@@ -12,11 +12,14 @@
   </head>
 
   <body id="lh-landing-v6">
-    <div class="main-wrapper">
+    <div class="main-wrapper"> 
       <div class="full-container">
         <div class="top-wrapper">
           <div class="top-bg">
             <img src="imgs/banner-1.png" alt="" />
+            <a id="click-to-claim-btn" href="#" target="_blank">
+              <img class="click-to-claim-btn" src="imgs/click-to-claim.gif" alt=""/>
+            </a>
           </div>
           <div class="top-logo">
             <img src="imgs/lh-logo3.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
@@ -139,8 +142,10 @@
       }
 
       var element = document.getElementById("tf88Url-btn");
+      var claimBtnElement = document.getElementById("click-to-claim-btn");
 
       element.href = tf88Url + "";
+      claimBtnElement.href = tf88Url + "";
     </script>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>

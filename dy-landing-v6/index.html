@@ -17,6 +17,9 @@
         <div class="top-wrapper">
           <div class="top-bg">
             <img src="imgs/banner-1.png" alt="" />
+            <a id="click-to-claim-btn" href="#" target="_blank">
+              <img class="click-to-claim-btn" src="imgs/click-to-claim.gif" alt=""/>
+            </a>
           </div>
           <div class="top-logo">
             <img src="imgs/dy-logo3.png" alt="东赢电竞" title="东赢电竞" />
@@ -131,8 +134,10 @@
       console.log(tf88Url);
 
       var element = document.getElementById("tf88Url-btn");
+      var claimBtnElement = document.getElementById("click-to-claim-btn");
 
       element.href = tf88Url + "";
+      claimBtnElement.href = tf88Url + "";
     </script>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
