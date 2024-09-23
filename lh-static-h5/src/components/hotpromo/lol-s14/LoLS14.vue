@@ -53,6 +53,10 @@
         <div class="title"></div>
         <div class="little-title" style="flex-direction: column; align-items: flex-start">
           <div class="left">活动时间</div>
+          <div class="right">2024年9月25日起</div>
+        </div>
+        <div class="little-title" style="flex-direction: column; align-items: flex-start">
+          <div class="left">活动内容</div>
           <div class="right">活动期间，当日S14全球总决赛有效投注≥1,500元即可获得10%有效投注反比。</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -102,7 +106,7 @@
 
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            例：用户A在06月30日投注S14全球总决赛有效投注5,000元，用户A在次日24小时内可获得彩金：5000*10%=50元，由于对应档位上限为28元，用户A最终可获得28元彩金。
+            例：用户 A 在09月25日投注 S14 全球总决赛有效投注 5,000 元，用户 A 在次日 24 小时内可获得彩金：5000*10%=50 元，由于对应档位上限为 28 元，用户 A 最终可获得 28 元彩金。
           </div>
         </div>
       </div>
@@ -113,6 +117,7 @@
           <div class="item">
             <div class="item-num">1</div>
             活动期间，活动仅计算电竞场馆中S14全球总决赛赛事，会员在当日S14全球总决赛中累计有效投注≥1,500元即可获得对应彩金，当日未达到则不符合彩金派发条件，彩金达到对应档位彩金上限则按彩金上限派发。有效投注次日清零；
+            <span style="color:#ff0000; display: contents;">注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -300,7 +305,7 @@ onMounted(() => {
     font-size: 12px;
     font-weight: 400;
     line-height: 22.4px;
-    color: black;
+    color: #ff0000;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
