@@ -5,9 +5,10 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-    <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
+    <SitePopout />
+    <!-- <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
       <img :src="homePopupImg" class="alert-img" />
-    </a>
+    </a> -->
   </el-dialog>
 
   <el-carousel class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true" :interval="5000">
@@ -28,6 +29,7 @@ import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
+import SitePopout from "@/components/modal/SitePopout.vue";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
 
@@ -216,13 +218,23 @@ onMounted(() => {
   transform: translate(-50%, -50%);
 
   &.el-dialog {
-    --el-dialog-width: 35%;
+    // --el-dialog-width: 35%;
   }
 
   .el-dialog__body {
     padding: 20px !important;
     border-radius: 12px;
   }
+
+  .el-dialog__headerbtn {
+    background: #ffffff99;
+    border: 1px solid #ffffffb3;
+  }
+
+  .el-dialog__close {
+    color: #2792FD !important;
+  }
+
 
   .alert-img {
     display: block;

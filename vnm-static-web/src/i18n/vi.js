@@ -911,6 +911,10 @@ export default {
     otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn.",
     login_to_continue: "Vui lòng đăng nhập để tiếp tục"
   },
+  sitePopout: {
+    sitePopout: "Thông báo bật lên",
+    checkDetails: "Chi tiết",
+  },
   response: {
     101: "Không tìm thấy nền tảng",
     102: "Nền tảng đã đóng cửa",
