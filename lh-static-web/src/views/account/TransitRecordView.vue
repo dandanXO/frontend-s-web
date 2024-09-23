@@ -467,12 +467,12 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
-                <template v-if="tbl.dataIndex === 'transactionId'" #default="scope">
+                <template v-if="tbl.dataIndex === 'betId'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <el-tooltip class="box-item" effect="dark" :content="scope.row.transactionId" placement="top-start">
-                      <a @click="copy(scope.row.transactionId)">
+                    <el-tooltip class="box-item" effect="dark" :content="scope.row.betId" placement="top-start">
+                      <a @click="copy(scope.row.betId)">
                         复制
-                        <span style="color: black">{{ scope.row.transactionId.slice(0, 1) }}...</span>
+                        <span style="color: black">{{ scope.row.betId.slice(0, 1) }}...</span>
                       </a>
                     </el-tooltip>
                   </div>
@@ -934,7 +934,7 @@ const tableColumns = {
   betRecord: [
     {
       title: " 下注 ID",
-      dataIndex: "transactionId"
+      dataIndex: "betId"
     },
     {
       title: "交易 ID",
