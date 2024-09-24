@@ -445,6 +445,39 @@ async function loadPrivilege(val) {
   });
 }
 
+const getRollOverText = (rolltext) => {
+  const thetext = JSON.parse(rolltext);
+
+  var fulltext = "流水倍数要求（本金 + 彩金）：";
+  var rolloverlists = [];
+  if (thetext.sport) {
+    rolloverlists.push("体育" + thetext.sport + "倍");
+  }
+  if (thetext.esport) {
+    rolloverlists.push("电竞" + thetext.esport + "倍");
+  }
+  if (thetext.slot) {
+    rolloverlists.push("电子" + thetext.slot + "倍");
+  }
+  if (thetext.live) {
+    rolloverlists.push("真人" + thetext.live + "倍");
+  }
+  if (thetext.poker) {
+    rolloverlists.push("棋牌" + thetext.poker + "倍");
+  }
+  if (thetext.fish) {
+    rolloverlists.push("捕鱼" + thetext.fish + "倍");
+  }
+  if (thetext.lottery) {
+    rolloverlists.push("彩票" + thetext.lottery + "倍");
+  }
+  if (thetext.casual) {
+    rolloverlists.push("小游戏" + thetext.casual + "倍");
+  }
+  fulltext += rolloverlists.join("，");
+  return fulltext;
+};
+
 function selectPayType(value) {
   if (value) {
     selectedPayType.value = value.payType;
