@@ -28,7 +28,7 @@ router.beforeEach(async (to, _, next) => {
       const currentHost = window.location.host
       const siteCode = currentHost.substring(0, 3)
       const thaiHost = "affiliate-web.monemental.com"
-      const ph1Host = "localhost:9998"
+      const ph1Host = "ph1-os.dt2e7svs94.com"
 
       if (currentHost === thaiHost) {
         next(`/th/login?redirect=${to.path}`);
