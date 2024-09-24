@@ -32,7 +32,7 @@
 
         <div class="loader-container">
           <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
-          <div>Loading... Please wait...</div>
+          <div>Carregando... Please wait...</div>
         </div>
 
         <template v-if="isInnerHtmlSrc === false">

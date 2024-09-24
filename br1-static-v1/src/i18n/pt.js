@@ -77,7 +77,7 @@ export default {
     promo: "Promoção",
     earnMoney: "Ganhe Dinheiro",
     wallet: "Carteira",
-    me: "Meu"
+    me: "Minha Conta"
   },
   form: {
     prependNumber: "+55",
@@ -88,7 +88,7 @@ export default {
     phone_rules_03: "O número de telefone não deve começar com '0'",
     phone_rules_04: "Por favor insira o número de conta correto",
     password: "Senha",
-    password_placeholder: "Por favor, digite a senha",
+    password_placeholder: "Insira a Senha",
     password_rules_01: "Por favor, insira a senha",
     password_rules_02: "Os caracteres da senha devem ser maiores que 6",
     forgotPassword: "Esqueceu sua senha",
@@ -126,7 +126,7 @@ export default {
     withdrawalAmount_placeholder: "Valor de Retirada",
     withdrawalAmount_rules_01: "Por favor, insira o valor da retirada",
     withdrawalAmount_rules_02: "O valor da retirada deve ser maior que 0",
-    withdrawalAmount_rules_03: "Saldo insuficiente para retirada",
+    withdrawalAmount_rules_03: "Valor da Retirada Insuficiente",
     withdrawalAmount_rules_04: "O valor da retirada deve estar entre",
     realTimeExchangeRates: "Taxas de Câmbio em Tempo Real",
     estimatedArrival: "Estimativa de chegada",
@@ -236,7 +236,7 @@ export default {
     loading: "Carregando",
     loading_plsWait: "Carregando... Por favor, aguarde...",
     loading_data: "Carregando dados... Por favor, aguarde...",
-    logging_in: "Efetuando login",
+    logging_in: "Entrando",
     cancel: "Cancelar",
     signOut: "Sair",
     back: "Voltar",
@@ -292,13 +292,13 @@ export default {
     menu_fish: "Pesca",
     menu_slot: "Caça-Níqueis",
     menu_poker: "Poker",
-    menu_sport: "Sport",
+    menu_sport: "Esporte",
     cat_hotgames: "Jogos Populares",
     cat_livecasino: "Cassino Ao Vivo",
     cat_slotsgame: "Jogos de Caça-Níqueis",
     cat_fishing: "Pesca",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Esporte"
   },
   settings: {
     totalScore: "Pontuação Total",

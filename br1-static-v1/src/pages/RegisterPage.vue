@@ -296,7 +296,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: "Registrado com sucesso",
                   icon: "check_circle_outline"
                 });
 

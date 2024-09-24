@@ -317,7 +317,7 @@
                     class="minmax-btn"
                     rounded
                     color="black"
-                    label="min"
+                    label="mín"
                     dense
                     no-caps
                     @click="toggleAmount('min')"
@@ -344,7 +344,7 @@
                     class="minmax-btn"
                     rounded
                     color="black"
-                    label="Max"
+                    label="Máx"
                     dense
                     no-caps
                     @click="toggleAmount('max')"
@@ -356,7 +356,7 @@
 
           <div class="fund-container q-mt-sm q-mb-md">
             <div>
-              <span class="fund-title">Available:</span>
+              <span class="fund-title">Disponível:</span>
               {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
             </div>
           </div>
@@ -373,7 +373,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ store.vip }} {{ $t("withdraw.dailyLimit") }}</div>
+                <div class="desc">{{ $t("withdraw.dailyLimit") }} {{ store.vip }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
@@ -382,7 +382,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">Remain Wagers</div>
+                <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
@@ -400,7 +400,7 @@
               size="2em"
               :thickness="2"
             ></q-spinner>
-            <template v-else>Submit</template>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
         </template>
 
@@ -412,7 +412,7 @@
               size="2em"
               :thickness="2"
             ></q-spinner>
-            <template v-else>Submit</template>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
         </template>
         <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>

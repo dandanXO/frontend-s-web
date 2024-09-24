@@ -114,7 +114,7 @@
                   v-model="mailboxState.mailboxList.write.content"
                   placeholder="Contents"
                 />
-                <q-btn color="brand" @click="onSubmit" label="Submit" />
+                <q-btn color="brand" @click="onSubmit" label="Enviar" />
               </q-form>
             </div>
           </div>
