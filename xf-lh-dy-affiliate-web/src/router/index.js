@@ -177,6 +177,15 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/ph1/summary',
+    name: 'Ph1 Summary',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "ph1-daily-summary" */ '../views/ph1/ph1-daily-summary/index.vue'
+      ),
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
