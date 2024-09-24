@@ -67,7 +67,7 @@
           </tr>
           <tr>
             <td>≥1,500</td>
-            <td rowspan="9" style="font-weight: bold; font-size: 24px;">10%</td>
+            <td rowspan="9" style="font-weight: bold; font-size: 24px">10%</td>
             <td>8元</td>
           </tr>
           <tr>
@@ -106,7 +106,8 @@
 
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            例：用户 A 在09月25日投注 S14 全球总决赛有效投注 5,000 元，用户 A 在次日 24 小时内可获得彩金：5000*10%=50 元，由于对应档位上限为 28 元，用户 A 最终可获得 28 元彩金。
+            例：用户 A 在09月25日投注 S14 全球总决赛有效投注 5,000 元，用户 A 在次日 24
+            小时内可获得彩金：5000*10%=500元，由于对应档位上限为 28 元，用户 A 最终可获得 28 元彩金。
           </div>
         </div>
       </div>
@@ -117,7 +118,7 @@
           <div class="item">
             <div class="item-num">1</div>
             活动期间，活动仅计算电竞场馆中S14全球总决赛赛事，会员在当日S14全球总决赛中累计有效投注≥1,500元即可获得对应彩金，当日未达到则不符合彩金派发条件，彩金达到对应档位彩金上限则按彩金上限派发。有效投注次日清零；
-            <span style="color:#ff0000; display: contents;">注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
+            <span style="color: #ff0000; display: contents">注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -189,32 +190,33 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBonus(promoCode.value).then((res) => {
-    if (res.code === 0) {
-      notify({
-        type: "success",
-        message: `成功领取`
-      });
+  claimCompetitionBonus(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: `成功领取`
+        });
 
-      init();
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+        init();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const init = () => {
   Promise.all([getCompetitionToday(), getCompetitionYesterday(promoCode.value)]).then(([resTdy, resYtd]) => {
-    if(resTdy.code === 0) {
+    if (resTdy.code === 0) {
       claimableBonus.value = resTdy.data || 0;
     }
 
-    if(resYtd.code === 0) {
+    if (resYtd.code === 0) {
       ytdCompetitionValidBet.value = resYtd.data || 0;
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
   if (!store.token) {
