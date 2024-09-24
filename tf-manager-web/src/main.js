@@ -82,12 +82,6 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_NGA_SOCKET;
     siteId = 'nga';
     break;
-  case process.env.VUE_APP_KYQ_HOST:
-    baseApi = process.env.VUE_APP_KYQ_API;
-    baseWss = process.env.VUE_APP_KYQ_SOCKET;
-    imageCDNUrl = process.env.VUE_APP_KYQ_IMAGE;
-    siteId = 'lh';
-    break;
   case process.env.VUE_APP_PH1_HOST:
     baseApi = process.env.VUE_APP_PH1_API;
     baseWss = process.env.VUE_APP_PH1_SOCKET;
@@ -99,6 +93,15 @@ switch (currentHost) {
     siteId = 'xf';
     break;
 }
+
+if (currentHost.indexOf(process.env.VUE_APP_KYQ_HOST) > -1) {
+  console.log("KYQ")
+  baseApi = process.env.VUE_APP_KYQ_API;
+  baseWss = process.env.VUE_APP_KYQ_SOCKET;
+  imageCDNUrl = process.env.VUE_APP_KYQ_IMAGE;
+  siteId = 'lh';
+}
+
 if (currentHost.indexOf(process.env.VUE_APP_BFY3_HOST) > -1) {
   console.log("BFY3")
   baseApi = process.env.VUE_APP_BFY3_API;

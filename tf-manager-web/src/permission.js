@@ -6,7 +6,7 @@ import { UserActionTypes } from "@/store/modules/user/action-types";
 import { MenuActionType } from "@/store/modules/menu/action-types";
 import { ElMessage } from "element-plus";
 
-const whiteList = ['/login', '/auth-redirect']
+const whiteList = ['/login', '/auth-redirect', '/403']
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, _, next) => {

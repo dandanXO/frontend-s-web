@@ -734,6 +734,7 @@ export default {
     'Daily Summary': 'Daily Summary',
     Withdraw: 'Withdraw',
     'Rebate Report': 'Rebate Report',
+    'AffiliateOwnSummary': 'Affiliate Own Summary',
   },
   posterType: {
     OVERALL: 'Overall Referral',

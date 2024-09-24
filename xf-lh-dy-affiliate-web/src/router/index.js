@@ -240,6 +240,14 @@ export const constantRoutes = [
           title: 'affiliate-summary',
         },
       },
+      {
+        path: 'own-summary',
+        component: () => import('../views/affiliate/own-summary/index.vue'),
+        name: 'Affiliate Own Summary',
+        meta: {
+          title: 'affiliate-own-summary',
+        },
+      },
     ],
   },
   {

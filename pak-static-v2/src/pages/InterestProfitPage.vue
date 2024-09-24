@@ -13,7 +13,8 @@
 
         <div class="do-amount">
           <div class="amount-txt">
-            {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
+            {{ store.currency.value
+            }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
           </div>
           <img src="../assets/images/interest-profit/chevron-right.png" />
         </div>
@@ -22,13 +23,15 @@
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.unexpiredEarnings") }}</div>
             <div class="item-amount">
-              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
+              {{ store.currency.value
+              }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
             </div>
           </div>
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.cumulativeIncome") }}</div>
             <div class="item-amount">
-              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
+              {{ store.currency.value
+              }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
             </div>
           </div>
         </div>
@@ -152,7 +155,7 @@
                 </div>
                 <div class="order-subrow">
                   <div class="order-col">
-                    <span class="txt-gray">{{ convertToGMT55(e.placeTime) }}</span>
+                    <span class="txt-gray">{{ moment(e.placeTime).format("YYYY-MM-DD HH:mm:ss") }}</span>
                   </div>
                   <div class="order-col">
                     <span class="txt-green">+{{ convertToTwoDecimalAmount(e.estimateRate) }}</span>
@@ -215,11 +218,12 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.placeTime") }}</div>
-          <div class="box-value">{{ convertToGMT55(recordDetails.placeTime) }}</div>
+          123
+          <div class="box-value">{{ moment(recordDetails.placeTime).format("YYYY-MM-DD HH:mm:ss") }}</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.matureTime") }}</div>
-          <div class="box-value">{{ convertToGMT55(recordDetails.matureTime) }}</div>
+          <div class="box-value">{{ moment(recordDetails.matureTime).format("YYYY-MM-DD HH:mm:ss") }}</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.status") }}</div>
@@ -231,6 +235,7 @@
                 'btn--red': ['CLOSED'].includes(recordDetails.status),
                 'btn--orange': recordDetails.status === 'PENDING'
               }"
+              unelevated
               :label="`${getDepositStatus(recordDetails.status)}`"
             ></q-btn>
           </div>
@@ -242,7 +247,7 @@
 
   <q-dialog width="100%" v-model="errorDialog">
     <q-card class="q-pa-md">
-      <q-card-section class="row items-center ">
+      <q-card-section class="row items-center">
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
@@ -254,7 +259,6 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-
 </template>
 
 <script setup>
@@ -280,7 +284,7 @@ const qs = require("qs");
 const isLoading = ref(false);
 const isRecordLoading = ref(false);
 const errorDialog = ref(false);
-const errorDialogMsg = ref('');
+const errorDialogMsg = ref("");
 const depositData = ref([]);
 const isAmountVisible = ref(true);
 const storageTimeOptions = ref([
@@ -443,7 +447,7 @@ const submitDeposit = () => {
         interestProfitField.deposits = "";
       } else {
         errorDialog.value = true;
-        errorDialogMsg.value = t(`error.${res.code}`)
+        errorDialogMsg.value = t(`error.${res.code}`);
       }
     })
     .catch((err) => {
@@ -730,20 +734,21 @@ onMounted(() => {
 }
 
 .record-details-card {
-  background: #131313;
+  // background: #131313;
 
   .details-box {
     padding: 12px;
-    background: #0b0e0d;
+    background: #e9f2ff;
+    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 8px;
-    border: 1px solid #072a19;
+    // border: 1px solid #072a19;
     margin-bottom: 16px;
 
     .box-title {
-      color: #ffffff;
+      color: #424f72;
     }
     .box-value {
       color: #00b900;

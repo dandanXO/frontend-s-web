@@ -726,6 +726,7 @@ export default {
     'Daily Summary': '每日全总览',
     Withdraw: '银行提款',
     'Rebate Report': '返水报表',
+    'AffiliateOwnSummary': '本代理总结',
   },
   posterType: {
     OVERALL: '综合推广图',

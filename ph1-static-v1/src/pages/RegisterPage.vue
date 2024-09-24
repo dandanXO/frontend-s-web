@@ -253,7 +253,14 @@ export default defineComponent({
     const hasAffiliate = ref(false);
 
     const getAffiliateCode = () => {
-      affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
+      affCode.value = (() => {
+        if(location.hostname === 'www.fff2evkgkj.com') {
+          return '77CCEF';
+        }
+        
+        return sessionStorage.getItem("AFFILIATE_CODE");
+      })();
+
       if (affCode.value) {
         // hasAffiliate.value = true;
         regForm.codeAffiliate = affCode.value;

@@ -11,11 +11,11 @@ export const getAdsPopoutList = (adsPopout) => {
 };
 
 export const createAdsPopout = (adsPopout) => {
-  return https().request("/site-ads-popout/create", Method.POST, adsPopout, ContentType.json);
+  return https().request("/site-ads-popout/create", Method.POST, adsPopout, ContentType.form);
 };
 
 export const updateAdsPopout = (adsPopout) => {
-  return https().request(`/site-ads-popout/update?_method=PUT`, Method.POST, adsPopout, ContentType.json);
+  return https().request(`/site-ads-popout/update?_method=PUT`, Method.POST, adsPopout, ContentType.form);
 };
 
 export const updateAdsPopoupStatus = async (id, status) => {

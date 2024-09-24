@@ -47,7 +47,10 @@ export const userStore = defineStore("userStore", {
       h5Url: "https://m.indwin7.com/",
       hasUpdatedOneSignal: false,
       walletCurrency: sessionStorage.getItem("WALLET_TYPE") ? sessionStorage.getItem("WALLET_TYPE") : "INR",
-      multipleBalance: []
+      multipleBalance: [],
+      paytypeWithPrivilege: "",
+      extraPrivilegeId: "",
+      ftd: true
     };
   },
   actions: {
@@ -108,7 +111,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data, 86400);
+            LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
@@ -137,7 +140,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data, 86400);
+            LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
@@ -300,7 +303,7 @@ export const userStore = defineStore("userStore", {
     autoLogin(token) {
       this.token = token;
       if (isAndroid()) {
-        LocalStorage.set("TOKEN", token, 86400);
+        LocalStorage.set("TOKEN", token, 31536000);
       } else {
         SessionStorage.set("TOKEN", token);
       }

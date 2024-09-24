@@ -260,7 +260,6 @@ export default defineComponent({
     };
     const loadAll = () => {
       loadPromo().then((res) => {
-        console.log(res,'dan')
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
