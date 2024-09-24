@@ -36,7 +36,7 @@
           autocomplete="current-password"
           outlined
           color="white"
-          :placeholder="$t('form.password')"
+          :placeholder="$t('form.password_placeholder')"
           class="landing-input login-form-field"
         >
           <template v-slot:append>
