@@ -290,6 +290,7 @@ export default {
     estimatedAffiliateCommission: '예상 제휴사 커미션',
     estimatedMemberCommission: '예상 회원 커미션',
     ewallet: '전자 지갑',
+    eventClickCount: '페이지 클릭수',
     finalSum: '최종 커미션',
     finishDate: '주문 처리 시간',
     firstDepositAmount: '첫 입금 금액',

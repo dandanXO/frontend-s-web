@@ -268,6 +268,7 @@ export default {
     estimatedAffiliateCommission: 'Ước tính Hoa hồng Đại lý',
     estimatedMemberCommission: 'Ước tính Hoa hồng Thành viên',
     ewallet: 'Ví điện tử',
+    eventClickCount: 'số lần nhấp vào trang',
     finalSum: 'Tổng cuối cùng',
     finishDate: 'Ngày Kết thúc',
     firstDepositAmount: 'Số tiền Gửi tiền Lần đầu',

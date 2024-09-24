@@ -4,7 +4,7 @@ import router from "@/router";
 import { useStore } from "./store";
 import { MenuActionType } from "@/store/modules/menu/action-types";
 
-const whiteList = ['/403', '/login', '/my/login', '/my/register', '/kaka/login', '/kaka/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register']
+const whiteList = ['/403', '/login', '/my/login', '/my/register', '/kaka/login', '/kaka/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register', '/ph1/summary']
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, _, next) => {
@@ -28,8 +28,12 @@ router.beforeEach(async (to, _, next) => {
       const currentHost = window.location.host
       const siteCode = currentHost.substring(0, 3)
       const thaiHost = "affiliate-web.monemental.com"
+      const ph1Host = "localhost:9998"
+
       if (currentHost === thaiHost) {
         next(`/th/login?redirect=${to.path}`);
+      } else if (currentHost === ph1Host) {
+        next(`/ph1/summary`)
       } else {
         console.log("IS this")
         console.log(siteCode)
