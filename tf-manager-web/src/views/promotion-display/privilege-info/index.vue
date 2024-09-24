@@ -227,12 +227,12 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
             <el-form-item prop="rollover">
               <el-input-number
                 v-model="uiControl.rollOverAmt"
                 style="width: 145px"
-                :min="0"
+                :min="1"
                 :max="100"
                 :controls="false"
                 @keypress="restrictInput($event)"
@@ -1198,7 +1198,7 @@ function constructRollover() {
   if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
     json.rollover = uiControl.rollOverAmt
   }
-  form.rollover = uiControl.rollOverAmt
+  // form.rollover = uiControl.rollOverAmt
   return JSON.stringify(json)
 }
 

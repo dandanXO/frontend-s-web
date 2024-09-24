@@ -1452,7 +1452,7 @@ export default {
     rollover: 'Rollover',
     rollOverAmt: 'Rollover Amount',
     rolloverType: 'Rollover Type',
-    rollOverMulti: 'Rollover Amount',
+    rollOverMulti: 'Rollover Multi Amount',
     rolloverAmount: 'Rollover Amount',
     rolloverRecord: 'Rollover Record',
     gameTypeRollover: 'Game Type Rollover',
