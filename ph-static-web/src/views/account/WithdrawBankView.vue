@@ -8,10 +8,7 @@
       <span class="account-title">Select Card</span>
     </div>
     <div class="account-content">
-      <div class="account-tip-text wbot">
-        <RiSpamLine /> Please register for a withdrawal bank account below to be
-        updated
-      </div>
+      <div class="account-tip-text wbot">Please register for a withdrawal bank account below to be updated</div>
       <!-- <div class="addbuttons">
         <div
           class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
@@ -23,14 +20,14 @@
       </div> -->
       <div class="flex-box flex-wrap bank-card-list">
         <div
+          v-for="(bc, index) in personalState.bankCardList"
+          :key="bc.id"
           class="bank-card-item"
           :class="{
             active: index === isCardActive,
-            inactive: index > isCardActive,
+            inactive: index > isCardActive
           }"
           @click="showCard(bc, index)"
-          v-for="(bc, index) in personalState.bankCardList"
-          :key="bc.id"
         >
           <div class="icon">
             <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
@@ -42,16 +39,11 @@
             </div>
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
-            <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
             <RiLinkUnlink />
           </div>
 
           <div class="flex-box cards">
-            <div
-              v-for="b in bc.cardNumber.split()"
-              :key="b"
-              class="card-num-box"
-            >
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
               {{ b }}
             </div>
             <!-- <div
@@ -84,14 +76,14 @@
             </div> -->
           </div>
         </div>
-        <div class="bank-card-item" @click="bankCardModal('bank')">
-          <RiLink />
+        <div class="bank-card-item addcard" @click="bankCardModal('bank')">
+          <RiAddCircleFill style="fill: currentColor" />
           Add card
         </div>
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">Bank Card Unbind Record</span>
+      <span class="account-title">Bank/E-wallet Card Unbind Record</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
@@ -103,8 +95,8 @@
                 show-time
                 type="date"
                 placeholder="Start"
-                valueFormat="yyyy-MM-DD"
-                format="yyyy-MM-DD"
+                value-format="yyyy-MM-DD"
+                format="MM/DD/yyyy"
               />
             </a-form-item>
             <a-form-item label="End">
@@ -113,126 +105,123 @@
                 show-time
                 type="date"
                 placeholder="End"
-                valueFormat="yyyy-MM-DD"
-                format="yyyy-MM-DD"
+                value-format="yyyy-MM-DD"
+                format="MM/DD/yyyy"
               />
             </a-form-item>
           </div>
           <a-form-item>
-            <button
-              class="common-btn outline search-btn"
-              @click="searchRecord()"
-            >
-              Search For
-            </button>
+            <button class="common-btn search-btn" @click="searchRecord()">Search</button>
           </a-form-item>
         </a-form>
       </div>
       <div class="unbind-record-wrapper">
-        <a-table
-          :columns="columns"
-          :data-source="dataSource"
-          :row-key="(record) => record.bankName"
-        ></a-table>
+        <a-table :columns="columns" :data-source="dataSource" :row-key="(record) => record.bankName">
+          <template #unbindTime="{ text }">
+            <span>{{ humanDatetime(text) }}</span>
+          </template>
+          <template #bindTime="{ text }">
+            <span>{{ humanDatetime(text) }}</span>
+          </template>
+        </a-table>
       </div>
     </div>
-    <a-modal
-      wrap-class-name="bankModal"
-      width="100%"
-      v-model:visible="bankCardModalState.visible"
-      :footer="null"
-    >
-      <div class="modal-head-title">Add a bank card</div>
+    <a-modal v-model:visible="bankCardModalState.visible" wrap-class-name="bankModal" width="100%" :footer="null">
+      <div class="modal-head-title">
+        {{ isVirtual ? "Add a Crypto card" : !isEwallet ? "Add Bank Card" : "Add E-wallet Card" }}
+      </div>
       <a-form
         ref="bankCardFormRef"
-        :hideRequiredMark="true"
+        :hide-required-mark="true"
         :model="bankCardInfo"
         :rules="bankCardRules"
         :colon="false"
       >
         <a-form-item
           name="bankId"
-          :rules="[{ required: true, message: 'Please select a bank' }]"
+          :rules="[
+            {
+              required: true,
+              message: isVirtual
+                ? 'Please select a Crypto card'
+                : !isEwallet
+                ? 'Please select a bank'
+                : 'Please select an E-wallet'
+            }
+          ]"
         >
           <a-space style="width: 100%; justify-content: space-between">
             <a-select
-              placeholder="Bank type"
               v-model:value="selectedBankType"
+              :placeholder="isVirtual ? 'Crypto' : !isEwallet ? 'Bank type' : 'E-wallet type'"
               style="width: 100%"
               :options="bankTypes.map((bank) => ({ value: bank }))"
               @change="selectBankType"
-            ></a-select>
+            />
             <a-select
-              class="select"
               v-model:value="bankCardInfo.bankId"
-              placeholder="Please select a bank"
+              class="select"
+              :placeholder="
+                isVirtual ? 'Please select a Crypto' : !isEwallet ? 'Please select a bank' : 'Please select an E-wallet'
+              "
               style="width: 100%"
             >
               <a-select-option v-for="b in banksList" :key="b.id" :value="b.id">
-                <span role="img" :aria-label="b.name"
-                  ><img
+                <span role="img" :aria-label="b.name">
+                  <img
                     v-if="b.bankIcon"
                     style="height: 100%; max-width: 30px; margin-right: 10px"
                     :src="imgURL + b.bankIcon"
                   />
-                  {{ b.name }}</span
-                >
+                  {{ b.name }}
+                </span>
               </a-select-option>
             </a-select>
           </a-space>
         </a-form-item>
 
-        <!-- <a-form-item v-if="isVirtual" name="bankId" label="ชื่อธนาคาร">
-          {{ bankName }}
-        </a-form-item> -->
-        <a-form-item style="background: #23263c; padding: 5px 20px">{{
-          bankCardInfo.cardAccount
-        }}</a-form-item>
-        <!-- <a-form-item ref="cardAccount" name="cardAccount">
-          <a-input
-            v-model:value="bankCardInfo.cardAccount"
-            placeholder="ชื่อบัญชี (ชื่อตรงกันกับบัญชีที่ใช้ฝาก)"
-          />
-        </a-form-item> -->
+        <div class="ant-input mb-24px">
+          {{ bankCardInfo.cardAccount }}
+        </div>
+
         <a-form-item ref="cardNumber" name="cardNumber">
           <a-input
             v-model:value="bankCardInfo.cardNumber"
-            placeholder="Card Number"
+            :placeholder="isVirtual || isEwallet ? 'Wallet' : 'Card Number'"
           />
         </a-form-item>
-        <a-form-item ref="cardAddress" name="cardAddress">
-          <a-input
-            v-model:value="bankCardInfo.cardAddress"
-            placeholder="Card Address"
-          />
+        <a-form-item v-if="!(isVirtual || isEwallet)" ref="cardAddress" name="cardAddress">
+          <a-input v-model:value="bankCardInfo.cardAddress" placeholder="Card Address" />
         </a-form-item>
         <a-form-item class="txt-center">
-          <button
-            class="txt-center common-btn"
-            type="submit"
-            @click="submitBankCard"
-          >
-            Confirm
-          </button>
+          <button class="txt-center common-btn" type="submit" @click="submitBankCard">Confirm</button>
         </a-form-item>
       </a-form>
+    </a-modal>
+    <a-modal centered v-model:visible="open" :title="`Remove ${selectedUnbindingCard.bankName} ?`">
+      Are you sure you want to remove {{ selectedUnbindingCard.bankName }} ?
+      <div class="flex" style="gap: 10px; margin: 20px">
+        <a-button class="common-btn outline" @click="handleCancel">Cancel</a-button>
+        <a-button class="common-btn" @click="handleOk">Confirm</a-button>
+      </div>
     </a-modal>
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, createVNode } from "vue";
-import { Modal, message } from "ant-design-vue";
-import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import { RiSpamLine, RiLink, RiLinkUnlink } from "vue-remix-icons";
-import { loadBanks, loadBankCards, loadUnbindRecord, addBankCard, deleteBankCard } from "@/api/personal/personal";
-import { userStore } from "@/store";
-import { useRouter } from "vue-router";
+import {defineComponent, reactive, ref, onMounted, createVNode, computed} from "vue";
+import {Modal, message} from "ant-design-vue";
+import {ExclamationCircleOutlined} from "@ant-design/icons-vue"
+import {RiSpamLine, RiAddCircleFill, RiLinkUnlink} from "vue-remix-icons";
+import {loadBanks, loadAllBankCards, loadUnbindRecord, addBankCard, deleteBankCard} from "@/api/personal/personal";
+import {userStore} from "@/store";
+import {useRouter} from "vue-router";
+import moment from "moment/moment";
+
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    // eslint-disable-next-line vue/no-unused-components
-    RiSpamLine, RiLink, RiLinkUnlink, ExclamationCircleOutlined
+    RiSpamLine, RiAddCircleFill, RiLinkUnlink
   },
   setup() {
     let validateBankLength = async (r, v) => {
@@ -249,21 +238,24 @@ export default defineComponent({
         max = 11;
       }
       var reg = /^\d+$/;
+      var allreg = /^[A-Za-z0-9]*$/;
       if (v === '') {
         return Promise.reject('Please enter card number');
-      } else if (!reg.test(v)) {
+      } else if (selectedBankType.value !== 'Crypto' && !reg.test(v)) {
         return Promise.reject('Only numbers are allowed');
+      } else if (selectedBankType.value === 'Crypto' && !allreg.test(v)) {
+        return Promise.reject('Only numbers and alphabets are allowed');
       } else if (v.length < min || v.length > max) {
         if (selectedBankType.value === 'e-Wallet') {
           return Promise.reject('Length should be 11');
         } else {
-          return Promise.reject('Length should be between ' + min + '-' + max );
+          return Promise.reject('Length should be between ' + min + '-' + max);
         }
       } else {
         return Promise.resolve();
       }
     };
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/'
     const isCardActive = ref();
     const store = userStore();
     const searchForm = reactive({
@@ -291,14 +283,19 @@ export default defineComponent({
         title: "Bind Time",
         key: "bindTime",
         dataIndex: "bindTime",
+        slots: { customRender: "bindTime" }
       },
       {
         title: "UnbindTime",
         key: "unbindTime",
-        dataIndex: "unbindTime"
+        dataIndex: "unbindTime",
+        slots: { customRender: "unbindTime" }
       }
     ];
-    const bankTypes = ['Bank', 'Crypto', 'e-Wallet']
+    const bankTypes = ['e-Wallet', 'Bank', 'Crypto',];
+    const isVirtual = computed(() => selectedBankType.value === "Crypto");
+    const isEwallet = computed(() => selectedBankType.value === "e-Wallet");
+
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -312,7 +309,7 @@ export default defineComponent({
           message.error(response.message, 4)
         }
       }).catch((e) => {
-          console.log(e.message);
+        console.log(e.message);
       });
     };
 
@@ -349,9 +346,13 @@ export default defineComponent({
     }
     const loadCards = () => {
       personalState.bankCardList = [];
-      loadBankCards().then((response) => {
+      loadAllBankCards().then((response) => {
         if (response.code === 0) {
-          personalState.bankCardList.push(...response.data);
+          response.data.forEach(element => {
+            if (element){
+              personalState.bankCardList.push(element);
+            }
+          });
         }
       }).catch((error) => {
         console.log("error", error);
@@ -410,7 +411,7 @@ export default defineComponent({
       //   });
       // }
     };
-    const selectedBankType = ref("Bank")
+    const selectedBankType = ref("e-Wallet")
     const selectBankType = () => {
       bankCardFormRef.value.clearValidate()
       banksList.value = []
@@ -429,32 +430,32 @@ export default defineComponent({
     }
     const submitBankCard = () => {
       bankCardFormRef.value
-        .validate()
-        .then(() => {
-          addBankCard(bankCardInfo).then((response) => {
-            if (response.code === 0) {
-              message.success("success");
-              bankCardModalState.visible = false;
-              loadCards();
-            }
+          .validate()
+          .then(() => {
+            addBankCard(bankCardInfo).then((response) => {
+              if (response.code === 0) {
+                message.success("success");
+                bankCardModalState.visible = false;
+                loadCards();
+              }
+            }).catch((error) => {
+              console.log(error.message);
+            });
           }).catch((error) => {
-            console.log(error.message);
-          });
-        }).catch((error) => {
         console.log("error", error);
       });
     };
     const bankCardRules = {
       cardNumber: [
-        // {
-        //   required: true,
-        //   message: "Please enter card number",
-        //   trigger: "blur",
-        // },
         {
-          validator: validateBankLength,
+          required: true,
+          message: "Please enter card number",
           trigger: "blur",
-        }
+        },
+        // {
+        //   validator: validateBankLength,
+        //   trigger: "blur",
+        // }
       ],
       cardAccount: [
         {
@@ -464,28 +465,54 @@ export default defineComponent({
         }
       ]
     };
+    const open = ref(false);
+    const selectedUnbindingCard = ref({})
     const unbindBankCard = (card) => {
-      Modal.confirm({
-        title: "Remove " + card.bankName + "?",
-        content: "Are you sure you want to remove " + card.bankName + "?",
-        icon: createVNode(ExclamationCircleOutlined),
-        width: "100%",
-        onOk() {
-          deleteBankCard(card.id
-).then((res) => {
-            if (res.code === 0) {
-              for (let i = 0; i < personalState.bankCardList.length; i++) {
-                if (personalState.bankCardList[i].id === card.id) {
-                  personalState.bankCardList.splice(i, 1);
-                }
-              }
-            }
-          }).catch((e) => {
-            console.log("error", e);
-          });
-        }
-      });
+      selectedUnbindingCard.value = card
+      open.value = true;
+      // Modal.confirm({
+      //   title: "Remove " + card.bankName + "?",
+      //   content: "Are you sure you want to remove " + card.bankName + "?",
+      //   icon: createVNode(ExclamationCircleOutlined),
+      //   width: "100%",
+      //   onOk() {
+      //     deleteBankCard(card.id
+      //     ).then((res) => {
+      //       if (res.code === 0) {
+      //         for (let i = 0; i < personalState.bankCardList.length; i++) {
+      //           if (personalState.bankCardList[i].id === card.id) {
+      //             personalState.bankCardList.splice(i, 1);
+      //           }
+      //         }
+      //       }
+      //     }).catch((e) => {
+      //       console.log("error", e);
+      //     });
+      //   },
+      //   onCancel() {
+      //   },
+      // });
     };
+
+const handleOk = (e) => {
+  deleteBankCard(selectedUnbindingCard.value.id).then((res) => {
+      if (res.code === 0) {
+        for (let i = 0; i < personalState.bankCardList.length; i++) {
+          if (personalState.bankCardList[i].id === selectedUnbindingCard.value.id) {
+            personalState.bankCardList.splice(i, 1);
+          }
+        }
+  open.value = false;
+      }
+    }).catch((e) => {
+      console.log("error", e);
+  open.value = false;
+    });
+};
+
+const handleCancel = (e) => {
+  open.value = false;
+}
     return {
       searchForm,
       columns,
@@ -505,9 +532,18 @@ export default defineComponent({
       selectedBankType,
       banksList,
       searchRecord,
+      humanDatetime(ts) {
+        return moment(ts).format("MM-DD-YYYY HH:mm:ss");
+      },
       dataSource,
       validateBankLength,
-      imgURL
+      imgURL,
+      isVirtual,
+      isEwallet,
+      open,
+      selectedUnbindingCard,
+      handleOk,
+      handleCancel
     };
   }
 });
@@ -517,9 +553,11 @@ export default defineComponent({
 .ant-space-item:nth-child(1) {
   width: 120px;
 }
+
 .ant-space-item:nth-child(2) {
   width: calc(100% - 120px);
 }
+
 .passwordModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -534,6 +572,7 @@ export default defineComponent({
     width: 90%;
   }
 }
+
 .bankModal .ant-modal {
   max-width: 520px;
   width: 100%;
@@ -543,15 +582,15 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  color: #ffffff;
 
   .ant-modal-content {
     width: 90%;
   }
+
   .ant-form-item-control-input-content {
-    color: #ffffff;
   }
 }
+
 .securityModal .ant-modal {
   width: 100%;
   max-width: 600px;
@@ -566,6 +605,7 @@ export default defineComponent({
     width: 90%;
   }
 }
+
 .ant-modal.ant-modal-confirm {
   width: 100%;
   max-width: 600px;
@@ -578,46 +618,49 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
 :deep(.ant-form-item-label > label) {
-  color: #ffffff;
 }
+
 :deep(.ant-form-item.half .ant-form-item-control-input-content) {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   .ant-input {
     width: 100%;
     flex-basis: 50%;
   }
 }
+
 :deep(.ant-form-item .ant-select) {
   width: 100%;
 }
+
 :deep(.ant-form-item.select .ant-form-item-control-input) {
   width: 100%;
 }
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector
-    .ant-select-selection-search-input) {
+
+:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
   height: 40px;
 }
+
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   height: 40px;
   padding: 5px 20px;
-  background: #23263c;
-  color: #ffffff;
-  border: 0;
 }
 
 .common-btn {
   width: 100%;
   cursor: pointer;
+
   &.search-btn {
     font-size: 14px;
   }
+
   &.verification-btn {
     padding: 8px;
   }
+
   &.submit-btn {
     padding: 8px;
   }
@@ -628,61 +671,81 @@ export default defineComponent({
     .bank-card-list {
       padding-top: 20px;
       padding-right: 220px;
-      padding-left: 40px;
+      // padding-left: 40px;
 
       .bank-card-item {
         margin-bottom: 20px;
         padding: 0 10px;
-        width: 300px;
-        height: 200px;
-        border-radius: 5px;
+        width: 320px;
+        height: 190px;
+        border-radius: 20px;
         background-image: linear-gradient(to right, #de4545, #db7e42);
         background-size: cover;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-right: -260px;
-
+        color: #fff;
         cursor: pointer;
         transition: all 0.3s ease-in;
         background-repeat: no-repeat;
         position: relative;
         overflow: hidden;
-        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.6);
         // filter: grayscale(0.3);
-        transform: skewX(5deg);
+        background-image: url("../../assets/images/finance/bankcard.png");
+        transform: none;
+        box-shadow: 0px 0px 10px 0 #000;
+        &.addcard {
+          background-image: url("../../assets/images/finance/bankaddcard.png");
+          // background-color: #e7e7ffc9;
+          color: #dfeeff;
+          display: flex;
+          flex-direction: column;
+          svg {
+            width: 50px;
+          }
+        }
 
         .icon {
           position: absolute;
-          left: 5px;
-          bottom: 5px;
-          width: 30px;
+          left: 25px;
+          bottom: 25px;
+          width: 50px;
+
           img {
             width: 100%;
           }
         }
-        &.active {
-          // background: #2b2b4b;
-          // margin-top: -50px;
-          // transform: rotate3d(1, 1, 1, 360deg);
-          flex-direction: column;
-          // margin-right: -60px;
-          margin: 0 -60px 0 0px;
 
+        &.active {
+          flex-direction: column;
+          margin: 0 -60px 20px 0px;
+          gap: 10px;
           filter: none;
+
           .icon {
-            width: 80px;
+            width: 20%;
             position: relative;
+            left: 0;
+            bottom: 0;
           }
+
           .unlink-btn {
             display: block;
+          }
+          .card-num-box {
+            display: block;
+            padding: 0;
           }
           .txt-center {
             position: relative;
             padding-top: 0;
             transform: rotateZ(0);
             height: unset;
+            text-align: center;
+            left: 0;
           }
+
           &:hover {
             &:before {
               -webkit-animation: shine 2s;
@@ -690,11 +753,13 @@ export default defineComponent({
             }
           }
         }
+
         .txt-center {
           position: absolute;
-          padding-top: 10px;
-          transform: rotateZ(-90deg);
-          left: 0;
+          padding-top: 25px;
+          text-align: left;
+          // transform: rotateZ(-90deg);
+          left: 20px;
           bottom: 35px;
           top: 0;
           margin: auto;
@@ -707,6 +772,7 @@ export default defineComponent({
           white-space: nowrap;
           transition: all 0.3s ease-in-out;
         }
+
         .cards {
           gap: 10px;
           margin-top: 10px;
@@ -714,12 +780,14 @@ export default defineComponent({
           width: 100%;
           text-align: center;
         }
+
         &.add-bank-card {
           cursor: pointer;
           align-items: center;
           padding: 0;
           filter: none;
         }
+
         .unlink-btn {
           cursor: pointer;
           position: absolute;
@@ -727,17 +795,21 @@ export default defineComponent({
           top: 10px;
           left: 10px;
         }
+
         svg {
           fill: #ffffff;
           width: 20px;
         }
+
         .card-num-box {
           // padding: 40px 0 0;
           width: 70%;
           padding-right: 20px;
           overflow-wrap: break-word;
           white-space: pre-wrap;
+          display: none;
         }
+
         &:before {
           position: absolute;
           top: 0;
@@ -747,11 +819,7 @@ export default defineComponent({
           content: "";
           width: 50%;
           height: 100%;
-          background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.3) 100%
-          );
+          background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
           border-radius: 10px;
           transform: skewX(320deg);
         }
@@ -770,11 +838,13 @@ export default defineComponent({
     }
   }
 }
+
 .addbuttons {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
   flex-wrap: wrap;
+
   .add-bank-card {
     cursor: pointer;
     border: 1px solid #ffffff;
@@ -782,14 +852,17 @@ export default defineComponent({
     padding: 10px;
     display: flex;
     gap: 10px;
+
     svg {
       width: 20px;
       fill: #ffffff;
     }
   }
 }
+
 .basic-info {
   position: relative;
+
   .buttons {
     position: absolute;
     top: 20px;
@@ -798,6 +871,7 @@ export default defineComponent({
     flex-direction: column;
     gap: 10px;
   }
+
   .account-btn {
     cursor: pointer;
     padding: 5px 20px;
@@ -805,21 +879,25 @@ export default defineComponent({
     min-width: 180px;
   }
 }
+
 .basic-info-table {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 70%;
+
   .tbl-row {
     display: flex;
     justify-content: flex-start;
     padding: 0 20px 15px 0px;
   }
+
   .basic-info-cell {
     padding-bottom: 0.5rem;
 
     &.title {
       width: 150px;
     }
+
     // &.content {
     //   // width: 170px;
     //   width: calc(100% - 100px);
@@ -828,25 +906,29 @@ export default defineComponent({
     // }
   }
 }
+
 .unbind-record-wrapper {
   margin-top: 20px;
 }
+
 .left {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
 }
+
 .searchbar .ant-form {
   display: flex;
   justify-content: space-between;
+
   .ant-form-item {
     margin-right: 0;
   }
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .account-container {
     .basic-info-table {
       grid-template-columns: 1fr;
@@ -863,7 +945,8 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 768px) {
+
+@media (max-width: 767px) {
   .bindunbind {
     display: none;
   }
@@ -875,7 +958,8 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 768px) {
+
+@media (max-width: 767px) {
   .account-container {
     .account-content-wrapper {
       .bank-card-list {
@@ -892,8 +976,8 @@ export default defineComponent({
           flex-direction: column;
           align-items: center;
           height: 150px;
-          // background-image: url("../../assets/images/account/bank_card_bg.png");
           transform: none;
+
           .icon {
             left: 5px;
             top: 2px;
@@ -901,6 +985,7 @@ export default defineComponent({
             bottom: unset;
             right: unset;
           }
+
           .unlink-btn {
             right: 10px;
             left: unset;
@@ -908,6 +993,7 @@ export default defineComponent({
             transition-delay: 0.5s;
             transition: all 0.3s ease-in;
           }
+
           .card-num-box {
             width: 100%;
             padding-right: 0;
@@ -915,6 +1001,7 @@ export default defineComponent({
             white-space: nowrap;
             padding: 0 20px;
           }
+
           .txt-center {
             transform: none;
             padding-top: 10px;
@@ -923,20 +1010,26 @@ export default defineComponent({
             bottom: 0;
             text-align: center;
           }
+
           &.active {
             margin: -40% 0 30% 0;
             padding-bottom: 10%;
+
             .txt-center {
               left: 0px;
               padding-top: 5px;
+              text-align: center;
             }
+
             .unlink-btn {
               display: block;
             }
+
             .icon {
               width: 40px;
             }
           }
+
           // &.inactive {
           //   // margin-top: -40%;
           // }

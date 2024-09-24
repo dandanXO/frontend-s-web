@@ -24,11 +24,16 @@
 
 <script setup lang="js"></script>
 <style scoped lang="scss">
+.dark-theme {
+  .sport-container {
+    background: linear-gradient(to bottom, #23263c, #190f25);
+  }
+}
 .sport-container {
   position: relative;
   height: 800px;
   padding-top: 100px;
-  background-image: url("../../assets/images/games/sport/sport_bg.png");
+  background-image: url("../../assets/images/games/sport/centerbg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   .sport-txt-wrapper {
@@ -47,20 +52,13 @@
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .sport-container {
     padding-bottom: 60px;
     background-attachment: fixed;
-    background-size: unset;
-    height: calc(100vh - 100px);
+    min-height: calc(100% - 100px);
+    height: 100%;
     padding-top: 0;
-    // height: 100%;
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // width: 100%;
-    // z-index: -1;
-    // padding-top: 140px;
     background-size: unset;
     .sport-txt-wrapper {
       display: none;

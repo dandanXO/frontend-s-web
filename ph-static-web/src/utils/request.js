@@ -14,7 +14,9 @@ const onRequest = (config) => {
   if (store.token) {
     config.headers["TOKEN"] = store.token;
   }
-  config.headers["Authorization"] = process.env.VUE_APP_SITE;
+
+  if (!config.headers?.Authorization) config.headers["Authorization"] = process.env.VUE_APP_SITE;
+
   if (config.data) {
     config.data = stringify(config.data);
   }
@@ -46,6 +48,9 @@ const onResponse = (response) => {
   if (res.code !== ResponseCode.SUCCESS) {
     if (res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
       return response;
+    }
+    if (res.code === ResponseCode.INFO_MESSAGE) {
+      return response.data;
     }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       location.reload();
@@ -96,6 +101,7 @@ export const server = new Proxy(
       if (!instance) {
         instance = initHttp();
       }
+
       if (propKey === "REST") {
         instance.defaults.baseURL = rstArray[getRndInteger(0, rstArray.length)];
       } else if (propKey === "EVENT") {

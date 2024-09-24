@@ -1,15 +1,34 @@
 <template>
   <div class="menu-title-container">
-    <span class="menu-title">Bank Infomation</span>
+    <span class="menu-title">Bank Information</span>
   </div>
   <div v-if="submitMessage" class="submit-message">
-    <div class="line"><span class="bankname">{{ submitMessage[0] }}</span></div>
-    <div class="line" @click="copyCode(copyText1)"><span>Bank Account Number </span><span ref="copyText1">{{ submitMessage[1] }}<RiFileCopyLine /></span></div>
-    <div class="line" @click="copyCode(copyText2)"><span>Bank Card Number </span><span ref="copyText2">{{ submitMessage[2] }}<RiFileCopyLine /></span></div>
-    <div class="line depositt"><span>Deposit Amount </span><span>{{ submitMessage[3] }}</span></div>
+    <div class="line">
+      <span class="bankname">
+        {{ bankName }}
+      </span>
+    </div>
+    <div class="line" @click="copyCode(copyText1)">
+      <span>Bank Account Number</span>
+      <span ref="copyText1">
+        {{ submitMessage[1] }}
+        <RiFileCopyLine style="fill: #000" />
+      </span>
+    </div>
+    <div class="line" @click="copyCode(copyText2)">
+      <span>Bank Card Number</span>
+      <span ref="copyText2">
+        {{ submitMessage[2] }}
+        <RiFileCopyLine style="fill: #000" />
+      </span>
+    </div>
+    <div class="line depositt">
+      <span>Deposit Amount</span>
+      <span>{{ submitMessage[3] }}</span>
+    </div>
   </div>
   <div v-else id="renderArea">
-    <form ref="formRef" method="post" style="display: none"></form>
+    <form ref="formRef" method="post" style="display: none" />
   </div>
 </template>
 
@@ -22,16 +41,17 @@ import { RiFileCopyLine } from "vue-remix-icons";
 const request = ref({});
 const formRef = ref();
 const submitMessage = ref([]);
+const bankName = ref("");
 const copyText1 = ref(null);
 const copyText2 = ref(null);
 
 function copyCode(copyText) {
-  let range = document.createRange()
-  range.selectNodeContents(copyText)
-  window.getSelection().removeAllRanges()
-  window.getSelection().addRange(range)
-  document.execCommand("copy")
-};
+  let range = document.createRange();
+  range.selectNodeContents(copyText);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  document.execCommand("copy");
+}
 function getRequest(url) {
   if (isEmpty(url)) {
     url = window.location.search;
@@ -64,7 +84,8 @@ function renderOrSubmit() {
 }
 
 function renderHtml() {
-  submitMessage.value = request.value.data.split(',');
+  submitMessage.value = request.value.data.split(",");
+  bankName.value = submitMessage.value[0].replace(/\+/g, ' ');
 }
 
 function postSubmit() {
@@ -102,10 +123,10 @@ onMounted(async () => {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  color:#ffffff;
+
   box-shadow: 2px 2px 10px 1px #000000;
   border-radius: 20px;
-  background-image: linear-gradient(to right, #de4545, #db7e42);
+  background-image: $primary-linear-background;
   padding: 30px;
   .bankname {
     font-weight: bold;

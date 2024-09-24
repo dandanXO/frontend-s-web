@@ -37,22 +37,26 @@ onMounted(() => {
   if (store.token) {
     const isMobile = Platform.is.mobile;
     if (isMobile) {
-      var way = null
+      var way = null;
       if (Platform.is.android) {
-        way = "ANDROID"
+        way = "ANDROID";
       } else if (Platform.is.ios) {
-        way="IOS"
+        way = "IOS";
       }
     }
-    // launchSessionGame("TFGaming").then((ret) => {
-    //   src.value = ret.data;
+    // launchSessionGame("TFGaming").then((res) => {
+    //   src.value = res.data;
     // });
     api
       .get(`/session/launch?_time=${new Date().getTime()}`, {
-        params: { platform: "TFGaming", gameCode: null, isMobile: isMobile, way: way }
+        params: {
+          platform: "TFGaming",
+          gameCode: null,
+          isMobile: isMobile,
+          way: way
+        }
       })
-      .then((ret) => {
-        const res = ret.data;
+      .then((res) => {
         if (res.code === 0) {
           src.value = res.data;
         } else {
@@ -68,16 +72,20 @@ onMounted(() => {
   } else {
     api
       .get(`/session/launch`, {
-        params: { platform: "TFGaming", gameCode: null, isMobile: isMobile, way: way }
+        params: {
+          platform: "TFGaming",
+          gameCode: null,
+          isMobile: isMobile,
+          way: way
+        }
       })
-      .then((ret) => {
-        const res = ret.data;
+      .then((res) => {
         src.value = res.data;
       });
   }
   //  else {
-  //   launchGame("TFGaming").then((ret) => {
-  //     src.value = ret.data;
+  //   launchGame("TFGaming").then((res) => {
+  //     src.value = res.data;
   //   });
   // }
 });
@@ -85,7 +93,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .esport-container {
-  // background-image: url("../../assets/images/index/index_bg.png");
   // background-size: cover;
   // background-repeat: no-repeat;
   background: linear-gradient(to bottom, #23263c, #190f25);

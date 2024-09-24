@@ -1,30 +1,23 @@
 <template>
   <div class="login-container">
     <div class="margin-center login-form-wrapper">
-      <div class="game-title">
-        <span class="menu-title">LOGIN</span>
-      </div>
+      <div class="logo"><img src="../assets/logo.png" /></div>
       <a-form ref="formRef" :model="loginForm" :rules="rules">
         <a-form-item ref="loginName" required name="loginName">
           <a-input v-model:value="loginForm.loginName" placeholder="Login name">
             <template #prefix>
-              <UserOutlined />
+              <RiUserFill />
             </template>
           </a-input>
         </a-form-item>
         <a-form-item ref="password" required name="password">
-          <a-input
-            type="password"
-            v-model:value="loginForm.password"
-            placeholder="Password"
-            @keypress.enter="onSubmit"
-          >
+          <a-input v-model:value="loginForm.password" type="password" placeholder="Password" @keypress.enter="onSubmit">
             <template #prefix>
-              <LockOutlined />
+              <RiLock2Fill />
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item ref="captchaCode" required name="captchaCode">
+        <!-- <a-form-item ref="captchaCode" required name="captchaCode">
           <a-input
             v-model:value="loginForm.captchaCode"
             :maxlength="4"
@@ -32,32 +25,27 @@
             @keypress.enter="onSubmit"
           >
             <template #prefix>
-              <SafetyCertificateOutlined />
+              <RiShieldCheckFill />
             </template>
           </a-input>
           <div class="verification" @click="getCode()">
             <img :src="verificationImg" />
           </div>
-        </a-form-item>
+        </a-form-item> -->
         <div class="bottomrow">
-          <div class="txt-left">
-            <router-link class="pwd-tip" to="/forgot-password">
-              Forgot password ?
-            </router-link>
+          <div class="txt-right" style="width: 100%; margin-bottom: 5px">
+            <router-link class="pwd-tip" to="/forgot-password">Forgot password ?</router-link>
           </div>
-          <a-button class="common-btn" :loading="loadingLogin" @click="onSubmit"
-            >Login Now</a-button
-          >
+          <a-button class="common-btn" :loading="loadingLogin" @click="onSubmit">Login Now</a-button>
 
           <!-- <button class="common-btn">
-            
+
           </button> -->
         </div>
       </a-form>
       <div class="txt-center">
-        <router-link class="forget-pwd-tip" to="/register">
-          Not on Jolly88 yet? Register Now
-        </router-link>
+        Not on Play4Win yet?
+        <router-link class="forget-pwd-tip" to="/register">Register Now</router-link>
       </div>
     </div>
   </div>
@@ -69,17 +57,17 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode } from "@/api/index/login";
 // import { message } from "ant-design-vue";
-import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from "@ant-design/icons-vue";
+import { RiUserFill, RiLock2Fill, RiShieldCheckFill } from "vue-remix-icons";
+
 import "@/assets/css/login.scss";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export default defineComponent({
   components: {
-    UserOutlined,
-    LockOutlined,
-    SafetyCertificateOutlined
+    RiUserFill, RiLock2Fill, RiShieldCheckFill
   },
   setup() {
+    const isSpinWheel = ref(true);
     const store = userStore();
     const router = useRouter();
     const route = useRoute();
@@ -87,12 +75,12 @@ export default defineComponent({
     const loginForm = reactive({
       loginName: "",
       password: "",
-      captchaCode: "",
-      codeId: ""
+      // captchaCode: "",
+      // codeId: ""
     });
     const verificationImg = ref("");
     onMounted(() => {
-      getCode();
+      // getCode();
     });
     const getCode = () => {
       loginForm.captchaCode = ''
@@ -126,19 +114,19 @@ export default defineComponent({
           trigger: "blur"
         }
       ],
-      captchaCode: [
-        {
-          required: true,
-          message: "Verification code is required",
-          trigger: "blur"
-        },
-        {
-          min: 4,
-          max: 4,
-          message: "Length should be 4",
-          trigger: "change"
-        }
-      ]
+      // captchaCode: [
+      //   {
+      //     required: true,
+      //     message: "Verification code is required",
+      //     trigger: "blur"
+      //   },
+      //   {
+      //     min: 4,
+      //     max: 4,
+      //     message: "Length should be 4",
+      //     trigger: "change"
+      //   }
+      // ]
     };
     const loadingLogin = ref(false)
     const onSubmit = () => {
@@ -159,8 +147,8 @@ export default defineComponent({
             loginName: loginForm.loginName,
             password: loginForm.password,
             sid: sidParam,
-            captchaCode: loginForm.captchaCode,
-            codeId: loginForm.codeId
+            // captchaCode: loginForm.captchaCode,
+            // codeId: loginForm.codeId
           }).then(() => {
             const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
           router.push(jumpUrl);
@@ -168,7 +156,7 @@ export default defineComponent({
           }).catch((error) => {
             console.log(error.message);
             loadingLogin.value = false
-            getCode();
+            // getCode();
           });
         });
       })();
@@ -183,15 +171,26 @@ export default defineComponent({
       onSubmit,
       resetForm,
       verificationImg,
-      getCode,
-      loadingLogin
+      // getCode,
+      loadingLogin,
+      isSpinWheel
     };
   }
 });
 </script>
 <style scoped lang="scss">
+.login-container {
+  .login-form-wrapper {
+    .logo {
+      width: 400px;
+      margin: 0 auto;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
 .login-btn {
-  color: #ffffff;
   background-image: linear-gradient(to right, #de4545, #db7e42);
   border: 0;
   margin: 0;
@@ -199,15 +198,26 @@ export default defineComponent({
 .verification {
   position: absolute;
   right: 20px;
-  bottom: 5px;
+  bottom: 8px;
 }
 .bottomrow {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+  .ant-btn.common-btn {
+    background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+    width: 100%;
+    color: #ffffff;
+  }
 }
 .pwd-tip {
-  color: #db7e42;
+  color: #ff8d4e;
+}
+</style>
+<style>
+.dark-theme .ant-input {
+  color: #ffffff;
 }
 </style>

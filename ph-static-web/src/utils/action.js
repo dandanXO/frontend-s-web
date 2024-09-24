@@ -1,5 +1,3 @@
-import { isEmpty } from "@/utils/utils";
-
 export function doIt(resp) {
   return new Promise((resolve) => {
     switch (resp.data.result.payResultType) {

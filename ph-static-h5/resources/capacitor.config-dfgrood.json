@@ -1,0 +1,7 @@
+{
+  "appId": "com.dfgrood",
+  "appName": "Lotsa - Slots Games",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

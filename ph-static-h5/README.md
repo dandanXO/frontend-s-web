@@ -1,3 +1,5 @@
+Node Version: 16.17.0
+
 # Jolly88 App (ph-project)
 
 APP
@@ -32,7 +34,7 @@ npm run format
 
 
 
-### Build the app for production
+### Build the app for production(nodejs version>=16.17.0)
 ```bash
 quasar build
 ```
