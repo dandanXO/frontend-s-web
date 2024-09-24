@@ -1255,7 +1255,7 @@ function constructRollover() {
   if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
     json.rollover = uiControl.rollOverAmt
   }
-  // form.rollover = uiControl.rollOverAmt
+  form.rollover = uiControl.rollOverAmt
   return JSON.stringify(json)
 }
 
