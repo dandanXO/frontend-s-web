@@ -37,7 +37,7 @@ const openPopup = () => {
 const getRecords = () => {
   getNationalDayRecords().then((res) => {
     appliedRecordsModalVisible.value = true;
-    appliedRecords.value = res.data.records;
+    appliedRecords.value = res.data;
   });
 };
 
