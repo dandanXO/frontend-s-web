@@ -1,11 +1,6 @@
 <template>
-  <q-scroll-area
-    ><q-dialog
-      v-model="visible"
-      class="gameDialog"
-      full-height
-      full-width
-    >
+  <q-scroll-area>
+    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
       <!-- <q-toolbar>
       <q-avatar>
         <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
@@ -17,57 +12,41 @@
 
       <q-btn flat round dense icon="close" v-close-popup />
     </q-toolbar> -->
-      <q-toolbar
-        >
+      <q-toolbar>
         <div class="topActions">
-        <q-toolbar-title></q-toolbar-title>
-        <q-btn
-          v-if="!drawerVisible"
-          flat
-          @click="closeDialog()"
-          round
-          dense
-          icon="close"
-        />
-        <q-btn
-          v-if="!drawerVisible"
-          flat
-          @click="drawerVisible = !drawerVisible"
-          round
-          dense
-          icon="menu_open"
-        />
-        <q-btn
-          v-if="drawerVisible"
-          flat
-          @click="drawerVisible = !drawerVisible"
-          round
-          dense
-          icon="read_more"
-        />
+          <q-toolbar-title></q-toolbar-title>
+          <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
+          <!-- <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" /> -->
+          <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />
         </div>
+        <template v-if="isInnerHtmlSrc === false">
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            :src="src"
+            id="game-iframe"
+            scrolling="no"
+            frameborder="0"
+            class="game-iframe"
+          ></iframe>
+        </template>
+        <template v-else>
+          <iframe
+            @load="loadGame()"
+            v-show="!logoShow"
+            v-bind:srcdoc="src"
+            id="game-iframe"
+            frameborder="0"
+            scrolling="no"
+            class="game-iframe"
+          ></iframe>
+        </template>
 
-      <iframe
-        @load="loadGame()"
-        v-show="!logoShow"
-        :src="src"
-        id="game-iframe"
-        scrolling="no"
-        frameborder="0"
-        class="game-iframe"
-      ></iframe>
-      <q-drawer
-        v-model="drawerVisible"
-        :breakpoint="500"
-        overlay
-        bordered
-        class="bg-primary"
-        side="right"
-      >
-        <div class="q-pa-sm q-pt-sm">
-          <div>
-            <!-- Uncomment for quick Transfer -->
-            <!-- <q-btn-group push>
+        <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered side="right" style="background: #a2d2ff">
+          <div class="q-pa-sm q-pt-sm">
+            <div>
+              <!-- Uncomment for quick Transfer -->
+              <!-- <q-btn-group push>
               <q-btn
                 size="sm"
                 :color="quickTransferTab ? 'white' : 'primary'"
@@ -91,7 +70,7 @@
               />
             </q-btn-group> -->
 
-            <!-- <template v-if="quickTransferTab">
+              <!-- <template v-if="quickTransferTab">
               <div class="numbers">
                 <div class="instruction">Transfer amount to platform</div>
 
@@ -108,23 +87,19 @@
                 </q-btn>
               </div>
             </template> -->
-            <template v-if="!quickTransferTab">
-              <div>
-                <span class="menu-title">Quick deposit</span>
-              </div>
-              <DepositComponent />
-            </template>
+              <template v-if="!quickTransferTab">
+                <div>
+                  <span class="menu-title">Quick deposit</span>
+                </div>
+                <DepositComponent />
+              </template>
+            </div>
           </div>
-        </div>
-      </q-drawer>
+        </q-drawer>
       </q-toolbar>
     </q-dialog>
-    <q-dialog
-      v-model="visibleComingSoon"
-      class="gameDialog"
-      style="width: 100%; margin: 0 auto"
-    >
-      <img src="../../assets/logo-coming.png" style="width: 80%;" />
+    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
+      <img src="../../assets/logo-coming.png" style="width: 80%" />
     </q-dialog>
   </q-scroll-area>
 </template>
@@ -141,6 +116,7 @@ import DepositComponent from "components/depositComponent.vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen } from "quasar";
+import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();
 
@@ -202,6 +178,7 @@ const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
 
+const isInnerHtmlSrc = ref(false);
 const transferInfo = ref({
   amount: null,
   platform: null
@@ -229,25 +206,33 @@ const submitTransfer = (amount) => {
       }
     })
     .catch((error) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: error.message,
-          //   icon: "report_problem"
-          // });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: error.message,
+      //   icon: "report_problem"
+      // });
     });
 };
 const closeDialog = () => {
-  visible.value = !visible.value
-  src.value = ""
-  AppFullscreen.exit()
-}
+  visible.value = !visible.value;
+  src.value = "";
+  if (isAndroid()) {
+    AppFullscreen.exit();
+    screen.orientation.lock("portrait");
+  }
+};
 const open = (gameName, platformCode, gameCode, gameType) => {
   //
-  AppFullscreen.request()
+  if (isAndroid()) {
+    AppFullscreen.request();
+    screen.orientation.unlock();
+  }
 
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
+
+  isInnerHtmlSrc.value = false;
   // window.addEventListener(
   //   "message",
   //   (event) => {
@@ -263,11 +248,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //     var gameIfrm = document.getElementById('game-iframe');
   //     gameIfrm.requestFullscreen();
   // // const iframeRef = ref(null);
-  // var myScreenOrientation = window.screen.orientation;
-  // console.log(myScreenOrientation)
-  // myScreenOrientation.unlock()
-  // myScreenOrientation.lock("portrait");
-  // console.log(myScreenOrientation)
+
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
   // wipeRight: function() { alert("right"); },
@@ -280,27 +261,40 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //   platform: platformCode
   // };
 
-// Get the iframe
-const iFrame = document.getElementById('game-iframe');
+  // Get the iframe
+  const iFrame = document.getElementById("game-iframe");
 
-// Let's say that you want to access a button with the ID `'myButton'`,
-// you can access via the followi ng code:
-// const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-// buttonInIFrame.style.visible = visible;
-//   console.log(iframe)
+  // Let's say that you want to access a button with the ID `'myButton'`,
+  // you can access via the followi ng code:
+  // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
+  // buttonInIFrame.style.visible = visible;
+  //   console.log(iframe)
   title.value = gameName;
   const store = userStore();
-   if (store.memberType !== "TEST" && gameType === "TEST") {
+  if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
-      var way = null
-        if (Platform.is.android) {
-          way = "ANDROID"
-        } else if (Platform.is.ios) {
-          way="IOS"
+      if (platformCode !== "RICH88" && platformCode !== "KM" && platformCode !== "UG") {
+        visible.value = true;
+      }
+
+      var way = null;
+      if ("standalone" in window.navigator && window.navigator.standalone) {
+        way = "IOS";
+      } else {
+        way = Platform.is.mobile ? "H5" : "WEB";
+        if (Platform.is.capacitor) {
+          if (Platform.is.android) {
+            way = "ANDROID";
+          }
         }
+      }
+
+      if (gameName === "esports") {
+        src.value = platformCode;
+        return;
+      }
       api
         .get(`/session/launch?_time=${new Date().getTime()}`, {
           params: {
@@ -310,9 +304,40 @@ const iFrame = document.getElementById('game-iframe');
             way: way
           }
         })
-        .then((ret) => {
-          const res = ret.data;
-          src.value = res.data;
+        .then((res) => {
+          let srcDoc = res.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            if (platformCode === "UG") {
+              if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
+                const newWin = window.open(`/`, `_self`);
+                newWin.location.href = srcDoc;
+                return;
+              }
+              window.open(srcDoc, "_blank");
+              return;
+            }
+            // debugger;
+            if (platformCode === "RICH88" || platformCode === "KM") {
+              if (way == "ANDROID") {
+                var ref = cordova.InAppBrowser.open(srcDoc, "_blank", "location=no,zoom=no");
+              } else {
+                window.location.href = srcDoc;
+              }
+            } else {
+              src.value = srcDoc;
+            }
+          } else {
+            isInnerHtmlSrc.value = true;
+
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replace(/\\\"/g, '"')
+              .replace(/\n/g, "");
+
+            src.value = srcDoc;
+          }
         });
     } else {
       router.push({ path: "/login", query: { redirect: route.path } });
@@ -339,11 +364,13 @@ defineExpose({
 </script>
 <style lang="scss">
 .gameDialog {
-  background: #23263cbc;
+  background: $primary-light;
 }
-#iphone-tips-close-button{
+
+#iphone-tips-close-button {
   visibility: visible !important;
 }
+
 // .q-dialog__backdrop {
 //   position: relative;
 //   display: none;
@@ -406,24 +433,21 @@ defineExpose({
   padding: 10px;
   font-size: 10px;
   text-align: center;
+
   .amt-numbers {
     margin: 5px -10px;
   }
+
   .num {
     font-size: 12px;
-    // background-image: linear-gradient(to right, #de4545, #db7e42);
-    // padding: 10px 0;
-    // text-align: center;
-    // border-radius: 0 10px 10px 0;
-    // cursor: pointer;
 
-    // background-image: linear-gradient(to right, #b845de, #4299db);
     text-align: center;
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 0px 0px 10px 0 #000;
     padding: 10px 5px;
     position: relative;
+
     &:before,
     &:after {
       position: absolute;
@@ -436,83 +460,78 @@ defineExpose({
       transition: all ease-in-out 0.5s;
       background-repeat: no-repeat;
     }
+
     &:before {
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,
-        15% 15%, 10% 10%, 18% 18%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
+
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-        20% 20%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
+
     &.animate {
       transform: translateZ(45deg);
     }
+
     &.animate:before {
       content: "";
       display: block;
       animation: topBubbles ease-in-out 0.75s forwards;
       z-index: 0;
     }
+
     &.animate:after {
       content: "";
       display: block;
       animation: bottomBubbles ease-in-out 0.75s forwards;
       z-index: 100;
     }
+
     @keyframes topBubbles {
       0% {
-        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
-          40% 90%, 55% 90%, 70% 90%;
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
       }
       50% {
-        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
-          50% 50%, 65% 20%, 90% 30%;
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
       }
       100% {
-        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
-          50% 40%, 65% 10%, 90% 20%;
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
-        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
-          70% -10%, 70% 0%;
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
       }
       50% {
-        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%,
-          95% 60%, 105% 0%;
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
       }
       100% {
-        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%,
-          95% 70%, 110% 10%;
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
   }
 }
+
 .drawer-btn {
   display: none;
 }
+
 .additional-buttons {
   position: absolute;
   right: -60px;
@@ -522,6 +541,7 @@ defineExpose({
   flex-direction: column;
   justify-content: space-between;
   background: #2b2b4b;
+
   .bottom-button {
     display: block;
     transform-origin: left top;
@@ -540,8 +560,10 @@ defineExpose({
     border-radius: 10px;
   }
 }
+
 :deep(.ant-drawer-content) {
   background: #1c1d32;
+
   .account-tip-text {
     svg {
       width: 15px;
@@ -551,50 +573,71 @@ defineExpose({
     }
   }
 }
+
 :deep(.ant-drawer-header) {
   background: #2b2b4b;
 }
+
 :deep(.ant-drawer-title) {
   color: #ffffff;
 }
+
 .account-tip {
   color: #ffffff;
 }
+
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   position: relative;
   background-color: #23263c;
   border: 0;
   color: #ffffff;
 }
-:deep(.ant-form-vertical
-    .ant-form-item-label
-    > label, .ant-col-24.ant-form-item-label
-    > label, .ant-col-xl-24.ant-form-item-label > label) {
+
+:deep(
+    .ant-form-vertical .ant-form-item-label > label,
+    .ant-col-24.ant-form-item-label > label,
+    .ant-col-xl-24.ant-form-item-label > label
+  ) {
   color: #ffffff;
 }
+
 :deep(.ant-drawer-right.ant-drawer-open) {
   width: calc(100% + 60px);
   margin-right: -60px;
 }
-  .q-toolbar {
-    height: 100vh;
-    max-height: unset !important;
-    max-width: unset !important;
+
+.q-toolbar {
+  height: 100vh;
+  max-height: unset !important;
+  max-width: unset !important;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 0;
+
+  .topActions {
     display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 0;
-    .topActions {
-      display: flex;
+    // background: $primary-light;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(242, 242, 242, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%);
 
     justify-content: flex-end;
     width: 100%;
+  }
+}
+
+.body--dark {
+  .q-toolbar {
+    .topActions {
+      background: linear-gradient(168.03deg, rgba(0, 31, 140, 0.77) -25.44%, rgba(5, 12, 24, 0.77) 99.56%);
     }
   }
-  .game-iframe {
-    width: 100%;
-    height: calc(100% - 35px);
-  }
+}
+
+.game-iframe {
+  width: 100%;
+  height: calc(100% - 35px);
+}
+
 // .game-iframe {
 //     width: 100%;
 //     height: 100%;
@@ -610,6 +653,7 @@ defineExpose({
 .mobileshow {
   display: none;
 }
+
 @media (max-width: 768px) {
   :deep(.ant-drawer-right.ant-drawer-open) {
     margin-right: 0;
@@ -621,6 +665,7 @@ defineExpose({
   // }
   .mobileshow {
     display: block;
+
     .numbers {
       // display: grid;
       // grid-template-areas: 1fr 1fr, 1fr 1fr, 2fr;
@@ -632,9 +677,11 @@ defineExpose({
       padding: 20px;
       border-radius: 20px;
       justify-content: center;
+
       .instruction {
         font-size: 14px;
       }
+
       .num {
         width: 100%;
       }
@@ -651,6 +698,7 @@ defineExpose({
     overflow: hidden;
     margin: 50px auto 30px;
     border: 1px solid #ffffff;
+
     .common-btn {
       flex: 1;
       border: 0;
@@ -658,9 +706,11 @@ defineExpose({
       border-radius: 0;
       font-size: 12px;
       text-align: center;
+
       &:hover {
         box-shadow: none;
       }
+
       &.active {
         background: #ffffff;
         color: #000000;
@@ -681,10 +731,12 @@ defineExpose({
     justify-content: center;
     align-items: center;
     padding: 0px 15px;
+
     svg {
       width: 20px;
       fill: white;
     }
+
     &.active {
       // right: 0;
       // left: unset;
@@ -707,6 +759,7 @@ defineExpose({
     right: 0px;
   }
 }
+
 .game-iframe {
   position: fixed;
   width: 100vw;
@@ -714,27 +767,11 @@ defineExpose({
   top: 35px;
 }
 
-.q-toolbar .topActions{
+.q-toolbar .topActions {
   position: fixed;
-  width:100vw;
-  right:0px;
-  left:0px;
+  width: 100vw;
+  right: 0px;
+  left: 0px;
   z-index: 999;
 }
-// @media (orientation: portrait) {
-//   .game-iframe {
-//     top: 0;
-//       height: calc(100vh - 45px - env(safe-area-inset-top, 40px) - env(safe-area-inset-bottom, 59px) );
-//       // padding-bottom: env(safe-area-inset-bottom, 40px);
-//       padding-bottom: 45px;
-
-//   }
-// }
-// @media (orientation: landscape) {
-//   .game-iframe {
-//     top: 0;
-//       height: calc(100vh - env(safe-area-inset-left, 0) - env(safe-area-inset-right, 0) );
-//       // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
-//   }
-// }
 </style>

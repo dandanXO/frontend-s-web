@@ -9,7 +9,8 @@
         <div class="main">Main Account</div>
         <div class="balance">
           <div class="balance-wrapper">
-            <span class="currency">{{ store.currency }}</span> {{ mainWallet.toFixed(2) }}
+            <span class="currency">{{ store.currency }}</span>
+            {{ mainWallet.toFixed(2) }}
           </div>
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <RiRestartLine />
@@ -38,7 +39,8 @@
                 </div>
                 <div class="balance-wrapper" @click="showCard(p, index)">
                   <div class="grey">Balance</div>
-                  {{ p.amount }}<span class="currency">RM</span>
+                  {{ p.amount }}
+                  <span class="currency">RM</span>
                 </div>
                 <div class="balance-refresh" @click="refreshBalance(p.code)">
                   <RiRestartLine />
@@ -46,10 +48,7 @@
               </div>
             </div>
 
-            <div
-              v-if="index === isCardActive"
-              class="flex-box flex-wrap transfer-action-box"
-            >
+            <div v-if="index === isCardActive" class="flex-box flex-wrap transfer-action-box">
               <a-form
                 ref="formRef"
                 :hideRequiredMark="true"
@@ -59,10 +58,7 @@
                 type="vertical"
               >
                 <a-form-item ref="amount" name="amount" style="margin: 0">
-                  <a-input
-                    v-model:value="transferInfo.amount"
-                    placeholder="Amount"
-                  />
+                  <a-input v-model:value="transferInfo.amount" placeholder="Amount" />
                 </a-form-item>
               </a-form>
               <button class="transfer-btn" @click="submitTransfer(0, p.code)">
@@ -81,10 +77,11 @@
 
 <script lang="js">
 import { defineComponent, ref, reactive, computed, onMounted } from "vue";
-import { loadBalance } from "@/api/personal/personal";
-import { transfer, getPlatforms } from "@/api/personal/transfer";
+import { loadBalance } from "src/api/personal/personal";
+import { transfer } from "src/api/personal/transfer";
+import { getPlatformList } from "src/api/platform/platform";
 import { message } from "ant-design-vue";
-import { MAIN } from "@/utils/utils";
+import { MAIN } from "src/boot/utils";
 import { userStore } from "stores/index";
 import { RiSpamLine, RiRestartLine, RiDownload2Line, RiUpload2Line} from "vue-remix-icons";
 
@@ -129,18 +126,18 @@ export default defineComponent({
           if (plaform) {
             plaform.amount = response.data;
           }
-        }).catch((e) => 
+        }).catch((e) =>
           $q.notify({
             color: "negative",
             position: "top",
             message: e.message,
             icon: "report_problem"
-          });
+          })
         );
       }
     };
     const loadPlatform = () => {
-      getPlatforms().then((response) => {
+		getPlatformList().then((response) => {
         response.data.filter(p => p.showTransfer).forEach(p => {
           platforms.push({
             id: p.id,

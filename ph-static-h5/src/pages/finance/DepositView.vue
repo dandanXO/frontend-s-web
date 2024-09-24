@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class="page-header">
-      <!-- <div class="page">วิธีชำระเงิน</div> -->
-    </div>
     <DepositComponent />
   </div>
 </template>

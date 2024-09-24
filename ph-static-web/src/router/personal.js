@@ -95,4 +95,13 @@ export default [
         /* webpackChunkName: "withdraw" */ "../views/finance/WithdrawView.vue"
       ),
   },
+  {
+    path: "security-verification",
+    name: "security-verification",
+    meta: { requiresAuth: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "security-verification" */ "../views/account/SecurityVerificationView.vue"
+      ),
+  },
 ];

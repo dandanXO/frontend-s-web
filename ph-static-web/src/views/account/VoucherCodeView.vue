@@ -33,7 +33,7 @@
       </div>
     </div> -->
       <div class="voucher-table-wrapper">
-        <a-table :columns="columns"></a-table>
+        <a-table :columns="columns" />
       </div>
     </div>
   </div>
@@ -135,7 +135,6 @@ export default defineComponent({
             color: #242e3b;
             background-color: #1bcef1;
             &.read-more {
-              color: #ffffff;
               background-color: #163d5b;
               border: 1px solid #ffffff;
             }
@@ -150,7 +149,7 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .account-container {
     .account-content-wrapper {
       .promo-wrapper {

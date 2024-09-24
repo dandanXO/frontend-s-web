@@ -2,55 +2,23 @@
   <div class="account-menu-container">
     <div class="account-info-wrapper">
       <div class="vip-badge">
-        <img
-          v-if="vip === 'VIP0'"
-          src="../../assets/images/vip/badge/badge-0.png"
-        />
-        <img
-          v-if="vip === 'VIP1'"
-          src="../../assets/images/vip/badge/badge-1.png"
-        />
-        <img
-          v-if="vip === 'VIP2'"
-          src="../../assets/images/vip/badge/badge-2.png"
-        />
-        <img
-          v-if="vip === 'VIP3'"
-          src="../../assets/images/vip/badge/badge-3.png"
-        />
-        <img
-          v-if="vip === 'VIP4'"
-          src="../../assets/images/vip/badge/badge-4.png"
-        />
-        <img
-          v-if="vip === 'VIP5'"
-          src="../../assets/images/vip/badge/badge-5.png"
-        />
-        <img
-          v-if="vip === 'VIP6'"
-          src="../../assets/images/vip/badge/badge-6.png"
-        />
-        <img
-          v-if="vip === 'VIP7'"
-          src="../../assets/images/vip/badge/badge-7.png"
-        />
+        <!-- <img v-if="vip === 'VIP0'" src="../../assets/images/vip/badge/badge.png" /> -->
+        <div class="vip-text">
+          {{ vip }}
+        </div>
       </div>
-      <div class="account-name">{{ loginName }}</div>
+      <div class="account-name">
+        {{ loginName }}
+      </div>
     </div>
     <div class="web-menu" :class="{ 'menu-active': personalMenuVisible }">
       <div class="account-menu-wrapper">
-        <router-link
-          to="/center/top-up"
-          class="flex-box flex-align-center account-menu-item"
-        >
-          <RiWallet3Line />
+        <router-link to="/center/top-up" class="flex-box flex-align-center account-menu-item">
+          <div class="icon icon-deposit"></div>
           Deposit
         </router-link>
-        <router-link
-          to="/center/withdraw"
-          class="flex-box flex-align-center account-menu-item"
-        >
-          <RiBankCardLine />
+        <router-link to="/center/withdraw" class="flex-box flex-align-center account-menu-item">
+          <div class="icon icon-withdraw"></div>
           Quick Withdraw
         </router-link>
         <!-- <router-link
@@ -60,35 +28,24 @@
           <RiExchangeDollarLine />
           Quick Transfer
         </router-link> -->
-        <router-link
-          to="/center/transit-record"
-          class="flex-box flex-align-center account-menu-item"
-        >
-          <RiShieldFlashLine />
-          Transit Record
+        <router-link to="/center/transit-record" class="flex-box flex-align-center account-menu-item">
+          <div class="icon icon-transac"></div>
+          Transaction Record
         </router-link>
       </div>
+      <div class="account-menu-separator"></div>
       <div class="account-menu-wrapper last">
-        <router-link
-          to="/center/personal"
-          class="flex-box flex-align-center account-menu-item"
-        >
-          <RiUser5Line />
-          Personal Infomation
+        <router-link to="/center/personal" class="flex-box flex-align-center account-menu-item">
+          <div class="icon icon-personal"></div>
+          Personal Information
         </router-link>
-        <router-link
-          to="/center/withdrawbank"
-          class="flex-box flex-align-center account-menu-item"
-        >
-          <RiBankLine />
+        <router-link to="/center/withdrawbank" class="flex-box flex-align-center account-menu-item">
+          <div class="icon icon-bank"></div>
           Withdraw Bank Card
         </router-link>
 
-        <router-link
-          to="/center/mailbox"
-          class="flex-box flex-align-center account-menu-item"
-        >
-          <RiMailLine />
+        <router-link to="/center/mailbox" class="flex-box flex-align-center account-menu-item">
+          <div class="icon icon-mail"></div>
           Mailbox
         </router-link>
         <!-- <router-link
@@ -98,11 +55,8 @@
           <RiCoupon3Line />
           Voucher Code
         </router-link> -->
-        <router-link
-          to="/center/share"
-          class="flex-box flex-align-center account-menu-item"
-        >
-          <RiShareBoxLine />
+        <router-link to="/center/share" class="flex-box flex-align-center account-menu-item">
+          <div class="icon icon-share"></div>
           Share
         </router-link>
       </div>
@@ -117,7 +71,7 @@
           class="flex-box flex-align-center account-menu-item"
         >
           <UserOutlined />
-          Personal Infomation
+          Personal Information
         </router-link>
         <router-link
           to="/mailbox"
@@ -145,7 +99,7 @@ import {
   RiShareBoxLine,
   RiFileShieldLine,
   RiMenuLine,
-  RiBankLine,
+  RiBankLine
 } from "vue-remix-icons";
 
 {
@@ -184,17 +138,18 @@ watch(
 
 <style scoped lang="scss">
 .account-menu-container {
-  .web-menu {
-  }
+  background: #ecf5ff;
+  color: #83a3ca;
 
+  min-height: 100%;
   .account-info-wrapper {
     display: flex;
     text-align: center;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
     margin-bottom: 2px;
-    gap: 10px;
+    gap: 20px;
     padding: 30px;
     .vip {
       background: rgba(255, 255, 255, 0.6);
@@ -217,13 +172,35 @@ watch(
     }
 
     .account-name {
-      color: #ffffff;
       font-size: 20px;
-      // flex: 2;
+      color: #000000;
+      font-weight: 500;
     }
     .vip-badge {
-      // flex: 1;
-      width: 100px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      font-family: Arial Black;
+      .vip-text {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 23px;
+        letter-spacing: 0px;
+        text-align: left;
+        background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+
+        /* Set the background size and repeat properties. */
+        background-size: 100%;
+        background-repeat: repeat;
+
+        /* Use the text as a mask for the background. */
+        /* This will show the gradient as a text color rather than element bg. */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+      }
+
       img {
         width: 100%;
       }
@@ -235,39 +212,105 @@ watch(
       align-items: center;
     }
   }
+  .web-menu {
+    padding-bottom: 50px;
+  }
 
   .account-menu-wrapper {
-    padding: 30px 20px;
-    border-bottom: 2px solid #2b2b4b;
-
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
     &.last {
       border: 0;
     }
 
     .account-menu-item {
-      color: #ffffff;
       width: 100%;
       font-size: 16px;
       padding: 10px 20px;
       font-weight: bold;
 
       .remixicon {
-        fill: #ffffff;
+        fill: currentColor;
         width: 30px;
         margin-right: 15px;
       }
+      .icon {
+        width: 25px;
+        height: 25px;
+        background-image: url(../../assets/images/account/accmenuicons.svg);
+        margin-right: 10px;
+        margin-bottom: 5px;
+        background-size: cover;
+        &.icon-deposit {
+          background-position: 0% 0%;
+        }
+        &.icon-withdraw {
+          background-position: 0% 16.5%;
+        }
+        &.icon-transac {
+          background-position: 0% 33%;
+        }
+        &.icon-personal {
+          background-position: 0% 50%;
+        }
+        &.icon-bank {
+          background-position: 0% 66.5%;
+        }
+        &.icon-mail {
+          background-position: 0% 83%;
+        }
+        &.icon-share {
+          background-position: 0% 100%;
+        }
+      }
+
+      &:hover,
+      &.router-link-active {
+        background: linear-gradient(270deg, rgba(7, 91, 232, 0.2) 0%, rgba(7, 91, 232, 0) 100%);
+        color: #2b2b82;
+        &.remixicon {
+          fill: #2b2b82;
+        }
+        .icon {
+          background-image: url(../../assets/images/account/accmenuicons-hover.svg);
+        }
+      }
     }
+  }
+  .account-menu-separator {
+    margin: 30px auto;
+    height: 1px;
+    width: 80%;
+    display: block;
+    background: #83a3ca33;
   }
 
   .mobile-menu {
     display: none;
-    color: #ffffff;
 
     svg {
-      fill: #ffffff;
+      fill: currentColor;
       width: 50px;
       margin-bottom: -5px;
       display: block;
+    }
+  }
+}
+.dark-theme {
+  .account-menu-container {
+    .account-menu-wrapper .account-menu-item {
+      &:hover,
+      &.router-link-active {
+        .icon {
+          filter: brightness(100);
+        }
+      }
+    }
+    .account-info-wrapper {
+      .account-name {
+        color: #ffffff;
+      }
     }
   }
 }
@@ -288,16 +331,6 @@ watch(
 
 .account-menu-container .account-menu-wrapper :deep(.router-link-active) {
   position: relative;
-  &.account-menu-item {
-    color: #ffffff;
-    background: #2b2b4b;
-
-    border-radius: 20px;
-  }
-
-  .remixicon {
-    fill: #ffffff;
-  }
 
   .icon {
     &.default {
@@ -311,7 +344,7 @@ watch(
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .account-menu-container {
     display: flex;
     justify-content: space-between;
@@ -329,7 +362,6 @@ watch(
         left: 0;
         display: block;
         top: 190px;
-        background: #23263c;
         right: 0;
         margin: auto;
       }
@@ -397,7 +429,7 @@ watch(
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .mobile-menu :deep(.anticon) {
     font-size: 28px;
   }
@@ -406,9 +438,6 @@ watch(
   }
   :deep(.ant-dropdown-menu) {
     background-color: #1b232d;
-  }
-  :deep(.ant-dropdown-menu-item-divider, .ant-dropdown-menu-submenu-title-divider) {
-    background-color: #ffffff;
   }
 }
 </style>

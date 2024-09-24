@@ -1,265 +1,64 @@
 <template>
   <div class="hot-promo">
-    <!-- <div
-      v-if="list.id === 32 && store.hasToken()"
-      class="promo-bg common-promo p19"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/19/icon.png"/>
-      <div class="contents">
-        <q-btn :loading="btnLoading" @click="ClaimDailyRebate(32)" label="เงินคืนรายวัน" color="brand"/>
-        <div class="orange">
-          *โบนัสเงินคืนต้องทำ 1 เทิร์นก่อนถอนและจะถูกริบคืนหากไม่ได้ใช้ภายใน 30 วัน
-        </div>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
+    <ClaimPromo
+      v-if="isCommonPromo && store.hasToken()"
+      :promo-id="list.id"
+      :promo-code="list.promoCode"
+      :loading-claim="btnLoading"
+      @daily-slot="handleSlot(list.promoCode)"
+    />
+    <!-- <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" /> -->
+    <!-- <InviteFriendPromo v-if="list.id === 35 && !isCommonPromo" class="promo-invt" /> -->
+    <DailyLoginCashBonusPromo
+      v-if="list.promoCode === 'P4W-VIP-DAILY-CHECKIN-BONUS' && !isCommonPromo"
+      :pageContent="list.pageContent"
+    />
+    <SpinWheelPromo v-if="list.promoCode === 'P4W-ROULETTE-TOTO' && !isCommonPromo" :isModal="false" />
+    <JiliTop50
+      v-if="list.promoCode === 'P4W-TOP-BET' && !isCommonPromo"
+      @claim-slot="handleSlot(list.promoCode)"
+      :pageContent="list.pageContent"
+    />
+
+    <div v-if="list.promoCode === 'P4W-CNY-VIP-RED-PACKET'">
+      <P4WRedPacket @claim-slot="handleSlot(list.promoCode)" />
     </div>
-
-    <div
-      v-if="list.id === 27 && store.hasToken()"
-      class="promo-bg common-promo p-20"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/20/icon.png"/>
-      <div class="contents">
-        โบนัสรายวันจะเข้ากระเป๋าหลักโดยอัตโนมัติหลังการฝากเงินสําเร็จ
-        <q-btn :loading="btnLoading" @click="ClaimDailyRebate(27)" label="เงินคืนรายวัน" color="brand"/>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
+    <div v-if="list.promoCode === 'P4W-DOWNLOAD-BONUS'">
+      <P4WApp @claim-slot="handleSlot(list.promoCode)" :loading-claim="btnLoading" :pageContent="list.pageContent" />
     </div>
-
-    <div
-      v-if="list.id === 23"
-      class="promo-bg common-promo p-23"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/23/icon.png"/>
-      <div class="contents">
-        <q-form :colon="false">
-          <q-input filled label="Net loss bonus" color="white"/>
-          <div class="orange q-ma-md">
-            *If the member does not claim the bonus on the day, it will be
-            deemed to have waived
-          </div>
-
-          <q-btn label="เคลมตอนนี้" color="brand"/>
-        </q-form>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
-    </div>
-
-    <div
-      v-if="list.id === 31  && store.hasToken()"
-      class="promo-bg common-promo p-24"
-      :style="
-        selectedHotPromo.bg
-          ? 'background-image: url(' + selectedHotPromo.bg + ')'
-          : ''
-      "
-    >
-      <img src="../assets/images/promotion/hotpromo/24/icon.png"/>
-      <div class="contents">
-        โบนัสบวกเงินฝากต้องใช้การเดิมพัน 12 รอบก่อนถอน
-        <q-btn :loading="btnLoading" @click="ClaimDailyRebate(31)" label="เคลมตอนนี้" color="brand"/>
-      </div>
-      <div class="extra-img">
-        <img src="../assets/images/promotion/hotpromo/common/extra.png"/>
-      </div>
-    </div> -->
-
-    <div v-if="list.id === 22 && store.hasToken()" class="promo-4">
-      <div class="tabs">
-        <q-card-section>
-          <q-tabs
-            v-model="activeKey"
-            dense
-            class="text-grey"
-            active-color="brand"
-            indicator-color="black"
-            align="justify"
-            narrow-indicator
-          >
-            <q-tab name="1" label="Choose lucky number" />
-            <q-tab name="2" label="Lucky number record" />
-            <q-tab name="3" label="Winner List" />
-          </q-tabs>
-
-          <q-separator/>
-
-          <q-tab-panels v-model="activeKey" animated>
-            <q-tab-panel name="1"
-            >
-              <div class="tab1">
-                <img src="../assets/images/promotion/hotpromo/22/icon.png"/>
-                <div class="contents">
-                  <q-form class="q-gutter-md">
-                    <div class="q-mb-md">
-                      {{ selectedHotPromo.contents.tab1 }}
-                    </div>
-                    <q-input v-model="lucky_number" filled color="white" type="number"
-                             :rules="[
-  (val) => (val && val.length === 3) || 'Maximum 3 numbers'
-]"
-                             label="Lucky Number"/>
-                    <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="Submit"/>
-                  </q-form>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="2">
-              <q-form>
-                <q-input
-                  filled
-                  v-model="formState.dateTime"
-                  label="Date"
-                  readonly
-                  color="white"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date v-model="formState.dateTime" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                  <template v-slot:after>
-                    <q-toggle
-                      style="font-size: 12px"
-                      v-model="formState.onlyMe"
-                      color="red"
-                      label="Only Me"
-                      left-label
-                      size="xs"
-                      val="xs"
-                    />
-                  </template>
-                </q-input>
-                <q-btn @click="filterLuckyNumber()" :loading="loading"
-                       class="full-width q-mt-md"
-                       color="brand"
-                       label="Filter"
-                />
-              </q-form>
-              <q-table title="Lucky number record" no-data-label="No information" loading-label="Loading..."
-                       rows-per-page-label=" " :loading="loading" class="q-mt-md" :columns="filterColumn"
-                       :rows="dataSource">
-              </q-table>
-            </q-tab-panel>
-
-            <q-tab-panel name="3">
-
-              <q-form>
-                <q-input
-                  filled
-                  v-model="formState.resultTime"
-                  label="Date"
-                  readonly
-                  color="white"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date v-model="formState.resultTime" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Close"
-                              color="white"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn @click="filterWinnerLists()" :loading="loading"
-                       class="full-width q-mt-md"
-                       color="brand"
-                       label="Filter"
-                />
-              </q-form>
-
-
-              <q-table class="q-mt-md" no-data-label="There are no prize winners today" loading-label="Loading..." rows-per-page-label=" "
-                       :loading="loading"
-                       :columns="winnerColumn" :rows="winnerDataSource"/>
-            </q-tab-panel>
-          </q-tab-panels>
-        </q-card-section>
-
-      </div>
-    </div>
-    <ClaimPromo v-if="isCommonPromo && store.hasToken()" :promo-id="list.id" :loading-claim="btnLoading" @daily-slot="handleSlot()" />
-    <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
-    <InviteFriendPromo v-if="list.id === 35 && !isCommonPromo" class="promo-invt" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
-
           <span class="claim-amt">{{ claimMsg }}</span>
           <span class="bonus-text">Bonus</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="ตกลง" color="primary" v-close-popup/>
+        <q-btn flat label="ตกลง" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
-
-
 </template>
 
 <script>
-import {defineComponent, onMounted, ref} from "vue";
-import {userStore} from "stores/index";
-import {eventapi} from "boot/axios"
-import {useQuasar} from "quasar";
+import { defineComponent, onMounted, ref } from "vue";
+import { userStore } from "stores/index";
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
 import * as _ from "lodash";
-import moment from "moment"
-import ClaimPromo from "../components/hotpromo/claimPromo.vue"
-import SJBPromo from "../components/hotpromo/40/shiJieBei.vue"
-import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue"
+import moment from "moment";
+import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+// import SJBPromo from "../components/hotpromo/40/shiJieBei.vue";
+// import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
+import SpinWheelPromo from "../components/hotpromo/p4w-roulette-toto/SpinWheel.vue";
+import P4WApp from "../components/hotpromo/p4wApp.vue";
+import P4WRedPacket from "../components/hotpromo/p4wRedPacket.vue";
+import DailyLoginCashBonusPromo from "../components/hotpromo/DAILY-LOGIN-CASH-BONUS/DailyLoginCashBonusPromo.vue";
+import JiliTop50 from "../components/hotpromo/JiliTop50/JiliTop50Page.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -267,8 +66,13 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    SJBPromo,
-    InviteFriendPromo
+    // SJBPromo,
+    // InviteFriendPromo,
+    SpinWheelPromo,
+    P4WApp,
+    P4WRedPacket,
+    DailyLoginCashBonusPromo,
+    JiliTop50
   },
   props: {
     list: {
@@ -282,85 +86,30 @@ export default defineComponent({
     return {
       isCommonPromo: null,
       activeKey: "1",
-      hotPromoList: [
-        // {
-        //   id: 19,
-        //   bg: require("../assets/images/promotion/hotpromo/19/bg.png"),
-        //   contents:
-        //     "*The rebate bonus needs 1 times rollover before withdrawing and will be returned if not used within 30 days."
-        // },
-        // {
-        //   id: 20,
-        //   bg: require("../assets/images/promotion/hotpromo/20/bg.png"),
-        //   contents: "Hello hello"
-        // },
-        // {
-        //   id: 21,
-        //   bg: "",
-        //   contents: "Hello hello"
-        // },
-        // {
-        //   id: 22,
-        //   bg: require("../assets/images/promotion/hotpromo/22/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // },
-        // {
-        //   id: 23,
-        //   bg: require("../assets/images/promotion/hotpromo/23/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // },
-        // {
-        //   id: 24,
-        //   bg: require("../assets/images/promotion/hotpromo/24/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day."
-        //   }
-        // }
-      ],
+      hotPromoList: [],
       selectedHotPromo: {
         id: "",
         bg: "",
         contents: ""
-      },
-    };
-  },
-  methods: {
-    handleSlot() {
-      const bonusItem = this.list.promoCode;
-      const eventUrl = "/bonus/claim/" + bonusItem;
-        this.btnLoading = true;
-        eventapi
-          .put(eventUrl)
-          .then((res) => {
-            this.btnLoading = false;
-            var responseCode = res.data;
-            if (responseCode.code === 0) {
-              var rebatePoint = responseCode.data;
-              this.claimMsg = "$" + rebatePoint;
-              this.isClaimModal = true;
-            } else {
-             this.btnLoading = false
-            }
-          })
-          .catch((error) => {
-            this.btnLoading = false;
-          });
       }
+    };
   },
   mounted() {
     this.hotPromoList.forEach((element) => {
-      if (this.list.id === element.id) {
+      if (this.list.promoCode === element.promoCode) {
         this.selectedHotPromo = element;
       }
     });
-    if (this.list.id === 22 || this.list.id === 40 || this.list.id === 35) {
-      this.isCommonPromo = false
+    if (
+      this.list.promoCode === "P4W-ROULETTE-TOTO" ||
+      this.list.promoCode === "P4W-TOP-BET" ||
+      this.list.promoCode === "P4W-CNY-VIP-RED-PACKET" ||
+      this.list.promoCode === "P4W-DOWNLOAD-BONUS" ||
+      this.list.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS"
+    ) {
+      this.isCommonPromo = false;
     } else {
-      this.isCommonPromo = true
+      this.isCommonPromo = true;
     }
     const store = userStore();
 
@@ -377,31 +126,31 @@ export default defineComponent({
     const store = userStore();
     var qs = require("qs");
 
-    const lucky_number = ref('');
+    const lucky_number = ref("");
     const loading = ref(false);
     const btnLoading = ref(false);
     const isClaimModal = ref(false);
-    const claimMsg = ref('');
+    const claimMsg = ref("");
     const formState = ref({
       dateTime: "",
       onlyMe: false,
       resultTime: ""
-    })
+    });
     const filterColumn = ref([
-      {name: 'number', label: 'Number', field: 'number', align: 'left', sortable: true},
-      {name: 'name', label: 'Name', field: 'loginName', align: 'left', sortable: true},
-      {name: 'status', label: 'Status', field: 'winStatus', align: 'left', sortable: true},
-      {name: 'date', label: 'Date', field: 'date', align: 'left', sortable: true}
+      { name: "number", label: "Number", field: "number", align: "left", sortable: true },
+      { name: "name", label: "Name", field: "loginName", align: "left", sortable: true },
+      { name: "status", label: "Status", field: "winStatus", align: "left", sortable: true },
+      { name: "date", label: "Date", field: "date", align: "left", sortable: true }
     ]);
     const dataSource = ref([]);
     const winnerDataSource = ref([]);
 
     const winnerColumn = [
-      {name: 'number', label: 'Number', field: 'number', align: 'left', sortable: true},
-      {name: 'name', label: 'Name', field: 'loginName', align: 'left', sortable: true},
-      {name: 'status', label: 'Status', field: 'winStatus', align: 'left', sortable: true},
-      {name: 'date', label: 'Date', field: 'date', align: 'left', sortable: true}
-    ]
+      { name: "number", label: "Number", field: "number", align: "left", sortable: true },
+      { name: "name", label: "Name", field: "loginName", align: "left", sortable: true },
+      { name: "status", label: "Status", field: "winStatus", align: "left", sortable: true },
+      { name: "date", label: "Date", field: "date", align: "left", sortable: true }
+    ];
 
     const filterWinnerLists = () => {
       var resultTime = formState.value.resultTime;
@@ -414,48 +163,53 @@ export default defineComponent({
 
       winnerDataSource.value = [];
       loading.value = true;
-      eventapi
-        .get(winnerUrl)
-        .then((res) => {
-          loading.value = false;
-          var data = res.data.data;
+      eventapi.get(winnerUrl).then((res) => {
+        loading.value = false;
+        var data = res.data.data;
 
-          for (let i in data) {
-            _.each(data[i].winners, function (winner, index) {
+        for (let i in data) {
+          _.each(data[i].winners, function (winner, index) {
+            winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
 
-              winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
+            winnerDataSource.value.push(winner);
+          });
+        }
+      });
+    };
 
-              winnerDataSource.value.push(winner);
-            })
-          }
+    const handleSlot = (promoCode) => {
+      if (!store.token) {
+        $q.notify({
+          type: "negative",
+          position: "top",
+          message: `Login to continue.`,
+          icon: "report_problem"
         });
+        return;
+      }
 
-    }
-
-    // const loadLNWinnerList = () => {
-    //   const winnerUrl = "/privi/winners";
-    //   winnerDataSource.value = [];
-    //   loading.value = true;
-    //   eventapi
-    //     .get(winnerUrl)
-    //     .then((res) => {
-    //       loading.value = false;
-    //       var data = res.data.data;
-
-    //       for (let i in data) {
-    //         _.each(data[i].winners, function (winner, index) {
-
-    //           winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-    //           console.log(winner);
-
-    //           winnerDataSource.value.push(winner);
-    //         })
-    //       }
-    //     });
-    // }
+      const bonusItem = promoCode;
+      const eventUrl = "/bonus/claim/" + bonusItem;
+      btnLoading.value = true;
+      eventapi
+        .put(eventUrl)
+        .then((res) => {
+          btnLoading.value = false;
+          var responseCode = res.data;
+          if (responseCode.code === 0) {
+            var rebatePoint = responseCode.data;
+            claimMsg.value = "$" + rebatePoint;
+            isClaimModal.value = true;
+          } else {
+            btnLoading.value = false;
+          }
+        })
+        .catch((error) => {
+          btnLoading.value = false;
+        });
+    };
 
     const filterLuckyNumber = () => {
-
       loading.value = true;
       dataSource.value = [];
 
@@ -470,19 +224,17 @@ export default defineComponent({
       var filterUrl = "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
 
       // console.log(filterDate);
-      eventapi.get(filterUrl)
+      eventapi
+        .get(filterUrl)
         .then((res) => {
           loading.value = false;
           var data = res.data.data;
           _.each(data, function (item, index) {
-
             item.date = moment(item.recordTime).format("DD/MM/YYYY");
             dataSource.value.push(item);
-
           });
 
           console.log(dataSource.value);
-
         })
         .catch((error) => {
           loading.value = false;
@@ -492,26 +244,8 @@ export default defineComponent({
           //   message: error.message,
           //   icon: "report_problem"
           // });
-        })
-
-    }
-    // const ClaimDailyRebate = (id) => {
-    //   if (!store.hasToken()) {
-    //   } else {
-    //     // var user_id = store.id;
-    //     var claim_id = '';
-    //     if (id == 27) {
-    //       claim_id = 'jolly88-daily-rebate';
-    //     } else if (id == 32) {
-    //       claim_id = 'jolly88-daily-slot';
-    //     } else if (id == 31) {
-    //       claim_id = 'jolly88-refund';
-    //     }
-
-    //     // console.log(eventapi);
-        
-    // }
-    // }
+        });
+    };
 
     const submitLuckyNumber = () => {
       console.log(lucky_number.value);
@@ -529,7 +263,7 @@ export default defineComponent({
 
         var postData = {};
         postData.number = submit_number;
-        postData.promoCode = 'jolly88-iphone';
+        postData.promoCode = "jolly88-iphone";
 
         var luckyNumberUrl = "/privi/lotteryNumber";
         btnLoading.value = true;
@@ -546,7 +280,6 @@ export default defineComponent({
                 message: "Number sent successfully",
                 icon: "check_circle_outline"
               });
-
             } else {
               // $q.notify({
               //   color: "negative",
@@ -564,12 +297,9 @@ export default defineComponent({
             //   message: error.message,
             //   icon: "report_problem"
             // });
-          })
-
+          });
       }
-
-
-    }
+    };
 
     return {
       store,
@@ -586,16 +316,14 @@ export default defineComponent({
       loading,
       btnLoading,
       isClaimModal,
-      claimMsg
-    }
-
+      claimMsg,
+      handleSlot
+    };
   }
-
 });
 </script>
 <style lang="scss">
 .hot-promo {
-  border-radius: 10px;
   overflow: hidden;
   position: relative;
 
@@ -609,7 +337,7 @@ export default defineComponent({
     background-size: contain;
     gap: 30px;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
 
     .extra-img {
       position: absolute;
@@ -621,8 +349,8 @@ export default defineComponent({
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 20px;
-      padding: 20px;
+      gap: 10px;
+      padding: 10px;
 
       .orange {
         color: #db7e42;
@@ -777,8 +505,10 @@ export default defineComponent({
     }
   }
 }
-.promo-sjb, .promo-invt {
-  background: #2b2b4b; 
+
+.promo-sjb,
+.promo-invt {
+  background: #2b2b4b;
   padding: 10px;
 }
 
