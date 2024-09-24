@@ -162,6 +162,8 @@ export default boot(({ app, router }) => {
           position: "top",
           message: t("error." + res.code)
           // i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
+          message:
+            i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
         });
       }
       throw new Error(res.message || "Error");
