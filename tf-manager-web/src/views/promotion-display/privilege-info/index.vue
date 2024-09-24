@@ -722,7 +722,7 @@ const formRules = reactive({
   frequency: [required(t('message.validateFrequencyRequired'))],
   startTime: [required(t('message.validateStartTimeRequired'))],
   endTime: [required(t('message.validateEndTimeRequired'))],
-  rollover: [required(t('message.validateRolloverRequired'))],
+  // rollover: [required(t('message.validateRolloverRequired'))],
   minBalance: [required(t('message.validateMinBalanceRequired'))],
   bonusType: [required(t('message.validateBonusTypeRequired'))],
   bonusAmount: [required(t('message.validateBonusAmountRequired'))],
@@ -1195,7 +1195,10 @@ function constructRollover() {
   // } else {
   //   json.rolloverType = 'TOTAL_' + selectedRolloverType.value + '_' + uiControl.selectedGameTypeRolloverType
   // }
-  json.rollover = uiControl.rollOverAmt
+  if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
+    json.rollover = uiControl.rollOverAmt
+  }
+  form.rollover = uiControl.rollOverAmt
   return JSON.stringify(json)
 }
 
