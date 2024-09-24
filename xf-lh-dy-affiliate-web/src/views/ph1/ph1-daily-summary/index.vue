@@ -209,8 +209,13 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index >= 1) {
         var prop = column.property
-        if (index === 1 || index === 2 || index === 4) {
+        if (index === 1 || index === 2) {
           sums[index] = total.data[prop]
+        } else if (index === 4) {
+          const pageRowCount = Number(page.records.reduce((sum, row) => {
+            return sum + Number(row[prop])
+          }, 0))
+          sums[index] = pageRowCount
         } else {
           sums[index] =
             '$' +
