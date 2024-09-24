@@ -271,7 +271,7 @@ export default {
     areYouSureUnbind: "Tem certeza de que deseja desvincular?"
   },
   sideNav: {
-    inviteToEarn: "Invite to Earn",
+    inviteToEarn: "Convidar para Ganhar",
     shareYourExclusiveQRCode: "share your exclusive QR code",
     slots: "Slots",
     livecasino: "Live Casino",
@@ -414,113 +414,116 @@ export default {
     dailyWithdrawalLimits: "Limites diários de retirada com base nos níveis VIP"
   },
   earnMoney: {
-    title: "Bonus Pot Arrived",
+    title: "Bônus Chegou",
     tabs: {
-      reward: "Reward",
-      teamManagement: "Team management",
-      teamBetting: "Team betting",
-      profitAndLoss: "User profit and loss",
-      about: "About",
-      history: "History",
-      daily: "Daily",
-      earn: "Earn"
+      reward: "Recompensa",
+      teamManagement: "Gerenciamento de Equipe",
+      teamBetting: "Aposta em Equipe",
+      profitAndLoss: "Lucro e Perda do Usuário",
+      about: "Sobre",
+      history: "Histórico",
+      daily: "Diário",
+      earn: "Ganhar"
     },
     about: {
-      inviteToEarn: "Invite to Earn",
-      simplyShare: "Simply share your exclusive QR code",
+      inviteToEarn: "Convidar para Ganhar",
+      simplyShare: "Basta compartilhar seu código QR exclusivo",
       benefits_01:
-        "Invite more friends and you will earn more. Every member who joins Skyace Club is both a player and an agent.",
-      benefits_02: "We advocate benefits and bonuses for everyone.",
-      agencyPolicy: "Agency Policy",
-      tableRewardsAssigned: "The table below shows how the rewards are assigned.",
-      point_01: "Active users: daily bet amount 200",
+        "Convide mais amigos e você ganhará mais. Cada membro que se junta ao Skyace Club é tanto jogador quanto agente.",
+      benefits_02: "Defendemos benefícios e bônus para todos.",
+      agencyPolicy: "Política da Agência",
+      tableRewardsAssigned: "A tabela abaixo mostra como as recompensas são atribuídas.",
+      point_01: "Usuários Ativos: valor de aposta diária 2.000",
       point_02:
-        "Your reward will be calculated based on the total bet amount of your members. The reward gained can either be withdrawn or used for further betting.",
-      point_03: "Refer as many friends as you can to gain bigger percentage of rebates.",
-      point_04: "Earn lifetime revenue on your referred players.",
-      faq: "FAQ",
-      faq_01: "1. How to earn commissions?",
+        "Sua recompensa será calculada com base no valor total de aposta de seus membros. A recompensa obtida pode ser retirada ou usada para mais apostas.",
+      point_03: "Indique o máximo de amigos que puder para obter uma porcentagem maior de reembolsos.",
+      point_04: "Ganhe receita vitalícia com seus jogadores indicados.",
+      faq: "Perguntas Frequentes",
+      faq_01: "1. Como ganhar comissões?",
       faq_01_01:
-        "You can earn up to 1.5% of the daily wagers of players you refer. The higher your level, the higher the commission percentage you can earn.",
+        "Você pode ganhar até 1,5% das apostas diárias dos jogadores que você indicar. Quanto maior o seu nível, maior a porcentagem de comissão que você pode ganhar.",
       faq_01_02:
-        "If your affiliate or your affiliate becomes an agent and they are at a lower level than their immediate superior, then you can receive up to 1.2% of the affiliate's wagering rebate amount. The commission rate depends on the level difference between you and your affiliate, the greater the level difference, the more commission you receive.",
-      faq_02: "2. How to invite your friends?",
-      faq_02_01: "Share the game via social media or share the referral link to your friends.",
+        "Se seu afiliado ou o afiliado se tornarem agentes e eles estiverem em um nível inferior ao superior imediato, você pode receber até 1,2% do valor da aposta do afiliado. A taxa de comissão depende da diferença de nível entre você e seu afiliado. Quanto maior a diferença de nível, mais comissão você recebe.",
+      faq_02: "2. Como convidar seus amigos?",
+      faq_02_01: "Compartilhe o jogo via redes sociais ou envie o link de referência para seus amigos.",
       faq_02_02:
-        "Friends must click on your promotion link, download the App, install the game and register to start betting to get commission.",
-      faq_02_03: "Registration must be completed through a referral link.",
-      faq_03: "3. What's the purpose of level?",
-      faq_03_01: "We have divided 13 levels based on the number of recommended users and betting performance.",
+        "Os amigos devem clicar no seu link de promoção, baixar o aplicativo, instalar o jogo e se registrar para começar a apostar e receber a comissão.",
+      faq_02_03: "O registro deve ser feito através de um link de indicação.",
+      faq_03: "3. Qual é o propósito do nível?",
+      faq_03_01: "Dividimos em 13 níveis com base no número de usuários recomendados e no desempenho de apostas.",
       faq_03_02:
-        "Upgrade conditions require that the bet amount and team size meet the requirements at the same time. The higher your level, the higher the commission percentage you will receive from members' bet amounts.",
+        "As condições de atualização exigem que o valor da aposta e o tamanho da equipe atendam aos requisitos ao mesmo tempo. Quanto maior o seu nível, maior a porcentagem de comissão que você receberá com base nos valores das apostas dos membros.",
       faq_03_03:
-        "Level difference: When the immediate superior minus the corresponding direct member level is ≥ 1, there is a level difference, otherwise there is no level difference.",
-      faq_03_04: "The higher your level, the higher the commission percentage you get from level difference bets.",
-      faq_04: "4. How to upgrade your level?",
-      faq_04_01: "The more members you bring to the game and the more they bet, the higher the tiers you can get.",
+        "Diferença de Nível: Quando o superior imediato menos o nível do membro direto correspondente é ≥ 1, há uma diferença de nível, caso contrário, não há diferença de nível.",
+      faq_03_04:
+        "Quanto maior o seu nível, maior a porcentagem de comissão que você ganha com as apostas de diferença de nível.",
+      faq_04: "4. Como atualizar seu nível?",
+      faq_04_01:
+        "Quanto mais membros você trouxer para o jogo e quanto mais eles apostarem, maiores os níveis que você pode alcançar.",
       faq_04_02:
-        "If you have extraordinary channel promotion capabilities, please contact our customer service center for verification.",
-      faq_05: "5. How to turn your friends into members?",
+        "Se você tiver habilidades extraordinárias de promoção de canais, entre em contato com nosso centro de atendimento ao cliente para verificação.",
+      faq_05: "5. Como transformar seus amigos em membros?",
       faq_05_01:
-        "Log in to 55Ace, share your recommendation link with your friends on the recommendation page, guide them to register from the link, and they can become your direct members.",
+        "Faça login no 55Ace, compartilhe seu link de recomendação com seus amigos na página de recomendações e oriente-os a se registrarem no link para se tornarem seus membros diretos.",
       faq_05_02:
-        "Encourage your members to invite their friends to play games, and the friends they invite will become your indirect members.",
+        "Incentive seus membros a convidar seus amigos para jogar, e os amigos que eles convidarem se tornarão seus membros indiretos.",
       faq_05_03:
-        "When friends of your direct members become your indirect members, they can still grow their membership this way. All their sub-members will be considered as your indirect sub-members.",
-      faq_06: "6. How to get commission from your members?",
+        "Quando os amigos dos seus membros diretos se tornarem seus membros indiretos, eles ainda poderão expandir sua base de membros dessa forma. Todos os sub-membros deles serão considerados como seus sub-membros indiretos.",
+      faq_06: "6. Como obter comissão dos seus membros?",
       faq_06_01:
-        "There must be a level difference between you and all your lower-level members, otherwise no level difference commission will be generated.",
+        "Deve haver uma diferença de nível entre você e todos os membros de níveis inferiores, caso contrário, não será gerada uma comissão por diferença de nível.",
       faq_06_02:
-        "The proportion of commission is determined by the difference between your level and the level of your subordinate members.",
-      faq_06_example: "Example",
-      faq_06_table_name: "Name",
-      faq_06_table_level: "Level",
-      faq_06_table_betting: "Betting",
-      faq_06_table_members: "Members",
+        "A proporção da comissão é determinada pela diferença entre o seu nível e o nível dos seus membros subordinados.",
+      faq_06_example: "Exemplo",
+      faq_06_table_name: "Nome",
+      faq_06_table_level: "Nível",
+      faq_06_table_betting: "Apostas",
+      faq_06_table_members: "Membros",
       faq_06_table_you: "You",
-      faq_06_dot_01: "You can't get A's betting rebate.",
-      faq_06_dot_02: "You can get 0.2% commission on B's bet amount",
-      faq_06_dot_03: "You can get 0.7% commission on C's bet amount",
-      table_col_levelDifference: "Level Difference",
-      table_col_rebate: "Rebate (%)",
-      table_col_level: "Level",
-      table_col_betAmount: "Bet Amount ",
-      table_col_activeMember: "Active Member",
-      table_col_rate: "Rate %"
+      faq_06_dot_01: "Você não pode obter o reembolso de apostas de A.",
+      faq_06_dot_02: "Você pode obter 0,2% de comissão sobre o valor apostado de B",
+      faq_06_dot_03: "Você pode obter 0,7% de comissão sobre o valor apostado de C",
+      table_col_levelDifference: "Diferença de nível",
+      table_col_rebate: "Reembolso (%)",
+      table_col_level: "Nível",
+      table_col_betAmount: "Valor da Aposta ",
+      table_col_activeMember: "Membro Ativo",
+      table_col_rate: "Taxa %"
     },
     history: {
-      totalRebates: "Total Rebates",
-      month: "Month",
-      week: "Week",
-      date: "Date",
-      rebateAmount: "Rebate Amount"
+      totalRebates: "Total de Reembolsos",
+      month: "Mês",
+      week: "Semana",
+      date: "Data",
+      rebateAmount: "Valor do Reembolso"
     },
     daily: {
-      myTeamYesterday: "My Team (Yesterday)",
-      member: "Member",
-      betAmount: "Bet Amount",
-      rate: "Rate",
-      yesterdayReportTotal: "Yesterday Report (Total)",
-      level: "Level",
-      myselfBettingAmount: "Myself betting amount",
-      myselfRebate: "Myself rebate",
-      teamBettingamount: "Team betting amount",
-      teamRebate: "Team rebate",
-      totalRebate: "Total rebate",
-      teamDetailsYesterday: "Team details (Yesterday)",
-      income: "Income"
+      myTeamYesterday: "Minha Equipe (Ontem)",
+      member: "Membro",
+      betAmount: "Valor da Aposta",
+      rate: "Taxa",
+      yesterdayReportTotal: "Relatório de Ontem (Total)",
+      level: "Nível",
+      myselfBettingAmount: "Meu valor apostado",
+      myselfRebate: "Meu reembolso",
+      teamBettingamount: "Valor apostado da equipe",
+      teamRebate: "Reembolso da equipe",
+      totalRebate: "Reembolso total",
+      teamDetailsYesterday: "Detalhes da Equipe (Ontem)",
+      income: "Renda"
     },
     earn: {
-      inviteToEarn: "Invite to Earn",
-      point_01_title: "Share your referral link or QR code below",
-      point_01_desc: "Just copy or screenshot and send it to your friends",
-      point_02_title: "Get your friends to start playing",
-      point_02_desc: "You can check your referred friends who registered with your code.",
-      point_03_title: "Start earning daily commissions",
+      inviteToEarn: "Convidar para Ganhar",
+      point_01_title: "Compartilhe seu link de indicação ou código QR abaixo",
+      point_01_desc: "Basta copiar ou fazer uma captura de tela e enviar para seus amigos",
+      point_02_title: "Faça seus amigos começarem a jogar",
+      point_02_desc: "Você pode verificar seus amigos indicados que se registraram com seu código.",
+      point_03_title: "Comece a ganhar comissões diárias",
       point_03_desc:
-        "You will be rewarded, regardless if they win or lose. The more friends you refer to Skyace Club, the bigger your daily reward. Start earning daily commissions",
-      myReferralLink: "My Referral Link",
-      save: "Save"
+        "Você será recompensado, independentemente de eles ganharem ou perderem. Quanto mais amigos você indicar para o Skyace Club, maior será sua recompensa diária. Comece a ganhar comissões diárias",
+      myReferralLink: "Meu Link de Indicação",
+      save: "SALVAR",
+      copiedToClipboard: "copiado para a área de transferência"
     },
     reward: {
       myTotalIncome: "My Total Income",
@@ -597,18 +600,18 @@ export default {
         searchButton: "Search"
       },
       table: {
-        vendor: "Vendor",
-        gameType: "Game Type",
-        betAmount: "Bet Amount",
-        winning: "Winning",
-        validBet: "Valid Bet",
-        balance: "Win/Loss",
-        rounds: "Rounds",
-        player: "Player",
-        platform: "Platform",
-        players: "Players",
-        bet: "Bet",
-        payout: "Payout"
+        vendor: "Fornecedor",
+        gameType: "Tipo de Jogo",
+        betAmount: "Valor da Aposta",
+        winning: "Ganho",
+        validBet: "Aposta Válida",
+        balance: "Ganho/Perda",
+        rounds: "Rodadas",
+        player: "Jogador",
+        platform: "Plataforma",
+        players: "Jogadores",
+        bet: "Aposta",
+        payout: "Pagamento"
       }
     },
     profitAndLoss: {
@@ -669,7 +672,6 @@ export default {
     applying: "Processando",
     waitingAutoPay: "Aguardando pagamento automático",
     failed: "Falhou",
-    success: "Sucesso",
     underReview: "Em Processamento",
     toBePaid: "A Ser Pago",
     paymentOnGoing: "Pagamento em Andamento",
@@ -688,8 +690,8 @@ export default {
     byyesterday: "Por Ontem",
     all: "Todos",
     turnover_requi: "TurnOver Requirement",
-    amount: "Amount",
-    reachTheEnd: "You have reached the end of the page."
+    reachTheEnd: "You have reached the end of the page.",
+    noMember: "Nenhum membro",
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -749,7 +751,22 @@ export default {
   },
   promo_activitiesDetails: {
     activitiesContent:
-      "Quanto mais dias consecutivos você cumprir os requisitos de depósito, mais bônus extra você receberá"
+      "Quanto mais dias consecutivos você cumprir os requisitos de depósito, mais bônus extra você receberá",
+    depositOftheDay: "Depósitos do dia",
+    numberOfDailyWager: "Número de apostas diárias",
+    day: "Dia",
+    free: "Grátis",
+    received: "Recebido",
+    wagerX5: "Aposta x5",
+    deposit: "Depósito",
+    noticeDesc: "Aviso: Esta promoção não conta para apostas no CASINO e SPORTS!",
+    rules_01:
+      "1. Exemplo: No primeiro dia, se você depositar 100BRL, receberá 88BRL após o turnover ser completado. Se não houver depósito no segundo dia, mas houver no terceiro dia, será recalculado como o primeiro dia.",
+    rules_02:
+      "2. O bônus do dia pode ser reivindicado apenas uma vez, por exemplo: cada conta pode reivindicar apenas 88BRL no primeiro dia.",
+    rules_03:
+      "3. Após cumprir o requisito de depósito, você deve jogar em máquinas caça-níqueis para começar a calcular o turnover, e o bônus será concedido após o turnover ser concluído.",
+    rules_04: "4. Depois que os requisitos forem atendidos, o sistema emitirá automaticamente o bônus."
   },
   error: {
     101: "Plataforma não encontrada",

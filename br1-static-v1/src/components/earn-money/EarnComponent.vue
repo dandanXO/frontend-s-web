@@ -40,6 +40,7 @@ import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
 import html2canvas from "html2canvas";
 import { Filesystem, Encoding, Directory } from "@capacitor/filesystem";
+import { t } from "src/boot/lang";
 
 const $q = useQuasar();
 const store = userStore();
@@ -51,7 +52,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} copied to clipboard`,
+        message: `${selfTgurl} ${t("earnMoney.earn.copiedToClipboard")}`,
         icon: "check_circle_outline"
       });
     })

@@ -662,7 +662,6 @@ export default {
     amount: "Amount",
     applying: "Processing",
     failed: "Failed",
-    success: "Success",
     underReview: "Processing",
     toBePaid: "To be paid",
     paymentOnGoing: "Payment on going",
@@ -681,7 +680,6 @@ export default {
     byyesterday: "By Yesterday",
     all: "All",
     turnover_requi: "TurnOver Requirement",
-    amount: "Amount",
     reachTheEnd: "You have reached the end of the page."
   },
   appUpdate: {

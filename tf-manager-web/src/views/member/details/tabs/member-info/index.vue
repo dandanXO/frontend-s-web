@@ -750,12 +750,7 @@
           class-name="member-context"
         >
           <span
-            v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
-          >
-            {{ memberDetail.regIp }}
-          </span>
-          <span
-            v-if="memberDetail.regIp !== null && memberDetail.dupIp !== 'red'"
+            v-if="memberDetail.regIp !== null"
             :style="[
               selectedIpColor.registerIpColor !== null
                 ? {color: selectedIpColor.registerIpColor}
@@ -763,6 +758,9 @@
             ]"
           >
             {{ memberDetail.regIp }}
+            <template v-if="selectedIpRemark.registerIpRemark">
+              ( {{ selectedIpRemark.registerIpRemark }} )
+            </template>
           </span>
           <span v-if="memberDetail.regIp === null">-</span>
         </el-descriptions-item>
@@ -822,6 +820,9 @@
             ]"
           >
             {{ memberDetail.lastLoginIp }}
+            <template v-if="selectedIpRemark.loginIpRemark">
+              ( {{ selectedIpRemark.loginIpRemark }} )
+            </template>
           </span>
           <span v-if="memberDetail.lastLoginIp === null">-</span>
         </el-descriptions-item>
@@ -1783,6 +1784,11 @@ export default defineComponent({
       loginIpColor: null,
     })
 
+    const selectedIpRemark = reactive({
+      registerIpRemark: null,
+      loginIpRemark: null,
+    })
+
     const memberDetail = reactive({
       id: 0,
       loginName: '',
@@ -2047,9 +2053,11 @@ export default defineComponent({
       )
       if (regIpLabel) {
         selectedIpColor.registerIpColor = regIpLabel.color
+        selectedIpRemark.registerIpRemark = regIpLabel.remark
       }
       if (lastLoginIpLabel) {
         selectedIpColor.loginIpColor = lastLoginIpLabel.color
+        selectedIpRemark.loginIpRemark = lastLoginIpLabel.remark
       }
     }
 
@@ -2653,6 +2661,7 @@ export default defineComponent({
       selectedRiskColor,
       selectedFinancialColor,
       selectedIpColor,
+      selectedIpRemark,
       memberDetail,
       affiliateDetail,
       platformWallet,

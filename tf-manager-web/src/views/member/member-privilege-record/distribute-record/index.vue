@@ -507,7 +507,6 @@ const uiControl = reactive({
     { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ANY_TYPES' },
     { key: 2, displayName: t('gameTypeRolloverSetting.specifyTypes'), value: 'SPECIFY_TYPE' },
     { key: 3, displayName: t('gameTypeRolloverSetting.excludeTypes'), value: 'EXCLUDE_TYPES' },
-    { key: 4, displayName: t('gameTypeRolloverSetting.specifyTypesAmount'), value: 'SPECIFY_TYPE_AMOUNT' },
   ],
   gameTypeRollover: [
     { key: 1, displayName: 'SLOT', value: 'slot' },
@@ -771,6 +770,8 @@ async function showMassImport() {
 }
 
 function selectPrivilege(val) {
+  rollover.value = []
+  uiControl.selectedGameTypeRolloverType = null
   privilegeInfoList.list.forEach(privilege => {
     if (privilege.id === val) {
       form.rollover = privilege.rollover;

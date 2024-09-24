@@ -45,7 +45,7 @@ const onRequest = (config) => {
   clearEmptyParam(config);
 
   const host = window.location.hostname;
-  if (host.includes("k4y0sr02") && !host.includes("lh1.k4y0sr02")) {
+  if (host.includes("www.k4y0sr02")) {
     // debugger;
     console.log("k4y0sr0 12");
     // config.withCredentials = true
@@ -91,7 +91,7 @@ const onResponse = (response) => {
     // const siteId = store.state.user.siteId
     if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
       sessionStorage.setItem('myIPAddress', res.data)
-      router.push('/403');
+      window.location.href = '/403';
       return;
     }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {

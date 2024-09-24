@@ -109,7 +109,7 @@
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-title">{{ item.title }}</div>
+            <div class="cat-title">{{ translateTitle(item.icon) }}</div>
           </div>
         </swiper-slide>
       </template>
@@ -2654,7 +2654,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("eb9ab187-5d06-46f1-9405-ef1b3124c5cf");
+  OneSignal.initialize("e79d0180-b889-40a2-9a46-5c7ce9f06ab9");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2685,6 +2685,18 @@ const loadCustomerAddress = () => {
       var url = data.liveUrl1;
       ui.CSAUrl = url;
     });
+};
+
+const translateTitle = (title) => {
+  const translations = {
+    hot: t("home.menu_hot"),
+    lobby: t("home.menu_lobby"),
+    slot: t("home.menu_slot"),
+    casino: t("home.cat_livecasino"),
+    fishing: t("home.menu_fish"),
+    sport: t("home.menu_sport")
+  };
+  return translations[title.toLowerCase()] || title;
 };
 
 const loadAppTabs = () => {
@@ -3964,6 +3976,7 @@ onBeforeUnmount(() => {
     color: #bfc3c9;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
+    white-space: nowrap;
   }
 }
 

@@ -246,3 +246,30 @@ export function claimBlastCoupon(promoCode) {
 export function getBlastCouponInit() {
   return eventapi.get("/session/blastCoupon/init");
 }
+export function getCompetitionToday() {
+  return eventapi.get('/session/competition/today')
+}
+
+export function getCompetitionYesterday(promoCode) {
+  return eventapi.get('/session/competition/yesterday', {
+    params: {
+      promoCode
+    }
+  })
+}
+
+export function claimCompetitionBonus(promoCode) {
+  return eventapi.post('/session/competition/claimBonus', qs.stringify({ promoCode }))
+}
+
+export function getNationalDayRecords() {
+  return eventapi.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return eventapi.post('/session/nationalDay/claimBonus')
+}
+
+export function getNationalDayinit() {
+  return eventapi.get('/session/nationalDay/init')
+}

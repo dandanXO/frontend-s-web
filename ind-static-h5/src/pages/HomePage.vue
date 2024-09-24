@@ -1289,8 +1289,9 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-        .get("/member/hot", {
+      .get("/sitePlatformAndGamesByLabel", {
           params: {
+            gameLabel: "HOT",
             device: regDevice
           }
         })
@@ -1309,7 +1310,7 @@ const loadHotGameList = () => {
       cached
         .get(key, () =>
           api
-            .get("/platformGamesByLabel", {
+            .get("/platformGamesByLabelV1", {
               params: {
                 gameLabel: "HOT",
                 device: regDevice

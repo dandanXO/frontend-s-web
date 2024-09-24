@@ -191,7 +191,7 @@
   </div>
 
   <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
-  <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member" shortenContainer="true"></NoInfoComponent>
+  <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMember')" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
     <div class="section-wrapper q-pt-lg">
       <div class="title-txt">{{ $t("earnMoney.daily.teamDetailsYesterday") }}</div>

@@ -304,19 +304,19 @@ const loadPlatformLists = () => {
         value: ""
       });
 
-      data.forEach(item => {
+      data.forEach((item) => {
         const option = {
           label: getGameName(item.name),
           value: item.code
-        }
+        };
         platformsList.value.push(option);
-      })
+      });
     });
 };
 
 const tableHeaders = [
   {
-    key: "betId",
+    key: "transactionId",
     label: "注单号"
   },
   {

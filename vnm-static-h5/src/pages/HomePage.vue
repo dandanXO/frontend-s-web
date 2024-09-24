@@ -1504,7 +1504,7 @@ export default defineComponent({
     const newsDetail_05 = ref([]);
 
     const goToNewsPage = () => {
-      window.open("http://tf88club.net");
+      window.open(newsDetail_00.value.url);
     };
 
     const gotoPromo = (banner) => {

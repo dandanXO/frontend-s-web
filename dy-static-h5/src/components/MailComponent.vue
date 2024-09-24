@@ -291,6 +291,11 @@ export default defineComponent({
                 item.readTime = currentTime; // Set readTime to current time for messages of the specified type
                 // }
               });
+              truncatedListAll.value.forEach((item) => {
+                // if (item.type === type) {
+                item.readTime = currentTime; // Set readTime to current time for messages of the specified type
+                // }
+              });
 
               allowSelectMultiple.value = false;
               selectedMailIds.value = {};

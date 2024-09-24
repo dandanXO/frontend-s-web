@@ -226,11 +226,15 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
-      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code === ResponseCode.ERROR_PROMO_NOT_STARTED) {
+      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code === ResponseCode.ERROR_PROMO_NOT_STARTED || res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT || res.code === ResponseCode.ERROR_PROMO_CLAIMED) {
         ui.notify({
           type: "error",
           message: res.message
         });
+      }
+      if (res.code === ResponseCode.ERROR_EMPTY_ADS) {
+        console.log(res)
+        return res;
       }
       // if (res.code === 36001 || 36002 || 36003 || 36004 || 36005 || 36006 || 36007 || 36008 || 36009) {
       //   // 龙卡

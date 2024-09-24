@@ -37,14 +37,14 @@ export default defineComponent({
         console.log("SID");
         console.log(visitorId);
 
-        const obj = {
-          identifier: store.visitorId,
-          affiliateCode: affiliateItem
-        };
-        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-          if (res.code === 0) {
-          }
-        });
+        // const obj = {
+        //   identifier: store.visitorId,
+        //   affiliateCode: affiliateItem
+        // };
+        // api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+        //   if (res.code === 0) {
+        //   }
+        // });
       })();
     };
 
