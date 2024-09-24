@@ -203,7 +203,6 @@ export default defineComponent({
         } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
           prevPage.value = "/";
           hasPage.value = false;
-          pageName.value = "Earn Money";
           pageName.value = t("header.earnMoney");
         } else if (route.path === "/language") {
           prevPage.value = "/";
