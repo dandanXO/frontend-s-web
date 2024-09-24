@@ -23,6 +23,21 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="changeSiteSearch"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -90,8 +105,23 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.title')" prop="title">
-          <el-input v-model="form.title" style="width: 350px;" maxlength="50" />
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            @change="changeSite"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.type')" prop="type">
           <el-select
@@ -110,23 +140,8 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="form.siteId"
-            size="small"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 350px;"
-            default-first-option
-            @focus="loadSites"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
+        <el-form-item :label="t('fields.title')" prop="title">
+          <el-input v-model="form.title" style="width: 350px;" maxlength="50" />
         </el-form-item>
         <el-form-item
           v-if="uiControl.dialogType === 'CREATE'"
@@ -250,7 +265,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
@@ -264,8 +279,12 @@ import { getSiteListSimple } from '../../../../api/site'
 import { getActiveAffAnnouncementType } from '../../../../api/affiliate-announcement-type'
 import { hasRole, hasPermission } from '../../../../utils/util'
 import { useI18n } from 'vue-i18n'
+import { store } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const announcementForm = ref(null)
 const siteList = reactive({
   list: [],
@@ -293,6 +312,7 @@ const request = reactive({
   current: 1,
   title: null,
   status: null,
+  siteId: null
 })
 
 const form = reactive({
@@ -344,7 +364,7 @@ async function loadAnnouncement() {
 }
 
 async function loadAffActiveAnnouncementType() {
-  const { data: type } = await getActiveAffAnnouncementType()
+  const { data: type } = await getActiveAffAnnouncementType(form.siteId)
   announcementTypeList.value = type
 }
 
@@ -383,7 +403,6 @@ function showEdit(announcement) {
         }
       }
     }
-    console.log(form)
   })
 }
 
@@ -451,15 +470,29 @@ function restrictInput(event) {
   }
 }
 
+function changeSite() {
+  loadAffActiveAnnouncementType()
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 }
 
-onMounted(() => {
-  loadAnnouncement()
+onMounted(async () => {
+  await loadSites()
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id;
+    form.siteId = site.value.id;
+  } else {
+    request.siteId = siteList.list[0].id;
+    form.siteId = siteList.list[0].id;
+  }
+  await loadAnnouncement()
   loadAffActiveAnnouncementType()
-  loadSites()
 })
 </script>
 

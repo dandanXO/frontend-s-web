@@ -1,14 +1,13 @@
 <template>
   <q-page class="account-message-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMessage')"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <img
         class="new-message-ribbon"
         src="../../assets/images/message/new-message-ribbon.svg"
         v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
       />
-
       <div class="message-wrapper">
         <q-card-section class="title">
           <div>{{ e.title }}</div>
@@ -18,7 +17,7 @@
         <q-card-section class="bottom-wrapper">
           <div class="time">{{ convertToGMT7(e.sendTime) }}</div>
           <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
-            More&nbsp;
+            {{ $t("btn.more") }}&nbsp;
             <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />
           </q-btn>
         </q-card-section>
@@ -90,7 +89,6 @@ const loadInbox = () => {
 
 const onDetailsClick = (mailData) => {
   store.setMailData(mailData);
-
   // NOTE: /session/inbox/read api call inside message-detail page onMounted
   router.push("/account/message-detail");
 };

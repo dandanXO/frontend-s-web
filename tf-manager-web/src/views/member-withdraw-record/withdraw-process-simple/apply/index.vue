@@ -26,12 +26,29 @@
           style="width: 120px;margin-left:10px"
           default-first-option
           @focus="loadSites"
+          @change="filterPayTypeByCurrency(request.siteId)"
         >
           <el-option
             v-for="item in siteList.list"
             :key="item.id"
             :label="item.siteName"
             :value="item.id"
+          />
+        </el-select>
+        <el-select
+          filterable
+          clearable
+          v-model="request.withdrawCode"
+          size="small"
+          :placeholder="t('fields.paymentType')"
+          class="filter-item"
+          style="width: 150px;margin-left:10px"
+        >
+          <el-option
+            v-for="item in list.filteredPayTypes"
+            :key="item.id"
+            :label="item.code"
+            :value="item.code"
           />
         </el-select>
         <el-input
@@ -89,6 +106,17 @@
         @keydown.enter.prevent
       >
         {{ t('fields.bulkApprove') }}
+      </el-button>
+      <el-button
+        v-if="hasPermission(['sys:withdraw:simple:bulk-withdraw'])"
+        ref="checkBtnRef"
+        size="mini"
+        type="primary"
+        :disabled="uiControl.toApproveBtn"
+        @click="showDialog('AUTOPAY')"
+        @keydown.enter.prevent
+      >
+        {{ t('fields.bulkWithdraw') }}
       </el-button>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
@@ -448,6 +476,41 @@
           </el-button>
         </div>
       </el-form>
+      <el-form
+        v-if="uiControl.dialogType === 'AUTOPAY'"
+        ref="toFailForm"
+        :model="autopayForm"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item
+          :label="t('fields.withdrawPlatform')"
+          prop="withdrawPlatformId"
+          required
+        >
+          <el-select
+            v-model="autopayForm.withdrawPlatformId"
+            size="small"
+            :placeholder="t('fields.withdrawPlatform')"
+            class="filter-item"
+            style="width: 300px;"
+          >
+            <el-option
+              v-for="item in withdrawPlatformList.list"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="toAutoPay" :disabled="uiControl.clickedAutoPay">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -461,6 +524,7 @@ import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   autoWithdrawToFail,
   fromApplyToAutopay,
+  fromApplyToAutopayBatch,
   getMemberWithdrawRecordApplySimple,
   getTotalWithdrawAmountByStatus,
 } from '../../../../api/member-withdraw-record'
@@ -473,6 +537,9 @@ import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/date
 import { getConfigList } from '../../../../api/config'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { isPak } from '@/utils/site'
+import { getWithdrawPlatformsSimpleBySiteId } from "../../../../api/withdraw-platform";
+import { getActivePaymentTypes } from "../../../../api/payment-type";
+import { getCurrencyNames } from "../../../../api/currency";
 
 const checkBtnRef = ref();
 const checkBtnsRef = ref();
@@ -490,6 +557,9 @@ const financialList = reactive({
 const bankList = reactive({
   list: [],
 })
+const withdrawPlatformList = reactive({
+  list: [],
+})
 
 let timeZone = null;
 
@@ -503,6 +573,7 @@ const uiControl = reactive({
   dialogTitle: '',
   dialogType: 'SEARCH',
   toApproveBtn: true,
+  clickedAutoPay: false,
 })
 
 let chooseRecord = []
@@ -529,6 +600,7 @@ const request = reactive({
   vipId: null,
   siteId: null,
   doris: false,
+  withdrawCode: null,
 })
 const failForm = reactive({
   id: null,
@@ -537,11 +609,22 @@ const failForm = reactive({
   failReason: null,
   withdrawDate: ''
 })
+const autopayForm = reactive({
+  withdrawPlatformId: null,
+})
 const reasonTypeList = reactive({
   list: [],
 })
 const reasonTemplateList = reactive({
   list: [],
+})
+const list = reactive({
+  payTypes: [],
+  filteredPayTypes: [],
+  siteCurrencyIds: [],
+})
+const currencyNames = reactive({
+  list: []
 })
 function disabledDate(time) {
   return (
@@ -570,9 +653,7 @@ function handleSelectionChange(val) {
   if (chooseRecord.length > 50) {
     uiControl.toApproveBtn = true
     ElMessage.warning("最多只能选择五十条记录");
-  } else {
-    uiControl.toApproveBtn = false
-  }
+  } else uiControl.toApproveBtn = chooseRecord.length === 0;
 }
 
 const page = reactive({
@@ -643,6 +724,43 @@ async function loadReasonTemplates() {
   reasonTemplateList.list = reasonTemplate
 }
 
+async function loadWithdrawPlatform() {
+  const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId);
+  withdrawPlatformList.list = ret
+}
+
+async function loadCurrencyNames() {
+  const { data: ret } = await getCurrencyNames();
+  currencyNames.list = ret;
+}
+
+async function loadPayTypes() {
+  const { data: payType } = await getActivePaymentTypes()
+  list.payTypes = payType
+}
+
+function filterPayTypeByCurrency(siteId) {
+  const currentSite = siteList.list.find(s => s.id === siteId)
+  const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
+  console.log(currencyCodeList)
+  list.siteCurrencyIds = [
+    ...currencyCodeList.map(currencyName => {
+      const currency = currencyNames.list.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
+      return currency ? currency.id : null;
+    }).filter(Boolean)
+  ]
+  console.log(list.siteCurrencyIds)
+  list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
+  console.log(list.filteredPayTypes)
+}
+
+function payTypeByCurrencyID (record) {
+  if (record.currencyIds) {
+    const currencyIdsList = record.currencyIds.split(',')
+    return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
+  }
+}
+
 async function loadRecord() {
   uiControl.dialogVisible = false
   page.loading = true
@@ -679,6 +797,7 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+  request.doris = ret.sums.useDoris;
   page.loading = false
 }
 
@@ -690,12 +809,32 @@ async function toCheck(memberWithdrawRecord) {
     await Promise.all(chooseRecord.map(async (a) => {
       await fromApplyToAutopay(a.id, 0, a.withdrawDate, a.siteId);
     }));
+    uiControl.toApproveBtn = true
   }
   await loadRecord()
   page.loading = false
   ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
   checkBtnRef.value.blur();
   checkBtnsRef.value.blur();
+}
+
+async function toAutoPay() {
+  toFailForm.value.validate(async valid => {
+    if (valid) {
+      uiControl.clickedAutoPay = true
+      await fromApplyToAutopayBatch(
+        chooseRecord.map(a => ({
+          id: a.id,
+          withdrawPlatformId: autopayForm.withdrawPlatformId,
+          withdrawDate: a.withdrawDate,
+          siteId: request.siteId
+        }))
+      )
+      uiControl.toApproveBtn = true
+      await loadRecord()
+      ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
+    }
+  })
 }
 
 async function toFail(memberWithdrawRecord) {
@@ -718,6 +857,13 @@ async function showDialog(type, memberWithdrawRecord) {
     await loadReasonTypes()
     failForm.reasonType = reasonTypeList.list[0].value
     uiControl.dialogTitle = t('fields.failReason')
+  } else if (type === "AUTOPAY") {
+    uiControl.clickedAutoPay = false
+    if (toFailForm.value) {
+      toFailForm.value.resetFields()
+    }
+    await loadWithdrawPlatform()
+    uiControl.dialogTitle = t('fields.autopay')
   } else if (type === 'SEARCH') {
     uiControl.dialogTitle = t('fields.advancedSearch')
   }
@@ -751,6 +897,9 @@ onMounted(async () => {
   loadFinancialLevels()
   loadBanks()
   loadRecord()
+  await loadCurrencyNames();
+  await loadPayTypes();
+  filterPayTypeByCurrency(request.siteId)
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>

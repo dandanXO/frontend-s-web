@@ -79,7 +79,6 @@
                 filled
                 v-model="bankCardField.cardNumber"
                 label="Enter Account Number"
-                lazy-rules
                 :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
               />
@@ -297,12 +296,18 @@ const isValidCardNumber = () => {
 
   const result = !cardNumber ? "Please Enter Account Number" : true;
 
-  if (cardNumber && selectedBankMethod.value && selectedBankMethod.value.code === "GCASH") {
+  if (
+    cardNumber &&
+    selectedBankMethod.value &&
+    (selectedBankMethod.value.code === "GCASH" ||
+      selectedBankMethod.value.code === "MAYAPAY" ||
+      selectedBankMethod.value.code === "GRABPAY")
+  ) {
     const gCashCheck =
       cardNumber.substring(0, 1) !== "0"
-        ? "The GCASH card number must start with '0'"
+        ? `The ${selectedBankMethod.value.code} card number must start with '0'`
         : cardNumber.length !== 11
-        ? "The GCASH card number length should be 11"
+        ? `The ${selectedBankMethod.value.code} card number length should be 11`
         : true;
     if (gCashCheck !== true) {
       return gCashCheck;

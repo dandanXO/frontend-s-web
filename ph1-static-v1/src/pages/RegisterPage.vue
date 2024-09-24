@@ -12,13 +12,19 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="11"
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+            (val) => {
+              if (val.startsWith('0')) {
+                return val.length === 11 || 'Phone number must have 11 digits if starting with 0';
+              } else {
+                return val.length === 10 || 'Phone number must have 10 digits';
+              }
+            }
           ]"
           color="white"
           class="landing-input"
@@ -247,7 +253,14 @@ export default defineComponent({
     const hasAffiliate = ref(false);
 
     const getAffiliateCode = () => {
-      affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
+      affCode.value = (() => {
+        if(location.hostname === 'www.fff2evkgkj.com') {
+          return '77CCEF';
+        }
+        
+        return sessionStorage.getItem("AFFILIATE_CODE");
+      })();
+
       if (affCode.value) {
         // hasAffiliate.value = true;
         regForm.codeAffiliate = affCode.value;

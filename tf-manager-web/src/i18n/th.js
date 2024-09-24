@@ -1243,6 +1243,7 @@ export default {
     configCode: 'Config Code',
     configValue: 'Config Value',
     configDescribes: 'Config Describes',
+    batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

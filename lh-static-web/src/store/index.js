@@ -33,6 +33,7 @@ export const userStore = defineStore("userStore", {
       unreadTotal: 0,
       visitorId: "",
       profilePhoto: "",
+      withdrawType: ""
     };
   },
   actions: {
@@ -49,7 +50,7 @@ export const userStore = defineStore("userStore", {
             this.getUnreadMail();
           } else {
             uiStore().notify({
-              type: 'error',
+              type: "error",
               message: ret.message
             });
             // throw new Error(ret.message);
@@ -76,7 +77,7 @@ export const userStore = defineStore("userStore", {
             this.getUnreadMail();
           } else {
             uiStore().notify({
-              type: 'error',
+              type: "error",
               message: ret.message
             });
             // throw new Error(ret.message);
@@ -88,12 +89,13 @@ export const userStore = defineStore("userStore", {
         });
     },
     getUnreadMail() {
-      getUnreadTotal().then((response) => {
-        if (response.code === 0) {
-          this.unreadTotal = response.data;
-        }
-      }).catch((error) => {
-      });
+      getUnreadTotal()
+        .then((response) => {
+          if (response.code === 0) {
+            this.unreadTotal = response.data;
+          }
+        })
+        .catch((error) => {});
     },
     getMemberInfo() {
       if (this.token) {
@@ -111,9 +113,11 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
             this.profilePhoto = ret.data.profilePhoto;
+
+            this.withdrawType = ret.data.withdrawType;
           } else {
             uiStore().notify({
-              type: 'error',
+              type: "error",
               message: ret.message
             });
           }

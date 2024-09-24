@@ -91,6 +91,7 @@ body > a{
 
     .landing-logo {
         padding-top: 20px;
+        padding-bottom: 10px;
     }
 
     .landing-logo img {
@@ -105,7 +106,7 @@ body > a{
     .landing-img img {
         display: block;
         width: 100%;
-        max-width: 300px;
+        max-width: 250px;
     }
 
     .landing-action-container {
@@ -113,5 +114,8 @@ body > a{
         gap: 20px;
         padding-bottom: 20px;
         margin-top: -30px;
+    }
+    .action-item img {
+        max-width: 300px;
     }
 }

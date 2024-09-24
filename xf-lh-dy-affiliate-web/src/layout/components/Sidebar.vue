@@ -295,6 +295,14 @@ const getNavigationData = () => {
             icon: 'affiliate',
           },
           {
+            path: '/own-summary',
+            title: t('menu.AffiliateOwnSummary'),
+            label: 'Affiliate Own Summary',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
+          },
+          {
             path: '/summary',
             title: t('menu.AffiliateSummary'),
             label: 'Affiliate Summary',

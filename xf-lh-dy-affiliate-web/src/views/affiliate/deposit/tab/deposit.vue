@@ -564,9 +564,16 @@ const returnCurrency = () => {
   }
 }
 
+function checkRealName() {
+  if (store.state.user.realName === null || store.state.user.realName === "" || store.state.user.realName === "null") {
+    router.push("/personal?name=realname");
+  }
+}
+
 onMounted(() => {
   initPay();
   loadCards();
+  checkRealName();
 });
 </script>
 <style lang="scss" scoped>

@@ -16,7 +16,7 @@
         </div>
       </div>
       <img
-        v-if="game.gameType === 'SLOT' && game.code.toLowerCase() === 'pt'"
+        v-if="game.gameType === 'LIVE' && game.code.toLowerCase() === 'won' || game.gameType === 'LIVE' && game.code.toLowerCase() === 'pmlive'"
         src="@/assets/images/home/new-ribbon.svg"
         class="new-ribbon"
       />

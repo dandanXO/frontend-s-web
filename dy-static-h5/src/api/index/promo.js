@@ -228,3 +228,37 @@ export function getDota2CompetitionBet(promoCode) {
   });
 }
 
+export function getBlastCoupon() {
+  return eventapi.get('/session/blastCoupon/init');
+}
+
+export function claimBlastCoupon(promoCode) {
+  return eventapi.post(`/session/blastCoupon/claim`, qs.stringify({ promoCode }));
+}
+
+export function getBlastCouponInit() {
+  return eventapi.get("/session/blastCoupon/init");
+}
+export function getCompetitionToday() {
+  return eventapi.get('/session/competition/today')
+}
+
+export function getCompetitionYesterday() {
+  return eventapi.get('/session/competition/yesterday')
+}
+
+export function claimCompetitionBonus() {
+  return eventapi.post('/session/competition/claimBonus')
+}
+
+export function getNationalDayRecords() {
+  return eventapi.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return eventapi.post('/session/nationalDay/claimBonus')
+}
+
+export function getNationalDayinit() {
+  return eventapi.get('/session/nationalDay/init')
+}

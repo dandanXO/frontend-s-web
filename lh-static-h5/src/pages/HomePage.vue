@@ -1282,6 +1282,8 @@ export default defineComponent({
                 liveObj.title = "WE真人";
               } else if (liveObj.code === "BBINDY") {
                 liveObj.title = "BBIN真人";
+              } else if (liveObj.code === "FBLive") {
+                liveObj.title = "FB真人";
               } else {
                 liveObj.title = translateRecord(liveObj.name) + "真人";
               }

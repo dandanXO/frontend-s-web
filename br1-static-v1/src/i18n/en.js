@@ -14,6 +14,9 @@ export default {
     addCrypto: "Add crypto",
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Add Bank Card",
+    addBank: "Add Bank",
+    addEWallet: "Add eWallet",
+    vip: "VIP",
     message: "Message",
     feedback: "Feedback",
     feedbackDetail: "Feedback Detail",
@@ -51,6 +54,24 @@ export default {
     betRecord: "Bet Record",
     referralRecord: "Referral Record",
     interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    depositAmount: "Deposit Amount",
+    bankName: "Bank Name",
+    bankAccount: "Bank Account",
+    bankCardNumber: "Bank Card Number",
+    amount: "Amount",
+    extra: "Extra",
+    choose: "Choose",
+    account: "Account",
+    gameLobby: "Game Lobby",
+    forgotPassword: "Forgot Password",
+    liveCasino: "Live Casino",
+    poker: "Poker",
+    eSports: "E-Sports",
+    sports: "Sports",
+    fishing: "Fishing",
+    activitiesDetails: "Activities Details",
+    addCard: "Add Card"
   },
   bottomNav: {
     home: "Home",
@@ -65,12 +86,20 @@ export default {
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must have 11 digits",
     phone_rules_03: "The phone number must start with '03'",
+    prependNumber: "+55",
+    phone: "Phone Number",
+    phone_placeholder: "Please enter phone number",
+    phone_rules_01: "Please insert Phone number",
+    phone_rules_02: "The phone number must have 11 digits",
+    phone_rules_03: "The phone number must not start with '0'",
+    phone_rules_04: "Please insert the correct account number",
     password: "Password",
     password_placeholder: "Please enter password",
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
     forgotPassword_desc: "Please Provide email, We Will Send OTP To Your Registered Email.",
+    forgotPassword_desc: "Please Provide Your Phone Number, We Will Send OTP To Your Registered Phone Number.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
     email: "Email",
@@ -96,6 +125,12 @@ export default {
     depositAmount: "Amount",
     depositAmount_placeholder: "Please enter the amount",
     depositAmount_rules_01: "Deposit should be between ",
+    confirmNewPassword_rules_02: "Password Must Be 6 To 11 Character",
+    confirmNewPassword_rules_03: "Confirm password does not match",
+    depositAmount: "Amount",
+    depositAmount_placeholder: "Please enter the amount",
+    depositAmount_rules_01: "Deposit should be between ",
+    depositAmount_rules_02: "Deposit should be more than ",
     withdrawChoose_placeholder: "Choose account",
     withdrawChoose_rules_01: "Please Select A Virtual Account",
     withdrawalAmount: "Withdrawal Amount",
@@ -161,6 +196,41 @@ export default {
     content_placeholder: "Please enter content",
     content_rules_01: "Please enter content",
     content_rules_02: "Content length is 500 words or less"
+    content_rules_02: "Content length is 500 words or less",
+    accountNumber: "Account Number",
+    accountNumber_placeholder: "Please insert account number",
+    accountNumber_rules_01: "Please insert account number",
+    accountNumber_rules_02: "Please insert the correct account number",
+    addBankAccount: "Add Bank Account",
+    bank: "Bank",
+    selectABank: "Select A Bank",
+    pleaseSelectABank: "Please Select A Bank",
+    holderName: "Holder Name",
+    holderName_placeholder: "Please Enter Holder Name",
+    holderName_rules_01: "Please Insert Holder Name",
+    holderName_rules_02: "Please Insert 2 or More Characters",
+    addCryptoWallet: "Add Crypto Wallet",
+    selectCrypto: "Select Crypto",
+    pleaseSelectACrypto: "Please Select A Crypto",
+    cryptoCardNumber: "Crypto Card Number",
+    addEWallet: "Add eWallet",
+    eWallet: "eWallet",
+    eWalletNumber: "eWallet Number",
+    selectEWallet: "Select eWallet",
+    pleaseSelectAEWallet: "Please Select A eWallet",
+    eWalletCardNumber: "eWallet Card Number",
+    cpf: "CPF",
+    cpf_placeholder: "Please enter CPF",
+    cpf_rules_01: "Please insert CPF",
+    cpf_rules_02: "CPF must have 11 digits",
+    cnpj: "CNPJ",
+    cnpj_placeholder: "Please enter CNPJ",
+    cnpj_rules_01: "Please insert CNPJ",
+    cnpj_rules_02: "CNPJ must have 14 digits",
+    evp: "EVP",
+    evp_placeholder: "Please enter EVP",
+    evp_rules_01: "Please insert EVP",
+    evp_rules_02: "Please insert valid EVP"
   },
   btn: {
     confirm: "Confirm",
@@ -187,17 +257,28 @@ export default {
     downloadNow: "Download Now",
     recharge: "Recharge",
     getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    notAMember: "Not a member?",
+    createAccount: "Create account"
   },
   notify: {
     noRecord: "No Record",
     haventFoundAnyRecord: "Haven’t found any record",
     updatedSuccessfully: "Updated successfully",
+    newPasswordUpdatedSuccessfully: "New password updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue"
+    plsLoginToContinue: "Please login to continue",
+    otpSent: "OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.",
+    passwordResetcompleted: "Password Reset Completed",
+    serialNumberCopied: "Serial Number Copied to clipboard.",
+    fillInPersonalDetails: "Please fill in your personal details",
+    addSucceed: "Add Succeed",
+    areYouSureUnbind: "Are You Sure To Unbind?"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -246,12 +327,22 @@ export default {
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    version: "Version"
   },
   deposit: {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again."
+    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
+    depositMethod: "Deposit Method",
+    paymentChannels: "Payment Channels",
+    wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
+    wagerExample: "Eg. Deposit R$1,000, require R$10,000 wager in slot games",
+    deposited: "Deposited",
+    youWillBeRedirect: "You will be redirected to your bank page to complete the deposit.",
+    afterDepositSuccessfully: "After deposited successfully, it will be reflected here."
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -263,6 +354,11 @@ export default {
     withdrawTutorial: "Withdraw Tutorial",
     withdrawalMethodInMaintenance:
       "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    withdrawCurrency: "Withdraw Currency",
+    paymentChannels: "Payment Channels",
+    channelUnderMaintenance: "This channel is under maintenance",
+    accountNumber: "Account Number"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -314,6 +410,20 @@ export default {
     rewards: "Rewards",
     vipTable_txt:
       "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
+      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
+    monthlyCumulativeDeposit: "Monthly Cumulative Deposit An Upgrade Vip Level",
+    level: "Level",
+    amount: "Amount",
+    turnover: "Turnover",
+    deposit: "Deposit",
+    aftertheRecharge:
+      "After the recharge on the day reaches the standard, the next day will increase the VIP level and issue corresponding upgrade rewards.",
+    vipPromoBonus: "VIP Promotion Bonus",
+    promotionBonusDesc: "Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.",
+    vipMonthlyCashBonus: "VIP Monthly Cash Bonus",
+    cashBonusDesc:
+      "Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on the 1st of next month.",
+    dailyWithdrawalLimits: "Daily withdrawal limits based on VIP levels"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -322,6 +432,108 @@ export default {
       teamManagement: "Team management",
       teamBetting: "Team betting",
       profitAndLoss: "User profit and loss"
+      profitAndLoss: "User profit and loss",
+      about: "About",
+      history: "History",
+      daily: "Daily",
+      earn: "Earn"
+    },
+    about: {
+      inviteToEarn: "Invite to Earn",
+      simplyShare: "Simply share your exclusive QR code",
+      benefits_01:
+        "Invite more friends and you will earn more. Every member who joins Skyace Club is both a player and an agent.",
+      benefits_02: "We advocate benefits and bonuses for everyone.",
+      agencyPolicy: "Agency Policy",
+      tableRewardsAssigned: "The table below shows how the rewards are assigned.",
+      point_01: "Active users: daily bet amount 200",
+      point_02:
+        "Your reward will be calculated based on the total bet amount of your members. The reward gained can either be withdrawn or used for further betting.",
+      point_03: "Refer as many friends as you can to gain bigger percentage of rebates.",
+      point_04: "Earn lifetime revenue on your referred players.",
+      faq: "FAQ",
+      faq_01: "1. How to earn commissions?",
+      faq_01_01:
+        "You can earn up to 1.5% of the daily wagers of players you refer. The higher your level, the higher the commission percentage you can earn.",
+      faq_01_02:
+        "If your affiliate or your affiliate becomes an agent and they are at a lower level than their immediate superior, then you can receive up to 1.2% of the affiliate's wagering rebate amount. The commission rate depends on the level difference between you and your affiliate, the greater the level difference, the more commission you receive.",
+      faq_02: "2. How to invite your friends?",
+      faq_02_01: "Share the game via social media or share the referral link to your friends.",
+      faq_02_02:
+        "Friends must click on your promotion link, download the App, install the game and register to start betting to get commission.",
+      faq_02_03: "Registration must be completed through a referral link.",
+      faq_03: "3. What's the purpose of level?",
+      faq_03_01: "We have divided 13 levels based on the number of recommended users and betting performance.",
+      faq_03_02:
+        "Upgrade conditions require that the bet amount and team size meet the requirements at the same time. The higher your level, the higher the commission percentage you will receive from members' bet amounts.",
+      faq_03_03:
+        "Level difference: When the immediate superior minus the corresponding direct member level is ≥ 1, there is a level difference, otherwise there is no level difference.",
+      faq_03_04: "The higher your level, the higher the commission percentage you get from level difference bets.",
+      faq_04: "4. How to upgrade your level?",
+      faq_04_01: "The more members you bring to the game and the more they bet, the higher the tiers you can get.",
+      faq_04_02:
+        "If you have extraordinary channel promotion capabilities, please contact our customer service center for verification.",
+      faq_05: "5. How to turn your friends into members?",
+      faq_05_01:
+        "Log in to 55Ace, share your recommendation link with your friends on the recommendation page, guide them to register from the link, and they can become your direct members.",
+      faq_05_02:
+        "Encourage your members to invite their friends to play games, and the friends they invite will become your indirect members.",
+      faq_05_03:
+        "When friends of your direct members become your indirect members, they can still grow their membership this way. All their sub-members will be considered as your indirect sub-members.",
+      faq_06: "6. How to get commission from your members?",
+      faq_06_01:
+        "There must be a level difference between you and all your lower-level members, otherwise no level difference commission will be generated.",
+      faq_06_02:
+        "The proportion of commission is determined by the difference between your level and the level of your subordinate members.",
+      faq_06_example: "Example",
+      faq_06_table_name: "Name",
+      faq_06_table_level: "Level",
+      faq_06_table_betting: "Betting",
+      faq_06_table_members: "Members",
+      faq_06_table_you: "You",
+      faq_06_dot_01: "You can't get A's betting rebate.",
+      faq_06_dot_02: "You can get 0.2% commission on B's bet amount",
+      faq_06_dot_03: "You can get 0.7% commission on C's bet amount",
+      table_col_levelDifference: "Level Difference",
+      table_col_rebate: "Rebate (%)",
+      table_col_level: "Level",
+      table_col_betAmount: "Bet Amount ",
+      table_col_activeMember: "Active Member",
+      table_col_rate: "Rate %"
+    },
+    history: {
+      totalRebates: "Total Rebates",
+      month: "Month",
+      week: "Week",
+      date: "Date",
+      rebateAmount: "Rebate Amount"
+    },
+    daily: {
+      myTeamYesterday: "My Team (Yesterday)",
+      member: "Member",
+      betAmount: "Bet Amount",
+      rate: "Rate",
+      yesterdayReportTotal: "Yesterday Report (Total)",
+      level: "Level",
+      myselfBettingAmount: "Myself betting amount",
+      myselfRebate: "Myself rebate",
+      teamBettingamount: "Team betting amount",
+      teamRebate: "Team rebate",
+      totalRebate: "Total rebate",
+      teamDetailsYesterday: "Team details (Yesterday)",
+      income: "Income"
+    },
+    earn: {
+      inviteToEarn: "Invite to Earn",
+      point_01_title: "Share your referral link or QR code below",
+      point_01_desc: "Just copy or screenshot and send it to your friends",
+      point_02_title: "Get your friends to start playing",
+      point_02_desc: "You can check your referred friends who registered with your code.",
+      point_03_title: "Start earning daily commissions",
+      point_03_desc:
+        "You will be rewarded, regardless if they win or lose. The more friends you refer to Skyace Club, the bigger your daily reward. Start earning daily commissions",
+      myReferralLink: "My Referral Link",
+      save: "Save"
     },
     reward: {
       myTotalIncome: "My Total Income",
@@ -470,6 +682,7 @@ export default {
     applying: "Processing",
     failed: "Failed",
     Success: "Success",
+    success: "Success",
     underReview: "Processing",
     toBePaid: "To be paid",
     paymentOnGoing: "Payment on going",
@@ -487,6 +700,13 @@ export default {
     byyesterday: "By Yesterday",
     all: "All",
     turnover_requi: "TurnOver Requirement"
+    noMessage: "No message",
+    bytoday: "By Today",
+    byyesterday: "By Yesterday",
+    all: "All",
+    turnover_requi: "TurnOver Requirement",
+    amount: "Amount",
+    reachTheEnd: "You have reached the end of the page."
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -502,6 +722,8 @@ export default {
     bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name"
+    insertCardAccName: "Please insert card account name",
+    accountNum: "Account Number"
   },
   promo: {
     all: "ALL",
@@ -552,9 +774,12 @@ export default {
     608: "The current user's operations are too frequent. Please try again.",
     609: "Platform in maintenance",
     604: "Logged in successfully",
+    608: "The current user's operations are too frequent. Please try again.",
     707: "Insufficient balance",
     710: "Insufficient balance",
     800: "Incorrect confirmation code",
+    710: "Insufficient withdrawable balance",
+    800: "Incorrect verification code",
     801: "Password captcha has expired",
     900: "Member not found",
     901: "Record not found",
@@ -605,6 +830,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
+    11000: "No gateway for the given amount",
     11003: "Deposit failed",
     11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
@@ -623,6 +849,9 @@ export default {
     15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
+    14010: "Your device has already registered an account at this time, please use your account to log in.",
+    15201: "Incorrect old password",
+    15202: "New password must not match with old password",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

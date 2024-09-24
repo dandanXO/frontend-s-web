@@ -3,41 +3,38 @@
     <div class="bank-add-lists">
       <div class="bank-card-add" @click="onAddCardClick()">
         <q-icon name="add" size="20px" />
-        <div class="card-label">Add Bank</div>
+        <div class="card-label">{{ $t("header.addCard") }}</div>
       </div>
-      <div class="bank-card-add" @click="onAddUSDTClick()">
+      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
         <q-icon name="add" size="20px" />
-        <div class="card-label">Add eWallet</div>
-      </div>
+        <div class="card-label">{{ $t("header.addEWallet") }}</div>
+      </div> -->
     </div>
 
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
       <q-card>
-        <DialogHeader title="Are You Sure To Unbind?"></DialogHeader>
-
+        <DialogHeader :title="$t('notify.areYouSureUnbind')"></DialogHeader>
         <q-card-section>
           <q-form>
-            <div class="input-title">Account Number</div>
+            <div class="input-title">{{ $t("form.accountNumber") }}</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              label="Enter Account Number"
-              lazy-rules
+              :placeholder="$t('form.accountNumber_placeholder')"
               :rules="[
-                (val) => (val && val.length > 0) || 'Please Enter Account Number',
-                (val) => (val && val === selectedUnbindCardNum) || 'Please Enter The Correct Account Number'
+                (val) => (val && val.length > 0) || $t('form.accountNumber_rules_01'),
+                (val) => (val && val === selectedUnbindCardNum) || $t('form.accountNumber_rules_02')
               ]"
               label-color="secondary"
-            />
+            ></q-input>
           </q-form>
         </q-card-section>
-
         <ConfirmButton
-          label="Confirm"
+          :label="$t('btn.confirm')"
           :confirmFunc="unbind"
           :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"
         ></ConfirmButton>
@@ -72,14 +69,14 @@
             </div>
             <div class="item-content">
               <div class="item-acc">
-                Account: {{ item.cardNumber }}
+                {{ $t("header.account") }}: {{ item.cardNumber }}
                 <!--                <br />-->
                 <!--                IFSC: {{ item.cardAddress }}-->
               </div>
               <div class="item-copy">
-                <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
+                <!-- <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
-                </div>
+                </div> -->
                 <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
@@ -155,7 +152,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onActivated } from "vue";
+import { ref, reactive, onMounted, onActivated, computed } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
