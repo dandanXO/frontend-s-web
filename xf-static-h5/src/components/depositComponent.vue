@@ -162,6 +162,24 @@
             </q-item>
           </template>
         </q-select>
+
+        <div
+          class="rollover-info"
+          v-if="
+            selectedPrivilege &&
+            selectedPrivilege.name &&
+            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)
+          "
+        >
+          <span v-if="selectedPrivilege.depositMin">
+            优惠最低存款要求：{{ selectedPrivilege.depositMin }}元，&nbsp;&nbsp;&nbsp;
+          </span>
+          <span v-if="selectedPrivilege.gameTypeRollover && selectedPrivilege.gameTypeRollover !== '{}'">
+            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
+          </span>
+          <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
+        </div>
+
         <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <!-- <div class="q-mt-md">
@@ -775,5 +793,10 @@ onMounted(() => {
 
 .q-select__dialog .q-field__control {
   background: #4fb2ff !important;
+}
+
+.rollover-info {
+  color: #bd4646;
+  font-size: 12px;
 }
 </style>
