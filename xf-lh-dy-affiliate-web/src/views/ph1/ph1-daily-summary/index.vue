@@ -167,7 +167,7 @@ function checkQuery() {
   })
   query.siteId = site.id
   // get static username : tuiguang1
-  query.affiliateId = "1838090347124301826"
+  query.loginName = "tuiguang1"
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = request.recordTime
