@@ -217,6 +217,7 @@
                 style="width: 100%;"
                 filterable
                 default-first-option
+                @change="checkRolloverType"
               >
                 <el-option
                   v-for="f in uiControl.rolloverType"
@@ -233,7 +234,7 @@
                 v-model="uiControl.rollOverAmt"
                 style="width: 145px"
                 :min="1"
-                :max="100"
+                :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                 :controls="false"
                 @keypress="restrictInput($event)"
               />
@@ -275,7 +276,7 @@
                 </el-select>
                 <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
                   :
-                  <el-input style="width: 170px " v-model="item.value" />
+                  <el-input-number :controls="false" style="width: 170px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
                 </span>
                 <el-button
                   v-if="index === gameTypes.length - 1"
@@ -829,6 +830,33 @@ const handleBonusDaysCheckAllChange = val => {
     })
   }
   handleCheckedChange('BONUSDAYS')
+}
+
+const cachedGameTypes = ref([]);
+const cachedUIAmt = ref([]);
+const checkRolloverType = () => {
+  if (selectedRolloverType.value === 'MULTIPLE') {
+    cachedUIAmt.value = uiControl.rollOverAmt
+    if (uiControl.rollOverAmt > 100) {
+      uiControl.rollOverAmt = 100
+    } else {
+      uiControl.rollOverAmt = null
+    }
+    cachedGameTypes.value = gameTypes.value.map(type => ({ ...type }));
+    gameTypes.value.forEach(type => {
+      if (type.value > 100) {
+        type.value = 100;
+      }
+    });
+  } else {
+    // gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
+    if (cachedGameTypes.value.length > 0) {
+      gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
+    }
+    if (cachedUIAmt.value) {
+      uiControl.rollOverAmt = cachedUIAmt.value
+    }
+  }
 }
 
 function changeSite(siteId) {
