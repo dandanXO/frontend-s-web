@@ -721,7 +721,7 @@ function constructRollover() {
     json.rollover = uiControl.rollOverAmt
   }
   form.rollover = uiControl.rollOverAmt
-  return json
+  return JSON.stringify(json)
 }
 // const createFilter = queryString => {
 //   return item => {
