@@ -813,7 +813,7 @@ async function requestExportExcel() {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>
