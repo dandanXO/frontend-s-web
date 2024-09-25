@@ -3,7 +3,7 @@
     <div class="top-balance">
       <div class="mainbal">
         <div class="icon">
-          <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.svg" />
           <img v-else src="../assets/images/account/account-wallet-icon.png" />
           <div class="label">中心钱包</div>
         </div>
@@ -407,18 +407,40 @@ onMounted(() => {
 .body--dark {
   .acct-balances {
     @include content-block-dark;
+    background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
+    .top-balance {
+      color: #fff;
+
+      .mainbal {
+        align-items: flex-start;
+      }
+    }
     .balamt {
       color: $font-3-dark !important;
     }
     .transfer-plat-wrapper {
       .transfer-plat-inner {
         .transfer-plat-item {
+          .transfer-balance-box {
+            width: 100%;
+          }
           .platform-details {
+            width: 100%;
             .name-wrapper {
-              color: $font-3-dark;
+              width: 100%;
+              color: #C4A28F;
+              background: #819bd226;
+            }
+
+            .name-wrapper .plat-name, .balance-wrapper {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 30px;
             }
             .balance-wrapper {
-              color: $primary-dark;
+              // color: $primary-dark;
+              color: #fff;
             }
           }
         }
