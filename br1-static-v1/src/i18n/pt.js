@@ -354,8 +354,8 @@ export default {
     virtualAccount: "eWallet Account"
   },
   order: {
-    withdrawal: "Withdrawal",
-    recharge: "Recharge"
+    withdrawal: "Cancelamento",
+    recharge: "Recarga"
   },
   interestProfit: {
     depositOverview: "Deposit overview",
@@ -672,7 +672,7 @@ export default {
     amount: "Quantia",
     applying: "Processando",
     waitingAutoPay: "Aguardando pagamento automático",
-    failed: "Falhou",
+    failed: "Falha",
     underReview: "Em Processamento",
     toBePaid: "A Ser Pago",
     paymentOnGoing: "Pagamento em Andamento",
