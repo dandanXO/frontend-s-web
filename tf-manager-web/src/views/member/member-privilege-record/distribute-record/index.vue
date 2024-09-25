@@ -541,7 +541,7 @@ const uiControl = reactive({
   ],
   gameTypeRolloverTypes: [
     { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ANY_TYPES' },
-    { key: 2, displayName: t('gameTypeRolloverSetting.specifyTypes'), value: 'SPECIFY_TYPE' },
+    { key: 2, displayName: t('gameTypeRolloverSetting.specifyTypes'), value: 'SPECIFY_TYPES' },
     { key: 3, displayName: t('gameTypeRolloverSetting.excludeTypes'), value: 'EXCLUDE_TYPES' },
     { key: 4, displayName: t('gameTypeRolloverSetting.specifyGameType'), value: 'GAME_TYPE' },
   ],
