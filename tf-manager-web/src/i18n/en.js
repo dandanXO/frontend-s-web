@@ -1450,9 +1450,6 @@ export default {
     roleList: 'Role List',
     roleName: 'Role Name',
     rollover: 'Rollover',
-    rollOverAmt: 'Rollover Amount',
-    rolloverType: 'Rollover Type',
-    rollOverMulti: 'Rollover Multi Amount',
     rolloverAmount: 'Rollover Amount',
     rolloverRecord: 'Rollover Record',
     gameTypeRollover: 'Game Type Rollover',
@@ -2981,7 +2978,6 @@ export default {
     specifyTypes: 'Specify Game Types',
     excludeTypes: 'Exclude Game Types',
     specifyTypesAmount: 'Specify Game Types Amount',
-    specifyGameType: 'Specific Game Types and Amount',
   },
   domainType: {
     LANDING: 'Landing',
