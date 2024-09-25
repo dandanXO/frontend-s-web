@@ -77,6 +77,7 @@ module.exports = configure(function (ctx) {
       // }
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+        chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
 
         // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {

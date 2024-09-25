@@ -116,11 +116,11 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
 };
 
 export const displayPlatform = (platform) => {
-  if(platform === "BTI"){
+  if (platform === "BTI") {
     return "55Ace";
   }
   return platform;
-}
+};
 
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);

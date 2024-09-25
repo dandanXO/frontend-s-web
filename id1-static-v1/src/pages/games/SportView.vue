@@ -3,9 +3,7 @@
     <div class="sport-txt-wrapper">
       <img src="../../assets/images/games/sport/sport_txt.png" />
     </div>
-    <div
-      class="margin-center flex-box flex-justify-center flex-align-center sport-main-container"
-    >
+    <div class="margin-center flex-box flex-justify-center flex-align-center sport-main-container">
       <!-- <div class="sport-plat">
         <img
           class="plat-img"
@@ -13,10 +11,7 @@
         />
       </div> -->
       <div class="sport-plat">
-        <img
-          class="plat-img"
-          src="../../assets/images/games/sport/sport_cmd.png"
-        />
+        <img class="plat-img" src="../../assets/images/games/sport/sport_cmd.png" />
       </div>
     </div>
   </div>

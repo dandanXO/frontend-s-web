@@ -7,7 +7,7 @@
 
       <q-form ref="profileFormRef" class="pc-form">
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Full Name</div>
+          <div class="pc-form-label">{{ $t("form.fullName") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.realName"
@@ -23,7 +23,7 @@
         </div>
 
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Phone</div>
+          <div class="pc-form-label">{{ $t("form.phone") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.phone"
@@ -38,28 +38,11 @@
           </div>
         </div>
 
-        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Email</div>
-          <div class="pc-form-input">
-            <q-input
-              v-model="formDetail.email"
-              filled
-              dense
-              clearable
-              borderless
-              standout
-              hide-bottom-space
-              readonly
-            ></q-input>
-          </div>
-        </div> -->
-
         <div class="pc-tip">
           <div>
-            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">{{ $t("form.changePassword") }}</a>
             <div class="pc-ver" v-if="appVersionNo">
-              Version:
+              {{ $t("form.version") }}:
               <span>{{ appVersionNo }}</span>
             </div>
           </div>
@@ -69,25 +52,23 @@
               class="btn-refresh"
               no-caps
               icon="refresh"
-              label="Updated"
+              :label="$t('btn.updated')"
               :loading="loadingUpdated"
               @click="startRefresh"
             >
               <template v-slot:loading>
                 <q-spinner class="on-left" style="color: #ae6def" />
-                Updating...
+                {{ $t("btn.updating") }}
               </template>
             </q-btn>
           </div>
         </div>
 
         <div class="q-mt-md">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">
+            {{ $t("btn.signOut") }}
+          </q-btn>
         </div>
-
-        <!-- <div class="text-center q-mt-md" v-if="canEdit">
-          <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
-        </div> -->
       </q-form>
     </div>
   </q-page>

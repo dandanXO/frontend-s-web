@@ -1,19 +1,16 @@
 <template>
-
-<q-scroll-area
-  ref="scrollPageRef"
-  style="height: calc(100% - 60px); margin-bottom: env(safe-area-inset-bottom, 40px); padding-bottom: env(safe-area-inset-top, 40px);"
->
-  <div class="c" style="position: relative; height: 100%;">
-    <iframe
-          @load="loadGame()"
-          :src="src"
-          frameborder="0"
-          scrolling="yes"
-          style="width: 100%; height: 90%;"
-        ></iframe>
-  </div>
-</q-scroll-area>
+  <q-scroll-area
+    ref="scrollPageRef"
+    style="
+      height: calc(100% - 60px);
+      margin-bottom: env(safe-area-inset-bottom, 40px);
+      padding-bottom: env(safe-area-inset-top, 40px);
+    "
+  >
+    <div class="c" style="position: relative; height: 100%">
+      <iframe @load="loadGame()" :src="src" frameborder="0" scrolling="yes" style="width: 100%; height: 90%"></iframe>
+    </div>
+  </q-scroll-area>
 </template>
 
 <script setup>
@@ -39,11 +36,11 @@ onMounted(() => {
   if (store.hasToken()) {
     const isMobile = Platform.is.mobile;
     if (isMobile) {
-      var way = null
+      var way = null;
       if (Platform.is.android) {
-        way = "ANDROID"
+        way = "ANDROID";
       } else if (Platform.is.ios) {
-        way="IOS"
+        way = "IOS";
       }
     }
     api
