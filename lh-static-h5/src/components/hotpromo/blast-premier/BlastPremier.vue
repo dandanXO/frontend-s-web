@@ -66,7 +66,7 @@
         <table class="livepoker-rebate-game-info-table">
           <tr>
             <th>等级</th>
-            <th>首冲要求 (元)</th>
+            <th>首充要求 (元)</th>
             <th>包赔比例</th>
             <th>彩金上限</th>
             <th>流水要求</th>
@@ -129,7 +129,7 @@
         </table>
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            例：VIP10会员A当日投注 BLAST Premier 秋季总决赛赛事结算为负盈利10,000元，则次日可领取最高388元彩金。
+            例：VIP10会员A当日首充≥1,000元并投注BLAST Premier 秋季总决赛赛事结算为负盈利20,000元，会员A在次日24小时内可获得彩金：20,000*5%=1,000元，由于档位彩金领取上限为388元，会员A最终可获得388元彩金。
           </div>
         </div>
       </div>
