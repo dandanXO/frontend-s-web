@@ -1,178 +1,184 @@
 <template>
-    <div class="container">
-      <div class="header">{{ $t('sitePopout.sitePopout') }}</div>
-      <div class="content">
-        <div class="left">
-          <div class="left-item" :class="index === selectedItemIndex ? 'active' : ''" v-for="popoutListItem, index in popoutList" @click="selectedItemIndex = index">
-            <div class="title">{{ popoutListItem.title }}</div>
-            <div class="period" v-if="popoutListItem.displayStartTime">{{ popoutListItem.displayStartTime }} - {{ popoutListItem.displayEndTime }}</div>
-          </div>
+  <div class="container">
+    <div class="header">{{ $t('sitePopout.sitePopout') }}</div>
+    <div class="content">
+      <div class="left">
+        <div class="left-item" :class="index === selectedItemIndex ? 'active' : ''"
+          v-for="popoutListItem, index in popoutList" @click="selectedItemIndex = index">
+          <div class="title">{{ popoutListItem.title }}</div>
+          <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">{{ moment(popoutListItem.displayStartTime).format('DD/MM/YYYY') }} - {{
+            moment(popoutListItem.displayEndTime).format('DD/MM/YYYY') }}</div>
         </div>
-        <div class="right">
-          <div v-if="selectedItem?.desktopImgUrl">
-            <img :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
-            <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
-          </div>
+      </div>
+      <div class="right">
+        <div v-if="selectedItem?.desktopImgUrl">
+          <img :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
+          <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted, computed } from "vue";
-  import { getSitePopoutList } from "@/api/personal/common";
-  import { useLocalStorage } from "@vueuse/core";
-  
-  const popoutList = ref([]);
-  const selectedItemIndex = ref();
-  const selectedItem = computed(() => popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined)
-  const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
-  
-  onMounted(() => {
-    getSitePopoutList().then((res) => {
-      if(res.code === 0) {
-        popoutList.value = res.data;
+  </div>
+</template>
 
-        if(res.data.length > 0) {
-          selectedItemIndex.value = 0;
-        }
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import { getSitePopoutList } from "@/api/personal/common";
+import { useLocalStorage } from "@vueuse/core";
+import moment from 'moment';
+
+const popoutList = ref([]);
+const selectedItemIndex = ref();
+const selectedItem = computed(() => popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined)
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+
+onMounted(() => {
+  getSitePopoutList().then((res) => {
+    if (res.code === 0) {
+      popoutList.value = res.data;
+
+      if (res.data.length > 0) {
+        selectedItemIndex.value = 0;
       }
-    })
-  });
-  </script>
-  
-  <style lang="scss">
-  .announcement-modal {
-    .el-dialog__body {
-      padding: 0 !important;
     }
+  })
+});
+</script>
+
+<style lang="scss">
+.announcement-modal {
+  .el-dialog__body {
+    padding: 0 !important;
   }
-  </style>
-  
-  <style lang="scss" scoped>
-  .container {
+}
+</style>
+
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  // background-color: white;
+  align-items: center;
+  font-family: "PingFang SC";
+  background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
+  background-size: 100% 100%;
+  aspect-ratio: 1826 / 1156;
+  padding: 8% 5% 0% 5%;
+
+  .header {
+    border-bottom: 1px solid black;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    // background-color: white;
+    justify-content: center;
     align-items: center;
-    font-family: "PingFang SC";
-    background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
-    background-size: 100% 100%;
-    aspect-ratio: 1826 / 1150;
-    padding: 8% 5%;
-  
-    .header {
-      border-bottom: 1px solid black;
-      width: 100%;
+    color: black;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1rem;
+    visibility: hidden;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    gap: 2%;
+
+    .left {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      color: black;
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1rem;
-      visibility: hidden;
-    }
-  
-    .content {
-      display: grid;
-      grid-template-columns: 0.5fr 1fr;
-      width: 100%;
+      flex-direction: column;
+      cursor: pointer;
+      height: 300px;
+      overflow: auto;
       height: 100%;
-      min-height: 300px;
-      gap: 2%;
-  
-      .left {
+      gap: 2px;
+
+      // &::-webkit-scrollbar {
+      //   -webkit-appearance: none;
+      //   width: 8px;
+      //   background-color: #ededed;
+      // }
+
+      // &::-webkit-scrollbar-thumb {
+      //   border-radius: 4px;
+      //   background-color: #D1D1D1;
+      //   border: 1px solid #808080;
+      //   box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+      // }
+
+      .left-item {
+        font-size: 1rem;
         display: flex;
         flex-direction: column;
-        cursor: pointer;
-        height: 300px;
-        overflow: auto;
-        height: 100%;
-        gap: 2px;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 2% 6%;
+        font-weight: 700;
+        background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
+        background-size: 100% 100%;
+        aspect-ratio: 300 / 100;
 
-        // &::-webkit-scrollbar {
-        //   -webkit-appearance: none;
-        //   width: 8px;
-        //   background-color: #ededed;
-        // }
-
-        // &::-webkit-scrollbar-thumb {
-        //   border-radius: 4px;
-        //   background-color: #D1D1D1;
-        //   border: 1px solid #808080;
-        //   box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-        // }
-  
-        .left-item {
-          font-size: 1rem;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: center;
-          padding: 2% 6%;
+        .title {
+          font-family: 'SF Pro';
+          font-size: 14px;
           font-weight: 700;
-          background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
+          line-height: 20px;
+          color: #414252;
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .period {
+          font-family: 'SF Pro';
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 17px;
+          color: #414252;
+        }
+
+
+        &.active {
+          background: url("../../assets/images/home/site-popout/list-item-bg-active.png") no-repeat center center;
           background-size: 100% 100%;
-          aspect-ratio: 300 / 100;
 
           .title {
-            font-family: 'PingFang SC';
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 22.4px;
-            color: #414252;
+            color: #2792fd;
           }
-
-          .period {
-            font-family: 'PingFang SC';
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 19.6px;
-            color: #414252;
-          }
-          
-  
-          &.active {
-            background: url("../../assets/images/home/site-popout/list-item-bg-active.png") no-repeat center center;
-            background-size: 100% 100%;
-
-            .title {
-              color: #2792fd;
-            }
-          }
-        }
-      }
-  
-      .right {
-        position: relative;
-        height: 100%;
-
-        .check-details-btn {
-          position: absolute;
-          right: 5%;
-          bottom: 5%;
-          color: black;
-          border: 1px solid black;
-          padding: 1% 3%;
-          border-radius: 5px;
-          cursor: pointer;
-          background-color: #e7e7e7;
-
-          &:hover {
-            background-color: #f2f2f2;
-          }
-
-          &:active {
-            transform: translateY(2px);
-          }
-        }
-        
-        img {
-          width: 100%;
         }
       }
     }
+
+    .right {
+      position: relative;
+      height: 100%;
+
+      .check-details-btn {
+        position: absolute;
+        right: 5%;
+        bottom: 5%;
+        color: black;
+        border: 1px solid black;
+        padding: 1% 3%;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #e7e7e7;
+
+        &:hover {
+          background-color: #f2f2f2;
+        }
+
+        &:active {
+          transform: translateY(2px);
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
   }
-  </style>
-  
+}
+</style>
