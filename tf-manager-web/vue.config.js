@@ -21,7 +21,6 @@ module.exports = {
   transpileDependencies,
   devServer: {
     hot: true,
-    host: '127.0.0.1',
     port: devPort,
     open: true,
     noInfo: false,
