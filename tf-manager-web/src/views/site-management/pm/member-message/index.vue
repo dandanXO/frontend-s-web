@@ -322,7 +322,7 @@ function changePage(page) {
   line-height: 36px;
 }
 
-::v-deep .el-autocomplete input {
+:deep(.el-autocomplete input) {
   /* input { */
   /* background-color: red!important;  调试用的样式 */
   outline: none !important;

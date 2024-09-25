@@ -164,14 +164,14 @@ onMounted(async() => {
   display: flex;
   justify-content: flex-start;
 }
-.transfer-container >>> .el-transfer-panel {
+.transfer-container:deep(.el-transfer-panel) {
   width: 350px;
 }
 .transfer-footer {
   margin-left: 15px;
   padding: 6px 5px;
 }
-.transfer-container >>> .el-transfer-panel__footer {
+.transfer-container:deep(.el-transfer-panel__footer) {
   height: 35px;
 }
 </style>
