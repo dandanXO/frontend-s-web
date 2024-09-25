@@ -92,7 +92,7 @@ export default {
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Por favor, forneça seu nome de usuário e número de telefone, enviaremos um OTP para seu número registrado.",
+    forgotPassword_desc: "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
     email: "Email",
