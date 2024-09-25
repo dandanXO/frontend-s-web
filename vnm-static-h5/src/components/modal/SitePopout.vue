@@ -80,7 +80,7 @@
   .close-btn {
     margin: 3% auto;
     display: flex;
-    height: 45px;
+    height: 35px;
   }
 
   .container {
@@ -93,7 +93,7 @@
     background-size: 100% 100%;
     aspect-ratio: 644 / 837;
     padding: 10% 2% 4%;
-    height: 380px;
+    height: 430px;
     margin: auto;
   
     .header {
@@ -135,17 +135,19 @@
           background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
           background-size: 100% 100%;
           aspect-ratio: 300 / 50;
+          width: 100%;
 
           .title {
             font-family: 'SF Pro';
             color: #2792fd;
             font-size: 16px;
             font-weight: 700;
-            line-height: 25px;
+            line-height: 30px;
             width: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            
           }
 
           .period {
@@ -153,7 +155,7 @@
             color: #414252;
             font-size: 14px;
             font-weight: 400;
-            line-height: 20px;
+            line-height: 25px;
           }
           
   
