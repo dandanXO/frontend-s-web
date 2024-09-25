@@ -15,13 +15,12 @@
             <div class="right">
               <div v-if="selectedItem?.desktopImgUrl">
                 <img :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
-                <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
               </div>
             </div>
             <div class="left">
               <div class="left-item active">
                 <div class="title">{{ popoutListItem.title }}</div>
-                <div class="period" v-if="popoutListItem.displayStartTime">{{ popoutListItem.displayStartTime }} - {{ popoutListItem.displayEndTime }}</div>
+                <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">{{ moment(popoutListItem.displayStartTime).format('DD/MM/YYYY') }} - {{ moment(popoutListItem.displayEndTime).format('DD/MM/YYYY') }}</div>
               </div>
             </div>
           </div>
@@ -35,6 +34,7 @@
   import { ref, onMounted, computed } from "vue";
   import { useLocalStorage } from "@vueuse/core";
   import { api } from "boot/axios";
+  import moment from 'moment';
 
   const props = defineProps(['closePopout']);
   const popoutList = ref([]);
@@ -91,8 +91,10 @@
     font-family: "SF Pro";
     background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
     background-size: 100% 100%;
-    aspect-ratio: 644 / 881;
-    padding: 12% 2% 6%;
+    aspect-ratio: 644 / 837;
+    padding: 10% 2% 4%;
+    height: 380px;
+    margin: auto;
   
     .header {
       border-bottom: 1px solid black;
@@ -132,22 +134,26 @@
           font-weight: 700;
           background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
           background-size: 100% 100%;
-          aspect-ratio: 300 / 100;
+          aspect-ratio: 300 / 50;
 
           .title {
             font-family: 'SF Pro';
             color: #2792fd;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            line-height: 30px;
+            line-height: 25px;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .period {
             font-family: 'SF Pro';
             color: #414252;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
-            line-height: 25px;
+            line-height: 20px;
           }
           
   
