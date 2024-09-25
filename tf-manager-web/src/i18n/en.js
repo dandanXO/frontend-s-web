@@ -3193,5 +3193,8 @@ export default {
     27000: 'Key quantity is not enough',
     31000: 'Some matches are not ended on the selected date, please wait until all matches are ended',
     31001: 'No matches on the selected date',
+    45300: 'Member already has dummy record on the selected date',
+    45301: 'Member dummy record on the selected date does not exists',
+    45302: 'Member does not belong to any affiliate'
   },
 }
