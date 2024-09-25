@@ -89,8 +89,18 @@ const onResponse = (response) => {
   if (res.code !== ResponseCode.SUCCESS) {
     const store = useStore()
     // const siteId = store.state.user.siteId
-    if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
-      sessionStorage.setItem('myIPAddress', res.data)
+    if(res.code === ResponseCode.ERROR_FORBIDDEN2 || res.code === ResponseCode.ERROR_FORBIDDEN3){
+      // debugger;
+      if(res.data){
+        sessionStorage.setItem('myIPAddress', res.data)
+      }
+      if(res.ip){
+        sessionStorage.setItem('myIPAddress', res.ip)
+      }
+      if(res.loginName){
+        sessionStorage.setItem('myloginName', res.loginName)
+      }
+
       window.location.href = '/403';
       return;
     }

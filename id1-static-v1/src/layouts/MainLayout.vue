@@ -116,6 +116,9 @@ import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 import { translateRecord } from "src/directives/translate";
 
@@ -123,6 +126,9 @@ export default defineComponent({
   name: "MainLayout",
 
   setup() {
+    const { t } = useI18n();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -178,7 +184,7 @@ export default defineComponent({
           pageName.value = "";
         } else if (route.path === "/account/bank") {
           hasPage.value = true;
-          pageName.value = "Bank";
+          pageName.value = t("header.bank");
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
@@ -216,6 +222,10 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = false;
           pageName.value = "Earn Money";
+        } else if (route.path === "/language") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = t("header.language");
         } else if (route.path === "/bonus") {
           prevPage.value = "/";
           // hasPage.value = true;
@@ -518,7 +528,8 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      languageVal
     };
   }
 });

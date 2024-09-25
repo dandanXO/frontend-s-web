@@ -1,38 +1,33 @@
 <template>
-  <div class="node" v-if="list && list.length !== 0">
-    <div class="" v-if="level === 1" />
+  <div v-if="list && list.length !== 0" class="node">
+    <div v-if="level === 1" class="" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
-    <div class="account-title-container" v-else>
-      <span class="account-title">{{ name }}</span>
+    <div v-else class="account-title-container">
+      <!-- <span class="account-name">{{ name }}</span> -->
     </div>
     <div class="node-content payment-method-wrapper">
       <div
-        class="node-item payment-method-item"
-        :id="level + '_' + i"
-        @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
-        ]"
-        :key="i"
         v-for="(item, i) in list"
+        :id="level + '_' + i"
+        :key="i"
+        class="node-item payment-method-item"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+        @click="clickItem(item)"
       >
         <div class="node-text">
           <img :src="imgURL + item.nodeIcon" />
           <div>{{ item.nodeName }}</div>
           <div
             class="promo"
-            :style="
-              item.promoStyle + 'background-image: url(' + item.promoIcon + ')'
-            "
+            :style="item.promoStyle + 'background-image: url(' + imgURL + '/label/' + item.promotionIcon + ')'"
           >
             <span class="val">{{ item.promoValue }}</span>
           </div>
           <div class="payment-method-wrapper">
             <div
-              class="payment-method-item"
               v-for="pm in payMethods"
               :key="pm.id"
+              class="payment-method-item"
               :class="{ active: pm.nodeName === activeMethod }"
             >
               <img :src="imgURL + pm.nodeIcon" />
@@ -53,18 +48,15 @@
       <!-- </div> -->
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
     </div>
-    <div :key="i + nodeKey" v-for="(item, i) in list">
+    <div v-for="(item, i) in list" :key="i + nodeKey">
       <node
-        @click="clickItem(item)"
-        :name="item.nodeName"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
-        ]"
         v-if="selectItem === item"
+        :name="item.nodeName"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
         :level="parseInt(level) + 1"
         :list="item.children"
         v-bind="$attrs"
+        @click="clickItem(item)"
       />
     </div>
   </div>
@@ -76,44 +68,49 @@ import { defineComponent, reactive } from "vue";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
-  // setup: (props, { emit }) => {},
-  emits: ["clicked"],
   props: {
     list: {
       type: Array,
       default: function () {
         return [];
-      },
+      }
     },
     level: {
       type: Number,
-      default: 0,
+      default: 0
     },
     name: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
+  // setup: (props, { emit }) => {},
+  emits: ["clicked"],
   data() {
     return {
       ruleForm: {
         name: "",
         icon: "",
-        add: false,
+        add: false
       },
       selectItem: null,
       dialogVisible: false,
       payMethods: reactive([]),
-      imgURL: process.env.VUE_APP_IMAGE_CDN + "/",
-      nodeKey: 0,
+      imgURL: process.env.VUE_APP_IMAGE_CDN + "/payment/",
+      nodeKey: 0
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.firstTime(this.list[0]);
+    });
   },
   methods: {
     firstTime(item) {
       if (item) {
         item.hasActive = true;
         this.selectItem = item;
-        this.$emit("clicked", this.selectItem);
+        // this.$emit("clicked", this.selectItem);
         if (item.group) {
           this.$emit("clicked", item.children[0]);
         } else {
@@ -129,9 +126,7 @@ export default defineComponent({
         item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find(
-            (child) => child.hasActive === true
-          );
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -149,13 +144,8 @@ export default defineComponent({
       item.hasActive = true;
       this.selectedItem = item;
       this.$emit("clicked", this.selectedItem);
-    },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.firstTime(this.list[0]);
-    });
-  },
+    }
+  }
 });
 </script>
 <style lang="scss" scoped>
@@ -175,8 +165,7 @@ $node-color: #dd4645;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 .title::before {
   top: 8px;
@@ -185,6 +174,47 @@ $node-color: #dd4645;
 .title::after {
   top: 15px;
   left: -10px;
+}
+
+.dark-theme {
+  .node {
+    .node-content {
+      .node-item {
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .payment-method-item {
+        background: unset;
+        color: #ffffff;
+        &.active {
+          // background: rgba(255,255,255,.3);
+          background: #ffffff0d;
+          border: 1px solid #48a7ff;
+          filter: none;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .node {
+    .node {
+      .node-content {
+        .node-item {
+          color: rgba(255, 255, 255, 0.3);
+          &.payment-method-item {
+            background: #ffffff0f;
+            color: #ffffff;
+            &.active {
+              background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+                linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+              border: 1px solid #48a7ff;
+              filter: none;
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 .payment-method-wrapper {
   // display: grid;
@@ -199,9 +229,9 @@ $node-color: #dd4645;
 
   .payment-method-item {
     text-align: center;
-    border-radius: 6px;
-    border: solid 1px #484460;
-    color: #ffffff;
+    border-radius: 12px;
+    color: #2222224d;
+
     cursor: pointer;
     padding: 20px 35px;
     &:hover {
@@ -209,7 +239,6 @@ $node-color: #dd4645;
     }
     &.active {
       // background: rgba(255,255,255, .2);
-      border-color: $node-color;
     }
 
     // &.node-group {
@@ -220,8 +249,9 @@ $node-color: #dd4645;
     // }
 
     img {
-      max-width: 50px;
+      max-width: 60px;
       margin-bottom: 10px;
+      border-radius: 12px;
     }
   }
 }
@@ -248,8 +278,29 @@ $node-color: #dd4645;
     .account-title-container {
       margin: 0 -30px;
       background: none;
-      border-top: 1px solid #484460;
+      border-top: 1px solid #83a3ca33;
       font-weight: bold;
+    }
+    .node-content {
+      .node-item.payment-method-item {
+        border-radius: 40px;
+        border: 1px solid #eaeaea;
+        font-weight: normal;
+        background: #ecf5ff;
+        color: #2b2b82;
+        min-width: 10rem;
+        &.active {
+          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+            linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+          color: #ffffff;
+          font-weight: bold;
+        }
+      }
+      .node-text {
+        img {
+          display: none;
+        }
+      }
     }
   }
   .node-content {
@@ -257,15 +308,12 @@ $node-color: #dd4645;
       text-align: center;
       padding: 10px 8px;
       cursor: pointer;
-      background: #2b2b4b;
-      box-shadow: 6px 6px #161b23;
 
       &:hover {
       }
       &.active {
-        background-color: #1c1c32;
-        border-radius: 6px;
-        border: solid 1px #1c1c32;
+        background: #075be81a;
+        color: #075be8;
         box-shadow: none;
         filter: drop-shadow(0px 0px 3px #ffffff);
       }
@@ -274,6 +322,9 @@ $node-color: #dd4645;
       display: flex;
       justify-content: center;
       min-width: 6rem;
+      // width: 140px;
+      font-weight: 700;
+      font-family: "Arial";
       .payment-method-wrapper {
         display: none;
       }
@@ -282,9 +333,10 @@ $node-color: #dd4645;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       gap: 10px;
+      font-size: 14px;
       img {
-        max-width: 2.3rem;
         margin-bottom: 0;
       }
     }
@@ -298,7 +350,7 @@ $node-color: #dd4645;
   //   position: relative;
   //   width: 100%;
   //   margin: 20px auto;
-  //   background: #23263c;
+  //
   // }
   // .node {
   //   .node-content {
@@ -384,7 +436,7 @@ $node-color: #dd4645;
       //   right: 1px;
       //   top: 3px;
       //   font-size: 8px;
-      //   color: #FFFFFF;
+      //
       //   display: block;
       //   background: #cd1e1e;
       // }
@@ -408,7 +460,7 @@ $node-color: #dd4645;
   //   }
   // }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .node {
     .node {
       .account-title-container {

@@ -1,37 +1,22 @@
 <template>
   <div class="promo-container">
     <div class="banner-container">
-      <img src="../assets/images/promotion/banner.jpg">
-      <!-- <div class="btn-wrapper">
-        <div class="center">
-          <div class="page-headline">Daily</div>
-          <div class="page-subline">Deposit 10%</div>
-          <div class="page-blend">UP TO <span class="pesos">₱</span>5,000</div>
-          <div class="page-liner">
-            Araw-araw na 10% deposito, hanggang 5,000 pesos
-          </div>
-        </div>
-      </div> -->
+      <img src="../assets/images/promotion/banner.jpg" />
     </div>
     <div class="hot-promo">
-      <HotPromotion :list="[{ name: '122'}]" />
+      <HotPromotion :list="[{ name: '122' }]" />
     </div>
-    <div class="promo-view-container">
-      Other promo details
-    </div>
+    <div class="promo-view-container">Other promo details</div>
   </div>
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive } from "vue";
+import { defineComponent, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import {RiFunctionLine} from 'vue-remix-icons'
-import { loadPromo } from "@/api/index/promo.js";
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
-    RiFunctionLine,
     HotPromotion
   },
   setup() {
@@ -48,10 +33,8 @@ export default defineComponent({
 <style scoped lang="scss">
 .promo-container {
   padding-bottom: 80px;
-  background: linear-gradient(to bottom, #23263c, #190f25);
-
   min-height: 70vh;
-  color: #ffffff;
+
   .banner-container {
     font-size: 30px;
     background-repeat: no-repeat;
@@ -59,7 +42,7 @@ export default defineComponent({
     display: flex;
     .btn-wrapper {
       width: 95%;
-      max-width: 1400px;
+      max-width: $container-width;
       margin: auto;
       position: relative;
       text-align: right;
@@ -73,7 +56,7 @@ export default defineComponent({
         justify-content: center;
         align-items: center;
         width: 52%;
-        color: #ffffff;
+
         .page-headline {
           font-size: 150px;
           line-height: 150px;
@@ -88,7 +71,7 @@ export default defineComponent({
         .page-blend {
           background-image: linear-gradient(to right, #de4545, #db7e42);
           font-family: Wave;
-          color: #ffffff;
+
           font-size: 60px;
           line-height: 60px;
           padding: 15px;
@@ -118,14 +101,13 @@ export default defineComponent({
     }
   }
   .promo-main-container {
-    max-width: 1400px;
+    max-width: $container-width;
     width: 95%;
     margin-left: auto;
     margin-right: auto;
     .promo-type-wrapper {
       display: flex;
       justify-content: center;
-      // border-bottom: 4px solid rgb(255 255 255 / 15%);
       .type-list {
         display: flex;
         justify-content: center;
@@ -138,7 +120,6 @@ export default defineComponent({
           padding: 5px 10px;
           cursor: pointer;
           border-radius: 20px;
-          background: #2b2b4b;
           box-shadow: 0 0 10px -3px #000000;
           white-space: nowrap;
           svg {
@@ -160,49 +141,6 @@ export default defineComponent({
           }
         }
       }
-      //   display: flex;
-      //   align-items: center;
-      //   gap: 10px;
-      //   overflow-x: auto;
-      //   padding-bottom: 20px;
-      //   .type-item {
-      //   font-size:15px;
-      //   line-height: 20px;
-      //     cursor: pointer;
-      //     white-space: nowrap;
-      //     padding: 10px 28px;
-      //     border-radius: 30px;
-      //     background-image: linear-gradient(to right, #4c4c4c, #858585);
-      //     // &.active {
-      //     //   color: $color-primary-active;
-      //     //   border-bottom: 4px solid #1bcef1;
-      //     //   margin-bottom: -1px;
-      //     // }
-      //     svg {
-      //       width: 20px;
-      //       display: block;
-      //       fill: #ffffff;
-      //     }
-      //     img {
-      //       filter: grayscale(1);
-      //       max-height: 30px;
-      //     }
-      //     &.active {
-      //       // color: #db7e42;
-      //       // */
-      //       background-image: linear-gradient(to right, #de4545, #db7e42);
-
-      //       img {
-      //         filter: grayscale(0);
-      //       }
-      //       svg {
-      //         // fill: #db7e42;
-      //       }
-
-      //       // border-bottom: 4px solid #db7e42;
-      //     }
-      //   }
-      // }
     }
     .promo-list-wrapper {
       margin-top: 30px;
@@ -226,7 +164,7 @@ export default defineComponent({
         .promo-img-wrapper {
           position: relative;
           overflow: hidden;
-          border-radius: 10px 10px 0 0;
+          border-radius: 10px;
 
           .promo-img {
             // position: absolute;
@@ -240,6 +178,7 @@ export default defineComponent({
           // position: absolute;
           text-align: right;
           border-radius: 0 0 10px 10px;
+          display: none;
 
           left: 0;
           bottom: 0;
@@ -270,7 +209,7 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .promo-container {
     .banner-container {
       background-position: 30% 50%;
@@ -300,37 +239,13 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .promo-container {
     padding-bottom: 60px;
     min-height: 100vh;
     .web-only-box {
       display: none;
     }
-    // .banner-container {
-    //   font-size: 1rem;
-    //   padding: 130px 0;
-    //   background-size: cover;
-    //   // height: 10rem;
-    //   height: unset;
-    //   background-image: url("../assets/images/promotion/banner-mob.png");
-    //   background-position: center center;
-    //   .title-container {
-    //     width: 100%;
-    //     &.large {
-    //       padding: 0;
-    //       .game-title {
-    //         font-size: 2.4rem;
-    //         &:before {
-    //           display: none;
-    //         }
-    //         &:after {
-    //           display: none;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
     .promo-main-container {
       width: 95%;
       .promo-type-wrapper {

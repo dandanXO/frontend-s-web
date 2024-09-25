@@ -1,25 +1,20 @@
 <template>
   <div class="common-promo">
-    <img
-      :src="
-        require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)
-      "
-    />
+    <img :src="require(`../../assets/images/promotion/hotpromo/${promoCode}/icon.png`)" />
+
     <div class="contents">
-      The daily reload bonus will be automatically created to the member's main
-      wallet once the deposit is successful.
-      <a-button
-        class="claim-btn"
-        :loading="loadingClaim"
-        @click="$emit('daily-slot')"
-        >Claim Daily Rebate</a-button
-      >
+      <a-button class="claim-btn" :loading="loadingClaim" @click="$emit('daily-slot')">Claim Bonus</a-button>
       <div v-if="promoId === 19" class="orange">
-        *The rebate bonus needs 1 times rollover before withdrawing and will be
-        returned if not used within 30 days.
+        *The rebate bonus needs 1 times rollover before withdrawing and will be returned if not used within 30 days.
       </div>
       <div v-if="promoId === 27" class="extra-img">
         <img src="../../assets/images/promotion/hotpromo/common/extra.png" />
+      </div>
+      <div v-if="promoCode === 'p4w-vip-refund'">
+        The daily reload bonus will be automatically created to the member's main wallet once the deposit is successful.
+      </div>
+      <div v-if="promoCode === 'P4W-CNY-VIP-RED-PACKET'">
+        The daily reload bonus will be automatically created to the member's main wallet once the deposit is successful.
       </div>
     </div>
   </div>
@@ -31,24 +26,27 @@ export default defineComponent({
   props: {
     loadingClaim: {
       type: Boolean,
-      default: false,
+      default: false
     },
     promoId: {
       type: Number,
-      default: null,
+      default: null
     },
+    promoCode: {
+      type: String,
+      default: null
+    }
   },
   emits: ["daily-slot"],
   setup() {
     onMounted(() => {});
     return {};
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
 .common-promo {
-  background: url("../../assets/images/promotion/hotpromo/common/bg.png")
-    no-repeat center center;
+  background: url("../../assets/images/promotion/hotpromo/common/bg.png") no-repeat center center;
   .contents {
     display: flex;
     flex-direction: column;
@@ -60,8 +58,9 @@ export default defineComponent({
       color: #db7e42;
     }
     .claim-btn {
-      color: #ffffff;
-      background: #db7e42;
+      background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+      border-radius: 12px;
+      color: #fff;
       border: 0;
     }
   }

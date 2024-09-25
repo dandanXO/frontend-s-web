@@ -11,30 +11,43 @@
           <account-menu />
         </div>
         <div class="account-box account-content-wrapper">
-          <router-view />
-        </div></div
-    ></a-config-provider>
+          <router-view :class="{ menuactive: globalStore.isMenuActive }" />
+        </div>
+      </div>
+    </a-config-provider>
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent } from "vue";
-import { Empty } from 'ant-design-vue'
+import { defineComponent, watchEffect, ref } from "vue";
 import AccountMenu from "@/components/account/AccountMenu.vue";
 import "@/assets/css/account.scss";
+import Empty from "@/assets/images/empty.png";
+import EmptyDark from "@/assets/images/emptydark.png";
+import { globalStore } from "@/store";
 
 export default defineComponent({
-  beforeCreate() {
-    this.simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
-  },
   name: "PersonalLayoutView",
   components: {
     AccountMenu
   },
   setup() {
-    return {};
+    const simpleImage = ref(Empty)
+    watchEffect(() => {
+      // Update simpleImage based on isDarkMode
+      simpleImage.value = globalStore.isDarkMode ? EmptyDark : Empty;
+    });
+    return {
+      globalStore,
+      simpleImage
+    };
   }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+:deep(.ant-empty-image) {
+  height: 200px;
+  margin-bottom: 0;
+}
+</style>

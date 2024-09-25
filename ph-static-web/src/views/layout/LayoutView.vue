@@ -3,27 +3,45 @@
     <keep-alive>
       <common-header />
     </keep-alive>
-    <router-view class="router-view" v-slot="{ Component }">
+    <router-view v-slot="{ Component }" class="router-view">
       <transition name="component-fade" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
-    <common-footer />
+
+    <!-- <AssistancePopup /> -->
+    
+    <common-footer v-if="isFooter" />
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent } from "vue";
+import {computed, defineComponent} from "vue";
 import CommonHeader from "@/components/layout/CommonHeader.vue";
 import CommonFooter from "@/components/layout/CommonFooter.vue";
+import AssistancePopup from "@/components/modal/AssistancePopup.vue";
+import {useRoute} from "vue-router";
 export default defineComponent({
   name: "LayoutView",
   components: {
     CommonHeader,
     CommonFooter,
+    AssistancePopup
   },
   setup() {
-    return {};
+    const route= useRoute();
+
+    const isFooter = computed(() => {
+      if(route.path === '/e-sport' || route.path === '/sport'){
+        return false;
+      }
+      return true;
+    })
+
+
+    return {
+      isFooter
+    };
   },
 });
 </script>

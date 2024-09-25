@@ -203,7 +203,7 @@
             "
             @click="submitKYC"
           >
-            Submit
+            {{ $t("btn.submit") }}
           </q-btn>
         </div>
       </div>

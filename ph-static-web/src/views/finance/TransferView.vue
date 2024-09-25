@@ -3,13 +3,14 @@
     <div class="menu-title-container">
       <span class="menu-title">Quick Transfer</span>
     </div>
-    <div class="account-content"></div>
+    <div class="account-content" />
     <div class="account-content quicktransfer">
       <div class="flex-box transfer-top-container">
         <div class="main">Main Account</div>
         <div class="balance">
           <div class="balance-wrapper">
-            <span class="currency">฿</span> {{ mainWallet }}
+            <span class="currency">฿</span>
+            {{ mainWallet }}
           </div>
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <RiRestartLine />
@@ -23,22 +24,25 @@
       <div class="quicktransfer-wrapper">
         <div class="transfer-plat-wrapper">
           <div
-            class="transfer-plat-item"
-            :class="{
-              active: index === isCardActive,
-            }"
             v-for="(p, index) in platforms"
             :key="p.id"
+            class="transfer-plat-item"
+            :class="{
+              active: index === isCardActive
+            }"
           >
             <div class="flex-box flex-justify-space transfer-balance-box">
               <div class="platform-details">
                 <div class="name-wrapper" @click="showCard(p, index)">
                   <div class="grey">Name</div>
-                  <div class="plat-name">{{ p.code }}</div>
+                  <div class="plat-name">
+                    {{ p.code }}
+                  </div>
                 </div>
                 <div class="balance-wrapper" @click="showCard(p, index)">
                   <div class="grey">Balance</div>
-                  {{ p.amount }}<span class="currency">฿</span>
+                  {{ p.amount }}
+                  <span class="currency">฿</span>
                 </div>
                 <div class="balance-refresh" @click="refreshBalance(p.code)">
                   <RiRestartLine />
@@ -46,30 +50,28 @@
               </div>
             </div>
 
-            <div
-              v-if="index === isCardActive"
-              class="flex-box flex-wrap transfer-action-box"
-            >
+            <div v-if="index === isCardActive" class="flex-box flex-wrap transfer-action-box">
               <a-form
                 ref="formRef"
-                :hideRequiredMark="true"
+                :hide-required-mark="true"
                 :model="transferInfo"
                 :rules="rules"
                 :label-col="{ span: 4 }"
                 type="vertical"
               >
                 <a-form-item ref="amount" name="amount" style="margin: 0">
-                  <a-input
-                    v-model:value="transferInfo.amount"
-                    placeholder="Amount"
-                  />
+                  <a-input v-model:value="transferInfo.amount" placeholder="Amount" />
                 </a-form-item>
               </a-form>
               <button class="transfer-btn" @click="submitTransfer(0, p.code)">
-                <div class="in"><RiDownload2Line /></div>
+                <div class="in">
+                  <RiDownload2Line />
+                </div>
               </button>
               <button class="transfer-btn" @click="submitTransfer(1, p.code)">
-                <div class="out"><RiUpload2Line /></div>
+                <div class="out">
+                  <RiUpload2Line />
+                </div>
               </button>
             </div>
           </div>
@@ -82,12 +84,12 @@
 <script lang="js">
 import { defineComponent, ref, reactive, computed, onMounted } from "vue";
 import { loadBalance } from "@/api/personal/personal";
-import { transfer, getPlatforms } from "@/api/personal/transfer";
+import { transfer } from "@/api/personal/transfer";
 import { message } from "ant-design-vue";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
 import { RiRestartLine, RiDownload2Line, RiUpload2Line} from "vue-remix-icons";
-
+import {  getPlatformList } from "@/api/platform/platform";
 
 export default defineComponent({
   name: "TransferView",
@@ -133,7 +135,7 @@ export default defineComponent({
       }
     };
     const loadPlatform = () => {
-      getPlatforms().then((response) => {
+		getPlatformList().then((response) => {
         response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
           platforms.push({
             id: p.id,
@@ -237,7 +239,6 @@ export default defineComponent({
 .account-container {
   .account-content-wrapper {
     .balance-wrapper {
-      color: #ffffff;
       font-size: 24px;
       line-height: 24px;
     }
@@ -433,7 +434,7 @@ export default defineComponent({
   width: 100%;
   cursor: pointer;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .account-container {
     .account-content-wrapper {
       .transfer-top-container {

@@ -1,9 +1,6 @@
 <template>
   <div class="poker-container">
-    <q-scroll-area
-      style="height: 100vh; padding-bottom: 10px"
-      :thumb-style="{ width: 0 }"
-    >
+    <q-scroll-area style="height: 100vh; padding-bottom: 10px" :thumb-style="{ width: 0 }">
       <q-intersection transition="scale">
         <!-- <div v-if="banner.mobileImageUrl" class="banner-container">
           <div
@@ -15,29 +12,15 @@
         </div> -->
 
         <div class="section-product">
-          <div
-            class="item-group"
-            data-aos="slide-down"
-            data-aos-easing="ease-out"
-            data-aos-duration="1000"
-          >
-            <div
-              v-for="(p, index) in pokerGames"
-              :key="index"
-              class="set aos-init aos-animate"
-              data-aos="fade-up"
-            >
+          <div class="item-group" data-aos="slide-down" data-aos-easing="ease-out" data-aos-duration="1000">
+            <div v-for="(p, index) in pokerGames" :key="index" class="set aos-init aos-animate" data-aos="fade-up">
               <div class="items" @click="playGame(p.name, p.code, p.gameCode, p.status)">
                 <div class="bgimg">
                   <div class="theme">
                     <img :src="p.bg" alt="" />
                     <img
                       class="logo"
-                      :style="
-                        p.name === 'KM'
-                          ? 'max-height: 5%; bottom: 15%; left: -5%;'
-                          : ''
-                      "
+                      :style="p.name === 'KM' ? 'max-height: 5%; bottom: 15%; left: -5%;' : ''"
                       :src="p.logo"
                     />
                   </div>
@@ -47,14 +30,14 @@
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-        <img src="../../assets/images/games/liveCasino/live-bg.png" />
+        <!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>
 </template>
 
 <script setup>
-// import { loadPromoBanner } from "@/api/index/promo";
+// import { loadPromoBanner } from "src/api/index/promo";
 import { onMounted, ref } from "vue";
 import GameModal from "components/modal/GameModal";
 import { api } from "boot/axios";
@@ -73,8 +56,8 @@ function playGame(gameName, platformCode, gameCode, gameStatus) {
 //         category: "LIVE"
 //       }
 //     })
-//     .then((ret) => {
-//       const res = ret.data;
+//     .then((res) => {
+//       ;
 //       if (res.code === 0) {
 //         banner.value = res.data[0];
 //       }
@@ -87,8 +70,6 @@ const pokerGames = [
     status: "NORMAL",
     gameName: "Jili",
     gameCode: "64",
-    bg: require("../../assets/images/games/poker/jili.png"),
-    main: require("../../assets/images/games/poker/poker1_1.png"),
     logo: require("../../assets/images/common/logo/jl.png")
   },
   {
@@ -96,8 +77,6 @@ const pokerGames = [
     name: "Rich88",
     status: "NORMAL",
     gameName: "Rich88",
-    bg: require("../../assets/images/games/poker/rich88.png"),
-    main: require("../../assets/images/games/poker/poker2_01.png"),
     logo: require("../../assets/images/common/logo/RICH88.png")
   },
   {
@@ -105,8 +84,6 @@ const pokerGames = [
     name: "KM",
     status: "NORMAL",
     gameName: "KM",
-    bg: require("../../assets/images/games/poker/kingmaker.png"),
-    main: require("../../assets/images/games/poker/poker3_01.png"),
     logo: require("../../assets/images/common/logo/km.png")
   }
 ];
@@ -115,7 +92,9 @@ onMounted(() => {});
 <style scoped lang="scss">
 $max-width: 1400px;
 .poker-container {
-  background: linear-gradient(to bottom, #23263c, #190f25);
+  background-color: #f5faff;
+  //background-image: url("../../assets/images/account/bg-23.png");
+
   img {
     width: 100%;
   }

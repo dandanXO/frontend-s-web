@@ -4,7 +4,10 @@ export const useUI = defineStore("ui-store", {
   state: () => {
     return {
       footer: true,
-      orientation: 'landscape',
+      orientation: "landscape",
+      isAffiliateA: false,
+      isAffiliate5D9325: false,
+      appVersion: ""
     };
   },
   actions: {
@@ -16,10 +19,13 @@ export const useUI = defineStore("ui-store", {
       this.footer = true;
     },
     orientationPotrait() {
-      this.orientation = 'portrait'
+      this.orientation = "portrait";
     },
     orientationLandscape() {
-      this.orientation = 'landscape'
+      this.orientation = "landscape";
+    },
+    setVersion(version) {
+      this.appVersion = version;
     }
   }
 });

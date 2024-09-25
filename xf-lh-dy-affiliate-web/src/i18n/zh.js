@@ -290,6 +290,7 @@ export default {
     estimatedAffiliateCommission: '预计代理佣金',
     estimatedMemberCommission: '预计会员佣金',
     ewallet: '电子钱包',
+    eventClickCount: '页面点击',
     finalSum: '最终佣金',
     finishDate: '订单处理时间',
     firstDepositAmount: '首充金额',
@@ -726,7 +727,7 @@ export default {
     'Daily Summary': '每日全总览',
     Withdraw: '银行提款',
     'Rebate Report': '返水报表',
-    'AffiliateOwnSummary': '本代理总结',
+    AffiliateOwnSummary: '本代理总结',
   },
   posterType: {
     OVERALL: '综合推广图',
