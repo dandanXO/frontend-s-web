@@ -1012,8 +1012,10 @@ async function showEdit(privilegeInfo) {
       const gameTypeRollover = JSON.parse(form.gameTypeRollover)
       const string = gameTypeRollover.rolloverType;
       const parts = string ? string.split('_') : "";
-      const type = parts ? parts.slice(2).join('_') : "";
-
+      var type = parts ? parts.slice(2).join('_') : "";
+      if (!(gameTypeRollover && 'gameTypes' in gameTypeRollover)) {
+        type = "GAME_TYPE";
+      }
       if (gameTypeRollover.newRollover) {
         uiControl.isNewRollover = true;
         selectedRolloverType.value = parts[1];
@@ -1031,11 +1033,8 @@ async function showEdit(privilegeInfo) {
         if (key === 'rollover') {
           uiControl.rollOverAmt = value; // Set rollover amount
         } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes') {
-          // Handle individual game types
           gameTypes.value.push({ key, value });
-          gameType = true;
         } else if (key === 'gameTypes' && Array.isArray(value)) {
-          // Handle 'gameTypes' specifically if it's an array
           value.forEach(type => {
             gameTypes.value.push({ key: type, value: null }); // Add each game type to gameTypes array
           });
@@ -1047,7 +1046,6 @@ async function showEdit(privilegeInfo) {
       } else if (gameType) {
         uiControl.selectedGameTypeRolloverType = 'GAME_TYPE'
       }
-
       if (string === "ANY_TYPES") {
         uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
       }
@@ -1223,7 +1221,7 @@ function constructRollover() {
 
   const json = { newRollover: true };
   if (uiControl.selectedGameTypeRolloverType === 'GAME_TYPE') {
-    json.rolloverType = 'INDIVIDUAL_' + selectedRolloverType.value + '_' + uiControl.selectedGameTypeRolloverType
+    json.rolloverType = 'INDIVIDUAL_' + selectedRolloverType.value + '_SPECIFY_TYPES'
     Object.values(gameTypes.value).forEach(item => {
       if (item.key) {
         json[item.key] = item.value;

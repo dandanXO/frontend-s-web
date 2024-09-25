@@ -700,7 +700,7 @@ function delRollover(index) {
 function constructRollover() {
   const json = { newRollover: true };
   if (uiControl.selectedGameTypeRolloverType === 'GAME_TYPE') {
-    json.rolloverType = 'INDIVIDUAL_' + selectedRolloverType.value + '_' + uiControl.selectedGameTypeRolloverType
+    json.rolloverType = 'INDIVIDUAL_' + selectedRolloverType.value + '_SPECIFY_TYPES'
     Object.values(gameTypes.value).forEach(item => {
       if (item.key) {
         json[item.key] = item.value;
@@ -856,8 +856,10 @@ function selectPrivilege(val) {
         const gameTypeRollover = JSON.parse(privilege.gameTypeRollover)
         const string = gameTypeRollover.rolloverType;
         const parts = string ? string.split('_') : "";
-        const type = parts ? parts.slice(2).join('_') : "";
-
+        var type = parts ? parts.slice(2).join('_') : "";
+        if (!(gameTypeRollover && 'gameTypes' in gameTypeRollover)) {
+          type = "GAME_TYPE";
+        }
         if (gameTypeRollover.newRollover) {
           // uiControl.isNewRollover = true;
           selectedRolloverType.value = parts[1];
