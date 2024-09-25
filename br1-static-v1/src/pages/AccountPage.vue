@@ -51,7 +51,7 @@
               class="btn-refresh"
               no-caps
               icon="refresh"
-              label="Updated"
+              label="Atualizado"
               :loading="loadingUpdated"
               @click="startRefresh"
             >

@@ -81,7 +81,7 @@ export default {
   },
   form: {
     prependNumber: "+55",
-    phone: "Número de Telefone",
+    phone: "Telefone",
     phone_placeholder: "Por favor, insira o número de telefone",
     phone_rules_01: "Por favor, insira o número de telefone",
     phone_rules_02: "O número de telefone deve ter 11 dígitos",
