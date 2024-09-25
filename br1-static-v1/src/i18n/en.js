@@ -116,6 +116,7 @@ export default {
     confirmNewPassword_rules_01: "Please insert new confirm password",
     confirmNewPassword_rules_02: "Password Must Be 6 To 11 Character",
     confirmNewPassword_rules_03: "Confirm password does not match",
+    mustBeAlphaNumeric: "The {field} field must be alphanumeric",
     depositAmount: "Amount",
     depositAmount_placeholder: "Please enter the amount",
     depositAmount_rules_01: "Deposit should be between ",
