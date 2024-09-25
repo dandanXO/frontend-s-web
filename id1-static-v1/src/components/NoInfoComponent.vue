@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-const props = defineProps(["noInfoTitle","shortenContainer"]);
+const props = defineProps(["noInfoTitle", "shortenContainer"]);
 </script>
 
 <style scoped lang="scss">
@@ -20,7 +20,7 @@ const props = defineProps(["noInfoTitle","shortenContainer"]);
   justify-content: center;
   gap: 10px;
 
-  &.shorten-container{
+  &.shorten-container {
     min-height: calc(50vh - 130px);
   }
 

@@ -1,9 +1,9 @@
-import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
-import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
-import OneSignal from "onesignal-cordova-plugin";
 import { isAndroid } from "boot/utils";
+import OneSignal from "onesignal-cordova-plugin";
+import { defineStore } from "pinia";
+import { Notify, Platform, SessionStorage } from "quasar";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";

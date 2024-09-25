@@ -1,12 +1,5 @@
 <template>
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    "
-  ></div>
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh"></div>
 </template>
 <script setup>
 import { onMounted } from "vue";

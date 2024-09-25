@@ -358,11 +358,14 @@
 </template>
 
 <script setup>
-import { watch, ref, onActivated } from "vue";
-import ProfileSummary from "components/ProfileSummary.vue";
+import { onActivated, ref, watch } from "vue";
+
 import { useRoute, useRouter } from "vue-router";
-import { userStore } from "stores/index";
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+
+import ProfileSummary from "@/components/ProfileSummary.vue";
+import { userStore } from "@/stores/index";
+
+import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 
 const vipLevel = ref("");

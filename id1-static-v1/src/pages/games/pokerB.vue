@@ -5,9 +5,7 @@ a
       <div
         v-if="banner.desktopImageUrl"
         class="promo-bg isDesktop"
-        :style="
-          'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
-        "
+        :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
       ></div>
       <div
         v-if="banner.mobileImageUrl"
@@ -16,18 +14,8 @@ a
       ></div>
     </div>
     <div class="section-product">
-      <div
-        class="item-group"
-        data-aos="slide-down"
-        data-aos-easing="ease-out"
-        data-aos-duration="1000"
-      >
-        <div
-          v-for="(p, index) in pokerGames"
-          :key="index"
-          class="set aos-init aos-animate"
-          data-aos="fade-up"
-        >
+      <div class="item-group" data-aos="slide-down" data-aos-easing="ease-out" data-aos-duration="1000">
+        <div v-for="(p, index) in pokerGames" :key="index" class="set aos-init aos-animate" data-aos="fade-up">
           <div class="items" @click="playGame(p.name, p.code, p.gameCode)">
             <div class="theme">
               <img :src="p.bg" alt="" />
@@ -36,14 +24,10 @@ a
               <img :src="p.main" alt="" />
             </div>
             <div class="txt">
-              <img
-                :style="p.name === 'Evolution' ? 'max-height:23px;' : ''"
-                :src="p.logo"
-              />
+              <img :style="p.name === 'Evolution' ? 'max-height:23px;' : ''" :src="p.logo" />
               <p>
-                The most innovative gaming experience, Most Classic Live
-                Games.Live Baccarat, Sic Bo, Dragon Tiger, Roulette, Blackjack
-                and other live game shows.
+                The most innovative gaming experience, Most Classic Live Games.Live Baccarat, Sic Bo, Dragon Tiger,
+                Roulette, Blackjack and other live game shows.
               </p>
             </div>
           </div>
@@ -262,10 +246,7 @@ $max-width: 1400px;
 </style>
 <template>
   <div class="live-container">
-    <q-scroll-area
-      style="height: 100%; padding-bottom: 10px"
-      :thumb-style="{ width: 0 }"
-    >
+    <q-scroll-area style="height: 100%; padding-bottom: 10px" :thumb-style="{ width: 0 }">
       <q-intersection transition="scale">
         <!-- <div v-if="banner.mobileImageUrl" class="banner-container">
           <div
@@ -277,12 +258,7 @@ $max-width: 1400px;
         </div> -->
 
         <div class="section-product">
-          <div
-            class="item-group"
-            data-aos="slide-down"
-            data-aos-easing="ease-out"
-            data-aos-duration="1000"
-          >
+          <div class="item-group" data-aos="slide-down" data-aos-easing="ease-out" data-aos-duration="1000">
             <div
               v-for="(p, index) in hotTrendingGames"
               :key="index"
@@ -295,11 +271,7 @@ $max-width: 1400px;
                     <img :src="p.bg" alt="" />
                     <img
                       class="logo"
-                      :style="
-                        p.name === 'Evolution'
-                          ? 'max-height:15px; bottom: 12%;'
-                          : ''
-                      "
+                      :style="p.name === 'Evolution' ? 'max-height:15px; bottom: 12%;' : ''"
                       :src="p.logo"
                     />
                   </div>
@@ -309,7 +281,7 @@ $max-width: 1400px;
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-<!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
+        <!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>

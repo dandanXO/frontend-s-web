@@ -92,7 +92,7 @@
                 <q-avatar icon="diamond" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>VIP</q-item-label>
+                <q-item-label>{{ $t("header.vip") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -103,7 +103,7 @@
               <q-item-section>
                 <q-item-label>
                   <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  Message
+                  {{ $t("header.message") }}
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -113,7 +113,9 @@
                 <q-avatar icon="receipt" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Order</q-item-label>
+                <q-item-label>
+                  {{ $t("header.order") }}
+                </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -124,7 +126,7 @@
                 <q-avatar icon="account_balance" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Bank</q-item-label>
+                <q-item-label>{{ $t("header.bank") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -133,7 +135,7 @@
                 <q-avatar icon="logout" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Log out</q-item-label>
+                <q-item-label>{{ $t("header.logout") }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -142,22 +144,18 @@
       <div class="profile-wrapper" v-else>
         <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
         <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
-        <!-- <div class="btn-lang" @click="router.push('/language')">
-          <img src="../assets/images/auth/icon-globe.png" />
-        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { useQuasar, Platform } from "quasar";
-import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
-import { useI18n } from "vue-i18n";
+import { Platform } from "quasar";
+import { convertToCommaAmount, isAndroid } from "src/boot/utils";
+import { userStore } from "stores/index";
+import { computed, onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);

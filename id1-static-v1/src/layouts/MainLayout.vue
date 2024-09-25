@@ -85,12 +85,12 @@
         <q-route-tab to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          Home
+          {{ $t("bottomNav.home") }}
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
-          Promo
+          {{ $t("bottomNav.promo") }}
         </q-route-tab>
         <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
           <img src="../assets/images/index/menu/deposit-icon.png" />
@@ -98,12 +98,12 @@
         <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
-          Earn Money
+          {{ $t("bottomNav.earnMoney") }}
         </q-route-tab>
         <q-route-tab to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          Me
+          {{ $t("bottomNav.me") }}
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -111,14 +111,14 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
-import { useI18n } from "vue-i18n";
-import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
+import { useI18n } from "vue-i18n";
 
 import { translateRecord } from "src/directives/translate";
 
@@ -278,7 +278,7 @@ export default defineComponent({
               prevPage.value = "/promo";
             }
           }
-        }else if (route.path === "/activities-details") {
+        } else if (route.path === "/activities-details") {
           prevPage.value = "/promo";
           hasPage.value = true;
           pageName.value = "Activities Details";
