@@ -182,7 +182,11 @@
         <div class="vip-boxes">
           <template v-for="category in categories" :key="category.key">
             <template v-for="(item, index) in vipItems" :key="index">
-              <template v-if="store.token && isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
+              <template
+                v-if="
+                  store.token && isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1
+                "
+              >
                 <div
                   class="box"
                   :class="{
@@ -507,7 +511,7 @@
             <td>VIP6</td>
             <!-- <td>黄金 III</td> -->
             <td>288元</td>
-            <td>1088</td>
+            <td>1,088</td>
             <td>88</td>
             <td>-</td>
             <td>0.8%</td>
@@ -518,7 +522,7 @@
             <td>VIP7</td>
             <!-- <td>黄金 II</td> -->
             <td>288元</td>
-            <td>1088</td>
+            <td>1,088</td>
             <td>188</td>
             <td>-</td>
             <td>1.0%</td>
@@ -529,7 +533,7 @@
             <td>VIP8</td>
             <!-- <td>黄金 I</td> -->
             <td>288元</td>
-            <td>1088</td>
+            <td>1,088</td>
             <td>288</td>
             <td>188</td>
             <td>1.2%</td>
@@ -540,7 +544,7 @@
             <td>VIP9</td>
             <!-- <td>铂金 II</td> -->
             <td>588元</td>
-            <td>1888</td>
+            <td>1,888</td>
             <td>388</td>
             <td>288</td>
             <td>1.3%</td>
@@ -551,7 +555,7 @@
             <td>VIP10</td>
             <!-- <td>铂金 I</td> -->
             <td>588元</td>
-            <td>1888</td>
+            <td>1,888</td>
             <td>588</td>
             <td>388</td>
             <td>1.5%</td>
@@ -562,7 +566,7 @@
             <td>VIP11</td>
             <!-- <td>钻石</td> -->
             <td>888元</td>
-            <td>2888</td>
+            <td>2,888</td>
             <td>888</td>
             <td>888</td>
             <td>1.8%</td>
@@ -573,12 +577,12 @@
             <td>VIP12</td>
             <!-- <td>王者</td> -->
             <td>1,888元</td>
-            <td>8888</td>
-            <td>1888</td>
-            <td>1888</td>
+            <td>8,888</td>
+            <td>1,888</td>
+            <td>1,888</td>
             <td>2.0%</td>
-            <td>1888</td>
-            <td>2888</td>
+            <td>1,888</td>
+            <td>2,888</td>
           </tr>
         </tbody>
       </table>
@@ -1227,20 +1231,20 @@ const handleSlideClick = (vipIndex) => {
 };
 const changeSlideToIsFirstTime = () => {
   isFirstTime.value = true;
-}
+};
 const next = () => {
   refCarousel.value.next();
   isFirstTime.value = false;
-}
+};
 const prev = () => {
   refCarousel.value.prev();
   isFirstTime.value = false;
-}
+};
 const slideTo = (vipIndex) => {
-  console.log(vipIndex)
+  console.log(vipIndex);
   isFirstTime.value = false;
   if (vipIndex || vipIndex === 0) {
-    console.log('i came in vip index');
+    console.log("i came in vip index");
     if (store.token && currentBetAmt.value >= currentUpgradeBetAmt.value) {
       currentSlide.value = vipIndex;
       return;
@@ -1277,7 +1281,7 @@ function formatNumber(value, type) {
     return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 }
-const tabActive = ref(1); 
+const tabActive = ref(1);
 const benefitActive = computed(() => tabActive.value === 1);
 const rebateActive = computed(() => tabActive.value === 2);
 watch(
