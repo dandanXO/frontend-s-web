@@ -34,6 +34,7 @@
           <img style="width: 100px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
+      <div id="captchaContainer"></div>
     </div>
 
     <div class="agreement-and-forget-pass">
@@ -119,6 +120,25 @@ const loadingBtn = ref(false);
 const router = useRouter();
 const route = useRoute();
 
+const message = ref("Loading Geetest...");
+
+// Dynamically load the Geetest script
+const loadScript = (src) => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+};
+
+// Initialize Geetest with configuration
+const initGeetest = (config) => {
+  console.log(config)
+  window.initGeetest4(config.config, config.handler);
+};
+
 const submitLogin = () => {
   loadingBtn.value = true;
   (async () => {
@@ -126,38 +146,50 @@ const submitLogin = () => {
     loginRef.value
       .validate()
       .then(() => {
-        store
-          .memberLogin({
-            loginName: loginForm.loginName,
-            password: loginForm.password,
-            sid: sidParam,
-            captchaCode: loginForm.captchaCode,
-            codeId: loginForm.codeId,
-            summoner: loginForm.summoner
-          })
-          .then(() => {
-            const jumpUrl = route.query.redirect
-              ? route.query.redirect.toString()
-              : props.pageType === "view"
-              ? "/"
-              : route.path;
-            if (store.token) {
-              router.push(jumpUrl);
+        if (window.captchaObj) {
+          const validate = window.captchaObj.getValidate();
+          if (!validate) {
+            alert("Please complete the captcha!");
+            return;
+          }
+          // You can now send the validate data to your backend
+          store
+            .memberLogin({
+              loginName: loginForm.loginName,
+              password: loginForm.password,
+              sid: sidParam,
+              captchaCode: loginForm.captchaCode,
+              codeId: loginForm.codeId,
+              summoner: loginForm.summoner,
+              // lotNumber: loginForm.lot_number,
+              // captchaOutput: loginForm.captcha_output,
+              // passToken: loginForm.pass_token,
+              // genTime: loginForm.gen_time,
+            })
+            .then(() => {
+              const jumpUrl = route.query.redirect
+                ? route.query.redirect.toString()
+                : props.pageType === "view"
+                ? "/"
+                : route.path;
+              if (store.token) {
+                router.push(jumpUrl);
 
-              sessionStorage.removeItem("REFERRAL_CODE");
-              sessionStorage.removeItem("SUMMON_CODE");
-              loginForm.loginName = null;
-              loginForm.password = null;
-              loginForm.captchaCode = null;
-              closeLoginDialog();
-            } else {
+                sessionStorage.removeItem("REFERRAL_CODE");
+                sessionStorage.removeItem("SUMMON_CODE");
+                loginForm.loginName = null;
+                loginForm.password = null;
+                loginForm.captchaCode = null;
+                closeLoginDialog();
+              } else {
+                getCode();
+              }
+            })
+            .catch((error) => {
+              console.log(error.message);
               getCode();
-            }
-          })
-          .catch((error) => {
-            console.log(error.message);
-            getCode();
-          });
+            });
+        }
       })
       .catch(() => {});
     loadingBtn.value = false;
@@ -207,7 +239,51 @@ const getSummonCode = () => {
     loginForm.summoner = summonCode;
   }
 };
-onMounted(() => {
+
+function captchaHandler(captchaObj) {
+  window.captchaObj = captchaObj;
+  captchaObj
+    .appendTo("#captchaContainer")
+    .onReady(function () {
+      console.log("ready");
+    })
+    .onNextReady(function () {
+      console.log("nextReady");
+    })
+    .onBoxShow(function () {
+      console.log("boxShow");
+    })
+    .onError(function (e) {
+      console.log(e);
+    })
+    .onSuccess(function () {
+      let result = window.captchaObj.getValidate()
+      for (let key in result) {
+        loginForm[key] = result[key];
+      }
+      console.log(loginForm)
+    });
+}
+
+onMounted(async () => {
+  try {
+    // Step 1: Load Geetest script
+    await loadScript("https://static.geetest.com/v4/gt4.js");
+
+    // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+    const geetestConfig = {
+      config: {
+        captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+      },
+      handler: captchaHandler
+    };
+
+    // Step 3: Initialize Geetest with the config
+    await initGeetest(geetestConfig);
+  } catch (error) {
+    message.value = "Error loading Geetest!";
+    console.error("Geetest loading error:", error);
+  }
   getCode();
   getSummonCode();
 });
