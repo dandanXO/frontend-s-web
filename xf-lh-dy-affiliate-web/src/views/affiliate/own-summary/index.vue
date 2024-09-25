@@ -80,7 +80,10 @@
             {{ t('fields.profit') }}
           </el-col>
           <el-col :span="12">
-            {{ data.profit }}
+            $
+            <span
+              v-formatter="{data: data.profit, type: 'money'}"
+            />
           </el-col>
         </el-row>
         <el-row>
@@ -88,7 +91,10 @@
             {{ t('fields.bet') }}
           </el-col>
           <el-col :span="12">
-            {{ data.bet }}
+            $
+            <span
+              v-formatter="{data: data.bet, type: 'money'}"
+            />
           </el-col>
         </el-row>
         <el-row>
@@ -96,7 +102,10 @@
             {{ t('fields.amountOfFirstDeposit') }}
           </el-col>
           <el-col :span="12">
-            {{ data.ftdAmount }}
+            $
+            <span
+              v-formatter="{data: data.ftdAmount, type: 'money'}"
+            />
           </el-col>
         </el-row>
         <el-row>
@@ -104,7 +113,10 @@
             {{ t('fields.depositAmount') }}
           </el-col>
           <el-col :span="12">
-            {{ data.depositAmount }}
+            $
+            <span
+              v-formatter="{data: data.depositAmount, type: 'money'}"
+            />
           </el-col>
         </el-row>
         <el-row>
@@ -112,7 +124,10 @@
             {{ t('fields.transferAmount') }}
           </el-col>
           <el-col :span="12">
-            {{ data.affiliateTransferAmount }}
+            $
+            <span
+              v-formatter="{data: data.affiliateTransferAmount, type: 'money'}"
+            />
           </el-col>
         </el-row>
       </div>
