@@ -387,9 +387,9 @@ export default {
     receive: "Receber",
     accumulateDeposit: "Depósito Acumulado",
     reward: "Recompensa por",
-    levelUpgrade: "Atualização de Nível",
-    monthly: "Mensal",
-    dailyWithdrawal: "Diário de Retirada",
+    levelUpgrade: "Recompensa por Atualização de Nível",
+    monthly: "Recompensa Mensal",
+    dailyWithdrawal: "Limite Diário de Retirada",
     limit: "Limite",
     vipStatus_txt: "O status VIP pode ser atualizado acumulando depósitos mensais",
     upgrade: "Atualizar",
@@ -407,10 +407,10 @@ export default {
       "Após o depósito no dia atingir o padrão, no dia seguinte o nível VIP será aumentado e as recompensas de atualização correspondentes serão emitidas.",
     vipPromoBonus: "Bônus de Promoção VIP",
     promotionBonusDesc:
-      "Bônus de Promoção: Cada vez que você avançar, poderá receber instantaneamente uma recompensa de promoção.",
+      "Bônus de Promoção: Toda vez que você avançar, pode receber instantaneamente uma recompensa de promoção.",
     vipMonthlyCashBonus: "Bônus em Dinheiro Mensal VIP",
     cashBonusDesc:
-      "Bônus em Dinheiro: Com base no seu nível VIP no final deste mês, essa recompensa será enviada a você às 10 da manhã do primeiro dia do próximo mês.",
+      "Bônus em Dinheiro: Com base no seu nível VIP no final deste mês, essa recompensa será enviada às 10h do dia 1º do próximo mês.",
     dailyWithdrawalLimits: "Limites diários de retirada com base nos níveis VIP"
   },
   earnMoney: {
@@ -441,9 +441,9 @@ export default {
       faq: "Perguntas Frequentes",
       faq_01: "1. Como ganhar comissões?",
       faq_01_01:
-        "Você pode ganhar até 1,5% das apostas diárias dos jogadores que você indicar. Quanto maior o seu nível, maior a porcentagem de comissão que você pode ganhar.",
+        "Você pode ganhar até 1.5% das apostas diárias dos jogadores que você indicar. Quanto maior o seu nível, maior a porcentagem de comissão que você pode ganhar.",
       faq_01_02:
-        "Se seu afiliado ou o afiliado se tornarem agentes e eles estiverem em um nível inferior ao superior imediato, você pode receber até 1,2% do valor da aposta do afiliado. A taxa de comissão depende da diferença de nível entre você e seu afiliado. Quanto maior a diferença de nível, mais comissão você recebe.",
+        "Se seu afiliado ou o afiliado se tornarem agentes e eles estiverem em um nível inferior ao superior imediato, você pode receber até 1.2% do valor da aposta do afiliado. A taxa de comissão depende da diferença de nível entre você e seu afiliado. Quanto maior a diferença de nível, mais comissão você recebe.",
       faq_02: "2. Como convidar seus amigos?",
       faq_02_01: "Compartilhe o jogo via redes sociais ou envie o link de referência para seus amigos.",
       faq_02_02:
