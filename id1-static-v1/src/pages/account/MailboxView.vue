@@ -38,7 +38,7 @@
               :class="{ active: mailOpened }"
               v-if="!newMailVisible && selectedId"
             >
-              <div class="b-button" @click="mailOpened = false">Back</div>
+              <div class="b-button" @click="mailOpened = false">{{ $t("btn.back") }}</div>
               <div class="mailbox-item">
                 <div class="mailbox-title">{{ mailDetailList.title }}</div>
                 <div class="txt-right">{{ convertToGMT7(mailDetailList.readTime) }}</div>
