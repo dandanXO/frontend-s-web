@@ -21,8 +21,8 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日流水/倍数：
-              <span class="amount">{{ validBetAmount }}元 / {{ turnOverRequirement }}倍</span>
+              当日有效流水：
+              <span class="amount">{{ validBetAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
