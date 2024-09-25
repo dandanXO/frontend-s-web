@@ -848,7 +848,7 @@
               <div>
                 <q-spinner color="yellow" size="10em" :thickness="10" />
               </div>
-              <div>Loading... Please wait...</div>
+              <div>{{ $t("btn.loading_plsWait") }}</div>
             </div>
           </template>
 
