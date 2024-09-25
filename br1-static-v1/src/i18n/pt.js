@@ -92,7 +92,7 @@ export default {
     password_rules_01: "Por favor, insira a senha",
     password_rules_02: "Os caracteres da senha devem ser maiores que 6",
     forgotPassword: "Esqueceu sua senha",
-    forgotPassword_desc: "Forneça seu número de telefone e enviaremos o OTP para seu número de telefone registrado.",
+    forgotPassword_desc: "Por favor, forneça seu nome de usuário e número de telefone, enviaremos um OTP para seu número registrado.",
     register_agree_01: "Eu concordo com o ",
     register_agree_02: "Acordo de Privacidade de Uso",
     email: "Email",
