@@ -599,9 +599,11 @@ async function verifyDepositAmount(r, v) {
       return Promise.reject(
         t("account.deposit_should_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
       );
-    } else if (Number(v) % 10000) {
-      return Promise.reject(t("account.deposit_amount_unit"));
-    } else {
+    }
+    // else if (Number(v) % 10000) {
+    //   return Promise.reject(t("account.deposit_amount_unit"));
+    // } 
+    else {
       if (checkAmount.flag) {
         return Promise.resolve();
       } else {
