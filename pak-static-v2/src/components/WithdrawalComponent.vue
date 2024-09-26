@@ -225,7 +225,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, watch, computed, defineEmits } from "vue";
+import { onMounted, ref, reactive, watch, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
