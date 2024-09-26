@@ -367,7 +367,7 @@
           <span class="role-list-decimal">3</span>
           生日礼金
           <br />
-          VIP2或以上等级会员可享受生日礼金，每年仅可领取一次。（生日彩金1倍流水即可提款）
+          VIP2或以上等级会员可享受生日礼金，每年仅可领取一次。（生日彩金3倍流水即可提款）
         </li>
         <li style="">
           <span class="role-list-decimal">4</span>
