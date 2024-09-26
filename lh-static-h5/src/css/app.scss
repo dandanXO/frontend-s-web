@@ -26,10 +26,6 @@ body {
   margin: 0 auto;
   background: $secondary;
 }
-.q-header,
-.q-footer {
-  z-index: 9999 !important;
-}
 
 ::-webkit-scrollbar {
   width: 2px;
@@ -680,7 +676,7 @@ svg {
   }
 
   .q-header {
-    background: #212b43;
+    background: #212B43;
     &.with-shadow {
       box-shadow: none;
     }
@@ -689,7 +685,7 @@ svg {
   .q-footer {
     box-shadow: none;
     .q-tab {
-      background: #0f182e;
+      background: #0F182E;
       &--active {
         color: #fff;
       }
@@ -771,16 +767,16 @@ svg {
   }
 
   .common-sm-btn {
-    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3a93ce;
+    border: 1px solid #3A93CE;
     color: $white;
   }
 
   .common-sm-white-btn {
-    background: url("../assets/images/account/secondary-btn.svg") no-repeat center center;
+    background: url('../assets/images/account/secondary-btn.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
@@ -789,29 +785,29 @@ svg {
   }
 
   .common-large-btn {
-    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3a93ce;
+    border: 1px solid #3A93CE;
     color: $white;
   }
 
   .common-md-white-btn {
-    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3a93ce;
+    border: 1px solid #3A93CE;
     color: $white;
   }
 
   .common-md-btn {
-    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3a93ce;
+    border: 1px solid #3A93CE;
     color: $white;
   }
 
@@ -820,7 +816,7 @@ svg {
   }
 
   .bg-brightbtn {
-    background: url("../assets/images/account/secondary-btn.svg") no-repeat center center;
+    background: url('../assets/images/account/secondary-btn.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;

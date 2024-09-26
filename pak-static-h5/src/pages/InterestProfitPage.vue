@@ -13,7 +13,8 @@
 
         <div class="do-amount">
           <div class="amount-txt">
-            {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
+            {{ store.currency.value
+            }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
           </div>
           <img src="../assets/images/interest-profit/chevron-right.png" />
         </div>
@@ -22,13 +23,15 @@
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.unexpiredEarnings") }}</div>
             <div class="item-amount">
-              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
+              {{ store.currency.value
+              }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
             </div>
           </div>
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.cumulativeIncome") }}</div>
             <div class="item-amount">
-              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
+              {{ store.currency.value
+              }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
             </div>
           </div>
         </div>
@@ -152,7 +155,7 @@
                 </div>
                 <div class="order-subrow">
                   <div class="order-col">
-                    <span class="txt-gray">{{ convertToGMT55(e.placeTime) }}</span>
+                    <span class="txt-gray">{{ moment(e.placeTime).format("YYYY-MM-DD HH:mm:ss") }}</span>
                   </div>
                   <div class="order-col">
                     <span class="txt-green">+{{ convertToTwoDecimalAmount(e.estimateRate) }}</span>
@@ -215,11 +218,11 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.placeTime") }}</div>
-          <div class="box-value">{{ convertToGMT55(recordDetails.placeTime) }}</div>
+          <div class="box-value">{{ moment(recordDetails.placeTime).format("YYYY-MM-DD HH:mm:ss") }}</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.matureTime") }}</div>
-          <div class="box-value">{{ convertToGMT55(recordDetails.matureTime) }}</div>
+          <div class="box-value">{{ moment(recordDetails.matureTime).format("YYYY-MM-DD HH:mm:ss") }}</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.status") }}</div>

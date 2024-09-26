@@ -36,7 +36,7 @@
             "
           />
           <img
-            v-if="props.platformType === 'slot' && item.code.toLowerCase() === 'pt'"
+            v-if="props.platformType === 'slot' && item.code.toLowerCase() === 'pt' || props.platformType === 'live' && (item.code.toLowerCase() === 'pmlive' || item.code.toLowerCase() === 'won')"
             src="@/assets/images/index/new-ribbon.svg"
             class="new-ribbon"
           />

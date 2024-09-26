@@ -28,6 +28,9 @@
           <el-input v-model="form.color" style="width: 250px;" disabled />
           <el-color-picker v-model="form.color" style="margin-left: 4px;" />
         </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input v-model="form.remark" style="width: 350px;" maxlength="100" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -49,6 +52,7 @@
           <div class="level-color" :style="{backgroundColor: scope.row.color}" />
         </template>
       </el-table-column>
+      <el-table-column prop="remark" :label="t('fields.remark')" width="200" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150" />
       <el-table-column
@@ -106,12 +110,14 @@ const request = reactive({
 const form = reactive({
   id: null,
   ip: null,
-  color: null
+  color: null,
+  remark: null,
 });
 
 const formRules = reactive({
   ip: [required(t('message.validateIpRequired'))],
-  color: [required(t('message.validateColorRequired'))]
+  color: [required(t('message.validateColorRequired'))],
+  remark: [required(t('message.validateRemarkRequired'))],
 });
 
 let chooseIpLabel = [];
@@ -186,6 +192,7 @@ function showEdit(ipLabel) {
 function create() {
   ipLabelForm.value.validate(async (valid) => {
     if (valid) {
+      form.id = null
       await createIpLabel(form);
       uiControl.dialogVisible = false;
       await loadIpLabel();

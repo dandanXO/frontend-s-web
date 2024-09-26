@@ -195,11 +195,12 @@ body.body--dark .q-footer {
   margin: 0 auto;
   background: transparent;
   border-radius: 4px;
+  aspect-ratio: 475 / 171;
 
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% 100%;
     border-radius: 12px;
     aspect-ratio: 22 / 7;
   }

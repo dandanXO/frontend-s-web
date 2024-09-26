@@ -2,26 +2,22 @@
   <div>
     <div class="center-numbers">
       <div class="center-title">Total bonus</div>
-      <div class="center-number">{{ prizePool.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+      <div class="center-number">
+        {{ prizePool.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
+      </div>
     </div>
     <div class="countries-wrapper">
       <div class="point">
         Choose your favorite team. The more votes you get, the more you have the chance to win more prizes.
       </div>
       <div class="right-count">
-        My vote: <span>{{ myVotes }}</span>
+        My vote:
+        <span>{{ myVotes }}</span>
       </div>
       <div class="country-list" id="countrylist">
-        <div
-          v-for="(country, i) in countriesList"
-          :key="i"
-          class="country-item"
-          @click="voteModal(country)"
-        >
+        <div v-for="(country, i) in countriesList" :key="i" class="country-item" @click="voteModal(country)">
           <div class="c-flag">
-            <img v-if="country.countryImgUrl"
-              :src="`${imgURL}${country.countryImgUrl}`"
-            />
+            <img v-if="country.countryImgUrl" :src="`${imgURL}${country.countryImgUrl}`" />
           </div>
           <div class="c-name">{{ country.teamNameLocal }}</div>
           <div class="c-price">{{ country.totalVotes }} vote(s)</div>
@@ -29,85 +25,85 @@
         </div>
       </div>
     </div>
-    
-    <div class="table-details">
-      <q-table title="Lucky number record" no-data-label="No information" loading-label="Loading..."
-          class="q-mt-md" :columns="tableColumns.votesRecord"
-                :rows="dataSource"
-            row-key="id">
-      </q-table>
-    </div>
-    
 
-  <q-dialog v-model="voteModalVisible">
-    <q-card class="q-pa-md" style="min-width: 360px;">
-      <div class="text-h6">{{ selectedCountry }}</div>
-      <q-card-section style="width: 100%;" class="row items-center">
-        <q-form style="width: 100%">
-            <q-input filled
-             style="width: 100%"
+    <div class="table-details">
+      <q-table
+        title="Lucky number record"
+        no-data-label="No information"
+        loading-label="Loading..."
+        class="q-mt-md"
+        :columns="tableColumns.votesRecord"
+        :rows="dataSource"
+        row-key="id"
+      ></q-table>
+    </div>
+
+    <q-dialog v-model="voteModalVisible">
+      <q-card class="q-pa-md" style="min-width: 360px">
+        <div class="text-h6">{{ selectedCountry }}</div>
+        <q-card-section style="width: 100%" class="row items-center">
+          <q-form style="width: 100%">
+            <q-input
+              filled
+              style="width: 100%"
               ref="voteCountRef"
               type="number"
               placeholder="Number of votes"
               v-model="voteForm.voteCount"
               color="white"
               :rules="[
-                (val) =>
-                  (val && val.length) ||
-                  'Please enter the number you want to vote for.',
-                  (val) =>
-                  (val && val > 0) ||
-                  'The number you wish to vote must be an integer.'
+                (val) => (val && val.length) || 'Please enter the number you want to vote for.',
+                (val) => (val && val > 0) || 'The number you wish to vote must be an integer.'
               ]"
             />
-        </q-form>
-      </q-card-section>
-      <q-card-actions align="center">
-        <q-btn style="width: 140px" :loading="btnLoading" label="Submit" color="deep-orange" @click="submitVotes">
-          <template v-slot:loading>
-            <q-spinner-hourglass class="on-left" />
-            Submitting
-          </template>
+          </q-form>
+        </q-card-section>
+        <q-card-actions align="center">
+          <q-btn style="width: 140px" :loading="btnLoading" label="Submit" color="light-blue-4" @click="submitVotes">
+            <template v-slot:loading>
+              <q-spinner-hourglass class="on-left" />
+              Submitting
+            </template>
           </q-btn>
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { useQuasar } from "quasar";
-import { eventapi } from "boot/axios"
+import { eventapi } from "boot/axios";
 import moment from "moment";
 
 var qs = require("qs");
 export default defineComponent({
-  name: 'SJBPromo',
+  name: "SJBPromo",
   setup() {
     const $q = useQuasar();
-    const btnLoading = ref(false)
+    const btnLoading = ref(false);
     const loading = ref(true);
-    const imgURL = process.env.IMAGE_CDN + "/"
+    const imgURL = process.env.IMAGE_CDN + "/";
     const pagination = reactive({
       pageSize: 5,
-      total: 5,
+      total: 5
     });
     const prizePool = ref(0);
     const tableColumns = {
       votesRecord: [
         {
-           label: "Team name",
-           field: "teamVotesId",
-         },
-         {
-           label: "Number of votes",
-           field: "votes"
-         },
-         {
-           label: "Vote Time",
-           field: "voteTime"
-         },
-      ],
+          label: "Team name",
+          field: "teamVotesId"
+        },
+        {
+          label: "Number of votes",
+          field: "votes"
+        },
+        {
+          label: "Vote Time",
+          field: "voteTime"
+        }
+      ]
     };
     const dataSource = ref([]);
     const selectedCountry = ref(null);
@@ -118,89 +114,87 @@ export default defineComponent({
     const voteModal = (ctry) => {
       voteModalVisible.value = true;
       selectedCountry.value = ctry.teamNameLocal;
-      voteForm.voteCount = null
+      voteForm.voteCount = null;
       voteForm.teamId = ctry.id;
     };
     const loadCountryList = () => {
-          eventapi.get("/privi/team-votes/init")
-            .then((ret) => {
-              const res = ret.data;
-              if (res.code === 0) {
-                prizePool.value = res.data.award
-                countriesList.value = res.data.votesList;
-                myVotes.value = res.data.myVotes;
-                dataSource.value = res.data.votesRecord;
-                updateTableItems()
-                loading.value = false;
-              } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message: res.message,
-                  icon: "report_problem"
-                });
-              }
-            })
-    };
-    const updateTableItems = () => {
-      dataSource.value.forEach(element => {
-        let teamNameEquivalent = countriesList.value.find((ctry) => ctry.id === element.teamVotesId);
-        if (teamNameEquivalent) {
-          element.teamVotesId = teamNameEquivalent.teamNameLocal
+      eventapi.get("/privi/team-votes/init").then((res) => {
+        if (res.code === 0) {
+          prizePool.value = res.data.award;
+          countriesList.value = res.data.votesList;
+          myVotes.value = res.data.myVotes;
+          dataSource.value = res.data.votesRecord;
+          updateTableItems();
+          loading.value = false;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
         }
       });
-    }
+    };
+    const updateTableItems = () => {
+      dataSource.value.forEach((element) => {
+        let teamNameEquivalent = countriesList.value.find((ctry) => ctry.id === element.teamVotesId);
+        if (teamNameEquivalent) {
+          element.teamVotesId = teamNameEquivalent.teamNameLocal;
+        }
+      });
+    };
     const voteCountRef = ref();
     const voteForm = reactive([
       {
         voteCount: 0,
         teamId: null
-      },
+      }
     ]);
     const submitVotes = () => {
-      btnLoading.value = true
+      btnLoading.value = true;
       voteCountRef.value.validate();
-      if (
-        voteCountRef.value.hasError
-      ) {
-        btnLoading.value = false
+      if (voteCountRef.value.hasError) {
+        btnLoading.value = false;
       } else {
-        btnLoading.value = true
-        if(myVotes.value > 0) {
+        btnLoading.value = true;
+        if (myVotes.value > 0) {
           const obj = {
             teamId: voteForm.teamId,
             votes: Number(voteForm.voteCount)
-          }
-          
-          eventapi.post(`/privi/team-votes/vote`, qs.stringify(obj)).then((res) => {
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: "Success",
-              icon: "check_circle_outline"
-            });
-            countriesList.value.forEach(element => {
-              if (Number(element.id) === Number(voteForm.teamId)) {
-                if (myVotes.value >= voteForm.voteCount) {
-                  element.totalVotes = Number(element.totalVotes) + Number(voteForm.voteCount)
-                  myVotes.value = Number(myVotes.value) - Number(voteForm.voteCount)
-                  const obj = {
-                    teamVotesId: voteForm.teamId,
-                    votes: voteForm.voteCount,
-                    voteTime: moment(new Date()).format("YYYY/MM/DD, hh:mm A"),
+          };
+
+          eventapi
+            .post(`/privi/team-votes/vote`, qs.stringify(obj))
+            .then((res) => {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "Success",
+                icon: "check_circle_outline"
+              });
+              countriesList.value.forEach((element) => {
+                if (Number(element.id) === Number(voteForm.teamId)) {
+                  if (myVotes.value >= voteForm.voteCount) {
+                    element.totalVotes = Number(element.totalVotes) + Number(voteForm.voteCount);
+                    myVotes.value = Number(myVotes.value) - Number(voteForm.voteCount);
+                    const obj = {
+                      teamVotesId: voteForm.teamId,
+                      votes: voteForm.voteCount,
+                      voteTime: moment(new Date()).format("YYYY/MM/DD, hh:mm A")
+                    };
+                    dataSource.value.push(obj);
                   }
-                  dataSource.value.push(obj);
                 }
-              }
+              });
+              updateTableItems();
+              voteModalVisible.value = false;
+              btnLoading.value = false;
+            })
+            .catch((err) => {
+              console.log(err);
+              btnLoading.value = false;
             });
-            updateTableItems();
-            voteModalVisible.value = false;
-            btnLoading.value = false;
-            
-          }).catch((err) => {
-            console.log(err)
-            btnLoading.value = false
-          })
         } else {
           btnLoading.value = false;
           $q.notify({
@@ -211,19 +205,19 @@ export default defineComponent({
           });
         }
       }
-    }
+    };
     const votingRules = {
       voteCount: [
         {
           required: true,
           message: "Please enter the number you wish to vote for.",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           min: 1,
-          message: "The number you wish to vote must be a positive number.",
-        },
-      ],
+          message: "The number you wish to vote must be a positive number."
+        }
+      ]
     };
     onMounted(() => {
       loadCountryList();
@@ -249,13 +243,13 @@ export default defineComponent({
       btnLoading,
       imgURL
     };
-  },
+  }
 });
 </script>
 
 <style scoped lang="scss">
 :deep(.ant-table-content) {
-    min-width: 400px;
+  min-width: 400px;
 }
 .votesm .vote-submit {
   margin: 20px auto 0;
@@ -264,8 +258,6 @@ export default defineComponent({
 .center-numbers {
   gap: 5px;
   position: relative;
-  background: url("../../../assets/images/promotion/hotpromo/40/fifa.png")
-    no-repeat center center;
   background-size: cover;
   width: 100%;
   min-height: 180px;

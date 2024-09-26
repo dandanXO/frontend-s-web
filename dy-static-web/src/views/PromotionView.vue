@@ -79,7 +79,8 @@
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
             iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
-            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024'
           }"
         >
           <div
@@ -738,6 +739,12 @@ export default defineComponent({
         width: 100%;
         max-width: 1920px;
         margin: 0 auto;
+
+        &.isNationalDay24 {
+          .promo-bg.isDesktop {
+            height: 585px !important;
+          }
+        }
 
         &.isCSBanner {
           aspect-ratio: 3840/1136;

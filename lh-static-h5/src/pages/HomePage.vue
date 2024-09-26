@@ -5,7 +5,7 @@
       <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">雷火电竞 app 下载</span>
-        <span>APP 专享礼包 888 元</span>
+        <span>APP专享礼包888元</span>
       </div>
       <div class="buttons">
         <div class="buttons">
@@ -1285,6 +1285,8 @@ export default defineComponent({
                 liveObj.title = "WE 真人";
               } else if (liveObj.code === "BBINDY") {
                 liveObj.title = "BBIN 真人";
+              } else if (liveObj.code === "FBLive") {
+                liveObj.title = "FB真人";
               } else {
                 liveObj.title = translateRecord(liveObj.name) + "真人";
               }

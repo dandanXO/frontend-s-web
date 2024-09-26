@@ -1,4 +1,4 @@
 module.exports = {
-  title: "Jolly88",
+  title: "Play4Win",
   namePrefix: "JB",
 };

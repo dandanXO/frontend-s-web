@@ -193,7 +193,7 @@
             <Slide v-for="(categoryPair, slideIndex) in categoryPairs" :key="slideIndex">
               <template v-for="category in categoryPair" :key="category.key">
                 <template v-for="item in vipItems" :key="item">
-                  <template v-if="isFirstTime && vipLevel !== 0 ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
+                  <template v-if="isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
                     <div
                       class="box"
                       :class="{
@@ -460,31 +460,31 @@
           <tr>
             <td>VIP0</td>
             <td>0.40%</td>
-            <td>0.40%</td>
-            <td>0.40%</td>
-            <td>0.40%</td>
-            <td>0.60%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.6%</td>
             <td>0.15%</td>
             <td>8,888</td>
           </tr>
           <tr>
             <td>VIP1</td>
             <td>0.40%</td>
-            <td>0.40%</td>
-            <td>0.40%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
             <td>0.45%</td>
-            <td>0.60%</td>
-            <td>0.20%</td>
+            <td>0.6%</td>
+            <td>0.2%</td>
             <td>8,888</td>
           </tr>
           <tr>
             <td>VIP2</td>
             <td>0.40%</td>
-            <td>0.40%</td>
-            <td>0.40%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
             <td>0.45%</td>
-            <td>0.60%</td>
-            <td>0.20%</td>
+            <td>0.6%</td>
+            <td>0.2%</td>
             <td>8,888</td>
           </tr>
           <tr>
@@ -493,7 +493,7 @@
             <td>0.45%</td>
             <td>0.45%</td>
             <td>0.45%</td>
-            <td>0.60%</td>
+            <td>0.6%</td>
             <td>0.25%</td>
             <td>12,888</td>
           </tr>
@@ -503,7 +503,7 @@
             <td>0.50%</td>
             <td>0.45%</td>
             <td>0.50%</td>
-            <td>0.80%</td>
+            <td>0.8%</td>
             <td>0.30%</td>
             <td>18,888</td>
           </tr>
@@ -513,7 +513,7 @@
             <td>0.55%</td>
             <td>0.50%</td>
             <td>0.55%</td>
-            <td>0.80%</td>
+            <td>0.8%</td>
             <td>0.30%</td>
             <td>18,888</td>
           </tr>
@@ -523,7 +523,7 @@
             <td>0.60%</td>
             <td>0.55%</td>
             <td>0.60%</td>
-            <td>0.80%</td>
+            <td>0.8%</td>
             <td>0.35%</td>
             <td>28,888</td>
           </tr>
@@ -553,7 +553,7 @@
             <td>0.80%</td>
             <td>0.75%</td>
             <td>0.90%</td>
-            <td>1.00%</td>
+            <td>1.0%</td>
             <td>0.40%</td>
             <td>58,888</td>
           </tr>
@@ -562,7 +562,7 @@
             <td>0.85%</td>
             <td>0.90%</td>
             <td>0.80%</td>
-            <td>1.00%</td>
+            <td>1.0%</td>
             <td>1.05%</td>
             <td>0.40%</td>
             <td>88,888</td>
@@ -570,20 +570,20 @@
           <tr>
             <td>VIP11</td>
             <td>0.95%</td>
-            <td>1.00%</td>
+            <td>1.0%</td>
             <td>0.85%</td>
-            <td>1.10%</td>
-            <td>1.10%</td>
+            <td>1.1%</td>
+            <td>1.1%</td>
             <td>0.40%</td>
             <td>88,888</td>
           </tr>
           <tr>
             <td>VIP12</td>
-            <td>1.10%</td>
-            <td>1.00%</td>
-            <td>1.00%</td>
-            <td>1.20%</td>
-            <td>1.20%</td>
+            <td>1.1%</td>
+            <td>1.0%</td>
+            <td>1.0%</td>
+            <td>1.2%</td>
+            <td>1.2%</td>
             <td>0.50%</td>
             <td>128,888</td>
           </tr>
@@ -632,15 +632,14 @@
 
       <h2>四. 年度保级彩金</h2>
       <ol class="terms">
-        <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日24小时内进行派发；</li>
+        <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；</li>
       </ol>
 
       <h2>五. 每日返水红包</h2>
-      <ol class="terms got-bullets">
-        <li class="numbered">
-          统计每日返水金额，对应VIP等级返水加赠比例次日派发。
+      <ol class="terms">
+        <li>
+          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水加赠礼金，返水加赠礼金达到10元即可领取，礼金无流水限制；
         </li>
-        <li class="numbered">返水加赠礼金达到10元即可领取，礼金无流水限制；</li>
       </ol>
 
       <h2>六. 会员日</h2>
@@ -653,7 +652,7 @@
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员每月在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款；
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -664,7 +663,7 @@
       <div v-if="isOpenTerms" class="panel">
         <ol class="terms got-bullets">
           <li class="numbered">
-            有效流水仅计算在游戏中产生输赢结果的注单，香港盘&lt;0.75（中国盘&lt;0.75）、欧洲盘&lt;1.75、美洲盘&lt;-133、马来盘&lt;0.75且&gt;0，负赔率&gt;-0.75且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；
+            有效流水仅计算在游戏中产生输赢结果的注单，香港盘&lt;0.7（中国盘&lt;0.7）、欧洲盘&lt;1.7、美国盘-143、印尼盘-1.42、马来盘&lt;0.7且&gt;0，负赔率&gt;-0.7且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；
           </li>
           <li class="numbered">
             根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
@@ -1280,15 +1279,15 @@ const handleSlideClick = (vipIndex) => {
 };
 const changeSlideToIsFirstTime = () => {
   isFirstTime.value = true;
-}
+};
 const next = () => {
   refCarousel.value.next();
   isFirstTime.value = false;
-}
+};
 const prev = () => {
   refCarousel.value.prev();
   isFirstTime.value = false;
-}
+};
 const slideTo = (vipIndex) => {
   isFirstTime.value = false;
   if (vipIndex || vipIndex === 0) {
@@ -2515,21 +2514,19 @@ $border-settings: 1px solid #e5e7eb;
 
   :deep(.carousel__prev) {
     // z-index: 2001 !important;
-    z-index: 0;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
     margin: 0px;
-    transform: translate3d(-20px, -20px, 0px);
+    transform: translate3d(-20px, -20px, 10px);
   }
   :deep(.carousel__next) {
     // z-index: 2001 !important;
-    z-index: 0;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
     margin: 0px;
-    transform: translate3d(20px, -20px, 0px) rotateY(180deg);
+    transform: translate3d(20px, -20px, 10px) rotateY(180deg);
   }
   :deep(.carousel__icon) {
     opacity: 0;

@@ -96,6 +96,24 @@
       </el-form-item>
     </el-row>
     <el-row>
+      <el-col>
+        <el-form-item :label="t('fields.displayStartTime')" prop="displayStartTime">
+            <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.displayStartTime"
+            />
+        </el-form-item>
+        <el-form-item :label="t('fields.displayEndTime')" prop="displayEndTime">
+            <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.displayEndTime"
+            />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-form-item
         :label="t('fields.desktopImage')"
         prop="desktopImgUrl"
@@ -500,6 +518,8 @@ const form = reactive({
   contentList: null,
   status: false,
   siteType: null,
+  displayStartTime: null,
+  displayEndTime: null,
 })
 
 const uiControl = reactive({

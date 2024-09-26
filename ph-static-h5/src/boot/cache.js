@@ -1,22 +1,21 @@
 import { boot } from "quasar/wrappers";
-import { SessionStorage } from "quasar";
 
 export const TIME_EXPIRED = "TIME_EXPIRED";
 export const GOT_EXPIRED = "GOT_EXPIRED";
 const DEFAULT_EXPIRED_TIME = 60;
 
 function getStorageData(key) {
-  const s_data = SessionStorage.getItem(key);
+  const s_data = sessionStorage.getItem(key);
   return s_data == undefined || s_data == null ? null : JSON.parse(s_data);
 }
 
 function setStorageData(key, value) {
   value = JSON.stringify(value);
-  SessionStorage.set(key, value);
+  sessionStorage.setItem(key, value);
 }
 
 function removeStorageData(key) {
-  SessionStorage.remove(key);
+  sessionStorage.removeItem(key);
 }
 
 class CachedNode {

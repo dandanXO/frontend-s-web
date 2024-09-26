@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
+        <NoInfoComponent v-if="isNoInfo" :noInfoTitle="$t('records.noRecord')" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
       <q-tab-panel name="week">
         <div v-for="(e, i) in weeklyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
+        <NoInfoComponent v-if="isNoInfo" :noInfoTitle="$t('records.noRecord')" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
     </q-tab-panels>
   </div>

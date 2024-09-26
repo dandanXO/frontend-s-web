@@ -169,7 +169,7 @@ if (siteId === 'dy') {
   title.innerText = 'KAKA GAME';
 } else if (siteId === 'krw') {
   link.href = '/kr-favicon.ico';
-  title.innerText = 'City8';
+  title.innerText = 'DIAMOND';
 } else if (siteId === 'iw2') {
   link.href = '/iw2-favicon.ico';
   title.innerText = '789F';

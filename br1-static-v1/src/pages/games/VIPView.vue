@@ -78,7 +78,7 @@
               <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
+              <span class="bold" style="font-size: 80%">{{ $t("vip.levelUpgrade") }}</span>
               <br />
               {{ $t("vip.reward") }}
             </div>
@@ -167,7 +167,7 @@
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
-                <div style="text-align: center">
+                <div style="text-align: center; font-size: 11px">
                   {{ $t("vip.deposit") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
@@ -1100,6 +1100,12 @@ const swipeRight = () => {
   .top-header {
     color: #f1f1f1;
     background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+
+    td {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      font-size: 12px;
+    }
   }
 
   .q-table__card {
@@ -1156,7 +1162,7 @@ const swipeRight = () => {
 
   .text-right {
     border-bottom-width: 0 !important;
-    padding: 0 1.5rem;
+    padding: 0 0.5rem;
   }
 
   .bottom-note {

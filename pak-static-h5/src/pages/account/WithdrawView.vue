@@ -744,12 +744,12 @@ const getWithdrawalMethods = () => {
         selectMethod(withdrawalMethods.value[0], 0);
       }
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: response.message,
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: response.message,
+      //   icon: "report_problem"
+      // });
     }
   });
 };

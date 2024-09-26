@@ -1,127 +1,51 @@
 <template>
-  <div class="hot-promo">
-    <div v-if="list.id === 22 && !isCommonPromo && store.token" class="promo-4">
-      <div class="tabs">
-        <a-tabs v-model:activeKey="activeKey">
-          <a-tab-pane key="1" tab="Choose lucky number">
-            <div class="tab1">
-              <img src="../assets/images/promotion/hotpromo/22/icon.png" />
-              <div class="contents">
-                {{ selectedHotPromo.contents.tab1 }}
-                <a-form>
-                  <a-form-item>
-                    <a-input
-                      v-model:value="luckyNumber"
-                      placeholder="Lucky number"
-                    />
-                  </a-form-item>
-                  <a-form-item>
-                    <a-button
-                      class="claim-btn"
-                      :loading="btnLoading"
-                      @click="chooseLuckyNumber()"
-                      >Submit</a-button
-                    >
-                  </a-form-item>
-                </a-form>
-              </div>
-            </div>
-          </a-tab-pane>
-          <a-tab-pane key="2" tab="Lucky number record">
-            <div class="tab2">
-              <a-form :model="query" :layout="'inline'">
-                <div class="firstrow">
-                  <a-date-picker
-                    key="1"
-                    placeholder="Select Date"
-                    v-model:value="query.recordTime"
-                    value-format="YYYY-MM-DD"
-                    format="YYYY-MM-DD"
-                  />
-                  <a-form-item label="Only me"
-                    ><a-switch v-model:checked="query.onlyMe"
-                  /></a-form-item>
-                </div>
-                <div class="secondrow">
-                  <a-form-item
-                    ><div class="common-btn" @click="retrieveList">
-                      Filter
-                    </div></a-form-item
-                  >
-                </div>
-              </a-form>
-              <div class="table">
-                <a-table
-                  :columns="columns"
-                  row-key="loginName"
-                  :data-source="dataSource"
-                  :locale="{ emptyText: 'No information' }"
-                >
-                  <template #recordTime="{ text }">
-                    <span>{{ humanDatetime(text) }}</span>
-                  </template>
-                </a-table>
-              </div>
-            </div>
-          </a-tab-pane>
-          <a-tab-pane key="3" tab="Winner List">
-            <div class="tab3">
-              <a-form :model="winnersQuery" :layout="'inline'">
-                <div class="firstrow">
-                  <a-date-picker
-                    placeholder="Select date"
-                    v-model:value="winnersQuery.resultTime"
-                    value-format="YYYY-MM-DD"
-                    format="YYYY-MM-DD"
-                    @change="retrieveWinnerList"
-                  />
-                </div>
-                <div class="secondrow">
-                  <a-form-item
-                    ><div class="common-btn" @click="retrieveWinnerList">
-                      Retrieve
-                    </div></a-form-item
-                  >
-                </div>
-              </a-form>
-              <div class="table">
-                <a-table
-                  :columns="winnerColumns"
-                  row-key="loginName"
-                  :data-source="winnerDataSource"
-                  :locale="{ emptyText: emptyText }"
-                >
-                  <template #resultTime="{ text }">
-                    <span>{{ humanDatetime(text) }}</span>
-                  </template>
-                </a-table>
-              </div>
-            </div>
-          </a-tab-pane>
-        </a-tabs>
+  <div>
+    <div v-if="!isCommonPromo && list.promoCode === 'P4W-ROULETTE-TOTO'">
+      <Roulette ref="rouletteRef" :is-modal="false" />
+      <div class="spinwheelevent-rules">
+        <div class="spinwheelterms">
+          <div class="spinwheelrule-title">Event terms</div>
+          <p>For members with deposit amount over 300 at play4win.</p>
+          <p>
+            The account name, contact number, the bank card and E-wallet binded to the active member cannot be
+            duplicated.
+          </p>
+          <div class="spinwheelrule-title">Who can help you to get reward</div>
+          <p>
+            It must not be the same as the IP, contact number, binded bank card and E-wallet of any member in play4win.
+            Meanwhile, if anyone registration information is the same as any other members, cant help you increace your
+            progress.
+          </p>
+        </div>
       </div>
     </div>
+    <div v-if="!isCommonPromo && list.promoCode === 'P4W-TOP-BET'">
+      <JiliTop50 @claim-slot="handleSlot()" :pageContent="list.pageContent" />
+    </div>
+    <div v-if="!isCommonPromo && list.promoCode === 'P4W-CNY-VIP-RED-PACKET'">
+      <P4WRedPacket @claim-slot="handleSlot()" />
+    </div>
+    <div v-if="!isCommonPromo && list.promoCode === 'P4W-DOWNLOAD-BONUS'">
+      <P4WApp @claim-slot="handleSlot()" :pageContent="list.pageContent" />
+    </div>
+    <div v-if="!isCommonPromo && list.promoCode === 'P4W-VIP-DAILY-CHECKIN-BONUS'">
+      <DailyLoginCashBonusPromo :pageContent="list.pageContent" />
+    </div>
+
     <ClaimPromo
       v-if="isCommonPromo && store.token"
       :promo-id="list.id"
+      :promo-code="list.promoCode"
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
-    <!-- <SJBPromo
-      v-if="list.id === 40 && !isCommonPromo && store.token"
-      class="promo-sjb"
-    />
-    <InviteFriendPromo
-      v-if="list.id === 35 && !isCommonPromo"
-      class="promo-sjb"
-    /> -->
   </div>
   <a-modal v-model:visible="privilegeClaimedModalVisible" centered>
     <div class="modal-div">
       <span class="img-item">
         <div class="inner-contents">
           <div class="amount">{{ amount }}</div>
-          <div class="bonus">Submit</div>
+          <div class="bonus">Okay</div>
         </div>
       </span>
       <img src="../assets/images/index/bonus.svg" />
@@ -131,16 +55,17 @@
 
 <script>
 import { defineComponent } from "vue";
-import {
-  submitLuckyNumber,
-  claimBonusItem,
-  luckyNumberList,
-  winnerList,
-} from "@/api/index/promo";
+import { submitLuckyNumber, claimBonusItem, luckyNumberList, winnerList } from "@/api/index/promo";
 import { message } from "ant-design-vue";
 import { userStore } from "@/store";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+import P4WApp from "../components/hotpromo/p4wApp.vue";
+import P4WRedPacket from "../components/hotpromo/p4wRedPacket.vue";
+import DailyLoginCashBonusPromo from "../components/hotpromo/DAILY-LOGIN-CASH-BONUS/DailyLoginCashBonusPromo.vue";
+import Roulette from "@/components/roulette.vue";
+import JiliTop50 from "./hotpromo/JiliTop50/JiliTop50.vue";
+import { ElMessage } from "element-plus";
 // import DailyBonus from "../components/hotpromo/39/dailyBonus.vue"
 // import SJBPromo from "../components/hotpromo/40/shiJieBei.vue";
 // import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
@@ -151,17 +76,22 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
+    P4WApp,
+    P4WRedPacket,
     // SJBPromo,
     // InviteFriendPromo,
     // DailyBonus
+    Roulette,
+    DailyLoginCashBonusPromo,
+    JiliTop50
   },
   props: {
     list: {
       type: Object,
       default: function () {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -171,62 +101,24 @@ export default defineComponent({
       dataSource: [],
       winnerDataSource: [],
       activeKey: "1",
-      hotPromoList: [
-        // {
-        //   id: 19,
-        //   bg: require("../assets/images/promotion/hotpromo/19/bg.png"),
-        //   contents:
-        //     "*โบนัสเงินคืนต้องใช้โรลโอเวอร์ 1 เท่าก่อนที่จะถอนออก และจะได้รับคืนหากไม่ได้ใช้ภายใน 30 วัน",
-        // },
-        // {
-        //   id: 20,
-        //   bg: require("../assets/images/promotion/hotpromo/20/bg.png"),
-        //   contents: "Hello hello",
-        // },
-        // {
-        //   id: 21,
-        //   bg: "",
-        //   contents: "Hello hello",
-        // },
-        // {
-        //   id: 22,
-        //   bg: require("../assets/images/promotion/hotpromo/22/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-        // {
-        //   id: 23,
-        //   bg: require("../assets/images/promotion/hotpromo/23/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-        // {
-        //   id: 24,
-        //   bg: require("../assets/images/promotion/hotpromo/24/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-      ],
+      hotPromoList: [],
       selectedHotPromo: {
         id: "",
         bg: "",
-        contents: "",
+        contents: ""
       },
       formState: {
         dateTime: "",
-        onlyMe: false,
+        onlyMe: false
       },
       luckyNumber: null,
       query: {
         winStatus: "",
         recordTime: null,
-        onlyMe: false,
+        onlyMe: false
       },
       winnersQuery: {
-        resultTime: null,
+        resultTime: null
       },
       store: userStore(),
       btnLoading: false,
@@ -237,52 +129,80 @@ export default defineComponent({
         {
           title: "Number",
           dataIndex: "number",
-          key: "1",
+          key: "1"
         },
         {
           title: "Name",
           dataIndex: "loginName",
-          key: "2",
+          key: "2"
         },
         {
           title: "Status",
           dataIndex: "winStatus",
-          key: "3",
+          key: "3"
         },
         {
           title: "Date",
           dataIndex: "recordTime",
           key: "recordTime",
-          slots: { customRender: "recordTime" },
-        },
+          slots: { customRender: "recordTime" }
+        }
       ],
       winnerColumns: [
         {
           title: "Number",
           dataIndex: "number",
-          key: "number",
+          key: "number"
         },
         {
           title: "Name",
           dataIndex: "loginName",
-          key: "loginName",
+          key: "loginName"
         },
         {
           title: "Status",
           dataIndex: "winStatus",
-          key: "winStatus",
+          key: "winStatus"
         },
         {
           title: "Date",
           dataIndex: "resultTime",
           key: "4",
-          slots: { customRender: "resultTime" },
-        },
-      ],
+          slots: { customRender: "resultTime" }
+        }
+      ]
     };
+  },
+  mounted() {
+    if (
+      this.list.promoCode === "P4W-ROULETTE-TOTO" ||
+      this.list.promoCode === "P4W-TOP-BET" ||
+      this.list.promoCode === "P4W-CNY-VIP-RED-PACKET" ||
+      this.list.promoCode === "P4W-DOWNLOAD-BONUS" ||
+      this.list.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS"
+    ) {
+      this.isCommonPromo = false;
+    } else {
+      this.isCommonPromo = true;
+    }
+    this.hotPromoList.forEach((element) => {
+      if (this.list.promoCode === element.promoCode) {
+        this.selectedHotPromo = element;
+      }
+    });
+    if (this.list.promoCode === "P4W-ROULETTE-TOTO") {
+      this.$refs?.rouletteRef?.getSpinRoulette();
+    }
   },
   methods: {
     handleSlot() {
+      if (!this.store.token) {
+        ElMessage({
+          message: "Please login to continue.",
+          type: "warning"
+        });
+        return;
+      }
       this.loadingClaim = true;
       const bonusItem = this.list.promoCode;
 
@@ -293,8 +213,11 @@ export default defineComponent({
             this.privilegeClaimedModalVisible = true;
             this.loadingClaim = false;
             this.store.getBalance();
+          } else if (res.code === 100000) {
+            message.info(res.message);
+            this.loadingClaim = false;
           } else {
-            message.error("res.message");
+            message.error(res.message);
             this.loadingClaim = false;
           }
         })
@@ -377,23 +300,45 @@ export default defineComponent({
     },
     humanDatetime(ts) {
       return moment(ts).format("YYYY-MM-DD");
-    },
-  },
-  mounted() {
-    if (this.list.id === 22 || this.list.id === 35 || this.list.id === 40) {
-      this.isCommonPromo = false;
-    } else {
-      this.isCommonPromo = true;
     }
-    this.hotPromoList.forEach((element) => {
-      if (this.list.id === element.id) {
-        this.selectedHotPromo = element;
-      }
-    });
-  },
+  }
 });
 </script>
 <style lang="scss">
+.spinwheelevent-rules {
+  padding: 20px;
+  .spinwheelterms {
+    .spinwheelrule-title {
+      font-family: Poppins Bold;
+      font-size: 24px;
+      color: #222222;
+    }
+    p {
+      color: #83a3ca;
+      position: relative;
+      padding-left: 20px;
+      &:before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+        position: absolute;
+        transform: rotateZ(45deg);
+        left: 0px;
+        top: 5px;
+      }
+    }
+  }
+}
+.dark-theme {
+  .spinwheelevent-rules {
+    .spinwheelterms {
+      .spinwheelrule-title {
+        color: #ffffff;
+      }
+    }
+  }
+}
 .modal-div {
   width: 340px;
   position: relative;
@@ -431,7 +376,6 @@ export default defineComponent({
   }
   &:hover {
     .ant-calendar-picker-clear {
-      background: #23263c;
       svg {
         fill: white;
       }
@@ -439,7 +383,6 @@ export default defineComponent({
   }
 }
 .ant-btn.claim-btn {
-  color: #ffffff;
   background-image: linear-gradient(to right, #de4545, #db7e42);
   border: 0;
   :hover {
@@ -447,7 +390,7 @@ export default defineComponent({
   }
 }
 .hot-promo {
-  border-radius: 10px;
+  padding: 20px;
   overflow: hidden;
   position: relative;
   .promo-bg {
@@ -456,7 +399,8 @@ export default defineComponent({
     background-position: center center;
     &.isDesktop {
       display: block;
-      height: 430px;
+      min-height: 430px;
+      height: 40vh;
     }
     &.isMobile {
       display: none;
@@ -465,9 +409,9 @@ export default defineComponent({
   }
   .common-promo {
     background-size: contain;
-    gap: 30px;
+    gap: 10px;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     .extra-img {
       position: absolute;
       right: 100px;
@@ -518,13 +462,14 @@ export default defineComponent({
     .ant-tabs-nav .ant-tabs-tab {
       padding: 10px 48px;
       margin: 10px 5px 20px;
-      color: #ffffff;
+
       font-size: 16px;
       border-radius: 10px;
       border: 1px solid #db7e42;
       box-shadow: rgb(0 0 0 / 100%) 0px 6px 12px 0px;
       width: 400px;
       text-align: center;
+      background: #ffffff;
       &-active {
         background-image: linear-gradient(to right, #de4545, #db7e42);
       }
@@ -534,7 +479,6 @@ export default defineComponent({
 
     .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
     .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
-      background: #2b2b4b;
     }
 
     .ant-tabs-ink-bar {
@@ -548,16 +492,6 @@ export default defineComponent({
       background-color: transparent;
     }
 
-    .ant-table-thead > tr > th,
-    .ant-table-placeholder {
-      color: #ffffff;
-      background-color: #23263c;
-      border: 0;
-    }
-
-    .ant-table-placeholder {
-      border: 0;
-    }
     .tabs {
       .tab1 {
         display: flex;
@@ -579,7 +513,7 @@ export default defineComponent({
             }
           }
           flex: 1;
-          color: #ffffff;
+
           text-align: center;
         }
       }
@@ -603,7 +537,6 @@ export default defineComponent({
           margin: 0;
         }
         .ant-form-item-label > label {
-          color: #ffffff;
         }
         .ant-switch-checked {
           background: #db7e42;
@@ -615,7 +548,7 @@ export default defineComponent({
     padding: 10px;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .hot-promo {
     .promo-bg {
       img {

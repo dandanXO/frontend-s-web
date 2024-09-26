@@ -99,7 +99,6 @@
               v-if="scope.row.placeTime !== null"
               v-formatter="{
                 data: scope.row.placeTime,
-                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -113,7 +112,6 @@
               v-if="scope.row.matureTime !== null"
               v-formatter="{
                 data: scope.row.matureTime,
-                timeZone: timeZone,
                 type: 'date',
               }"
             />

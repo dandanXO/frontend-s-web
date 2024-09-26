@@ -1,7 +1,7 @@
-import { server } from "@/utils/request";
+import { api } from "src/boot/axios";
 
 export function loadMailbox(type, pageNum, pageSize) {
-  return server.REST.post("auth/mailbox", {
+  return api.post("auth/mailbox", {
     type,
     pageNum,
     pageSize,
@@ -9,7 +9,7 @@ export function loadMailbox(type, pageNum, pageSize) {
 }
 
 export function mailInbox(mailQuery) {
-  return server.REST.get("/session/inbox", {
+  return api.get("/session/inbox", {
     params: {
       type: mailQuery.type,
       current: mailQuery.current,
@@ -20,7 +20,7 @@ export function mailInbox(mailQuery) {
 }
 
 export function mailOutbox(mailQuery) {
-  return server.REST.get("/session/outbox", {
+  return api.get("/session/outbox", {
     params: {
       type: mailQuery.type,
       current: mailQuery.current,
@@ -31,5 +31,5 @@ export function mailOutbox(mailQuery) {
 }
 
 export function wirteMail(mail) {
-  return server.REST.post("/session/writeOutbox", mail);
+  return api.post("/session/writeOutbox", mail);
 }
