@@ -88,6 +88,17 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            {{ t('fields.netProfit') }}
+          </el-col>
+          <el-col :span="12">
+            $
+            <span
+              v-formatter="{data: data.ngr, type: 'money'}"
+            />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             {{ t('fields.bet') }}
           </el-col>
           <el-col :span="12">
