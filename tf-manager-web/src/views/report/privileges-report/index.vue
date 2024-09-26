@@ -17,7 +17,6 @@
           :editable="false"
           :clearable="false"
         />
-
         <el-input
           v-model="request.name"
           size="small"
@@ -415,7 +414,7 @@ onMounted(async () => {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>
