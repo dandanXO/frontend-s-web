@@ -276,9 +276,13 @@
                     :value="gameType.value"
                   />
                 </el-select>
-                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
+                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE' && item.key">
                   :
                   <el-input-number :controls="false" style="width: 170px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
+                </span>
+                <span v-else>
+                  :
+                  <el-input-number :controls="false" style="width: 170px " v-model="item.value" />
                 </span>
                 <el-button
                   v-if="index === gameTypes.length - 1"

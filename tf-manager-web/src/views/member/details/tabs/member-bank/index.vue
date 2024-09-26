@@ -35,7 +35,6 @@
         <el-table-column
           :label="t('fields.operate')"
           align="center"
-          fixed="right"
         >
           <template #default="scope" v-if="hasPermission(['sys:member:unbindbankcard'])">
             <el-button ref="unbindBtnsRef" size="mini" type="danger" @click="toUnbind(scope.row)" @keydown.enter.prevent>
