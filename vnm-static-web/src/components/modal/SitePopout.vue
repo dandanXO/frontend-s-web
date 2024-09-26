@@ -12,7 +12,7 @@
       </div>
       <div class="right">
         <div v-if="selectedItem?.desktopImgUrl">
-          <img :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
+          <img @click="onClickPopoutImg(`/promotion?name=${selectedItem.path}`)" :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
           <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
         </div>
       </div>
@@ -25,11 +25,18 @@ import { ref, onMounted, computed } from "vue";
 import { getSitePopoutList } from "@/api/personal/common";
 import { useLocalStorage } from "@vueuse/core";
 import moment from 'moment';
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const popoutList = ref([]);
 const selectedItemIndex = ref();
 const selectedItem = computed(() => popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined)
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+
+
+const onClickPopoutImg = (path) => {
+  router.push(path)
+}
 
 onMounted(() => {
   getSitePopoutList().then((res) => {
@@ -177,6 +184,11 @@ onMounted(() => {
 
       img {
         width: 100%;
+        cursor: pointer;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
       }
     }
   }
