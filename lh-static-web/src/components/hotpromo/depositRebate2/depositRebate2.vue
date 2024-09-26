@@ -79,6 +79,12 @@
           <td>≥1,000</td>
           <td>100</td>
         </tr> -->
+        <tr>
+          <td>支付宝</td>
+          <td>0.5%</td>
+          <td>≥500</td>
+          <td>50</td>
+        </tr>
       </tbody>
     </table>
     <div class="similar-title">
@@ -145,12 +151,12 @@ const depositCards = ref([
     code: "szrmb",
     title: "数字人民币",
     content: `充值即送<em class="light-bg">1.0%</em>彩金 数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥300元，即可享受存款金额的1.0%加码彩金，单日优惠最高上限100元。`
-  }
-  // {
-  //   code: "zfb",
-  //   title: "支付宝转卡",
-  //   content: `充值即送<em class="light-bg">0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em class="light-bg">0.5%</em>的彩金返还，单日优惠最高上限50元。`
-  // },
+  },
+  {
+    code: "zfb",
+    title: "支付宝转卡",
+    content: `充值即送<em class="light-bg">0.5%</em>彩金 支付宝可以满足您不同需求和使用场景，速度快，够安全。用户每日任何时间在雷火使用“支付宝”方式成功存款≥500元，即可享受存款金额的<em class="light-bg">0.5%</em>加码彩金，单日优惠最高上限50元。`
+  },
 ]);
 </script>
 <style lang="scss">
