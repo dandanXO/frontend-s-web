@@ -720,7 +720,7 @@ function constructRollover() {
   if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
     json.rollover = uiControl.rollOverAmt
   }
-  form.rollover = uiControl.rollOverAmt
+  form.rollover = uiControl.rollOverAmt ? uiControl.rollOverAmt : 1;
   return JSON.stringify(json)
 }
 // const createFilter = queryString => {
