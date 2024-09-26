@@ -33,7 +33,27 @@ const globalLinks = [
   "lh970.",
   "lh971.",
   "lh988.",
-  "033lh.vip"
+  "033lh.vip",
+  "lh997.cc",
+  "lh135.cc",
+  "lh207.cc",
+  "lh794.cc",
+  "lh595.cc",
+  "lh381.cc",
+  "lh313.cc",
+  "lh693.cc",
+  "lh526.cc",
+  "lh643.cc",
+  "lh311.cc",
+  "lh130.cc",
+  "lh582.cc",
+  "lh982.cc",
+  "lh820.cc",
+  "lh715.cc",
+  "lh571.cc",
+  "lh504.cc",
+  "lh435.cc",
+  "lh575.cc"
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
@@ -226,14 +246,19 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
-      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code === ResponseCode.ERROR_PROMO_NOT_STARTED || res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT || res.code === ResponseCode.ERROR_PROMO_CLAIMED) {
+      if (
+        res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+        res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+        res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+        res.code === ResponseCode.ERROR_PROMO_CLAIMED
+      ) {
         ui.notify({
           type: "error",
           message: res.message
         });
       }
       if (res.code === ResponseCode.ERROR_EMPTY_ADS) {
-        console.log(res)
+        console.log(res);
         return res;
       }
       // if (res.code === 36001 || 36002 || 36003 || 36004 || 36005 || 36006 || 36007 || 36008 || 36009) {
