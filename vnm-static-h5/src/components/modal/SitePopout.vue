@@ -14,7 +14,7 @@
           <div class="content">
             <div class="right">
               <div v-if="selectedItem?.desktopImgUrl">
-                <img :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
+                <img @click="onClickPopoutImg(`/promotion?name=${selectedItem.path}`)" :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
               </div>
             </div>
             <div class="left">
@@ -35,12 +35,20 @@
   import { useLocalStorage } from "@vueuse/core";
   import { api } from "boot/axios";
   import moment from 'moment';
+  import { useRouter } from "vue-router";
 
+  const router = useRouter();
   const props = defineProps(['closePopout']);
   const popoutList = ref([]);
   const selectedItemIndex = ref();
   const selectedItem = computed(() => popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined)
   const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+
+
+  const onClickPopoutImg = (path) => {
+    router.push(path);
+    props.closePopout();
+  }
 
   onMounted(() => {
     api.get('/member/site-popout-list?siteType=main').then((res) => {
@@ -192,6 +200,11 @@
         
         img {
           width: 100%;
+          cursor: pointer;
+
+          &:hover {
+            filter: brightness(0.9);
+          }
         }
       }
     }
