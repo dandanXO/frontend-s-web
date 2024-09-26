@@ -1008,6 +1008,7 @@ async function showEdit(privilegeInfo) {
     handleIndividualCheckChange()
     gameTypes.value = []
     uiControl.isNewRollover = false;
+    // debugger;
     if (form.gameTypeRollover) {
       const gameTypeRollover = JSON.parse(form.gameTypeRollover)
       const string = gameTypeRollover.rolloverType;
@@ -1046,7 +1047,7 @@ async function showEdit(privilegeInfo) {
       } else if (gameType) {
         uiControl.selectedGameTypeRolloverType = 'GAME_TYPE'
       }
-      if (string === "ANY_TYPES") {
+      if (uiControl.isNewRollover === false && (string === "ANY_TYPES" || !string)) {
         uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
       }
 
