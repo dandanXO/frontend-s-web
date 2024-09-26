@@ -127,7 +127,7 @@
               <th style="text-align: center">
                 生日礼金
                 <br />
-                (1倍)
+                (3倍)
               </th>
               <th style="text-align: center">
                 每月红包
