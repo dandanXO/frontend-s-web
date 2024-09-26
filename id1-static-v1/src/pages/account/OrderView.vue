@@ -8,8 +8,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="withdrawal" label="Withdrawal" />
-      <q-tab name="recharge" label="Recharge" />
+      <q-tab name="withdrawal" label="Penarikan" />
+      <q-tab name="recharge" label="Isi ulang" />
     </q-tabs>
 
     <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
@@ -25,7 +25,7 @@
       <q-tab-panel name="withdrawal">
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
+            <div class="order-col">NO. Order</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
 
@@ -229,9 +229,9 @@ const getWithdrawStatus = (withdrawStatus) => {
       return "Pending";
     case "FAIL":
     case "STEP_5":
-      return "Failed";
+      return "Gagal";
     case "SUCCESS":
-      return "Success";
+      return "Berhasil";
     default:
       return withdrawStatus;
   }
@@ -242,11 +242,11 @@ const getDepositStatus = (depositStatus) => {
     case "PENDING":
       return "Pending";
     case "SUCCESS":
-      return "Success";
+      return "Berhasil";
     case "SUPPLEMENT_SUCCESS":
-      return "Success";
+      return "Lengkapi Berhasil";
     case "CLOSED":
-      return "Closed";
+      return "Ditutup";
     default:
       return depositStatus;
   }

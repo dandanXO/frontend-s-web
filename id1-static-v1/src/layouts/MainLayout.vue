@@ -6,8 +6,8 @@
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
-          <q-btn glossy color="brand" to="/login">Login</q-btn>
-          <q-btn outline color="brand" to="/register">Register</q-btn>
+          <q-btn glossy color="brand" to="/login">Masuk</q-btn>
+          <q-btn outline color="brand" to="/register">Daftar</q-btn>
         </q-card-actions>
         <!-- <q-card-actions v-if="store.hasToken()">
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
