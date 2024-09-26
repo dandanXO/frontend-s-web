@@ -268,13 +268,10 @@
                     :value="gameType.value"
                   />
                 </el-select>
-                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE' && item.key">
+                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
                   :
-                  <el-input-number :controls="false" style="width: 100px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
-                </span>
-                <span v-else>
-                  :
-                  <el-input-number :controls="false" style="width: 100px " v-model="item.value" />
+                  <el-input-number v-if="item.key" :controls="false" style="width: 100px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
+                  <el-input-number v-else :controls="false" style="width: 100px " v-model="item.value" />
                 </span>
                 <el-button
                   v-if="index === gameTypes.length - 1"
@@ -882,7 +879,7 @@ function selectPrivilege(val) {
           selectedRolloverType.value = parts[1];
         } else {
           uiControl.isNewRollover = false;
-          uiControl.oldRollOver.gameTypeRollover = privilege.gameTypeRollover;
+          uiControl.oldRollOver.gameTypeRollover = gameTypeRollover;
 
           selectedRolloverType.value = "MULTIPLE";
           uiControl.rollOverAmt = privilege.rollover;
