@@ -76,7 +76,18 @@
             </template>
           </q-input>
 
-          <q-input
+          <div class="geetest-captcha-wrapper">
+            <div class="input-icon-label-wrapper">
+              <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+              <label class="input-label">
+                <em>*</em>
+                验证码
+              </label>
+            </div>
+            <div id="captchaContainer"></div>
+          </div>
+
+          <!-- <q-input
             ref="verificationRef"
             standout
             clearable
@@ -103,7 +114,7 @@
                 </label>
               </div>
             </template>
-          </q-input>
+          </q-input> -->
         </div>
 
         <div v-if="loginType">
@@ -221,7 +232,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, onActivated, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -257,6 +268,26 @@ export default defineComponent({
     const verificationRef = ref();
     const router = useRouter();
     const route = useRoute();
+
+    const message = ref("Loading Geetest...");
+
+    // Dynamically load the Geetest script
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    // Initialize Geetest with configuration
+    const initGeetest = (config) => {
+      console.log(config)
+      window.initGeetest4(config.config, config.handler);
+    };
+
 
     const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
@@ -369,51 +400,63 @@ export default defineComponent({
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
+
+          if(window.captchaObj) {
+            const validate = window.captchaObj.getValidate();
+            if (!validate) {
+              alert("Please complete the captcha!");
+              return;
+            }
+          }
+          // verificationRef.value.validate();
           $q.loading.show({
             message: "登录中"
           });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
             $q.loading.hide();
           } else {
             store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
-                summoner: loginForm.summoner
-              })
-              .then(() => {
-                $q.loading.hide();
-                sessionStorage.removeItem("REFERRAL_CODE");
-                sessionStorage.removeItem("SUMMON_CODE");
+            .memberLogin({
+              loginName: loginForm.loginName,
+              password: loginForm.password,
+              sid: sidParam,
+              // captchaCode: loginForm.captchaCode,
+              // codeId: loginForm.codeId,
+              summoner: loginForm.summoner,
+              lotNumber: loginForm.lot_number,
+              captchaOutput: loginForm.captcha_output,
+              passToken: loginForm.pass_token,
+              genTime: loginForm.gen_time,
+            })
+            .then(() => {
+              $q.loading.hide();
+              sessionStorage.removeItem("REFERRAL_CODE");
+              sessionStorage.removeItem("SUMMON_CODE");
 
-                if (isCheckRmb.value) {
-                  localStorage.setItem(
-                    "userpass",
-                    JSON.stringify({
-                      loginName: loginForm.loginName,
-                      password: loginForm.password
-                    })
-                  );
-                } else {
-                  localStorage.removeItem("userpass");
-                }
+              if (isCheckRmb.value) {
+                localStorage.setItem(
+                  "userpass",
+                  JSON.stringify({
+                    loginName: loginForm.loginName,
+                    password: loginForm.password
+                  })
+                );
+              } else {
+                localStorage.removeItem("userpass");
+              }
 
-                loginFormRef.value.reset();
+              loginFormRef.value.reset();
 
-                if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
-                }
-              })
-              .catch((error) => {
-                loginForm.captchaCode = "";
-                getCode();
-                $q.loading.hide();
-              });
+              if (store.hasToken()) {
+                const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                router.go(jumpUrl);
+              }
+            })
+            .catch((error) => {
+              loginForm.captchaCode = "";
+              getCode();
+              $q.loading.hide();
+            });
           }
         } else {
           telephoneRef.value.validate();
@@ -491,6 +534,64 @@ export default defineComponent({
         })
         .catch(() => {});
     };
+
+    function captchaHandler(captchaObj) {
+      window.captchaObj = captchaObj;
+      captchaObj
+        .appendTo("#captchaContainer")
+        .onReady(function () {
+          console.log("ready");
+        })
+        .onNextReady(function () {
+          console.log("nextReady");
+        })
+        .onBoxShow(function () {
+          console.log("boxShow");
+        })
+        .onError(function (e) {
+          console.log(e);
+        })
+        .onSuccess(function () {
+          let result = window.captchaObj.getValidate()
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
+          console.log(loginForm)
+        });
+    }
+
+    const initGeetestCaptcha = async () => {
+      try {
+        // Step 1: Load Geetest script
+        await loadScript("https://static.geetest.com/v4/gt4.js");
+
+        // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+        const geetestConfig = {
+          config: {
+            captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+            language: "zh",
+            nativeButton: {
+            width: '100%',
+            height: '40px',
+            },
+            nextWidth: '280px',
+            product: 'float',
+          },
+          handler: captchaHandler
+        };
+
+        // Step 3: Initialize Geetest with the config
+        await initGeetest(geetestConfig);
+      } catch (error) {
+        message.value = "Error loading Geetest!";
+        console.error("Geetest loading error:", error);
+      }
+    }
+
+    watch(() => loginType.value, () => {
+      initGeetestCaptcha();
+    })
+
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -498,6 +599,7 @@ export default defineComponent({
       }
       checkRememberPwd();
       getBannerImage();
+      initGeetestCaptcha();
     });
     onActivated(() => {
       getCode();
@@ -539,6 +641,29 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.geetest-captcha-wrapper {
+  #captchaContainer {
+      width: 100%;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content, .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg, #ecf3fd, 0%, #ecf3fd 100%) !important;
+    border-color: #424f72;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
+    // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
+  }
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #424f72;
+    font-family: 'PingFang SC' !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_content .geetest_tip_container .geetest_tips_wrap .geetest_tip {
+    color: #39c522 !important;
+  }
+}
+
 .login-container {
   .q-field--standout .q-field__control {
     border-radius: 8px;
@@ -610,6 +735,21 @@ export default defineComponent({
     .login-banner-img {
       width: 100%;
       border-radius: 10px;
+    }
+
+    .geetest-captcha-wrapper {
+      display:flex;
+      background: #f7f8fb;
+      border-radius: 8px;
+      box-shadow: inset 0 0 4px 0 #a9c9ea;
+      height: 44px;
+      padding-left: 10px;
+      align-items: center;
+
+      #captchaContainer {
+        width: 100%;
+        padding-left: 12px;
+      }
     }
 
     .input-icon-label-wrapper {
