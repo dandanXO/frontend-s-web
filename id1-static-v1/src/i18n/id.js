@@ -72,7 +72,7 @@ export default {
     phone: "Nomor Telepon",
     phone_placeholder: "Masukkan nomor ponsel Anda",
     phone_rules_01: "Masukkan nomor telepon",
-    phone_rules_02: "Nomor telepon harus memiliki 11 digit",
+    phone_rules_02: "Nomor telepon harus 10 digit",
     phone_rules_03: "Nomor telepon harus dimulai dengan '03'",
     prependNumber: "+62",
     password: "Kata Sandi",
@@ -223,7 +223,8 @@ export default {
     getInterestProfit: "Dapatkan Keuntungan Bunga",
     notAMember: "Bukan anggota?",
     createAccount: "Buat akun",
-    copy: "Menyalin"
+    copy: "Menyalin",
+    joinNow: "Bergabung sekarang",
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
@@ -237,7 +238,8 @@ export default {
     plsLoginToContinue: "Silakan login untuk melanjutkan",
     copiedtoClipboard: "disalin ke papan klip",
     addSucceed: "Berhasil Ditambahkan",
-    loggingIn: "Sedang masuk"
+    loggingIn: "Memasuki",
+    registeredSuccessfully: "Berhasil terdaftar",
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -698,7 +700,8 @@ export default {
     sports: "SPORTS",
     live: "LIVE",
     slot: "SLOT",
-    vip: "VIP"
+    vip: "VIP",
+    promotionEnds: "Promosi Berakhir",
   },
   hotPromo: {
     aviatorWheel: {
