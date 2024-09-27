@@ -404,7 +404,7 @@
             <li>晋升顺序：VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升。</li>
             <li>生日礼金：VIP2或以上等级会员可享受生日礼金，每年仅可领取一次。（生日彩金3倍流水即可提款）</li>
             <li>
-              每月红包：每月1号会员即可登录账户领取每月红包，（每月红包彩金3倍流水即可提款）。上个月需累积2000元存款方可领取每月红包奖金。
+              每月1号会员即可登录账户领取每月红包（每月红包彩金3倍流水即可提款）。上月需达到累计存款要求方可领取每月红包奖金。
             </li>
             <li>东赢保留对活动的修改，停止及最终解释权。</li>
           </ol>
@@ -1077,7 +1077,7 @@ program at any time without prior notice.`
 
     onMounted(() => {
       if (!store.token) {
-        return
+        return;
       }
       vipLevel.value = store.vip.replace("VIP", "");
       if (vipLevel.value >= 1) {
