@@ -106,7 +106,6 @@ import { reactive } from 'vue'
 import moment from 'moment'
 import {
   queryPh1DailySummary,
-  queryPh1DailySummaryTotal,
 } from '../../../api/affiliate-daily-summary'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
@@ -134,10 +133,6 @@ const request = reactive({
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
-})
-
-const total = reactive({
-  data: null,
 })
 
 function convertDate(date) {
@@ -191,9 +186,9 @@ async function loadRecord() {
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await queryPh1DailySummary(query)
-  const { data: ret1 } = await queryPh1DailySummaryTotal(query)
+  // const { data: ret1 } = await queryPh1DailySummaryTotal(query)
 
-  total.data = ret1
+  // total.data = ret1
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
@@ -203,25 +198,30 @@ async function loadRecord() {
 function getSummaries(param) {
   const { columns } = param
   var sums = []
-  if (total.data) {
-    columns.forEach((column, index) => {
-      if (index === 0) {
-        sums[index] = t('fields.total')
-      } else if (index >= 1) {
-        var prop = column.property
-        if (index === 1 || index === 2 || index === 4) {
-          sums[index] = total.data[prop]
-        } else {
-          sums[index] =
-            '$' +
-            parseFloat(total.data[prop]).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        }
+  columns.forEach((column, index) => {
+    if (index === 0) {
+      sums[index] = t('fields.total')
+    } else if (index >= 1) {
+      var prop = column.property
+      if (index === 1 || index === 2 || index === 4) {
+        const pageRowCount = Number(page.records.reduce((sum, row) => {
+          return sum + Number(row[prop])
+        }, 0))
+        sums[index] = pageRowCount
+      } else {
+        const pageRowCount = Number(page.records.reduce((sum, row) => {
+          return sum + Number(row[prop])
+        }, 0))
+        sums[index] =
+          '$ ' +
+          parseFloat(pageRowCount).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
       }
-    })
-  }
+    }
+  })
+
   return sums
 }
 </script>

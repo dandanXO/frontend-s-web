@@ -1,9 +1,6 @@
 <template>
   <div class="live-container">
-    <q-scroll-area
-      style="height: calc(100vh - 90px); padding-bottom: 10px"
-      :thumb-style="{ width: 0 }"
-    >
+    <q-scroll-area style="height: calc(100vh - 90px); padding-bottom: 10px" :thumb-style="{ width: 0 }">
       <q-intersection transition="scale">
         <!-- <div v-if="banner.mobileImageUrl" class="banner-container">
           <div
@@ -15,12 +12,7 @@
         </div> -->
 
         <div class="section-product">
-          <div
-            class="item-group"
-            data-aos="slide-down"
-            data-aos-easing="ease-out"
-            data-aos-duration="1000"
-          >
+          <div class="item-group" data-aos="slide-down" data-aos-easing="ease-out" data-aos-duration="1000">
             <div
               v-for="(p, index) in hotTrendingGames"
               :key="index"
@@ -30,16 +22,16 @@
               <div class="items" @click="playGame(p.name, p.code, p.gameCode)">
                 <div class="bgimg">
                   <div class="theme">
-<!--                    <img :src="p.bg" alt="" />-->
-<!--                    <img-->
-<!--                      class="logo"-->
-<!--                      :style="-->
-<!--                        p.name === 'Evolution'-->
-<!--                          ? 'max-height:15px; bottom: 12%;'-->
-<!--                          : ''-->
-<!--                      "-->
-<!--                      :src="p.logo"-->
-<!--                    />-->
+                    <!--                    <img :src="p.bg" alt="" />-->
+                    <!--                    <img-->
+                    <!--                      class="logo"-->
+                    <!--                      :style="-->
+                    <!--                        p.name === 'Evolution'-->
+                    <!--                          ? 'max-height:15px; bottom: 12%;'-->
+                    <!--                          : ''-->
+                    <!--                      "-->
+                    <!--                      :src="p.logo"-->
+                    <!--                    />-->
                   </div>
                 </div>
               </div>
@@ -47,7 +39,7 @@
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-<!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
+        <!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>

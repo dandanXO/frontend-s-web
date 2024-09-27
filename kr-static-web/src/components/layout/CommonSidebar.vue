@@ -3,7 +3,7 @@
     <div class="additional-info-items" v-if="customerHovered">
       <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
-        <span>CSKH 24/7</span>
+        <span>HELP 24</span>
       </div>
       <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />

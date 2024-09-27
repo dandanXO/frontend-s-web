@@ -4,15 +4,9 @@
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
-      <!-- <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
-      <div class="download-rating">
-        <div class="rate-exp">Best experience!</div>
-        <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
-      </div> -->
-
       <div class="download-btn">
         <a :href="topDownloadUrl">
-          <img src="../assets/images/index/download/top-download-btn.png" />
+          <img src="@/assets/images/index/download/top-download-btn.png" />
         </a>
       </div>
       <div class="download-count">({{ topDownloadCount }}s)</div>
@@ -23,51 +17,32 @@
   </div>
 
   <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
-    <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" @click="onClickLogo" />
+          <img src="@/assets/logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.token">
         <div class="profile-details-container">
-          <template v-if="!homeProfile">
-            <div class="profile-rating">
-              <img src="../assets/images/index/profile-rating-off.png" alt="" />
-              <img src="../assets/images/index/profile-rating-off.png" alt="" />
-              <img src="../assets/images/index/profile-rating-off.png" alt="" />
-            </div>
-            <div class="profile-agency">
-              <div class="profile-agency-lbl">Agency Level:</div>
-              <div class="profile-agency-val">1</div>
-            </div>
-          </template>
-
-          <template v-else>
-            <div class="flex-c-start">
-              <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  <span style="font-family: Times New Roman, Times, serif">
-                    {{ store.currency.value }}
-                  </span>
-                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
+          <div class="flex-c-start">
+            <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
+              <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                <span style="font-family: Times New Roman, Times, serif">
+                  {{ store.currency.value }}
                 </span>
-                <div class="btn-refresh">
-                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
-                </div>
+                {{ isLoadingBalance ? $t("btn.loading") : convertToCommaAmount(store.balance, false) }}
+              </span>
+              <div class="btn-refresh">
+                <q-icon name="sync" size="16px" color="white-7"></q-icon>
               </div>
             </div>
-          </template>
+          </div>
         </div>
 
         <div style="z-index: 1">
           <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
         </div>
-        <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
-          <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
-          <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
-        </div> -->
         <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
           <template v-slot:label>
             <div class="profile-pic">
@@ -78,7 +53,7 @@
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
               <div class="vip-details">
-                <img src="../assets/images/index/vip-row.png" alt="" />
+                <img src="@/assets/images/index/vip-row.png" alt="" />
                 <div class="vip-level">
                   {{ store.vip }}
                 </div>
@@ -92,7 +67,7 @@
                 <q-avatar icon="diamond" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>VIP</q-item-label>
+                <q-item-label>{{ $t("header.vip") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -103,7 +78,7 @@
               <q-item-section>
                 <q-item-label>
                   <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  Message
+                  {{ $t("header.message") }}
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -113,7 +88,9 @@
                 <q-avatar icon="receipt" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Order</q-item-label>
+                <q-item-label>
+                  {{ $t("header.order") }}
+                </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -124,7 +101,7 @@
                 <q-avatar icon="account_balance" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Bank</q-item-label>
+                <q-item-label>{{ $t("header.bank") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -133,7 +110,7 @@
                 <q-avatar icon="logout" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Log out</q-item-label>
+                <q-item-label>{{ $t("header.logout") }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -142,22 +119,18 @@
       <div class="profile-wrapper" v-else>
         <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
         <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
-        <!-- <div class="btn-lang" @click="router.push('/language')">
-          <img src="../assets/images/auth/icon-globe.png" />
-        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { useQuasar, Platform } from "quasar";
-import { userStore } from "stores/index";
+import { api } from "@/boot/axios";
+import { convertToCommaAmount, isAndroid } from "@/boot/utils";
+import { userStore } from "@/stores/index";
+import { Platform } from "quasar";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount, isAndroid } from "src/boot/utils";
-import { api } from "boot/axios";
-import { useI18n } from "vue-i18n";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
@@ -165,36 +138,12 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 
-// const balance = ref(19999999);
-
-const profileImg = [
-  {
-    imgPath: ["profile-pic"]
-  }
-];
-
 const goLogin = () => {
-  if (props.homeProfile) {
-    emits("closeslot");
-  }
   router.push("/login");
 };
 
-const randomProfileImg = computed(() => {
-  const storedImg = sessionStorage.getItem("PROFILE_IMG");
-  if (storedImg) {
-    return storedImg;
-  } else {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
-    sessionStorage.setItem("PROFILE_IMG", imgPath);
-    return imgPath;
-  }
-});
-
 const profileImagePath = computed(() => {
-  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+  return require(`@/assets/images/account/profile-pic.png`);
 });
 
 const isLoadingBalance = ref(false);
@@ -212,7 +161,6 @@ const onClickLogo = () => {
     window.open(store.h5Url, "_blank");
     return;
   }
-
   router.push("/");
 };
 
@@ -222,7 +170,6 @@ const onVipClick = () => {
 
 const onLogout = () => {
   store.memberLogout().then(() => {
-    // location.reload();
     router.push("/home");
   });
 };
@@ -239,7 +186,7 @@ const closeTopdownload = () => {
 const countdown = () => {
   if (topDownloadCount.value > 0) {
     topDownloadCount.value--;
-    setTimeout(countdown, 1000); // Update every 1000 milliseconds (1 second)
+    setTimeout(countdown, 1000);
   }
 };
 
@@ -264,7 +211,6 @@ const checkTopDownloadAppear = () => {
 };
 
 const topDownloadUrl = ref("");
-
 const getTopDownloadUrl = () => {
   api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=77A4DF`).then((res) => {
     if (res.code === 0) {
@@ -281,13 +227,6 @@ const handleBackBtn = () => {
 };
 
 onMounted(() => {
-  if (!sessionStorage.getItem("PROFILE_IMG")) {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
-    sessionStorage.setItem("PROFILE_IMG", imgPath);
-  }
-
   getTopDownloadUrl();
   checkTopDownloadAppear();
 });
@@ -447,7 +386,6 @@ onMounted(() => {
     }
 
     .profile-pic-frame {
-      // background-image: url(../assets/images/common/profile-frame.png);
       width: 70px;
       height: 70px;
       background-size: 100%;

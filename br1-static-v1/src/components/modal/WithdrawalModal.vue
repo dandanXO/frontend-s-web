@@ -171,7 +171,7 @@
                 (val) => !!val || 'Please Enter Withdraw Amount',
                 (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
                 (val) =>
-                  val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+                  val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Valor da Retirada Insuficiente`,
                 (val) =>
                   (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                     val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
@@ -198,14 +198,14 @@
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
-                <div class="desc">{{ store.vip }} Daily Limit</div>
+                <div class="desc">{{ $t("withdraw.dailyLimit") }} {{ store.vip }}</div>
               </div>
               <div class="desc">{{ store.currency.label}}:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
-                <div class="desc">Remain Wagers</div>
+                <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
               </div>
               <div class="desc">{{ store.currency.label}}:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
             </div>
@@ -214,14 +214,14 @@
 
         <template v-if="bankCardList.length > 0">
           <ConfirmButton
-            label="Submit"
+            label="Enviar"
             :confirmFunc="submitWithdraw"
             :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           ></ConfirmButton>
         </template>
         <template v-else>
           <ConfirmButton
-            label="Submit"
+            label="Enviar"
             :confirmFunc="submitWithdrawBank"
             :isLoading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           ></ConfirmButton>

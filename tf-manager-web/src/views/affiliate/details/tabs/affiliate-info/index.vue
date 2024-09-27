@@ -2558,12 +2558,12 @@ onMounted(async () => {
 }
 
 .box-card {
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 0;
   }
 }
 
-::v-deep {
+:deep {
   .el-tabs__content {
     padding: 0;
   }
@@ -2594,7 +2594,7 @@ onMounted(async () => {
   }
 }
 
-::v-deep([class^='el-table']) {
+:deep([class^='el-table']) {
   .cell,
   .remove-padding {
     padding: 0 !important;

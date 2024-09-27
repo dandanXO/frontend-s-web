@@ -40,9 +40,7 @@
         <!--        </div>-->
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">
-            2024年9月25日起
-          </div>
+          <div class="right">2024年9月25日起</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
@@ -55,71 +53,71 @@
         <table class="livepoker-rebate-game-info-table">
           <tr>
             <th>等级</th>
-            <th>首冲要求 (元)</th>
+            <th>首充要求 (元)</th>
             <th>包赔比例</th>
             <th>彩金上限</th>
             <th>流水要求</th>
           </tr>
           <tr>
-            <td>Lv.0</td>
+            <td>VIP0</td>
             <td rowspan="13">≥1,000</td>
             <td rowspan="13">5%</td>
             <td>8</td>
             <td rowspan="13">3倍流水/不限场馆</td>
           </tr>
           <tr>
-            <td>Lv.1</td>
+            <td>VIP1</td>
             <td>18</td>
           </tr>
           <tr>
-            <td>Lv.2</td>
+            <td>VIP2</td>
             <td>28</td>
           </tr>
           <tr>
-            <td>Lv.3</td>
+            <td>VIP3</td>
             <td>58</td>
           </tr>
           <tr>
-            <td>Lv.4</td>
+            <td>VIP4</td>
 
             <td>88</td>
           </tr>
           <tr>
-            <td>Lv.5</td>
+            <td>VIP5</td>
             <td>108</td>
           </tr>
           <tr>
-            <td>Lv.6</td>
+            <td>VIP6</td>
             <td>188</td>
           </tr>
           <tr>
-            <td>Lv.7</td>
+            <td>VIP7</td>
             <td>258</td>
           </tr>
           <tr>
-            <td>Lv.8</td>
+            <td>VIP8</td>
             <td>288</td>
           </tr>
           <tr>
-            <td>Lv.9</td>
+            <td>VIP9</td>
             <td>328</td>
           </tr>
           <tr>
-            <td>Lv.10</td>
+            <td>VIP10</td>
             <td>388</td>
           </tr>
           <tr>
-            <td>Lv.11</td>
+            <td>VIP11</td>
             <td>588</td>
           </tr>
           <tr>
-            <td>Lv.12</td>
+            <td>VIP12</td>
             <td>888</td>
           </tr>
         </table>
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            例：vip10会员A当日投注 BLAST Premier 秋季总决赛赛事结算为负盈利10,000元，则次日可领取最高388元彩金。
+            例：VIP10会员A当日首充≥1,000元并投注BLAST Premier 秋季总决赛赛事结算为负盈利20,000元，会员A在次日24小时内可获得彩金：20,000*5%=1,000元，由于档位彩金领取上限为388元，会员A最终可获得388元彩金。
           </div>
         </div>
       </div>

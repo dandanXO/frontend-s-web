@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promo" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" :label="$t('header.promotion')" />
+      <q-tab name="vip" :label="$t('header.vip')" />
     </q-tabs>
   </div>
 
@@ -43,7 +43,7 @@
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
-                <span v-if="vip.vipLevel !== '0'">Accummulate Deposit</span>
+                <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
                 {{ vip.ugprade }}
               </div>
 
@@ -79,67 +79,58 @@
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
+              <img src="@/assets/images/vip/level-upgrade-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Level Upgrade</span>
+              {{ $t("vip.reward") }}
               <br />
-              Reward
+              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
             </div>
           </div>
           <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
+            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/monthly-reward-icon.svg" />
+              <img src="@/assets/images/vip/monthly-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Monthly</span>
+              {{ $t("vip.reward") }}
               <br />
-              Reward
+              <span class="bold">{{ $t("vip.monthly") }}</span>
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
             </div>
           </div>
           <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
+            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
+              <img src="@/assets/images/vip/daily-withdrawal-limit-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Daily Withdrawal</span>
+              {{ $t("vip.limit") }}
               <br />
-              Limit
+              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
             </div>
           </div>
           <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
+            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
+            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
       </div>
@@ -147,28 +138,28 @@
       <hr class="separator-line" style="margin-top: 20px" />
 
       <div class="header-wrapper">
-        <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
+        <div class="header">{{ $t("vip.monthlyCumulative") }}</div>
       </div>
 
       <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <img v-if="colIndex === 0" class="vip-icon" src="@/assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
               <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">
-                  Monthly Cumulative Deposit An Upgrade Vip Level
+                  {{ $t("vip.monthlyCumulative") }}
                 </div>
               </template>
             </q-th>
           </q-tr>
 
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td>Amount</q-td>
-            <q-td style="width: 60px">Turnover</q-td>
+            <q-td>{{ $t("records.level") }}</q-td>
+            <q-td>{{ $t("records.amount") }}</q-td>
+            <q-td style="width: 70px">{{ $t("records.turnover") }}</q-td>
           </q-tr>
         </template>
 
@@ -177,7 +168,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
-                  Deposit {{ store.currency.value }}
+                  {{ $t("vip.deposit") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
@@ -189,16 +180,14 @@
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-              corresponding upgrade rewards.
+              {{ $t("vip.afterTheRecharge") }}
             </q-td>
           </q-tr>
         </template>
       </q-table>
 
       <div class="hint-msg">
-        After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-        corresponding upgrade rewards.
+        {{ $t("vip.afterTheRecharge") }}
       </div>
 
       <q-table
@@ -212,7 +201,7 @@
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <img v-if="colIndex === 0" class="vip-icon" src="@/assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
               <!-- unable to adjust table width... -->
               <template v-else>
@@ -222,9 +211,9 @@
           </q-tr>
 
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td>Amount</q-td>
-            <q-td style="width: 60px">Turnover</q-td>
+            <q-td>{{ $t("records.level") }}</q-td>
+            <q-td>{{ $t("records.amount") }}</q-td>
+            <q-td style="width: 70px">{{ $t("records.turnover") }}</q-td>
           </q-tr>
         </template>
 
@@ -245,13 +234,13 @@
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.
+              {{ $t("vip.promotionBonus") }}
             </q-td>
           </q-tr>
         </template>
       </q-table>
 
-      <div class="hint-msg">Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.</div>
+      <div class="hint-msg">{{ $t("vip.promotionBonus") }}</div>
 
       <q-table
         flat
@@ -264,18 +253,20 @@
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <img v-if="colIndex === 0" class="vip-icon" src="@/assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
               <!-- unable to adjust table width... -->
               <template v-else>
-                <div style="text-align: center; padding-right: 60px">VIP Monthly Cash Bonus</div>
+                <div style="text-align: center; padding-right: 60px">
+                  {{ $t("vip.vipMonthCashBonus") }}
+                </div>
               </template>
             </q-th>
           </q-tr>
 
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td style="text-align: right">Amount</q-td>
+            <q-td>{{ $t("records.level") }}</q-td>
+            <q-td style="text-align: right">{{ $t("records.amount") }}</q-td>
           </q-tr>
         </template>
 
@@ -296,18 +287,13 @@
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m.
-              on the 1st of next month.
+              {{ $t("vip.cashBonus") }}
             </q-td>
           </q-tr>
         </template>
       </q-table>
 
-      <div class="hint-msg">
-        Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on the
-        1st of next month.
-      </div>
-
+      <div class="hint-msg">{{ $t("vip.cashBonus") }}</div>
       <q-table
         flat
         :hide-pagination="true"
@@ -319,17 +305,17 @@
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <img v-if="colIndex === 0" class="vip-icon" src="@/assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 90px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
               <template v-else>
-                <div style="text-align: center; padding-right: 60px">VIP Daily Withdrawal Limit</div>
+                <div style="text-align: center; padding-right: 60px">{{ $t("vip.vipDailyWithdrawalLimit") }}</div>
               </template>
             </q-th>
           </q-tr>
 
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td style="text-align: right">Amount</q-td>
+            <q-td>{{ $t("records.level") }}</q-td>
+            <q-td style="text-align: right">{{ $t("records.amount") }}</q-td>
           </q-tr>
         </template>
 
@@ -347,22 +333,21 @@
 
         <template v-slot:bottom-row>
           <q-tr style="display: none">
-            <q-td colspan="100%" class="bottom-note text-left">Daily withdrawal limits based on VIP levels.</q-td>
+            <q-td colspan="100%" class="bottom-note text-left">{{ $t("vip.dailyWithdrwalLimits") }}</q-td>
           </q-tr>
         </template>
       </q-table>
-
-      <div class="hint-msg">Daily withdrawal limits based on VIP levels.</div>
+      <div class="hint-msg">{{ $t("vip.dailyWithdrwalLimits") }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { watch, ref, onActivated } from "vue";
-import ProfileSummary from "components/ProfileSummary.vue";
+import ProfileSummary from "@/components/ProfileSummary.vue";
+import { userStore } from "@/stores/index";
+import { onActivated, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { userStore } from "stores/index";
-import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 
 const vipLevel = ref("");
@@ -808,7 +793,7 @@ const swipeRight = () => {
   .vip-reward-item {
     width: 107px;
     height: 182px;
-    background: url("../../assets/images/vip/vip-reward-unlock-bg.png") no-repeat center center;
+    background: url("@/assets/images/vip/vip-reward-unlock-bg.png") no-repeat center center;
     background-size: 100% 100%;
     display: flex;
     flex-direction: column;
@@ -911,7 +896,7 @@ const swipeRight = () => {
   position: relative;
   display: flex;
   flex-direction: column-reverse;
-  background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
+  background: url("@/assets/images/vip/badge/banner.png") no-repeat top center;
   background-size: 100% 100%;
   height: 170px;
   width: 100%;
@@ -933,61 +918,61 @@ const swipeRight = () => {
     color: #fff;
     position: absolute;
 
-    background: url("../../assets/images/vip/badge/vip1.png") no-repeat top center;
+    background: url("@/assets/images/vip/badge/vip1.png") no-repeat top center;
     background-size: 100% 100%;
 
     &.vip2 {
-      background: url("../../assets/images/vip/badge/vip2.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip2.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip3 {
-      background: url("../../assets/images/vip/badge/vip3.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip3.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip4 {
-      background: url("../../assets/images/vip/badge/vip4.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip4.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip5 {
-      background: url("../../assets/images/vip/badge/vip5.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip5.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip6 {
-      background: url("../../assets/images/vip/badge/vip6.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip6.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip7 {
-      background: url("../../assets/images/vip/badge/vip7.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip7.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip8 {
-      background: url("../../assets/images/vip/badge/vip8.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip8.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip9 {
-      background: url("../../assets/images/vip/badge/vip9.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip9.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip10 {
-      background: url("../../assets/images/vip/badge/vip10.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip10.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip11 {
-      background: url("../../assets/images/vip/badge/vip11.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip11.png") no-repeat top center;
       background-size: 100% 100%;
     }
 
     &.vip12 {
-      background: url("../../assets/images/vip/badge/vip12.png") no-repeat top center;
+      background: url("@/assets/images/vip/badge/vip12.png") no-repeat top center;
       background-size: 100% 100%;
     }
   }

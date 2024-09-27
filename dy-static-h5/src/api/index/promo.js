@@ -197,7 +197,7 @@ export function getEurocupManualSchedule() {
 }
 
 export function getSportMatch() {
-  return eventapi.get('/sport-match/today')
+  return eventapi.get("/sport-match/today");
 }
 
 export function getLivePoker() {
@@ -229,7 +229,7 @@ export function getDota2CompetitionBet(promoCode) {
 }
 
 export function getBlastCoupon() {
-  return eventapi.get('/session/blastCoupon/init');
+  return eventapi.get("/session/blastCoupon/init");
 }
 
 export function claimBlastCoupon(promoCode) {
@@ -240,25 +240,29 @@ export function getBlastCouponInit() {
   return eventapi.get("/session/blastCoupon/init");
 }
 export function getCompetitionToday() {
-  return eventapi.get('/session/competition/today')
+  return eventapi.get("/session/competition/today");
 }
 
-export function getCompetitionYesterday() {
-  return eventapi.get('/session/competition/yesterday')
+export function getCompetitionYesterday(promoCode) {
+  return eventapi.get("/session/competition/yesterday", {
+    params: {
+      promoCode
+    }
+  });
 }
 
-export function claimCompetitionBonus() {
-  return eventapi.post('/session/competition/claimBonus')
+export function claimCompetitionBonus(promoCode) {
+  return eventapi.post("/session/competition/claimBonus", qs.stringify({ promoCode }));
 }
 
 export function getNationalDayRecords() {
-  return eventapi.get('/session/nationalDay/records')
+  return eventapi.get("/session/nationalDay/records");
 }
 
 export function claimNationalDayBonus() {
-  return eventapi.post('/session/nationalDay/claimBonus')
+  return eventapi.post("/session/nationalDay/claimBonus");
 }
 
 export function getNationalDayinit() {
-  return eventapi.get('/session/nationalDay/init')
+  return eventapi.get("/session/nationalDay/init");
 }

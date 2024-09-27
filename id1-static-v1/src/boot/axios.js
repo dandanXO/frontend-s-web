@@ -1,11 +1,12 @@
-import { boot, store } from "quasar/wrappers";
-import { createPinia } from "pinia";
-import { Loading, Notify, SessionStorage, Dialog } from "quasar";
-import { ResponseCode } from "../api/response";
-import LocalStorage from "boot/local-storage";
 import axios from "axios";
+import LocalStorage from "boot/local-storage";
 import { getRndInteger } from "boot/utils";
+import { createPinia } from "pinia";
+import { Dialog, Loading, Notify, SessionStorage } from "quasar";
+import { boot, store } from "quasar/wrappers";
+import { ResponseCode } from "../api/response";
 import { errorMessages } from "./error-messages";
+import { t } from "./lang";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -159,8 +160,7 @@ export default boot(({ app, router }) => {
           type: "negative",
           timeout: 1000,
           position: "top",
-          message:
-            i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
+          message: t("error." + res.code)
         });
       }
       throw new Error(res.message || "Error");
@@ -186,4 +186,4 @@ export default boot(({ app, router }) => {
   eventapi.interceptors.response.use(onResponse, onResponseError);
 });
 
-export { axios, api, cashier, eventapi };
+export { api, axios, cashier, eventapi };

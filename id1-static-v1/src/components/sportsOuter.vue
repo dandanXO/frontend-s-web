@@ -1,12 +1,5 @@
 <template>
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    "
-  >
+  <div style="display: flex; justify-content: center; align-items: center; height: 100%">
     <a-spin />
   </div>
 </template>
@@ -24,11 +17,11 @@ onMounted(() => {
 
   const isMobile = Platform.is.mobile;
   if (isMobile) {
-    var way = null
+    var way = null;
     if (Platform.is.android) {
-      way = "ANDROID"
+      way = "ANDROID";
     } else if (Platform.is.ios) {
-      way="IOS"
+      way = "IOS";
     }
   }
   api
@@ -59,9 +52,9 @@ onMounted(() => {
   //       // pDepo(data);
   //     }
   //   })
-    // .catch((error) => {
-    //   window.opener.postMessage({ pmsg: error.message }, "*");
-    //   window.close();
-    // });
+  // .catch((error) => {
+  //   window.opener.postMessage({ pmsg: error.message }, "*");
+  //   window.close();
+  // });
 });
 </script>
