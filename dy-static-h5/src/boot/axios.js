@@ -235,6 +235,7 @@ export default boot(({ app, router }) => {
           window.location.href = "/";
         }
         if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+          sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
           window.location.href = "/";
