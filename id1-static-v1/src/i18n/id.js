@@ -72,7 +72,7 @@ export default {
     phone: "Nomor Telepon",
     phone_placeholder: "Masukkan nomor ponsel Anda",
     phone_rules_01: "Masukkan nomor telepon",
-    phone_rules_02: "Nomor telepon harus memiliki 11 digit",
+    phone_rules_02: "Nomor telepon harus 10 digit",
     phone_rules_03: "Nomor telepon harus dimulai dengan '03'",
     prependNumber: "+62",
     password: "Kata Sandi",
@@ -223,7 +223,8 @@ export default {
     getInterestProfit: "Dapatkan Keuntungan Bunga",
     notAMember: "Bukan anggota?",
     createAccount: "Buat akun",
-    copy: "Menyalin"
+    copy: "Menyalin",
+    joinNow: "Bergabung sekarang",
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
@@ -237,7 +238,8 @@ export default {
     plsLoginToContinue: "Silakan login untuk melanjutkan",
     copiedtoClipboard: "disalin ke papan klip",
     addSucceed: "Berhasil Ditambahkan",
-    loggingIn: "Sedang masuk",
+    loggingIn: "Memasuki",
+    registeredSuccessfully: "Berhasil terdaftar",
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -698,7 +700,8 @@ export default {
     sports: "SPORTS",
     live: "LIVE",
     slot: "SLOT",
-    vip: "VIP"
+    vip: "VIP",
+    promotionEnds: "Promosi Berakhir",
   },
   hotPromo: {
     aviatorWheel: {
@@ -721,6 +724,25 @@ export default {
     to: "To",
     content02: "During this period, all games and services will be unavailable.",
     content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+  },
+  promo_activitiesDetails: {
+    activitiesContent:
+      "Semakin banyak hari berturut-turut Anda memenuhi persyaratan deposit, semakin banyak bonus ekstra yang akan Anda dapatkan",
+    depositOftheDay: "Deposit hari ini",
+    numberOfDailyWager: "Jumlah taruhan harian",
+    day: "Hari",
+    free: "Gratis",
+    received: "Diterima",
+    wagerX5: "Taruhan x5",
+    deposit: "Deposit",
+    noticeDesc: "Pemberitahuan: Promosi ini tidak dihitung untuk taruhan CASINO dan SPORTS!",
+    rules_01:
+      "1. Contoh: Pada hari pertama, jika Anda melakukan deposit 1.000 IDR, Anda akan diberikan 88 IDR setelah turnover penuh. Tidak ada deposit pada hari kedua, tetapi melakukan deposit pada hari ketiga, maka akan dihitung ulang sebagai hari pertama.",
+    rules_02:
+      "2. Bonus untuk hari tersebut hanya bisa diklaim sekali, misalnya: setiap akun hanya bisa mengklaim 88 IDR pada hari pertama.",
+    rules_03:
+      "3. Setelah persyaratan deposit terpenuhi, Anda harus bermain mesin slot untuk mulai menghitung turnover, dan bonus akan diberikan setelah turnover selesai.",
+    rules_04: "4. Setelah persyaratan terpenuhi, sistem akan secara otomatis mengeluarkan bonus."
   },
   error: {
     101: "Platform tidak ditemukan",
