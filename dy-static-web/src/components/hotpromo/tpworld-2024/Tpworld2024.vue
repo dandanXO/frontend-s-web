@@ -302,6 +302,7 @@ onMounted(() => {
 .livepoker-rebate-game-info {
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
