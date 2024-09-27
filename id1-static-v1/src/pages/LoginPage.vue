@@ -260,7 +260,7 @@ export default defineComponent({
 
     const onSubmit = () => {
       $q.loading.show({
-        message: "Logging in"
+        message: t("notify.loggingIn")
       });
       const fpPromise = FingerprintJS.load();
       (async () => {
@@ -278,7 +278,7 @@ export default defineComponent({
           passwordRef.value.validate();
           // verificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t("notify.loggingIn")
           });
           // || verificationRef.value.hasError
           if (loginNameRef.value.hasError || passwordRef.value.hasError) {
