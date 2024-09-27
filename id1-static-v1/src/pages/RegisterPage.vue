@@ -89,6 +89,7 @@ import { defineComponent, onActivated, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
 import { isAndroid } from "@/boot/utils";
 import { userStore } from "@/stores/index";
 import { useUI } from "@/stores/ui";
@@ -240,7 +241,7 @@ export default defineComponent({
       // verificationRef.value.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("notify.registeringInProgress")
       });
 
       if (
@@ -306,7 +307,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: t("notify.registeredSuccessfully"),
                   icon: "check_circle_outline"
                 });
 
