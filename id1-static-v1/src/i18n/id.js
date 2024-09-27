@@ -431,9 +431,9 @@ export default {
       faq: "TJU",
       faq_01: "1. Bagaimana cara meraup komisi?",
       faq_01_01:
-        "Anda bisa meraup hingga 1,5% dari taruhan harian pemain yang Anda ajukan. Makin tinggi level Anda, makin besar persentase komisi yang bisa Anda raup.",
+        "Anda bisa meraup hingga 1.5% dari taruhan harian pemain yang Anda ajukan. Makin tinggi level Anda, makin besar persentase komisi yang bisa Anda raup.",
       faq_01_02:
-        "Jika afiliasi Anda atau afiliasi Anda menjadi agen dan mereka berada di level lebih rendah dari atasan langsung mereka, maka Anda bisa terima hingga 1,2% dari jumlah rabat taruhan afiliasi tersebut. Nilai komisi tergantung pada selisih level antara Anda dan afiliasi Anda, makin besar selisih levelnya, makin banyak komisi yang Anda terima.",
+        "Jika afiliasi Anda atau afiliasi Anda menjadi agen dan mereka berada di level lebih rendah dari atasan langsung mereka, maka Anda bisa terima hingga 1.2% dari jumlah rabat taruhan afiliasi tersebut. Nilai komisi tergantung pada selisih level antara Anda dan afiliasi Anda, makin besar selisih levelnya, makin banyak komisi yang Anda terima.",
       faq_02: "2. Bagaimana cara mengundang teman Anda?",
       faq_02_01: "Bagikan game ini lewat media sosial atau bagikan tautan referal ke teman Anda.",
       faq_02_02:
