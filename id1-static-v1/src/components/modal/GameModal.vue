@@ -6,20 +6,6 @@
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
             <img src="../../assets/logo.png" />
-            <!-- <div
-              class="game-logo"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return '';
-                  }
-                })()
-              }"
-            >
-              &nbsp;
-            </div> -->
           </div>
 
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
@@ -82,10 +68,10 @@
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
-          <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
+          <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-            <q-btn label="Confirm" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
+            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+            <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
         </div>
       </div>
@@ -113,29 +99,21 @@
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
-import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
+import { defineExpose, reactive, ref, shallowRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
-import DepositComponent from "components/depositComponent.vue";
+import { Platform, useQuasar } from "quasar";
 
+import { api } from "@/boot/axios";
+import { isAndroid } from "@/boot/utils";
+import DepositComponent from "@/components/depositComponent.vue";
+import DepositView from "@/pages/account/DepositView.vue";
+import { userStore } from "@/stores/index";
+import { useUI } from "@/stores/ui";
 import { App } from "@capacitor/app";
-
-// import { transfer } from "api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
-import { api } from "boot/axios";
-import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
-import { isAndroid } from "boot/utils";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import DepositView from "../../pages/account/DepositView.vue";
-import { useUI } from "stores/ui";
 
 const props = defineProps(["closeFullGameDialog"]);
-
 const fullDepositDialog = ref(false);
-
 const $q = useQuasar();
 const ui = useUI();
 

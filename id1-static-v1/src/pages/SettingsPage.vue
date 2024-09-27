@@ -122,13 +122,13 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Sign Out</div>
+        <div class="txt-title">{{ $t("btn.signout") }}</div>
 
-        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+        <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
+          <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+          <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
         </div>
       </div>
     </div>
@@ -136,11 +136,12 @@
 </template>
 
 <script setup>
-import { useQuasar } from "quasar";
-import { userStore } from "src/stores";
 import { onActivated, ref } from "vue";
 import { useRouter } from "vue-router";
-import ProfileSummary from "../components/ProfileSummary.vue";
+import { useQuasar } from "quasar";
+
+import ProfileSummary from "@/components/ProfileSummary.vue";
+import { userStore } from "@/stores";
 
 const store = userStore();
 const router = useRouter();

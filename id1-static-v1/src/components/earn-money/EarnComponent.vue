@@ -36,14 +36,15 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue";
+import VueQRCodeComponent from "vue-qrcode-component";
+import { copyToClipboard, Platform, useQuasar } from "quasar";
+
 import { api } from "@/boot/axios";
 import { t } from "@/boot/lang";
 import { userStore } from "@/stores/index";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import html2canvas from "html2canvas";
-import { copyToClipboard, Platform, useQuasar } from "quasar";
-import { onMounted, ref } from "vue";
-import VueQRCodeComponent from "vue-qrcode-component";
 
 const $q = useQuasar();
 const store = userStore();
