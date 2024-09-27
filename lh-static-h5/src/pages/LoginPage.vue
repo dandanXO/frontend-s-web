@@ -76,7 +76,18 @@
             </template>
           </q-input>
 
-          <q-input
+          <div class="geetest-captcha-wrapper">
+            <div class="input-icon-label-wrapper">
+              <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+              <label class="input-label">
+                <em>*</em>
+                验证码
+              </label>
+            </div>
+            <div id="captchaContainer"></div>
+          </div>
+
+          <!-- <q-input
             ref="verificationRef"
             standout
             clearable
@@ -103,7 +114,7 @@
                 </label>
               </div>
             </template>
-          </q-input>
+          </q-input> -->
         </div>
 
         <div v-if="loginType">
@@ -258,23 +269,44 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
+    const message = ref("Loading Geetest...");
+
+    // Dynamically load the Geetest script
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    // Initialize Geetest with configuration
+    const initGeetest = (config) => {
+      console.log(config)
+      window.initGeetest4(config.config, config.handler);
+    };
+
+
     const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
     const getCode = () => {
-      api
-        .get("/member/verificationCode")
-        .then((response) => {
-          if (response.code === 0) {
-            verificationImg.value = "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          notify({
-            type: "error",
-            message: e.message,
-          });
-        });
+      return;
+      // api
+      //   .get("/member/verificationCode")
+      //   .then((response) => {
+      //     if (response.code === 0) {
+      //       verificationImg.value = "data:image/png;base64," + response.data.img;
+      //       loginForm.codeId = response.data.id;
+      //     }
+      //   })
+      //   .catch((e) => {
+      //     notify({
+      //       type: "error",
+      //       message: e.message,
+      //     });
+      //   });
     };
 
     const isCheckRmb = ref(false);
@@ -369,51 +401,63 @@ export default defineComponent({
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
+
+          if(window.captchaObj) {
+            const validate = window.captchaObj.getValidate();
+            if (!validate) {
+              alert("Please complete the captcha!");
+              return;
+            }
+          }
+          // verificationRef.value.validate();
           $q.loading.show({
             message: "登录中"
           });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
             $q.loading.hide();
           } else {
             store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
-                summoner: loginForm.summoner
-              })
-              .then(() => {
-                $q.loading.hide();
-                sessionStorage.removeItem("REFERRAL_CODE");
-                sessionStorage.removeItem("SUMMON_CODE");
+            .memberLogin({
+              loginName: loginForm.loginName,
+              password: loginForm.password,
+              sid: sidParam,
+              // captchaCode: loginForm.captchaCode,
+              // codeId: loginForm.codeId,
+              summoner: loginForm.summoner,
+              lotNumber: loginForm.lot_number,
+              captchaOutput: loginForm.captcha_output,
+              passToken: loginForm.pass_token,
+              genTime: loginForm.gen_time,
+            })
+            .then(() => {
+              $q.loading.hide();
+              sessionStorage.removeItem("REFERRAL_CODE");
+              sessionStorage.removeItem("SUMMON_CODE");
 
-                if (isCheckRmb.value) {
-                  localStorage.setItem(
-                    "userpass",
-                    JSON.stringify({
-                      loginName: loginForm.loginName,
-                      password: loginForm.password
-                    })
-                  );
-                } else {
-                  localStorage.removeItem("userpass");
-                }
+              if (isCheckRmb.value) {
+                localStorage.setItem(
+                  "userpass",
+                  JSON.stringify({
+                    loginName: loginForm.loginName,
+                    password: loginForm.password
+                  })
+                );
+              } else {
+                localStorage.removeItem("userpass");
+              }
 
-                loginFormRef.value.reset();
+              loginFormRef.value.reset();
 
-                if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
-                }
-              })
-              .catch((error) => {
-                loginForm.captchaCode = "";
-                getCode();
-                $q.loading.hide();
-              });
+              if (store.hasToken()) {
+                const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                router.go(jumpUrl);
+              }
+            })
+            .catch((error) => {
+              loginForm.captchaCode = "";
+              getCode();
+              $q.loading.hide();
+            });
           }
         } else {
           telephoneRef.value.validate();
@@ -491,13 +535,60 @@ export default defineComponent({
         })
         .catch(() => {});
     };
-    onMounted(() => {
+
+    function captchaHandler(captchaObj) {
+      window.captchaObj = captchaObj;
+      captchaObj
+        .appendTo("#captchaContainer")
+        .onReady(function () {
+          console.log("ready");
+        })
+        .onNextReady(function () {
+          console.log("nextReady");
+        })
+        .onBoxShow(function () {
+          console.log("boxShow");
+        })
+        .onError(function (e) {
+          console.log(e);
+        })
+        .onSuccess(function () {
+          let result = window.captchaObj.getValidate()
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
+          console.log(loginForm)
+        });
+    }
+
+    onMounted(async () => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
       }
       checkRememberPwd();
       getBannerImage();
+
+      try {
+        // Step 1: Load Geetest script
+        await loadScript("https://static.geetest.com/v4/gt4.js");
+
+        // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+        const geetestConfig = {
+          config: {
+            captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+            language: "zh"
+          },
+          handler: captchaHandler
+        };
+
+        // Step 3: Initialize Geetest with the config
+        await initGeetest(geetestConfig);
+      } catch (error) {
+        message.value = "Error loading Geetest!";
+        console.error("Geetest loading error:", error);
+      }
+
     });
     onActivated(() => {
       getCode();
@@ -539,6 +630,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.geetest-captcha-wrapper {
+    #captchaContainer {
+    .geetest_holder {
+      width: 100% !important;
+    }
+  }
+}
+
 .login-container {
   .q-field--standout .q-field__control {
     border-radius: 8px;
@@ -610,6 +709,21 @@ export default defineComponent({
     .login-banner-img {
       width: 100%;
       border-radius: 10px;
+    }
+
+    .geetest-captcha-wrapper {
+      display:flex;
+      background: #f7f8fb;
+      border-radius: 8px;
+      box-shadow: inset 0 0 4px 0 #a9c9ea;
+      height: 60px;
+      padding: 0 10px;
+      align-items: center;
+
+      #captchaContainer {
+        width: 100%;
+        padding-left: 12px;
+      }
     }
 
     .input-icon-label-wrapper {

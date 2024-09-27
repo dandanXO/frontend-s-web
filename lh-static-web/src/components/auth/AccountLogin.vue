@@ -274,6 +274,7 @@ onMounted(async () => {
     const geetestConfig = {
       config: {
         captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+        language: "zh"
       },
       handler: captchaHandler
     };
