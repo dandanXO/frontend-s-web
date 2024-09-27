@@ -232,7 +232,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, onActivated, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -292,21 +292,20 @@ export default defineComponent({
     const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
     const getCode = () => {
-      return;
-      // api
-      //   .get("/member/verificationCode")
-      //   .then((response) => {
-      //     if (response.code === 0) {
-      //       verificationImg.value = "data:image/png;base64," + response.data.img;
-      //       loginForm.codeId = response.data.id;
-      //     }
-      //   })
-      //   .catch((e) => {
-      //     notify({
-      //       type: "error",
-      //       message: e.message,
-      //     });
-      //   });
+      api
+        .get("/member/verificationCode")
+        .then((response) => {
+          if (response.code === 0) {
+            verificationImg.value = "data:image/png;base64," + response.data.img;
+            loginForm.codeId = response.data.id;
+          }
+        })
+        .catch((e) => {
+          notify({
+            type: "error",
+            message: e.message,
+          });
+        });
     };
 
     const isCheckRmb = ref(false);
@@ -561,14 +560,7 @@ export default defineComponent({
         });
     }
 
-    onMounted(async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has("register")) {
-        tab.value = "register";
-      }
-      checkRememberPwd();
-      getBannerImage();
-
+    const initGeetestCaptcha = async () => {
       try {
         // Step 1: Load Geetest script
         await loadScript("https://static.geetest.com/v4/gt4.js");
@@ -580,7 +572,7 @@ export default defineComponent({
             language: "zh",
             nativeButton: {
             width: '100%',
-            height: '45px',
+            height: '40px',
             },
             nextWidth: '280px',
             product: 'float',
@@ -594,7 +586,20 @@ export default defineComponent({
         message.value = "Error loading Geetest!";
         console.error("Geetest loading error:", error);
       }
+    }
 
+    watch(() => loginType.value, () => {
+      initGeetestCaptcha();
+    })
+
+    onMounted(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("register")) {
+        tab.value = "register";
+      }
+      checkRememberPwd();
+      getBannerImage();
+      initGeetestCaptcha();
     });
     onActivated(() => {
       getCode();
@@ -639,6 +644,23 @@ export default defineComponent({
 .geetest-captcha-wrapper {
   #captchaContainer {
       width: 100%;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content, .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg, #ecf3fd, 0%, #ecf3fd 100%) !important;
+    border-color: #424f72;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
+    // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
+  }
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #424f72;
+    font-family: 'PingFang SC' !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_content .geetest_tip_container .geetest_tips_wrap .geetest_tip {
+    color: #39c522 !important;
   }
 }
 
@@ -720,8 +742,8 @@ export default defineComponent({
       background: #f7f8fb;
       border-radius: 8px;
       box-shadow: inset 0 0 4px 0 #a9c9ea;
-      height: 60px;
-      padding: 0 10px;
+      height: 44px;
+      padding-left: 10px;
       align-items: center;
 
       #captchaContainer {

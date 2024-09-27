@@ -20,10 +20,13 @@
       </el-form-item>
     </div>
 
-    <div class="light-bg form-field">
+    <div class="light-bg form-field geetest-captcha-form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-      <el-form-item label="验证码" prop="captchaCode">
-        <div style="display: flex; width: 100%">
+        <div class="geetest-captcha-wrapper">
+          <div class="geetest-captcha-label">
+            <span style="color:red;margin-right:4px;">*</span>
+            <span>验证码</span>
+          </div>
           <!-- <el-input
             v-model="loginForm.captchaCode"
             label="验证码"
@@ -34,7 +37,6 @@
           <img style="width: 100px" :src="verificationImg" @click="getCode" /> -->
           <div id="captchaContainer"></div>
         </div>
-      </el-form-item>
     </div>
 
     <div class="agreement-and-forget-pass">
@@ -277,7 +279,7 @@ onMounted(async () => {
         language: "zh",
         nativeButton: {
           width: '100%',
-          height: '45px',
+          height: '48px',
         },
         nextWidth: '280px',
         product: 'float',
@@ -299,8 +301,45 @@ onMounted(async () => {
 <style scoped lang="scss" src="@/scss/pages/accountDialog.scss" />
 
 <style lang="scss">
-#captchaContainer {
-  width: 100%;
+.geetest-captcha-form-field {
+  padding: 0 !important;
+
+  #captchaContainer {
+    width: 100%;
+
+    .geetest_captcha.geetest_dark .geetest_holder .geetest_content, .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+      background-image: linear-gradient(180deg, #ecf3fd, 0%, #ecf3fd 100%) !important;
+      border-color: #424f72;
+    }
+
+    .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+      color: #424f72;
+      font-family: 'PingFang SC' !important;
+    }
+
+    .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
+      // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
+    }
+
+    .geetest_captcha.geetest_dark.geetest_lock_success .geetest_content .geetest_tip_container .geetest_tips_wrap .geetest_tip {
+      color: #39c522 !important;
+    }
+  }
+
+  .form-field-icon, .geetest-captcha-label {
+    padding: 8px 15px;
+  }
+
+  .geetest-captcha-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    color: black;
+
+    .geetest-captcha-label {
+      width:112px;
+    }
+  }
 }
 
 .form-field {
