@@ -2396,6 +2396,8 @@ export default {
     validateRoleRequired: '角色必填',
     validateRoleNameRequired: '角色名称必填',
     validateRolloverRequired: '倍数必填',
+    validateGameRolloverRequired: "游戏类型流水必选",
+    validateGameRolloverSelectRequired: "请选择游戏类型",
     validateRoundRequired: '局数必填',
     validateRulesRequired: '彩金配置必填',
     validateSchemaNameRequired: '模式名必填',

@@ -2443,6 +2443,8 @@ export default {
     validateRoleRequired: 'Role is required',
     validateRoleNameRequired: 'Role Name is required',
     validateRolloverRequired: 'Rollover is required',
+    validateGameRolloverRequired: "Game Rollover is required",
+    validateGameRolloverSelectRequired: "Please select Game Rollover type",
     validateRoundRequired: 'Round is required',
     validateRulesRequired: 'Rules is required',
     validateSchemaNameRequired: 'Schema Name is required',
