@@ -91,7 +91,7 @@
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'dy2-blast-premier'" :promo-code="list.promoCode" />
-    <Tpworld2024 v-if="list.redirectUrl === 'dy2-tp-2024-championship'" :promo-code="list.promoCode" />
+    <Tpworld2024 v-if="list.redirectUrl === 'dy2-tpworld-2024'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'dy2-national-day-2024'" :promo-code="list.promoCode" />
     <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
     <Dota2Ti13 v-if="list.redirectUrl === 'dy2-dota2-ti13'" :promo-code="list.promoCode" />
