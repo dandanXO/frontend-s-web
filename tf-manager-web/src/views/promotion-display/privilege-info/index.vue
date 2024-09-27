@@ -1083,6 +1083,7 @@ async function showEdit(privilegeInfo) {
             }
           })
         } else {
+          uiControl.oldRollOver.selectType = 'ALL_TYPES';
           uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
         }
         addRollover()
