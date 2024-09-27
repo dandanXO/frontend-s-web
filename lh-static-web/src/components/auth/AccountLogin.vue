@@ -274,7 +274,13 @@ onMounted(async () => {
     const geetestConfig = {
       config: {
         captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
-        language: "zh"
+        language: "zh",
+        nativeButton: {
+          width: '100%',
+          height: '45px',
+        },
+        nextWidth: '280px',
+        product: 'float',
       },
       handler: captchaHandler
     };
@@ -293,6 +299,10 @@ onMounted(async () => {
 <style scoped lang="scss" src="@/scss/pages/accountDialog.scss" />
 
 <style lang="scss">
+#captchaContainer {
+  width: 100%;
+}
+
 .form-field {
   margin: 15px 0px;
 

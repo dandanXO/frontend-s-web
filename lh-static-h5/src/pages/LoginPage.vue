@@ -577,7 +577,13 @@ export default defineComponent({
         const geetestConfig = {
           config: {
             captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
-            language: "zh"
+            language: "zh",
+            nativeButton: {
+            width: '100%',
+            height: '45px',
+            },
+            nextWidth: '280px',
+            product: 'float',
           },
           handler: captchaHandler
         };
@@ -631,10 +637,8 @@ export default defineComponent({
 
 <style lang="scss">
 .geetest-captcha-wrapper {
-    #captchaContainer {
-    .geetest_holder {
-      width: 100% !important;
-    }
+  #captchaContainer {
+      width: 100%;
   }
 }
 
