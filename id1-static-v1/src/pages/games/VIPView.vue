@@ -1,6 +1,5 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-
   <div class="vip-promo-tab-wrapper">
     <q-tabs
       v-model="vipPromoTab"
@@ -343,10 +342,11 @@
 </template>
 
 <script setup>
-import ProfileSummary from "@/components/ProfileSummary.vue";
-import { userStore } from "@/stores/index";
 import { onActivated, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+import ProfileSummary from "@/components/ProfileSummary.vue";
+import { userStore } from "@/stores/index";
 import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 
