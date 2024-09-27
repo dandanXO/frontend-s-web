@@ -32,3 +32,18 @@ npm run build
 ```
 
 3. Use the files on /release/{version}/
+
+### Generate SSL certificate
+
+1. Prepare a domain name
+2. Install certbot
+
+```
+pip install certbot
+```
+
+3. Execute the certbot command
+
+```
+certbot certonly --email <yourmail> -d <yourdomain> --agree-tos --manual
+```
