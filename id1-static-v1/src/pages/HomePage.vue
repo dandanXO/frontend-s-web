@@ -961,9 +961,9 @@
 </template>
 
 <script setup>
+import { Platform, useQuasar } from "quasar";
 import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { Platform, useQuasar } from "quasar";
 
 import { api } from "@/boot/axios";
 import { cached } from "@/boot/cache";

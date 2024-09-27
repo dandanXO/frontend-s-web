@@ -136,9 +136,9 @@
 </template>
 
 <script setup>
+import { useQuasar } from "quasar";
 import { onActivated, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
 
 import ProfileSummary from "@/components/ProfileSummary.vue";
 import { userStore } from "@/stores";
@@ -158,7 +158,6 @@ const btm_banners = ref([
 ]);
 
 const loadingLogout = ref(false);
-
 const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
@@ -421,10 +420,6 @@ const logout = () => {
 </style>
 
 <style lang="scss">
-// .q-page-container {
-//   padding-bottom: 20px !important;
-// }
-
 .q-page {
   min-height: 0 !important;
 }
