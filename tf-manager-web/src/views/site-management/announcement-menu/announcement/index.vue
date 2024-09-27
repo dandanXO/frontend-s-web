@@ -678,7 +678,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.title = null
   request.status = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
   if (isVnm(request.siteId)) {
     uiControl.showSiteTypeSearch = true;
   } else {
