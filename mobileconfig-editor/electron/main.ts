@@ -116,14 +116,15 @@ ipcMain.handle("check:openssl", async () => {
 
 ipcMain.handle(
   "file:signBySsl",
-  async (_: IpcMainInvokeEvent, publicKeyPath, privateKeyPath, mobileconfigFilePath, outputPath) => {
-    log.info(1);
+  async (
+    _: IpcMainInvokeEvent,
+    { publicKeyPath, privateKeyPath, mobileconfigFilePath, outputPath }: SignBySslPayload
+  ) => {
     return new Promise<void>((resolve, reject) => {
       try {
         const appFolderPath = getAppDataPath();
         const filePath = path.join(appFolderPath, "signed.mobileconfig");
         const execScript = `openssl smime -sign -in "${mobileconfigFilePath}" -out "${filePath}" -signer "${publicKeyPath}" -inkey "${privateKeyPath}" -certfile "${publicKeyPath}" -outform der -nodetach`;
-        // log.info(execScript);
         exec(execScript, (error, _, stderr) => {
           if (error || stderr) {
             if (error) log.info(error);
@@ -156,4 +157,11 @@ const getAppDataPath = () => {
 interface SaveFilePayload {
   fileName: string;
   title: string;
+}
+
+interface SignBySslPayload {
+  publicKeyPath: string;
+  privateKeyPath: string;
+  mobileconfigFilePath: string;
+  outputPath: string;
 }

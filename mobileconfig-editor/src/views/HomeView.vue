@@ -259,8 +259,8 @@ const handleUploadFile = (event: Event) => {
 };
 
 const handleSelectFile = async (key: keyof Form) => {
-  const filePaths = await window.ipcRenderer.invoke("dialog:openFile");
-  form.value[key] = filePaths;
+  const [filePath] = await window.ipcRenderer.invoke("dialog:openFile");
+  form.value[key] = filePath;
 };
 
 const handleSubmit = async () => {
@@ -337,13 +337,12 @@ const buildSslSignFile = async (_xmlObj: Xml) => {
     if (saveResult.canceled) return;
     if (!saveResult.filePath) throw new Error();
     // console.log(form.value.sslPublicKeyPath, form.value.sslPrivateKeyPath, unSignConfigPath, saveResult.filePath);
-    await window.ipcRenderer.invoke(
-      "file:signBySsl",
-      form.value.sslPublicKeyPath,
-      form.value.sslPrivateKeyPath,
-      unSignConfigPath,
-      saveResult.filePath
-    );
+    await window.ipcRenderer.invoke("file:signBySsl", {
+      publicKeyPath: form.value.sslPublicKeyPath,
+      privateKeyPath: form.value.sslPrivateKeyPath,
+      mobileconfigFilePath: unSignConfigPath,
+      outputPath: saveResult.filePath
+    });
     console.log("end");
   } catch (e) {
     console.log(e);
