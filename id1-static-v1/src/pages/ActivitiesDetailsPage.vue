@@ -1,18 +1,17 @@
 <template>
   <div class="activities-container">
     <div class="activity-banner">
-      <img src="../assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
+      <img src="@/assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
     </div>
-    <div class="activities-title"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-content">
-      The more consecutive days of deposit requirements you complete, the more extra bonus you will get
+      {{ $t("promo_activitiesDetails.activitiesContent") }}
     </div>
     <router-link :to="`/deposit?from=${route.path}`" class="activities-btn">
-      <img src="../assets/images/promotion/activities/deposit-btn-1.png" />
+      <img src="@/assets/images/promotion/activities/deposit-btn-1.png" />
     </router-link>
     <div class="activities-stats-container">
       <div class="stats-info">
-        <div class="info-title">Deposits of the day</div>
+        <div class="info-title">{{ $t("promo_activitiesDetails.depositOftheDay") }}</div>
         <div class="info-progress">
           <q-linear-progress :value="progressDeposit" rounded size="16px" class="info-linear-progress">
             <div class="info-label">
@@ -20,14 +19,14 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            {{ rules[bonusSeq] ? rules[bonusSeq].deposit : 0 }}
+            {{ rules[bonusSeq] ? rules[bonusSeq].deposit.toLocaleString() : 0 }}
             <br />
             {{ store.currency.label }}
           </div>
         </div>
       </div>
       <div class="stats-info">
-        <div class="info-title">Number of daily wager</div>
+        <div class="info-title">{{ $t("promo_activitiesDetails.numberOfDailyWager") }}</div>
         <div class="info-progress">
           <q-linear-progress :value="progressDailyWager" rounded size="16px" class="info-linear-progress">
             <div class="info-label">
@@ -35,7 +34,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            {{ rules[bonusSeq] ? rules[bonusSeq].bet : 0 }}
+            {{ rules[bonusSeq] ? rules[bonusSeq].bet.toLocaleString() : 0 }}
             <br />
             {{ store.currency.label }}
           </div>
@@ -52,58 +51,56 @@
           { isReceived: (i === bonusSeq && isReceivedToday) || i < bonusSeq }
         ]"
       >
-        <div class="box-ribbon">Day {{ i + 1 }}</div>
+        <div class="box-ribbon">{{ $t("promo_activitiesDetails.day") }} {{ i + 1 }}</div>
         <div class="box-img">
           <img
             v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq"
-            :src="require(`../assets/images/promotion/activities/day-received.png`)"
+            :src="require(`@/assets/images/promotion/activities/day-received.png`)"
           />
-          <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" />
+          <img v-else :src="require(`@/assets/images/promotion/activities/day-0${i + 1}.png`)" />
         </div>
         <div>
-          <div class="box-title">Free {{ rule.bonus }}{{ store.currency.label }}</div>
+          <div class="box-title">
+            {{ $t("promo_activitiesDetails.free") }} {{ convertToCommaAmount(rule.bonus) }}{{ store.currency.label }}
+          </div>
           <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
-            <img :src="require(`../assets/images/promotion/activities/tick.png`)" />
-            Received
+            <img :src="require(`@/assets/images/promotion/activities/tick.png`)" />
+
+            {{ $t("promo_activitiesDetails.received") }}
           </div>
           <div class="box-subtitle" v-else>
-            Wager x5
+            {{ $t("promo_activitiesDetails.wagerX5") }}
             <br />
-            Deposit {{ rule.deposit }}{{ store.currency.label }}
+            {{ $t("promo_activitiesDetails.deposit") }}
+            <br />{{ rule.deposit.toLocaleString() }} {{ store.currency.label }}
           </div>
         </div>
       </div>
     </div>
     <div class="activities-notice">
-      <div class="notice-img"><img src="../assets/images/promotion/activities/alert-img.png" /></div>
-      <div>Notice : This promotion is not counted towards CASINO and SPORTS wager!</div>
+      <div class="notice-img"><img src="@/assets/images/promotion/activities/alert-img.png" /></div>
+      <div>{{ $t("promo_activitiesDetails.noticeDesc") }}</div>
     </div>
-    <div class="activities-title q-mt-md"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
+
     <div class="activities-rules-container">
-      1. Example: On the first day, if you deposit 1,000{{ store.currency.label }}, you will be given 88{{
-        store.currency.label
-      }}
-      after the turnover is full. No deposit on the second day, but deposit on the third day, it will be recalculated as
-      the first day.
+      {{ $t("promo_activitiesDetails.rules_01") }}
       <br />
-      2. The bonus for the day can only be claimed once, for example: each account can only claim 88{{
-        store.currency.label
-      }}
-      on the first day.
+      {{ $t("promo_activitiesDetails.rules_02") }}
       <br />
-      3. After the deposit requirement is met, you must play slot machines to start calculating the turnover, and the
-      bonus will be given after the turnover is completed.
+      {{ $t("promo_activitiesDetails.rules_03") }}
       <br />
-      4. After the requirements are met, the system will automatically issue the bonus
+      {{ $t("promo_activitiesDetails.rules_04") }}
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onActivated } from "vue";
-import { eventapi } from "boot/axios";
+import { computed, onActivated, ref } from "vue";
 import { useRoute } from "vue-router";
-import { userStore } from "stores/index";
+
+import { eventapi } from "@/boot/axios";
+import { userStore } from "@/stores/index";
+import { convertToCommaAmount } from "@/boot/utils";
 
 const route = useRoute();
 const store = userStore();
@@ -284,8 +281,8 @@ onActivated(() => {
         font-weight: bold;
         color: #ffffff;
         text-align: center;
-        margin-top: 4px;
-        white-space: nowrap;
+        // white-space: nowrap;
+        margin: 4px 10px 0;
       }
 
       .box-subtitle {

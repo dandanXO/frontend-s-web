@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日存款金额：
+              昨日存款金额：
               <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
@@ -21,7 +21,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日有效流水：
+              昨日有效流水：
               <span class="amount">{{ validBetAmount }}元</span>
             </div>
           </div>
@@ -30,7 +30,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日可领彩金：
+              今日可领彩金：
               <span class="amount">{{ bonusAmount }}元</span>
             </div>
           </div>
@@ -198,7 +198,7 @@ const onClickAppliedRecordsBtn = () => {
 const init = () => {
   getNationalDayinit().then((res) => {
     if (res.code === 0) {
-      // 当日存款金额
+      // 昨日存款金额
       depositAmount.value = res.data.depositAmount || 0;
       // 奖金
       bonusAmount.value = res.data.bonusAmount || 0;

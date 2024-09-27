@@ -36,9 +36,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { userStore } from "stores/index";
-import { convertToCommaAmount } from "src/boot/utils";
+import { computed, ref } from "vue";
+
+import { userStore } from "@/stores/index";
 
 const store = userStore();
 

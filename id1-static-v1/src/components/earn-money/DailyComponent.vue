@@ -236,6 +236,8 @@
 </template>
 
 <script setup>
+import { onMounted, reactive, ref } from "vue";
+
 import { api } from "@/boot/axios";
 import { convertToCommaAmount } from "@/boot/utils";
 import LoadingComponent from "@/components/LoadingComponent.vue";
@@ -245,10 +247,8 @@ import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title
 import moment from "moment";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
-import { onMounted, reactive, ref } from "vue";
 
 const store = userStore();
-
 const isLoading = reactive({ referredBetRebateRecord: true });
 const isNoInfo = ref(true);
 

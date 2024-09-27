@@ -259,35 +259,18 @@ const store = userStore();
 const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
-
-const checkNewUser = () => {
-  if (store.realName == "" || store.realName == null) {
-    emits("closeModal");
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "Please fill in your personal details",
-      icon: "report_problem"
-    });
-  }
-};
-
 const isSelectedMethod = ref(false);
 const paymentMethodsItems = ref();
 const isDeposited = ref(false);
 const btnLoading = ref(false);
 const payTypeClass = ref();
 const payMethods = ref([]);
-const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
 const amountList = ref([]);
-const privilegeList = ref([]);
-const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
-const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
 const submitMessage = ref([]);
@@ -295,11 +278,10 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
-
-const copybtntxt0 = ref("复制");
-const copybtntxt1 = ref("复制");
-const copybtntxt2 = ref("复制");
-const copybtntxt3 = ref("复制");
+const copybtntxt0 = ref(t("btn.copy"));
+const copybtntxt1 = ref(t("btn.copy"));
+const copybtntxt2 = ref(t("btn.copy"));
+const copybtntxt3 = ref(t("btn.copy"));
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -328,9 +310,6 @@ const blurCode = () => {
 const verifyDepositAmount = ref([
   (val) => !!val || "Please enter the amount",
   (val) => val > calculatedMinDeposit.value - 1 || "Deposit should be more than " + calculatedMinDeposit.value
-  // (val) =>
-  //   val < activeMethod.value.depositMax + 1 ||
-  //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -355,7 +334,6 @@ const getFtdCommaAmount = (amount) => {
 };
 
 const selectedItem = ref();
-const selectedItemPrivilege = ref();
 const selectedItemPrivilegeId = ref();
 const extraPrivilegeId = ref();
 const selectedItemChannel = ref();
@@ -367,22 +345,18 @@ const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
 const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
-
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   activeMethod.value = item;
   isSelectedMethod.value = true;
   selectedItemChannel.value = item.children;
   selectedChanelExtra.value = [];
-
   goSelectedChannel(item.children[0]);
 };
-
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
   selectedChanelExtra.value = item.extra.banks;
   selectedItemAmount.value = item.extra.amountArr;
-
   selectedChannelBank.value = null;
   if (selectedChanelExtra.value.length > 0) {
     selectedChannelBank.value = item.extra.banks[0].id;
@@ -395,35 +369,27 @@ function initPay() {
   $q.loading.show({
     message: "Loading data... Please wait..."
   });
-
   let promoParam = "";
-
   if (route.query.extra === "true") {
-    // promoParam = "?promo=1";
     isPrivilege.value = true;
     selectedItemPrivilegeId.value = store.extraPrivilegeId;
   } else {
     isPrivilege.value = false;
     selectedItemPrivilegeId.value = "";
   }
-
   if (route.query.privilegeId) {
     extraPrivilegeId.value = route.query.privilegeId;
   } else {
     extraPrivilegeId.value = undefined;
   }
-
   payMethods.value = [];
-
   cashier.get(`/session/php/deposit/index/${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
-
     if (res.code === 0) {
       paymentMethodsItems.value = res.data.payments;
       goSelectedMethod(res.data.payments[0]);
     }
-
     if (
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
@@ -465,12 +431,10 @@ function selectPayType(value) {
 const depositForm = ref(null);
 async function onSelect(value) {
   isDisplay.value = false;
-
   clearInfo();
   if (depositAmtRef.value) {
     depositAmtRef.value.resetValidation();
   }
-
   if (value) {
     if (value.group) {
       value.children.forEach((element) => {
@@ -801,7 +765,6 @@ const scrollToInput = () => {
 
 onActivated(() => {
   initPay();
-  // checkNewUser();
   loadInfo();
   resetSelectedMethod();
 });
@@ -809,7 +772,6 @@ onActivated(() => {
 onMounted(() => {
   loadAppTabs();
   initPay();
-  // checkNewUser();
   loadInfo();
 });
 </script>

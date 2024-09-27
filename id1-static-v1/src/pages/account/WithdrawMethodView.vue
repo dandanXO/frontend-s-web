@@ -317,14 +317,15 @@
 </template>
 
 <script setup>
+import { Platform, useQuasar } from "quasar";
+import { computed, nextTick, onActivated, onMounted, reactive, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
 import { api } from "@/boot/axios";
 import { t } from "@/boot/lang";
 import { convertToCommaAmount } from "@/boot/utils";
 import KYCUserForm from "@/components/KYCUserForm.vue";
 import { userStore } from "@/stores/index";
-import { Platform, useQuasar } from "quasar";
-import { computed, nextTick, onActivated, onMounted, reactive, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
 
 // withdraw component
 const qs = require("qs");
@@ -702,7 +703,7 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      message: t("notify.pleaseFillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/withdraw`);

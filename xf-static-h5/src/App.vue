@@ -11,14 +11,14 @@ import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import { getVisitorId } from "boot/utils";
-import {useRouter} from "vue-router";
-import {useUI} from "stores/ui";
+import { useRouter } from "vue-router";
+import { useUI } from "stores/ui";
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
     const store = userStore();
-    const router= useRouter();
+    const router = useRouter();
     const ui = useUI();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
@@ -66,14 +66,7 @@ export default defineComponent({
 
       // 'XFCS' / 2
       // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient(
-        "XFCS",
-        regDevice,
-        "zh-CN",
-        "2",
-        "prod",
-        `https://${CSAUrl}`
-      );
+      csclient = new CsClient("XFCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
@@ -96,7 +89,7 @@ export default defineComponent({
       });
 
       //CsClient Event Listener.
-      window.addEventListener('message', function (event) {
+      window.addEventListener("message", function (event) {
         // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
         if (_.isString(event.data)) {
           // if (event.data == 'sess_timeout') {
@@ -124,11 +117,27 @@ export default defineComponent({
       const way = "h5";
 
       if (sidParam) {
-        const res = await api.post("/memberStatistics/submit", qs.stringify({
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode:  process.env.SITE
-        }));
+            siteCode: process.env.SITE
+          })
+        );
+      }
+    };
+
+    const checkSessStorageItem = () => {
+      const checkItem = sessionStorage.getItem("ERROR_TOKEN_LOGGED");
+      if (checkItem) {
+        sessionStorage.removeItem("ERROR_TOKEN_LOGGED");
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "您账户已在其他设备登录。请注意是否由本人登录，如有异常请及时修改密码。",
+          icon: "report_problem"
+        });
       }
     };
 
@@ -137,7 +146,7 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
-
+      checkSessStorageItem();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

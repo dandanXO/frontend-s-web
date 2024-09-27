@@ -104,15 +104,17 @@
 </template>
 
 <script>
+import { Platform, useQuasar } from "quasar";
+import { defineComponent, onMounted, reactive, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import { userStore } from "@/stores/index";
 import { App } from "@capacitor/app";
 import { Device } from "@capacitor/device";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { api } from "boot/axios";
 import qs from "qs";
-import { Platform, useQuasar } from "quasar";
-import { userStore } from "stores/index";
-import { defineComponent, onMounted, reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "LoginPage",
@@ -258,7 +260,7 @@ export default defineComponent({
 
     const onSubmit = () => {
       $q.loading.show({
-        message: "Logging in"
+        message: t("notify.loggingIn")
       });
       const fpPromise = FingerprintJS.load();
       (async () => {
@@ -276,7 +278,7 @@ export default defineComponent({
           passwordRef.value.validate();
           // verificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t("notify.loggingIn")
           });
           // || verificationRef.value.hasError
           if (loginNameRef.value.hasError || passwordRef.value.hasError) {
@@ -325,7 +327,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t("notify.loggingIn")
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();

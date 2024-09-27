@@ -9,7 +9,7 @@ export default {
     download: "Unduh",
     withdraw: "Tarik",
     personalCenter: "Pusat Pribadi",
-    deposit: "Setor",
+    deposit: "Deposit",
     bank: "Bank",
     addCrypto: "Tambah Kripto",
     addVirtualWallet: "Tambah Dompet Virtual",
@@ -20,9 +20,9 @@ export default {
     postComment: "Kirim Komentar",
     record: "Rekaman",
     records: "Rekaman",
-    order: "Pesanan",
+    order: "Order",
     discount: "Diskon",
-    earnMoney: "Dapatkan Uang",
+    earnMoney: "Raup Uang",
     language: "Bahasa",
     dailyActivity: "Aktivitas Harian",
     vipPrivileges: "Hak Istimewa VIP",
@@ -34,12 +34,13 @@ export default {
     personalInformation: "Informasi Pribadi",
     verifyMobileNumber: "Verifikasi Nomor Ponsel",
     email: "E-mail",
-    changePassword: "Ubah Kata Sandi",
+    changePassword: "Ganti Kata sandi",
     referral: "Referensi",
     announcement: "Pengumuman",
     mail: "Surat",
     inbox: "Kotak Masuk",
     outbox: "Kotak Keluar",
+    write: "Menulis",
     bankDetail: "Detail Bank",
     promotionClaim: "Klaim Promosi",
     affiliate: "Afiliasi",
@@ -52,7 +53,14 @@ export default {
     referralRecord: "Rekaman Referensi",
     interestProfit: "Keuntungan Bunga",
     vip: "VIP",
-    logout: "Keluar"
+    logout: "Keluar",
+    promotion: "Promosi",
+    activitiesDetails: "Rincian Kegiatan",
+    moneyChange: "Uang Kembalian",
+    financeFeedback: "Umpan Balik Keuangan",
+    helpRecord: "Catatan Dana Bantuan",
+    reminderRecords: "Catatan Pengingat",
+    forgotPassword: "Lupa Kata sandi"
   },
   bottomNav: {
     home: "Beranda",
@@ -65,7 +73,7 @@ export default {
     phone: "Nomor Telepon",
     phone_placeholder: "Masukkan nomor ponsel Anda",
     phone_rules_01: "Masukkan nomor telepon",
-    phone_rules_02: "Nomor telepon harus memiliki 11 digit",
+    phone_rules_02: "Nomor telepon harus 10 digit",
     phone_rules_03: "Nomor telepon harus dimulai dengan '03'",
     prependNumber: "+62",
     password: "Kata Sandi",
@@ -73,7 +81,8 @@ export default {
     password_rules_01: "Masukkan kata sandi",
     password_rules_02: "Karakter kata sandi harus lebih dari 6",
     forgotPassword: "Lupa Kata Sandi",
-    forgotPassword_desc: "Silakan berikan email, kami akan mengirimkan OTP ke email terdaftar Anda.",
+    forgotPassword_desc:
+      "Masukkan Nama pengguna Dan Nomor Telepon Anda, Kami Akan Kirim OTP Ke Nomor Telepon Terdaftar Anda.",
     register_agree_01: "Saya telah setuju dengan ",
     register_agree_02: "Perjanjian Privasi Penggunaan",
     email: "Email",
@@ -113,8 +122,8 @@ export default {
       "*Catatan khusus: Pihak ketiga secara otomatis mengenakan biaya penanganan sebesar {fee} USDT untuk menarik koin!",
     fullName: "Nama Lengkap",
     fullName_placeholder: "Masukkan nama lengkap Anda",
-    fullName_rules_01: "Silakan masukkan nama lengkap Anda",
-    fullName_rules_02: "Silakan masukkan nama lengkap yang valid",
+    fullName_rules_01: "Masukkan nama lengkap Anda",
+    fullName_rules_02: "Masukkan nama lengkap yang valid",
     changePassword: "Ganti Kata Sandi",
     currentPassword: "Kata Sandi Saat Ini",
     currentPassword_placeholder: "Masukkan Kata Sandi Saat Ini",
@@ -147,7 +156,7 @@ export default {
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
-      "Warm reminder：The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
+      "Warm reminder: The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
     virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
@@ -167,7 +176,27 @@ export default {
     version: "Versi",
     accountNumber: "Nomor Akun",
     accountNumber_placeholder: "Masukkan Nomor Akun",
-    accountNumber_rules_01: "Silakan Masukkan Nomor Kartu"
+    accountNumber_rules_01: "Masukkan Nomor Akun",
+    accountNumber_rules_02: "Masukkan Nomor Akun yang Benar",
+    holderName: "Nama Pemegang",
+    holderName_placeholder: "Masukkan Nama Pemegang",
+    holderName_rules_01: "Masukkan Nama Pemegang",
+    holderName_rules_02: "Masukkan 2 Karakter atau Lebih",
+    bank_title: "Tambahkan Akun Bank",
+    bank_selectionTitle: "Bank",
+    bank_select: "Pilih Bank",
+    bank_selectError: "Pilih Bank",
+    bank_type: "Nomor Akun",
+    crypto_title: "Tambahkan Dompet Crypto",
+    crypto_selectionTitle: "Crypto",
+    crypto_select: "Pilih Crypto",
+    crypto_selectError: "Pilih Crypto",
+    crypto_type: "Nomor Kartu Crypto",
+    ewallet_title: "Tambahkan eWallet",
+    ewallet_selectionTitle: "eWallet",
+    ewallet_select: "Pilih eWallet",
+    ewallet_selectError: "Pilih eWallet",
+    ewallet_type: "Nomor Kartu eWallet"
   },
   btn: {
     confirm: "Konfirmasi",
@@ -179,7 +208,7 @@ export default {
     addVirtualWallet: "Tambahkan dompet virtual",
     addBankCard: "Tambahkan kartu bank",
     untie: "Lepas",
-    more: "Lainnya",
+    more: "Lagi",
     postComments: "Kirim Komentar",
     post: "Kirim",
     loading: "Memuat",
@@ -195,7 +224,9 @@ export default {
     recharge: "Isi Ulang",
     getInterestProfit: "Dapatkan Keuntungan Bunga",
     notAMember: "Bukan anggota?",
-    createAccount: "Buat akun"
+    createAccount: "Buat akun",
+    copy: "Menyalin",
+    joinNow: "Bergabung sekarang"
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
@@ -204,9 +235,18 @@ export default {
     emailVerificationSent: "Verifikasi email telah dikirim",
     messageSent: "Pesan Terkirim",
     feedbackSentSuccess: "Umpan balik Anda telah berhasil dikirim!",
-    quitGameMessage: "Apakah Anda yakin ingin keluar? Klik Konfirmasi untuk keluar dari permainan.",
-    signOutMessage: "Apakah Anda yakin ingin keluar?",
-    plsLoginToContinue: "Silakan login untuk melanjutkan"
+    quitGameMessage: "Anda yakin ingin keluar? Klik Konfirmasi untuk keluar dari permainan.",
+    signOutMessage: "Anda yakin ingin keluar?",
+    plsLoginToContinue: "Silakan login untuk melanjutkan",
+    copiedtoClipboard: "disalin ke papan klip",
+    addSucceed: "Berhasil Ditambahkan",
+    loggingIn: "Memasuki",
+    loggingOut: "Keluar...",
+    registeredSuccessfully: "Berhasil terdaftar",
+    registeringInProgress: "Pendaftaran sedang berlangsung",
+    refreshing: "Menyegarkan...",
+    pleaseLoginToOperate: "Silakan masuk untuk beroperasi",
+    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -299,11 +339,16 @@ export default {
   },
   bank: {
     virtualWallet: "eWallet",
-    virtualAccount: "eWallet Account"
+    virtualAccount: "eWallet Account",
+    addBank: "Tambahkan Bank",
+    addEWallet: "Tambahkan eWallet",
+    areYouSureUnbind: "Anda Yakin Ingin Memutus Ikatan?",
+    account: "Akun"
   },
   order: {
-    withdrawal: "Withdrawal",
-    recharge: "Recharge"
+    withdrawal: "Pernarikan",
+    recharge: "Isi ulang",
+    orderNo: "NO. Order"
   },
   interestProfit: {
     depositOverview: "Deposit overview",
@@ -378,7 +423,7 @@ export default {
       weAdvocateBenefits: "Kami dukung keuntungan dan bonus bagi setiap orang.",
       agencyPolicy: "Kebijakan Keagenan",
       theTableBelowShows: "Tabel di bawah menampilkan bagaimana hadiah ditetapkan.",
-      point_01: "Pengguna aktif: jumlah taruhan harian 2.000",
+      point_01: "Pengguna aktif: jumlah taruhan harian Rp2,000K",
       point_02:
         "Hadiah Anda akan dihitung berdasarkan jumlah total taruhan anggota Anda. Hadiah yang diperoleh bisa ditarik atau digunakan untuk taruhan selanjutnya.",
       point_03: "Ajukan sebanyak mungkin teman yang Anda bisa untuk mendapatkan persentase rabat lebih besar.",
@@ -386,9 +431,9 @@ export default {
       faq: "TJU",
       faq_01: "1. Bagaimana cara meraup komisi?",
       faq_01_01:
-        "Anda bisa meraup hingga 1,5% dari taruhan harian pemain yang Anda ajukan. Makin tinggi level Anda, makin besar persentase komisi yang bisa Anda raup.",
+        "Anda bisa meraup hingga 1.5% dari taruhan harian pemain yang Anda ajukan. Makin tinggi level Anda, makin besar persentase komisi yang bisa Anda raup.",
       faq_01_02:
-        "Jika afiliasi Anda atau afiliasi Anda menjadi agen dan mereka berada di level lebih rendah dari atasan langsung mereka, maka Anda bisa terima hingga 1,2% dari jumlah rabat taruhan afiliasi tersebut. Nilai komisi tergantung pada selisih level antara Anda dan afiliasi Anda, makin besar selisih levelnya, makin banyak komisi yang Anda terima.",
+        "Jika afiliasi Anda atau afiliasi Anda menjadi agen dan mereka berada di level lebih rendah dari atasan langsung mereka, maka Anda bisa terima hingga 1.2% dari jumlah rabat taruhan afiliasi tersebut. Nilai komisi tergantung pada selisih level antara Anda dan afiliasi Anda, makin besar selisih levelnya, makin banyak komisi yang Anda terima.",
       faq_02: "2. Bagaimana cara mengundang teman Anda?",
       faq_02_01: "Bagikan game ini lewat media sosial atau bagikan tautan referal ke teman Anda.",
       faq_02_02:
@@ -424,8 +469,8 @@ export default {
       faq_06_table_members: "Anggota",
       faq_06_table_you: "You",
       faq_06_dot_01: "Anda tidak bisa mendapatkan rabat taruhan A.",
-      faq_06_dot_02: "Anda bisa mendapatkan komisi 0,2% dari jumlah taruhan B",
-      faq_06_dot_03: "Anda bisa mendapatkan komisi 0,7% dari jumlah taruhan C",
+      faq_06_dot_02: "Anda bisa mendapatkan komisi 0.2% dari jumlah taruhan B",
+      faq_06_dot_03: "Anda bisa mendapatkan komisi 0.7% dari jumlah taruhan C",
       table_col_levelDifference: "Selisih Level",
       table_col_rebate: "Rabat (%)",
       table_col_level: "Level",
@@ -622,8 +667,8 @@ export default {
     automaticPayment: "Pembayaran Otomatis",
     suspend: "Ditangguhkan",
     pending: "Tertunda",
-    success: "Sukses",
-    supplementSuccess: "Sukses Ditambahkan",
+    success: "Berhasil",
+    supplementSuccess: "Lengkapi Berhasil",
     closed: "Ditutup",
     orderNo: "Nomor Pesanan",
     bank: "BANK",
@@ -662,7 +707,8 @@ export default {
     sports: "SPORTS",
     live: "LIVE",
     slot: "SLOT",
-    vip: "VIP"
+    vip: "VIP",
+    promotionEnds: "Promosi Berakhir"
   },
   hotPromo: {
     aviatorWheel: {
@@ -685,6 +731,25 @@ export default {
     to: "To",
     content02: "During this period, all games and services will be unavailable.",
     content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+  },
+  promo_activitiesDetails: {
+    activitiesContent:
+      "Semakin banyak hari berturut-turut Anda memenuhi persyaratan deposit, semakin banyak bonus ekstra yang akan Anda dapatkan",
+    depositOftheDay: "Deposit hari ini",
+    numberOfDailyWager: "Jumlah taruhan harian",
+    day: "Hari",
+    free: "Gratis",
+    received: "Diterima",
+    wagerX5: "Taruhan x5",
+    deposit: "Deposit",
+    noticeDesc: "Pemberitahuan: Promosi ini tidak dihitung untuk taruhan CASINO dan SPORTS!",
+    rules_01:
+      "1. Contoh: Pada hari pertama, jika Anda melakukan deposit 1.000 IDR, Anda akan diberikan 88 IDR setelah turnover penuh. Tidak ada deposit pada hari kedua, tetapi melakukan deposit pada hari ketiga, maka akan dihitung ulang sebagai hari pertama.",
+    rules_02:
+      "2. Bonus untuk hari tersebut hanya bisa diklaim sekali, misalnya: setiap akun hanya bisa mengklaim 88 IDR pada hari pertama.",
+    rules_03:
+      "3. Setelah persyaratan deposit terpenuhi, Anda harus bermain mesin slot untuk mulai menghitung turnover, dan bonus akan diberikan setelah turnover selesai.",
+    rules_04: "4. Setelah persyaratan terpenuhi, sistem akan secara otomatis mengeluarkan bonus."
   },
   error: {
     101: "Platform tidak ditemukan",

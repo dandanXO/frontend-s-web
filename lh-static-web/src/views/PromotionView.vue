@@ -11,7 +11,7 @@
         <div class="promo-type-wrapper">
           <div>
             <div class="type-list">
-              <img src="../assets/promo/menu-title.png" />
+              <img width="90%" src="../assets/promo/menu-title.png" />
               <div
                 class="type-item"
                 v-for="p in promoTypes"
@@ -432,7 +432,7 @@ export default defineComponent({
     // background-size: 100% auto;
     // padding-top: max(110px, 16vw);
     width: 100%;
-    padding: 30px 50px 50px;
+    padding: 0px 50px 50px;
     position: relative;
     background-color: #E7F1FD;
   }
@@ -543,9 +543,9 @@ export default defineComponent({
       width: 100%;
       max-width: $maxwidth;
       margin: 0 auto;
-      padding: 10px 0;
+      padding: 0;
       display: flex;
-      gap: 30px;
+      gap: 20px;
       min-height: 1250px;
       align-items: flex-start;
       .promo-type-wrapper {
@@ -567,12 +567,11 @@ export default defineComponent({
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 20px;
+          padding: 15px 20px 20px;
           overflow: auto;
           width: 280px;
           flex-direction: column;
-          gap: 25px;
-          min-height: 818px;
+          gap: 10px;
           // position: sticky;
           // top: 100px;
           .type-item {
@@ -587,7 +586,7 @@ export default defineComponent({
             justify-content: center;
             align-items: center;
             gap: 20px;
-            padding: 12px 40px;
+            padding: 10px 40px;
             position: relative;
             width: 100%;
             border-radius: 30px;
@@ -596,7 +595,9 @@ export default defineComponent({
             .label {
               z-index: 0;
               color: #468cff;
-              font-size: 23px;
+              font-size: 18px;
+              font-weight: 700;
+              font-family: "PingFang SC"
             }
 
             &:before {
@@ -640,7 +641,7 @@ export default defineComponent({
         margin: 0 auto;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
         .promo-item {
           position: relative;
           overflow: hidden;
@@ -685,9 +686,10 @@ export default defineComponent({
               height: 42px;
               .label-type {
                 background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
-                padding: 10px 30px 10px 50px;
+                padding: 10px 30px 10px 40px;
                 color: #ffffff;
                 position: relative;
+                height: 42px;
                 &:after {
                   content: "";
                   border-left: 0 solid transparent;
@@ -705,6 +707,7 @@ export default defineComponent({
                 font-size: 18px;
                 font-weight: 700;
                 padding-left: 30px;
+                font-family: 'PingFang SC';
               }
             }
             .promo-type {
@@ -728,9 +731,9 @@ export default defineComponent({
             .promo-details {
               font-family: "Microsoft Yahei UI";
               margin: 20px 0;
-              padding: 50px 0 10px 0;
+              padding: 30px 0 0 0;
               display: flex;
-              gap: 5px;
+              gap: 8px;
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
@@ -751,9 +754,9 @@ export default defineComponent({
               }
               .front-btn {
                 color: #ffffff;
-                padding: 5px 30px;
+                padding: 8px 30px;
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-
+                font-family: 'PingFang SC';
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
                 box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
