@@ -24,17 +24,17 @@
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item label="验证码" prop="captchaCode">
         <div style="display: flex; width: 100%">
-          <el-input
+          <!-- <el-input
             v-model="loginForm.captchaCode"
             label="验证码"
             placeholder="请输入验证码"
             @keyup.enter="submitLogin"
             clearable
           ></el-input>
-          <img style="width: 100px" :src="verificationImg" @click="getCode" />
+          <img style="width: 100px" :src="verificationImg" @click="getCode" /> -->
+          <div id="captchaContainer"></div>
         </div>
       </el-form-item>
-      <div id="captchaContainer"></div>
     </div>
 
     <div class="agreement-and-forget-pass">
@@ -93,19 +93,19 @@ const loginRules = {
       trigger: "blur"
     }
   ],
-  captchaCode: [
-    {
-      required: true,
-      message: "请输入验证码",
-      trigger: "blur"
-    },
-    {
-      min: 4,
-      max: 4,
-      message: "长度为 4",
-      trigger: "blur"
-    }
-  ]
+  // captchaCode: [
+  //   {
+  //     required: true,
+  //     message: "请输入验证码",
+  //     trigger: "blur"
+  //   },
+  //   {
+  //     min: 4,
+  //     max: 4,
+  //     message: "长度为 4",
+  //     trigger: "blur"
+  //   }
+  // ]
 };
 
 const loginForm = reactive({
@@ -158,13 +158,13 @@ const submitLogin = () => {
               loginName: loginForm.loginName,
               password: loginForm.password,
               sid: sidParam,
-              captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId,
+              // captchaCode: loginForm.captchaCode,
+              // codeId: loginForm.codeId,
               summoner: loginForm.summoner,
-              // lotNumber: loginForm.lot_number,
-              // captchaOutput: loginForm.captcha_output,
-              // passToken: loginForm.pass_token,
-              // genTime: loginForm.gen_time,
+              lotNumber: loginForm.lot_number,
+              captchaOutput: loginForm.captcha_output,
+              passToken: loginForm.pass_token,
+              genTime: loginForm.gen_time,
             })
             .then(() => {
               const jumpUrl = route.query.redirect
