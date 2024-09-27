@@ -689,13 +689,7 @@ export default defineComponent({
                 padding: 10px 30px 10px 40px;
                 color: #ffffff;
                 position: relative;
-                font-family: 'PingFang SC';
-                font-size: 16px;
-                aspect-ratio: 205 / 70;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 0 25px;
+                height: 42px;
                 &:after {
                   content: "";
                   border-left: 0 solid transparent;
