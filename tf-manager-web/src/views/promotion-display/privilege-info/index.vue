@@ -679,7 +679,8 @@ const uiControl = reactive({
   oldRollOver: {
     rollover: 0,
     gameTypeRollover: null,
-    gameLists: []
+    gameLists: [],
+    selectType: null
   }
 })
 const page = reactive({
@@ -1054,6 +1055,7 @@ async function showEdit(privilegeInfo) {
         if (gameTypeRollover.esport || gameTypeRollover.lottery || gameTypeRollover.sport || gameTypeRollover.slot || gameTypeRollover.casino || gameTypeRollover.casual || gameTypeRollover.poker || gameTypeRollover.fish) {
           uiControl.selectedGameTypeRolloverType = 'GAME_TYPE';
           uiControl.isNewRollover = true;
+          uiControl.oldRollOver.selectType = 'ALL_TYPES';
           gameTypes.value.forEach((game) => {
             if (game.key === 'slot') {
               game.value = parseInt(gameTypeRollover.slot)
@@ -1083,8 +1085,11 @@ async function showEdit(privilegeInfo) {
         } else {
           uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
         }
+        addRollover()
       } else if (uiControl.isNewRollover === false && (string === "EXCLUDE_TYPES")) {
         uiControl.selectedGameTypeRolloverType = 'EXCLUDE_TYPES';
+        uiControl.oldRollOver.selectType = 'EXCLUDE_TYPES';
+
         const excludeItem = gameTypeRollover.excludeTypes;
         gameTypes.value.push({
           key: excludeItem,
@@ -1093,6 +1098,8 @@ async function showEdit(privilegeInfo) {
         uiControl.oldRollOver.gameLists = JSON.parse(JSON.stringify(gameTypes.value));
       } else if (uiControl.isNewRollover === false && (string === "SPECIFY_TYPE")) {
         uiControl.selectedGameTypeRolloverType = 'SPECIFY_TYPES';
+
+        uiControl.oldRollOver.selectType = 'SPECIFY_TYPES';
         uiControl.oldRollOver.gameLists = JSON.parse(JSON.stringify(gameTypes.value))
       } else {
         addRollover()
@@ -1300,7 +1307,10 @@ function compareOldGameLists () {
 }
 
 function constructRollover() {
-  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt && (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists()))) {
+  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt &&
+    (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists())) &&
+    (!uiControl.oldRollOver.selectType || (uiControl.oldRollOver.selectType === uiControl.selectedGameTypeRolloverType))
+  ) {
     form.rollover = uiControl.rollOverAmt;
     return JSON.stringify(uiControl.oldRollOver.gameTypeRollover);
   }
