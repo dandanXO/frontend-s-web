@@ -703,7 +703,7 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      message: t("notify.pleaseFillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/withdraw`);
