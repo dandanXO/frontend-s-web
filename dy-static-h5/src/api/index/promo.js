@@ -252,8 +252,6 @@ export function getCompetitionYesterday(promoCode) {
 }
 
 export function claimCompetitionBonus(promoCode) {
-  return eventapi.post('/session/competition/claimBonus', { params: { promoCode } })
-export function claimCompetitionBonus(promoCode) {
   return eventapi.post("/session/competition/claimBonus", qs.stringify({ promoCode }));
 }
 
@@ -270,9 +268,9 @@ export function getNationalDayinit() {
 }
 
 export function getCompetitionBetYesterday(promoCode) {
-  return eventapi.get('/session/competition-bet/yesterday', {
+  return eventapi.get("/session/competition-bet/yesterday", {
     params: {
       promoCode
     }
-  })
+  });
 }
