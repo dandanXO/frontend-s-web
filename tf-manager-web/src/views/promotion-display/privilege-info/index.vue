@@ -678,7 +678,8 @@ const uiControl = reactive({
   isNewRollover: true,
   oldRollOver: {
     rollover: 0,
-    gameTypeRollover: null
+    gameTypeRollover: null,
+    gameLists: []
   }
 })
 const page = reactive({
@@ -1049,7 +1050,7 @@ async function showEdit(privilegeInfo) {
       } else if (gameType) {
         uiControl.selectedGameTypeRolloverType = 'GAME_TYPE'
       }
-      if (uiControl.isNewRollover === false && (string === "ANY_TYPES" || string === "SPECIFY_TYPE" || !string)) {
+      if (uiControl.isNewRollover === false && (string === "ANY_TYPES" || !string)) {
         if (gameTypeRollover.esport || gameTypeRollover.lottery || gameTypeRollover.sport || gameTypeRollover.slot || gameTypeRollover.casino || gameTypeRollover.casual || gameTypeRollover.poker || gameTypeRollover.fish) {
           uiControl.selectedGameTypeRolloverType = 'GAME_TYPE';
           uiControl.isNewRollover = true;
@@ -1083,16 +1084,19 @@ async function showEdit(privilegeInfo) {
           uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
         }
       } else if (uiControl.isNewRollover === false && (string === "EXCLUDE_TYPES")) {
-        uiControl.isNewRollover = true;
         uiControl.selectedGameTypeRolloverType = 'EXCLUDE_TYPES';
         const excludeItem = gameTypeRollover.excludeTypes;
         gameTypes.value.push({
           key: excludeItem,
           value: form.rollover,
         })
+        uiControl.oldRollOver.gameLists = JSON.parse(JSON.stringify(gameTypes.value));
+      } else if (uiControl.isNewRollover === false && (string === "SPECIFY_TYPE")) {
+        uiControl.selectedGameTypeRolloverType = 'SPECIFY_TYPES';
+        uiControl.oldRollOver.gameLists = JSON.parse(JSON.stringify(gameTypes.value))
+      } else {
+        addRollover()
       }
-
-      addRollover()
     } else {
       addRollover()
     }
@@ -1285,8 +1289,18 @@ function delRollover(index) {
   gameTypes.value.splice(index, 1)
 }
 
+function compareOldGameLists () {
+  if (uiControl.oldRollOver.gameLists.length !== gameTypes.value.length) {
+    return false;
+  }
+  if (JSON.stringify(uiControl.oldRollOver.gameLists) !== JSON.stringify(gameTypes.value)) {
+    return false;
+  }
+  return true;
+}
+
 function constructRollover() {
-  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt) {
+  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt && (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists()))) {
     form.rollover = uiControl.rollOverAmt;
     return JSON.stringify(uiControl.oldRollOver.gameTypeRollover);
   }
