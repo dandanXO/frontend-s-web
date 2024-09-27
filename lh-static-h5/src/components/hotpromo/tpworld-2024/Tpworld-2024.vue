@@ -41,7 +41,7 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-btn.png" alt="" width="100%" />
+            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -132,7 +132,8 @@
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还,将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还,将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">5</div>
