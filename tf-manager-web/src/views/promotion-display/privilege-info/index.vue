@@ -1035,7 +1035,7 @@ async function showEdit(privilegeInfo) {
       Object.entries(gameTypeRollover).forEach(([key, value]) => {
         if (key === 'rollover') {
           uiControl.rollOverAmt = value; // Set rollover amount
-        } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes') {
+        } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes' && key !== 'excludeTypes') {
           gameTypes.value.push({ key, value });
         } else if (key === 'gameTypes' && Array.isArray(value)) {
           value.forEach(type => {
@@ -1049,7 +1049,7 @@ async function showEdit(privilegeInfo) {
       } else if (gameType) {
         uiControl.selectedGameTypeRolloverType = 'GAME_TYPE'
       }
-      if (uiControl.isNewRollover === false && (string === "ANY_TYPES" || !string)) {
+      if (uiControl.isNewRollover === false && (string === "ANY_TYPES" || string === "SPECIFY_TYPE" || !string)) {
         if (gameTypeRollover.esport || gameTypeRollover.lottery || gameTypeRollover.sport || gameTypeRollover.slot || gameTypeRollover.casino || gameTypeRollover.casual || gameTypeRollover.poker || gameTypeRollover.fish) {
           uiControl.selectedGameTypeRolloverType = 'GAME_TYPE';
           uiControl.isNewRollover = true;
@@ -1082,6 +1082,14 @@ async function showEdit(privilegeInfo) {
         } else {
           uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
         }
+      } else if (uiControl.isNewRollover === false && (string === "EXCLUDE_TYPES")) {
+        uiControl.isNewRollover = true;
+        uiControl.selectedGameTypeRolloverType = 'EXCLUDE_TYPES';
+        const excludeItem = gameTypeRollover.excludeTypes;
+        gameTypes.value.push({
+          key: excludeItem,
+          value: form.rollover,
+        })
       }
 
       addRollover()
