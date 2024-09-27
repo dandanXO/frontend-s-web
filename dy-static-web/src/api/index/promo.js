@@ -350,8 +350,8 @@ export function getCompetitionYesterday() {
   return server.EVENT.get('/session/competition/yesterday')
 }
 
-export function claimCompetitionBonus() {
-  return server.EVENT.post('/session/competition/claimBonus')
+export function claimCompetitionBonus(promoCode) {
+  return server.EVENT.post('/session/competition/claimBonus', { params: { promoCode } })
 }
 
 export function getNationalDayinit() {
@@ -363,4 +363,12 @@ export function getNationalDayRecords() {
 
 export function claimNationalDayBonus() {
   return server.EVENT.post('/session/nationalDay/claimBonus')
+}
+
+export function getCompetitionBetYesterday(promoCode) {
+  return server.EVENT.get('/session/competition-bet/yesterday', {
+    params: {
+      promoCode
+    }
+  })
 }
