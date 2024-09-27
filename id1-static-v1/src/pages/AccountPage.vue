@@ -1,10 +1,7 @@
 <template>
   <q-page>
-    <!-- <ProfileSummary /> -->
-
     <div class="personal-center-container">
       <ProfileProgressBanner />
-
       <q-form ref="profileFormRef" class="pc-form">
         <div class="pc-form-item" @click="openPersonalCenterDialog">
           <div class="pc-form-label">{{ $t("form.fullName") }}</div>
@@ -482,34 +479,17 @@
 </template>
 
 <script setup>
-import SwiperNav from "../components/SwiperNav.vue";
-import ProfileSummary from "../components/ProfileSummary.vue";
-import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
-import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
-import moment from "moment";
-import { api } from "boot/axios";
-import { useQuasar, copyToClipboard } from "quasar";
-import { userStore } from "src/stores";
+import { computed, onActivated, onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+
+import { api } from "@/boot/axios";
+import KYCGuestForm from "@/components/KYCGuestForm.vue";
+import KYCUserForm from "@/components/KYCUserForm.vue";
+import ProfileProgressBanner from "@/components/ProfileProgressBanner.vue";
+import { userStore } from "@/stores";
 import { App } from "@capacitor/app";
-import KYCGuestForm from "../components/KYCGuestForm.vue";
-import KYCUserForm from "../components/KYCUserForm.vue";
-
-let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
-let slideListPath = ref([
-  "/account",
-  "/account/discount",
-  "/account/record",
-  "/account/order",
-  "/account/bank",
-  "/account/message"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
+import moment from "moment";
 
 const logout = () => {
   loadingLogout.value = true;
@@ -551,9 +531,6 @@ const openPersonalCenterDialog = () => {
   } else {
     return false;
   }
-  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
-  //   personalCenterDialog.value = true;
-  // }
 };
 
 const closePersonalCenterDialog = () => {

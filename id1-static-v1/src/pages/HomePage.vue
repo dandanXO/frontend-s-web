@@ -961,15 +961,23 @@
 </template>
 
 <script setup>
-import { App } from "@capacitor/app";
-import { api } from "boot/axios";
-import { cached } from "boot/cache";
-import { t } from "boot/lang";
-import GameModal from "components/modal/GameModal";
-import OneSignal from "onesignal-cordova-plugin";
+import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { Platform, useQuasar } from "quasar";
-import { userStore } from "stores/index";
-import { useUI } from "stores/ui";
+
+import { api } from "@/boot/axios";
+import { cached } from "@/boot/cache";
+import { t } from "@/boot/lang";
+import KYCGuestForm from "@/components/KYCGuestForm.vue";
+import KYCUserForm from "@/components/KYCUserForm.vue";
+import GameModal from "@/components/modal/GameModal";
+import PushNotification from "@/components/modal/PushNotification.vue";
+import WithdrawalModal from "@/components/modal/WithdrawalModal.vue";
+import ProfileSummary from "@/components/ProfileSummary.vue";
+import { userStore } from "@/stores/index";
+import { useUI } from "@/stores/ui";
+import { App } from "@capacitor/app";
+import OneSignal from "onesignal-cordova-plugin";
 import SwiperCore, { A11y, Navigation, Pagination, Scrollbar } from "swiper/core";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -977,15 +985,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpLine } from "vue-remix-icons";
-import { useRoute, useRouter } from "vue-router";
-import KYCGuestForm from "../components/KYCGuestForm.vue";
-import KYCUserForm from "../components/KYCUserForm.vue";
-import PushNotification from "../components/modal/PushNotification.vue";
-import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
-import ProfileSummary from "../components/ProfileSummary.vue";
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
