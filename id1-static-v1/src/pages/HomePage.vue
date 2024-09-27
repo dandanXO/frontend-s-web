@@ -945,12 +945,6 @@
     </q-card>
   </q-dialog>
   <WithdrawalModal ref="withdrawalModalRef"></WithdrawalModal>
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
-      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
-    </div>
-  </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
@@ -968,7 +962,6 @@ import { useRoute, useRouter } from "vue-router";
 import { api } from "@/boot/axios";
 import { cached } from "@/boot/cache";
 import { t } from "@/boot/lang";
-import KYCGuestForm from "@/components/KYCGuestForm.vue";
 import KYCUserForm from "@/components/KYCUserForm.vue";
 import GameModal from "@/components/modal/GameModal";
 import PushNotification from "@/components/modal/PushNotification.vue";
@@ -1025,33 +1018,23 @@ const searchText = ref("");
 const withdrawalModalRef = ref();
 const onWithdrawalClick = () => {
   // withdrawalDialog.value = true;
-  if (!store.realName && !store.guest) {
+  if (!store.realName) {
     userKYCDialog.value = true;
-  } else if (!store.realName && store.guest) {
-    guestKYCDialog.value = true;
   } else {
     withdrawalModalRef.value.open();
   }
 };
 
 const userKYCDialog = ref(false);
-const guestKYCDialog = ref(false);
 const depositDialog = ref(false);
 const openDepositDialog = () => {
-  if (!store.realName && !store.guest) {
+  if (!store.realName) {
     userKYCDialog.value = true;
-  } else if (!store.realName && store.guest) {
-    guestKYCDialog.value = true;
   } else {
     depositDialog.value = true;
   }
 };
 
-const closeGuestKYCDialog = () => {
-  guestKYCDialog.value = false;
-  store.getMemberInfo();
-  loadData();
-};
 const closeUserKYCDialog = () => {
   userKYCDialog.value = false;
   store.getMemberInfo();
@@ -1577,9 +1560,7 @@ const closeSlotModal = () => {
 const closeFullGameDialog = () => {
   fullGameDialog.value = false;
 
-  if (store.guest && !store.realName) {
-    guestKYCDialog.value = true;
-  } else if (!store.guest && !store.realName) {
+  if (!store.realName) {
     userKYCDialog.value = true;
   }
 };

@@ -121,8 +121,8 @@ export default {
       "*Catatan khusus: Pihak ketiga secara otomatis mengenakan biaya penanganan sebesar {fee} USDT untuk menarik koin!",
     fullName: "Nama Lengkap",
     fullName_placeholder: "Masukkan nama lengkap Anda",
-    fullName_rules_01: "Silakan masukkan nama lengkap Anda",
-    fullName_rules_02: "Silakan masukkan nama lengkap yang valid",
+    fullName_rules_01: "Masukkan nama lengkap Anda",
+    fullName_rules_02: "Masukkan nama lengkap yang valid",
     changePassword: "Ganti Kata Sandi",
     currentPassword: "Kata Sandi Saat Ini",
     currentPassword_placeholder: "Masukkan Kata Sandi Saat Ini",
@@ -240,8 +240,11 @@ export default {
     copiedtoClipboard: "disalin ke papan klip",
     addSucceed: "Berhasil Ditambahkan",
     loggingIn: "Memasuki",
+    loggingOut: "Keluar...",
     registeredSuccessfully: "Berhasil terdaftar",
-    registeringInProgress: "Pendaftaran sedang berlangsung"
+    registeringInProgress: "Pendaftaran sedang berlangsung",
+    refreshing: "Menyegarkan...",
+    pleaseLoginToOperate: "Silakan masuk untuk beroperasi"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -418,7 +421,7 @@ export default {
       weAdvocateBenefits: "Kami dukung keuntungan dan bonus bagi setiap orang.",
       agencyPolicy: "Kebijakan Keagenan",
       theTableBelowShows: "Tabel di bawah menampilkan bagaimana hadiah ditetapkan.",
-      point_01: "Pengguna aktif: jumlah taruhan harian 2.000",
+      point_01: "Pengguna aktif: jumlah taruhan harian Rp2,000K",
       point_02:
         "Hadiah Anda akan dihitung berdasarkan jumlah total taruhan anggota Anda. Hadiah yang diperoleh bisa ditarik atau digunakan untuk taruhan selanjutnya.",
       point_03: "Ajukan sebanyak mungkin teman yang Anda bisa untuk mendapatkan persentase rabat lebih besar.",

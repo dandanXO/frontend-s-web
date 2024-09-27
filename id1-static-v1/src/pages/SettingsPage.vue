@@ -140,6 +140,7 @@ import { useQuasar } from "quasar";
 import { onActivated, ref } from "vue";
 import { useRouter } from "vue-router";
 
+import { t } from "@/boot/lang";
 import ProfileSummary from "@/components/ProfileSummary.vue";
 import { userStore } from "@/stores";
 
@@ -171,7 +172,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t("notify.loggingOut")
   });
 
   store.memberLogout().then(() => {

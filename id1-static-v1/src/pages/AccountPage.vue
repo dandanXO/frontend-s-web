@@ -410,13 +410,6 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
-      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
-    </div>
-  </q-dialog>
-
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
@@ -479,12 +472,12 @@
 </template>
 
 <script setup>
+import { useQuasar } from "quasar";
 import { computed, onActivated, onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
 
 import { api } from "@/boot/axios";
-import KYCGuestForm from "@/components/KYCGuestForm.vue";
+import { t } from "@/boot/lang";
 import KYCUserForm from "@/components/KYCUserForm.vue";
 import ProfileProgressBanner from "@/components/ProfileProgressBanner.vue";
 import { userStore } from "@/stores";
@@ -495,7 +488,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t("notify.loggingOut")
   });
 
   store.memberLogout().then(() => {
@@ -523,10 +516,7 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  if (store.guest && !personalState.memberInfo.realName) {
-    // openNewChangePasswordDialog();
-    openGuestKYCDialog();
-  } else if (!store.guest && !personalState.memberInfo.realName) {
+  if (!personalState.memberInfo.realName) {
     openUserKYCDialog();
   } else {
     return false;
@@ -553,21 +543,6 @@ const closeUserKYCDialog = () => {
     loadInfo();
     userKYCDialog.value = false;
   });
-};
-
-const guestKYCDialog = ref(false);
-const openGuestKYCDialog = () => {
-  guestKYCDialog.value = true;
-};
-const closeGuestKYCDialog = () => {
-  store.getMemberInfo().then(() => {
-    loadInfo();
-    guestKYCDialog.value = false;
-  });
-
-  // formDetail.realName = "";
-  // formDetail.phone = "";
-  // formDetail.password = "";
 };
 
 const changeNewPasswordDialog = ref(false);
@@ -622,14 +597,7 @@ const isEditPhone = ref(false);
 const isEditBirthday = ref(false);
 const loadInfo = () => {
   personalState.memberInfo = userStore();
-
-  if (store.guest && personalState.memberInfo.realName === null) {
-    // openNewChangePasswordDialog();
-    openGuestKYCDialog();
-  }
-
-  if (!store.guest && personalState.memberInfo.realName === null) {
-    // openPersonalCenterDialog();
+  if (personalState.memberInfo.realName === null) {
     openUserKYCDialog();
   }
 
@@ -888,87 +856,35 @@ const updateNewUserState = () => {
     });
 };
 
-// const updateNewGuestState = () => {
-//   const updateInfo = {};
-//   updateInfo.realName = formDetail.realName;
-//   updateInfo.phone = formDetail.phone;
-//   updateInfo.password = formDetail.password;
-
-//   api
-//     .post("/session/guest-password", qs.stringify(updateInfo))
-//     .then((r) => {
-//       if (r.code === 0) {
-//         profileFormRef.value.reset();
-
-//         $q.notify({
-//           color: "positive",
-//           position: "top",
-//           message: "Updated successfully",
-//           icon: "check_circle_outline"
-//         });
-
-//         store.getMemberInfo().then(() => {
-//           loadInfo();
-//           guestKYCDialog.value = false;
-//         });
-//       } else {
-//         $q.notify({
-//           color: "negative",
-//           position: "top",
-//           message: r.message,
-//           icon: "report_problem"
-//         });
-//       }
-//     })
-//     .catch(() => {})
-//     .then(() => {
-//       btnLoading.value = false;
-//     });
-// };
-
 const submitKYC = () => {
   btnLoading.value = true;
   updateState();
 };
-
-const submitKYCNewUser = () => {
-  btnLoading.value = true;
-  updateNewUserState();
-};
-
-// const submitKYCNewGuest = () => {
-//   btnLoading.value = true;
-//   updateNewGuestState();
-// };
 
 const isValidName = () => {
   const { realName } = formDetail;
   const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
 
   const result = !realName
-    ? "Please Enter Your Full Name"
+    ? t("form.fullName_rules_01")
     : !namePattern.test(realName)
-    ? "Please Enter A Valid Full Name"
+    ? t("form.fullName_rules_02")
     : true;
   return result;
 };
 
 const isValidPhone = () => {
   const { phone } = formDetail;
-
   if (!phone) {
     return "Please Enter Phone Number";
   }
-
   const phoneRegex = /^\d{10}$/;
   const isValid = phoneRegex.test(phone);
-
   return isValid ? true : "Phone Number must be 10 digits";
 };
 
 const isValidOTP = () => {
   const { phoneOtpRef } = formDetail;
-
   const result = !phoneOtpRef ? "Please Enter Verification Code" : true;
   return result;
 };
