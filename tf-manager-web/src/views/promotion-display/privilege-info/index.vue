@@ -244,6 +244,7 @@
         </el-row>
         <el-row>
           <el-form-item
+            class="is-required"
             :label="t('fields.gameTypeRollover')"
             prop="gameTypeRollover"
           >
@@ -741,6 +742,7 @@ const formRules = reactive({
   payTypes: [required(t('message.validatePayTypeRequired'))],
   depositMin: [required(t('message.validateMinDepositRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
+  // gameTypeRollover: [required(t('message.validateRolloverRequired'))],
 })
 
 const vipList = reactive({
@@ -1096,6 +1098,15 @@ function clearCheckAll() {
  * 新增公告
  */
 function create() {
+  if (!uiControl.selectedGameTypeRolloverType) {
+    ElMessage({ message: t('message.validateGameRolloverRequired'), type: 'error' })
+    return;
+  }
+  if (validateGameRollOverType()) {
+    ElMessage({ message: t('message.validateGameRolloverSelectRequired'), type: 'error' })
+    return;
+  }
+
   privilegeInfoForm.value.validate(async valid => {
     if (valid) {
       if (form.bonusType === 'RATIO') {
@@ -1121,10 +1132,31 @@ function create() {
   })
 }
 
+function validateGameRollOverType () {
+  const validate = false;
+  // console.log(uiControl.selectedGameTypeRolloverType);
+  if (uiControl.selectedGameTypeRolloverType !== 'ANY_TYPES' && uiControl.selectedGameTypeRolloverType !== "ALL_TYPES") {
+    const count = gameTypes.value.filter((item) => item.key !== '').length;
+    if (count === 0) {
+      return true;
+    }
+  }
+  return validate;
+}
+
 /**
  * 编辑公告
  */
 function edit() {
+  if (!uiControl.selectedGameTypeRolloverType) {
+    ElMessage({ message: t('message.validateGameRolloverRequired'), type: 'error' })
+    return;
+  }
+  if (validateGameRollOverType()) {
+    ElMessage({ message: t('message.validateGameRolloverSelectRequired'), type: 'error' })
+    return;
+  }
+
   privilegeInfoForm.value.validate(async valid => {
     if (valid) {
       if (form.bonusType === 'RATIO') {
