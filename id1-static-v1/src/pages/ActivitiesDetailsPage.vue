@@ -3,7 +3,6 @@
     <div class="activity-banner">
       <img src="@/assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
     </div>
-    <div class="activities-title"><img src="@/assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-content">
       {{ $t("promo_activitiesDetails.activitiesContent") }}
     </div>
@@ -62,7 +61,7 @@
         </div>
         <div>
           <div class="box-title">
-            {{ $t("promo_activitiesDetails.free") }} {{ rule.bonus }}{{ store.currency.label }}
+            {{ $t("promo_activitiesDetails.free") }} {{ convertToCommaAmount(rule.bonus) }}{{ store.currency.label }}
           </div>
           <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
             <img :src="require(`@/assets/images/promotion/activities/tick.png`)" />
@@ -82,7 +81,7 @@
       <div class="notice-img"><img src="@/assets/images/promotion/activities/alert-img.png" /></div>
       <div>{{ $t("promo_activitiesDetails.noticeDesc") }}</div>
     </div>
-    <div class="activities-title q-mt-md"><img src="@/assets/images/promotion/activities/title-activities.png" /></div>
+
     <div class="activities-rules-container">
       {{ $t("promo_activitiesDetails.rules_01") }}
       <br />
@@ -101,6 +100,7 @@ import { useRoute } from "vue-router";
 
 import { eventapi } from "@/boot/axios";
 import { userStore } from "@/stores/index";
+import { convertToCommaAmount } from "@/boot/utils";
 
 const route = useRoute();
 const store = userStore();

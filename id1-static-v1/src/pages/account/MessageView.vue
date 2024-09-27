@@ -5,7 +5,7 @@
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <img
         class="new-message-ribbon"
-        src="../../assets/images/message/new-message-ribbon.svg"
+        src="@/assets/images/message/new-message-ribbon.svg"
         v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
       />
 
@@ -39,23 +39,6 @@ import { userStore } from "@/stores/index";
 
 const router = useRouter();
 const store = userStore();
-
-let slideList = ref(["Message", "Personal Center", "Discount", "Record", "Order", "Bank"]);
-let slideListPath = ref([
-  "/account/message",
-  "/account",
-  "/account/discount",
-  "/account/record",
-  "/account/order",
-  "/account/bank"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
-
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 const readIdLists = ref([]);
