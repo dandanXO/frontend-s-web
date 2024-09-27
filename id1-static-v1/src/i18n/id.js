@@ -9,7 +9,7 @@ export default {
     download: "Unduh",
     withdraw: "Tarik",
     personalCenter: "Pusat Pribadi",
-    deposit: "Setor",
+    deposit: "Deposit",
     bank: "Bank",
     addCrypto: "Tambah Kripto",
     addVirtualWallet: "Tambah Dompet Virtual",
@@ -20,9 +20,9 @@ export default {
     postComment: "Kirim Komentar",
     record: "Rekaman",
     records: "Rekaman",
-    order: "Pesanan",
+    order: "Order",
     discount: "Diskon",
-    earnMoney: "Dapatkan Uang",
+    earnMoney: "Raup Uang",
     language: "Bahasa",
     dailyActivity: "Aktivitas Harian",
     vipPrivileges: "Hak Istimewa VIP",
@@ -34,12 +34,13 @@ export default {
     personalInformation: "Informasi Pribadi",
     verifyMobileNumber: "Verifikasi Nomor Ponsel",
     email: "E-mail",
-    changePassword: "Ubah Kata Sandi",
+    changePassword: "Ganti Kata sandi",
     referral: "Referensi",
     announcement: "Pengumuman",
     mail: "Surat",
     inbox: "Kotak Masuk",
     outbox: "Kotak Keluar",
+    write: "Menulis",
     bankDetail: "Detail Bank",
     promotionClaim: "Klaim Promosi",
     affiliate: "Afiliasi",
@@ -52,7 +53,13 @@ export default {
     referralRecord: "Rekaman Referensi",
     interestProfit: "Keuntungan Bunga",
     vip: "VIP",
-    logout: "Keluar"
+    logout: "Keluar",
+    promotion: "Promosi",
+    activitiesDetails: "Rincian Kegiatan",
+    moneyChange: "Uang Kembalian",
+    financeFeedback: "Umpan Balik Keuangan",
+    helpRecord: "Catatan Dana Bantuan",
+    reminderRecords: "Catatan Pengingat"
   },
   bottomNav: {
     home: "Beranda",
@@ -147,7 +154,7 @@ export default {
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
-      "Warm reminder：The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
+      "Warm reminder: The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
     virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
@@ -167,7 +174,27 @@ export default {
     version: "Versi",
     accountNumber: "Nomor Akun",
     accountNumber_placeholder: "Masukkan Nomor Akun",
-    accountNumber_rules_01: "Silakan Masukkan Nomor Kartu"
+    accountNumber_rules_01: "Masukkan Nomor Akun",
+    accountNumber_rules_02: "Masukkan Nomor Akun yang Benar",
+    holderName: "Nama Pemegang",
+    holderName_placeholder: "Masukkan Nama Pemegang",
+    holderName_rules_01: "Masukkan Nama Pemegang",
+    holderName_rules_02: "Masukkan 2 Karakter atau Lebih",
+    bank_title: "Tambahkan Akun Bank",
+    bank_selectionTitle: "Bank",
+    bank_select: "Pilih Bank",
+    bank_selectError: "Pilih Bank",
+    bank_type: "Nomor Akun",
+    crypto_title: "Tambahkan Dompet Crypto",
+    crypto_selectionTitle: "Crypto",
+    crypto_select: "Pilih Crypto",
+    crypto_selectError: "Pilih Crypto",
+    crypto_type: "Nomor Kartu Crypto",
+    ewallet_title: "Tambahkan eWallet",
+    ewallet_selectionTitle: "eWallet",
+    ewallet_select: "Pilih eWallet",
+    ewallet_selectError: "Pilih eWallet",
+    ewallet_type: "Nomor Kartu eWallet"
   },
   btn: {
     confirm: "Konfirmasi",
@@ -179,7 +206,7 @@ export default {
     addVirtualWallet: "Tambahkan dompet virtual",
     addBankCard: "Tambahkan kartu bank",
     untie: "Lepas",
-    more: "Lainnya",
+    more: "Lagi",
     postComments: "Kirim Komentar",
     post: "Kirim",
     loading: "Memuat",
@@ -206,7 +233,8 @@ export default {
     feedbackSentSuccess: "Umpan balik Anda telah berhasil dikirim!",
     quitGameMessage: "Apakah Anda yakin ingin keluar? Klik Konfirmasi untuk keluar dari permainan.",
     signOutMessage: "Apakah Anda yakin ingin keluar?",
-    plsLoginToContinue: "Silakan login untuk melanjutkan"
+    plsLoginToContinue: "Silakan login untuk melanjutkan",
+    copiedtoClipboard: "disalin ke papan klip"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -299,11 +327,16 @@ export default {
   },
   bank: {
     virtualWallet: "eWallet",
-    virtualAccount: "eWallet Account"
+    virtualAccount: "eWallet Account",
+    addBank: "Tambahkan Bank",
+    addEWallet: "Tambahkan eWallet",
+    areYouSureUnbind: "Anda Yakin Ingin Memutus Ikatan?",
+    account: "Akun"
   },
   order: {
-    withdrawal: "Withdrawal",
-    recharge: "Recharge"
+    withdrawal: "Pernarikan",
+    recharge: "Isi ulang",
+    orderNo: "NO. Order"
   },
   interestProfit: {
     depositOverview: "Deposit overview",
@@ -622,8 +655,8 @@ export default {
     automaticPayment: "Pembayaran Otomatis",
     suspend: "Ditangguhkan",
     pending: "Tertunda",
-    success: "Sukses",
-    supplementSuccess: "Sukses Ditambahkan",
+    success: "Berhasil",
+    supplementSuccess: "Lengkapi Berhasil",
     closed: "Ditutup",
     orderNo: "Nomor Pesanan",
     bank: "BANK",

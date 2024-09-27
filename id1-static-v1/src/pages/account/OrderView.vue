@@ -8,8 +8,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="withdrawal" label="Penarikan" />
-      <q-tab name="recharge" label="Isi ulang" />
+      <q-tab name="withdrawal" :label="$t('order.withdrawal')" />
+      <q-tab name="recharge" :label="$t('order.recharge')" />
     </q-tabs>
 
     <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
@@ -25,7 +25,7 @@
       <q-tab-panel name="withdrawal">
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
-            <div class="order-col">NO. Order</div>
+            <div class="order-col">{{ $t("order.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
 
@@ -100,41 +100,19 @@
 </template>
 
 <script setup>
-import { onActivated, onMounted, reactive, ref } from "vue";
-import { api } from "boot/axios";
-import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
-import LoadingComponent from "../../components/LoadingComponent.vue";
-import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { onActivated, reactive, ref } from "vue";
 import { useQuasar } from "quasar";
-import { convertToCommaAmount } from "src/boot/utils";
+
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import { convertToCommaAmount, convertToGMT8, updateDate } from "@/boot/utils";
+import LoadingComponent from "@/components/LoadingComponent.vue";
+import NoInfoComponent from "@/components/NoInfoComponent.vue";
 
 const $q = useQuasar();
-const router = useRouter();
-
-let slideList = ref(["Order", "Bank", "Message", "Personal Center", "Discount", "Record"]);
-let slideListPath = ref([
-  "/account/order",
-  "/account/bank",
-  "/account/message",
-  "/account",
-  "/account/discount",
-  "/account/record"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
-
 const isLoading = reactive({ withdrawal: true, recharge: true });
 const isNoInfo = reactive({ withdrawal: true, recharge: true });
-
 const orderOptionTab = ref("withdrawal");
-
 const searchForm = reactive({ startDate: "", endDate: "" });
 const setTime = () => {
   searchForm.startDate = updateDate(7);
@@ -147,7 +125,6 @@ const searchWithdrawalRecord = () => {
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
-
   const gmtStartDate = convertToGMT8(startDate);
   const gmtEndDate = convertToGMT8(endDate);
   api
@@ -226,12 +203,12 @@ const getWithdrawStatus = (withdrawStatus) => {
     case "STEP_2":
     case "STEP_3":
     case "STEP_4":
-      return "Pending";
+      return t("records.pending");
     case "FAIL":
     case "STEP_5":
-      return "Gagal";
+      return t("records.failed");
     case "SUCCESS":
-      return "Berhasil";
+      return t("records.success");
     default:
       return withdrawStatus;
   }
@@ -240,13 +217,13 @@ const getWithdrawStatus = (withdrawStatus) => {
 const getDepositStatus = (depositStatus) => {
   switch (depositStatus) {
     case "PENDING":
-      return "Pending";
+      return t("records.pending");
     case "SUCCESS":
-      return "Berhasil";
+      return t("records.success");
     case "SUPPLEMENT_SUCCESS":
-      return "Lengkapi Berhasil";
+      return t("records.supplementSuccess");
     case "CLOSED":
-      return "Ditutup";
+      return t("records.closed");
     default:
       return depositStatus;
   }
@@ -254,8 +231,6 @@ const getDepositStatus = (depositStatus) => {
 
 onActivated(() => {
   setTime();
-
-  // NOTE: load both 1st, change if need implement search field
   searchWithdrawalRecord();
   searchDepositRecord();
 });
@@ -266,7 +241,6 @@ onActivated(() => {
   background-color: #101114;
   border-radius: 8px;
   width: calc(100% - 20px);
-  //margin-bottom: 10px;
   margin: 0px auto 10px;
   border: 1px solid #5c46e7;
   aspect-ratio: 335/32;

@@ -18,7 +18,7 @@
         <q-card-section class="bottom-wrapper">
           <div class="time">{{ convertToGMT7(e.sendTime) }}</div>
           <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
-            Lagi&nbsp;
+            {{ $t("btn.more") }}&nbsp;
             <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />
           </q-btn>
         </q-card-section>
@@ -28,13 +28,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onActivated } from "vue";
+import { onActivated, ref } from "vue";
 import { useRouter } from "vue-router";
-import { api } from "boot/axios";
-import { userStore } from "stores/index";
-import { convertToGMT55, convertToGMT7 } from "src/boot/utils";
-import LoadingComponent from "../../components/LoadingComponent.vue";
-import NoInfoComponent from "../../components/NoInfoComponent.vue";
+
+import { api } from "@/boot/axios";
+import { convertToGMT7 } from "@/boot/utils";
+import LoadingComponent from "@/components/LoadingComponent.vue";
+import NoInfoComponent from "@/components/NoInfoComponent.vue";
+import { userStore } from "@/stores/index";
 
 const router = useRouter();
 const store = userStore();
