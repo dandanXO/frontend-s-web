@@ -168,8 +168,9 @@ const onResponse = (response) => {
         location.reload();
       }
       if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+        sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
         store.token = null;
-        location.reload();
+        window.location.href = "/home";
       }
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return response.data;

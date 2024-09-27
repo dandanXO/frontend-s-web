@@ -5,6 +5,7 @@ import { userStore } from "@/store";
 // import i18n from "../i18n/index";
 import { ResponseCode, SkipErrorCode } from "@/api/response";
 import { uiStore } from "@/store/ui";
+import { useRouter } from "vue-router";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
@@ -243,8 +244,10 @@ const onResponse = (response) => {
         location.reload();
       }
       if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+        sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
         store.token = null;
-        location.reload();
+        window.location.href = "/home";
+        return;
       }
       if (
         res.code === ResponseCode.ERROR_USER_TOO_FAST ||
