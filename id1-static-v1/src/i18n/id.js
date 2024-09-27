@@ -81,7 +81,8 @@ export default {
     password_rules_01: "Masukkan kata sandi",
     password_rules_02: "Karakter kata sandi harus lebih dari 6",
     forgotPassword: "Lupa Kata Sandi",
-    forgotPassword_desc: "Masukkan Nama pengguna Dan Nomor Telepon Anda, Kami Akan Kirim OTP Ke Nomor Telepon Terdaftar Anda.",
+    forgotPassword_desc:
+      "Masukkan Nama pengguna Dan Nomor Telepon Anda, Kami Akan Kirim OTP Ke Nomor Telepon Terdaftar Anda.",
     register_agree_01: "Saya telah setuju dengan ",
     register_agree_02: "Perjanjian Privasi Penggunaan",
     email: "Email",
@@ -244,7 +245,8 @@ export default {
     registeredSuccessfully: "Berhasil terdaftar",
     registeringInProgress: "Pendaftaran sedang berlangsung",
     refreshing: "Menyegarkan...",
-    pleaseLoginToOperate: "Silakan masuk untuk beroperasi"
+    pleaseLoginToOperate: "Silakan masuk untuk beroperasi",
+    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
