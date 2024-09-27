@@ -59,7 +59,8 @@ export default {
     moneyChange: "Uang Kembalian",
     financeFeedback: "Umpan Balik Keuangan",
     helpRecord: "Catatan Dana Bantuan",
-    reminderRecords: "Catatan Pengingat"
+    reminderRecords: "Catatan Pengingat",
+    forgotPassword: "Lupa Kata sandi"
   },
   bottomNav: {
     home: "Beranda",
@@ -80,7 +81,7 @@ export default {
     password_rules_01: "Masukkan kata sandi",
     password_rules_02: "Karakter kata sandi harus lebih dari 6",
     forgotPassword: "Lupa Kata Sandi",
-    forgotPassword_desc: "Silakan berikan email, kami akan mengirimkan OTP ke email terdaftar Anda.",
+    forgotPassword_desc: "Masukkan Nama pengguna Dan Nomor Telepon Anda, Kami Akan Kirim OTP Ke Nomor Telepon Terdaftar Anda.",
     register_agree_01: "Saya telah setuju dengan ",
     register_agree_02: "Perjanjian Privasi Penggunaan",
     email: "Email",
@@ -224,7 +225,7 @@ export default {
     notAMember: "Bukan anggota?",
     createAccount: "Buat akun",
     copy: "Menyalin",
-    joinNow: "Bergabung sekarang",
+    joinNow: "Bergabung sekarang"
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
@@ -240,6 +241,7 @@ export default {
     addSucceed: "Berhasil Ditambahkan",
     loggingIn: "Memasuki",
     registeredSuccessfully: "Berhasil terdaftar",
+    registeringInProgress: "Pendaftaran sedang berlangsung"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -701,7 +703,7 @@ export default {
     live: "LIVE",
     slot: "SLOT",
     vip: "VIP",
-    promotionEnds: "Promosi Berakhir",
+    promotionEnds: "Promosi Berakhir"
   },
   hotPromo: {
     aviatorWheel: {

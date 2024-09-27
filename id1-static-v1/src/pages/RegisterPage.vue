@@ -241,7 +241,7 @@ export default defineComponent({
       // verificationRef.value.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("notify.registeringInProgress")
       });
 
       if (
