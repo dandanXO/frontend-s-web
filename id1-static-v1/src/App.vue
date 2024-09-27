@@ -3,20 +3,20 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, nextTick } from "vue";
-import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { api } from "boot/axios";
-import { Device } from "@capacitor/device";
-import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
-import { AddressbarColor } from "quasar";
-import { StatusBar, Style } from "@capacitor/status-bar";
-import { useUI } from "src/stores/ui";
-import axios from "axios";
-import AOS from "aos";
+import { AddressbarColor, Platform, useQuasar } from "quasar";
+import { defineComponent, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+
+import { api } from "@/boot/axios";
+import { isAndroid } from "@/boot/utils";
+import { userStore } from "@/stores";
+import { useUI } from "@/stores/ui";
+import { Device } from "@capacitor/device";
+import { StatusBar, Style } from "@capacitor/status-bar";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",

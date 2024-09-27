@@ -222,7 +222,8 @@ export default {
     recharge: "Isi Ulang",
     getInterestProfit: "Dapatkan Keuntungan Bunga",
     notAMember: "Bukan anggota?",
-    createAccount: "Buat akun"
+    createAccount: "Buat akun",
+    copy: "Menyalin"
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
@@ -231,10 +232,12 @@ export default {
     emailVerificationSent: "Verifikasi email telah dikirim",
     messageSent: "Pesan Terkirim",
     feedbackSentSuccess: "Umpan balik Anda telah berhasil dikirim!",
-    quitGameMessage: "Apakah Anda yakin ingin keluar? Klik Konfirmasi untuk keluar dari permainan.",
-    signOutMessage: "Apakah Anda yakin ingin keluar?",
+    quitGameMessage: "Anda yakin ingin keluar? Klik Konfirmasi untuk keluar dari permainan.",
+    signOutMessage: "Anda yakin ingin keluar?",
     plsLoginToContinue: "Silakan login untuk melanjutkan",
-    copiedtoClipboard: "disalin ke papan klip"
+    copiedtoClipboard: "disalin ke papan klip",
+    addSucceed: "Berhasil Ditambahkan",
+    loggingIn: "Sedang masuk",
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
