@@ -54,7 +54,6 @@ export default {
     interestProfit: "Keuntungan Bunga",
     vip: "VIP",
     logout: "Keluar",
-    promotion: "Promosi",
     activitiesDetails: "Rincian Kegiatan",
     moneyChange: "Uang Kembalian",
     financeFeedback: "Umpan Balik Keuangan",
@@ -681,7 +680,6 @@ export default {
     noMember: "Tidak Ada Anggota",
     noMessage: "Tidak Ada Pesan",
     level: "Level",
-    amount: "Jumlah",
     turnover: "Perputaran"
   },
   appUpdate: {
