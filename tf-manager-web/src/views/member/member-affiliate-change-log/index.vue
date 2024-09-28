@@ -114,8 +114,8 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { getAffiliateActionLog } from '../../../api/user-action-log'
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
 import {
   getShortcuts,
   convertDateToStart,
@@ -142,8 +142,8 @@ const page = reactive({
   loading: false,
 })
 const siteList = reactive({
-  list: []
-});
+  list: [],
+})
 const request = reactive({
   size: 30,
   current: 1,
@@ -207,8 +207,10 @@ onMounted(async () => {
   await loadSites()
   request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
   }
   await loadAffiliateActionLog()
 })

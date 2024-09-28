@@ -176,11 +176,12 @@
           type="primary"
           v-permission="['sys:report:summary:review:export']"
           @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
-
+    <!-- eslint-disable -->
     <el-table
       :data="page.records"
       ref="table"
@@ -189,7 +190,7 @@
       highlight-current-row
       v-loading="page.loading"
       :height="tableHeight"
-      :header-cell-style="{background: 'lightgray'}"
+      :header-cell-style="{ background: 'lightgray' }"
       :empty-text="t('fields.noData')"
       :summary-method="getSummaries"
       show-summary
@@ -264,11 +265,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column
-        prop="time"
-        :label="t('fields.date')"
-        width="120"
-      />
+      <el-table-column prop="time" :label="t('fields.date')" width="120" />
       <el-table-column
         prop="totalBet"
         :label="t('fields.totalBet')"
@@ -374,7 +371,7 @@
         width="120"
       />
 
-      <el-table-column prop="remark" :label="t('fields.remark')" width="120" />
+      <el-table-column prop="remark" :label="t('fields.remark')" width="120"/>
 
       <el-table-column
         prop="review"
@@ -460,8 +457,13 @@
       </div>
     </el-dialog>
 
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -475,13 +477,13 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import moment from 'moment'
 import {
   getMemberReport,
   addReview,
   getTotalWithdrawReview,
-  getExportWithdrawalReviewReport
+  getExportWithdrawalReviewReport,
 } from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -495,9 +497,9 @@ import {
   convertDateToStart,
   getShortcuts,
 } from '@/utils/datetime'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
+import {formatInputTimeZone} from "@/utils/format-timeZone"
 
-const { t } = useI18n()
+const {t} = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
@@ -515,44 +517,44 @@ const vipList = reactive({
 const financialLevelList = reactive({
   list: [],
 })
-let timeZone = null;
+let timeZone = null
 
 const tableHeight = computed(() => {
-  const windowHeight = window.innerHeight;
-  return windowHeight - 225;
+  const windowHeight = window.innerHeight
+  return windowHeight - 225
 })
 
 const sortList = reactive({
   list: [
-    { label: t('fields.byprofitasc'), value: '1' },
-    { label: t('fields.byprofitdesc'), value: '2' },
-    { label: t('fields.bydateasc'), value: '3' },
-    { label: t('fields.bydatedesc'), value: '4' },
+    {label: t('fields.byprofitasc'), value: '1'},
+    {label: t('fields.byprofitdesc'), value: '2'},
+    {label: t('fields.bydateasc'), value: '3'},
+    {label: t('fields.bydatedesc'), value: '4'},
   ],
 })
 
 const reviewList = reactive({
   list: [
-    { label: t('fields.reviewno'), value: '1' },
-    { label: t('fields.reviewsuccess'), value: '2' },
-    { label: t('fields.reviewfail'), value: '3' },
+    {label: t('fields.reviewno'), value: '1'},
+    {label: t('fields.reviewsuccess'), value: '2'},
+    {label: t('fields.reviewfail'), value: '3'},
   ],
 })
 
 const reviewStatusList = reactive({
   list: [
-    { label: t('fields.allreviewstatus'), value: '1' },
-    { label: t('fields.reviewno'), value: 'PENDING' },
-    { label: t('fields.reviewsuccess'), value: 'APPROVED' },
-    { label: t('fields.reviewfail'), value: 'REJECTED' },
+    {label: t('fields.allreviewstatus'), value: '1'},
+    {label: t('fields.reviewno'), value: 'PENDING'},
+    {label: t('fields.reviewsuccess'), value: 'APPROVED'},
+    {label: t('fields.reviewfail'), value: 'REJECTED'},
   ],
 })
 
 const profitList = reactive({
   list: [
-    { label: t('fields.allprofit'), value: '1' },
-    { label: t('fields.profitpositive'), value: '2' },
-    { label: t('fields.profitnegative'), value: '3' },
+    {label: t('fields.allprofit'), value: '1'},
+    {label: t('fields.profitpositive'), value: '2'},
+    {label: t('fields.profitnegative'), value: '3'},
   ],
 })
 
@@ -561,7 +563,7 @@ const source = reactive({
     { label: t('fields.allSource'), value: '1' },
     { label: 'DIRECT', value: 'DIRECT' },
     { label: 'REFER', value: 'REFER' },
-    { label: 'AFFILIATE', value: 'AFFILIATE' }
+    { label: 'AFFILIATE', value: 'AFFILIATE' },
   ],
 })
 
@@ -625,7 +627,7 @@ function submit() {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.sort = sortList.list[0].value
 
   request.vip = vipList.list[0].id
@@ -645,7 +647,7 @@ async function loadMemberRecord() {
     alert(t('fields.maxno'))
   } else {
     page.loading = true
-    const requestCopy = { ...request }
+    const requestCopy = {...request}
     const query = {}
     Object.entries(requestCopy).forEach(([key, value]) => {
       if (value) {
@@ -653,7 +655,7 @@ async function loadMemberRecord() {
       }
     })
 
-    timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+    timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
     if (request.recordTime !== null) {
       if (request.recordTime.length === 2) {
         /* query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
@@ -663,11 +665,11 @@ async function loadMemberRecord() {
       }
     }
 
-    const { data: ret } = await getMemberReport(query)
+    const {data: ret} = await getMemberReport(query)
     page.pages = ret.pages
     page.records = ret.records
 
-    const { data: ret1 } = await getTotalWithdrawReview(query)
+    const {data: ret1} = await getTotalWithdrawReview(query)
     page1.records = ret1
     request.doris = false
     page.loading = false
@@ -675,14 +677,14 @@ async function loadMemberRecord() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
+  const {data: site} = await getSiteListSimple()
   siteList.list = site
 }
 
 async function loadVipList() {
   var ret = []
-  ret.push({ id: '1', name: t('fields.allvip') })
-  const { data: vList } = await getVipList({ siteId: request.siteId })
+  ret.push({id: '1', name: t('fields.allvip')})
+  const {data: vList} = await getVipList({siteId: request.siteId})
   vList.forEach((item, index) => {
     ret.push(item)
   })
@@ -692,8 +694,8 @@ async function loadVipList() {
 
 async function loadFinancialLevelList() {
   var ret = []
-  ret.push({ id: '1', name: t('fields.allfinanciallevel') })
-  const { data: fList } = await getFinancialLevels({ siteId: request.siteId })
+  ret.push({id: '1', name: t('fields.allfinanciallevel')})
+  const {data: fList} = await getFinancialLevels({siteId: request.siteId})
   fList.forEach((item, index) => {
     ret.push(item)
   })
@@ -710,9 +712,9 @@ function getSummaries(param) {
   if (!hasPermission(['sys:report:summary:total'])) {
     return []
   }
-  const { columns } = param
+  const {columns} = param
   var sums = []
-  const requestCopy = { ...request }
+  const requestCopy = {...request}
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
@@ -721,9 +723,9 @@ function getSummaries(param) {
   })
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
-      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone);
-      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone);
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone)
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone)
       query.recordTime = query.recordTime.join(',')
     }
   }
@@ -834,19 +836,19 @@ onMounted(async () => {
 })
 
 function checkQuery() {
-  const requestCopy = { ...request }
+  const requestCopy = {...request}
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
       query[key] = value
     }
   })
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
-      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone);
-      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone);
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone)
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone)
       query.recordTime = query.recordTime.join(',')
     }
   }
@@ -854,12 +856,12 @@ function checkQuery() {
 }
 
 async function requestExportExcel() {
-  const query = checkQuery();
-  query.requestBy = store.state.user.name;
-  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getExportWithdrawalReviewReport(query);
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getExportWithdrawalReviewReport(query)
   if (ret) {
-    uiControl.messageVisible = true;
+    uiControl.messageVisible = true
   }
 }
 
