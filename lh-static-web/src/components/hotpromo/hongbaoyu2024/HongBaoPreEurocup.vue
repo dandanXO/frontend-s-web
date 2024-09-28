@@ -201,7 +201,7 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      max-width: 420px;
+      max-width: 240px;
       margin-left: 0px;
 
       img {
