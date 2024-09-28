@@ -227,9 +227,7 @@
                       +item.vipLevel === vipLevel
                     "
                   >
-                    <div class="claim-now disabled">
-                      {{ formatNumber(currentRedPacketAmount, "redPacket") }}
-                    </div>
+                    <div class="claim-now disabled">{{ formatNumber(currentRedPacketAmount, "redPacket") }}</div>
                   </template>
                   <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
                     <div
@@ -597,139 +595,139 @@
             <th>真人</th>
             <th>棋牌</th>
             <th>电子</th>
-            <th>捕鱼</th>
+            <!--            <th>捕鱼</th>-->
             <th>返水上限</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>VIP0</td>
+            <td>0.45%</td>
             <td>0.40%</td>
-            <td>0.4%</td>
-            <td>0.4%</td>
-            <td>0.4%</td>
-            <td>0.6%</td>
-            <td>0.15%</td>
+            <td>0.40%</td>
+            <td>0.40%</td>
+            <td>0.60%</td>
+            <!--            <td>0.15%</td>-->
             <td>8,888</td>
           </tr>
           <tr>
             <td>VIP1</td>
-            <td>0.40%</td>
-            <td>0.4%</td>
-            <td>0.4%</td>
             <td>0.45%</td>
-            <td>0.6%</td>
-            <td>0.2%</td>
+            <td>0.40%</td>
+            <td>0.45%</td>
+            <td>0.45%</td>
+            <td>0.60%</td>
+            <!--            <td>0.2%</td>-->
             <td>8,888</td>
           </tr>
           <tr>
             <td>VIP2</td>
-            <td>0.40%</td>
-            <td>0.4%</td>
-            <td>0.4%</td>
             <td>0.45%</td>
-            <td>0.6%</td>
-            <td>0.2%</td>
+            <td>0.40%</td>
+            <td>0.45%</td>
+            <td>0.45%</td>
+            <td>0.60%</td>
+            <!--            <td>0.2%</td>-->
             <td>8,888</td>
           </tr>
           <tr>
             <td>VIP3</td>
-            <td>0.50%</td>
+            <td>0.48%</td>
             <td>0.45%</td>
             <td>0.45%</td>
             <td>0.45%</td>
-            <td>0.6%</td>
-            <td>0.25%</td>
+            <td>0.60%</td>
+            <!--            <td>0.25%</td>-->
             <td>12,888</td>
           </tr>
           <tr>
             <td>VIP4</td>
-            <td>0.50%</td>
-            <td>0.50%</td>
+            <td>0.48%</td>
+            <td>0.45%</td>
             <td>0.45%</td>
             <td>0.50%</td>
-            <td>0.8%</td>
-            <td>0.30%</td>
+            <td>0.80%</td>
+            <!--            <td>0.30%</td>-->
             <td>18,888</td>
           </tr>
           <tr>
             <td>VIP5</td>
-            <td>0.58%</td>
-            <td>0.55%</td>
+            <td>0.48%</td>
             <td>0.50%</td>
+            <td>0.48%</td>
             <td>0.55%</td>
-            <td>0.8%</td>
-            <td>0.30%</td>
+            <td>0.80%</td>
+            <!--            <td>0.30%</td>-->
             <td>18,888</td>
           </tr>
           <tr>
             <td>VIP6</td>
-            <td>0.58%</td>
+            <td>0.50%</td>
+            <td>0.50%</td>
+            <td>0.50%</td>
             <td>0.60%</td>
-            <td>0.55%</td>
-            <td>0.60%</td>
-            <td>0.8%</td>
-            <td>0.35%</td>
+            <td>0.80%</td>
+            <!--            <td>0.35%</td>-->
             <td>28,888</td>
           </tr>
           <tr>
             <td>VIP7</td>
-            <td>0.58%</td>
-            <td>0.65%</td>
-            <td>0.60%</td>
+            <td>0.50%</td>
+            <td>0.55%</td>
+            <td>0.55%</td>
             <td>0.70%</td>
             <td>0.85%</td>
-            <td>0.35%</td>
+            <!--            <td>0.35%</td>-->
             <td>28,888</td>
           </tr>
           <tr>
             <td>VIP8</td>
+            <td>0.55%</td>
+            <td>0.60%</td>
             <td>0.65%</td>
-            <td>0.70%</td>
-            <td>0.68%</td>
             <td>0.80%</td>
             <td>0.90%</td>
-            <td>0.35%</td>
+            <!--            <td>0.35%</td>-->
             <td>38,888</td>
           </tr>
           <tr>
             <td>VIP9</td>
-            <td>0.75%</td>
-            <td>0.80%</td>
-            <td>0.75%</td>
+            <td>0.55%</td>
+            <td>0.65%</td>
+            <td>0.68%</td>
             <td>0.90%</td>
-            <td>1.0%</td>
-            <td>0.40%</td>
+            <td>1.00%</td>
+            <!--            <td>0.40%</td>-->
             <td>58,888</td>
           </tr>
           <tr>
             <td>VIP10</td>
-            <td>0.85%</td>
-            <td>0.90%</td>
-            <td>0.80%</td>
-            <td>1.0%</td>
+            <td>0.60%</td>
+            <td>0.70%</td>
+            <td>0.70%</td>
+            <td>1.00%</td>
             <td>1.05%</td>
-            <td>0.40%</td>
+            <!--            <td>0.40%</td>-->
             <td>88,888</td>
           </tr>
           <tr>
             <td>VIP11</td>
-            <td>0.95%</td>
-            <td>1.0%</td>
-            <td>0.85%</td>
-            <td>1.1%</td>
-            <td>1.1%</td>
-            <td>0.40%</td>
+            <td>0.70%</td>
+            <td>0.75%</td>
+            <td>0.75%</td>
+            <td>1.10%</td>
+            <td>1.10%</td>
+            <!--            <td>0.40%</td>-->
             <td>88,888</td>
           </tr>
           <tr>
             <td>VIP12</td>
-            <td>1.1%</td>
-            <td>1.0%</td>
-            <td>1.0%</td>
-            <td>1.2%</td>
-            <td>1.2%</td>
-            <td>0.50%</td>
+            <td>0.80%</td>
+            <td>0.80%</td>
+            <td>0.80%</td>
+            <td>1.20%</td>
+            <td>1.20%</td>
+            <!--            <td>0.50%</td>-->
             <td>128,888</td>
           </tr>
         </tbody>
