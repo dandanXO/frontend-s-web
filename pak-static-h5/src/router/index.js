@@ -105,11 +105,6 @@ export default route(function (/* { store, ssrContext } */) {
         next();
       }
     }
-
-    // FB tracking
-    console.log("Fb track.");
-    fbq("init", "864258358743236");
-    fbq("track", "PageView");
   });
 
   return Router;
