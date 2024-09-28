@@ -7,7 +7,7 @@
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <div class="contents" v-if="!bonusOpened">
         <div @click="getPromotion" class="hongbao-open">
-          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-open.png`)" />
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/claimbg-new.png`)" />
         </div>
       </div>
     </div>
@@ -249,9 +249,9 @@ const getPromotionListing = () => {
     });
 };
 onMounted(() => {
-      if (!store.token) {
-        return;
-      }
+  if (!store.token) {
+    return;
+  }
   getPromotionListing();
 });
 </script>
@@ -280,13 +280,20 @@ onMounted(() => {
 
   .receive-container {
     position: relative;
-    margin: 0 0 25px 0;
+    margin: 0 0 0px 0;
+
+    .hongbao-open {
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
+    }
 
     .contents {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 0px;
 
       img {
         display: block;
