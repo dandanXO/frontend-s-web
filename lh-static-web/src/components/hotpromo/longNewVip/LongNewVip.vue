@@ -107,43 +107,112 @@
         <thead>
             <tr>
                 <th>VIP 等级</th>
-                <th>首次保级彩金</th>
-                <th>年度保级彩金</th>
+                <th>生日彩金</th>
+                <th>节日彩金</th>
+                <th>每日返水红包</th>
+                <th>会员日<br>每月 15 号</th>
+                <th>会员加码<br>充值送 10% 加码券</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>青铜</td>
+                <td>VIP1</td>
+                <td>8</td>
+                <td>-</td>
+                <td>0.1%</td>
+                <td>8</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>VIP2</td>
                 <td>18</td>
-                <td>208</td>
+                <td>-</td>
+                <td>0.2%</td>
+                <td>18</td>
+                <td>28</td>
             </tr>
             <tr>
-                <td>白银</td>
+                <td>VIP3</td>
+                <td>28</td>
+                <td>-</td>
+                <td>0.3%</td>
+                <td>28</td>
                 <td>58</td>
-                <td>588</td>
             </tr>
             <tr>
-                <td>黄金</td>
+                <td>VIP4</td>
+                <td>38</td>
+                <td>-</td>
+                <td>0.5%</td>
+                <td>38</td>
+                <td>88</td>
+            </tr>
+            <tr>
+                <td>VIP5</td>
+                <td>58</td>
+                <td>-</td>
+                <td>0.6%</td>
+                <td>58</td>
+                <td>128</td>
+            </tr>
+            <tr>
+                <td>VIP6</td>
+                <td>88</td>
+                <td>-</td>
+                <td>0.8%</td>
+                <td>68</td>
+                <td>188</td>
+            </tr>
+            <tr>
+                <td>VIP7</td>
+                <td>188</td>
+                <td>-</td>
+                <td>1.0%</td>
+                <td>128</td>
+                <td>258</td>
+            </tr>
+            <tr>
+                <td>VIP8</td>
                 <td>288</td>
-                <td>1,088</td>
+                <td>188</td>
+                <td>1.2%</td>
+                <td>208</td>
+                <td>388</td>
             </tr>
             <tr>
-                <td>铂金</td>
+                <td>VIP9</td>
+                <td>388</td>
+                <td>288</td>
+                <td>1.3%</td>
+                <td>388</td>
+                <td>508</td>
+            </tr>
+            <tr>
+                <td>VIP10</td>
                 <td>588</td>
-                <td>1,888</td>
+                <td>388</td>
+                <td>1.5%</td>
+                <td>588</td>
+                <td>888</td>
             </tr>
             <tr>
-                <td>钻石</td>
+                <td>VIP11</td>
                 <td>888</td>
+                <td>888</td>
+                <td>1.8%</td>
+                <td>888</td>
+                <td>1,288</td>
+            </tr>
+            <tr>
+                <td>VIP12</td>
+                <td>1,888</td>
+                <td>1,888</td>
+                <td>2.0%</td>
+                <td>1,888</td>
                 <td>2,888</td>
             </tr>
-            <tr>
-                <td>王者</td>
-                <td>1,888</td>
-                <td>8,888</td>
-            </tr>
         </tbody>
-        </table>
+    </table>
         <div class="three-title-2"></div>
         <table class="vip-table">
         <thead>
@@ -319,7 +388,7 @@
                 <td>128,888</td>
             </tr>
         </tbody>
-    </table>
+        </table>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">
