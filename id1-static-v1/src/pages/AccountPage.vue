@@ -1,13 +1,10 @@
 <template>
   <q-page>
-    <!-- <ProfileSummary /> -->
-
     <div class="personal-center-container">
       <ProfileProgressBanner />
-
       <q-form ref="profileFormRef" class="pc-form">
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Full Name</div>
+          <div class="pc-form-label">{{ $t("form.fullName") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.realName"
@@ -23,7 +20,7 @@
         </div>
 
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Phone</div>
+          <div class="pc-form-label">{{ $t("form.phone") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.phone"
@@ -38,28 +35,11 @@
           </div>
         </div>
 
-        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Email</div>
-          <div class="pc-form-input">
-            <q-input
-              v-model="formDetail.email"
-              filled
-              dense
-              clearable
-              borderless
-              standout
-              hide-bottom-space
-              readonly
-            ></q-input>
-          </div>
-        </div> -->
-
         <div class="pc-tip">
           <div>
-            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">{{ $t("form.changePassword") }}</a>
             <div class="pc-ver" v-if="appVersionNo">
-              Version:
+              {{ $t("form.version") }}:
               <span>{{ appVersionNo }}</span>
             </div>
           </div>
@@ -69,25 +49,23 @@
               class="btn-refresh"
               no-caps
               icon="refresh"
-              label="Updated"
+              :label="$t('btn.updated')"
               :loading="loadingUpdated"
               @click="startRefresh"
             >
               <template v-slot:loading>
                 <q-spinner class="on-left" style="color: #ae6def" />
-                Updating...
+                {{ $t("btn.updating") }}
               </template>
             </q-btn>
           </div>
         </div>
 
         <div class="q-mt-md">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">
+            {{ $t("btn.signOut") }}
+          </q-btn>
         </div>
-
-        <!-- <div class="text-center q-mt-md" v-if="canEdit">
-          <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
-        </div> -->
       </q-form>
     </div>
   </q-page>
@@ -501,34 +479,17 @@
 </template>
 
 <script setup>
-import SwiperNav from "../components/SwiperNav.vue";
-import ProfileSummary from "../components/ProfileSummary.vue";
-import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
-import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
-import moment from "moment";
-import { api } from "boot/axios";
-import { useQuasar, copyToClipboard } from "quasar";
-import { userStore } from "src/stores";
+import { computed, onActivated, onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+
+import { api } from "@/boot/axios";
+import KYCGuestForm from "@/components/KYCGuestForm.vue";
+import KYCUserForm from "@/components/KYCUserForm.vue";
+import ProfileProgressBanner from "@/components/ProfileProgressBanner.vue";
+import { userStore } from "@/stores";
 import { App } from "@capacitor/app";
-import KYCGuestForm from "../components/KYCGuestForm.vue";
-import KYCUserForm from "../components/KYCUserForm.vue";
-
-let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
-let slideListPath = ref([
-  "/account",
-  "/account/discount",
-  "/account/record",
-  "/account/order",
-  "/account/bank",
-  "/account/message"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
+import moment from "moment";
 
 const logout = () => {
   loadingLogout.value = true;
@@ -570,9 +531,6 @@ const openPersonalCenterDialog = () => {
   } else {
     return false;
   }
-  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
-  //   personalCenterDialog.value = true;
-  // }
 };
 
 const closePersonalCenterDialog = () => {

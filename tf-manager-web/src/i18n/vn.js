@@ -2202,6 +2202,8 @@ export default {
     validateRoleRequired: 'Yêu cầu vai trò',
     validateRoleNameRequired: 'Yêu cầu tên vai trò',
     validateRolloverRequired: 'Yêu cầu lật',
+    validateGameRolloverRequired: "Loại trò chơi và doanh thu phải chọn",
+    validateGameRolloverSelectRequired: "Loại trò chơi và doanh thu phải chọn",
     validateRoundRequired: 'Yêu cầu vòng',
     validateRulesRequired: 'Yêu cầu luật lệ',
     validateSchemaNameRequired: 'Yêu cầu tên lược đồ',

@@ -2443,6 +2443,8 @@ export default {
     validateRoleRequired: 'Role is required',
     validateRoleNameRequired: 'Role Name is required',
     validateRolloverRequired: 'Rollover is required',
+    validateGameRolloverRequired: "Game Rollover is required",
+    validateGameRolloverSelectRequired: "Please select Game Rollover type",
     validateRoundRequired: 'Round is required',
     validateRulesRequired: 'Rules is required',
     validateSchemaNameRequired: 'Schema Name is required',
@@ -3194,5 +3196,8 @@ export default {
     27000: 'Key quantity is not enough',
     31000: 'Some matches are not ended on the selected date, please wait until all matches are ended',
     31001: 'No matches on the selected date',
+    45300: 'Member already has dummy record on the selected date',
+    45301: 'Member dummy record on the selected date does not exists',
+    45302: 'Member does not belong to any affiliate'
   },
 }

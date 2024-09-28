@@ -78,9 +78,9 @@
               <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold" style="font-size: 80%">{{ $t("vip.levelUpgrade") }}</span>
+              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
               <br />
-              {{ $t("vip.reward") }}
+              <!-- {{ $t("vip.reward") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
@@ -102,7 +102,7 @@
             <div class="title">
               <span class="bold">{{ $t("vip.monthly") }}</span>
               <br />
-              {{ $t("vip.reward") }}
+              <!-- {{ $t("vip.reward") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
@@ -124,7 +124,7 @@
             <div class="title">
               <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
               <br />
-              {{ $t("vip.limit") }}
+              <!-- {{ $t("vip.limit") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
@@ -785,10 +785,11 @@ const swipeRight = () => {
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      text-align: center;
 
       .bold {
         font-weight: 800;
-        white-space: nowrap;
+        // white-space: nowrap;
       }
 
       .icon {
@@ -804,7 +805,7 @@ const swipeRight = () => {
         color: #5c46e7;
         font-size: 10px;
         height: 35px;
-        line-height: 18px;
+        line-height: 12px;
       }
 
       .reward-amt-wrapper {

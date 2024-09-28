@@ -1,8 +1,8 @@
 <template>
   <div class="transaction-landing">
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
-      <q-route-tab to="/deposit" name="deposit" label="Deposit"></q-route-tab>
-      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>
+      <q-route-tab to="/deposit" name="deposit" :label="$t('settings.deposit')"></q-route-tab>
+      <q-route-tab to="/withdraw" name="withdraw" :label="$t('settings.withdraw')"></q-route-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
@@ -20,7 +20,6 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import DepositView from "../account/DepositView.vue";
-import WithdrawView from "../account/WithdrawView.vue";
 import WithdrawMethodView from "../account/WithdrawMethodView.vue";
 
 const route = useRoute();
@@ -29,13 +28,11 @@ const withdrawViewRef = ref(null);
 
 watch(
   () => route.path,
-  () => {
-    if (route.path === "/deposit") activeKey.value = "deposit";
-    else if (route.path === "/withdraw") {
-      activeKey.value = "withdraw";
-      if (withdrawViewRef.value && typeof withdrawViewRef.value.onActivated === "function") {
-        withdrawViewRef.value.onActivated();
-      }
+  (newPath) => {
+    activeKey.value = newPath.includes("deposit") ? "deposit" : "withdraw";
+
+    if (newPath.includes("withdraw") && withdrawViewRef.value?.onActivated) {
+      withdrawViewRef.value.onActivated();
     }
   }
 );

@@ -4,18 +4,7 @@
       <div class="buttons">
         <a :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
         <a href="https://affiliate-web.gwd4jptunz.com/xf/login">登录</a>
-        <a
-          @click.stop.prevent="
-            openWindow(
-              `https://direct.lc.chat/14154051/`,
-              'Chat Server',
-              350,
-              650
-            )
-          "
-        >
-          联系我们
-        </a>
+        <a @click.stop.prevent="openWindow(`https://direct.lc.chat/14154051/`, 'Chat Server', 350, 650)">联系我们</a>
       </div>
     </div>
     <div class="affiliate-program">
