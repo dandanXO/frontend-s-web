@@ -13,7 +13,7 @@
       @update:model-value="selectBank()"
     >
       <template v-slot:prepend>
-        <span style="font-weight: bold">银行</span>
+        <span style="font-weight: bold; font-size: 15px">银行</span>
       </template>
       <template v-slot:selected>
         <span>{{ selectedBankId ? selectedBankId.name : "请选择银行" }}</span>
