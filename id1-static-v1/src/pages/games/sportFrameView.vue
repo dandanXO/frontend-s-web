@@ -1,10 +1,6 @@
 <template>
   <q-page>
-    <iframe
-        @load="loadGame()"
-        :src="src"
-        frameborder="0"
-    ></iframe>
+    <iframe @load="loadGame()" :src="src" frameborder="0"></iframe>
   </q-page>
 </template>
 
@@ -31,24 +27,24 @@ onMounted(() => {
   if (store.hasToken()) {
     const isMobile = Platform.is.mobile;
     if (isMobile) {
-      var way = null
+      var way = null;
       if (Platform.is.android) {
-        way = "ANDROID"
+        way = "ANDROID";
       } else if (Platform.is.ios) {
-        way="IOS"
+        way = "IOS";
       }
     }
     api
-        .get(`/session/launch?_time=${new Date().getTime()}`, {
-          params: { platform: "SABA", isMobile: isMobile, way: way }
-        })
-        .then((response) => {
-          if (response.code === 0) {
-            src.value = response.data;
-          } else {
-          }
-          $q.loading.hide();
-        });
+      .get(`/session/launch?_time=${new Date().getTime()}`, {
+        params: { platform: "SABA", isMobile: isMobile, way: way }
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          src.value = response.data;
+        } else {
+        }
+        $q.loading.hide();
+      });
   }
 });
 </script>

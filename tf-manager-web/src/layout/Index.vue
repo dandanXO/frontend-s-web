@@ -89,10 +89,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .app-wrapper {
-  @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;
+
+  @include clearfix;
 }
 
 .drawer-bg {

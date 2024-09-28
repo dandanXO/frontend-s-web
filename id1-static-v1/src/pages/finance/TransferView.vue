@@ -35,12 +35,7 @@
           />
         </div>
         <div class="transferamounts q-my-md">
-          <div
-            class="val"
-            v-for="(amt, i) in amounts"
-            :key="i"
-            @click="transferInfo.amount = amt"
-          >
+          <div class="val" v-for="(amt, i) in amounts" :key="i" @click="transferInfo.amount = amt">
             {{ amt }}
           </div>
         </div>
@@ -62,11 +57,7 @@
           </template>
           <template v-slot:append>
             <span style="font-size: 26px" class="text-bright">
-              <q-btn
-                label="最大金额"
-                @click="updateTransferAmt"
-                color="brightbtn"
-              />
+              <q-btn label="最大金额" @click="updateTransferAmt" color="brightbtn" />
             </span>
           </template>
         </q-input>

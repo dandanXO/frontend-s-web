@@ -1,13 +1,13 @@
 import { createI18n } from "vue-i18n";
-import ur from "./ur";
 import en from "./en";
+import id from "./id";
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem("languageLocale") || "en",
+  locale: localStorage.getItem("languageLocale") || "id",
   allowComposition: true,
   messages: {
-    ur,
+    id,
     en
   },
   globalInjection: true

@@ -18,7 +18,7 @@
             </div>
             <div class="reward-info-content">
               昨日赛事有效投注：
-              <span class="amount">{{ ytdCompetitionValidBet }}元</span>
+              <span class="amount">{{ ytdCompetitionValidBet.totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -27,7 +27,7 @@
             </div>
             <div class="reward-info-content">
               可领彩金：
-              <span class="amount">{{ claimableBonus }}元</span>
+              <span class="amount">{{ ytdCompetitionValidBet.bonus }}元</span>
             </div>
           </div>
         </div>
@@ -103,7 +103,8 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，活动仅计算电竞场馆中 S14 全球总决赛赛事，会员在当日 S14 全球总决赛中累计有效投注≥1,500 元即可获得对应彩金，有效投注次日清零；
+            活动期间，活动仅计算电竞场馆中 S14 全球总决赛赛事，会员在当日 S14 全球总决赛中累计有效投注≥1,500
+            元即可获得对应彩金，有效投注次日清零；
             <span style="color: #ff0000; display: contents">注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
           </div>
           <div class="item">
@@ -176,7 +177,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBonus()
+  claimCompetitionBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
@@ -193,7 +194,7 @@ const handleClaimBonus = () => {
 };
 
 const init = () => {
-  Promise.all([getCompetitionToday(), getCompetitionYesterday()]).then(([resTdy, resYtd]) => {
+  Promise.all([getCompetitionToday(), getCompetitionYesterday(promoCode.value)]).then(([resTdy, resYtd]) => {
     if (resTdy.code === 0) {
       claimableBonus.value = resTdy.data || 0;
     }

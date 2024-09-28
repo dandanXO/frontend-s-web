@@ -89,7 +89,7 @@ const onResponse = (response) => {
   if (res.code !== ResponseCode.SUCCESS) {
     const store = useStore()
     // const siteId = store.state.user.siteId
-    if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2 ||res.code === ResponseCode.ERROR_FORBIDDEN3){
+    if(res.code === ResponseCode.ERROR_FORBIDDEN2 || res.code === ResponseCode.ERROR_FORBIDDEN3){
       // debugger;
       if(res.data){
         sessionStorage.setItem('myIPAddress', res.data)

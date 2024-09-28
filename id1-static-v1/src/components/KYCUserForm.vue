@@ -1,15 +1,15 @@
 <template>
   <div class="popout-dialog-container">
-    <div class="txt-title">Please Complete KYC</div>
+    <div class="txt-title">{{ $t("form.pleaseCompleteKYC") }}</div>
     <div class="pc-form">
       <div class="pc-form-item">
-        <div class="pc-form-label">Full Name</div>
+        <div class="pc-form-label">{{ $t("form.fullName") }}</div>
         <div class="pc-form-input">
           <q-input
             filled
             dense
             clearable
-            placeholder="Enter Your Full Name"
+            :placeholder="$t('form.fullName_placeholder')"
             v-model="formDetail.realName"
             :rules="[(_) => isValidName()]"
           />
@@ -26,16 +26,17 @@
       :disable="!(isValidName() === true)"
       @click="submitKYCNewUser"
     >
-      Submit
+      {{ $t("btn.submit") }}
     </q-btn>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, computed } from "vue";
 import { api } from "boot/axios";
-import { useQuasar, copyToClipboard } from "quasar";
+import { t } from "boot/lang";
+import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const emits = defineEmits(["test"]);
@@ -52,9 +53,9 @@ const isValidName = () => {
   const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
 
   const result = !realName
-    ? "Please Enter Your Full Name"
+    ? t("form.fullName_rules_01")
     : !namePattern.test(realName)
-    ? "Please Enter A Valid Full Name"
+    ? t("form.fullName_rules_02")
     : true;
   return result;
 };

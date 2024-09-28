@@ -2396,6 +2396,8 @@ export default {
     validateRoleRequired: '角色必填',
     validateRoleNameRequired: '角色名称必填',
     validateRolloverRequired: '倍数必填',
+    validateGameRolloverRequired: "游戏类型流水必选",
+    validateGameRolloverSelectRequired: "请选择游戏类型",
     validateRoundRequired: '局数必填',
     validateRulesRequired: '彩金配置必填',
     validateSchemaNameRequired: '模式名必填',
@@ -3141,5 +3143,8 @@ export default {
     31001: '所选日期无赛事',
     40002: '唤醒记录不存在',
     40003: '会员已被唤醒',
+    45300: '玩家于此记录时间的虚拟数据已存在',
+    45301: '玩家于此记录时间的虚拟数据不存在',
+    45302: '玩家不属于任何代理'
   },
 }

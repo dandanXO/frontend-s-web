@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promo" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" :label="$t('header.promotion')" />
+      <q-tab name="vip" :label="$t('header.vip')" />
     </q-tabs>
   </div>
 
@@ -22,9 +22,9 @@
     v-touch-swipe.right="swipeRight"
   >
     <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
-      </q-tabs>
+      <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify"> -->
+      <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
+      <!-- </q-tabs> -->
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
