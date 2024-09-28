@@ -1,10 +1,11 @@
-<template>
+romo<template>
   <div class="promo-container">
     <div
       class="promo"
       :class="{
         unfixed: selectedPromo.redirectUrl === 'lh1-app-hongbao',
-        midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel'
+        midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel',
+        lh1Vip:selectedPromo.redirectUrl === 'lh1-vip'
       }"
       :style="
         isPromoDetail
@@ -672,6 +673,10 @@ export default defineComponent({
 
     &.unfixed {
       background-attachment: scroll;
+    }
+
+    &.lh1Vip{
+      background-color: #fff;
     }
   }
 
