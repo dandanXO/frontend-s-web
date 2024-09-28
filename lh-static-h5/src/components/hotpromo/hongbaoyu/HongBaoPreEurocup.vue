@@ -298,7 +298,7 @@ onMounted(() => {
       img {
         display: block;
         width: 100%;
-        max-width: 300px;
+        max-width: 240px;
       }
     }
   }
