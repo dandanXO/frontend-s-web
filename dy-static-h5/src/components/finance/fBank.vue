@@ -1,17 +1,24 @@
 <template>
   <div>
     <q-select
+      class="q-mt-md bank-selection"
       filled
-      class="q-mt-md"
-      label="银行"
+      dense
+      ref="refSelectBank"
       v-model="selectedBankId"
       :options="bankList"
       option-value="id"
       option-label="name"
-      ref="refSelectBank"
       :rules="verifyBank"
       @update:model-value="selectBank()"
-    />
+    >
+      <template v-slot:prepend>
+        <span style="font-weight: bold">银行</span>
+      </template>
+      <template v-slot:selected>
+        <span>{{ selectedBankId ? selectedBankId.name : "请选择银行" }}</span>
+      </template>
+    </q-select>
   </div>
 </template>
 
@@ -33,8 +40,8 @@ const props = defineProps({
 const emits = defineEmits(["selected", "successful"]);
 const verifyBank = ref([(val) => (props.bankList && !!val) || "请输入银行"]);
 
-const selectedBankId = ref();
 const refSelectBank = ref();
+const selectedBankId = ref();
 
 function selectBank() {
   // console.log(selectedBankId)
@@ -49,7 +56,9 @@ async function validateBank(value) {
     return false;
   }
 }
+
 const qs = require("qs");
+
 async function submitDeposit(deposit) {
   const obj = {
     bankCardId: deposit.bankCardId,
@@ -80,4 +89,21 @@ async function submitDeposit(deposit) {
 defineExpose({ submitDeposit, validateBank });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.bank-selection {
+  padding-bottom: 10px;
+
+  :deep(.q-field__control) {
+    min-height: 46px;
+    height: 46px;
+  }
+  :deep(.q-field__native) {
+    min-height: 46px;
+    height: 46px;
+  }
+  :deep(.q-field__marginal) {
+    min-height: 46px;
+    height: 46px;
+  }
+}
+</style>
