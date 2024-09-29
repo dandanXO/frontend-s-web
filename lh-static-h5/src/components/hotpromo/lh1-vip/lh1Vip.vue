@@ -29,7 +29,7 @@
         <tr>
           <th style="width: 15%">VIP 等级</th>
           <th style="width: 15%">生日礼金</th>
-          <th style="width: 15%">节日彩金</th>
+<!--          <th style="width: 15%">节日彩金</th>-->
           <th>每日返水红包</th>
           <th>会员日每月 15 号</th>
           <th>会员加码充值送 10% 加码券</th>
@@ -39,7 +39,7 @@
         <tr v-for="level in vipLevel2s" :key="level.vip">
           <td>{{ level.vip }}</td>
           <td>{{ formatNumber(level.birthdayGift) }}</td>
-          <td>{{ formatNumber(level.holidayBonus) }}</td>
+<!--          <td>{{ formatNumber(level.holidayBonus) }}</td>-->
           <td>{{ formatNumber(level.dailyTurnoverGift) }}</td>
           <td>{{ formatNumber(level.weeklyDepositBonus) }}</td>
           <td>{{ formatNumber(level.monthlyUpgradeBonus) }}</td>
@@ -169,15 +169,15 @@
 
       </p>
 
-      <p>
-        <strong>八.节日礼金</strong>
-        <ol class="terms non-style" >
-          <li class="numbered">
-            每年特殊重大节日，等级≥VIP8的会员可在节日当天通过在线客服申请礼金，逾期不补；礼金1倍流水即可提款，具体节日礼金派发时间，请以客服站内信通知为准；
-          </li>
-        </ol>
+<!--      <p>-->
+<!--        <strong>八.节日礼金</strong>-->
+<!--        <ol class="terms non-style" >-->
+<!--          <li class="numbered">-->
+<!--            每年特殊重大节日，等级≥VIP8的会员可在节日当天通过在线客服申请礼金，逾期不补；礼金1倍流水即可提款，具体节日礼金派发时间，请以客服站内信通知为准；-->
+<!--          </li>-->
+<!--        </ol>-->
 
-      </p>
+<!--      </p>-->
 
       <p>
         <strong>九.一般规则</strong>
