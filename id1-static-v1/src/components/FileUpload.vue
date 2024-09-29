@@ -11,10 +11,11 @@
 </template>
 
 <script>
-import { ref, defineComponent, watch } from "vue";
-import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
-import { getRndInteger } from "boot/utils";
+import { defineComponent, ref, watch } from "vue";
+
+import { getRndInteger } from "@/boot/utils";
+import { userStore } from "@/stores";
 
 export default defineComponent({
   emits: ["photoResponse"],

@@ -32,12 +32,13 @@
 </template>
 
 <script setup>
-import { api } from "boot/axios";
-import { t } from "boot/lang";
 import { useQuasar } from "quasar";
-import { userStore } from "src/stores";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import { userStore } from "@/stores";
 
 const emits = defineEmits(["test"]);
 
@@ -96,7 +97,7 @@ const updateNewUserState = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
         });
         emits("closeUserKYCDialog");

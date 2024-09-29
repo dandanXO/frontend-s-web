@@ -1,6 +1,6 @@
 import axios from "axios";
-import LocalStorage from "boot/local-storage";
-import { getRndInteger } from "boot/utils";
+import LocalStorage from "@/boot/local-storage";
+import { getRndInteger } from "@/boot/utils";
 import { createPinia } from "pinia";
 import { Dialog, Loading, Notify, SessionStorage } from "quasar";
 import { boot, store } from "quasar/wrappers";
@@ -72,7 +72,7 @@ export default boot(({ app, router }) => {
       type: "warning",
       timeout: 1000,
       position: "top",
-      message: "Refreshing..."
+      message: t("notify.refreshing")
     });
     // debugger;
     const originalRequest = errorresp.config;
@@ -147,7 +147,7 @@ export default boot(({ app, router }) => {
           return Dialog.create({
             class: "login-card",
             title: "Please Login",
-            message: "Please log in to operate",
+            message: t("notify.pleaseLoginToOperate"),
             cancel: { color: "negative", label: "Cancel" },
             ok: { color: "brightbtn", label: "Login" },
             padding: "20px"

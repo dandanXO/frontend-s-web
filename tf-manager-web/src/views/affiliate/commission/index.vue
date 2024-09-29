@@ -343,7 +343,7 @@ function changePage(page) {
 }
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
 }
 
 function showDialog(type) {

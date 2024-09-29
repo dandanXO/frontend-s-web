@@ -451,7 +451,7 @@ onActivated(() => {
         height: auto;
         width: 100%;
         // background-color: #f4f9fe;
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: top center;
         background-repeat: no-repeat;
         aspect-ratio: 819/295;

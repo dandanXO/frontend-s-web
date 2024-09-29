@@ -20,7 +20,7 @@
           label-color="white"
         >
           <template v-slot:prepend>
-            <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <img class="white-svg" src="@/assets/images/auth/phone.svg" />
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
         </q-input>
@@ -49,7 +49,7 @@
           </template>
 
           <template v-slot:prepend>
-            <img class="white-svg" src="../assets/images/auth/pass.svg" />
+            <img class="white-svg" src="@/assets/images/auth/pass.svg" />
           </template>
         </q-input>
       </div>
@@ -78,21 +78,24 @@
     </q-form>
 
     <div class="register-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
+      <img src="@/assets/55-ace-logo.png" />
     </div>
   </div>
 </template>
 
 <script>
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { api } from "boot/axios";
-import { isAndroid } from "boot/utils";
-import qs from "qs";
 import { Platform, useQuasar } from "quasar";
-import { userStore } from "stores/index";
-import { useUI } from "stores/ui";
 import { defineComponent, onActivated, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import { isAndroid } from "@/boot/utils";
+import { userStore } from "@/stores/index";
+import { useUI } from "@/stores/ui";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import qs from "qs";
+
 // import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
@@ -238,7 +241,7 @@ export default defineComponent({
       // verificationRef.value.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("notify.registeringInProgress")
       });
 
       if (
@@ -304,7 +307,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: t("notify.registeredSuccessfully"),
                   icon: "check_circle_outline"
                 });
 
@@ -492,7 +495,7 @@ function charType(num) {
   flex-direction: column;
   min-height: 100vh;
   justify-content: flex-start;
-  background: url("../assets/images/index/auth-bg.png");
+  background: url("@/assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

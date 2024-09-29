@@ -266,3 +266,11 @@ export function claimNationalDayBonus() {
 export function getNationalDayinit() {
   return eventapi.get("/session/nationalDay/init");
 }
+
+export function getCompetitionBetYesterday(promoCode) {
+  return eventapi.get("/session/competition-bet/yesterday", {
+    params: {
+      promoCode
+    }
+  });
+}

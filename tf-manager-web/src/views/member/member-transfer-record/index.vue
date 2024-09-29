@@ -379,12 +379,12 @@ async function loadSites() {
 }
 
 function resetQuery() {
-  request.memberName = null
-  request.status = null
-  request.platformCode = null
-  request.type = null
-  request.times = [defaultStartDate, defaultEndDate]
-  request.siteId = siteList.list[0].id
+  request.memberName = null;
+  request.status = null;
+  request.platformCode = null;
+  request.type = null;
+  request.times = [defaultStartDate, defaultEndDate];
+  request.siteId = siteList.list[0].id;
   loadPlatformNames()
 }
 

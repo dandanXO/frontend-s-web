@@ -488,7 +488,7 @@ const showInput = () => {
 }
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : sites.list[0].id
   request.platformId = null
 }
 
