@@ -919,6 +919,10 @@ export default {
     pending: "Pending",
     login_to_continue: "Please login to continue"
   },
+  sitePopout: {
+    sitePopout: "Site Popout",
+    checkDetails: "Check Details",
+  },
   response: {
     101: "Platform not found",
     102: "Platform is closed",

@@ -8,3 +8,7 @@ export const getMemberVip = (members) => {
 export const getMemberVipExport = (members) => {
   return https().request("/member-vip", Method.GET, members, ContentType.form);
 };
+
+export const getVipUpgradeRecord = (query) => {
+  return https().request("/member-vip-upgrade", Method.GET, query, ContentType.form);
+};

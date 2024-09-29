@@ -2824,6 +2824,7 @@ export default {
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
+    'Member Vip Upgrade Record': 'Member Vip Upgrade Record',
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
     'Sites Config': 'Site Config',
