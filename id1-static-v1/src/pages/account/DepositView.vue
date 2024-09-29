@@ -238,6 +238,13 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -251,6 +258,7 @@ import { openURL, Platform, useQuasar } from "quasar";
 import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { t } from "@/boot/lang";
+import KYCUserForm from "components/KYCUserForm.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 

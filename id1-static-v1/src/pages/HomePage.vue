@@ -467,12 +467,12 @@
       <template
         v-if="(category.title === 'Fishing' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
+        <div class="games-selection-wrapper" id="fishing">
           <div class="title-game">
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
           </div>
 
-          <div class="platform-game-wrapper">
+          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -579,89 +579,95 @@
               </template>
             </swiper>
           </div>
-        </div>
 
-        <div class="platform-game-container grid-view" v-else>
-          <template v-for="(item, index) in fishGameTADAList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+          <div class="platform-game-container grid-view" v-else>
+            <template v-for="(item, index) in fishGameTADAList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
 
-          <template v-for="(item, index) in fishGameJILIList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+            <template v-for="(item, index) in fishGameJILIList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
 
-          <template v-for="(item, index) in fishGameJDBList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+            <template v-for="(item, index) in fishGameJDBList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </template>
 
@@ -945,12 +951,6 @@
     </q-card>
   </q-dialog>
   <WithdrawalModal ref="withdrawalModalRef"></WithdrawalModal>
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
-      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
-    </div>
-  </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
@@ -961,14 +961,13 @@
 </template>
 
 <script setup>
+import { Platform, useQuasar } from "quasar";
 import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { Platform, useQuasar } from "quasar";
 
 import { api } from "@/boot/axios";
 import { cached } from "@/boot/cache";
 import { t } from "@/boot/lang";
-import KYCGuestForm from "@/components/KYCGuestForm.vue";
 import KYCUserForm from "@/components/KYCUserForm.vue";
 import GameModal from "@/components/modal/GameModal";
 import PushNotification from "@/components/modal/PushNotification.vue";
@@ -1025,33 +1024,23 @@ const searchText = ref("");
 const withdrawalModalRef = ref();
 const onWithdrawalClick = () => {
   // withdrawalDialog.value = true;
-  if (!store.realName && !store.guest) {
+  if (!store.realName) {
     userKYCDialog.value = true;
-  } else if (!store.realName && store.guest) {
-    guestKYCDialog.value = true;
   } else {
     withdrawalModalRef.value.open();
   }
 };
 
 const userKYCDialog = ref(false);
-const guestKYCDialog = ref(false);
 const depositDialog = ref(false);
 const openDepositDialog = () => {
-  if (!store.realName && !store.guest) {
+  if (!store.realName) {
     userKYCDialog.value = true;
-  } else if (!store.realName && store.guest) {
-    guestKYCDialog.value = true;
   } else {
     depositDialog.value = true;
   }
 };
 
-const closeGuestKYCDialog = () => {
-  guestKYCDialog.value = false;
-  store.getMemberInfo();
-  loadData();
-};
 const closeUserKYCDialog = () => {
   userKYCDialog.value = false;
   store.getMemberInfo();
@@ -1577,9 +1566,7 @@ const closeSlotModal = () => {
 const closeFullGameDialog = () => {
   fullGameDialog.value = false;
 
-  if (store.guest && !store.realName) {
-    guestKYCDialog.value = true;
-  } else if (!store.guest && !store.realName) {
+  if (!store.realName) {
     userKYCDialog.value = true;
   }
 };

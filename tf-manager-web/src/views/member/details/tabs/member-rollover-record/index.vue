@@ -88,6 +88,7 @@
             $ <span v-formatter="{data: scope.row.rolloverAmount, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="gameTypeRolloverDescription" :label="t('fields.description')" align="center" min-width="150" />
         <el-table-column
           prop="totalBetAmount"
           :label="t('fields.totalBetAmount')"

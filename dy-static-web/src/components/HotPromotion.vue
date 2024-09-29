@@ -72,6 +72,7 @@
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'dy2-blast-premier'" :promo-code="list.promoCode" />
+    <Tpworld2024 v-if="list.redirectUrl === 'dy2-tpworld-2024'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'dy2-national-day-2024'" :promo-code="list.promoCode" />
     <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
@@ -159,6 +160,7 @@ import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 import EslProCsgo2 from "./hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
+import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
 import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
 
@@ -216,6 +218,7 @@ export default defineComponent({
     BbdachaCsgo2,
     EslProCsgo2,
     BlastPremier,
+    Tpworld2024,
     NationalDay2024,
     LoLS14,
     BlackMythWuKongPromo,

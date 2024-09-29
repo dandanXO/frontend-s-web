@@ -169,7 +169,7 @@
     :title="uiControl.dialogTitle"
     v-model="uiControl.dialogVisible"
     append-to-body
-    width="780px"
+    width="1200px"
   >
     <el-form
       v-if="uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'"
@@ -188,7 +188,7 @@
           size="small"
           type="date"
           :placeholder="t('fields.recordTime')"
-          style="margin-left: 5px; width: 150px"
+          style="width: 350px"
           :editable="false"
           :clearable="false"
         />
@@ -230,17 +230,47 @@
       <el-form-item :label="t('fields.adjustment')" prop="adjustment">
         <el-input v-model="form.adjustment" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event, 'adjustment')" />
       </el-form-item>
-      <el-form-item :label="t('fields.betAmount')" prop="bet">
-        <el-input v-model="form.bet" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event, 'bet')" />
-      </el-form-item>
-      <el-form-item :label="t('fields.validBet')" prop="validBet">
-        <el-input v-model="form.validBet" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event, 'validBet')" />
-      </el-form-item>
-      <el-form-item :label="t('fields.payout')" prop="payout">
-        <el-input v-model="form.payout" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event, 'payout')" />
-      </el-form-item>
       <el-form-item :label="t('fields.rebateAmount')" prop="rebateAmount">
         <el-input v-model="form.rebateAmount" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event, 'rebateAmount')" />
+      </el-form-item>
+      <el-form-item :label="t('fields.platformDetails')" prop="platforms">
+        <div v-for="(item, index) in platformsParam" :key="index">
+          <el-row>
+            <span class="param-label">{{ t('fields.platform') }}:</span>
+            <el-select
+              v-model="item.platform"
+              size="small"
+              :placeholder="t('fields.platform')"
+              class="param-input"
+              style="margin-left: 5px; width: 200px;"
+            >
+              <el-option
+                v-for="item in platform.list"
+                :key="item.id"
+                :label="item.name"
+                :value="item.code"
+              />
+            </el-select>
+          </el-row>
+
+          <span class="param-label">{{ t('fields.betAmount') }}:</span>
+          <el-input class="param-input" v-model="item.bet" />
+
+          <span class="param-label">{{ t('fields.validBet') }}:</span>
+          <el-input class="param-input" v-model="item.validBet" />
+
+          <span class="param-label">{{ t('fields.payout') }}:</span>
+          <el-input class="param-input" v-model="item.payout" />
+          
+          <el-button v-if="index === platformsParam.length - 1" icon="el-icon-plus" size="mini" type="primary"
+                     @click="addParam()" plain
+          >{{ t('fields.add') }}
+          </el-button>
+          <el-button v-if="platformsParam.length > 0" icon="el-icon-remove" size="mini" type="danger"
+                     @click="delParam(index)" plain
+          >{{ t('fields.delete') }}
+          </el-button>
+        </div>
       </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -258,7 +288,8 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getDummyRecords, createDummyRecord, updateDummyRecord, deleteDummyRecord } from "@/api/affiliate-dummy";
+import { getDummyRecords, getPlatformDummyRecords, createDummyRecord, updateDummyRecord, deleteDummyRecord } from "@/api/affiliate-dummy";
+import { getPlatformsBySite } from '@/api/platform';
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { hasRole, hasPermission } from '@/utils/util'
@@ -269,6 +300,7 @@ const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const formRef = ref(null);
 const site = ref(null);
+const platformsParam = ref([]);
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
@@ -297,6 +329,10 @@ const sites = reactive({
   list: []
 });
 
+const platform = reactive({
+  list: []
+});
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -318,8 +354,24 @@ const form = reactive({
   bet: 0,
   validBet: 0,
   payout: 0,
-  rebateAmount: 0
+  rebateAmount: 0,
+  platforms: null
 });
+
+const validatePlatforms = (rule, value, callback) => {
+  const param = JSON.parse(constructParam())
+  if (param.platforms[0].platform && (!param.platforms[0].bet || !param.platforms[0].validBet || !param.platforms[0].payout)) {
+    callback(new Error(t('message.validatePlatformDetailsRequired')))
+  }
+
+  const platforms = param.platforms.map(p => p.platform);
+  platforms.forEach(platform => {
+    if (platforms.indexOf(platform) !== platforms.lastIndexOf(platform)) {
+      callback(new Error(t('message.validatePlatformSelected')))
+    }
+  })
+  callback()
+}
 
 const formRules = reactive({
   recordTime: [required(t('message.validateRecordTimeRequired'))],
@@ -329,10 +381,8 @@ const formRules = reactive({
   withdrawAmount: [required(t('message.validateWithdrawAmountRequired'))],
   bonus: [required(t('message.validateBonusRequired'))],
   adjustment: [required(t('message.validateAdjustmentRequired'))],
-  bet: [required(t('message.validateBetAmountRequired'))],
-  validBet: [required(t('message.validateValidBetRequired'))],
-  payout: [required(t('message.validatePayoutRequired'))],
   rebateAmount: [required(t('message.validateRebateAmountRequired'))],
+  platforms: [{ validator: validatePlatforms, trigger: 'blur' }]
 });
 
 async function loadDummyRecord() {
@@ -357,9 +407,30 @@ async function loadDummyRecord() {
   page.loading = false;
 }
 
+async function loadPlatformDummyRecord(query) {
+  platformsParam.value = []
+  const { data: ret } = await getPlatformDummyRecords(query);
+  nextTick(() => {
+    if (ret) {
+      ret.forEach(obj => {
+        const json = {}
+        Object.entries(obj).forEach(([key, value]) => {
+          json[key] = value;
+        })
+        platformsParam.value.push(json)
+      })
+    }
+  })
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
   sites.list = site;
+}
+
+async function loadPlatform() {
+  const { data: ret } = await getPlatformsBySite(site.value.id);
+  platform.list = ret;
 }
 
 function resetQuery() {
@@ -389,6 +460,9 @@ function showDialog(type) {
   if (type === 'CREATE') {
     form.siteId = request.siteId;
     uiControl.dialogTitle = t('fields.add');
+    if (platformsParam.value.length === 0) {
+      addParam()
+    }
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.edit');
   }
@@ -396,7 +470,7 @@ function showDialog(type) {
   uiControl.dialogVisible = true;
 }
 
-function showEdit(record) {
+async function showEdit(record) {
   showDialog('EDIT');
   nextTick(() => {
     for (const key in record) {
@@ -405,6 +479,8 @@ function showEdit(record) {
       }
     }
   });
+  await loadPlatformDummyRecord();
+  addParam();
 }
 
 function submit() {
@@ -418,6 +494,13 @@ function submit() {
 function create() {
   formRef.value.validate(async (valid) => {
     if (valid) {
+      const platformJson = [];
+      Object.values(platformsParam.value).forEach((item) => {
+        if (item && item.platform) {
+          platformJson.push(item);
+        }
+      });
+      form.platforms = JSON.stringify(platformJson);
       await createDummyRecord(form);
       uiControl.dialogVisible = false;
       await loadDummyRecord();
@@ -429,6 +512,13 @@ function create() {
 function edit() {
   formRef.value.validate(async (valid) => {
     if (valid) {
+      const platformJson = [];
+      Object.values(platformsParam.value).forEach((item) => {
+        if (item && item.platform) {
+          platformJson.push(item);
+        }
+      });
+      form.platforms = JSON.stringify(platformJson);
       await updateDummyRecord(form);
       uiControl.dialogVisible = false;
       await loadDummyRecord();
@@ -449,6 +539,35 @@ async function removeRecord(record) {
   })
 }
 
+function addParam() {
+  platformsParam.value.push({
+    platform: null,
+    bet: null,
+    validBet: null,
+    payout: null
+  })
+}
+
+function delParam(index) {
+  platformsParam.value.splice(index, 1);
+  if (platformsParam.value.length === 0) {
+    addParam()
+  }
+}
+
+function constructParam() {
+  const json = {};
+  const platformJson = [];
+  Object.values(platformsParam.value).forEach((item) => {
+    if (item) {
+      platformJson.push(item);
+    }
+  });
+
+  json.platforms = platformJson;
+  return JSON.stringify(json);
+}
+
 onMounted(async () => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -457,6 +576,7 @@ onMounted(async () => {
     site.value = sites.list[0];
   }
   request.siteId = site.value.id;
+  await loadPlatform();
 });
 
 </script>
@@ -482,5 +602,14 @@ onMounted(async () => {
 
 .el-form-item--level-color:deep(.el-form-item__content) {
   display: flex !important;
+}
+
+.param-input {
+  width: 170px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 15px;
+  font-size: var(--el-form-label-font-size);
+  color: var(--el-text-color-regular);
 }
 </style>

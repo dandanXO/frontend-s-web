@@ -238,15 +238,52 @@
         <el-button
           type="primary"
           :disabled="importedPage.records.length === 0"
+           @click="showRemark"
+          :loading="importedPage.buttonLoading"
+        >
+          {{ t('fields.confirm') }}
+        </el-button>
+        <el-button @click="clearImport">{{ t('fields.cancel') }}</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog
+      :title="t('fields.massImport')"
+      v-model="uiControl.importDialogRemarkVisible"
+      append-to-body
+      width="800px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false">
+        <el-form
+        ref="remarkForm"
+        :model="form"
+        :rules="formRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input
+            type="textarea"
+            :rows="6"
+            v-model="form.remark"
+            style="width: 600px"
+            maxlength="500"
+            show-word-limit
+          />
+        </el-form-item>
+        </el-form>
+        <div class="dialog-footer">
+        <el-button
+          type="primary"
+          :disabled="importedPage.records.length === 0"
           @click="confirmImport"
           :loading="importedPage.buttonLoading"
         >
           {{ t('fields.confirmAndImport') }}
         </el-button>
-        <el-button @click="clearImport">{{ t('fields.cancel') }}</el-button>
-      </div>
+        <el-button @click="clearRemark">{{ t('fields.cancel') }}</el-button>
+        </div>
     </el-dialog>
-
 </template>
 
 <script setup>
@@ -261,6 +298,8 @@ import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import * as XLSX from 'xlsx'
 import { ElMessage } from 'element-plus'
+import { required } from '../../../../utils/validate'
+// import { required } from '../../../../utils/validate'
 
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
@@ -272,6 +311,7 @@ const defaultEndDate = convertDateToEnd(new Date())
 const site = ref(null)
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const remarkForm = ref(null)
 let timeZone = null
 
 const sites = reactive({
@@ -297,6 +337,7 @@ const request = reactive({
 
 const uiControl = reactive({
   importDialogVisible: false,
+  importDialogRemarkVisible: false,
 })
 
 const importedPage = reactive({
@@ -315,6 +356,14 @@ const EXPORT_MEMBER_FROZEN_LIST_HEADER = [
 const IMPORT_MEMBER_LIST_JSON = [
   'loginName',
 ]
+
+const form = reactive({
+  remark: null,
+})
+
+const formRules = reactive({
+  remark: [required(t('message.validateRemarkRequired'))],
+})
 
 function disabledDate(time) {
   return (
@@ -493,29 +542,44 @@ function changeImportedPage(page) {
 
 function clearImport() {
   uiControl.importDialogVisible = false
+  uiControl.importDialogRemarkVisible = false
   importedPage.buttonLoading = false
   importedPage.loading = false
   importedPage.records = []
   importedPage.pages = 0
   importedPage.current = 1
+  form.remark = null
+}
+
+function clearRemark() {
+  uiControl.importDialogRemarkVisible = false
+  form.remark = null
 }
 
 async function confirmImport() {
-  importedPage.buttonLoading = true
-  const records = [...importedPage.records];
-  const siteId = request.siteId;
-  do {
-    if (records.length > 10000) {
-      await batchUpdateFrozenMember(records.slice(0, 10000), siteId);
-      records.splice(0, 10000);
-    } else {
-      await batchUpdateFrozenMember(records, siteId);
-      records.splice(0, records.length);
+  remarkForm.value.validate(async valid => {
+    if (valid) {
+      importedPage.buttonLoading = true
+      const records = [...importedPage.records];
+      const siteId = request.siteId;
+      do {
+        if (records.length > 10000) {
+          await batchUpdateFrozenMember(records.slice(0, 10000), siteId, form.remark);
+          records.splice(0, 10000);
+        } else {
+          await batchUpdateFrozenMember(records, siteId, form.remark);
+          records.splice(0, records.length);
+        }
+      } while (records.length > 0)
+      importedPage.buttonLoading = false
+      ElMessage({ message: t('message.importSuccess'), type: 'success' })
+      clearImport()
     }
-  } while (records.length > 0)
-  importedPage.buttonLoading = false
-  ElMessage({ message: t('message.importSuccess'), type: 'success' })
-  clearImport()
+  })
+}
+
+async function showRemark() {
+  uiControl.importDialogRemarkVisible = true;
 }
 
 onMounted(async () => {

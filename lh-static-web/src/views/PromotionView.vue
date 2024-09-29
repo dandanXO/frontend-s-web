@@ -114,7 +114,8 @@
                 ? '#F5F6F8'
                 : selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? '#1D1D1E'
-                : '',
+                : selectedPromo?.promoCode === 'lh1-vip'
+                ? '#E7F1FD':'',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
@@ -219,7 +220,7 @@ export default defineComponent({
       // { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "FTD", img: "deposit", label: "存款优惠" },
-      { code: "VIP", img: "vip", label: "VIP特权" }
+      { code: "VIP", img: "vip", label: "VIP 特权" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
