@@ -443,7 +443,7 @@
             <th>首次保级彩金</th>
             <th>年度保级彩金</th>
             <th>生日彩金</th>
-            <th>节日礼金</th>
+            <!--            <th>节日礼金</th>-->
             <th>每日返水红包</th>
             <th>会员日每月15号</th>
             <th>会员充值加码10%</th>
@@ -456,7 +456,7 @@
             <td>18元</td>
             <td>208</td>
             <td>-</td>
-            <td>-</td>
+            <!--            <td>-</td>-->
             <td>0.1%</td>
             <td>8</td>
             <td>10</td>
@@ -467,7 +467,7 @@
             <td>18元</td>
             <td>208</td>
             <td>-</td>
-            <td>-</td>
+            <!--            <td>-</td>-->
             <td>0.2%</td>
             <td>18</td>
             <td>28</td>
@@ -478,7 +478,7 @@
             <td>58元</td>
             <td>588</td>
             <td>-</td>
-            <td>-</td>
+            <!--            <td>-</td>-->
             <td>0.3%</td>
             <td>28</td>
             <td>58</td>
@@ -489,7 +489,7 @@
             <td>58元</td>
             <td>588</td>
             <td>38</td>
-            <td>-</td>
+            <!--            <td>-</td>-->
             <td>0.5%</td>
             <td>38</td>
             <td>88</td>
@@ -500,7 +500,7 @@
             <td>58元</td>
             <td>588</td>
             <td>58</td>
-            <td>-</td>
+            <!--            <td>-</td>-->
             <td>0.6%</td>
             <td>58</td>
             <td>128</td>
@@ -511,7 +511,7 @@
             <td>288元</td>
             <td>1,088</td>
             <td>88</td>
-            <td>-</td>
+            <!--            <td>-</td>-->
             <td>0.8%</td>
             <td>68</td>
             <td>188</td>
@@ -522,7 +522,7 @@
             <td>288元</td>
             <td>1,088</td>
             <td>188</td>
-            <td>-</td>
+            <!--            <td>-</td>-->
             <td>1.0%</td>
             <td>128</td>
             <td>258</td>
@@ -533,7 +533,7 @@
             <td>288元</td>
             <td>1,088</td>
             <td>288</td>
-            <td>188</td>
+            <!--            <td>188</td>-->
             <td>1.2%</td>
             <td>208</td>
             <td>388</td>
@@ -544,7 +544,7 @@
             <td>588元</td>
             <td>1,888</td>
             <td>388</td>
-            <td>288</td>
+            <!--            <td>288</td>-->
             <td>1.3%</td>
             <td>388</td>
             <td>508</td>
@@ -555,7 +555,7 @@
             <td>588元</td>
             <td>1,888</td>
             <td>588</td>
-            <td>388</td>
+            <!--            <td>388</td>-->
             <td>1.5%</td>
             <td>588</td>
             <td>888</td>
@@ -566,7 +566,7 @@
             <td>888元</td>
             <td>2,888</td>
             <td>888</td>
-            <td>888</td>
+            <!--            <td>888</td>-->
             <td>1.8%</td>
             <td>888</td>
             <td>1888</td>
@@ -577,7 +577,7 @@
             <td>1,888元</td>
             <td>8,888</td>
             <td>1,888</td>
-            <td>1,888</td>
+            <!--            <td>1,888</td>-->
             <td>2.0%</td>
             <td>1,888</td>
             <td>2,888</td>
@@ -798,12 +798,12 @@
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
 
-      <h2>八.节日礼金</h2>
-      <ol class="terms">
-        <li class="numbered">
-          每年特殊重大节日，等级≥VIP8的会员可在节日当天通过在线客服申请礼金，逾期不补；礼金1倍流水即可提款，具体节日礼金派发时间，请以客服站内信通知为准；
-        </li>
-      </ol>
+      <!--      <h2>八.节日礼金</h2>-->
+      <!--      <ol class="terms">-->
+      <!--        <li class="numbered">-->
+      <!--          每年特殊重大节日，等级≥VIP8的会员可在节日当天通过在线客服申请礼金，逾期不补；礼金1倍流水即可提款，具体节日礼金派发时间，请以客服站内信通知为准；-->
+      <!--        </li>-->
+      <!--      </ol>-->
 
       <div class="section-title" @click="toggleAccordion">一般规则</div>
       <button class="accordion" @click="toggleAccordion">
@@ -1162,6 +1162,7 @@ const runVipAPI = (res) => {
   slideTo();
   changeSlideToIsFirstTime();
 };
+//TODO: 节日礼金去掉了
 const categories = ref([
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
@@ -1169,8 +1170,8 @@ const categories = ref([
   { key: "redPacket", image: "rebate", displayName: "每日返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
-  { key: "birthday", image: "birthday", displayName: "生日礼金" },
-  { key: "holiday", image: "holiday", displayName: "节日礼金" }
+  { key: "birthday", image: "birthday", displayName: "生日礼金" }
+  // { key: "holiday", image: "holiday", displayName: "节日礼金" }
 ]);
 const isLoading = reactive({});
 const handleClick = async (key, item) => {
