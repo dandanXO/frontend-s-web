@@ -752,6 +752,12 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result;
 
+        //FB Tracking.
+        fbq("track", "Purchase", {
+          currency: "PKR",
+          value: obj.localAmount
+        });
+
         // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
         // if (!isFirstDepo) {
         //   console.log("First Depo");
