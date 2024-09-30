@@ -37,6 +37,9 @@ onMounted(() => {
 <style scoped lang="scss">
 .b9-style-container {
   height: calc(100vh - 182px);
+  .row {
+    line-height: 0;
+  }
   iframe {
     border: none;
     box-sizing: border-box;

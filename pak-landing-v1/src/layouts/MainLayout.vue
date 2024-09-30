@@ -30,9 +30,7 @@
         </q-tabs>
 
         <router-view v-slot="{ Component }">
-          <!-- <KeepAlive :max="8"> -->
           <component :is="Component" />
-          <!-- </KeepAlive> -->
         </router-view>
       </q-page>
     </q-page-container>
@@ -42,10 +40,6 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-// defineOptions({
-//   name: "IndexPage",
-// });
 
 const route = useRoute();
 const router = useRouter();
@@ -138,7 +132,4 @@ const onTabClick = () => {
   overflow: auto;
   white-space: nowrap;
 }
-// :deep(.q-tabs__arrow) {
-//   display: none;
-// }
 </style>

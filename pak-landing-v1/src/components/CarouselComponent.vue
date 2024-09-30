@@ -59,6 +59,7 @@ const slide = ref(0);
   flex-direction: column;
   margin: 12px;
 }
+
 .carousel-media {
   width: 270px;
   height: 180px;
