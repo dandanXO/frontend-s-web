@@ -15,6 +15,9 @@ console.log(window.location.hostname);
 const globalLinks = ["xf13140"];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
+const globalAndCNLinks = ["xingfabet6", "xingfabet8.cc"];
+const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
+
 if (isGlobalLH) {
   var rstApi = "https://apn0zz6gox.330z3w3.com";
   var evtApi = "https://prx6g60gox.7tk6kax.com";
@@ -26,6 +29,15 @@ if (isGlobalLH) {
 
   var imageCdnUrl = "https://urle7rqimtl.enkpdmqvhc.com";
   localStorage.setItem("IMAGE_CDN", imageCdnUrl);
+} else if (isGlobalAndCN) {
+  console.log("IS Global + CN");
+  var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
+  var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
+  var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
+  s;
+  var rstApi = getInitApi(rstGlobalArray, "XF_WEB_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "XF_WEB_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "XF_WEB_CRT_URL");
 } else {
   var rstApi = getInitApi(rstArray, "XF_WEB_RST_URL");
   var evtApi = getInitApi(evtArray, "XF_WEB_EVT_URL");
