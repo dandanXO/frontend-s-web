@@ -28,7 +28,7 @@
 
     <q-dialog v-model="isClaimHistoryDialogVisible">
         <div class="nba-water-battle-claim-history-dialog">
-            <table class="nba-water-battle-claim-history-dialog-table">
+            <table class="nba-water-battle-claim-history-dialog-table" v-if="claimHistoryArr?.length">
                 <tr class="nba-water-battle-claim-history-dialog-table-header">
                     <th>赛事</th>
                     <th>全场进10个三分球</th>
@@ -49,6 +49,7 @@
                     <td>{{ claimHistoryItem.bonus }}</td>
                 </tr>
             </table>
+            <h6 class="no-content" v-else>暂无内容</h6>
         </div>
     </q-dialog>
 </template>
@@ -100,6 +101,13 @@ onMounted(() => {
     font-size: 15px;
     background-color: white;
     margin: 20px;
+
+    .no-content {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
 
     .el-dialog__close {
         color: #000 !important;
