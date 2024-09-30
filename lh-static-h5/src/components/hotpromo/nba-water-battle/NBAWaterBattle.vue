@@ -26,28 +26,30 @@
         </el-carousel>
     </div>
 
-    <q-dialog v-model="isClaimHistoryDialogVisible" class="nba-water-battle-claim-history-dialog">
-        <table class="nba-water-battle-claim-history-dialog-table">
-            <tr class="nba-water-battle-claim-history-dialog-table-header">
-                <th>赛事</th>
-                <th>全场进10个三分球</th>
-                <th>任意球员砍下30分</th>
-                <th>任意球员拿到13个篮板</th>
-                <th>任意球员判罚离场</th>
-                <th>状态</th>
-                <th>获得彩金</th>
-            </tr>
+    <q-dialog v-model="isClaimHistoryDialogVisible">
+        <div class="nba-water-battle-claim-history-dialog">
+            <table class="nba-water-battle-claim-history-dialog-table">
+                <tr class="nba-water-battle-claim-history-dialog-table-header">
+                    <th>赛事</th>
+                    <th>全场进10个三分球</th>
+                    <th>任意球员砍下30分</th>
+                    <th>任意球员拿到13个篮板</th>
+                    <th>任意球员判罚离场</th>
+                    <th>状态</th>
+                    <th>获得彩金</th>
+                </tr>
 
-            <tr v-for="claimHistoryItem, in claimHistoryArr" :key="claimHistoryItem.id">
-                <td>{{ claimHistoryItem.title }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.threePointShots) }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.shotPoints) }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.scoringShots) }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.foulOut) }}</td>
-                <td>{{ claimHistoryItem.status }}</td>
-                <td>{{ claimHistoryItem.bonus }}</td>
-            </tr>
-        </table>
+                <tr v-for="claimHistoryItem, in claimHistoryArr" :key="claimHistoryItem.id">
+                    <td>{{ claimHistoryItem.title }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.threePointShots) }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.shotPoints) }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.scoringShots) }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.foulOut) }}</td>
+                    <td>{{ claimHistoryItem.status }}</td>
+                    <td>{{ claimHistoryItem.bonus }}</td>
+                </tr>
+            </table>
+        </div>
     </q-dialog>
 </template>
 
@@ -96,6 +98,8 @@ onMounted(() => {
 .nba-water-battle-claim-history-dialog {
     font-family: 'PingFang';
     font-size: 15px;
+    background-color: white;
+    margin: 20px;
 
     .el-dialog__close {
         color: #000 !important;
