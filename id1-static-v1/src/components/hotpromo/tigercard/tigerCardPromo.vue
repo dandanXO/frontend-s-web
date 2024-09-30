@@ -366,15 +366,16 @@ const columns = [
 <style lang="scss">
 .tigercard-container {
   .q-table {
-    &__empty-text p {
-      color: #ffd97f;
-    }
     max-width: 650px;
     margin: 0 auto;
 
     background: #1d212e;
     border-radius: 10px;
     border: 0;
+
+    &__empty-text p {
+      color: #ffd97f;
+    }
     th {
       text-align: center;
       line-height: 32px;
