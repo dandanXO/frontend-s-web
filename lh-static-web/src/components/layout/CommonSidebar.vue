@@ -406,8 +406,7 @@ export default defineComponent({
 .rocket-wrapper {
   position: fixed;
   z-index: 666;
-  // bottom: 220px;
-  // right: 0px;
+
   transition: all 0.3s;
   display: none;
   width: 100px;
@@ -529,11 +528,10 @@ export default defineComponent({
     cursor: pointer;
 
     &:hover {
+      color: #4e93ff;
       img {
         filter: brightness(1.05);
       }
-
-      color: #4e93ff;
     }
   }
 }

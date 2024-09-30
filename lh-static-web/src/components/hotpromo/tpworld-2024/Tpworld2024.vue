@@ -41,55 +41,53 @@
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
-          <tr>
-            <th>有效投注</th>
-            <th>投注嘉奖</th>
-          </tr>
-          <tr>
-            <td>≥2,000</td>
-            <td>8元</td>
-          </tr>
-          <tr>
-            <td>≥5,000</td>
-            <td>18元</td>
-          </tr>
-          <tr>
-            <td>≥10,000</td>
-            <td>38元</td>
-          </tr>
-          <tr>
-            <td>≥30,000</td>
-            <td>88元</td>
-          </tr>
-          <tr>
-            <td>≥50,000</td>
-            <td>188元</td>
-          </tr>
-          <tr>
-            <td>≥100,000</td>
-            <td>328元</td>
-          </tr>
-          <tr>
-            <td>≥200,000</td>
-            <td>588元</td>
-          </tr>
-          <tr>
-            <td>≥500,000</td>
-            <td>1,088元</td>
-          </tr>
-          <tr>
-            <td>≥1,000,000</td>
-            <td>1,888元</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>有效投注</th>
+              <th>投注嘉奖</th>
+            </tr>
+            <tr>
+              <td>≥2,000</td>
+              <td>8元</td>
+            </tr>
+            <tr>
+              <td>≥5,000</td>
+              <td>18元</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>38元</td>
+            </tr>
+            <tr>
+              <td>≥30,000</td>
+              <td>88元</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>188元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>328元</td>
+            </tr>
+            <tr>
+              <td>≥200,000</td>
+              <td>588元</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>1,088元</td>
+            </tr>
+            <tr>
+              <td>≥1,000,000</td>
+              <td>1,888元</td>
+            </tr>
+          </tbody>
         </table>
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
-              <img
-                src="../../../assets/promo/lh1-blast-premier/game-bottom-left-btn.png"
-                alt=""
-                style="width: 10px"
-              />
+              <img src="../../../assets/promo/lh1-blast-premier/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
             会员A当日投注TP世界锦标赛赛事有效投注6,000元，会员可在次日领取18元彩金
@@ -119,7 +117,8 @@
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还,将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还,将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">5</div>
