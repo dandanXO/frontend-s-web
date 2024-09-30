@@ -142,6 +142,9 @@
                     : 'none'
                 }"
               >
+                <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
+                  <NBAWaterBattle />
+                </div>
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -313,11 +316,13 @@ import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
+import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const store = userStore();

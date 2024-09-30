@@ -376,3 +376,12 @@ export function getCompetitionBetYesterday(promoCode) {
     }
   });
 }
+
+
+export function getNBAUpcomingMatch() {
+  return server.EVENT.get('/session/nba-match-preseason/upcoming')
+}
+
+export function getNBAClaimHistory() {
+  return server.EVENT.get('/session/nba-match-preseason/history')
+}

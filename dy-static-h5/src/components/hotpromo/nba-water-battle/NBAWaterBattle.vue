@@ -4,7 +4,7 @@
             领取记录
         </div>
         <el-carousel>
-            <el-carousel-item v-for="matchInfo in matchInfoArr">
+            <el-carousel-item v-for="matchInfo in matchInfoArr" :key="matchInfo.id">
                 <div class="match-info">
                     <div class="match-info-team">
                         <div class="team-img-wrapper"><img class="team-img"
@@ -26,42 +26,44 @@
         </el-carousel>
     </div>
 
-    <el-dialog v-model="isClaimHistoryDialogVisible" class="nba-water-battle-claim-history-dialog">
-        <table class="nba-water-battle-claim-history-dialog-table"  v-if="claimHistoryArr?.length">
-            <tr class="nba-water-battle-claim-history-dialog-table-header">
-                <th>赛事</th>
-                <th>全场进10个三分球</th>
-                <th>任意球员砍下30分</th>
-                <th>任意球员拿到13个篮板</th>
-                <th>任意球员判罚离场</th>
-                <th>状态</th>
-                <th>获得彩金</th>
-            </tr>
+    <q-dialog v-model="isClaimHistoryDialogVisible">
+        <div class="nba-water-battle-claim-history-dialog">
+            <table class="nba-water-battle-claim-history-dialog-table" v-if="claimHistoryArr?.length">
+                <tr class="nba-water-battle-claim-history-dialog-table-header">
+                    <th>赛事</th>
+                    <th>全场进10个三分球</th>
+                    <th>任意球员砍下30分</th>
+                    <th>任意球员拿到13个篮板</th>
+                    <th>任意球员判罚离场</th>
+                    <th>状态</th>
+                    <th>获得彩金</th>
+                </tr>
 
-            <tr v-for="claimHistoryItem in claimHistoryArr">
-                <td>{{ claimHistoryItem.title }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.threePointShots) }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.shotPoints) }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.scoringShots) }}</td>
-                <td>{{ getStatusLabel(claimHistoryItem.foulOut) }}</td>
-                <td>{{ claimHistoryItem.status }}</td>
-                <td>{{ claimHistoryItem.bonus }}</td>
-            </tr>
-        </table>
-        <h3 class="no-content" v-else>暂无内容</h3>
-    </el-dialog>
+                <tr v-for="claimHistoryItem, in claimHistoryArr" :key="claimHistoryItem.id">
+                    <td>{{ claimHistoryItem.title }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.threePointShots) }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.shotPoints) }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.scoringShots) }}</td>
+                    <td>{{ getStatusLabel(claimHistoryItem.foulOut) }}</td>
+                    <td>{{ claimHistoryItem.status }}</td>
+                    <td>{{ claimHistoryItem.bonus }}</td>
+                </tr>
+            </table>
+            <h6 class="no-content" v-else>暂无内容</h6>
+        </div>
+    </q-dialog>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useLocalStorage } from "@vueuse/core";
 
-import { getNBAUpcomingMatch, getNBAClaimHistory } from '@/api/index/promo';
+import { getNBAUpcomingMatch, getNBAClaimHistory } from '../../../api/index/promo';
 
 const matchInfoArr = ref([]);
 const claimHistoryArr = ref([]);
 const isClaimHistoryDialogVisible = ref(false);
-const imageDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
 const iniNBAUpcomingMatches = () => {
     getNBAUpcomingMatch().then((res) => {
@@ -95,13 +97,16 @@ onMounted(() => {
 
 <style lang="scss">
 .nba-water-battle-claim-history-dialog {
-    font-family: 'PingFang SC';
+    font-family: 'PingFang';
     font-size: 15px;
+    background-color: white;
+    margin: 20px;
 
     .no-content {
         margin: auto;
         display: flex;
         justify-content: center;
+        padding: 20px;
     }
 
     .el-dialog__close {
@@ -110,7 +115,7 @@ onMounted(() => {
 
     .nba-water-battle-claim-history-dialog-table-header {
         height: 56px;
-        font-size: 1rem;
+        font-size: 0.7rem;
         font-weight: 400;
         line-height: 28px;
         color: #fff;
@@ -123,15 +128,23 @@ onMounted(() => {
     }
 
     .nba-water-battle-claim-history-dialog-table {
-        font-size: 14px;
+        font-size: 12px;
+        background-color: white;
+        border-collapse: collapse;
+        margin: 5%;
+
+        td, th {
+            border: 1px solid rgb(228, 228, 228);
+            text-align: center;
+        }
     }
 }
 </style>
 <style lang="scss" scoped>
 .nba-water-battle-bg {
-    background: url("@/assets/images/promotion/hotpromo/nba-water-battle/nba-water-battle-widget-bg.png") no-repeat center center;
+    background: url("../../../assets/images/promo/hotpromo/nba-water-battle/nba-water-battle-widget-bg.png") no-repeat center center;
     background-size: 100% 100%;
-    aspect-ratio: 1200 / 302;
+    aspect-ratio: 702 / 280;
     position: relative;
     font-family: 'PingFang SC';
     font-weight: bold;
@@ -141,8 +154,8 @@ onMounted(() => {
         background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
         position: absolute;
         top: 2%;
-        right: 11%;
-        padding: 10px 30px;
+        right: 2%;
+        padding: 5px 15px;
         color: #fff;
         border-radius: 100px;
         cursor: pointer;
@@ -168,9 +181,9 @@ onMounted(() => {
 
         .match-info-time {
             background-color: #edf4ff;
-            padding: 10px 30px;
+            padding: 5px 15px;
             border-radius: 100px;
-            min-width: 280px;
+            min-width: 120px;
             text-align: center;
 
             .time-text {
@@ -186,11 +199,10 @@ onMounted(() => {
             gap: 5px;
 
             .team-img-wrapper {
-                height: 200px;
+                height: 60px;
             }
 
             .team-img {
-                max-height: 150px;
                 height: 100%;
                 width: auto;
             }
