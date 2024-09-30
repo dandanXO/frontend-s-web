@@ -159,6 +159,7 @@ const getDateRange = (param) => {
 };
 
 const getPromotion = () => {
+  if(loadingClaim.value) return
   loadingClaim.value = true;
   eventapi
     .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
