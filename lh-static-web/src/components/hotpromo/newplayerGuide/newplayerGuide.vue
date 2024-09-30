@@ -478,12 +478,13 @@ onMounted(async () => {
   align-items: flex-start;
   margin-top: 20px;
   .left-panel {
+    flex: 4;
     .big-icon {
       width: 32px;
       height: 32px;
       margin-right: 8px;
     }
-    flex: 4;
+
     .title {
       margin-top: 4px;
       color: #000;
@@ -509,12 +510,14 @@ onMounted(async () => {
   align-items: flex-start;
   margin-top: 20px;
   .left-panel {
+    flex: 2;
+
     .big-icon {
       width: 24px;
       height: 24px;
       margin-right: 8px;
     }
-    flex: 2;
+
     .title {
       margin-top: 4px;
       color: #000;

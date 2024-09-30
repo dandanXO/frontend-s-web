@@ -88,7 +88,7 @@
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
-    <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param"/>
+    <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -136,8 +136,8 @@ import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
 import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import LongNewVip from "../components/hotpromo/longNewVip/LongNewVip.vue";
-import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
-import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
+import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue";
+import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue";
 import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
@@ -753,6 +753,10 @@ export default defineComponent({
         .contents {
           display: flex;
           justify-content: center;
+          flex: 1;
+          color: #ffffff;
+          text-align: center;
+
           form {
             margin-top: 20px;
 
@@ -765,10 +769,6 @@ export default defineComponent({
               display: inline-block;
             }
           }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
         }
       }
 
