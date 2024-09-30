@@ -69,7 +69,7 @@
             <el-link
               v-if="scope.row.registerCount !== 0"
               type="primary"
-              @click="showDialog(scope.row.affiliateId)"
+              @click="showDialog(scope.row.recordTime)"
             >
               {{ scope.row.registerCount }}
             </el-link>
@@ -198,7 +198,8 @@ const request = reactive({
 const newMemberRequest = reactive({
   size: 20,
   current: 1,
-  siteId: null
+  siteId: null,
+  regTime: null
 })
 
 function convertDate(date) {
@@ -301,8 +302,9 @@ function getSummaries(param) {
   return sums
 }
 
-function showDialog() {
+function showDialog(recordTime) {
   uiControl.dialogVisible = true
+  newMemberRequest.regTime = recordTime
   loadNewRegisterMember()
 }
 
@@ -318,13 +320,8 @@ async function loadNewRegisterMember() {
 
   query.siteId = fixedValue.siteId
   query.affiliateId = fixedValue.affiliateId
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.regTime = request.recordTime
-      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD') + ' 00:00:00'
-      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD') + ' 23:59:59'
-      query.regTime = query.regTime.join(',')
-    }
+  if (newMemberRequest.regTime !== null) {
+    query.regTime = moment(newMemberRequest.regTime).format('YYYY-MM-DD') + ' 00:00:00,' + moment(newMemberRequest.regTime).format('YYYY-MM-DD') + ' 23:59:59';
   }
   const { data: ret } = await queryPh1NewRegister(query)
 
