@@ -1225,7 +1225,9 @@ export default {
     mqLogProcessTimestamp: 'System Timestamp',
     mqLogTimestampWithTimezone: 'Site Timestamp',
     name: 'Name',
+    nbaMatchPreseasonRecord: 'NBA Preseason Match Record',
     nbaMatchRecord: 'NBA Playoffs Match Record',
+    nbaMatchPreseasonSetting: 'NBA Preseason Match Setting',
     nbaMatchSetting: 'NBA Playoffs Match Setting',
     needRegister: 'Need Register',
     needSpecify: 'Need Specify',
@@ -2049,6 +2051,10 @@ export default {
     successCount: 'Success Count',
     betBonus: 'Bet Bonus',
     batchFrozenMember: 'Batch Frozen Member',
+    threePointShots: 'Entire Match 10 Three Points Shots In',
+    shotPoints: 'Any Player Scored 30 Points',
+    scoringShots: 'Any Players Scored With 13 Shots',
+    foulOut: 'Any Player Getting Foul Out'
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2722,6 +2728,7 @@ export default {
     'Refer Friend Manager': 'Refer Friend Manager',
     'Sport Match': 'Sport Match',
     'Nba Match': 'NBA Playoffs',
+    'Nba Match Preseason': 'NBA Preseason',
     Redirect: 'Redirect Management',
     Permission: 'Permission',
     Menu: 'Menu',
