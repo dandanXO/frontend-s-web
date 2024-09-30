@@ -793,7 +793,7 @@ build-image-pak-landing-v1:
 build-pak-landing-v1-strapi:
   extends: .build-projects
   variables:
-    PROJECT: landing-v1-strapi
+    PROJECT: pak-landing-v1-strapi
 
 build-image-pak-landing-v1-strapi:
   extends: .docker-build
