@@ -184,11 +184,14 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="name" :label="t('fields.name')" width="200" />
+      <el-table-column prop="name" :label="t('fields.name')" width="100" />
       <el-table-column prop="level" :label="t('fields.level')" width="100" />
-      <el-table-column prop="levelUpCredit" :label="t('fields.levelUpCredit')" width="200" />
-      <el-table-column prop="previousLevelName" :label="t('fields.previousLevelName')" width="200" />
-      <el-table-column :label="t('fields.checkExclusiveUrl')" width="200">
+      <el-table-column prop="levelUpCredit" :label="t('fields.levelUpCredit')" width="160" />
+      <el-table-column prop="levelUpBet" :label="t('fields.levelUpBet')" width="160" />
+      <el-table-column prop="retainLevelBet" :label="t('fields.retainLevelBet')" width="160" />
+      <el-table-column prop="retainLevelDays" :label="t('fields.retainLevelDays')" width="100" />
+      <el-table-column prop="previousLevelName" :label="t('fields.previousLevelName')" width="100" />
+      <el-table-column :label="t('fields.checkExclusiveUrl')" width="150">
         <template #default="scope">
           <el-link type="primary" @click="show(scope.row)"> {{ t('fields.view') }} </el-link>
         </template>
