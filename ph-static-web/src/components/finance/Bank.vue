@@ -3,8 +3,8 @@
     <div>
       <a-select
         v-model:value="selectedBankId"
-        @change="selectBank"
         placeholder="Please select a bank"
+        @change="selectBank"
       >
         <a-select-option
           v-for="bc in props.bankList"
@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, defineEmits, defineExpose } from "vue";
+import { ref } from "vue";
 import { postDeposit } from "@/api/personal/deposit";
 import { doIt } from "@/utils/action";
 // import { message } from "ant-design-vue";

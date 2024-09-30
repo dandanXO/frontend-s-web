@@ -139,12 +139,6 @@
           min-width="110"
         />
         <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
           prop="financial"
           :label="t('fields.financialLevel')"
           align="center"
@@ -239,6 +233,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="vip"
+          :label="t('fields.vipLevel')"
+          align="center"
+          min-width="80"
+        />
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"
@@ -645,7 +645,6 @@ import {
   fromPayToBeforePaid,
   fromPayToSuccess,
   fromPayToFail,
-  getTotalWithdrawAmountByStatus,
   getWithdrawPlatformList,
   fromPayToAutopay,
 } from '../../../../api/member-withdraw-record'
@@ -870,9 +869,7 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {
-    query.status = 'STEP_3'
-    const { data: amount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }

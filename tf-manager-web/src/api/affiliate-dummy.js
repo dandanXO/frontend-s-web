@@ -5,6 +5,10 @@ export const getDummyRecords = (query) => {
   return https().request("/affiliate-dummy", Method.GET, query, ContentType.form);
 };
 
+export const getPlatformDummyRecords = (query) => {
+  return https().request("/affiliate-dummy/platformDetails", Method.GET, query, ContentType.form);
+};
+
 export const createDummyRecord = (dummy) => {
   return https().request("/affiliate-dummy", Method.POST, dummy, ContentType.form);
 };

@@ -345,6 +345,7 @@ export default {
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
+      multiple_acc_hint: "Note: It is prohibited for the same person to use multiple accounts to maliciously obtain commissions. Violators will have their accounts frozen.",
       shareTitle: "B9GAME Share and Earn",
       shareText:
         "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"

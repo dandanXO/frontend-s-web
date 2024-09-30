@@ -45,8 +45,9 @@ const onRequest = (config) => {
   clearEmptyParam(config);
 
   const host = window.location.hostname;
-  if (host.includes("k4y0sr02")) {
-    console.log("k4y0sr02");
+  if (host.includes("www.k4y0sr02")) {
+    // debugger;
+    console.log("k4y0sr0 12");
     // config.withCredentials = true
 
     const cfAuthori = getCookieValue('CF_Authorization');
@@ -58,7 +59,10 @@ const onRequest = (config) => {
     const cfBinding = getCookieValue('CF_Binding');
     console.log(cfBinding);
 
-    config.headers['Cookie'] = `CF_Authorization=${cfAuthori}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding}`;
+    config.withCredentials = true;
+
+    config.headers['Cookie'] = `CF_Authorization=${cfAuthori}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding};`;
+    // console.log(config);
   }
   return config;
 }
@@ -83,6 +87,23 @@ const onResponse = (response) => {
     res = JSON.parse(response.data);
   }
   if (res.code !== ResponseCode.SUCCESS) {
+    const store = useStore()
+    // const siteId = store.state.user.siteId
+    if(res.code === ResponseCode.ERROR_FORBIDDEN2 || res.code === ResponseCode.ERROR_FORBIDDEN3){
+      // debugger;
+      if(res.data){
+        sessionStorage.setItem('myIPAddress', res.data)
+      }
+      if(res.ip){
+        sessionStorage.setItem('myIPAddress', res.ip)
+      }
+      if(res.loginName){
+        sessionStorage.setItem('myloginName', res.loginName)
+      }
+
+      window.location.href = '/403';
+      return;
+    }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",

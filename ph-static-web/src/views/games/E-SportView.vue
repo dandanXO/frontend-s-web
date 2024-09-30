@@ -1,26 +1,31 @@
 <template>
   <div class="esport-container">
-    <TFLoading v-show="logoShow"></TFLoading>
+    <TFLoading v-show="logoShow" />
     <iframe
-      @load="loadGame()"
       v-show="!logoShow"
-      :src="src"
       id="esportsForm"
+      :src="src"
       allowfullscreen="true"
       scrolling="no"
       frameborder="0"
       class="esports-iframe animate__animated animate__fadeIn"
-    ></iframe>
+      @load="loadGame()"
+    />
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { launchGame, launchSessionGame } from "@/api/platform/platform";
+import { useRoute, useRouter } from "vue-router";
+import { launchSessionGame } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import TFLoading from "@/components/loading/TFLoading";
 
 let src = ref("");
+
+const router = useRouter();
+const route = useRoute();
+
 const store = userStore();
 const logoShow = ref(true);
 
@@ -36,30 +41,32 @@ onMounted(() => {
       src.value = ret.data;
     });
   } else {
-    launchGame("TFGaming").then((ret) => {
-      src.value = ret.data;
-    });
+    router.push({ name: "login", query: { redirect: route.path } });
   }
 });
 </script>
 
 <style scoped lang="scss">
+.dark-theme {
+  .esport-container {
+    background: linear-gradient(to bottom, #23263c, #190f25);
+  }
+}
 .esport-container {
-  // background-image: url("../../assets/images/index/index_bg.png");
-  // background-size: cover;
-  // background-repeat: no-repeat;
-  background: linear-gradient(to bottom, #23263c, #190f25);
+  background-image: url(../../assets/images/index/centerbg.png);
 
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 930px;
+  min-height: 930px;
+  height: 100%;
 
   .esports-iframe {
     width: 100%;
-    max-width: 1440px;
-    height: 930px;
+    // max-width: 1440px;
+    // height: 930px;
+    height: 100vh;
     overflow: hidden !important;
     margin: 0 auto;
     display: block;
@@ -67,7 +74,7 @@ onMounted(() => {
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .esport-container {
     height: 100%;
     height: calc(100vh - 100px);

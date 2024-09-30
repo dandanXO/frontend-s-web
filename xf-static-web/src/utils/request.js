@@ -125,8 +125,9 @@ const onResponse = (response) => {
         location.reload();
       }
       if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+        sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
         store.token = null;
-        location.reload();
+        window.location.href = "/home";
       }
       // message.error(res.message, 4);
       // loading.close();

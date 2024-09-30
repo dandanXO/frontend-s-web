@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promo" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" :label="$t('header.promotion')" />
+      <q-tab name="vip" :label="$t('header.vip')" />
     </q-tabs>
   </div>
 
@@ -22,9 +22,9 @@
     v-touch-swipe.right="swipeRight"
   >
     <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
-      </q-tabs>
+      <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify"> -->
+      <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
+      <!-- </q-tabs> -->
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
@@ -106,7 +106,7 @@
                   }"
                 >
                   <div class="top-float" v-if="!selectedParam || (selectedParam && !selectedParam.hidefloat)">
-                    <div class="top-subtitle">Get unlimited rewards!</div>
+                    <!-- <div class="top-subtitle">Get unlimited rewards!</div> -->
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div class="promo-content-inner" v-if="!selectedParam || (selectedParam && !selectedParam.hidetitle)">
@@ -124,7 +124,7 @@
                     :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
                   >
                     <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
+                      <div class="date-txt">{{ $t("promo.promotionEnds") }}</div>
                       <div class="date-timer">
                         <img src="../assets/images/promotion/timer-icon.svg" alt="" />
                         <q-icon name="all_inclusive" size="22px"></q-icon>
@@ -135,18 +135,10 @@
                       :class="isFtdPromoEnded ? 'btn-disabled' : ''"
                       :disable="isFtdPromoEnded"
                       no-caps
-                      label="Join Now"
+                      :label="$t('btn.joinNow')"
                       @click="goToJoinNow()"
                     />
                   </div>
-
-                  <!-- <div class="join-container">
-                    <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
-                      <div class="date-timer">01/01/2024</div>
-                    </div>
-                    <q-btn class="btn-join-now" no-caps label="Join Now" />
-                  </div> -->
                 </div>
               </div>
             </div>

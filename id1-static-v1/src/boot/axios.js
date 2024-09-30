@@ -1,11 +1,12 @@
-import { boot, store } from "quasar/wrappers";
-import { createPinia } from "pinia";
-import { Loading, Notify, SessionStorage, Dialog } from "quasar";
-import { ResponseCode } from "../api/response";
-import LocalStorage from "boot/local-storage";
 import axios from "axios";
-import { getRndInteger } from "boot/utils";
+import LocalStorage from "@/boot/local-storage";
+import { getRndInteger } from "@/boot/utils";
+import { createPinia } from "pinia";
+import { Dialog, Loading, Notify, SessionStorage } from "quasar";
+import { boot, store } from "quasar/wrappers";
+import { ResponseCode } from "../api/response";
 import { errorMessages } from "./error-messages";
+import { t } from "./lang";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -71,7 +72,7 @@ export default boot(({ app, router }) => {
       type: "warning",
       timeout: 1000,
       position: "top",
-      message: "Refreshing..."
+      message: t("notify.refreshing")
     });
     // debugger;
     const originalRequest = errorresp.config;
@@ -146,7 +147,7 @@ export default boot(({ app, router }) => {
           return Dialog.create({
             class: "login-card",
             title: "Please Login",
-            message: "Please log in to operate",
+            message: t("notify.pleaseLoginToOperate"),
             cancel: { color: "negative", label: "Cancel" },
             ok: { color: "brightbtn", label: "Login" },
             padding: "20px"
@@ -159,10 +160,10 @@ export default boot(({ app, router }) => {
           type: "negative",
           timeout: 1000,
           position: "top",
-          message: messageTranslated
+          message: t("error." + res.code)
         });
       }
-      throw new Error(messageTranslated);
+      throw new Error(res.message || "Error");
     } else {
       Loading.hide();
       return res;
@@ -185,4 +186,4 @@ export default boot(({ app, router }) => {
   eventapi.interceptors.response.use(onResponse, onResponseError);
 });
 
-export { axios, api, cashier, eventapi };
+export { api, axios, cashier, eventapi };

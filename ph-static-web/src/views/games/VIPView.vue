@@ -1,89 +1,62 @@
 <template>
   <div class="vip-container">
-    <div class="banner-container">
+    <!-- <div class="banner-container">
       <div class="btn-wrapper">
         <div class="center">
-          <div class="page-headline">VIP</div>
-          <div class="page-subline">Exclusive privileges for members</div>
-          <!-- <div class="page-blend">GET NOW</div> -->
-          <!-- <div class="page-liner">
+          <!- <div class="page-blend">GET NOW</div> ->
+          <!- <div class="page-liner">
             Araw-araw na 10% deposito, hanggang 5,000 pesos
-          </div> -->
+          </div> ->
         </div>
       </div>
-    </div>
-    <Carousel :itemsToShow="2.95" :wrapAround="true">
+    </div> -->
+
+    <Carousel :items-to-show="2.95" :wrap-around="true">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
-          <div class="vipitem">
-            <div
-              class="vipcontents"
-              :style="
-                vip.upgrade === 'Successful deposit'
-                  ? 'padding-top: 120px;'
-                  : ''
-              "
-            >
-              <div class="title">Upgrade requirements</div>
-              <div
-                class="inner-vip"
-                :style="
-                  vip.upgrade === 'Successful deposit'
-                    ? 'font-size: 20px; padding: 5px 0;'
-                    : ''
-                "
-              >
-                {{ vip.upgrade }}
+          <div :class="`vipitem vipitem${vip.vipLevel}`">
+            <div class="vipcontents">
+              <div class="title">VIP {{ vip.vipLevel }}</div>
+              <div class="description" v-if="vipLevel && vip.vipLevel === '8'">
+                Congratulations on reaching the highest level.
               </div>
-
-              <div class="second-vip">
-                <div v-if="vip.monthly">
-                  <div class="title">Monthly Bonus</div>
-                  <div class="inner-vip">{{ vip.monthly }}</div>
-                  <a-button
-                    v-if="vipLevel === 'VIP' + vip.vipLevel && storeToken"
-                    class="claim-btn"
-                    :loading="loadingMClaim"
-                    @click="dailySlot('jolly88-vip-monthly', 'monthly')"
-                    >Claim Now</a-button
-                  >
+              <div v-if="vip.vipLevel != '8'" class="description">
+                {{ vip.upgrade !== "Successful deposit" ? `Accumulate Deposit: ${vip.upgrade}` : vip.upgrade }}
+              </div>
+              <!-- vip progress bar start -->
+              <div class="progressBarContainer" v-if="vipLevel && vip.vipLevel != '8'">
+                <div class="progressBarOuterBar">
+                  <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vip) + '%' }" />
                 </div>
-                <div v-if="vip.birthday">
-                  <div class="title">Birthday Bonus</div>
-                  <div class="inner-vip">{{ vip.birthday }}</div>
-                  <a-button
-                    v-if="vipLevel === 'VIP' + vip.vipLevel && storeToken"
-                    class="claim-btn"
-                    :loading="loadingBClaim"
-                    @click="dailySlot('jolly88-vip-birthday', 'birthday')"
-                    >Claim Now</a-button
-                  >
+                <div class="progressBarDescription">
+                  <span>
+                    {{ `VIP${vip.vipLevel}` }}
+                  </span>
+                  <span>
+                    {{ `VIP${+vip.vipLevel + 1}` }}
+                  </span>
                 </div>
               </div>
+              <!-- vip progress bar end -->
             </div>
-            <div class="viplevelcircle">
-              <img
-                :src="
-                  require('../../assets/images/vip/badge/badge-' +
-                    vip.vipLevel +
-                    '.png')
-                "
-              />
-            </div>
+            <!-- <div :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`">
+              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? 'Achieved' : 'Not Yet' }}</span>
+            </div> -->
           </div>
 
           <div class="inner-vip-mobile">
             <div class="game-title">REBATE BONUS</div>
             <div class="rebates">
-              <div class="rebate" v-for="(rebate, i) in vip.rebates" :key="i">
-                <div class="value">{{ rebate.rebateValue }}</div>
-                <div class="name">{{ rebate.rebateName }}</div>
+              <div v-for="(rebate, i) in vip.rebates" :key="i" class="rebate">
+                <div class="value">
+                  {{ rebate.rebateValue }}
+                </div>
+                <div class="name">
+                  {{ rebate.rebateName }}
+                </div>
               </div>
             </div>
-            <span class="note"
-              >*Note: All the Bonus, Deposit amount and withdrawal amount in
-              PHP</span
-            >
+            <span class="note">*Note: All the Bonus, Deposit amount and withdrawal amount in PHP</span>
           </div>
         </div>
       </Slide>
@@ -93,50 +66,45 @@
     </Carousel>
 
     <div class="vip-program">
-      <div class="game-title">VIP PROGRAM</div>
       <div class="buttons">
-        <div
-          class="common-btn"
-          :class="{ active: showRebate }"
-          @click="showRebate = true"
-        >
-          REBATE BONUS
+        <div class="vipp-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">
+          DAILY CASHBACK BONUS FOR VIP PLAYER
         </div>
-        <div
-          class="common-btn"
-          :class="{ active: !showRebate }"
-          @click="showRebate = false"
-        >
-          EXCLUSIVE PROMOTIONS AND BENEFITS
+        <div class="vipp-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">
+          VIP PLAYER BIRTHDAY BONUS
         </div>
       </div>
       <div v-if="showRebate">
-        <a-table :pagination="false" :columns="columns" :data-source="data" />
+        <a-table :pagination="false" :columns="columns" :dataSource="columnsData" :locale="{ emptyText: ' ' }" />
+        <div class="separator"></div>
+        <a-table :pagination="false" :columns="columns3" :dataSource="column3Data" />
+        <div class="separator"></div>
+        <a-table :pagination="false" :columns="columns4" :dataSource="column4Data" />
       </div>
-      <a-table
-        v-if="!showRebate"
-        :pagination="false"
-        :columns="promoExclusive"
-        :data-source="dataExclusive"
-      />
+      <div v-else>
+        <a-table :pagination="false" :columns="columns" :dataSource="birthdayColumnData" :locale="{ emptyText: ' ' }" />
+        <div class="separator"></div>
+        <a-table :pagination="false" :columns="columns3" :dataSource="column3Data" />
+        <div class="separator"></div>
+        <a-table :pagination="false" :columns="columns4" :dataSource="column4Data" />
+      </div>
 
-      <span class="note"
-        >*Note: All the Bonus, Deposit amount and withdrawal amount in PHP</span
-      >
+      <span class="note">*Note: All the Bonus, Deposit amount and withdrawal amount in PHP</span>
 
-      <div class="left"></div>
-      <div class="right"></div>
+      <div class="left" />
+      <div class="right" />
     </div>
     <div class="terms-conditions">
       <div class="game-title">Terms &amp; Conditions</div>
-      <div class="terms">
-        <div class="term" v-for="(term, i) in terms" :key="i">
-          <div class="circle-wrapper">
-            <div class="circle">{{ i + 1 }}</div>
-          </div>
-          <div class="term-text">{{ term.text }}</div>
-        </div>
-      </div>
+      <img
+        class="terms-conditions-title-separator"
+        :src="require('../../assets/images/vip/terms-condition-title-separator.png')"
+      />
+      <ol class="terms">
+        <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
+          {{ term.text }}
+        </li>
+      </ol>
     </div>
 
     <a-modal v-model:visible="privilegeClaimedModalVisible" centered>
@@ -165,7 +133,7 @@ export default defineComponent({
   components: {
     Carousel,
     Slide,
-    Navigation,
+    Navigation
   },
   setup() {
     const store = userStore();
@@ -174,6 +142,18 @@ export default defineComponent({
     const vipLevel = computed(() => {
       return store.vip;
     });
+    const getVipLevelProgress = (vipInfo) => {
+      const vipLevel = +store.vip.replace("VIP", "");
+      const currentDeposit = +store.getCurrentDeposit();
+      const upgradeStatus = vipInfo.upgrade;
+
+      if (vipLevel > +vipInfo.vipLevel) {
+        return 100;
+      }
+
+      const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
+      return (currentDeposit / levelUpDeposit) * 100;
+    };
     const storeToken = computed(() => {
       return store.token;
     });
@@ -205,160 +185,361 @@ export default defineComponent({
           loadingBClaim.value = false;
         });
     };
+
+    const terms = [
+      {
+        text: `Conditions for receiving the turnover bonus: The rebate will be calculated based on the valid turnover of all games played by members from 00:00 to 23:59 of the previous day.`
+      },
+      {
+        text: `This bonus for withdrawals are issued before the turnover requirement of x1, Example: get bonus 10000 = turnover requirement 10000`
+      },
+      {
+        text: `All invalid/cancelled/rejected bets, tied bets, bets on both outcomes,  Live Game, Poker, Sport Bet and E-Sport will not count in for turnover.`
+      },
+      {
+        text: `Play4win Bonuses may not be traded, transferred or sold in any form.`
+      },
+      {
+        text: `Only one account is allowed per player. Members may be required to show proof of identity prior to receiving any promotions or bonuses. Players who open multiple or fraudulent accounts, accounts with the same IP address, in the same household or family members will not be eligible to participate in the promotion and may forfeit funds and have their accounts blocked.`
+      },
+      {
+        text: `Players with confirmed or suspected fraudulent accounts will not be entitled to this bonus.`
+      },
+      {
+        text: `Play4win reserves the right to withhold all prizes and bonus if it is suspected that fraudulent activity has occurred.`
+      },
+      {
+        text: `Play4win reserves the right of final decision and the right of final interpretation of this event.`
+      }
+    ];
+
+    const birthdayTerms = [
+      {
+        text: `Conditions for Birthday Bonus: Players registered reached 3 months and above need to contact customer service to apply , members will also be asked to show proof of identity and can only receive the bonus once a year. Birthday bonus will be paid according to the guidelines set by the management.`
+      },
+      {
+        text: `This bonus for withdrawals are issued before the turnover requirement of x1, Example: get bonus 10000 = turnover requirement 10000`
+      },
+      {
+        text: `All invalid/cancelled/rejected bets, tied bets, bets on both outcomes, Live Game, Poker, Sport Bet and E-Sport will not count in for turnover.`
+      },
+      {
+        text: `Play4win Bonuses may not be traded, transferred or sold in any form.`
+      },
+      {
+        text: `Only one account is allowed per player. Members may be required to show proof of identity prior to receiving any promotions or bonuses. Players who open multiple or fraudulent accounts, accounts with the same IP address, in the same household or family members will not be eligible to participate in the promotion and may forfeit funds and have their accounts blocked.`
+      },
+      {
+        text: `Players with confirmed or suspected fraudulent accounts will not be entitled to this bonus.`
+      },
+      {
+        text: `Play4win reserves the right to withhold all prizes and bonus if it is suspected that fraudulent activity has occurred. 8. Play4win reserves the right of final decision and the right of final interpretation of this event.`
+      }
+    ];
+
     const showRebate = ref(false);
+    const currentDisplayTerms = ref(birthdayTerms);
+    const onShowRebateClick = (flag) => {
+      showRebate.value = flag;
+      if (showRebate.value) currentDisplayTerms.value = terms;
+      else currentDisplayTerms.value = birthdayTerms;
+    };
+
     const columns = [
       {
         title: "VIP Level",
         dataIndex: "vipLevel",
         key: "vipLevel",
+        colSpan: 2,
+        customCell: (_, index) => ({
+          colSpan: index === 0 ? 2 : 1
+        })
+      },
+      {
+        title: "VIP 0",
+        dataIndex: "vip0",
+        key: "vip0"
       },
       {
         title: "VIP 1",
         dataIndex: "vip1",
-        key: "vip1",
+        key: "vip1"
       },
       {
         title: "VIP 2",
         dataIndex: "vip2",
-        key: "vip2",
+        key: "vip2"
       },
       {
         title: "VIP 3",
         dataIndex: "vip3",
-        key: "vip3",
+        key: "vip3"
       },
       {
         title: "VIP 4",
         dataIndex: "vip4",
-        key: "vip4",
+        key: "vip4"
       },
       {
         title: "VIP 5",
         dataIndex: "vip5",
-        key: "vip5",
+        key: "vip5"
       },
       {
         title: "VIP 6",
         dataIndex: "vip6",
-        key: "vip6",
+        key: "vip6"
       },
       {
         title: "VIP 7",
         dataIndex: "vip7",
-        key: "vip7",
+        key: "vip7"
       },
-    ];
-    const data = [
+      {
+        title: "VIP 8",
+        dataIndex: "vip8",
+        key: "vip8"
+      }
+    ].map((props) => ({ ...props, className: "highlight" })); // add highlight color to every column
+
+    const columnsData = [
       {
         key: "1",
-        vipLevel: "Slots Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.50%",
-        vip5: "0.60%",
-        vip6: "0.80%",
-        vip7: "1.00%",
+        vipLevel: "Turnover Bonus",
+        vip0: "X",
+        vip1: "X",
+        vip2: "X",
+        vip3: "X",
+        vip4: "0.01%",
+        vip5: "0.05%",
+        vip6: "0.10%",
+        vip7: "0.25%",
+        vip8: "0.50%"
+      }
+    ];
+
+    const columns3 = [
+      {
+        title: "Upgrade Achievement",
+        dataIndex: "upgradeAchievement",
+        key: "upgradeAchievement",
+        colSpan: 10,
+        className: "highlight",
+        customCell: (_, index) => {
+          if (index < 2) return { colSpan: 2 };
+        }
+      },
+      {
+        title: "",
+        dataIndex: "vip0",
+        key: "vip0",
+        colSpan: 0
+      },
+      {
+        title: "",
+        dataIndex: "vip1",
+        key: "vip1",
+        colSpan: 0
+      },
+      {
+        title: "",
+        dataIndex: "vip2",
+        key: "vip2",
+        colSpan: 0
+      },
+      {
+        title: "",
+        dataIndex: "vip3",
+        key: "vip3",
+        colSpan: 0
+      },
+      {
+        title: "",
+        dataIndex: "vip4",
+        key: "vip4",
+        colSpan: 0
+      },
+      {
+        title: "",
+        dataIndex: "vip5",
+        key: "vip5",
+        colSpan: 0
+      },
+      {
+        title: "",
+        dataIndex: "vip6",
+        key: "vip6",
+        colSpan: 0
+      },
+      {
+        title: "",
+        dataIndex: "vip7",
+        key: "vip7",
+        colSpan: 0
+      }
+    ];
+
+    const column3Data = [
+      {
+        key: "1",
+        upgradeAchievement: "Accumulated Deposits",
+        vip0: "≥100",
+        vip1: "≥10000",
+        vip2: "≥100000",
+        vip3: "≥500000",
+        vip4: "≥1000000",
+        vip5: "≥3000000",
+        vip6: "≥5000000",
+        vip7: "≥10000000",
+        className: "highlight"
       },
       {
         key: "2",
-        vipLevel: "Fishing Rebate",
-        vip1: "0.30%",
-        vip2: "0.30%",
-        vip3: "0.30%",
-        vip4: "0.30%",
-        vip5: "0.30%",
-        vip6: "0.30%",
-        vip7: "0.30%",
-      },
-      {
-        key: "3",
-        vipLevel: "Live Casino Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.45%",
-        vip5: "0.50%",
-        vip6: "0.60%",
-        vip7: "0.80%",
-      },
-      // {
-      //   key: "4",
-      //   vipLevel: "เงินคืนไพ่",
-      //   vip1: "0.20%",
-      //   vip2: "0.20%",
-      //   vip3: "0.30%",
-      //   vip4: "0.40%",
-      //   vip5: "0.50%",
-      //   vip6: "0.60%",
-      //   vip7: "0.80%",
-      // },
-      {
-        key: "5",
-        vipLevel: "Sports/Esports Rebate",
-        vip1: "0.20%",
-        vip2: "0.30%",
-        vip3: "0.40%",
-        vip4: "0.40%",
-        vip5: "0.50%",
-        vip6: "0.50%",
-        vip7: "0.60%",
-      },
-      {
-        key: "6",
-        vipLevel: "Lottery Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.40%",
-        vip5: "0.50%",
-        vip6: "0.50%",
-        vip7: "0.60%",
-      },
+        upgradeAchievement: "Promotion Level",
+        vip0: "VIP 1",
+        vip1: "VIP 2",
+        vip2: "VIP 3",
+        vip3: "VIP 4",
+        vip4: "VIP 5",
+        vip5: "VIP 6",
+        vip6: "VIP 7",
+        vip7: "VIP 8"
+      }
     ];
+
+    const columns4 = [
+      {
+        title: "Level",
+        dataIndex: "level",
+        key: "level",
+        colSpan: 2,
+        className: "highlight",
+        customCell: (_, index) => ({
+          colSpan: index === 0 ? 2 : 1
+        })
+      },
+      {
+        title: "VIP 0",
+        dataIndex: "vip0",
+        key: "vip0"
+      },
+      {
+        title: "VIP 1",
+        dataIndex: "vip1",
+        key: "vip1"
+      },
+      {
+        title: "VIP 2",
+        dataIndex: "vip2",
+        key: "vip2"
+      },
+      {
+        title: "VIP 3",
+        dataIndex: "vip3",
+        key: "vip3"
+      },
+      {
+        title: "VIP 4",
+        dataIndex: "vip4",
+        key: "vip4"
+      },
+      {
+        title: "VIP 5",
+        dataIndex: "vip5",
+        key: "vip5"
+      },
+      {
+        title: "VIP 6",
+        dataIndex: "vip6",
+        key: "vip6"
+      },
+      {
+        title: "VIP 7",
+        dataIndex: "vip7",
+        key: "vip7"
+      },
+      {
+        title: "VIP 8",
+        dataIndex: "vip8",
+        key: "vip8"
+      }
+    ];
+
+    const column4Data = [
+      {
+        key: "1",
+        level: "Cumulative withdrawal limit for a single day",
+        vip0: "50,000",
+        vip1: "100,000",
+        vip2: "500,000",
+        vip3: "1,000,000",
+        vip4: "5,000,000",
+        vip5: "10,000,000",
+        vip6: "10,000,000",
+        vip7: "10,000,000",
+        vip8: "10,000,000"
+      }
+    ];
+
+    const birthdayColumnData = [
+      {
+        key: "1",
+        vipLevel: "Birthday Bonus",
+        vip0: "X",
+        vip1: "X",
+        vip2: "X",
+        vip3: "188",
+        vip4: "288",
+        vip5: "388",
+        vip6: "488",
+        vip7: "588",
+        vip8: "888"
+      }
+    ];
+
     const promoExclusive = [
       {
         title: "VIP Level",
         dataIndex: "vipLevel",
         key: "vipLevel",
-        render: (text) => String(text),
+        render: (text) => String(text)
       },
       {
         title: "VIP 1",
         dataIndex: "vip1",
-        key: "vip1",
+        key: "vip1"
       },
       {
         title: "VIP 2",
         dataIndex: "vip2",
-        key: "vip2",
+        key: "vip2"
       },
       {
         title: "VIP 3",
         dataIndex: "vip3",
-        key: "vip3",
+        key: "vip3"
       },
       {
         title: "VIP 4",
         dataIndex: "vip4",
-        key: "vip4",
+        key: "vip4"
       },
       {
         title: "VIP 5",
         dataIndex: "vip5",
-        key: "vip5",
+        key: "vip5"
       },
       {
         title: "VIP 6",
         dataIndex: "vip6",
-        key: "vip6",
+        key: "vip6"
       },
       {
         title: "VIP 7",
         dataIndex: "vip7",
         key: "vip7",
-        render: (text) => String(text),
-      },
+        render: (text) => String(text)
+      }
     ];
     const dataExclusive = [
       {
@@ -370,7 +551,7 @@ export default defineComponent({
         vip4: "1,000,000/Day",
         vip5: "1,000,000/Day",
         vip6: "1,000,000/Day",
-        vip7: "1,500,000/Day",
+        vip7: "1,500,000/Day"
       },
       {
         key: "2",
@@ -381,7 +562,7 @@ export default defineComponent({
         vip4: "Standard",
         vip5: "High limit",
         vip6: "High limit",
-        vip7: "High limit",
+        vip7: "High limit"
       },
       {
         key: "3",
@@ -392,7 +573,7 @@ export default defineComponent({
         vip4: "",
         vip5: "✔",
         vip6: "✔",
-        vip7: "✔",
+        vip7: "✔"
       },
       {
         key: "4",
@@ -403,7 +584,7 @@ export default defineComponent({
         vip4: "",
         vip5: "",
         vip6: "✔",
-        vip7: "✔",
+        vip7: "✔"
       },
       {
         key: "5",
@@ -414,60 +595,28 @@ export default defineComponent({
         vip4: "",
         vip5: "",
         vip6: "",
-        vip7: "✔",
-      },
+        vip7: "✔"
+      }
     ];
-    const terms = [
-      {
-        text: `The program applies to VIP members with valid accounts. The VIP upgrade is based on the member's total accumulated deposit amount, the daily total successful deposit amount is calculate from 00:00:01 to 23:59:59  (GMT+8)`,
-      },
-      {
-        text: `The system will automatically upgrade VIP level after 00:00:00 (GMT+8) of the next day, the VIP level only can upgrade one level a day if the member's  total 
-deposit amount is eligible for the corresponding VIP level.`,
-      },
-      {
-        text: `The Free bonus, rebates and promotins benefits level corresponding to the VIP level will be updated as soon as the member's account is updated in the 
-next day.`,
-      },
-      {
-        text: `Birthday bonus:the bonus need to be claim on VIP page by member self on the birthday day and overdue void, Members who celebrate their birthday less 
-than 90 days from registration day will not receive this year's birthday bonus, Only members who have registered for more than 90 days can receive it, once 
-a year. (Birthday bonus can be withdrawal after 1x turnover)`,
-      },
-      {
-        text: `Monthly bonus:the bonus need to be claim on VIP page by member self after the member have upgraded to a new level in the next day, Each member can 
-claim 1 monthly bonus in upgrade month.(Monthly bonus can be withdrawal after 3x turnover)`,
-      },
-      {
-        text: `All draw bets, CANCEL bets, 2 sided bets, bets on Europe Handicap under 1.75, Asian Handicap under 0.75, Number Games, Fantasy Sports, Progressive RNG 
-Jackpots, Progressive RNG Slot will not be counted in this promotion.`,
-      },
-      {
-        text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership
-program at any time without prior notice.`,
-      },
-      {
-        text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.`,
-      },
-    ];
+
     const vipItems = [
       {
         vipLevel: "1",
-        upgrade: "Successful deposit",
+        upgrade: "100",
         monthly: "",
         birthday: "",
         rebates: [
           {
             rebateName: "Slots Rebate",
-            rebateValue: "1.00%",
+            rebateValue: "1.00%"
           },
           {
             rebateName: "Fishing Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เงินคืนไพ่",
@@ -475,7 +624,7 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Poker Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เเงินคืนล็อตตารี่",
@@ -483,31 +632,31 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
-          },
-        ],
+            rebateValue: "0.60%"
+          }
+        ]
       },
       {
         vipLevel: "2",
-        upgrade: "70,000",
+        upgrade: "10,000",
         monthly: "188",
         birthday: "",
         rebates: [
           {
             rebateName: "Slots Rebate",
-            rebateValue: "1.00%",
+            rebateValue: "1.00%"
           },
           {
             rebateName: "Fishing Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เงินคืนไพ่",
@@ -515,7 +664,7 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Poker Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เเงินคืนล็อตตารี่",
@@ -524,31 +673,31 @@ program at any time without prior notice.`,
 
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
-          },
-        ],
+            rebateValue: "0.60%"
+          }
+        ]
       },
       {
         vipLevel: "3",
-        upgrade: "500,000",
+        upgrade: "100,000",
         monthly: "688",
         birthday: "888",
         rebates: [
           {
             rebateName: "Slots Rebate",
-            rebateValue: "1.00%",
+            rebateValue: "1.00%"
           },
           {
             rebateName: "Fishing Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เงินคืนไพ่",
@@ -556,7 +705,7 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Poker Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เเงินคืนล็อตตารี่",
@@ -564,31 +713,31 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
-          },
-        ],
+            rebateValue: "0.60%"
+          }
+        ]
       },
       {
         vipLevel: "4",
-        upgrade: "2,000,000",
+        upgrade: "500,000",
         monthly: "1,588",
         birthday: "2,888",
         rebates: [
           {
             rebateName: "Slots Rebate",
-            rebateValue: "1.00%",
+            rebateValue: "1.00%"
           },
           {
             rebateName: "Fishing Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เงินคืนไพ่",
@@ -596,7 +745,7 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Poker Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เเงินคืนล็อตตารี่",
@@ -604,31 +753,31 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
-          },
-        ],
+            rebateValue: "0.60%"
+          }
+        ]
       },
       {
         vipLevel: "5",
-        upgrade: "7,000,000",
+        upgrade: "1,000,000",
         monthly: "2,888",
         birthday: "5,888",
         rebates: [
           {
             rebateName: "Slots Rebate",
-            rebateValue: "1.00%",
+            rebateValue: "1.00%"
           },
           {
             rebateName: "Fishing Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เงินคืนไพ่",
@@ -636,7 +785,7 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Poker Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เเงินคืนล็อตตารี่",
@@ -644,35 +793,35 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
-          },
-        ],
+            rebateValue: "0.60%"
+          }
+        ]
       },
       {
         vipLevel: "6",
-        upgrade: "20,000,000",
+        upgrade: "3,000,000",
         monthly: "6,888",
         birthday: "8,888",
         rebates: [
           {
             rebateName: "Slots Rebate",
-            rebateValue: "1.00%",
+            rebateValue: "1.00%"
           },
           {
             rebateName: "Fishing Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Poker Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เงินคืนไพ่",
@@ -680,7 +829,7 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           // {
           //   rebateName: "เเงินคืนล็อตตารี่",
@@ -688,31 +837,31 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
-          },
-        ],
+            rebateValue: "0.60%"
+          }
+        ]
       },
       {
         vipLevel: "7",
-        upgrade: "60,000,000",
+        upgrade: "5,000,000",
         monthly: "18,888",
         birthday: "48,888",
         rebates: [
           {
             rebateName: "Slots Rebate",
-            rebateValue: "1.00%",
+            rebateValue: "1.00%"
           },
           {
             rebateName: "Fishing Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Live Casino Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           // {
           //   rebateName: "เงินคืนไพ่",
@@ -720,15 +869,15 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Poker Rebate",
-            rebateValue: "0.80%",
+            rebateValue: "0.80%"
           },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
+            rebateValue: "0.60%"
           },
           // {
           //   rebateName: "เเงินคืนล็อตตารี่",
@@ -736,34 +885,91 @@ program at any time without prior notice.`,
           // },
           {
             rebateName: "Sport/EsportsRebate",
-            rebateValue: "0.65%",
+            rebateValue: "0.65%"
           },
           {
             rebateName: "Lottery Rebate",
-            rebateValue: "0.60%",
-          },
-        ],
+            rebateValue: "0.60%"
+          }
+        ]
       },
+      {
+        vipLevel: "8",
+        upgrade: "",
+        monthly: "18,888",
+        birthday: "48,888",
+        rebates: [
+          {
+            rebateName: "Slots Rebate",
+            rebateValue: "1.00%"
+          },
+          {
+            rebateName: "Fishing Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Live Casino Rebate",
+            rebateValue: "0.80%"
+          },
+          // {
+          //   rebateName: "เงินคืนไพ่",
+          //   rebateValue: "0.80%",
+          // },
+          {
+            rebateName: "Poker Rebate",
+            rebateValue: "0.80%"
+          },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          },
+          // {
+          //   rebateName: "เเงินคืนล็อตตารี่",
+          //   rebateValue: "0.60%",
+          // },
+          {
+            rebateName: "Sport/EsportsRebate",
+            rebateValue: "0.65%"
+          },
+          {
+            rebateName: "Lottery Rebate",
+            rebateValue: "0.60%"
+          }
+        ]
+      }
     ];
 
     return {
       columns,
-      data,
+      columnsData,
+      columns3,
+      column3Data,
+      columns4,
+      column4Data,
+      birthdayColumnData,
       showRebate,
+      currentDisplayTerms,
+      onShowRebateClick,
       promoExclusive,
       dataExclusive,
       terms,
+      birthdayTerms,
       vipItems,
       vipLevel,
+      getVipLevelProgress,
       storeToken,
       dailySlot,
       loadingClaim,
       loadingMClaim,
       loadingBClaim,
       amount,
-      privilegeClaimedModalVisible,
+      privilegeClaimedModalVisible
     };
-  },
+  }
 });
 </script>
 <style scoped lang="scss">
@@ -798,15 +1004,31 @@ program at any time without prior notice.`,
     line-height: 38px;
   }
 }
-$max-width: 1400px;
+
+$max-width: $container-width;
+
+.dark-theme {
+  .vip-container .vip-program .note {
+    color: #83a3ca;
+  }
+  .vip-container .terms-conditions .game-title {
+    color: #ffffff;
+  }
+  .vip-container .vip-program .buttons {
+    background: #ffffff0f;
+    .vipp-btn {
+      color: #ffffff;
+    }
+  }
+}
 .vip-container {
-  background: linear-gradient(to bottom, #23263c, #190f25);
+  color: #8d8d8d;
   min-height: 100vh;
+  background: url("../../assets/images/index/centerbg.png") no-repeat center center;
+
   .banner-container {
-    background: url("../../assets/images/vip/banner.png") no-repeat center
-      center;
+    // background: url("../../assets/images/vip/banner.png") no-repeat center center;
     background-size: cover;
-    margin-bottom: -200px;
     padding-top: 100px;
     padding-bottom: 200px;
     // width: 1920px;
@@ -814,11 +1036,11 @@ $max-width: 1400px;
     font-size: 30px;
     background-repeat: no-repeat;
     background-position: center center;
-    min-height: 300px;
+    min-height: 371px;
     display: flex;
     .btn-wrapper {
       width: 95%;
-      max-width: 1400px;
+      max-width: $container-width;
       margin: auto;
       position: relative;
 
@@ -829,22 +1051,11 @@ $max-width: 1400px;
         justify-content: center;
         align-items: center;
         text-align: center;
-        color: #ffffff;
-        .page-headline {
-          font-size: 150px;
-          line-height: 150px;
-          font-family: Wave;
-        }
-        .page-subline {
-          font-size: 25px;
-          line-height: 25px;
-          margin-bottom: 20px;
-          font-family: Wave;
-        }
+        color: $primary-color;
         .page-blend {
           background-image: linear-gradient(to right, #de4545, #db7e42);
           font-family: Wave;
-          color: #ffffff;
+
           font-size: 60px;
           line-height: 60px;
           padding: 15px;
@@ -874,61 +1085,132 @@ $max-width: 1400px;
         }
       }
     }
-
-    // .jp-container {
-    //   display: flex;
-    //   justify-content: center;
-    //   text-align: center;
-    //   font-size: 110px;
-    //   margin-top: 30px;
-    //   color: #1bcef1;
-    //   font-family: jp;
-    //   font-weight: 600;
-    //   line-height: 120px;
-
-    //   .jp-number-item {
-    //     width: 96px;
-    //     height: 120px;
-    //     // background-image: url("../../assets/images/games/casino/jp_bg.png");
-    //     background-repeat: no-repeat;
-    //     background-size: 100% 100%;
-    //   }
-    // }
   }
   .inner-vip-mobile {
     display: none;
   }
   .vipitem {
-    position: relative;
     display: flex;
     flex-direction: column-reverse;
-    background: url("../../assets/images/vip/vip_04.png") no-repeat top center;
-    background-size: contain;
-    width: 350px;
-    min-height: 410px;
     justify-content: flex-end;
-    .viplevelcircle {
-      img {
-        width: 140px;
-        margin-top: 20px;
-      }
-      margin-bottom: -50px;
-      z-index: 1;
+    position: relative;
+    width: 564px;
+    height: 284px;
+    background: url("../../assets/images/vip/badge/banner-1.png") no-repeat top center;
+    background-size: contain;
+
+    &2 {
+      background: url("../../assets/images/vip/badge/banner-2.png") no-repeat top center;
+      background-size: contain;
     }
+
+    &3 {
+      background: url("../../assets/images/vip/badge/banner-3.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &4 {
+      background: url("../../assets/images/vip/badge/banner-4.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &5 {
+      background: url("../../assets/images/vip/badge/banner-5.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &6 {
+      background: url("../../assets/images/vip/badge/banner-6.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &7 {
+      background: url("../../assets/images/vip/badge/banner-7.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    &8 {
+      background: url("../../assets/images/vip/badge/banner-8.png") no-repeat top center;
+      background-size: contain;
+    }
+
+    .vipLevelReachStatus {
+      // background: url("../../assets/images/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left
+      //   center;
+      background-size: contain;
+      margin-top: 15px;
+      margin-left: 2px;
+      z-index: 1;
+      text-align: left;
+      height: 30px;
+
+      &.vipLevelReached {
+        // background: url("../../assets/images/vip/badge/vip-level-banner-status-ribbon-achieved.png") no-repeat left
+        //   center;
+        background-size: contain;
+      }
+
+      span {
+        color: #fff;
+        margin-left: 10px;
+      }
+    }
+
     .vipcontents {
-      padding-top: 60px;
-      // background: #2b2b4b;
-      color: #ffffff;
+      height: 100%;
       border-radius: 20px;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
+      align-items: flex-start;
       flex-direction: column;
-      // border-top: 2px solid #db7e42;
-      // border-bottom: 2px solid #db7e42;
+      padding: 80px 30px 30px;
+
       .title {
-        font-size: 18px;
-        line-height: 36px;
+        color: #ffffff;
+        text-align: center;
+        font-family: "Baloo Bhaina";
+        font-size: 44.319px;
+        font-weight: 700;
+        line-height: normal;
+      }
+
+      .description {
+        color: #ffffff;
+        font-size: 17.987px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .progressBarContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .progressBarOuterBar {
+          border-radius: 16px;
+          background: #ffffff4d;
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .progressBarInnerBar {
+          color: #fff;
+          border-radius: 16px;
+          background: #ffffff;
+          height: 10px;
+        }
+
+        .progressBarDescription {
+          display: flex;
+          justify-content: space-between;
+          color: #ffffff;
+          font-size: 17.987px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
       }
       .inner-vip {
         background-color: #303450;
@@ -940,129 +1222,135 @@ $max-width: 1400px;
         line-height: 53px;
         font-family: "Arial";
       }
-      .second-vip {
-        // background: #2b2b4b;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        font-size: 45px;
-        line-height: 53px;
-        div {
-          flex: 1;
-        }
-        .ant-btn.claim-btn {
-          color: #ffffff;
-          background-image: linear-gradient(to right, #de4545, #db7e42);
-          border: 0;
-          :hover {
-            opacity: 0.8;
-          }
-        }
-        .common-btn {
-          padding: 5px 10px;
-          font-size: 12px;
-          line-height: 20px;
-          margin: 0 30px 30px;
-        }
-      }
     }
   }
+
   .vip-program {
-    .game-title {
-      margin-bottom: 30px;
-    }
     margin: 50px auto;
     max-width: 1080px;
     width: 95%;
+
     .buttons {
+      // display: flex;
+      // justify-content: center;
+      // align-items: stretch;
+      // border: 1px solid #fce9c5;
+      // border-radius: 58.321px;
+      // width: fit-content;
+      // margin: 0px auto 20px auto;
+
+      position: relative;
       display: flex;
+      background: #ffffff;
+      border-radius: 5px;
+      margin: 0px auto 20px;
       justify-content: center;
-      align-items: stretch;
-      border: 1px solid #db7e42;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      .common-btn {
-        display: block;
-        width: 100%;
-        text-align: center;
-        background: transparent;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+      max-width: 750px;
+
+      .vipp-btn {
+        // display: block;
+        // text-align: center;
+        // color: #858585;
+        // background: #f9fcff;
+        // border: 0px;
+        // border-radius: 58.321px;
+        cursor: pointer;
+        color: #222222;
+        padding: 8px 15px;
+        transition: color 0.3s ease-out;
+        z-index: 1;
+        font-family: Inter Medium;
+        flex: 1;
         &.active {
-          background-image: linear-gradient(to right, #de4545, #db7e42);
+          // background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
+          // box-shadow: 0px 2.33286px 2.33286px 0px rgba(255, 255, 255, 0.25) inset,
+          //   0px -2.33286px 2.33286px 0px rgba(137, 82, 0, 0.25) inset;
+          // color: #fff;
+          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+          color: #ffffff;
+          box-shadow: 0px -3.1666667461395264px 3.9583334922790527px 0px #0b081d33 inset;
+
+          border-radius: 5px;
+          top: 4px;
+          left: 4px;
+          opacity: 1;
+          transition: left 0.4s ease-out, width 0.4s ease-out, opacity 0.4s ease-out 0.4s;
         }
       }
     }
-    :deep(.ant-table-thead > tr > th) {
-      text-align: center;
-      &:nth-child(odd) {
-        background: #2b2b4b;
-      }
-    }
-    :deep(.ant-table-tbody > tr > td) {
-      &:nth-child(odd) {
-        background: #2b2b4b;
-      }
+
+    .separator {
+      margin: 20px 0;
     }
     .note {
-      color: #db7d42;
-      margin-top: 5px;
+      color: #83a3ca;
+      font-size: 14px;
+      margin-top: 10px;
       display: block;
+      font-family: Inter Medium;
+      text-transform: uppercase;
+
+      color: #83a3ca;
+      position: relative;
+      padding-left: 20px;
+      &:before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+        position: absolute;
+        transform: rotateZ(45deg);
+        left: 0px;
+        top: 5px;
+      }
     }
   }
   .terms-conditions {
     padding-bottom: 80px;
-    max-width: 900px;
     margin: 0 auto;
-    width: 95%;
+    width: 90%;
+    max-width: 1080px;
     position: relative;
     .game-title {
-      margin-top: 80px;
-      margin-bottom: 30px;
+      color: #222222;
+      font-family: Poppins Bold;
+      font-size: 30px;
+      text-align: left;
+    }
+    .terms-conditions-title-separator {
+      width: 100%;
+      height: 100%;
+      display: none;
     }
     .terms {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 30px;
+      color: #83a3ca;
+      margin: 0;
+      padding: 0;
+      align-items: flex-start;
+
       .term {
-        .circle-wrapper {
-          margin-right: -50px;
-
-          z-index: 1;
-          background: #2b2b4b;
-          border: 4px solid #d7510b;
-          border-radius: 50%;
-          width: 80px;
-          height: 80px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+        width: 100%;
+        list-style-type: none;
+        color: #83a3ca;
+        position: relative;
+        padding-left: 20px;
+        &:before {
+          content: "";
+          width: 8px;
+          height: 8px;
+          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
           position: absolute;
-          left: 10px;
-
-          .circle {
-            border: 2px solid #d7510b;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 50px;
-            font-family: Wave;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ffffff;
-          }
-        }
-        .term-text {
-          min-height: 80px;
-          width: calc(100% - 40px);
-          border-radius: 10px;
-          background: #2b2b4b;
-          min-width: 20px;
-          justify-content: center;
-          align-items: center;
-          display: flex;
-          color: #ffffff;
-          padding: 20px 20px 20px 80px;
-          margin-left: 40px;
+          transform: rotateZ(45deg);
+          left: 0px;
+          top: 5px;
         }
       }
     }
@@ -1159,7 +1447,6 @@ $max-width: 1400px;
     .txt {
       position: absolute;
       bottom: 0px;
-      background: #2b2b4b;
       padding: 20px 80px 20px 20px;
       color: #fff;
       width: 100%;
@@ -1187,7 +1474,7 @@ $max-width: 1400px;
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .section-product .item-group {
     grid-template-columns: 1fr;
   }
@@ -1197,12 +1484,14 @@ $max-width: 1400px;
   }
   .vip-container {
     .banner-container {
-      background-position: 70% 50%;
+      min-height: 300px;
+      background-position: center center;
       .btn-wrapper {
         .center {
           max-width: 300px;
           width: 100%;
           margin: 0 auto;
+
           .page-headline {
             font-size: 5rem;
             line-height: 5rem;
@@ -1224,9 +1513,13 @@ $max-width: 1400px;
       }
     }
     .vipitem {
-      background-size: cover;
-      min-width: 340px;
+      width: 430px;
+      height: 215px;
       margin: auto;
+      .vipLevelReachStatus {
+        margin-top: 12px;
+        margin-left: 3px;
+      }
       .vipcontents {
         padding-bottom: 10px;
       }
@@ -1242,31 +1535,21 @@ $max-width: 1400px;
         gap: 10px;
         padding: 10px;
         .rebate {
-          background: #23263c;
           border-top: 5px solid #dc5e43;
           border-bottom: 5px solid #dc5e43;
           border-radius: 20px;
           .name {
             font-size: 12px;
             line-height: 15px;
-            color: #ffffff;
+
             padding: 20px 0;
           }
           .value {
-            background: #2b2b4b;
-            color: #ffffff;
             margin: 20px 0 0;
             font-family: Wave;
             font-size: 30px;
           }
         }
-      }
-      .note {
-        color: #db7d42;
-        font-size: 12px;
-        text-align: left;
-        padding: 0 10px;
-        display: block;
       }
     }
   }
@@ -1304,26 +1587,26 @@ $max-width: 1400px;
   box-sizing: content-box;
   background: url(../../assets/images/vip/nextprev.png) no-repeat center center;
   background-size: contain;
-  top: 25%;
+  top: 45%;
   .carousel__icon {
     display: none;
   }
 }
 .carousel__prev {
-  top: 26.5%;
+  top: 46.5%;
   left: 4%;
 }
 .carousel__next {
   transform: rotate(180deg);
 }
 .carousel__slide > .carousel__item {
-  transform: scale(0.8);
-  filter: brightness(0.7);
+  transform: scale(0.2);
+  filter: brightness(0.7) grayscale(1);
   transition: 0.5s;
 }
 .carousel__slide--visible > .carousel__item {
   opacity: 1;
-  filter: brightness(1);
+  filter: brightness(1) grayscale(0);
   transform: rotateY(0);
 }
 .carousel__slide--next > .carousel__item {
@@ -1340,7 +1623,16 @@ $max-width: 1400px;
   transform: scale(1);
   z-index: 0;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+  .carousel__prev,
+  .carousel__next {
+    top: 15%;
+  }
+  .carousel__next {
+    top: 13.5%;
+    right: 2%;
+  }
+
   .carousel__slide > .carousel__item {
     transform: scale(0);
     filter: brightness(0.7);

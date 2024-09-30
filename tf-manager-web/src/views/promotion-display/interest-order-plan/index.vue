@@ -99,7 +99,6 @@
               v-if="scope.row.placeTime !== null"
               v-formatter="{
                 data: scope.row.placeTime,
-                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -113,7 +112,6 @@
               v-if="scope.row.matureTime !== null"
               v-formatter="{
                 data: scope.row.matureTime,
-                timeZone: timeZone,
                 type: 'date',
               }"
             />
@@ -134,6 +132,18 @@
           </template>
       </el-table-column>
       </el-table>
+      <div class="table-footer">
+        <span> {{ t('fields.totalPlaceMemberCount') }}</span>
+        <span style="margin-left: 10px">{{ total.memberCount }} </span>
+
+        <span style="margin-left: 30px"> {{ t('fields.totalBonus') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalBonus, type: 'money'}" />
+
+        <span style="margin-left: 30px"> {{ t('fields.totalPlaceAmount') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalPlaceAmount, type: 'money'}" />
+      </div>
       <el-pagination class="pagination"
                      @current-change="changePage"
                      layout="prev, pager, next"
@@ -198,6 +208,12 @@ const request = reactive({
   siteId: null
 });
 
+const total = reactive({
+  memberCount: 0,
+  totalBonus: 0,
+  totalPlaceAmount: 0
+});
+
 function resetQuery() {
   request.status = null;
   request.loginName = null;
@@ -238,6 +254,11 @@ async function loadRecords() {
   const { data: ret } = await getInterestPlanOrderRecords(query);
   page.pages = ret.pages;
   page.records = ret.records;
+  page.total = ret.total;
+
+  total.memberCount = ret.sums.memberCount;
+  total.totalBonus = ret.sums.totalBonus;
+  total.totalPlaceAmount = ret.sums.totalPlaceAmount;
   page.loading = false;
 }
 
@@ -288,7 +309,7 @@ onMounted(async() => {
   padding: 0;
 }
 
-::v-deep(.el-table__row:not([class*='el-table__row--level-'])) {
+:deep(.el-table__row:not([class*='el-table__row--level-'])) {
   td:first-child {
     padding-left: 23px;
   }

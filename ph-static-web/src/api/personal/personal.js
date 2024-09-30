@@ -1,4 +1,5 @@
 import { server } from "@/utils/request";
+import axios from "axios";
 
 export function loadBalance(platform) {
   return server.REST.get("/session/balance?v=123", {
@@ -15,12 +16,19 @@ export function loadMemberInfo() {
   return server.REST.get("/session/member");
 }
 
+export function loadVerifyStatus() {
+  return server.REST.get("/session/idVerifyStatus");
+}
+
 export function changePwd(oldPassword, password) {
   return server.REST.post("/session/password", { oldPassword, password });
 }
 
 export function changeWithdrawPwd(oldPassword, password) {
-  return server.REST.post("/session/withdrawPassword", { oldPassword, password });
+  return server.REST.post("/session/withdrawPassword", {
+    oldPassword,
+    password,
+  });
 }
 
 export function updateAccount(updateInfo) {
@@ -45,6 +53,10 @@ export function gameBetRecordTotal(p) {
   return server.REST.get("/session/member/gameBetRecordTotal", { params: p });
 }
 
+export function financeFeedbackList(p) {
+  return server.REST.get("/session/member/financeFeedback", { params: p });
+}
+
 export function loadCurrency() {
   return server.REST.get("/session/withdraw/currency");
 }
@@ -55,6 +67,10 @@ export function loadBanks(currencyId) {
 
 export function loadBankCards() {
   return server.REST.get("/session/bankCard");
+}
+
+export function loadAllBankCards() {
+  return server.REST.get("/session/allBankCard");
 }
 
 export function loadUnbindRecord(params) {
@@ -87,4 +103,33 @@ export function verifyEmail(emailInfo) {
 
 export function checkWithdrawPassword() {
   return server.REST.get("/session/withdrawPasswordExist");
+}
+
+export function saveFinanceFeedback(reminderInfo) {
+  return server.REST.post("/session/saveFinanceFeedback", reminderInfo);
+}
+
+export function getVerifyingFeedbackCount() {
+  return server.REST.get("session/getVerifyingFeedbackCount");
+}
+
+export const verifyID = (formData, token) => {
+  // const requestOptions = {
+  //   method: "POST",
+  //   body: formData
+  // for (var [key, value] of formData.entries()) {
+  //   console.log(key, value);
+  // }
+  const restUrl = process.env.VUE_APP_RST_API.split(",")[0];
+  return axios.post(restUrl + "/session/idVerify", formData, {
+    headers: {
+      "Content-Type": `multipart/form-data`,
+      Authorization: process.env.VUE_APP_SITE,
+      TOKEN: token,
+    },
+  });
+};
+
+export function sendTelephoneOtpToRegisteredUser(params) {
+  return server.REST.post("/session/sendSms", params);
 }

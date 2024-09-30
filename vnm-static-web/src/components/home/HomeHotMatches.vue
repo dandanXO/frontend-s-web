@@ -1,46 +1,46 @@
 <template>
   <div class="hot-matches-wrapper">
-<!--    <div class="euro-countdown">-->
-<!--      <div class="euro-countdown-fly-01">-->
-<!--        <img src="../../assets/home/eurocup-countdown-fly-01.png" />-->
-<!--      </div>-->
-<!--      <div class="euro-countdown-fly-02">-->
-<!--        <img src="../../assets/home/eurocup-countdown-fly-02.png" />-->
-<!--      </div>-->
-<!--      <div class="euro-countdown-fly-03">-->
-<!--        <img src="../../assets/home/eurocup-countdown-fly-03.png" />-->
-<!--      </div>-->
-<!--      <div class="euro-countdown-fly-04">-->
-<!--        <img src="../../assets/home/eurocup-countdown-fly-04.png" />-->
-<!--      </div>-->
-<!--      <div class="euro-countdown-fly-05">-->
-<!--        <img src="../../assets/home/eurocup-countdown-fly-05.png" />-->
-<!--      </div>-->
-<!--      <div class="euro-countdown-fly-06">-->
-<!--        <img src="../../assets/home/eurocup-countdown-fly-06.png" />-->
-<!--      </div>-->
-<!--      <div class="euro-countdown-content">-->
-<!--        <img src="../../assets/home/eurocup-countdown-content.png" />-->
-<!--      </div>-->
+    <!--    <div class="euro-countdown">-->
+    <!--      <div class="euro-countdown-fly-01">-->
+    <!--        <img src="../../assets/home/eurocup-countdown-fly-01.png" />-->
+    <!--      </div>-->
+    <!--      <div class="euro-countdown-fly-02">-->
+    <!--        <img src="../../assets/home/eurocup-countdown-fly-02.png" />-->
+    <!--      </div>-->
+    <!--      <div class="euro-countdown-fly-03">-->
+    <!--        <img src="../../assets/home/eurocup-countdown-fly-03.png" />-->
+    <!--      </div>-->
+    <!--      <div class="euro-countdown-fly-04">-->
+    <!--        <img src="../../assets/home/eurocup-countdown-fly-04.png" />-->
+    <!--      </div>-->
+    <!--      <div class="euro-countdown-fly-05">-->
+    <!--        <img src="../../assets/home/eurocup-countdown-fly-05.png" />-->
+    <!--      </div>-->
+    <!--      <div class="euro-countdown-fly-06">-->
+    <!--        <img src="../../assets/home/eurocup-countdown-fly-06.png" />-->
+    <!--      </div>-->
+    <!--      <div class="euro-countdown-content">-->
+    <!--        <img src="../../assets/home/eurocup-countdown-content.png" />-->
+    <!--      </div>-->
 
-<!--      <div class="euro-countdown-txt">-->
-<!--        {{ $t("home.euroCountdown01") }} {{ $t("home.euroCountdown01a") }}-->
-<!--        <div class="euro-countdown-num">-->
-<!--          <div class="num">-->
-<!--            <span>{{ countDay01 }}</span>-->
-<!--          </div>-->
-<!--          <div class="num">-->
-<!--            <span>{{ countDay02 }}</span>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        {{ $t("home.euroCountdown02") }}-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--      <div class="euro-countdown-txt">-->
+    <!--        {{ $t("home.euroCountdown01") }} {{ $t("home.euroCountdown01a") }}-->
+    <!--        <div class="euro-countdown-num">-->
+    <!--          <div class="num">-->
+    <!--            <span>{{ countDay01 }}</span>-->
+    <!--          </div>-->
+    <!--          <div class="num">-->
+    <!--            <span>{{ countDay02 }}</span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--        {{ $t("home.euroCountdown02") }}-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
-          <img src="../../assets/images/home/icon-hot-matches.png" alt="hot matches">
+          <img src="../../assets/images/home/icon-hot-matches.png" alt="hot matches" />
         </div>
         {{ $t("home.hotMatches") }}
       </div>
@@ -75,7 +75,7 @@
             <div class="top-match-title">{{ item.competitionName }}</div>
             <div class="team-details team-details__home">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamOneLogo" :alt="item.teamOneName"/>
+                <img :src="hotMatchesImgURL + item.teamOneLogo" :alt="item.teamOneName" />
               </div>
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
@@ -90,7 +90,11 @@
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" :alt="item.teamTwoName"/>
+                <img
+                  :src="hotMatchesImgURL + item.teamTwoLogo"
+                  :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);' : ''"
+                  :alt="item.teamTwoName"
+                />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
@@ -481,6 +485,7 @@ onMounted(() => {
         img {
           width: unset;
           height: 80px;
+          max-width: 100px;
         }
       }
 

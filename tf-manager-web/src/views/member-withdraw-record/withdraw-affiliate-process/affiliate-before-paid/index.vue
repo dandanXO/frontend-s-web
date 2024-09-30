@@ -138,12 +138,6 @@
           min-width="110"
         />
         <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
           prop="financial"
           :label="t('fields.financialLevel')"
           align="center"
@@ -257,6 +251,12 @@
           :label="t('fields.checkBy')"
           align="center"
           min-width="100"
+        />
+        <el-table-column
+          prop="vip"
+          :label="t('fields.vipLevel')"
+          align="center"
+          min-width="80"
         />
         <el-table-column
           prop="walletType"

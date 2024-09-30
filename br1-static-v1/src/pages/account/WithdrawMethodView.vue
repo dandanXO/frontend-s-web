@@ -2,18 +2,10 @@
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
     </div>
 
     <template v-else>
@@ -62,9 +54,10 @@
       </template>
 
       <template v-if="isSelectedMethod">
-        <!-- <div
+        <div
           class="bank-account-container"
           v-if="isBankType === 'BANK' && (bankCardList.length === 0 || isAddNewAccount)"
+          style="opacity: 0; visibility: hidden; position: absolute"
         >
           <div class="w-form-item w-form-item--bankcard">
             <div class="top-wrapper">
@@ -92,7 +85,7 @@
               ></q-select>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
@@ -162,18 +155,55 @@
 
         <div class="withdrawal-amount-container">
           <template v-if="bankCardList.length === 0 || isAddNewAccount">
+            <!-- <div class="type-option-container">
+              <div class="">Select Type</div>
+              <q-select
+                class="type-option"
+                v-model="typeVal"
+                :options="typeOptions"
+                option-label="label"
+                option-value="value"
+                emit-value
+                map-options
+                filled
+                @update:model-value="selectOption"
+              />
+            </div> -->
+
             <div class="w-form-item w-form-item--bankcard">
               <div class="top-wrapper">
-                <div class="title">{{ $t("form.phone") }}</div>
+                <div class="title">{{ $t("form.holderName") }}</div>
               </div>
               <div class="mid-wrapper">
                 <q-input
                   filled
                   dense
                   clearable
+                  type="text"
+                  ref="bankAccountRef"
+                  :placeholder="$t('form.holderName_placeholder')"
+                  v-model="bankCardField.cardAccount"
+                  :rules="[(_) => isValidCardAccount()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                ></q-input>
+              </div>
+            </div>
+
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.phone") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <!-- :type="['phone', 'cpf', 'cnpj'].includes(typeVal) ? 'number' : 'text'" -->
+                <q-input
+                  filled
+                  dense
+                  clearable
                   type="number"
                   ref="bankNumberRef"
-                  :placeholder="$t('form.phone')"
+                  :placeholder="$t('form.phone_placeholder')"
                   v-model="bankCardField.cardNumber"
                   :rules="[(_) => isValidCardNumber()]"
                   hide-bottom-space
@@ -181,8 +211,72 @@
                   @blur="isInputFocus = false"
                 >
                   <template v-slot:prepend>
-                    <img class="white-svg" src="../../assets/images/auth/phone.svg" />
+                    <!-- <template v-if="typeVal === 'phone'"> -->
+                    <img class="white-svg" src="../../assets/images/account/input-icon-phone.png" />
                     <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                    <!-- </template> -->
+                    <!-- <template v-if="typeVal === 'email'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-email.png" />
+                    </template>
+                    <template v-if="typeVal === 'cpf'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cpf.png" />
+                    </template>
+                    <template v-if="typeVal === 'cnpj'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cnpj.png" />
+                    </template>
+                    <template v-if="typeVal === 'evp'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-evp.png" />
+                    </template> -->
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.cpf") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="number"
+                  ref="bankAddressRef"
+                  :placeholder="$t('form.cpf_placeholder')"
+                  v-model="bankCardField.cardAddress"
+                  :rules="[(_) => isValidCardAddress()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                >
+                  <template v-slot:prepend>
+                    <img class="white-svg" src="../../assets/images/account/input-icon-cpf.png" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.email") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="text"
+                  ref="bankEmailRef"
+                  :placeholder="$t('form.email_placeholder')"
+                  v-model="bankCardField.email"
+                  :rules="[(_) => isValidEmail()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                >
+                  <template v-slot:prepend>
+                    <img class="white-svg" src="../../assets/images/account/input-icon-email.png" />
                   </template>
                 </q-input>
               </div>
@@ -201,7 +295,7 @@
               filled
               dense
               clearable
-              placeholder="Withdraw Amount"
+              :placeholder="$t('form.withdrawalAmount')"
               v-model="withdrawInfo.amount"
               :rules="[
                 (val) => !!val || $t('form.withdrawalAmount_rules_01'),
@@ -223,7 +317,7 @@
                     class="minmax-btn"
                     rounded
                     color="black"
-                    label="min"
+                    label="mín"
                     dense
                     no-caps
                     @click="toggleAmount('min')"
@@ -250,7 +344,7 @@
                     class="minmax-btn"
                     rounded
                     color="black"
-                    label="Max"
+                    label="Máx"
                     dense
                     no-caps
                     @click="toggleAmount('max')"
@@ -262,7 +356,7 @@
 
           <div class="fund-container q-mt-sm q-mb-md">
             <div>
-              <span class="fund-title">Available:</span>
+              <span class="fund-title">Disponível:</span>
               {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
             </div>
           </div>
@@ -270,7 +364,7 @@
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">Withdrew Amount</div>
+                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
@@ -279,7 +373,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ store.vip }} Daily Limit</div>
+                <div class="desc">{{ $t("withdraw.dailyLimit") }} {{ store.vip }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
@@ -288,7 +382,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">Remain Wagers</div>
+                <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
@@ -306,7 +400,7 @@
               size="2em"
               :thickness="2"
             ></q-spinner>
-            <template v-else>Submit</template>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
         </template>
 
@@ -318,7 +412,7 @@
               size="2em"
               :thickness="2"
             ></q-spinner>
-            <template v-else>Submit</template>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
         </template>
         <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
@@ -559,7 +653,10 @@ const loadCards = () => {
 const cardRef = ref();
 const amountRef = ref();
 // const bankAddressRef = ref();
+const bankAccountRef = ref();
 const bankNumberRef = ref();
+const bankAddressRef = ref();
+const bankEmailRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
@@ -576,7 +673,8 @@ const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
   cardNumber: "",
-  // cardAddress: "",
+  cardAddress: "",
+  email: "",
   withdrawCode: "",
   withdrawPlatformId: "",
   amount: ""
@@ -596,6 +694,7 @@ watch(withdrawalDialogTab, () => {
   bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
+  bankCardField.email = "";
 });
 
 const onCardChanged = () => {
@@ -638,8 +737,15 @@ const submitWithdrawBank = () => {
   isSubmitDisable.value = true;
   amountRef.value.validate();
   bankNumberRef.value.validate();
+  bankAddressRef.value.validate();
+  bankEmailRef.value.validate();
 
-  if (amountRef.value.hasError || bankNumberRef.value.hasError) {
+  if (
+    amountRef.value.hasError ||
+    bankNumberRef.value.hasError ||
+    bankAddressRef.value.hasError ||
+    bankEmailRef.value.hasError
+  ) {
     $q.loading.hide();
     isSubmitDisable.value = false;
     return;
@@ -651,9 +757,11 @@ const submitWithdrawBank = () => {
 
   const formData = { ...bankCardField };
 
+  // if (typeVal.value === "phone") {
   if (!formData.cardNumber.startsWith("+55")) {
     formData.cardNumber = `+55${formData.cardNumber}`;
   }
+  // }
 
   api
     .post("/session/withdrawAndBankCard", qs.stringify(formData))
@@ -670,7 +778,7 @@ const submitWithdrawBank = () => {
         getWithdrawalMethods();
         resetSelectedMethod();
 
-        bankCardField.cardNumber = "";
+        (bankCardField.cardAccount = store.realName), (bankCardField.cardNumber = "");
         bankCardField.amount = "";
         withdrawInfo.amount = "";
       }
@@ -759,6 +867,7 @@ const goSelectedMethod = (item) => {
   bankCardField.bankId = item.bankList[0].id;
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
+  bankCardField.email = "";
   withdrawInfo.amount = "";
 };
 
@@ -783,26 +892,76 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-  const result = !cardNumber ? t("form.phone_rules_01") : true;
+  let result = true;
 
+  // if (typeVal.value === "phone") {
+  result = !cardNumber ? t("form.phone_rules_01") : true;
   if (cardNumber.startsWith("0")) {
     return t("form.phone_rules_03");
   }
-
   const digitCount = cardNumber.match(/\d/g)?.length || 0;
   if (digitCount !== 11) {
     return t("form.phone_rules_02");
   }
+  // } else if (typeVal.value === "email") {
+  //   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   result = emailPattern.test(cardNumber) ? true : t("form.email_rules_02");
+  // } else if (typeVal.value === "cpf") {
+  //   const cpfPattern = /^\d{11}$/;
+  //   result = cpfPattern.test(cardNumber) ? true : t("form.cpf_rules_02");
+  // } else if (typeVal.value === "cnpj") {
+  //   const cnpjPattern = /^\d{14}$/;
+  //   result = cnpjPattern.test(cardNumber) ? true : t("form.cnpj_rules_02");
+  // } else if (typeVal.value === "evp") {
+  //   const evpPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  //   result = evpPattern.test(cardNumber) ? true : t("form.evp_rules_02");
+  // }
 
   return result;
 };
 
+const cardNumberLabel = ref("");
+const cardNumberPlaceholder = ref("");
+
+const selectOption = (option) => {
+  bankCardField.cardNumber = "";
+  if (option === "phone") {
+    cardNumberLabel.value = t("form.phone");
+    cardNumberPlaceholder.value = t("form.phone_placeholder");
+  } else if (option === "email") {
+    cardNumberLabel.value = t("form.email");
+    cardNumberPlaceholder.value = t("form.email_placeholder");
+  } else if (option === "cpf") {
+    cardNumberLabel.value = t("form.cpf");
+    cardNumberPlaceholder.value = t("form.cpf_placeholder");
+  } else if (option === "cnpj") {
+    cardNumberLabel.value = t("form.cnpj");
+    cardNumberPlaceholder.value = t("form.cnpj_placeholder");
+  } else if (option === "evp") {
+    cardNumberLabel.value = t("form.evp");
+    cardNumberPlaceholder.value = t("form.evp_placeholder");
+  }
+};
+
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
-  const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
+  const result = !cardAddress ? t("form.cpf_rules_01") : cardAddress.length !== 11 ? t("form.cpf_rules_02") : true;
+  return result;
+};
+
+const isValidEmail = () => {
+  const { email } = bankCardField;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const result = !email ? t("form.email_rules_01") : !emailPattern.test(email) ? t("form.email_rules_02") : true;
+  return result;
+};
+
+const isValidCardAccount = () => {
+  const { cardAccount } = bankCardField;
+  const result = !cardAccount
+    ? t("form.holderName_rules_01")
+    : cardAccount.length < 2
+    ? t("form.holderName_rules_02")
     : true;
   return result;
 };
@@ -919,6 +1078,30 @@ const loadInfo = () => {
     openUserKYCDialog();
   }
 };
+
+const typeVal = ref("phone");
+const typeOptions = [
+  {
+    label: "Phone",
+    value: "phone"
+  },
+  {
+    label: "Email",
+    value: "email"
+  },
+  {
+    label: "CPF",
+    value: "cpf"
+  },
+  {
+    label: "CNPJ",
+    value: "cnpj"
+  },
+  {
+    label: "EVP",
+    value: "evp"
+  }
+];
 </script>
 
 <style scoped lang="scss">
@@ -1342,5 +1525,22 @@ const loadInfo = () => {
 
 .input-btm {
   padding-bottom: 270px;
+}
+
+.type-option-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #98a6b4;
+  font-size: 12px;
+}
+
+.type-option {
+  width: 100px;
+  font-size: 12px;
+  min-height: 0;
+  :deep(.q-field__native, q-field--auto-height) {
+    min-height: 0px;
+  }
 }
 </style>

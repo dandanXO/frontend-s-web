@@ -348,7 +348,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch } from "vue";
+import { ref, reactive, onMounted, shallowRef, onActivated, watch } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
@@ -372,10 +372,7 @@ const store = userStore();
 const router = useRouter();
 const emits = defineEmits(["closeModal"]);
 
-const { userKYCDialog, closeUserKYCDialog } = useCheckKYC([
-  "mounted",
-  "activated"
-]);
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
 
 // const checkNewUser = () => {
 //   if (store.realName == "" || store.realName == null) {
@@ -887,7 +884,7 @@ const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
-  window.open("https://docs.google.com/presentation/d/1SzP0PFCOPmxJrJoUFBgTx9XW0TrqQzA0/edit?usp=sharing&ouid=104788776916971720528&rtpof=true&sd=true", "_blank");
+  window.open("https://drive.google.com/file/d/1XcqiSx7RXH6ix239h-NUa_9RjfMR7KBm/view?usp=sharing", "_blank");
   // if (selectedPayType.value === "EASYPAISA") {
   //   window.open("https://docs.google.com/presentation/d/1SzP0PFCOPmxJrJoUFBgTx9XW0TrqQzA0/edit?usp=sharing&ouid=104788776916971720528&rtpof=true&sd=true", "_blank");
   // } else if (selectedPayType.value === "JAZZCASH") {
@@ -902,7 +899,7 @@ const openDepositVideo = () => {
   if (langSelect === "ur") {
     window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+    window.open("https://drive.google.com/file/d/1CgUruqNA7fEKTcTfskFOgagswVIF-7J1/view?usp=sharing", "_blank");
   }
   // if (selectedPayType.value === "EASYPAISA") {
   //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
@@ -1243,7 +1240,7 @@ onMounted(() => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  // background-color: #0e1412;
+  background-color: #e9f2fd;
   // margin: 16px;
 }
 
@@ -1253,7 +1250,7 @@ onMounted(() => {
 }
 
 .step-desc-div {
-  color: #9f9f9f;
+  color: #000;
 
   p {
     margin: 5px 0px;

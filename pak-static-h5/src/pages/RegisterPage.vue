@@ -449,6 +449,9 @@ export default defineComponent({
                   icon: "check_circle_outline"
                 });
 
+                //FB Tracking.
+                fbq("track", "CompleteRegistration");
+
                 //ADJUST TRACKEVENT.
                 // debugger;
                 // if (Platform.is.android && Platform.is.capacitor) {

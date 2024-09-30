@@ -124,7 +124,7 @@
                     :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
                   >
                     <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
+                      <div class="date-txt">{{ $t("promo_page.promotionEnds") }}</div>
                       <div class="date-timer">
                         <img src="../assets/images/promotion/timer-icon.svg" alt="" />
                         <q-icon name="all_inclusive" size="22px"></q-icon>
@@ -135,7 +135,7 @@
                       :class="isFtdPromoEnded ? 'btn-disabled' : ''"
                       :disable="isFtdPromoEnded"
                       no-caps
-                      label="Join Now"
+                      :label="$t('promo_page.joinNow')"
                       @click="goToJoinNow()"
                     />
                   </div>

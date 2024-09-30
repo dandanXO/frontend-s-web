@@ -1,19 +1,8 @@
 <template>
   <div class="slots-container">
-    <div
-      v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
-      class="banner-container"
-    >
-      <div
-        class="promo-bg isDesktop"
-        :style="
-          'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
-        "
-      ></div>
-      <div
-        class="promo-bg isMobile"
-        :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"
-      ></div>
+    <div v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl" class="banner-container">
+      <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'" />
+      <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" />
     </div>
     <!-- <div
         class="promo-bg"
@@ -37,15 +26,13 @@
     <div class="margin-center game-container">
       <div class="bookmarks">
         <div
-          class="plat-item"
           v-for="p in platforms"
-          :class="{ active: p.id === selectedPlatId }"
           :key="p"
+          class="plat-item"
+          :class="{ active: p.id === selectedPlatId }"
           @click="switchPlat(p)"
         >
-          <img
-            :src="require('../../assets/images/common/logo/' + p.code + '.png')"
-          />
+          <img :src="require('../../assets/images/common/logo/' + p.code + '.png')" />
           <!-- <img
             v-if="p.name === 'PG'"
             src="../../assets/images/common/logo/PG.png"
@@ -93,9 +80,9 @@
         <main>
           <div class="search-container">
             <a-input
+              v-model:value="gamePage.searchKey"
               class="search-input"
               placeholder="Search"
-              v-model:value="gamePage.searchKey"
               @keypress.enter="searchList()"
             >
               <template #suffix>
@@ -106,21 +93,18 @@
             </a-input>
           </div>
           <div
-            class="game-slot"
             v-for="game in gamePage.gameList"
             :key="game.id"
+            :style="selectedPlat.code === 'SP' ? 'align-items: flex-start' : 'align-items: center'"
             @click="openGame(game.name, game.code)"
-            :style="
-              selectedPlat.code === 'SP'
-                ? 'align-items: flex-start'
-                : 'align-items: center'
-            "
           >
-            <div class="slot-img">
-              <img :src="game.default" v-image="game.icon" />
+            <div class="game-slot">
+              <div class="slot-img">
+                <img v-image="game.icon" :src="game.default" />
+              </div>
             </div>
             <div class="slot-name">
-              <span class="slide"> {{ game.name }}</span>
+              <span class="slide">{{ game.name }}</span>
             </div>
 
             <!-- <a @click="openGame(game.name, game.code)">
@@ -138,27 +122,28 @@
               v-model:current="gamePage.currentPage"
               v-model:pageSize="gamePage.pageSize"
               :total="gamePage.total"
+              :show-size-changer="true"
               @change="changePage"
               @showSizeChange="onShowSizeChange"
-              :showSizeChanger="true"
             />
           </div>
         </main>
       </div>
     </div>
-    <GameModal ref="slotsGame"></GameModal>
+    <GameModal ref="slotsGame" />
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, ref, watch } from "vue";
-import { SearchOutlined } from "@ant-design/icons-vue";
-import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import {SearchOutlined} from "@ant-design/icons-vue";
+import {getPlatformGames, getPlatformList} from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
-import { useRoute, useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 // import { message } from "ant-design-vue";
-import { loadPromoBanner } from "@/api/index/promo";
-const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
+import {loadPromoBanner} from "@/api/index/promo";
+
+const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/'
 
 export default defineComponent({
   components: {
@@ -184,7 +169,7 @@ export default defineComponent({
     const gameListData = ref([]);
 
     const switchPlat = (plat) => {
-      router.push({ path: 'slot', query: { plat: plat.code }})
+      router.push({path: 'slot', query: {plat: plat.code}})
       selectedPlat.value = plat
       selectedPlatId.value = plat.id;
       gamePage.currentPage = 1;
@@ -222,7 +207,7 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("SLOT").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0]
         }
       })
     }
@@ -230,13 +215,13 @@ export default defineComponent({
       getPlatformGames(selectedPlatId.value, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/slot/${selectedPlat.value.code}/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/games/slot/${selectedPlat.value.code}/${element.icon}.png`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
         changePage(1, gamePage.pageSize);
       }).catch((err) => {
-          console.log(err.message);
+        console.log(err.message);
         // message.error(
         //   err.message,
         //   4
@@ -262,12 +247,12 @@ export default defineComponent({
       loadBanner();
     });
     watch(
-      () => route.query.plat,
-      () => {
-        if (route.path === '/slot') {
-          getPlatList();
-        }
-      }
+        () => route.query.plat,
+        // () => {
+        //   if (route.path === '/slot') {
+        //     getPlatList();
+        //   }
+        // }
     );
     return {
       jpNumber,
@@ -319,25 +304,58 @@ export default defineComponent({
     -webkit-transform: scale(1.04, 1.04);
   }
 }
+.game-container {
+  width: 95%;
+}
 .slots-container {
-  background: linear-gradient(to bottom, #23263c, #190f25);
+  background-image: url(../../assets/images/index/centerbg.png);
   .banner-container {
     @keyframes fadein {
       100% {
         opacity: 1;
       }
     }
+
     .promo-bg {
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
+
       &.isDesktop {
         display: block;
         height: 430px;
       }
+
       &.isMobile {
         display: none;
         height: 220px;
+      }
+    }
+  }
+}
+.dark-theme {
+  .slots-container {
+    background-color: linear-gradient(to bottom, #23263c, #190f25);
+  }
+  .bookmarks {
+    .plat-item {
+      &:hover,
+      &.active {
+        position: relative;
+        background: linear-gradient(90deg, rgba(57, 129, 255, 0.2) 0%, rgba(20, 29, 38, 0.2) 100%);
+        box-shadow: none;
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin: auto;
+          width: 39px;
+          border-radius: 1px;
+          height: 2px;
+          background: #3981ff;
+        }
       }
     }
   }
@@ -346,145 +364,157 @@ export default defineComponent({
   cursor: pointer;
   display: flex;
   grid-gap: 20px;
-  max-width: 1400px;
-  margin: 30px auto 60px;
+  max-width: $container-width;
+  margin: 0px auto 60px;
   padding: 20px 15px;
   justify-content: flex-start;
   overflow: unset;
   flex-wrap: wrap;
+
   .plat-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #23263c;
+    min-width: 100px;
+    border-radius: 4px;
+    min-width: 80px;
+    background: transparent;
+    padding: 15px 15px;
+
     // min-width: 120px;
     img {
       max-height: 30px;
-      filter: grayscale(1);
+      // filter: grayscale(1);
     }
+
     span {
       color: rgba(200, 200, 200, 0.5);
       font-size: 20px;
       font-weight: bold;
     }
-    &.active,
-    &:hover {
-      background: #2b2b4b;
-      box-shadow: 0 0 5px #ffffff;
-      img {
-        filter: grayscale(0);
-      }
-      span {
-        color: #ffffff;
+
+    &:hover,
+    &.active {
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 39px;
+        border-radius: 1px;
+        height: 2px;
+        background: #3981ff;
       }
     }
   }
-  div {
-    padding: 10px 20px;
-    text-align: center;
-    background: #2b2b4b;
-    border-radius: 20px;
-    box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
-    &:hover {
-      transform: scale(1.01274) translate(0px, -4px);
-    }
-  }
+
+  // div {
+  //   padding: 10px 20px;
+  //   text-align: center;
+  //   border-radius: 20px;
+  //   box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
+
+  //   &:hover {
+  //     //transform: scale(1.01274) translate(0px, -4px);
+  //   }
+  // }
 }
 
 .hot-game-container {
   margin: 0 auto;
   padding: 20px 0 80px;
-  width: 100%;
-  max-width: 1400px;
+  width: 95%;
+  max-width: $container-width;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 20px;
+
   :deep(.ant-select:not(.ant-select-disabled):hover .ant-select-selector) {
-    border-color: #de4845;
+    border-color: $primary-color;
   }
+
   :deep(.ant-select-selector:focus) {
-    border-color: #de4845;
+    border-color: $primary-color;
   }
 
   :deep(.ant-select:not(.ant-select-disabled):visited .ant-select-selector) {
-    border-color: #de4845;
+    border-color: $primary-color;
   }
+
   :deep(.ant-pagination-next:hover .ant-pagination-item-link) {
-    border-color: #de4845;
-    color: #de4845;
+    border-color: $primary-color;
+    color: $primary-color;
   }
+
   :deep(.ant-pagination-next:focus .ant-pagination-item-link) {
-    border-color: #de4845;
-    color: #de4845;
+    border-color: $primary-color;
+    color: $primary-color;
   }
+
   :deep(.ant-pagination-prev:hover .ant-pagination-item-link) {
-    border-color: #de4845;
-    color: #de4845;
+    border-color: $primary-color;
+    color: $primary-color;
   }
+
   :deep(.ant-pagination-prev:focus .ant-pagination-item-link) {
-    border-color: #de4845;
-    color: #de4845;
+    border-color: $primary-color;
+    color: $primary-color;
   }
 
   main {
     &:after {
       display: none;
     }
+
     width: 100%;
     padding-bottom: 50px;
     text-align: center;
-    .pagination-wrapper {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      margin: auto;
-    }
-    .search-container :deep(.ant-input-affix-wrapper) {
-      padding-top: 0;
-      padding-bottom: 0;
-      background-color: #23263c;
-      border: solid 1px #919191;
-      svg {
-        fill: #ffffff;
-      }
-    }
-    :deep(.ant-input-affix-wrapper > input.ant-input) {
-      padding: 10px;
 
-      background: #23263c;
-      color: #ffffff;
-      border: #23263c;
+    .pagination-wrapper {
+      margin: 10px auto;
+      width: 100%;
+
+      grid-column: 1/-1;
     }
     .search-container {
       position: absolute;
       right: 0;
       top: -60px;
     }
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(8, 100px);
 
-    grid-gap: 20px;
+    position: relative;
+    // display: grid;
+    // grid-template-columns: repeat(7, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    //grid-template-rows: repeat(8, 100px);
+    grid-gap: 75px;
     grid-auto-flow: row;
-    grid-template-areas:
-      ". . ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
-      "imp imp ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
-      "imp imp ip0 ip0 ip0 ip1 ip1 ip1 . ip5 ip5 ."
-      ". . . . . ip1 ip1 ip1 . ip5 ip5 ."
-      ". ip6 ip6 ip7 ip7 ip1 ip1 ip1 . ip8 ip8 ."
-      ". ip6 ip6 ip7 ip7 . . . . ip8 ip8 ." ". . . . . . . . . . . ."
-      ". . . . . . . ip9 ip9 . . ." "ip10 ip10 . . . . . ip9 ip9 . . ." "ip10 ip10 ip11 ip11 . . . . . . . ."
-      ". . ip11 ip11 . . . . . . . ."
-      ". . . . . . ip12 ip12 . . . ."
-      ". . . . . . ip12 ip12 . . . ."
-      ". ip13 ip13 . . . . . . . . ." ". ip13 ip13 . . . . . . ip14 ip14 ." ". . . . . . . . . ip14 ip14 .";
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10vw, 1fr));
+    //grid-template-areas:
+    //  ". . ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
+    //  "imp imp ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
+    //  "imp imp ip0 ip0 ip0 ip1 ip1 ip1 . ip5 ip5 ."
+    //  ". . . . . ip1 ip1 ip1 . ip5 ip5 ."
+    //  ". ip6 ip6 ip7 ip7 ip1 ip1 ip1 . ip8 ip8 ."
+    //  ". ip6 ip6 ip7 ip7 . . . . ip8 ip8 ." ". . . . . . . . . . . ."
+    //  ". . . . . . . ip9 ip9 . . ." "ip10 ip10 . . . . . ip9 ip9 . . ." "ip10 ip10 ip11 ip11 . . . . . . . ."
+    //  ". . ip11 ip11 . . . . . . . ."
+    //  ". . . . . . ip12 ip12 . . . ."
+    //  ". . . . . . ip12 ip12 . . . ."
+    //  ". ip13 ip13 . . . . . . . . ." ". ip13 ip13 . . . . . . ip14 ip14 ." ". . . . . . . . . ip14 ip14 .";
+
     .game-slot {
       box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
 
-      border-radius: 20px;
+      border-radius: 4px;
       color: white;
       font-family: sans-serif;
       font-size: 120%;
@@ -499,70 +529,85 @@ export default defineComponent({
       transform: scale(0, 0);
       -webkit-animation-fill-mode: forwards;
       animation-fill-mode: forwards;
+      aspect-ratio: 1/1;
+      max-height: 134px;
+      margin: 0 auto 10px;
+
       .slot-img {
         display: flex;
         justify-content: center;
         transition: all 0.3s ease;
-        height: 120%;
+        height: 100%;
+        width: 100%;
         align-items: flex-start;
+
         img {
           display: block;
           // height: 100%;
           height: 100%;
+          width: 100%;
           min-height: 100%;
         }
       }
+
       &:hover {
         .slot-img {
           -webkit-transform: scale(1.2, 1.2);
           transform: scale(1.2, 1.2);
         }
       }
-      &:nth-child(1) {
-        grid-area: imp;
-      }
-      &:nth-child(2) {
-        grid-area: ip0;
-      }
-      &:nth-child(3) {
-        grid-area: ip1 / ip1 / ip1 / ip1;
-      }
-      &:nth-child(4) {
-        grid-area: ip2;
-      }
-      &:nth-child(5) {
-        grid-area: ip3;
-      }
-      &:nth-child(6) {
-        grid-area: ip4;
-      }
-      &:nth-child(7) {
-        grid-area: ip5;
-      }
-      &:nth-child(8) {
-        grid-area: ip6;
-      }
-      &:nth-child(9) {
-        grid-area: ip7;
-      }
-      &:nth-child(10) {
-        grid-area: ip8;
-      }
+
+      //&:nth-child(1) {
+      //  grid-area: imp;
+      //}
+      //
+      //&:nth-child(2) {
+      //  grid-area: ip0;
+      //}
+      //
+      //&:nth-child(3) {
+      //  grid-area: ip1 / ip1 / ip1 / ip1;
+      //}
+      //
+      //&:nth-child(4) {
+      //  grid-area: ip2;
+      //}
+      //
+      //&:nth-child(5) {
+      //  grid-area: ip3;
+      //}
+      //
+      //&:nth-child(6) {
+      //  grid-area: ip4;
+      //}
+      //
+      //&:nth-child(7) {
+      //  grid-area: ip5;
+      //}
+      //
+      //&:nth-child(8) {
+      //  grid-area: ip6;
+      //}
+      //
+      //&:nth-child(9) {
+      //  grid-area: ip7;
+      //}
+      //
+      //&:nth-child(10) {
+      //  grid-area: ip8;
+      //}
 
       transition: all 0.3s ease-in;
       cursor: pointer;
       position: relative;
+
       .slot-name {
         position: absolute;
         opacity: 0;
         font-size: 15px;
         line-height: 15px;
 
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.3) 10%,
-          transparent
-        );
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.3) 10%, transparent);
         width: 100%;
         height: 100%;
         display: flex;
@@ -576,6 +621,7 @@ export default defineComponent({
           display: block;
         }
       }
+
       &:before {
         position: absolute;
         top: 0;
@@ -585,16 +631,8 @@ export default defineComponent({
         content: "";
         width: 50%;
         height: 100%;
-        background: -webkit-linear-gradient(
-          left,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0.3) 100%
-        );
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0.3) 100%
-        );
+        background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
         -webkit-transform: skewX(-25deg);
         transform: skewX(-25deg);
       }
@@ -636,23 +674,28 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 768px) {
+
+@media (max-width: 767px) {
   .slots-container {
     margin: 0 auto;
+
     .banner-container {
       .promo-bg {
         &.isDesktop {
           display: none;
         }
+
         &.isMobile {
           display: block;
         }
       }
     }
+
     .game-container {
       width: 100%;
       min-height: 100vh;
     }
+
     .bookmarks {
       // overflow: auto;
       // padding: 20px 20px 40px;
@@ -664,37 +707,45 @@ export default defineComponent({
 
     .hot-game-container {
       width: 90%;
+
       main {
         .search-container {
           width: 100%;
         }
+
         display: grid;
         grid-gap: 30px;
         grid-template-columns: repeat(2, 1fr);
         grid-area: unset;
         grid-template-rows: none;
         grid-template-areas: none;
+
         .game-slot {
           display: flex;
           max-height: 25vw;
           align-items: center;
+
           .slot-img {
             min-height: unset;
             height: unset;
           }
+
           img {
             width: 108%;
             opacity: 0.8;
             margin-left: -4%;
           }
+
           &:nth-child(n) {
             grid-area: unset;
           }
+
           .slot-name {
             opacity: 1;
             transform: translate(0px, 0px);
           }
         }
+
         &:after {
           display: none;
         }

@@ -46,7 +46,20 @@
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="180" />
+        <el-table-column
+          prop="loginName"
+          :label="t('fields.loginName')"
+          width="180"
+        >
+          <template
+            #default="scope"
+            v-if="hasPermission(['sys:affiliate:detail'])"
+          >
+            <router-link :to="`/member/details/${scope.row.id}?site=${site.id}`">
+              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+            </router-link>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" align="center" min-width="180">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'NORMAL'" type="success" size="mini">{{ scope.row.status }}</el-tag>
@@ -100,6 +113,7 @@ import { onMounted, defineProps, reactive } from 'vue';
 import { getAffiliateDownline } from '../../../../../api/member-affiliate';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router';
+import { hasPermission } from '../../../../../utils/util'
 
 // eslint-disable-next-line
 const { t } = useI18n();

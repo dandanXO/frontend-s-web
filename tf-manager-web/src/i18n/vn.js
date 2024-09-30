@@ -1491,6 +1491,7 @@ export default {
     toreview: 'Đang Đánh Giá',
     toSuspend: 'Dự Định Tạm Dừng',
     total: 'Tổng Cộng',
+    totalActualRate: 'Tổng số tiền lãi',
     totalAdjustment: 'Tổng Điều Chỉnh',
     totalBalance: 'Tổng Số Dư',
     totalBet: 'Tổng Số Cược',
@@ -1521,6 +1522,8 @@ export default {
     totalNoOfDeposits: 'Tổng Số Lượt Gửi',
     totalNoOfWithdrawals: 'Tổng Số Lượt Rút',
     totalPayout: 'Tổng Số Thanh Toán',
+    totalPlaceAmount: 'Tổng số tiền gửi',
+    totalPlaceMemberCount: 'Tổng số người',
     totalPrivilegeAmount: 'Tổng Số Tiền Ưu Đãi',
     totalPrivilegeClaimAmount: 'Tổng Số Tiền Yêu Cầu Ưu Đãi',
     totalPromo: 'Tổng Số Khuyến Mãi',
@@ -1817,6 +1820,7 @@ export default {
     updateShareRatio: 'Cập nhật tỷ lệ hoàn trả',
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
+    batchFrozenMember: 'Đóng băng thành viên hàng loạt',
   },
   message: {
     startenddatemore3months:
@@ -2198,6 +2202,8 @@ export default {
     validateRoleRequired: 'Yêu cầu vai trò',
     validateRoleNameRequired: 'Yêu cầu tên vai trò',
     validateRolloverRequired: 'Yêu cầu lật',
+    validateGameRolloverRequired: "Loại trò chơi và doanh thu phải chọn",
+    validateGameRolloverSelectRequired: "Loại trò chơi và doanh thu phải chọn",
     validateRoundRequired: 'Yêu cầu vòng',
     validateRulesRequired: 'Yêu cầu luật lệ',
     validateSchemaNameRequired: 'Yêu cầu tên lược đồ',

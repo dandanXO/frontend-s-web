@@ -825,7 +825,7 @@ const tableColumns = {
   gameBetRecord: [
     {
       title: "注单号",
-      dataIndex: "betId"
+      dataIndex: "transactionId"
     },
     {
       title: "游戏时间",

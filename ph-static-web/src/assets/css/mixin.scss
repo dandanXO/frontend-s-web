@@ -19,7 +19,7 @@
       top: $top;
       width: 98px;
       height: 20px;
-      background-image: url("@/assets/images/index/index_img_title.png");
+      // background-image: url("@/assets/images/index/index_img_title.png");
       background-repeat: no-repeat;
     }
     &::before {
@@ -47,14 +47,13 @@
       position: absolute;
       top: $top;
       height: 20px;
-      background-image: url("@/assets/images/index/index_img_title.png");
+      // background-image: url("@/assets/images/index/index_img_title.png");
       background-repeat: no-repeat;
     }
     &::before {
       left: $left;
       width: 20px;
-      background-image: linear-gradient(0deg, #0471a5 0%, #1bcef1 100%),
-        linear-gradient(#4d97ac, #4d97ac);
+      background-image: linear-gradient(0deg, #0471a5 0%, #1bcef1 100%), linear-gradient(#4d97ac, #4d97ac);
     }
     &::after {
       width: 98px;

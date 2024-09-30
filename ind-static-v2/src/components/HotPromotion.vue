@@ -14,6 +14,7 @@
     <AnniversaryCelebrationPromo
       v-if="!isCommonPromo && list.redirectUrl === 'anniversary-celebration' && store.token"
     />
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'indwin2-slot-ftd' && store.token" :params="list.param" />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -190,6 +191,7 @@ import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import AnniversaryCelebrationPromo from "../components/hotpromo/anniversarycelebration/AnniversaryCelebrationPromo.vue";
+import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -202,7 +204,8 @@ export default defineComponent({
     HongBaoYuPromo,
     WelcomeTaskPromo,
     InviteFriendPromo,
-    AnniversaryCelebrationPromo
+    AnniversaryCelebrationPromo,
+    SlotFtdPromo
   },
   props: {
     list: {
@@ -260,6 +263,7 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "anniversary-celebration" ||
+      this.list.redirectUrl === "indwin2-slot-ftd" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

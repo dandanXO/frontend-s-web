@@ -267,19 +267,19 @@ export function loadHomePopup() {
 }
 
 export function getOlympicFirstDeposit() {
-  return server.EVENT.get('/lhOlympicDailyFirstDeposit/init')
+  return server.EVENT.get("/lhOlympicDailyFirstDeposit/init");
 }
 
 export function claimOlympicFirstDeposit() {
-  return server.EVENT.put('/lhOlympicDailyFirstDeposit/claim')
+  return server.EVENT.put("/lhOlympicDailyFirstDeposit/claim");
 }
 
 export function getOlympicDailySportBet() {
-  return server.EVENT.get('/lhOlympicDailySportBet/init')
+  return server.EVENT.get("/lhOlympicDailySportBet/init");
 }
 
 export function claimOlympicDailySportBet() {
-  return server.EVENT.put('/lhOlympicDailySportBet/claim')
+  return server.EVENT.put("/lhOlympicDailySportBet/claim");
 }
 
 export function getNewUserSetupBonusInit() {
@@ -320,6 +320,57 @@ export function getCompetitionBetToday(promoCode) {
 
 export function getDota2CompetitionBet(promoCode) {
   return server.EVENT.get(`/dota2-competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getBlastCoupon() {
+  return server.EVENT.get("/session/blastCoupon/init");
+}
+
+export function claimBlastCoupon(promoCode) {
+  return server.EVENT.post("/session/blastCoupon/claim", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getBlastCouponInit() {
+  return server.EVENT.get("/session/blastCoupon/init");
+}
+
+export function getCompetitionToday() {
+  return server.EVENT.get("/session/competition/today");
+}
+
+export function getCompetitionYesterday(promoCode) {
+  return server.EVENT.get("/session/competition/yesterday", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBonus(promoCode) {
+  return server.EVENT.post("/session/competition/claimBonus", { promoCode });
+}
+
+export function getNationalDayinit() {
+  return server.EVENT.get("/session/nationalDay/init");
+}
+export function getNationalDayRecords() {
+  return server.EVENT.get("/session/nationalDay/records");
+}
+
+export function claimNationalDayBonus() {
+  return server.EVENT.post("/session/nationalDay/claimBonus");
+}
+
+export function getCompetitionBetYesterday(promoCode) {
+  return server.EVENT.get("/session/competition-bet/yesterday", {
     params: {
       promoCode
     }

@@ -75,7 +75,7 @@ npx cap open android
 ### Build Release Version .apk
 1. Open Android Studio.
 2. Select Build -> Generate Signed Bundle/Apk -> Select APK.
-3. Select keystore file .jks
+3. Select keystore file .jks (目前在 /resources/[xf-android.jks](src-capacitor%2Fxf-android.jks) 里面。)
 4. Input Alias & Both Passwords
 5. Build release .apk.
 

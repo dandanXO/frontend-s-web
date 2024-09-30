@@ -4,7 +4,7 @@ import { getDevice } from "@/utils/utils";
 export function register(regForm) {
   const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
   regForm.regDevice = regDevice;
-  return server.REST.post("/member/register", regForm);
+  return server.REST.post("/member/fbRegister", regForm);
 }
 
 export function login(loginInfo) {
@@ -31,16 +31,10 @@ export function getVerificationCode() {
   return server.REST.get("/member/verificationCode");
 }
 
-export function sendForgetPasswordEmail(email) {
-  return server.REST.post("/otp/sendForgetPasswordEmail", email);
-}
-export function verifyForgetPasswordEmail(results) {
-  return server.REST.post("/otp/verifyForgetPasswordEmail", results);
-}
 export function memberAccessLog(log) {
   return server.REST.post("/memberAccessLog", log);
 }
 
 export function sendTelephoneOtp(telephone) {
-  return server.REST.post("/member/sendOtp", telephone)
+  return server.REST.post("/otp/sendSms", telephone);
 }

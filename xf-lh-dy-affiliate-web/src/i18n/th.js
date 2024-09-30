@@ -240,6 +240,7 @@ export default {
     estimatedAffiliateCommission: 'คอมมิชชันตัวแทนโดยประมาณ',
     estimatedMemberCommission: 'คอมมิชชันสมาชิกโดยประมาณ',
     ewallet: 'กระเป๋าเงินดิจิทัล',
+    eventClickCount: 'การคลิกหน้า',
     finalSum: 'ยอดรวมสุดท้าย',
     finishDate: 'เวลาที่ประมวลผลคำสั่ง',
     firstDepositAmount: 'จำนวนการเติมเงินครั้งแรก',

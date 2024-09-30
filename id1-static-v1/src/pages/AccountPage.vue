@@ -1,13 +1,10 @@
 <template>
   <q-page>
-    <!-- <ProfileSummary /> -->
-
     <div class="personal-center-container">
       <ProfileProgressBanner />
-
       <q-form ref="profileFormRef" class="pc-form">
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Full Name</div>
+          <div class="pc-form-label">{{ $t("form.fullName") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.realName"
@@ -23,7 +20,7 @@
         </div>
 
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Phone</div>
+          <div class="pc-form-label">{{ $t("form.phone") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.phone"
@@ -38,28 +35,11 @@
           </div>
         </div>
 
-        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Email</div>
-          <div class="pc-form-input">
-            <q-input
-              v-model="formDetail.email"
-              filled
-              dense
-              clearable
-              borderless
-              standout
-              hide-bottom-space
-              readonly
-            ></q-input>
-          </div>
-        </div> -->
-
         <div class="pc-tip">
           <div>
-            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">{{ $t("form.changePassword") }}</a>
             <div class="pc-ver" v-if="appVersionNo">
-              Version:
+              {{ $t("form.version") }}:
               <span>{{ appVersionNo }}</span>
             </div>
           </div>
@@ -69,25 +49,23 @@
               class="btn-refresh"
               no-caps
               icon="refresh"
-              label="Updated"
+              :label="$t('btn.updated')"
               :loading="loadingUpdated"
               @click="startRefresh"
             >
               <template v-slot:loading>
                 <q-spinner class="on-left" style="color: #ae6def" />
-                Updating...
+                {{ $t("btn.updating") }}
               </template>
             </q-btn>
           </div>
         </div>
 
         <div class="q-mt-md">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">
+            {{ $t("btn.signOut") }}
+          </q-btn>
         </div>
-
-        <!-- <div class="text-center q-mt-md" v-if="canEdit">
-          <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
-        </div> -->
       </q-form>
     </div>
   </q-page>
@@ -432,13 +410,6 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
-      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
-    </div>
-  </q-dialog>
-
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
@@ -501,40 +472,23 @@
 </template>
 
 <script setup>
-import SwiperNav from "../components/SwiperNav.vue";
-import ProfileSummary from "../components/ProfileSummary.vue";
-import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
-import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
-import moment from "moment";
-import { api } from "boot/axios";
-import { useQuasar, copyToClipboard } from "quasar";
-import { userStore } from "src/stores";
+import { useQuasar } from "quasar";
+import { computed, onActivated, onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import KYCUserForm from "@/components/KYCUserForm.vue";
+import ProfileProgressBanner from "@/components/ProfileProgressBanner.vue";
+import { userStore } from "@/stores";
 import { App } from "@capacitor/app";
-import KYCGuestForm from "../components/KYCGuestForm.vue";
-import KYCUserForm from "../components/KYCUserForm.vue";
-
-let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
-let slideListPath = ref([
-  "/account",
-  "/account/discount",
-  "/account/record",
-  "/account/order",
-  "/account/bank",
-  "/account/message"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
+import moment from "moment";
 
 const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t("notify.loggingOut")
   });
 
   store.memberLogout().then(() => {
@@ -562,17 +516,11 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  if (store.guest && !personalState.memberInfo.realName) {
-    // openNewChangePasswordDialog();
-    openGuestKYCDialog();
-  } else if (!store.guest && !personalState.memberInfo.realName) {
+  if (!personalState.memberInfo.realName) {
     openUserKYCDialog();
   } else {
     return false;
   }
-  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
-  //   personalCenterDialog.value = true;
-  // }
 };
 
 const closePersonalCenterDialog = () => {
@@ -595,21 +543,6 @@ const closeUserKYCDialog = () => {
     loadInfo();
     userKYCDialog.value = false;
   });
-};
-
-const guestKYCDialog = ref(false);
-const openGuestKYCDialog = () => {
-  guestKYCDialog.value = true;
-};
-const closeGuestKYCDialog = () => {
-  store.getMemberInfo().then(() => {
-    loadInfo();
-    guestKYCDialog.value = false;
-  });
-
-  // formDetail.realName = "";
-  // formDetail.phone = "";
-  // formDetail.password = "";
 };
 
 const changeNewPasswordDialog = ref(false);
@@ -664,14 +597,7 @@ const isEditPhone = ref(false);
 const isEditBirthday = ref(false);
 const loadInfo = () => {
   personalState.memberInfo = userStore();
-
-  if (store.guest && personalState.memberInfo.realName === null) {
-    // openNewChangePasswordDialog();
-    openGuestKYCDialog();
-  }
-
-  if (!store.guest && personalState.memberInfo.realName === null) {
-    // openPersonalCenterDialog();
+  if (personalState.memberInfo.realName === null) {
     openUserKYCDialog();
   }
 
@@ -930,87 +856,35 @@ const updateNewUserState = () => {
     });
 };
 
-// const updateNewGuestState = () => {
-//   const updateInfo = {};
-//   updateInfo.realName = formDetail.realName;
-//   updateInfo.phone = formDetail.phone;
-//   updateInfo.password = formDetail.password;
-
-//   api
-//     .post("/session/guest-password", qs.stringify(updateInfo))
-//     .then((r) => {
-//       if (r.code === 0) {
-//         profileFormRef.value.reset();
-
-//         $q.notify({
-//           color: "positive",
-//           position: "top",
-//           message: "Updated successfully",
-//           icon: "check_circle_outline"
-//         });
-
-//         store.getMemberInfo().then(() => {
-//           loadInfo();
-//           guestKYCDialog.value = false;
-//         });
-//       } else {
-//         $q.notify({
-//           color: "negative",
-//           position: "top",
-//           message: r.message,
-//           icon: "report_problem"
-//         });
-//       }
-//     })
-//     .catch(() => {})
-//     .then(() => {
-//       btnLoading.value = false;
-//     });
-// };
-
 const submitKYC = () => {
   btnLoading.value = true;
   updateState();
 };
-
-const submitKYCNewUser = () => {
-  btnLoading.value = true;
-  updateNewUserState();
-};
-
-// const submitKYCNewGuest = () => {
-//   btnLoading.value = true;
-//   updateNewGuestState();
-// };
 
 const isValidName = () => {
   const { realName } = formDetail;
   const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
 
   const result = !realName
-    ? "Please Enter Your Full Name"
+    ? t("form.fullName_rules_01")
     : !namePattern.test(realName)
-    ? "Please Enter A Valid Full Name"
+    ? t("form.fullName_rules_02")
     : true;
   return result;
 };
 
 const isValidPhone = () => {
   const { phone } = formDetail;
-
   if (!phone) {
     return "Please Enter Phone Number";
   }
-
   const phoneRegex = /^\d{10}$/;
   const isValid = phoneRegex.test(phone);
-
   return isValid ? true : "Phone Number must be 10 digits";
 };
 
 const isValidOTP = () => {
   const { phoneOtpRef } = formDetail;
-
   const result = !phoneOtpRef ? "Please Enter Verification Code" : true;
   return result;
 };

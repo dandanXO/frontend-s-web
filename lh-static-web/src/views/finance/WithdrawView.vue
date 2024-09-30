@@ -203,7 +203,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import { defineComponent, reactive, ref, onMounted, computed, watch } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -499,6 +499,9 @@ export default defineComponent({
       }).finally(() => loadingBtn.value = false)
     }
 
+    watch(() => withdrawInfo.cardId, (newVal) => {
+      console.log("Selected cardId: ", newVal);
+    });
 
     return {
       formRef,

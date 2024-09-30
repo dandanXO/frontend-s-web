@@ -1289,8 +1289,9 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-        .get("/member/hot", {
+      .get("/sitePlatformAndGamesByLabel", {
           params: {
+            gameLabel: "HOT",
             device: regDevice
           }
         })
@@ -1309,7 +1310,7 @@ const loadHotGameList = () => {
       cached
         .get(key, () =>
           api
-            .get("/platformGamesByLabel", {
+            .get("/platformGamesByLabelV1", {
               params: {
                 gameLabel: "HOT",
                 device: regDevice
@@ -1497,7 +1498,7 @@ const setWithExpiry = (key, value, interval) => {
 
 function loadData() {
   api
-    .get("/promo/banner?category=HOME")
+    .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = res.data;

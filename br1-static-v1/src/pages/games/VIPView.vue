@@ -80,7 +80,7 @@
             <div class="title">
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
               <br />
-              {{ $t("vip.reward") }}
+              <!-- {{ $t("vip.reward") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
@@ -102,7 +102,7 @@
             <div class="title">
               <span class="bold">{{ $t("vip.monthly") }}</span>
               <br />
-              {{ $t("vip.reward") }}
+              <!-- {{ $t("vip.reward") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
@@ -124,7 +124,7 @@
             <div class="title">
               <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
               <br />
-              {{ $t("vip.limit") }}
+              <!-- {{ $t("vip.limit") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
@@ -167,7 +167,7 @@
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
-                <div style="text-align: center">
+                <div style="text-align: center; font-size: 11px">
                   {{ $t("vip.deposit") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
@@ -785,10 +785,11 @@ const swipeRight = () => {
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      text-align: center;
 
       .bold {
         font-weight: 800;
-        white-space: nowrap;
+        // white-space: nowrap;
       }
 
       .icon {
@@ -804,7 +805,7 @@ const swipeRight = () => {
         color: #5c46e7;
         font-size: 10px;
         height: 35px;
-        line-height: 18px;
+        line-height: 12px;
       }
 
       .reward-amt-wrapper {
@@ -1100,6 +1101,12 @@ const swipeRight = () => {
   .top-header {
     color: #f1f1f1;
     background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+
+    td {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      font-size: 12px;
+    }
   }
 
   .q-table__card {
@@ -1156,7 +1163,7 @@ const swipeRight = () => {
 
   .text-right {
     border-bottom-width: 0 !important;
-    padding: 0 1.5rem;
+    padding: 0 0.5rem;
   }
 
   .bottom-note {
