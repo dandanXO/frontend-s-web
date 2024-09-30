@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div class="main-title-box">瑞士轮阶段活动投票时间：10.03~10.13</div>
+        <!-- <div class="main-title-box">瑞士轮阶段活动投票时间：10.03~10.13</div>
         <div class="table">
           <div class="table-header">
             <div class="table-headertext">
@@ -105,7 +105,7 @@
                 </tr>
             </table>
           </div>
-        </div>
+        </div> -->
       </div>
       <div v-if="activeTab === 2">
         <div class="center-numbers">
@@ -150,30 +150,6 @@
               </div>
               <div class="c-button"  @click.prevent="submit(votesListItem)">投票</div>
             </div>
-          </div>
-        </div>
-        <div class="main-title-box">淘汰赛阶段活动投票时间：10.17~10.27</div>
-        <div class="table">
-          <div class="table-header">
-            <div class="table-headertext">
-              BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛
-            </div>
-          </div>
-          <div class="table-content">
-            <table>
-                <tr>
-                  <td>瑞士轮晋级队伍1</td>
-                  <td>瑞士轮晋级队伍2</td>
-                  <td>瑞士轮晋级队伍3</td>
-                  <td>瑞士轮晋级队伍4</td>
-                </tr>
-                <tr>
-                  <td>瑞士轮晋级队伍5</td>
-                  <td>瑞士轮晋级队伍6</td>
-                  <td>瑞士轮晋级队伍7</td>
-                  <td>瑞士轮晋级队伍8</td>
-                </tr>
-            </table>
           </div>
         </div>
       </div>
@@ -221,24 +197,26 @@
             </div>
           </div>
         </div>
-        <div class="main-title-box">冠亚赛阶段活动投票时间：11.02~11.02</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="main-title-box">{{selectedDate}}</div>
         <div class="table">
           <div class="table-header">
             <div class="table-headertext">
-              BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠
+              {{selectedTitle}}
             </div>
           </div>
           <div class="table-content">
-            
             <table>
-                <tr>
-                  <td>淘汰赛晋级1</td>
-                  <td>淘汰赛晋级2</td>
-                </tr>
+              <tr v-for="(row, rowIndex) in teamRows" :key="rowIndex">
+                <td v-for="(team, index) in row" :key="team.id">
+                  {{ team.teamNameLocal }}
+                </td>
+              </tr>
             </table>
           </div>
         </div>
-      </div>
     </div>
     <div class="column">
       <div class="main-title-box">获取投票</div>
@@ -335,12 +313,18 @@
       <div class="cast-vote-container">
         <div class=title>投票记录</div>
         <div class="vote-records">
-          <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
-            <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-            <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
-
-
-          </div>
+          <table class="table-titles">
+            <tr>
+              <th>队伍</th>
+              <th>时间</th>
+              <th>票数</th>
+            </tr>
+            <tr v-for="(voteRecord, voteIndex) in paginatedVoteRecords" :key="voteIndex">
+              <td>{{ voteRecord.teamNameLocal }}</td>
+              <td>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</td>
+              <td style="font-family: 'HYYakuHei800'; color:#70CBFB;">{{ voteRecord.votes }} 票</td>
+            </tr>
+          </table>
         </div>
         <div class="pagination-wrapper">
           <el-pagination
@@ -349,9 +333,13 @@
             :page-size="votesData.votesRecord.pageSize"
             :small="small"
             background
-            layout="total, prev, pager, next"
+            layout="total, prev, next"
+            :hide-on-single-page="true"
             :total="votesData.votesRecord.data.length"
           />
+          <div class="page-info">
+            {{ votesData.votesRecord.current + '/' + totalPages }}
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -366,6 +354,7 @@ import { userStore } from "@/store/index";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 import { RouterLink } from "vue-router";
+import moment from "moment";
 
 // Store and Notify hooks
 const store = userStore();
@@ -408,9 +397,9 @@ const votesData = ref({
 
 // Tabs data
 const tabs = [
-  { label: "瑞士轮", period: 1 },
-  { label: "淘汰赛", period: 2 },
-  { label: "冠亚赛", period: 3 }
+  { label: "瑞士轮", period: 1, date: '瑞士轮阶段活动投票时间：10.03~10.13', tabtitle: 'BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛' },
+  { label: "淘汰赛", period: 2, date: '淘汰赛阶段活动投票时间：10.17~10.27', tabtitle: 'BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛' },
+  { label: "冠亚赛", period: 3, date: '冠亚赛阶段活动投票时间：11.02~11.02', tabtitle: 'BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠' }
 ];
 
 // Function to handle casting votes
@@ -446,7 +435,7 @@ const submit = async (voteData) => {
 const loadVoteTeam = () => {
   poolPrizeVoteInit().then((res) => {
     if (res.code === 0) {
-      activeTab.value = res.data.period
+      activeTab.value = res.data.period;
       const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
         const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
         return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
@@ -466,10 +455,36 @@ const loadVoteTeam = () => {
   });
 };
 
-// Pagination logic for vote records
 const paginatedVoteRecords = computed(() => {
   const votesRecord = votesData.value.votesRecord;
   return votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize);
+});
+
+const teamRows = computed(() => {
+  const rows = [];
+  if (activeTab.value === 2) {
+    for (let i = 0; i < 8; i += 4) {
+      rows.push(votesData.value.votesList.slice(i, i + 4));
+    }
+  } else if (activeTab.value === 3) {
+    rows.push(votesData.value.votesList.slice(0, 2));
+  } else {
+    for (let i = 0; i < votesData.value.votesList.length; i += 4) {
+      rows.push(votesData.value.votesList.slice(i, i + 4));
+    }
+  }
+  return rows;
+});
+
+const selectedTabDetails = computed(() => {
+  return tabs.find(tab => tab.period === activeTab.value) || {};
+});
+
+const selectedDate = computed(() => selectedTabDetails.value.date);
+const selectedTitle = computed(() => selectedTabDetails.value.tabtitle);
+
+const totalPages = computed(() => {
+  return Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
 });
 
 onMounted(() => {
@@ -492,11 +507,17 @@ onMounted(() => {
     // align-items: center;
     // color: #fff;
     // background-color: transparent;
+    
     border: 0;
     background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66ACFF 100%);
 
+      margin-top: 5px;
   }
-
+    .el-pagination.is-background .btn-prev:disabled,
+    .el-pagination.is-background .btn-next:disabled {
+      background: #0E3B87;
+      color: #FFFFFF80;
+    }
   .el-pagination__total {
     color: #fff;
     display: none;
@@ -507,6 +528,23 @@ onMounted(() => {
     border: 1px solid #ffffff;
     font-weight: bold;
     color: #ffffff;
+  }
+}
+
+.el-dialog {
+  /* For WebKit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 8px; /* Simplified width */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #70CBFB; /* Simplified color */
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin; /* Simplified width */
+    scrollbar-color: #70CBFB transparent; /* Thumb color, no track background */
   }
 }
 </style>
@@ -571,7 +609,7 @@ onMounted(() => {
 
 .cast-vote-container {
   font-family: PingFang SC;
-  margin: -20px;
+  margin: -15px;
 
   .title {
     text-align: left;
@@ -585,10 +623,29 @@ onMounted(() => {
   }
 
   .vote-records {
-    display: grid;
-    padding: 20px;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr;
+    // gap: 10px;
+    padding: 0 10px;
+    color: #ffffff;
+    overflow: auto;
+    height:190px;
+    table {
+      width: 100%;
+      text-align: center;
+    }
+    .table-titles {
+      td, th {
+        padding: 10px;
+      }
+      tr:first-child {
+        position: sticky;
+        top: 0;
+        background: url(images/tblbg.png)no-repeat center center;
+        background-size: contain;
+        background-color: #002a4d;
+      }
+    }
 
     @media (max-width: 500px) {
       grid-template-columns: 1fr;
@@ -621,8 +678,13 @@ onMounted(() => {
 
   .pagination-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 5px auto;
+    .page-info {
+      color: #ffffff;
+      padding-right: 15px;
+    }
   }
 }
 .center-numbers {

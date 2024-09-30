@@ -113,42 +113,6 @@
             </div>
           </div>
         </div>
-        <div class="main-title-box">瑞士轮阶段活动投票时间：10.03~10.13</div>
-        <div class="table">
-          <div class="table-header">
-            <div class="table-headertext">
-              BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛
-            </div>
-          </div>
-          <div class="table-content">
-            <table>
-                <tr>
-                  <td>BLG</td>
-                  <td>TES</td>
-                  <td>LNG</td>
-                  <td>WBG</td>
-                </tr>
-                <tr>
-                  <td>GEN</td>
-                  <td>HLE</td>
-                  <td>DK</td>
-                  <td>T1</td>
-                </tr>
-                <tr>
-                  <td>G2</td>
-                  <td>FNC</td>
-                  <td>FLY</td>
-                  <td>TL</td>
-                </tr>
-                <tr>
-                  <td>入围赛晋级队伍1</td>
-                  <td>入围赛晋级队伍2</td>
-                  <td>入围赛晋级队伍3</td>
-                  <td>入围赛晋级队伍4</td>
-                </tr>
-            </table>
-          </div>
-        </div>
       </div>
       <div v-if="activeTab === 2">
         <div class="center-numbers">
@@ -195,30 +159,6 @@
               </div>
               <div class="c-button"  @click.prevent="submit(votesListItem)">投票</div>
             </div>
-          </div>
-        </div>
-        <div class="main-title-box">淘汰赛阶段活动投票时间：10.17~10.27</div>
-        <div class="table">
-          <div class="table-header">
-            <div class="table-headertext">
-              BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛
-            </div>
-          </div>
-          <div class="table-content">
-            <table>
-                <tr>
-                  <td>瑞士轮晋级队伍1</td>
-                  <td>瑞士轮晋级队伍2</td>
-                  <td>瑞士轮晋级队伍3</td>
-                  <td>瑞士轮晋级队伍4</td>
-                </tr>
-                <tr>
-                  <td>瑞士轮晋级队伍5</td>
-                  <td>瑞士轮晋级队伍6</td>
-                  <td>瑞士轮晋级队伍7</td>
-                  <td>瑞士轮晋级队伍8</td>
-                </tr>
-            </table>
           </div>
         </div>
       </div>
@@ -269,23 +209,26 @@
             </div>
           </div>
         </div>
-        <div class="main-title-box">冠亚赛阶段活动投票时间：11.02~11.02</div>
+      </div>
+    </div>
+    <div class="columne">
+      <div class="main-title-box">{{selectedDate}}</div>
         <div class="table">
           <div class="table-header">
             <div class="table-headertext">
-              BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠
+              {{selectedTitle}}
             </div>
           </div>
           <div class="table-content">
-            <table>
-                <tr>
-                  <td>淘汰赛晋级1</td>
-                  <td>淘汰赛晋级2</td>
-                </tr>
+            <table cellpadding="0" cellspacing="0" border="0">
+              <tr v-for="(row, rowIndex) in teamRows" :key="rowIndex">
+                <td v-for="(team) in row" :key="team.id">
+                  {{ team.teamNameLocal }}
+                </td>
+              </tr>
             </table>
           </div>
         </div>
-      </div>
     </div>
     <div class="columne">
       <div class="main-title-box">获取投票</div>
@@ -388,23 +331,35 @@
     </div> -->
       <q-dialog v-model="isVoteRecordModalVisible">
         <div class="cast-vote-container">
-          <div class=title>投票历史</div>
-          <div class="vote-records">
-            <div class="vote-record-item" v-for="(voteRecord, index) in paginatedVoteRecords" :key="index">
-              <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-              <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
-            </div>
-          </div>
+          <q-btn color="white" flat round dense icon="close" v-close-popup style="position: absolute; right: 10px;top: 10px;" />
+      
+          <div class=title>投票记录</div>
+        <div class="vote-records">
+          <table class="table-titles">
+            <tr>
+              <th>队伍</th>
+              <th>时间</th>
+              <th>票数</th>
+            </tr>
+            <tr v-for="(voteRecord, voteIndex) in paginatedVoteRecords" :key="voteIndex">
+              <td>{{ voteRecord.teamNameLocal }}</td>
+              <td>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</td>
+              <td style="font-family: 'HYYakuHei800'; color:#70CBFB;">{{ voteRecord.votes }} 票</td>
+            </tr>
+          </table>
+        </div>
           <div class="pagination-wrapper">
             <q-pagination
               class="vote-record-pagination"
               v-model="votesData.votesRecord.current"
               :max="Math.ceil(votesData.votesRecord.data.length / votesData.votesRecord.pageSize)"
               direction-links
+              :boundary-links="false"
+              max-pages="6"
               boundary-numbers
-              :max-pages="6"
-
-        @input="votesRecordChangePage"
+              input
+              input-class="white"
+              @input="votesRecordChangePage"
             />
           </div>
         </div>
@@ -456,9 +411,9 @@ import { useNotify } from "src/hooks/notify";
     });
     // Tabs data
     const tabs = [
-      { label: "瑞士轮", period: 1 },
-      { label: "淘汰赛", period: 2 },
-      { label: "冠亚赛", period: 3 }
+      { label: "瑞士轮", period: 1, date: '瑞士轮阶段活动投票时间：10.03~10.13', tabtitle: 'BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛' },
+      { label: "淘汰赛", period: 2, date: '淘汰赛阶段活动投票时间：10.17~10.27', tabtitle: 'BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛' },
+      { label: "冠亚赛", period: 3, date: '冠亚赛阶段活动投票时间：11.02~11.02', tabtitle: 'BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠' }
     ];
     const castVote = ({ teamId, teamName, teamNameLocal }) => {
       toggleCastVoteModal(true)
@@ -562,6 +517,29 @@ import { useNotify } from "src/hooks/notify";
       });
     }
 
+    const teamRows = computed(() => {
+    const rows = [];
+    if (activeTab.value === 2) {
+      for (let i = 0; i < 8; i += 4) {
+        rows.push(votesData.value.votesList.slice(i, i + 4));
+      }
+    } else if (activeTab.value === 3) {
+      rows.push(votesData.value.votesList.slice(0, 2));
+    } else {
+      for (let i = 0; i < votesData.value.votesList.length; i += 4) {
+        rows.push(votesData.value.votesList.slice(i, i + 4));
+      }
+    }
+    return rows;
+  });
+
+  const selectedTabDetails = computed(() => {
+    return tabs.find(tab => tab.period === activeTab.value) || {};
+  });
+
+  const selectedDate = computed(() => selectedTabDetails.value.date);
+  const selectedTitle = computed(() => selectedTabDetails.value.tabtitle);
+
 
     onMounted(() => {
       if (!store.token) {
@@ -573,12 +551,15 @@ import { useNotify } from "src/hooks/notify";
 
 <style lang="scss">
 .cast-vote-container {
+  position: relative;
+  background: url(images/dialogbg.png)no-repeat center center;
+background-size: 100% 100%;
   .q-pagination__middle {
     gap: 5px;
   }
 
   .q-pagination__middle > .q-btn, .q-pagination__content > .q-btn {
-    border: 2px solid #fff;
+    background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66ACFF 100%) !important;
     width: 32px;
     height: 32px;
     border-radius: 4px;
@@ -590,8 +571,10 @@ import { useNotify } from "src/hooks/notify";
 
     &.bg-primary {
       color: #102628;
-      background-color: #00EAFE !important;
-      border: 2px solid #00EAFE;
+      // background-color: #00EAFE !important;
+      background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66ACFF 100%) !important;
+
+      // border: 2px solid #00EAFE;
       font-weight: bold;
       border: none;
     }
@@ -658,18 +641,46 @@ import { useNotify } from "src/hooks/notify";
 .cast-vote-container {
   background-color: #00192B;
   padding: 10px 20px;
+  width: 90%;
 
   .title {
-    font-size: 14px;
-    text-align: center;
-    color: #00E9FE;
+    text-align: left;
+    background: linear-gradient(180deg, #FFFFFF 51.04%, #5AB0FF 100%);
+    padding: 5px 10px;
+    font-family: 'HYYakuHei800';
+    font-size: 25px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .vote-records {
-    display: grid;
-    padding: 20px;
-    grid-template-columns: 1fr;
-    gap: 10px;
+    // display: grid;
+    // padding: 20px;
+    // grid-template-columns: 1fr;
+    // gap: 10px;
+    padding: 0 10px;
+    margin-top: 20px;
+    min-height: 220px;
+    width: 100%;
+    color:#ffffff;
+    table {
+      width: 100%;
+      text-align: center;
+    }
+    .table-titles {
+      td, th {
+        padding: 5px 10px;
+        border: 0;
+      }
+      tr:first-child {
+        position: sticky;
+        top: 0;
+        background: url(images/tblbg.png)no-repeat center center;
+        background-size: cover;
+      }
+    }
+
 
     .vote-record-item {
       background-color: #0A243E;
@@ -963,6 +974,8 @@ import { useNotify } from "src/hooks/notify";
       -webkit-text-fill-color: transparent;
       &:last-child {
         text-align: right;
+        margin: 0;
+        white-space: nowrap;
       }
     .blue {
       color: #69B4FF;
@@ -1314,6 +1327,8 @@ import { useNotify } from "src/hooks/notify";
 
 .table-details {
   border: 1px solid #00EAFE;
+  background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66ACFF 100%);
+
   max-width: 1298px;
   margin: 10px;
   font-size: 16px;
