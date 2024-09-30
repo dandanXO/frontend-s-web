@@ -551,7 +551,7 @@ onMounted(async () => {
       font-size: 16px;
       .item-icon-box {
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         height: 100%;
         padding-top: 10px;
       }
@@ -701,7 +701,7 @@ onMounted(async () => {
       font-size: 16px;
       .item-icon-box {
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         height: 100%;
         padding-top: 10px;
       }
