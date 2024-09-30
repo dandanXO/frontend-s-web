@@ -68,7 +68,7 @@
         v-model="verificationForm.code"
         label="OTP"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please Enter OTP']"
+        :rules="[(val) => (val && val.length > 0) || $t('form.otp_placeholder')]"
         rounded
         outlined
         label-color="brand"
@@ -87,7 +87,7 @@
         :rules="[
           (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
           (val) => (val.length > 5 && val.length <= 12) || $t('form.newPassword_rules_02'),
-          (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
+          (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('form.strongerPasswordRecommended')
         ]"
         rounded
         outlined
@@ -143,7 +143,9 @@ import { SessionStorage, useQuasar } from "quasar";
 import ConfirmButton from "src/atoms/ConfirmButton.vue";
 import { onMounted, reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const qs = require("qs");
 const $q = useQuasar();
 const router = useRouter();
@@ -329,7 +331,7 @@ const onVerifyForgotPassword = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Password Reset Completed",
+            message: t('form.passwordResetCompleted'),
             icon: "report_problem"
           });
 

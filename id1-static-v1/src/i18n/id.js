@@ -79,6 +79,7 @@ export default {
     password_placeholder: "Masukkan kata sandi",
     password_rules_01: "Masukkan kata sandi",
     password_rules_02: "Karakter kata sandi harus lebih dari 6",
+    strongerPasswordRecommended: "Kata Sandi yang Lebih Kuat Direkomendasikan",
     forgotPassword: "Lupa Kata Sandi",
     forgotPassword_desc:
       "Masukkan Nama pengguna Dan Nomor Telepon Anda, Kami Akan Kirim OTP Ke Nomor Telepon Terdaftar Anda.",
@@ -121,6 +122,7 @@ export default {
     estimatedArrival: "Perkiraan kedatangan",
     usdtSpecialNote:
       "*Catatan khusus: Pihak ketiga secara otomatis mengenakan biaya penanganan sebesar {fee} USDT untuk menarik koin!",
+    loginName: "Nama Masuk",
     fullName: "Nama Lengkap",
     fullName_placeholder: "Masukkan nama lengkap Anda",
     fullName_rules_01: "Masukkan nama lengkap Anda",
@@ -129,6 +131,8 @@ export default {
     currentPassword: "Kata Sandi Saat Ini",
     currentPassword_placeholder: "Masukkan Kata Sandi Saat Ini",
     currentPassword_rules_01: "Masukkan kata sandi lama",
+    changeNewpassword: "Ganti Kata Sandi Baru",
+    passwordResetCompleted: "Ganti kata sandi selesaikan",
     pleaseCompleteKYC: "Selesaikan KYC",
     bindEmail: "Ikat Email",
     code: "Kode",
