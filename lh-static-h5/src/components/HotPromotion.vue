@@ -9,6 +9,7 @@
     />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
+    <S14VotePromo v-if="list.redirectUrl === 'lh1-s14-vote'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
     <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
@@ -136,6 +137,9 @@ const DragonCardPromo = defineAsyncComponent(() => import("../components/hotprom
 const EurocupVotePromo = defineAsyncComponent(() =>
   import("../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue")
 );
+const S14VotePromo = defineAsyncComponent(() =>
+import("../components/hotpromo/s14-vote/S14VotePromo.vue")
+);
 const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
 const HongBaoPreEurocup = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue"));
 const HongBaoYu2024 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue"));
@@ -237,6 +241,7 @@ export default defineComponent({
     ClaimPromo,
     DragonCardPromo,
     EurocupVotePromo,
+    S14VotePromo,
     GoldenEggPromo,
     HongBaoYu2024,
     UpcomingMatchPromo,
