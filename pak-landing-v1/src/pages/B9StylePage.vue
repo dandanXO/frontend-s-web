@@ -25,7 +25,7 @@ onMounted(() => {
   strapi
     .get("/api/b9-styles")
     .then((res) => {
-      arr.value = res.data.data;
+      arr.value = res.data;
     })
     .catch((e) => {})
     .finally(() => {

@@ -14,7 +14,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container>
+    <q-page-container v-if="hasInit">
       <q-page>
         <q-tabs
           v-model="mainTabsKey"
@@ -40,15 +40,35 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-defineOptions({
-  name: "IndexPage",
+// defineOptions({
+//   name: "IndexPage",
+// });
+
+const route = useRoute();
+const router = useRouter();
+const mainTabsKey = ref("b9-charity");
+const hasInit = ref(false);
+
+onMounted(() => {
+  const initialTab = route.path.split("/").pop();
+  if (initialTab) {
+    mainTabsKey.value = initialTab;
+  }
+  hasInit.value = true;
 });
 
-const mainTabsKey = ref("b9-charity");
-const router = useRouter();
+watch(
+  () => route.path,
+  (newPath) => {
+    const newTab = newPath.split("/").pop();
+    if (newTab) {
+      mainTabsKey.value = newTab;
+    }
+  }
+);
 
 const onTabClick = () => {
   router.push(`/${mainTabsKey.value}`);
