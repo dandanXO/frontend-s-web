@@ -33,7 +33,7 @@
     </div>
 
     <template v-if="galleryItems.length > 0">
-      <div class="title q-pt-sm">Charitable Associations</div>
+      <div class="title q-pt-md">Charitable Associations</div>
       <div class="subtitle q-pt-sm">CHARITY PROJECTS</div>
     </template>
 
