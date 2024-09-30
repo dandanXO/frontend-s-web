@@ -93,6 +93,7 @@ export default {
     confirmNewPassword_placeholder: "Please enter new confirm password",
     confirmNewPassword_rules_01: "Please insert new confirm password",
     confirmNewPassword_rules_02: "Confirm password does not match",
+    mustBeAlphaNumeric: "{field} must be alphanumeric",
     depositAmount: "Amount",
     depositAmount_placeholder: "Please enter the amount",
     depositAmount_rules_01: "Deposit should be between ",

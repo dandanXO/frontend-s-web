@@ -30,7 +30,7 @@
         class="progress-bar"
         color="white"
       ></q-linear-progress>
-      <div class="win-gift-text">Deposit Monthly To Win Gifts</div>
+      <div class="win-gift-text">{{ $t('settings.depositMonthlytoWinGifts') }}</div>
     </div>
   </div>
 </template>
