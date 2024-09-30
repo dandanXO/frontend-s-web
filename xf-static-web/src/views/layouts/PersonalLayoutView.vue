@@ -1,26 +1,25 @@
 <template>
   <div class="account-container">
-    <div
-      class="account-container-wrap"
-    >
+    <div class="account-container-wrap">
       <div class="account-box account-menu-wrapper">
         <account-menu />
       </div>
       <div class="account-content-wrapper">
         <div class="account-box account-balance">
-
-
-               <a @click="refreshBalance" class="balance-container">
-                  <span>账户余额：</span>
-                  <div class="balance-txt"><span v-if="isLoadingBalance">Loading...</span><span v-if="!isLoadingBalance">￥{{ store.balance }}</span></div>
-                  <el-icon><Refresh /></el-icon>
-                 <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
-              </a>
-            <span style="width: 100px;margin-left: 10px;text-align: center">专属网址：</span>
-            <span id="vipUrl" class="badge badge-info">{{ store.evip.web }}</span>
+          <a @click="refreshBalance" class="balance-container">
+            <span>账户余额：</span>
+            <div class="balance-txt">
+              <span v-if="isLoadingBalance">Loading...</span>
+              <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+            </div>
+            <el-icon><Refresh /></el-icon>
+            <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
+          </a>
+          <span style="width: 100px; margin-left: 10px; text-align: center">专属网址：</span>
+          <span id="vipUrl" class="badge badge-info">{{ store.evip.web }}</span>
         </div>
         <div class="account-box account-contents">
-        <router-view />
+          <router-view />
         </div>
       </div>
     </div>
@@ -59,7 +58,6 @@ export default defineComponent({
 });
 </script>
 
-
 <style lang="scss">
 .account-container {
   font-size: 14px;
@@ -90,7 +88,7 @@ export default defineComponent({
       flex-direction: column;
       gap: 20px;
       .account-balance {
-          font-size: 14px;
+        font-size: 14px;
         height: 100px;
         display: flex;
         justify-content: flex-start;
@@ -104,12 +102,12 @@ export default defineComponent({
           border-right: 1px solid #2a313e;
           margin-right: 10px;
           padding: 5px 0px;
-        .balance-txt {
-          color:#30a73b;
-        }
-        .trans-tip {
-          color: #436aa0;
-        }
+          .balance-txt {
+            color: #30a73b;
+          }
+          .trans-tip {
+            color: #436aa0;
+          }
         }
       }
       .account-contents {
@@ -137,14 +135,16 @@ export default defineComponent({
             text-decoration: none;
             color: #a0bcd6;
             padding: 15px 40px 15px 10px;
-              border-left: 4px solid transparent;
+            border-left: 4px solid transparent;
+
             svg {
               height: 20px;
               fill: #3d4b66;
             }
-            &:hover, &.router-link-exact-active {
+            &:hover,
+            &.router-link-exact-active {
               border-left: 4px solid #45fdfb;
-              background-image: linear-gradient(90deg,#2d4551 0,#2a313e 100%);
+              background-image: linear-gradient(90deg, #2d4551 0, #2a313e 100%);
               color: #ffffff;
               svg {
                 fill: #45fdfb;
@@ -155,6 +155,5 @@ export default defineComponent({
       }
     }
   }
-
 }
 </style>

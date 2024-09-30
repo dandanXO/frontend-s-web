@@ -40,39 +40,43 @@
         </div>
         <div class="subtitle">
           <span class="subtitle-1">活动内容</span>
-          <span class="subtitle-2">活动期间，会员在电子场馆当日总有效投注≥3000元即可在次日24小时内点击领取对应档位彩金，每日最高可领取888元。</span>
+          <span class="subtitle-2">
+            活动期间，会员在电子场馆当日总有效投注≥3000元即可在次日24小时内点击领取对应档位彩金，每日最高可领取888元。
+          </span>
         </div>
         <table class="match-game-info-table">
-          <tr>
-            <th>当日有效投注</th>
-            <th>彩金金额</th>
-            <th>流水倍数</th>
-          </tr>
-          <tr>
-            <td>≥3,000</td>
-            <td>38元</td>
-            <td rowspan="8">8倍</td>
-          </tr>
-          <tr>
-            <td>≥8,000</td>
-            <td>88元</td>
-          </tr>
-          <tr>
-            <td>≥20,000</td>
-            <td>128元</td>
-          </tr>
-          <tr>
-            <td>≥50,000</td>
-            <td>158元</td>
-          </tr>
-          <tr>
-            <td>≥200,000</td>
-            <td>388元</td>
-          </tr>
-          <tr>
-            <td>≥1,000,000</td>
-            <td>888元</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>当日有效投注</th>
+              <th>彩金金额</th>
+              <th>流水倍数</th>
+            </tr>
+            <tr>
+              <td>≥3,000</td>
+              <td>38元</td>
+              <td rowspan="8">8倍</td>
+            </tr>
+            <tr>
+              <td>≥8,000</td>
+              <td>88元</td>
+            </tr>
+            <tr>
+              <td>≥20,000</td>
+              <td>128元</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>158元</td>
+            </tr>
+            <tr>
+              <td>≥200,000</td>
+              <td>388元</td>
+            </tr>
+            <tr>
+              <td>≥1,000,000</td>
+              <td>888元</td>
+            </tr>
+          </tbody>
         </table>
         <div class="content-sub-title">
           <span style="font-weight: bold">⮞ 示例</span>
@@ -90,9 +94,7 @@
           </div>
           <div class="item">
             <span class="rounded-number">2</span>
-            <span>
-              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。
-            </span>
+            <span>打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。</span>
           </div>
           <div class="item">
             <span class="rounded-number">3</span>
