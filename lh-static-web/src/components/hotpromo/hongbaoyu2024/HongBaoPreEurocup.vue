@@ -70,6 +70,7 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
 const getPromotion = () => {
+  if(loadingClaim.value) return
   loadingClaim.value = true;
   claimDailyRainItem(promoCode.value)
     .then((res) => {
