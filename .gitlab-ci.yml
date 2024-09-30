@@ -776,6 +776,33 @@ build-image-pak-static-h5:
 
 #===============================================================================================
 
+build-pak-landing-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-landing-v1
+
+build-image-pak-landing-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-landing-v1
+  needs:
+    - build-pak-landing-v1
+
+#===============================================================================================
+
+build-pak-landing-v1-strapi:
+  extends: .build-projects
+  variables:
+    PROJECT: landing-v1-strapi
+
+build-image-pak-landing-v1-strapi:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-landing-v1-strapi
+  needs:
+    - build-pak-landing-v1-strapi
+
+#===============================================================================================
 
 build-pak-static-v2:
   extends: .build-projects
