@@ -578,7 +578,7 @@ const submitWithdraw = async () => {
           getWithdrawalMethods();
 
           // FB tracking :: apply-withdrawal
-          if (store.isAffiliateA) {
+          if (store.isFbPixel) {
             fbq("track", "apply-withdrawal");
           }
 
