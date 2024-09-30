@@ -14,6 +14,9 @@ console.log(window.location.hostname);
 const globalLinks = ["xf13140"];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
+const globalAndCNLinks = ["xingfabet6", "xingfabet8"];
+const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
+
 if (isGlobalLH) {
   var rstApi = "https://apn0zz6gox.330z3w3.com";
   var evtApi = "https://prx6g60gox.7tk6kax.com";
@@ -25,6 +28,15 @@ if (isGlobalLH) {
 
   var cdnApi = "https://urle7rqimtl.enkpdmqvhc.com";
   localStorage.setItem("IMAGE_CDN", cdnApi);
+} else if (isGlobalAndCN) {
+  console.log("IS Global + CN");
+  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+
+  var rstApi = getInitApi(rstGlobalArray, "XF_H5_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "XF_H5_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "XF_H5_CRT_URL");
 } else {
   var rstApi = getInitApi(rstArray, "XF_H5_RST_URL");
   var crtApi = getInitApi(crArray, "XF_H5_CRT_URL");
