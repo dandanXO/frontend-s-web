@@ -1080,7 +1080,7 @@ export default defineComponent({
           params = "HOME";
       }
       api
-        .get("/promo/banner", { params: { category: params } })
+        .get("/opt-session/promo/banner", { params: { category: params } })
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
@@ -2302,9 +2302,7 @@ export default defineComponent({
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow:
-    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
-    0px 4px 10px 0px;
+  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
   font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");

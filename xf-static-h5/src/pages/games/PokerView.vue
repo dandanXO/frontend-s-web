@@ -69,7 +69,7 @@ function playGame(gameName, platformCode, gameCode, gameStatus) {
 
 // const loadBanner = () => {
 //   api
-//     .get("/promo/banner", {
+//     .get("/opt-session/promo/banner", {
 //       params: {
 //         category: "LIVE"
 //       }

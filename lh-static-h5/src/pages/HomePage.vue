@@ -1162,7 +1162,7 @@ export default defineComponent({
 
     function loadData() {
       api
-        .get("/promo/banner?category=HOME")
+        .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
@@ -1725,7 +1725,7 @@ export default defineComponent({
 
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
-      
+
       domainPos.value = [18, 18];
     };
     const domainPos= ref([18,258]);

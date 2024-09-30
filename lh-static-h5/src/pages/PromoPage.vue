@@ -390,7 +390,7 @@ export default defineComponent({
     );
 
     const loadBanner = () => {
-      api.get("/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
           // console.log(banner.value)
@@ -483,10 +483,7 @@ export default defineComponent({
           console.warn('No promo types loaded, using default promo types.');
         }
       })
-      const platformApiUrl =
-        store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
-          ? "/session/loggedInPromoPages"
-          : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
