@@ -526,7 +526,7 @@ export default defineComponent({
 
     const getBannerImage = () => {
       api
-        .get("/promo/banner?category=LOGIN")
+        .get("/opt-session/promo/banner?category=LOGIN")
         .then((res) => {
           if (res.code === 0) {
             bannerImage.value = imageDir + res.data[0].mobileImageUrl;
