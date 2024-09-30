@@ -122,7 +122,7 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">{{ $t("btn.signout") }}</div>
+        <div class="txt-title">{{ $t("btn.signOut") }}</div>
 
         <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 

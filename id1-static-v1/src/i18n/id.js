@@ -92,7 +92,7 @@ export default {
     verificationCode: "Kode Verifikasi",
     verificationCode_placeholder: "Masukkan Kode Verifikasi",
     verificationCode_rules_01: "Masukkan Kode Verifikasi",
-    otp_sent_title: "OTP telah dikirim ke email Anda, silakan masukkan OTP dan kata sandi baru.",
+    otp_sent_title: "OTP telah dikirim ke Nomor Telepon Anda, silakan masukkan OTP dan kata sandi baru.",
     otp: "OTP",
     otp_placeholder: "Masukkan OTP",
     otp_rules_01: "Masukkan OTP",

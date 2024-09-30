@@ -81,7 +81,7 @@ export default {
     verificationCode: "Verification Code",
     verificationCode_placeholder: "Please enter Verification Code",
     verificationCode_rules_01: "Please insert Verification Code",
-    otp_sent_title: "OTP Has Been Sent To Your Email, Please Enter The OTP And New Password.",
+    otp_sent_title: "OTP Has Been Sent To Your Phone, Please Enter The OTP And New Password.",
     otp: "OTP",
     otp_placeholder: "Please enter OTP",
     otp_rules_01: "Please insert OTP",
