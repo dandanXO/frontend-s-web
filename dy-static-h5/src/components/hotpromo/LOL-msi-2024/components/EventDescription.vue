@@ -38,7 +38,7 @@ import DescriptionImg from "components/hotpromo/LOL-msi-2024/images/description-
 
   > div {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
 
     img {
       max-width: 1rem;

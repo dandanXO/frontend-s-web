@@ -542,7 +542,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pro
       font-size: 16px;
       .item-icon-box {
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         height: 100%;
         padding-top: 10px;
       }
@@ -691,7 +691,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pro
       font-size: 16px;
       .item-icon-box {
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         height: 100%;
         padding-top: 10px;
       }

@@ -316,7 +316,7 @@ const claimHongBao = async () => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   padding-bottom: 16px;
 
   .fish-match-game-content-left,
