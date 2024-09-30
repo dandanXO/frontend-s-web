@@ -165,6 +165,7 @@ const carouselBtm = computed(() => {
   display: flex;
   justify-content: center;
   padding-top: 4px;
+  text-align: center;
   span {
     padding: 0 8px;
     overflow-wrap: anywhere;

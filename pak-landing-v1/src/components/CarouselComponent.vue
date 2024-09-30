@@ -30,7 +30,7 @@
             allowfullscreen
           ></iframe>
         </div>
-        <div class="carousel-description q-pt-xs q-pl-md q-pr-md">
+        <div class="carousel-description q-pt-xs q-pl-xs q-pr-xs">
           <span>{{ carouselItem.description }}</span>
         </div>
       </q-carousel-slide>
@@ -40,7 +40,8 @@
       <span
         v-for="(carouselItem, i) in carouselData"
         :key="i"
-        :class="['dot', { active: slide === i }]"
+        :class="['dot', { active: slide == i }]"
+        @click="onCarouselNavDotClick(i)"
       ></span>
     </div>
   </div>
@@ -51,6 +52,12 @@ import { ref } from "vue";
 
 const props = defineProps(["carouselData", "hasBg"]);
 const slide = ref(0);
+
+const onCarouselNavDotClick = (i) => {
+  if (slide.value != i) {
+    slide.value = i;
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -61,8 +68,9 @@ const slide = ref(0);
 }
 
 .carousel-media {
-  width: 270px;
-  height: 180px;
+  width: -webkit-fill-available;
+  max-width: 345px;
+  height: 200px;
   background-size: cover;
   background-position: center;
   margin: 0 auto;
