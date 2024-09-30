@@ -281,3 +281,11 @@ export function getCompetitionBetYesterday(promoCode) {
     }
   })
 }
+
+export function getNBAUpcomingMatch() {
+  return eventapi.get('/session/nba-match-preseason/upcoming')
+}
+
+export function getNBAClaimHistory() {
+  return eventapi.get('/session/nba-match-preseason/history')
+}
