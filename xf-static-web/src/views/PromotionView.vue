@@ -365,14 +365,13 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
+      border-collapse: collapse;
 
       tr:first-child td {
         background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
         color: #ffffff;
         border: 0;
       }
-
-      border-collapse: collapse;
 
       th,
       td {
@@ -455,7 +454,6 @@ export default defineComponent({
           justify-content: center;
           align-items: center;
           border-radius: 20px;
-          overflow: hidden;
           gap: 20px;
           padding: 30px;
           overflow: auto;
@@ -510,11 +508,6 @@ export default defineComponent({
           overflow: hidden;
           cursor: pointer;
 
-          img {
-          }
-
-          cursor: pointer;
-
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
@@ -523,16 +516,15 @@ export default defineComponent({
               transition: all 0.5s ease;
               background-size: cover;
               background-position: center center;
-
-              &:hover {
-                transform: scale(1.2);
-              }
-
               display: flex;
               justify-content: center;
               align-items: center;
               gap: 30px;
               max-height: 200px;
+
+              &:hover {
+                transform: scale(1.2);
+              }
 
               .promo-content {
                 width: 100%;
@@ -749,6 +741,7 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
+          overflow: auto;
 
           ol {
             li {
@@ -761,7 +754,7 @@ export default defineComponent({
           // background-position: 95% 90%;
           // padding: 20px;
           // border-radius: 10px;
-          overflow: auto;
+
           // &.welcome {
           //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
           // }
