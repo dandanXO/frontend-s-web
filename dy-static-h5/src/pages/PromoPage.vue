@@ -142,9 +142,6 @@
                     : 'none'
                 }"
               >
-                <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
-                  <NBAWaterBattle />
-                </div>
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -163,6 +160,9 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
+                    <NBAWaterBattle />
+                  </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"
