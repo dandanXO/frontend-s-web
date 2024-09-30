@@ -450,7 +450,9 @@ export default defineComponent({
                 });
 
                 //FB Tracking.
-                fbq("track", "CompleteRegistration");
+                if (store.isFbPixel) {
+                  fbq("track", "CompleteRegistration");
+                }
 
                 //ADJUST TRACKEVENT.
                 // debugger;
