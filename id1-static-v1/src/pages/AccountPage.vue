@@ -254,16 +254,16 @@
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password"
+                :placeholder="$t('form.newPassword_placeholder')"
                 v-model="updatePwdInfo.password"
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password',
+                  (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
                   (val) =>
-                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
-                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                    (val.length >= 6 && val.length <= 11) || $t('form.newPassword_rules_02'),
+                  () => isAlphanumeric(updatePwdInfo.password, $t('form.newPassword'))
                 ]"
               >
                 <template v-slot:append>
@@ -284,13 +284,13 @@
                 filled
                 dense
                 clearable
-                placeholder="Enter Confirm New Password"
+                :placeholder="$t('form.confirmNewPassword_placeholder')"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
+                  (val) => (val && val.length > 0) || $t('form.confirmNewPassword_rules_01'),
                   (val) => val === updatePwdInfo.password || $t('form.confirmNewPassword_rules_02')
                 ]"
               >
@@ -318,10 +318,10 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Change New Password</div>
+        <div class="txt-title">{{ $t('form.changeNewpassword') }}</div>
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">Login Name</div>
+            <div class="pc-form-label">{{ $t('form.loginName') }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -359,7 +359,7 @@
                   (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
                   (val) =>
                     (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
-                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                  () => isAlphanumeric(updatePwdInfo.password, $t('form.newPassword'))
                 ]"
               >
                 <template v-slot:append>
