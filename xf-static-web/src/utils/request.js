@@ -34,7 +34,6 @@ if (isGlobalLH) {
   var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
   var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
   var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
-  s;
   var rstApi = getInitApi(rstGlobalArray, "XF_WEB_RST_URL");
   var evtApi = getInitApi(evtGlobalArray, "XF_WEB_EVT_URL");
   var crtApi = getInitApi(crGlobalArray, "XF_WEB_CRT_URL");
