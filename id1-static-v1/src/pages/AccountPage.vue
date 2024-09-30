@@ -219,11 +219,11 @@
         v-close-popup
       />
       <div class="popout-dialog-container">
-        <div class="txt-title">Change Password</div>
+        <div class="txt-title">{{ $t('header.changePassword') }}</div>
 
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">Password</div>
+            <div class="pc-form-label">{{ $t('form.password') }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -308,7 +308,7 @@
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">{{ $t('btn.confirm') }}</q-btn>
         </div>
       </div>
     </div>
