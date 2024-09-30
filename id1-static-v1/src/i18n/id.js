@@ -101,9 +101,11 @@ export default {
     newPassword_rules_01: "Masukkan kata sandi baru",
     newPassword_rules_02: "Karakter kata sandi baru harus lebih dari 6",
     confirmNewPassword: "Konfirmasi Kata Sandi Baru",
-    confirmNewPassword_placeholder: "Masukkan konfirmasi kata sandi baru",
+    confirmNewPassword_placeholder: "Masukkan Kata sandi Baru Terkonfirmasi",
     confirmNewPassword_rules_01: "Masukkan konfirmasi kata sandi baru",
+    confirmNewPassword_rules_02: "Kata sandi terkonfirmasi tidak cocok dengan kata sandi baru",
     confirmNewPassword_rules_03: "Konfirmasi kata sandi tidak cocok",
+    mustBeAlphaNumeric: "{field} harus alfanumerik",
     depositAmount: "Jumlah",
     depositAmount_placeholder: "Silakan masukkan jumlah",
     depositAmount_rules_01: "Deposit harus antara ",
@@ -126,7 +128,7 @@ export default {
     changePassword: "Ganti Kata Sandi",
     currentPassword: "Kata Sandi Saat Ini",
     currentPassword_placeholder: "Masukkan Kata Sandi Saat Ini",
-    currentPassword_rules_01: "Silakan masukkan kata sandi saat ini",
+    currentPassword_rules_01: "Masukkan kata sandi lama",
     pleaseCompleteKYC: "Selesaikan KYC",
     bindEmail: "Ikat Email",
     code: "Kode",
@@ -229,7 +231,7 @@ export default {
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
-    haventFoundAnyRecord: "Belum menemukan catatan apapun",
+    haventFoundAnyRecord: "Tidak temukan catatan apa pun",
     updatedSuccessfully: "Berhasil diperbarui",
     emailVerificationSent: "Verifikasi email telah dikirim",
     messageSent: "Pesan Terkirim",
@@ -292,7 +294,7 @@ export default {
     feedback: "Umpan Balik",
     vip: "VIP",
     logout: "KELUAR",
-    depositMonthlytoWinGifts: "Deposit Bulanan Untuk Mendapatkan Hadiah",
+    depositMonthlytoWinGifts: "Deposit Tiap bulan untuk Memenangi Hadiah",
     interestProfit: "Keuntungan Bunga"
   },
   deposit: {
@@ -480,7 +482,7 @@ export default {
     history: {
       totalRebates: "Total rabat",
       month: "Bulan",
-      week: "Minggu",
+      week: "Pekan",
       date: "Tanggal",
       rebateAmount: "Jumlah Rebate"
     },
