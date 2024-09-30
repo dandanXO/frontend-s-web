@@ -1,0 +1,18 @@
+.q-layout,
+.q-header,
+.q-footer,
+.q-page {
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+body {
+  background: #131313;
+  font-family: Inter;
+  color: #fff;
+}
+
+.q-btn {
+  text-transform: none;
+  border-radius: 8px;
+}

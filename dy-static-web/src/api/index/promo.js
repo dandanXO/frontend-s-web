@@ -368,3 +368,11 @@ export function getNationalDayRecords() {
 export function claimNationalDayBonus() {
   return server.EVENT.post("/session/nationalDay/claimBonus");
 }
+
+export function getCompetitionBetYesterday(promoCode) {
+  return server.EVENT.get("/session/competition-bet/yesterday", {
+    params: {
+      promoCode
+    }
+  });
+}
