@@ -84,6 +84,7 @@ const openUrl = () => {
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   height: 34px;
   width: 80px;
+  letter-spacing: 0.5px;
 }
 .q-toolbar {
   padding: 0;
