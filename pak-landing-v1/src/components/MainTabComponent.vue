@@ -1,6 +1,7 @@
 <template>
   <div class="main-tab-container q-pl-md q-pr-md q-pb-md">
-    <CarouselComponent :carousel-data="carouselTop"> </CarouselComponent>
+    <CarouselComponent :carousel-data="carouselTop" :margin="0">
+    </CarouselComponent>
 
     <div class="btn-container q-pb-lg q-pt-xs">
       <img alt="" src="~assets/imgs/yt_btn.png" />

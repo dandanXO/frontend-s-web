@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-component">
+  <div class="carousel-component" :style="{ margin: margin }">
     <q-carousel
       v-model="slide"
       transition-prev="jump-right"
@@ -50,7 +50,7 @@
 <script setup>
 import { ref } from "vue";
 
-const props = defineProps(["carouselData", "hasBg"]);
+const props = defineProps(["carouselData", "hasBg", "margin"]);
 const slide = ref(0);
 
 const onCarouselNavDotClick = (i) => {
