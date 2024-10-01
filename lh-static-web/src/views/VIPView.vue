@@ -184,7 +184,7 @@
             <template v-for="(item, index) in vipItems" :key="index">
               <template
                 v-if="
-                  store.token && isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1
+                  store.token && isFirstTime && vipLevel !== 0 ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1
                 "
               >
                 <div
