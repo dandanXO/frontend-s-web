@@ -41,9 +41,6 @@
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <!-- <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div> -->
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
                       </div>
@@ -52,7 +49,6 @@
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <!-- <div class="pad-label label-new">最新活动</div> -->
                     </a>
                   </div>
 
@@ -76,22 +72,11 @@
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-                <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
               <div class="inner">
                 <div
@@ -106,7 +91,6 @@
                   }"
                 >
                   <div class="top-float" v-if="!selectedParam || (selectedParam && !selectedParam.hidefloat)">
-                    <!-- <div class="top-subtitle">Get unlimited rewards!</div> -->
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div class="promo-content-inner" v-if="!selectedParam || (selectedParam && !selectedParam.hidetitle)">
@@ -153,35 +137,19 @@
     ref="allGames"
     :closeFullGameDialog="closeFullGameDialog"
   ></GameModal>
-
-  <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
-      <q-card-section class="q-mb-md">
-        <strong>System Prompt</strong>
-        <br />
-        <br />
-        Please log in before performing the operation
-      </q-card-section>
-      <router-link to="/login?redirect=/promo">
-        <q-btn label="Login" color="primary" />
-      </router-link>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script lang="js">
-import { ref, defineComponent, computed, reactive, watch, onBeforeUnmount, onActivated } from "vue";
+import { computed, defineComponent, onActivated, onBeforeUnmount, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+
+import { api } from "@/boot/axios";
+import HotPromotion from "@/components/HotPromotion";
+import GameModal from "@/components/modal/GameModal.vue";
+import ProfileSummary from "@/components/ProfileSummary.vue";
+import { userStore } from "@/stores/index";
+import { useUI } from "@/stores/ui";
 import { useQuasar } from "quasar";
-import { useUI } from "stores/ui";
-import { userStore } from "stores/index";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
-import ProfileSummary from "components/ProfileSummary.vue";
-import HotPromotion from "components/HotPromotion";
-import GameModal from "components/modal/GameModal.vue";
-// import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -214,7 +182,6 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
-    const isDisplayLogin = ref(false);
 
     const tab = ref("all");
     const tabItems = [
@@ -326,12 +293,10 @@ export default defineComponent({
     };
     const showPromoDetails = (promo) => {
       if (!store.token) {
-        // isDisplayLogin.value = true
-
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Please login to continue",
+          message: t('notify.plsLoginToContinue'),
           icon: "report_problem"
         });
         router.push(`/login`);
@@ -507,12 +472,6 @@ export default defineComponent({
       clearInterval(countdownInterval);
     });
 
-    // onMounted(() => {
-    //   loadBanner();
-    //   loadAll();
-    //   updateCountdown();
-    // });
-
     const swipeLeft = () => {
       router.push("/vip");
     };
@@ -539,7 +498,6 @@ export default defineComponent({
       store,
       tab,
       tabItems,
-      isDisplayLogin,
       vipPromoTab,
       backToPromoList,
       isPromotionEnded,
@@ -561,6 +519,7 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="scss" scoped>
 .vip-promo-tab-wrapper {
   width: 90%;
@@ -596,8 +555,7 @@ export default defineComponent({
     }
   }
 }
-</style>
-<style scoped lang="scss">
+
 .promo-container {
   .promo-view-container {
     ol {
@@ -655,6 +613,7 @@ export default defineComponent({
   z-index: 9;
 }
 </style>
+
 <style lang="scss">
 .promo-container {
   color: #ffffff;

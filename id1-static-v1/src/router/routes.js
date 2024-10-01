@@ -50,11 +50,6 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    path: "/agency-policy",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AgencyPolicyPage.vue") }]
-  },
-  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]

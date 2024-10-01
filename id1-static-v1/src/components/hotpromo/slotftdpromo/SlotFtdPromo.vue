@@ -2,21 +2,21 @@
   <div class="btn-container">
     <div class="go-deposit-btn" :class="isFtdPromoEnded ? 'is-disabled' : ''" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
-      <span>JOIN NOW</span>
+      <span>{{ $t("btn.joinNow") }}</span>
     </div>
 
     <div class="text-warning" v-if="isFtdPromoEnded">
-      Sorry, account have already get bouns. Please join to our other activity .
+      {{ $t("promo_ph1SlotFtd.sorryDesc") }}
     </div>
   </div>
 </template>
+
 <script setup>
 import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { userStore } from "src/stores";
+import { userStore } from "@/stores";
 
 const router = useRouter();
-
 const store = userStore();
 
 const props = defineProps(["params"]);
@@ -72,6 +72,7 @@ const gotoDepositPage = () => {
     color: #fff;
     font-size: 20px;
     font-weight: 700;
+    text-transform: uppercase;
   }
 
   &:active {

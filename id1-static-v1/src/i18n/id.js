@@ -761,6 +761,9 @@ export default {
       "3. Setelah persyaratan deposit terpenuhi, Anda harus bermain mesin slot untuk mulai menghitung turnover, dan bonus akan diberikan setelah turnover selesai.",
     rules_04: "4. Setelah persyaratan terpenuhi, sistem akan secara otomatis mengeluarkan bonus."
   },
+  promo_ph1SlotFtd: {
+    sorryDesc: "Maaf, akun Anda sudah mendapatkan bonus. Silakan bergabung dengan aktivitas kami yang lain."
+  },
   error: {
     101: "Platform tidak ditemukan",
     102: "Platform ditutup",
