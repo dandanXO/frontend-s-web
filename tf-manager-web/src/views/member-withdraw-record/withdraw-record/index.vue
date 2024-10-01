@@ -139,6 +139,19 @@
         v-loading="page.loading"
       >
         <el-table-column
+          v-if="hasRole(['ADMIN'])"
+        >
+          <template #default="scope">
+            <el-button
+              type="primary"
+              size="mini"
+              @click="syncRecord(scope.row)"
+            >
+              {{ t('fields.sync') }}
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="withdrawType"
           :label="t('fields.withdrawType')"
           align="center"
@@ -884,17 +897,19 @@ import {
   fromToFail,
   fromToConfirm,
   getExportWithdrawRecord,
+  sync
 } from '../../../api/member-withdraw-record'
 import { getMemberWithdrawLog } from '../../../api/member-withdraw-log'
 import { getAllWithdrawBankCard } from '../../../api/bank-card'
 import { getConfigList } from '../../../api/config'
-import { hasPermission } from '../../../utils/util'
+import { hasPermission, hasRole } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n();
 const store = useStore()
@@ -1332,6 +1347,11 @@ async function requestExportExcel() {
   if (ret) {
     uiControl.messageVisible = true;
   }
+}
+
+async function syncRecord(record) {
+  await sync({ withdrawDate: record.withdrawDate, serialNumber: record.serialNumber, siteId: request.siteId })
+  ElMessage({ message: t('message.success'), type: 'success' })
 }
 
 onMounted(async () => {

@@ -122,13 +122,13 @@ const getInbox = () => {
 };
 
 onMounted(() => {
-  if(!store.token) return
+  if (!store.token) return;
 
-  if(lastAnnouncementDateStr.value) {
-    const today = moment()
-    const lastAnnouncementDate = moment(lastAnnouncementDateStr.value)
-    const diff = today.diff(lastAnnouncementDate, 'days')
-    if(!diff) return
+  if (lastAnnouncementDateStr.value) {
+    const today = moment();
+    const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
+    const diff = today.diff(lastAnnouncementDate, "days");
+    if (!diff) return;
   }
 
   getInbox()
@@ -145,7 +145,6 @@ onMounted(() => {
         visible.value = true;
       }
     });
-
 });
 
 watch(

@@ -467,6 +467,7 @@ export default defineComponent({
               }
             })
             .catch((error) => {
+              window.captchaObj.reset()
               loginForm.captchaCode = "";
               getCode();
               $q.loading.hide();

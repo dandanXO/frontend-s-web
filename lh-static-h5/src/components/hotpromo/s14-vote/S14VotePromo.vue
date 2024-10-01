@@ -45,6 +45,7 @@
         v-for="(tab) in tabs"
         :key="tab.period"
         :class="{ active: activeTab === tab.period }"
+        @click="checkPeriod(tab.period)"
         class="tab-item"
       >
         {{ tab.label }}
@@ -540,6 +541,20 @@ import { useNotify } from "src/hooks/notify";
   const selectedDate = computed(() => selectedTabDetails.value.date);
   const selectedTitle = computed(() => selectedTabDetails.value.tabtitle);
 
+  const isClickable = ref(true); 
+  const checkPeriod = (tabClicked) => {
+    if (!isClickable.value) return; // Prevent clicks if not clickable
+    if (tabClicked > activeTab.value) {
+      notify({ type: "error", message: "该赛段暂未开启" });
+    } else if (tabClicked < activeTab.value) {
+      notify({ type: "error", message: "该赛段已结束" });
+    }
+    // Disable clicking for 2 seconds
+    isClickable.value = false;
+    setTimeout(() => {
+      isClickable.value = true; // Re-enable clicking after 2 seconds
+    }, 2000);
+  }
 
     onMounted(() => {
       if (!store.token) {

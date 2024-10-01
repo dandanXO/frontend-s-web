@@ -6,6 +6,7 @@
         v-for="(tab, index) in tabs"
         :key="tab.period"
         :class="{ active: activeTab === tab.period }"
+        @click="checkPeriod(tab.period)"
         class="tab-item"
       >
         {{ tab.label }}
@@ -487,6 +488,20 @@ const totalPages = computed(() => {
   return Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
 });
 
+const isClickable = ref(true); 
+const checkPeriod = (tabClicked) => {
+  if (!isClickable.value) return; // Prevent clicks if not clickable
+  if (tabClicked > activeTab.value) {
+    notify({ type: "error", message: "该赛段暂未开启" });
+  } else if (tabClicked < activeTab.value) {
+    notify({ type: "error", message: "该赛段已结束" });
+  }
+  // Disable clicking for 2 seconds
+  isClickable.value = false;
+  setTimeout(() => {
+    isClickable.value = true; // Re-enable clicking after 2 seconds
+  }, 2000);
+}
 onMounted(() => {
   if (!store.token) return;
   loadVoteTeam();
@@ -567,6 +582,7 @@ onMounted(() => {
 
 .tab-item {
     border-radius: 5px 5px 0 0;
+    cursor: pointer;
     height: 40px;
     width: 23%;
     margin-top: 5px;
@@ -593,7 +609,7 @@ onMounted(() => {
   display: flex;
   max-width: 1250px;
   gap: 20px;
-  margin: 20px auto;
+  margin: 20px auto 0;
   justify-content: center;
   .column {
     background: url(images/dateborder.png)no-repeat left center;
@@ -845,9 +861,9 @@ onMounted(() => {
   margin: 15px auto;
   max-width: 1200px;
 }
-.column {
-  margin: 15px auto 40px;
-}
+// .column {
+//   margin: 15px auto 40px;
+// }
 .terms {
   font-family: 'HYYakuHei300';
   font-size: 20px;
