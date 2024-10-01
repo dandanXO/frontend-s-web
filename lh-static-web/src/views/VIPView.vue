@@ -2240,7 +2240,7 @@ $border-settings: 1px solid #e5e7eb;
 
 .carousel__slide {
   opacity: 0;
-  transform: scale(0.6);
+  transform: scale(0.85);
   filter: grayscale(0.5) brightness(0.9);
 }
 
@@ -2300,7 +2300,7 @@ $border-settings: 1px solid #e5e7eb;
 
 .carousel__slide--prev {
   opacity: 1;
-  transform: scale(0.8);
+  transform: scale(0.7);
   z-index: -2;
   filter: grayscale(1) brightness(0.5);
   .vipcontents {
@@ -2317,7 +2317,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 
 .carousel__slide--next {
-  transform: scale(0.8);
+  transform: scale(0.7);
   opacity: 1;
   z-index: -2;
   filter: grayscale(1) brightness(0.5);
