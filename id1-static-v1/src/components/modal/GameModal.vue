@@ -5,13 +5,13 @@
         <div class="topActions">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
-            <img src="../../assets/logo.png" />
+            <img src="@/assets/logo.png" />
           </div>
 
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
-            Add Cash &nbsp;
+            {{ $t("btn.addCash") }} &nbsp;
             <q-btn dense rounded class="wallet-btn">
-              <img src="../../assets/images/index/icon-wallet.png" />
+              <img src="@/assets/images/index/icon-wallet.png" />
             </q-btn>
           </div>
         </div>
@@ -61,7 +61,7 @@
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-      <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
+      <!-- <img src="@/assets/logo-coming.png" style="width: 80%" /> -->
     </q-dialog>
 
     <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
@@ -662,7 +662,6 @@ defineExpose({
   }
 
   .popout-dialog-container-gold {
-    // background-image: url(../../assets/images/index/popout/deposit-bg.png);
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -671,7 +670,6 @@ defineExpose({
   }
 
   .popout-main-title {
-    // background-image: url(../../assets/images/index/popout/popout-title.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -712,7 +710,6 @@ defineExpose({
 
     .deposit-item {
       .deposit-icon {
-        // background-image: url(../../assets/images/index/popout/deposit-item-frame.png);
         background-position: top center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -730,15 +727,10 @@ defineExpose({
         }
       }
 
-      &.active > .deposit-icon {
-        // background-image: url(../../assets/images/index/popout/deposit-item-frame-active.png);
-      }
-
       .deposit-hot-label {
         position: absolute;
         top: 0;
         right: 0;
-        // background-image: url(../../assets/images/index/popout/hot-label.png);
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center center;
@@ -753,7 +745,6 @@ defineExpose({
       }
 
       .deposit-amt {
-        // background-image: url(../../assets/images/index/popout/deposit-item-frame-amount.png);
         background-position: center center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -808,7 +799,6 @@ defineExpose({
         position: relative;
         &:after {
           content: "";
-          // background-image: url(../../assets/images/index/popout/label-discount.png);
           background-repeat: no-repeat;
           display: block;
           position: absolute;

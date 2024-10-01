@@ -41,7 +41,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, false) }}</div>
               <div class="order-col">BANK</div>
             </div>
             <div class="order-subrow">
@@ -77,7 +77,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, false) }}</div>
               <div class="order-col">{{ e.paymentType }}</div>
             </div>
             <div class="order-subrow">
