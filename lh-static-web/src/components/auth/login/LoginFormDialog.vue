@@ -39,6 +39,11 @@
         </div>
 
         <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">登录</el-button>
+
+        <div class="register-hint">
+            <span class="no-acc">没有账号？</span>
+            <a class="go-reg" @click="openRegDialog">去注册</a>
+        </div>
     </el-form>
 </template>
 
@@ -118,6 +123,15 @@ const closeLoginDialog = () => {
 
 const openForgotpwdDialog = () => {
     emits("open-forgotpwd-dialog");
+};
+
+const openRegDialog = () => {
+  // console.log(route.path)
+  if (route.path === "/login") {
+    router.push("/register");
+  } else {
+    emits("open-reg-dialog");
+  }
 };
 
 const submitLogin = () => {
@@ -370,6 +384,11 @@ const loginRules = {
             text-decoration: underline;
         }
     }
+
+    .register-hint {
+        display: flex;
+        justify-content: flex-end;
+    }
 }
 
 .dark {
@@ -423,6 +442,18 @@ const loginRules = {
         border-radius: 6px;
         border: 1px solid #3A93CE;
         margin-top: 20px;
+    }
+
+    .register-hint {
+        justify-content: center;
+
+        .no-acc {
+            color: #a98f7c;
+        }
+
+        .go-reg {
+            color: #3A93CE;
+        }
     }
 }
 </style>
