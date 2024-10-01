@@ -8,7 +8,7 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="12"
           ref="phoneRef"
           hide-bottom-space
           v-model="passwordForm.phone"
