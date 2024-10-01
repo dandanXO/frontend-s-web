@@ -409,7 +409,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .promo-container {
   //overflow-x: hidden;
   min-height: 600px;
