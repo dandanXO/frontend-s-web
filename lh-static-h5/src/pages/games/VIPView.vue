@@ -193,7 +193,7 @@
             <Slide v-for="(categoryPair, slideIndex) in categoryPairs" :key="slideIndex">
               <template v-for="category in categoryPair" :key="category.key">
                 <template v-for="item in vipItems" :key="item">
-                  <template v-if="isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
+                  <template v-if="store.token && isFirstTime && vipLevel !== 0 ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
                     <div
                       class="box"
                       :class="{

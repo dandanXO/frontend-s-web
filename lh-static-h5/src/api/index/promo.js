@@ -222,11 +222,12 @@ export function claimItems(status, level) {
 }
 
 export function getVIPDetails() {
-  return eventapi.get("/vip-bonus/get-detail");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/vip-bonus/get-detail?v=${randNum}`);
 }
 
 export function getVIPDetailsNotLoggedIn() {
-  return eventapi.get(`/get-vip-bonus-detail?siteId=7`);
+  return eventapi.get(`/get-vip-bonus-detail?siteId=7&v=${randNum}`);
 }
 
 export function getLivePoker() {
