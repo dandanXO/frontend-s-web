@@ -1,7 +1,7 @@
 <template>
   <div :class="isLoading ? 'wload deposit' : ''">
-    <div class="loading" v-if="isLoading">
-      <TFLoading></TFLoading>
+    <div v-if="isLoading" class="loading">
+      <TFLoading />
     </div>
     <div v-if="!isLoading">
       <!-- <div class="account-tip-text">
@@ -10,132 +10,141 @@
         1000VND
       </div> -->
       <div class="node-wrapper">
-        <Node
-          :level="1"
-          :list="payMethods"
-          ref="paymentNode"
-          @clicked="onSelect"
-        />
+        <Node ref="paymentNode" :level="1" :list="payMethods" @clicked="onSelect" />
       </div>
 
       <div class="deposit-container">
+        <div class="deposit-amt-quick-select-wrapper" v-if="allowedDepositAmtOptions.length > 0">
+          <div class="deposit-amt-quick-select-title">Deposit Amounts</div>
+          <div class="deposit-amt-quick-select-list">
+            <div
+              :class="`deposit-amt-quick-select-item ${depositAmtOption === Number(form.localAmount) ? 'active' : ''}`"
+              v-for="depositAmtOption in allowedDepositAmtOptions"
+              :key="depositAmtOption"
+              @click="onDepositAmtQuickSelect(depositAmtOption)"
+            >
+              {{ depositAmtOption }}
+            </div>
+          </div>
+        </div>
+
         <a-form
           ref="formRef"
           :model="form"
           :rules="rules"
-          :hideRequiredMark="true"
+          :hide-required-mark="true"
           name="basic"
           :colon="false"
           autocomplete="off"
-          labelAlign="left"
+          label-align="left"
         >
-          <a-form-item
-            class="helptxt"
-            label="Deposit Amount"
-            name="localAmount"
-          >
-            <a-input
-              v-model:value="form.localAmount"
-              placeholder="Enter an amount"
-            />
-            <div class="account-tip">
-              Min amount one time :
-              {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ store.currency.value }}
-              <br />
-              Max Amount one time:
-              {{
-                activeMethod.depositMax
-                  ? activeMethod.depositMax + " " + store.currency.value
-                  : "No Limit"
-              }}
+          <a-form-item class="helptxt" label="Deposit Amount" name="localAmount">
+            <a-input v-model:value="form.localAmount" placeholder="Enter an amount" allowClear />
+            <div class="account-tip" style="flex-direction: column; align-items: flex-start">
+              <span class="account-tip-text">
+                Min amount one time :
+                {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
+                {{ isUSDT ? "USDT" : store.currency.value }}
+              </span>
+              <span class="account-tip-text">
+                Max Amount one time:
+                {{
+                  activeMethod.depositMax
+                    ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
+                    : "No Limit"
+                }}
+              </span>
             </div>
           </a-form-item>
 
-          <a-form-item
-            v-if="isUSDT && activeMethod.currencyRate"
-            class="helptxt"
-            label="Exchange Rate"
-          >
-            <span style="color: #9bffd1"
-              >1.00 USDT ≈ {{ activeMethod.currencyRate }} ₱</span
-            >
+          <a-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="Exchange Rate">
+            <span style="color: #0b8f1a">1.00 USDT ≈ {{ activeMethod.currencyRate }} ₱</span>
           </a-form-item>
           <a-form-item
             v-show="selectedPayType && bankCardList.length"
-            label="Please select a bank"
             ref="bankId"
+            label="Please select a bank"
             name="bankId"
           >
-            <template #label></template>
+            <template #label />
             <BankComponent
-              ref="payTypeClass"
               :is="selectedPayType"
+              ref="payTypeClass"
               v-model:value="form.bankId"
               :bank-list="bankCardList"
               @selected="selectedBank"
-            ></BankComponent>
+            />
           </a-form-item>
           <a-form-item
+            class="helptxt"
+            v-if="hasPrivilege"
             ref="privilegeId"
             name="privilegeId"
-            v-if="hasPrivilege"
-            label="Apply For Offer"
+            label="Select promotion"
+            style="margin-bottom: 0px"
           >
             <a-select
               v-model:value="selectedPrivilege"
               placeholder="Please select an offer"
               @select="checkMinDepositAmt"
-              @focus="loadPrivilege(activeMethod)"
+              allowClear
             >
-              <a-select-option
-                v-for="p in unselectedPrivileges"
-                :key="p.id"
-                :value="p.id"
-              >
+              <a-select-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id">
                 {{ p.name }}
               </a-select-option>
             </a-select>
+            <div class="account-tip text-red" v-if="promoBonus">Bonus Amount {{ promoBonus }}</div>
+            <div class="account-tip-text text-red" v-if="!selectedPrivilege">
+              If the first-time deposit promotion is not selected, it is considered as
+              <br />
+              giving up the second and third deposit promotions.
+            </div>
+            <div
+              class="account-tip text-red"
+              v-else-if="selectedPrivilege == 5 || selectedPrivilege == 6 || selectedPrivilege == 7"
+            >
+              {{ promoRollOver }}X turnover
+            </div>
           </a-form-item>
           <a-form-item v-if="selectedPayType" class="tip">
-            <template #label></template>
-            <span class="account-tip-text" style="margin-bottom: 10px">
-              <div v-html="activeMethod.msg"></div>
+            <span v-if="activeMethod.msg" class="account-tip-text activemethod" style="margin-bottom: 10px">
+              <div v-html="activeMethod.msg" />
             </span>
             <div class="account-tip-text">
-              <RiSpamLine />
-              New accounts that have updated personal information can
-              participate in promotions
+              <!-- <RiSpamLine /> -->
+              New accounts that have updated personal information can participate in promotions
+            </div>
+
+            <div v-if="isIOSGCash" class="account-tip-text" style="color: #f1bb34">
+              <!-- <RiSpamLine /> -->
+              iOS only supports scanning QR codes through screenshots.
             </div>
           </a-form-item>
         </a-form>
         <div class="txt-center">
-          <button @click="confirmDeposit" class="common-btn confirm-btn">
-            Confirm Deposit
-          </button>
+          <button class="common-btn confirm-btn" @click="confirmDeposit">Confirm Deposit</button>
         </div>
       </div>
       <a-modal
+        v-model:visible="isDeposited"
         class="footer-modal"
         wrap-class-name="sm"
         width="100%"
-        v-model:visible="isDeposited"
-        :maskClosable="false"
+        :mask-closable="false"
         :closable="false"
         :footer="null"
       >
-        You have been redirected to your specific bank to proceed with the
-        deposit.<br /><br />
+        You have been redirected to your specific bank to proceed with the deposit.
+        <br />
+        <br />
         Once the deposit is successful, it will be reflected here.
-        <div class="common-btn confirm-btn" @click="clearInfo">
-          I understand
-        </div>
+        <div class="common-btn confirm-btn" @click="clearInfo">I understand</div>
       </a-modal>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef, computed } from "vue";
 import { loadPay, loadPrivileges } from "@/api/personal/deposit";
 import { RiSpamLine } from "vue-remix-icons";
 import { message } from "ant-design-vue";
@@ -143,6 +152,9 @@ import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/Bank";
 import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
+import { getMobileOS } from "@/utils/utils";
+import { useRoute } from "vue-router";
+
 {
   RiSpamLine;
 }
@@ -162,17 +174,25 @@ const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
+const depositAmtOptions = ref(new Set([100, 300, 500, 800, 1000, 3000, 5000, 8000, 10000, 20000]));
 
 const form = reactive({
   paymentId: null,
   privilegeId: null,
   localAmount: null,
-  bankId: null,
+  bankId: null
 });
 
 const checkAmount = reactive({
   flag: true,
-  errorMessage: "",
+  errorMessage: ""
+});
+
+const isIOSGCash = computed(() => {
+  if (getMobileOS() === "IOS" && activeMethod.value.payType === "GCASH") {
+    return true;
+  }
+  return false;
 });
 
 const calculatedMinDeposit = ref("");
@@ -181,24 +201,46 @@ const rules = {
     {
       required: true,
       message: "Deposit amount is required",
-      trigger: "blur",
+      trigger: "blur"
     },
     {
       pattern: "^([1-9][0-9]*)$",
       message: "Amount should be a positive number",
-      trigger: "change",
+      trigger: "change"
     },
     {
       validator: verifyDepositAmount,
-      trigger: "change",
-    },
+      trigger: "change"
+    }
   ],
   bankId: [
     {
       validator: verifyBank,
-      trigger: "change",
-    },
-  ],
+      trigger: "change"
+    }
+  ]
+};
+
+const allowedDepositAmtOptions = computed(() => {
+  const depositAmtOptionsArr = Array.from(depositAmtOptions.value);
+  return depositAmtOptionsArr.filter(
+    (depositAmtOption) =>
+      depositAmtOption >= calculatedMinDeposit.value && depositAmtOption <= activeMethod.value.depositMax
+  );
+});
+const route = useRoute();
+const checkWelcome = () => {
+  if (route.query && route.query.isFromWelcomePromo) {
+    unselectedPrivileges.value.forEach((p) => {
+      if (p.name === 'P4W-FIRST-DEPOSIT') {
+        selectedPrivilege.value = p.id
+      }
+    })
+    onDepositAmtQuickSelect(300)
+  }
+};
+const onDepositAmtQuickSelect = (amt) => {
+  form.localAmount = amt.toString();
 };
 
 function initPay() {
@@ -209,7 +251,7 @@ function initPay() {
       isLoading.value = false;
       d.data.payments.forEach((element) => {
         element.promoValue = "";
-        element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
+        element.promoStyle = "right: -5px; top: -10px; padding: 20px;";
         element.hasActive = false;
         payMethods.push(element);
       });
@@ -222,7 +264,7 @@ function initPay() {
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
-  // hasPrivilege.value = false;
+  hasPrivilege.value = false;
   await loadPrivileges(val.paymentId).then((d) => {
     if (d.code == 0) {
       privilegeList.value = d.data.privileges;
@@ -238,12 +280,14 @@ async function loadPrivilege(val) {
           }
         }
       });
+      checkWelcome()
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
     }
   });
 }
+
 function selectPayType(value) {
   if (value) {
     if (value.extra && value.extra.banks) {
@@ -284,16 +328,29 @@ async function onSelect(value) {
     checkMinDepositAmt();
   }
 }
+
+const promoRollOver = ref(0);
+const promoBonus = computed(() => {
+  const privilege = unselectedPrivileges.value.find((element) => {
+    return element.id === selectedPrivilege.value;
+  });
+
+  if (privilege?.bonusType === "RATIO" && form.localAmount && privilege.bonusAmount) {
+    const bonusAmt = Number(form.localAmount) * privilege.bonusAmount;
+    return Math.min(privilege.bonusMax, bonusAmt);
+  }
+
+  return 0;
+});
+
 function checkMinDepositAmt(value, option) {
   if (!selectedPrivilege.value || !option) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
     unselectedPrivileges.value.forEach((element) => {
       if (element.id === option.key) {
-        calculatedMinDeposit.value = Math.max(
-          activeMethod.value.depositMin,
-          element.depositMin
-        );
+        calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
+        promoRollOver.value = element.rollover;
       }
     });
   }
@@ -309,6 +366,7 @@ function checkPrivilege(v) {
 function selectedBank(value) {
   form.bankId = value;
 }
+
 function clearInfo() {
   isDeposited.value = false;
   formRef.value.resetFields();
@@ -352,14 +410,12 @@ function confirmDeposit() {
     }
   });
 }
+
 async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
-        "Deposit should be between " +
-          calculatedMinDeposit.value +
-          " - " +
-          activeMethod.value.depositMax
+        "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
       );
     } else {
       if (checkAmount.flag) {
@@ -401,6 +457,7 @@ onMounted(() => {
   .ant-modal-content {
     width: 90%;
   }
+
   .confirm-btn {
     padding: 5px;
     min-width: unset;
@@ -409,6 +466,19 @@ onMounted(() => {
 }
 </style>
 <style lang="scss">
+.dark-theme {
+  .account-content .deposit-container .deposit-amt-quick-select-item {
+    background: #ffffff0f;
+    color: #ffffff;
+    &.active {
+      background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+        linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+      border: 1px solid #48a7ff;
+      filter: none;
+      color: #ffffff;
+    }
+  }
+}
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
@@ -422,9 +492,11 @@ onMounted(() => {
     background-color: #1b232d;
     border: 1px solid #163d5b;
     cursor: pointer;
+
     &.payment-channel-item {
       flex-direction: column;
     }
+
     &.active {
       border-color: #1bcef1;
     }
@@ -442,55 +514,72 @@ onMounted(() => {
   color: #4d97ac;
 }
 
-.confirm-btn {
-  // width: 300px;
-  // height: 50px;
-  // background-color: #db7e42;
-  // margin: 68px auto 0;
-  // color: #000000;
-  // font-size: 18px;
-  margin: 20px auto;
-}
 .account-tip {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  &-text.activemethod {
+    div {
+      display: inline-block;
+    }
+  }
 }
+
 .deposit {
   margin-bottom: 0;
   min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
+
   & > div {
     height: 180px;
   }
 }
+
+.dark-theme {
+  .account-content
+    .deposit-container
+    .ant-form.ant-form-horizontal
+    .ant-form-item
+    .ant-form-item-control-input-content {
+    .ant-input-affix-wrapper,
+    > .ant-input {
+      border: 1px solid rgba(72, 167, 255, 0.1607843137);
+    }
+  }
+}
+
 .account-content {
   .wload {
     // display: flex;
     // justify-content: center;
     // align-items: center;
     // position: absolute;
-    // left: 0;
+    // left: 0;z
     // top: 0;
     // bottom: 0;
     // right: 0;
     // margin: auto;
   }
+
   .loading {
     display: flex;
     justify-content: center;
     font-size: 30px;
     height: 100%;
-    img {
-      width: 100%;
-    }
-    .icon {
-      margin-right: 10px;
-    }
+
+    // img {
+    //   width: 100%;
+    //   max-width: 750px;
+    // }
+
+    // .icon {
+    //   margin-right: 10px;
+    // }
   }
+
   .node-wrapper {
-    border-bottom: 1px solid #484460;
+    border-bottom: 1px solid #83a3ca33;
     // margin: 30px -30px;
     padding: 0 30px;
     // background: url(../../assets/images/common/bg.jpg);
@@ -498,48 +587,86 @@ onMounted(() => {
     // padding: 30px;
   }
   .deposit-container {
-    padding: 20px 30px;
-    // background: #23263c;
-    .ant-form.ant-form-horizontal
-      .ant-form-item
-      .ant-form-item-control-input-content
-      .ant-input {
-      background: #23263c;
-      border: #23263c;
-      max-width: 280px;
-      padding: 10px;
-      margin-right: 20px;
+    .deposit-amt-quick-select-wrapper {
     }
+    .deposit-amt-quick-select-title {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .deposit-amt-quick-select-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10vw, 1fr));
+      grid-gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+    }
+    .deposit-amt-quick-select-item {
+      border-radius: 40px;
+      border: 1px solid #eaeaea;
+      font-weight: normal;
+      background: #ecf5ff;
+      color: #2b2b82;
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+
+      &.active {
+        background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+          linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+    padding: 20px 30px;
+    //
+    .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content {
+      .ant-input-affix-wrapper,
+      > .ant-input {
+        max-width: 280px;
+        padding: 10px;
+        margin-right: 20px;
+        border: 1px solid #eaeaea;
+        border-radius: 12px;
+      }
+
+      .ant-input-affix-wrapper > .ant-input {
+        border: none;
+      }
+    }
+
     :deep(.ant-form-item) {
       align-items: flex-start;
       gap: 10px;
+
       &.tip {
-        color: #ffffff;
       }
     }
+
     :deep(.helptxt .ant-form-item-control-input-content) {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       flex-wrap: wrap;
       row-gap: 10px;
     }
+
     :deep(.ant-form-item .ant-select) {
       max-width: 280px;
       width: 100%;
     }
+
     :deep(.ant-form-item.select .ant-form-item-control-input) {
       max-width: 280px;
     }
-    :deep(.ant-select-single:not(.ant-select-customize-input)
-        .ant-select-selector
-        .ant-select-selection-search-input) {
+
+    :deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
       height: 40px;
     }
+
     :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
       height: 40px;
       padding: 5px 20px;
-      background: #23263c;
-      color: #ffffff;
+
       border: 0;
     }
   }
@@ -547,40 +674,16 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 :deep(.ant-form-item-label > label) {
-  color: #ffffff;
-}
-.account-tip {
-  color: #ffffff;
-  &-text {
-    color: #ffffff;
-  }
-}
-:deep(.ant-select) {
-  height: 42px;
-  width: 280px;
-  margin-right: 24px;
+  font-family: "Inter Medium";
 }
 
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector) {
-  height: 42px;
-}
-:deep(.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector
-    .ant-select-selection-search-input) {
-  height: 40px;
-}
-:deep(.ant-select-single
-    .ant-select-selector
-    .ant-select-selection-placeholder) {
-  line-height: 30px;
-}
-:deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
-  line-height: 30px;
+.account-tip {
+  &-text {
+  }
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .account-content .node-wrapper {
     padding: 0;
   }

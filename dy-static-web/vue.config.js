@@ -4,13 +4,17 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = defineConfig({
-  lintOnSave: true,
+  lintOnSave: false,
   productionSourceMap: false,
   runtimeCompiler: true,
   devServer: {
     hot: true,
     compress: true,
-    port: 8089
+    port: 8089,
+    client: {
+      overlay: false
+    },
+    open: true
   },
   assetsDir: "static",
   transpileDependencies: true,
@@ -48,6 +52,15 @@ module.exports = defineConfig({
     config.plugin("html").tap((args) => {
       args[0].title = defaultSettings.title;
       return args;
+    });
+
+    config.plugin("define").tap((definitions) => {
+      Object.assign(definitions[0], {
+        __VUE_OPTIONS_API__: "true",
+        __VUE_PROD_DEVTOOLS__: "false",
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "false"
+      });
+      return definitions;
     });
   },
   css: {

@@ -1,0 +1,40 @@
+{
+  "kind": "singleType",
+  "collectionName": "b9_charities",
+  "info": {
+    "singularName": "b9-charity",
+    "pluralName": "b9-charities",
+    "displayName": "B9 Charity",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "charityGallery": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item",
+      "required": false
+    },
+    "bannerTop": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item",
+      "required": false
+    },
+    "bannerMid": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item",
+      "required": false
+    },
+    "bannerBtm": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item",
+      "required": false
+    }
+  }
+}

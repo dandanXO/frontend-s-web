@@ -1,14 +1,10 @@
 <template>
   <div>
-    <div className="menu-title-container">
-      <span className="menu-title">Transit Record</span>
+    <div class="menu-title-container">
+      <span class="menu-title">Transaction Record</span>
     </div>
     <div class="account-content transit">
-      <a-tabs
-        v-model:activeKey="recordActive"
-        class="form-wrapped"
-        @change="searchRecord"
-      >
+      <a-tabs v-model:activeKey="recordActive" class="form-wrapped" @change="searchRecord">
         <a-tab-pane key="deposit" tab="Deposit">
           <div>
             <a-form layout="inline" :model="searchForm.deposit">
@@ -16,26 +12,22 @@
                 <a-form-item label="Start">
                   <a-date-picker
                     v-model:value="searchForm.deposit.startDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
                 <a-form-item label="End">
                   <a-date-picker
                     v-model:value="searchForm.deposit.endDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
               </div>
               <a-form-item class="search">
-                <button
-                  class="common-btn outline search-btn"
-                  type="submit"
-                  @click="searchRecord"
-                >
-                  Search For
-                </button>
+                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
               </a-form-item>
             </a-form>
           </div>
@@ -53,20 +45,12 @@
               </template>
               <template #operation="{ record }">
                 <template v-if="record.status === 'PENDING'">
-                  <a-button
-                    class="common-btn"
-                    style="margin: auto"
-                    @click="openReminder(record)"
-                    >Reminder</a-button
-                  >
+                  <a-button class="common-btn" style="margin: auto" @click="openReminder(record)">Reminder</a-button>
                 </template>
-                <!-- <template #operation="{ text }">
-                  <span>{{ (text) }}</span>
-                </template> -->
               </template>
-              <!-- <template #status="{ text }">
+              <template #status="{ text }">
                 <span>{{ getDepositStatus(text) }}</span>
-              </template> -->
+              </template>
             </a-table>
           </div>
         </a-tab-pane>
@@ -77,26 +61,22 @@
                 <a-form-item label="Start">
                   <a-date-picker
                     v-model:value="searchForm.turnover.startDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
                 <a-form-item label="End">
                   <a-date-picker
                     v-model:value="searchForm.turnover.endDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
               </div>
               <a-form-item>
-                <button
-                  class="common-btn outline search-btn"
-                  type="submit"
-                  @click="searchRecord"
-                >
-                  Search For
-                </button>
+                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
               </a-form-item>
             </a-form>
           </div>
@@ -112,9 +92,9 @@
               <template #recordTime="{ text }">
                 <span>{{ humanDatetime(text) }}</span>
               </template>
-              <!-- <template #type="{ text }">
+              <template #type="{ text }">
                 <span>{{ getTurnoverType(text) }}</span>
-              </template> -->
+              </template>
             </a-table>
           </div>
         </a-tab-pane>
@@ -125,26 +105,22 @@
                 <a-form-item label="Start">
                   <a-date-picker
                     v-model:value="searchForm.withdraw.startDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
                 <a-form-item label="End">
                   <a-date-picker
                     v-model:value="searchForm.withdraw.endDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
               </div>
               <a-form-item>
-                <button
-                  class="common-btn outline search-btn"
-                  type="submit"
-                  @click="searchRecord"
-                >
-                  Search For
-                </button>
+                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
               </a-form-item>
             </a-form>
           </div>
@@ -160,10 +136,15 @@
               <template #withdrawDate="{ text }">
                 <span>{{ humanDatetime(text) }}</span>
               </template>
-              <!-- 
+              <template #operation="{ record }">
+                <template v-if="record.status === 'STEP_1'">
+                  <a-button class="common-btn" style="margin: auto" @click="openReminder(record)">Reminder</a-button>
+                </template>
+              </template>
+
               <template #status="{ text }">
                 <span>{{ getWithdrawStatus(text) }}</span>
-              </template> -->
+              </template>
             </a-table>
           </div>
         </a-tab-pane>
@@ -188,11 +169,11 @@
               </div>
               <a-form-item>
                 <button
-                  class="common-btn outline search-btn"
+                  class="common-btn search-btn"
                   type="submit"
                   @click="searchRecord"
                 >
-                  Search For
+                  Search
                 </button>
               </a-form-item>
             </a-form>
@@ -237,26 +218,22 @@
                 <a-form-item label="Start">
                   <a-date-picker
                     v-model:value="searchForm.rebates.startDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
                 <a-form-item label="End">
                   <a-date-picker
                     v-model:value="searchForm.rebates.endDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
               </div>
               <a-form-item>
-                <button
-                  class="common-btn outline search-btn"
-                  type="submit"
-                  @click="searchRecord"
-                >
-                  Search For
-                </button>
+                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
               </a-form-item>
             </a-form>
           </div>
@@ -285,17 +262,13 @@
               <div class="left">
                 <a-form-item label="Platform">
                   <a-select
-                    allowClear
-                    style="width: 300px"
                     v-model:value="searchForm.gameBetRecord.platform"
+                    allow-clear
+                    style="width: 300px"
                     placeholder="Platform"
                     @change="searchRecord"
                   >
-                    <a-select-option
-                      v-for="p in platformsList"
-                      :key="p.name"
-                      :value="p.name"
-                    >
+                    <a-select-option v-for="p in platformsList" :key="p.name" :value="p.name">
                       {{ p.name }}
                     </a-select-option>
                   </a-select>
@@ -303,26 +276,22 @@
                 <a-form-item label="Start">
                   <a-date-picker
                     v-model:value="searchForm.gameBetRecord.startDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
                 <a-form-item label="End">
                   <a-date-picker
                     v-model:value="searchForm.gameBetRecord.endDate"
-                    valueFormat="yyyy-MM-DD"
+                    value-format="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
                     placeholder=""
                   />
                 </a-form-item>
               </div>
               <a-form-item>
-                <button
-                  class="common-btn outline search-btn"
-                  type="submit"
-                  @click="searchRecord"
-                >
-                  Search For
-                </button>
+                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
               </a-form-item>
             </a-form>
           </div>
@@ -336,22 +305,61 @@
               @change="recordPage"
             >
               <template #actions="{ record }">
-                <a-button class="common-btn" @click="betDetails(record)"
-                  >Bet record</a-button
-                >
+                <a-button class="common-btn" @click="betDetails(record)">Bet record</a-button>
+              </template>
+            </a-table>
+          </div>
+        </a-tab-pane>
+        <a-tab-pane key="reminderRecord" tab="Reminder record">
+          <div>
+            <a-form layout="inline" :model="searchForm.reminderRecord">
+              <div class="left">
+                <a-form-item label="Start">
+                  <a-date-picker
+                    v-model:value="searchForm.reminderRecord.startDate"
+                    valueFormat="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
+                    placeholder=""
+                  />
+                </a-form-item>
+                <a-form-item label="End">
+                  <a-date-picker
+                    v-model:value="searchForm.reminderRecord.endDate"
+                    valueFormat="yyyy-MM-DD"
+                    format="MM/DD/yyyy"
+                    placeholder=""
+                  />
+                </a-form-item>
+              </div>
+              <a-form-item>
+                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
+              </a-form-item>
+            </a-form>
+          </div>
+          <div class="unbind-record-wrapper">
+            <a-table
+              :columns="tableColumns.reminderRecord"
+              :data-source="dataState.reminderRecord"
+              :row-key="(record) => record.orderNo"
+              :loading="loading"
+              :pagination="pagination"
+              @change="recordPage"
+            >
+              <template #feedbackTime="{ text }">
+                <span>{{ humanDatetime(text) }}</span>
+              </template>
+              <template #type="{ text }">
+                <span>{{ checkType(text) }}</span>
+              </template>
+              <template #actions="{ record }">
+                <a-button class="common-btn" @click="betDetails(record)">Bet record</a-button>
               </template>
             </a-table>
           </div>
         </a-tab-pane>
       </a-tabs>
 
-      <a-modal
-        width="90%"
-        v-model:visible="betRecordDialog"
-        :maskClosable="false"
-        :closable="true"
-        :footer="null"
-      >
+      <a-modal v-model:visible="betRecordDialog" width="90%" :mask-closable="false" :closable="true" :footer="null">
         <div class="modal-head-title">Bet Record</div>
         <a-table
           :columns="tableColumns.betRecord"
@@ -360,62 +368,74 @@
           :loading="loading"
           :pagination="betPagination"
           @change="recordBetPage"
-        >
-        </a-table>
+        />
       </a-modal>
 
-      <a-modal
-        width="90%"
-        v-model:visible="reminderDialog"
-        :maskClosable="false"
-        :closable="true"
-        :footer="null"
+      <el-dialog
+        v-model="reminderDialog"
+        title="Submit Reminder"
+        width="50%"
+        align-center
+        style="max-width: 800px"
+        :before-close="clearItems"
       >
-        <div class="modal-head-title">Reminder Dialog</div>
-        <a-form
-          ref="formRef"
-          :model="reminderForm"
-          :hideRequiredMark="true"
-          name="basic"
-          :colon="false"
-          autocomplete="off"
-          labelAlign="left"
-          :label-col="{ span: 5 }"
-        >
-          <a-form-item label="Serial number" name="serialNumber">
-            <a-input
-              v-model:value="reminderForm.orderNo"
-              placeholder="Serial number"
-              disabled
-            />
-          </a-form-item>
-          <a-form-item label="Image Upload" name="photos">
-            <FileUpload @photo-response="getImageLink" />
-          </a-form-item>
-          <a-form-item label="Remarks" name="remarks">
-            <a-textarea
-              v-model:value="reminderForm.memberRemark"
-              placeholder="Remarks"
-              :auto-size="{ minRows: 2, maxRows: 5 }"
-            />
-          </a-form-item>
-          <a-button class="common-btn" @click="submitReminder"> Submit </a-button>
-        </a-form>
-      </a-modal>
+        <span>
+          <el-form
+            ref="formRef"
+            :model="reminderForm"
+            :hide-required-mark="true"
+            name="basic"
+            autocomplete="off"
+            label-width="120"
+            label-suffix=":"
+            style="width: 100%; max-width: 600px; margin: 0px auto 0px; padding-top: 50px; padding-bottom: 50px"
+          >
+            <el-form-item tabindex="1" label="Serial No." prop="serialNumber">
+              <el-input v-model="reminderForm.orderNo" placeholder="Serial No." disabled />
+            </el-form-item>
+
+            <el-form-item label="Choose Image" prop="photos">
+              <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
+            </el-form-item>
+
+            <el-form-item label="Remark" prop="remarks">
+              <el-input
+                type="textarea"
+                v-model="reminderForm.memberRemark"
+                placeholder="Remark"
+                :rows="2"
+                :autosize="{ minRows: 2, maxRows: 5 }"
+              />
+            </el-form-item>
+
+            <a-button
+              color="#3bafda"
+              class="common-btn"
+              style="margin-left: 120px; width: unset;"
+              :loading="loadingBtn"
+              @click="submitReminder()"
+            >
+              Submit
+            </a-button>
+          </el-form>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref } from "vue";
-import { loadRecords, gameBetRecordTotal } from "@/api/personal/personal";
+import { loadRecords, gameBetRecordTotal, saveFinanceFeedback, financeFeedbackList, getVerifyingFeedbackCount } from "@/api/personal/personal";
 import moment from "moment";
-// import { message } from "ant-design-vue";
 import { getPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
+import { message } from "ant-design-vue";
 
-const store = userStore()
+const loadingBtn = ref(false);
+const store = userStore();
+const uploadFileRef = ref();
 const recordActive = ref("deposit");
 const reminderForm = reactive({});
 const totalBetRecord = reactive({
@@ -467,6 +487,12 @@ const searchForm = reactive({
     memberId: store.id,
     current: 1,
     size: 10
+  },
+  reminderRecord: {
+    startDate: "",
+    endDate: "",
+    current: 1,
+    size: 10
   }
 });
 const dataState = reactive({
@@ -476,7 +502,8 @@ const dataState = reactive({
   withdraw: [],
   turnover: [],
   betRecord: [],
-  gameBetRecord: []
+  gameBetRecord: [],
+  reminderRecord: []
 });
 const commonColumns = [
   {
@@ -496,6 +523,10 @@ const tableColumns = {
       title: "Status",
       dataIndex: "status",
       slots: { customRender: "status" }
+    },
+    {
+      title: "Payment Type",
+      dataIndex: "paymentType",
     },
     {
       title: "Deposit Date",
@@ -523,6 +554,11 @@ const tableColumns = {
       title: "Withdraw Date",
       dataIndex: "withdrawDate",
       slots: { customRender: "withdrawDate" }
+    },
+    {
+      title: "Operation ",
+      dataIndex: "operation",
+      slots: { customRender: "operation" }
     }
   ],
   transfer: [
@@ -750,6 +786,26 @@ const tableColumns = {
     //   title: "Sport Bet Result",
     //   dataIndex: "sportBetResult"
     // },
+  ],
+  reminderRecord: [
+    {
+      title: "Order No.",
+      dataIndex: 'orderNo'
+    },
+    {
+      title: "Finance Remark",
+      dataIndex: 'financeRemark'
+    },
+    {
+      title: "Feedback Time",
+      dataIndex: "feedbackTime",
+      slots: { customRender: "feedbackTime" }
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      slots: { customRender: "type" }
+    }
   ]
 };
 const loading = ref(false);
@@ -765,40 +821,86 @@ const betPagination = reactive({
 export default defineComponent({
   name: "TransitRecordView",
   components: {
-    FileUpload,
+    FileUpload
   },
   setup() {
     const reminderDialog = ref(false);
     const openReminder = (record) => {
-      reminderDialog.value = true
-      reminderForm.orderNo = record.serialNumber
-      if (recordActive.value === 'deposit') {
-        reminderForm.type = 1
-      } else if (recordActive.value === 'withdraw') {
-        reminderForm.type = 2
-      }
+      getVerifyingFeedbackCount().then((res) => {
+        if (res.code === 0) {
+          if (res.data < 3) {
+            reminderDialog.value = true
+            reminderForm.orderNo = record.serialNumber
+            reminderForm.photos = null
+            reminderForm.memberRemark = null
+            if (recordActive.value === 'deposit') {
+              reminderForm.type = 1
+              reminderForm.recordTime = moment(record.depositDate).format('YYYY-MM-DD HH:mm:ss')
+            } else if (recordActive.value === 'withdraw') {
+              reminderForm.type = 2
+              reminderForm.recordTime = moment(record.withdrawDate).format('YYYY-MM-DD HH:mm:ss')
+            }
+          } else {
+            message.error('There is an existing reminder')
+          }
+        }
+      })
     }
     const submitReminder = () => {
-      console.log(reminderForm);
+      loadingBtn.value = true;
+      if (!reminderForm.photos) {
+        loadingBtn.value = false;
+        message.error(
+            `Please select Image`
+        );
+      } else {
+        saveFinanceFeedback(reminderForm).then((res) => {
+          loadingBtn.value = false;
+          if (res.code === 0) {
+            reminderDialog.value = false;
+            reminderForm.value = {}
+            uploadFileRef.value.clear()
+            message.success("Success", 4);
+          }
+        });
+      }
     }
     const searchRecord = () => {
+      if (searchForm[recordActive.value].startDate === "" || searchForm[recordActive.value].startDate === null || searchForm[recordActive.value].endDate === "" || searchForm[recordActive.value].endDate === null) {
+        message.error('Please fill in the date.')
+        return
+      }
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
         getPlatList();
       }
-      loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
-        if (response.code === 0) {
+      if (recordActive.value === 'reminderRecord') {
+        financeFeedbackList(searchForm[recordActive.value]).then((response) => {
+          if(response.code === 0) {
           pagination.total = response.data.total;
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
-        }
-      }).catch((error) => {
-        console.log("error", error);
-      }).then(() => {
-        loading.value = false;
-      });
+          loading.value = false;
+          }
+          return
+        })
+      } else {
+        loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
+          if (response.code === 0) {
+            pagination.total = response.data.total;
+            const dataSource = dataState[recordActive.value];
+            //clear array and then push new record
+            dataSource.splice(0);
+            dataSource.push(...response.data.records);
+          }
+        }).catch((error) => {
+          console.log("error", error);
+        }).then(() => {
+          loading.value = false;
+        });
+      }
     };
     const recordPage = (pagination) => {
       searchForm[recordActive.value].current = pagination.current;
@@ -820,10 +922,16 @@ export default defineComponent({
       return useDate;
     };
     const getTime = () => {
-      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord"].forEach(function(v) {
+      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function(v) {
         if (v in searchForm) {
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
+          if(v === "gameBetRecord") {
+            // 结束时间如果不跟开始时间一个月，则从当月1号开始
+            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+            }
+          }
         }
       });
       searchRecord();
@@ -851,56 +959,62 @@ export default defineComponent({
       })
 
     };
+    const clearItems = (done) => {
+      uploadFileRef.value.clear();
+      done()
+    }
     const selectedBetRecord = ref({})
-    // const getTurnoverType = (turnoverType) => {
-    //   if (!turnoverType) {
-    //     return ''
-    //   }
-    //   if (turnoverType === 'WITHDRAW_FAIL') {
-    //     return 'การถอนเงินล้มเหลว' // Fail Withdrawal
-    //   } else if (turnoverType === 'WITHDRAW') {
-    //     return 'ถอนเงิน' // Withdraw
-    //   } else {
-    //     return turnoverType
-    //   }
-    // }
-    // const getWithdrawStatus = (withdrawStatus) => {
-    //   if (withdrawStatus === 'APPLY') {
-    //     return 'ส่งดำเนินการ' //Applying
-    //   } else if (withdrawStatus === 'FAIL') {
-    //     return 'ล้มเหลว' // Failed
-    //   } else if (withdrawStatus === 'SUCCESS') {
-    //     return 'สำเร็จ' // Success
-    //   } else if (withdrawStatus === 'STEP_1') {
-    //     return 'กำลังตรวจสอบ' //Under review
-    //   } else if (withdrawStatus === 'STEP_2') {
-    //     return 'กำลังดำเนินการจ่าย' // To be paid
-    //   }  else if (withdrawStatus === 'STEP_3') {
-    //     return 'กำลังดำเนินการโอน' // Payment on going
-    //   }  else if (withdrawStatus === 'STEP_4') {
-    //     return 'ชำระอัตโนมัติ' // Automatic Payment
-    //   }  else if (withdrawStatus === 'STEP_5') {
-    //     return 'ระงับ' //Suspend
-    //   } else {
-    //     return withdrawStatus
-    //   }
-    // };
-    // const getDepositStatus = (depositStatus) => {
-    //   if (!depositStatus) {
-    //     return ''
-    //   }
-    //   if (depositStatus === 'PENDING') {
-    //     return 'รอดำเนินการ' // Pending
-    //   } else if (depositStatus === 'SUCCESS') {
-    //     return 'สำเร็จ' // Success
-    //   } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
-    //     return 'เสริมความสำเร็จ' // Supplement Success
-    //   } else if (depositStatus === 'CLOSED') {
-    //     return 'ปิด' // Closed
-    //   } else {
-    //     return depositStatus
-    //   }
-    // }
+    const getTurnoverType = (turnoverType) => {
+      if (!turnoverType) {
+        return ''
+      }
+      if (turnoverType === 'WITHDRAW_FAIL') {
+        return 'Fail Withdrawal' // Fail Withdrawal
+      } else if (turnoverType === 'WITHDRAW') {
+        return 'Withdraw' // Withdraw
+      } else {
+        return turnoverType
+      }
+    }
+    const getWithdrawStatus = (withdrawStatus) => {
+      if (withdrawStatus === 'APPLY') {
+        return 'Applying' //Applying
+      } else if (withdrawStatus === 'FAIL') {
+        return 'Failed' // Failed
+      } else if (withdrawStatus === 'SUCCESS') {
+        return 'Success' // Success
+      } else if (withdrawStatus === 'STEP_1') {
+        return 'Under review' //Under review
+      } else if (withdrawStatus === 'STEP_2') {
+        return 'To be paid' // To be paid
+      }  else if (withdrawStatus === 'STEP_3') {
+        return 'Paying' // Payment on going
+      }  else if (withdrawStatus === 'STEP_4') {
+        return 'Automatic Payment' // Automatic Payment
+      }  else if (withdrawStatus === 'STEP_5') {
+        return 'Suspend' //Suspend
+      } else if (withdrawStatus === 'WAITING_CALLBACK') {
+        return 'Paying' //Paying
+      } else {
+        return withdrawStatus
+      }
+    };
+    const getDepositStatus = (depositStatus) => {
+      if (!depositStatus) {
+        return ''
+      }
+      if (depositStatus === 'PENDING') {
+        return 'Pending' // Pending
+      } else if (depositStatus === 'SUCCESS') {
+        return 'Success' // Success
+      } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
+        return 'Supplement Success' // Supplement Success
+      } else if (depositStatus === 'CLOSED') {
+        return 'Closed' // Closed
+      } else {
+        return depositStatus
+      }
+    }
 
     const betRecordDialog = ref(false)
     const betDetails = (record) => {
@@ -924,10 +1038,8 @@ export default defineComponent({
       })
     }
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://fxlmnp.wallykrooger.com/photo/${linkId}`
-      alert(linkId)
+      reminderForm.photos = `${linkId}`
     }
-
 
     return {
       recordActive,
@@ -940,8 +1052,16 @@ export default defineComponent({
       pagination,
       getTime,
       chgDate,
+      loadingBtn,
       humanDatetime(ts) {
-        return moment(ts).format("DD-MM-YYYY HH:mm:ss");
+        return moment(ts).format("MM/DD/yyyy HH:mm:ss");
+      },
+      checkType(ts) {
+        if (ts === 1) {
+          return 'Deposit'
+        } else {
+          return 'Withdraw'
+        }
       },
       getPlatList,
       platformsList,
@@ -954,10 +1074,12 @@ export default defineComponent({
       reminderDialog,
       reminderForm,
       submitReminder,
-      getImageLink
-      // getTurnoverType,
-      // getWithdrawStatus,
-      // getDepositStatus
+      getImageLink,
+      uploadFileRef,
+      getTurnoverType,
+      getWithdrawStatus,
+      getDepositStatus,
+      clearItems
     };
   }
 });
@@ -975,25 +1097,23 @@ export default defineComponent({
   width: 100%;
 }
 :deep(.ant-upload-list-item) {
-  color: #ffffff;
   margin-top: 0;
 }
 :deep(.ant-upload-list.ant-upload-list-text > div) {
   width: 100%;
 }
 :deep(.ant-upload-list-item-card-actions .anticon) {
-  color: #ffffff;
 }
 :deep(.ant-upload-list-item:hover .ant-upload-list-item-info) {
-  background: #23263c;
-  color: #ffffff;
 }
 :deep(.ant-form-item-label > label) {
-  color: #ffffff;
 }
 .ant-input[disabled] {
   color: #aaaaaa;
   background-color: #181829;
+}
+.ant-input {
+  border-width: 1px;
 }
 .payout-total {
   display: flex;
@@ -1003,7 +1123,6 @@ export default defineComponent({
   margin-bottom: 20px;
 }
 :deep(.ant-select:hover .ant-select-clear) {
-  background: #2b2b4b;
 }
 .account-content.transit {
   min-height: 740px;
@@ -1045,7 +1164,7 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .account-container {
     .account-content-wrapper {
       .transit .ant-form {

@@ -1,25 +1,20 @@
 <template>
   <div class="agency-policy">
-    <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div>
-
-    <div class="title">Invite to Earn</div>
-    <div class="subtitle">Simply share your exclusive QR code</div>
+    <div class="agency-policy-main-img"><img src="@/assets/images/earn-money/about-bg.png" /></div>
+    <div class="title">{{ $t("earnMoney.about.invitetoEarn") }}</div>
+    <div class="subtitle">{{ $t("earnMoney.about.simplyShare") }}</div>
     <div class="desc-wrapper">
-      <img src="../../assets/images/earn-money/about-invite.svg" />
-      <div>
-        Invite more friends and you will earn more. Every member who joins Skyace Club is both a player and an agent.
-      </div>
+      <img src="@/assets/images/earn-money/about-invite.svg" />
+      <div>{{ $t("earnMoney.about.inviteMoreFriends") }}</div>
     </div>
     <div class="desc-wrapper">
-      <img src="../../assets/images/earn-money/about-reward.svg" />
-      <div>We advocate benefits and bonuses for everyone.</div>
+      <img src="@/assets/images/earn-money/about-reward.svg" />
+      <div>{{ $t("earnMoney.about.weAdvocateBenefits") }}</div>
     </div>
-
     <div class="agency-policy-separator"></div>
-    <div class="agency-policy-title">Agency Policy</div>
+    <div class="agency-policy-title">{{ $t("earnMoney.about.agencyPolicy") }}</div>
     <div class="agency-policy-separator"></div>
-
-    <h6>The table below shows how the rewards are assigned.</h6>
+    <h6>{{ $t("earnMoney.about.theTableBelowShows") }}</h6>
     <q-table
       flat
       :hide-pagination="true"
@@ -32,58 +27,34 @@
     ></q-table>
 
     <ul>
-      <li class="dot-style">Active users: daily bet amount 2,000</li>
-      <li class="dot-style">
-        Your reward will be calculated based on the total bet amount of your members. The reward gained can either be
-        withdrawn or used for further betting.
-      </li>
-      <li class="dot-style">Refer as many friends as you can to gain bigger percentage of rebates.</li>
-      <li class="dot-style">Earn lifetime revenue on your referred players.</li>
+      <li class="dot-style">{{ $t("earnMoney.about.point_01") }}</li>
+      <li class="dot-style">{{ $t("earnMoney.about.point_02") }}</li>
+      <li class="dot-style">{{ $t("earnMoney.about.point_03") }}</li>
+      <li class="dot-style">{{ $t("earnMoney.about.point_04") }}</li>
     </ul>
 
-    <h4>&nbsp;&middot;&nbsp;FAQ</h4>
-    <q-expansion-item label="1. How to earn commissions?">
+    <h4>&nbsp;&middot;&nbsp;{{ $t("earnMoney.about.faq") }}</h4>
+    <q-expansion-item :label="$t('earnMoney.about.faq_01')">
       <ul>
-        <li class="dot-style">
-          You can earn up to 1.5% of the daily wagers of players you refer. The higher your level, the higher the
-          commission percentage you can earn.
-        </li>
-        <li class="dot-style">
-          If your affiliate or your affiliate becomes an agent and they are at a lower level than their immediate
-          superior, then you can receive up to 1.2% of the affiliate's wagering rebate amount. The commission rate
-          depends on the level difference between you and your affiliate, the greater the level difference, the more
-          commission you receive.
-        </li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_01_01") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_01_02") }}</li>
       </ul>
     </q-expansion-item>
 
-    <q-expansion-item label="2. How to invite your friends?">
+    <q-expansion-item :label="$t('earnMoney.about.faq_02')">
       <ul>
-        <li class="dot-style">Share the game via social media or share the referral link to your friends.</li>
-        <li class="dot-style">
-          Friends must click on your promotion link, download the App, install the game and register to start betting to
-          get commission.
-        </li>
-        <li class="dot-style">Registration must be completed through a referral link.</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_02_01") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_02_02") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_02_03") }}</li>
       </ul>
     </q-expansion-item>
 
-    <q-expansion-item label="3. What's the purpose of level?">
+    <q-expansion-item :label="$t('earnMoney.about.faq_03')">
       <ul>
-        <li class="dot-style">
-          We have divided 13 levels based on the number of recommended users and betting performance.
-        </li>
-        <li class="dot-style">
-          Upgrade conditions require that the bet amount and team size meet the requirements at the same time. The
-          higher your level, the higher the commission percentage you will receive from members' bet amounts.
-        </li>
-        <li class="dot-style">
-          Level difference: When the immediate superior minus the corresponding direct member level is ≥ 1, there is a
-          level difference, otherwise there is no level difference.
-        </li>
-        <li class="dot-style">
-          The higher your level, the higher the commission percentage you get from level difference bets.
-        </li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_03_01") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_03_02") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_03_03") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_03_04") }}</li>
 
         <q-table
           flat
@@ -96,51 +67,30 @@
           dense
         ></q-table>
       </ul>
-
     </q-expansion-item>
 
-    <q-expansion-item label="4. How to upgrade your level?">
+    <q-expansion-item :label="$t('earnMoney.about.faq_04')">
       <ul>
-        <li class="dot-style">
-          The more members you bring to the game and the more they bet, the higher the tiers you can get.
-        </li>
-        <li class="dot-style">
-          If you have extraordinary channel promotion capabilities, please contact our customer service center for
-          verification.
-        </li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_04_01") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_04_02") }}</li>
       </ul>
     </q-expansion-item>
 
-    <q-expansion-item label="5. How to turn your friends into members?">
+    <q-expansion-item :label="$t('earnMoney.about.faq_05')">
       <ul>
-        <li class="dot-style">
-          Log in to 55Ace, share your recommendation link with your friends on the recommendation page, guide them to
-          register from the link, and they can become your direct members.
-        </li>
-        <li class="dot-style">
-          Encourage your members to invite their friends to play games, and the friends they invite will become your
-          indirect members.
-        </li>
-        <li class="dot-style">
-          When friends of your direct members become your indirect members, they can still grow their membership this
-          way. All their sub-members will be considered as your indirect sub-members.
-        </li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_05_01") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_05_02") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_05_03") }}</li>
       </ul>
     </q-expansion-item>
 
-    <q-expansion-item label="6. How to get commission from your members?">
+    <q-expansion-item :label="$t('earnMoney.about.faq_06')">
       <ul>
-        <li class="dot-style">
-          There must be a level difference between you and all your lower-level members, otherwise no level difference
-          commission will be generated.
-        </li>
-        <li class="dot-style">
-          The proportion of commission is determined by the difference between your level and the level of your
-          subordinate members.
-        </li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_06_01") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_06_02") }}</li>
       </ul>
 
-      <h4>&nbsp;&middot;&nbsp;Example</h4>
+      <h4>&nbsp;&middot;&nbsp;{{ $t("earnMoney.about.faq_06_example") }}</h4>
 
       <div class="text-center">
         <img class="affi-graph" src="../../assets/images/earn-money/afiliate-graph.png" />
@@ -149,97 +99,62 @@
       <table class="rebate-example-table">
         <tbody>
           <tr>
-            <td>Name</td>
-            <td>Level</td>
-            <td>Betting</td>
-            <td>Members</td>
+            <td>{{ $t("earnMoney.about.faq_06_table_name") }}</td>
+            <td>{{ $t("earnMoney.about.faq_06_table_level") }}</td>
+            <td>{{ $t("earnMoney.about.faq_06_table_betting") }}</td>
+            <td>{{ $t("earnMoney.about.faq_06_table_members") }}</td>
           </tr>
           <tr>
-            <td>You</td>
+            <td>{{ $t("earnMoney.about.faq_06_table_you") }}</td>
             <td>8(1.0%)</td>
-            <td>972,000</td>
+            <td>Rp972,000K</td>
             <td>49</td>
           </tr>
           <tr>
             <td>A</td>
             <td>8(1.0%)</td>
-            <td>760,000</td>
+            <td>Rp760,000K</td>
             <td>35</td>
           </tr>
           <tr>
             <td>B</td>
             <td>6(0.8%)</td>
-            <td>210,000</td>
+            <td>Rp210,000K</td>
             <td>13</td>
           </tr>
           <tr>
             <td>C</td>
             <td>1(0.3%)</td>
-            <td>2,000</td>
+            <td>Rp2,000K</td>
             <td>1</td>
           </tr>
         </tbody>
       </table>
 
       <ul>
-        <!--      <li class="dot-style">-->
-        <!--        You level-->
-        <!--        <em>V8</em>-->
-        <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(972000) }}rs</em>-->
-        <!--        . Team members-->
-        <!--        <em>49</em>-->
-        <!--        people.-->
-        <!--      </li>-->
-        <!--      <li class="dot-style">-->
-        <!--        A Level-->
-        <!--        <em>V8</em>-->
-        <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(760000) }}rs</em>-->
-        <!--        . Team members-->
-        <!--        <em>35</em>-->
-        <!--        people.-->
-        <!--      </li>-->
-        <!--      <li class="dot-style">-->
-        <!--        B Level-->
-        <!--        <em>V6</em>-->
-        <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(210000) }}rs</em>-->
-        <!--        . Team members-->
-        <!--        <em>13</em>-->
-        <!--        people.-->
-        <!--      </li>-->
-        <!--      <li class="dot-style">-->
-        <!--        C Level-->
-        <!--        <em>V1</em>-->
-        <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(2000) }}rs</em>-->
-        <!--        . Team members-->
-        <!--        <em>1</em>-->
-        <!--        person.-->
-        <!--      </li>-->
-        <li class="dot-style">You can't get A's betting rebate.</li>
-        <li class="dot-style">You can get 0.2% commission on B's bet amount</li>
-        <li class="dot-style">You can get 0.7% commission on C's bet amount</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_06_dot_01") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_06_dot_02") }}</li>
+        <li class="dot-style">{{ $t("earnMoney.about.faq_06_dot_03") }}</li>
       </ul>
     </q-expansion-item>
   </div>
 </template>
 
 <script setup>
-import { convertToCommaAmount } from "src/boot/utils";
-import { userStore } from "stores/index";
+import { t } from "@/boot/lang";
+import { convertToCommaAmount } from "@/boot/utils";
+import { userStore } from "@/stores/index";
 
-const store = userStore()
+const store = userStore();
 
 const columns4 = [
   {
     name: "level",
-    label: "Level Difference",
+    label: t("earnMoney.about.table_col_levelDifference"),
     field: "level",
     align: "center"
   },
-  { name: "rebates", label: "Rebate (%)", field: "rebates", align: "center" }
+  { name: "rebates", label: t("earnMoney.about.table_col_rebate"), field: "rebates", align: "center" }
 ];
 const rows4 = [
   {
@@ -295,90 +210,95 @@ const rows4 = [
 const columns2 = [
   {
     name: "level",
-    label: "Level",
+    label: t("earnMoney.about.table_col_level"),
     field: "level",
     align: "center"
   },
-  { name: "betAmount", label: `Bet Amount (${ store.currency.value })`, field: "betAmount", align: "center" },
-  { name: "teamMember", label: "Active Member", field: "teamMember", align: "center" },
-  { name: "rebate", label: "Rate %", field: "rebate", align: "center" }
+  {
+    name: "betAmount",
+    label: `${t("earnMoney.about.table_col_betAmount")} (${store.currency.value})`,
+    field: "betAmount",
+    align: "center"
+  },
+  { name: "teamMember", label: t("earnMoney.about.table_col_activeMember"), field: "teamMember", align: "center" },
+  { name: "rebate", label: t("earnMoney.about.table_col_rate"), field: "rebate", align: "center" }
 ];
 const rows2 = [
   {
     level: "v13",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(160000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(160000000)}K`,
     teamMember: "377",
     rebate: "1.5"
   },
   {
     level: "v12",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(85000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(85000000)}K`,
     teamMember: "233",
     rebate: "1.4"
   },
   {
     level: "v11",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(50000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(50000000)}K`,
     teamMember: "144",
     rebate: "1.3"
   },
   {
     level: "v10",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(26000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(26000000)}K`,
     teamMember: "89",
     rebate: "1.2"
   },
   {
     level: "v9",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(14000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(14000000)}K`,
     teamMember: "55",
     rebate: "1.1"
   },
   {
     level: "v8",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(7500000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(7500000)}K`,
     teamMember: "34",
     rebate: "1.0"
   },
   {
     level: "v7",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(4200000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(4200000)}K`,
     teamMember: "21",
     rebate: "0.9"
   },
   {
     level: "v6",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(2000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(2000000)}K`,
     teamMember: "13",
     rebate: "0.8"
   },
   {
     level: "v5",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(1000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(1000000)}K`,
     teamMember: "8",
     rebate: "0.7"
   },
   {
     level: "v4",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(350000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(350000)}K`,
     teamMember: "5",
     rebate: "0.6"
   },
   {
     level: "v3",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(140000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(140000)}K`,
     teamMember: "3",
     rebate: "0.5"
   },
   {
     level: "v2",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(5000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(5000)}K`,
     teamMember: "2",
     rebate: "0.4"
   },
   {
     level: "v1",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(2000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(2000)}K`,
     teamMember: "1",
     rebate: "0.3"
   }
@@ -482,7 +402,7 @@ const rows3 = [
 
   .agency-policy-title {
     // background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
-    background-image: url("../../assets/images/earn-money/agency-policy-label.png");
+    background-image: url("@/assets/images/earn-money/agency-policy-label.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% auto;

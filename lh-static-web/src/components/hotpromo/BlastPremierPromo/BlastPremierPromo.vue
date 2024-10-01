@@ -149,15 +149,17 @@
         </table>
         <div class="rec">
           <table v-if="keyRecords && keyRecords.length > 0" class="table-rows">
-            <tr v-for="(key, i) in keyRecords" :key="i">
-              <td>{{ key.createTime }}</td>
-              <td>
-                <div class="keysAmt">
-                  <img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />
-                  {{ key.quantity }}
-                </div>
-              </td>
-            </tr>
+            <tbody>
+              <tr v-for="(key, i) in keyRecords" :key="i">
+                <td>{{ key.createTime }}</td>
+                <td>
+                  <div class="keysAmt">
+                    <img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />
+                    {{ key.quantity }}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
           </table>
           <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px">暂无数据</div>
         </div>
@@ -180,11 +182,13 @@
             </table>
           </div>
           <table style="width: 100%" v-if="openRecords">
-            <tr v-for="(open, i) in openRecords" :key="i">
-              <td width="50%">{{ open.createTime }}</td>
-              <td width="25%">{{ open.quantity }}</td>
-              <td width="25%">{{ open.amount }}</td>
-            </tr>
+            <tbody>
+              <tr v-for="(open, i) in openRecords" :key="i">
+                <td width="50%">{{ open.createTime }}</td>
+                <td width="25%">{{ open.quantity }}</td>
+                <td width="25%">{{ open.amount }}</td>
+              </tr>
+            </tbody>
           </table>
           <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px">暂无数据</div>
         </div>
@@ -662,11 +666,11 @@ onMounted(() => {
           font-weight: 500;
           line-height: 28px;
           font-family: "PingFang SC";
+          color: #fffd66;
           // color: $color-white;
           &:first-of-type {
             color: $color-white;
           }
-          color: #fffd66;
 
           // background: url(@/assets/images/promotion/hotpromo/blastpremier/btn-active.png) no-repeat center center;
         }
@@ -844,7 +848,8 @@ onMounted(() => {
 
 :deep(.cs2Dialog) {
   width: 760px;
-
+  background: transparent;
+  box-shadow: none;
   .el-dialog__header .el-dialog__headerbtn {
     background: url(../../../assets/images/promotion/hotpromo/cs2/close.png);
     content-visibility: hidden;
@@ -852,9 +857,6 @@ onMounted(() => {
     right: 50px;
     background-size: contain;
   }
-
-  background: transparent;
-  box-shadow: none;
 
   .modal-title {
     background: url(../../../assets/images/promotion/hotpromo/cs2/star.png) no-repeat center center;
@@ -875,17 +877,10 @@ onMounted(() => {
     flex-direction: column;
 
     &.keyRec {
+      color: #7f4c00;
+      font-size: 20px;
+
       .rec {
-        &::-webkit-scrollbar {
-          width: 5px;
-          height: 8px;
-          background-color: #ffffff;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: #ffd4b3;
-        }
-
         width: 90%;
         margin: 0 auto;
         height: 300px;
@@ -895,10 +890,17 @@ onMounted(() => {
         overflow: auto;
         justify-content: flex-start;
         align-items: center;
-      }
 
-      color: #7f4c00;
-      font-size: 20px;
+        &::-webkit-scrollbar {
+          width: 5px;
+          height: 8px;
+          background-color: #ffffff;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #ffd4b3;
+        }
+      }
 
       table {
         width: 100%;
@@ -924,21 +926,15 @@ onMounted(() => {
     }
 
     &.openRec {
+      color: #7f4c00;
+      font-size: 24px;
+      gap: 15px;
+
       .table-title {
         font-weight: 700;
       }
 
       .rec {
-        &::-webkit-scrollbar {
-          width: 5px;
-          height: 8px;
-          background-color: #ffffff;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: #ffd4b3;
-        }
-
         width: 90%;
         margin: 0 auto;
         height: 300px;
@@ -948,11 +944,17 @@ onMounted(() => {
         overflow: auto;
         justify-content: flex-start;
         align-items: center;
-      }
 
-      color: #7f4c00;
-      font-size: 24px;
-      gap: 15px;
+        &::-webkit-scrollbar {
+          width: 5px;
+          height: 8px;
+          background-color: #ffffff;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #ffd4b3;
+        }
+      }
 
       .flex {
         display: flex;

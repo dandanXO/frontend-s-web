@@ -7,7 +7,7 @@
           <div class="top-line1-content">
             您通过推广链接邀请的用户注册并存款，您将获得最高累计
             <span class="prize-span">2,000</span>
-            元的奖励。<router-link to="/promo?name=lh1-invite">活动详情</router-link>
+            元的奖励。<span class="promo-details-btn" @click="onClickInviteFriendPromoDetailsBtn">活动详情</span>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
         <div class="title-top-line1">
           <div class="top-line1-content">
             您通过唤醒链接激活的老用户存款，双方都可获得不限量彩金。
-            <router-link to="/promo?name=lh1-summon-event">活动详情</router-link>
+            <span class="promo-details-btn" @click="onClickSummonEventPromoDetailsBtn">活动详情</span>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ import VueQRCodeComponent from 'vue-qrcode-component'
 import {userStore} from "src/stores";
 import {useQuasar, Platform, scroll} from "quasar";
 import {api, eventapi} from "boot/axios"
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
@@ -135,6 +135,7 @@ export default defineComponent({
     const notify = useNotify();
     const { getScrollTarget, setVerticalScrollPosition } = scroll;
     const route = useRoute();
+    const router = useRouter();
     const $q = useQuasar();
     const store = userStore();
     const selfTgurl = ref("");
@@ -178,6 +179,26 @@ export default defineComponent({
         });
       }, 100)
 
+    }
+
+    const onClickInviteFriendPromoDetailsBtn = () => {
+      if (window.location.pathname === "/invitefriend") {
+        window.location.href = `/promotion?name=lh1-invite&token=${store.token}`
+        return;
+      }
+
+      router.push('/promo?name=lh1-invite');
+      return;
+    }
+
+    const onClickSummonEventPromoDetailsBtn = () => {
+      if (window.location.pathname === "/invitefriend") {
+        window.location.href = `/promotion?name=lh1-summon-event&token=${store.token}`
+        return;
+      }
+
+      router.push('/promo?name=lh1-summon-event');
+      return;
     }
 
     async function copyToClipboard(textToCopy) {
@@ -257,7 +278,9 @@ export default defineComponent({
       SummonUrl,
       SummonQrCode,
       refTotalSummon,
-      store
+      store,
+      onClickInviteFriendPromoDetailsBtn,
+      onClickSummonEventPromoDetailsBtn
     }
   }
 });
@@ -273,9 +296,15 @@ export default defineComponent({
     &.grad {
       background: linear-gradient(180deg, #4ad8fc, #3f9dff);
       color: #ffffff;
+
       .qr-title, .prize-span, .top-line1-content a {
         color: #ffffff;
       }
+    }
+
+    .promo-details-btn {
+      cursor: pointer;
+      text-decoration: underline;
     }
   }
 
@@ -473,7 +502,7 @@ export default defineComponent({
   .share-container {
     .personal-content-box {
       #selfTgurl {
-        color: $primary-dark;
+        color: #117DCC; 
       }
     }
     .shadow-box {
@@ -484,7 +513,7 @@ export default defineComponent({
       .title-top-line1 {
         .prize-span,
         a {
-          color: $primary-dark;
+          color: #117DCC;
         }
       }
     }

@@ -3,43 +3,47 @@
     v-model:visible="visible"
     :footer="null"
     width="100%"
-    :maskClosable="false"
+    :mask-closable="false"
     wrap-class-name="full-modal"
     :title="title"
-    destroyOnClose
-    :afterClose="destroyGame"
+    destroy-on-close
+    :after-close="destroyGame"
   >
-    <TFLoading v-if="logoShow"> </TFLoading>
-    <iframe
-      @load="loadGame()"
-      v-show="!logoShow"
-      :src="src"
-      id="game-iframe"
-      scrolling="no"
-      frameborder="0"
-      class="game-iframe"
-    ></iframe>
-    <div
-      @click="showDrawer()"
-      class="drawer-btn"
-      :class="{ active: isMobileDrawerActive }"
-    >
-      Quick Actions
-    </div>
+    <TFLoading v-if="logoShow" />
 
-    <div
-      :class="{ active: isMobileDrawerActive }"
-      class="additional-buttons desktopview"
-      v-if="!drawerVisible"
-    >
+    <template v-if="isInnerHtmlSrc === false">
+      <iframe
+        v-show="!logoShow"
+        id="game-iframe"
+        :src="src"
+        scrolling="no"
+        frameborder="0"
+        class="game-iframe"
+        @load="loadGame()"
+      />
+    </template>
+    <template v-else>
+      <iframe
+        @load="loadGame()"
+        v-show="!logoShow"
+        v-bind:srcdoc="src"
+        id="game-iframe"
+        frameborder="0"
+        scrolling="no"
+        class="game-iframe"
+      ></iframe>
+    </template>
+    <div class="drawer-btn" :class="{ active: isMobileDrawerActive }" @click="showDrawer()">Quick Actions</div>
+
+    <div v-if="!drawerVisible" :class="{ active: isMobileDrawerActive }" class="additional-buttons desktopview">
       <div class="numbers">
         <div class="amt-numbers">QUICK TRANSFER</div>
         <div
           v-for="(val, valIndex) in values"
           :key="valIndex"
           class="num"
-          @click="submitTransfer(val)"
           :class="{ animate: isClicked === val }"
+          @click="submitTransfer(val)"
         >
           {{ val }}
         </div>
@@ -55,8 +59,8 @@
       :visible="drawerVisible"
       :get-container="false"
       :style="{ position: 'absolute', overflow: 'hidden' }"
-      @close="onClose"
       :closable="true"
+      @close="onClose"
     >
       <!-- <template #extra>
         <a-button style="margin-right: 8px" @click="onClose">Cancel</a-button>
@@ -87,8 +91,8 @@
               v-for="(val, valIndex) in values"
               :key="valIndex"
               class="num"
-              @click="submitTransfer(val)"
               :class="{ animate: isClicked === val }"
+              @click="submitTransfer(val)"
             >
               {{ val }}
             </div>
@@ -108,19 +112,19 @@
     v-model:visible="visibleComingSoon"
     :footer="null"
     width="100%"
-    :maskClosable="false"
+    :mask-closable="false"
     wrap-class-name="full-modal"
     :title="title"
-    destroyOnClose
+    destroy-on-close
   >
-    <ComingSoon></ComingSoon>
+    <ComingSoon />
   </a-modal>
 </template>
 <script setup id="GameModal">
 import { userStore } from "@/store";
 import { launchSessionGame } from "@/api/platform/platform";
 import { isMobile } from "@/utils/utils";
-import { ref, defineExpose } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import ComingSoon from "@/components/loading/ComingSoon";
 import TFLoading from "@/components/loading/TFLoading";
@@ -137,6 +141,7 @@ const values = ref(["100", "200", "300", "500", "1000"]);
 
 const quickTransferTab = ref(true);
 
+const isInnerHtmlSrc = ref(false);
 const drawerVisible = ref(false);
 
 const showDrawer = () => {
@@ -164,7 +169,7 @@ const title = ref("");
 
 const transferInfo = ref({
   amount: null,
-  platform: null,
+  platform: null
 });
 const isClicked = ref("");
 const submitTransfer = (amount) => {
@@ -187,8 +192,9 @@ const submitTransfer = (amount) => {
     });
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
+  isInnerHtmlSrc.value = false;
   transferInfo.value = {
-    platform: platformCode,
+    platform: platformCode
   };
   title.value = gameName;
   const store = userStore();
@@ -199,9 +205,23 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       visible.value = true;
       launchSessionGame(platformCode, {
         gameCode: gameCode,
-        isMobile: isMobile(),
+        isMobile: isMobile()
       }).then((res) => {
-        src.value = res.data;
+        let srcDoc = res.data;
+        var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+        if (firstFourChars === "http") {
+          src.value = srcDoc;
+        } else {
+          isInnerHtmlSrc.value = true;
+
+          const scriptEndTag = "</" + "script>";
+          srcDoc = srcDoc
+            .replace(/<\/script>/g, scriptEndTag)
+            .replace(/\\\"/g, '"')
+            .replace(/\n/g, "");
+
+          src.value = srcDoc;
+        }
       });
     } else {
       router.push("/login");
@@ -215,7 +235,7 @@ const loadGame = () => {
   }
 };
 defineExpose({
-  open,
+  open
 });
 </script>
 <style lang="scss">
@@ -292,27 +312,20 @@ defineExpose({
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,
-        15% 15%, 10% 10%, 18% 18%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-        20% 20%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
     &.animate {
       transform: translateZ(45deg);
@@ -331,31 +344,25 @@ defineExpose({
     }
     @keyframes topBubbles {
       0% {
-        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
-          40% 90%, 55% 90%, 70% 90%;
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
       }
       50% {
-        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
-          50% 50%, 65% 20%, 90% 30%;
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
       }
       100% {
-        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
-          50% 40%, 65% 10%, 90% 20%;
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
-        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
-          70% -10%, 70% 0%;
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
       }
       50% {
-        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%,
-          95% 60%, 105% 0%;
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
       }
       100% {
-        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%,
-          95% 70%, 110% 10%;
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
@@ -407,22 +414,19 @@ defineExpose({
   background: #201f2a;
 }
 :deep(.ant-drawer-title) {
-  color: #ffffff;
 }
 .account-tip {
-  color: #ffffff;
 }
 :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
   position: relative;
   background-color: #23263c;
   border: 0;
-  color: #ffffff;
 }
-:deep(.ant-form-vertical
-    .ant-form-item-label
-    > label, .ant-col-24.ant-form-item-label
-    > label, .ant-col-xl-24.ant-form-item-label > label) {
-  color: #ffffff;
+:deep(
+    .ant-form-vertical .ant-form-item-label > label,
+    .ant-col-24.ant-form-item-label > label,
+    .ant-col-xl-24.ant-form-item-label > label
+  ) {
 }
 :deep(.ant-drawer-right.ant-drawer-open) {
   width: calc(100% + 60px);
@@ -456,7 +460,7 @@ defineExpose({
 .mobileshow {
   display: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   :deep(.ant-drawer-right.ant-drawer-open) {
     margin-right: 0;
     max-width: 100%;
@@ -501,7 +505,7 @@ defineExpose({
       flex: 1;
       border: 0;
       background: #201f2a;
-      color: #ffffff;
+
       border-radius: 0;
       font-size: 12px;
       text-align: center;
@@ -560,11 +564,4 @@ defineExpose({
     position: fixed;
   }
 }
-// @media (orientation: landscape) {
-//   .game-iframe {
-//     top: 0;
-//     height: 100%;
-//     // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
-//   }
-// }
 </style>

@@ -12,9 +12,10 @@
         ยิ่งมีสิทธิ์ได้ลุ้นรับรางวัลมากขึ้น
       </div>
       <div class="right-count">
-        โหวตของฉัน: <span>{{ myVotes }}</span>
+        โหวตของฉัน:
+        <span>{{ myVotes }}</span>
       </div>
-      <div class="country-list" id="countrylist">
+      <div id="countrylist" class="country-list">
         <div
           v-for="(country, i) in countriesList"
           :key="i"
@@ -27,7 +28,9 @@
               :src="`${imgURL}${country.countryImgUrl}`"
             />
           </div>
-          <div class="c-name">{{ country.teamNameLocal }}</div>
+          <div class="c-name">
+            {{ country.teamNameLocal }}
+          </div>
           <div class="c-price">{{ country.totalVotes }} โหวด</div>
           <div class="c-button">โหวด</div>
         </div>
@@ -48,25 +51,28 @@
       </a-table>
     </div>
 
-    <a-modal class="votesm" v-model:visible="voteModalVisible" centered>
+    <a-modal v-model:visible="voteModalVisible" class="votesm" centered>
       <div>
-        <div class="game-title sub">{{ selectedCountry }}</div>
+        <div class="game-title sub">
+          {{ selectedCountry }}
+        </div>
         <span class="img-item">
           <div class="inner-contents">
             <a-form ref="formRef" :model="voteForm" :rules="votingRules">
               <a-form-item ref="voteCount" name="voteCount">
                 <a-input
+                  v-model:value="voteForm.voteCount"
                   type="number"
                   placeholder="จํานวนคะแนนเสียง"
-                  v-model:value="voteForm.voteCount"
                 />
               </a-form-item>
               <a-button
                 :loading="btnLoading"
-                @click="submitVotes"
                 class="common-btn vote-submit"
-                >ส่ง</a-button
+                @click="submitVotes"
               >
+                ส่ง
+              </a-button>
             </a-form>
           </div>
         </span>
@@ -229,6 +235,7 @@ export default defineComponent({
       btnLoading,
       getCountryName,
       imgURL,
+      store
     };
   },
 });
@@ -258,14 +265,13 @@ export default defineComponent({
   .center-title {
     padding-top: 40px;
     font-size: 36px;
-    color: #ffffff;
+
     font-weight: bold;
   }
   .center-number {
     font-size: 72px;
     line-height: 80px;
     font-weight: bold;
-    color: #ffffff;
   }
 }
 .countries-wrapper {
@@ -279,7 +285,6 @@ export default defineComponent({
   font-weight: bold;
   padding: 20px;
   .point {
-    color: #ffffff;
     &:before {
       content: "";
       width: 8px;
@@ -292,7 +297,7 @@ export default defineComponent({
   }
   .right-count {
     text-align: right;
-    color: #ffffff;
+
     margin-top: -25px;
     font-weight: normal;
   }
@@ -317,7 +322,6 @@ export default defineComponent({
       &:hover {
         .c-button {
           background: #a81538;
-          color: #ffffff;
         }
       }
       .c-flag {
@@ -382,14 +386,13 @@ export default defineComponent({
       border-bottom: 1px solid #ffffff;
       td {
         text-align: center;
-        color: #ffffff;
+
         padding: 10px;
       }
     }
     tbody {
       border-bottom: 1px solid #ffffff;
       td {
-        color: #ffffff;
         padding: 10px;
         text-align: center;
         font-weight: normal;
@@ -397,6 +400,6 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 }
 </style>

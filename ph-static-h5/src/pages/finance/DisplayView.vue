@@ -1,6 +1,6 @@
 <template>
   <div v-if="submitMessage" class="submit-message">
-    <div class="line"><span class="bankname">{{ submitMessage[0] }}</span></div>
+    <div class="line"><span class="bankname">{{ bankName }}</span></div>
     <div class="line" @click="copyCode(copyText1)"><span>Bank Account Number </span><span ref="copyText1">{{ submitMessage[1] }}<RiFileCopyLine /></span></div>
     <div class="line" @click="copyCode(copyText2)"><span>Bank Card Number </span><span ref="copyText2">{{ submitMessage[2] }}<RiFileCopyLine /></span></div>
     <div class="line depositt"><span>Deposit Amount </span><span>{{ submitMessage[3] }}</span></div>
@@ -14,19 +14,30 @@
 import { ref, onMounted } from "vue";
 import { cashier } from "src/boot/axios";
 import { RiFileCopyLine } from "vue-remix-icons";
+import {useQuasar} from "quasar";
 
+
+const $q= useQuasar();
 const request = ref({});
 const formRef = ref();
 const submitMessage = ref([]);
 const copyText1 = ref(null);
 const copyText2 = ref(null);
+const bankName = ref("");
 
 function copyCode(copyText) {
   let range = document.createRange()
   range.selectNodeContents(copyText)
   window.getSelection().removeAllRanges()
   window.getSelection().addRange(range)
-  document.execCommand("copy")
+  document.execCommand("copy");
+
+  $q.notify({
+    type: "positive",
+    position: "top",
+    message: `Code copied.`,
+    icon: "check_circle_outline"
+  });
 };
 function getRequest(url) {
   if (!url) {
@@ -61,6 +72,7 @@ function renderOrSubmit() {
 
 function renderHtml() {
   submitMessage.value = request.value.data.split(',');
+  bankName.value = submitMessage.value[0].replace(/\+/g, ' ');
 }
 
 function postSubmit() {
@@ -99,10 +111,10 @@ onMounted(async () => {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  color:#ffffff;
+  color:#000;
   box-shadow: 2px 2px 10px 1px #000000;
   border-radius: 20px;
-  background-image: linear-gradient(to right, #de4545, #db7e42);
+  background-image: $primary-linear;
   padding: 30px;
   .bankname {
     font-weight: bold;
@@ -133,7 +145,7 @@ onMounted(async () => {
     }
     .remixicon {
       width: 15px;
-      fill: white;
+      fill: #000;
       cursor: pointer;
     }
   }

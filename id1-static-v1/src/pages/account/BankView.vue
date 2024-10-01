@@ -3,33 +3,33 @@
     <div class="bank-add-lists">
       <div class="bank-card-add" @click="onAddCardClick()">
         <q-icon name="add" size="20px" />
-        <div class="card-label">Add Bank</div>
+        <div class="card-label">{{ $t("bank.addBank") }}</div>
       </div>
-      <div class="bank-card-add" @click="onAddUSDTClick()">
+      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
         <q-icon name="add" size="20px" />
-        <div class="card-label">Add eWallet</div>
-      </div>
+        <div class="card-label">{{ $t("bank.addEWallet") }}</div>
+      </div> -->
     </div>
 
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
       <q-card>
-        <DialogHeader title="Are You Sure To Unbind?"></DialogHeader>
+        <DialogHeader :title="$t('bank.areYouSureUnbind')"></DialogHeader>
 
         <q-card-section>
           <q-form>
-            <div class="input-title">Account Number</div>
+            <div class="input-title">{{ $t("form.accountNumber") }}</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              label="Enter Account Number"
+              :label="$t('form.accountNumber_placeholder')"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Please Enter Account Number',
-                (val) => (val && val === selectedUnbindCardNum) || 'Please Enter The Correct Account Number'
+                (val) => (val && val.length > 0) || $t('form.accountNumber_rules_01'),
+                (val) => (val && val === selectedUnbindCardNum) || $t('form.accountNumber_rules_02')
               ]"
               label-color="secondary"
             />
@@ -37,7 +37,7 @@
         </q-card-section>
 
         <ConfirmButton
-          label="Confirm"
+          :label="$t('btn.confirm')"
           :confirmFunc="unbind"
           :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"
         ></ConfirmButton>
@@ -53,7 +53,7 @@
     <div class="bank-card-container">
       <!-- Bank Section -->
       <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'BANK')">
-        <q-expansion-item expand-separator label="Bank" default-opened>
+        <q-expansion-item expand-separator :label="$t('header.bank')" default-opened>
           <div
             v-for="(item, index) in bankCardList.filter((item) => item.bankType === 'BANK')"
             :key="index"
@@ -65,17 +65,11 @@
               </div>
               <div class="item-title">{{ item.bankName }}</div>
               <div class="item-bind" @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
-                <div class="card-unlink">
-                  <q-icon size="sm" name="link_off" />
-                </div>
+                <div class="card-unlink"><q-icon size="sm" name="link_off" /></div>
               </div>
             </div>
             <div class="item-content">
-              <div class="item-acc">
-                Account: {{ item.cardNumber }}
-                <!--                <br />-->
-                <!--                IFSC: {{ item.cardAddress }}-->
-              </div>
+              <div class="item-acc">{{ $t("bank.account") }}: {{ item.cardNumber }}</div>
               <div class="item-copy">
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
@@ -107,7 +101,7 @@
               </div>
             </div>
             <div class="item-content">
-              <div class="item-acc">Account: {{ item.cardNumber }}</div>
+              <div class="item-acc">{{ $t("bank.account") }}: {{ item.cardNumber }}</div>
               <div class="item-copy">
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
@@ -139,7 +133,7 @@
               </div>
             </div>
             <div class="item-content">
-              <div class="item-acc">Account: {{ item.cardNumber }}</div>
+              <div class="item-acc">{{ $t("bank.account") }}: {{ item.cardNumber }}</div>
               <div class="item-copy">
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
@@ -155,39 +149,20 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onActivated } from "vue";
-import { useQuasar, copyToClipboard } from "quasar";
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
-import { api } from "boot/axios";
-import SwiperNav from "../../components/SwiperNav.vue";
-import DialogHeader from "../../atoms//DialogHeader.vue";
-import ConfirmButton from "../../atoms//ConfirmButton.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
-import AddBankCardModal from "../../components/modal/AddBankCardModal.vue";
-import UpdateBankCardModal from "../../components/modal/UpdateBankCardModal.vue";
+import { onActivated, reactive, ref } from "vue";
+import { copyToClipboard, useQuasar } from "quasar";
 
-const router = useRouter();
-const store = userStore();
+import ConfirmButton from "@/atoms/ConfirmButton.vue";
+import DialogHeader from "@/atoms/DialogHeader.vue";
+import { api } from "@/boot/axios";
+import AddBankCardModal from "@/components/modal/AddBankCardModal.vue";
+import UpdateBankCardModal from "@/components/modal/UpdateBankCardModal.vue";
+import { userStore } from "@/stores/index";
+import { t } from "@/boot/lang";
+
 const $q = useQuasar();
 const qs = require("qs");
 const imgURL = process.env.IMAGE_CDN + "/payment/";
-
-let slideList = ref(["Bank", "Message", "Personal Center", "Discount", "Record", "Order"]);
-let slideListPath = ref([
-  "/account/bank",
-  "/account/message",
-  "/account",
-  "/account/discount",
-  "/account/record",
-  "/account/order"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
 
 let isCardShown = ref([]);
 const handleBankCardClick = (index) => {
@@ -205,7 +180,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} copied to clipboard`,
+        message: `${val} ${t("notify.copiedtoClipboard")}`,
         icon: "check_circle_outline"
       });
     })
@@ -213,7 +188,7 @@ const copy = (val) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Failed",
+        message: t("notify.failed"),
         icon: "report_problem"
       });
     });
@@ -239,7 +214,7 @@ const unbind = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "Unbind succeed",
+        message: t("notify.unbindSucceed"),
         icon: "check_circle_outline"
       });
       loadCards();
@@ -281,35 +256,6 @@ const loadCards = () => {
       console.log("error", error);
     });
 };
-
-// let bankCardList = reactive({ BANK: [], CRYPTO: [], EWALLET: [], ALIPAY: [] });
-// const loadCards = () => {
-//   api
-//     .get("/session/allBankCard")
-//     .then((res) => {
-//       if (res.code === 0) {
-//         // Empty each array in bankCardList
-//         Object.keys(bankCardList).forEach((key) => {
-//           bankCardList[key] = [];
-//         });
-
-//         for (let i = 0, l = res.data.length; i < l; i++) {
-//           const data = res.data[i];
-//           const { bankType, bankCode } = data;
-
-//           if (isAlipay(bankCode)) {
-//             const alipayBankType = "ALIPAY";
-//             bankCardList[alipayBankType].push(data);
-//           } else {
-//             bankCardList[bankType].push(data);
-//           }
-//         }
-//       }
-//     })
-//     .catch((error) => {
-//       console.log("error", error);
-//     });
-// };
 
 onActivated(() => {
   loadCards();

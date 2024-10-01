@@ -29,7 +29,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache"],
+    boot: ["axios", "cache", "lang"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -77,6 +77,7 @@ module.exports = configure(function (ctx) {
       // }
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+        chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
 
         // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {

@@ -1,11 +1,7 @@
 <template>
-<q-page>
-    <iframe
-          @load="loadGame()"
-          :src="src"
-          frameborder="0"
-        ></iframe>
-</q-page>
+  <q-page>
+    <iframe @load="loadGame()" :src="src" frameborder="0"></iframe>
+  </q-page>
 </template>
 
 <script setup>
@@ -31,19 +27,18 @@ onMounted(() => {
   if (store.hasToken()) {
     const isMobile = Platform.is.mobile;
     if (isMobile) {
-      var way = null
+      var way = null;
       if (Platform.is.android) {
-        way = "ANDROID"
+        way = "ANDROID";
       } else if (Platform.is.ios) {
-        way="IOS"
+        way = "IOS";
       }
     }
     api
       .get(`/session/launch?_time=${new Date().getTime()}`, {
-        params: { platform: "UG", isMobile: isMobile, way: way }
+        params: { platform: "UG", isMobile: isMobile, way: way },
       })
-      .then((ret) => {
-        const res = ret.data;
+      .then((res) => {
         if (res.code === 0) {
           src.value = res.data;
         } else {
@@ -55,14 +50,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
-  iframe {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-  }
+iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
 </style>

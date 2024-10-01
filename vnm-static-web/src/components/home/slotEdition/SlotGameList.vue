@@ -243,6 +243,7 @@ onMounted(() => {
         position: absolute;
         right: -10px;
         top: -5px;
+        max-width: 64px;
       }
     }
   }

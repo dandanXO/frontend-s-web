@@ -1,6 +1,8 @@
 const { defineConfig } = require("@vue/cli-service");
 const defaultSettings = require("./src/settings.js");
 
+const isProduction = process.env.NODE_ENV === "production";
+
 module.exports = defineConfig({
   lintOnSave: true,
   productionSourceMap: false,
@@ -12,7 +14,7 @@ module.exports = defineConfig({
   // publicPath:
   //   process.env.NODE_ENV === "production" ? "https://asdfdsa.com/" : "/",
   assetsDir: "static",
-  transpileDependencies: true,
+  transpileDependencies: isProduction,
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
       args[0].title = defaultSettings.title;

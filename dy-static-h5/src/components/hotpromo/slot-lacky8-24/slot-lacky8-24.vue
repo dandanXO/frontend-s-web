@@ -381,7 +381,7 @@ onMounted(() => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   padding-bottom: 16px;
 
   .slot-lacky8-game-content-left,

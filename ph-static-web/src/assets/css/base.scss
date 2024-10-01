@@ -54,11 +54,14 @@ button {
   justify-content: flex-end;
 }
 .clr-white {
-  color: #ffffff;
+  
 }
 .revers-y {
   transform: rotateX(180deg);
 }
 .revers-x {
   transform: rotateY(180deg);
+}
+.text-red {
+  color: #ff4d4f;
 }

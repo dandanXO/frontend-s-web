@@ -74,7 +74,7 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .account-container {
     .account-content-wrapper {
       background-image: none;

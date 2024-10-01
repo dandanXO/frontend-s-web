@@ -348,7 +348,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch } from "vue";
+import { ref, reactive, onMounted, shallowRef, onActivated, watch } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
@@ -372,10 +372,7 @@ const store = userStore();
 const router = useRouter();
 const emits = defineEmits(["closeModal"]);
 
-const { userKYCDialog, closeUserKYCDialog } = useCheckKYC([
-  "mounted",
-  "activated"
-]);
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
 
 // const checkNewUser = () => {
 //   if (store.realName == "" || store.realName == null) {
@@ -1243,7 +1240,7 @@ onMounted(() => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  // background-color: #0e1412;
+  background-color: #e9f2fd;
   // margin: 16px;
 }
 
@@ -1253,7 +1250,7 @@ onMounted(() => {
 }
 
 .step-desc-div {
-  color: #9f9f9f;
+  color: #000;
 
   p {
     margin: 5px 0px;

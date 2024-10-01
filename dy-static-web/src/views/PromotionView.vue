@@ -79,7 +79,8 @@
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
             iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
-            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024'
           }"
         >
           <div
@@ -152,6 +153,9 @@
               football1: selectedPromo.promoCode === 'dy2-football'
             }"
           >
+            <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
+              <NBAWaterBattle />
+            </div>
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
             <div
               v-if="['dy2-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
@@ -181,12 +185,14 @@ import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPr
 
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
+import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const store = userStore();
@@ -452,10 +458,6 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
 .promo-container {
-  // padding-bottom: 80px;
-
-  // min-height: 70vh;
-  // color: #ffffff;
   .banner-container {
     min-height: 500px;
   }
@@ -608,11 +610,6 @@ export default defineComponent({
             height: 100%;
           }
 
-          img {
-          }
-
-          cursor: pointer;
-
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
@@ -655,7 +652,7 @@ export default defineComponent({
             gap: 10px;
             display: flex;
             flex-direction: column;
-            align-items: start;
+            align-items: flex-start;
             box-sizing: border-box;
             flex: 1;
 
@@ -738,6 +735,12 @@ export default defineComponent({
         width: 100%;
         max-width: 1920px;
         margin: 0 auto;
+
+        &.isNationalDay24 {
+          .promo-bg.isDesktop {
+            height: 585px !important;
+          }
+        }
 
         &.isCSBanner {
           aspect-ratio: 3840/1136;
@@ -913,6 +916,7 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
+          overflow: auto;
 
           &.football1 {
             table {
@@ -927,8 +931,6 @@ export default defineComponent({
               margin: 20px 0;
             }
           }
-
-          overflow: auto;
 
           .game-title {
             color: #ffd800;

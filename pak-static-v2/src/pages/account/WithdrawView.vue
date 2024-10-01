@@ -817,8 +817,8 @@ const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialPage = () => {
-  window.open("https://drive.google.com/file/d/1--lKiZGWQ71yFRLTP5Mj4GvFW6jSBZce/view?usp=sharing", "_blank")
-}
+  window.open("https://drive.google.com/file/d/1--lKiZGWQ71yFRLTP5Mj4GvFW6jSBZce/view?usp=sharing", "_blank");
+};
 
 const openWithdrawTutorialVideo = () => {
   window.open("https://drive.google.com/file/d/1uSYmuE0Dx4YW-zrU9CH7x-Sx_Vp2qvTd/view?usp=sharing", "_blank");
@@ -967,7 +967,7 @@ const openWithdrawTutorialVideo = () => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  // background-color: #0e1412;
+  background-color: #e9f2fd;
 }
 
 .tutorial-link {
@@ -975,7 +975,7 @@ const openWithdrawTutorialVideo = () => {
   text-decoration: underline;
 }
 .step-desc-div {
-  color: #9f9f9f;
+  color: #000;
 
   p {
     margin: 5px 0px;
@@ -1017,6 +1017,9 @@ const openWithdrawTutorialVideo = () => {
     }
 
     img {
+      background-color: #fff;
+      box-shadow: 0px 0px 2.92px 0px #a9c9ea inset;
+      border-radius: 10px;
       width: 100%;
       padding: 5px;
     }
@@ -1027,7 +1030,7 @@ const openWithdrawTutorialVideo = () => {
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        border: 3px solid #4877f6;
+        border: 3px solid #468cff;
         border-radius: 10px;
       }
 
@@ -1147,7 +1150,7 @@ const openWithdrawTutorialVideo = () => {
   }
 
   .title {
-    color: #9f9f9f;
+    color: #000;
     font-weight: 700;
   }
 }

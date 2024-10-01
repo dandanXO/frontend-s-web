@@ -303,7 +303,11 @@
         </el-table-column>
         <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
         <el-table-column prop="rule" :label="t('fields.rule')" v-if="uiControl.useRule" />
-        <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" align="center" v-if="!uiControl.useRule" />
+        <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" align="center" v-if="!uiControl.useRule">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.withdrawAmountMax, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
           <template #default="scope">
             <el-switch
@@ -359,7 +363,7 @@ import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
-import { isPak, isIndiaSite, isPh1, isBr1, isNga } from '@/utils/site'
+import { isPak, isIndiaSite, isPh1, isBr1, isNga, isId1 } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
@@ -678,7 +682,7 @@ function changePage(page) {
 }
 
 function checkUseRule() {
-  if (isIndiaSite(request.siteId) || isPh1(request.siteId) || isBr1(request.siteId) || isNga(request.siteId)) {
+  if (isIndiaSite(request.siteId) || isPh1(request.siteId) || isBr1(request.siteId) || isNga(request.siteId) || isId1(request.siteId)) {
     uiControl.useRule = false;
   } else {
     uiControl.useRule = true;

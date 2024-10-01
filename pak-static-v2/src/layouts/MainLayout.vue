@@ -609,6 +609,16 @@ svg path {
   margin: 0.5rem 0 0 0;
 }
 
+.page-title {
+  background-color: #fff;
+  box-shadow: 0px -5px 8px 0px #c3d4e6 inset, 0px 2px 0px 0px #a7c2dd;
+}
+
+.page-title__empty {
+  background-color: unset;
+  box-shadow: unset;
+}
+
 .page-title-wrapper {
   display: flex;
   justify-content: space-between;

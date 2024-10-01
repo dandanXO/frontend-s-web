@@ -128,6 +128,7 @@ import { showAlert } from '../../../api/member'
 import { updateDefaultSite, loadAuthMenu } from '../../../api/user'
 import { ElMessage } from 'element-plus'
 import { inject } from 'vue-demi'
+import { getSiteTitle } from '../../../utils/site'
 
 export default {
   methods: { hasPermission, hasRole },
@@ -177,6 +178,7 @@ export default {
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const { setLanguage } = i18nStoreLanguage
+    let originalSiteTitle = ''
 
     const handleLanguage = () => {
       setLanguage(languageVal.value)
@@ -216,8 +218,33 @@ export default {
 
     function updateApplyWithdrawCount() {
       applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0
+      updateSiteTitle()
     }
 
+    let intervalId = null; // To store the interval ID and control blinking
+    function updateSiteTitle() {
+      originalSiteTitle = document.querySelector("title").innerText
+      
+      const existingCountRegex = /\(\d+\)$/; 
+      originalSiteTitle = originalSiteTitle.replace(existingCountRegex, "").trim();
+
+      let blinkingTitle = originalSiteTitle + ` (${applyWithdrawCount.value})`;
+
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      if (applyWithdrawCount.value > 0) {
+        let isOriginalTitle = true;
+        intervalId = setInterval(() => {
+          document.title = isOriginalTitle ? blinkingTitle : originalSiteTitle;
+          isOriginalTitle = !isOriginalTitle;
+        }, 1000);
+      } else {
+        document.title = originalSiteTitle;
+      }
+    }
+    
     const reload = inject('reload')
     const changeSite = async () => {
       const getSelectedSite = sites.value.find(
@@ -233,6 +260,12 @@ export default {
         UserActionTypes.ACTION_CHANGE_SITE_ID,
         getSelectedSite
       )
+
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      document.title = getSiteTitle(getSelectedSite.id)
       ElMessage({
         message: `switch site to ` + getSelectedSite.siteName,
         type: 'success',
@@ -241,7 +274,6 @@ export default {
         reload()
         loadMenu()
         updateData()
-        // location.reload()
       }, 500)
     }
 

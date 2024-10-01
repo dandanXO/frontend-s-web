@@ -51,7 +51,7 @@
               class="btn-refresh"
               no-caps
               icon="refresh"
-              label="Updated"
+              label="Atualizado"
               :loading="loadingUpdated"
               @click="startRefresh"
             >
@@ -203,7 +203,7 @@
             "
             @click="submitKYC"
           >
-            Submit
+            {{ $t("btn.submit") }}
           </q-btn>
         </div>
       </div>
@@ -264,7 +264,7 @@
                 :rules="[
                   (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
                   (val) => (val.length >= 6 && val.length <= 11) || $t('form.newPassword_rules_02'),
-                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                  () => isAlphanumeric(updatePwdInfo.password, t('form.newPassword'))
                 ]"
               >
                 <template v-slot:append>
@@ -468,13 +468,13 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Sign Out</div>
+        <div class="txt-title">Sair</div>
 
-        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+        <div class="txt-content q-mt-md text-center">Tem certeza de que deseja sair?</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
+          <q-btn label="Cancelar" no-caps class="btn-cancel" v-close-popup />
+          <q-btn label="Confirmar" no-caps class="btn-confirm" @click="logout" />
         </div>
       </div>
     </div>
@@ -1031,7 +1031,9 @@ const updatePwdInfo = reactive({
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-  return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+  return passwordPattern.test(value) || t('form.mustBeAlphaNumeric', {
+    field: translation.toLowerCase(),
+  });
 };
 
 const submitUpdatePwd = () => {

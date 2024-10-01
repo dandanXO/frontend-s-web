@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_ui_gallery_items",
+  "info": {
+    "displayName": "Gallery Item",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "videoUrl": {
+      "type": "string"
+    }
+  }
+}

@@ -16,7 +16,9 @@
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage || '/'">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
-          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
+          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
+            {{ $t("btn.back") }}
+          </span>
         </router-link>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
@@ -65,12 +67,12 @@
         <q-route-tab to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          Home
+          {{ $t("bottomNav.home") }}
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
-          Promo
+          {{ $t("bottomNav.promo") }}
         </q-route-tab>
         <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
           <img src="../assets/images/index/menu/deposit-icon.png" />
@@ -78,12 +80,12 @@
         <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
-          Earn Money
+          {{ $t("bottomNav.earnMoney") }}
         </q-route-tab>
         <q-route-tab to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          Me
+          {{ $t("bottomNav.me") }}
         </q-route-tab>
       </q-tabs>
     </q-footer>

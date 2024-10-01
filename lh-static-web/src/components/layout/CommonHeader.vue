@@ -1837,9 +1837,6 @@ body {
 }
 
 .header-container {
-  &.on-scrolled {
-  }
-
   width: 100%;
   position: sticky;
   top: 0;
@@ -2118,15 +2115,15 @@ body {
 <!-- Menu Styles -->
 <style lang="scss">
 .platform-menu {
-  a {
-    text-decoration: none;
-  }
-
   display: flex;
   margin: 0 auto;
   // max-width: 1280px;
   justify-content: space-evenly;
   align-items: center;
+
+  a {
+    text-decoration: none;
+  }
 
   .platform-title {
     font-size: 40px;

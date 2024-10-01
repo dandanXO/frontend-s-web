@@ -48,6 +48,12 @@
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
+    <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
+    <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
+    <LongNewVip v-if="list.redirectUrl === 'lh1-vip'" :promo-code="list.promoCode" />
+    <NationalDay2024 v-if="list.redirectUrl === 'lh1-national-day-2024'" :promo-code="list.promoCode" />
+    <LoLS14 v-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
     <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode" />
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game'"></CnyStepGame2024Promo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
@@ -72,6 +78,7 @@
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
+    <S14VotePromo v-if="list.redirectUrl === 'lh1-s14-vote'" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
     <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
@@ -83,7 +90,7 @@
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
-    <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param"/>
+    <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -112,6 +119,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
+import S14VotePromo from "../components/hotpromo/s14-vote/S14VotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
@@ -128,6 +136,12 @@ import FootballFight from "../components/hotpromo/footballfight/FootballFight.vu
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
 import BbdachaCsgo2 from "../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
+import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
+import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
+import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
+import LongNewVip from "../components/hotpromo/longNewVip/LongNewVip.vue";
+import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue";
+import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue";
 import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
@@ -192,6 +206,7 @@ export default defineComponent({
     ClaimPromo,
     TigerCardPromo,
     EurocupVotePromo,
+    S14VotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
     InviteFriendPromo,
@@ -250,6 +265,12 @@ export default defineComponent({
     LivepokerRebate,
     BbdachaCsgo2,
     EslProCsgo2,
+    BlastPremier,
+    Tpworld2024,
+    NewVipRebate,
+    LongNewVip,
+    NationalDay2024,
+    LoLS14,
     Dota2Ti13,
     BlackMythWuKongPromo,
     DailiPromo
@@ -738,6 +759,10 @@ export default defineComponent({
         .contents {
           display: flex;
           justify-content: center;
+          flex: 1;
+          color: #ffffff;
+          text-align: center;
+
           form {
             margin-top: 20px;
 
@@ -750,10 +775,6 @@ export default defineComponent({
               display: inline-block;
             }
           }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
         }
       }
 

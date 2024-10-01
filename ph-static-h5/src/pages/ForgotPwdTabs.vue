@@ -5,35 +5,35 @@
   <div class="q-pa-md">
     <div class="q-gutter-y-md">
       <q-card>
-            <q-form class="q-pa-md">
-              <q-input
-                ref="emailRef"
-                type="email"
-                filled
-                v-model="loginForm.email"
-                label="อีเมลล์"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Please enter your email address.',
-                  isValidEmail
-                ]"
-                color="white"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="mail_outline" />
-                </template>
-              </q-input>
+        <q-form class="q-pa-md">
+          <q-input
+            ref="emailRef"
+            type="email"
+            filled
+            v-model="loginForm.email"
+            label="อีเมลล์"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Please enter your email address.',
+              isValidEmail,
+            ]"
+            color="white"
+          >
+            <template v-slot:prepend>
+              <q-icon name="mail_outline" />
+            </template>
+          </q-input>
 
-              <div class="row justify-between items-center">
-                <q-btn
-                  @click.prevent="onSubmit"
-                  label="Submit"
-                  type="submit"
-                  color="brand"
-                />
-              </div>
-            </q-form>
-
+          <div class="row justify-between items-center">
+            <q-btn
+              @click.prevent="onSubmit"
+              label="Submit"
+              type="submit"
+              color="brand"
+            />
+          </div>
+        </q-form>
       </q-card>
     </div>
   </div>
@@ -50,35 +50,37 @@ import { defineComponent, ref, reactive, onMounted } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
+
+import { getCodeDetail } from "src/utils/helper";
+
 export default defineComponent({
   name: "LoginPage",
   setup() {
-    onMounted(() => {
-      getCode();
-    });
     const verificationImg = ref("");
     const loginForm = reactive({
       loginName: "",
       password: "",
       captchaCode: "",
-      codeId: ""
+      codeId: "",
     });
     const activeTab = ref("phone");
-    const getCode = () => {
-      api
-        .get("/member/verificationCode")
-        .then((res) => {
-          const response = res.data;
-          if (response.code === 0) {
-            verificationImg.value =
-              "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          console.log(e)
+
+    const getCode = async () => {
+      const json = await getCodeDetail();
+
+      if (json.isOk) {
+        verificationImg.value = json.verificationImg;
+        loginForm.codeId = json.codeId;
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: json.message,
+          icon: "report_problem",
         });
+      }
     };
+
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
@@ -101,7 +103,7 @@ export default defineComponent({
       emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
-        message: "Registering"
+        message: "Registering",
       });
       if (
         loginNameRef.value.hasError ||
@@ -116,8 +118,7 @@ export default defineComponent({
         (regForm.regDevice = Platform.is.mobile ? "H5" : "WEB"),
           api
             .post("/member/register", regForm)
-            .then((ret) => {
-              const res = ret.data;
+            .then((res) => {
               if (res.code === 0) {
                 router.push("/login");
 
@@ -125,7 +126,7 @@ export default defineComponent({
                   color: "positive",
                   position: "top",
                   message: "Registration Success",
-                  icon: "report_problem"
+                  icon: "report_problem",
                 });
               } else {
                 // $q.notify({
@@ -157,8 +158,11 @@ export default defineComponent({
       verificationRef,
       verificationImg,
       activeTab,
-      getCode
+      getCode,
     };
-  }
+  },
+  mounted() {
+    this.getCode();
+  },
 });
 </script>

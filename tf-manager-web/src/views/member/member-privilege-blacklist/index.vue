@@ -656,7 +656,7 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     await loadPrivilegeInfos(site.value.id);
   } else {
-    await loadPrivilegeInfos();
+    await loadPrivilegeInfos(siteList.list[0].id);
   }
   await loadBlacklist();
 });
