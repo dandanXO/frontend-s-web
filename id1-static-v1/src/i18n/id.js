@@ -251,7 +251,10 @@ export default {
     registeringInProgress: "Pendaftaran sedang berlangsung",
     refreshing: "Menyegarkan...",
     pleaseLoginToOperate: "Silakan masuk untuk beroperasi",
-    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda"
+    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda",
+    failed: "Gagal",
+    updateSucceed: "Pembaruan berhasil",
+    unbindSucceed: "Berhasil dilepaskan"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
