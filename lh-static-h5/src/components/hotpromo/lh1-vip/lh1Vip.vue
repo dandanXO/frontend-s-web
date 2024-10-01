@@ -159,7 +159,7 @@
       </p>
 
       <p>
-        <strong>七。会员充值加码 10%</strong>
+        <strong>七。会员充值加码10%</strong>
         <ol class="terms got-bullets">
           <li class="numbered">
             VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要（本金+彩金一倍流水）即可提款；
@@ -330,7 +330,7 @@ const vipLevel3s = ref([
 ]);
 
 const vipLevel4s = ref([
-  { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
+  // { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP1", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP2", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP3", eSport: "0.48%", sport: "0.45%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "12,888" },
