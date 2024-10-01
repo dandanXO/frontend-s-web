@@ -121,7 +121,8 @@
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
-              selectedPromo?.promoCode === 'lh-lpl-summer24'
+              selectedPromo?.promoCode === 'lh-lpl-summer24' ||
+              selectedPromo?.promoCode === 'lh1-s14-vote'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : ''
           }"

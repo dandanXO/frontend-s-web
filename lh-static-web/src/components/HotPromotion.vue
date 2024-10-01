@@ -78,6 +78,7 @@
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
+    <S14VotePromo v-if="list.redirectUrl === 'lh1-s14-vote'" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
     <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
@@ -118,6 +119,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
+import S14VotePromo from "../components/hotpromo/s14-vote/S14VotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
@@ -204,6 +206,7 @@ export default defineComponent({
     ClaimPromo,
     TigerCardPromo,
     EurocupVotePromo,
+    S14VotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
     InviteFriendPromo,
