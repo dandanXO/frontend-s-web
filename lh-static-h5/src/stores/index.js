@@ -126,6 +126,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
+          window.captchaObj.reset()
           useUI().notify({
             type: "error",
             message: ret.message
