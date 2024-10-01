@@ -88,7 +88,7 @@
       <q-card class="full-deposit-card" id="fulldeposit">
         <div class="back-bar" @click="closeFullDepositDialog">
           <q-icon name="chevron_left" size="28px" />
-          Back
+          {{ $t("btn.back") }}
         </div>
 
         <q-card-section>
