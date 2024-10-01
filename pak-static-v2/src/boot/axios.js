@@ -133,6 +133,7 @@ export default boot(({ app, router }) => {
         SessionStorage.remove("TOKEN");
         LocalStorage.remove("TOKEN");
         router.push("/login");
+        location.reload();
         return;
       } else {
         if (
@@ -144,6 +145,7 @@ export default boot(({ app, router }) => {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
             router.push("/login");
+            location.reload();
             return;
           }
           return refreshTokenAndRetry(response);
