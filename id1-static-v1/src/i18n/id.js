@@ -254,7 +254,8 @@ export default {
     pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda",
     failed: "Gagal",
     updateSucceed: "Pembaruan berhasil",
-    unbindSucceed: "Berhasil dilepaskan"
+    unbindSucceed: "Berhasil dilepaskan",
+    withdrawalSubmitSucceed: "Penarikan Kirim Berhasil"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

@@ -56,7 +56,7 @@
     <!-- select amount -->
     <template v-if="isSelectedMethod">
       <div class="method-title q-mt-md q-mb-sm">{{ $t("form.depositAmount") }}</div>
-      <div class="deposit-methods-container">
+      <div class="deposit-methods-container col-three">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
             <q-badge

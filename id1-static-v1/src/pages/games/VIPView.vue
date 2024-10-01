@@ -86,7 +86,7 @@
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}K</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -105,7 +105,7 @@
               <span class="bold">{{ $t("vip.monthly") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}K</div>
             </div>
           </div>
           <div class="unlock-status">
