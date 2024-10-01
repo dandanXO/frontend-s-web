@@ -122,7 +122,7 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
         return res;
       }
-      if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
+      if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
         location.reload();
       } else {
         if (
