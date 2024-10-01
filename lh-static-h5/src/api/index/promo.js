@@ -311,3 +311,7 @@ export function getNBAUpcomingMatch() {
 export function getNBAClaimHistory() {
   return eventapi.get('/session/nba-match-preseason/history')
 }
+
+export function claimNBABonus(matchId) {
+  return eventapi.post(`/session/nba-match-preseason/claim?matchId=${matchId}`)
+}

@@ -467,3 +467,6 @@ export function getNBAClaimHistory() {
   return server.EVENT.get('/session/nba-match-preseason/history')
 }
 
+export function claimNBABonus(matchId) {
+  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`)
+}
