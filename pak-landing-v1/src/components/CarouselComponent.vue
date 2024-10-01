@@ -68,16 +68,18 @@ const onCarouselNavDotClick = (i) => {
 }
 
 .carousel-media {
-  width: -webkit-fill-available;
-  max-width: 345px;
-  height: 200px;
+  width: 100%;
+  height: 0;
+  max-height: 200px;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  background-repeat: no-repeat;
+  padding-bottom: 63.47%;
   iframe {
     border-radius: 8px;
   }
@@ -86,6 +88,7 @@ const onCarouselNavDotClick = (i) => {
 .carousel-description {
   overflow-wrap: anywhere;
   text-align: center;
+  font-weight: 500;
 }
 
 .q-carousel {

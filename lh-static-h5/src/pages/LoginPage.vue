@@ -18,9 +18,23 @@
         <img class="logo-img" @click="backHome" src="../assets/images/login/logo-login.png" />
       </div>
 
-      <img class="login-banner-img" :src="bannerImage" />
+      <div v-if="$q.dark.isActive" class="login-banner-img-wrapper">
+        <img class="login-banner-img" :src="bannerImage" />
+        <div class="login-banner-filter" />
+      </div>
+      <img v-else class="login-banner-img" :src="bannerImage" />
 
-      <q-form ref="loginFormRef" @submit="onSubmit">
+      <q-form ref="loginFormRef" @submit="onSubmit" class="login-form" :class="{['phone-login']: loginType}">
+        <div class="tabs-wrapper" v-if="$q.dark.isActive">
+          <div class="tab-wrapper" @click="loginType = undefined" :class="{active: !loginType}">
+            <div class="tab">用户名登录</div>
+            <div v-show="!loginType" class="active-tab-border" />
+          </div>
+          <div class="tab-wrapper" @click="loginType = '手机号登录'" :class="{active: loginType}">
+            <div class="tab">手机号登录</div>
+            <div v-show="loginType" class="active-tab-border" />
+          </div>
+        </div>
         <div v-if="!loginType">
           <q-input
             standout
@@ -687,6 +701,7 @@ export default defineComponent({
 </style>
 
 <style scoped lang="scss">
+
 .login-container {
   position: relative;
   background: url(../assets/images/login/login-bg.jpg) no-repeat top center;
@@ -837,18 +852,93 @@ export default defineComponent({
 .body--dark {
   .login-container {
     background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
-    background-size: 100% auto;
+    background-size: auto;
+
     .login-content {
       .login-via-phone-div {
-        color: $primary-dark;
+        color: #b1bad3;
+      }
+
+      .tabs-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: center;
+        background-color: transparent;
+        margin-top: -55px;
+        padding-bottom: 30px;
+        
+        .tab-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          gap: 3px;
+          cursor: pointer;
+
+          .active-tab-border {
+            height: 3px;
+            width: 20%;
+            background-color: white;
+            margin: auto;
+            border-radius: 100px;
+          }
+        }
+      }
+
+      .login-banner-img-wrapper {
+        position: relative;
+        display: flex;
+
+        .login-banner-filter {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(#5e698800 25%, #5E6988);
+          border-radius: 10px;
+          border: 1px solid #969696;
+        }
+      }
+
+      .login-form {
+        padding: 65px 20px 20px 20px;
+        background: linear-gradient(180deg, #2E4166 0%, #1A263F 100%);
+        background: url('../assets/images/login/login-acc-bg-dark.png') no-repeat center center;
+        background-size: 100% 100%;
+        // aspect-ratio: 1035 / 1368;
+
+        &.phone-login {
+          background: url('../assets/images/login/login-phone-bg-dark.png') no-repeat center center;
+          background-size: 100% 100%;
+          // aspect-ratio: 1035 / 1368;
+        }
       }
     }
   }
   .common-large-btn {
-    background: $linear-bg-180-dark;
+    background: url('../assets/images/login/login-btn-bg-dark.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3A93CE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .common-large-white-btn {
-    color: $white;
+    background: url('../assets/images/login/register-btn-bg-dark.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #BE9457;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5e300e;
   }
 }
 

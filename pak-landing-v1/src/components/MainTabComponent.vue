@@ -4,10 +4,24 @@
     </CarouselComponent>
 
     <div class="btn-container q-pb-lg q-pt-xs">
-      <img alt="" src="~assets/imgs/yt_btn.png" />
-      <img alt="" src="~assets/imgs/wa_btn.png" />
-      <img alt="" src="~assets/imgs/tt_btn.png" />
-      <img alt="" src="~assets/imgs/ig_btn.png" />
+      <a href="https://www.youtube.com/@B9GamePakistan" target="_blank">
+        <img alt="" src="~assets/imgs/yt_btn.png" />
+      </a>
+      <a
+        href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
+        target="_blank"
+      >
+        <img alt="" src="~assets/imgs/wa_btn.png" />
+      </a>
+      <a href="https://www.tiktok.com/@b9game2" target="_blank">
+        <img alt="" src="~assets/imgs/tt_btn.png" />
+      </a>
+      <a
+        href="https://www.instagram.com/b9game?igsh=MWJuZjRubjZwdnh0OQ=="
+        target="_blank"
+      >
+        <img alt="" src="~assets/imgs/ig_btn.png" />
+      </a>
     </div>
 
     <div class="carousel-container">
@@ -19,7 +33,7 @@
     </div>
 
     <template v-if="galleryItems.length > 0">
-      <div class="title q-pt-sm">Charitable Associations</div>
+      <div class="title q-pt-md">Charitable Associations</div>
       <div class="subtitle q-pt-sm">CHARITY PROJECTS</div>
     </template>
 

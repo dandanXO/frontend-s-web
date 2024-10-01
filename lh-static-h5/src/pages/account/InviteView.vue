@@ -502,7 +502,7 @@ export default defineComponent({
   .share-container {
     .personal-content-box {
       #selfTgurl {
-        color: $primary-dark;
+        color: #117DCC; 
       }
     }
     .shadow-box {
@@ -513,7 +513,7 @@ export default defineComponent({
       .title-top-line1 {
         .prize-span,
         a {
-          color: $primary-dark;
+          color: #117DCC;
         }
       }
     }
