@@ -148,6 +148,7 @@ import HotPromotion from "@/components/HotPromotion";
 import GameModal from "@/components/modal/GameModal.vue";
 import ProfileSummary from "@/components/ProfileSummary.vue";
 import { userStore } from "@/stores/index";
+import { t } from "@/boot/lang";
 import { useUI } from "@/stores/ui";
 import { useQuasar } from "quasar";
 export default defineComponent({
