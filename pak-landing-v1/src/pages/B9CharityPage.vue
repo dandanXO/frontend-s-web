@@ -1,6 +1,7 @@
 <template>
   <div>
     <MainTabComponent v-if="!isLoading" :tab-data="tabData"></MainTabComponent>
+    <q-inner-loading v-else :showing="isLoading" />
   </div>
 </template>
 
