@@ -123,7 +123,10 @@ export default boot(({ app, router }) => {
         return res;
       }
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
-        location.reload();
+        SessionStorage.remove("TOKEN");
+        LocalStorage.remove("TOKEN");
+        router.push("/login");
+        return;
       } else {
         if (
           res.code === ResponseCode.ERROR_NAME_EXIST ||
@@ -131,7 +134,7 @@ export default boot(({ app, router }) => {
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED
         ) {
           // debugger;
-          if (attemptTimes > 10) {
+          if (attemptTimes > 10 || !store.token) {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
             router.push("/login");

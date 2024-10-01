@@ -131,14 +131,17 @@ export default boot(({ app, router }) => {
       }
 
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
-        location.reload();
+        SessionStorage.remove("TOKEN");
+        LocalStorage.remove("TOKEN");
+        router.push("/login");
+        return;
       } else {
         if (
           res.code === ResponseCode.ERROR_NAME_EXIST ||
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED
         ) {
-          if (attemptTimes > 10) {
+          if (attemptTimes > 10 || !store.token) {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
             router.push("/login");
