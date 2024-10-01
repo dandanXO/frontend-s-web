@@ -541,7 +541,7 @@ onMounted(async () => {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>
@@ -584,16 +584,15 @@ onMounted(async () => {
 }
 
 .box-card {
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 0;
   }
 }
 
-::v-deep {
-  .el-tabs__content {
+:deep(
+  .el-tabs__content) {
     padding: 0;
   }
-}
 
 .platform {
   display: flex;
@@ -620,7 +619,7 @@ onMounted(async () => {
   }
 }
 
-::v-deep([class^='el-table']) {
+:deep([class^='el-table']) {
   .cell,
   .remove-padding {
     padding: 0 !important;

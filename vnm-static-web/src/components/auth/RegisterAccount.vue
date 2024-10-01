@@ -128,19 +128,64 @@
 
     <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
       {{ $t("login.registration_hints") }}
-      <a href="/about?id=info" style="white-space: nowrap">
+      <!-- <a href="/about?id=info" style="white-space: nowrap">
         {{ $t("login.user_registration_protocol") }}
-      </a>
+      </a> -->
+      <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed;">
+        {{ $t("login.user_registration_protocol") }}
+      </span>
     </div>
 
     <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
       {{ $t("login.already_have_acc") }}
-      <router-link to="/login">
-        {{ $t("login.login_here") }}
-      </router-link>
+      <!-- <router-link to="/login"> -->
+        <a @click="openLoginDialog">
+          {{ $t("login.login_here") }}
+        </a>
+      <!-- </router-link> -->
     </div>
   </div>
-
+  <el-dialog class="bettingruledialog" append-to-body align-center style="overflow: auto;
+    max-height: 790px; transform: scale(.9);" width="1260px" v-model="showBetRulesDialog">
+    <div style="padding: 10px">
+    <p><b style="font-size: 16px; color: #0071ed;">{{ $t("about.bettingRules") }}</b></p>
+    <ul>
+        <li>{{ $t("about.familyRestriction") }}</li>
+        <li>{{ $t("about.entertainmentPurpose2") }}</li>
+        <li>{{ $t("about.modifyPromotion") }}</li>
+        <li>{{ $t("about.singleDeposit") }}</li>
+        <li>
+          {{ $t("about.refundBasedOnBetTurnover") }}
+          <ul class="sub-ul">
+            <li>{{ $t("about.refundOptions.loseAll") }}</li>
+            <li>{{ $t("about.refundOptions.loseLessThanStake") }}</li>
+            <li>{{ $t("about.refundOptions.winGreaterThanOrEqualTo75") }}</li>
+            <li>{{ $t("about.refundOptions.winLessThan75") }}</li>
+          </ul>
+        </li>
+        <li>{{ $t("about.requiredRounds") }}</li>
+        <li>
+          {{ $t("about.abuseDiscretion") }}
+          <ul class="sub-ul">
+            <li>{{ $t("about.abuseExamples.excludedGames") }}</li>
+            <li>{{ $t("about.abuseExamples.multipleAccounts") }}</li>
+            <li>{{ $t("about.abuseExamples.crossAccountBets") }}</li>
+            <li>{{ $t("about.abuseExamples.oddsDifference") }}</li>
+            <li>{{ $t("about.abuseExamples.doubleBetAmount") }}</li>
+            <li>{{ $t("about.abuseExamples.betOnBothSides") }}</li>
+            <li>{{ $t("about.abuseExamples.doubleBet") }}</li>
+            <li>{{ $t("about.abuseExamples.allin") }}</li>
+            <li>{{ $t("about.abuseExamples.affiliateAbuse") }}</li>
+          </ul>
+        </li>
+        <li>{{ $t("about.excludedBets") }}</li>
+        <li>{{ $t("about.transactionRecordsCheck") }}</li>
+        <li>{{ $t("about.falsifiedContentDisqualification") }}</li>
+        <li>{{ $t("about.amendTermsAndConditions") }}</li>
+        <li>{{ $t("about.withdrawalVerification") }}</li>
+      </ul>
+    </div>
+  </el-dialog>
   <div style="width: 100%; margin-top: 5px">
     <!-- <div style="visibility:hidden">
       <a @click="closeRegDialog">先去逛逛</a>
@@ -495,6 +540,10 @@ onMounted(() => {
   getAffiliateCode();
   getReferalCode();
 });
+const showBetRulesDialog = ref(false);
+const openDialog = (currentDialog) => {
+  showBetRulesDialog.value = true
+}
 </script>
 
 <style scoped lang="scss">
@@ -558,6 +607,16 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
+body .bettingruledialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
+  color: #000000 !important;
+  opacity: 0.5;
+}
+body .el-dialog.bettingruledialog .el-dialog__body {
+}
+body .bettingruledialog .el-dialog__header .el-dialog__headerbtn {
+  top: 10px;
+  right: 10px;
+}
 .form-field {
   .el-form-item {
     margin-bottom: 0px;

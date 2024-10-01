@@ -8,13 +8,12 @@
         outlined
         dense
         color="white"
-        style="width: 200px;margin:10px auto 8px 8px;"
+        style="width: 200px; margin: 10px auto 8px 8px"
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
         @update:model-value="searchRecord"
-      >
-      </q-select>
+      ></q-select>
       <div class="payout-total">
         <div>总投注: {{ totalBetRecord.totalBet }}</div>
         <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
@@ -63,23 +62,20 @@
   </div>
 </template>
 <script setup>
-import {defineComponent, onMounted, ref, reactive} from "vue";
+import { defineComponent, onMounted, ref, reactive } from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
-import {api} from "boot/axios";
+import { api } from "boot/axios";
 import moment from "moment/moment";
-import {userStore} from "src/stores";
-import {cached} from "boot/cache";
-import * as _ from "lodash"
-
-
+import { userStore } from "src/stores";
+import { cached } from "boot/cache";
+import * as _ from "lodash";
 
 const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
 });
 
-
-var apiUrl= "/session/member/gameBetRecord";
+var apiUrl = "/session/member/gameBetRecord";
 
 var endDate = reactive(moment().format("YYYY-MM-DD"));
 var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));
@@ -100,8 +96,7 @@ const searchRecord = () => {
   isEnded.value = false;
   recordRef.value.clearTable();
   loadDepositTable(true);
-}
-
+};
 
 const loadNewData = () => {
   if (maxPage.value > current.value) {
@@ -113,7 +108,6 @@ const loadNewData = () => {
   }
   loadDepositTable(false);
 };
-
 
 const loadDepositTable = (isNew) => {
   if (isNew) {
@@ -133,50 +127,48 @@ const loadDepositTable = (isNew) => {
     current: current.value
   };
 
-  api.get(apiUrl, {
+  api
+    .get(apiUrl, {
       params: paramData
-    }
-  ).then((res) => {
-    maxPage.value = res.data.pages;
-    totalBetRecord.totalBet = res.data.sums.totalBet;
-    totalBetRecord.totalPayout = res.data.sums.totalPayout;
-    tableData.value.push(...res.data.records);
-
-
-
-  }).finally(() => {
-    if (isNew) {
-      visible.value = false;
-    }
-  });
+    })
+    .then((res) => {
+      maxPage.value = res.data.pages;
+      totalBetRecord.totalBet = res.data.sums.totalBet;
+      totalBetRecord.totalPayout = res.data.sums.totalPayout;
+      tableData.value.push(...res.data.records);
+    })
+    .finally(() => {
+      if (isNew) {
+        visible.value = false;
+      }
+    });
 };
 
 const loadPlatformLists = () => {
-  var platformApiUrl = store.hasToken()
-    ? "/session/loggedInPlatform"
-    : "/platform";
+  var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
   var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
-
-  cached.get(platformApiKey, () => api.get(platformApiUrl).then((response) => {
-    return response
-  })).then((data) => {
-    console.log(data);
-    _.each(data, function (item, index) {
-      var option = {
-        label: item.name,
-        value: item.code,
-      }
-      platformsList.value.push(option);
-    })
-
-  });
-}
-
+  cached
+    .get(platformApiKey, () =>
+      api.get(platformApiUrl).then((response) => {
+        return response;
+      })
+    )
+    .then((data) => {
+      console.log(data);
+      _.each(data, function (item, index) {
+        var option = {
+          label: item.name,
+          value: item.code
+        };
+        platformsList.value.push(option);
+      });
+    });
+};
 
 const tableHeaders = [
   {
-    key: "betId",
+    key: "transactionId",
     label: "注单号"
   },
   {
@@ -216,7 +208,6 @@ onMounted(async () => {
   }
   await loadDepositTable(true);
 });
-
 </script>
 <style lang="scss">
 .table-record {
@@ -259,6 +250,5 @@ onMounted(async () => {
 
 .payout-total {
   margin-right: 5px;
-
 }
 </style>

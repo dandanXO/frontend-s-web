@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace "com.code9.Play4Win"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.example.Jolly88"
+        applicationId "com.code9.Play4Win"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 19
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

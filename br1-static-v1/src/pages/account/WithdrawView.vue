@@ -154,7 +154,7 @@
           :rules="[
             (val) => !!val || 'Please Enter Withdraw Amount',
             (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-            (val) => val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+            (val) => val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Valor da Retirada Insuficiente`,
             (val) =>
               (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                 val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
@@ -174,7 +174,7 @@
         </div>
         <div class="info">
           <div class="desc-wrapper">
-            <div class="desc">{{ store.vip }} Daily Limit</div>
+            <div class="desc">{{ $t("withdraw.dailyLimit") }} {{ store.vip }}</div>
           </div>
           <div class="desc">
             {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
@@ -182,7 +182,7 @@
         </div>
         <div class="info">
           <div class="desc-wrapper">
-            <div class="desc">Remain Wagers</div>
+            <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
           </div>
           <div class="desc">{{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
         </div>
@@ -197,7 +197,7 @@
           size="2em"
           :thickness="2"
         ></q-spinner>
-        <template v-else>Submit</template>
+        <template v-else>{{ $t("btn.submit") }}</template>
       </div>
     </template>
     <template v-else>
@@ -208,7 +208,7 @@
           size="2em"
           :thickness="2"
         ></q-spinner>
-        <template v-else>Submit</template>
+        <template v-else>{{ $t("btn.submit") }}</template>
       </div>
     </template>
 

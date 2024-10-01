@@ -15,7 +15,6 @@
             <td v-html="$t('lang.share_table_header_01')" />
             <td v-html="$t('lang.share_table_header_02')" />
             <td v-html="$t('lang.share_table_header_03')" />
-            <td v-html="$t('lang.share_table_header_04')" />
           </tr>
           <template v-if="referredData.length === 0">
             <tr class="box-content-row">
@@ -35,41 +34,85 @@
             <tr v-for="(item, i) in referredData" :key="i">
               <td>{{ item.loginName }}</td>
               <td>{{ item.regTime }}</td>
-              <td>{{ item.totalBet }}</td>
-              <td>{{ item.status }}</td>
+              <td>{{ item.depositAmount }}</td>
             </tr>
           </template>
         </table>
       </div>
+      
+      <div class="terms-wrapper">
+      <div class="qr-title">{{ $t('lang.share_para_title') }}</div>
 
-      <div class="qr-title">{{ $t("lang.share_para_title") }}</div>
-      <div class="share-tnc">
+      <p/>
+
+      <div class="terms-subtitle"><b>{{ $t('lang.receiveReward') }}</b></div>
+
+      <p/>
+
+      <div><b>{{ $t('lang.promotionStart') }}</b></div>
+      <div v-html="$t('lang.applicableTo')"></div>
+
+      <p/>
+
+      <div><b>{{ $t('lang.promotionDetailsLabel') }}</b></div>
+      <div>{{ $t('lang.promotionDetails') }}</div>
+
+      <p/>
+
+      <div><b>{{ $t('lang.howToParticipateLabel') }}</b></div>
+      <div>
         <ol>
-          <li v-html="$t('lang.share_tnc_para_01')" />
-          <li v-html="$t('lang.share_tnc_para_02')" />
-          <li v-html="$t('lang.share_tnc_para_03')" />
-          <ol type="a">
-            <li v-html="$t('lang.share_tnc_para_03_a')" />
-            <ol type="i">
-              <li v-html="$t('lang.share_tnc_para_03_a_i')" />
-              <li v-html="$t('lang.share_tnc_para_03_a_ii')" />
-            </ol>
-            <li v-html="$t('lang.share_tnc_para_03_b')" />
-            <ol type="i">
-              <li v-html="$t('lang.share_tnc_para_03_b_i')" />
-              <li v-html="$t('lang.share_tnc_para_03_b_ii')" />
-              <li v-html="$t('lang.share_tnc_para_03_b_iii')" />
-            </ol>
-          </ol>
-          <li v-html="$t('lang.share_tnc_para_04')" />
-          <li v-html="$t('lang.share_tnc_para_05')" />
-          <li v-html="$t('lang.share_tnc_para_06')" />
-          <li v-html="$t('lang.share_tnc_para_07')" />
-          <li v-html="$t('lang.share_tnc_para_08')" />
-          <li v-html="$t('lang.share_tnc_para_09')" />
-          <li v-html="$t('lang.share_tnc_para_10')" />
+          <li>{{ $t('lang.howToParticipate1') }}</li>
+          <li>{{ $t('lang.howToParticipate2') }}</li>
+          <li>{{ $t('lang.howToParticipate3') }}</li>
+          <li>{{ $t('lang.howToParticipate4') }}</li>
+          <li>{{ $t('lang.howToParticipate5') }}</li>
         </ol>
       </div>
+
+      <table border class="terms-table">
+        <thead>
+          <th>{{ $t('lang.numOfReferredFriends') }}</th>
+          <th>{{ $t('lang.bonusPercentage') }}</th>
+          <th>{{ $t('lang.minimumBonusAmt') }}</th>
+          <th>{{ $t('lang.maximumBonusPerReferredPerson') }}</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>10%</td>
+            <td>100</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td rowspan="2">≥2</td>
+            <td>20%</td>
+            <td>200</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td colspan="3">{{ $t('lang.additionalCommissionHint') }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p/>
+      
+
+      <div><b>{{ $t('lang.termsCondition') }}</b></div>
+      <ol>
+        <li>{{ $t('lang.termsCondition1') }}</li>
+        <li>{{ $t('lang.termsCondition2') }}</li>
+        <li>{{ $t('lang.termsCondition3') }}</li>
+        <li>{{ $t('lang.termsCondition4') }}</li>
+        <li>{{ $t('lang.termsCondition5') }}</li>
+        <li>{{ $t('lang.termsCondition6') }}</li>
+        <li>{{ $t('lang.termsCondition7') }}</li>
+        <li>{{ $t('lang.termsCondition8') }}</li>
+        <li>{{ $t('lang.termsCondition9') }}</li>
+        <li>{{ $t('lang.termsCondition10') }}</li>
+      </ol>
+    </div>
     </div>
   </q-page>
 </template>
@@ -176,7 +219,7 @@ export default defineComponent({
       //   }
       // });
 
-      api.get("/session/vnm/referred").then((res) => {
+      api.get("/session/vnm/newReferred").then((res) => {
         // console.log(reminderForm)
         if (res.code === 0) {
           referredData.value = res.data;
@@ -197,6 +240,26 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.terms-wrapper {
+  line-height: 2em;
+  color: #9AA8CB;
+
+  .qr-title,
+  .terms-subtitle {
+    text-align: center;
+  }
+
+  .terms-table {
+    th, td {
+      text-align: center;
+      padding: 2px 5px;
+      border: 1px solid #9AA8CB;
+    }
+  }
+}
+</style>
 
 <style lang="scss">
 .share-container {

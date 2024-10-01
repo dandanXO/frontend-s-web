@@ -4,12 +4,11 @@
     <!-- <ul>
       <li v-for="v in 5" :key="v"></li>
     </ul> -->
-     <span class="txt">即将到来...</span>
+    <span class="txt">即将到来...</span>
   </div>
 </template>
 
-<script setup id="TFLoading">
-</script>
+<script setup id="TFLoading"></script>
 
 <style scoped lang="scss">
 .logo {
@@ -90,6 +89,12 @@
 }
 $loadingwidth: 300px;
 .loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
   img {
     height: 50px;
     width: auto;
@@ -99,11 +104,6 @@ $loadingwidth: 300px;
     font-size: 30px;
     color: #ffffff;
   }
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
   ul {
     margin: auto;
     height: 10px;
@@ -128,13 +128,11 @@ $loadingwidth: 300px;
 
   li:nth-child(-n + 3) {
     background: rgba(255, 255, 255, 0.9);
-    box-shadow: inset 0px 0px 10px 2px rgb(255 75 0),
-      0px 0px 20px rgb(255 153 0 / 90%);
+    box-shadow: inset 0px 0px 10px 2px rgb(255 75 0), 0px 0px 20px rgb(255 153 0 / 90%);
   }
 
   li:nth-child(n + 4) {
-    box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4),
-      0px 0px 20px rgba(255, 102, 0, 0.1);
+    box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4), 0px 0px 20px rgba(255, 102, 0, 0.1);
   }
 
   li:nth-child(3) {
@@ -145,26 +143,22 @@ $loadingwidth: 300px;
   @-webkit-keyframes pulse {
     0% {
       background: rgba(255, 255, 255, 1);
-      box-shadow: inset 0px 0px 10px 2px rgb(255 75 0),
-        0px 0px 20px rgb(255 153 0 / 90%);
+      box-shadow: inset 0px 0px 10px 2px rgb(255 75 0), 0px 0px 20px rgb(255 153 0 / 90%);
     }
     100% {
       background: rgba(255, 255, 255, 0);
-      box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4),
-        0px 0px 20px rgba(255, 102, 0, 0.1);
+      box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4), 0px 0px 20px rgba(255, 102, 0, 0.1);
     }
   }
 
   @-moz-keyframes pulse {
     0% {
       background: rgba(255, 255, 255, 1);
-      box-shadow: inset 0px 0px 10px 2px rgb(255 75 0),
-        0px 0px 20px rgb(255 153 0 / 90%);
+      box-shadow: inset 0px 0px 10px 2px rgb(255 75 0), 0px 0px 20px rgb(255 153 0 / 90%);
     }
     100% {
       background: rgba(255, 255, 255, 0);
-      box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4),
-        0px 0px 20px rgba(255, 102, 0, 0.1);
+      box-shadow: inset 0px 0px 10px 1px rgba(228, 106, 55, 0.4), 0px 0px 20px rgba(255, 102, 0, 0.1);
     }
   }
 }

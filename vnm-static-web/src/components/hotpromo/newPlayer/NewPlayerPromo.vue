@@ -117,7 +117,7 @@ const missions = ref([
   {
     code: "newbie-mission-t1",
     description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
-    reward: 18,
+    reward: 8,
     icon: AccountSvg,
     missionProgress: "0/0",
     status: "Incomplete"
@@ -133,7 +133,7 @@ const missions = ref([
   {
     code: "newbie-mission-t3",
     description: "Tích lũy tổng nạp tiền 700 VNDP, có tổng cộng 20 vé cược hợp lệ tại Thể Thao hoặc Live casino.",
-    reward: 70,
+    reward: 38,
     icon: depositSvg,
     missionProgress: "0/0",
     status: "Incomplete"
@@ -141,7 +141,7 @@ const missions = ref([
   {
     code: "newbie-mission-t4",
     description: "Tích lũy tổng nạp tiền 3,500 VNDP, tích lũy tổng tiền cược hợp lệ 7,000 VNDP.",
-    reward: 175,
+    reward: 188,
     icon: walletSvg,
     missionProgress: "0/0",
     status: "Incomplete"

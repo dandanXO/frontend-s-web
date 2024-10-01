@@ -154,74 +154,78 @@
           </div>
         </el-row>
         <table class="summary-container" v-if="(parseInt(store.state.user.siteId) === 10)">
-          <tr>
-            <th>
-              {{ t('fields.gameType') }}
-            </th>
-            <th>
-              {{ t('gameType.LIVE') }}
-            </th>
-            <th>
-              {{ t('gameType.SPORT') }}
-            </th>
-            <th>
-              {{ t('gameType.SLOT') }}
-            </th>
-            <th>
-              {{ t('gameType.MINIGAME') }}
-            </th>
-          </tr>
-          <tr>
-            <td>
-              {{ t('fields.bet') }}
-            </td>
-            <td>
-              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet }}
-            </td>
-            <td>
-              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet)).toFixed(0) }}
-            </td>
-            <td>
-              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet }}
-            </td>
-            <td>
-              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet }}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              {{ t('fields.payout') }}
-            </td>
-            <td>
-              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalPayout }}
-            </td>
-            <td>
-              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
-            </td>
-            <td>
-              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalPayout }}
-            </td>
-            <td>
-              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalPayout }}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              {{ t('fields.winLoss') }}
-            </td>
-            <td>
-              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet - gameTypeFilter("LIVE")[0].totalPayout }}
-            </td>
-            <td>
-              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet - gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet - gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
-            </td>
-            <td>
-              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet - gameTypeFilter("SLOT")[0].totalPayout }}
-            </td>
-            <td>
-              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet - gameTypeFilter("FISH")[0].totalPayout }}
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <th>
+                {{ t('fields.gameType') }}
+              </th>
+              <th>
+                {{ t('gameType.LIVE') }}
+              </th>
+              <th>
+                {{ t('gameType.SPORT') }}
+              </th>
+              <th>
+                {{ t('gameType.SLOT') }}
+              </th>
+              <th>
+                {{ t('gameType.MINIGAME') }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {{ t('fields.bet') }}
+              </td>
+              <td>
+                {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet }}
+              </td>
+              <td>
+                {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet)).toFixed(0) }}
+              </td>
+              <td>
+                {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet }}
+              </td>
+              <td>
+                {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{ t('fields.payout') }}
+              </td>
+              <td>
+                {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalPayout }}
+              </td>
+              <td>
+                {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
+              </td>
+              <td>
+                {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalPayout }}
+              </td>
+              <td>
+                {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalPayout }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{ t('fields.winLoss') }}
+              </td>
+              <td>
+                {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet - gameTypeFilter("LIVE")[0].totalPayout }}
+              </td>
+              <td>
+                {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet - gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet - gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
+              </td>
+              <td>
+                {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet - gameTypeFilter("SLOT")[0].totalPayout }}
+              </td>
+              <td>
+                {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet - gameTypeFilter("FISH")[0].totalPayout }}
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -374,6 +378,12 @@
           align="center"
           min-width="50"
         />
+        <el-table-column prop="ftdAmount" :label="t('fields.ftdAmount')" align="center" width="120">
+          <template #default="scope">
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+            <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="newMemberCount"
           :label="t('fields.newMemberCount')"

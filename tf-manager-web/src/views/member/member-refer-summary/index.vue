@@ -184,10 +184,12 @@
       <el-pagination
         class="pagination"
         @current-change="changePage"
-        layout="prev, pager, next"
+        layout="prev, pager, next, sizes"
+        :page-sizes="[30, 50, 100]"
         :page-size="request.size"
         :page-count="page.pages"
         :current-page="request.current"
+        @size-change="handleSizeChange"
       />
     </el-card>
   </div>
@@ -327,6 +329,11 @@ function changePage(page) {
   }
 }
 
+function handleSizeChange(val) {
+  request.size = val;
+  loadMembers();
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
@@ -381,7 +388,7 @@ onMounted(async () => {
   padding: 0;
 }
 
-::v-deep(.el-table__row:not([class*='el-table__row--level-'])) {
+:deep(.el-table__row:not([class*='el-table__row--level-'])) {
   td:first-child {
     padding-left: 23px;
   }

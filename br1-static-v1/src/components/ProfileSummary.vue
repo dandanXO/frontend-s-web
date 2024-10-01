@@ -4,12 +4,6 @@
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
-      <!-- <div class="download-icon"><img src="../assets/images/index/download/top-download-icon.png" /></div>
-      <div class="download-rating">
-        <div class="rate-exp">Best experience!</div>
-        <div class="rate-stars"><img src="../assets/images/index/download/top-download-stars.png" /></div>
-      </div> -->
-
       <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
@@ -23,7 +17,6 @@
   </div>
 
   <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
-    <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
@@ -64,10 +57,6 @@
         <div style="z-index: 1">
           <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
         </div>
-        <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
-          <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
-          <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
-        </div> -->
         <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
           <template v-slot:label>
             <div class="profile-pic">
@@ -85,17 +74,15 @@
               </div>
             </div>
           </template>
-
           <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>VIP</q-item-label>
+                <q-item-label>{{ $t("header.vip") }}</q-item-label>
               </q-item-section>
             </q-item>
-
             <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
               <q-item-section avatar>
                 <q-avatar icon="mail" />
@@ -103,45 +90,41 @@
               <q-item-section>
                 <q-item-label>
                   <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  Message
+                  {{ $t("header.message") }}
                 </q-item-label>
               </q-item-section>
             </q-item>
-
             <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
               <q-item-section avatar>
                 <q-avatar icon="receipt" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Order</q-item-label>
+                <q-item-label>{{ $t("header.order") }}</q-item-label>
               </q-item-section>
             </q-item>
-
             <hr class="menu-line" />
-
             <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
               <q-item-section avatar>
                 <q-avatar icon="account_balance" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Bank</q-item-label>
+                <q-item-label>{{ $t("header.bank") }}</q-item-label>
               </q-item-section>
             </q-item>
-
             <q-item clickable v-close-popup @click="onLogout()">
               <q-item-section avatar>
                 <q-avatar icon="logout" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Log out</q-item-label>
+                <q-item-label>{{ $t("btn.signOut") }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn no-caps @click="goLogin()">Login</q-btn>
-        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">Register</q-btn>
+        <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
+        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
       </div>
     </div>
   </div>
@@ -154,6 +137,8 @@ import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
+import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
@@ -262,8 +247,7 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  //TODO:: Need Change PH1 AffiliateCode.
-  api.get("/app/download/affiliate/url?siteCode=PH1&affiliateCode=A3048D").then((res) => {
+  api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=A3048D`).then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
@@ -512,6 +496,7 @@ onMounted(() => {
 
       .balance-amount {
         padding-right: 18px;
+        padding-left: 8px;
         white-space: nowrap;
       }
     }
@@ -590,7 +575,7 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  top: 0;
+  top: 2px;
   right: 10px;
 }
 
@@ -669,5 +654,17 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.btn-lang {
+  display: flex;
+  width: 24px;
+  img {
+    display: block !important;
+    width: 24px !important;
+    filter: brightness(1.2) invert(20%) sepia(40%) saturate(200%) hue-rotate(280deg) brightness(130%) contrast(80%);
+    // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
+    animation: hueBlink 1s infinite;
+  }
 }
 </style>

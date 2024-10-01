@@ -1,6 +1,7 @@
 <template>
   <q-page class="transfer-container">
-    <div class="account-tabs-div">
+    <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="transfer" redirect="account/transfer" style="padding: 15px 15px 5px 15px;"/>
+    <div class="account-tabs-div" v-else>
       <div class="account-item is-active">
         <span>转账</span>
       </div>
@@ -19,7 +20,8 @@
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
         <div class="volume">
-          <img src="../../assets/images/home/announce-icon.png" />
+          <img v-if="$q.dark.isActive" src="../../assets/images/home/transfer-announce-icon-dark.svg" />
+          <img v-else src="../../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 10">
           <div v-if="announcementList">
@@ -93,7 +95,7 @@
             <img
               :src="
                 $q.dark.isActive
-                  ? require('../../assets/images/account/transfer-arrow-dark.png')
+                  ? require('../../assets/images/account/transfer-arrow-dark.svg')
                   : require('../../assets/images/account/transfer-arrow.png')
               "
             />
@@ -177,7 +179,7 @@
             @click="clearInput"
           >
             <template v-slot:prepend>
-              <span class="transfer-amt-input-prepend" >
+              <span class="transfer-amt-input-prepend">
                 {{ store.currency.value }}
               </span>
             </template>
@@ -218,9 +220,11 @@ import { useQuasar } from "quasar";
 import { translateRecord } from "src/directives/translate";
 import MarqueeText from "vue-marquee-text-component";
 import { useNotify } from "src/hooks/notify";
+import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
 
 components: {
-  AcctBal;
+  AcctBal,
+  DepositWithdrawTransferTabs
 }
 const notify = useNotify();
 const store = userStore();
@@ -313,7 +317,7 @@ const submitTransfer = () => {
                   setTimeout(() => {
                     notify({
                       type: "success",
-                      message: "成功",
+                      message: "成功"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -344,7 +348,7 @@ const submitTransfer = () => {
                   setTimeout(() => {
                     notify({
                       type: "success",
-                      message: "转账成功",
+                      message: "转账成功"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -375,7 +379,7 @@ const updateTransferAmt = () => {
 const getPlatList = () => {
   api.get("/session/loggedInPlatform").then((res) => {
     res.data.forEach((p) => {
-      if (p.walletType !== "SEAMLESS") {
+      if (p.walletType !== "SEAMLESS" && p.underMaintenance === false) {
         platforms.push({
           id: p.id,
           code: p.code,
@@ -581,14 +585,14 @@ onMounted(() => {
 .body--dark {
   .transferamounts {
     .val:not(.common-sm-btn) {
-      background: $background-dark;
+      background: #1b253f;
       color: $font-1;
     }
   }
   .transfer-amt-input {
-    background: $background-dark;
+    background: #1b253f;
     :deep(.q-field__control) {
-      &::before{
+      &::before {
         border: none;
       }
     }
@@ -644,6 +648,18 @@ onMounted(() => {
     @include content-block-dark;
   }
 
+  .transfer-tab-section {
+    background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .transfer-mid-div {
+    background: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .account-tabs-div {
     .account-item {
       background-image: url("../../assets/images/download/inactive-tab-bg-dark.png");
@@ -665,8 +681,15 @@ onMounted(() => {
 
   .transferfromto {
     .q-select {
-      background-image: url("../../assets/images/common/common-md-btn-dark.png");
+      background-image: none;
+      background: #273354;
+      border: 1px solid #d0a383;
+      border-radius: 4px;
     }
+  }
+
+  .q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
+    background: none;
   }
 }
 </style>

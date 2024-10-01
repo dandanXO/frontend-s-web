@@ -1,50 +1,43 @@
 <template>
   <div class="register-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link>
-    </div> -->
-
     <q-form class="q-gutter-y-md rounded-borders">
       <div class="register-form-grid">
-        <!--        <span class="register-form-field-label">Phone Number</span>-->
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="11"
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
           :rules="[
-            (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+            (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+            (val) => (val && !val.startsWith('0')) || $t('form.phone_rules_03'),
+            (val) => (val && val.length === 11) || $t('form.phone_rules_02')
           ]"
           color="white"
           class="landing-input"
           outlined
-          placeholder="Enter your mobile number"
-          label-color="brand"
+          :placeholder="$t('form.phone')"
+          label-color="white"
         >
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
         </q-input>
-
-        <!--        <span class="register-form-field-label">Password</span>-->
         <q-input
           ref="pwdRef"
           hide-bottom-space
           v-model="regForm.password"
           :rules="[
-            (val) => (val && val.length > 0) || 'Please insert password',
-            (val) => (val && val.length >= 6) || 'The characters of password must be above 6'
+            (val) => (val && val.length > 0) || $t('form.password_rules_01'),
+            (val) => (val && val.length >= 6) || $t('form.password_rules_02')
           ]"
           :type="isPwd ? 'password' : 'text'"
           color="white"
           class="landing-input"
           outlined
-          placeholder="Enter Confirm Password"
+          :placeholder="$t('form.confirmNewPassword')"
           label-color="brand"
         >
           <template v-slot:append>
@@ -55,116 +48,34 @@
               @click="isPwd = !isPwd"
             />
           </template>
-
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/pass.svg" />
           </template>
         </q-input>
-        <!-- <div v-if="regForm.password" class="password-str-div">
-          <span
-            :class="{
-              'weak-pwd': pwdStrength == 'weak',
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
-            Weak
-          </span>
-          <span
-            :class="{
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
-            Good
-          </span>
-          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-        </div> -->
-
-        <!-- <span class="register-form-field-label">Confirm Password</span>
-        <q-input
-          ref="confirmPwdRef"
-          hide-bottom-space
-          :type="isCfmPwd ? 'password' : 'text'"
-          v-model="regForm.confirmPwd"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please insert password',
-            (val) => val === regForm.password || 'Password does not match'
-          ]"
-          color="white"
-          class="landing-input"
-          outlined
-          label-color="brand"
-        >
-          <template v-slot:append>
-            <q-icon
-              color="gray-3"
-              :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isCfmPwd = !isCfmPwd"
-            />
-          </template>
-        </q-input> -->
-
-        <!--      <q-input-->
-        <!--        ref="verificationRef"-->
-        <!--        hide-bottom-space-->
-        <!--        clearable-->
-        <!--        type="text"-->
-        <!--        v-model="regForm.captchaCode"-->
-        <!--        label="Verification Code"-->
-        <!--        lazy-rules-->
-        <!--        :rules="[-->
-        <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
-        <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
-        <!--        ]"-->
-        <!--        placeholder="Please enter verification Code"-->
-        <!--        label-color="brand"-->
-        <!--        rounded-->
-        <!--        outlined-->
-        <!--        color="white"-->
-        <!--        class="landing-input"-->
-        <!--      >-->
-        <!--        <template v-slot:append>-->
-        <!--          <img :src="verificationImg" @click="getCode()" />-->
-        <!--        </template>-->
-        <!--      </q-input>-->
-
-        <!-- <span class="register-form-field-label">Invitation Code (Optional)</span>
-        <q-input
-          v-if="!hasAffiliate"
-          ref="affiliateCodeRef"
-          hide-bottom-space
-          v-model="regForm.referrer"
-          label-color="brand"
-          outlined
-          color="white"
-          class="landing-input"
-        /> -->
       </div>
 
       <div class="" style="margin-top: 5px" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-          I have Agree To The
-          <a href="#" style="text-decoration: none; color: #c1dffc">Use Privacy Agreement</a>
+          {{ $t("form.register_agree_01") }}
+          <a href="#" style="text-decoration: none; color: #c1dffc">{{ $t("form.register_agree_02") }}</a>
         </q-checkbox>
       </div>
 
       <div style="margin-top: 0px">
-        <q-btn @click="onSubmit" class="register-btn" label="Register" rounded no-caps :disable="!isAgreeReg">
+        <q-btn
+          @click="onSubmit"
+          class="register-btn"
+          :label="$t('header.register')"
+          rounded
+          no-caps
+          :disable="!isAgreeReg"
+        >
           <template v-slot:loading>
             <q-spinner-hourglass size="24px" color="white" />
           </template>
         </q-btn>
       </div>
-
-      <!--
-        <div class="tip-container">
-        <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
-      </div>
-    --></q-form>
-
+    </q-form>
     <div class="register-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
     </div>
@@ -259,13 +170,6 @@ export default defineComponent({
         regForm.referrer = refCode;
       }
     };
-
-    // const getReferralCode = () => {
-    //   const refCode = sessionStorage.getItem("REFERRAL_CODE");
-    //   if (refCode) {
-    //     regForm.referrer = refCode;
-    //   }
-    // }
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
@@ -392,7 +296,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: "Registrado com sucesso",
                   icon: "check_circle_outline"
                 });
 
@@ -682,10 +586,9 @@ function charType(num) {
   :deep(.q-field__control) {
     padding-left: 20px;
     padding-right: 20px;
-  }
-  :deep(.q-field__control):before {
-    border-color: #1e1f24;
     background-color: #1e1f24;
+    border-color: #1e1f24;
+
     border-width: 2px;
   }
 
@@ -722,5 +625,11 @@ function charType(num) {
   color: #fae576;
   text-decoration: none;
   font-weight: 700;
+}
+
+.prepend-number {
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 8px;
 }
 </style>

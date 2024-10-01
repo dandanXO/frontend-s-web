@@ -233,6 +233,13 @@ body {
   &.light {
     background: #394a65
   }
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:active {
+    transform: translateY(2px);
+  }
 }
 .el-button>span {
   color: #ffffff;

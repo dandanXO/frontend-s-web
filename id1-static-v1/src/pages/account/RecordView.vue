@@ -38,7 +38,7 @@
     </q-card>
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noRecord')"></NoInfoComponent>
 
     <template v-else>
       <NoInfoComponent
@@ -67,7 +67,7 @@
           </div>
           <div class="origin-val">
             <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
-            <div class="game-platform-val">{{ e.platform }}</div>
+            <div class="game-platform-val">{{ displayPlatform(e.platform) }}</div>
           </div>
         </q-card-section>
       </q-card>
@@ -86,12 +86,10 @@ import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
+import { updateDate, convertToGMT8 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
-import { convertToCommaAmount } from "src/boot/utils";
+import { convertToCommaAmount, displayPlatform } from "src/boot/utils";
 import { useQuasar } from "quasar";
 
 const router = useRouter();

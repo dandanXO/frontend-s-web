@@ -1,53 +1,42 @@
 <template>
   <div class="login-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link>
-    </div> -->
-
-    <!-- <div class="login-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
-    </div> -->
-
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div v-if="!loginType" class="login-form-grid">
-        <!--        <span class="login-form-field-label">Phone Number</span>-->
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="11"
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
           :rules="[
-            (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+            (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+            (val) => (val && !val.startsWith('0')) || $t('form.phone_rules_03'),
+            (val) => (val && val.length === 11) || $t('form.phone_rules_02')
           ]"
           label-color="brand"
           autocomplete="username"
           outlined
-          placeholder="Phone Number"
+          :placeholder="$t('form.phone')"
           color="white"
           class="landing-input login-form-field"
         >
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
         </q-input>
-
-        <!--        <span class="login-form-field-label">Password</span>-->
         <q-input
           ref="passwordRef"
           hide-bottom-space
           v-model="loginForm.password"
           :type="isPwd ? 'password' : 'text'"
-          :rules="[(val) => (val && val.length > 0) || 'Please insert password']"
+          :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
           label-color="brand"
           autocomplete="current-password"
           outlined
           color="white"
-          placeholder="Enter Password"
+          :placeholder="$t('form.password_placeholder')"
           class="landing-input login-form-field"
         >
           <template v-slot:append>
@@ -58,108 +47,30 @@
               @click="isPwd = !isPwd"
             />
           </template>
-
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/pass.svg" />
           </template>
         </q-input>
-        <!--        <q-input-->
-        <!--          ref="verificationRef"-->
-        <!--          hide-bottom-space-->
-        <!--          clearable-->
-        <!--          type="text"-->
-        <!--          v-model="loginForm.captchaCode"-->
-        <!--          label="Verification Code"-->
-        <!--          :rules="[-->
-        <!--            (val) => (val && val.length > 0) || 'Please insert verification code',-->
-        <!--            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
-        <!--          ]"-->
-        <!--          label-color="brand"-->
-        <!--          rounded-->
-        <!--          outlined-->
-        <!--          color="white"-->
-        <!--          class="landing-input"-->
-        <!--        >-->
-        <!--          <template v-slot:append>-->
-        <!--            <img :src="verificationImg" @click="getCode" />-->
-        <!--          </template>-->
-        <!--        </q-input>-->
       </div>
 
       <div class="forgot-password">
-        <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
+        <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
       </div>
-
-      <!--
-      <div class="row items-center justify-between q-mt-sm">
-        <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
-          <q-checkbox
-            rounded
-            v-model="isCheckRmb"
-            label="Remember Me"
-            size="md"
-            class="rmb-checked-box"
-            color="yellow"
-          />
-        </div>
-      </div>
-       -->
-
       <div>
-        <q-btn @click.prevent="onSubmit" type="submit" class="login-btn" label="Login" rounded no-caps />
+        <q-btn @click.prevent="onSubmit" type="submit" class="login-btn" :label="$t('header.login')" rounded no-caps />
       </div>
-
-      <!-- <div class="q-mt-sm">
-        <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
-      </div> -->
     </q-form>
-
     <hr class="end-of-form-separator" />
-
     <div class="create-account">
-      <span class="form-text">Not a member?</span>
+      <span class="form-text">{{ $t("btn.notAMember") }}</span>
       &nbsp;
-      <router-link class="form-text" to="/register" style="color: #ae6def">Create account</router-link>
+      <router-link class="form-text" to="/register" style="color: #ae6def">{{ $t("btn.createAccount") }}</router-link>
     </div>
 
     <div class="register-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
     </div>
-
-    <!--
-      <div class="tip-container">
-      <router-link class="landing-tip" to="/forgot-password">Forgot Password ?</router-link>
-
-      <router-link class="landing-tip" to="/register">Sign Up Now</router-link>
-    </div>
-    -->
   </div>
-
-  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
-    <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
-        <q-toolbar>
-          <q-toolbar-title>Verification Code</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
-        </q-toolbar>
-      </q-card-section>
-      <div class="q-px-lg q-pt-sm q-pb-lg">
-        <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" placeholder="Verification Code">
-            <template v-slot:append>
-              <img
-                :src="phoneVerificationImg"
-                title="Tap to refresh captcha"
-                style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode"
-              />
-            </template>
-          </q-input>
-        </q-card-section>
-        <q-btn @click="sendOtpSms" label="Send OTP" color="brightbtn" />
-      </div>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -172,6 +83,7 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
 import { App } from "@capacitor/app";
+import { t } from "src/boot/lang";
 
 export default defineComponent({
   name: "LoginPage",
@@ -317,7 +229,7 @@ export default defineComponent({
 
     const onSubmit = () => {
       $q.loading.show({
-        message: "Logging in"
+        message: t("btn.logging_in")
       });
       const fpPromise = FingerprintJS.load();
       (async () => {
@@ -335,7 +247,7 @@ export default defineComponent({
           passwordRef.value.validate();
           // verificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t("btn.logging_in")
           });
           // || verificationRef.value.hasError
           if (loginNameRef.value.hasError || passwordRef.value.hasError) {
@@ -384,7 +296,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t("btn.logging_in")
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
@@ -673,5 +585,12 @@ export default defineComponent({
     margin: 20px auto;
     max-width: 200px;
   }
+}
+
+.prepend-number {
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 8px;
+  z-index: 2;
 }
 </style>

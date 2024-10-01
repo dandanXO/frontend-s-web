@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
 import { login, logout } from "@/api/index/login";
 import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
-import { useSessionStorage } from "@vueuse/core";
+import { useSessionStorage, useLocalStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
+import { reactive } from "vue";
 
 const TOKEN_KEY = "TOKEN";
-
+const DARK_MODE = "DARKMODE";
+export const globalStore = reactive({
+  isDarkMode: useLocalStorage(DARK_MODE, true),
+  isMenuActive: true
+});
 export const userStore = defineStore("userStore", {
   state: () => {
     return {
@@ -20,6 +25,11 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       vip: "",
       currency: { value: "₱", label: "peso" },
+      currentDeposit: "0.0000",
+      levelUpDeposit: "0",
+      isAffiliateA: false,
+      isAffiliate2: false,
+      isAffiliate3: false
     };
   },
   actions: {
@@ -33,6 +43,11 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
+    autoLogin(token) {
+      this.token = token;
+      this.getBalance();
+      this.getMemberInfo();
+    },
     getMemberInfo() {
       return loadMemberInfo().then((ret) => {
         if (ret.code === 0) {
@@ -44,6 +59,8 @@ export const userStore = defineStore("userStore", {
           this.phone = ret.data.telephone;
           this.memberType = ret.data.memberType;
           this.vip = ret.data.vip;
+          this.currentDeposit = ret.data.currentDeposit;
+          this.levelUpDeposit = ret.data.levelUpDeposit;
         } else {
           throw new Error(ret.message);
         }
@@ -56,8 +73,14 @@ export const userStore = defineStore("userStore", {
         });
       }
     },
+    getCurrentDeposit() {
+      return this.currentDeposit;
+    },
+    getLevelUpDeposit() {
+      return this.levelUpDeposit;
+    },
     memberLogout() {
       return logout().then(() => (this.token = null));
-    },
-  },
+    }
+  }
 });

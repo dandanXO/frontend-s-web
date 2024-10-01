@@ -93,7 +93,6 @@
     </div>
   </div>
 
-
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md">
@@ -204,7 +203,7 @@ export default defineComponent({
     });
     const loadBanner = () => {
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
@@ -302,7 +301,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
@@ -429,8 +428,6 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      //height: 40vw;
-      //max-height: 130px;
       margin: 10px;
 
       img {
@@ -447,7 +444,6 @@ export default defineComponent({
       .promo-type-wrapper {
         display: flex;
         justify-content: center;
-        // border-bottom: 4px solid rgb(255 255 255 / 15%);
         ::-webkit-scrollbar {
           display: none;
         }
@@ -503,11 +499,6 @@ export default defineComponent({
       }
 
       .promo-list-wrapper {
-        // margin-top: 30px;
-        // display: grid;
-        // margin-top: 20px;
-        // grid-template-columns: 1fr;
-
         display: flex;
         margin-top: 20px;
         flex-direction: column;
@@ -524,11 +515,6 @@ export default defineComponent({
           overflow: hidden;
           padding-top: 30px;
 
-          img {
-          }
-
-          cursor: pointer;
-
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
@@ -540,23 +526,18 @@ export default defineComponent({
               background-position: center center;
               margin: 0;
               // border-radius: 10px 10px 0 0;
-
-              &:hover {
-                transform: scale(1.2);
-              }
-
               display: flex;
               justify-content: center;
               //align-items: center;
               gap: 30px;
 
-              .promo-content {
-                // width: 100%;
-                width: 100%;
-                //aspect-ratio: 1004/252;
-                height: auto;
+              &:hover {
+                transform: scale(1.2);
+              }
 
-                //height: 100%;
+              .promo-content {
+                width: 100%;
+                height: auto;
 
                 &.isDesktop {
                   display: block;
@@ -574,17 +555,6 @@ export default defineComponent({
           }
 
           .promo-info {
-            // position: absolute;
-            // text-align: right;
-            // border-radius: 0 0 10px 10px;
-
-            // left: 0;
-            // bottom: 0;
-            // width: 100%;
-            // background-color: #272c3d;
-            // display: flex;
-            // justify-content: flex-end;
-            // align-items: center;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -648,7 +618,6 @@ export default defineComponent({
       }
 
       &.bg__xf-deposit-award {
-        // background-image: url("../assets/images/promotion/hotpromo/deposit-award/bg-img.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: top center;
@@ -809,9 +778,6 @@ export default defineComponent({
 
 .pad-title {
   position: absolute;
-  // top: -7px;
-  // right: 5px;
-  // z-index: 3;
   font-size: 12px;
   // color: #3e5cc0;
   color: #ffffff;
@@ -905,7 +871,6 @@ export default defineComponent({
 
 .q-toolbar {
   height: calc(100%);
-
   max-height: unset !important;
   max-width: unset !important;
   display: flex;

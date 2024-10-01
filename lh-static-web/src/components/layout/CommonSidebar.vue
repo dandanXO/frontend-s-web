@@ -20,7 +20,7 @@
     </div>
     <div class="sticky-sidebar-items">
       <div
-        v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
+        v-if="memberType === 'TEST' || memberType === 'PROMO_TEST'"
         class="sticky-sidebar-item"
         @click="handleDarkModeClick"
       >
@@ -149,6 +149,7 @@ import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
 import { Ri24HoursLine } from "vue-remix-icons";
 
+import { storeToRefs } from "pinia";
 export default defineComponent({
   components: {
     GameModal,
@@ -165,7 +166,7 @@ export default defineComponent({
     const store = userStore();
     const ui = uiStore();
     const isDark = useDark();
-
+    const { memberType } = storeToRefs(store);
     const handleDarkModeClick = () => (isDark.value = !isDark.value);
 
     const gameMenu = ref(null);
@@ -395,7 +396,8 @@ export default defineComponent({
       clickAllowed,
       isDragging,
       goToLiveChatPromo,
-      ElMessageBox
+      ElMessageBox,
+      memberType
     };
   }
 });
@@ -406,8 +408,7 @@ export default defineComponent({
 .rocket-wrapper {
   position: fixed;
   z-index: 666;
-  // bottom: 220px;
-  // right: 0px;
+
   transition: all 0.3s;
   display: none;
   width: 100px;
@@ -529,11 +530,10 @@ export default defineComponent({
     cursor: pointer;
 
     &:hover {
+      color: #4e93ff;
       img {
         filter: brightness(1.05);
       }
-
-      color: #4e93ff;
     }
   }
 }
@@ -556,7 +556,8 @@ export default defineComponent({
 
 .dark {
   .sticky-sidebar-items {
-    background: linear-gradient(180deg, #2a2e3b 0%, #1f3342 100%);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
 
     > :first-child {
       border-color: #ffffff1a;
@@ -566,17 +567,18 @@ export default defineComponent({
       color: $color-white;
 
       &:hover {
-        color: $active-color-dark;
+        // color: rgb(83, 83, 83);
       }
 
       img {
-        filter: $active-color-dark-filter;
+        filter: brightness(0) invert(1);
       }
     }
   }
 
   .additional-info-items {
-    background: linear-gradient(180deg, #2a2e3b 0%, #1f3342 100%);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
 
     .additional-info-item {
       color: $color-white;
@@ -586,7 +588,7 @@ export default defineComponent({
       }
 
       img {
-        filter: $active-color-dark-filter;
+        filter: brightness(0) invert(1);
       }
     }
   }

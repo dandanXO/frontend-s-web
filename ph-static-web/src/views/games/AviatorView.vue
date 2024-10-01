@@ -1,48 +1,33 @@
 <template>
   <div class="fishing-container">
-    <div
-      v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
-      class="banner-container"
-    >
-      <div
-        class="promo-bg isDesktop"
-        :style="
-          'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
-        "
-      ></div>
-      <div
-        class="promo-bg isMobile"
-        :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"
-      ></div>
+    <div v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl" class="banner-container">
+      <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'" />
+      <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" />
     </div>
     <div class="bubbles">
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
-      <div class="bubble"></div>
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
+      <div class="bubble" />
     </div>
     <div class="margin-center game-container">
       <div class="all-game-container">
         <div class="plat-type-container">
           <div class="plat-list">
             <div
-              class="plat-item"
               v-for="p in platforms"
-              :class="{ active: p.id === selectedPlatId }"
               :key="p"
+              class="plat-item"
+              :class="{ active: p.id === selectedPlatId }"
               @click="switchPlat(p)"
             >
-              <img
-                :src="
-                  require('../../assets/images/common/logo/' + p.code + '.png')
-                "
-              />
+              <img :src="require('../../assets/images/common/logo/' + p.code + '.png')" />
               <!-- <img
                 v-if="p.name === 'KAGaming'"
                 src="../../assets/images/common/logo/KA.png"
@@ -54,27 +39,12 @@
             </div>
           </div>
         </div>
-        <div
-          class="grid-items flex-box flex-align-center search-container web-only-box"
-        ></div>
+        <div class="grid-items flex-box flex-align-center search-container web-only-box" />
         <div class="game-list-wrapper">
-          <div
-            class="game-slot animate__animated animate__fadeInRight"
-            v-for="game in gameListData"
-            :key="game.id"
-          >
-            <a
-              @click="
-                fishGame.open(
-                  game.name,
-                  selectedPlat.code,
-                  game.code,
-                  game.status
-                )
-              "
-            >
+          <div v-for="game in gameListData" :key="game.id" class="game-slot animate__animated animate__fadeInRight">
+            <a @click="fishGame.open(game.name, selectedPlat.code, game.code, game.status)">
               <div class="slot-img">
-                <img :src="game.default" v-image="game.icon" />
+                <img v-image="game.icon" :src="game.default" />
               </div>
               <div class="slot-name">
                 {{ game.name }}
@@ -96,36 +66,18 @@
         shape-rendering="auto"
       >
         <defs>
-          <path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          />
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
         </defs>
         <g class="parallax">
-          <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="0"
-            fill="rgba(36,71,100,0.7"
-          />
-          <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="3"
-            fill="rgba(36,71,100,0.5)"
-          />
-          <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="5"
-            fill="rgba(36,71,100,0.3)"
-          />
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(36,71,100,0.7" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(36,71,100,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(36,71,100,0.3)" />
           <use xlink:href="#gentle-wave" x="48" y="7" fill="#244764" />
         </g>
       </svg>
     </div>
 
-    <GameModal ref="fishGame"></GameModal>
+    <GameModal ref="fishGame" />
   </div>
 </template>
 
@@ -144,7 +96,7 @@ export default defineComponent({
   components: { GameModal, RiPlayLine,
   },
 setup() {
-  const imgURL = process.env.VUE_APP_IMAGE_CDN + '/'
+  const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/'
   const route = useRoute();
   const router = useRouter();
   const platforms = ref([]);
@@ -198,7 +150,7 @@ const loadGameList = () => {
       .then((data) => {
         data.forEach((element) => {
            element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/fish/${selectedPlat.value.code}/${element.icon}.png`;
+          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/games/fish/${selectedPlat.value.code}/${element.icon}.png`;
         gameListData.value = data;
         gamePage.total = data.length;
 
@@ -267,11 +219,49 @@ onMounted(() => {
   }
 }
 
+.dark-theme {
+  .fishing-container {
+    color: #fff;
+    background-blend-mode: unset;
+    .game-container {
+      .all-game-container {
+        .plat-type-container {
+          .plat-list {
+            .plat-item {
+              text-align: center;
+              &:hover,
+              &.active {
+                position: relative;
+                background: linear-gradient(90deg, rgba(57, 129, 255, 0.2) 0%, rgba(20, 29, 38, 0.2) 100%);
+                box-shadow: none;
+                &:after {
+                  content: "";
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  margin: auto;
+                  width: 39px;
+                  border-radius: 1px;
+                  height: 2px;
+                  background: #3981ff;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 .fishing-container {
-  background: linear-gradient(to top, #23263c, #244764);
+  background-color: #ffffff;
+  background-blend-mode: hard-light;
+  transition: all 1s;
+
   background-image: url("../../assets/images/games/aviator/aviator_bg.png");
-  background-attachment: fixed;
-  background-size: cover;
+  // background-attachment: fixed;
+  // background-size: cover;
   position: relative;
   overflow: hidden;
   .banner-container {
@@ -452,7 +442,7 @@ for safari gap*/
           top: 12px;
           width: 46px;
           height: 36px;
-          background-image: url("../../assets/images/common/title_large.png");
+          // background-image: url("../../assets/images/common/title_large.png");
           background-repeat: no-repeat;
         }
 
@@ -479,7 +469,7 @@ for safari gap*/
           position: absolute;
           width: 26px;
           height: 16px;
-          background-image: url("../../assets/images/common/title_small.png");
+          // background-image: url("../../assets/images/common/title_small.png");
           background-repeat: no-repeat;
           right: -36px;
           top: 10px;
@@ -575,24 +565,31 @@ for safari gap*/
           .plat-item {
             padding: 10px;
             cursor: pointer;
-            // border-bottom: 4px solid transparent;
-            border-radius: 40px;
-            background: #003653;
+            min-width: 100px;
+            min-width: 100px;
+            border-radius: 4px;
+            min-width: 80px;
+            background: transparent;
+            padding: 15px 15px;
             z-index: 2;
-            box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
-            // min-width: 100px;
-            text-align: center;
             img {
               max-height: 23px;
               max-width: 100%;
-              filter: grayscale(1);
             }
             &.active,
             &:hover {
-              background: #1c5370;
-              box-shadow: 0 0 5px #ffffff;
-              img {
-                filter: grayscale(0);
+              position: relative;
+              &:after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+                width: 39px;
+                border-radius: 1px;
+                height: 2px;
+                background: #3981ff;
               }
             }
           }
@@ -612,7 +609,7 @@ for safari gap*/
           -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
           position: relative;
-          border-radius: 20px;
+          border-radius: 4px;
           overflow: hidden;
           display: flex;
           justify-content: center;
@@ -624,17 +621,22 @@ for safari gap*/
             &:hover {
               img {
                 // transform: scale(1.2);
-                filter: brightness(0);
-                transform: rotateY(180deg);
+                //filter: brightness(0);
+                //transform: rotateY(360deg);
+                transform: scale(1.2);
               }
 
               .slot-name {
                 opacity: 1;
-                font-size: 18px;
+                font-size: 24px;
+                color: #fff;
+                font-weight: bold;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+
                 svg {
                   width: 40px;
                   fill: #ffffff;
-                  transform: scale(1);
+                  transform: scale(1.2);
                 }
                 img {
                   opacity: 1;
@@ -651,7 +653,7 @@ for safari gap*/
               width: 100%;
               height: auto;
               overflow: hidden;
-              border-radius: 20px;
+              border-radius: 4px;
               img {
                 transition: all 0.5s ease;
               }
@@ -671,7 +673,7 @@ for safari gap*/
               flex-direction: column-reverse;
               justify-content: center;
               align-items: center;
-              color: #ffffff;
+
               font-size: 0;
               line-height: 23px;
               width: 100%;
@@ -712,7 +714,8 @@ for safari gap*/
 }
 
 .slot-iframe {
-  height: 100%;
+  // height: 100%;
+  height: 100vh;
   width: 100%;
   margin: 0 auto;
   display: block;
@@ -720,31 +723,22 @@ for safari gap*/
 </style>
 <style scoped lang="scss">
 .casino-container :deep(.anticon) {
-  color: #ffffff;
 }
 .casino-container :deep(.ant-pagination-item-link .anticon) {
   font-size: 12px;
 }
 .search-container :deep(.ant-input) {
   margin: 10px;
-  color: #ffffff;
+
   width: 460px;
-  background: #23263c;
+
   border: #23263c;
   padding: 10px;
 }
 .search-container :deep(.anticon) {
   font-size: 22px;
 }
-.search-container :deep(.ant-input-affix-wrapper) {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-left: 16px;
-  background-color: #23263c;
-}
-
 .pagination-wrapper :deep(.ant-pagination) {
-  color: #ffffff;
   .ant-select-dropdown {
     background: #242424;
     .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
@@ -752,7 +746,6 @@ for safari gap*/
       background: #ffffff;
     }
     .ant-select-item {
-      color: #ffffff;
       &:hover {
         color: #242424;
       }
@@ -764,23 +757,12 @@ for safari gap*/
     border-color: #363636;
 
     a {
-      color: #ffffff;
-    }
-  }
-
-  .ant-pagination-item-active {
-    background-color: #242424;
-    border-color: #ffffff;
-
-    a {
-      color: #ffffff;
     }
   }
 
   .ant-select-selector {
     background-color: #242424;
     border-color: #363636;
-    color: #ffffff;
   }
   .ant-select-arrow .ant-icon {
     font-size: 12px;
@@ -799,7 +781,7 @@ for safari gap*/
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .fishing-container {
     .banner-container {
       .promo-bg {
@@ -835,7 +817,7 @@ for safari gap*/
     }
   }
 }
-// @media (max-width: 768px) {
+// @media (max-width: 767px) {
 //   .fishing-container {
 //     .game-container {
 //       .all-game-container {
@@ -854,7 +836,7 @@ for safari gap*/
 //     background-position: 70% center;
 //   }
 // }
-// @media (max-width: 768px) {
+// @media (max-width: 767px) {
 //   .casino-container {
 //     min-height: unset;
 

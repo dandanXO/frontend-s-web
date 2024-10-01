@@ -103,12 +103,6 @@
       >
         <el-table-column type="selection" width="40" />
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
           align="center"
@@ -134,12 +128,6 @@
           :label="t('fields.realName')"
           align="center"
           min-width="110"
-        />
-        <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
         />
         <el-table-column
           prop="financial"
@@ -242,6 +230,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="vip"
+          :label="t('fields.vipLevel')"
+          align="center"
+          min-width="80"
+        />
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"
@@ -712,6 +706,7 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+  request.doris = ret.sums.useDoris;
   page.loading = false
 }
 

@@ -621,12 +621,34 @@ function charType(num) {
   .login-container {
     background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
     background-size: 100% auto;
+
+    .login-form-container {
+      padding: 20px;
+      background: linear-gradient(180deg, #2E4166 0%, #1A263F 100%);
+      border: 1px solid #BE9457;
+      border-radius: 8px;
+    }
   }
   .common-large-btn {
-    background: $linear-bg-180-dark;
+    background: url('../assets/images/login/login-btn-bg-dark.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3A93CE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .common-large-white-btn {
-    color: $white;
+    background: url('../assets/images/login/register-btn-bg-dark.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #BE9457;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5e300e;
   }
 }
 

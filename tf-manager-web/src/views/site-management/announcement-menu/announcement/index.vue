@@ -678,7 +678,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.title = null
   request.status = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
   if (isVnm(request.siteId)) {
     uiControl.showSiteTypeSearch = true;
   } else {
@@ -968,7 +968,10 @@ onMounted(async () => {
       s => s.siteName === store.state.user.siteName
     )
     imageRequest.siteId = site.value.id
-    request.siteId = site.value.id;
+    request.siteId = site.value.id
+  } else {
+    imageRequest.siteId = siteList.list[0].id
+    request.siteId = siteList.list[0].id
   }
 
   if (isVnm(request.siteId)) {

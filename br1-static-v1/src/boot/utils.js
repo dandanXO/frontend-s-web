@@ -105,14 +105,27 @@ export const convertToGMT7 = (dateTime) => {
   return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD");
 };
 
-export const convertToCommaAmount = (amount, isForceDecimal) => {
-  if (amount === null) {
-    return 0;
+export const convertToCommaAmount = (amount, isForceDecimal = false) => {
+  if (amount === null || isNaN(amount)) {
+    return "0.00";
   }
-  if (isNonNumericString(amount)) {
-    return amount;
+  const parsedAmount = parseFloat(amount);
+  let formattedAmount = parsedAmount.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
+  if (isForceDecimal) {
+    return formattedAmount;
   }
-  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+  return formattedAmount.replace(/\.00$/, "");
+};
+
+export const displayPlatform = (platform) => {
+  if (platform === "BTI") {
+    return "55Ace";
+  }
+  return platform;
 };
 
 function isNonNumericString(value) {

@@ -103,6 +103,12 @@
 }
 $loadingwidth: 300px;
 .loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
   img {
     width: 100%;
     max-width: 150px;
@@ -112,11 +118,7 @@ $loadingwidth: 300px;
     font-size: 30px;
     color: #ffffff;
   }
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+
   ul {
     margin: auto;
     height: 10px;

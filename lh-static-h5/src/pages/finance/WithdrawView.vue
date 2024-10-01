@@ -1,27 +1,42 @@
 <template>
   <q-page>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
-      <div class="account-content last">
-        <div class="withdrawalmethod">
-          <div
-            v-for="(method, i) in withdrawalMethods"
-            :key="i"
-            class="withdraw-type-item"
-            @click="selectMethod(method, i)"
-            :class="{ active: i === activeItem }"
-          >
-            <span class="promo" v-if="method.recommended">Recommended</span>
-            <div class="withdraw-img">
-              <img :src="imgURL + '/withdraw/' + method.icon" />
-            </div>
-            <div class="type-name">{{ method.name }}</div>
+      <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
+        <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
+        <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+          <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+          <span>升级快速提款</span>
+        </q-btn>
+      </div>
 
-            <div class="promo-label">
-              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+      <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="withdraw" redirect="finance/withdraw" style="padding:5px 0px 5px 0px;" />
+      <div class="account-content last">
+        <div class="payment-method-section">
+          <div class="section-title" v-if="$q.dark.isActive">
+            <div class="section-title-decor" />
+            <div class="section-title-text">提款方式</div>
+          </div>
+          <div class="withdrawalmethod">
+            <div
+              v-for="(method, i) in withdrawalMethods"
+              :key="i"
+              class="withdraw-type-item"
+              @click="selectMethod(method, i)"
+              :class="{ active: i === activeItem }"
+            >
+              <span class="promo" v-if="method.recommended">Recommended</span>
+              <div class="withdraw-img">
+                <img :src="imgURL + '/withdraw/' + method.icon" />
+              </div>
+              <div class="type-name">{{ method.name }}</div>
+
+              <div class="promo-label">
+                <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+              </div>
             </div>
           </div>
         </div>
-        <q-form ref="withdrawFormRef">
+        <q-form ref="withdrawFormRef" class="withdraw-form">
           <q-select
             v-show="isLoaded"
             hide-bottom-space
@@ -105,32 +120,88 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
-                <q-btn @click="updateWithdrawAmt" label="全额提款" color="brightbtn" />
+                <q-btn v-if="$q.dark.isActive" @click="updateWithdrawAmt" label="全额提款" class="update-withdraw-amt-btn" />
+                <q-btn v-else @click="updateWithdrawAmt" label="全额提款" color="brightbtn" />
               </span>
             </template>
           </q-input>
-          <div
-            class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
-            style="border-bottom: 1px solid #434343"
+          <template v-if="$q.dark.isActive">
+            <div
+            class="q-mt-sm q-mb-sm q-pb-sm"
+            style="border-bottom: 1px solid #434343;color: #98a7b5;"
             v-show="selectedWithdrawalMethod"
           >
-            <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
-              {{
-                "单笔提款: " +
-                selectedWithdrawalMethod.withdrawMin +
-                "RMB - " +
-                selectedWithdrawalMethod.withdrawMax +
-                "RMB"
-              }}
-              <br />
-            </template>
-            <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
-            </template>
-            <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-              {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
-            </template>
+              <div v-if="isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
+                <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+                <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+              </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;color: #98a7b5;gap:10px;" v-if="(selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin) || (selectedWithdrawalMethod.withdrawMaxAmount)">
+              <div v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
+                <span>{{
+                  "单笔提款: "}}</span>
+                  <span style="color:#fff;">
+                    {{ selectedWithdrawalMethod.withdrawMin }}
+                  </span>
+                   <span>
+                    {{ " RMB - " }}
+                   </span>
+                   <span style="color:#fff;">
+                    {{ selectedWithdrawalMethod.withdrawMax }}
+                  </span>
+                  <span>
+                  {{ " RMB" }}
+                  </span>
+              </div>
+              <div v-if="selectedWithdrawalMethod.withdrawMaxAmount">
+                <span>{{
+                  "今日提款: "}}</span>
+                  <span style="color:#fff;">
+                    {{ selectedWithdrawalMethod.withdrawMaxAmount }}
+                  </span>
+                  <span>
+                  {{ " RMB" }}
+                  </span>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;color: #98a7b5;" v-if="selectedWithdrawalMethod.withdrawMaxTimes">
+              <div v-if="selectedWithdrawalMethod.withdrawMaxTimes">
+                <span>{{`今日提款剩余: `}}</span><span style="color:#fff;">{{selectedWithdrawalMethod.withdrawMaxTimes}}</span><span>{{` 次`}}</span>
+              </div>
+              <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY' && tutorialLabel()">
+                <span
+                  style="text-decoration: underline;color: #fff;"
+                  @click="openEWalletTutorial"
+                >
+                {{ `*${tutorialLabel()}` }}
+                </span>
+              </div>
+            </div>
           </div>
+          </template>
+          <template v-else>
+            <div
+              class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
+              style="border-bottom: 1px solid #434343"
+              v-show="selectedWithdrawalMethod"
+            >
+              <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
+                {{
+                  "单笔提款: " +
+                  selectedWithdrawalMethod.withdrawMin +
+                  "RMB - " +
+                  selectedWithdrawalMethod.withdrawMax +
+                  "RMB"
+                }}
+                <br />
+              </template>
+              <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
+                {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
+              </template>
+              <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
+                {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
+              </template>
+            </div>
+          </template>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">实时汇率：</span>
@@ -156,7 +227,7 @@
           <!--          </div>-->
           <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
             <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
-            <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
+            <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY' && !$q.dark.isActive">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
                 @click="openEWalletTutorial"
@@ -164,7 +235,9 @@
               />
             </div>
           </div>
-          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
+          </div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -186,7 +259,8 @@
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
             <q-btn
-              class="q-mt-md common-large-btn quick-withdraw-btn"
+              class="q-mt-md quick-withdraw-btn"
+              :class="`${$q.dark.isActive ? '' : 'common-large-btn'}`"
               @click="submitWithdraw"
               :loading="withdrawLoading"
               :disable="withdrawLoading"
@@ -251,10 +325,11 @@ import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import{useLocalStorage} from "@vueuse/core"
 import { useNotify } from "src/hooks/notify";
+import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
 
 export default defineComponent({
   name: "WithdrawView",
-  components: {AcctBal},
+  components: {AcctBal, DepositWithdrawTransferTabs},
   setup() {
     const notify = useNotify();
     const store = userStore();
@@ -504,6 +579,31 @@ export default defineComponent({
       if(!selectedWithdrawalMethod.value.url) return
       window.open(selectedWithdrawalMethod.value.url);
     };
+
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: "升级中。。。"
+      });
+      api.get("/session/updateAutoWithdraw").then(async (res) => {
+        if(res.code === 0) {
+          notify({
+            type: "success",
+            message: "成功升级为快速提款!"
+          });
+
+          await store.getMemberInfo()
+        } else {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
+      }).finally(() => $q.loading.hide())
+    }
+
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -535,7 +635,9 @@ export default defineComponent({
       isNewUser,
       checkNewUser,
       isValidUSDTAmt,
-      withdrawLoading
+      withdrawLoading,
+      isAutoWithdrawal,
+      handleUpgradeClick,
     };
   }
 });
@@ -674,6 +776,30 @@ export default defineComponent({
   color: $warning;
 }
 
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 1rem;
+  .upgrade-btn {
+    padding: 1px 12px;
+    img {
+      height: 30px;
+    }
+  }
+}
+
+.upgraded-helper-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  color: #00a478;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
 .quick-withdraw-btn {
   width: 100%;
 }
@@ -681,9 +807,108 @@ export default defineComponent({
 .body--dark {
   .withdraw-section {
     @include content-block-dark;
+    background: transparent;
+    padding: 0;
+
+    .account-content {
+
+      .payment-method-section, .withdraw-form {
+        background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
+        padding: 10px;
+        border-radius: 6px;
+        width: 100%;
+        margin: 10px 0;
+      }
+      .payment-method-section {
+        .section-title {
+          display:flex;
+          gap:5px;
+          padding-bottom:5px;
+
+          .section-title-decor {
+            width: 2px;
+            background-color: #fff;
+            margin: 5px 0;
+            border-radius: 10px;
+          }
+
+          .section-title-text {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .withdrawalmethod {
+      .withdraw-type-item {
+        border-radius: 4px;
+        border: 1px solid #d9d9d94d;
+        width: 100%;
+        background: #273354;
+        padding: 5px;
+
+        .promo-label {
+          top: -15%;
+          left: 85%;
+        }
+
+        .withdraw-img {
+          max-width: unset;
+          width: 54px;
+          height: 54px;
+          border: none;
+
+          img {
+            padding: 5px;
+          }
+        }
+
+        &.active {
+          border-color: #d0a383;
+          border-width: 1px;
+
+          .withdraw-img {
+            img {
+              border: none;
+            }
+          }
+          .type-name {
+            font-weight: 400;
+          }
+
+          &:before {
+            display: block;
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 18px;
+            width: 18px;
+            z-index: 3;
+            background-image: url("../../assets/images/finance/deposit/checkmark-dark.svg");
+            background-size: 100%;
+            background-position: center center;
+          }
+        }
+      }
+    }
     .withdraw-selection.q-field,
     .withdraw-field.q-field {
       box-shadow: none;
+    }
+
+
+    .quick-withdraw-btn, .update-withdraw-amt-btn {
+      background: url('../../assets/images/account/primary-btn.svg') no-repeat center center;
+      background-size: cover;
+      box-shadow: none;
+      border: 1px solid #3A93CE;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 40px;
+      border-radius: 4px;
     }
   }
 }

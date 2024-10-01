@@ -139,7 +139,8 @@
             <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
               <div class="quiz-header">有奖问答</div>
               <div class="quiz-gift">
-                <img src="../../assets/feedback/gift.png" />
+                <img v-if="isDark" src="../../assets/feedback/gift-dark.png" />
+                <img v-else src="../../assets/feedback/gift.png" />
               </div>
               <div class="quiz-content">
                 <div class="content-title">让我们聆听您的心声</div>
@@ -155,7 +156,8 @@
               </div> -->
               <div class="questions-header">有奖问答</div>
               <div class="questions-gift">
-                <img src="../../assets/feedback/gift.png" />
+                <img v-if="isDark" src="../../assets/feedback/gift-dark.png" />
+                <img v-else src="../../assets/feedback/gift.png" />
               </div>
               <div class="questions-content" v-if="!isAnswered">
                 <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
@@ -306,6 +308,7 @@ import { useNotify } from "@/hooks/notify";
 import { CaretBottom } from "@element-plus/icons-vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import FileUpload from "@/components/feedback/FileUpload.vue";
+import { useDark } from "@vueuse/core";
 
 const notify = useNotify();
 const store = userStore();
@@ -315,6 +318,7 @@ const uiIsShowStatus = reactive({
   questionBox: false,
   showQuestions: true
 });
+const isDark = useDark();
 
 const feedbackTypes = ref("");
 const announcementBonusList = ref([8, 12, 16, 36, 38, 68]);
@@ -872,7 +876,7 @@ onUnmounted(() => {
     width: 129px;
     height: 110px;
     position: absolute;
-    top: 54px;
+    top: 40px;
     right: 200px;
   }
 
@@ -946,7 +950,7 @@ onUnmounted(() => {
     width: 129px;
     height: 110px;
     position: absolute;
-    top: 10px;
+    top: 40px;
     right: 200px;
   }
 
@@ -1372,12 +1376,12 @@ onUnmounted(() => {
     .quiz-header {
       padding-bottom: 60px;
       margin-bottom: -44px;
-      background: $active-color-dark-linear;
+      background: linear-gradient(180deg, #A88D7C 0%, #a88d7c14 100%);
     }
 
     .quiz-content {
       @include content-block-dark;
-      border-color: $background-content-block-lighter-dark;
+      border-color: #E9CC94;
 
       .content-title,
       .content-desc {
@@ -1390,12 +1394,12 @@ onUnmounted(() => {
     .questions-header {
       padding-bottom: 60px;
       margin-bottom: -44px;
-      background: $active-color-dark-linear;
+      background: linear-gradient(180deg, #A88D7C 0%, #a88d7c14 100%);
     }
 
     .questions-content {
       @include content-block-dark;
-      border-color: $background-content-block-lighter-dark;
+      border-color: #E9CC94;
 
       .questions-title {
         color: $active-color-dark;

@@ -15,6 +15,11 @@
           {{ $t("lang.langVal") === "en" ? game.title_en : game.title_vn }}
         </div>
       </div>
+      <img
+        v-if="game.gameType === 'LIVE' && game.code.toLowerCase() === 'won' || game.gameType === 'LIVE' && game.code.toLowerCase() === 'pmlive'"
+        src="@/assets/images/home/new-ribbon.svg"
+        class="new-ribbon"
+      />
     </div>
   </div>
 </template>
@@ -187,6 +192,14 @@ const getImgPlatformBg = (platform, code, alias) => {
       background-image: url(../../assets/images/home/label-certified.png);
       background-size: contain;
       background-repeat: no-repeat;
+    }
+
+    .new-ribbon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 15vw;
+      max-width: 54px;
     }
   }
 }

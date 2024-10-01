@@ -6,6 +6,7 @@
     "serve": "cross-env NODE_ENV=development dotenv -e .env.development vue-cli-service serve",
     "serve:test": "cross-env NODE_ENV=development dotenv -e .env.test vue-cli-service serve",
     "serve:prod": "cross-env NODE_ENV=production dotenv -e .env.production vue-cli-service serve",
+    "build": "cross-env NODE_ENV=production  dotenv -e .env.production vue-cli-service build",
     "build:dev": "cross-env NODE_ENV=development  dotenv -e .env.development vue-cli-service build",
     "build:test": "cross-env NODE_ENV=development  dotenv -e .env.test vue-cli-service build",
     "build:staging": "cross-env NODE_ENV=production  dotenv -e .env.staging vue-cli-service build",
@@ -39,7 +40,7 @@
     "vue-remix-icons": "^1.1.1",
     "vue-router": "4.3.0",
     "vue3-autocounter": "1.0.6",
-    "vue3-carousel": "^0.1.40",
+    "vue3-carousel": "^0.3.3",
     "vue3-marquee": "^3.1.2",
     "vue3-number-counter": "^0.0.2"
   },

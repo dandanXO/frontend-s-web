@@ -7,3 +7,7 @@ export function getParamKey(key) {
 export function getAnnouncement() {
   return server.REST.get(`/announcement`);
 }
+
+export function getAppDownload() {
+  return server.REST.get('/config/appDownloadUrl');
+}

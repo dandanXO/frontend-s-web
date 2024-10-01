@@ -1,9 +1,6 @@
 <template>
   <div class="live-container">
-    <q-scroll-area
-      style="height: calc(100vh - 90px); padding-bottom: 10px"
-      :thumb-style="{ width: 0 }"
-    >
+    <q-scroll-area style="height: calc(100vh - 90px); padding-bottom: 10px" :thumb-style="{ width: 0 }">
       <q-intersection transition="scale">
         <!-- <div v-if="banner.mobileImageUrl" class="banner-container">
           <div
@@ -15,12 +12,7 @@
         </div> -->
 
         <div class="section-product">
-          <div
-            class="item-group"
-            data-aos="slide-down"
-            data-aos-easing="ease-out"
-            data-aos-duration="1000"
-          >
+          <div class="item-group" data-aos="slide-down" data-aos-easing="ease-out" data-aos-duration="1000">
             <div
               v-for="(p, index) in hotTrendingGames"
               :key="index"
@@ -33,11 +25,7 @@
                     <img :src="p.bg" alt="" />
                     <img
                       class="logo"
-                      :style="
-                        p.name === 'Evolution'
-                          ? 'max-height:15px; bottom: 12%;'
-                          : ''
-                      "
+                      :style="p.name === 'Evolution' ? 'max-height:15px; bottom: 12%;' : ''"
                       :src="p.logo"
                     />
                   </div>
@@ -47,14 +35,14 @@
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-        <img src="../../assets/images/games/liveCasino/live-bg.png" />
+        <!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>
 </template>
 
 <script setup>
-// import { loadPromoBanner } from "@/api/index/promo";
+// import { loadPromoBanner } from "src/api/index/promo";
 import { onMounted, ref } from "vue";
 import GameModal from "components/modal/GameModal";
 import { api } from "boot/axios";
@@ -73,8 +61,8 @@ function playGame(gameName, platformCode, gameCode, gameStatus) {
 //         category: "LIVE"
 //       }
 //     })
-//     .then((ret) => {
-//       const res = ret.data;
+//     .then((res) => {
+//       ;
 //       if (res.code === 0) {
 //         banner.value = res.data[0];
 //       }
@@ -82,14 +70,12 @@ function playGame(gameName, platformCode, gameCode, gameStatus) {
 // };
 const hotTrendingGames = [
   {
-    code: "Evo",
+    code: "EvoAce",
     name: "Evolution",
     status: "NORMAL",
     gameName: "EVO",
-    bg: require("../../assets/images/games/liveCasino/evo.png"),
-    main: require("../../assets/images/games/liveCasino/live1_1.png"),
-    logo: require("../../assets/images/common/logo/EVO.png"),
-    text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop.",
+    logo: require("../../assets/images/common/logo/evo.png"),
+    text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop."
   },
   {
     code: "AWC",
@@ -97,21 +83,17 @@ const hotTrendingGames = [
     status: "NORMAL",
     gameName: "AE Sexy",
     gameCode: "MX-LIVE-001",
-    bg: require("../../assets/images/games/liveCasino/sexy.png"),
-    main: require("../../assets/images/games/liveCasino/live2_01.png"),
     logo: require("../../assets/images/common/logo/ae_2.png"),
-    text: "AE Casino, Asia's most potential live-action video. The interface is simple and easy to operate, cross-platform, download-free, and fun anytime, anywhere!",
+    text: "AE Casino, Asia's most potential live-action video. The interface is simple and easy to operate, cross-platform, download-free, and fun anytime, anywhere!"
   },
   {
     code: "EZUGI",
     name: "Ezugi",
     status: "NORMAL",
     gameName: "Ezugi",
-    bg: require("../../assets/images/games/liveCasino/ezugi.png"),
-    main: require("../../assets/images/games/liveCasino/live3_01.png"),
     logo: require("../../assets/images/common/logo/ezugi.png"),
-    text: "The EZUGI entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience.",
-  },
+    text: "The EZUGI entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience."
+  }
   // {
   //   code: "Evo",
   //   name: "Evolution",
@@ -186,7 +168,9 @@ onMounted(() => {});
 <style scoped lang="scss">
 $max-width: 1400px;
 .live-container {
-  background: linear-gradient(to bottom, #23263c, #190f25);
+  background-color: #f5faff;
+  //background-image: url("../../assets/images/account/bg-23.png");
+
   img {
     width: 100%;
   }

@@ -22,52 +22,46 @@
                 lazy-rules
                 :rules="[(_) => isValidCardAccount()]"
                 label-color="secondary"
+                disable
               />
             </div>
 
             <div class="q-my-sm">
               <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
-                type="number"
+                :type="currentCardType === 'Bank' || selectedBankCode === 'GCASH' ? 'number' : 'text'"
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardNumber"
                 label="Enter Account Number"
-                lazy-rules
                 :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
               />
             </div>
 
-            <div class="q-my-sm" v-if="currentCardType === 'BANK'">
-              <div class="input-title">IFSC Code</div>
-              <q-input
-                standout
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardAddress"
-                label="Enter Bank IFSC Code"
-                lazy-rules
-                :rules="[(_) => isValidCardAddress()]"
-                label-color="secondary"
-              />
-            </div>
+            <!--            <div class="q-my-sm" v-if="currentCardType === 'BANK'">-->
+            <!--              <div class="input-title">IFSC Code</div>-->
+            <!--              <q-input-->
+            <!--                standout-->
+            <!--                class="q-pb-xs dialog-input"-->
+            <!--                hide-bottom-space-->
+            <!--                filled-->
+            <!--                v-model="bankCardField.cardAddress"-->
+            <!--                label="Enter Bank IFSC Code"-->
+            <!--                lazy-rules-->
+            <!--                :rules="[(_) => isValidCardAddress()]"-->
+            <!--                label-color="secondary"-->
+            <!--              />-->
+            <!--            </div>-->
           </q-form>
         </q-card-section>
 
         <ConfirmButton
           label="Update"
           :confirmFunc="updateCard"
-          :isDisabled="
-            !(
-              isValidCardAccount() === true &&
-              isValidCardNumber() === true &&
-              ((currentCardType === 'BANK' && isValidCardAddress() === true) || currentCardType !== 'BANK')
-            ) || isDisableBtn
-          "
+          :isDisabled="!(isValidCardAccount() === true && isValidCardNumber() === true) || isDisableBtn"
         ></ConfirmButton>
       </q-card>
     </div>
@@ -89,7 +83,7 @@ const $q = useQuasar();
 const store = userStore();
 
 const refBankCardModal = ref();
-const currentCardType = ref("Bank");
+const currentCardType = ref("BANK");
 
 const accountTypeStr = ref("");
 const currBankList = ref([]);
@@ -107,13 +101,17 @@ const bankCardField = reactive({
 const router = useRouter();
 
 const isUpdateCardDialogOpen = ref(false);
+const selectedBankCode = ref();
+
 const onUpdateCardClick = (bankCardDetails, type) => {
   currentCardType.value = type;
 
   if (currentCardType.value === "CRYPTO") {
     dialogDisplays.accountNum = "Crypto Card Number";
-  } else if(currentCardType.value === "EWALLET"){
+  } else if (currentCardType.value === "EWALLET") {
     dialogDisplays.accountNum = "eWallet Number";
+  } else if (currentCardType.value === "BANK") {
+    dialogDisplays.accountNum = "Account Number";
   }
   // debugger;
 
@@ -121,6 +119,8 @@ const onUpdateCardClick = (bankCardDetails, type) => {
   bankCardField.cardNumber = bankCardDetails.cardNumber;
   bankCardField.cardAddress = bankCardDetails.cardAddress;
   bankCardField.cardId = bankCardDetails.id;
+
+  selectedBankCode.value = bankCardDetails.bankCode;
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
@@ -151,8 +151,8 @@ const isValidCardAccount = () => {
   const result = !cardAccount
     ? "Please Enter Holder Name"
     : cardAccount.length < 2
-      ? "Please Insert 2 or More Characters"
-      : true;
+    ? "Please Insert 2 or More Characters"
+    : true;
 
   return result;
 };
@@ -161,6 +161,24 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
   const result = !cardNumber ? "Please Enter Card Number" : true;
+
+  if (
+    cardNumber &&
+    (selectedBankCode.value === "GCASH" ||
+      selectedBankCode.value === "MAYAPAY" ||
+      selectedBankCode.value === "GRABPAY")
+  ) {
+    const gCashCheck =
+      cardNumber.substring(0, 1) !== "0"
+        ? `The ${selectedBankCode.value} card number must start with '0'`
+        : cardNumber.length !== 11
+        ? `The ${selectedBankCode.value} card number length should be 11`
+        : true;
+    if (gCashCheck !== true) {
+      return gCashCheck;
+    }
+  }
+
   return result;
 };
 
@@ -169,8 +187,8 @@ const isValidCardAddress = () => {
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-      ? "Bank IFSC Code Must Be More Than 3 Characters"
-      : true;
+    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    : true;
   return result;
 };
 

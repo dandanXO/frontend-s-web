@@ -162,6 +162,24 @@
             </q-item>
           </template>
         </q-select>
+
+        <div
+          class="rollover-info"
+          v-if="
+            selectedPrivilege &&
+            selectedPrivilege.name &&
+            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)
+          "
+        >
+          <span v-if="selectedPrivilege.depositMin">
+            优惠最低存款要求：{{ selectedPrivilege.depositMin }}元，&nbsp;&nbsp;&nbsp;
+          </span>
+          <span v-if="selectedPrivilege.gameTypeRollover && selectedPrivilege.gameTypeRollover !== '{}'">
+            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
+          </span>
+          <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
+        </div>
+
         <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <!-- <div class="q-mt-md">
@@ -173,7 +191,7 @@
 
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
-      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dyblue text-white">已存款</q-card-section>
+      <q-card-section style="padding: 10px 20px" class="text-white q-pa-md bg-dyblue">已存款</q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           您将被重定向到您的银行页面以完成存款。
@@ -188,7 +206,7 @@
 
   <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 20px" class="text-black">
-      <q-card-section class="q-mb-md text-center" style="flex-direction: column">
+      <q-card-section class="text-center q-mb-md" style="flex-direction: column">
         <strong>温馨提示</strong>
         <br />
         <br />
@@ -204,7 +222,7 @@
 
   <!--  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>-->
   <!--    <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">-->
-  <!--      <q-card-section class="q-mb-md text-center" style="flex-direction:column;">-->
+  <!--      <q-card-section class="text-center q-mb-md" style="flex-direction:column;">-->
   <!--        <strong>温馨提示</strong>-->
   <!--        <br/>-->
   <!--        为保证资金安全，存款前先绑定银行卡-->
@@ -700,6 +718,39 @@ const checkExtension = () => {
   }
 };
 
+const getRollOverText = (rolltext) => {
+  const thetext = JSON.parse(rolltext);
+
+  var fulltext = "流水倍数要求（本金 + 彩金）：";
+  var rolloverlists = [];
+  if (thetext.sport) {
+    rolloverlists.push("体育" + thetext.sport + "倍");
+  }
+  if (thetext.esport) {
+    rolloverlists.push("电竞" + thetext.esport + "倍");
+  }
+  if (thetext.slot) {
+    rolloverlists.push("电子" + thetext.slot + "倍");
+  }
+  if (thetext.live) {
+    rolloverlists.push("真人" + thetext.live + "倍");
+  }
+  if (thetext.poker) {
+    rolloverlists.push("棋牌" + thetext.poker + "倍");
+  }
+  if (thetext.fish) {
+    rolloverlists.push("捕鱼" + thetext.fish + "倍");
+  }
+  if (thetext.lottery) {
+    rolloverlists.push("彩票" + thetext.lottery + "倍");
+  }
+  if (thetext.casual) {
+    rolloverlists.push("小游戏" + thetext.casual + "倍");
+  }
+  fulltext += rolloverlists.join("，");
+  return fulltext;
+};
+
 onMounted(() => {
   initPay();
   if (route.meta && route.meta.isApp) {
@@ -802,5 +853,10 @@ onActivated(() => {
     letter-spacing: 1px;
     border-radius: 12px;
   }
+}
+
+.rollover-info {
+  color: #bd4646;
+  font-size: 12px;
 }
 </style>

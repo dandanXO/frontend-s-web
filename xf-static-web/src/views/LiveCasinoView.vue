@@ -211,6 +211,8 @@ export default defineComponent({
       margin-right: -100px;
       display: flex;
       justify-content: center;
+      flex: 2;
+
       .absolute {
         position: absolute;
         top: 0;
@@ -220,7 +222,7 @@ export default defineComponent({
         width: 100%;
         height: unset;
       }
-      flex: 2;
+
       img {
         height: 100%;
       }

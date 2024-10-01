@@ -8,6 +8,10 @@ import { getRndInteger } from "boot/utils";
 
 console.log(window.location.hostname);
 const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
+
+const globalAndCNLinks = ["dongyingbet6", "dongyingbet6"];
+const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
+
 const imgCDN = process.env.IMAGE_CDN;
 let apiReplacementRecords = [];
 
@@ -21,6 +25,15 @@ if (isGlobalDY) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
   var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
   var crtApi = "https://cad5kegdgl.grsib6dfily.com";
+} else if (isGlobalAndCN) {
+  console.log("IS Global + CN");
+  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+
+  var rstApi = getInitApi(rstGlobalArray, "DY_H5_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "DY_H5_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "DY_H5_CRT_URL");
 } else {
   var rstApi = getInitApi(rstArray, "DY_H5_RST_URL", "1");
   var crtApi = getInitApi(crArray, "DY_H5_CRT_URL", "2");
@@ -235,6 +248,7 @@ export default boot(({ app, router }) => {
           window.location.href = "/";
         }
         if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+          sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
           window.location.href = "/";

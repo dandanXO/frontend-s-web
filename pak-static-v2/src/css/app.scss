@@ -195,11 +195,12 @@ body.body--dark .q-footer {
   margin: 0 auto;
   background: transparent;
   border-radius: 4px;
+  aspect-ratio: 475 / 171;
 
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% 100%;
     border-radius: 12px;
     aspect-ratio: 22 / 7;
   }
@@ -331,8 +332,11 @@ body.body--dark .q-footer {
   }
 
   .footer-img {
-    height: 30px;
-    width: 30px;
+    height: 20px;
+    width: 20px;
+    img {
+      max-width: 100%;
+    }
   }
 
   .footer-big-img {
@@ -360,7 +364,7 @@ body.body--dark .q-footer {
   &__indicator {
     // display: none;
     // background: linear-gradient(251.03deg, #dfdf0c 7.46%, #7edb5c 91.87%);
-    background: #ffffff;
+    background: #4877f6;
     width: 4px;
     height: 4px;
     border-radius: 50%;

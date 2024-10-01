@@ -145,7 +145,7 @@ const pageInit = () => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
     } else {
-      notify.error(res.message)
+      notify.error(res.message);
     }
   });
 };
@@ -192,7 +192,7 @@ const compoundCard = () => {
       });
       isPageLoading.value = false;
     } else {
-      notify.error(res.message)
+      notify.error(res.message);
       isPageLoading.value = false;
     }
   });
@@ -248,9 +248,9 @@ onMounted(() => {
     // });
     return;
   }
-  
+
   pageInit();
-    loadRanking();
+  loadRanking();
 });
 const formLabelWidth = "140px";
 
@@ -303,7 +303,7 @@ const submitRegisterForm = async (elForm) => {
           });
           isSubmitting.value = false;
         } else {
-          notify.error(res.message)
+          notify.error(res.message);
           isSubmitting.value = false;
         }
       });
@@ -320,15 +320,16 @@ const submitRegisterForm = async (elForm) => {
 }
 .tigercard-container {
   .el-table {
-    &__empty-text p {
-      color: #ffd97f;
-    }
     max-width: 650px;
     margin: 0 auto;
 
     background: #1d212e;
     border-radius: 10px;
     border: 0;
+
+    &__empty-text p {
+      color: #ffd97f;
+    }
     th {
       text-align: center;
       line-height: 32px;
@@ -365,12 +366,12 @@ const submitRegisterForm = async (elForm) => {
       }
       &.is-active,
       &:hover {
+        color: #ffd87f;
         &:after {
           content: "/";
           display: inline-block;
           margin-left: 8px;
         }
-        color: #ffd87f;
       }
     }
     button:hover {

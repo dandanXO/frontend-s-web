@@ -8,62 +8,62 @@
           <div class="acct-nav-item">
             <img src="../assets/images/account/withdraw-svg.svg" />
           </div>
-          <div class="acct-nav-label">Withdraw</div>
+          <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
         </router-link>
         <router-link to="/deposit">
           <div class="acct-nav-item">
             <img src="../assets/images/account/deposit-svg.svg" />
           </div>
-          <div class="acct-nav-label">Deposit</div>
+          <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
         </router-link>
         <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/promo-svg.svg" />
           </div>
-          <div class="acct-nav-label">Promo</div>
+          <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
         </router-link>
       </div>
     </div>
 
     <div class="mid-setting-section">
       <q-item-section class="acct-nav">
-        <h2>Other Services</h2>
+        <h2>{{ $t("settings.otherServices") }}</h2>
         <div class="acct-menu" id="id-acct-menu">
           <router-link to="/account/profile">
             <div class="acct-nav-item">
               <img src="../assets/images/account/personal-svg.svg" />
             </div>
-            <div class="acct-nav-label">Personal Centre</div>
+            <div class="acct-nav-label">{{ $t("settings.personalCentre") }}</div>
           </router-link>
           <router-link to="/account/discount">
             <div class="acct-nav-item">
               <img src="../assets/images/account/discount-svg.svg" />
             </div>
-            <div class="acct-nav-label">Discount</div>
+            <div class="acct-nav-label">{{ $t("settings.discount") }}</div>
           </router-link>
           <router-link to="/account/record">
             <div class="acct-nav-item">
               <img src="../assets/images/account/record-svg.svg" />
             </div>
-            <div class="acct-nav-label">Record</div>
+            <div class="acct-nav-label">{{ $t("settings.record") }}</div>
           </router-link>
           <router-link to="/account/order">
             <div class="acct-nav-item">
               <img src="../assets/images/account/order-svg.svg" />
             </div>
-            <div class="acct-nav-label">Order</div>
+            <div class="acct-nav-label">{{ $t("settings.order") }}</div>
           </router-link>
           <router-link to="/account/bank">
             <div class="acct-nav-item">
               <img src="../assets/images/account/bank-svg.svg" />
             </div>
-            <div class="acct-nav-label">Bank</div>
+            <div class="acct-nav-label">{{ $t("settings.bank") }}</div>
           </router-link>
           <router-link to="/account/message">
             <div class="acct-nav-item">
               <img src="../assets/images/account/message-svg.svg" />
             </div>
-            <div class="acct-nav-label">Message</div>
+            <div class="acct-nav-label">{{ $t("settings.message") }}</div>
           </router-link>
         </div>
       </q-item-section>
@@ -112,7 +112,7 @@
       </q-card>
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
-          <div class="acct-nav-label">LOG OUT</div>
+          <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
         </div>
       </a>
     </div>
@@ -122,13 +122,13 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Sign Out</div>
+        <div class="txt-title">{{ $t("btn.signOut") }}</div>
 
-        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+        <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
+          <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+          <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
         </div>
       </div>
     </div>
@@ -136,11 +136,13 @@
 </template>
 
 <script setup>
-import { onActivated, ref } from "vue";
-import { userStore } from "src/stores";
-import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-import ProfileSummary from "../components/ProfileSummary.vue";
+import { onActivated, ref } from "vue";
+import { useRouter } from "vue-router";
+
+import { t } from "@/boot/lang";
+import ProfileSummary from "@/components/ProfileSummary.vue";
+import { userStore } from "@/stores";
 
 const store = userStore();
 const router = useRouter();
@@ -157,7 +159,6 @@ const btm_banners = ref([
 ]);
 
 const loadingLogout = ref(false);
-
 const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
@@ -171,7 +172,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t("notify.loggingOut")
   });
 
   store.memberLogout().then(() => {
@@ -420,10 +421,6 @@ const logout = () => {
 </style>
 
 <style lang="scss">
-// .q-page-container {
-//   padding-bottom: 20px !important;
-// }
-
 .q-page {
   min-height: 0 !important;
 }

@@ -578,7 +578,7 @@ const submitWithdraw = async () => {
           getWithdrawalMethods();
 
           // FB tracking :: apply-withdrawal
-          if (store.isAffiliateA) {
+          if (store.isFbPixel) {
             fbq("track", "apply-withdrawal");
           }
 
@@ -744,12 +744,12 @@ const getWithdrawalMethods = () => {
         selectMethod(withdrawalMethods.value[0], 0);
       }
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: response.message,
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: response.message,
+      //   icon: "report_problem"
+      // });
     }
   });
 };

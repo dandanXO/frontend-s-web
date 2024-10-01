@@ -3,11 +3,8 @@
     <span v-for="n in 190" :key="n"></span>
   </div>
 
-  <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
-    <img src="../../assets/images/index/money-rain/money-content-events.png" />
-  </div>
-  <div class="rain-money-bg" v-if="moneyRainTab === 'records'">
-    <img src="../../assets/images/index/money-rain/money-content-records.png" />
+  <div class="rain-money-bg">
+    <img src="../../assets/images/index/money-rain/bird-decor.png" />
   </div>
   <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
 
@@ -417,7 +414,7 @@ onMounted(() => {
 }
 
 .rain-money-tabs {
-  background: #00b352;
+  background: #0274dd;
   display: flex;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
@@ -432,14 +429,14 @@ onMounted(() => {
     color: rgba(255, 255, 255, 0.6);
 
     &.active {
-      background: #00d461;
+      background: #309cff;
       color: #ffffff;
     }
   }
 }
 
 .rain-money-tab-content {
-  background: #00d461;
+  background: #309cff;;
   min-height: 30dvh;
   height: calc(100dvh - 450px);
   overflow-y: auto;
@@ -448,6 +445,7 @@ onMounted(() => {
   border-bottom-right-radius: 12px;
 
   .content-footer {
+    color: #fff;
     margin-top: 12px;
     .footer-title {
       font-weight: bold;
@@ -462,7 +460,7 @@ onMounted(() => {
   }
 
   .content-table {
-    background: #00b352;
+    background: #0274dd;;
     padding: 8px;
     border-radius: 12px;
     margin-top: 12px;
@@ -474,6 +472,7 @@ onMounted(() => {
     }
 
     .table-data {
+      color: #fff;
       margin-top: 6px;
       table {
         width: 100%;
@@ -491,11 +490,12 @@ onMounted(() => {
   }
 
   .content-timing {
-    background: #00b352;
+    background: #0274dd;
     padding: 8px;
     border-radius: 12px;
     text-align: center;
     margin-top: 12px;
+    color: #fff;
 
     .timing-divider {
       display: block;
@@ -536,7 +536,7 @@ onMounted(() => {
   }
 
   .content-sec {
-    background: #00b352;
+    background: #0274dd;
     padding: 8px;
     border-radius: 12px;
     display: flex;
@@ -555,9 +555,9 @@ onMounted(() => {
       text-align: center;
       margin-left: auto;
       margin-right: auto;
+      color: #fff;
 
       span {
-        font-family: "Arial", sans-serif;
         font-weight: 900;
         display: block;
         font-size: 18px;
@@ -574,7 +574,7 @@ onMounted(() => {
 
 .rain-money-bg {
   display: block;
-  margin-bottom: -180px;
+  margin-bottom: -190px;
   img {
     display: block;
     width: 302px;
@@ -583,7 +583,7 @@ onMounted(() => {
 
 .rain-money-title {
   width: 100%;
-  margin-bottom: -170px;
+  margin-bottom: -150px;
   max-width: 420px;
   z-index: 2;
   img {
@@ -593,14 +593,15 @@ onMounted(() => {
 }
 
 .rain-money-tabs-wrapper {
-  background: linear-gradient(149.95deg, #94febe 1.35%, #96f8ec 41.73%, #90fc9b 84.62%);
+  background: linear-gradient(149.95deg, #94CBFE 1.35%, #96C3F8 41.73%, #90C8FC 84.62%);
   padding: 6px;
   border-radius: 12px;
   margin: 16px;
   max-width: 400px;
+  font-family: "Poppins";
 
   .rain-money-tabs-container {
-    background: linear-gradient(151.97deg, #fefefc 2.12%, #bbfdca 83.61%);
+    background: linear-gradient(151.97deg, #FEFEFC 2.12%, #BBCAFD 83.61%);
     padding: 16px 10px 4px;
     border-radius: 12px;
     // position: relative;
@@ -623,7 +624,6 @@ onMounted(() => {
       margin-top: 5px;
 
       span.orange {
-        font-family: "Arial", sans-serif;
         background-clip: text;
         font-weight: 900;
         -webkit-background-clip: text;
@@ -632,12 +632,12 @@ onMounted(() => {
       }
 
       span.green {
-        font-family: "Arial", sans-serif;
         background-clip: text;
         font-weight: 900;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-image: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background-image: linear-gradient(92.08deg, #1B3AAA -1.85%, #426FC5 81.76%);
+
       }
     }
   }

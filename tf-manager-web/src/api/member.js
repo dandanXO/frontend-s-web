@@ -497,3 +497,7 @@ export const walletBalance = (id, siteId) => {
     Method.GET
   )
 }
+
+export const freezeMemberBatchUpdate = (memberFreeze) => {
+  return https(5 * 60 * 1000).request("/member/freezeMemberBatchUpdate", Method.POST, { memberFreeze: JSON.stringify(memberFreeze) }, ContentType.form);
+}

@@ -20,7 +20,7 @@
 
 <script lang="js">
 import { defineComponent, reactive, onMounted } from "vue";
-import { loadMemberInfo } from "@/api/personal/personal";
+import { loadMemberInfo } from "src/api/personal/personal";
 export default defineComponent({
   name: "SecurityView",
   setup() {

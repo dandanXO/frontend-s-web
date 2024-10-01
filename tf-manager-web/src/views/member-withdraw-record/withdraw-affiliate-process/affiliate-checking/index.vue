@@ -101,11 +101,15 @@
       >
         <el-table-column type="selection" width="40" />
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
+          prop="withdrawType"
+          :label="t('fields.withdrawType')"
           align="center"
-          min-width="80"
-        />
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
@@ -132,12 +136,6 @@
           :label="t('fields.realName')"
           align="center"
           min-width="110"
-        />
-        <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
         />
         <el-table-column
           prop="financial"
@@ -235,15 +233,11 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="withdrawType"
-          :label="t('fields.withdrawType')"
+          prop="vip"
+          :label="t('fields.vipLevel')"
           align="center"
-          min-width="120"
-        >
-          <template #default="scope">
-            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
-          </template>
-        </el-table-column>
+          min-width="80"
+        />
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"
@@ -692,6 +686,7 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+  request.doris = ret.sums.useDoris;
   page.loading = false
 }
 

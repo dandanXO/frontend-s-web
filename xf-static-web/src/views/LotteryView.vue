@@ -3,26 +3,14 @@
     <div class="lottery-container-inner">
       <template v-for="(det, idx) in filteredPlatforms" :key="idx">
         <template v-if="selectedPlat === det.code">
-          <div
-            class="lottery-left"
-            data-aos="fade-right"
-            data-aos-duration="4000"
-          >
-            <img
-              :src="
-                require('../assets/lottery/title_lottery_' + det.image + '.png')
-              "
-              style="margin-bottom: 54px"
-            />
+          <div class="lottery-left" data-aos="fade-right" data-aos-duration="4000">
+            <img :src="require('../assets/lottery/title_lottery_' + det.image + '.png')" style="margin-bottom: 54px" />
             <div class="platform-txt-box">
               <div>
                 <div class="platform-txt-list-content">{{ det.message }}</div>
               </div>
             </div>
-            <img
-              src="../assets/lottery/lottery_tcg_platforms.png"
-              style="margin: 38px 0 0px 0px"
-            />
+            <img src="../assets/lottery/lottery_tcg_platforms.png" style="margin: 38px 0 0px 0px" />
             <br />
             <div class="rounded-txt-container">
               <div class="rounded-txt">11选5</div>
@@ -31,22 +19,11 @@
               <div class="rounded-txt">快3</div>
               <div class="rounded-txt">双色球</div>
             </div>
-            <div
-              class="play-btn"
-              @click="openGame(det.name, det.code, det.gameCode)"
-            ></div>
+            <div class="play-btn" @click="openGame(det.name, det.code, det.gameCode)"></div>
           </div>
-          <div
-            class="lottery-right"
-            data-aos="fade-left"
-            data-aos-duration="4000"
-          >
+          <div class="lottery-right" data-aos="fade-left" data-aos-duration="4000">
             <!-- <img class="absolute" src="../assets/lottery/lottery_right.png"> -->
-            <img
-              :src="
-                require('../assets/lottery/lottery_right_' + det.image + '.png')
-              "
-            />
+            <img :src="require('../assets/lottery/lottery_right_' + det.image + '.png')" />
           </div>
         </template>
       </template>
@@ -70,10 +47,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import { useRoute } from "vue-router";
 import aos from "aos";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -120,17 +94,13 @@ export default defineComponent({
       if (store.memberType === "TEST") {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LOTTERY")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LOTTERY"));
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LOTTERY")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LOTTERY"));
           setFilteredPlatforms();
         });
       }
@@ -138,9 +108,7 @@ export default defineComponent({
 
     const setFilteredPlatforms = () => {
       filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === displayPlatform.code
-        )
+        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
       filteredPlatforms.value.forEach((element) => {
@@ -231,6 +199,8 @@ export default defineComponent({
     .lottery-right {
       position: relative;
       margin-right: -100px;
+      flex: 2;
+
       .absolute {
         position: absolute;
         top: 0;
@@ -240,7 +210,7 @@ export default defineComponent({
         width: 100%;
         height: unset;
       }
-      flex: 2;
+
       img {
         height: 100%;
       }

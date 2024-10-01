@@ -66,6 +66,14 @@ export const liveCasinoPlatforms = [
     gameCode: ""
   },
   {
+    code: "FBLive",
+    cnname: "FB真人",
+    image: "fblive",
+    message: "全球首创多款娱乐游戏，包括极速轮盘、定制化VIP包厢、实时互动百家乐以及多种创新玩法。多平台无缝兼容，让您畅享极致娱乐体验，感受前所未有的刺激与乐趣！",
+    caption: "",
+    gameCode: ""
+  },
+  {
     code: "WE",
     cnname: "WE真人",
     image: "we",
