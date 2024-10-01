@@ -23,6 +23,36 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="changeSiteSearch"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
+          v-if="uiControl.showSiteTypeSearch === true"
+          v-model="request.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 120px;margin-left:5px"
+        >
+          <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -93,6 +123,42 @@
         <el-form-item :label="t('fields.title')" prop="title">
           <el-input v-model="form.title" style="width: 350px;" maxlength="50" />
         </el-form-item>
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            @change="changeSite"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.siteType')" prop="siteType" v-if="uiControl.showSiteType === true">
+          <el-select
+            v-model="form.siteType"
+            size="small"
+            class="filter-item"
+            :placeholder="t('fields.siteType')"
+            style="width: 350px"
+            @change="loadActiveAnnouncementType"
+          >
+            <el-option
+              v-for="item in siteType.list"
+              :key="item.value"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+
         <el-form-item :label="t('fields.type')" prop="type">
           <el-select
             v-model="form.type"
@@ -486,6 +552,8 @@ import { uploadImage } from '../../../../api/image'
 import { getSiteListSimple } from '../../../../api/site'
 import { store } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
+import { isVnm } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const announcementForm = ref(null)
@@ -493,7 +561,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const inputImage = ref(null)
 const imageFormRef = ref(null)
-const announcementDir = process.env.VUE_APP_IMAGE + '/announcement/'
+const announcementDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/announcement/'
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -508,7 +576,17 @@ const uiControl = reactive({
   ],
   imageSelectionTitle: '',
   imageSelectionVisible: false,
+  showSiteType: false,
+  showSiteTypeSearch: false,
 })
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
+})
+
 const siteList = reactive({
   list: [],
 })
@@ -539,6 +617,8 @@ const request = reactive({
   current: 1,
   title: null,
   status: null,
+  siteType: null,
+  siteId: null,
 })
 
 const imageRequest = reactive({
@@ -558,6 +638,8 @@ const form = reactive({
   content: null,
   sequence: null,
   attachment: null,
+  siteType: null,
+  siteId: null,
 })
 
 const imageForm = reactive({
@@ -596,6 +678,31 @@ function disabledDate(time) {
 function resetQuery() {
   request.title = null
   request.status = null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteTypeSearch = true;
+  } else {
+    uiControl.showSiteTypeSearch = false;
+  }
+  request.siteType = "main"
+}
+
+async function changeSiteSearch() {
+  request.siteType = 'main'
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteTypeSearch = true;
+  } else {
+    uiControl.showSiteTypeSearch = false;
+  }
+}
+
+async function changeSite() {
+  form.siteType = 'main'
+  if (isVnm(form.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
 }
 
 function resetImageQuery() {
@@ -626,8 +733,18 @@ async function loadAnnouncement() {
 }
 
 async function loadActiveAnnouncementType() {
-  const { data: type } = await getActiveAnnouncementType()
-  announcementTypeList.value = type
+  announcementTypeList.value = null;
+  if (form.siteId !== null) {
+    if (isVnm(form.siteId)) {
+      if (form.siteType !== null) {
+        const { data: type } = await getActiveAnnouncementType(form.siteId, form.siteType)
+        announcementTypeList.value = type
+      }
+    } else {
+      const { data: type } = await getActiveAnnouncementType(form.siteId, 'main')
+      announcementTypeList.value = type
+    }
+  }
 }
 
 function changePage(page) {
@@ -649,6 +766,14 @@ function showDialog(type) {
       form.status = 'true'
     }
     uiControl.dialogTitle = t('fields.addAnnouncement')
+    form.id = null;
+    form.siteId = siteList.list[0].id;
+    form.siteType = "main"
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editAnnouncement')
   }
@@ -661,7 +786,7 @@ function showEdit(announcement) {
   if (!announcement) {
     announcement = chooseAnnouncement[0]
   }
-  nextTick(() => {
+  nextTick(async () => {
     for (const key in announcement) {
       if (Object.keys(form).find(k => k === key)) {
         if (key === 'dueDate') {
@@ -671,7 +796,14 @@ function showEdit(announcement) {
         }
       }
     }
-    console.log(form)
+
+    await loadActiveAnnouncementType();
+
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
   })
 }
 
@@ -836,9 +968,19 @@ onMounted(async () => {
       s => s.siteName === store.state.user.siteName
     )
     imageRequest.siteId = site.value.id
+    request.siteId = site.value.id
+  } else {
+    imageRequest.siteId = siteList.list[0].id
+    request.siteId = siteList.list[0].id
   }
+
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteTypeSearch = true;
+  } else {
+    uiControl.showSiteTypeSearch = false;
+  }
+  request.siteType = "main";
   await loadAnnouncement()
-  await loadActiveAnnouncementType()
 })
 </script>
 

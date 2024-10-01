@@ -15,7 +15,12 @@
           <br />
           <span class="slot-game-platform-btn__text-description">{{ $t("home.slotEdition.description") }}</span>
         </div>
-        <img class="slot-game-platform-btn__icon" :src="getPlatformIcon(platform.code)">
+        <img class="slot-game-platform-btn__icon" :src="getPlatformIcon(platform.code)" />
+        <img
+          v-if="platform.code.toLowerCase() === 'pt'"
+          src="@/assets/images/index/new-ribbon.svg"
+          class="new-ribbon"
+        />
       </button>
     </div>
     <div v-if="isLoading" v-loading="isLoading" class="slot-game-loading-wrapper" />
@@ -53,7 +58,7 @@
       <div class="game-slot more-game">
         <router-link :to="{ path: '/slot', query: { plat: selectedPlat } }">
           <div>
-            <img src="@/assets/images/home/slotEdition/more-game-img.png" alt="more game">
+            <img src="@/assets/images/home/slotEdition/more-game-img.png" alt="more game" />
           </div>
           <button>{{ $t("home.slotEdition.moreGame") }}</button>
         </router-link>
@@ -232,6 +237,13 @@ onMounted(() => {
         top: 50%;
         transform: translateY(-50%);
         max-height: 94px;
+      }
+
+      .new-ribbon {
+        position: absolute;
+        right: -10px;
+        top: -5px;
+        max-width: 64px;
       }
     }
   }

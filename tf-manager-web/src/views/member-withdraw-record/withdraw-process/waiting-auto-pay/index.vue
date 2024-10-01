@@ -69,6 +69,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
     </div>
 
     <div class="btn-group">
@@ -95,12 +103,6 @@
       >
         <el-table-column type="selection" width="40" />
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
           align="center"
@@ -126,12 +128,6 @@
           :label="t('fields.realName')"
           align="center"
           min-width="110"
-        />
-        <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
         />
         <el-table-column
           prop="financial"
@@ -234,6 +230,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="vip"
+          :label="t('fields.vipLevel')"
+          align="center"
+          min-width="80"
+        />
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"
@@ -587,6 +589,7 @@ const request = reactive({
   maxWithdrawAmount: null,
   vipId: null,
   siteId: null,
+  doris: false
 })
 
 function disabledDate(time) {
@@ -703,6 +706,7 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+  request.doris = ret.sums.useDoris;
   page.loading = false
 }
 

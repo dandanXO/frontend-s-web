@@ -127,6 +127,20 @@
               </el-option>
             </el-select>
           </el-form-item>
+
+          <div
+            class="btn-confirm rollover-info"
+            v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
+          >
+            <span v-if="selectedPromo.depositMin">
+              优惠最低存款要求：{{ selectedPromo.depositMin }}元，&nbsp;&nbsp;&nbsp;
+            </span>
+            <span v-if="selectedPromo.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">
+              {{ getRollOverText(selectedPromo.gameTypeRollover) }}
+            </span>
+            <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPromo.rollover }}倍</span>
+          </div>
+
           <el-form-item label="">
             <div class="txt-center">
               <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
@@ -168,11 +182,49 @@
         <br />
         <el-button class="common-btn" @click="clearInfo">理解</el-button>
       </el-dialog>
+
+      <el-dialog
+        width="500"
+        v-model="isShowSubmitDialog"
+        title="完成以下认证才可以存款"
+        :close-on-click-modal="false"
+        center
+        class="dialog-wrapper"
+      >
+        <div class="submit-alert-message-wrapper">
+          <div v-if="!store.realName">
+            <div class="submit-alert-message-item">
+              <div class="">
+                <p style="color: #fff; margin-top: 0px">存款需要绑定真实姓名</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+              </div>
+
+              <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
+            </div>
+          </div>
+          <div v-if="!store.phone">
+            <div class="submit-alert-message-item">
+              <div class="">
+                <p style="color: #fff; margin-top: 0px">存款需要绑定手机号</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+              </div>
+              <button type="primary" class="common-btn" @click="handleBindPhoneNumber">去绑定</button>
+            </div>
+          </div>
+        </div>
+        <template #footer>
+          <div class="dialog-footer">
+            <button type="primary" class="common-btn" style="width: 100%" @click="isShowSubmitDialog = false">
+              暂不认证
+            </button>
+          </div>
+        </template>
+      </el-dialog>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef, computed } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { loadBankCards } from "@/api/personal/personal";
 import { RiSpamLine } from "vue-remix-icons";
@@ -261,6 +313,7 @@ const checkAmount = reactive({
 });
 
 const calculatedMinDeposit = ref("");
+const isShowSubmitDialog = ref(false);
 const rules = {
   localAmount: [
     {
@@ -294,6 +347,10 @@ const withdrawState = reactive({
 //   memberInfo: {},
 //   bankCardList: []
 // });
+
+const selectedPromo = computed(() => {
+  return unselectedPrivileges.value.find((item) => item.id === selectedPrivilege.value);
+})
 
 const loadCards = () => {
   withdrawState.bankCardList = [];
@@ -437,56 +494,52 @@ function clearInfo() {
   checkMinDepositAmt();
 }
 
+const checkBeforeSubmit = () => {
+  if (!store.phone || !store.realName) {
+    isShowSubmitDialog.value = true;
+    return false;
+  }
+
+  return true;
+};
+
 function confirmDeposit() {
   if (store.token) {
-    if (!store.phone) {
-      ElMessageBox.alert("为保证资金安全，存款前请先验证手机号", "系统提示", {
-        showClose: "false",
-        cancelButtonClass: "cancel-btn",
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning",
-        draggable: true,
-        buttonSize: "small"
-      })
-        .then(() => {
-          router.push("/center/personal");
-        })
-        .catch(() => {});
-      return;
-    } else if (withdrawState.bankCardList.length === 0) {
-      if (isUSDT.value == true) {
-        ElMessageBox.alert("请先绑定虚拟币钱包", "系统提示", {
-          showClose: false,
-          showCancelButton: false,
-          confirmButtonText: "确认",
-          draggable: false,
-          buttonSize: "small",
-          closeOnClickModal: false,
-          center: true
-        })
-          .then(() => {
-            router.push("/center/withdrawbank");
-          })
-          .catch(() => {});
-        return;
-      } else {
-        ElMessageBox.alert("请先绑定银行卡", "系统提示", {
-          showClose: false,
-          showCancelButton: false,
-          confirmButtonText: "确认",
-          draggable: false,
-          buttonSize: "small",
-          closeOnClickModal: false,
-          center: true
-        })
-          .then(() => {
-            router.push("/center/withdrawbank");
-          })
-          .catch(() => {});
-        return;
-      }
-    }
+    if (!checkBeforeSubmit()) return;
+
+    // if (withdrawState.bankCardList.length === 0) {
+    //   if (isUSDT.value == true) {
+    //     ElMessageBox.alert("请先绑定虚拟币钱包", "系统提示", {
+    //       showClose: false,
+    //       showCancelButton: false,
+    //       confirmButtonText: "确认",
+    //       draggable: false,
+    //       buttonSize: "small",
+    //       closeOnClickModal: false,
+    //       center: true
+    //     })
+    //       .then(() => {
+    //         router.push("/center/withdrawbank");
+    //       })
+    //       .catch(() => {});
+    //     return;
+    //   } else {
+    //     ElMessageBox.alert("请先绑定银行卡", "系统提示", {
+    //       showClose: false,
+    //       showCancelButton: false,
+    //       confirmButtonText: "确认",
+    //       draggable: false,
+    //       buttonSize: "small",
+    //       closeOnClickModal: false,
+    //       center: true
+    //     })
+    //       .then(() => {
+    //         router.push("/center/withdrawbank");
+    //       })
+    //       .catch(() => {});
+    //     return;
+    //   }
+    // }
   }
   loadingBtn.value = true;
 
@@ -615,7 +668,49 @@ async function verifyBank(r, v) {
   }
 }
 
+const handleBindRealName = () => {
+  router.push("/center/personal");
+};
+
+const handleBindPhoneNumber = () => {
+  router.push("/center/personal");
+};
+
+const getRollOverText = (rolltext) => {
+  const thetext = JSON.parse(rolltext);
+
+  var fulltext = "流水倍数要求（本金 + 彩金）：";
+  var rolloverlists = [];
+  if (thetext.sport) {
+    rolloverlists.push("体育" + thetext.sport + "倍");
+  }
+  if (thetext.esport) {
+    rolloverlists.push("电竞" + thetext.esport + "倍");
+  }
+  if (thetext.slot) {
+    rolloverlists.push("电子" + thetext.slot + "倍");
+  }
+  if (thetext.live) {
+    rolloverlists.push("真人" + thetext.live + "倍");
+  }
+  if (thetext.poker) {
+    rolloverlists.push("棋牌" + thetext.poker + "倍");
+  }
+  if (thetext.fish) {
+    rolloverlists.push("捕鱼" + thetext.fish + "倍");
+  }
+  if (thetext.lottery) {
+    rolloverlists.push("彩票" + thetext.lottery + "倍");
+  }
+  if (thetext.casual) {
+    rolloverlists.push("小游戏" + thetext.casual + "倍");
+  }
+  fulltext += rolloverlists.join("，");
+  return fulltext;
+};
+
 onMounted(() => {
+  checkBeforeSubmit();
   initPay();
   loadCards();
 });
@@ -809,6 +904,15 @@ onMounted(() => {
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
   line-height: 30px;
 }
+
+.rollover-info {
+  color: #bd4646;
+}
+
+.btn-confirm {
+  margin-left: 100px;
+  margin-bottom: 10px;
+}
 </style>
 
 <style lang="scss">
@@ -852,5 +956,28 @@ onMounted(() => {
       width: 80px;
     }
   }
+}
+
+.submit-alert-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .submit-alert-message-item {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    p {
+      flex: 1;
+    }
+  }
+}
+
+.dialog-wrapper {
+  overflow: hidden;
+  border-radius: 8px !important;
 }
 </style>

@@ -214,7 +214,7 @@ const totalRatio = computed(() => {
 
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : 1
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.vipId = null;
   request.gameName = null;
 }
@@ -351,13 +351,12 @@ async function loadVips() {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   await loadVips()
   await loadVipReport()

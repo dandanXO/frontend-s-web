@@ -2,23 +2,19 @@ import { server } from "@/utils/request";
 import { userStore } from "@/store";
 
 export function loadPromo(siteType) {
-  const store = userStore();
-
-  const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
-
-  return server.REST.get(platformApiUrl, { params: { siteType } });
+  return server.REST.get("/opt-session/promo/page", { params: { siteType } });
 }
 
 export function loadPromoBanner(category) {
-  return server.REST.get("/promo/banner", {
+  return server.REST.get("/opt-session/promo/banner", {
     params: {
       category: category
     }
   });
 }
 
-export function loadHomePopup() {
-  return server.REST.get("/member/ads-popout");
+export function loadHomePopup(siteType) {
+  return server.REST.get("/member/ads-popout", { params: { siteType } });
 }
 
 export function claimBonusItem(item) {

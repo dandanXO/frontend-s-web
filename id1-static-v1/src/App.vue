@@ -3,20 +3,20 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, nextTick } from "vue";
-import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { api } from "boot/axios";
+import { AddressbarColor, Platform, useQuasar } from "quasar";
+import { defineComponent, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
+import { api } from "@/boot/axios";
+import { isAndroid } from "@/boot/utils";
+import { userStore } from "@/stores";
+import { useUI } from "@/stores/ui";
 import { Device } from "@capacitor/device";
-import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
-import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { useUI } from "src/stores/ui";
-import axios from "axios";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import AOS from "aos";
-import {useRouter} from "vue-router"
 import "aos/dist/aos.css";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -124,14 +124,7 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      const omitSites = ["bw3.genoortisy.com"];
-
-      var affiliateCode = "";
-      if (omitSites.includes(window.location.host)) {
-        affiliateCode = "E94ED4";
-      } else {
-        affiliateCode = "E94ED4";
-      }
+      var affiliateCode = "77A4DF";
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
@@ -212,9 +205,9 @@ export default defineComponent({
       }
     };
 
-    const router= useRouter();
+    const router = useRouter();
     const checkServerStatus = () => {
-      axios.get(`https://sumbtf.tebarncale.com/server/status/IND`).then((response) => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITE}`).then((response) => {
         if (response.data.code === 0) {
           console.log("responseStatus:", response.data.data.status);
           if (response.data.data.status === "CLOSED") {

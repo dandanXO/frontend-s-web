@@ -1,18 +1,16 @@
 <template>
   <div class="activities-container">
     <div class="activity-banner">
-      <img src="../assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
+      <img src="../assets/images/promotion/activities/deposit-promo-topbanner.png" />
     </div>
     <div class="activities-title"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
-    <div class="activities-content">
-      The more consecutive days of deposit requirements you complete, the more extra bonus you will get
-    </div>
+    <div class="activities-content">{{ $t("promo_activitiesDetails.activitiesContent") }}</div>
     <router-link :to="`/deposit?from=${route.path}`" class="activities-btn">
       <img src="../assets/images/promotion/activities/deposit-btn-1.png" />
     </router-link>
     <div class="activities-stats-container">
       <div class="stats-info">
-        <div class="info-title">Deposits of the day</div>
+        <div class="info-title">{{ $t("promo_activitiesDetails.depositOftheDay") }}</div>
         <div class="info-progress">
           <q-linear-progress :value="progressDeposit" rounded size="16px" class="info-linear-progress">
             <div class="info-label">
@@ -27,7 +25,7 @@
         </div>
       </div>
       <div class="stats-info">
-        <div class="info-title">Number of daily wager</div>
+        <div class="info-title">{{ $t("promo_activitiesDetails.numberOfDailyWager") }}</div>
         <div class="info-progress">
           <q-linear-progress :value="progressDailyWager" rounded size="16px" class="info-linear-progress">
             <div class="info-label">
@@ -52,7 +50,7 @@
           { isReceived: (i === bonusSeq && isReceivedToday) || i < bonusSeq }
         ]"
       >
-        <div class="box-ribbon">Day {{ i + 1 }}</div>
+        <div class="box-ribbon">{{ $t("promo_activitiesDetails.day") }} {{ i + 1 }}</div>
         <div class="box-img">
           <img
             v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq"
@@ -61,34 +59,35 @@
           <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" />
         </div>
         <div>
-          <div class="box-title">Free {{ rule.bonus }}{{ store.currency.label }}</div>
+          <div class="box-title">
+            {{ $t("promo_activitiesDetails.free") }} {{ rule.bonus }}{{ store.currency.label }}
+          </div>
           <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
             <img :src="require(`../assets/images/promotion/activities/tick.png`)" />
-            Received
+            {{ $t("promo_activitiesDetails.received") }}
           </div>
           <div class="box-subtitle" v-else>
-            Wager x5
+            {{ $t("promo_activitiesDetails.wagerX5") }}
             <br />
-            Deposit {{ rule.deposit }}{{ store.currency.label }}
+            {{ $t("promo_activitiesDetails.deposit") }} {{ rule.deposit }}{{ store.currency.label }}
           </div>
         </div>
       </div>
     </div>
     <div class="activities-notice">
       <div class="notice-img"><img src="../assets/images/promotion/activities/alert-img.png" /></div>
-      <div>Notice : This promotion is not counted towards CASINO and SPORTS wager!</div>
+      <div>{{ $t("promo_activitiesDetails.noticeDesc") }}</div>
     </div>
     <div class="activities-title q-mt-md"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-rules-container">
-      1. Example: On the first day, if you deposit 10,000{{ store.currency.label }}, you will be given 888{{ store.currency.label }} after the turnover is full. No deposit
-      on the second day, but deposit on the third day, it will be recalculated as the first day.
+      {{ $t("promo_activitiesDetails.rules_01") }}
       <br />
-      2. The bonus for the day can only be claimed once, for example: each account can only claim 888{{ store.currency.label }} on the first day.
+      {{ $t("promo_activitiesDetails.rules_02") }}
       <br />
-      3. After the deposit requirement is met, you must play slot machines to start calculating the turnover, and the
-      bonus will be given after the turnover is completed.
+      {{ $t("promo_activitiesDetails.rules_03") }}
       <br />
-      4. After the requirements are met, the system will automatically issue the bonus
+      {{ $t("promo_activitiesDetails.rules_04") }}
+      <br />
     </div>
   </div>
 </template>
@@ -100,7 +99,7 @@ import { useRoute } from "vue-router";
 import { userStore } from "stores/index";
 
 const route = useRoute();
-const store = userStore()
+const store = userStore();
 
 const progressDeposit = ref(0);
 const progressDailyWager = ref(0);
@@ -114,7 +113,7 @@ const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).
 
 const isLoading = ref(false);
 onActivated(() => {
-  const acitivtyApi = "/session/ind/deposit/bonus";
+  const acitivtyApi = "/ind/deposit/bonus";
   rules.value = [];
   eventapi.get(acitivtyApi).then((res) => {
     const resp = res.data;
@@ -179,6 +178,7 @@ onActivated(() => {
 
     .stats-info {
       text-align: center;
+      font-size: 12px;
 
       .info-title {
         margin-bottom: 0.5rem;
@@ -204,16 +204,11 @@ onActivated(() => {
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            font-size: 12px;
+            font-size: 10px;
             color: #ffffff;
-            text-shadow:
-              1px 1px 2px rgba(0, 0, 0, 0.7),
-              -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7),
-              -1px 1px 2px rgba(0, 0, 0, 0.7),
-              1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7),
-              1px -1px 2px rgba(255, 255, 255, 0.7),
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
               -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
@@ -237,7 +232,7 @@ onActivated(() => {
       &.isReceived {
         background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
       }
-      padding: 12px;
+      padding: 12px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -278,7 +273,7 @@ onActivated(() => {
       }
 
       .box-title {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         color: #ffffff;
         text-align: center;

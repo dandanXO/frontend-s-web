@@ -293,6 +293,7 @@ export default {
     estimatedAffiliateCommission: 'Estimated Affiliate Commission',
     estimatedMemberCommission: 'Estimated Member Commission',
     ewallet: 'e-Wallet',
+    eventClickCount: 'Page Clicks',
     finalSum: 'Final Sum',
     finishDate: 'Finish Date',
     firstDepositAmount: 'First Deposit Amount',
@@ -320,6 +321,7 @@ export default {
     monthBeforeLastTotal: 'Month Before Last Total',
     monthlyMemberCommission: 'Monthly Member Commission',
     newMemberCount: 'New Member Count',
+    newMember: 'New Register Member',
     activeMemberCount: 'Active Member Count',
     totalRegisterCount: 'Total Register Count',
     myAccount: 'My Account',
@@ -734,6 +736,7 @@ export default {
     'Daily Summary': 'Daily Summary',
     Withdraw: 'Withdraw',
     'Rebate Report': 'Rebate Report',
+    AffiliateOwnSummary: 'Affiliate Own Summary',
   },
   posterType: {
     OVERALL: 'Overall Referral',

@@ -410,11 +410,12 @@ import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { getSiteImage } from "@/api/site-image";
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const site = ref(null);
 const imageList = reactive({
   dataList: [],
@@ -676,6 +677,7 @@ onMounted(async () => {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
   } else {
     site.value = sites.list[0];
+    imageRequest.siteId = sites.list[0].id;
   }
   request.siteId = site.value.id;
   await loadUefaTeam();
@@ -702,7 +704,7 @@ onMounted(async () => {
   justify-content: flex-end;
 }
 
-.el-form-item--level-color:deep .el-form-item__content {
+.el-form-item--level-color:deep(.el-form-item__content) {
   display: flex !important;
 }
 </style>

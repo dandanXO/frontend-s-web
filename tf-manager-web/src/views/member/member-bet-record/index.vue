@@ -154,6 +154,7 @@
         <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="280" />
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120" />
+        <el-table-column prop="vipName" :label="t('fields.vipLevel')" align="center" min-width="120" />
         <el-table-column prop="gameAccountName" :label="t('fields.gameAccountName')" align="center" min-width="120" />
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">

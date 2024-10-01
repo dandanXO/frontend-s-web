@@ -477,7 +477,12 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview, getTotalWithdrawReview, getExportWithdrawalReviewReport } from '../../../api/report-summary'
+import {
+  getMemberReport,
+  addReview,
+  getTotalWithdrawReview,
+  getExportWithdrawalReviewReport
+} from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -491,6 +496,7 @@ import {
   getShortcuts,
 } from '@/utils/datetime'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
@@ -619,7 +625,7 @@ function submit() {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.sort = sortList.list[0].value
 
   request.vip = vipList.list[0].id
@@ -663,7 +669,7 @@ async function loadMemberRecord() {
 
     const { data: ret1 } = await getTotalWithdrawReview(query)
     page1.records = ret1
-
+    request.doris = false
     page.loading = false
   }
 }
@@ -811,13 +817,12 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   request.sort = sortList.list[0].value
   request.profit = profitList.list[0].value
@@ -957,12 +962,12 @@ async function showDialog(record) {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>
 <style lang="scss">
-.roles-main .el-table__footer-wrapper{
+.roles-main .el-table__footer-wrapper {
   height: 43px;
 }
 </style>

@@ -685,13 +685,14 @@ import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from 'moment'
 import { uploadImage } from '../../../api/image'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const gameForm = ref(null)
-const gameDir = process.env.VUE_APP_IMAGE + '/game/'
+const gameDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/game/'
 const inputImage = ref(null)
 const imageFormRef = ref(null)
 
@@ -885,14 +886,14 @@ const selected = reactive({ gameLabels: [] });
 function resetQuery() {
   request.name = null
   request.platform = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : sites.list[0].id;
   request.gameType = null
   request.code = null;
 }
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : sites.list[0].id
 }
 
 function handleSelectionChange(val) {
@@ -1343,6 +1344,7 @@ onMounted(async () => {
     request.siteId = site.value.id;
   } else {
     request.siteId = sites.list[0].id;
+    imageRequest.siteId = sites.list[0].id;
   }
   form.siteId = request.siteId
   await loadSearchPlatforms()

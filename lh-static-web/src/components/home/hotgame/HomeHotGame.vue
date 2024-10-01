@@ -1,7 +1,7 @@
 <template>
   <div class="hotgame-section">
     <!-- <HomeTitle title="热门游戏" subtitle="TOP GAMES"></HomeTitle> -->
-    <HomeTitleV2 title="热门游戏" subtitle="TOP GAMES"/>
+    <HomeTitleV2 title="热门游戏" subtitle="TOP GAMES" />
     <div class="hotgame-container">
       <div class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
         <div class="hotgame-banner-wrapper">
@@ -1285,6 +1285,12 @@ $transition_timer: 0.5s;
             height: 29rem;
           }
 
+          .character-casino-fblive {
+            position: relative;
+            right: 9.5rem;
+            height: 29rem;
+          }
+
           .character-casino-allbet {
             right: 6rem;
           }
@@ -1416,13 +1422,13 @@ $transition_timer: 0.5s;
       .hotgame-wrapper {
         .hotgame-banner-wrapper {
           .hotgame-banner {
-            background: linear-gradient(180deg, #00273D 0%, #02132C 100%);
-            box-shadow: 0px -1px 3.66px 0px #11131E inset;
+            background: linear-gradient(180deg, #00273d 0%, #02132c 100%);
+            box-shadow: 0px -1px 3.66px 0px #11131e inset;
             color: $font-5-dark;
 
             &.highlight {
               background: $active-color-dark-linear;
-              box-shadow: 0px -2px 4.58px 0px #FFDCBB inset;
+              box-shadow: 0px -2px 4.58px 0px #ffdcbb inset;
               color: $color-white;
             }
 
@@ -1434,31 +1440,31 @@ $transition_timer: 0.5s;
 
         .hotgame-content-wrapper {
           @include content-block-dark;
-          background: linear-gradient(180deg, #1B202D 0%, #00010B 100%);
+          background: linear-gradient(180deg, #1b202d 0%, #00010b 100%);
 
           .left-container {
             .title-wrapper {
               .title,
               .subtitle {
-                background: linear-gradient(180deg, #C2FBFB 0%, #299AAD 100%);
+                background: linear-gradient(180deg, #c2fbfb 0%, #299aad 100%);
                 background-clip: text;
               }
             }
 
             .description {
-                .desc {
-                  color: $font-3-dark;
-                }
+              .desc {
+                color: $font-3-dark;
               }
+            }
 
             .game-provider-wrapper {
               .game-provider {
                 .game-provider-img {
                   background: linear-gradient(180deg, #113765 0%, #212428 100%);
-                  border-color: #36677C;
+                  border-color: #36677c;
                   &.active {
-                    background: linear-gradient(180deg, #38D2DA 0%, #1B7893 100%);
-                    border-color: #52E4ED;
+                    background: linear-gradient(180deg, #38d2da 0%, #1b7893 100%);
+                    border-color: #52e4ed;
                     box-shadow: 0px 3.35px 3.35px 0px #00000040;
                   }
                 }
@@ -1469,7 +1475,7 @@ $transition_timer: 0.5s;
             }
 
             .game-start-btn {
-              background: linear-gradient(180deg, #3BDCE2 0%, #18708E 100%);
+              background: linear-gradient(180deg, #3bdce2 0%, #18708e 100%);
               box-shadow: none;
             }
           }

@@ -1,14 +1,14 @@
 <template>
   <div class="ocean-wrapper">
     <div class="ocean-container">
-      <div class="wave"></div>
+      <div class="wave" />
       <div class="context txt-center">
-        <div class="margin-center square"></div>
+        <div class="margin-center square" />
         <div>Jolly88</div>
         <div>ADVANTAGE</div>
-        <slot></slot>
+        <slot />
         <div class="stats-num">
-          <slot name="number"></slot>
+          <slot name="number" />
         </div>
       </div>
     </div>

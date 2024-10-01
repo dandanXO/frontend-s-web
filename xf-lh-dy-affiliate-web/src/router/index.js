@@ -177,6 +177,15 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/ph1/summary',
+    name: 'Ph1 Summary',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "ph1-daily-summary" */ '../views/ph1/ph1-daily-summary/index.vue'
+      ),
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -238,6 +247,14 @@ export const constantRoutes = [
         name: 'Affiliate Summary',
         meta: {
           title: 'affiliate-summary',
+        },
+      },
+      {
+        path: 'own-summary',
+        component: () => import('../views/affiliate/own-summary/index.vue'),
+        name: 'Affiliate Own Summary',
+        meta: {
+          title: 'affiliate-own-summary',
         },
       },
     ],

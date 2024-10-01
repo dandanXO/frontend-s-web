@@ -10,99 +10,65 @@
 
         <q-card-section>
           <q-form>
-            <!-- <div class="q-my-sm select-wrapper">
-            <div class="input-title">Card Type</div>
-            <q-select
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="currentCardType"
-              label="Select A Card Type"
-              lazy-rules
-              :rules="[(val) => !!val || 'Please Select A Card Type']"
-              label-color="secondary"
-              :options="cardType"
-              @update:model-value="selectBankType(opt)"
-            />
-          </div> -->
-
-          <div class="q-my-sm">
-            <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
-            <q-select
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.bankId"
-              :label="dialogDisplays.selectionPlaceholder"
-              :rules="[(_) => isValidBank()]"
-              label-color="secondary"
-              :options="filteredBankList"
-              option-value="id"
-              option-label="name"
-              lazy-rules
-              emit-value
-              map-options
-              use-input
-              input-debounce="100"
-              fill-input
-              hide-selected
-              @filter="filterBank"
-              behavior="menu"
-            />
-          </div>
+            <div class="q-my-sm" v-if="currentCardType === 'Bank' || currentCardType === 'EWallet'">
+              <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
+              <q-select
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.bankId"
+                :label="dialogDisplays.selectionPlaceholder"
+                :rules="[(_) => isValidBank()]"
+                label-color="secondary"
+                :options="currBankList"
+                option-value="id"
+                option-label="name"
+                emit-value
+                map-options
+                @update:model-value="updateBankType"
+              />
+            </div>
 
             <div class="q-my-sm">
-              <div class="input-title">Holder Name</div>
+              <div class="input-title">{{ $t("form.holderName") }}</div>
               <q-input
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardAccount"
-                label="Enter Holder Name"
-                lazy-rules
+                :label="$t('form.holderName_placeholder')"
                 :rules="[(_) => isValidCardAccount()]"
                 label-color="secondary"
+                disable
               />
             </div>
 
             <div class="q-my-sm">
-              <div class="input-title">Account Number</div>
+              <div class="input-title">{{ accountTypeStr }}</div>
               <q-input
-                type="number"
+                :type="
+                  currentCardType === 'Bank' || (selectedBankMethod && selectedBankMethod.code === 'GCASH')
+                    ? 'number'
+                    : 'text'
+                "
                 standout
+                ref="refBankCardNum"
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardNumber"
-                label="Enter Account Number"
-                lazy-rules
+                :label="$t('form.accountNumber_placeholder')"
                 :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
               />
             </div>
-
-            <!-- <div class="q-my-sm">
-              <div class="input-title">IFSC Code</div>
-              <q-input
-                standout
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardAddress"
-                label="Enter Bank IFSC Code"
-                lazy-rules
-                :rules="[(_) => isValidCardAddress()]"
-                label-color="secondary"
-              />
-            </div> -->
           </q-form>
         </q-card-section>
 
         <ConfirmButton
-          label="Confirm"
+          :label="$t('btn.confirm')"
           :confirmFunc="addCard"
           :isDisabled="
             !(
@@ -117,12 +83,14 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
-import { userStore } from "stores/index";
-import ConfirmButton from "../../atoms/ConfirmButton.vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+
+import { t } from "@/boot/lang";
+import ConfirmButton from "@/atoms/ConfirmButton.vue";
+import { api } from "@/boot/axios";
+import { userStore } from "@/stores/index";
 
 const props = defineProps(["loadCards"]);
 
@@ -135,10 +103,11 @@ const refBankCardModal = ref();
 // add card dialog
 const cardType = ["Bank" /*, "Crypto", "EWallet"*/];
 const currentCardType = ref("Bank");
+const accountTypeStr = ref("");
+const refBankCardNum = ref();
 
 // display
 const currBankList = ref([]);
-const filteredBankList = ref([])
 
 // cache
 const bankList = [];
@@ -157,8 +126,19 @@ const closeModal = () => {
   refBankCardModal.value.hide();
 };
 
+const selectedBankMethod = ref();
+const updateBankType = (val) => {
+  selectedBankMethod.value = currBankList.value.find((item) => item.id === val);
+  console.log(selectedBankMethod.value);
+  refBankCardNum.value.validate();
+};
+
 const isAddCardDialogOpen = ref(false);
-const onAddCardClick = () => {
+const onAddCardClick = (type) => {
+  // debugger;
+  currentCardType.value = type;
+  selectBankStr();
+
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
       $q.notify({
@@ -172,7 +152,11 @@ const onAddCardClick = () => {
       isAddCardDialogOpen.value = true;
 
       // NOTE: fire once
-      if (bankList.length === 0 && cryptoList.length === 0 && ewalletList.length === 0) {
+      if (
+        (currentCardType.value === "Bank" && bankList.length === 0) ||
+        (currentCardType.value === "Crypto" && cryptoList.length === 0) ||
+        (currentCardType.value === "EWallet" && ewalletList.length === 0)
+      ) {
         api
           .get("/session/withdraw/card")
           .then((res) => {
@@ -185,6 +169,8 @@ const onAddCardClick = () => {
               });
               selectBankType();
               bankCardField.bankId = currBankList.value[0].id;
+              selectedBankMethod.value = currBankList.value[0];
+              console.log(selectedBankMethod.value);
             }
           })
           .catch((e) => {
@@ -192,6 +178,7 @@ const onAddCardClick = () => {
           });
       } else {
         clearField();
+        selectBankType();
         bankCardField.bankId = currBankList.value[0].id;
       }
     }
@@ -199,10 +186,10 @@ const onAddCardClick = () => {
 };
 
 const dialogDisplays = reactive({
-  title: "Add Bank Account",
-  selectionTitle: "Bank",
-  selectionPlaceholder: "Select A Bank",
-  selectionError: "Please Select A Bank"
+  title: t("form.bank_title"),
+  selectionTitle: t("form.bank_selectionTitle"),
+  selectionPlaceholder: t("form.bank_select"),
+  selectionError: t("form.bank_selectError")
 });
 const selectBankType = () => {
   currBankList.value = [];
@@ -210,25 +197,32 @@ const selectBankType = () => {
 
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;
-    filteredBankList.value = currBankList.value
-    dialogDisplays.title = "Add Bank Account";
-    dialogDisplays.selectionTitle = "Bank";
-    dialogDisplays.selectionPlaceholder = "Select A Bank";
-    dialogDisplays.selectionError = "Please Select A Bank";
   } else if (currentCardType.value === "Crypto") {
     currBankList.value = cryptoList;
-    filteredBankList.value = currBankList.value
-    dialogDisplays.title = "Add Crypto Wallet";
-    dialogDisplays.selectionTitle = "Crypto";
-    dialogDisplays.selectionPlaceholder = "Select Crypto";
-    dialogDisplays.selectionError = "Please Select A Crypto";
   } else if (currentCardType.value === "EWallet") {
     currBankList.value = ewalletList;
-    filteredBankList.value = currBankList.value
-    dialogDisplays.title = "Add A Virtual Currency";
-    dialogDisplays.selectionTitle = "eWallet";
-    dialogDisplays.selectionPlaceholder = "Select eWallet";
-    dialogDisplays.selectionError = "Please Select A eWallet";
+  }
+};
+
+const selectBankStr = () => {
+  if (currentCardType.value === "Bank") {
+    dialogDisplays.title = t("form.bank_title");
+    dialogDisplays.selectionTitle = t("form.bank_selectionTitle");
+    dialogDisplays.selectionPlaceholder = t("form.bank_select");
+    dialogDisplays.selectionError = t("form.bank_selectError");
+    accountTypeStr.value = t("form.bank_type");
+  } else if (currentCardType.value === "Crypto") {
+    dialogDisplays.title = t("form.crypto_title");
+    dialogDisplays.selectionTitle = t("form.crypto_selectionTitle");
+    dialogDisplays.selectionPlaceholder = t("form.crypto_select");
+    dialogDisplays.selectionError = t("form.crypto_selectError");
+    accountTypeStr.value = t("form.crypto_type");
+  } else if (currentCardType.value === "EWallet") {
+    dialogDisplays.title = t("form.ewallet_title");
+    dialogDisplays.selectionTitle = t("form.ewallet_selectionTitle");
+    dialogDisplays.selectionPlaceholder = t("form.ewallet_select");
+    dialogDisplays.selectionError = t("form.ewallet_selectError");
+    accountTypeStr.value = t("form.ewallet_type");
   }
 };
 
@@ -251,37 +245,22 @@ const isDisableBtn = ref(false);
 
 const isValidCardAccount = () => {
   const { cardAccount } = bankCardField;
-
   const result = !cardAccount
-    ? "Please Enter Holder Name"
+    ? t("form.holderName_rules_01")
     : cardAccount.length < 2
-    ? "Please Insert 2 or More Characters"
+    ? t("form.holderName_rules_02")
     : true;
-
   return result;
 };
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-
-  const result = !cardNumber ? "Please Enter Account Number": cardNumber.length < 10
-  ? "Account Number Must Be More Than Or 10 Characters" : true;
-  return result;
-};
-
-const isValidCardAddress = () => {
-  const { cardAddress } = bankCardField;
-  const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+  const result = !cardNumber ? t("form.accountNumber_rules_01") : true;
   return result;
 };
 
 const addCard = () => {
   isDisableBtn.value = true;
-
   api
     .post("/session/bankCard", qs.stringify(bankCardField))
     .then((response) => {
@@ -290,7 +269,7 @@ const addCard = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Add Succeed",
+          message: t("notify.addSucceed"),
           icon: "check_circle_outline"
         });
         props.loadCards();
@@ -302,25 +281,6 @@ const addCard = () => {
       isDisableBtn.value = false;
     });
 };
-
-const filterBank = (val, update) => {
-  if(currentCardType.value !== 'Bank') return
-
-  if(!val) {
-    update(() => {
-      filteredBankList.value = currBankList.value
-    })
-    return
-  }
-  update(() => {
-    const result = currBankList.value.filter(bank => {
-      const bankName = bank.name.toLowerCase()
-      const lowerCaseVal = val.toLowerCase()
-      return bankName.includes(lowerCaseVal)
-    })
-    filteredBankList.value = result
-  })
-}
 
 defineExpose({
   onAddCardClick
@@ -388,8 +348,4 @@ defineExpose({
     overflow: hidden;
   }
 }
-
-//.q-select__dialog{
-//  max-height: 200px !important;
-//}
 </style>

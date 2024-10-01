@@ -12,8 +12,8 @@
   <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
 </head>
 
-<body>
-  <div class="main-wrapper" id="lh-landing-v4">
+<body id="lh-landing-v4">
+  <div class="main-wrapper">
     <div class="full-container">
       <div class="top-wrapper">
         <div class="top-logo">
@@ -73,7 +73,7 @@
       <img src="imgs/subtitle-contact.png" />
     </div>
 
-    <div class="contact-btns-wrapper">
+    <!-- <div class="contact-btns-wrapper">
       <div class="contact-btns-container">
 
         <div class="contact-btn w-50 qq-bg">
@@ -84,19 +84,33 @@
           <span class="title">游溪群QQ群</span>
           <span>948669296</span>
         </div>
-        <div class="contact-btn w-100"><a href="https://vo56.cc" target="_blank"><img
+        <div class="contact-btn w-100"><a href="https://am67.cc" target="_blank"><img
+              src="imgs/contact-btn-03.png" /></a></div>
+      </div>
+    </div> -->
+
+    <div class="contact-btns-wrapper">
+      <div class="contact-btns-container">
+        <div class="contact-btn w-50 qq-bg">
+          <span class="title" id="group1-title"></span>
+          <span id="group1-number"></span>
+        </div>
+        <div class="contact-btn w-50 qq-bg">
+          <span class="title" id="group2-title"></span>
+          <span id="group2-number"></span>
+        </div>
+        <div class="contact-btn w-100"><a id="landing-page-link" href="#" target="_blank"><img
               src="imgs/contact-btn-03.png" /></a></div>
         <div class="contact-btn w-50 voxis-bg">
           <span class="title">专员ID</span>
-          <span>vip881</span>
+          <span id="agent1-id"></span>
         </div>
         <div class="contact-btn w-50 voxis-bg">
           <span class="title">专员ID</span>
-          <span>vip662</span>
+          <span id="agent2-id"></span>
         </div>
       </div>
     </div>
-
     <div class="main-sticky-btn" id="scrolldown-tbn">点击查看联系方式</div>
   </div>
 
@@ -205,6 +219,8 @@
       tf88Url = "https://www.lh83675.com"
     } else if (host.indexOf("06510.cc") > -1) {
       tf88Url = "https://www.lh99939.com"
+    } else if (host.indexOf("02574.co") > -1 || host.indexOf("36100.co") > -1 || host.indexOf("02494.co") > -1 || host.indexOf("25213.co") > -1) {
+      tf88Url = "https://www.lh86699.com/agent/7AE545"
     }
 
     console.log(tf88Url)
@@ -216,11 +232,87 @@
       elements[i].href = tf88Url + "";
     }
   </script>
+  <script>
+    function updateContactInfoByHostname() {
+      const hostname = window.location.hostname;
+
+      const contactInfo = {
+        'www.02574.co': {
+          group1Title: "LH浮力群",
+          group1Number: "887824420",
+          group2Title: "LH娱乐城",
+          group2Number: "854663762",
+          landingPageLink: "https://am67.cc",
+          agent1ID: "nana888",
+          agent2ID: "nana988"
+        },
+        'www.36100.co': {
+          group1Title: "LH符力群",
+          group1Number: "982694108",
+          group2Title: "雷火洪礼群",
+          group2Number: "982717327",
+          landingPageLink: "https://am67.cc",
+          agent1ID: "harry1314",
+          agent2ID: "lh138158"
+        },
+        'www.02494.co': {
+          group1Title: "LH大红群",
+          group1Number: "887853472",
+          group2Title: "雷火红火群",
+          group2Number: "982731960",
+          landingPageLink: "https://am67.cc",
+          agent1ID: "susu08",
+          agent2ID: "susu09"
+        },
+        'www.25213.co': {
+          group1Title: "红利群",
+          group1Number: "812758319",
+          group2Title: "大红大紫",
+          group2Number: "982717230",
+          landingPageLink: "https://am67.cc",
+          agent1ID: "006225",
+          agent2ID: "lh1668"
+        }
+      };
+
+      // Default content if no hostname matches
+      const defaultInfo = {
+        group1Title: "好运连连QQ群",
+        group1Number: "941446940",
+        group2Title: "游溪群QQ群",
+        group2Number: "948669296",
+        landingPageLink: "https://am67.cc",  // You can set a default link or leave it empty
+        agent1ID: "vip881",
+        agent2ID: "vip858"
+      };
+
+      const selectedInfo = contactInfo[hostname] || defaultInfo;
+
+      document.getElementById("group1-title").textContent = selectedInfo.group1Title;
+      document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+      document.getElementById("group2-title").textContent = selectedInfo.group2Title;
+      document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+      document.getElementById("landing-page-link").href = selectedInfo.landingPageLink;
+      document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
+      document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
+    }
+
+    // Call the function to update content based on the current hostname
+    updateContactInfoByHostname();
+  </script>
   <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
   <script>
     var hostname = window.location.hostname;
     console.log(hostname);
-    if (hostname.indexOf("96730.biz") > -1) {
+    if (hostname.indexOf("02574.co") > -1) {
+      LA.init({ id: "KZXiMAA3IWdDafIl", ck: "KZXiMAA3IWdDafIl" })
+    } else if (hostname.indexOf("36100.co") > -1) {
+      LA.init({ id: "KZXigTkVtmpsNaT0", ck: "KZXigTkVtmpsNaT0" })
+    } else if (hostname.indexOf("02494.co") > -1) {
+      LA.init({ id: "KZXiomlyUj9gkh1H", ck: "KZXiomlyUj9gkh1H" })
+    } else if (hostname.indexOf("25213.co") > -1) {
+      LA.init({ id: "KZXixDEJ9l9V5SI7", ck: "KZXixDEJ9l9V5SI7" })
+    } else if (hostname.indexOf("96730.biz") > -1) {
       LA.init({ id: "KTQx8ks32tLjR6yY", ck: "KTQx8ks32tLjR6yY" })
     } else if (hostname.indexOf("86915.biz") > -1) {
       LA.init({ id: "KTQxYiB9R4hxFTQo", ck: "KTQxYiB9R4hxFTQo" })

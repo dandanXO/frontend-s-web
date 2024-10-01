@@ -72,7 +72,7 @@
       :disable="!(isValidName() === true && isValidPhone() === true)"
       @click="submitKYCNewGuest"
     >
-      Submit
+      {{ $t("btn.submit") }}
     </q-btn>
   </div>
 </template>

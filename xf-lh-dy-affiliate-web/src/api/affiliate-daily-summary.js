@@ -27,3 +27,21 @@ export const queryDailySummaryTotal = form => {
     ContentType.form
   )
 }
+
+export const queryPh1DailySummary = form => {
+  return https().request(
+    '/ph-affiliate-daily-summary/list',
+    Method.GET,
+    form,
+    ContentType.form
+  )
+}
+
+export const queryPh1NewRegister = form => {
+  return https().request(
+    '/ph-affiliate-daily-summary/newRegister/list',
+    Method.GET,
+    form,
+    ContentType.form
+  )
+}

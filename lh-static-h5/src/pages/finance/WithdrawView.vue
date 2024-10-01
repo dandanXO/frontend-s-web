@@ -1,6 +1,14 @@
 <template>
   <q-page>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
+      <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
+        <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
+        <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+          <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+          <span>升级快速提款</span>
+        </q-btn>
+      </div>
+
       <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="withdraw" redirect="finance/withdraw" style="padding:5px 0px 5px 0px;" />
       <div class="account-content last">
         <div class="payment-method-section">
@@ -123,6 +131,10 @@
             style="border-bottom: 1px solid #434343;color: #98a7b5;"
             v-show="selectedWithdrawalMethod"
           >
+              <div v-if="isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
+                <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+                <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+              </div>
             <div style="display: flex; justify-content: space-between; align-items: center;color: #98a7b5;gap:10px;" v-if="(selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin) || (selectedWithdrawalMethod.withdrawMaxAmount)">
               <div v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
                 <span>{{
@@ -209,7 +221,6 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -223,6 +234,9 @@
                 :label="tutorialLabel()"
               />
             </div>
+          </div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
           </div>
           <!-- <a-form-item
             class="select"
@@ -565,6 +579,31 @@ export default defineComponent({
       if(!selectedWithdrawalMethod.value.url) return
       window.open(selectedWithdrawalMethod.value.url);
     };
+
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: "升级中。。。"
+      });
+      api.get("/session/updateAutoWithdraw").then(async (res) => {
+        if(res.code === 0) {
+          notify({
+            type: "success",
+            message: "成功升级为快速提款!"
+          });
+
+          await store.getMemberInfo()
+        } else {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
+      }).finally(() => $q.loading.hide())
+    }
+
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -596,7 +635,9 @@ export default defineComponent({
       isNewUser,
       checkNewUser,
       isValidUSDTAmt,
-      withdrawLoading
+      withdrawLoading,
+      isAutoWithdrawal,
+      handleUpgradeClick,
     };
   }
 });
@@ -735,6 +776,30 @@ export default defineComponent({
   color: $warning;
 }
 
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 1rem;
+  .upgrade-btn {
+    padding: 1px 12px;
+    img {
+      height: 30px;
+    }
+  }
+}
+
+.upgraded-helper-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  color: #00a478;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
 .quick-withdraw-btn {
   width: 100%;
 }
@@ -766,7 +831,7 @@ export default defineComponent({
             margin: 5px 0;
             border-radius: 10px;
           }
-          
+
           .section-title-text {
             font-size: 18px;
           }
@@ -792,7 +857,7 @@ export default defineComponent({
           width: 54px;
           height: 54px;
           border: none;
-          
+
           img {
             padding: 5px;
           }

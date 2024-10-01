@@ -5,6 +5,7 @@ import { userStore } from "@/store";
 // import i18n from "../i18n/index";
 import { ResponseCode, SkipErrorCode } from "@/api/response";
 import { uiStore } from "@/store/ui";
+import { useRouter } from "vue-router";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
@@ -32,7 +33,28 @@ const globalLinks = [
   "lh887.",
   "lh970.",
   "lh971.",
-  "lh988."
+  "lh988.",
+  "033lh.vip",
+  "lh997.cc",
+  "lh135.cc",
+  "lh207.cc",
+  "lh794.cc",
+  "lh595.cc",
+  "lh381.cc",
+  "lh313.cc",
+  "lh693.cc",
+  "lh526.cc",
+  "lh643.cc",
+  "lh311.cc",
+  "lh130.cc",
+  "lh582.cc",
+  "lh982.cc",
+  "lh820.cc",
+  "lh715.cc",
+  "lh571.cc",
+  "lh504.cc",
+  "lh435.cc",
+  "lh575.cc"
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
@@ -136,9 +158,9 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 function replaceRndDomain(urlLsName) {
-  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
-  const domainPrefix = getApiDomainPrefix(urlLsName);
-  return `${domainPrefix}${rndSecondLevelDomain}`;
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(10);
+  // const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${rndSecondLevelDomain}`;
 }
 
 function generateRndSecondLevelDomain(unit) {
@@ -151,19 +173,19 @@ function generateRndSecondLevelDomain(unit) {
   return result;
 }
 
-function getApiDomainPrefix(urlLsName) {
-  if (urlLsName.indexOf("RST") > -1) {
-    return "ap";
-  } else if (urlLsName.indexOf("CR") > -1) {
-    return "ca";
-  } else if (urlLsName.indexOf("EVT") > -1) {
-    return "pr";
-  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
-    return "fi";
-  } else {
-    return "";
-  }
-}
+// function getApiDomainPrefix(urlLsName) {
+//   if (urlLsName.indexOf("RST") > -1) {
+//     return "ap";
+//   } else if (urlLsName.indexOf("CR") > -1) {
+//     return "ca";
+//   } else if (urlLsName.indexOf("EVT") > -1) {
+//     return "pr";
+//   } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+//     return "fi";
+//   } else {
+//     return "";
+//   }
+// }
 
 const onRequest = (config) => {
   const store = userStore();
@@ -222,14 +244,25 @@ const onResponse = (response) => {
         location.reload();
       }
       if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+        sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
         store.token = null;
-        location.reload();
+        window.location.href = "/home";
+        return;
       }
-      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code === ResponseCode.ERROR_PROMO_NOT_STARTED) {
+      if (
+        res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+        res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+        res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+        res.code === ResponseCode.ERROR_PROMO_CLAIMED
+      ) {
         ui.notify({
           type: "error",
           message: res.message
         });
+      }
+      if (res.code === ResponseCode.ERROR_EMPTY_ADS) {
+        console.log(res);
+        return res;
       }
       // if (res.code === 36001 || 36002 || 36003 || 36004 || 36005 || 36006 || 36007 || 36008 || 36009) {
       //   // 龙卡

@@ -88,6 +88,13 @@
             $ <span v-formatter="{data: scope.row.rolloverAmount, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column :label="t('fields.description')" align="center" min-width="150">
+          <template #default="scope">
+            <span v-for="(item, index) in scope.row.progress" :key="index" :style="{color: getProgressColor(item)}">
+              {{ item.type }}: {{ item.progress }} / {{ item.total }}  <br>
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="totalBetAmount"
           :label="t('fields.totalBetAmount')"
@@ -143,6 +150,12 @@
             <span v-else v-formatter="{data: scope.row.updateTime, type: 'date'}">{{ scope.row.updateTime }}</span>
           </template>
         </el-table-column>
+        <el-table-column
+          prop="updateBy"
+          :label="t('fields.updateBy')"
+          align="center"
+          min-width="180"
+        />
         <el-table-column
           prop="remark"
           :label="t('fields.remark')"
@@ -325,6 +338,13 @@ async function loadRolloverRecords() {
   page.loading = false
 }
 
+function getProgressColor(progress) {
+  if (progress.progress / progress.total === 1) {
+    return 'green'
+  }
+  return 'blue'
+}
+
 function changePage(page) {
   if (request.current >= 1) {
     request.current = page
@@ -394,6 +414,12 @@ onMounted(() => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+::v-deep .el-table{
+  .cell {
+    white-space: pre-line !important;
+  }
+}
+
 .header-container {
   margin-bottom: 10px;
 }

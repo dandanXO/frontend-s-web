@@ -15,28 +15,27 @@ import { onMounted } from "vue";
 import { useQuasar, Platform } from "quasar";
 const $q = useQuasar();
 import { api } from "boot/axios";
-// import { launchSessionGame } from "@/api/platform/platform";
+// import { launchSessionGame } from "src/api/platform/platform";
 
 onMounted(() => {
   $q.loading.show({ message: "Loading Page" });
   const params = localStorage.getItem("sportsSession");
   var sport = params ? JSON.parse(params) : "";
-  
+
   const isMobile = Platform.is.mobile;
   if (isMobile) {
-    var way = null
+    var way = null;
     if (Platform.is.android) {
-      way = "ANDROID"
+      way = "ANDROID";
     } else if (Platform.is.ios) {
-      way="IOS"
+      way = "IOS";
     }
   }
   api
     .get(`/session/launch?_time=${new Date().getTime()}`, {
-      params: { platform: sport.name, isMobile: sport.isMobile, way: way }
+      params: { platform: sport.name, isMobile: sport.isMobile, way: way },
     })
-    .then((ret) => {
-      const res = ret.data;
+    .then((res) => {
       if (res.code === 0) {
         location.href = res.data;
       } else {
@@ -60,9 +59,9 @@ onMounted(() => {
   //       // pDepo(data);
   //     }
   //   })
-    // .catch((error) => {
-    //   window.opener.postMessage({ pmsg: error.message }, "*");
-    //   window.close();
-    // });
+  // .catch((error) => {
+  //   window.opener.postMessage({ pmsg: error.message }, "*");
+  //   window.close();
+  // });
 });
 </script>

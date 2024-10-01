@@ -248,26 +248,127 @@ dense
         <div class="text-center q-mt-md q-pb-xs">
           {{ $t("lang.registration_hints") }}
           <!--          <router-link to="/login" style="white-space: nowrap">-->
-          <a href="/about?id=info" style="white-space: nowrap">
+          <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed;">
             {{ $t("lang.user_registration_protocol") }}
-          </a>
+          </span>
 
           <!--          </router-link>-->
         </div>
+      <div class="text-center q-mt-md q-pb-sm">
+        {{ $t("lang.already_have_acc") }}
+        <router-link to="/login">
+          {{ $t("lang.login_here") }}
+        </router-link>
+      </div>
       </div>
     </q-form>
 
-    <div class="text-center q-mt-md q-pb-lg">
-      {{ $t("lang.already_have_acc") }}
-      <router-link to="/login">
-        {{ $t("lang.login_here") }}
-      </router-link>
-    </div>
 
-    <!-- <div class="login-bottom-div"> -->
-    <!-- <img src="../assets/images/login/register-banner.png" /> -->
-    <!-- </div> -->
+    <div class="login-bottom-div" @click="openDialog('hundred')">
+      <img src="../assets/images/login/register-banner.jpg" />
+    </div>
   </div>
+  <q-dialog v-model="showHundredDialog" width="100%" show-close>
+    
+    <q-card width="100%" class="q-pa-md">
+      <q-card-section class="row items-end justify-end q-pb-none">
+        <div class="text-h6"></div>
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <div>
+  <p style="
+    width: 85%;
+    margin-top: -25px;"><b style="font-size: 14px; color: #0071ed;">THƯỞNG CHÀO MỪNG 100% LÊN ĐẾN 2,000 VNDP</b>
+    
+  </p>
+  Thành Viên có thể tham gia khuyến mãi này tại trang nạp tiền, sau khi nhập <strong>"Số tiền nạp"</strong> ấn chọn khuyến mãi <strong>100% Chào Mừng</strong>, sau đó nhấn <strong>"Xác nhận"</strong>.
+
+
+  <table style="font-size: 13px; margin: 10px auto; min-width: 80%; text-align: center; border-collapse: collapse;">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="background: #e7f3ff; padding: 10px; border-top-left-radius: 20px;">Sản Phẩm</th>
+        <th style="background: #e7f3ff; padding: 10px;">Nạp tối thiểu</th>
+        <th style="background: #e7f3ff; padding: 10px;">Thưởng</th>
+        <th style="background: #e7f3ff; padding: 10px;">Thưởng tối đa</th>
+        <th style="background: #e7f3ff; padding: 10px; border-top-right-radius: 20px;">Vòng cược</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">Thể thao</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">200 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">100%</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">2,000 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">15</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">E-sports, Live Casino, Nổ hũ, Poker, Hashgame</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">200 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">100%</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">2,000 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">25</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Để biết thêm chi tiết về khuyến mãi vui lòng liên hệ Chăm Sóc Khách Hàng trực tuyến 24/7 để được hỗ trợ
+  </p>
+</div> </q-card>
+  </q-dialog>
+  
+  <q-dialog v-model="showBetRulesDialog" width="100%" show-close>
+    <q-card width="100%" class="q-pa-md">
+      <q-card-section class="row items-end justify-end q-pb-none">
+        <div class="text-h6"></div>
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+    
+    <p style="width: 85%; margin-top: -25px;"><b style="font-size: 16px; color: #0071ed;">{{ $t("lang.about.bettingRules") }}</b></p>
+    <ul>
+        <li>{{ $t("lang.about.familyRestriction") }}</li>
+        <li>{{ $t("lang.about.entertainmentPurpose2") }}</li>
+        <li>{{ $t("lang.about.modifyPromotion") }}</li>
+        <li>{{ $t("lang.about.singleDeposit") }}</li>
+        <li>
+          {{ $t("lang.about.refundBasedOnBetTurnover") }}
+          <ul class="sub-ul">
+            <li>{{ $t("lang.about.refundOptions.loseAll") }}</li>
+            <li>{{ $t("lang.about.refundOptions.loseLessThanStake") }}</li>
+            <li>{{ $t("lang.about.refundOptions.winGreaterThanOrEqualTo75") }}</li>
+            <li>{{ $t("lang.about.refundOptions.winLessThan75") }}</li>
+          </ul>
+        </li>
+        <li>{{ $t("lang.about.requiredRounds") }}</li>
+        <li>
+          {{ $t("lang.about.abuseDiscretion") }}
+          <ul class="sub-ul">
+            <li>{{ $t("lang.about.abuseExamples.excludedGames") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.multipleAccounts") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.crossAccountBets") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.oddsDifference") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.doubleBetAmount") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.betOnBothSides") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.doubleBet") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.allin") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.affiliateAbuse") }}</li>
+          </ul>
+        </li>
+        <li>{{ $t("lang.about.excludedBets") }}</li>
+        <li>{{ $t("lang.about.transactionRecordsCheck") }}</li>
+        <li>{{ $t("lang.about.falsifiedContentDisqualification") }}</li>
+        <li>{{ $t("lang.about.amendTermsAndConditions") }}</li>
+        <li>{{ $t("lang.about.withdrawalVerification") }}</li>
+      </ul>
+    </q-card>
+  </q-dialog>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
     <q-card width="100%">
@@ -317,6 +418,15 @@ export default defineComponent({
     onActivated(() => {
       getCode();
     });
+    const showHundredDialog = ref(false);
+    const showBetRulesDialog = ref(false);
+    const openDialog = (currentDialog) => {
+      if (currentDialog === 'hundred') {
+        showHundredDialog.value = true
+      } else {
+        showBetRulesDialog.value = true
+      } 
+    }
     const { t } = useI18n();
     const store = userStore();
     const verificationImg = ref("");
@@ -361,7 +471,6 @@ export default defineComponent({
           console.log(e);
         });
     };
-
     const getInnerCode = () => {
       api
         .get("/member/verificationEasyCode")
@@ -672,7 +781,10 @@ export default defineComponent({
       hasAffiliate,
       trackRegisterSuccessEvent,
       trackRegisterFailedEvent,
-      ui
+      ui,
+      openDialog,
+      showHundredDialog,
+      showBetRulesDialog
     };
   }
 });
@@ -746,7 +858,7 @@ function charType(num) {
   background: url(../assets/images/login/reg-bg.png) no-repeat center center;
   background-size: cover;
   height: 100%;
-  padding: 12px 0px 0px;
+  padding: 12px 0px;
 
   .login-form-container {
     width: $box-width;
@@ -791,11 +903,13 @@ function charType(num) {
 }
 
 .login-bottom-div {
-  width: 100%;
-  margin-top: 10px;
-
+  // width: 100%;
+    margin: 15px 15px 5px;
+  overflow: hidden;
+  border-radius: 10px;
   img {
     width: 100%;
+    margin: -20px 0;
   }
 }
 </style>

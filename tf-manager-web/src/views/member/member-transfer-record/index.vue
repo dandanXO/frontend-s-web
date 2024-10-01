@@ -280,7 +280,7 @@ function resetQuery() {
   request.platformCode = null;
   request.type = null;
   request.times = [defaultStartDate, defaultEndDate];
-  request.siteId = null;
+  request.siteId = siteList.list[0].id;
   loadPlatformNames()
 }
 
@@ -369,6 +369,7 @@ function submit() {
 
 onMounted(async() => {
   await loadSites();
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

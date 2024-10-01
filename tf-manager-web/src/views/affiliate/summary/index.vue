@@ -86,6 +86,7 @@
         row-key="affiliateId"
         :load="loadChildren"
         lazy
+        :fit="false"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
@@ -95,7 +96,7 @@
           prop="loginName"
           :label="t('fields.loginName')"
           align="left"
-          width="160"
+          width="120"
         >
           <template
             #default="scope"
@@ -114,7 +115,7 @@
           prop="depositAmount"
           :label="t('fields.depositAmount')"
           align="center"
-          width="120"
+          width="115"
         >
           <template #default="scope">
             $
@@ -227,6 +228,12 @@
           align="center"
           min-width="50"
         />
+        <el-table-column prop="ftdAmount" :label="t('fields.ftdAmount')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="newMemberCount"
           :label="t('fields.newMemberCount')"
@@ -923,16 +930,16 @@ function showDialog(type, affiliateId) {
     uiControl.dialogTitle = t('fields.newMember')
     memberPage.affiliateId = affiliateId
     memberRequest.current = 1
+    popUpRequest.regTime = request.recordTime;
     loadNewMember(affiliateId)
-    popUpRequest.regTime = request.recordTime
   } else if (type === 'ALLMEMBER') {
     currentPageType.value = 'allMembers'
     uiControl.dialogTitle = t('fields.allmembers')
     allMemberPage.affiliateId = affiliateId
     allMemberRequest.current = 1
+    popUpRequest.regTime = null
     loadAllMember(affiliateId)
     // popUpRequest.recordTime = request.recordTime
-    popUpRequest.regTime = null
   }
   currentAffiliateId.value = affiliateId
   uiControl.dialogType = type
@@ -961,6 +968,29 @@ async function loadNewMember(affiliateId) {
       query.regTime = query.regTime.join(',')
     } else {
       query.regTime = moment(popUpRequest.regTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
+
+  if (popUpRequest.recordTime === null) {
+    popUpRequest.recordTime = request.recordTime
+  }
+
+  if (popUpRequest.recordTime !== null) {
+    if (popUpRequest.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
+
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
+      )
+
+      query.recordTime = query.recordTime.join(',')
+    } else {
+      query.recordTime = moment(popUpRequest.recordTime[0]).format(
         'YYYY-MM-DD 00:00:00'
       )
     }

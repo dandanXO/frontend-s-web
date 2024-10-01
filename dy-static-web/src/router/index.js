@@ -9,7 +9,7 @@ import { ElMessageBox } from "element-plus";
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "homeRoot",
     component: LayoutView,
     redirect: "home",
     children: [
@@ -119,7 +119,24 @@ const routes = [
         path: "/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
-      }
+      },
+      {
+        path: "/finance/:path",
+        redirect: (to) => `/center/${to.params.path}`
+      },
+      {
+        path: "/account/:path",
+        redirect: (to) => {
+          const path = to.params.path;
+          if (path === "vip") return "/vip";
+          if (h5RoutingMap[path]) return `/center/${h5RoutingMap[path]}`;
+          return "/";
+        }
+      },
+      {
+        path: "/promo",
+        redirect: "/promotion"
+      },
       // {
       //   path: "/test",
       //   name: "test",
@@ -138,6 +155,15 @@ const routes = [
     component: () => {}
   }
 ];
+
+const h5RoutingMap = {
+  transfer: "transfer",
+  personal: "personal",
+  records: "transit-record",
+  inbox: "mailbox",
+  invite: "share",
+  withdraw: "withdrawbank"
+};
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

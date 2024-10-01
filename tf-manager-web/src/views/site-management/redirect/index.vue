@@ -359,14 +359,15 @@ import { getActivePromoPageList } from "@/api/promoPages"
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteImage } from "@/api/site-image";
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const formRef = ref(null);
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
-const gameDir = process.env.VUE_APP_IMAGE + '/game/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
+const gameDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/game/'
 const selectedId = ref(null);
 const platforms = reactive({
   list: []
@@ -627,7 +628,7 @@ onMounted(async () => {
   justify-content: flex-end;
 }
 
-.el-form-item--level-color:deep .el-form-item__content {
+.el-form-item--level-color:deep(.el-form-item__content) {
   display: flex !important;
 }
 

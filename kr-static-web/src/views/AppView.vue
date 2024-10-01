@@ -9,12 +9,12 @@
       <div class="intro-container">
         <img
           :src="require(`../assets/app/toplabel-${languageVal}.png`)"
-          alt="CITY8GamingApp"
+          alt="DIAMONDGamingApp"
           width="570px"
           class="img-slogan"
           data-v-93674b8c=""
         />
-        <img src="../assets/app/light.png" alt="CITY8GamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
+        <img src="../assets/app/light.png" alt="DIAMONDGamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
         <div class="text-content">
           {{ $t("app.sports") }}
           <br />

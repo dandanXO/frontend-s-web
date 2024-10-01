@@ -341,7 +341,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.sort = sortList.list[0].value
   request.financialLevel = financialLevelList.list[0].id
   request.min = ''
@@ -417,13 +417,12 @@ function changePage(page) {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   request.sort = sortList.list[0].value
   loadFinancialLevelList()
@@ -461,7 +460,7 @@ async function loadDetail() {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>

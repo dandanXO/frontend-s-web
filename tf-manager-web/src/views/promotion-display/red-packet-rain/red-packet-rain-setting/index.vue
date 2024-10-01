@@ -697,6 +697,7 @@ import {getVipList} from "@/api/vip";
 import moment from "moment/moment";
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
+import { formatTimeZone } from "@/utils/format-timeZone";
 
 const router = useRouter()
 const {t} = useI18n();
@@ -721,7 +722,7 @@ const currVipList = reactive({
 const ways = reactive({
   list: [],
 })
-
+let timeZone = null;
 const singleRainRangeFrom = ref(null);
 const singleRainRangeTo = ref(null);
 
@@ -818,7 +819,7 @@ const formRules = reactive({
 function resetQuery() {
   request.name = null
   request.status = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 function changePage(page) {
@@ -876,6 +877,8 @@ function showEdit(banner) {
         form.siteId = element.id
       }
     })
+
+    timeZone = siteList.list.find(e => e.id === form.siteId).timeZone;
   })
 }
 
@@ -886,7 +889,7 @@ const goToList = (row) => {
     }
 
 function displayHourMinute(rangeString) {
-  return rangeString.startTime + ' - ' + rangeString.endTime;
+  return rangeString.startTime + ' - ' + rangeString.endTime
 }
 
 function displayVipRule(vipRule) {
@@ -917,8 +920,12 @@ function removeLastDigitRule(item) {
 }
 
 function isExpiredTime(rangeString) {
-  // rangeString.startTime + ' - ' + rangeString.endTime;
-  if (rangeString.endTime < moment().format("YYYY-MM-DD-HH:mm")) {
+  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  console.log(timeZone);
+  const currentDateTime = formatTimeZone( moment().utc(), timeZone);
+  console.log(moment(currentDateTime).format("YYYY-MM-DD-HH:mm"))
+
+  if (rangeString.endTime < moment(currentDateTime).format("YYYY-MM-DD-HH:mm")) {
     return true;
   }
   if (rangeString.endTime < rangeString.startTime) {
@@ -1216,6 +1223,7 @@ onMounted(async () => {
   await loadVips();
   await loadWays();
   console.log(ways.list)
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

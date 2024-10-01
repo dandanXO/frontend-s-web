@@ -327,9 +327,9 @@
     <el-dialog
       class="acc-dialog"
       v-model="loginDialogVisible"
-      width="1280px"
+      width="1088px"
       align-center
-      style="max-width: 1280px"
+      style="max-width: 1088px"
       @close="store.loginPageVisible = false"
     >
       <div class="acc-dialog-container">
@@ -356,9 +356,9 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1280px"
+      width="1200px"
       align-center
-      style="max-width: 1280px"
+      style="max-width: 1200px"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container">
@@ -367,7 +367,7 @@
             <img :src="accDialogImg" />
           </div>
         </div>
-        <div class="acc-dialog-right">
+        <div class="acc-dialog-right register">
           <div class="acc-dialog-homelogo">
             <img src="../../../assets/logo-1.png" width="150" />
           </div>
@@ -405,9 +405,9 @@
     <el-dialog
       class="acc-dialog"
       v-model="forgetPassDialogVisible"
-      width="1280px"
+      width="1088px"
       align-center
-      style="max-width: 1280px"
+      style="max-width: 1088px"
       @close="store.forgetPassDialogVisible = false"
     >
       <div class="acc-dialog-container">
@@ -481,7 +481,9 @@ import GameModal from "@/components/modal/GameModal";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-import LoginDialog from "@/views/logindialog/index.vue";
+// import LoginDialog from "@/views/logindialog/index.vue";
+//TODO:Revert.
+import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/register/index.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { uploadImage, saveImage } from "@/api/personal/common";
@@ -1156,7 +1158,7 @@ export default defineComponent({
 
     const loadBanners = () => {
       loadPromoBanner("LOGIN").then((res) => {
-        if (res.code === 0) {
+        if (res.code === 0 && res.data.length > 0) {
           const promoImageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
           accDialogImg.value = promoImageDir + res.data[0].desktopImageUrl
         }
@@ -1837,8 +1839,6 @@ body {
 }
 
 .header-container {
-  &.on-scrolled {
-  }
 
   width: 100%;
   position: sticky;
@@ -2118,15 +2118,15 @@ body {
 <!-- Menu Styles -->
 <style lang="scss">
 .platform-menu {
-  a {
-    text-decoration: none;
-  }
-
   display: flex;
   margin: 0 auto;
   // max-width: 1280px;
   justify-content: space-evenly;
   align-items: center;
+
+  a {
+    text-decoration: none;
+  }
 
   .platform-title {
     font-size: 40px;
@@ -2520,13 +2520,13 @@ body {
 
       .acc-dialog-left {
         width: calc(100% - 450px);
-        background-image: url(../../../assets/home/acc-dialog-bg-paris.png);
+        // background-image: url(../../assets/home/acc-dialog-bg-paris.png);
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
-        background-color: #ffffff;
+        // background-color: #ffffff;
         border-radius: 20px;
         overflow: hidden;
 
@@ -2546,6 +2546,13 @@ body {
       .acc-dialog-right {
         width: 460px;
         padding: 24px 24px 24px 24px;
+
+        &.register {
+          padding: 12px 24px 0;
+          .primary-btn {
+            margin-top: 10px;
+          }
+        }
 
         .acc-dialog-content {
           padding-top: 26px;
@@ -2693,7 +2700,7 @@ body {
 
     .el-dialog__body {
       .acc-dialog-left {
-        background-image: url(../../../assets/home/acc-dialog-bg-dark-eurocup.png);
+        // background-image: url(../../assets/home/acc-dialog-bg-dark-eurocup.png);
         background-size: 100% 100%;
         background-position: center center;
       }

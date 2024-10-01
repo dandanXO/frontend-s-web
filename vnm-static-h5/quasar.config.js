@@ -326,7 +326,10 @@ module.exports = configure(function (ctx) {
         cfg.plugins.push(
           new SitemapPlugin({
             base: process.env.SERVER ? process.env.SERVER : "https://www.tkeochuan88.com",
-            paths
+            paths,
+            options: {
+              skipgzip: true
+            }
           })
         );
         cfg.resolve.alias = {

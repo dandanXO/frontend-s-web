@@ -44,8 +44,11 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://n9yvj69mw.com/",
-      hasUpdatedOneSignal: false
+      h5Url: "https://phl.55ace.com/",
+      hasUpdatedOneSignal: false,
+      paytypeWithPrivilege: "",
+      extraPrivilegeId: "",
+      ftd: true
     };
   },
   actions: {
@@ -106,7 +109,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data, 86400);
+            LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
@@ -135,7 +138,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data, 86400);
+            LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
@@ -278,7 +281,7 @@ export const userStore = defineStore("userStore", {
     autoLogin(token) {
       this.token = token;
       if (isAndroid()) {
-        LocalStorage.set("TOKEN", token, 86400);
+        LocalStorage.set("TOKEN", token, 31536000);
       } else {
         SessionStorage.set("TOKEN", token);
       }

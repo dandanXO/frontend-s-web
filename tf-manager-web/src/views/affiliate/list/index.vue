@@ -585,6 +585,16 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="commissionBalance"
+          :label="t('fields.commissionBalance')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.commissionBalance, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="regTime"
           :label="t('fields.registerTime')"
           width="150"
@@ -1241,7 +1251,7 @@ onMounted(async () => {
   padding: 0;
 }
 
-::v-deep(.el-table__row:not([class*='el-table__row--level-'])) {
+:deep(.el-table__row:not([class*='el-table__row--level-'])) {
   td:first-child {
     padding-left: 23px;
   }

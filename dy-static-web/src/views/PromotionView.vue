@@ -74,10 +74,13 @@
               selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
               selectedPromo.redirectUrl === 'dy2-livepoker-rebate' ||
               selectedPromo.redirectUrl === 'dy2-football' ||
+              selectedPromo.redirectUrl === 'dy2-blackmyth-wukong' ||
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
             iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024'
           }"
         >
           <div
@@ -108,9 +111,11 @@
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo?.promoCode === 'dy2-football' ||
               selectedPromo.promoCode === 'dy2-olympic-match',
-            isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
+            isMSI: selectedPromo.promoCode === 'dy2-msi-promo' || selectedPromo.promoCode === 'dy2-blackmyth-wukong',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             esl: selectedPromo.promoCode === 'dy2-intel-esl',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            dy2quiz: selectedPromo.promoCode === 'dy2-quiz',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -118,11 +123,13 @@
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual',
-            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
+              selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            duanwujie:
+              selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
-            dyfootball: selectedPromo?.promoCode === 'dy2-football',
+            dyfootball: selectedPromo?.promoCode === 'dy2-football'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -146,6 +153,9 @@
               football1: selectedPromo.promoCode === 'dy2-football'
             }"
           >
+            <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
+              <NBAWaterBattle />
+            </div>
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
             <div
               v-if="['dy2-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
@@ -175,12 +185,14 @@ import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPr
 
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
+import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const store = userStore();
@@ -248,7 +260,7 @@ export default defineComponent({
           router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
-          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo' || promo.redirectUrl === 'dy2-quiz') {
             isSpecialPromo.value = true;
           } else {
             isSpecialPromo.value = false;
@@ -340,7 +352,8 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      isSpecialPromo
     };
   }
 });
@@ -405,6 +418,13 @@ export default defineComponent({
 
       border-collapse: collapse;
 
+      tr:first-child td:first-child {
+        border-top-left-radius: 10px;
+      }
+      tr:first-child td:last-child {
+        border-top-right-radius: 10px;
+      }
+
       th,
       td {
         padding: 10px;
@@ -415,7 +435,7 @@ export default defineComponent({
       }
 
       tbody {
-        //display: table;
+        display: table;
         table-layout: fixed;
         width: 100%;
       }
@@ -438,10 +458,6 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
 .promo-container {
-  // padding-bottom: 80px;
-
-  // min-height: 70vh;
-  // color: #ffffff;
   .banner-container {
     min-height: 500px;
   }
@@ -594,11 +610,6 @@ export default defineComponent({
             height: 100%;
           }
 
-          img {
-          }
-
-          cursor: pointer;
-
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
@@ -641,7 +652,7 @@ export default defineComponent({
             gap: 10px;
             display: flex;
             flex-direction: column;
-            align-items: start;
+            align-items: flex-start;
             box-sizing: border-box;
             flex: 1;
 
@@ -725,6 +736,12 @@ export default defineComponent({
         max-width: 1920px;
         margin: 0 auto;
 
+        &.isNationalDay24 {
+          .promo-bg.isDesktop {
+            height: 585px !important;
+          }
+        }
+
         &.isCSBanner {
           aspect-ratio: 3840/1136;
           max-width: none;
@@ -741,9 +758,15 @@ export default defineComponent({
           height: 376px !important;
           min-height: 376px;
 
-          .promo-bg {
+          .promo-bg.isDesktop {
             height: 376px !important;
             min-height: 376px;
+          }
+        }
+
+        &.isMidAutumnWukong {
+          .promo-bg {
+            height: 585px !important;
           }
         }
 
@@ -793,10 +816,22 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
 
+        &.dy2quiz {
+          background: #e7f1fd;
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+        }
+
         &.isEurocupManual {
           background-repeat: no-repeat;
           background-position: center center;
           background-size: 100% 100%;
+        }
+
+        &.isMidAutumnWukong {
+          background-repeat: no-repeat;
+          background-size: 100% auto;
         }
 
         &.isMSI {
@@ -881,6 +916,7 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
+          overflow: auto;
 
           &.football1 {
             table {
@@ -895,8 +931,6 @@ export default defineComponent({
               margin: 20px 0;
             }
           }
-
-          overflow: auto;
 
           .game-title {
             color: #ffd800;

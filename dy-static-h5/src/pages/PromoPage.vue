@@ -93,7 +93,7 @@
             <div class="loader" v-if="isFetchingPromo" />
             <div
               class="selected-promo-wrapper"
-              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;' : '']"
+              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' || selectedPromo.promoCode === 'dy2-quiz' ? 'background:#E7F1FD;' : '']"
             >
               <div
                 class="banner-container"
@@ -131,8 +131,10 @@
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+                  wukong: selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
-                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
+                  midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -158,6 +160,9 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
+                    <NBAWaterBattle />
+                  </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"
@@ -311,11 +316,13 @@ import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
+import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const store = userStore();
@@ -414,7 +421,7 @@ export default defineComponent({
       }
     );
     const loadBanner = () => {
-      api.get("/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
         }
@@ -487,10 +494,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl =
-        store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
-          ? "/session/loggedInPromoPages"
-          : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
@@ -937,6 +941,14 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.midAutumnWukong {
+          width: 100%;
+          margin: -15px 0 0;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-color: #eaecfd;
+        }
+
         &.lpllck {
           width: 100%;
           margin: 0px;
@@ -998,6 +1010,15 @@ export default defineComponent({
           margin: 0px;
           width: 100%;
           background-size: 100% 100% !important;
+          padding-top: 0px !important;
+        }
+
+        &.wukong {
+          margin: 0px;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-color: #100a0e;
           padding-top: 0px !important;
         }
 

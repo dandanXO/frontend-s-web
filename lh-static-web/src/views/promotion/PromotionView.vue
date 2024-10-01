@@ -6,7 +6,6 @@
         <img v-else src="../../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
-
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
@@ -20,8 +19,10 @@
                 :key="p.code"
                 @click="switchPromoType(p.code)"
               >
-                <img :src="require('../../assets/promo/menu-' + p.img + '.png')" />
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <img v-if="p.iconUrl" :src="p.iconUrl" />
+                <img v-else-if="p.img" :src="require('../../assets/promo/menu-' + p.img + '.png')" />
+                <span v-else></span>
+                <span style="width: 100px" class="label">{{ p.label.zh }}</span>
               </div>
             </div>
           </div>
@@ -113,12 +114,15 @@
                 ? '#F5F6F8'
                 : selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? '#1D1D1E'
+                : selectedPromo?.promoCode === 'lh1-vip'
+                ? '#E7F1FD'
                 : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
-              selectedPromo?.promoCode === 'lh-lpl-summer24'
+              selectedPromo?.promoCode === 'lh-lpl-summer24' ||
+              selectedPromo?.promoCode === 'lh1-s14-vote'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : ''
           }"
@@ -155,6 +159,9 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
+              <NBAWaterBattle />
+            </div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
@@ -181,7 +188,7 @@
 <script lang="js">
 import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { loadPromo } from "@/api/index/promo.js";
+import { loadPromo, loadPromoTypes } from "@/api/index/promo.js";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
@@ -190,12 +197,14 @@ import { useDark } from "@vueuse/core";
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const isDark = useDark();
@@ -209,14 +218,16 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code: "ALL", img: "all", label: "全站优惠" },
-      { code: "FTD", img: "deposit", label: "新人优惠" },
-      { code: "ESPORT", img: "esport", label: "电竞优惠" },
-      { code: "SPORT", img: "sport", label: "体育优惠" },
-      { code: "LIVE CASINO", img: "live", label: "真人优惠" },
-      { code: "POKER", img: "poker", label: "棋牌优惠" },
+      { code: "WELCOME", img: "welcome", label: "新人优惠" },
+      { code: "HOT", img: "hot", label: "热门活动" },
+      { code: "ESPORT", img: "esport", label: "电竞活动" },
+      { code: "SPORT", img: "sport", label: "体育活动" },
+      { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
+      { code: "SLOT GAME", img: "slot", label: "电游活动" },
+      // { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
-      { code: "DAILY", img: "daily", label: "日常优惠" },
-      { code: "OTHER", img: "slot", label: "其他优惠" }
+      { code: "FTD", img: "deposit", label: "存款优惠" },
+      { code: "VIP", img: "vip", label: "VIP特权" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -303,8 +314,24 @@ export default defineComponent({
         filteredArray.value = promoState.promoList;
       }
     };
-
-    const loadAll = () => {
+    const loadAll = async () => {
+      await loadPromoTypes().then((res) => {
+        if (res.length > 0) {
+          promoTypes.value = [];
+          res.forEach(element => {
+            const obj = {
+              code: element.value,
+              img: 'all',
+              iconUrl: imgURL + element.iconUrl,
+              label: JSON.parse(element.name)
+            };
+            promoTypes.value.push(obj);
+          });
+          switchPromoType(promoTypes.value[0])
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      });
       loadPromo()
         .then((res) => {
           if (res.code === 0) {
@@ -397,7 +424,7 @@ export default defineComponent({
   min-height: 600px;
 
   .promo-banner {
-    //background: #f3f7fd;
+    background: #e7f1fd;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -415,7 +442,7 @@ export default defineComponent({
     width: 100%;
     padding: 30px 50px 50px;
     position: relative;
-    background-color: #f3f7fd;
+    background-color: #E7F1FD;
   }
   .promo-view-container {
     line-height: 30px;
@@ -436,6 +463,7 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
+      border-collapse: collapse;
 
       tr:first-child td {
         background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
@@ -449,7 +477,6 @@ export default defineComponent({
         border-top-right-radius: 10px;
       }
 
-      border-collapse: collapse;
       th,
       td {
         padding: 10px;
@@ -524,15 +551,16 @@ export default defineComponent({
       width: 100%;
       max-width: $maxwidth;
       margin: 0 auto;
-      padding: 10px 0;
+      padding: 0;
       display: flex;
-      gap: 30px;
+      gap: 20px;
       min-height: 1250px;
       align-items: flex-start;
       .promo-type-wrapper {
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
         border-radius: 20px;
+        background-color: #f3f7fd;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
         align-self: flex-start;
@@ -547,12 +575,11 @@ export default defineComponent({
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 20px;
+          padding: 15px 20px 20px;
           overflow: auto;
           width: 280px;
           flex-direction: column;
-          gap: 25px;
-          min-height: 818px;
+          gap: 10px;
           // position: sticky;
           // top: 100px;
           .type-item {
@@ -567,7 +594,7 @@ export default defineComponent({
             justify-content: center;
             align-items: center;
             gap: 20px;
-            padding: 12px 40px;
+            padding: 10px 40px;
             position: relative;
             width: 100%;
             border-radius: 30px;
@@ -576,7 +603,9 @@ export default defineComponent({
             .label {
               z-index: 0;
               color: #468cff;
-              font-size: 23px;
+              font-size: 18px;
+              font-weight: 700;
+              font-family: "PingFang SC";
             }
 
             &:before {
@@ -620,7 +649,7 @@ export default defineComponent({
         margin: 0 auto;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
         .promo-item {
           position: relative;
           overflow: hidden;
@@ -630,6 +659,7 @@ export default defineComponent({
           box-shadow: 0px 4px 26px 0px #00000026;
 
           border-radius: 20px;
+
           a {
             display: block;
           }
@@ -642,9 +672,7 @@ export default defineComponent({
               }
             }
           }
-          img {
-          }
-          cursor: pointer;
+
 
           .promo-img-wrapper {
             position: relative;
@@ -665,9 +693,10 @@ export default defineComponent({
               height: 42px;
               .label-type {
                 background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
-                padding: 10px 30px 10px 50px;
+                padding: 10px 30px 10px 40px;
                 color: #ffffff;
                 position: relative;
+                height: 42px;
                 &:after {
                   content: "";
                   border-left: 0 solid transparent;
@@ -708,9 +737,9 @@ export default defineComponent({
             .promo-details {
               font-family: "Microsoft Yahei UI";
               margin: 20px 0;
-              padding: 50px 0 10px 0;
+              padding: 30px 0 0 0;
               display: flex;
-              gap: 5px;
+              gap: 8px;
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
@@ -731,7 +760,7 @@ export default defineComponent({
               }
               .front-btn {
                 color: #ffffff;
-                padding: 5px 30px;
+                padding: 8px 30px;
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
 
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
@@ -873,6 +902,7 @@ export default defineComponent({
           padding: 20px;
           color: #333;
           font-size: 20px;
+          overflow: auto;
           ol {
             li {
               margin: 20px 0;
@@ -883,7 +913,6 @@ export default defineComponent({
           // background-position: 95% 90%;
           // padding: 20px;
           // border-radius: 10px;
-          overflow: auto;
           // &.welcome {
           //   background-image: url("../../assets/images/promotion/hotpromo/common/welcome.png");
           // }
@@ -1023,6 +1052,9 @@ export default defineComponent({
 
 .dark {
   .promo-container {
+    .promo-banner {
+      background: unset;
+    }
     .all-promotions {
       background: $background-dark;
 

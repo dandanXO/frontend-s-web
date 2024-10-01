@@ -337,14 +337,14 @@
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
-  </q-dialog>
+  </q-dialog>-->
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
-  </q-dialog> -->
+  </q-dialog>
 </template>
 
 <script setup>
@@ -358,10 +358,11 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
-// import KYCUserForm from "../../components/KYCUserForm.vue";
-import PrimaryButton from "src/components/auth/PrimaryButton.vue";
-import DepositComponent from "../../components/depositComponent.vue";
+import KYCUserForm from "../../components/KYCUserForm.vue";
+// import PrimaryButton from "src/components/auth/PrimaryButton.vue";
+// import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
+import { useCheckKYC } from "src/hooks/checkKYC";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
@@ -370,6 +371,8 @@ var qs = require("qs");
 const store = userStore();
 const router = useRouter();
 const emits = defineEmits(["closeModal"]);
+
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
 
 // const checkNewUser = () => {
 //   if (store.realName == "" || store.realName == null) {
@@ -748,6 +751,14 @@ async function pDepo(deposit) {
     .then((res) => {
       if (res.code === 0) {
         const response = res.data.result;
+
+        //FB Tracking.
+        if (store.isFbPixel) {
+          fbq("track", "Purchase", {
+            currency: "PKR",
+            value: obj.localAmount
+          });
+        }
 
         // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
         // if (!isFirstDepo) {

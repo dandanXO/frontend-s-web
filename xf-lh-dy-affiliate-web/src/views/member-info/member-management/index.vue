@@ -245,11 +245,12 @@
               <th scope="col">{{ t('fields.loginName') }}</th>
               <th scope="col">{{ t('fields.totalDeposit') }}</th>
               <th scope="col">{{ t('fields.totalWithdraw') }}</th>
+              <th scope="col">{{ t('fields.totalBet') }}</th>
               <th scope="col">{{ t('fields.netProfit') }}</th>
               <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th>
-              <th scope="col" v-if="showOperation">{{ t('fields.operate') }}</th>
+              <th scope="col">{{ t('fields.operate') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.records.length > 0">
@@ -271,6 +272,10 @@
                 {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 {{ formatMoney(item.totalWithdraw) }}
               </td>
+              <td :data-label="t('fields.totalBet')">
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+                {{ formatMoney(item.totalBet) }}
+              </td>
               <td :data-label="t('fields.netProfit')">
                 {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 {{ formatMoney(item.revenueShare) }}
@@ -284,9 +289,9 @@
                 <span>{{ formatDateTime(item.lastLoginTime) }}</span>
               </td>
               <td :data-label="t('fields.memberTag')">
-                {{ formatmTag(item.tags) }}
+                {{ formatmTag(item.tagDesc) }}
               </td>
-              <td class="relativerow" :data-label="t('fields.operate')" v-if="showOperation">
+              <td class="relativerow" :data-label="t('fields.operate')">
                 <el-dropdown>
                   <span class="el-dropdown-link">
                     {{ t('fields.more') }}
@@ -300,23 +305,24 @@
                         {{ t('fields.memberInfo') }}
                       </el-dropdown-item>
                       <el-dropdown-item
+                        v-if="showOperation"
                         @click="transferRedirect(item.loginName)"
                       >
                         {{ t('menu.Transfer') }}
                       </el-dropdown-item>
-                      <el-dropdown-item @click="showEditTag(item)">
+                      <el-dropdown-item @click="showEditTag(item)" v-if="showOperation">
                         {{ t('fields.editTag') }}
                       </el-dropdown-item>
-                      <el-dropdown-item @click="showEditRemark(item)">
+                      <el-dropdown-item @click="showEditRemark(item)" v-if="showOperation">
                         {{ t('fields.remark') }}
                       </el-dropdown-item>
-                      <el-dropdown-item v-if="parseInt(store.state.user.siteId) === 10" @click="showEditShareRatio(item)">
+                      <el-dropdown-item v-if="parseInt(store.state.user.siteId) === 10 && showOperation" @click="showEditShareRatio(item)">
                         {{ t('fields.editShareRatio') }}
                       </el-dropdown-item>
                       <el-dropdown-item @click="showDepositRecord(item)">
                         {{ t('fields.depositRecord') }}
                       </el-dropdown-item>
-                      <el-dropdown-item @click="showGameRecord(item.loginName)">
+                      <el-dropdown-item @click="showGameRecord(item.loginName, downlineAffiliate)">
                         {{ t('fields.betRecord') }}
                       </el-dropdown-item>
                       <el-dropdown-item @click="showPrivilegeRecord(item)">
@@ -862,7 +868,7 @@ const uiControl = reactive({
   orderBy: [
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
-    { display: 'lastLoginTime', value: 'last_login_time' },
+    // { display: 'lastLoginTime', value: 'last_login_time' },
     { display: 'registerTime', value: 'reg_time' },
   ],
   sortType: [
@@ -1309,8 +1315,12 @@ function transferRedirect(name) {
   router.push(`/affiliate/transfer?user=${name}`)
 }
 
-function showGameRecord(name) {
-  router.push(`/downline/game-record?user=${name}`)
+function showGameRecord(name, affiliate) {
+  if (affiliate) {
+    router.push(`/downline/game-record?user=${name}&affiliate=${affiliate}`)
+  } else {
+    router.push(`/downline/game-record?user=${name}`)
+  }
 }
 
 function showDepositRecord(member) {

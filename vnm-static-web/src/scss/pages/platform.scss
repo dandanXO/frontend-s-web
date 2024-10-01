@@ -517,7 +517,7 @@
 
     .plat-options-container {
       display: flex;
-      gap: 0.5rem;
+      gap: 10px;
       justify-content: center;
       align-items: center;
       padding: 0.5rem 0.5rem;
@@ -534,12 +534,13 @@
       justify-content: center;
       align-items: center;
       min-height: 2rem;
-      min-width: 5rem;
+      min-width: 4rem;
       box-shadow: 0px -3px 6px 0px transparent inset, 0px -2px 4px 0px transparent inset;
       transition: 0.3s all;
+      position: relative;
       .text {
         color: #5894ff;
-        font-size: 20px;
+        font-size: 17px;
         font-weight: bold;
       }
 
@@ -564,6 +565,13 @@
           color: #ffffff;
         }
       }
+
+      .new-ribbon {
+        position: absolute;
+        width: 20px;
+        right: -10px;
+        top: -12px;
+      }
     }
 
     .plat-games-container {
@@ -573,7 +581,7 @@
     .search-container {
       display: flex;
       // margin-top: 2rem;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
       justify-content: space-between;
       position: absolute;
       right: 15px;

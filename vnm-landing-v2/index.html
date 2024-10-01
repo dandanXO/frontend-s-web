@@ -19,7 +19,7 @@
 
     <a href="https://6789tf.com/register" class="hyperlink" target="_blank">
       <div id="image-container" class="banner-wrapper">
-        <img id="banner-img" src="img/11.jpg" alt="2024 Eurocup" title="2024 Eurocup" />
+        <img id="banner-img" src="img/a.jpg" alt="2024 Eurocup" title="2024 Eurocup" />
       </div>
     </a>
 
@@ -117,9 +117,12 @@
     const urlParams = new URLSearchParams(window.location.search);
     const redirectUrl = urlParams.get('redirect');
 
+    const host= window.location.hostname;
     var tf88Url= "https://6789tf.com"
     if(redirectUrl){
       tf88Url= "https://t667788.com"
+    }else if(host.includes("z888686")){
+      tf88Url= "https://tf88568.com";
     }
 
     var elements = document.getElementsByClassName('hyperlink');
@@ -153,7 +156,7 @@
     // });
 
 
-    const images = ["img/11.jpg", "img/22.jpg", "img/33.jpg"];
+    const images = ["img/a.jpg", "img/b.jpg", "img/c.jpg"];
     let currentIndex = 0;
     const imgElement = document.getElementById('banner-img');
 

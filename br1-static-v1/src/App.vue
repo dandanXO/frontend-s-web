@@ -124,14 +124,8 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      const omitSites = ["bw3.genoortisy.com"];
 
-      var affiliateCode = "";
-      if (omitSites.includes(window.location.host)) {
-        affiliateCode = "E94ED4";
-      } else {
-        affiliateCode = "E94ED4";
-      }
+      var affiliateCode = "A3048D";
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
@@ -214,7 +208,7 @@ export default defineComponent({
 
     const router= useRouter();
     const checkServerStatus = () => {
-      axios.get(`https://sumbtf.tebarncale.com/server/status/IND`).then((response) => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITE}`).then((response) => {
         if (response.data.code === 0) {
           console.log("responseStatus:", response.data.data.status);
           if (response.data.data.status === "CLOSED") {

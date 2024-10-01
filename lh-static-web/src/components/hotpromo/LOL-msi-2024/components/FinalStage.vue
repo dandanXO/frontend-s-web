@@ -14,15 +14,17 @@
           <th>流水倍数</th>
         </tr>
       </thead>
-      <tr>
-        <td>≥1,000</td>
-        <td>8</td>
-        <td rowspan="2">3倍/不限场馆</td>
-      </tr>
-      <tr>
-        <td>≥5,000</td>
-        <td>18</td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>≥1,000</td>
+          <td>8</td>
+          <td rowspan="2">3倍/不限场馆</td>
+        </tr>
+        <tr>
+          <td>≥5,000</td>
+          <td>18</td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="remark">

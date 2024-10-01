@@ -1,10 +1,13 @@
 import { cached } from "boot/cache";
-import { eventapi } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 
 const qs = require("qs");
 
 export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
+}
+export function loadPromoBanner(category) {
+  return api.get(`/promo/banner?category=${category}`);
 }
 
 export function claimBonusItem2(item) {
@@ -214,7 +217,8 @@ export function claimItems(status, level) {
   if (status === 'monthly') {return eventapi.put("/vip-bonus/claim-monthly-bonus");}
   if (status === 'yearlyRetain') {return eventapi.post("/vip-bonus/claim-yearly-retain?_method=PUT", qs.stringify({ vipLevel: level }))}
   if (status === 'coupon') {return eventapi.put("/vip-bonus/claim-coupon");}
-  if (status === 'all') {return eventapi.post("/vip-bonus/claim-all?_method=PUT", qs.stringify({ vipLevel: level }))}
+  if (status === 'redPacket') {return eventapi.put("/vip-bonus/claim-red-packet");}
+  if (status === 'all') {return eventapi.put("/vip-bonus/claim-all");}
 }
 
 export function getVIPDetails() {
@@ -243,4 +247,67 @@ export function getCompetitionBetToday(promoCode) {
       promoCode
     }
   });
+}
+
+export function getDota2CompetitionBet(promoCode) {
+  return eventapi.get(`/dota2-competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getBlastCoupon() {
+  return eventapi.get('/session/blastCoupon/init');
+}
+
+export function claimBlastCoupon(promoCode) {
+  return eventapi.post(`/session/blastCoupon/claim`, qs.stringify({ promoCode }));
+}
+
+export function getBlastCouponInit() {
+  return eventapi.get("/session/blastCoupon/init");
+}
+export function getCompetitionToday() {
+  return eventapi.get('/session/competition/today')
+}
+
+export function getCompetitionYesterday(promoCode) {
+  return eventapi.get('/session/competition/yesterday', {
+    params: {
+      promoCode
+    }
+  })
+}
+
+export function claimCompetitionBonus(promoCode) {
+  return eventapi.post('/session/competition/claimBonus', qs.stringify({ promoCode }))
+}
+
+export function getNationalDayRecords() {
+  return eventapi.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return eventapi.post('/session/nationalDay/claimBonus')
+}
+
+export function getNationalDayinit() {
+  return eventapi.get('/session/nationalDay/init')
+}
+
+export function getCompetitionBetYesterday(promoCode) {
+  return eventapi.get('/session/competition-bet/yesterday', {
+    params: {
+      promoCode
+    }
+  })
+}
+
+export function getNBAUpcomingMatch() {
+  return eventapi.get('/session/nba-match-preseason/upcoming')
+}
+
+export function getNBAClaimHistory() {
+  return eventapi.get('/session/nba-match-preseason/history')
 }

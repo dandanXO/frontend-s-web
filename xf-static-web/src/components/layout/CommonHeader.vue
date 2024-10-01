@@ -12,7 +12,7 @@
             </div>
 
             <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="90" style="width: 780px">
+              <Vue3Marquee :clone="false" :duration="90" :style="store.token ? `width: 550px` : `width:780px`">
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
@@ -268,16 +268,16 @@
               </el-space>
             </el-form-item> -->
 
-            <el-form-item label="姓名" prop="realName">
+            <!-- <el-form-item label="姓名" prop="realName">
               <el-space>
                 <el-input v-model="regForm.realName" placeholder="输入姓名" />
-                <el-tooltip content="范围在2-12位之间, 由中文字符组成" placement="right">
+                <el-tooltip content="范围在 2-12 位之间，由中文字符组成" placement="right">
                   <el-icon :size="10">
                     <InfoFilled />
                   </el-icon>
                 </el-tooltip>
               </el-space>
-            </el-form-item>
+            </el-form-item> -->
 
             <el-form-item label="用户名" prop="loginName">
               <el-space>
@@ -1015,25 +1015,25 @@ export default defineComponent({
       }
     };
 
-    let validateRealName = async (r, v) => {
-      if (v === "") {
-        return Promise.reject("请输入登姓名");
-      } else if (!checkRealName(v)) {
-        return Promise.reject("请输入中文字符");
-      } else {
-        return Promise.resolve();
-      }
-    };
+    // let validateRealName = async (r, v) => {
+    //   if (v === "") {
+    //     return Promise.reject("请输入登姓名");
+    //   } else if (!checkRealName(v)) {
+    //     return Promise.reject("请输入中文字符");
+    //   } else {
+    //     return Promise.resolve();
+    //   }
+    // };
 
     const checkName = (v) => {
       const alphanumeric = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
       return v.match(alphanumeric);
     };
-    const checkRealName = (v) => {
-      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
-      return v.match(chineseCharOnly);
-    };
+    // const checkRealName = (v) => {
+    //   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
+    //   const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+    //   return v.match(chineseCharOnly);
+    // };
     let validatePass2 = async (r, v) => {
       if (v === "") {
         return Promise.reject("请重新输入密码");
@@ -1160,7 +1160,7 @@ export default defineComponent({
     };
 
     const regForm = reactive({
-      realName: "",
+      // realName: "",
       loginName: "",
       password: "",
       confirmPwd: "",
@@ -1185,19 +1185,19 @@ export default defineComponent({
     });
 
     const regRules = {
-      realName: [
-        {
-          required: true,
-          min: 2,
-          max: 12,
-          message: "长度应为 2 至 12",
-          trigger: "blur",
-        },
-        {
-          validator: validateRealName,
-          trigger: "change",
-        },
-      ],
+      // realName: [
+      //   {
+      //     required: true,
+      //     min: 2,
+      //     max: 12,
+      //     message: "长度应为 2 至 12",
+      //     trigger: "blur",
+      //   },
+      //   {
+      //     validator: validateRealName,
+      //     trigger: "change",
+      //   },
+      // ],
       loginName: [
         {
           required: true,
@@ -1553,6 +1553,8 @@ export default defineComponent({
                     getCode();
                     // message.error(response.message);
                   }
+                }).catch(() => {
+                  getCode();
                 })
           })();
         } else {
@@ -1992,6 +1994,7 @@ export default defineComponent({
 
     const submitLogin = () => {
       loadingBtn.value = true;
+
       (async () => {
         const sidParam = store.visitorId;
 
@@ -2016,13 +2019,16 @@ export default defineComponent({
                   loginForm.captchaCode = null
                   getCode();
                 }
+                loadingBtn.value = false;
               }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
             getCode();
+            loadingBtn.value = false;
+          }).finally(() => {
+            loadingBtn.value = false;
           });
         });
-        loadingBtn.value = false
       })();
     };
 
@@ -2279,7 +2285,7 @@ export default defineComponent({
 body {
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
-    background-color:#5e5e5e;
+    background-color: #5e5e5e;
   }
 
   .el-dropdown {
@@ -2370,10 +2376,6 @@ body {
 }
 
 .header-container {
-  &.on-scrolled {
-    // background: rgb(43 43 75 / 80%);
-  }
-
   width: 100%;
   position: sticky;
   top: 0;
@@ -2631,15 +2633,15 @@ body {
 <!-- Menu Styles -->
 <style lang="scss">
 .platform-menu {
-  a {
-    text-decoration: none;
-  }
-
   display: flex;
   margin: 0 auto;
   max-width: 1280px;
   justify-content: center;
   align-items: center;
+
+  a {
+    text-decoration: none;
+  }
 
   .platform-title {
     color: #ffffff;

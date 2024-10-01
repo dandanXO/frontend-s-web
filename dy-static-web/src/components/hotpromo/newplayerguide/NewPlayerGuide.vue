@@ -36,7 +36,7 @@
                 <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
                 <div class="subtitle">奖励说明</div>
               </div>
-              <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+              <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡后任意存款一笔即可领取。</p>
             </div>
             <div class="section2">
               <div style="display: flex">

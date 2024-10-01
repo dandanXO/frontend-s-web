@@ -8,8 +8,13 @@
         <div class="logo-section" />
       </a>
       <div class="row-item">
-        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage"
-                   size="small">
+        <el-select
+          class="lang-container right-menu-item"
+          placeholder=""
+          v-model="languageVal"
+          @change="handleLanguage"
+          size="small"
+        >
           <el-option key="1" value="en">en</el-option>
           <el-option key="5" value="kr">kr</el-option>
         </el-select>
@@ -25,7 +30,11 @@
             <ForgetPasswordModal :requireOld="true" @submit="changePassword">
               <svg-icon :icon-class="'lock'" />
             </ForgetPasswordModal>
-            <svg-icon :icon-class="'logout'" :title="$t('common.logout')" @click="logout" />
+            <svg-icon
+              :icon-class="'logout'"
+              :title="$t('common.logout')"
+              @click="logout"
+            />
           </div>
         </div>
       </div>
@@ -34,30 +43,56 @@
           <span>{{ t('statsHeader.myMoney') }}</span>
           <span>{{ Math.floor(affInfo.balance) }}</span>
         </div>
-        <div class="balance-item" style="margin-top: 10px; cursor: pointer" @click="redeemDialogVisible = true">
+        <div
+          class="balance-item"
+          style="margin-top: 10px; cursor: pointer"
+          @click="redeemDialogVisible = true"
+        >
           <span>{{ t('statsHeader.myPoint') }}</span>
           <span>{{ Math.floor(affInfo.point) }}</span>
         </div>
       </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
-          <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
+          <a
+            :href="krwUrl"
+            target="_blank"
+            style="display:flex;align-items: center;gap:6px;"
+          >
             <svg-icon :icon-class="'right'" />
             <span>유저사이트</span>
           </a>
         </div>
       </div>
-      <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
-        <div v-if="nav.display" class="route-title row-item" @click="checkMenu(nav)">
+      <div
+        v-for="nav in navigationData"
+        :key="nav.id"
+        :class="`route-wrapper ${nav.active ? 'active' : ''}`"
+      >
+        <div
+          v-if="nav.display"
+          class="route-title row-item"
+          @click="checkMenu(nav)"
+        >
           {{ nav.title }}
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
-        <div v-for="child in nav.children" :key="child.id" :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''
-          }`
-          ">
+        <div
+          v-for="child in nav.children"
+          :key="child.id"
+          :class="
+            `route-container ${child.active ? 'active' : ''} ${
+              nav.menuShown ? 'show-menu' : ''
+            }`
+          "
+        >
           <template v-if="child.path === '/commission-info' ? false : true">
-            <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
+            <RouterLink
+              :to="nav.path + child.path"
+              class="route"
+              v-if="child.isMainNav"
+            >
               <div class="route-content">
                 <!-- <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
                   :className="child.active ? 'active-icon' : ''" /> -->
@@ -72,15 +107,30 @@
     </div>
   </nav>
 
-  <el-dialog :title="t('fields.redeemPoint')" v-model="redeemDialogVisible" width="580px" append-to-body>
-    <p>{{ t('message.yourCurrentPoint') }} <b> {{ affInfo.point }}</b></p>
+  <el-dialog
+    :title="t('fields.redeemPoint')"
+    v-model="redeemDialogVisible"
+    width="580px"
+    append-to-body
+  >
+    <p>
+      {{ t('message.yourCurrentPoint') }}
+      <b>{{ affInfo.point }}</b>
+    </p>
     <p>{{ t('message.confirmRedeem') }}</p>
 
     <div class="redeemDialogActionButtons">
       <el-button size="normal" @click="redeemDialogVisible = false">
         {{ $t('fields.cancel') }}
       </el-button>
-      <el-button size="normal" type="primary" @click="onRedeem" :disabled="affInfo.point <= 0">{{ $t('fields.confirm') }}</el-button>
+      <el-button
+        size="normal"
+        type="primary"
+        @click="onRedeem"
+        :disabled="affInfo.point <= 0"
+      >
+        {{ $t('fields.confirm') }}
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -108,12 +158,11 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const navigationData = ref([])
-const redeemDialogVisible = ref(false);
+const redeemDialogVisible = ref(false)
 
 const store = useStore()
 
-const krwUrl = ref("https://city8.vip");
-
+const krwUrl = ref('https://dia.game')
 
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
@@ -500,7 +549,7 @@ const getNavigationData = () => {
   ]
 }
 const onRedeem = async () => {
-  await redeemPoint();
+  await redeemPoint()
   ElMessage({ message: t('message.redeemSuccess'), type: 'success' })
   redeemDialogVisible.value = false
   const { data: affBal } = await getAffiliateBalance(store.state.user.id)
@@ -577,10 +626,11 @@ watch(languageVal, newVal => {
 
     .logo-section {
       display: flex;
-      background: url('../../assets/images/kr/kr-logo-long.png') no-repeat center center;
-      background-size: contain;
+      background: url('../../assets/logo-diamond.svg') no-repeat center center;
+      background-size: 90% auto;
       width: 100%;
       height: 60px;
+      padding: 6px 10px;
       background-color: #192226;
     }
 
@@ -648,7 +698,7 @@ watch(languageVal, newVal => {
         display: flex;
         gap: 10px;
 
-        >div {
+        > div {
           align-items: center;
         }
       }

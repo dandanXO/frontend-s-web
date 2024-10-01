@@ -52,11 +52,12 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
+    const hasToken = !!to.query.token;
     if (
-      to.path === "/promotion" ||
+      (to.path === "/promotion" && hasToken) ||
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
-      to.path === "/vip" ||
+      (to.path === "/vip" && hasToken) ||
       to.path === "/privilege/invite"
     ) {
       if (isAndroid()) {
@@ -67,6 +68,11 @@ export default route(function (/* { store, ssrContext } */) {
 
       user.token = to.query.token;
       console.log("user", user.token);
+    }
+
+    if(!hasToken) {
+      if(to.path === "/promotion") next("/promo")
+      if(to.path === "/vip") next("/account/vip")
     }
 
     if (to.name === "agentCode") {

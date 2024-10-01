@@ -179,7 +179,7 @@
             @click="clearInput"
           >
             <template v-slot:prepend>
-              <span class="transfer-amt-input-prepend" >
+              <span class="transfer-amt-input-prepend">
                 {{ store.currency.value }}
               </span>
             </template>
@@ -317,7 +317,7 @@ const submitTransfer = () => {
                   setTimeout(() => {
                     notify({
                       type: "success",
-                      message: "成功",
+                      message: "成功"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -348,7 +348,7 @@ const submitTransfer = () => {
                   setTimeout(() => {
                     notify({
                       type: "success",
-                      message: "转账成功",
+                      message: "转账成功"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -379,7 +379,7 @@ const updateTransferAmt = () => {
 const getPlatList = () => {
   api.get("/session/loggedInPlatform").then((res) => {
     res.data.forEach((p) => {
-      if (p.walletType !== "SEAMLESS") {
+      if (p.walletType !== "SEAMLESS" && p.underMaintenance === false) {
         platforms.push({
           id: p.id,
           code: p.code,
@@ -592,7 +592,7 @@ onMounted(() => {
   .transfer-amt-input {
     background: #1b253f;
     :deep(.q-field__control) {
-      &::before{
+      &::before {
         border: none;
       }
     }

@@ -8,9 +8,9 @@
       </p>
 
       <div class="q-mt-md">
-        <div :class="`btn-submit`" @click="receiveCheckinReward">
+        <div class="btn-submit" :class="{ disabled: rewardClaimedToday }" @click="receiveCheckinReward">
           <q-spinner v-if="isLoading" color="white" size="2em" :thickness="2"></q-spinner>
-          <template v-else>Receive</template>
+          <template v-else>{{ rewardClaimedToday ? "Received" : "Receive" }}</template>
         </div>
       </div>
 
@@ -81,11 +81,13 @@ const receiveCheckinReward = () => {
 };
 
 const dailyRewards = ref([]);
-const rewardEligibility = ref(false);
+const rewardEligibility = ref(true);
+const rewardClaimedToday = ref(true);
 
 const initCheckIn = () => {
   eventapi.get(`/check-in/init`).then((res) => {
     rewardEligibility.value = res.data.eligibility;
+    rewardClaimedToday.value = res.data.claimedToday;
     dailyRewards.value = [
       { freeAmount: 88, checked: false },
       { freeAmount: 188, checked: false },
@@ -142,6 +144,8 @@ onMounted(() => {
 
   &.disabled {
     opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 

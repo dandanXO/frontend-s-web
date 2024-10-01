@@ -1144,6 +1144,8 @@ export default {
     upLineLoginName: 'ชื่อล็อกอินอัพไลน์',
     upload: 'ที่อัพโหลด',
     upperName: 'ชื่อของระดับที่สูงกว่า',
+    usdtDepositAmount: 'จำนวนเงินฝากสกุลเงินดิจิทัล',
+    usdtDepositCount: 'จำนวนผู้ฝากสกุลเงินดิจิทัล',
     username: 'ชื่อผู้ใช้',
     userType: 'ประเภทผู้ใช้',
     validate: 'ตรวจสอบความถูกต้อง',
@@ -1241,6 +1243,7 @@ export default {
     configCode: 'Config Code',
     configValue: 'Config Value',
     configDescribes: 'Config Describes',
+    batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

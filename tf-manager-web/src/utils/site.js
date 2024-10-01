@@ -10,6 +10,10 @@ const PAK_SITE_ID = 11;
 const BGD_SITE_ID = 12;
 const NGA_SITE_ID = 14;
 const KAKA_SITE_ID = 15;
+const PH1_SITE_ID = 16;
+const ID1_SITE_ID = 17;
+const BR1_SITE_ID = 18;
+const PAK2_SITE_ID = 19;
 
 export const isIndiaSite = (siteId) => {
   return parseInt(siteId) === IND_SITE_ID || parseInt(siteId) === IND2_SITE_ID;
@@ -32,7 +36,7 @@ export const isInd2 = (siteId) => {
 }
 
 export const isPak = (siteId) => {
-  return parseInt(siteId) === PAK_SITE_ID;
+  return parseInt(siteId) === PAK_SITE_ID || parseInt(siteId) === PAK2_SITE_ID;
 }
 
 export const isXF = (siteId) => {
@@ -69,4 +73,72 @@ export const isNga = (siteId) => {
 
 export const isKaka = (siteId) => {
   return parseInt(siteId) === KAKA_SITE_ID;
+}
+
+export const isPh1 = (siteId) => {
+  return parseInt(siteId) === PH1_SITE_ID;
+}
+
+export const isBr1 = (siteId) => {
+  return parseInt(siteId) === BR1_SITE_ID;
+}
+
+export const isId1 = (siteId) => {
+  return parseInt(siteId) === ID1_SITE_ID;
+}
+
+export const getSiteTitle = (siteId) => {
+  let siteTitle;
+  switch (parseInt(siteId)) {
+    case XF_SITE_ID :
+      siteTitle = "兴发后台 "
+      break;
+    case THAI_SITE_ID :
+      siteTitle = "Jolly88 "
+      break;
+    case IND_SITE_ID :
+      siteTitle = "55Ace "
+      break;
+    case DY_SITE_ID :
+      siteTitle = "东赢后台 "
+      break;
+    case LH_SITE_ID :
+      siteTitle = "雷火后台 "
+      break;
+    case VNM_SITE_ID :
+      siteTitle = "TF88 "
+      break;
+    case IND2_SITE_ID :
+      siteTitle = "55Ace "
+      break;
+    case KRW_SITE_ID :
+      siteTitle = "DIAMOND "
+      break;
+    case PAK_SITE_ID :
+      siteTitle = "后台 "
+      break;
+    case BGD_SITE_ID :
+      siteTitle = "后台 "
+      break;
+    case NGA_SITE_ID :
+      siteTitle = "55Ace "
+      break;
+    case KAKA_SITE_ID :
+      siteTitle = "KAKA GAME "
+      break;
+    case PH1_SITE_ID :
+      siteTitle = "55Ace "
+      break;
+    case ID1_SITE_ID :
+      siteTitle = "后台 "
+      break;
+    case BR1_SITE_ID :
+      siteTitle = "后台 "
+      break;
+    case PAK2_SITE_ID :
+      siteTitle = "后台 "
+      break;
+  }
+
+  return siteTitle
 }

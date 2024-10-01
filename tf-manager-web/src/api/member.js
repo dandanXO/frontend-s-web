@@ -160,14 +160,15 @@ export const deleteMemberRemark = id => {
   )
 }
 
-export const getMemberNameList = siteId => {
-  return https().request(
-    `/member/nameList/${siteId}`,
-    Method.GET,
-    siteId,
-    ContentType.form
-  )
-}
+// CANNOT USE IT
+// export const getMemberNameList = siteId => {
+//   return https().request(
+//     `/member/nameList/${siteId}`,
+//     Method.GET,
+//     siteId,
+//     ContentType.form
+//   )
+// }
 
 export const getMemberPrivilegeRecord = (id, query) => {
   return https().request(
@@ -495,4 +496,8 @@ export const walletBalance = (id, siteId) => {
     `/member/all-wallet/${id}/${siteId}`,
     Method.GET
   )
+}
+
+export const freezeMemberBatchUpdate = (memberFreeze) => {
+  return https(5 * 60 * 1000).request("/member/freezeMemberBatchUpdate", Method.POST, { memberFreeze: JSON.stringify(memberFreeze) }, ContentType.form);
 }

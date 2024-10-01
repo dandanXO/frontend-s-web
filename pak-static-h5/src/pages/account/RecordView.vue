@@ -54,23 +54,26 @@
       ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+          <BetRefereceWithCopy :betId="e.betId" />
 
-          <q-btn
-            :class="{
-              'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
-              'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
-              'btn--orange': e.betStatus === 'BET',
-              'btn--yellow': e.betStatus === 'UNSETTLED',
-              'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
-            }"
-            :label="getRecordStatus(e.betStatus)"
-          ></q-btn>
+          <div class="date-status-wrapper">
+            <q-btn
+              :class="{
+                'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
+                'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
+                'btn--orange': e.betStatus === 'BET',
+                'btn--yellow': e.betStatus === 'UNSETTLED',
+                'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
+              }"
+              :label="getRecordStatus(e.betStatus)"
+            ></q-btn>
+            <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+          </div>
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
           RS
-          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
+          <span :class="`${['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus) ? (e.payout <= 0 ? 'loss-amt' : 'win-amt') : 'bet-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -107,6 +110,7 @@ import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount } from "src/boot/utils";
 import { useQuasar } from "quasar";
 import { t } from "src/boot/lang";
+import BetRefereceWithCopy from "../../components/account/BetReferenceWithCopy.vue";
 
 const router = useRouter();
 const store = userStore();
@@ -371,10 +375,27 @@ onActivated(() => {
   margin-top: 0;
 
   .top-wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: 50% 50%;
     align-items: center;
-    justify-content: space-between;
     margin: 0 0 0.5rem 0;
+
+    .bet-id-wrapper {
+      display: grid;
+      grid-template-columns: 90% 10%;
+    }
+
+    .bet-id {
+      font-size: smaller;
+      word-wrap: break-word;
+    }
+
+    .date-status-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
     .date {
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.825rem;
@@ -459,14 +480,6 @@ onActivated(() => {
     }
   }
 
-  .win-amt {
-    color: $positive;
-  }
-
-  .loss-amt {
-    color: $negative;
-  }
-
   .mid-wrapper {
     font-size: 1rem;
     font-weight: 700;
@@ -476,10 +489,15 @@ onActivated(() => {
     padding: 0 1rem;
 
     span {
-      background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #fff;
+    }
+
+    .win-amt {
+      color: $positive;
+    }
+
+    .loss-amt {
+      color: $negative;
     }
   }
 

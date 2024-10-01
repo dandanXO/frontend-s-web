@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="account-title-container">
-      <span class="account-title">Payment Method</span>
+    <div class="menu-title-container">
+      <span class="menu-title">Payment Method</span>
     </div>
     <div class="account-content">
       <DepositComponent />

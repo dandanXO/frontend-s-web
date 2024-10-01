@@ -38,20 +38,20 @@
     </q-card>
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noRecord')"></NoInfoComponent>
 
     <template v-else>
       <NoInfoComponent
         v-if="isNoInfoAtEnd"
         shortenContainer="true"
-        noInfoTitle="You have reached the end of the page."
+        :noInfoTitle="$t('records.reachTheEnd')"
       ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
           <div class="date">{{ e.betTime }}</div>
           <q-btn
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+            :label="`${e.payout > 0 ? $t('btn.profit') : $t('btn.loss')}`"
           ></q-btn>
         </q-card-section>
 
@@ -63,11 +63,11 @@
         <q-card-section class="bot-wrapper">
           <div class="origin">
             <div class="bet">Bet</div>
-            <div class="game-platform">Game Platform</div>
+            <div class="game-platform">{{ $t("records.gamePlatform") }}</div>
           </div>
           <div class="origin-val">
             <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
-            <div class="game-platform-val">{{ e.platform }}</div>
+            <div class="game-platform-val">{{ displayPlatform(e.platform) }}</div>
           </div>
         </q-card-section>
       </q-card>
@@ -86,12 +86,10 @@ import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
+import { updateDate, convertToGMT8 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
-import { convertToCommaAmount } from "src/boot/utils";
+import { convertToCommaAmount, displayPlatform } from "src/boot/utils";
 import { useQuasar } from "quasar";
 
 const router = useRouter();
@@ -248,7 +246,6 @@ const getGameBetRecordTotal = () => {
 onActivated(() => {
   setTime();
   getPlatformList();
-
   searchRecord(true);
 });
 </script>

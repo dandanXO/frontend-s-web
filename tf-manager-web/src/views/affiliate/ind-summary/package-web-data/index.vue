@@ -49,7 +49,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
+        height="70vh"
         size="small"
         :resizable="true"
         :data="page.records"
@@ -94,7 +94,7 @@
           prop="withdrawAmount"
           :label="t('fields.withdrawAmount')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -106,6 +106,12 @@
         <el-table-column
           prop="withdrawCount"
           :label="t('fields.withdrawCount')"
+          align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="withdrawMembersCount"
+          :label="t('fields.totalWithdrawMemberCount')"
           align="center"
           width="120"
         />
@@ -140,7 +146,7 @@
           prop="ftdAmount"
           :label="t('fields.ftdAmount')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -151,7 +157,7 @@
           prop="bet"
           :label="t('fields.betAmount')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -162,7 +168,7 @@
           prop="payout"
           :label="t('fields.payoutAmount')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -196,6 +202,12 @@
             />
           </template>
         </el-table-column> -->
+        <el-table-column
+          prop="depositCount"
+          :label="t('fields.totalDepositCount')"
+          align="center"
+          width="120"
+        />
         <el-table-column
           prop="depositMembersCount"
           :label="t('fields.totalDepositMemberCount')"
@@ -317,13 +329,13 @@ const total = reactive({
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
 }
 
@@ -410,13 +422,22 @@ function getSummaries(param) {
         var prop = column.property
         if (
           index === 3 ||
-          index === 5 ||
+          index === 4 ||
           index === 6 ||
-          index === 11 ||
           index === 12
         ) {
           sums[index] = total.data[prop]
-        } else if (index === 4) {
+        } else if (index === 7 || index === 13 || index === 14) {
+          const pageRowCount = Number(page.records.reduce((sum, row) => {
+            return sum + Number(row[prop])
+          }, 0))
+          const totalPageCount = Number(total.data[prop])
+          if (pageRowCount !== totalPageCount) {
+            sums[index] = `${total.data[prop]} (${pageRowCount})`
+          } else {
+            sums[index] = total.data[prop]
+          }
+        } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +

@@ -404,7 +404,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 async function loadDepositReport(first) {
@@ -521,13 +521,12 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   await loadDepositReport(true)
 })
@@ -556,7 +555,7 @@ onMounted(async () => {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>
@@ -599,15 +598,13 @@ onMounted(async () => {
 }
 
 .box-card {
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 0;
   }
 }
 
-::v-deep {
-  .el-tabs__content {
+:deep(.el-tabs__content) {
     padding: 0;
-  }
 }
 
 .platform {
@@ -635,7 +632,7 @@ onMounted(async () => {
   }
 }
 
-::v-deep([class^='el-table']) {
+:deep([class^='el-table']) {
   .cell,
   .remove-padding {
     padding: 0 !important;

@@ -88,7 +88,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            {{ t('fields.commission') }}
+            {{ t('fields.memberProfit') }}
           </el-col>
           <el-col :span="12">
             {{ data.commissionAmount }}

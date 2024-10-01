@@ -270,7 +270,7 @@ async function loadMemberRebateRules() {
 }
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
   request.loginName = null;
 }
 
@@ -412,7 +412,7 @@ onMounted(async() => {
     padding: 4px 0;
   }
 
-  .el-form-item--level-color:deep .el-form-item__content {
+  .el-form-item--level-color:deep(.el-form-item__content) {
     display: flex !important;
   }
 

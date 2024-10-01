@@ -3,8 +3,8 @@
 </template>
 
 <script setup>
-// import { postDeposit } from "@/api/personal/deposit";
-// import { doIt } from "@/utils/action";
+// import { postDeposit } from "src/api/personal/deposit";
+// import { doIt } from "src/boot/action";
 import { defineExpose } from "vue";
 
 async function submitDeposit(deposit) {

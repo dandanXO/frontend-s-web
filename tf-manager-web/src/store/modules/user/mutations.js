@@ -18,5 +18,10 @@ export const mutations = {
 
   [UserMutationTypes.SET_AVATAR](state, avatar) {
     state.avatar = avatar;
-  }
+  },
+
+  [UserMutationTypes.SET_SITE_ID](state, siteInfo) {
+    state.siteId = siteInfo.id
+    state.siteName = siteInfo.siteName
+  },
 };

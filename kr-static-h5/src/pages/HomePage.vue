@@ -406,7 +406,7 @@
       <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
       <!-- <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a> -->
       <!-- <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a> -->
-      <a href="https://t.me/cityy88" target="_blank" class="menu-item">
+      <a href="https://t.me/Diahelp7" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
       <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
@@ -1076,7 +1076,7 @@ export default defineComponent({
 
     function loadData() {
       api
-        .get("/promo/banner?category=HOME")
+        .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
@@ -2148,7 +2148,7 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 56px;
+      max-width: 140px;
       height: auto;
     }
   }

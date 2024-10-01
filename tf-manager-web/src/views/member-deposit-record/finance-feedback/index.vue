@@ -461,7 +461,7 @@ function resetQuery() {
   request.name = null
   request.feedbackTime = [null, null]
   request.commitTime = [null, null]
-  request.siteId = site.value.id ? site.value.id : null
+  request.siteId = site.value.id ? site.value.id : siteList.list[0].id
   request.orderNo = null
   request.type = typeList.list[0].value
   request.status = statusList.list[0].value
@@ -522,13 +522,12 @@ async function loadSites() {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
 
   request.status = statusList.list[0].value
@@ -569,7 +568,7 @@ async function showDialog(record) {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>

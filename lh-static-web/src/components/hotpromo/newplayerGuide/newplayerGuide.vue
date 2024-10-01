@@ -17,7 +17,9 @@
             <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
             <div class="title">
               新手礼包
-              <span v-if="store.token" style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
+              <span v-if="store.token" style="font-size: 16px; font-weight: 400">
+                ({{ isValidUser ? "进行中" : "已结束" }})
+              </span>
             </div>
           </div>
           <div v-if="store.token">
@@ -28,15 +30,13 @@
               (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
             </span>
           </div>
-          <div v-else style="font-size: 12px; font-weight: 400; color: #00000099">
-            您还未登录，请登录后参与活动
-          </div>
+          <div v-else style="font-size: 12px; font-weight: 400; color: #00000099">您还未登录，请登录后参与活动</div>
           <div class="section">
             <div style="display: flex">
               <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
               <div class="subtitle">奖励说明</div>
             </div>
-            <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+            <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡后任意存款一笔即可领取。</p>
           </div>
           <div class="section2">
             <div style="display: flex">
@@ -268,6 +268,7 @@ const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
 const usdtAddrBindState = ref("NO");
 const memberRegTime = ref(0);
+const depositState = ref("NO");
 
 const progress = ref(0);
 
@@ -286,13 +287,22 @@ function selectOption(option) {
 }
 
 const getStatus = (status) => {
+  var realStatus = status;
+  if (status === "YES" && depositState.value === "NO") {
+    realStatus = "OK";
+  }
+
   const statusTextMap = {
     NO: {
       text: "去完成",
       class: "incomplete"
     },
+    OK: {
+      text: "绑定成功",
+      class: "incomplete"
+    },
     YES: {
-      text: "领取",
+      text: "点击领取",
       class: "incomplete"
     },
     CLAIMED: {
@@ -304,7 +314,7 @@ const getStatus = (status) => {
       class: "not-eligible"
     }
   };
-  return statusTextMap[status];
+  return statusTextMap[realStatus];
 };
 
 const getStatus2 = (status) => {
@@ -334,6 +344,14 @@ const handleClickStatusButton = (status, promoCode) => {
       router.push({ path: "/center/personal" });
     }
   } else if (status === "YES") {
+    if (promoCode !== "new-user-setup-bonus-first-withdrawal" && depositState.value === "NO") {
+      notify({
+        type: "warning",
+        message: "请先完成任意存款一笔即可领取。"
+      });
+      return;
+    }
+
     getBonus(promoCode);
   }
 };
@@ -376,6 +394,7 @@ const getData = async () => {
   try {
     const apiRes = await getNewUserSetupBonusInit();
 
+    depositState.value = apiRes.data.depositState;
     bankCardBindState.value = apiRes.data.bankCardBindState;
     firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
     telephoneBindState.value = apiRes.data.telephoneBindState;
@@ -390,7 +409,7 @@ const getData = async () => {
   }
 };
 
-onMounted(async() => {
+onMounted(async () => {
   if (!store.token) {
     return;
   }
@@ -459,12 +478,13 @@ onMounted(async() => {
   align-items: flex-start;
   margin-top: 20px;
   .left-panel {
+    flex: 4;
     .big-icon {
       width: 32px;
       height: 32px;
       margin-right: 8px;
     }
-    flex: 4;
+
     .title {
       margin-top: 4px;
       color: #000;
@@ -490,12 +510,14 @@ onMounted(async() => {
   align-items: flex-start;
   margin-top: 20px;
   .left-panel {
+    flex: 2;
+
     .big-icon {
       width: 24px;
       height: 24px;
       margin-right: 8px;
     }
-    flex: 2;
+
     .title {
       margin-top: 4px;
       color: #000;
@@ -587,7 +609,7 @@ h1 {
   border-radius: 6px;
   font-size: 14px;
   text-align: center;
-  width: 80px;
+  width: 100px;
   border: 1px solid rgba(0, 133, 232, 1);
 
   cursor: pointer;

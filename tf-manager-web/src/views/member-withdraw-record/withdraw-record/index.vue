@@ -110,6 +110,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
 
       <div class="btn-group">
         <el-button
@@ -131,11 +139,15 @@
         v-loading="page.loading"
       >
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
+          prop="withdrawType"
+          :label="t('fields.withdrawType')"
           align="center"
-          min-width="80"
-        />
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
@@ -164,12 +176,6 @@
           min-width="110"
         />
         <el-table-column
-          prop="memberType"
-          :label="t('fields.memberType')"
-          align="center"
-          min-width="110"
-        />
-        <el-table-column
           prop="status"
           :label="t('fields.status')"
           align="center"
@@ -185,27 +191,6 @@
             <el-tag v-else>{{ t('withdrawStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="confirm status"
-          :label="t('fields.confirmStatus')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.confirmStatus === '0' && scope.row.status === 'SUCCESS'" type="danger">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.confirmStatus === '1' && scope.row.status === 'SUCCESS'" type="success">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
-        />
         <el-table-column
           prop="financial"
           :label="t('fields.financialLevel')"
@@ -259,7 +244,6 @@
             />
           </template>
         </el-table-column>
-
         <el-table-column
           prop="localCurrencyAmount"
           :label="t('fields.localCurrencyAmount')"
@@ -276,7 +260,6 @@
             />
           </template>
         </el-table-column>
-
         <el-table-column
           prop="withdrawDate"
           :label="t('fields.withdrawDate')"
@@ -371,6 +354,21 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="confirm status"
+          :label="t('fields.confirmStatus')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.confirmStatus === '0' && scope.row.status === 'SUCCESS'" type="danger">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.confirmStatus === '1' && scope.row.status === 'SUCCESS'" type="success">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="confirmBy"
           :label="t('fields.confirmBy')"
           align="center"
@@ -400,20 +398,22 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="withdrawType"
-          :label="t('fields.withdrawType')"
+          prop="vip"
+          :label="t('fields.vipLevel')"
           align="center"
-          min-width="120"
-        >
-          <template #default="scope">
-            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
-          </template>
-        </el-table-column>
+          min-width="80"
+        />
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"
           align="center"
           min-width="120"
+        />
+        <el-table-column
+          prop="memberType"
+          :label="t('fields.memberType')"
+          align="center"
+          min-width="110"
         />
         <el-table-column
           :label="t('fields.operate')"
@@ -845,6 +845,23 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.withdrawType')" prop="withdrawType">
+          <el-select
+            v-model="request.withdrawType"
+            size="small"
+            :placeholder="t('fields.withdrawType')"
+            class="filter-item"
+            style="width: 250px;"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.withdrawType"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="resetQuery()">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="advancedSearch()">{{ t('fields.search') }}</el-button>
@@ -963,6 +980,10 @@ const uiControl = reactive({
     { label: t('fields.byPaymentDateDesc'), value: 3 },
     { label: t('fields.byPaymentDateAsc'), value: 4 },
   ],
+  withdrawType: [
+    { key: 1, displayName: t('withdrawType.Manual'), value: 'Manual' },
+    { key: 2, displayName: t('withdrawType.AUTO_WITHDRAW'), value: 'AUTO_WITHDRAW' },
+  ],
 })
 
 const startDate = new Date()
@@ -1007,6 +1028,8 @@ const request = reactive({
   siteId: null,
   clientType: null,
   sort: 1,
+  withdrawType: null,
+  doris: false
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -1283,6 +1306,7 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+  request.doris = ret.sums.useDoris;
   page.loading = false
 }
 

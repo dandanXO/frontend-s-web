@@ -46,6 +46,7 @@
 
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
+    <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
 
@@ -69,6 +70,7 @@
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <SlotLacky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel'" />
+    <MidautumSpinWheel v-if="list.redirectUrl === 'dy2-midautumn-spinwheel'" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo'" />
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
     <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match'" />
@@ -86,12 +88,20 @@
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
-    <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode" />
+    <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <BlastPremier v-if="list.redirectUrl === 'dy2-blast-premier'" :promo-code="list.promoCode" />
+    <Tpworld2024 v-if="list.redirectUrl === 'dy2-tpworld-2024'" :promo-code="list.promoCode" />
+    <NationalDay2024 v-if="list.redirectUrl === 'dy2-national-day-2024'" :promo-code="list.promoCode" />
+    <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
+    <Dota2Ti13 v-if="list.redirectUrl === 'dy2-dota2-ti13'" :promo-code="list.promoCode" />
+    <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
+    <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
-      <q-card-section class="row items-center">
+      <q-card-section class="items-center row">
         <div class="bonus-svg-div">
           <span class="bonus-text">恭喜获得奖金</span>
           <span class="claim-amt">{{ claimMsg }}</span>
@@ -136,6 +146,7 @@ const InviteFriendPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/invitefriend/inviteFriendPromo.vue")
 );
 const EsportQuiz = defineAsyncComponent(() => import("../components/hotpromo/esportquiz/EsportQuiz.vue"));
+const EsportQuiz2 = defineAsyncComponent(() => import("../components/hotpromo/esportquiz2/EsportQuiz.vue"));
 const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
 const GiftPromo = defineAsyncComponent(() => import("../components/hotpromo/gift/GiftPromo.vue"));
 const PrivilegeInvite = defineAsyncComponent(() =>
@@ -153,6 +164,9 @@ const CnyStepGame2024Promo = defineAsyncComponent(() =>
 const Dy2StepGamePromo = defineAsyncComponent(() => import("../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue"));
 const CS2Sign = defineAsyncComponent(() => import("../components/hotpromo/CS2Sign/CS2Sign.vue"));
 const BonusSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
+const MidautumSpinWheel = defineAsyncComponent(() =>
+  import("../components/hotpromo/midautumSpinWheel/MidautumSpinWheel.vue")
+);
 const LOLMsi2024Promo = defineAsyncComponent(() => import("../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue"));
 const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
 const LPLSummer24 = defineAsyncComponent(() => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
@@ -170,12 +184,22 @@ const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Ol
 const Olympic24Match = defineAsyncComponent(() => import("../components/hotpromo/Olympic24Match/Olympic24Match.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
-const LivepokerRebate = defineAsyncComponent(() => import("../components/hotpromo/livepoker-rebate/LivepokerRebate.vue"));
+const LivepokerRebate = defineAsyncComponent(() =>
+  import("../components/hotpromo/livepoker-rebate/LivepokerRebate.vue")
+);
 
 const IntelEsl24 = defineAsyncComponent(() => import("../components/hotpromo/intel-esl-24/intel-esl-24.vue"));
 const LPLLCK = defineAsyncComponent(() => import("../components/hotpromo/lpllck/LPLLCK.vue"));
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const BbdachaCsgo2 = defineAsyncComponent(() => import("./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue"));
+const EslProCsgo2 = defineAsyncComponent(() => import("./hotpromo/eslpro-csgo2/EslProCsGo2.vue"));
+const BlastPremier = defineAsyncComponent(() => import("../components/hotpromo/blast-premier/BlastPremier.vue"))
+const Tpworld2024 = defineAsyncComponent(() => import("../components/hotpromo/tpworld-2024/tpworld-2024.vue"));
+const NationalDay2024 = defineAsyncComponent(() => import("../components/hotpromo/national-day-2024/NationalDay2024.vue"));
+const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
+const Dota2Ti13 = defineAsyncComponent(() => import("../components/hotpromo/dota2-ti13/Dota2Ti13.vue"));
+const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"));
+const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -199,6 +223,7 @@ export default defineComponent({
     InsuranceSubmitPromo,
     InviteFriendPromo,
     EsportQuiz,
+    EsportQuiz2,
     LotteryPromo,
     GiftPromo,
     PrivilegeInvite,
@@ -211,6 +236,7 @@ export default defineComponent({
     Dy2StepGamePromo,
     CS2Sign,
     BonusSpinWheel,
+    MidautumSpinWheel,
     LOLMsi2024Promo,
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
@@ -223,7 +249,15 @@ export default defineComponent({
     NewplayerGuide,
     LPLLCK,
     NewFootball,
-    BbdachaCsgo2
+    BbdachaCsgo2,
+    EslProCsgo2,
+    BlastPremier,
+    Tpworld2024,
+    NationalDay2024,
+    LoLS14,
+    BlackMythWuKongPromo,
+    Dota2Ti13,
+    SubmitClaimPromo
   },
   props: {
     list: {

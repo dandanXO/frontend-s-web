@@ -69,7 +69,7 @@
               class="filter-item"
               :placeholder="t('fields.siteType')"
               style="width: 240px;margin-bottom:10px"
-              @change="loadPromoTypes"
+              @change="onChangeSiteType"
             >
               <el-option
                 v-for="item in siteType.list"
@@ -90,10 +90,10 @@
               >
                 <el-checkbox
                   v-for="p in promoTypes"
-                  :label="p.typeName"
+                  :label="p.value"
                   :key="p.value"
                 >
-                  {{ p.displayName }}
+                  {{ getName(p.name) }}
                 </el-checkbox>
               </el-checkbox-group>
             </el-col>
@@ -227,26 +227,52 @@
             </el-button>
           </div>
         </el-form-item>
-        <el-form-item :label="t('fields.startTime')" prop="startTime">
-          <el-date-picker
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            v-model="form.startTime"
-            :disabled-date="disabledStartDate"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.endTime')" prop="endTime">
-          <el-date-picker
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            v-model="form.endTime"
-            :disabled-date="disabledEndDate"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.content')" prop="pageContent">
-          <!-- editor here -->
-          <Editor v-model:value="form.pageContent" @input="getInput" />
-        </el-form-item>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.startTime')" prop="startTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.startTime"
+                :disabled-date="disabledStartDate"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.endTime')" prop="endTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.endTime"
+                :disabled-date="disabledEndDate"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.displayStartTime')" prop="displayStartTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.displayStartTime"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.displayEndTime')" prop="displayEndTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.displayEndTime"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.content')" prop="pageContent">
+              <!-- editor here -->
+              <Editor v-model:value="form.pageContent" @input="getInput" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <div class="form-footer">
           <el-button type="primary" @click="submit">
             {{ t('fields.confirm') }}
@@ -1172,18 +1198,20 @@ import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
 import moment from 'moment'
-import { isVnm, isXF, isThai, isDY, isLH, isPak } from '@/utils/site'
+import { isVnm, isXF, isThai, isDY, isLH } from '@/utils/site'
 import { getSupportDarkMode } from '@/api/config'
+import { getActivePromoType } from "@/api/promo-type";
+import { useSessionStorage } from "@vueuse/core";
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
-const LOGIN_SITE_ID = store.state.user.siteId
+// const LOGIN_SITE_ID = store.state.user.siteId
 const site = ref(null)
 const inputImage = ref(null)
 const imageFormRef = ref(null)
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const promoForm = ref(null)
 const param = ref([])
 const inputValue = ref('')
@@ -1240,6 +1268,8 @@ const form = reactive({
   affiliates: null,
   startTime: null,
   endTime: null,
+  displayStartTime: "2020-01-01 00:00:00",
+  displayEndTime: "2030-01-01 23:59:59",
 })
 
 const imageForm = reactive({
@@ -1346,106 +1376,108 @@ const labelType = reactive({
 const promoTypes = ref([])
 const selectedVIPs = reactive({ vipChecked: [] })
 
-function loadPromoTypes() {
-  if (form.siteType === 'main') {
-    if (isPak(LOGIN_SITE_ID) || isPak(form.siteId)) {
-      promoTypes.value = [
-        { typeName: 'EARN', value: 12, displayName: 'EARN' },
-        { typeName: 'HOT', value: 13, displayName: 'HOT' },
-        { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
-        { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
-        { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
-        { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
-        { typeName: 'VIP', value: 15, displayName: 'VIP' },
-      ]
-    } else if (LOGIN_SITE_ID === 0) {
-      promoTypes.value = [
-        { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
-        { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-        { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-        { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
-        {
-          typeName: 'LIVE CASINO',
-          value: 5,
-          displayName: t('promoType.LIVECASINO'),
-        },
-        {
-          typeName: 'SLOT GAME',
-          value: 6,
-          displayName: t('promoType.SLOTGAME'),
-        },
-        { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
-        { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-        { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
-        { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
-        { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+async function loadPromoTypes() {
+  const { data: ret } = await getActivePromoType(form.siteId, form.siteType);
+  promoTypes.value = ret;
+  // if (form.siteType === 'main') {
+  //   if (isPak(LOGIN_SITE_ID) || isPak(form.siteId)) {
+  //     promoTypes.value = [
+  //       { typeName: 'EARN', value: 12, displayName: 'EARN' },
+  //       { typeName: 'HOT', value: 13, displayName: 'HOT' },
+  //       { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
+  //       { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
+  //       { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
+  //       { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
+  //       { typeName: 'VIP', value: 15, displayName: 'VIP' },
+  //     ]
+  //   } else if (LOGIN_SITE_ID === 0) {
+  //     promoTypes.value = [
+  //       { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+  //       { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+  //       { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+  //       { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+  //       {
+  //         typeName: 'LIVE CASINO',
+  //         value: 5,
+  //         displayName: t('promoType.LIVECASINO'),
+  //       },
+  //       {
+  //         typeName: 'SLOT GAME',
+  //         value: 6,
+  //         displayName: t('promoType.SLOTGAME'),
+  //       },
+  //       { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+  //       { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+  //       { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+  //       { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+  //       { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
 
-        { typeName: 'EARN', value: 12, displayName: 'EARN' },
-        { typeName: 'HOT', value: 13, displayName: 'HOT' },
-        { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
-        { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
-        { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
-        { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
-        { typeName: 'VIP', value: 15, displayName: 'VIP' },
-      ]
-    } else if (LOGIN_SITE_ID === 6) {
-      // Dongying 东赢
-      promoTypes.value = [
-        { typeName: 'WELCOME', value: 1, displayName: '新人优惠' },
-        { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-        { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-        { typeName: 'LIVE CASINO', value: 5, displayName: '真人棋牌' },
-        { typeName: 'SLOT GAME', value: 6, displayName: '电游活动' },
-        { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
-        { typeName: 'LIMITED', value: 16, displayName: '限时热门' },
-        { typeName: 'FTD', value: 9, displayName: '充提优惠' },
-      ]
-    } else {
-      promoTypes.value = [
-        { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
-        { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-        { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-        { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
-        {
-          typeName: 'LIVE CASINO',
-          value: 5,
-          displayName: t('promoType.LIVECASINO'),
-        },
-        {
-          typeName: 'SLOT GAME',
-          value: 6,
-          displayName: t('promoType.SLOTGAME'),
-        },
-        { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
-        { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-        { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
-        { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
-        { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
-        { typeName: 'VIP', value: 15, displayName: 'VIP' },
-        { typeName: 'LIMITED', value: 16, displayName: t('promoType.LIMITED') },
-      ]
-    }
-  } else if (form.siteType === 'slot') {
-    promoTypes.value = [
-      {
-        typeName: 'SLOT WELCOME',
-        value: 1,
-        displayName: t('promoType.SLOTWELCOME'),
-      },
-      {
-        typeName: 'SLOT DAILY',
-        value: 2,
-        displayName: t('promoType.SLOTDAILY'),
-      },
-      {
-        typeName: 'SLOT OTHER',
-        value: 3,
-        displayName: t('promoType.SLOTOTHER'),
-      },
-    ]
-  } else {
-    promoTypes.value = []
-  }
+  //       { typeName: 'EARN', value: 12, displayName: 'EARN' },
+  //       { typeName: 'HOT', value: 13, displayName: 'HOT' },
+  //       { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
+  //       { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
+  //       { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
+  //       { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
+  //       { typeName: 'VIP', value: 15, displayName: 'VIP' },
+  //     ]
+  //   } else if (LOGIN_SITE_ID === 6) {
+  //     // Dongying 东赢
+  //     promoTypes.value = [
+  //       { typeName: 'WELCOME', value: 1, displayName: '新人优惠' },
+  //       { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+  //       { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+  //       { typeName: 'LIVE CASINO', value: 5, displayName: '真人棋牌' },
+  //       { typeName: 'SLOT GAME', value: 6, displayName: '电游活动' },
+  //       { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
+  //       { typeName: 'LIMITED', value: 16, displayName: '限时热门' },
+  //       { typeName: 'FTD', value: 9, displayName: '充提优惠' },
+  //     ]
+  //   } else {
+  //     promoTypes.value = [
+  //       { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+  //       { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+  //       { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+  //       { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+  //       {
+  //         typeName: 'LIVE CASINO',
+  //         value: 5,
+  //         displayName: t('promoType.LIVECASINO'),
+  //       },
+  //       {
+  //         typeName: 'SLOT GAME',
+  //         value: 6,
+  //         displayName: t('promoType.SLOTGAME'),
+  //       },
+  //       { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+  //       { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+  //       { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+  //       { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+  //       { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+  //       { typeName: 'VIP', value: 15, displayName: 'VIP' },
+  //       { typeName: 'LIMITED', value: 16, displayName: t('promoType.LIMITED') },
+  //     ]
+  //   }
+  // } else if (form.siteType === 'slot') {
+  //   promoTypes.value = [
+  //     {
+  //       typeName: 'SLOT WELCOME',
+  //       value: 1,
+  //       displayName: t('promoType.SLOTWELCOME'),
+  //     },
+  //     {
+  //       typeName: 'SLOT DAILY',
+  //       value: 2,
+  //       displayName: t('promoType.SLOTDAILY'),
+  //     },
+  //     {
+  //       typeName: 'SLOT OTHER',
+  //       value: 3,
+  //       displayName: t('promoType.SLOTOTHER'),
+  //     },
+  //   ]
+  // } else {
+  //   promoTypes.value = []
+  // }
 }
 
 function disabledStartDate(time) {
@@ -1475,7 +1507,7 @@ function handleCheckedChangePromoType() {
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 async function changeImagePage(page) {
@@ -1874,8 +1906,11 @@ function submitImageUpload() {
 
 function onChangeSite() {
   // if (parseInt(form.siteId) === 8) {
+  selected.promoTypeChecked = []
+  form.promoType = null
   loadVips()
   loadDarkMode()
+  loadPromoTypes()
   // }
 
   if (isVnm(form.siteId)) {
@@ -1883,6 +1918,12 @@ function onChangeSite() {
   } else {
     uiControl.showSiteType = false;
   }
+}
+
+function onChangeSiteType() {
+  selected.promoTypeChecked = []
+  form.promoType = null
+  loadPromoTypes()
 }
 
 async function loadVips() {
@@ -1948,10 +1989,23 @@ const handleInputConfirm = () => {
   inputValue.value = ''
 }
 
+function getName(nameStr) {
+  const json = JSON.parse(nameStr)
+  if (json[locale.value]) {
+    return json[locale.value]
+  } else {
+    return Object.values(json)[0]
+  }
+}
+
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
+    form.siteId = store.state.user.siteId
+  } else {
+    imageRequest.siteId = siteList.list[0].id
+    form.siteId = siteList.list[0].id
   }
   form.siteType = "main";
   if (route.name.includes('Edit')) {
@@ -1959,6 +2013,11 @@ onMounted(async () => {
     await loadForm(route.params.id)
     await loadDarkMode()
   } else {
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
     await addParam()
     await loadPromoTypes()
   }

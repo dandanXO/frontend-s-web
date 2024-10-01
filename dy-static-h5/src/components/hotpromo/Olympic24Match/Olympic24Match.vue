@@ -576,7 +576,7 @@ onMounted(() => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   padding-bottom: 16px;
 
   .olympic24-match-game-content-left,

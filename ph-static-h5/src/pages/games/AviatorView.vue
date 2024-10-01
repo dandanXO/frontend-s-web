@@ -14,7 +14,7 @@
     </div>
     <div class="margin-center game-container">
       <div class="all-game-container">
-        <div class="plat-type-container">
+        <div class="plat-type-container" style="display: none">
           <div class="plat-list">
             <div
               class="plat-item"
@@ -23,7 +23,7 @@
               :key="p"
               @click="switchPlat(p)"
             >
-              <img :src="require('../../assets/logo/' + p.code + '.png')">
+              <img :src="require('../../assets/logo/' + p.code + '.png')" />
               <!-- <img
                 v-if="p.name === 'JDB'"
                 src="../../assets/images/common/logo/JDB.png"
@@ -55,9 +55,7 @@
             </div>
           </div>
         </div>
-        <div
-          class="grid-items flex-box flex-align-center search-container web-only-box"
-        ></div>
+        <div class="grid-items flex-box flex-align-center search-container web-only-box"></div>
         <!-- <div class="game-list-wrapper">
           <div
             class="game-slot animate__animated animate__fadeInRight"
@@ -75,16 +73,9 @@
             </a>
           </div>
         </div> -->
-        <q-scroll-area
-          ref="scrollPageRef"
-          style="height: calc(100vh - 265px)" 
-          :thumb-style="{ width: 0 }"
-        >
+        <q-scroll-area ref="scrollPageRef" style="height: calc(100vh - 265px)" :thumb-style="{ width: 0 }">
           <div class="loading-div" v-if="isLoading">
-            <q-spinner-hourglass
-              color="deep-orange"
-              size="8em"
-            />
+            <q-spinner-hourglass color="light-blue-4" size="8em" />
           </div>
           <q-intersection transition="scale">
             <div class="grid fishing">
@@ -93,6 +84,7 @@
                 v-for="game in gameListData"
                 :key="game.id"
                 @click="fishGame.open(game.name, selectedPlat.code, game.code, selectedPlat.status)"
+                style="height: 120px"
               >
                 <div class="slot-img">
                   <!-- <q-img loading="lazy" :src="game.icon" style="height: 150px">
@@ -103,13 +95,17 @@
                       <img :src="game.default"/>
                     </template>
                   </q-img> -->
-                  
-                    <div class="box" style="display: flex; justify-content:center;" :style="`background: url(${game.default})no-repeat center center; background-size: cover`">
-                       <img :src="game.icon" v-bind:alt="game.default" style="height: 150px; left: -50px;" >
-                    </div>
+
+                  <div
+                    class="box"
+                    style="display: flex; justify-content: center"
+                    :style="`background: url(${game.default})no-repeat center center; background-size: 100% 100%;aspect-ratio:1/1;`"
+                  >
+                    <img :src="game.icon" v-bind:alt="game.default" style="height: 100%; width: 100%" />
+                  </div>
                 </div>
                 <div class="slot-name">
-                  <span class="slide"> {{ game.name }}</span>
+                  <span class="slide">{{ game.name }}</span>
                 </div>
 
                 <!-- <a @click="openGame(game.name, game.code)">
@@ -124,8 +120,8 @@
               </div>
             </div>
           </q-intersection>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
-          <q-scroll-observer @scroll="scrolling"/>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+          <q-scroll-observer @scroll="scrolling" />
         </q-scroll-area>
       </div>
     </div>
@@ -140,31 +136,13 @@
         shape-rendering="auto"
       >
         <defs>
-          <path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          />
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
         </defs>
         <g class="parallax">
-          <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="0"
-            fill="rgba(36,71,100,0.7"
-          />
-          <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="3"
-            fill="rgba(36,71,100,0.5)"
-          />
-          <use
-            xlink:href="#gentle-wave"
-            x="48"
-            y="5"
-            fill="rgba(36,71,100,0.3)"
-          />
-          <use xlink:href="#gentle-wave" x="48" y="7" fill="#244764"/>
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(36,71,100,0.7" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(36,71,100,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(36,71,100,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#244764" />
         </g>
       </svg>
     </div>
@@ -173,11 +151,11 @@
 </template>
 
 <script lang="js">
-import {defineComponent, onMounted, reactive, ref} from "vue";
-// import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import { getPlatformGames, getPlatformList } from "src/api/platform/platform";
 import GameModal from "components/modal/GameModal";
 // import { message } from "ant-design-vue";
-// import { loadPromoBanner } from "@/api/index/promo";
+// import { loadPromoBanner } from "src/api/index/promo";
 import {api} from "boot/axios";
 import {cached} from "boot/cache";
 import {useQuasar, Platform} from "quasar";
@@ -187,7 +165,8 @@ import {scroll} from 'quasar'
 
 export default defineComponent({
   components: {GameModal, BacktoTop},
-  setup() {
+  props: ['activeSubTab'],
+  setup(props, { emit }) {
     const $q = useQuasar();
     const route = useRoute()
     const platforms = ref([]);
@@ -208,10 +187,9 @@ export default defineComponent({
 
     const getPlatList = () => {
       isLoading.value = true;
-      cached.get("PLATFORMS", () => api.get("/platform").then((res) => {
-        const response = res.data
-        return response
-      })).then((data) => {
+      // return;
+
+      getPlatformList().then((data) => {
         isLoading.value = false;
         platforms.value = data.filter(element => element.gameType.includes("FISH"));
         platforms.value.forEach((e, i) => {
@@ -237,6 +215,8 @@ export default defineComponent({
         //   message: "Loading failed",
         //   icon: "report_problem"
         // });
+      }).finally(() => {
+        emit('platformUpdate', platforms.value)
       })
 
     };
@@ -263,7 +243,7 @@ export default defineComponent({
       var way = null
       if (Platform.is.android) {
         way = "ANDROID"
-      } else if (Platform.is.ios) { 
+      } else if (Platform.is.ios) {
         way="IOS"
       }
       const code = selectedPlatId.value;
@@ -272,9 +252,9 @@ export default defineComponent({
 
       cached.get(key, () => api.get("/platformGames", {
         params: {platformId: code, gameType: gameType, device: regDevice, way: way},
-      }).then((ret) => {
+      }).then((res) => {
         isLoading.value = false;
-        const res = ret.data
+
         if (res.code === 0) {
           return res
         }
@@ -290,7 +270,7 @@ export default defineComponent({
         isLoading.value = false;
         res.forEach(element => {
           element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.IMAGE_CDN}/fish/${selectedPlat.value.code}/${element.icon}.png`;
+          element.icon = `${process.env.IMAGE_CDN}/games/fish/${selectedPlat.value.code}/${element.icon}.png`;
         });
         gameListData.value = res;
       })
@@ -300,6 +280,14 @@ export default defineComponent({
     onMounted(() => {
       getPlatList();
     });
+
+    watch(() => props.activeSubTab, () => {
+      const plat = platforms.value.find(({ code }) => code === props.activeSubTab);
+
+      if(plat) {
+        switchPlat(plat);
+      }
+    })
 
     return {
       platforms,
@@ -352,8 +340,10 @@ export default defineComponent({
 }
 
 .fishing-container {
-  background: linear-gradient(to top, #23263c, #244764);
-  background-image: url("../../assets/images/games/aviator/aviator_bg.png");
+  // background-color: #f5faff;
+  // background-image: url("../../assets/images/account/bg-23.png");
+
+  //background: linear-gradient(to top, #23263c, #244764);
   background-attachment: fixed;
   background-size: cover;
   position: relative;
@@ -664,8 +654,6 @@ export default defineComponent({
     }
 
     .all-game-container {
-      margin-top: 50px;
-      max-width: 1280px;
       margin: 0px auto;
 
       .plat-type-container {
@@ -682,34 +670,39 @@ export default defineComponent({
           width: 100%;
           margin: 10px auto 0;
           overflow: auto;
-          padding: 10px 20px 20px;
+          padding: 5px 20px 10px;
           justify-content: flex-start;
-          flex-wrap: wrap;
 
           .plat-item {
-            padding: 10px;
+            min-width: 130px;
+            padding: 7px 10px;
             cursor: pointer;
             border-radius: 10px;
-            background: #003653;
             z-index: 2;
-            box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
+            align-items: center;
+            box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.24);
+
             // min-width: 100px;
             text-align: center;
 
             img {
-              max-height: 16px;
+              max-height: 25px;
               filter: grayscale(1);
               display: block;
               margin: 0 auto;
             }
 
-            &.active,
-            &:hover {
-              background: #1c5370;
-              box-shadow: inset 0 0 5px #ffffff;
+            &.active {
+              background: $primary;
+              border: 1px solid hsla(0, 0%, 78%, 0.5);
+              box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.24);
 
               img {
                 filter: grayscale(0);
+              }
+
+              span {
+                color: #ffffff;
               }
             }
           }
@@ -821,13 +814,19 @@ export default defineComponent({
       // }
 
       .grid.fishing {
-        padding: 0 20px 10px;
-        display: grid;
-        grid-auto-rows: 100px;
+        // padding: 0 20px 10px;
+        // display: grid;
+        // grid-auto-rows: 100px;
         // grid-template-columns: repeat(3, 1fr);
-        
-         grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+
+        // grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+        // gap: 10px;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 10px;
+        width: 100%;
+        margin: 0 auto;
 
         .game-slot {
           cursor: pointer;
@@ -840,7 +839,7 @@ export default defineComponent({
           // transform: scale(0, 0);
           // -webkit-animation-fill-mode: forwards;
           // animation-fill-mode: forwards;
-          
+
           @-webkit-keyframes scale {
             100% {
               -webkit-transform: scale(1, 1);
@@ -857,10 +856,19 @@ export default defineComponent({
             background: linear-gradient(0deg, #1f2035 20%, transparent);
             position: absolute;
             bottom: 0;
+            color: #fff;
             left: 0;
             right: 0;
             padding: 10px;
             text-align: center;
+          }
+
+          .slide {
+            display: block;
+            line-height: 15px;
+            white-space: nowrap; /* 防止文本换行 */
+            overflow: hidden; /* 超出部分隐藏 */
+            text-overflow: ellipsis; /* 超出部分显示省略号 */
           }
         }
       }
@@ -884,7 +892,7 @@ export default defineComponent({
 .loading-div {
   z-index: 99;
   position: fixed;
-  background: rgba(35, 38, 60, 0.6);
+  background: rgba(255, 255, 255, 0.1);
   text-align: center;
   margin: 0 auto;
   width: 100%;
@@ -895,7 +903,7 @@ export default defineComponent({
   padding-bottom: 100px;
 
   svg {
-    color: #db7e42;
+    color: #1e88e5;
     width: 48px;
   }
 }
@@ -992,6 +1000,10 @@ export default defineComponent({
   }
 }
 
+.q-scrollarea {
+  // padding-top: 14px;
+}
+
 @media (max-width: 768px) {
   .fishing-container {
     .banner-container {
@@ -1012,119 +1024,4 @@ export default defineComponent({
     }
   }
 }
-
-// @media (max-width: 1440px) {
-//   .casino-container .banner-container {
-//     background-position: 70% center;
-//   }
-// }
-// @media (max-width: 768px) {
-//   .casino-container {
-//     min-height: unset;
-
-//     .web-only-box {
-//       display: none !important;
-//     }
-
-//     .banner-container {
-//       // width: 100%;
-//       // height: 270px;
-//       // padding-top: 30px;
-//       font-size: 1rem;
-//       // background-image: url("../../assets/images/games/casino/casino_banner_mob.png");
-//       padding: 75px 0;
-//       background-size: cover;
-//     }
-
-//     .title-container {
-//       &.large {
-//         padding: 12px 0;
-
-//         .game-title {
-//           font-size: 1em;
-
-//           &:before {
-//             display: none;
-//           }
-
-//           &:after {
-//             display: none;
-//           }
-//         }
-//       }
-
-//       &.hot {
-//         .game-title {
-//           font-size: 26px;
-//         }
-//       }
-//     }
-
-//     .game-container {
-//       width: 95%;
-//       min-width: unset;
-//       overflow: hidden;
-
-//       .hot-game-container {
-//         padding: 10px;
-
-//         .carousel-item {
-//           width: 100%;
-//           height: unset;
-
-//           .carousel-img {
-//             display: grid;
-//             grid-gap: 10px;
-//             grid-template-columns: 1fr 1fr;
-//             justify-content: space-between;
-
-//             img {
-//               width: 100%;
-//               margin: 0;
-//             }
-//           }
-//         }
-
-//         .desktop {
-//           display: none;
-//         }
-
-//         .mobile {
-//           display: block;
-//         }
-//       }
-
-//       .hot-img {
-//         width: 100%;
-//         margin-bottom: 10px;
-//       }
-
-//       .all-game-container {
-//         .grid-items {
-//           display: grid;
-//           justify-content: start;
-//           grid-template-columns: repeat(2, 1fr);
-//           grid-column-gap: 9px;
-//         }
-
-//         .game-list-wrapper {
-//           grid-template-columns: 1fr 1fr;
-//           grid-gap: 10px;
-
-//           .game-slot a .slot-img {
-//             width: 100%;
-//             height: unset;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
-// .slot-iframe {
-//   height: 100%;
-//   width: 100%;
-//   margin: 0 auto;
-//   display: block;
-// }
 </style>

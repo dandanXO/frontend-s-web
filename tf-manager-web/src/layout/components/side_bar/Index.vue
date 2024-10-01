@@ -100,6 +100,9 @@ export default defineComponent({
       }
       query.withdrawDate = query.withdrawDate.join(',');
       query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
+      if (!query.siteId) {
+        query.siteId = store.state.user.siteId;
+      }
       return query;
     }
 

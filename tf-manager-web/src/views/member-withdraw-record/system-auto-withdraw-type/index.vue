@@ -52,7 +52,7 @@
         :rules="formRules"
         :inline="true"
         size="small"
-        label-width="150px"
+        label-width="250px"
       >
         <el-form-item :label="t('fields.payTypeName')" prop="paymentTypeCode" required>
           <el-select
@@ -72,8 +72,24 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.rule')" prop="rule">
+        <el-form-item :label="t('fields.rule')" prop="rule" v-if="uiControl.useRule">
           <el-input type="textarea" :rows="6" v-model="form.rule" class="form-input" style="width: 300px;" />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.maxWithdrawAmount')"
+          prop="withdrawAmountMax"
+          v-if="!uiControl.useRule"
+          required
+        >
+          <el-input-number
+            v-model="form.withdrawAmountMax"
+            :min="0"
+            class="form-input"
+            :controls="false"
+            :step="1"
+            :precision="0"
+            style="width: 200px;"
+          />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -286,7 +302,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
-        <el-table-column prop="rule" :label="t('fields.rule')" />
+        <el-table-column prop="rule" :label="t('fields.rule')" v-if="uiControl.useRule" />
+        <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" align="center" v-if="!uiControl.useRule">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.withdrawAmountMax, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
           <template #default="scope">
             <el-switch
@@ -342,7 +363,7 @@ import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
-import { isPak } from '@/utils/site'
+import { isPak, isIndiaSite, isPh1, isBr1, isNga, isId1 } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
@@ -358,6 +379,7 @@ const uiControl = reactive({
   platformDialogTitle: '',
   platformDialogType: 'CREATE',
   dialogLoading: false,
+  useRule: true,
 })
 const request = reactive({
   size: 30,
@@ -432,7 +454,21 @@ async function loadCurrency() {
 
 async function loadAutoPaymentType() {
   const { data: ret } = await getSystemAutoPaymentTypeList(request)
+  ret.forEach(item => {
+    item.withdrawAmountMax = getMaxWithdrawNumber(item.rule)
+  })
   page.records = ret
+}
+
+function getMaxWithdrawNumber(str) {
+  if (!str) return null;
+  const matches = str.match(/#withdraw\s*[<>]\s*\d+/g);
+  if (matches === null) return null;
+  const numbers = matches.map(match => {
+    const num = match.match(/\d+/);
+    return parseInt(num, 10); // Convert the number to an integer
+  });
+  return Math.max(...numbers);
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
@@ -480,6 +516,7 @@ function payTypeByExistingPayType() {
 }
 
 async function handleChangeSite() {
+  checkUseRule()
   await loadWithdrawPlatform()
   await loadAutoPaymentType()
   await loadSiteWithdrawPlatform(request.siteId)
@@ -498,14 +535,12 @@ function changeStatus(data, status) {
 
 async function saveOrder(data) {
   data.siteId = request.siteId
-  console.log(data)
   await createWithdrawalChannelOrder(data)
   await loadAutoPaymentType()
   ElMessage({ message: t('message.addSuccess'), type: 'success' })
 }
 
 async function batchSave(data) {
-  console.log(data)
   var sequenceList = []
   var isDuplicate = false
   data.forEach(setting => {
@@ -587,6 +622,7 @@ function create() {
   autoPaymentForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
+      form.rule = uiControl.useRule ? form.rule : "#withdraw < " + form.withdrawAmountMax
       await createSystemAutoPaymentType(form)
       uiControl.dialogVisible = false
       await loadAutoPaymentType()
@@ -613,6 +649,7 @@ function edit() {
   autoPaymentForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
+      form.rule = uiControl.useRule ? form.rule : "#withdraw < " + form.withdrawAmountMax
       await updateystemAutoPaymentType(form)
       uiControl.dialogVisible = false
       await loadAutoPaymentType()
@@ -644,6 +681,14 @@ function changePage(page) {
   request.current = page
 }
 
+function checkUseRule() {
+  if (isIndiaSite(request.siteId) || isPh1(request.siteId) || isBr1(request.siteId) || isNga(request.siteId) || isId1(request.siteId)) {
+    uiControl.useRule = false;
+  } else {
+    uiControl.useRule = true;
+  }
+}
+
 onMounted(async() => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -653,6 +698,7 @@ onMounted(async() => {
     site.value = list.sites[0];
     request.siteId = site.value.id;
   }
+  checkUseRule()
   await loadWithdrawPlatform()
   await loadSiteWithdrawPlatform(request.siteId)
   loadCurrency()

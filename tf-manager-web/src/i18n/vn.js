@@ -297,7 +297,7 @@ export default {
     CENTERPROMO: 'Khuyến mãi trung tâm',
     LOGIN: 'Đăng nhập',
     REGISTER: 'Đăng ký',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: 'Đang chờ',
@@ -1464,6 +1464,8 @@ export default {
     teamOneIcon: 'Biểu Tượng Đội 1',
     teamTwo: 'Đội 2',
     teamTwoIcon: 'Biểu Tượng Đội 2',
+    teamBackgroundImage: 'Hình nền đội',
+    teamBackgroundImageDark: 'đội hình nền tối',
     telephone: 'Điện Thoại',
     thirtyDaysdw: '30 Ngày Gửi - Rút',
     thirdParty: 'Bên Thứ Ba',
@@ -1489,6 +1491,7 @@ export default {
     toreview: 'Đang Đánh Giá',
     toSuspend: 'Dự Định Tạm Dừng',
     total: 'Tổng Cộng',
+    totalActualRate: 'Tổng số tiền lãi',
     totalAdjustment: 'Tổng Điều Chỉnh',
     totalBalance: 'Tổng Số Dư',
     totalBet: 'Tổng Số Cược',
@@ -1519,6 +1522,8 @@ export default {
     totalNoOfDeposits: 'Tổng Số Lượt Gửi',
     totalNoOfWithdrawals: 'Tổng Số Lượt Rút',
     totalPayout: 'Tổng Số Thanh Toán',
+    totalPlaceAmount: 'Tổng số tiền gửi',
+    totalPlaceMemberCount: 'Tổng số người',
     totalPrivilegeAmount: 'Tổng Số Tiền Ưu Đãi',
     totalPrivilegeClaimAmount: 'Tổng Số Tiền Yêu Cầu Ưu Đãi',
     totalPromo: 'Tổng Số Khuyến Mãi',
@@ -1590,6 +1595,8 @@ export default {
     upload: 'Tải Lên',
     upperName: 'Tên Upline',
     usdtControl: 'Kiểm Soát Rút USDT',
+    usdtDepositAmount: 'Số tiền gửi tiền kỹ thuật số',
+    usdtDepositCount: 'Số lượng người gửi tiền kỹ thuật số',
     username: 'Tên Người Dùng',
     userType: 'Loại Người Dùng',
     validate: 'Xác Nhận',
@@ -1813,6 +1820,7 @@ export default {
     updateShareRatio: 'Cập nhật tỷ lệ hoàn trả',
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
+    batchFrozenMember: 'Đóng băng thành viên hàng loạt',
   },
   message: {
     startenddatemore3months:
@@ -2194,6 +2202,8 @@ export default {
     validateRoleRequired: 'Yêu cầu vai trò',
     validateRoleNameRequired: 'Yêu cầu tên vai trò',
     validateRolloverRequired: 'Yêu cầu lật',
+    validateGameRolloverRequired: "Loại trò chơi và doanh thu phải chọn",
+    validateGameRolloverSelectRequired: "Loại trò chơi và doanh thu phải chọn",
     validateRoundRequired: 'Yêu cầu vòng',
     validateRulesRequired: 'Yêu cầu luật lệ',
     validateSchemaNameRequired: 'Yêu cầu tên lược đồ',
@@ -2547,6 +2557,7 @@ export default {
     'Vip Report': 'Báo cáo VIP',
     'System Value Rules': 'Quy tắc giá trị hệ thống',
     'Sites Config': 'Cấu hình trang web',
+    'Mooncake Fest Spin Record': '中秋节转盘2024',
   },
   google: {
     google_auth_menu: 'Google Xác thực',

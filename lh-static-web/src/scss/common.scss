@@ -41,10 +41,86 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "PlayBold";
+  src: url("@/assets/fonts/Play-Bold.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Play";
+  src: url("@/assets/fonts/Play-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Purple Purse";
+  src: url("@/assets/fonts/PurplePurse-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: "HYYakuHei800";
+  src: url("@/assets/fonts/HYYakuHei800.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HYYakuHei400";
+  src: url("@/assets/fonts/HYYakuHei400.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HYYakuHei300";
+  src: url("@/assets/fonts/HYYakuHei300.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: "YouSheBiaoTiHei";
-  src: url("@/assets/fonts/YouSheBiaoTiHei Regular.ttf");
+  src: url("@/assets/fonts/YouSheBiaoTiHei.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: "HYYakuHei800";
+  src: url("@/assets/fonts/HYYakuHei800.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HYYakuHei400";
+  src: url("@/assets/fonts/HYYakuHei400.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HYYakuHei300";
+  src: url("@/assets/fonts/HYYakuHei300.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "YouSheBiaoTiHei";
+  src: url("@/assets/fonts/YouSheBiaoTiHei.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -613,4 +689,8 @@ button {
   //  background-image: $active-color-dark-linear;
   //  box-shadow: $active-color-dark-shadow;
   //}
+}
+
+body .announcement-modal.el-dialog .el-dialog__body {
+  padding: 0;
 }

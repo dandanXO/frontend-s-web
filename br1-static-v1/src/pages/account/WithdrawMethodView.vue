@@ -1,354 +1,442 @@
 <template>
-  <div class="withdrawal-modal-view">
-    <template v-if="isSelectedMethod">
-      <div class="method-options">
-        <div class="method-title">Payment Method</div>
-        <div class="options-picker" @click="resetSelectedMethod()">
-          <div class="pick-title">{{ selectedMethodItem.nodeName }}</div>
-          <q-icon name="arrow_drop_down" size="20px" />
-        </div>
-      </div>
-
-      <div class="bank-account-container">
-        <div class="w-form-item w-form-item--bankcard">
-          <div class="top-wrapper">
-            <div class="title">Bank Name</div>
-          </div>
-          <div>
-            <q-select
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.bankId"
-              label-color="secondary"
-              :options="filteredBankList"
-              option-value="id"
-              option-label="name"
-              emit-value
-              map-options
-              use-input
-              input-debounce="100"
-              fill-input
-              hide-selected
-              @filter="filterBank"
-              behavior="menu"
-            >
-              <!-- <template v-slot:option="scope">
-                <q-item v-bind="scope.itemProps">
-                  <q-item-section avatar v-if="scope.opt.bankIcon">
-                    <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
-                  </q-item-section>
-                  <q-item-section>
-                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                    {{ scope.opt.name }}
-                  </q-item-label>
-                </q-item-section>
-                </q-item>
-              </template>
-              <template v-slot:selected-item="scope">
-                <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img
-                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                    {{ scope.opt.name }}
-                  </q-item-label>
-                </q-item-section>
-              </template> -->
-            </q-select>
-          </div>
-        </div>
-      </div>
-
-      <!-- bank options -->
-      <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
-        <div class="method-title q-mt-sm">Choose Bank Account</div>
-        <div class="mid-wrapper">
-          <div class="w-form-item w-form-item--bankcard">
-            <div class="w-form-input">
-              <q-select
-                ref="cardRef"
-                filled
-                dense
-                clearable
-                v-model="withdrawInfo.cardId"
-                @update:model-value="onCardChanged"
-                :options="bankCardList"
-                option-value="id"
-                emit-value
-                map-options
-                :rules="[(val) => !!val || 'Please Select A Bank Card']"
-                hide-bottom-space
-              >
-                <template v-slot:option="scope">
-                  <q-item v-bind="scope.itemProps">
-                    <q-item-section avatar v-if="scope.opt.bankIcon">
-                      <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>
-                        Acc No. ****{{
-                          scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
-                        }}
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </template>
-                <template v-slot:selected-item="scope">
-                  <q-item-section avatar v-if="scope.opt.bankIcon">
-                    <img
-                      style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                      :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                    />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                      Acc No. {{ scope.opt.cardNumber }}
-                    </q-item-label>
-                  </q-item-section>
-                </template>
-              </q-select>
-            </div>
-          </div>
-        </div>
-
-        <div class="bot-wrapper">
-          <div class="bank-card-item" @click="isAddNewAccount = true">
-            <div class="card-icon">
-              <q-icon key="md" size="md" name="add" />
-            </div>
-            <div class="card-label">Add New Account</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="withdrawal-amount-container">
-        <template v-if="bankCardList.length === 0 || isAddNewAccount">
-          <div class="w-form-item w-form-item--bankcard">
-            <div class="top-wrapper">
-              <div class="title">Account Number</div>
-            </div>
-            <div class="mid-wrapper">
-              <q-input
-                filled
-                dense
-                clearable
-                ref="bankNumberRef"
-                placeholder="Enter Account Number"
-                v-model="bankCardField.cardNumber"
-                :rules="[(_) => isValidCardNumber()]"
-                hide-bottom-space
-              ></q-input>
-            </div>
-          </div>
-          <!-- <div class="w-form-item w-form-item--bankcard">
-            <div class="top-wrapper">
-              <div class="title">Bank IFSC Code</div>
-            </div>
-            <div class="mid-wrapper">
-              <q-input
-                filled
-                dense
-                clearable
-                ref="bankAddressRef"
-                placeholder="Enter Bank IFSC Code"
-                v-model="bankCardField.cardAddress"
-                :rules="[(_) => isValidCardAddress()]"
-                hide-bottom-space
-              ></q-input>
-            </div>
-          </div> -->
-        </template>
-
-        <div class="top-wrapper">
-          <!-- <div class="title">
-            Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-            {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.label }})
-          </div> -->
-          <div class="title">
-            Withdrawal Amount ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
-            {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} {{ store.currency.label }})
-          </div>
-        </div>
-
-        <div class="mid-wrapper">
-          <q-input
-            type="number"
-            ref="amountRef"
-            filled
-            dense
-            clearable
-            placeholder="Withdraw Amount"
-            v-model="withdrawInfo.amount"
-            :rules="[
-              (val) => !!val || 'Please Enter Withdraw Amount',
-              (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-              (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
-              (val) =>
-                (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
-            ]"
-            hide-bottom-space
-          >
-            <template v-slot:append>
-              <q-btn-group>
-                <q-btn
-                  class="minmax-btn"
-                  rounded
-                  color="black"
-                  label="min"
-                  dense
-                  no-caps
-                  @click="toggleAmount('min')"
-                />
-                <q-btn class="minmax-btn" rounded color="black" label="25%" dense no-caps @click="toggleAmount('25')" />
-                <q-btn class="minmax-btn" rounded color="black" label="50%" dense no-caps @click="toggleAmount('50')" />
-                <q-btn
-                  class="minmax-btn"
-                  rounded
-                  color="black"
-                  label="Max"
-                  dense
-                  no-caps
-                  @click="toggleAmount('max')"
-                />
-              </q-btn-group>
-            </template>
-          </q-input>
-        </div>
-
-        <div class="fund-container q-mt-sm q-mb-md">
-          <div>
-            <span class="fund-title">Available:</span>
-            {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
-          </div>
-        </div>
-
-        <div class="bot-wrapper">
-          <div class="info">
-            <div class="desc-wrapper">
-              <div class="desc">Withdrew Amount</div>
-            </div>
-            <div class="desc desc_white">
-              <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
-              {{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}
-            </div>
-          </div>
-          <div class="info">
-            <div class="desc-wrapper">
-              <div class="desc">{{ store.vip }} Daily Limit</div>
-            </div>
-            <div class="desc desc_white">
-              <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
-              {{ store.currency.label }}: {{ selectedMethodItem.withdrawMaxAmount }}
-            </div>
-          </div>
-          <div class="info">
-            <div class="desc-wrapper">
-              <div class="desc">Remain Wagers</div>
-            </div>
-            <div class="desc desc_white">
-              <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
-              {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <template v-if="bankCardList.length > 0 && !isAddNewAccount">
-        <div :class="`btn-submit`" @click="submitWithdraw">
-          <q-spinner
-            v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-            color="white"
-            size="2em"
-            :thickness="2"
-          ></q-spinner>
-          <template v-else>Submit</template>
-        </div>
-      </template>
-
-      <template v-else>
-        <div :class="`btn-submit`" @click="submitWithdrawBank">
-          <q-spinner
-            v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-            color="white"
-            size="2em"
-            :thickness="2"
-          ></q-spinner>
-          <template v-else>Submit</template>
-        </div>
-      </template>
-
-      <!-- <div class="bottom-tnc q-mt-md">
-        Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
-        information, if withdrawal failed or you have any other questions, please contact CS 24/7
-      </div> -->
-    </template>
+  <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
+    <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
+    </div>
 
     <template v-else>
-      <div class="method-title q-mb-md">Choose a payment method</div>
-      <div class="withdraw-methods-container">
-        <template v-for="(item, index) in paymentMethodsItems" :key="index">
-          <div class="method-item" @click="goSelectedMethod(item)" :class="{ disabled: item.maintenance }">
-            <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
+      <div class="withdraw-methods-currency">
+        <div
+          class="currency-item"
+          v-for="(item, index) in paymentMethodsItems"
+          :key="index"
+          @click="selectWithdrawCurrency(item)"
+          :class="{ active: item.code === selectedWithdraw[0].code }"
+        >
+          <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
+          <div>{{ item.code }}</div>
+          <div class="item-hot-ribbon" v-if="item.hot">
+            <img src="../../assets/images/account/ribbon-hot.png" />
+          </div>
+        </div>
+      </div>
 
-            <template v-if="item.maintenance">
-              <div class="item-detail">
-                <div class="txt-maintenance">
-                  <q-icon name="build" size="16px" />
-                  This channel is under maintenance
+      <template v-if="selectedWithdraw">
+        <div class="method-title q-mt-md q-mb-sm">{{ $t("withdraw.paymentChannels") }}</div>
+        <div class="withdraw-methods-container">
+          <template v-for="(item, index) in selectedWithdraw" :key="index">
+            <div
+              class="method-item"
+              @click="goSelectedMethod(item)"
+              :class="{ disabled: item.maintenance, active: item.active }"
+            >
+              <template v-if="item.maintenance">
+                <div class="item-detail">
+                  <div class="txt-maintenance">
+                    <q-icon name="build" size="16px" />
+                    {{ $t("withdraw.channelUnderMaintenance") }}
+                  </div>
                 </div>
-              </div>
-            </template>
+              </template>
 
-            <template v-else>
-              <div class="item-detail">
-                <div class="txt-title">{{ item.nodeName }}</div>
-                <div class="txt-content">
-                  ETA: {{ item.eta }}
-                  <br />
-                  Fee: {{ item.fee }}
+              <template v-else>
+                <div class="item-detail">
+                  <div class="txt-title">{{ item.nodeName }}</div>
                 </div>
-              </div>
-            </template>
+              </template>
+            </div>
+          </template>
+        </div>
+      </template>
 
-            <div class="item-amount" v-if="item.withdrawMin && item.withdrawMax">
-              {{ item.withdrawMin }}~{{ item.withdrawMax }} {{ store.currency.label }}
+      <template v-if="isSelectedMethod">
+        <div
+          class="bank-account-container"
+          v-if="isBankType === 'BANK' && (bankCardList.length === 0 || isAddNewAccount)"
+          style="opacity: 0; visibility: hidden; position: absolute"
+        >
+          <div class="w-form-item w-form-item--bankcard">
+            <div class="top-wrapper">
+              <div class="title">{{ $t("header.bankName") }}</div>
+            </div>
+            <div>
+              <q-select
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.bankId"
+                label-color="secondary"
+                :options="filteredBankList"
+                option-value="id"
+                option-label="name"
+                emit-value
+                map-options
+                use-input
+                input-debounce="100"
+                fill-input
+                hide-selected
+                @filter="filterBank"
+                behavior="menu"
+              ></q-select>
+            </div>
+          </div>
+        </div>
+
+        <!-- bank options -->
+        <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
+          <div class="method-title q-mb-sm">
+            {{ $t("header.choose") }} {{ displayCardType }} {{ $t("header.account") }}
+          </div>
+          <div class="mid-wrapper">
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="w-form-input">
+                <q-select
+                  ref="cardRef"
+                  class="bank-select-input"
+                  :loading="isLoadingBankCard"
+                  filled
+                  dense
+                  clearable
+                  v-model="withdrawInfo.cardId"
+                  @update:model-value="onCardChanged"
+                  :options="bankCardList"
+                  option-value="id"
+                  emit-value
+                  map-options
+                  :rules="[(val) => !!val || validateBankCardError()]"
+                  hide-bottom-space
+                >
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
+                      <q-item-section avatar v-if="scope.opt.bankIcon">
+                        <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>
+                          Acc No. ****{{
+                            scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                  <template v-slot:selected-item="scope">
+                    <q-item-section avatar v-if="scope.opt.bankIcon">
+                      <img
+                        style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                        :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                      />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                        Acc No. {{ scope.opt.cardNumber }}
+                      </q-item-label>
+                    </q-item-section>
+                  </template>
+                </q-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="bot-wrapper">
+            <div class="bank-card-item" @click="onAddNewAccount">
+              <div class="card-icon">
+                <q-icon key="md" size="md" name="add" />
+              </div>
+              <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="withdrawal-amount-container">
+          <template v-if="bankCardList.length === 0 || isAddNewAccount">
+            <!-- <div class="type-option-container">
+              <div class="">Select Type</div>
+              <q-select
+                class="type-option"
+                v-model="typeVal"
+                :options="typeOptions"
+                option-label="label"
+                option-value="value"
+                emit-value
+                map-options
+                filled
+                @update:model-value="selectOption"
+              />
+            </div> -->
+
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.holderName") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="text"
+                  ref="bankAccountRef"
+                  :placeholder="$t('form.holderName_placeholder')"
+                  v-model="bankCardField.cardAccount"
+                  :rules="[(_) => isValidCardAccount()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                ></q-input>
+              </div>
             </div>
 
-            <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.phone") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <!-- :type="['phone', 'cpf', 'cnpj'].includes(typeVal) ? 'number' : 'text'" -->
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="number"
+                  ref="bankNumberRef"
+                  :placeholder="$t('form.phone_placeholder')"
+                  v-model="bankCardField.cardNumber"
+                  :rules="[(_) => isValidCardNumber()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                >
+                  <template v-slot:prepend>
+                    <!-- <template v-if="typeVal === 'phone'"> -->
+                    <img class="white-svg" src="../../assets/images/account/input-icon-phone.png" />
+                    <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                    <!-- </template> -->
+                    <!-- <template v-if="typeVal === 'email'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-email.png" />
+                    </template>
+                    <template v-if="typeVal === 'cpf'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cpf.png" />
+                    </template>
+                    <template v-if="typeVal === 'cnpj'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cnpj.png" />
+                    </template>
+                    <template v-if="typeVal === 'evp'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-evp.png" />
+                    </template> -->
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.cpf") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="number"
+                  ref="bankAddressRef"
+                  :placeholder="$t('form.cpf_placeholder')"
+                  v-model="bankCardField.cardAddress"
+                  :rules="[(_) => isValidCardAddress()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                >
+                  <template v-slot:prepend>
+                    <img class="white-svg" src="../../assets/images/account/input-icon-cpf.png" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.email") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="text"
+                  ref="bankEmailRef"
+                  :placeholder="$t('form.email_placeholder')"
+                  v-model="bankCardField.email"
+                  :rules="[(_) => isValidEmail()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                >
+                  <template v-slot:prepend>
+                    <img class="white-svg" src="../../assets/images/account/input-icon-email.png" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+          </template>
+          <div class="top-wrapper">
+            <div class="title">
+              {{ $t("form.withdrawalAmount") }} ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
+              {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} {{ store.currency.label }})
+            </div>
+          </div>
+          <div class="mid-wrapper">
+            <q-input
+              type="number"
+              ref="amountRef"
+              filled
+              dense
+              clearable
+              :placeholder="$t('form.withdrawalAmount')"
+              v-model="withdrawInfo.amount"
+              :rules="[
+                (val) => !!val || $t('form.withdrawalAmount_rules_01'),
+                (val) => val > 0 || $t('form.withdrawalAmount_rules_02'),
+                (val) => val < selectedMethodItem.withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
+                (val) =>
+                  (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
+                  `${$t('form.withdrawalAmount_rules_04')} ${selectedMethodItem.withdrawMin} - ${
+                    selectedMethodItem.withdrawMax
+                  }`
+              ]"
+              hide-bottom-space
+              @focus="scrollToInput"
+              @blur="isInputFocus = false"
+            >
+              <template v-slot:append>
+                <q-btn-group>
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="mín"
+                    dense
+                    no-caps
+                    @click="toggleAmount('min')"
+                  />
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="25%"
+                    dense
+                    no-caps
+                    @click="toggleAmount('25')"
+                  />
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="50%"
+                    dense
+                    no-caps
+                    @click="toggleAmount('50')"
+                  />
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="Máx"
+                    dense
+                    no-caps
+                    @click="toggleAmount('max')"
+                  />
+                </q-btn-group>
+              </template>
+            </q-input>
+          </div>
+
+          <div class="fund-container q-mt-sm q-mb-md">
+            <div>
+              <span class="fund-title">Disponível:</span>
+              {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+            </div>
+          </div>
+
+          <div class="bot-wrapper">
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
+              </div>
+              <div class="desc desc_white">
+                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
+                {{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}
+              </div>
+            </div>
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc">{{ $t("withdraw.dailyLimit") }} {{ store.vip }}</div>
+              </div>
+              <div class="desc desc_white">
+                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
+                {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
+              </div>
+            </div>
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
+              </div>
+              <div class="desc desc_white">
+                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
+                {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <template v-if="bankCardList.length > 0 && !isAddNewAccount">
+          <div :class="`btn-submit`" @click="submitWithdraw">
+            <q-spinner
+              v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+              color="white"
+              size="2em"
+              :thickness="2"
+            ></q-spinner>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
         </template>
 
-        <!-- <div class="method-item">
-          <div class="item-icon"><div style="background: teal; height: 50px; width: 50px"></div></div>
-          <div class="item-detail">
-            <div class="txt-title">Bank Transfer</div>
-            <div class="txt-content">
-              EAT: 4min
-              <br />
-              Fee: 2.25%+50.00{{ store.currency.label }}
-            </div>
+        <template v-else>
+          <div :class="`btn-submit`" @click="submitWithdrawBank">
+            <q-spinner
+              v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+              color="white"
+              size="2em"
+              :thickness="2"
+            ></q-spinner>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
-          <div class="item-amount">257～1,000,000 {{ store.currency.label }}</div>
-          <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
-        </div> -->
-      </div>
+        </template>
+        <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
+      </template>
     </template>
   </div>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, onActivated, ref, reactive, watch, computed } from "vue";
+import { onMounted, onActivated, ref, reactive, watch, computed, nextTick } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
+import KYCUserForm from "../../components/KYCUserForm.vue";
+import { t } from "src/boot/lang";
 
 // withdraw component
 const qs = require("qs");
@@ -378,6 +466,8 @@ const withdrawalMethods = reactive({
 });
 
 const paymentMethodsItems = ref([]);
+const selectedMethodsItems = ref([]);
+const listItems = ref([]);
 
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
@@ -389,18 +479,43 @@ const getWithdrawalMethods = () => {
 
   api.get("/session/nga/withdraw/entrance").then((res) => {
     if (res.code === 0) {
-      // let bankWithdraws = response.data.withdraws;
-      // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
-
-
       let bankWithdraws = res.data.withdraws
         .map((withdraw) => {
           return withdraw.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
         })
         .flat();
+      selectedMethodsItems.value = bankWithdraws.flat().sort((a, b) => {
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
+        return 0;
+      });
 
-      paymentMethodsItems.value = bankWithdraws.flat();
+      let groupedMethods = bankWithdraws.reduce((acc, method) => {
+        if (!acc[method.code]) {
+          acc[method.code] = method;
+        }
+        return acc;
+      }, {});
 
+      // listItems
+      let listCurrency = res.data.withdraws
+        .map((withdraw) => {
+          return withdraw.children.map((child) => child.children).flat();
+        })
+        .flat();
+      listItems.value = listCurrency.flat().sort((a, b) => {
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
+        return 0;
+      });
+
+      paymentMethodsItems.value = Object.values(groupedMethods).sort((a, b) => {
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
+        return 0;
+      });
+
+      selectWithdrawCurrency(paymentMethodsItems.value[0]);
     } else {
       $q.notify({
         color: "negative",
@@ -409,7 +524,6 @@ const getWithdrawalMethods = () => {
         icon: "report_problem"
       });
     }
-
     cbCount++;
     checkCb();
   });
@@ -445,22 +559,60 @@ const getWithdrawalMethods = () => {
   }
 };
 
+const selectedWithdraw = ref();
+const selectWithdrawCurrency = (item) => {
+  const filteredMethods = selectedMethodsItems.value.filter((method) => method.code === item.code);
+  if (filteredMethods.length > 0) {
+    selectedWithdraw.value = filteredMethods;
+  }
+  isAddNewAccount.value = false;
+  goSelectedMethod(selectedWithdraw.value[0]);
+};
+
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
+
+const displayCardType = computed(() => {
+  if (selectedMethodItem.value.payType === "EWALLET") {
+    return "eWallet";
+  } else if (selectedMethodItem.value.payType === "CRYPTO") {
+    return "Crypto";
+  }
+  return "Bank";
+});
+
+const validateBankCardError = () => {
+  if (selectedMethodItem.value.payType === "EWALLET") {
+    return "Please Select eWallet Card";
+  } else if (selectedMethodItem.value.payType === "CRYPTO") {
+    return "Please Select Crypto Card";
+  }
+  return "Please Select Bank Card";
+};
 
 const isNoBankCard = ref(false);
 
 const filterCards = (type) => {
+  isLoadingBankCard.value = true;
+
   api
     .get("/session/bankCard")
     .then((res) => {
+      isLoadingBankCard.value = false;
+
       if (res.code === 0) {
-        let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        let filteredData = [];
+        if (isBankType.value === "BANK") {
+          const bankType = type.bankType;
+          filteredData = res.data.filter((item) => item.bankType === bankType);
+          const bankCodes = filteredBankList.value.map((bank) => bank.code);
+          filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
+        } else {
+          const typeCode = type.code;
+          filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        }
 
-        bankCardList.value = [];
-        bankCardList.value.push(...filteredData);
-
+        bankCardList.value = [...filteredData];
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
         }
@@ -469,7 +621,7 @@ const filterCards = (type) => {
     .catch((error) => {
       console.log("error", error);
     })
-    .then(() => {
+    .finally(() => {
       isLoadingBankCard.value = false;
     });
 };
@@ -480,6 +632,7 @@ const loadCards = () => {
   api
     .get("/session/bankCard")
     .then((res) => {
+      isLoadingBankCard.value = false;
       if (res.code === 0) {
         bankCardList.value = [];
         bankCardList.value.push(...res.data);
@@ -500,7 +653,10 @@ const loadCards = () => {
 const cardRef = ref();
 const amountRef = ref();
 // const bankAddressRef = ref();
+const bankAccountRef = ref();
 const bankNumberRef = ref();
+const bankAddressRef = ref();
+const bankEmailRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
@@ -509,7 +665,7 @@ const withdrawInfo = reactive({
 });
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
-  cardNumber: "",
+  cardNumber: ""
   // cardAddress: ""
 });
 
@@ -517,7 +673,8 @@ const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
   cardNumber: "",
-  // cardAddress: "",
+  cardAddress: "",
+  email: "",
   withdrawCode: "",
   withdrawPlatformId: "",
   amount: ""
@@ -526,31 +683,18 @@ const bankCardField = reactive({
 watch(
   () => bankCardField.bankId,
   (newValue) => {
-    // console.log('..',newValue)
     const selectedBank = filteredBankList.value.find((bank) => bank.id === newValue);
     filterCards(selectedBank);
-
-    // console.log('newValue',newValue);
-    // console.log('selectedBank',selectedBank)
   }
 );
-
-// watch(
-//   () => bankCardField.withdrawPlatformId,
-//   (newValue) => {
-//     const selectedBank = filteredBankList.value.find((bank) => bank.bankCode === newValue);
-//     console.log("selectedBank", selectedBank);
-//     filterCards(selectedBank);
-//   }
-// );
 
 watch(withdrawalDialogTab, () => {
   withdrawInfo.cardId = null;
   withdrawInfo.amount = "";
-
   bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
+  bankCardField.email = "";
 });
 
 const onCardChanged = () => {
@@ -571,7 +715,6 @@ const submitWithdraw = () => {
     isShowRedirectAddBankModal.value = true;
     isSubmitDisable.value = false;
   } else {
-    // cardRef.value.validate();
     amountRef.value.validate();
 
     $q.loading.show({
@@ -591,27 +734,39 @@ const submitWithdraw = () => {
 };
 
 const submitWithdrawBank = () => {
-  // isSubmitDisable.value = true;
-  // if (bankCardList.value.length === 0) {
+  isSubmitDisable.value = true;
   amountRef.value.validate();
-  // bankAddressRef.value.validate();
   bankNumberRef.value.validate();
+  bankAddressRef.value.validate();
+  bankEmailRef.value.validate();
 
-  if (amountRef.value.hasError || bankNumberRef.value.hasError) {
+  if (
+    amountRef.value.hasError ||
+    bankNumberRef.value.hasError ||
+    bankAddressRef.value.hasError ||
+    bankEmailRef.value.hasError
+  ) {
     $q.loading.hide();
     isSubmitDisable.value = false;
     return;
   }
 
-  // bankCardField.cardNumber = withdrawReadOnlyInfo.cardNumber;
-  // bankCardField.cardAddress = withdrawReadOnlyInfo.cardAddress;
   bankCardField.amount = withdrawInfo.amount;
   bankCardField.withdrawCode = selectedMethodItem.value.code;
   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
+  const formData = { ...bankCardField };
+
+  // if (typeVal.value === "phone") {
+  if (!formData.cardNumber.startsWith("+55")) {
+    formData.cardNumber = `+55${formData.cardNumber}`;
+  }
+  // }
+
   api
-    .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
+    .post("/session/withdrawAndBankCard", qs.stringify(formData))
     .then((response) => {
+      isSubmitDisable.value = false;
       if (response.code === 0) {
         $q.notify({
           color: "positive",
@@ -619,24 +774,12 @@ const submitWithdrawBank = () => {
           message: "Withdrawal Submit Succeed",
           icon: "check_circle_outline"
         });
-        // props.loadCards();
         refreshBalance();
         getWithdrawalMethods();
-
-        // emits("closeWithdraw");
-
         resetSelectedMethod();
 
-        bankCardField.cardNumber = "";
-        // bankCardField.cardAddress = "";
-        // bankCardField.withdrawCode = "";
-        // bankCardField.withdrawPlatformId = "";
+        (bankCardField.cardAccount = store.realName), (bankCardField.cardNumber = "");
         bankCardField.amount = "";
-
-        // bankCardField.cardAddress = "";
-        // bankCardField.cardNumber = "";
-        // bankCardField.bankId = "";
-        // withdrawInfo.cardId = "";
         withdrawInfo.amount = "";
       }
     })
@@ -646,25 +789,6 @@ const submitWithdrawBank = () => {
     .then(() => {
       isSubmitDisable.value = false;
     });
-  // }
-  // } else {
-  //   // cardRef.value.validate();
-  //   amountRef.value.validate();
-
-  //   $q.loading.show({
-  //     message: "Withdrawing..."
-  //   });
-
-  //   // cardRef.value.hasError ||
-  //   if (amountRef.value.hasError) {
-  //     $q.loading.hide();
-  //     isSubmitDisable.value = false;
-  //   } else {
-  //     withdrawGo(() => {
-  //       isSubmitDisable.value = false;
-  //     });
-  //   }
-  // }
 };
 
 const withdrawGo = (callback) => {
@@ -680,13 +804,9 @@ const withdrawGo = (callback) => {
           message: "Withdrawal Submit Succeed",
           icon: "check_circle_outline"
         });
-
         refreshBalance();
         getWithdrawalMethods();
-
         withdrawInfo.amount = "";
-
-        // isShowModal.value = false;
       } else {
         $q.notify({
           color: "negative",
@@ -717,7 +837,7 @@ const checkNewUser = () => {
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/deposit`);
+    router.push(`/withdraw`);
   }
 };
 
@@ -728,54 +848,120 @@ const resetSelectedMethod = () => {
   isAddNewAccount.value = false;
 };
 
+const isBankType = ref();
+
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
+  // selectedWithdraw.value.forEach((method) => (method.active = false));
+  // item.active = true;
+
+  selectedWithdraw.value.forEach((method) => {
+    method.active = false;
+  });
+  item.active = true;
   isSelectedMethod.value = true;
+  // debugger;
   selectedMethodItem.value = item;
-  // withdrawInfo.withdrawCode = selectedMethodItem.value.code;
-
-  // bankCardField.withdrawCode = selectedMethodItem.value.code;
-  //   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
-
-  // filterCards(item);
-
-  // console.log(item);
   filteredBankList.value = item.bankList;
+  isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;
-  // filterCards(item.bankList[0]);
-
-  bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
-
+  bankCardField.email = "";
   withdrawInfo.amount = "";
+};
+
+const onAddNewAccount = () => {
+  bankCardField.cardNumber = "";
+  isAddNewAccount.value = true;
 };
 
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
+  let result = true;
 
-  const result = !cardNumber ? "Please Enter Card Number" : true;
+  // if (typeVal.value === "phone") {
+  result = !cardNumber ? t("form.phone_rules_01") : true;
+  if (cardNumber.startsWith("0")) {
+    return t("form.phone_rules_03");
+  }
+  const digitCount = cardNumber.match(/\d/g)?.length || 0;
+  if (digitCount !== 11) {
+    return t("form.phone_rules_02");
+  }
+  // } else if (typeVal.value === "email") {
+  //   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   result = emailPattern.test(cardNumber) ? true : t("form.email_rules_02");
+  // } else if (typeVal.value === "cpf") {
+  //   const cpfPattern = /^\d{11}$/;
+  //   result = cpfPattern.test(cardNumber) ? true : t("form.cpf_rules_02");
+  // } else if (typeVal.value === "cnpj") {
+  //   const cnpjPattern = /^\d{14}$/;
+  //   result = cnpjPattern.test(cardNumber) ? true : t("form.cnpj_rules_02");
+  // } else if (typeVal.value === "evp") {
+  //   const evpPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  //   result = evpPattern.test(cardNumber) ? true : t("form.evp_rules_02");
+  // }
+
   return result;
+};
+
+const cardNumberLabel = ref("");
+const cardNumberPlaceholder = ref("");
+
+const selectOption = (option) => {
+  bankCardField.cardNumber = "";
+  if (option === "phone") {
+    cardNumberLabel.value = t("form.phone");
+    cardNumberPlaceholder.value = t("form.phone_placeholder");
+  } else if (option === "email") {
+    cardNumberLabel.value = t("form.email");
+    cardNumberPlaceholder.value = t("form.email_placeholder");
+  } else if (option === "cpf") {
+    cardNumberLabel.value = t("form.cpf");
+    cardNumberPlaceholder.value = t("form.cpf_placeholder");
+  } else if (option === "cnpj") {
+    cardNumberLabel.value = t("form.cnpj");
+    cardNumberPlaceholder.value = t("form.cnpj_placeholder");
+  } else if (option === "evp") {
+    cardNumberLabel.value = t("form.evp");
+    cardNumberPlaceholder.value = t("form.evp_placeholder");
+  }
 };
 
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
-  const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
+  const result = !cardAddress ? t("form.cpf_rules_01") : cardAddress.length !== 11 ? t("form.cpf_rules_02") : true;
+  return result;
+};
+
+const isValidEmail = () => {
+  const { email } = bankCardField;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const result = !email ? t("form.email_rules_01") : !emailPattern.test(email) ? t("form.email_rules_02") : true;
+  return result;
+};
+
+const isValidCardAccount = () => {
+  const { cardAccount } = bankCardField;
+  const result = !cardAccount
+    ? t("form.holderName_rules_01")
+    : cardAccount.length < 2
+    ? t("form.holderName_rules_02")
     : true;
   return result;
 };
@@ -795,53 +981,20 @@ const isValidBank = () => {
   return result;
 };
 
-// const loadFilterBank = () => {
-//   api
-//     .get("/session/withdraw/card")
-//     .then((res) => {
-//       if (res.code === 0) {
-//         res.data.forEach((e) => {
-//           const bankType = e.bankType;
-//           if (bankType === "BANK") bankList.push(e);
-//           else if (bankType === "CRYPTO") cryptoList.push(e);
-//           else if (bankType === "EWALLET") ewalletList.push(e);
-//         });
-//         selectBankType();
-//         bankCardField.bankId = currBankList.value[0].id;
-//       }
-//     })
-//     .catch((e) => {
-//       console.log("error", e);
-//     });
-// };
-
 const filterBank = (val, update) => {
-  // if (currentCardType.value !== "Bank") return;
   if (!val) {
     update(() => {
-      // filteredBankList.value = currBankList.value;
       filteredBankList.value = selectedMethodItem.value.bankList;
-      // bankCardField.bankId = selectedMethodItem.value.bankList[0].id;
-      // filterCards(item.bankList[0]);
-      // filterCards(selectedMethodItem.value.bankList[0]);
-
-      // if (selectedMethodItem.value.bankList.length > 0) {
-      //   bankCardField.bankId = selectedMethodItem.value.bankList[0].id;
-      //   filterCards(selectedMethodItem.value.bankList[0]);
-      // }
     });
     return;
   }
   update(() => {
-    const result = currBankList.value.filter((bank) => {
+    const result = selectedMethodItem.value.bankList.filter((bank) => {
       const bankName = bank.name.toLowerCase();
       const lowerCaseVal = val.toLowerCase();
       return bankName.includes(lowerCaseVal);
     });
     filteredBankList.value = result;
-
-    // console.log("result", result);
-    // bankCardField.bankId = selectedMethodItem.value.bankList[0].id;
   });
 };
 
@@ -884,6 +1037,71 @@ const toggleAmount = (type) => {
       break;
   }
 };
+
+const isInputFocus = ref(false);
+
+const scrollToInput = () => {
+  if (Platform.is.capacitor && Platform.is.android) {
+    isInputFocus.value = true;
+    nextTick(() => {
+      const input = document.activeElement;
+      if (input) {
+        input.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest"
+        });
+      }
+    });
+  }
+};
+
+// KYC Dialog
+const personalState = reactive({
+  memberInfo: {}
+});
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (!store.guest && personalState.memberInfo.realName === null) {
+    openUserKYCDialog();
+  }
+};
+
+const typeVal = ref("phone");
+const typeOptions = [
+  {
+    label: "Phone",
+    value: "phone"
+  },
+  {
+    label: "Email",
+    value: "email"
+  },
+  {
+    label: "CPF",
+    value: "cpf"
+  },
+  {
+    label: "CNPJ",
+    value: "cnpj"
+  },
+  {
+    label: "EVP",
+    value: "evp"
+  }
+];
 </script>
 
 <style scoped lang="scss">
@@ -891,8 +1109,63 @@ const toggleAmount = (type) => {
   margin: auto;
   width: 95%;
 
+  .withdraw-methods-currency {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+
+    .currency-item {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      border: 2px solid #78798580;
+      gap: 6px;
+      border-radius: 8px;
+      color: #ffffffb2;
+      background-color: #263349;
+      font-size: 12px;
+      position: relative;
+
+      &.active {
+        border: 2px solid #5c46e7;
+        .item-title {
+          color: rgba(255, 255, 255, 1);
+        }
+        &:before {
+          content: "";
+          height: 20px;
+          width: 20px;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          background-image: url(../../assets/images/account/active-tick.png);
+          background-size: cover;
+        }
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        max-width: 50px;
+      }
+
+      .item-hot-ribbon {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        img {
+          display: block;
+          width: 30px;
+        }
+      }
+    }
+  }
+
   .withdraw-methods-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     flex-direction: column;
     background-color: #161f2d;
@@ -905,6 +1178,7 @@ const toggleAmount = (type) => {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    position: relative;
 
     .options-picker {
       display: flex;
@@ -922,12 +1196,31 @@ const toggleAmount = (type) => {
     padding: 6px 8px 6px 12px;
     display: flex;
     align-items: center;
+    position: relative;
+    border: 2px solid #78798580;
 
     &.disabled {
       cursor: not-allowed;
       backdrop-filter: grayscale(1) brightness(0.7);
       pointer-events: none;
       // opacity: 0.6;
+    }
+
+    &.active {
+      border: 2px solid #5c46e7;
+      .item-title {
+        color: rgba(255, 255, 255, 1);
+      }
+      &:before {
+        content: "";
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-image: url(../../assets/images/account/active-tick.png);
+        background-size: cover;
+      }
     }
 
     .item-icon {
@@ -940,6 +1233,7 @@ const toggleAmount = (type) => {
         width: 50px;
       }
     }
+
     .item-detail {
       padding: 6px 6px 6px 8px;
       .txt-title {
@@ -1073,6 +1367,12 @@ const toggleAmount = (type) => {
         }
       }
     }
+
+    .bank-select-input {
+      :deep(.q-field__append) {
+        height: 60px;
+      }
+    }
   }
 
   .withdrawal-amount-container {
@@ -1135,7 +1435,8 @@ const toggleAmount = (type) => {
       justify-content: space-between;
       // gap: 10px;
       margin: 1rem 0 0.5rem 0;
-      background-color: rgba(74, 56, 185, 0.4);
+      // background-color: rgba(74, 56, 185, 0.4);
+      background-color: #263349;
       border-radius: 6px;
       padding: 6px;
 
@@ -1203,5 +1504,43 @@ const toggleAmount = (type) => {
 .dialog-input {
   background-color: #263349;
   border-radius: 6px;
+}
+
+.withdraw-tip-wrapper {
+  background-color: rgba(21, 127, 66, 0.2);
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.2px;
+  letter-spacing: 0.045em;
+  text-align: left;
+  color: #a9a6bb;
+
+  :deep(em) {
+    color: #ffae00;
+  }
+}
+
+.input-btm {
+  padding-bottom: 270px;
+}
+
+.type-option-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #98a6b4;
+  font-size: 12px;
+}
+
+.type-option {
+  width: 100px;
+  font-size: 12px;
+  min-height: 0;
+  :deep(.q-field__native, q-field--auto-height) {
+    min-height: 0px;
+  }
 }
 </style>

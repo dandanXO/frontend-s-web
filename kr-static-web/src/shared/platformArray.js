@@ -202,7 +202,7 @@ export const lotteryPlatforms = [
     code: "TCG",
     name: "TCG",
     image: "tcg",
-    message: "Lottery at CITY8 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    message: "Lottery at DIAMOND offers attractive odds and diverse betting options, with fast payouts after the draw.",
     vimessage:
       "TC Gaming XỔ SỐ Đông Nam Á cung cấp hệ thống quản lý linh hoạt và hiệu quả nhất cho phép người chơi cài đặt cấu hình tỷ lệ cá cược, giới hạn và tiền thưởng một cách độc lập. ",
     caption: "",
@@ -212,7 +212,7 @@ export const lotteryPlatforms = [
     code: "GPI",
     name: "GPI",
     image: "gpi",
-    message: "Lottery at CITY8 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    message: "Lottery at DIAMOND offers attractive odds and diverse betting options, with fast payouts after the draw.",
     vimessage:
       "Sảnh chơi xổ số online được phát hành và triển khai trên nền tảng ứng dụng công nghệ hiện đại blockchain nhằm đảm bảo sự công bằng và chính xác cho người chơi.",
     caption: "",
@@ -222,7 +222,7 @@ export const lotteryPlatforms = [
     code: "LOTO",
     name: "LOTO",
     image: "loto",
-    message: "Lottery at CITY8 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    message: "Lottery at DIAMOND offers attractive odds and diverse betting options, with fast payouts after the draw.",
     vimessage:
       "Một sảnh xổ số nổi bật với chức năng xem Livestream quay số kéo dài cả ngày ở tất cả những trò chơi số trong sảnh. Ngoài ra kết quả xổ số của các miền đều được cập nhật nhanh chóng và chính xác.",
     caption: "",
@@ -261,7 +261,8 @@ export const minigamePlatforms = [
     code: "TFGaming",
     name: "TFGaming",
     image: "TFGaming",
-    message: "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
+    message:
+      "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
     vimessage: "",
     caption: "",
     gameCode: "CASUAL"
@@ -270,7 +271,8 @@ export const minigamePlatforms = [
     code: "Spribe",
     name: "Spribe",
     image: "Spribe",
-    message: "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
+    message:
+      "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
     vimessage: "",
     caption: "",
     gameCode: "aviator"

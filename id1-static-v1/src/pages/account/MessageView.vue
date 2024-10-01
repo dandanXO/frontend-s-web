@@ -1,11 +1,11 @@
 <template>
   <q-page class="account-message-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMessage')"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <img
         class="new-message-ribbon"
-        src="../../assets/images/message/new-message-ribbon.svg"
+        src="@/assets/images/message/new-message-ribbon.svg"
         v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
       />
 
@@ -18,7 +18,7 @@
         <q-card-section class="bottom-wrapper">
           <div class="time">{{ convertToGMT7(e.sendTime) }}</div>
           <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
-            More&nbsp;
+            {{ $t("btn.more") }}&nbsp;
             <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />
           </q-btn>
         </q-card-section>
@@ -28,33 +28,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onActivated } from "vue";
+import { onActivated, ref } from "vue";
 import { useRouter } from "vue-router";
-import { api } from "boot/axios";
-import { userStore } from "stores/index";
-import { convertToGMT55, convertToGMT7 } from "src/boot/utils";
-import LoadingComponent from "../../components/LoadingComponent.vue";
-import NoInfoComponent from "../../components/NoInfoComponent.vue";
+
+import { api } from "@/boot/axios";
+import { convertToGMT7 } from "@/boot/utils";
+import LoadingComponent from "@/components/LoadingComponent.vue";
+import NoInfoComponent from "@/components/NoInfoComponent.vue";
+import { userStore } from "@/stores/index";
 
 const router = useRouter();
 const store = userStore();
-
-let slideList = ref(["Message", "Personal Center", "Discount", "Record", "Order", "Bank"]);
-let slideListPath = ref([
-  "/account/message",
-  "/account",
-  "/account/discount",
-  "/account/record",
-  "/account/order",
-  "/account/bank"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
-
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 const readIdLists = ref([]);

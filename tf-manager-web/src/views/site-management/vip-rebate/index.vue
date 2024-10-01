@@ -243,7 +243,7 @@ async function loadVipRebateRules() {
 }
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
 }
 
 function showDialog(type) {
@@ -356,6 +356,7 @@ async function loadGameTypes() {
 
 onMounted(async() => {
   await loadSitesAndVip();
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
@@ -389,7 +390,7 @@ onMounted(async() => {
     padding: 4px 0;
   }
 
-  .el-form-item--level-color:deep .el-form-item__content {
+  .el-form-item--level-color:deep(.el-form-item__content) {
     display: flex !important;
   }
 

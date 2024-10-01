@@ -145,12 +145,13 @@ async function loadSiteWithdrawPlatform(siteId) {
 
 onMounted(async() => {
   await loadSites();
+  selected.siteName = list.sites[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
     selected.siteName = site.value.id;
-    await loadWithdrawPlatform();
-    await loadSiteWithdrawPlatform(selected.siteName);
   }
+  await loadWithdrawPlatform();
+  await loadSiteWithdrawPlatform(selected.siteName);
 });
 
 </script>
@@ -163,14 +164,14 @@ onMounted(async() => {
   display: flex;
   justify-content: flex-start;
 }
-.transfer-container >>> .el-transfer-panel {
+.transfer-container:deep(.el-transfer-panel) {
   width: 350px;
 }
 .transfer-footer {
   margin-left: 15px;
   padding: 6px 5px;
 }
-.transfer-container >>> .el-transfer-panel__footer {
+.transfer-container:deep(.el-transfer-panel__footer) {
   height: 35px;
 }
 </style>

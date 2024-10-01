@@ -37,48 +37,50 @@
         <div class="subtitle">
           <span class="subtitle-1">活动内容</span>
           <span class="subtitle-2">
-            活动期间，投注LPL与LCK赛事当日累计总有效投注≥2,000元即可符合获取活动彩金条件，最高可获1,288元
+            活动期间，投注LPL与LCK赛事当日累计总有效投注≥1,000元即可符合获取活动彩金条件，最高可获1,288元
           </span>
         </div>
         <table class="match-game-info-table">
-          <tr>
-            <th>累计有效投注</th>
-            <th>彩金</th>
-            <th>流水倍数</th>
-          </tr>
-          <tr>
-            <td>≥1,000</td>
-            <td>5</td>
-            <td rowspan="8">5倍/流水倍数</td>
-          </tr>
-          <tr>
-            <td>≥3,000</td>
-            <td>15</td>
-          </tr>
-          <tr>
-            <td>≥8,000</td>
-            <td>28</td>
-          </tr>
-          <tr>
-            <td>≥20,000</td>
-            <td>58</td>
-          </tr>
-          <tr>
-            <td>≥50,000</td>
-            <td>88</td>
-          </tr>
-          <tr>
-            <td>≥100,000</td>
-            <td>288</td>
-          </tr>
-          <tr>
-            <td>≥300,000</td>
-            <td>588</td>
-          </tr>
-          <tr>
-            <td>≥500,000</td>
-            <td>1,288</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>累计有效投注</th>
+              <th>彩金</th>
+              <th>流水倍数</th>
+            </tr>
+            <tr>
+              <td>≥1,000</td>
+              <td>5</td>
+              <td rowspan="8">5倍/流水倍数</td>
+            </tr>
+            <tr>
+              <td>≥3,000</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>≥8,000</td>
+              <td>28</td>
+            </tr>
+            <tr>
+              <td>≥20,000</td>
+              <td>58</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>288</td>
+            </tr>
+            <tr>
+              <td>≥300,000</td>
+              <td>588</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>1,288</td>
+            </tr>
+          </tbody>
         </table>
         <div class="content-sub-title">
           <span style="font-weight: bold">⮞ 示例</span>
@@ -91,7 +93,7 @@
           <div class="item">
             <span class="rounded-number">1</span>
             <span>
-              活动期间，会员当日LPL夏季赛季后赛与LCK夏季赛季后赛赛事累计有效投注≥2,000元即可符合获得彩金资格，符合条件的会员需在次日前往活动页面点击领取彩金；
+              活动期间，会员当日LPL夏季赛季后赛与LCK夏季赛季后赛赛事累计有效投注≥1,000元即可符合获得彩金资格，符合条件的会员需在次日前往活动页面点击领取彩金；
             </span>
           </div>
           <div class="item">

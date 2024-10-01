@@ -63,6 +63,9 @@
             ]"
           >
             {{ scope.row.loginIp }}
+            <template v-if="scope.row.loginIpRemark">
+              ( {{ scope.row.loginIpRemark }} )
+            </template>
           </span>
         </template>
       </el-table-column>
@@ -264,6 +267,7 @@ export default defineComponent({
         )
         if (ipLabel) {
           record.loginIpColor = ipLabel.color
+          record.loginIpRemark = ipLabel.remark
         }
       })
       memberData.loading = false

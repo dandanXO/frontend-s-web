@@ -75,6 +75,7 @@
                     outlined
                     class="q-mt-md"
                     dense
+                    style="background: #fff"
                     v-model="winStatusSelect"
                     :options="winStatusOptions"
                     :label="$t('lang.record_win_status')"
@@ -405,6 +406,7 @@ const dateClosePopup = ref(true);
       text-align: center;
       align-items: center;
       justify-content: center;
+      filter: hue-rotate(140deg);
       cursor: pointer;
       opacity: 0.5;
       height: 50px;
@@ -414,6 +416,7 @@ const dateClosePopup = ref(true);
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 100% 100%;
+        filter: hue-rotate(140deg);
         opacity: 1;
       }
 
@@ -433,8 +436,9 @@ const dateClosePopup = ref(true);
       gap: 10px;
       // background: salmon;
       background-image: url("../../../assets/images/promo/hotpromo/lottery/prize-bg.png");
-      box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
+      box-shadow: 0px -8px 8px 0px #e6c3c3 inset;
       border-radius: 8px;
+      background-color: #1f1f1f;
       padding: 10px 20px;
       margin-top: 20px;
 
@@ -466,7 +470,7 @@ const dateClosePopup = ref(true);
 
       .desc {
         // width: 90%;
-        color: #0f0f0f;
+        color: #fff;
         line-height: 1.5;
         font-size: 14px;
         text-align: center;
@@ -489,7 +493,7 @@ const dateClosePopup = ref(true);
             background-color: #f4f7f8;
             border-radius: 6px;
             box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
-            color: #ffffff;
+            color: #000;
           }
         }
       }
@@ -513,7 +517,7 @@ const dateClosePopup = ref(true);
           justify-content: center;
           gap: 15px;
           color: #87898a;
-          box-shadow: 0px -4px 4px 0px #E6C3C3 inset;
+          box-shadow: 0px -4px 4px 0px #e6c3c3 inset;
           background: #ffffff;
           border-radius: 6px;
 

@@ -160,6 +160,9 @@ const depositCards = ref([
 </script>
 <style lang="scss">
 .deposit-rebates-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
   &.isEuro {
     .cards {
       .deposit-card {
@@ -201,9 +204,7 @@ const depositCards = ref([
       }
     }
   }
-  width: 95%;
-  max-width: 1200px;
-  margin: 0 auto;
+
   .cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

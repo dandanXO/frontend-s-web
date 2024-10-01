@@ -269,7 +269,7 @@ function convertDate(date) {
 function resetQuery() {
   request.loginName = null
   request.cardTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value : null
+  request.siteId = site.value ? site.value : siteList.list[0].id
   request.cardNo = null
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value
@@ -318,13 +318,12 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value
@@ -354,7 +353,7 @@ onMounted(async () => {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>

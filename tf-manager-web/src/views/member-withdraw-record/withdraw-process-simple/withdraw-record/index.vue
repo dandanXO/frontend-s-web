@@ -113,6 +113,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
 
       <div class="btn-group">
         <el-button
@@ -943,6 +951,7 @@ const request = reactive({
   code: null,
   siteId: null,
   sort: 1,
+  doris: false,
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -1238,6 +1247,7 @@ async function loadRecord() {
   } else {
     page.totalAmount = 0
   }
+  request.doris = ret.sums.useDoris;
   page.loading = false
 }
 

@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { useRoute } from "vue-router";
 
 export const useUI = defineStore("ui-store", {
   state: () => {
@@ -17,7 +16,7 @@ export const useUI = defineStore("ui-store", {
     };
   },
   actions: {
-    setScrollPosition: (axis = "vertical", offset = 0, duration = 0) => null,
+    setScrollPosition: (_axis = "vertical", _offset = 0, _duration = 0) => null,
     hiddenFooter() {
       this.footer = false;
     },

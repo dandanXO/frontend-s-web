@@ -136,7 +136,6 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-
         <div
           v-if="form.receiveType === 'MULTIPLE'"
           class="el-input-tag input-tag-wrapper"
@@ -155,7 +154,7 @@
           </el-tag>
           <el-autocomplete
             v-model="inputValue"
-            :fetch-suggestions="querySearch"
+            :fetch-suggestions="debouncedFetchSuggestions"
             :trigger-on-focus="false"
             class="inline-input"
             :placeholder="t('fields.addRecipient')"
@@ -388,13 +387,13 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx';
-import { getMemberNameList } from '../../../../api/member'
 import { getSiteListSimple } from '../../../../api/site'
 import {
   createSystemMessageTemplate,
   deleteMessageTemplate,
   getSystemMessageTemplate,
-  createBatchMessageTemplate
+  createBatchMessageTemplate,
+  getMemberLoginNameList
 } from '../../../../api/system-message-template'
 import { findLevelByVipName, getVipList } from '../../../../api/vip'
 import { required } from '../../../../utils/validate'
@@ -402,6 +401,7 @@ import { hasRole } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
+import { debounce } from 'lodash';
 
 const store = useStore();
 const { t } = useI18n();
@@ -485,7 +485,7 @@ const request = reactive({
 function resetQuery() {
   request.sendTime = [];
   request.type = null;
-  request.siteId = null;
+  request.siteId = siteList.list[0].id;
 }
 
 const form = reactive({
@@ -538,25 +538,45 @@ const handleClose = tag => {
   inputValue.value = ''
 }
 
-const querySearch = (queryString, cb) => {
-  const results = queryString
-    ? list.members.filter(createFilter(queryString))
-    : list.members
-  // call callback function to return suggestions
-  cb(results)
-}
-const createFilter = queryString => {
-  return item => {
-    return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+const querySearch = async (queryString, callback) => {
+  if (!queryString) {
+    callback();
+    return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
   }
-}
+
+  try {
+    const { data: ret } = await getMemberLoginNameList(selected.site, queryString);
+
+    const results = ret.map(item => ({
+      value: item.value,
+      id: item.id
+    }));
+    callback(results);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    callback();
+  }
+};
+
+const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  if (!selected.site) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
+  querySearch(queryString, callback);
+}, 1500); // Adjust debounce time as needed
 
 const handleSelect = item => {
   if (item) {
-    dynamicTags.value.push(item.value)
-    const removed = list.members.splice(list.members.indexOf(item), 1)
-    const removedArr = [...removed]
-    selectionList.members.push(removedArr[0])
+    if (dynamicTags.value.indexOf(item.value) === -1) {
+      dynamicTags.value.push(item.value)
+      const removed = list.members.splice(list.members.indexOf(item), 1)
+      const removedArr = [...removed]
+      selectionList.members.push(removedArr[0])
+    }
   }
   inputValue.value = ''
 }
@@ -584,17 +604,13 @@ function handleRadioChangeLabel() {
   form.recipient = []
   form.title = null
   form.content = null
-
-  if (selected.site !== undefined) {
-    // reset the member name list (recipient input)
-    loadMemberNameList()
-  }
 }
 
 function handleSiteChange() {
-  loadMemberNameList()
   handleVipFilter()
   selected.vip = null
+  selectionList.members = [];
+  dynamicTags.value = [];
 }
 
 function handleVipFilter() {
@@ -609,7 +625,12 @@ function submit() {
   dialogForm.value.validate(async valid => {
     if (valid) {
       if (form.receiveType === 'MULTIPLE') {
-        form.recipient = dynamicTags.value
+        form.recipient = dynamicTags.value;
+        if (form.recipient.length === 0 && inputValue.value) {
+          const members = inputValue.value.split(",");
+          form.recipient.push(...members);
+          inputValue.value = '';
+        }
       } else if (form.receiveType === 'VIP') {
         form.recipient.push(form.vip)
       }
@@ -692,17 +713,6 @@ async function loadVipNameList() {
   //   list.vips.push(singleObj);
   // });
   list.vips = ret
-}
-
-async function loadMemberNameList() {
-  list.members = []
-  const { data: ret } = await getMemberNameList(selected.site)
-  ret.forEach(function (entry) {
-    var singleObj = {}
-    singleObj.id = entry.id
-    singleObj.value = entry.value
-    list.members.push(singleObj)
-  })
 }
 
 async function loadSites() {
@@ -974,7 +984,7 @@ function changePage(page) {
   line-height: 36px;
 }
 
-::v-deep .el-autocomplete input {
+:deep(.el-autocomplete input) {
   /* input { */
   /* background-color: red!important;  调试用的样式 */
   outline: none !important;

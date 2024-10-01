@@ -426,7 +426,7 @@ watch(tableRecordDialog, async () => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   padding-bottom: 16px;
 
   .nba24-match-game-content-left,

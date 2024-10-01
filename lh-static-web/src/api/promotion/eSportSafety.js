@@ -28,6 +28,9 @@ export function submitUefaForm() {
   return server.EVENT.post("/game-match/submit/UEFA", {});
 }
 
+export function submitClaimForm(promoCode) {
+  return server.EVENT.post(`/game-match/submit/${promoCode}`, {});
+}
 
 export function submitESportInsurance() {
   return server.EVENT.post("/game-match/submit/ESPORT");

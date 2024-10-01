@@ -204,7 +204,7 @@ export default {
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! KAKA xin chân thành cảm ơn!"
   },
   placeholder: {
-    realName: "Vui lòng nhập tên thật",
+    realName: "Họ tên phải được viết in hoa không dấu, khớp với tên tài khoản ngân hàng và cách nhau bằng dấu cách",
     birthday: "Vui lòng nhập ngày sinh",
     zalo: "Vui lòng nhập Zalo",
     email: "Vui lòng nhập địa chỉ email",
@@ -333,10 +333,10 @@ export default {
     beforeBindVerifyPhone: "Trước khi ràng buộc thẻ ngân hàng, vui lòng xác minh số điện thoại của bạn.",
     expectedAmount: "Số coin sẽ nhận",
     depositAmountRange: "Vui lòng nhập số tiền từ",
-    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 2.00 USDT sẽ tự động thu bởi bên thứ ba!",
+    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là {fee} USDT sẽ tự động thu bởi bên thứ ba!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
-    accountNo: "Số thẻ",
+    accountNo: "Số tài khoản ngân hàng",
     accountNoUnmatched: "Số thẻ không hợp lệ, vui lòng đăng nhập lại",
     confirmUnbind: "Xác nhận bỏ thẻ",
     confirmCorrectNumber: "Vui lòng nhập chính xác số thẻ",
@@ -1003,6 +1003,8 @@ export default {
     30006: "Những thành viên được liệt kê là chủ tài khoản bị cấm nhận đặc quyền này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
+    30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",
@@ -1021,6 +1023,7 @@ export default {
     35009: "Đặc quyền sẽ có hiệu lực sớm",
     35010: "Thành viên 35010 không thể nhận đặc quyền này",
     35011: "Thành viên 35011 không thể nhận đặc quyền này.",
+    37001: "Đã hết thời gian nhận Lì Xì",
     12100: "Mật khẩu rút tiền cũ chưa chính xác.",
     45000: "Chưa đạt đến số tiền tối thiểu để rút",
     45001: "Hôm nay đã nhận được tiền thưởng ngẫu nhiên."

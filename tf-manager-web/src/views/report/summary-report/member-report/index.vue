@@ -47,6 +47,12 @@
         fixed
       />
       <el-table-column
+        prop="vipName"
+        :label="t('fields.vipLevel')"
+        width="120"
+        fixed
+      />
+      <el-table-column
         prop="source"
         :label="t('fields.sourceType')"
         width="120"
@@ -293,6 +299,11 @@ function back() {
 }
 
 onMounted(async () => {
+  // 返回前一页如果用户换站点
+  if (store.state.user.siteId !== Number(siteIdFromParam)) {
+    back()
+  }
+
   await loadSites()
   // tenant 只可以看到本身site的资料
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -352,7 +363,7 @@ async function requestExportExcel() {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>

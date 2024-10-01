@@ -208,7 +208,7 @@ export default defineComponent({
 
     const router= useRouter();
     const checkServerStatus = () => {
-      axios.get(`https://sumbtf.tebarncale.com/server/status/IND`).then((response) => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITE}`).then((response) => {
         if (response.data.code === 0) {
           console.log("responseStatus:", response.data.data.status);
           if (response.data.data.status === "CLOSED") {

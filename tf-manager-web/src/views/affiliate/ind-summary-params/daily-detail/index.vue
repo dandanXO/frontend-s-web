@@ -45,7 +45,6 @@
             :editable="false"
             :clearable="false"
           />
-          ASDASDSASD
 
           <el-button
             style="margin-left: 20px"
@@ -64,7 +63,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
+        height="70vh"
         size="small"
         :resizable="true"
         :data="page.records"
@@ -97,7 +96,7 @@
           :label="t('fields.platform')"
           align="left"
           min-width="100"
-          width="120"
+          width="150"
         >
           <template
             #default="scope"
@@ -193,7 +192,7 @@
           prop="bet"
           :label="t('fields.indBet')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -204,7 +203,7 @@
           prop="payout"
           :label="t('fields.payout')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -215,7 +214,7 @@
           prop="profit"
           :label="t('fields.indProfit')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -376,13 +375,13 @@ function handleChangeSites() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   loadAffiliateList()
 }
@@ -406,13 +405,13 @@ let previousSuperiorLoginName = ref(null)
 async function loadSitesWithPreDefineAffiliate() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
 
   if (
@@ -552,12 +551,19 @@ function getSummaries(param) {
         var prop = column.property
         if (
           index === 4 ||
-          index === 6 ||
-          index === 7 ||
-          index === 12 ||
-          index === 13
+          index === 6
         ) {
           sums[index] = total.data[prop]
+        } else if (index === 7 || index === 12 || index === 13) {
+          const pageRowCount = Number(page.records.reduce((sum, row) => {
+            return sum + Number(row[prop])
+          }, 0))
+          const totalPageCount = Number(total.data[prop])
+          if (pageRowCount !== totalPageCount) {
+            sums[index] = `${total.data[prop]} (${pageRowCount})`
+          } else {
+            sums[index] = total.data[prop]
+          }
         } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =

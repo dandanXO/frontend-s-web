@@ -15,3 +15,15 @@ export function submitSportInsuranceForm(params) {
 export function getSportInsuranceRecords(params) {
   return server.EVENT.get(`/game-match/records/${params.gameType}?size=${params.size}&current=${params.current}`);
 }
+
+export function getUpcomingCopaMatches() {
+  return server.EVENT.get("/game-match/upcoming/COPA");
+}
+
+export function getCopaPlatformOptions() {
+  return server.EVENT.get("/game-match/platform/COPA");
+}
+
+export function submitCopaForm() {
+  return server.EVENT.post("/game-match/submit/COPA", {});
+}

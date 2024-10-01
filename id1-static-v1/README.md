@@ -1,4 +1,4 @@
-# NGA App (ind-h5-project)
+# ID1 App (ID1-h5-project)
 
 Indonesia H5 APP
 - Node Version >= 16.17.0
@@ -50,7 +50,7 @@ npx cap run android
 4(b). Build on Android Studio/ Build .apk
 npx cap open android
 
-4(c). Rename - ind-app-1.0.x
+4(c). Rename - id1-app-1.0.x
 
 ```
 

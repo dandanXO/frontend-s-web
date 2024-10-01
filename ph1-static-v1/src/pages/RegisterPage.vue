@@ -12,22 +12,29 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="11"
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+            (val) => {
+              if (val.startsWith('0')) {
+                return val.length === 11 || 'Phone number must have 11 digits if starting with 0';
+              } else {
+                return val.length === 10 || 'Phone number must have 10 digits';
+              }
+            }
           ]"
           color="white"
           class="landing-input"
           outlined
           placeholder="Enter your mobile number"
-          label-color="brand"
+          label-color="white"
         >
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">+63</span>
           </template>
         </q-input>
 
@@ -246,7 +253,14 @@ export default defineComponent({
     const hasAffiliate = ref(false);
 
     const getAffiliateCode = () => {
-      affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
+      affCode.value = (() => {
+        if(location.hostname === 'www.fff2evkgkj.com') {
+          return '77CCEF';
+        }
+        
+        return sessionStorage.getItem("AFFILIATE_CODE");
+      })();
+
       if (affCode.value) {
         // hasAffiliate.value = true;
         regForm.codeAffiliate = affCode.value;
@@ -682,10 +696,9 @@ function charType(num) {
   :deep(.q-field__control) {
     padding-left: 20px;
     padding-right: 20px;
-  }
-  :deep(.q-field__control):before {
-    border-color: #1e1f24;
     background-color: #1e1f24;
+    border-color: #1e1f24;
+
     border-width: 2px;
   }
 
@@ -722,5 +735,11 @@ function charType(num) {
   color: #fae576;
   text-decoration: none;
   font-weight: 700;
+}
+
+.prepend-number {
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 8px;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="black-myth-content-wrapper" style="padding-top: 16px">
       <img class="black-myth-content-title" src="./img/event-content-title.png" />
       <div class="black-myth-content-block event-content">
-        <span>活动期间，每位会员当日首充达5,000元或以上，即可领取对应档位奖品。</span>
+        <span>活动期间，每位会员当日首存单笔达5,000元或以上，即可领取对应档位奖品。</span>
         <div class="reward-table">
           <div class="reward-table__header">
             <span>单笔充值</span>
@@ -32,17 +32,25 @@
       <img class="black-myth-content-title" src="./img/event-rule-title.png" />
       <div class="black-myth-content-block event-rule">
         <ul>
-          <li>1.活动期间，单日单笔充值≥5,000元的会员可前往客服中心领取对应奖品；</li>
-          <li>2.活动期间，满足领取条件的会员若当日23:59:59未前往客服页面领取则视为预期自动放弃奖品；</li>
+          <li>
+            1.活动期间，当日首存单笔充值≥5,000元以上的会员可前往客服中心领取对应奖品，奖品以及兑换的奖金在次日24小时内派发；
+          </li>
+          <li>2.活动期间，满足领取条件的会员若在当日23:59:59前未进入客服页面申请领取则视为自动放弃奖品，逾期不补；</li>
           <li>3.活动期间，每位会员每日最多可兑换一次奖品，当日已兑换完成的会员无法再领取其他档位奖品；</li>
-          <li>4.活动期间，每位会员仅限兑换一次游戏激活码，次日单笔充值达到指定金额，可兑换相应折算彩金。</li>
           <li>
-            5.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+            4.活动期间，每位会员仅限兑换一次游戏激活码，次日单笔充值达到指定金额，可兑换相应折算彩金，彩金三倍流水即可提款；
           </li>
           <li>
-            6.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
+            5.活动期间，符合条件的会员， 默认Steam版本国区CDKEY激活码，特殊要求需备注，未备注则默认Steam国区激活码；
           </li>
-          <li>7.为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          <li>
+            6.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+          </li>
+          <li>
+            7.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
+          </li>
+          <li>8.本活动不与官网其他活动共享；</li>
+          <li>9.为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ul>
         <!--        <button class="deposit-btn" @click="handleDepositClick"></button>-->
       </div>
@@ -132,7 +140,7 @@ const handleDepositClick = () => {
   width: 100%;
   background-color: #4b3e3a;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 1.1rem;
   line-height: 1.5rem;
 
   .reward-table__header,
@@ -142,13 +150,18 @@ const handleDepositClick = () => {
     span {
       flex: 1;
     }
+    span:nth-child(2) {
+      flex: 3;
+    }
   }
   .reward-table__header {
     background-color: #443429;
-    padding: 0 20px;
+    padding: 5px 10px;
   }
   .reward-table__row {
-    margin: 0 20px;
+    margin: 0 5px;
+    padding: 5px;
+    align-items: center;
     &:not(:last-child) {
       border-bottom: 1px solid #6a5954;
     }

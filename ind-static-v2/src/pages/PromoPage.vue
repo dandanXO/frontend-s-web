@@ -112,8 +112,21 @@
                 >
                   <div v-html="selectedPromo.pageContent"></div>
 
-                  <template v-if="!selectedPromo.hasPromo">
-                    <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                  <div
+                    class="join-container"
+                    v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
+                    :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
+                  >
+                    <template v-if="selectedPromoDate">
+                      <div class="promo-date">
+                        <div class="date-txt">Promotion:</div>
+                        <div class="date-timer">
+                          {{ selectedPromoDate }}
+                        </div>
+                      </div>
+                      <!-- <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" /> -->
+                    </template>
+                    <template v-else>
                       <div class="promo-date">
                         <div class="date-txt">Promotion Ends</div>
                         <div class="date-timer">
@@ -121,17 +134,16 @@
                           <q-icon name="all_inclusive" size="22px"></q-icon>
                         </div>
                       </div>
-                      <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
-                    </div>
-                  </template>
-
-                  <!-- <div class="join-container">
-                    <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
-                      <div class="date-timer">01/01/2024</div>
-                    </div>
-                    <q-btn class="btn-join-now" no-caps label="Join Now" />
-                  </div> -->
+                      <q-btn
+                        class="btn-join-now"
+                        :class="isFtdPromoEnded ? 'btn-disabled' : ''"
+                        :disable="isFtdPromoEnded"
+                        no-caps
+                        label="Join Now"
+                        @click="goToJoinNow()"
+                      />
+                    </template>
+                  </div>
                 </div>
               </div>
             </div>
@@ -163,7 +175,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
+import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -203,6 +215,7 @@ export default defineComponent({
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
+    const selectedPromoDate = ref();
     const route = useRoute();
     const router = useRouter();
     const $q = useQuasar();
@@ -280,6 +293,14 @@ export default defineComponent({
       isPromoDetailPage.value = false
     }
 
+    const isFtdPromoEnded = computed(() => {
+      if(selectedPromo.value && selectedPromo.value.promoCode==="indwin2-slot-ftd" && store.ftd===true){
+        return true;
+      }
+
+      return false;
+    })
+
     const loadBanner = () => {
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
@@ -287,7 +308,7 @@ export default defineComponent({
       //   }
       // })
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
@@ -327,6 +348,16 @@ export default defineComponent({
           }
           isPromoDetail.value = true
           selectedPromo.value = promo
+
+          selectedPromoDate.value = '';
+
+          if(selectedPromo.value.param){
+            let promoDate = JSON.parse(selectedPromo.value.param).promoDate;
+
+            if(promoDate) {
+              selectedPromoDate.value = promoDate;
+            }
+          }
         }
       }
     }
@@ -342,7 +373,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -369,6 +400,15 @@ export default defineComponent({
       });
 
     }
+
+    const selectedParam = computed( () => {
+      if(selectedPromo.value && selectedPromo.value.param){
+        const paramJson = JSON.parse(selectedPromo.value.param);
+        return paramJson;
+      }else{
+        return null;
+      }
+    })
 
     const goToJoinNow = () => {
       // console.log(selectedPromo.value);
@@ -433,28 +473,38 @@ export default defineComponent({
     }
 
     // promo timer
-    const endDate = new Date('01/8/2024 12:00:00').getTime();
+    const endDate = ref('2024-08-31T00:00:00');
+    const countdownState = ref(false);
     const countdown = ref('');
     const isPromotionEnded = ref(false);
 
-    function getCountdown() {
+    const getCountdown = () => {
       const now = new Date().getTime();
-      const timeRemaining = endDate - now;
 
-      if (timeRemaining <= 0) {
-        isPromotionEnded.value = true;
-        return 'Promotion Ended';
+      if (selectedPromo.value.param) {
+        let newEndDate = JSON.parse(selectedPromo.value.param).endDate;
+
+        if (newEndDate){
+          countdownState.value = true;
+          const timeRemaining = new Date(newEndDate).getTime() - now;
+
+          if (timeRemaining <= 0) {
+            isPromotionEnded.value = true;
+            return 'Promotion Ended';
+          }
+
+          const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+          const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+          const formattedHours = String(hours).padStart(2, '0');
+          const formattedMinutes = String(minutes).padStart(2, '0');
+          const formattedSeconds = String(seconds).padStart(2, '0');
+
+          return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+        }
+
       }
-
-      const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-      const formattedHours = String(hours).padStart(2, '0');
-      const formattedMinutes = String(minutes).padStart(2, '0');
-      const formattedSeconds = String(seconds).padStart(2, '0');
-
-      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
     const updateCountdown = () => {
@@ -466,7 +516,7 @@ export default defineComponent({
 
     // Cleanup the interval when the component is unmounted
     onBeforeUnmount(() => {
-      clearInterval(countdownInterval);
+      // clearInterval(countdownInterval);
     });
 
     // onMounted(() => {
@@ -497,6 +547,7 @@ export default defineComponent({
       isPromoDetail,
       showPromoDetails,
       selectedPromo,
+      selectedPromoDate,
       banner,
       imgURL,
       store,
@@ -517,7 +568,9 @@ export default defineComponent({
       swipeRight,
       route,
       allGames,
-      closeFullGameDialog
+      closeFullGameDialog,
+      isFtdPromoEnded,
+      selectedParam
     }
   },
 });

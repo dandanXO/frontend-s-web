@@ -1,16 +1,7 @@
 <template>
-  <div
-    class="q-pa-md"
-    style="overflow: auto;  margin: 8px 8px"
-  >
+  <div class="q-pa-md" style="overflow: auto; margin: 8px 8px">
     <div class="node-wrapper">
-      <Node
-        :level="1"
-        :list="payMethods"
-        :gridcol="4"
-        ref="paymentNode"
-        @clicked="onSelect"
-      />
+      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
     <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
@@ -50,7 +41,7 @@
             {{ copybtntxt3 }}
           </q-btn>
         </div>
-        <div class="line"  v-if="submitMessage[5] && submitMessage[5] !== 'null'">
+        <div class="line" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
           <span>备注：</span>
           <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('5')" class="common-btn">
@@ -75,10 +66,10 @@
             padding="none"
           >
             <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">
-              <template v-if="isUSDT">USDT</template>
-              <template v-else>{{ store.currency.value }}</template>
-            </span>
+              <span style="font-size: 26px" class="text-bright">
+                <template v-if="isUSDT">USDT</template>
+                <template v-else>{{ store.currency.value }}</template>
+              </span>
             </template>
           </q-input>
           <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
@@ -97,26 +88,22 @@
             padding="none"
           >
             <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">
-              {{ store.currency.value }}
-            </span>
+              <span style="font-size: 26px" class="text-bright">
+                {{ store.currency.value }}
+              </span>
             </template>
           </q-select>
           <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
         </div>
 
-        <div class="q-mt-sm text-grey text-bold ">
+        <div class="q-mt-sm text-grey text-bold">
           单笔存款：{{
-            calculatedMinDeposit
-              ? calculatedMinDeposit +
-              " " +
-              (isUSDT ? "USDT" : store.currency.value)
-              : 0
-          }}  -   {{
+            calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
+          }}
+          -
+          {{
             activeMethod.depositMax
-              ? activeMethod.depositMax +
-              " " +
-              (isUSDT ? "USDT" : store.currency.value)
+              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
               : "No Limit"
           }}
         </div>
@@ -168,19 +155,31 @@
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section>
-                <q-item-label
-                  style="
-                    text-overflow: ellipsis;
-                    overflow: auto;
-                    white-space: nowrap;
-                  "
-                >
+                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
                   {{ scope.opt.name }}
                 </q-item-label>
               </q-item-section>
             </q-item>
           </template>
         </q-select>
+
+        <div
+          class="rollover-info"
+          v-if="
+            selectedPrivilege &&
+            selectedPrivilege.name &&
+            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)
+          "
+        >
+          <span v-if="selectedPrivilege.depositMin">
+            优惠最低存款要求：{{ selectedPrivilege.depositMin }}元，&nbsp;&nbsp;&nbsp;
+          </span>
+          <span v-if="selectedPrivilege.gameTypeRollover && selectedPrivilege.gameTypeRollover !== '{}'">
+            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
+          </span>
+          <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
+        </div>
+
         <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <!-- <div class="q-mt-md">
@@ -197,20 +196,15 @@
 
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
-      <q-card-section
-        style="padding: 10px 20px"
-        class="q-pa-md bg-primary text-white"
-      >
-        已存款
-      </q-card-section>
+      <q-card-section style="padding: 10px 20px" class="text-white q-pa-md bg-primary">已存款</q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           您将被重定向到您的银行页面以完成存款。
-          <br/>
-          <br/>
+          <br />
+          <br />
           入金成功后会反映这里。
         </q-card-section>
-        <q-btn @click="clearInfo" label="明白" color="brightbtn"/>
+        <q-btn @click="clearInfo" label="明白" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
@@ -218,15 +212,30 @@
   <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 20px" class="text-white">
       <q-card-section class="q-mb-md">
-        <strong>温馨提示</strong>
-        <br/>
-        <br/>
-        为保证资金安全，存款前需先验证手机号
+        <strong style="display: inline-block; padding-bottom: 12px; font-size: 20px">完成以下认证才可以存款</strong>
+        <div v-if="!store.realName" style="margin: 16px 0">
+          <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+            <div class="">
+              <p style="margin: 0; color: #fff; font-size: 16px">存款需要绑定真实姓名</p>
+              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+            </div>
+            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+          </div>
+        </div>
+
+        <div v-if="!store.phone">
+          <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+            <div class="">
+              <p style="margin: 0; color: #fff; font-size: 16px">存款需要绑定手机号</p>
+              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+            </div>
+
+            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+          </div>
+        </div>
       </q-card-section>
       <q-card-actions align="right">
-        <router-link to="/account/personal">
-          <q-btn label="前往验证" color="brightbtn"/>
-        </router-link>
+        <q-btn style="width: 100%" label="暂不认证" color="brightbtn" @click="isNewUser = false" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -235,13 +244,13 @@
     <q-card style="width: 100%; padding: 20px" class="text-white">
       <q-card-section class="q-mb-md">
         <strong>温馨提示</strong>
-        <br/>
-        <br/>
+        <br />
+        <br />
         为保证资金安全，存款前先绑定银行卡
       </q-card-section>
       <q-card-actions align="right">
         <router-link to="/account/withdraw">
-          <q-btn label="前往绑定" color="brightbtn"/>
+          <q-btn label="前往绑定" color="brightbtn" />
         </router-link>
       </q-card-actions>
     </q-card>
@@ -249,18 +258,18 @@
 </template>
 
 <script setup id="DepositComponent">
-import {ref, reactive, onMounted, shallowRef, onBeforeUnmount} from "vue";
+import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import {api, cashier} from "boot/axios";
-import {Platform, useQuasar, openURL} from "quasar";
-import {doIt} from "boot/action";
+import { api, cashier } from "boot/axios";
+import { Platform, useQuasar, openURL } from "quasar";
+import { doIt } from "boot/action";
 import liff from "@line/liff";
 
 var qs = require("qs");
 
-import {userStore} from "stores/index";
-import {useRouter} from "vue-router";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
 
 const store = userStore();
 const router = useRouter();
@@ -268,17 +277,22 @@ const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 const checkNewUser = () => {
-  if (store.phone == "") {
+  if (!store.phone || !store.realName) {
     isNewUser.value = true;
-  } else {
-    api.get("/session/bankCard").then((response) => {
-      if (response.code === 0) {
-        if (response.data.length === 0) {
-          isNoBankCard.value = true;
-        }
-      }
-    });
+    return false;
   }
+  // else {
+  //   api.get("/session/bankCard").then((response) => {
+  //     if (response.code === 0) {
+  //       if (response.data.length === 0) {
+  //         isNoBankCard.value = true;
+  //       }
+  //     }
+  //   });
+  //
+  //
+  // }
+  return true;
 };
 const isDeposited = ref(false);
 const isLoading = ref(true);
@@ -339,26 +353,18 @@ const blurCode = () => {
 };
 
 const isValidDecimal = () => {
-  const decimalPattern =
-    /^[0-9]*(\.[0-9]{0,2})?$/;
+  const decimalPattern = /^[0-9]*(\.[0-9]{0,2})?$/;
   return decimalPattern.test(form.localAmount) || "金额数字不正确";
 };
-
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
-    "存款应介于 " +
-    calculatedMinDeposit.value +
-    " - " +
-    activeMethod.value.depositMax,
+    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
-    "存款应介于 " +
-    calculatedMinDeposit.value +
-    " - " +
-    activeMethod.value.depositMax
+    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -417,29 +423,60 @@ function initPay() {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
-  await cashier
-    .get(`/session/payment/${val.paymentId}/privileges`)
-    .then((res) => {
-      if (res.code === 0) {
-        privilegeList.value = res.data.privileges;
-        hasPrivilege.value = true;
-        unselectedPrivileges.value = [];
-        freePrivilege.value = null;
-        privilegeList.value.map((p) => {
-          if (p.payTypes.indexOf(val.payType) >= 0) {
-            if (p.triggerType == "FREE") {
-              freePrivilege.value = p;
-            } else {
-              unselectedPrivileges.value.push(p);
-            }
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = null;
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType == "FREE") {
+            freePrivilege.value = p;
+          } else {
+            unselectedPrivileges.value.push(p);
           }
-        });
-      } else {
-        hasPrivilege.value = false;
-        privilegeList.value = [];
-      }
-    });
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
 }
+
+const getRollOverText = (rolltext) => {
+  const thetext = JSON.parse(rolltext);
+
+  var fulltext = "流水倍数要求（本金 + 彩金）：";
+  var rolloverlists = [];
+  if (thetext.sport) {
+    rolloverlists.push("体育" + thetext.sport + "倍");
+  }
+  if (thetext.esport) {
+    rolloverlists.push("电竞" + thetext.esport + "倍");
+  }
+  if (thetext.slot) {
+    rolloverlists.push("电子" + thetext.slot + "倍");
+  }
+  if (thetext.live) {
+    rolloverlists.push("真人" + thetext.live + "倍");
+  }
+  if (thetext.poker) {
+    rolloverlists.push("棋牌" + thetext.poker + "倍");
+  }
+  if (thetext.fish) {
+    rolloverlists.push("捕鱼" + thetext.fish + "倍");
+  }
+  if (thetext.lottery) {
+    rolloverlists.push("彩票" + thetext.lottery + "倍");
+  }
+  if (thetext.casual) {
+    rolloverlists.push("小游戏" + thetext.casual + "倍");
+  }
+  fulltext += rolloverlists.join("，");
+  return fulltext;
+};
 
 function selectPayType(value) {
   if (value) {
@@ -495,10 +532,7 @@ function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(
-      activeMethod.value.depositMin,
-      selectedPrivilege.value.depositMin
-    );
+    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
   }
 }
 
@@ -527,15 +561,15 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
+  if (!checkNewUser()) return;
+
   btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
     btnLoading.value = false;
   } else {
     await cashier
-      .get(
-        `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
-      )
+      .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
       .then((d) => {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
@@ -551,8 +585,7 @@ async function confirmDeposit() {
         } else {
           if (freePrivilege.value) {
             if (selectedPrivilege.value) {
-              form.privilegeId =
-                selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
             } else {
               form.privilegeId = "," + freePrivilege.value.id;
             }
@@ -564,7 +597,7 @@ async function confirmDeposit() {
             }
           }
           form.paymentId = activeMethod.value.paymentId;
-          const copy = {...form};
+          const copy = { ...form };
           const data = {};
           Object.entries(copy).forEach(([key, value]) => {
             if (value) {
@@ -616,7 +649,7 @@ async function pDepo(deposit) {
             Platform.is.name !== "webkit" &&
             !liff.isInClient()
           ) {
-            if (store.getDeviceType() === 'IOS' || store.isMobileSafari()) {
+            if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
@@ -631,7 +664,6 @@ async function pDepo(deposit) {
                   btnLoading.value = false;
                 }
               }
-
             } else {
               const newWin = window.open(`/`);
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
@@ -649,8 +681,6 @@ async function pDepo(deposit) {
                 }
               }
             }
-
-
           } else {
             localStorage.setItem("formDetails", JSON.stringify(form));
             if (response.payResultType === "GET_SUBMIT") {
@@ -670,10 +700,12 @@ async function pDepo(deposit) {
             if (response.payResultType === "POST_SUBMIT") {
               localStorage.setItem("responseDetails", JSON.stringify(response));
               if (response.paramKey === null || response.paramKey === "") {
-
-                if (store.getDeviceType() == 'ANDROID') {
+                if (store.getDeviceType() == "ANDROID") {
                   // alert("Adnroid");
-                  var preUrl = 'https://' + store.evip + `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  var preUrl =
+                    "https://" +
+                    store.evip +
+                    `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
 
                   // alert(preUrl);
                   const newWin = window.open(preUrl, `_blank`);
@@ -682,10 +714,7 @@ async function pDepo(deposit) {
                     `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
                   );
                   btnLoading.value = false;
-
                 }
-
-
               } else {
                 router.push(
                   `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
@@ -694,7 +723,6 @@ async function pDepo(deposit) {
               }
             }
           }
-
         }
       } else {
         $q.notify({
@@ -772,18 +800,18 @@ onMounted(() => {
     }
   }
 }
-.flex-c-center{
-  display:flex;
+.flex-c-center {
+  display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  .deposit-input{
+  .deposit-input {
     width: 70%;
   }
-  .deposit-btn{
+  .deposit-btn {
     width: 25%;
     height: 56px;
     font-size: 20px;
-    white-space:nowrap;
+    white-space: nowrap;
     background-color: #33bcd4;
   }
 }
@@ -798,5 +826,10 @@ onMounted(() => {
 
 .q-select__dialog .q-field__control {
   background: #4fb2ff !important;
+}
+
+.rollover-info {
+  color: #bd4646;
+  font-size: 12px;
 }
 </style>

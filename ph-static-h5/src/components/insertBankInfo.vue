@@ -1,41 +1,50 @@
 <template>
   <div
-    style="display: flex;
+    style="
+      display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;"
+      padding: 20px;
+    "
   >
-        <q-form style="width: 100%;">
-          <template v-if="step === 1">
-            <q-input
-            ref="updateInfoNameRef"
-            class="q-mb-md"
-            filled
-            v-model="updateInfo.cardAccountName"
-            label="First name - matches bank account"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please enter your bank account name.']"
-            color="white"
-          >
-            <template v-slot:prepend>
-              <q-icon name="web" />
-            </template>
-          </q-input>
-          <q-input
-            ref="updateInfoSurnameRef"
-            class="q-mb-md"
-            filled
-            v-model="updateInfo.cardAccountSurname"
-            label="Last name - matches bank account"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please enter your last name that matches your bank account name']"
-            color="white"
-          >
-            <template v-slot:prepend>
-              <q-icon name="web" />
-            </template>
-          </q-input>
-          <!-- <q-input
+    <q-form style="width: 100%">
+      <template v-if="step === 1">
+        <q-input
+          ref="updateInfoNameRef"
+          class="q-mb-md"
+          filled
+          v-model="updateInfo.cardAccountName"
+          label="First name - matches bank account"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val && val.length > 0) || 'Please enter your bank account name.',
+          ]"
+          color="white"
+        >
+          <template v-slot:prepend>
+            <q-icon name="web" />
+          </template>
+        </q-input>
+        <q-input
+          ref="updateInfoSurnameRef"
+          class="q-mb-md"
+          filled
+          v-model="updateInfo.cardAccountSurname"
+          label="Last name - matches bank account"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val && val.length > 0) ||
+              'Please enter your last name that matches your bank account name',
+          ]"
+          color="white"
+        >
+          <template v-slot:prepend>
+            <q-icon name="web" />
+          </template>
+        </q-input>
+        <!-- <q-input
             ref="updateInfoRef"
             class="q-mb-md"
             filled
@@ -48,143 +57,163 @@
             lazy-rules
             color="white"
           /> -->
-          <div class="flex">
-            <q-btn
-              class="q-mr-md"
-              color="brand"
-              label="ยืนยัน"
-              @click="updateName"
-            />
-          </div>
-          </template>
-          <template v-if="step === 2">
-          <q-input
-            class="q-mb-md"
-            filled
-            v-model="bankCardInfo.cardAccount"
-            label="Bank account (The same as the account used to deposit)"
-            :rules="[
-              val => (val && val.length > 0) || 'Please enter bank account',
-            ]"
-            lazy-rules
-            :disable="true"
-            ref="cardAccountRef"
-            color="white"
+        <div class="flex">
+          <q-btn
+            class="q-mr-md"
+            color="brand"
+            label="ยืนยัน"
+            @click="updateName"
           />
-          <div>
-            <div class="row q-col-gutter-xs">
-              <div class="col-12">
-                <q-select
-                  v-model="selectedBankType"
-                  filled
-                  :options="[{ name: 'Bank' }, { name: 'Crypto' }, { name: 'e-Wallet' }]"
-                  label="ช่องทางการถอน"
-                  color="white"
-                  label-color="grey"
-                  option-label="name"
-                  option-value="name"
-                  @update:model-value="selectBankType(opt)"
-                  emit-value
-                  map-options
-                />
-              </div>
-              <div class="col-12">
-                <q-select
-                  ref="bankCardRef"
-                  class="q-mb-md"
-                  color="white"
-                  filled
-                  label-color="grey"
-                  v-model="bankCardInfo.bankId"
-                  :options="banksList"
-                  option-value="id"
-                  option-label="name"
-                  label="Select bank card"
-                  :rules="[(val) => !!val || 'Please select a bank card']"
-                  lazy-rules
-                  emit-value
-                  map-options
-                >
-                  <template v-slot:selected-item="scope">
+        </div>
+      </template>
+      <template v-if="step === 2">
+        <q-input
+          class="q-mb-md"
+          filled
+          v-model="bankCardInfo.cardAccount"
+          label="Bank account (The same as the account used to deposit)"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please enter bank account',
+          ]"
+          lazy-rules
+          :disable="true"
+          ref="cardAccountRef"
+          color="white"
+        />
+        <div>
+          <div class="row q-col-gutter-xs">
+            <div class="col-12">
+              <q-select
+                v-model="selectedBankType"
+                filled
+                :options="[
+                  { name: 'Bank' },
+                  { name: 'Crypto' },
+                  { name: 'e-Wallet' },
+                ]"
+                label="ช่องทางการถอน"
+                color="light-blue-4"
+                label-color="grey"
+                option-label="name"
+                option-value="name"
+                @update:model-value="selectBankType(opt)"
+                emit-value
+                map-options
+              />
+            </div>
+            <div class="col-12">
+              <q-select
+                ref="bankCardRef"
+                class="q-mb-md"
+                color="light-blue-4"
+                filled
+                label-color="grey"
+                v-model="bankCardInfo.bankId"
+                :options="banksList"
+                option-value="id"
+                option-label="name"
+                label="Select bank card"
+                :rules="[(val) => !!val || 'Please select a bank card']"
+                lazy-rules
+                emit-value
+                map-options
+              >
+                <template v-slot:selected-item="scope">
+                  <q-item-section avatar>
+                    <img
+                      v-if="scope.opt.bankIcon"
+                      style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                      :src="imgURL + scope.opt.bankIcon"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label
+                      style="
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                      "
+                      >{{ scope.opt.name }}</q-item-label
+                    >
+                  </q-item-section>
+                </template>
+                <template v-slot:option="scope">
+                  <q-item v-bind="scope.itemProps">
                     <q-item-section avatar>
-                      <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
+                      <img
+                        v-if="scope.opt.bankIcon"
+                        style="
+                          width: 30px;
+                          margin-top: 10px;
+                          margin-bottom: 10px;
+                        "
+                        :src="imgURL + scope.opt.bankIcon"
+                      />
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.name }}</q-item-label>
+                      <q-item-label>{{ scope.opt.name }}</q-item-label>
                     </q-item-section>
-                  </template>
-                  <template v-slot:option="scope">
-                    <q-item v-bind="scope.itemProps">
-                      <q-item-section avatar>
-                        <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon">
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>{{ scope.opt.name }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
+                  </q-item>
+                </template>
+              </q-select>
             </div>
           </div>
-          <q-input
-            filled
-            class="q-mb-md"
-            v-model="bankCardInfo.cardNumber"
-            label="Card number"
-            :rules="[
-              val => (val && val.length > 0) || 'Please enter card number',
-              val => validateBankLength(val)
-            ]"
-            ref="cardNumberRef"
-            color="white"
-          />
-          <q-input
-            class="q-mb-md"
-            filled
-            v-model="bankCardInfo.cardAddress"
-            label="Branch (Optional)"
-            ref="cardAddressRef"
-            color="white"
-          />
-          <div class="flex">
-            <q-btn color="brand" label="Submit" @click="submitBankCard" />
-          </div>
-          </template>
-        </q-form>
+        </div>
+        <q-input
+          filled
+          class="q-mb-md"
+          v-model="bankCardInfo.cardNumber"
+          label="Card number"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please enter card number',
+            (val) => validateBankLength(val),
+          ]"
+          ref="cardNumberRef"
+          color="white"
+        />
+        <q-input
+          class="q-mb-md"
+          filled
+          v-model="bankCardInfo.cardAddress"
+          label="Branch (Optional)"
+          ref="cardAddressRef"
+          color="white"
+        />
+        <div class="flex">
+          <q-btn color="brand" label="Submit" @click="submitBankCard" />
+        </div>
+      </template>
+    </q-form>
     <q-dialog v-model="isShowInstruction">
       Kindly update your details first.
     </q-dialog>
-    
+
     <q-dialog
       v-model="isShowInstruction"
       transition-show="slide-up"
       transition-hide="slide-down"
     >
       <q-card style="width: 100%; padding: 20px" class="bg-primary text-white">
-        <q-card-section>
-          Edit your personal information.
-        </q-card-section>
-
+        <q-card-section> Edit your personal information. </q-card-section>
       </q-card>
     </q-dialog>
     <q-btn color="brand" class="bottombtn" @click="logout">
-        <RiLogoutBoxLine />
-        <div class="acct-nav-label">Logout</div>
+      <RiLogoutBoxLine />
+      <div class="acct-nav-label">Logout</div>
     </q-btn>
   </div>
 </template>
 <script setup>
-import {onMounted, ref, reactive} from "vue";
-import {useQuasar, Platform} from "quasar";
+import { onMounted, ref, reactive } from "vue";
+import { useQuasar, Platform } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 import { RiLogoutBoxLine } from "vue-remix-icons";
-import liff from '@line/liff';
-const step = ref(1)
+import liff from "@line/liff";
+const step = ref(1);
 const store = userStore();
-const imgURL = process.env.IMAGE_CDN + '/'
+const imgURL = process.env.IMAGE_CDN + "/";
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAccountRef = ref();
@@ -193,11 +222,11 @@ const bankCardInfo = reactive({
   bankId: undefined,
   cardNumber: "",
   cardAccount: "",
-  cardAddress: ""
+  cardAddress: "",
 });
 const updateInfo = reactive({
   realName: "",
-})
+});
 const updateInfoNameRef = ref();
 const updateInfoSurnameRef = ref();
 const qs = require("qs");
@@ -206,7 +235,7 @@ const $q = useQuasar();
 const router = useRouter();
 const bankCardModalState = reactive({
   visible: false,
-  banks: []
+  banks: [],
 });
 
 const banksList = ref([]);
@@ -218,10 +247,7 @@ const selectBankType = () => {
     if (selectedBankType.value === "Bank" && element.bankType === "BANK") {
       banksList.value.push(element);
     }
-    if (
-      selectedBankType.value === "Crypto" &&
-      element.bankType === "CRYPTO"
-    ) {
+    if (selectedBankType.value === "Crypto" && element.bankType === "CRYPTO") {
       const isCrypto = ref(true);
       banksList.value.push(element);
     }
@@ -240,38 +266,46 @@ const loadBankCards = () => {
   bankCardInfo.cardNumber = "";
   bankCardInfo.cardAddress = "";
   bankCardModalState.visible = true;
-if (bankCardModalState.banks.length === 0) {
-  api.get("/session/withdraw/card").then((ret) => {
-    const res = ret.data
-    if (res.code === 0) {
-      bankCardModalState.banks.push(...res.data);
-      selectBankType()
-    }
-  }).catch((e) => {
-    console.log("error", e);
-  });
-}
-}
+  if (bankCardModalState.banks.length === 0) {
+    api
+      .get("/session/withdraw/card")
+      .then((res) => {
+        if (res.code === 0) {
+          bankCardModalState.banks.push(...res.data);
+          selectBankType();
+        }
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+};
 
 const submitBankCard = () => {
   bankCardRef.value.validate();
   cardAccountRef.value.validate();
   cardAddressRef.value.validate();
   cardNumberRef.value.validate();
-  if (bankCardRef.value.hasError || cardAccountRef.value.hasError  || cardAddressRef.value.hasError || cardNumberRef.value.hasError) {
-  }
-  else {
-      api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((res) => {
-        const response = res.data
-        if (response.code === 0) {
+  if (
+    bankCardRef.value.hasError ||
+    cardAccountRef.value.hasError ||
+    cardAddressRef.value.hasError ||
+    cardNumberRef.value.hasError
+  ) {
+  } else {
+    api
+      .post("/session/bankCard", qs.stringify(bankCardInfo))
+      .then((res) => {
+        if (res.code === 0) {
           bankCardModalState.visible = false;
+
           $q.notify({
             color: "positive",
             position: "top",
             message: "Card has been added",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
           });
-          router.push('/account')
+          router.push("/account");
         } else {
           // $q.notify({
           //   color: "negative",
@@ -280,65 +314,66 @@ const submitBankCard = () => {
           //   icon: "report_problem"
           // });
         }
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log("error", error);
       });
-
-
   }
 };
 
 let validateBankLength = (val) => {
   if (selectedBankType.value === "Bank") {
     return (
-      (val.length > 5 && val.length < 13) || "Length should be 6 to 12 characters."
+      (val.length > 5 && val.length < 13) ||
+      "Length should be 6 to 12 characters."
     );
   } else if (selectedBankType.value === "Crypto") {
     return (
-      (val.length > 33 && val.length < 38) || "Length should be 34 to 37 characters."
+      (val.length > 33 && val.length < 38) ||
+      "Length should be 34 to 37 characters."
     );
   }
 };
 const updateName = () => {
-  updateInfoNameRef.value.validate()
-  updateInfoSurnameRef.value.validate()
+  updateInfoNameRef.value.validate();
+  updateInfoSurnameRef.value.validate();
   if (updateInfoNameRef.value.hasError || updateInfoSurnameRef.value.hasError) {
   } else {
-    updateInfo.realName = updateInfo.cardAccountName + '-' + updateInfo.cardAccountSurname
+    updateInfo.realName =
+      updateInfo.cardAccountName + "-" + updateInfo.cardAccountSurname;
     api.post("/session/account", qs.stringify(updateInfo)).then((res) => {
-      const r = res.data
-        if (r.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "Updated successfully",
-            icon: "check_circle_outline"
-          });
-          bankCardInfo.cardAccount = updateInfo.realName
-          step.value = 2
-          loadBankCards();
-        }
-      })
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Updated successfully",
+          icon: "check_circle_outline",
+        });
+        bankCardInfo.cardAccount = updateInfo.realName;
+        step.value = 2;
+        loadBankCards();
+      }
+    });
   }
-}
+};
 const logout = () => {
   store.memberLogout().then(() => {
-    router.push('/')
+    router.push("/");
   });
-}
+};
 onMounted(() => {
-  store.getMemberInfo()
+  store.getMemberInfo();
   if (store.realName) {
-    bankCardInfo.cardAccount = store.realName
-    step.value = 2
+    bankCardInfo.cardAccount = store.realName;
+    step.value = 2;
     loadBankCards();
   }
 });
 </script>
 <style scoped>
-  .bottombtn {
-    position:absolute;
-    bottom: 10px;
-    right: 10px;
-  }
+.bottombtn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
 </style>
