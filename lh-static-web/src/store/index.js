@@ -50,6 +50,7 @@ export const userStore = defineStore("userStore", {
             this.getMemberInfo();
             this.getUnreadMail();
           } else {
+            window.captchaObj.reset()
             uiStore().notify({
               type: "error",
               message: ret.message
