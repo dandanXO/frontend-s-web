@@ -94,7 +94,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                
@@ -144,7 +144,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                
                 <q-input
@@ -191,7 +191,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <q-input
@@ -438,6 +438,13 @@ import { useNotify } from "src/hooks/notify";
       // if (voteRef.value.hasError) {
       //   return;
       // }
+      if (voteData.votes === 0) {
+        notify({
+          type: "error",
+          message: "请输入票数",
+        });
+        return;
+      }
 
       if (Number(voteData.votes) > votesData.value.myVotes) {
         notify({
@@ -505,7 +512,7 @@ import { useNotify } from "src/hooks/notify";
         const votesList = res.data.votesList.map((team) => {
           return {
             ...team,
-            votes: 1 // Initialize each team's votes to 1
+            votes: 0 // Initialize each team's votes to 1
           };
         });
 
