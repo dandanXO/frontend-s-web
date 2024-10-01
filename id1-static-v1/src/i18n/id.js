@@ -72,7 +72,7 @@ export default {
     phone: "Nomor Telepon",
     phone_placeholder: "Masukkan nomor ponsel Anda",
     phone_rules_01: "Masukkan nomor telepon",
-    phone_rules_02: "Nomor telepon harus 10 digit",
+    phone_rules_02: "Nomor telepon harus antara 9 hingga 12 digit",
     phone_rules_03: "Nomor telepon harus dimulai dengan '03'",
     prependNumber: "+62",
     password: "Kata Sandi",
