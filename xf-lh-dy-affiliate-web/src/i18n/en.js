@@ -321,6 +321,7 @@ export default {
     monthBeforeLastTotal: 'Month Before Last Total',
     monthlyMemberCommission: 'Monthly Member Commission',
     newMemberCount: 'New Member Count',
+    newMember: 'New Register Member',
     activeMemberCount: 'Active Member Count',
     totalRegisterCount: 'Total Register Count',
     myAccount: 'My Account',

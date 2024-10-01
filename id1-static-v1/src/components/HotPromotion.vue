@@ -525,6 +525,10 @@ export default defineComponent({
         padding: 20px;
 
         .contents {
+          flex: 1;
+          color: #ffffff;
+          text-align: center;
+
           form {
             margin-top: 20px;
 
@@ -537,10 +541,6 @@ export default defineComponent({
               display: inline-block;
             }
           }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
         }
       }
 

@@ -4,11 +4,7 @@ import cached from "@/utils/cache";
 
 
 export function loadPromo() {
-  const store = userStore();
-
-  const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
-
-  return server.REST.get(platformApiUrl);
+  return server.REST.get("/opt-session/promo/page");
 }
 
 export function loadPromoTypes(category) {
@@ -16,7 +12,7 @@ export function loadPromoTypes(category) {
 }
 
 export function loadPromoBanner(category) {
-  return server.REST.get("/promo/banner", {
+  return server.REST.get("/opt-session/promo/banner", {
     params: {
       category: category
     }
@@ -462,3 +458,12 @@ export function getCompetitionBetYesterday(promoCode) {
     }
   })
 }
+
+export function getNBAUpcomingMatch() {
+  return server.EVENT.get('/session/nba-match-preseason/upcoming')
+}
+
+export function getNBAClaimHistory() {
+  return server.EVENT.get('/session/nba-match-preseason/history')
+}
+

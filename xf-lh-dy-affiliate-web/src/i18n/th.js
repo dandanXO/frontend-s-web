@@ -269,6 +269,7 @@ export default {
     monthBeforeLastTotal: 'รวมเดือนก่อนหน้า',
     monthlyMemberCommission: 'คอมมิชชันสมาชิกรายเดือน',
     newMemberCount: 'จำนวนสมาชิกใหม่ ',
+    newMember: 'สมาชิกใหม่',
     activeMemberCount: 'จำนวนสมาชิกที่ใช้งาน',
     totalRegisterCount: 'จำนวนสมาชิกสมบูรณ์ ',
     myAccount: 'บัญชีของฉัน',

@@ -56,17 +56,17 @@ const loadDailyCheckIn = () => {
 };
 const generateMonthMaxDaysArray = (details) => {
   // Clear the array to ensure it's empty before generating
-    dateDetails.value = [];
+  dateDetails.value = [];
 
-    // Generate the array of objects based on monthMaxDays
-    for (let i = 0; i < details.monthMaxDays; i++) {
-      dateDetails.value.push({
-        number: details?.signBonus?.[i],
-        checkInActive: false,
-        isCheckedIn: false
-      });
-    }
-    getCheckInDays(details);
+  // Generate the array of objects based on monthMaxDays
+  for (let i = 0; i < details.monthMaxDays; i++) {
+    dateDetails.value.push({
+      number: details?.signBonus?.[i],
+      checkInActive: false,
+      isCheckedIn: false
+    });
+  }
+  getCheckInDays(details);
 };
 const getCheckInDays = (details) => {
   // Get checked in days
@@ -83,7 +83,7 @@ const getCheckInDays = (details) => {
       }
     }
   });
-}
+};
 const checkIn = (mth) => {
   signIn().then((res) => {
     if (res.code === 0) {
@@ -92,7 +92,7 @@ const checkIn = (mth) => {
         type: "success",
         message: "领取成功"
       });
-      getCheckInDays(res.data)
+      getCheckInDays(res.data);
     } else {
       notify({
         type: "error",
@@ -138,6 +138,15 @@ onMounted(() => {
     padding: 30px 30px 20px;
     background: #ffffffcc;
     .mth {
+      width: calc((100% - (40px * 6)) / 7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #4c4c6c;
+      height: 200px;
+      padding-bottom: 55px;
+
       &.check-in {
         cursor: pointer;
         background: url(../../../assets/images/promotion/hotpromo/dailylogin/sign.png) no-repeat center center;
@@ -158,14 +167,7 @@ onMounted(() => {
           color: #6e6e6e;
         }
       }
-      width: calc((100% - (40px * 6)) / 7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: #4c4c6c;
-      height: 200px;
-      padding-bottom: 55px;
+
       .day {
         font-size: 40px;
         .times {

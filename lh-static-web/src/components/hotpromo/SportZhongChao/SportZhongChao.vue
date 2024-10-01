@@ -47,66 +47,68 @@
     </div>
     <div class="sport-zhongchao-content">
       <table class="first-table" v-if="tab === 'first'">
-        <tr>
-          <th>早盘有效投注额</th>
-          <th>事件加分</th>
-          <th>事件总分≥55</th>
-          <th>事件总分≥70</th>
-          <th>事件总分≥85</th>
-        </tr>
-        <tr>
-          <td>888</td>
-          <td
-            rowspan="6"
-            style="
-              color: #05a5ff;
-              line-height: 60px;
-              font-size: 20px;
-              border-left: 2px solid #05a5ff;
-              border-right: 2px solid #05a5ff;
-            "
-          >
-            <div>角球+1分</div>
-            <div>黄牌+1分</div>
-            <div>进球+2分</div>
-            <div>红牌+2分</div>
-            <div>射门数+2分</div>
-            <div>乌龙球+2分</div>
-          </td>
-          <td>6</td>
-          <td>8</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td>2,888</td>
-          <td>18</td>
-          <td>22</td>
-          <td>28</td>
-        </tr>
-        <tr>
-          <td>8,888</td>
-          <td>58</td>
-          <td>72</td>
-          <td>88</td>
-        </tr>
-        <tr>
-          <td>28,888</td>
-          <td>188</td>
-          <td>238</td>
-          <td>288</td>
-        </tr>
-        <tr>
-          <td>58,888</td>
-          <td>388</td>
-          <td>488</td>
-          <td>588</td>
-        </tr>
-        <tr>
-          <td>88,888</td>
-          <td>688</td>
-          <td>788</td>
-          <td>888</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>早盘有效投注额</th>
+            <th>事件加分</th>
+            <th>事件总分≥55</th>
+            <th>事件总分≥70</th>
+            <th>事件总分≥85</th>
+          </tr>
+          <tr>
+            <td>888</td>
+            <td
+              rowspan="6"
+              style="
+                color: #05a5ff;
+                line-height: 60px;
+                font-size: 20px;
+                border-left: 2px solid #05a5ff;
+                border-right: 2px solid #05a5ff;
+              "
+            >
+              <div>角球+1分</div>
+              <div>黄牌+1分</div>
+              <div>进球+2分</div>
+              <div>红牌+2分</div>
+              <div>射门数+2分</div>
+              <div>乌龙球+2分</div>
+            </td>
+            <td>6</td>
+            <td>8</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>2,888</td>
+            <td>18</td>
+            <td>22</td>
+            <td>28</td>
+          </tr>
+          <tr>
+            <td>8,888</td>
+            <td>58</td>
+            <td>72</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td>28,888</td>
+            <td>188</td>
+            <td>238</td>
+            <td>288</td>
+          </tr>
+          <tr>
+            <td>58,888</td>
+            <td>388</td>
+            <td>488</td>
+            <td>588</td>
+          </tr>
+          <tr>
+            <td>88,888</td>
+            <td>688</td>
+            <td>788</td>
+            <td>888</td>
+          </tr>
+        </tbody>
       </table>
 
       <div
@@ -149,72 +151,74 @@
       </div>
 
       <table class="second-table" v-if="tab === 'second'">
-        <tr>
-          <th rowspan="2">累计有效投注</th>
-          <th colspan="2" style="border-right: 2px solid #05a5ff; border-left: 2px solid #05a5ff">投注指定一场</th>
-          <th colspan="2">投注指定两场</th>
-        </tr>
-        <tr>
-          <td style="color: #05a5ff; font-size: 20px; line-height: 28px; font-weight: 500">
-            <div>两队总比分</div>
-            <div>双数彩金</div>
-          </td>
-          <td
-            style="
-              color: #05a5ff;
-              font-size: 20px;
-              line-height: 28px;
-              font-weight: 500;
-              border-right: 2px solid #05a5ff;
-            "
-          >
-            <div>两队总比分</div>
-            <div>单数彩金</div>
-          </td>
-          <td style="color: #05a5ff; font-size: 20px; line-height: 28px; font-weight: 500">
-            <div>四队总比分</div>
-            <div>双数彩金</div>
-          </td>
-          <td style="color: #05a5ff; font-size: 20px; line-height: 28px">
-            <div>四队总比分</div>
-            <div>单数彩金</div>
-          </td>
-        </tr>
-        <tr>
-          <td>≥1,000</td>
-          <td style="border-left: 2px solid #05a5ff">5</td>
-          <td style="border-right: 2px solid #05a5ff">6</td>
-          <td>8</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td>≥5,000</td>
-          <td style="border-left: 2px solid #05a5ff">18</td>
-          <td style="border-right: 2px solid #05a5ff">26</td>
-          <td>28</td>
-          <td>38</td>
-        </tr>
-        <tr>
-          <td>≥10,000</td>
-          <td style="border-left: 2px solid #05a5ff">28</td>
-          <td style="border-right: 2px solid #05a5ff">38</td>
-          <td>58</td>
-          <td>68</td>
-        </tr>
-        <tr>
-          <td>≥50,000</td>
-          <td style="border-left: 2px solid #05a5ff">158</td>
-          <td style="border-right: 2px solid #05a5ff">188</td>
-          <td>288</td>
-          <td>388</td>
-        </tr>
-        <tr>
-          <td>≥100,000</td>
-          <td style="border-left: 2px solid #05a5ff">328</td>
-          <td style="border-right: 2px solid #05a5ff">388</td>
-          <td>588</td>
-          <td>888</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th rowspan="2">累计有效投注</th>
+            <th colspan="2" style="border-right: 2px solid #05a5ff; border-left: 2px solid #05a5ff">投注指定一场</th>
+            <th colspan="2">投注指定两场</th>
+          </tr>
+          <tr>
+            <td style="color: #05a5ff; font-size: 20px; line-height: 28px; font-weight: 500">
+              <div>两队总比分</div>
+              <div>双数彩金</div>
+            </td>
+            <td
+              style="
+                color: #05a5ff;
+                font-size: 20px;
+                line-height: 28px;
+                font-weight: 500;
+                border-right: 2px solid #05a5ff;
+              "
+            >
+              <div>两队总比分</div>
+              <div>单数彩金</div>
+            </td>
+            <td style="color: #05a5ff; font-size: 20px; line-height: 28px; font-weight: 500">
+              <div>四队总比分</div>
+              <div>双数彩金</div>
+            </td>
+            <td style="color: #05a5ff; font-size: 20px; line-height: 28px">
+              <div>四队总比分</div>
+              <div>单数彩金</div>
+            </td>
+          </tr>
+          <tr>
+            <td>≥1,000</td>
+            <td style="border-left: 2px solid #05a5ff">5</td>
+            <td style="border-right: 2px solid #05a5ff">6</td>
+            <td>8</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>≥5,000</td>
+            <td style="border-left: 2px solid #05a5ff">18</td>
+            <td style="border-right: 2px solid #05a5ff">26</td>
+            <td>28</td>
+            <td>38</td>
+          </tr>
+          <tr>
+            <td>≥10,000</td>
+            <td style="border-left: 2px solid #05a5ff">28</td>
+            <td style="border-right: 2px solid #05a5ff">38</td>
+            <td>58</td>
+            <td>68</td>
+          </tr>
+          <tr>
+            <td>≥50,000</td>
+            <td style="border-left: 2px solid #05a5ff">158</td>
+            <td style="border-right: 2px solid #05a5ff">188</td>
+            <td>288</td>
+            <td>388</td>
+          </tr>
+          <tr>
+            <td>≥100,000</td>
+            <td style="border-left: 2px solid #05a5ff">328</td>
+            <td style="border-right: 2px solid #05a5ff">388</td>
+            <td>588</td>
+            <td>888</td>
+          </tr>
+        </tbody>
       </table>
 
       <div
@@ -257,39 +261,41 @@
         </div>
       </div>
       <table class="third-table" v-if="tab === 'third'">
-        <tr>
-          <th style="width: 340px">指定赛事</th>
-          <th style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff; width: 330px">注单条件</th>
-          <th>逢8奖金</th>
-        </tr>
-        <tr>
-          <td rowspan="6" style="color: #05a5ff; line-height: 60px; font-size: 20px; border-right: 2px solid #05a5ff">
-            <div>首战告捷</div>
-            <div>乘胜追击</div>
-          </td>
-          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续两个8</td>
-          <td>28</td>
-        </tr>
-        <tr>
-          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续三个8</td>
-          <td>88</td>
-        </tr>
-        <tr>
-          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续四个8</td>
-          <td>188</td>
-        </tr>
-        <tr>
-          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续五个8</td>
-          <td>688</td>
-        </tr>
-        <tr>
-          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续六个8</td>
-          <td>1,888</td>
-        </tr>
-        <tr>
-          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续七个或以上8</td>
-          <td>2,888</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th style="width: 340px">指定赛事</th>
+            <th style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff; width: 330px">注单条件</th>
+            <th>逢8奖金</th>
+          </tr>
+          <tr>
+            <td rowspan="6" style="color: #05a5ff; line-height: 60px; font-size: 20px; border-right: 2px solid #05a5ff">
+              <div>首战告捷</div>
+              <div>乘胜追击</div>
+            </td>
+            <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续两个8</td>
+            <td>28</td>
+          </tr>
+          <tr>
+            <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续三个8</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续四个8</td>
+            <td>188</td>
+          </tr>
+          <tr>
+            <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续五个8</td>
+            <td>688</td>
+          </tr>
+          <tr>
+            <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续六个8</td>
+            <td>1,888</td>
+          </tr>
+          <tr>
+            <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续七个或以上8</td>
+            <td>2,888</td>
+          </tr>
+        </tbody>
       </table>
 
       <div

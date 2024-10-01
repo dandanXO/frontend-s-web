@@ -140,7 +140,14 @@
         <div class="header">{{ $t("vip.monthlyCumulative") }}</div>
       </div>
 
-      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns"
+        :rows="rows1"
+        row-key="name"
+        :rows-per-page-options="[0]"
+      >
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -168,7 +175,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ $t("vip.deposit") }} {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}</span>
+                  <span class="amt-text">{{ col.value }}K</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -222,7 +229,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}</span>
+                  <span class="amt-text">{{ col.value }}K</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -275,7 +282,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: right">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}</span>
+                  <span class="amt-text">{{ col.value }}K</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -323,7 +330,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 {{ store.currency.value }}
-                <span class="amt-text">{{ col.value }}</span>
+                <span class="amt-text">{{ col.value }}K</span>
               </template>
               <template v-else>{{ col.value }}</template>
             </q-td>
@@ -396,6 +403,69 @@ const columns = [
   { name: "flow", field: "flow", align: "center" }
 ];
 const rows = [
+  {
+    name: "VIP 1",
+    ugprade: "5,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 2",
+    ugprade: "10,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 3",
+    ugprade: "20,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 4",
+    ugprade: "50,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 5",
+    ugprade: "100,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 6",
+    ugprade: "200,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 7",
+    ugprade: "500,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 8",
+    ugprade: "1,000,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 9",
+    ugprade: "2,000,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 10",
+    ugprade: "5,000,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 11",
+    ugprade: "10,000,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 12",
+    ugprade: "20,000,000,000",
+    flow: "x10"
+  }
+];
+
+const rows1 = [
   {
     name: "VIP 1",
     ugprade: "5,000",
@@ -835,6 +905,7 @@ const swipeRight = () => {
         font-size: 12px;
 
         .reward-amt {
+          font-size: 10px;
           line-height: 12px;
           word-wrap: break-word;
           color: #8b36f8;

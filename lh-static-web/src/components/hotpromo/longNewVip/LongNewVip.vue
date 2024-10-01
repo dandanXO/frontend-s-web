@@ -18,411 +18,486 @@
         <div class="title"></div>
         <div class="title-2"></div>
         <table class="vip-table">
-        <thead>
+          <thead>
             <tr>
-                <th>VIP 等级</th>
-                <th>升级条件（流水）</th>
-                <th>保级条件（90 天）</th>
-                <th>晋级彩金</th>
+              <th>VIP 等级</th>
+              <th>升级条件（流水）</th>
+              <th>保级条件（90 天）</th>
+              <th>晋级彩金</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <tr>
-                <td>VIP1</td>
-                <td>3,000</td>
-                <td>1,500</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <td>VIP2</td>
-                <td>17,500</td>
-                <td>7,500</td>
-                <td>18</td>
+              <td>VIP1</td>
+              <td>3,000</td>
+              <td>1,500</td>
+              <td>8</td>
             </tr>
             <tr>
-                <td>VIP3</td>
-                <td>50,000</td>
-                <td>19,000</td>
-                <td>28</td>
+              <td>VIP2</td>
+              <td>17,500</td>
+              <td>7,500</td>
+              <td>18</td>
             </tr>
             <tr>
-                <td>VIP4</td>
-                <td>150,000</td>
-                <td>32,500</td>
-                <td>38</td>
+              <td>VIP3</td>
+              <td>50,000</td>
+              <td>19,000</td>
+              <td>28</td>
             </tr>
             <tr>
-                <td>VIP5</td>
-                <td>600,000</td>
-                <td>75,000</td>
-                <td>58</td>
+              <td>VIP4</td>
+              <td>150,000</td>
+              <td>32,500</td>
+              <td>38</td>
             </tr>
             <tr>
-                <td>VIP6</td>
-                <td>1,200,000</td>
-                <td>200,000</td>
-                <td>88</td>
+              <td>VIP5</td>
+              <td>600,000</td>
+              <td>75,000</td>
+              <td>58</td>
             </tr>
             <tr>
-                <td>VIP7</td>
-                <td>2,400,000</td>
-                <td>620,000</td>
-                <td>188</td>
+              <td>VIP6</td>
+              <td>1,200,000</td>
+              <td>200,000</td>
+              <td>88</td>
             </tr>
             <tr>
-                <td>VIP8</td>
-                <td>6,400,000</td>
-                <td>1,900,000</td>
-                <td>288</td>
+              <td>VIP7</td>
+              <td>2,400,000</td>
+              <td>620,000</td>
+              <td>188</td>
             </tr>
             <tr>
-                <td>VIP9</td>
-                <td>24,000,000</td>
-                <td>6,250,000</td>
-                <td>388</td>
+              <td>VIP8</td>
+              <td>6,400,000</td>
+              <td>1,900,000</td>
+              <td>288</td>
             </tr>
             <tr>
-                <td>VIP10</td>
-                <td>64,000,000</td>
-                <td>12,500,000</td>
-                <td>588</td>
+              <td>VIP9</td>
+              <td>24,000,000</td>
+              <td>6,250,000</td>
+              <td>388</td>
             </tr>
             <tr>
-                <td>VIP11</td>
-                <td>150,000,000</td>
-                <td>21,000,000</td>
-                <td>888</td>
+              <td>VIP10</td>
+              <td>64,000,000</td>
+              <td>12,500,000</td>
+              <td>588</td>
             </tr>
             <tr>
-                <td>VIP12</td>
-                <td>250,000,000</td>
-                <td>50,000,000</td>
-                <td>1,888</td>
+              <td>VIP11</td>
+              <td>150,000,000</td>
+              <td>21,000,000</td>
+              <td>888</td>
             </tr>
-        </tbody>
+            <tr>
+              <td>VIP12</td>
+              <td>250,000,000</td>
+              <td>50,000,000</td>
+              <td>1,888</td>
+            </tr>
+          </tbody>
         </table>
 
         <div class="sec-title-2"></div>
         <table class="vip-table">
-        <thead>
+          <thead>
             <tr>
-                <th>VIP 等级</th>
-                <th>生日彩金</th>
-                <th>节日彩金</th>
-                <th>每日返水红包</th>
-                <th>会员日<br>每月 15 号</th>
-                <th>会员加码<br>充值送 10% 加码券</th>
+              <th>VIP 等级</th>
+              <th>生日彩金</th>
+<!--              <th>节日彩金</th>-->
+              <th>每日返水红包</th>
+              <th>
+                会员日
+                <br />
+                每月 15 号
+              </th>
+              <th>
+                会员加码
+                <br />
+                充值送 10% 加码券
+              </th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <tr>
-                <td>VIP1</td>
-                <td>8</td>
-                <td>-</td>
-                <td>0.1%</td>
-                <td>8</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>VIP2</td>
-                <td>18</td>
-                <td>-</td>
-                <td>0.2%</td>
-                <td>18</td>
-                <td>28</td>
-            </tr>
-            <tr>
-                <td>VIP3</td>
-                <td>28</td>
-                <td>-</td>
-                <td>0.3%</td>
-                <td>28</td>
-                <td>58</td>
+              <td>VIP1</td>
+              <td>-</td>
+<!--              <td>-</td>-->
+              <td>0.1%</td>
+              <td>8</td>
+              <td>10</td>
             </tr>
             <tr>
-                <td>VIP4</td>
-                <td>38</td>
-                <td>-</td>
-                <td>0.5%</td>
-                <td>38</td>
-                <td>88</td>
+              <td>VIP2</td>
+              <td>-</td>
+<!--              <td>-</td>-->
+              <td>0.2%</td>
+              <td>18</td>
+              <td>28</td>
             </tr>
             <tr>
-                <td>VIP5</td>
-                <td>58</td>
-                <td>-</td>
-                <td>0.6%</td>
-                <td>58</td>
-                <td>128</td>
+              <td>VIP3</td>
+              <td>-</td>
+<!--              <td>-</td>-->
+              <td>0.3%</td>
+              <td>28</td>
+              <td>58</td>
             </tr>
             <tr>
-                <td>VIP6</td>
-                <td>88</td>
-                <td>-</td>
-                <td>0.8%</td>
-                <td>68</td>
-                <td>188</td>
+              <td>VIP4</td>
+              <td>38</td>
+<!--              <td>-</td>-->
+              <td>0.5%</td>
+              <td>38</td>
+              <td>88</td>
             </tr>
             <tr>
-                <td>VIP7</td>
-                <td>188</td>
-                <td>-</td>
-                <td>1.0%</td>
-                <td>128</td>
-                <td>258</td>
+              <td>VIP5</td>
+              <td>58</td>
+<!--              <td>-</td>-->
+              <td>0.6%</td>
+              <td>58</td>
+              <td>128</td>
             </tr>
             <tr>
-                <td>VIP8</td>
-                <td>288</td>
-                <td>188</td>
-                <td>1.2%</td>
-                <td>208</td>
-                <td>388</td>
+              <td>VIP6</td>
+              <td>88</td>
+<!--              <td>-</td>-->
+              <td>0.8%</td>
+              <td>68</td>
+              <td>188</td>
             </tr>
             <tr>
-                <td>VIP9</td>
-                <td>388</td>
-                <td>288</td>
-                <td>1.3%</td>
-                <td>388</td>
-                <td>508</td>
+              <td>VIP7</td>
+              <td>188</td>
+<!--              <td>-</td>-->
+              <td>1.0%</td>
+              <td>128</td>
+              <td>258</td>
             </tr>
             <tr>
-                <td>VIP10</td>
-                <td>588</td>
-                <td>388</td>
-                <td>1.5%</td>
-                <td>588</td>
-                <td>888</td>
+              <td>VIP8</td>
+              <td>288</td>
+<!--              <td>188</td>-->
+              <td>1.2%</td>
+              <td>208</td>
+              <td>388</td>
             </tr>
             <tr>
-                <td>VIP11</td>
-                <td>888</td>
-                <td>888</td>
-                <td>1.8%</td>
-                <td>888</td>
-                <td>1,288</td>
+              <td>VIP9</td>
+              <td>388</td>
+<!--              <td>288</td>-->
+              <td>1.3%</td>
+              <td>388</td>
+              <td>508</td>
             </tr>
             <tr>
-                <td>VIP12</td>
-                <td>1,888</td>
-                <td>1,888</td>
-                <td>2.0%</td>
-                <td>1,888</td>
-                <td>2,888</td>
+              <td>VIP10</td>
+              <td>588</td>
+<!--              <td>388</td>-->
+              <td>1.5%</td>
+              <td>588</td>
+              <td>888</td>
             </tr>
-        </tbody>
-    </table>
+            <tr>
+              <td>VIP11</td>
+              <td>888</td>
+<!--              <td>888</td>-->
+              <td>1.8%</td>
+              <td>888</td>
+              <td>1,288</td>
+            </tr>
+            <tr>
+              <td>VIP12</td>
+              <td>1,888</td>
+<!--              <td>1,888</td>-->
+              <td>2.0%</td>
+              <td>1,888</td>
+              <td>2,888</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="three-title-2"></div>
         <table class="vip-table">
-        <thead>
+          <thead>
             <tr>
-                <th>VIP 等级</th>
-                <th>首次保级彩金</th>
-                <th>年度保级彩金</th>
+              <th>VIP 等级</th>
+              <th>首次保级彩金</th>
+              <th>年度保级彩金</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <tr>
-                <td>青铜</td>
-                <td>18</td>
-                <td>208</td>
-            </tr>
-            <tr>
-                <td>白银</td>
-                <td>58</td>
-                <td>588</td>
+              <td>青铜</td>
+              <td>18</td>
+              <td>208</td>
             </tr>
             <tr>
-                <td>黄金</td>
-                <td>288</td>
-                <td>1,088</td>
+              <td>白银</td>
+              <td>58</td>
+              <td>588</td>
             </tr>
             <tr>
-                <td>铂金</td>
-                <td>588</td>
-                <td>1,888</td>
+              <td>黄金</td>
+              <td>288</td>
+              <td>1,088</td>
             </tr>
             <tr>
-                <td>钻石</td>
-                <td>888</td>
-                <td>2,888</td>
+              <td>铂金</td>
+              <td>588</td>
+              <td>1,888</td>
             </tr>
             <tr>
-                <td>王者</td>
-                <td>1,888</td>
-                <td>8,888</td>
+              <td>钻石</td>
+              <td>888</td>
+              <td>2,888</td>
             </tr>
-        </tbody>
+            <tr>
+              <td>王者</td>
+              <td>1,888</td>
+              <td>8,888</td>
+            </tr>
+          </tbody>
         </table>
         <div class="four-title-2"></div>
         <table class="vip-table">
-        <thead>
+          <thead>
             <tr>
-                <th>VIP 等级</th>
-                <th>电竞</th>
-                <th>体育</th>
-                <th>真人</th>
-                <th>棋牌</th>
-                <th>电子</th>
-                <th>返水上限</th>
+              <th>VIP 等级</th>
+              <th>电竞</th>
+              <th>体育</th>
+              <th>真人</th>
+              <th>棋牌</th>
+              <th>电子</th>
+              <th>返水上限</th>
             </tr>
-        </thead>
-        <tbody>
-            
-          <tr>
-                <td>VIP0</td>
-                <td>0.45%</td>
-                <td>0.40%</td>
-                <td>0.40%</td>
-                <td>0.40%</td>
-                <td>0.60%</td>
-                <td>8,888</td>
-            </tr>
+          </thead>
+          <tbody>
             <tr>
-                <td>VIP1</td>
-                <td>0.45%</td>
-                <td>0.40%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.60%</td>
-                <td>8,888</td>
+              <td>VIP0</td>
+              <td>0.45%</td>
+              <td>0.40%</td>
+              <td>0.40%</td>
+              <td>0.40%</td>
+              <td>0.60%</td>
+              <td>8,888</td>
             </tr>
             <tr>
-                <td>VIP2</td>
-                <td>0.45%</td>
-                <td>0.40%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.60%</td>
-                <td>8,888</td>
+              <td>VIP1</td>
+              <td>0.45%</td>
+              <td>0.40%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.60%</td>
+              <td>8,888</td>
             </tr>
             <tr>
-                <td>VIP3</td>
-                <td>0.48%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.60%</td>
-                <td>12,888</td>
+              <td>VIP2</td>
+              <td>0.45%</td>
+              <td>0.40%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.60%</td>
+              <td>8,888</td>
             </tr>
             <tr>
-                <td>VIP4</td>
-                <td>0.48%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.50%</td>
-                <td>0.80%</td>
-                <td>18,888</td>
+              <td>VIP3</td>
+              <td>0.48%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.60%</td>
+              <td>12,888</td>
             </tr>
             <tr>
-                <td>VIP5</td>
-                <td>0.48%</td>
-                <td>0.50%</td>
-                <td>0.48%</td>
-                <td>0.55%</td>
-                <td>0.80%</td>
-                <td>18,888</td>
+              <td>VIP4</td>
+              <td>0.48%</td>
+              <td>0.45%</td>
+              <td>0.45%</td>
+              <td>0.50%</td>
+              <td>0.80%</td>
+              <td>18,888</td>
             </tr>
             <tr>
-                <td>VIP6</td>
-                <td>0.50%</td>
-                <td>0.50%</td>
-                <td>0.50%</td>
-                <td>0.60%</td>
-                <td>0.80%</td>
-                <td>28,888</td>
+              <td>VIP5</td>
+              <td>0.48%</td>
+              <td>0.50%</td>
+              <td>0.48%</td>
+              <td>0.55%</td>
+              <td>0.80%</td>
+              <td>18,888</td>
             </tr>
             <tr>
-                <td>VIP7</td>
-                <td>0.50%</td>
-                <td>0.55%</td>
-                <td>0.55%</td>
-                <td>0.70%</td>
-                <td>0.85%</td>
-                <td>28,888</td>
+              <td>VIP6</td>
+              <td>0.50%</td>
+              <td>0.50%</td>
+              <td>0.50%</td>
+              <td>0.60%</td>
+              <td>0.80%</td>
+              <td>28,888</td>
             </tr>
             <tr>
-                <td>VIP8</td>
-                <td>0.55%</td>
-                <td>0.60%</td>
-                <td>0.65%</td>
-                <td>0.80%</td>
-                <td>0.90%</td>
-                <td>38,888</td>
+              <td>VIP7</td>
+              <td>0.50%</td>
+              <td>0.55%</td>
+              <td>0.55%</td>
+              <td>0.70%</td>
+              <td>0.85%</td>
+              <td>28,888</td>
             </tr>
             <tr>
-                <td>VIP9</td>
-                <td>0.55%</td>
-                <td>0.65%</td>
-                <td>0.68%</td>
-                <td>0.90%</td>
-                <td>1.00%</td>
-                <td>58,888</td>
+              <td>VIP8</td>
+              <td>0.55%</td>
+              <td>0.60%</td>
+              <td>0.65%</td>
+              <td>0.80%</td>
+              <td>0.90%</td>
+              <td>38,888</td>
             </tr>
             <tr>
-                <td>VIP10</td>
-                <td>0.60%</td>
-                <td>0.70%</td>
-                <td>0.70%</td>
-                <td>1.00%</td>
-                <td>1.05%</td>
-                <td>88,888</td>
+              <td>VIP9</td>
+              <td>0.55%</td>
+              <td>0.65%</td>
+              <td>0.68%</td>
+              <td>0.90%</td>
+              <td>1.00%</td>
+              <td>58,888</td>
             </tr>
             <tr>
-                <td>VIP11</td>
-                <td>0.70%</td>
-                <td>0.75%</td>
-                <td>0.75%</td>
-                <td>1.10%</td>
-                <td>1.10%</td>
-                <td>88,888</td>
+              <td>VIP10</td>
+              <td>0.60%</td>
+              <td>0.70%</td>
+              <td>0.70%</td>
+              <td>1.00%</td>
+              <td>1.05%</td>
+              <td>88,888</td>
             </tr>
             <tr>
-                <td>VIP12</td>
-                <td>0.80%</td>
-                <td>0.80%</td>
-                <td>0.80%</td>
-                <td>1.20%</td>
-                <td>1.20%</td>
-                <td>128,888</td>
+              <td>VIP11</td>
+              <td>0.70%</td>
+              <td>0.75%</td>
+              <td>0.75%</td>
+              <td>1.10%</td>
+              <td>1.10%</td>
+              <td>88,888</td>
             </tr>
-        </tbody>
+            <tr>
+              <td>VIP12</td>
+              <td>0.80%</td>
+              <td>0.80%</td>
+              <td>0.80%</td>
+              <td>1.20%</td>
+              <td>1.20%</td>
+              <td>128,888</td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
-          <p><strong>1. 晋升标准：</strong> 会员累计投注金额达到相应级别的要求，即可在次日 24 点前晋升相应 VIP 等级；</p>
-        
-        <p><strong>2. 晋升顺序：</strong> VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</p>
-        
-        <p><strong>3. 保级要求：</strong> 会员在达到某 VIP 等级后，90 天内投注需要完成保级要求；如果在此期间完晋升，保级要求按重新按照当前等级计算；</p>
-        
-        <p><strong>4. 升级红包：</strong> 每个级别的升级红包每位会员仅能获得 1 次（升级礼金 1 倍流水即可提取）；</p>
-        
-        <p><strong>5. 生日礼金：</strong> 会员在注册 90 天内过生日、本年度内将不能领取生日礼金；另注册时间大于 90 天的会员需在生日当天的 VIP 页面进行自助领取，每年可领取一次（生日彩金 1 倍流水即可提取）；</p>
-        
-        <p><strong>6. VIP 首保级彩金：</strong> 当晋升等级后首保级且达到保级要求，次月 1 日可领取保级彩金；</p>
-        
-        <p><strong>7. 年度保级彩金：</strong> 首次保级成功后计算会员 12 个月内未降级（可晋级），彩金与第 13 个月首日进行派发；</p>
-        
-        <p><strong>8. 每日返水红包：</strong> 统计每日返水金额，对应 VIP 等级返水加赠比例派发；次日可领取每日 9 点，反水加赠礼金，返水加赠礼金达 10 元即可领取，礼金无流水限制；</p>
-        
-        <p><strong>9. 每月会员日：</strong> 从每月会员日 15 号 00:00:00 起，相应等级的玩家只要在上月有一笔及其以上的存款，即可在活动页面领取一次会员红包（以领取时的等级为准），领取时间截至 24 号 23:59:59，仅需完成一倍流水，过期未领取视为放弃；</p>
-        
-        <p><strong>10. 会员加码：</strong>1.非 0 级玩家从会员日 18 号 00:00:00 起均可在活动页面领取一张“10% 充值加码券”，领取时间截至 21 号 23:59:59，且领取后需在 7 日内使用充值加码券，成功使用后需在 15 日内完成相应流水要求；</p>
-        
-        <p>11. 本加码券单日内不可与其他活动加码券同时使用</p>
-        
-        <p>12. 有效流水仅计算在游戏中产生输赢结果的注单，香港盘<0.75（中国盘<0.75）、欧洲盘<1.75、美洲盘<-133、马来盘<0.75 且>0，负赔率>-0.75 且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；</p>
-        
-        <p>13. 根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</p>
-        
-        <p>14. 此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</p>
-        <p>15. 为避免文字理解差异，雷火电竞保留此活动最终解释权；</p>
-         
+          <p>
+            <strong>一. 会员晋级/保级/降级规则</strong>
+            <ol class="terms got-bullets">
+              <li>会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；</li>
+              <li>VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</li>
+              <li>会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
+              <li>
+                假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；
+              </li>
+              <li>每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；</li>
+            </ol>
+          </p>
+
+          <p>
+            <strong>二. 生日礼金</strong>
+            <ol class="terms non-style">
+              <li>
+                生日符合资格的会员，每年生日当天及当天后7日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金1倍流水即可提款；
+              </li>
+            </ol>
+          </p>
+
+          <p>
+            <strong>三. 首次保级彩金</strong>
+            <ol class="terms non-style">
+              <li>
+                会员当月达到保级要求时，次月1日可领取首次保级彩金；
+                <br />
+                例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；彩金1倍流水即可提款
+              </li>
+            </ol>
+          </p>
+
+          <p>
+            <strong>四. 年度保级彩金</strong>
+            <ol class="terms non-style">
+              <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款</li>
+            </ol>
+          </p>
+
+          <p>
+            <strong>五. 每日返水红包</strong>
+            <ol class="terms non-style">
+              <li>
+                统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水加赠礼金，返水加赠礼金达到10元即可领取，彩金1倍流水即可提款；
+              </li>
+            </ol>
+
+          </p>
+
+          <p>
+            <strong>六. 会员日</strong>
+            <ol class="terms non-style">
+              <li>
+                会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至24号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
+              </li>
+            </ol>
+          </p>
+
+          <p>
+            <strong>七. 会员充值加码10%</strong>
+            <ol class="terms got-bullets">
+              <li class="numbered">
+                VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
+              </li>
+              <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
+            </ol>
+
+          </p>
+
+<!--          <p>-->
+<!--            <strong>八.节日礼金</strong>-->
+<!--            <ol class="terms non-style" >-->
+<!--              <li class="numbered">-->
+<!--                每年特殊重大节日，等级≥VIP8的会员可在节日当天通过在线客服申请礼金，逾期不补；礼金1倍流水即可提款，具体节日礼金派发时间，请以客服站内信通知为准；-->
+<!--              </li>-->
+<!--            </ol>-->
+
+<!--          </p>-->
+
+          <p>
+            <strong>八.一般规则</strong>
+            <ol class="terms got-bullets">
+              <li class="numbered">
+                有效流水仅计算在游戏中产生输赢结果的注单，香港盘&lt;0.7（中国盘&lt;0.7）、欧洲盘&lt;1.7、美国盘-143、印尼盘-1.42、马来盘&lt;0.7且&gt;0，负赔率&gt;-0.7且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；
+              </li>
+              <li class="numbered">
+                根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+              </li>
+              <li class="numbered">
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
+              </li>
+              <li class="numbered">为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+            </ol>
+          </p>
+
+
         </div>
       </div>
     </div>
@@ -597,7 +672,7 @@ onMounted(() => {
     gap: 4px;
   }
 }
-.livepoker-first{
+.livepoker-first {
   width: 100%;
   height: 100%;
   display: flex;
@@ -619,7 +694,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    .out-content{
+    .out-content {
       // box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: row;
@@ -632,7 +707,7 @@ onMounted(() => {
       height: 98px;
       font-size: 20px;
       position: relative;
-      .in-title{
+      .in-title {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -645,9 +720,9 @@ onMounted(() => {
         color: white;
         font-size: 20px;
         position: absolute;
-        top:0;
+        top: 0;
       }
-      .in-content{
+      .in-content {
         margin-top: 24px;
       }
     }
@@ -677,7 +752,6 @@ onMounted(() => {
     width: 461px;
     height: 54px;
     margin: 10px auto -10px;
-    
   }
   .sec-title-2 {
     background-image: url("../../../assets/promo/lh-new-vip/sec-info-title.png");
@@ -686,7 +760,6 @@ onMounted(() => {
     width: 461px;
     height: 54px;
     margin: 10px auto -10px;
-    
   }
   .three-title-2 {
     background-image: url("../../../assets/promo/lh-new-vip/three-info-title.png");
@@ -695,7 +768,6 @@ onMounted(() => {
     width: 461px;
     height: 54px;
     margin: 10px auto -10px;
-    
   }
   .four-title-2 {
     background-image: url("../../../assets/promo/lh-new-vip/four-info-title.png");
@@ -704,42 +776,40 @@ onMounted(() => {
     width: 461px;
     height: 54px;
     margin: 10px auto -10px;
-    
   }
 }
 
-
 .vip-table {
-    width: 80%;
-    border-collapse: collapse;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: #E7F1FD;
-    border-radius: 8px;
-    overflow: hidden;
-    font-weight: 700;
+  width: 80%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #e7f1fd;
+  border-radius: 8px;
+  overflow: hidden;
+  font-weight: 700;
 }
 
-.vip-table th, .vip-table td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd; /* Add right border */
+.vip-table th,
+.vip-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd; /* Add right border */
 }
 
-.vip-table th:last-child, .vip-table td:last-child {
-    border-right: none; /* Remove right border from the last column */
+.vip-table th:last-child,
+.vip-table td:last-child {
+  border-right: none; /* Remove right border from the last column */
 }
 
 .vip-table thead {
-  background: linear-gradient(193.13deg, #74B3FF 1.12%, #286CDE 95.38%);
-    color: #fff;
+  background: linear-gradient(193.13deg, #74b3ff 1.12%, #286cde 95.38%);
+  color: #fff;
 }
 
-
-
 .vip-table th {
-    font-weight: bold;
-    border-right: 1px solid #ddd; /* Add right border to header cells */
+  font-weight: bold;
+  border-right: 1px solid #ddd; /* Add right border to header cells */
 }
 
 .livepoker-rebate-game-info-table {
@@ -794,7 +864,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   margin-top: 40px;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -812,12 +882,18 @@ onMounted(() => {
     font-weight: 400;
     line-height: 36px;
     color: #000000;
+
+    .terms{
+      list-style: disc;
+    }
+
+    .non-style{
+      list-style: none;
+    }
     .item {
       padding-left: 24px;
       display: flex;
       gap: 10px;
-
-     
 
       .hint {
         font-size: 18px;

@@ -70,12 +70,14 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
-import { userStore } from "stores/index";
-import ConfirmButton from "../../atoms/ConfirmButton.vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+
+import ConfirmButton from "@/atoms/ConfirmButton.vue";
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import { userStore } from "@/stores/index";
+import { useQuasar } from "quasar";
 
 const props = defineProps(["loadCards"]);
 
@@ -199,7 +201,7 @@ const updateCard = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Update Succeed",
+          message: t("notify.updateSucceed"),
           icon: "check_circle_outline"
         });
         props.loadCards();

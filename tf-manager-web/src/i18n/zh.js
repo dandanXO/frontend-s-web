@@ -1225,7 +1225,9 @@ export default {
     mqLogProcessTimestamp: '系统时间',
     mqLogTimestampWithTimezone: '站点时间',
     name: '名称',
+    nbaMatchPreseasonRecord: 'NBA季前赛记录',
     nbaMatchRecord: 'NBA季后赛记录',
+    nbaMatchPreseasonSetting: 'NBA季前赛配置',
     nbaMatchSetting: 'NBA季后赛配置',
     needRegister: '需要注册',
     needSpecify: '需要自填',
@@ -2048,6 +2050,10 @@ export default {
     successCount: '合格人数',
     betBonus: '投注返佣',
     batchFrozenMember: '批量冻结会员',
+    threePointShots: '全场进10个三分球',
+    shotPoints: '任意球员砍下30分',
+    scoringShots: '任意球员拿到13个篮板',
+    foulOut: '任意球员判罚离场'
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2670,6 +2676,7 @@ export default {
     'Refer Friend Manager': '邀请好友管理',
     'Sport Match': '中超角逐',
     'Nba Match': 'NBA季后赛',
+    'Nba Match Preseason': 'NBA季前赛',
     Redirect: '浮窗管理',
     Permission: '权限',
     Menu: '菜单',

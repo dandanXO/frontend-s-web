@@ -50,40 +50,42 @@
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
-          <tr>
-            <th>当日真人与棋牌有效投注</th>
-            <th>彩金上限</th>
-            <th>流水要求</th>
-          </tr>
-          <tr>
-            <td>≥1,500</td>
-            <td>18</td>
-            <td rowspan="7">12 倍</td>
-          </tr>
-          <tr>
-            <td>≥6,000</td>
-            <td>58</td>
-          </tr>
-          <tr>
-            <td>≥15,000</td>
-            <td>88</td>
-          </tr>
-          <tr>
-            <td>≥60,000</td>
-            <td>288</td>
-          </tr>
-          <tr>
-            <td>≥150,000</td>
-            <td>588</td>
-          </tr>
-          <tr>
-            <td>≥600,000</td>
-            <td>1,188</td>
-          </tr>
-          <tr>
-            <td>≥1,500,000</td>
-            <td>2,388</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>当日真人与棋牌有效投注</th>
+              <th>彩金上限</th>
+              <th>流水要求</th>
+            </tr>
+            <tr>
+              <td>≥1,500</td>
+              <td>18</td>
+              <td rowspan="7">12 倍</td>
+            </tr>
+            <tr>
+              <td>≥6,000</td>
+              <td>58</td>
+            </tr>
+            <tr>
+              <td>≥15,000</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>≥60,000</td>
+              <td>288</td>
+            </tr>
+            <tr>
+              <td>≥150,000</td>
+              <td>588</td>
+            </tr>
+            <tr>
+              <td>≥600,000</td>
+              <td>1,188</td>
+            </tr>
+            <tr>
+              <td>≥1,500,000</td>
+              <td>2,388</td>
+            </tr>
+          </tbody>
         </table>
 
         <div class="livepoker-rebate-game-bottom">

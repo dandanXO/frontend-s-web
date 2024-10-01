@@ -1168,7 +1168,7 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      window.open('https://t.me/cityy88', '_blank').focus()
+      window.open('https://t.me/Diahelp7', '_blank').focus()
     }
 
     const handleInput = event => {

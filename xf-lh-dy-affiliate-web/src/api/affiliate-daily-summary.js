@@ -36,3 +36,12 @@ export const queryPh1DailySummary = form => {
     ContentType.form
   )
 }
+
+export const queryPh1NewRegister = form => {
+  return https().request(
+    '/ph-affiliate-daily-summary/newRegister/list',
+    Method.GET,
+    form,
+    ContentType.form
+  )
+}

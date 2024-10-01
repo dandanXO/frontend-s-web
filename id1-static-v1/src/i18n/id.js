@@ -79,6 +79,7 @@ export default {
     password_placeholder: "Masukkan kata sandi",
     password_rules_01: "Masukkan kata sandi",
     password_rules_02: "Karakter kata sandi harus lebih dari 6",
+    strongerPasswordRecommended: "Kata Sandi yang Lebih Kuat Direkomendasikan",
     forgotPassword: "Lupa Kata Sandi",
     forgotPassword_desc:
       "Masukkan Nama pengguna Dan Nomor Telepon Anda, Kami Akan Kirim OTP Ke Nomor Telepon Terdaftar Anda.",
@@ -92,7 +93,7 @@ export default {
     verificationCode: "Kode Verifikasi",
     verificationCode_placeholder: "Masukkan Kode Verifikasi",
     verificationCode_rules_01: "Masukkan Kode Verifikasi",
-    otp_sent_title: "OTP telah dikirim ke email Anda, silakan masukkan OTP dan kata sandi baru.",
+    otp_sent_title: "OTP telah dikirim ke Nomor Telepon Anda, silakan masukkan OTP dan kata sandi baru.",
     otp: "OTP",
     otp_placeholder: "Masukkan OTP",
     otp_rules_01: "Masukkan OTP",
@@ -101,9 +102,11 @@ export default {
     newPassword_rules_01: "Masukkan kata sandi baru",
     newPassword_rules_02: "Karakter kata sandi baru harus lebih dari 6",
     confirmNewPassword: "Konfirmasi Kata Sandi Baru",
-    confirmNewPassword_placeholder: "Masukkan konfirmasi kata sandi baru",
+    confirmNewPassword_placeholder: "Masukkan Kata sandi Baru Terkonfirmasi",
     confirmNewPassword_rules_01: "Masukkan konfirmasi kata sandi baru",
+    confirmNewPassword_rules_02: "Kata sandi terkonfirmasi tidak cocok dengan kata sandi baru",
     confirmNewPassword_rules_03: "Konfirmasi kata sandi tidak cocok",
+    mustBeAlphaNumeric: "{field} harus alfanumerik",
     depositAmount: "Jumlah",
     depositAmount_placeholder: "Silakan masukkan jumlah",
     depositAmount_rules_01: "Deposit harus antara ",
@@ -119,6 +122,7 @@ export default {
     estimatedArrival: "Perkiraan kedatangan",
     usdtSpecialNote:
       "*Catatan khusus: Pihak ketiga secara otomatis mengenakan biaya penanganan sebesar {fee} USDT untuk menarik koin!",
+    loginName: "Nama Masuk",
     fullName: "Nama Lengkap",
     fullName_placeholder: "Masukkan nama lengkap Anda",
     fullName_rules_01: "Masukkan nama lengkap Anda",
@@ -126,7 +130,9 @@ export default {
     changePassword: "Ganti Kata Sandi",
     currentPassword: "Kata Sandi Saat Ini",
     currentPassword_placeholder: "Masukkan Kata Sandi Saat Ini",
-    currentPassword_rules_01: "Silakan masukkan kata sandi saat ini",
+    currentPassword_rules_01: "Masukkan kata sandi lama",
+    changeNewpassword: "Ganti Kata Sandi Baru",
+    passwordResetCompleted: "Ganti kata sandi selesaikan",
     pleaseCompleteKYC: "Selesaikan KYC",
     bindEmail: "Ikat Email",
     code: "Kode",
@@ -229,7 +235,7 @@ export default {
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
-    haventFoundAnyRecord: "Belum menemukan catatan apapun",
+    haventFoundAnyRecord: "Tidak temukan catatan apa pun",
     updatedSuccessfully: "Berhasil diperbarui",
     emailVerificationSent: "Verifikasi email telah dikirim",
     messageSent: "Pesan Terkirim",
@@ -245,7 +251,10 @@ export default {
     registeringInProgress: "Pendaftaran sedang berlangsung",
     refreshing: "Menyegarkan...",
     pleaseLoginToOperate: "Silakan masuk untuk beroperasi",
-    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda"
+    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda",
+    failed: "Gagal",
+    updateSucceed: "Pembaruan berhasil",
+    unbindSucceed: "Berhasil dilepaskan"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -292,7 +301,7 @@ export default {
     feedback: "Umpan Balik",
     vip: "VIP",
     logout: "KELUAR",
-    depositMonthlytoWinGifts: "Deposit Bulanan Untuk Mendapatkan Hadiah",
+    depositMonthlytoWinGifts: "Deposit Tiap bulan untuk Memenangi Hadiah",
     interestProfit: "Keuntungan Bunga"
   },
   deposit: {
@@ -480,7 +489,7 @@ export default {
     history: {
       totalRebates: "Total rabat",
       month: "Bulan",
-      week: "Minggu",
+      week: "Pekan",
       date: "Tanggal",
       rebateAmount: "Jumlah Rebate"
     },
