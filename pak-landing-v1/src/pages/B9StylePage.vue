@@ -11,6 +11,7 @@
         ></iframe>
       </div>
     </div>
+    <q-inner-loading v-else :showing="isLoading" />
   </div>
 </template>
 
