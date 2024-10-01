@@ -88,7 +88,7 @@
       <q-card class="full-deposit-card" id="fulldeposit">
         <div class="back-bar" @click="closeFullDepositDialog">
           <q-icon name="chevron_left" size="28px" />
-          Back
+          {{ $t("btn.back") }}
         </div>
 
         <q-card-section>
@@ -98,10 +98,11 @@
     </q-dialog>
   </q-scroll-area>
 </template>
+
 <script setup id="GameModal">
-import { defineExpose, reactive, ref, shallowRef } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { Platform, useQuasar } from "quasar";
+import { defineExpose, ref, shallowRef } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
 import { isAndroid } from "@/boot/utils";
@@ -116,59 +117,14 @@ const props = defineProps(["closeFullGameDialog"]);
 const fullDepositDialog = ref(false);
 const $q = useQuasar();
 const ui = useUI();
-
 const store = userStore();
 const { token } = storeToRefs(store);
-
-const formRef = ref();
-const payTypeClass = ref();
-var payMethods = reactive([]);
-const paymentNode = ref([]);
-const activeMethod = ref({});
 const bankCardList = ref([]);
-const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
-const isPaymentLoading = ref(true);
-
-const isMobileDrawerActive = ref(false);
-const values = ref(["100", "200", "300", "500", "1000"]);
-const hasPrivilege = ref(false);
-// const quickTransferTab = ref(false);
-
 const closeFullDepositDialog = () => {
   fullDepositDialog.value = false;
   store.getBalance();
 };
-
-const checkAmount = reactive({
-  flag: true,
-  errorMessage: ""
-});
-
-function selectPayType(value) {
-  if (value) {
-    if (value.payType === "BANK") {
-      selectedPayType.value = Bank;
-      if (!value.extra) {
-        bankCardList.value = [];
-        form.bankId = null;
-      } else if (value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      }
-    } else if (value.payType === "TruePay") {
-      selectedPayType.value = TruePay;
-      if (!value.extra) {
-        bankCardList.value = [];
-        form.bankId = null;
-      } else if (value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      }
-    } else if (value.payType === "OFFLINE") {
-      selectedPayType.value = Offline;
-      form.bankId = null;
-    }
-  }
-}
 
 const drawerVisible = ref(false);
 const isExitDialogOpen = ref(false);
@@ -260,21 +216,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //TESt
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
-  // window.addEventListener(
-  //   "message",
-  //   (event) => {
-  //     console.log("Action");
-  //     console.log(event.data);
-  //     if (event.data?.msg) {
-  //       if (event.data.msg === "closemodal") {
-  //         drawerVisible.value= false;
-  //       }
-  //     }
-  //   });
-
-  //     var gameIfrm = document.getElementById('game-iframe');
-  //     gameIfrm.requestFullscreen();
-  // // const iframeRef = ref(null);
   if (isAndroid()) {
     screen.orientation.unlock();
 
@@ -282,26 +223,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       onExitClick();
     });
   }
-  // iframe.find('HTML-Element').touchwipe({
-  // wipeLeft: function() { alert("left"); },
-  // wipeRight: function() { alert("right"); },
-  // wipeUp: function() { alert("up"); },
-  // wipeDown: function() { alert("down"); },
-  // min_move_x: 20,
-  // min_move_y: 20,
-  // preventDefaultEvents: true });
-  // transferInfo.value = {
-  //   platform: platformCode
-  // };
 
-  // Get the iframe
   const iFrame = document.getElementById("game-iframe");
-
-  // Let's say that you want to access a button with the ID `'myButton'`,
-  // you can access via the followi ng code:
-  // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-  // buttonInIFrame.style.visible = visible;
-  //   console.log(iframe)
   title.value = gameName;
   const store = userStore();
 
@@ -352,16 +275,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             src.value = srcDoc;
           }
-
-          // if (platformCode === "PG") {
-          // if (way === "ANDROID") {
-          //   cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
-          // } else {
-          //   window.location.href = res.data;
-          // }
-          // } else {
-          //   src.value = res.data;
-          // }
         });
     } else {
       props.closeFullGameDialog();
