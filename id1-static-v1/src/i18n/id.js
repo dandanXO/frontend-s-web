@@ -207,7 +207,7 @@ export default {
     confirm: "Konfirmasi",
     submit: "Kirim",
     addNewAccount: "Tambahkan Akun Baru",
-    update: "Memperbarui",
+    update: "Pembaruan",
     updated: "Diperbarui",
     updating: "Memperbarui...",
     addCrypto: "Tambahkan kripto",
@@ -223,7 +223,7 @@ export default {
     signOut: "Keluar",
     back: "Kembali",
     moreGames: "Lebih Banyak Permainan",
-    addCash: "Tambah Saldo",
+    addCash: "Tambah uang tunai",
     search: "Cari",
     downloadApp: "Unduh Aplikasi",
     downloadNow: "Unduh Sekarang",
@@ -692,7 +692,8 @@ export default {
     noMessage: "Tidak Ada Pesan",
     level: "Level",
     turnover: "Perputaran",
-    serialNumber: "Nomor seri"
+    serialNumber: "Nomor seri",
+    vipUpgradeBonus: "Hadiah Upgrade VIP"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
