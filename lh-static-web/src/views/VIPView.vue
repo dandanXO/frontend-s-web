@@ -1465,7 +1465,8 @@ $border-settings: 1px solid #e5e7eb;
         }
 
         .progressBarDescription {
-          display: flex;
+          // display: flex;
+          display: none;
           // justify-content: space-between;
           color: #333;
           font-size: 17.987px;
