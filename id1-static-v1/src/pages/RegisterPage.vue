@@ -5,7 +5,7 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="12"
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
