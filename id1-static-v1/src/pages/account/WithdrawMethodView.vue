@@ -161,6 +161,7 @@
               </div>
               <div class="mid-wrapper">
                 <q-input
+                  :type="currentCardType === 'Bank' ? 'number' : 'text'"
                   filled
                   dense
                   clearable

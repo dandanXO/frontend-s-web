@@ -207,6 +207,7 @@ export default {
     confirm: "Konfirmasi",
     submit: "Kirim",
     addNewAccount: "Tambahkan Akun Baru",
+    update: "Memperbarui",
     updated: "Diperbarui",
     updating: "Memperbarui...",
     addCrypto: "Tambahkan kripto",
@@ -679,7 +680,7 @@ export default {
     success: "Berhasil",
     supplementSuccess: "Lengkapi Berhasil",
     closed: "Ditutup",
-    orderNo: "Nomor Pesanan",
+    orderNo: "NO. Order",
     bank: "BANK",
     noRecord: "Tak ada Catatan",
     noMoreRecord: "Tidak temukan catatan apa pun",
@@ -690,7 +691,8 @@ export default {
     noMember: "Tidak Ada Anggota",
     noMessage: "Tidak Ada Pesan",
     level: "Level",
-    turnover: "Perputaran"
+    turnover: "Perputaran",
+    serialNumber: "Nomor seri"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -733,12 +735,12 @@ export default {
     }
   },
   maintenance: {
-    underMaintenance: "Under maintenance",
-    content01: "Our website is currently undergoing maintenance...",
-    from: "From",
-    to: "To",
-    content02: "During this period, all games and services will be unavailable.",
-    content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+    underMaintenance: "Sedang dalam pemeliharaan",
+    content01: "Website kami sedang dalam pemeliharaan...",
+    from: "Dari",
+    to: "Sampai",
+    content02: "Selama periode ini, semua permainan dan layanan tidak akan tersedia.",
+    content03: "Kami mohon maaf atas ketidaknyamanan yang ditimbulkan dan menghargai kesabaran Anda!"
   },
   promo_activitiesDetails: {
     activitiesContent:
