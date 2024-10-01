@@ -10,7 +10,7 @@
       </div>
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
       <div class="withdraw-remaining-dialog__body">
-        <div class="withdraw-remaining-dialog__body-title">完成全部流水，立即享受快速提款</div>
+        <div class="withdraw-remaining-dialog__body-title">完成 {{ totalRemaining }} 流水，立即享受快速提款</div>
         <table class="withdraw-remaining-dialog__body-table">
           <thead>
             <tr>
@@ -36,7 +36,7 @@
 </template>
 <script setup>
 import { api } from "src/boot/axios";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const isShow = defineModel();
@@ -65,6 +65,13 @@ const getDisplayRemainingType = (type) => {
       return "电子";
   }
 };
+
+const totalRemaining = computed(() =>
+  tableData.value.reduce((result, record) => {
+    result = result - record.progress + record.total;
+    return result;
+  }, 0)
+);
 
 const handleClose = () => {
   isShow.value = false;
