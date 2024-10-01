@@ -18,36 +18,38 @@
           <th colspan="4">礼金额度</th>
         </tr>
       </thead>
-      <tr>
-        <td>≥500</td>
-        <td>8</td>
-        <td>58</td>
-        <td style="border-bottom: 2px solid rgba(255, 255, 255, 0.2)">88</td>
-      </tr>
-      <tr>
-        <td>≥1,000</td>
-        <td>18</td>
-        <td>88</td>
-        <td>188</td>
-      </tr>
-      <tr>
-        <td>≥5,000</td>
-        <td>58</td>
-        <td>158</td>
-        <td>288</td>
-      </tr>
-      <tr>
-        <td>≥10,000</td>
-        <td>88</td>
-        <td>188</td>
-        <td>328</td>
-      </tr>
-      <tr>
-        <td>≥50,000</td>
-        <td>188</td>
-        <td>288</td>
-        <td>588</td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>≥500</td>
+          <td>8</td>
+          <td>58</td>
+          <td style="border-bottom: 2px solid rgba(255, 255, 255, 0.2)">88</td>
+        </tr>
+        <tr>
+          <td>≥1,000</td>
+          <td>18</td>
+          <td>88</td>
+          <td>188</td>
+        </tr>
+        <tr>
+          <td>≥5,000</td>
+          <td>58</td>
+          <td>158</td>
+          <td>288</td>
+        </tr>
+        <tr>
+          <td>≥10,000</td>
+          <td>88</td>
+          <td>188</td>
+          <td>328</td>
+        </tr>
+        <tr>
+          <td>≥50,000</td>
+          <td>188</td>
+          <td>288</td>
+          <td>588</td>
+        </tr>
+      </tbody>
     </table>
 
     <section-header label="特惠返利场" class="special-promo-section-header" />

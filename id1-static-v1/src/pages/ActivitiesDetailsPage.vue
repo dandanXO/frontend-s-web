@@ -72,7 +72,8 @@
             {{ $t("promo_activitiesDetails.wagerX5") }}
             <br />
             {{ $t("promo_activitiesDetails.deposit") }}
-            <br />{{ rule.deposit.toLocaleString() }} {{ store.currency.label }}
+            <br />
+            {{ rule.deposit.toLocaleString() }} {{ store.currency.label }}
           </div>
         </div>
       </div>
@@ -210,9 +211,14 @@ onActivated(() => {
             z-index: 2;
             font-size: 10px;
             color: #ffffff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
+            text-shadow:
+              1px 1px 2px rgba(0, 0, 0, 0.7),
+              -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7),
+              -1px 1px 2px rgba(0, 0, 0, 0.7),
+              1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7),
+              1px -1px 2px rgba(255, 255, 255, 0.7),
               -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
@@ -233,9 +239,6 @@ onActivated(() => {
     margin-top: 1rem;
     .days-box {
       background: #3b156e4d;
-      &.isReceived {
-        background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
-      }
       padding: 12px 0;
       display: flex;
       flex-direction: column;
@@ -243,6 +246,10 @@ onActivated(() => {
       justify-content: center;
       border-radius: 8px;
       position: relative;
+
+      &.isReceived {
+        background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+      }
 
       &__last {
         grid-column: span 3;

@@ -504,7 +504,7 @@ onMounted(() => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   padding-bottom: 40px;
   margin-top: 40px;
 

@@ -115,12 +115,14 @@
                 : selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? '#1D1D1E'
                 : selectedPromo?.promoCode === 'lh1-vip'
-                ? '#E7F1FD':'',
+                ? '#E7F1FD'
+                : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
-              selectedPromo?.promoCode === 'lh-lpl-summer24'
+              selectedPromo?.promoCode === 'lh-lpl-summer24' ||
+              selectedPromo?.promoCode === 'lh1-s14-vote'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : ''
           }"
@@ -157,6 +159,9 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
+              <NBAWaterBattle />
+            </div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
@@ -192,12 +197,14 @@ import { useDark } from "@vueuse/core";
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const isDark = useDark();
@@ -435,7 +442,7 @@ export default defineComponent({
     width: 100%;
     padding: 0px 50px 50px;
     position: relative;
-    background-color: #E7F1FD;
+    background-color: #e7f1fd;
   }
   .promo-view-container {
     line-height: 30px;
@@ -456,6 +463,7 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
+      border-collapse: collapse;
 
       tr:first-child td {
         background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
@@ -469,7 +477,6 @@ export default defineComponent({
         border-top-right-radius: 10px;
       }
 
-      border-collapse: collapse;
       th,
       td {
         padding: 10px;
@@ -598,7 +605,7 @@ export default defineComponent({
               color: #468cff;
               font-size: 18px;
               font-weight: 700;
-              font-family: "PingFang SC"
+              font-family: "PingFang SC";
             }
 
             &:before {
@@ -664,9 +671,6 @@ export default defineComponent({
               }
             }
           }
-          img {
-          }
-          cursor: pointer;
 
           .promo-img-wrapper {
             position: relative;
@@ -708,7 +712,7 @@ export default defineComponent({
                 font-size: 18px;
                 font-weight: 700;
                 padding-left: 30px;
-                font-family: 'PingFang SC';
+                font-family: "PingFang SC";
               }
             }
             .promo-type {
@@ -757,7 +761,7 @@ export default defineComponent({
                 color: #ffffff;
                 padding: 8px 30px;
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-                font-family: 'PingFang SC';
+                font-family: "PingFang SC";
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
                 box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
@@ -897,35 +901,13 @@ export default defineComponent({
           padding: 20px;
           color: #333;
           font-size: 20px;
+          overflow: auto;
           ol {
             li {
               margin: 20px 0;
             }
           }
-          // background: #201f29;
-          // background-repeat: no-repeat;
-          // background-position: 95% 90%;
-          // padding: 20px;
-          // border-radius: 10px;
-          overflow: auto;
-          // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
-          // }
+
           &.olympicCheckin {
             border: 1px solid #acd4f6;
             border-radius: 10px;

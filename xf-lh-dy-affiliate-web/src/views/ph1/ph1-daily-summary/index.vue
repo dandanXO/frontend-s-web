@@ -64,7 +64,17 @@
           prop="registerCount"
           :label="t('fields.registerCount')"
           align="center"
-        />
+        >
+          <template #default="scope">
+            <el-link
+              v-if="scope.row.registerCount !== 0"
+              type="primary"
+              @click="showDialog(scope.row.recordTime)"
+            >
+              {{ scope.row.registerCount }}
+            </el-link>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="ftdCount"
           :label="t('fields.ftdCount')"
@@ -98,6 +108,52 @@
         @size-change="loadRecord"
       />
     </el-card>
+    <el-dialog
+      v-model="uiControl.dialogVisible"
+      :title="t('fields.newMember')"
+      append-to-body
+      width="900px"
+    >
+      <el-table
+        :resizeable="true"
+        :data="newMemberPage.records"
+      >
+        <el-table-column
+          prop="loginName"
+          :label="t('fields.loginName')"
+          align="left"
+        />
+        <el-table-column
+          prop="telephone"
+          :label="t('fields.telephone')"
+        />
+        <el-table-column
+          prop="regTime"
+          :label="t('fields.registerTime')"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{
+                data: scope.row.regTime,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
+            />
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        :total="newMemberPage.total"
+        :page-sizes="[20, 50, 100, 150]"
+        layout="total,sizes,prev, pager, next"
+        style="margin-top: 10px"
+        v-model:page-size="newMemberRequest.size"
+        v-model:page-count="newMemberRequest.pages"
+        v-model:current-page="newMemberRequest.current"
+        @current-change="loadNewRegisterMember"
+        @size-change="loadNewRegisterMember"
+      />
+    </el-dialog>
   </div>
 </template>
 <script setup>
@@ -106,14 +162,18 @@ import { reactive } from 'vue'
 import moment from 'moment'
 import {
   queryPh1DailySummary,
+  queryPh1NewRegister,
 } from '../../../api/affiliate-daily-summary'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 
 const { t } = useI18n()
-const site = reactive({
-  id: 16,
+const fixedValue = reactive({
+  siteId: 16,
+  loginName: "tuiguang1",
+  affiliateId: "1838090347124301826"
 })
+
 const shortcuts = getShortcuts(t)
 const startDate = new Date()
 startDate.setTime(
@@ -135,6 +195,13 @@ const request = reactive({
   loginNameList: null,
 })
 
+const newMemberRequest = reactive({
+  size: 20,
+  current: 1,
+  siteId: null,
+  regTime: null
+})
+
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -152,6 +219,17 @@ const page = reactive({
   loading: false,
 })
 
+const uiControl = reactive({
+  dialogVisible: false
+})
+
+const newMemberPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  affiliateId: null
+})
+
 function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
@@ -160,9 +238,8 @@ function checkQuery() {
       query[key] = value
     }
   })
-  query.siteId = site.id
-  // get static username : tuiguang1
-  query.loginName = "tuiguang1"
+  query.siteId = fixedValue.siteId
+  query.loginName = fixedValue.loginName
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = request.recordTime
@@ -223,6 +300,35 @@ function getSummaries(param) {
   })
 
   return sums
+}
+
+function showDialog(recordTime) {
+  uiControl.dialogVisible = true
+  newMemberRequest.regTime = recordTime
+  loadNewRegisterMember()
+}
+
+async function loadNewRegisterMember() {
+  newMemberPage.loading = true
+  const requestCopy = { ...newMemberRequest }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+
+  query.siteId = fixedValue.siteId
+  query.affiliateId = fixedValue.affiliateId
+  if (newMemberRequest.regTime !== null) {
+    query.regTime = moment(newMemberRequest.regTime).format('YYYY-MM-DD') + ' 00:00:00,' + moment(newMemberRequest.regTime).format('YYYY-MM-DD') + ' 23:59:59';
+  }
+  const { data: ret } = await queryPh1NewRegister(query)
+
+  newMemberPage.pages = ret.pages
+  newMemberPage.records = ret.records
+  newMemberPage.total = ret.total
+  newMemberPage.loading = false
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>

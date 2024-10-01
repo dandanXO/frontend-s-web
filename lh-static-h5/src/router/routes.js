@@ -25,6 +25,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/hotmatch",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/HotMatchPage.vue") }]
+  },
+  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]

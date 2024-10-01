@@ -1,13 +1,11 @@
 import { server } from "@/utils/request";
 
 export function loadPromo(isLogin = false) {
-  const platformApiUrl = isLogin ? "/session/loggedInPromoPages" : "/promo/page";
-
-  return server.REST.get(platformApiUrl);
+  return server.REST.get("/opt-session/promo/page");
 }
 
 export function loadPromoBanner(category) {
-  return server.REST.get("/promo/banner", {
+  return server.REST.get("/opt-session/promo/banner", {
     params: {
       category: category
     }
@@ -375,4 +373,13 @@ export function getCompetitionBetYesterday(promoCode) {
       promoCode
     }
   });
+}
+
+
+export function getNBAUpcomingMatch() {
+  return server.EVENT.get('/session/nba-match-preseason/upcoming')
+}
+
+export function getNBAClaimHistory() {
+  return server.EVENT.get('/session/nba-match-preseason/history')
 }

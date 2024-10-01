@@ -8,6 +8,7 @@
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
+              <tbody>
               <tr>
                 <th>
                   被唤醒人每日存款
@@ -51,7 +52,7 @@
                 <td>唤醒第五日存款≥200</td>
                 <td>88</td>
                 <td>当日存款10% </td>
-              </tr>
+              </tr></tbody>
             </table>
           </div>
           <router-link to="center/share" class="summon-btn">
@@ -99,6 +100,7 @@
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
+              <tbody>
               <tr>
                 <th>
                   成功唤醒人数
@@ -130,7 +132,7 @@
               <tr>
                 <td>≥30</td>
                 <td>388</td>
-              </tr>
+              </tr></tbody>
             </table>
           </div>
           <router-link to="center/share" class="summon-btn">
@@ -165,6 +167,7 @@
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
+              <tbody>
               <tr>
                 <th>完成第5日存款被唤醒人数量 </th>
                 <th>额外加赠</th>
@@ -186,7 +189,7 @@
               <tr>
                 <td>≥30</td>
                 <td>288</td>
-              </tr>
+              </tr></tbody>
             </table>
           </div>
           <router-link to="center/share" class="summon-btn">

@@ -2,7 +2,7 @@
   <div class="eurocup-hongbaoyu-container">
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <div @click="getPromotion" class="hongbao-open">
-        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-open.png`)" />
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/claimbg-new.png`)" />
       </div>
     </div>
   </div>
@@ -159,7 +159,6 @@ onMounted(() => {
   getPromotionListing();
 });
 </script>
-
 <style scoped lang="scss">
 .eurocup-hongbaoyu-container {
   //background-color: #e2e6f1;
@@ -189,15 +188,20 @@ onMounted(() => {
 
   .receive-container {
     position: relative;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 
     .hongbao-open {
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
+      max-width: 240px;
       margin-left: 0px;
+
+      img {
+        width: 100%;
+      }
 
       &:hover {
         filter: brightness(0.9);
@@ -497,5 +501,4 @@ onMounted(() => {
   border-bottom: 0 !important;
 }
 </style>
-
 <style lang="scss"></style>
