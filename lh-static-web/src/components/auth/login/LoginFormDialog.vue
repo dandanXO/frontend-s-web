@@ -52,6 +52,7 @@ import { reactive, ref, onMounted, defineEmits } from "vue";
 import { useDark } from "@vueuse/core";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["pageType"]);
 
@@ -61,6 +62,7 @@ const store = userStore();
 const isLoading = ref(false);
 const router = useRouter();
 const route = useRoute();
+const notify = useNotify();
 const loginForm = reactive({
     loginName: "",
     password: "",
@@ -144,7 +146,10 @@ const submitLogin = () => {
                 if (window.captchaObj) {
                     const validate = window.captchaObj.getValidate();
                     if (!validate) {
-                        alert("Please complete the captcha!");
+                        notify({
+                            type: "error",
+                            message: "请完成验证码"
+                        });
                         return;
                     }
 
