@@ -224,6 +224,10 @@ export default {
     let intervalId = null; // To store the interval ID and control blinking
     function updateSiteTitle() {
       originalSiteTitle = document.querySelector("title").innerText
+      
+      const existingCountRegex = /\(\d+\)$/; 
+      originalSiteTitle = originalSiteTitle.replace(existingCountRegex, "").trim();
+
       let blinkingTitle = originalSiteTitle + ` (${applyWithdrawCount.value})`;
 
       if (intervalId !== null) {
