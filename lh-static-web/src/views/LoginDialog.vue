@@ -10,14 +10,14 @@
     <el-tab-pane label="手机登录">
       <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large">
         <div class="light-bg form-field">
-          <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+          <img class="form-field-icon" src="../assets/home/auth/phone-icon.png" />
           <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
             <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
           </el-form-item>
         </div>
 
         <div class="light-bg form-field">
-          <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+          <img class="form-field-icon" src="../assets/home/auth/verification-icon.png" />
           <el-form-item tabindex="2" label="验证码" prop="code">
             <el-row :gutter="10" style="justify-content: center; align-items: center">
               <el-col :span="10">
@@ -76,7 +76,7 @@
       style="padding: 20px"
     >
       <div class="light-bg form-field">
-        <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+        <img class="form-field-icon" src="../assets/home/auth/verification-icon.png" />
         <el-form-item tabindex="3" label="验证码" prop="captchaCode">
           <div style="display: flex; width: 100%">
             <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
@@ -93,7 +93,7 @@
 <script setup>
 import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
-import { userStore } from "@/store/index";
+import { userStore } from "@/store";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from "@/components/auth/login/index.vue";
 import { useNotify } from "@/hooks/notify";
@@ -296,7 +296,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import "@/scss/pages/accountDialog.scss";
+@import "@/scss/pages/accountDialog";
 
 .login-page-container {
   width: 100%;
