@@ -1,5 +1,5 @@
 <template>
-  <div class="vip-container">
+  <div class="vip-container test-con2">
     <div class="header-section">
       <img src="../../assets/images/vip/vip-header.png" class="vip-header" />
     </div>
