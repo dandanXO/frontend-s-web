@@ -480,8 +480,10 @@ async function loadSiteWithdrawPlatform(siteId) {
       platform.name = matchingItem.name;
       platform.id = matchingItem.id;
       platform.type = matchingItem.type;
+      platform.status = matchingItem.status;
     }
   });
+  list.siteWithdrawPlatform = list.siteWithdrawPlatform.filter(platform => platform.status)
 }
 
 async function loadWithdrawPlatform() {
