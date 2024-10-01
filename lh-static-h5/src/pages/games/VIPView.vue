@@ -31,7 +31,7 @@
                     >
                       待晋级
                     </span>
-                    <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                    <span v-else>{{ formatNumber(originalUpgradeBetAmounts[vipIndex]) }}</span>
                   </span>
                 </div>
                 <div class="viplevel">VIP {{ vip.vipLevel }}</div>
