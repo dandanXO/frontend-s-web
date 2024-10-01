@@ -122,7 +122,7 @@
   </q-page>
 </template>
 <script>
-import { defineComponent, onMounted, ref, computed } from "vue";
+import { defineComponent, onMounted, ref, computed, watch } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -171,15 +171,16 @@ export default defineComponent({
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
     const truncatedList = ref([]);
+    const truncatedListAll = ref([])
     const truncatedListByType = computed(() => {
       return truncatedList.value.filter((listItem) => {
         if (mailboxMessageTab.value === "ALL") {
           return true;
         }
-
         return listItem.type === mailboxMessageTab.value;
       });
     });
+
     const comList = ref({});
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
@@ -191,6 +192,7 @@ export default defineComponent({
           var slicedArray = comList.value.splice(0, 6);
           slicedArray.forEach((element) => {
             truncatedList.value.push(element);
+            truncatedListAll.value.push(element);
           });
           done();
         }
@@ -285,6 +287,11 @@ export default defineComponent({
               // Update the readTime property of all messages
               const currentTime = Date.now();
               truncatedList.value.forEach((item) => {
+                // if (item.type === type) {
+                item.readTime = currentTime; // Set readTime to current time for messages of the specified type
+                // }
+              });
+              truncatedListAll.value.forEach((item) => {
                 // if (item.type === type) {
                 item.readTime = currentTime; // Set readTime to current time for messages of the specified type
                 // }
@@ -449,10 +456,15 @@ export default defineComponent({
 
     const hasUnreadMessages = (type) => {
       if (type === "ALL") {
-        return truncatedList.value.some((item) => item.readTime === null);
+        return truncatedListAll.value.some((item) => item.readTime === null);
       }
-      return truncatedList.value.some((item) => item.type === type && item.readTime === null);
+      return truncatedListAll.value.some((item) => item.type === type && item.readTime === null);
     };
+
+    watch(mailboxMessageTab, (newType) => {
+      truncatedList.value = [];
+      context.emit("tabChange", newType);
+    });
 
     onMounted(() => {
       onLoad();

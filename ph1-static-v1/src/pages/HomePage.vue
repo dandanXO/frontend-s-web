@@ -109,7 +109,7 @@
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-title">{{ item.title }}</div>
+            <div class="cat-title">{{ transformTitle(item.title) }}</div>
           </div>
         </swiper-slide>
       </template>
@@ -501,14 +501,18 @@
       </template>
 
       <template
-        v-if="(category.title === 'Fishing' && category.active) || (category.title === 'Lobby' && category.active)"
+        v-if="
+          (category.title === 'Fishing' && category.active) ||
+          (category.title === 'Minigames' && category.active) ||
+          (category.title === 'Lobby' && category.active)
+        "
       >
-        <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
+        <div class="games-selection-wrapper" id="fishing">
           <div class="title-game">
-            <span class="txt-style">Fishing</span>
+            <span class="txt-style">Minigames</span>
           </div>
 
-          <div class="platform-game-wrapper">
+          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -518,10 +522,10 @@
               :modules="gameModules"
               class="platform-game-container"
             >
-              <template v-for="(item, index) in fishGameJILIList" :key="index">
+              <template v-for="(item, index) in recommendList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                 >
                   <div>
                     <div class="platform-game-img">
@@ -530,46 +534,14 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/games/recommend/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
                                 return `url(${
                                   store.h5Url
-                                }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                              }
-                            }
-                          })()
-                        }"
-                      ></div>
-                    </div>
-
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-                  </div>
-                </swiper-slide>
-              </template>
-
-              <template v-for="(item, index) in fishGameJDBList" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-                >
-                  <div>
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              try {
-                                return `url(${imgURLGame}${item.icon})`;
-                              } catch (e) {
-                                return `url(${
-                                  store.h5Url
-                                }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                                }static/images/index/recommend/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -583,62 +555,37 @@
               </template>
             </swiper>
           </div>
-        </div>
 
-        <div class="platform-game-container grid-view" v-else>
-          <template v-for="(item, index) in fishGameJILIList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+          <div class="platform-game-container grid-view" v-else>
+            <template v-for="(item, index) in recommendList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/recommend/item-game-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/recommend/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
-
-          <template v-for="(item, index) in fishGameJDBList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
-                        try {
-                          return `url(${imgURLGame}${item.icon})`;
-                        } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                        }
-                      }
-                    })()
-                  }"
-                ></div>
-              </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </template>
 
@@ -2000,6 +1947,62 @@ const filteredHotGameList = computed(() => {
   }
 });
 
+const recommendList = ref([]);
+const loadRecommendGameList = () => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const key = `PLATFORM_RECOMMEND_GAMES_${regDevice}`;
+  const key2 = `MEMBER_RECOMMEND_${regDevice}`;
+
+  var gameLists = [];
+  var recommendlists = [];
+
+  cached
+    .get(key2, () =>
+      api
+        .get("/sitePlatformAndGamesByLabel", {
+          params: {
+            gameLabel: "RECOMMEND",
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      recommendlists = res;
+      recommendList.value = res;
+
+      // cached
+      cached
+        .get(key, () =>
+          api
+            .get("/platformGamesByLabelV1", {
+              params: {
+                gameLabel: "RECOMMEND",
+                device: regDevice
+              }
+            })
+            .then((ret) => {
+              const res = ret;
+              if (res.code === 0) {
+                return res;
+              }
+            })
+            .catch((err) => {})
+        )
+        .then((res) => {
+          gameLists = res;
+          recommendlists = res;
+          recommendList.value = res;
+        });
+    });
+};
+
 const loadHotGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const key = `PLATFORM_HOT_GAMES_${regDevice}`;
@@ -2436,6 +2439,7 @@ const getPlatList = () => {
       console.log("After");
       console.log(sport.value);
       loadHotGameList();
+      loadRecommendGameList();
     })
     .catch((err) => {});
 };
@@ -2739,6 +2743,10 @@ const loadAppTabs = () => {
         categoriesList.value[0].active = true;
       }
     });
+};
+
+const transformTitle = (title) => {
+  return title === "Fishing" ? "Minigames" : title;
 };
 
 let intervalId;

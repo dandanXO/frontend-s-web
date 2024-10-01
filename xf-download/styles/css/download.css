@@ -3,7 +3,7 @@
     height: auto;
     display: none;
     background: url(../images/bg.png) top center no-repeat;
-    background-size: 7.5rem 13.34rem;
+    background-size: auto 100%;
     overflow: hidden;
     font-family: "微软雅黑";
 }
@@ -12,26 +12,31 @@
     height: 100vh;
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 .content {
     position: relative;
-    top: 5.2rem;
+    padding-bottom: 3%;
 }
 a.logo {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 88px;
     height: 88px;
-    margin: 0 auto;
+    margin: auto;
 }
 .remind h3 {
-    font-size: 0.48rem;
+    font-size: 28px;
     font-family: "微软雅黑";
     color: #333333;
     text-align: center;
-    margin-top: 0.2rem;
+    margin-top: 11.5px;
 }
 .remind-txt {
-    font-size: 0.28rem;
+    font-size: 16px;
     text-align: center;
     color: #7e7e7e;
 }
@@ -47,7 +52,7 @@ a.logo {
     background: #2ec2f5;
     color: white;
     text-align: center;
-    font-size: 0.38rem;
+    font-size: 22px;
     margin: auto;
     border-radius: 20px;
     line-height: 40px;
@@ -57,11 +62,11 @@ a.logo {
 }
 .tuto {
     width: 100%;
-    font-size: 0.28rem;
+    font-size: 16px;
     font-weight: bold;
     color: #333333;
     text-align: center;
-    margin-top: 0.28rem;
+    margin-top: 16px;
 }
 #consult {
     display: block;

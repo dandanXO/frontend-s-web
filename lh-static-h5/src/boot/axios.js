@@ -35,7 +35,27 @@ const globalLinks = [
   "lh970.",
   "lh971.",
   "lh988.",
-  "033lh.vip"
+  "033lh.vip",
+  "lh997.cc",
+  "lh135.cc",
+  "lh207.cc",
+  "lh794.cc",
+  "lh595.cc",
+  "lh381.cc",
+  "lh313.cc",
+  "lh693.cc",
+  "lh526.cc",
+  "lh643.cc",
+  "lh311.cc",
+  "lh130.cc",
+  "lh582.cc",
+  "lh982.cc",
+  "lh820.cc",
+  "lh715.cc",
+  "lh571.cc",
+  "lh504.cc",
+  "lh435.cc",
+  "lh575.cc"
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
@@ -304,6 +324,7 @@ export default boot(({ app, router }) => {
           window.location.href = "/";
         }
         if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+          sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
           window.location.href = "/";

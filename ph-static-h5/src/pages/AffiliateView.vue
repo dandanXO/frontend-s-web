@@ -1,308 +1,147 @@
 <template>
   <div class="wrapper">
     <div class="affiliate">
-      <div class="game-title">Jolly88</div>
-      <div class="game-title sub">Affiliate Program</div>
-      <div class="description">
-        <div class="desc pro">
-          <img src="../assets/images/affiliate/01.png" />
-          <span>The most professional team</span>
+      <div class="top-banner">
+        <div class="banner-text">
+          <div class="banner-percentage">
+            <img
+              :src="
+                $q.dark.isActive
+                  ? require('../assets/affiliate/percemntage-banner-dark.png')
+                  : require('../assets/affiliate/percentage-banner-light.png')
+              "
+            />
+          </div>
+          <div class="banner-best-life">
+            <img
+              :src="
+                $q.dark.isActive
+                  ? require('../assets/affiliate/best-life-banner-dark.png')
+                  : require('../assets/affiliate/best-life-banner-light.png')
+              "
+            />
+          </div>
+          <div class="banner-comm">
+            <img
+              :src="
+                $q.dark.isActive
+                  ? require('../assets/affiliate/comm-banner-dark.png')
+                  : require('../assets/affiliate/comm-banner-light.png')
+              "
+            />
+          </div>
+          <div class="banner-affiliate">
+            <img src="../assets/affiliate/affiliate-banner.png" />
+          </div>
         </div>
-        <div class="desc best">
-          <img src="../assets/images/affiliate/02.png" />
-          <span>The best service</span>
+        <div class="banner-image">
+          <div class="poker-image-box">
+            <img src="../assets/affiliate/poker-banner.png" />
+          </div>
         </div>
       </div>
-      <div class="buttons">
-        <!-- Action Required - Contact Us Link -->
-        <a :href="
-            'https://www.agtjlph.com/ph/register?agent=' +
-            (affCode ? affCode : '')
-          ">
-          <q-btn color="deep-orange" align="around" class="full-width">JOIN US</q-btn>
+
+      <div class="btn-box">
+        <router-link to="/liveChat" name="live">
+          <q-btn class="contact-us" unelevated>
+            <img
+              :src="
+                $q.dark.isActive
+                  ? require('../assets/affiliate/contact-us-dark.png')
+                  : require('../assets/affiliate/contact-us-light.png')
+              "
+            />
+          </q-btn>
+        </router-link>
+        <a @click="openAffiliateLink">
+          <q-btn class="join-us" unelevated>
+            <img src="../assets/affiliate/join-us.png" />
+          </q-btn>
         </a>
-        <a href="https://www.agtjlph.com/ph/login">
-          <q-btn color="deep-orange" align="around" class="full-width">LOGIN</q-btn>
+      </div>
+
+      <div class="description-box">
+        <div class="best-service">
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/affiliate/best-service-dark.png')
+                : require('../assets/affiliate/best-service-light.png')
+            "
+          />
+        </div>
+        <div class="prof-team">
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/affiliate/prof-team-dark.png')
+                : require('../assets/affiliate/prof-team-light.png')
+            "
+          />
+        </div>
+      </div>
+
+      <!-- <div class="buttons"> -->
+      <!-- Action Required - Contact Us Link -->
+      <!-- <a :href="'https://affilliate-web.xvpxsn9gfu.com/ph/register?agent=' + (affCode ? affCode : '')">
+          <q-btn align="around" class="full-width">JOIN US</q-btn>
+        </a>
+        <a href="https://affilliate-web.xvpxsn9gfu.com/ph/login">
+          <q-btn align="around" class="full-width">LOGIN</q-btn>
         </a>
         <router-link to="/liveChat" name="live">
-          <q-btn color="deep-orange" align="around" class="full-width">CONTACT US</q-btn>
-        </router-link>
-      </div>
-      <div class="steps">
-        <div class="step">
-          <div class="game-title">01</div>
-          <div class="stepdesc">
-            First step<br />
-            To be agent
-          </div>
-        </div>
-        <div class="step">
-          <div class="game-title">02</div>
-          <div class="stepdesc">
-            Second step<br />
-            Advertise
-          </div>
-        </div>
-        <div class="step">
-          <div class="game-title">03</div>
-          <div class="stepdesc">
-            third step<br />
-            Get commissions
-          </div>
-        </div>
-      </div>
+          <q-btn align="around" class="full-width">CONTACT US</q-btn>
+        </router-link> -->
+      <!-- </div> -->
 
       <div class="information">
-        <div class="game-title sub">TERMS AND CONDITIONS</div>
-        <ol class="terms">
-          <li>
-            <p>
-              If the active members are less than 05 during a month, there will
-              be no commission.
-            </p>
-          </li>
-          <li>
-            <p>
-              If the affiliate account has a negative commission for the month
-              (negative profit: is the amount owed by the affiliate to the
-              Company), the negative amount will be cumulative to the following
-              months until negative commission is cleared
-
-              <br />
-              All affiliates must pay fees when using our platform
-              <br />
-              + Deposit and withdrawal fee of the bank. <br />
-              + Bonus claimed by their users. <br />
-              + Platform fee
-            </p>
-          </li>
-          <li>
-            <p>
-              Commission will be audited by 5th of every month, Release on 10th
-              of every month using PHP currency. From 10th onwards, affiliate
-              may proceed to withdraw their commission.
-            </p>
-          </li>
-          <li>
-            <p>
-              JOLLY88 monitor all affiliate’s user and have our own criterion
-              (risk level, deposit amount, betting index…) when evaluate such
-              users. If they fail to meet our criterion, we reverse the right to
-              refuse to release commission to affiliate.
-            </p>
-          </li>
-          <li>
-            <p>
-              One unique affiliate must register only one Email, Phone number,
-              and Name
-            </p>
-          </li>
-          <li>
-            <p>
-              Affiliate manipulation (faking downline account, interfere
-              downline’s betting behavior, multiple device login...) intercepted
-              by our system or specialist will be punished.
-            </p>
-          </li>
-          <li>
-            <p>
-              Jolly88.com reserves the right to change or correct the commission
-              percentage we deem appropriate.
-            </p>
-          </li>
-          <li>
-            <p>
-              Jolly88.com reserves the right to change or modify the above terms
-              or add any additional terms as necessary.
-            </p>
-          </li>
-          <li>
-            <p>
-              Jolly88.com reserves the right to cancel the affiliate status at
-              any time without prior notice in the event that affiliate accounts
-              do not meet the requirements of Jolly88.com given within a certain
-              time and have acts of cheating and violation.
-            </p>
-          </li>
-        </ol>
-        <div class="table">
-          <div class="game-title sub">COMMISSION PLAN TABLE</div>
-          <!-- <q-table no-data-label="No information" loading-label="Loading..."
-                    rows-per-page-label=" " class="q-mt-md" :columns="columns"
-                    :rows="dataSource" :pagination="false">
-          </q-table> -->
-          <q-markup-table :separator="'cell'" class="q-my-md">
-            <table class="text-center fit">
-              <thead>
-              <tr>
-                <th>Active Player</th>
-                <th>Net profit(PHP)</th>
-                <th>Commission(%)</th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>5</td>
-                  <td>1-750,000</td>
-                  <td>30%</td>
-                </tr>
-                <tr>
-                  <td>10</td>
-                  <td>750,001-1,500,000</td>
-                  <td>35%</td>
-                </tr>
-                <tr>
-                  <td>15</td>
-                  <td>1,500,001-2,500,000</td>
-                  <td>40%</td>
-                </tr>
-                <tr>
-                  <td>25</td>
-                  <td>2,500,001-3,500,000</td>
-                  <td>45%</td>
-                </tr>
-                <tr>
-                  <td>35</td>
-                  <td>3,500,001-7,000,000</td>
-                  <td>50%</td>
-                </tr>
-                <tr>
-                  <td>50</td>
-                  <td>>=7,000,001</td>
-                  <td>55%</td>
-                </tr>
-              </tbody>
-            </table>
-          </q-markup-table>
-        </div>
-        <div class="game-title sub">COMMISSION FORMULA</div>
+        <div class="tnc">TERMS AND CONDITIONS</div>
+        <p>Agent must complete requirements below to be eligible for the commission:</p>
         <p>
-          Net profit = (Total win/loss x 90%) - Bonus - (Bank transaction fees x
-          1%). <br />
-
-          => In there: Total win/loss = Total bet - Total payout <br />
-
-          Bank transaction fees: (deposit +withdrawal)*1% <br />
-
-          Commission = Net profit x corresponding commission percentage.
+          <img src="../assets/affiliate/pointer.png" />
+          Must have 3 direct active players.
         </p>
-        <div class="boxes">
-          <div class="box">
-            <p>
-              Example 1: affiliate A earns a monthly commission profit of 35%
-            </p>
-            <div class="bx-table">
-              <div class="rw-left">- Total loss of customers:</div>
-              <div class="rw-rgt">1,000,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">- Total amount deposit in the month:</div>
-              <div class="rw-rgt">3,000,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">- Total amount withdrawn in the month:</div>
-              <div class="rw-rgt">600,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                - Total promotion customers receive in the month:
-              </div>
-              <div class="rw-rgt">50,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                - Bank transaction fee ((deposit+withdrawn)*1%);
-              </div>
-              <div class="rw-rgt">36,000</div>
-            </div>
-
-            <div class="bx-table">
-              <div class="rw-left">=>Net profit=</div>
-              <div class="rw-rgt">(1,000,000*90%)-50,000-36,000=814,000</div>
-            </div>
-
-            <div class="bx-table">
-              <div class="rw-left">=>Commission=</div>
-              <div class="rw-rgt">814,000*35%=284,900</div>
-            </div>
-          </div>
-
-          <div class="box">
-            <p>
-              Example 2: affiliate B earns a monthly commission profit of 50%
-            </p>
-            <div class="bx-table">
-              <div class="rw-left">- Total loss of customers:</div>
-              <div class="rw-rgt">8,000,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">- Total amount deposit in the month:</div>
-              <div class="rw-rgt">10,000,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">- Total amount withdrawn in the month:</div>
-              <div class="rw-rgt">3,000,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                - Total promotion customers receive in the month:
-              </div>
-              <div class="rw-rgt">250,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">
-                - Bank transaction fee ((deposit withdrawn)*1%):
-              </div>
-              <div class="rw-rgt">130,000</div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">=>Net profit=</div>
-              <div class="rw-rgt">
-                (6,000,000*90%)-250,000-130,000=5,020,000
-              </div>
-            </div>
-            <div class="bx-table">
-              <div class="rw-left">=>Commission=</div>
-              <div class="rw-rgt">5,020,000*50%=2,510,000</div>
-            </div>
-          </div>
-        </div>
-        <div class="game-title sub">DOWNLINE AFFILIATE</div>
         <p>
-          Affiliate may recruit their own downline affiliate from their users
-          base (users who already registered under the affiliate link) to earn
-          extra percentage of their commission plus your own commission.
+          <img src="../assets/affiliate/pointer.png" />
+          Direct players must have minimum 100 deposit and 500 valid bets in each period.
         </p>
-        <div class="game-title sub">PAYMENT METHODS</div>
-        <ol>
-          <li>
-            <p>
-              Commission will be settled on 5th of each month paid on the 10th
-              of each month, from 10th onward Affiliate may proceed to withdraw
-              money
-            </p>
-          </li>
-          <li><p>Commission will be paid in PHP OR USDT</p></li>
-          <li>
-            <p>
-              Complaint and dispute about commission must be submit to Affiliate
-              cares before 10th of each month, otherwise paid commission cannot
-              be changed
-            </p>
-          </li>
-          <li>
-            <p>
-              Jolly88 reserves the right to change or correct the commission
-              percentage we deem appropriate.
-            </p>
-          </li>
-          <li>
-            <p>
-              Jolly88 reserves the right to change or modify the above terms or
-              add any additional terms as necessary.
-            </p>
-          </li>
-        </ol>
+
+        <div class="tnc">Important</div>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Strictly agent playing or registered under own link is not allowed.
+        </p>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Agent and player must have 1 account and with own withdrawal bank or e-wallet.
+        </p>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Same percentage with your agent or 5% below difference is not allowed.
+        </p>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Always abide the rules for agent.
+        </p>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Fraud activity is not allowed.
+        </p>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Violating the rules result to forfeiture of commission.
+        </p>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Agents and player must have one account only.
+        </p>
+        <p>
+          <img src="../assets/affiliate/pointer.png" />
+          Commission is released every Monday.
+        </p>
+
+        <div class="tnc">Reminder</div>
+        <p>Play4win reserves the right to make final decision to protect the fair rights for all agents and players.</p>
       </div>
     </div>
   </div>
@@ -313,151 +152,223 @@ export default defineComponent({
   setup() {
     const affCode = sessionStorage.getItem("AFFILIATE_CODE");
     const columns = ref([
-      {name: 'activeUser', label: 'Active Player', field: 'activeUser'},
-      {name: 'realProfit', label: 'Net profit(PHP)', field: 'realProfit'},
-      {name: 'commission', label: 'Commission(%)', field: 'commission'},
+      { name: "activeUser", label: "Active Player", field: "activeUser" },
+      { name: "realProfit", label: "Net profit(PHP)", field: "realProfit" },
+      { name: "commission", label: "Commission(%)", field: "commission" }
     ]);
-    // const columns = [
-    //   {
-    //     title: "Active Player",
-    //     dataIndex: "activeUser",
-    //     key: "activeUser",
-    //   },
-    //   {
-    //     title: "Net profit(PHP)",
-    //     dataIndex: "realProfit",
-    //     key: "realProfit",
-    //   },
-    //   {
-    //     title: "Commission(%)",
-    //     dataIndex: "commission",
-    //     key: "commission",
-    //   },
-    // ];
+
+    const openAffiliateLink = () => {
+      window.open("https://affilliate-web.xvpxsn9gfu.com/ph/register?agent=" + (affCode ? affCode : ""), "_system");
+    };
+
     const dataSource = [
       {
         activeUser: "5",
         realProfit: "1-750,000",
-        commission: "30%",
+        commission: "30%"
       },
       {
         activeUser: "10",
         realProfit: "750,001-1,500,000",
-        commission: "35%",
+        commission: "35%"
       },
       {
         activeUser: "15",
         realProfit: "1,500,001-2,500,000",
-        commission: "40%",
+        commission: "40%"
       },
       {
         activeUser: "25",
         realProfit: "2,500,001-3,500,000",
-        commission: "45%",
+        commission: "45%"
       },
       {
         activeUser: "35",
         realProfit: "3,500,001-7,000,000",
-        commission: "50%",
+        commission: "50%"
       },
       {
         activeUser: "50",
         realProfit: ">=7,000,001",
-        commission: "55%",
-      },
+        commission: "55%"
+      }
     ];
 
     return {
       columns,
       dataSource,
-      affCode
+      affCode,
+      openAffiliateLink
     };
-  },
+  }
 });
 </script>
 
 <style scoped lang="scss">
 .wrapper {
-  background: url("../assets/images/affiliate/bg.png") no-repeat center center;
-  background-size: cover;
-  background-attachment: fixed;
-
   .affiliate {
     max-width: 1550px;
     margin: 0 auto;
     min-height: 90vh;
-    padding: 40px 0;
+    padding: 0px 0 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     .game-title {
+      //background-image: linear-gradient(104.75deg, #8ec1f7 39.58%, #4183d3 109.58%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
       &.sub {
         font-size: 30px;
         line-height: 33px;
       }
     }
-    .description {
-      margin: 50px;
+
+    .top-banner {
       display: flex;
-      gap: 50px;
+      flex-direction: row;
+      width: 100%;
+    }
+    .banner-text {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.8rem;
+      padding-left: 1rem;
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
+    }
+    .banner-percentage {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+    }
+    .banner-best-life {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+    }
+    .banner-comm {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+    }
+    .banner-affiliate {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      padding-top: 0.7rem;
+    }
+    .banner-image {
+      width: 100%;
+      display: flex;
+      position: relative;
+      justify-content: flex-end;
+    }
+    .poker-image-box {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 0.8rem;
+    }
+
+    .btn-box {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.2rem;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .contact-us {
+      display: flex;
+      width: 100%;
+    }
+
+    .join-us {
+      display: flex;
+      width: 100%;
+    }
+
+    .description-box {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      gap: 0.2rem;
+      padding-top: 1.7rem;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    .best-service {
+      display: flex;
+      width: 50%;
+      justify-content: center;
+      padding-left: 10px;
+    }
+    .prof-team {
+      display: flex;
+      width: 50%;
+      justify-content: center;
+      padding-right: 10px;
+    }
+
+    .description {
+      width: calc(100% - 24px);
+
+      margin: 15px 0px 10px;
+      flex-wrap: nowrap;
+      justify-content: space-evenly;
+      display: flex;
+      gap: 10px;
       .desc {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #ffffff;
+        color: #000;
         gap: 10px;
         img {
           width: 50px;
         }
       }
     }
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-       width: 200px;
-    }
-    .steps {
-      background: #23263c;
-      padding: 40px;
-      border-radius: 20px;
-      width: 95%;
-      margin: 50px auto;
-      max-width: 1200px;
-      display: flex;
-      justify-content: space-between;
-      flex-direction: column;
-       max-width: 260px;
-       gap: 10px;
-      .step {
-        display: flex;
-        color: #ffffff;
-        gap: 10px;
-        justify-content: flex-start;
-        align-items: center;
-      }
-    }
+    // .buttons {
+    //   display: flex;
+    //   flex-direction: column;
+    //   margin: 12px auto;
+    //   gap: 20px;
+    //   width: 200px;
+
+    //   .q-btn {
+    //     background: linear-gradient(360deg, #a2d2ff -59.29%, #e0efff 72.14%);
+    //     color: #000;
+    //     font-weight: bold;
+    //     filter: brightness(1);
+    //   }
+    // }
     .information {
+      margin: 20px auto;
       max-width: 1200px;
-      width: 90%; margin: 0 auto;
+      width: 90%;
       text-align: left;
       .game-title {
         text-align: left;
         margin: unset;
       }
       p {
-        font-size: 16px;
-        color: #ffffff;
+        font-size: 12px;
+        color: #83a3ca;
       }
       ol {
-        color: #ffffff;
+        color: #000;
         text-align: left;
         margin: 0;
         padding-left: 15px;
       }
       .terms {
-        color: #ffffff;
+        color: #000;
         text-align: left;
         margin: 0;
         padding-left: 15px;
@@ -481,9 +392,10 @@ export default defineComponent({
         margin-bottom: 20px;
         .box {
           flex: 1;
-          background-color: #2b2b4b;
+          background: $primary-linear;
           padding: 20px;
-          color: #ffffff;
+          border-radius: 6px;
+          color: #000;
           .bx-table {
             display: flex;
             justify-content: space-between;
@@ -491,14 +403,17 @@ export default defineComponent({
         }
       }
     }
+    .tnc {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 24px;
+      color: rgba(43, 43, 130, 0.8);
+    }
   }
 }
 @media (max-width: 768px) {
   .wrapper {
     .affiliate {
-      .description {
-        flex-direction: column-reverse;
-      }
       .information {
         .boxes {
           flex-direction: column;

@@ -249,7 +249,7 @@ onMounted(async() => {
   padding: 0;
 }
 
-::v-deep(.el-table__row:not([class*='el-table__row--level-'])) {
+:deep(.el-table__row:not([class*='el-table__row--level-'])) {
   td:first-child {
     padding-left: 23px;
   }

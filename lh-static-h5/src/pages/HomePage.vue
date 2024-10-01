@@ -86,7 +86,8 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img loading="lazy" src="../assets/images/home/announce-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/announce-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
@@ -115,22 +116,22 @@
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/deposit-btnicon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/withdraw-btnicon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/transfer-btnicon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/vip-btnicon.png" />
         <div class="">VIP</div>
       </router-link>
@@ -146,7 +147,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/esport-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'esport'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/esport-icon.png" />
           </div>
@@ -159,7 +160,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/sport-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'sport'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/sport-icon.png" />
           </div>
@@ -172,7 +173,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/live-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'live'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/live-icon.png" />
           </div>
@@ -186,7 +187,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/poker-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'poker'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/poker-icon.png" />
           </div>
@@ -199,7 +200,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/slot-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'slot'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/slot-icon.png" />
           </div>
@@ -213,7 +214,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/casual-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'casual'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/casual-icon.png" />
           </div>
@@ -241,7 +242,7 @@
             />
             <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'lottery'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon.png" />
           </div>
@@ -254,7 +255,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/fish-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'fishing'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/fish-icon.png" />
           </div>
@@ -1164,7 +1165,7 @@ export default defineComponent({
 
     function loadData() {
       api
-        .get("/promo/banner?category=HOME")
+        .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
@@ -1284,6 +1285,8 @@ export default defineComponent({
                 liveObj.title = "WE 真人";
               } else if (liveObj.code === "BBINDY") {
                 liveObj.title = "BBIN 真人";
+              } else if (liveObj.code === "FBLive") {
+                liveObj.title = "FB真人";
               } else {
                 liveObj.title = translateRecord(liveObj.name) + "真人";
               }
@@ -2605,19 +2608,32 @@ export default defineComponent({
       color: $font-1-dark;
     }
     .menulist {
+      img {
+        width: 3rem;
+      }
+
       .men {
-        color: $font-4-dark;
+        color: #a98f7c;
       }
     }
   }
 
   .home-game-section {
+    .game-left-list {
+      gap: 10px;
+    }
     .game-right-platform {
       .platform-block {
         .platform-img-frame {
-          border-radius: 20px;
+          border-radius: unset;
+          background-color: transparent;
+          aspect-ratio: 684/244;
+          background-size: 100% 100%;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
+            top:1px;
+            left:1px;
+            border-top-left-radius:8px;
           }
           .platform-subtitle {
             color: $font-1-dark;

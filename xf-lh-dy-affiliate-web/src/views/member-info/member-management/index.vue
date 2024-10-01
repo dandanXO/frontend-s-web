@@ -245,6 +245,7 @@
               <th scope="col">{{ t('fields.loginName') }}</th>
               <th scope="col">{{ t('fields.totalDeposit') }}</th>
               <th scope="col">{{ t('fields.totalWithdraw') }}</th>
+              <th scope="col">{{ t('fields.totalBet') }}</th>
               <th scope="col">{{ t('fields.netProfit') }}</th>
               <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
@@ -270,6 +271,10 @@
               <td :data-label="t('fields.totalWithdraw')">
                 {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 {{ formatMoney(item.totalWithdraw) }}
+              </td>
+              <td :data-label="t('fields.totalBet')">
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+                {{ formatMoney(item.totalBet) }}
               </td>
               <td :data-label="t('fields.netProfit')">
                 {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
@@ -863,7 +868,7 @@ const uiControl = reactive({
   orderBy: [
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
-    { display: 'lastLoginTime', value: 'last_login_time' },
+    // { display: 'lastLoginTime', value: 'last_login_time' },
     { display: 'registerTime', value: 'reg_time' },
   ],
   sortType: [

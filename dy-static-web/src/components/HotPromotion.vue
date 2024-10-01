@@ -30,8 +30,8 @@
     <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone'"></BbDacha2024Promo>
-    <Dota2Ti13 v-if="list.redirectUrl === 'dy2-dota2-ti13'" :promo-code="list.promoCode"/>
-    <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode"/>
+    <Dota2Ti13 v-if="list.redirectUrl === 'dy2-dota2-ti13'" :promo-code="list.promoCode" />
+    <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode" />
     <PrivilegeInvite
       v-if="
         list.redirectUrl === 'Dongying-refer' ||
@@ -40,9 +40,7 @@
       "
     />
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'dy2-cny-step-game'"></CnyStepGame2024Promo>
-
     <Dy2StepGamePromo v-if="list.redirectUrl === 'dy2-game-steps'" :pageContent="list.pageContent"></Dy2StepGamePromo>
-
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel'" />
     <MidautumSpinWheel v-if="list.redirectUrl === 'dy2-midautumn-spinwheel'" />
@@ -70,13 +68,16 @@
     <slotLucky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
     <NewplayerGuide v-if="list.redirectUrl === 'dy2-newplayer-guide'" />
     <intelEsl2024 v-if="list.redirectUrl === 'dy2-intel-esl'" />
-
-    <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
-    <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
-    <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode"/>
-    <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'"/>
+    <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
+    <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode" />
+    <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <BlastPremier v-if="list.redirectUrl === 'dy2-blast-premier'" :promo-code="list.promoCode" />
+    <Tpworld2024 v-if="list.redirectUrl === 'dy2-tpworld-2024'" :promo-code="list.promoCode" />
+    <NationalDay2024 v-if="list.redirectUrl === 'dy2-national-day-2024'" :promo-code="list.promoCode" />
+    <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
+    <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
-    
+
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -142,24 +143,26 @@ import intelEsl2024 from "../components/hotpromo/intel-esl-2024/intel-esl-2024.v
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import NewplayerGuide from "../components/hotpromo/newplayerguide/NewPlayerGuide.vue";
-
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
-
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
-import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"
+import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue";
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 import EslProCsgo2 from "./hotpromo/eslpro-csgo2/EslProCsgo2.vue";
+import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
+import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
+import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
+import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -214,6 +217,10 @@ export default defineComponent({
     newFootballFight,
     BbdachaCsgo2,
     EslProCsgo2,
+    BlastPremier,
+    Tpworld2024,
+    NationalDay2024,
+    LoLS14,
     BlackMythWuKongPromo,
     SubmitClaimPromo
   },
@@ -233,45 +240,7 @@ export default defineComponent({
       loadingClaim: false,
       memberId: null,
       amount: "$0",
-      hotPromoList: [
-        // {
-        //   id: 19,
-        //   bg: require("../assets/images/promotion/hotpromo/19/bg.png"),
-        //   contents:
-        //     "*The rebate bonus needs 1 times rollover before withdrawing and will be returned if not used within 30 days.",
-        // },
-        // {
-        //   id: 20,
-        //   bg: require("../assets/images/promotion/hotpromo/20/bg.png"),
-        //   contents: "Hello hello",
-        // },
-        // {
-        //   id: 21,
-        //   bg: "",
-        //   contents: "Hello hello",
-        // },
-        // {
-        //   id: 22,
-        //   bg: require("../assets/images/promotion/hotpromo/22/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-        // {
-        //   id: 23,
-        //   bg: require("../assets/images/promotion/hotpromo/23/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-        // {
-        //   id: 24,
-        //   bg: require("../assets/images/promotion/hotpromo/24/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-      ],
+      hotPromoList: [],
       selectedHotPromo: {
         id: "",
         bg: "",
@@ -323,18 +292,18 @@ export default defineComponent({
     handleSlot() {
       const store = userStore();
       if (!store.hasToken()) {
-    ElMessageBox.alert("请登录后再操作", "系统提示", {
-      autofocus: false,
-      center: true,
-      confirmButtonText: "确认",
-      showClose: false,
-      buttonSize: "large",
-      closeOnClickModal: true
-    }).then(() => {
-      store.loginPageVisible = true;
-    });
-    return;
-  }
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
+          autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large",
+          closeOnClickModal: true
+        }).then(() => {
+          store.loginPageVisible = true;
+        });
+        return;
+      }
       this.loadingClaim = true;
       const bonusItem = this.list.promoCode;
 

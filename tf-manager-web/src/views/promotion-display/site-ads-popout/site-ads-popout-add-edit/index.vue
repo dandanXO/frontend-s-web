@@ -96,6 +96,38 @@
       </el-form-item>
     </el-row>
     <el-row>
+      <el-col>
+        <el-form-item :label="t('fields.displayStartTime')" prop="displayStartTime">
+            <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.displayStartTime"
+            />
+        </el-form-item>
+        <el-form-item :label="t('fields.displayEndTime')" prop="displayEndTime">
+            <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.displayEndTime"
+            />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-form-item :label="t('fields.sequence')" prop="sequence">
+          <el-input-number
+            type="number"
+            v-model.number="form.sequence"
+            :min="0"
+            style="width: 350px"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-form-item
         :label="t('fields.desktopImage')"
         prop="desktopImgUrl"
@@ -500,6 +532,8 @@ const form = reactive({
   contentList: null,
   status: false,
   siteType: null,
+  displayStartTime: null,
+  displayEndTime: null,
 })
 
 const uiControl = reactive({
@@ -840,6 +874,13 @@ function submitImage() {
     form.mobileImgUrl = selectedImage.path
   }
   uiControl.imageSelectionVisible = false
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
 }
 
 watch(

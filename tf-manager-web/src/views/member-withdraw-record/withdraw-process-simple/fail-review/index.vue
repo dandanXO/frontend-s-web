@@ -609,7 +609,6 @@ import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   autoWithdrawToFail,
   getMemberWithdrawRecordFailReview,
-  getTotalWithdrawAmountByStatus,
   autoWithdrawToSuccess,
   autoWithdrawToFailBatch,
   fromApplyToAutopayBatch
@@ -854,12 +853,11 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {
-    query.status = 'APPLY'
-    const { data: amount } = await getTotalWithdrawAmountByStatus(query)
-    page.totalAmount = amount
+    page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
   }
+  request.doris = ret.sums.useDoris;
   page.loading = false
 }
 

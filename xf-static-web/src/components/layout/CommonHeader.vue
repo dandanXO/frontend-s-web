@@ -12,7 +12,7 @@
             </div>
 
             <div class="station-notice">
-              <Vue3Marquee :clone="false" :duration="90" :style="store.token  ? `width: 550px` : `width:780px`">
+              <Vue3Marquee :clone="false" :duration="90" :style="store.token ? `width: 550px` : `width:780px`">
                 <div
                   v-for="(word, index) in announcementList"
                   :key="index"
@@ -1553,6 +1553,8 @@ export default defineComponent({
                     getCode();
                     // message.error(response.message);
                   }
+                }).catch(() => {
+                  getCode();
                 })
           })();
         } else {
@@ -1992,6 +1994,7 @@ export default defineComponent({
 
     const submitLogin = () => {
       loadingBtn.value = true;
+
       (async () => {
         const sidParam = store.visitorId;
 
@@ -2016,13 +2019,16 @@ export default defineComponent({
                   loginForm.captchaCode = null
                   getCode();
                 }
+                loadingBtn.value = false;
               }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
             getCode();
+            loadingBtn.value = false;
+          }).finally(() => {
+            loadingBtn.value = false;
           });
         });
-        loadingBtn.value = false
       })();
     };
 
@@ -2279,7 +2285,7 @@ export default defineComponent({
 body {
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
-    background-color:#5e5e5e;
+    background-color: #5e5e5e;
   }
 
   .el-dropdown {
@@ -2370,10 +2376,6 @@ body {
 }
 
 .header-container {
-  &.on-scrolled {
-    // background: rgb(43 43 75 / 80%);
-  }
-
   width: 100%;
   position: sticky;
   top: 0;
@@ -2631,15 +2633,15 @@ body {
 <!-- Menu Styles -->
 <style lang="scss">
 .platform-menu {
-  a {
-    text-decoration: none;
-  }
-
   display: flex;
   margin: 0 auto;
   max-width: 1280px;
   justify-content: center;
   align-items: center;
+
+  a {
+    text-decoration: none;
+  }
 
   .platform-title {
     color: #ffffff;

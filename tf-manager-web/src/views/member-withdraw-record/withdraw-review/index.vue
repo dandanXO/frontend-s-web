@@ -179,14 +179,6 @@
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
-      <div style="margin-top:20px;">
-        <span style="font-size: small;margin-top: 10px;margin-right:10px">
-          {{ t('fields.historyRecord') }}
-        </span>
-        <el-switch
-          v-model="request.doris"
-        />
-      </div>
     </div>
 
     <el-table
@@ -485,7 +477,12 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview, getTotalWithdrawReview, getExportWithdrawalReviewReport } from '../../../api/report-summary'
+import {
+  getMemberReport,
+  addReview,
+  getTotalWithdrawReview,
+  getExportWithdrawalReviewReport
+} from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -499,6 +496,7 @@ import {
   getShortcuts,
 } from '@/utils/datetime'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
@@ -600,7 +598,6 @@ const request = reactive({
   max: null,
   reviewBy: null,
   source: null,
-  doris: false
 })
 
 const uiControl = reactive({
@@ -628,7 +625,7 @@ function submit() {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.sort = sortList.list[0].value
 
   request.vip = vipList.list[0].id
@@ -672,7 +669,7 @@ async function loadMemberRecord() {
 
     const { data: ret1 } = await getTotalWithdrawReview(query)
     page1.records = ret1
-
+    request.doris = false
     page.loading = false
   }
 }
@@ -965,12 +962,12 @@ async function showDialog(record) {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>
 <style lang="scss">
-.roles-main .el-table__footer-wrapper{
+.roles-main .el-table__footer-wrapper {
   height: 43px;
 }
 </style>

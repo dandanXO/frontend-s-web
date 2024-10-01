@@ -63,6 +63,7 @@
       ref="table"
       row-key="id"
       size="small"
+      height="75vh"
       highlight-current-row
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
@@ -155,7 +156,7 @@
         prop="fdAmount"
         :label="t('fields.ftdAmount')"
         align="center"
-        width="120"
+        width="150"
       >
         <template #default="scope">
           $
@@ -167,7 +168,7 @@
         prop="validBet"
         :label="t('fields.betAmount')"
         align="center"
-        width="120"
+        width="150"
       >
         <template #default="scope">
           $
@@ -179,7 +180,7 @@
         prop="payout"
         :label="t('fields.payoutAmount')"
         align="center"
-        width="120"
+        width="150"
       >
         <template #default="scope">
           $
@@ -641,13 +642,20 @@ function getSummaries(param) {
         var prop = column.property
         if (
           index === 4 ||
-          index === 7 ||
-          index === 12 ||
-          index === 13 ||
-          index === 14
+          index === 12
         ) {
           // WithdrawCount, FtdCount, totalMemberDepositCount, totalMemberUsdtDepositCount, totalMemberBetCount
           sums[index] = totalPage.records[0][prop]
+        } else if (index === 7 || index === 13 || index === 15) {
+          const pageRowCount = Number(page.records.reduce((sum, row) => {
+            return sum + Number(row[prop])
+          }, 0))
+          const totalPageCount = Number(totalPage.records[0][prop])
+          if (pageRowCount !== totalPageCount) {
+            sums[index] = `${totalPage.records[0][prop]} (${pageRowCount})`
+          } else {
+            sums[index] = totalPage.records[0][prop]
+          }
         } else if (index === 6) {
           // registerCount
           sums[index] = totalPage.records[0].registerCount
@@ -805,7 +813,7 @@ async function requestExportExcel() {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>

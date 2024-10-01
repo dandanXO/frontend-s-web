@@ -32,19 +32,19 @@
       </div>
 
       <div class="pc-form-item">
-        <div class="pc-form-label">New Password</div>
+        <div class="pc-form-label">{{ $t('form.newPassword') }}</div>
         <div class="pc-form-input">
           <q-input
             filled
             dense
             clearable
-            placeholder="Enter New Password"
+            :placeholder="$t('form.newPassword_placeholder')"
             v-model="formDetail.password"
             ref="passwordRef"
             hide-bottom-space
             :type="isPwd ? 'password' : 'text'"
             :rules="[
-              (val) => (val && val.length > 0) || 'Please insert new password',
+              (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
               (val) =>
                 (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
               () => isAlphanumeric(formDetail.password, 'New password')
@@ -72,7 +72,7 @@
       :disable="!(isValidName() === true && isValidPhone() === true)"
       @click="submitKYCNewGuest"
     >
-      Submit
+      {{ $t('btn.submit') }}
     </q-btn>
   </div>
 </template>

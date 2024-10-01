@@ -1,20 +1,13 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
-    <div class="method-title q-mb-sm">Withdraw Currency</div>
-    <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
-      <div>
-        <q-skeleton style="height: 96px" />
+    <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
+    <template v-if="isLoadingWithdrawalMethod">
+      <div class="withdraw-methods-currency">
+        <div v-for="index in 4" :key="index">
+          <q-skeleton style="height: 96px" />
+        </div>
       </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-    </div>
+    </template>
 
     <template v-else>
       <div class="withdraw-methods-currency">
@@ -28,13 +21,13 @@
           <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
           <div>{{ item.code }}</div>
           <div class="item-hot-ribbon" v-if="item.hot">
-            <img src="../../assets/images/account/ribbon-hot.png" />
+            <img src="@/assets/images/account/ribbon-hot.png" />
           </div>
         </div>
       </div>
 
       <template v-if="selectedWithdraw">
-        <div class="method-title q-mt-md q-mb-sm">Payment channels</div>
+        <div class="method-title q-mt-md q-mb-sm">{{ $t("withdraw.paymentChannels") }}</div>
         <div class="withdraw-methods-container">
           <template v-for="(item, index) in selectedWithdraw" :key="index">
             <div
@@ -46,7 +39,7 @@
                 <div class="item-detail">
                   <div class="txt-maintenance">
                     <q-icon name="build" size="16px" />
-                    This channel is under maintenance
+                    {{ $t("withdraw.withdrawalMethodInMaintenance") }}
                   </div>
                 </div>
               </template>
@@ -68,7 +61,7 @@
         >
           <div class="w-form-item w-form-item--bankcard">
             <div class="top-wrapper">
-              <div class="title">Bank Name</div>
+              <div class="title">{{ $t("withdraw.bankName") }}</div>
             </div>
             <div>
               <q-select
@@ -96,7 +89,9 @@
 
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
-          <div class="method-title q-mb-sm">Choose {{ displayCardType }} Account</div>
+          <div class="method-title q-mb-sm">
+            {{ $t("withdraw.choose") }} {{ displayCardType }} {{ $t("withdraw.account") }}
+          </div>
           <div class="mid-wrapper">
             <div class="w-form-item w-form-item--bankcard">
               <div class="w-form-input">
@@ -153,7 +148,7 @@
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
-              <div class="card-label">Add New Account</div>
+              <div class="card-label">{{ $t("withdraw.addNewAccount") }}</div>
             </div>
           </div>
         </div>
@@ -162,7 +157,7 @@
           <template v-if="bankCardList.length === 0 || isAddNewAccount">
             <div class="w-form-item w-form-item--bankcard">
               <div class="top-wrapper">
-                <div class="title">Account Number</div>
+                <div class="title">{{ $t("form.accountNumber") }}</div>
               </div>
               <div class="mid-wrapper">
                 <q-input
@@ -170,7 +165,7 @@
                   dense
                   clearable
                   ref="bankNumberRef"
-                  placeholder="Enter Account Number"
+                  :placeholder="$t('form.accountNumber_placeholder')"
                   v-model="bankCardField.cardNumber"
                   :rules="[(_) => isValidCardNumber()]"
                   hide-bottom-space
@@ -179,32 +174,11 @@
                 ></q-input>
               </div>
             </div>
-            <!--            <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">-->
-            <!--              <div class="top-wrapper">-->
-            <!--                <div class="title">Bank IFSC Code</div>-->
-            <!--              </div>-->
-            <!--              <div class="mid-wrapper">-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  dense-->
-            <!--                  clearable-->
-            <!--                  ref="bankAddressRef"-->
-            <!--                  placeholder="Enter Bank IFSC Code"-->
-            <!--                  v-model="bankCardField.cardAddress"-->
-            <!--                  :rules="[(_) => isValidCardAddress()]"-->
-            <!--                  hide-bottom-space-->
-            <!--                ></q-input>-->
-            <!--              </div>-->
-            <!--            </div>-->
           </template>
 
           <div class="top-wrapper">
-            <!-- <div class="title">
-            Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-            {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.label }})
-          </div> -->
             <div class="title">
-              Withdrawal Amount ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
+              {{ $t("withdraw.withdrawalAmount") }} ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
               {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} {{ store.currency.label }})
             </div>
           </div>
@@ -216,15 +190,17 @@
               filled
               dense
               clearable
-              placeholder="Withdraw Amount"
+              :placeholder="$t('form.withdrawalAmount_placeholder')"
               v-model="withdrawInfo.amount"
               :rules="[
-                (val) => !!val || 'Please Enter Withdraw Amount',
-                (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-                (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
+                (val) => !!val || $t('form.withdrawalAmount_rules_01'),
+                (val) => val > 0 || $t('form.withdrawalAmount_rules_02'),
+                (val) => val < selectedMethodItem.withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
                 (val) =>
                   (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                  `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+                  `${$t('form.withdrawalAmount_rules_04')} ${selectedMethodItem.withdrawMin} - ${
+                    selectedMethodItem.withdrawMax
+                  }`
               ]"
               hide-bottom-space
               @focus="scrollToInput"
@@ -275,7 +251,7 @@
 
           <div class="fund-container q-mt-sm q-mb-md">
             <div>
-              <span class="fund-title">Available:</span>
+              <span class="fund-title">{{ $t("withdraw.available") }}:</span>
               {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
             </div>
           </div>
@@ -283,30 +259,23 @@
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">Withdrew Amount</div>
+                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
-              <div class="desc desc_white">
-                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
-                {{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}
-              </div>
+              <div class="desc desc_white">{{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ store.vip }} Daily Limit</div>
+                <div class="desc">{{ store.vip }} {{ $t("withdraw.dailyLimit") }}</div>
               </div>
               <div class="desc desc_white">
-                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
                 {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
               </div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">Remain Wagers</div>
+                <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
-              <div class="desc desc_white">
-                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
-                {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}
-              </div>
+              <div class="desc desc_white">{{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}</div>
             </div>
           </div>
         </div>
@@ -319,7 +288,7 @@
               size="2em"
               :thickness="2"
             ></q-spinner>
-            <template v-else>Submit</template>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
         </template>
 
@@ -331,7 +300,7 @@
               size="2em"
               :thickness="2"
             ></q-spinner>
-            <template v-else>Submit</template>
+            <template v-else>{{ $t("btn.submit") }}</template>
           </div>
         </template>
         <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
@@ -348,13 +317,15 @@
 </template>
 
 <script setup>
-import { onMounted, onActivated, ref, reactive, watch, computed, nextTick } from "vue";
-import { api } from "boot/axios";
-import { useQuasar, Platform } from "quasar";
+import { Platform, useQuasar } from "quasar";
+import { computed, nextTick, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { userStore } from "stores/index";
-import { convertToCommaAmount } from "src/boot/utils";
-import KYCUserForm from "../../components/KYCUserForm.vue";
+
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import { convertToCommaAmount } from "@/boot/utils";
+import KYCUserForm from "@/components/KYCUserForm.vue";
+import { userStore } from "@/stores/index";
 
 // withdraw component
 const qs = require("qs");
@@ -434,13 +405,6 @@ const getWithdrawalMethods = () => {
       });
 
       selectWithdrawCurrency(paymentMethodsItems.value[0]);
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
     }
     cbCount++;
     checkCb();
@@ -669,7 +633,7 @@ const submitWithdrawBank = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -699,7 +663,7 @@ const withdrawGo = (callback) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -732,7 +696,7 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      message: t("notify.pleaseFillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/withdraw`);
@@ -789,21 +753,7 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-
-  const result = !cardNumber ? "Please Enter Card Number" : true;
-
-  if (cardNumber && selectedMethodItem.value.code === "GCASH") {
-    const gCashCheck =
-      cardNumber.substring(0, 1) !== "0"
-        ? "The GCASH card number must start with '0'"
-        : cardNumber.length !== 11
-        ? "The GCASH card number length should be 11"
-        : true;
-    if (gCashCheck !== true) {
-      return gCashCheck;
-    }
-  }
-
+  const result = !cardNumber ? t("form.accountNumber_rules_01") : true;
   return result;
 };
 
@@ -966,7 +916,7 @@ const loadInfo = () => {
           position: absolute;
           bottom: 0;
           right: 0;
-          background-image: url(../../assets/images/account/active-tick.png);
+          background-image: url(@/assets/images/account/active-tick.png);
           background-size: cover;
         }
       }
@@ -1045,7 +995,7 @@ const loadInfo = () => {
         position: absolute;
         bottom: 0;
         right: 0;
-        background-image: url(../../assets/images/account/active-tick.png);
+        background-image: url(@/assets/images/account/active-tick.png);
         background-size: cover;
       }
     }

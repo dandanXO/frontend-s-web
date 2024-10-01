@@ -10,21 +10,16 @@
         class="node-item payment-method-item"
         :id="level + '_' + i"
         @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
-        ]"
+        :class="[item.children ? 'node-group' : '', selectItem?.code === item.code ? 'active' : '', level === 1 ? 'payment-gateway' : level === 2 ? 'payment-channel' : '']"
         :key="i"
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon" />
+          <img v-if=" level !== 2" :src="imgURL + item.nodeIcon" />
           <div class="overflow">{{ item.nodeName }}</div>
           <div
             class="promo"
-            :style="
-              item.promoStyle + 'background-image: url(' + item.promoIcon + ')'
-            "
+            :style="item.promoStyle + 'background-image: url(' + imgURL + '/label/' + item.promotionIcon + ')'"
           >
             <span class="val">{{ item.promoValue }}</span>
           </div>
@@ -57,11 +52,8 @@
       <node
         @click="clickChildItem(item)"
         :name="item.nodeName"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
-        ]"
-        v-if="selectItem === item"
+        :class="[item.children ? 'node-group' : '', selectItem?.code === item.code ? 'active' : '']"
+        v-if="selectItem?.code === item.code"
         :level="parseInt(level) + 1"
         :list="item.children"
         v-bind="$attrs"
@@ -73,8 +65,7 @@
 <script>
 import { defineComponent, reactive } from "vue";
 
-
-const imgURL = process.env.IMAGE_CDN + '/'
+const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -85,23 +76,23 @@ export default defineComponent({
       type: Array,
       default: function () {
         return [];
-      },
+      }
     },
     level: {
       type: Number,
-      default: 0,
+      default: 0
     },
     name: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   data() {
     return {
       ruleForm: {
         name: "",
         icon: "",
-        add: false,
+        add: false
       },
       selectItem: null,
       dialogVisible: false,
@@ -110,46 +101,20 @@ export default defineComponent({
       imgURL
     };
   },
-  // methods: {
-  //   clickItem(item) {
-  //     this.list.forEach((element) => {
-  //       element.hasActive = false;
-  //     });
-  //     if (item) {
-  //       item.hasActive = true;
-  //       this.selectItem = item;
-  //       this.$emit("clicked", this.selectItem);
-  //       if (item.group) {
-  //         this.clickChildItem(item.children[0]);
-  //       }
-  //     }
-  //   },
-  //   clickChildItem(item) {
-  //     this.list.forEach((element) => {
-  //       element.hasActive = false;
-  //     });
-  //     item.hasActive = true;
-  //     this.selectedItem = item;
-  //     this.$emit("clicked", this.selectedItem);
-  //   },
-  // },
   updated() {
     this.$nextTick().then(() => {
       if (!this.selectItem) {
-        // Add the component back in
         this.firstTime(this.list[0]);
       }
     });
   },
-  
   methods: {
     firstTime(item) {
       if (item) {
-        item.hasActive = true
+        item.hasActive = true;
         this.selectItem = item;
-        this.$emit("clicked", this.selectItem);
         if (item.group) {
-              this.$emit("clicked", item.children[0]);
+          this.$emit("clicked", item.children[0]);
         } else {
           this.$emit("clicked", item);
         }
@@ -159,19 +124,19 @@ export default defineComponent({
       this.list.forEach((element) => {
         if (!element.hasActive && element.group) {
           element.children.forEach((e) => {
-            e.hasActive = false
-          })
-        };
+            e.hasActive = false;
+          });
+        }
         element.hasActive = false;
       });
       this.list.forEach((element) => {
         element.hasActive = false;
       });
       if (item) {
-        item.hasActive = true
+        item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find((child) => child.hasActive === true)
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -187,15 +152,15 @@ export default defineComponent({
         element.hasActive = false;
       });
       item.hasActive = true;
-      this.selectedItem = item
+      this.selectedItem = item;
       this.$emit("clicked", this.selectedItem);
-    },
+    }
   },
   mounted() {
     // this.clickItem(this.list[0]);
     this.$nextTick(() => {
-     this.firstTime(this.list[0]);
-    })
+      this.firstTime(this.list[0]);
+    });
   }
 });
 </script>
@@ -216,8 +181,7 @@ $node-color: #dd4645;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 .title::before {
   top: 8px;
@@ -241,7 +205,8 @@ $node-color: #dd4645;
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    border: solid 1px #484460;
+    // box-shadow: 6px 6px #161b23;
+    // background: #fff;
     color: #ffffff;
     cursor: pointer;
     padding: 20px 35px;
@@ -250,15 +215,8 @@ $node-color: #dd4645;
     }
     &.active {
       // background: rgba(255,255,255, .2);
-      border-color: $node-color;
+      // border-color: $node-color;
     }
-
-    // &.node-group {
-    //   color: $group-color;
-    //   &.active{
-    //     border-color: $group-color;
-    //   }
-    // }
 
     img {
       max-width: 50px;
@@ -288,7 +246,7 @@ $node-color: #dd4645;
     padding: 0 30px;
     .account-title-container {
       // margin: 0 -30px;
-    padding: 15px 0;
+      padding: 15px 0;
       background: none;
       border-top: 1px solid #484460;
       font-weight: bold;
@@ -299,43 +257,66 @@ $node-color: #dd4645;
       text-align: center;
       padding: 10px 8px;
       cursor: pointer;
-      background: #2b2b4b;
-      box-shadow: 6px 6px #161b23;
+      // background: #fff;
+      color: #000;
+      // box-shadow: 6px 6px #161b23;
+      border-radius: 6px;
+      // border: solid 1px #000;
 
-      &:hover {
-      }
       &.active {
-        background-color: #1c1c32;
+        background-color: #a4c6ff;
         border-radius: 6px;
-        border: solid 1px #1c1c32;
+        color: #075BE8;
+        // border: solid 1px #1c1c32;
         box-shadow: none;
-        filter: drop-shadow(0px 0px 3px #ffffff);
+        // filter: drop-shadow(0px 0px 3px #ffffff);
+      }
+
+      &.payment-channel {
+        background-color: #EBF2FF;
+        border-radius: 100px;
+        width: 100%;
+        color: #222;
+
+        &.active {
+          background: linear-gradient(270deg, #5800E8 0%, #0062E8 100%);
+          color: #fff;
+        }
       }
     }
+
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 6rem;
+      min-width: 3rem;
+      max-width: 75px;
+      width: 40vw;
       .payment-method-wrapper {
         display: none;
       }
     }
     .node-text {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 10px;
       overflow: hidden;
       width: 140px;
-      justify-content: flex-start;
+      justify-content: center;
       .overflow {
         text-overflow: ellipsis;
-        width: 104px;
+        width: 60px;
         overflow: hidden;
+
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        word-break: break-all;
       }
       img {
-        max-width: 2.3rem;
+        max-width: 3.5rem;
         margin-bottom: 0;
+        border-radius: 10px;
       }
     }
   }
@@ -469,5 +450,29 @@ $node-color: #dd4645;
     }
   }
 }
-</style>
 
+.body--dark {
+  .node {
+    .node-content .payment-method-item  {
+      &.payment-channel {
+        background-color: transparent;
+        color: #D3D7DD;
+        border: 1px solid #5E6982;
+      }
+
+      &.payment-gateway {
+        color: #5A6881;
+        background-color: transparent;
+
+        &.active {
+          color: #FFFFFF;
+          background-color: #243354;
+          border: 1px solid #9FC587;
+          box-shadow: 1px 1px 1px #0071ed;
+        }
+      }
+    }
+  }
+}
+
+</style>

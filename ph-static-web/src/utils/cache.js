@@ -1,6 +1,6 @@
 export const TIME_EXPIRED = "TIME_EXPIRED";
 export const GOT_EXPIRED = "GOT_EXPIRED";
-const DEFAULT_EXPIRED_TIME = 60;
+const DEFAULT_EXPIRED_TIME = 120;
 
 function getStorageData(key) {
   const s_data = sessionStorage.getItem(key);

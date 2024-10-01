@@ -39,7 +39,7 @@ import DescriptionImg from "@/components/hotpromo/LOL-msi-2024/images/descriptio
 
   > div {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
   }
 
   .description-title {

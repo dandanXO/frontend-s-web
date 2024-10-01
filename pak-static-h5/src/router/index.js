@@ -20,8 +20,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -58,6 +58,21 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (Platform.is.capacitor && Platform.is.android) {
       StatusBar.hide();
+    }
+
+    // FB tracking
+    console.log("Fb track.");
+    console.log(window.location.href);
+    if (window.location.href.indexOf("5shl8hk3.cc") > -1) {
+      console.log("1");
+      fbq("init", "864258358743236");
+      fbq("track", "PageView");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("79hgkvfs.cc") > -1) {
+      console.log("2");
+      fbq("init", "1187424955646133");
+      fbq("track", "PageView");
+      user.isFbPixel = true;
     }
 
     // if (to.name === "referCode") {

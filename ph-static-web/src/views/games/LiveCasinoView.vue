@@ -1,63 +1,49 @@
 <template>
   <div class="live-container">
     <div
-      v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
+      v-if="props.noBanner === false && banner && banner.desktopImageUrl && banner.mobileImageUrl"
       class="banner-container"
     >
-      <div
-        class="promo-bg isDesktop"
-        :style="
-          'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
-        "
-      ></div>
-      <div
-        class="promo-bg isMobile"
-        :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"
-      ></div>
+      <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'" />
+      <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" />
     </div>
-    <div class="section-product">
+    <div class="section-product" id="parent">
       <div
         class="item-group"
-        data-aos="slide-down"
+        data-aos="fade-in"
         data-aos-easing="ease-out"
         data-aos-duration="1000"
+        data-aos-anchor="#parent"
       >
-        <div
-          v-for="(p, index) in hotTrendingGames"
-          :key="index"
-          class="set aos-init aos-animate"
-          data-aos="fade-up"
-        >
+        <div v-for="(p, index) in hotTrendingGames" :key="index" class="set aos-init aos-animate" data-aos="fade-up">
           <div
             class="items"
             @click="playGame(p.name, p.code, p.gameCode, p.status)"
+            :style="'background-image: url(' + p.bigbg + ')'"
           >
-            <div class="theme">
-              <img :src="p.bg" alt="" />
-            </div>
-            <div class="main-object">
-              <img :src="p.main" alt="" />
-            </div>
             <div class="txt">
-              <img
-                :style="p.name === 'Evolution' ? 'max-height:23px;' : ''"
-                :src="p.logo"
-              />
               <p>{{ p.text }}</p>
             </div>
           </div>
         </div>
       </div>
-      <GameModal ref="casinoGame"></GameModal>
+      <GameModal ref="casinoGame" />
     </div>
   </div>
 </template>
 
 <script setup>
 import { loadPromoBanner } from "@/api/index/promo";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineProps } from "vue";
 import GameModal from "@/components/modal/GameModal";
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/";
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+
+const props = defineProps({
+  noBanner: {
+    type: Boolean,
+    default: false
+  }
+});
 
 const casinoGame = ref(null);
 function playGame(gameName, platformCode, gameCode, status) {
@@ -74,14 +60,18 @@ const loadBanner = () => {
 };
 const hotTrendingGames = [
   {
-    code: "Evo",
+    code: "EvoAce",
     name: "Evolution",
     status: "NORMAL",
     gameName: "EVO",
-    bg: require("../../assets/images/games/liveCasino/live_1.jpg"),
-    main: require("../../assets/images/games/liveCasino/live1_1.png"),
-    logo: require("../../assets/images/common/logo/EVO.png"),
-    text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop.",
+    bigbg: require("../../assets/images/games/liveCasino/live-evo.png"),
+    // bg: require("../../assets/images/games/liveCasino/live-1.png"),
+    // main: require("../../assets/images/games/liveCasino/main-1.png"),
+    // sub: require("../../assets/images/games/liveCasino/sub-1.png"),
+    // logo: require("../../assets/images/common/logo/evo-white.png"),
+    gradient: "rgba(32, 0, 52, 0.6) 0%, rgba(50, 50, 50, 0) 100%",
+    wordbg: "#12005999",
+    text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop."
   },
   {
     code: "AWC",
@@ -89,39 +79,38 @@ const hotTrendingGames = [
     status: "NORMAL",
     gameName: "AE Sexy",
     gameCode: "MX-LIVE-001",
-    bg: require("../../assets/images/games/liveCasino/live_2.jpg"),
-    main: require("../../assets/images/games/liveCasino/live2_01.png"),
-    logo: require("../../assets/images/common/logo/ae_2.png"),
-    text: "AE Casino, Asia's most potential live-action video. The interface is simple and easy to operate, cross-platform, download-free, and fun anytime, anywhere!",
+    bigbg: require("../../assets/images/games/liveCasino/live-ae.png"),
+    // bg: require("../../assets/images/games/liveCasino/live-2.png"),
+    // main: require("../../assets/images/games/liveCasino/main-2.png"),
+    // sub: require("../../assets/images/games/liveCasino/sub-2.png"),
+    // logo: require("../../assets/images/common/logo/ae-white.png"),
+    gradient: "rgba(114, 1, 143, 0.6) 0%, rgba(23, 0, 23, 0) 100%",
+    wordbg: "#680B8899",
+    text: "AE Casino, Asia's most potential live-action video. The interface is simple and easy to operate, cross-platform, download-free, and fun anytime, anywhere!"
   },
   {
     code: "EZUGI",
     name: "Ezugi",
     status: "NORMAL",
     gameName: "Ezugi",
-    bg: require("../../assets/images/games/liveCasino/live_3.jpg"),
-    main: require("../../assets/images/games/liveCasino/live3_01.png"),
-    logo: require("../../assets/images/common/logo/ezugi.png"),
-    text: "The EZUGI entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience.",
-  },
-  // {
-  //   code: "SA",
-  //   name: "SA gaming",
-  //   gameName: "SA",
-  //   bg: require("../../assets/images/games/liveCasino/live_4.jpg"),
-  //   main: require("../../assets/images/games/liveCasino/live4_01.png"),
-  //   logo: require("../../assets/images/common/logo/SA.png"),
-  //   text: "SA Gaming has been committed to creating a mobile entertainment platform with both gameplay and creativity.",
-  // },
+    bigbg: require("../../assets/images/games/liveCasino/live-ezugi.png"),
+    gradient: "rgba(121, 52, 2, 0.6) 0%, rgba(50, 50, 50, 0) 100%",
+    wordbg: "#4D2A0099",
+    text: "The EZUGI entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience."
+  }
 ];
 onMounted(() => {
   loadBanner();
+
+  // console.log(props.noBanner);
 });
 </script>
 <style scoped lang="scss">
-$max-width: 1400px;
+$max-width: $container-width;
 .live-container {
-  background: linear-gradient(to bottom, #23263c, #190f25);
+  // background: #fff;
+  background: url(../../assets/images/index/centerbg.png);
+
   .banner-container {
     width: 100%;
     .promo-bg {
@@ -142,9 +131,11 @@ $max-width: 1400px;
 .section-product {
   width: 95%;
   margin: 0 auto;
-  padding: 50px 0 80px 0;
-  max-width: $max-width;
-  /* position: relative; */
+  // padding: 50px 0 80px 0;
+  // max-width: 1020px;
+  position: relative;
+  z-index: 2;
+
   .title {
     position: relative;
     &:after {
@@ -170,7 +161,7 @@ $max-width: 1400px;
     margin: 0 auto;
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     &:last-child {
       padding-top: 30px;
     }
@@ -178,39 +169,54 @@ $max-width: 1400px;
   .set {
     margin: auto;
     width: 100%;
-    // &:nth-child(1) {
-    //   grid-column-start: 2;
-    //   grid-column-end: 3;
-    // }
   }
   .items {
     position: relative;
     cursor: pointer;
     width: 100%;
-    height: 320px;
+    height: 20vw;
+    // height: 369px;
     margin: auto;
-    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 1vw;
     .theme {
       overflow: hidden;
       img {
         width: 100%;
         vertical-align: middle;
-        margin-top: 70px;
-        border-radius: 20px 20px 0 0;
+        // border-radius: 20px 20px 0 0;
       }
     }
     .main-object {
       position: absolute;
       top: 0;
-      right: 0px;
-      height: 220px;
+      bottom: 0px;
+      height: 15vw;
       transform: translateY(0px);
       transition: 0.3s;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
       img {
         vertical-align: middle;
-        width: 100%;
+        &.logo {
+          margin: 0 auto;
+          height: 5vw;
+        }
+        &.imgmain {
+          height: 100%;
+          width: unset;
+          // position: absolute;
+          right: 0px;
+        }
+        &.imgsub {
+          height: 30%;
+          width: unset;
+          // position: absolute;
+        }
       }
     }
     &:hover .main-object {
@@ -234,22 +240,24 @@ $max-width: 1400px;
     .txt {
       position: absolute;
       bottom: 0px;
-      background: #2b2b4b;
       padding: 20px;
-      color: #fff;
+      color: #ffffff;
       width: 100%;
-      filter: brightness(0.9);
-      min-height: 130px;
-      border-radius: 0 0 20px 20px;
+      // min-height: 130px;
+      border-radius: 0 0 12px 12px;
+
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: flex-start;
+      height: 6.5vw;
+      // box-shadow: 0px 0px 8px 0px #00000038;
+
       p {
-        font-size: 12px;
+        font-size: 0.9vw;
+        line-height: 1.5vw;
         font-weight: normal;
         font-stretch: normal;
-        line-height: 16px;
         margin: 0;
       }
       img {
@@ -259,15 +267,20 @@ $max-width: 1400px;
         max-height: 30px;
       }
     }
-    &:hover {
-      .txt {
-        opacity: 1;
-        filter: brightness(1);
-      }
-    }
+    // &:hover {
+    //   .txt {
+    //     opacity: 1;
+    //     filter: brightness(1);
+    //   }
+    // }
   }
 }
-@media (max-width: 768px) {
+.dark-theme {
+  .section-product .items .txt p {
+    color: #ffffff;
+  }
+}
+@media (max-width: 767px) {
   .section-product {
     padding: 0 0 80px;
     .item-group {

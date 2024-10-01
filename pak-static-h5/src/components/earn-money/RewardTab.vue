@@ -157,6 +157,8 @@
         <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
 
         <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
+
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
       </div>
     </div>
 

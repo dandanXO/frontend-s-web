@@ -112,7 +112,11 @@
                 >
                   <div v-html="selectedPromo.pageContent"></div>
 
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                  <div
+                    class="join-container"
+                    v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
+                    :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
+                  >
                     <template v-if="selectedPromoDate">
                       <div class="promo-date">
                         <div class="date-txt">Promotion:</div>
@@ -130,7 +134,14 @@
                           <q-icon name="all_inclusive" size="22px"></q-icon>
                         </div>
                       </div>
-                      <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
+                      <q-btn
+                        class="btn-join-now"
+                        :class="isFtdPromoEnded ? 'btn-disabled' : ''"
+                        :disable="isFtdPromoEnded"
+                        no-caps
+                        label="Join Now"
+                        @click="goToJoinNow()"
+                      />
                     </template>
                   </div>
                 </div>
@@ -164,7 +175,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
+import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -282,6 +293,14 @@ export default defineComponent({
       isPromoDetailPage.value = false
     }
 
+    const isFtdPromoEnded = computed(() => {
+      if(selectedPromo.value && selectedPromo.value.promoCode==="indwin2-slot-ftd" && store.ftd===true){
+        return true;
+      }
+
+      return false;
+    })
+
     const loadBanner = () => {
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
@@ -289,7 +308,7 @@ export default defineComponent({
       //   }
       // })
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
@@ -354,7 +373,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -381,6 +400,15 @@ export default defineComponent({
       });
 
     }
+
+    const selectedParam = computed( () => {
+      if(selectedPromo.value && selectedPromo.value.param){
+        const paramJson = JSON.parse(selectedPromo.value.param);
+        return paramJson;
+      }else{
+        return null;
+      }
+    })
 
     const goToJoinNow = () => {
       // console.log(selectedPromo.value);
@@ -540,7 +568,9 @@ export default defineComponent({
       swipeRight,
       route,
       allGames,
-      closeFullGameDialog
+      closeFullGameDialog,
+      isFtdPromoEnded,
+      selectedParam
     }
   },
 });

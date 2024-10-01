@@ -31,10 +31,15 @@ const activeKey = ref("");
 
 onActivated(() => {
   const isUsdt = store.walletCurrency;
-  if (isUsdt === "USDT" || route.query.usdt === "true") {
-    activeKey.value = "crypto";
-  } else {
+
+  if (route.query.privilegeId) {
     activeKey.value = "flat";
+  } else {
+    if (isUsdt === "USDT" || route.query.usdt === "true") {
+      activeKey.value = "crypto";
+    } else {
+      activeKey.value = "flat";
+    }
   }
 });
 

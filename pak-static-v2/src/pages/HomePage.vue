@@ -1371,6 +1371,7 @@
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
+  <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 </template>
 
 <script setup>
@@ -3187,6 +3188,8 @@ const gotoPromo = (banner) => {
   } else {
     if (banner.redirectUrl.includes("https://")) {
       window.open(banner.redirectUrl, "_blank");
+    } else if (banner.redirectUrl === "app_login") {
+      if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
     } else {
       if (banner.redirectUrl === "redpacketrain") {
         isMoneyRainModal.value = true;
@@ -3504,6 +3507,8 @@ const gotoFloatPromo = (val) => {
     mediaCode.value = val.code;
   }
 };
+
+const downloadAppRef = ref();
 
 onActivated(() => {
   store.getUnreadTotal();

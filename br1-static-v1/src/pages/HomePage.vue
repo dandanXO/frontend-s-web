@@ -109,7 +109,7 @@
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-title">{{ item.title }}</div>
+            <div class="cat-title">{{ translateTitle(item.icon) }}</div>
           </div>
         </swiper-slide>
       </template>
@@ -119,21 +119,9 @@
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
-            <span class="txt-style">Hot Games</span>
+            <span class="txt-style">{{ $t("home.cat_hotgames") }}</span>
           </div>
-
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <!--            <template v-if="isHotGameLoading">-->
-            <!--              <div class="skeleton-lists">-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--              </div>-->
-            <!--            </template>-->
-
-            <!-- <pre>hotGameList{{hotGameList}}</pre> -->
-
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -278,19 +266,9 @@
       >
         <div class="games-selection-wrapper" id="slotsgames">
           <div class="title-game">
-            <span class="txt-style">Slots Games</span>
+            <span class="txt-style">{{ $t("home.cat_slotsgame") }}</span>
           </div>
-
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <!--            <template v-if="isPlatLoading">-->
-            <!--              <div class="skeleton-lists">-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--              </div>-->
-            <!--            </template>-->
-
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -397,17 +375,9 @@
       >
         <div class="games-selection-wrapper" id="live">
           <div class="title-game">
-            <span class="txt-style">Live Casino</span>
+            <span class="txt-style">{{ $t("home.cat_livecasino") }}</span>
           </div>
-
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <!--            <template v-if="isPlatLoading">-->
-            <!--              <div class="skeleton-lists">-->
-            <!--                <q-skeleton class="casino-skeleton" />-->
-            <!--                <q-skeleton class="casino-skeleton" />-->
-            <!--              </div>-->
-            <!--            </template>-->
-
             <swiper
               :slidesPerView="1.5"
               :spaceBetween="0"
@@ -505,9 +475,8 @@
       >
         <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
-            <span class="txt-style">Fishing</span>
+            <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
           </div>
-
           <div class="platform-game-wrapper">
             <swiper
               :slidesPerView="3.5"
@@ -706,7 +675,7 @@
       >
         <div class="games-selection-wrapper" id="sport">
           <div class="title-game">
-            <span class="txt-style">Sports</span>
+            <span class="txt-style">{{ $t("home.cat_sport") }}</span>
           </div>
           <div class="platform-game-container sport-platform">
             <template v-if="isPlatLoading">
@@ -716,7 +685,6 @@
                 <q-skeleton class="sport-skeleton" />
               </div>
             </template>
-
             <template v-for="(item, index) in sport" :key="index">
               <div
                 class="platform-game-item btn-effect"
@@ -761,19 +729,21 @@
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
-          <div class="titles backgroundColor">Update Announcement</div>
+          <div class="titles backgroundColor">{{ $t("appUpdate.updateHeader") }}</div>
         </div>
         <div class="contents">
           <template v-if="isOutdatedApp">
-            Your App Version Is Outdated,
+            {{ $t("appUpdate.isOutdatedAppContent_01") }}
             <br />
-            Please Update The App Now
+            {{ $t("appUpdate.isOutdatedAppContent_02") }}
           </template>
-          <template v-else>New Version Detected, Do You Want To Update?</template>
+          <template v-else>{{ $t("appUpdate.newAppVersionContent_01") }}</template>
         </div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">Cancel</div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">
+            {{ $t("appUpdate.cancel") }}
+          </div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">{{ $t("appUpdate.updateNow") }}</div>
         </div>
       </div>
     </q-card>
@@ -787,9 +757,7 @@
           <q-tabs v-model="activeKey" dense class="text-white" align="justify">
             <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
           </q-tabs>
-
           <q-separator />
-
           <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
               <q-list style="min-height: auto">
@@ -807,7 +775,6 @@
                         </q-card-section>
                       </q-card>
                     </q-expansion-item>
-
                     <q-separator></q-separator>
                   </span>
                 </div>
@@ -871,7 +838,7 @@
             </div>
 
             <div class="fullgame-search">
-              <q-input standout v-model="searchText" label="Search" clearable clear-icon="close">
+              <q-input standout v-model="searchText" :label="$t('btn.search')" clearable clear-icon="close">
                 <template v-slot:prepend>
                   <q-icon name="search" size="20px" />
                 </template>
@@ -884,7 +851,7 @@
               <div>
                 <q-spinner color="yellow" size="10em" :thickness="10" />
               </div>
-              <div>Loading... Please wait...</div>
+              <div>{{ $t("btn.loading_plsWait") }}</div>
             </div>
           </template>
 
@@ -1049,6 +1016,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import { useLocalStorage } from "@vueuse/core";
+import { t } from "../boot/lang";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
@@ -1057,12 +1025,12 @@ const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const categoriesList = ref([
-  { title: "Hot", icon: "hot", active: false },
-  { title: "Lobby", icon: "lobby", active: false },
-  { title: "Slot", icon: "slot", active: false },
-  { title: "Casino", icon: "casino", active: false },
-  { title: "Fishing", icon: "fishing", active: false },
-  { title: "Sport", icon: "sport", active: false }
+  { title: t("home.menu_hot"), icon: "hot", active: false },
+  { title: t("home.menu_lobby"), icon: "lobby", active: false },
+  { title: t("home.menu_slot"), icon: "slot", active: false },
+  { title: t("home.menu_live"), icon: "casino", active: false },
+  { title: t("home.menu_fish"), icon: "fishing", active: false },
+  { title: t("home.menu_sport"), icon: "sport", active: false }
 ]);
 
 const activateSlide = (clickedItem) => {
@@ -1670,107 +1638,156 @@ const openHotGame = (hotGameList) => {
 
 const hotGameList = ref([
   {
-    id: 116,
-    name: "Super Ace",
-    code: "49",
-    status: "OPEN",
-    icon: "5/JILI/49.png",
-    sequence: 1,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 117,
-    name: "Golden Empire",
-    code: "103",
-    status: "OPEN",
-    icon: "5/JILI/103.png",
-    sequence: 3,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 157,
-    name: "Fortune Gems 2",
-    code: "223",
-    status: "OPEN",
-    icon: "16/JILI/7a390a37-8613-47c5-93af-fda8491bd021.png",
-    sequence: 4,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 118,
+    id: 163,
     name: "Fortune Gems",
     code: "109",
     status: "OPEN",
-    icon: "5/JILI/109.png",
+    icon: "18/TaDa/109.png",
+    sequence: 1,
+    siteName: null,
+    platformId: 152,
+    platformName: "TaDa",
+    platformCode: "TaDa",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 164,
+    name: "Fortune Tiger",
+    code: "WCPG_90",
+    status: "OPEN",
+    icon: "16/WCPG/90.png",
+    sequence: 2,
+    siteName: null,
+    platformId: 155,
+    platformName: "PG",
+    platformCode: "WCPG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 165,
+    name: "Fortune Rabbit",
+    code: "WCPG_105",
+    status: "OPEN",
+    icon: "16/WCPG/105.png",
+    sequence: 3,
+    siteName: null,
+    platformId: 155,
+    platformName: "PG",
+    platformCode: "WCPG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 166,
+    name: "Fortune Ox",
+    code: "WCPG_65",
+    status: "OPEN",
+    icon: "16/WCPG/65.png",
+    sequence: 4,
+    siteName: null,
+    platformId: 155,
+    platformName: "PG",
+    platformCode: "WCPG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 167,
+    name: "Fortune Dragon",
+    code: "WCPG_125",
+    status: "OPEN",
+    icon: "16/WCPG/125.png",
     sequence: 5,
     siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
+    platformId: 155,
+    platformName: "PG",
+    platformCode: "WCPG",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "JILI"
+    type: "game"
   },
   {
-    id: 119,
-    name: "Chinese New Year 2",
-    code: "22041",
+    id: 168,
+    name: "Fortune Mouse",
+    code: "WCPG_41",
     status: "OPEN",
-    icon: "16/FC/22041.png",
-    sequence: 10,
+    icon: "16/WCPG/41.png",
+    sequence: 6,
     siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
+    platformId: 155,
+    platformName: "PG",
+    platformCode: "WCPG",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "FC"
+    type: "game"
   },
   {
-    id: 120,
-    name: "Sweet Bonanza 1000",
-    code: "vs20fruitswx",
+    id: 169,
+    name: "Turbo Mines",
+    code: "turbomines",
     status: "OPEN",
-    icon: "14/PP/vs20fruitswx.png",
-    sequence: 11,
+    icon: "11/TurboGames/turbomines.jpg",
+    sequence: 7,
+    siteName: null,
+    platformId: 151,
+    platformName: "TurboGames",
+    platformCode: "TurboGames",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 170,
+    name: "Money Coming",
+    code: "51",
+    status: "OPEN",
+    icon: "18/TaDa/51.png",
+    sequence: 9,
+    siteName: null,
+    platformId: 152,
+    platformName: "TaDa",
+    platformCode: "TaDa",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 171,
+    name: "Joker’s Jewels Wild",
+    code: "vs5jjwild",
+    status: "OPEN",
+    icon: "14/PP/vs5jjwild.png",
+    sequence: 10,
     siteName: null,
     platformId: 22,
     platformName: "PP",
@@ -1780,55 +1797,88 @@ const hotGameList = ref([
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "PP"
+    type: "game"
   },
   {
-    id: 121,
-    name: "Lucky Fortunes",
-    code: "22040",
+    id: 172,
+    name: "Fortune Monkey",
+    code: "303",
     status: "OPEN",
-    icon: "16/FC/22040.png",
-    sequence: 12,
+    icon: "18/TaDa/303.png",
+    sequence: 11,
     siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
+    platformId: 152,
+    platformName: "TaDa",
+    platformCode: "TaDa",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "FC"
+    type: "game"
   },
   {
-    id: 122,
+    id: 177,
     name: "Gates of Olympus 1000",
     code: "vs20olympx",
     status: "OPEN",
     icon: "14/PP/vs20olympx.png",
+    sequence: 12,
+    siteName: null,
+    platformId: 22,
+    platformName: "PP",
+    platformCode: "PP",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 173,
+    name: "Devil Fire",
+    code: "193",
+    status: "OPEN",
+    icon: "18/TaDa/193.png",
     sequence: 13,
     siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
+    platformId: 152,
+    platformName: "TaDa",
+    platformCode: "TaDa",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "PP"
+    type: "game"
   },
   {
-    id: 123,
-    name: "Sweet Bonanza",
-    code: "vs20fruitsw",
+    id: 174,
+    name: "Jackpot Joker",
+    code: "301",
     status: "OPEN",
-    icon: "14/PP/vs20fruitsw.png",
+    icon: "18/TaDa/301.png",
     sequence: 14,
     siteName: null,
+    platformId: 152,
+    platformName: "TaDa",
+    platformCode: "TaDa",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game"
+  },
+  {
+    id: 178,
+    name: "Gold Party",
+    code: "vs25goldparty",
+    status: "OPEN",
+    icon: "14/PP/vs25goldparty.png",
+    sequence: 15,
+    siteName: null,
     platformId: 22,
     platformName: "PP",
     platformCode: "PP",
@@ -1837,217 +1887,61 @@ const hotGameList = ref([
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "PP"
+    type: "game"
   },
   {
-    id: 124,
-    name: "Sugar Rush 1000",
-    code: "vs20sugarrushx",
+    id: 175,
+    name: "Crazy777",
+    code: "35",
     status: "OPEN",
-    icon: "14/PP/vs20sugarrushx.png",
+    icon: "18/TaDa/35.png",
     sequence: 17,
     siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
+    platformId: 152,
+    platformName: "TaDa",
+    platformCode: "TaDa",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "PP"
+    type: "game"
   },
   {
-    id: 125,
-    name: "Starlight Princess 1000",
-    code: "vs20starlightx",
+    id: 176,
+    name: "Dragon Tiger Luck",
+    code: "WCPG_37",
     status: "OPEN",
-    icon: "14/PP/vs20starlightx.png",
-    sequence: 20,
+    icon: "16/WCPG/37.png",
+    sequence: 18,
     siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
+    platformId: 155,
+    platformName: "PG",
+    platformCode: "WCPG",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "PP"
+    type: "game"
   },
   {
-    id: 126,
-    name: "Chinese New Year",
-    code: "22020",
+    id: 179,
+    name: "Aviator",
+    code: "27",
     status: "OPEN",
-    icon: "16/FC/22020.png",
-    sequence: 21,
+    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
+    sequence: 23,
     siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
+    platformId: 16,
+    platformName: "TFGaming",
+    platformCode: "TFGaming",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 127,
-    name: "Night Market",
-    code: "22018",
-    status: "OPEN",
-    icon: "16/FC/22018.png",
-    sequence: 22,
-    siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 129,
-    name: "FRUITY BONANZA",
-    code: "14085",
-    status: "OPEN",
-    icon: "13/JDB/14085.png",
-    sequence: 24,
-    siteName: null,
-    platformId: 31,
-    platformName: "JDB",
-    platformCode: "JDB",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JDB"
-  },
-  {
-    id: 130,
-    name: "Coin Volcano",
-    code: "WCBNG_185",
-    status: "OPEN",
-    icon: "5/WCBNG/185.png",
-    sequence: 27,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 131,
-    name: "3 Hot Chillies",
-    code: "WCBNG_197",
-    status: "OPEN",
-    icon: "5/WCBNG/197.png",
-    sequence: 29,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 132,
-    name: "OPEN SESAME MEGA",
-    code: "14086",
-    status: "OPEN",
-    icon: "13/JDB/14086.png",
-    sequence: 32,
-    siteName: null,
-    platformId: 31,
-    platformName: "JDB",
-    platformCode: "JDB",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JDB"
-  },
-  {
-    id: 133,
-    name: "777 Coins",
-    code: "WCBNG_194",
-    status: "OPEN",
-    icon: "5/WCBNG/194.png",
-    sequence: 33,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 134,
-    name: "Aztec Fire 2",
-    code: "WCBNG_207",
-    status: "OPEN",
-    icon: "5/WCBNG/207.png",
-    sequence: 36,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 135,
-    name: "Money Tree",
-    code: "208",
-    status: "OPEN",
-    icon: "16/CQ9/208.png",
-    sequence: 39,
-    siteName: null,
-    platformId: 33,
-    platformName: "CQ9",
-    platformCode: "CQ9",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "CQ9"
+    type: "game"
   }
 ]);
 
@@ -2760,7 +2654,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("eb9ab187-5d06-46f1-9405-ef1b3124c5cf");
+  OneSignal.initialize("e79d0180-b889-40a2-9a46-5c7ce9f06ab9");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2791,6 +2685,18 @@ const loadCustomerAddress = () => {
       var url = data.liveUrl1;
       ui.CSAUrl = url;
     });
+};
+
+const translateTitle = (title) => {
+  const translations = {
+    hot: t("home.menu_hot"),
+    lobby: t("home.menu_lobby"),
+    slot: t("home.menu_slot"),
+    casino: t("home.cat_livecasino"),
+    fishing: t("home.menu_fish"),
+    sport: t("home.menu_sport")
+  };
+  return translations[title.toLowerCase()] || title;
 };
 
 const loadAppTabs = () => {
@@ -4065,11 +3971,12 @@ onBeforeUnmount(() => {
   }
 
   .cat-title {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     color: #bfc3c9;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
+    white-space: nowrap;
   }
 }
 

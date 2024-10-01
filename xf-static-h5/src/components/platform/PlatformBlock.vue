@@ -1,6 +1,4 @@
 <script setup>
-import {defineProps} from "vue";
-
 const props = defineProps({
   dataType: {
     type: String,
@@ -29,11 +27,7 @@ const props = defineProps({
 
 <template>
   <router-link :to="dataType === 'slot' ? `${dataType}?platform=${data.code}` : ``">
-    <img
-        :src="
-        require(`../../assets/images/index/${dataType}/${dataType}_bg_${data.name.toLowerCase()}.png`)
-      "
-    />
+    <img :src="require(`../../assets/images/index/${dataType}/${dataType}_bg_${data.name.toLowerCase()}.png`)" />
     <div class="game_content">
       <div class="game_title">{{ data.title }}</div>
       <div class="game_subtitle">

@@ -127,6 +127,20 @@
               </el-option>
             </el-select>
           </el-form-item>
+
+          <div
+            class="btn-confirm rollover-info"
+            v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
+          >
+            <span v-if="selectedPromo.depositMin">
+              优惠最低存款要求：{{ selectedPromo.depositMin }}元，&nbsp;&nbsp;&nbsp;
+            </span>
+            <span v-if="selectedPromo.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">
+              {{ getRollOverText(selectedPromo.gameTypeRollover) }}
+            </span>
+            <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPromo.rollover }}倍</span>
+          </div>
+
           <el-form-item label="">
             <div class="txt-center">
               <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
@@ -210,7 +224,7 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef, computed } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { loadBankCards } from "@/api/personal/personal";
 import { RiSpamLine } from "vue-remix-icons";
@@ -333,6 +347,10 @@ const withdrawState = reactive({
 //   memberInfo: {},
 //   bankCardList: []
 // });
+
+const selectedPromo = computed(() => {
+  return unselectedPrivileges.value.find((item) => item.id === selectedPrivilege.value);
+})
 
 const loadCards = () => {
   withdrawState.bankCardList = [];
@@ -658,6 +676,39 @@ const handleBindPhoneNumber = () => {
   router.push("/center/personal");
 };
 
+const getRollOverText = (rolltext) => {
+  const thetext = JSON.parse(rolltext);
+
+  var fulltext = "流水倍数要求（本金 + 彩金）：";
+  var rolloverlists = [];
+  if (thetext.sport) {
+    rolloverlists.push("体育" + thetext.sport + "倍");
+  }
+  if (thetext.esport) {
+    rolloverlists.push("电竞" + thetext.esport + "倍");
+  }
+  if (thetext.slot) {
+    rolloverlists.push("电子" + thetext.slot + "倍");
+  }
+  if (thetext.live) {
+    rolloverlists.push("真人" + thetext.live + "倍");
+  }
+  if (thetext.poker) {
+    rolloverlists.push("棋牌" + thetext.poker + "倍");
+  }
+  if (thetext.fish) {
+    rolloverlists.push("捕鱼" + thetext.fish + "倍");
+  }
+  if (thetext.lottery) {
+    rolloverlists.push("彩票" + thetext.lottery + "倍");
+  }
+  if (thetext.casual) {
+    rolloverlists.push("小游戏" + thetext.casual + "倍");
+  }
+  fulltext += rolloverlists.join("，");
+  return fulltext;
+};
+
 onMounted(() => {
   checkBeforeSubmit();
   initPay();
@@ -852,6 +903,15 @@ onMounted(() => {
 }
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
   line-height: 30px;
+}
+
+.rollover-info {
+  color: #bd4646;
+}
+
+.btn-confirm {
+  margin-left: 100px;
+  margin-bottom: 10px;
 }
 </style>
 

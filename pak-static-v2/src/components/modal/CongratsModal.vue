@@ -36,7 +36,7 @@ const ui = useUI();
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
+  background-color: #111934;
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -105,5 +105,9 @@ const ui = useUI();
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+
+  :deep(.q-icon) {
+    color: #fff;
+  }
 }
 </style>

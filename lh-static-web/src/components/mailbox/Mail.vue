@@ -121,7 +121,7 @@ const handleDetail = (mail) => {
     }
 
     .mail-content {
-      color: $font-3-dark;
+      color: #fff;
     }
   }
 }

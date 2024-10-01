@@ -7,7 +7,7 @@
 
       <q-form ref="profileFormRef" class="pc-form">
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Full Name</div>
+          <div class="pc-form-label">{{ $t("form.fullName") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.realName"
@@ -23,7 +23,7 @@
         </div>
 
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Phone</div>
+          <div class="pc-form-label">{{ $t("form.phone") }}</div>
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.phone"
@@ -37,29 +37,11 @@
             ></q-input>
           </div>
         </div>
-
-        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">Email</div>
-          <div class="pc-form-input">
-            <q-input
-              v-model="formDetail.email"
-              filled
-              dense
-              clearable
-              borderless
-              standout
-              hide-bottom-space
-              readonly
-            ></q-input>
-          </div>
-        </div> -->
-
         <div class="pc-tip">
           <div>
-            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
-
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">{{ $t("form.changePassword") }}</a>
             <div class="pc-ver" v-if="appVersionNo">
-              Version:
+              {{ $t("settings.version") }}:
               <span>{{ appVersionNo }}</span>
             </div>
           </div>
@@ -69,25 +51,23 @@
               class="btn-refresh"
               no-caps
               icon="refresh"
-              label="Updated"
+              label="Atualizado"
               :loading="loadingUpdated"
               @click="startRefresh"
             >
               <template v-slot:loading>
                 <q-spinner class="on-left" style="color: #ae6def" />
-                Updating...
+                {{ $t("btn.updating") }}
               </template>
             </q-btn>
           </div>
         </div>
 
         <div class="q-mt-md">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">
+            {{ $t("btn.signOut") }}
+          </q-btn>
         </div>
-
-        <!-- <div class="text-center q-mt-md" v-if="canEdit">
-          <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
-        </div> -->
       </q-form>
     </div>
   </q-page>
@@ -223,7 +203,7 @@
             "
             @click="submitKYC"
           >
-            Submit
+            {{ $t("btn.submit") }}
           </q-btn>
         </div>
       </div>
@@ -241,22 +221,22 @@
         v-close-popup
       />
       <div class="popout-dialog-container">
-        <div class="txt-title">Change Password</div>
+        <div class="txt-title">{{ $t("header.changePassword") }}</div>
 
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">Password</div>
+            <div class="pc-form-label">{{ $t("form.currentPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter Current Password"
+                :placeholder="$t('form.currentPassword_placeholder')"
                 v-model="updatePwdInfo.oldPassword"
                 ref="oldPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
-                :rules="[(val) => (val && val.length > 0) || 'Please insert old password']"
+                :rules="[(val) => (val && val.length > 0) || $t('form.currentPassword_rules_01')]"
               >
                 <template v-slot:append>
                   <q-icon
@@ -270,22 +250,21 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">New Password</div>
+            <div class="pc-form-label">{{ $t("form.newPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter New Password"
+                :placeholder="$t('form.newPassword_placeholder')"
                 v-model="updatePwdInfo.password"
                 ref="passwordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert new password',
-                  (val) =>
-                    (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
-                  () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                  (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
+                  (val) => (val.length >= 6 && val.length <= 11) || $t('form.newPassword_rules_02'),
+                  () => isAlphanumeric(updatePwdInfo.password, t('form.newPassword'))
                 ]"
               >
                 <template v-slot:append>
@@ -300,20 +279,20 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">Confirm New Password</div>
+            <div class="pc-form-label">{{ $t("form.confirmNewPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 dense
                 clearable
-                placeholder="Enter Confirm New Password"
+                :placeholder="$t('form.confirmNewPassword_placeholder')"
                 v-model="updatePwdInfo.confirmNewPwd"
                 ref="confirmPasswordRef"
                 hide-bottom-space
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert confirm new password',
-                  (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
+                  (val) => (val && val.length > 0) || $t('form.confirmNewPassword_rules_01'),
+                  (val) => val === updatePwdInfo.password || $t('form.confirmNewPassword_rules_03')
                 ]"
               >
                 <template v-slot:append>
@@ -330,7 +309,9 @@
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
       </div>
     </div>
@@ -487,13 +468,13 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Sign Out</div>
+        <div class="txt-title">Sair</div>
 
-        <div class="txt-content q-mt-md text-center">Are you sure you want to sign out?</div>
+        <div class="txt-content q-mt-md text-center">Tem certeza de que deseja sair?</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-          <q-btn label="Confirm" no-caps class="btn-confirm" @click="logout" />
+          <q-btn label="Cancelar" no-caps class="btn-cancel" v-close-popup />
+          <q-btn label="Confirmar" no-caps class="btn-confirm" @click="logout" />
         </div>
       </div>
     </div>
@@ -513,6 +494,7 @@ import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
+import { t } from "src/boot/lang";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -871,7 +853,7 @@ const updateState = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
         });
 
@@ -907,7 +889,7 @@ const updateNewUserState = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
         });
 
@@ -930,44 +912,6 @@ const updateNewUserState = () => {
     });
 };
 
-// const updateNewGuestState = () => {
-//   const updateInfo = {};
-//   updateInfo.realName = formDetail.realName;
-//   updateInfo.phone = formDetail.phone;
-//   updateInfo.password = formDetail.password;
-
-//   api
-//     .post("/session/guest-password", qs.stringify(updateInfo))
-//     .then((r) => {
-//       if (r.code === 0) {
-//         profileFormRef.value.reset();
-
-//         $q.notify({
-//           color: "positive",
-//           position: "top",
-//           message: "Updated successfully",
-//           icon: "check_circle_outline"
-//         });
-
-//         store.getMemberInfo().then(() => {
-//           loadInfo();
-//           guestKYCDialog.value = false;
-//         });
-//       } else {
-//         $q.notify({
-//           color: "negative",
-//           position: "top",
-//           message: r.message,
-//           icon: "report_problem"
-//         });
-//       }
-//     })
-//     .catch(() => {})
-//     .then(() => {
-//       btnLoading.value = false;
-//     });
-// };
-
 const submitKYC = () => {
   btnLoading.value = true;
   updateState();
@@ -978,19 +922,14 @@ const submitKYCNewUser = () => {
   updateNewUserState();
 };
 
-// const submitKYCNewGuest = () => {
-//   btnLoading.value = true;
-//   updateNewGuestState();
-// };
-
 const isValidName = () => {
   const { realName } = formDetail;
   const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
 
   const result = !realName
-    ? "Please Enter Your Full Name"
+    ? t("form.fullName_rules_01")
     : !namePattern.test(realName)
-    ? "Please Enter A Valid Full Name"
+    ? t("form.fullName_rules_02")
     : true;
   return result;
 };
@@ -999,19 +938,19 @@ const isValidPhone = () => {
   const { phone } = formDetail;
 
   if (!phone) {
-    return "Please Enter Phone Number";
+    return t("form.phone_rules_01");
   }
 
   const phoneRegex = /^\d{10}$/;
   const isValid = phoneRegex.test(phone);
 
-  return isValid ? true : "Phone Number must be 10 digits";
+  return isValid ? true : t("form.phone_rules_02");
 };
 
 const isValidOTP = () => {
   const { phoneOtpRef } = formDetail;
 
-  const result = !phoneOtpRef ? "Please Enter Verification Code" : true;
+  const result = !phoneOtpRef ? t("form.verificationCode_rules_01") : true;
   return result;
 };
 
@@ -1092,7 +1031,9 @@ const updatePwdInfo = reactive({
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-  return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+  return passwordPattern.test(value) || t('form.mustBeAlphaNumeric', {
+    field: translation.toLowerCase(),
+  });
 };
 
 const submitUpdatePwd = () => {
@@ -1115,7 +1056,7 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t("notify.newPasswordUpdatedSuccessfully"),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1154,7 +1095,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t("notify.newPasswordUpdatedSuccessfully"),
             icon: "check_circle_outline"
           });
           // router.go("/account");

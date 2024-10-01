@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: #e7f1fd">
     <keep-alive>
       <common-header v-if="!shouldHideHeaderAndFooter" />
     </keep-alive>
@@ -17,7 +17,7 @@
 
 <script lang="js">
 import { defineComponent, computed } from "vue";
-import CommonHeader from "@/components/layout/CommonHeader.vue";
+import CommonHeader from "@/components/layout/header/index.vue";
 import CommonFooter from "@/components/layout/CommonFooter.vue";
 import CommonSidebar from "@/components/layout/CommonSidebar.vue";
 import { useRoute } from "vue-router";

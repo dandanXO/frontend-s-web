@@ -227,7 +227,12 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    balance: "Your balance",
+    link_deposit: "Deposit",
+    link_withdraw: "Withdraw",
+    link_share: "Share",
+    link_profit: "PROFIT"
   },
   settings: {
     totalScore: "Total Score",
@@ -345,6 +350,7 @@ export default {
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
+      multiple_acc_hint: "Note: It is prohibited for the same person to use multiple accounts to maliciously obtain commissions. Violators will have their accounts frozen.",
       shareTitle: "97PKR Share and Earn",
       shareText:
         "97PKR Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
@@ -605,6 +611,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
+    11000: "The entered amount exceeds the allowed limit.",
     11003: "Deposit failed",
     11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",

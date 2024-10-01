@@ -1,3 +1,4 @@
+/* eslint-disable */
 import HttpClient from "axios-mapper";
 import { ElMessage } from "element-plus";
 import { useStore } from "@/store";
@@ -5,6 +6,7 @@ import { ResponseCode } from "../api/response";
 import _cloneDeep from 'lodash/cloneDeep';
 import i18n from "../i18n/index";
 import { globals } from '../main.js'
+import axios from 'axios';
 
 const toRawType = (value) => {
   return Object.prototype.toString.call(value).slice(8, -1)
@@ -41,7 +43,42 @@ const clearEmptyParam = (config) => {
 }
 const onRequest = (config) => {
   clearEmptyParam(config);
+
+  const host = window.location.hostname;
+  if (host.includes("www.k4y0sr02")) {
+    // debugger;
+    console.log("k4y0sr0 12");
+    // config.withCredentials = true
+
+    const cfAuthori = getCookieValue('CF_Authorization');
+    console.log(cfAuthori);
+
+    const cfSession = getCookieValue('CF_AppSession');
+    console.log(cfSession);
+
+    const cfBinding = getCookieValue('CF_Binding');
+    console.log(cfBinding);
+
+    config.withCredentials = true;
+
+    config.headers['Cookie'] = `CF_Authorization=${cfAuthori}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding};`;
+    // console.log(config);
+  }
   return config;
+}
+
+function getCookieValue(cookieName) {
+  const name = cookieName + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(';');
+
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i].trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return null; // 如果Cookie不存在，返回null
 }
 
 const onResponse = (response) => {
@@ -50,6 +87,23 @@ const onResponse = (response) => {
     res = JSON.parse(response.data);
   }
   if (res.code !== ResponseCode.SUCCESS) {
+    const store = useStore()
+    // const siteId = store.state.user.siteId
+    if(res.code === ResponseCode.ERROR_FORBIDDEN2 || res.code === ResponseCode.ERROR_FORBIDDEN3){
+      // debugger;
+      if(res.data){
+        sessionStorage.setItem('myIPAddress', res.data)
+      }
+      if(res.ip){
+        sessionStorage.setItem('myIPAddress', res.ip)
+      }
+      if(res.loginName){
+        sessionStorage.setItem('myloginName', res.loginName)
+      }
+
+      window.location.href = '/403';
+      return;
+    }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",
@@ -97,8 +151,9 @@ const https = (timeout) => {
     }
   }
 
+
   const token = useStore().state.user.token;
-  const config = {
+  var config = {
     baseURL: baseApi,
     headers: {
       Authorization: `Bearer ${token}`

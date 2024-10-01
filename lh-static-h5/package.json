@@ -43,7 +43,7 @@
     "vue-marquee-text-component": "^2.0.1",
     "vue-qrcode-component": "^2.1.1",
     "vue-router": "^4.4.0",
-    "vue3-carousel": "^0.1.40"
+    "vue3-carousel": "^0.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
