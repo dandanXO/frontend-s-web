@@ -2,15 +2,11 @@ import { server } from "@/utils/request";
 import { userStore } from "@/store";
 
 export function loadPromo() {
-  const store = userStore();
-
-  const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
-
-  return server.REST.get(platformApiUrl);
+  return server.REST.get("/opt-session/promo/page");
 }
 
 export function loadPromoBanner(category) {
-  return server.REST.get("/promo/banner", {
+  return server.REST.get("/opt-session/promo/banner", {
     params: {
       category: category
     }
@@ -207,20 +203,20 @@ export function getQuestionnaireAns() {
 
 export const submitQuestionnaire = (formData) => {
   const requestOptions = {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify(formData),
     headers: {
-        token: `${userStore().token}`,
-        'Content-Type': 'application/json'
-    },
+      token: `${userStore().token}`,
+      "Content-Type": "application/json"
+    }
   };
-    var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
+  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
 
-  return fetch(evtUrl + '/questionnaire/submit', requestOptions)
-    .then(response => {
-      return response.json()
+  return fetch(evtUrl + "/questionnaire/submit", requestOptions)
+    .then((response) => {
+      return response.json();
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(error);
     });
 };
@@ -234,34 +230,33 @@ export function getDailyRainListing(item) {
 
 // penny bank
 export function piggyBankGetLottery() {
-  return server.EVENT.post('/piggy-bank/getLottery');
+  return server.EVENT.post("/piggy-bank/getLottery");
 }
 
 export function piggyBankClaim() {
-  return server.EVENT.put('/piggy-bank/claim');
+  return server.EVENT.put("/piggy-bank/claim");
 }
 export function getBonusPiggyCashback() {
-  return server.EVENT.get('/piggy-bank/amount');
+  return server.EVENT.get("/piggy-bank/amount");
 }
 
 // slot netloss
 export function bonusClaimSlotsRefund() {
-  return server.EVENT.put('/bonus/claim/vnm-slots-refund');
+  return server.EVENT.put("/bonus/claim/vnm-slots-refund");
 }
 export function getBonusSlotsCashback() {
-  return server.EVENT.get('/vnm-refund/slots');
+  return server.EVENT.get("/vnm-refund/slots");
 }
 
 // poker cashback
 export function bonusClaimPokerRefund() {
-  return server.EVENT.put('/bonus/claim/vnm-poker-refund');
+  return server.EVENT.put("/bonus/claim/vnm-poker-refund");
 }
 export function getBonusPokerCashback() {
-  return server.EVENT.get('/vnm-refund/poker');
+  return server.EVENT.get("/vnm-refund/poker");
 }
-export function selectNumber(promoCode, number) { 
-  return server.EVENT.post('/uefa-lottery/select-number',  
-  { promoCode, number }); 
+export function selectNumber(promoCode, number) {
+  return server.EVENT.post("/uefa-lottery/select-number", { promoCode, number });
   // const formData = {
   //   promoCode: promoCode,
   //   number: Number(number)
@@ -283,13 +278,13 @@ export function selectNumber(promoCode, number) {
   //   .catch(error => {
   //     return Promise.reject(error);
   //   });
-} 
-export function getSelectedNumber() { 
-  return server.EVENT.get('/uefa-lottery/selected-number') 
-} 
-export function getWinners(promoCode) { 
-  return server.EVENT.get(`/uefa-lottery/winners?promoCode=${promoCode}`); 
-} 
-export function getPrizeAmount(promoCode) { 
-  return server.EVENT.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`); 
-} 
+}
+export function getSelectedNumber() {
+  return server.EVENT.get("/uefa-lottery/selected-number");
+}
+export function getWinners(promoCode) {
+  return server.EVENT.get(`/uefa-lottery/winners?promoCode=${promoCode}`);
+}
+export function getPrizeAmount(promoCode) {
+  return server.EVENT.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`);
+}

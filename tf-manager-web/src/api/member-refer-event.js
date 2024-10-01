@@ -33,6 +33,6 @@ export const changeMemberReferrer = (siteId, memberId, loginName) => {
   return https().request("/refer-friend/change-referrer?_method=PUT", Method.POST, { siteId: siteId, memberId: memberId, referrerLoginName: loginName }, ContentType.form);
 }
 
-export const batchUpdateFrozenMember = (members, siteId) => {
-  return https(5 * 60 * 1000).request("/refer-friend/importFrozen", Method.POST, { siteId: siteId, memberFrozenList: JSON.stringify(members) }, ContentType.form);
+export const batchUpdateFrozenMember = (members, siteId, remarks) => {
+  return https(5 * 60 * 1000).request("/refer-friend/importFrozen", Method.POST, { siteId: siteId, memberFrozenList: JSON.stringify(members), remarks: remarks }, ContentType.form);
 };

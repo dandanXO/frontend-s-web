@@ -4,7 +4,8 @@
       class="promo"
       :class="{
         unfixed: selectedPromo.redirectUrl === 'lh1-app-hongbao',
-        midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel'
+        midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel',
+        lh1Vip:selectedPromo.redirectUrl === 'lh1-vip'
       }"
       :style="
         isPromoDetail
@@ -51,11 +52,16 @@
                           </div>
                           <div
                             class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
+                            v-if="parsedParam(promo.param).date && !$q.dark.isActive"
                             v-html="parsedParam(promo.param).date"
                           />
                         </div>
-
+                        <div
+                          style="padding-left:0;font-weight:400;"
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date && $q.dark.isActive"
+                          v-html="parsedParam(promo.param).date"
+                        />
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -201,6 +207,9 @@
                     olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
                   }"
                 >
+                <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
+                  <NBAWaterBattle />
+                </div>
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
                 <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
@@ -325,12 +334,14 @@ import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { cached } from "src/boot/cache";
+import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const notify = useNotify();
@@ -389,7 +400,7 @@ export default defineComponent({
     );
 
     const loadBanner = () => {
-      api.get("/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
           // console.log(banner.value)
@@ -482,10 +493,7 @@ export default defineComponent({
           console.warn('No promo types loaded, using default promo types.');
         }
       })
-      const platformApiUrl =
-        store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
-          ? "/session/loggedInPromoPages"
-          : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
@@ -672,6 +680,10 @@ export default defineComponent({
 
     &.unfixed {
       background-attachment: scroll;
+    }
+
+    &.lh1Vip{
+      background-color: #fff;
     }
   }
 
@@ -1321,13 +1333,23 @@ export default defineComponent({
 .body--dark {
   .promo-container {
     background: $background-dark;
+
     .all-promotions {
       .promo-main-container {
         .promo-list-wrapper {
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
+            border-radius: unset;
+            // aspect-ratio: 702/208;
+            border-radius: 8px;
+            overflow: hidden;
+            .promo-label {
+              top:0px;
+              left:0px;
+              font-family: 'YouSheBiaoTiHei';
+            }
             .promo-ribbon {
-              background: linear-gradient(90deg, #36cbd5 0%, #1d809a 100%);
+              background: #1475e1;
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
               &::after {
                 display: none;
@@ -1338,9 +1360,18 @@ export default defineComponent({
             }
             .promo-item-title {
               color: $font-3-dark;
+              font-family: 'YouSheBiaoTiHei';
+              font-weight: 400;
             }
             .promo-item-deal {
               color: $grey-color;
+            }
+            .promo-item-btn {
+              background: url('../assets/images/promo/promo-info-btn-bg.svg') no-repeat center center;
+              background-size: cover;
+              box-shadow: none;
+              border-radius: 4px;
+              border: 1px solid #3A93CE;
             }
           }
         }
@@ -1392,9 +1423,13 @@ export default defineComponent({
 
   .promo:not(.unfixed) {
     .q-tabs {
-      background: $background-dark-light;
+      background: #1A2338;
       .q-tab--active {
-        color: $primary-dark;
+        color: #fff;
+      }
+      .q-tab--active .q-tab__indicator {
+        width: 60%;
+        margin: auto;
       }
     }
     .q-tab-panels {

@@ -198,9 +198,41 @@
           <span style="margin-left: 10px" v-if="selectedPrivilege !== null && selectedPrivilege.bonusMax !== null && selectedPrivilege.bonusMax !== 0 && selectedPrivilege.bonusType !== 'FIXED'">
             {{ t('fields.maxBonus') }} : $ <span v-formatter="{data: selectedPrivilege.bonusMax,type: 'money'}" /></span>
         </el-form-item>
-        <el-form-item :label="t('fields.rollover')" prop="rollover">
+        <!-- <el-form-item :label="t('fields.rollover')" prop="rollover">
           <el-input v-model="form.rollover" style="width: 100px;" />
-        </el-form-item>
+        </el-form-item> -->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="t('fields.rolloverType')" prop="rolloverType">
+              <el-select
+                v-model="selectedRolloverType"
+                style="width: 100%;"
+                filterable
+                default-first-option
+                @change="checkRolloverType"
+              >
+                <el-option
+                  v-for="f in uiControl.rolloverType"
+                  :key="f.key"
+                  :label="f.displayName"
+                  :value="f.value"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
+            <el-form-item prop="rollover">
+              <el-input-number
+                v-model="uiControl.rollOverAmt"
+                style="width: 145px"
+                :min="1"
+                :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row>
           <el-form-item
             :label="t('fields.gameTypeRollover')"
@@ -218,8 +250,8 @@
                 :value="f.value"
               />
             </el-select>
-            <div v-if="uiControl.selectedGameTypeRolloverType !== null && uiControl.selectedGameTypeRolloverType !== 'ANY_TYPES'">
-              <div v-for="(item, index) in rollover" :key="index">
+            <div v-if="uiControl.selectedGameTypeRolloverType !== null && uiControl.selectedGameTypeRolloverType !== 'ALL_TYPES'">
+              <div v-for="(item, index) in gameTypes" :key="index">
                 <el-select
                   v-model="item.key"
                   size="small"
@@ -234,12 +266,13 @@
                     :value="gameType.value"
                   />
                 </el-select>
-                <span v-if="uiControl.selectedGameTypeRolloverType === 'SPECIFY_TYPE' || uiControl.selectedGameTypeRolloverType === 'SPECIFY_TYPE_AMOUNT'">
+                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
                   :
-                  <el-input style="width: 100px " v-model="item.value" />
+                  <el-input-number v-if="item.key" :controls="false" style="width: 100px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
+                  <el-input-number v-else :controls="false" style="width: 100px " v-model="item.value" />
                 </span>
                 <el-button
-                  v-if="index === rollover.length - 1"
+                  v-if="index === gameTypes.length - 1"
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
@@ -482,6 +515,10 @@ const uiControl = reactive({
     { typeName: 'Specific Recipient', value: 'MULTIPLE' },
     { typeName: 'Specific VIP', value: 'VIP' },
   ],
+  rolloverType: [
+    { key: 1, displayName: t('fields.rollOverAmt'), value: 'AMOUNT' },
+    { key: 2, displayName: t('fields.rollOverMulti'), value: 'MULTIPLE' },
+  ],
   size: null,
   importDialogVisible: false,
   importDataOperatable: true,
@@ -504,9 +541,10 @@ const uiControl = reactive({
     { key: 3, displayName: 'Outer', value: 'OUTER' }
   ],
   gameTypeRolloverTypes: [
-    { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ANY_TYPES' },
-    { key: 2, displayName: t('gameTypeRolloverSetting.specifyTypes'), value: 'SPECIFY_TYPE' },
+    { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ALL_TYPES' },
+    { key: 2, displayName: t('gameTypeRolloverSetting.specifyTypes'), value: 'SPECIFY_TYPES' },
     { key: 3, displayName: t('gameTypeRolloverSetting.excludeTypes'), value: 'EXCLUDE_TYPES' },
+    { key: 4, displayName: t('gameTypeRolloverSetting.specifyGameType'), value: 'GAME_TYPE' },
   ],
   gameTypeRollover: [
     { key: 1, displayName: 'SLOT', value: 'slot' },
@@ -520,8 +558,19 @@ const uiControl = reactive({
   ],
   displayExpiryTime: false,
   selectedGameTypeRolloverType: null,
+  rollOverAmt: null,
+  isNewRollover: true,
+  oldRollOver: {
+    rollover: 0,
+    gameTypeRollover: null,
+    gameLists: [],
+    selectType: null
+  }
 })
-const rollover = ref([])
+// const rollover = ref([])
+
+const gameTypes = ref([])
+const selectedRolloverType = ref();
 
 const importedPage = reactive({
   pages: 0,
@@ -560,7 +609,8 @@ const form = reactive({
   siteId: null,
   privilegeId: null,
   amount: null,
-  rollover: null
+  rollover: null,
+  gameTypeRollover: null,
 })
 
 const selected = reactive({
@@ -626,31 +676,77 @@ const querySearch = async (queryString, callback) => {
   }
 }
 
+const cachedGameTypes = ref([]);
+const cachedUIAmt = ref([]);
+const checkRolloverType = () => {
+  if (selectedRolloverType.value === 'MULTIPLE') {
+    cachedUIAmt.value = uiControl.rollOverAmt
+    if (uiControl.rollOverAmt > 100) {
+      uiControl.rollOverAmt = 100
+    } else {
+      uiControl.rollOverAmt = null
+    }
+    cachedGameTypes.value = gameTypes.value.map(type => ({ ...type }));
+    gameTypes.value.forEach(type => {
+      if (type.value > 100) {
+        type.value = 100;
+      }
+    });
+  } else {
+    // gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
+    if (cachedGameTypes.value.length > 0) {
+      gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
+    }
+    if (cachedUIAmt.value) {
+      uiControl.rollOverAmt = cachedUIAmt.value
+    }
+  }
+}
 function delRollover(index) {
-  rollover.value.splice(index, 1)
+  gameTypes.value.splice(index, 1)
+}
+function compareOldGameLists () {
+  if (uiControl.oldRollOver.gameLists.length !== gameTypes.value.length) {
+    return false;
+  }
+  if (JSON.stringify(uiControl.oldRollOver.gameLists) !== JSON.stringify(gameTypes.value)) {
+    return false;
+  }
+  return true;
 }
 
 function constructRollover() {
-  const json = {}
-  json.rolloverType = uiControl.selectedGameTypeRolloverType
-  if (json.rolloverType === 'SPECIFY_TYPE' || uiControl.selectedGameTypeRolloverType === 'SPECIFY_TYPE_AMOUNT') {
-    if (json.rolloverType === 'SPECIFY_TYPE_AMOUNT') {
-      json.rolloverType = 'SPECIFY_TYPE_AMOUNT'
-    }
-    Object.values(rollover.value).forEach(item => {
-      if (item.key) {
-        json[item.key] = item.value
-      }
-    })
-  } else if (json.rolloverType === 'EXCLUDE_TYPES') {
-    const excludeTypes = []
-    Object.values(rollover.value).forEach(item => {
-      if (item.key) {
-        excludeTypes.push(item.key)
-      }
-    })
-    json.excludeTypes = excludeTypes.join(',')
+  // debugger;
+  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt &&
+    (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists())) &&
+    (!uiControl.oldRollOver.selectType || (uiControl.oldRollOver.selectType === uiControl.selectedGameTypeRolloverType))
+  ) {
+    form.rollover = uiControl.rollOverAmt;
+    return JSON.stringify(uiControl.oldRollOver.gameTypeRollover);
   }
+  const json = { newRollover: true };
+  if (uiControl.selectedGameTypeRolloverType === 'GAME_TYPE') {
+    json.rolloverType = 'INDIVIDUAL_' + selectedRolloverType.value + '_SPECIFY_TYPES'
+    Object.values(gameTypes.value).forEach(item => {
+      if (item.key) {
+        json[item.key] = item.value;
+      }
+    });
+  } else {
+    json.rolloverType = 'TOTAL_' + selectedRolloverType.value + '_' + uiControl.selectedGameTypeRolloverType
+    const excludeTypes = [];
+    Object.values(gameTypes.value).forEach(item => {
+      if (item.key) {
+        excludeTypes.push(item.key);
+      }
+    });
+
+    json.gameTypes = excludeTypes;
+  }
+  if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
+    json.rollover = uiControl.rollOverAmt
+  }
+  form.rollover = uiControl.rollOverAmt ? uiControl.rollOverAmt : 1;
   return JSON.stringify(json)
 }
 // const createFilter = queryString => {
@@ -703,7 +799,7 @@ function showDialog(type) {
   form.redirectUrl = null
   form.redirectButton = null
   uiControl.selectedGameTypeRolloverType = null
-  rollover.value = []
+  gameTypes.value = []
   addRollover()
   uiControl.dialogType = type
   if (dialogForm.value) {
@@ -730,7 +826,7 @@ function showDialog(type) {
 //   })
 // }
 function addRollover() {
-  rollover.value.push({
+  gameTypes.value.push({
     key: '',
     value: '',
   })
@@ -770,8 +866,9 @@ async function showMassImport() {
 }
 
 function selectPrivilege(val) {
-  rollover.value = []
+  gameTypes.value = []
   uiControl.selectedGameTypeRolloverType = null
+  uiControl.isNewRollover = false;
   privilegeInfoList.list.forEach(privilege => {
     if (privilege.id === val) {
       form.rollover = privilege.rollover;
@@ -781,28 +878,103 @@ function selectPrivilege(val) {
         form.amount = null;
       }
       selectedPrivilege.value = privilege;
-      rollover.value = []
+      gameTypes.value = []
       if (privilege.gameTypeRollover) {
         const gameTypeRollover = JSON.parse(privilege.gameTypeRollover)
-        const type = gameTypeRollover.rolloverType
-        let specifyType = false;
+        const string = gameTypeRollover.rolloverType;
+        const parts = string ? string.split('_') : "";
+        var type = parts ? parts.slice(2).join('_') : "";
+        if (!(gameTypeRollover && 'gameTypes' in gameTypeRollover)) {
+          type = "GAME_TYPE";
+        }
+        if (gameTypeRollover.newRollover) {
+          uiControl.isNewRollover = true;
+          selectedRolloverType.value = parts[1];
+        } else {
+          uiControl.isNewRollover = false;
+          uiControl.oldRollOver.gameTypeRollover = gameTypeRollover;
+          uiControl.oldRollOver.rollover = form.rollover;
+
+          selectedRolloverType.value = "MULTIPLE";
+          uiControl.rollOverAmt = privilege.rollover;
+        }
+        // let specifyType = false;
+        let gameType = false;
         Object.entries(gameTypeRollover).forEach(([key, value]) => {
-          if (key !== 'rolloverType' && key !== 'excludeTypes') {
-            rollover.value.push({ key, value })
-            specifyType = true;
-          } else if (key === 'excludeTypes') {
-            const excludeTypes = value.split(',')
-            excludeTypes.forEach(excludeType => {
-              rollover.value.push({ key: excludeType, value: '' })
-            })
+          if (key === 'rollover') {
+            uiControl.rollOverAmt = value; // Set rollover amount
+          } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes' && key !== 'excludeTypes') {
+            // Handle individual game types
+            gameTypes.value.push({ key, value });
+          } else if (key === 'gameTypes' && Array.isArray(value)) {
+            // Handle 'gameTypes' specifically if it's an array
+            value.forEach(type => {
+              gameTypes.value.push({ key: type, value: null }); // Add each game type to gameTypes array
+            });
+            gameType = true;
           }
         })
         if (type) {
           uiControl.selectedGameTypeRolloverType = type
-        } else if (specifyType) {
-          uiControl.selectedGameTypeRolloverType = 'SPECIFY_TYPE'
+        } else if (gameType) {
+          uiControl.selectedGameTypeRolloverType = 'GAME_TYPE'
         }
-        addRollover()
+
+        // debugger;
+        if (uiControl.isNewRollover === false && (string === "ANY_TYPES" || !string)) {
+          if (gameTypeRollover.esport || gameTypeRollover.lottery || gameTypeRollover.sport || gameTypeRollover.slot || gameTypeRollover.casino || gameTypeRollover.casual || gameTypeRollover.poker || gameTypeRollover.fish) {
+            uiControl.selectedGameTypeRolloverType = 'GAME_TYPE';
+            uiControl.isNewRollover = true;
+            uiControl.oldRollOver.selectType = 'ALL_TYPES';
+            gameTypes.value.forEach((game) => {
+              if (game.key === 'slot') {
+                game.value = parseInt(gameTypeRollover.slot)
+              }
+              if (game.key === 'sport') {
+                game.value = parseInt(gameTypeRollover.sport)
+              }
+              if (game.key === 'casino') {
+                game.value = parseInt(gameTypeRollover.casino)
+              }
+              if (game.key === 'lottery') {
+                game.value = parseInt(gameTypeRollover.lottery)
+              }
+              if (game.key === 'esport') {
+                game.value = parseInt(gameTypeRollover.esport)
+              }
+              if (game.key === 'casual') {
+                game.value = parseInt(gameTypeRollover.casual)
+              }
+              if (game.key === 'fish') {
+                game.value = parseInt(gameTypeRollover.fish)
+              }
+              if (game.key === 'poker') {
+                game.value = parseInt(gameTypeRollover.poker)
+              }
+            })
+          } else {
+            uiControl.oldRollOver.selectType = 'ALL_TYPES';
+            uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
+          }
+          addRollover()
+        } else if (uiControl.isNewRollover === false && (string === "EXCLUDE_TYPES")) {
+          uiControl.selectedGameTypeRolloverType = 'EXCLUDE_TYPES';
+          uiControl.oldRollOver.selectType = 'EXCLUDE_TYPES';
+
+          const excludeItem = gameTypeRollover.excludeTypes;
+          gameTypes.value.push({
+            key: excludeItem,
+            value: form.rollover,
+          })
+          uiControl.oldRollOver.gameLists = JSON.parse(JSON.stringify(gameTypes.value));
+        } else if (uiControl.isNewRollover === false && (string === "SPECIFY_TYPE")) {
+          uiControl.selectedGameTypeRolloverType = 'SPECIFY_TYPES';
+
+          uiControl.oldRollOver.selectType = 'SPECIFY_TYPES';
+          uiControl.oldRollOver.gameLists = JSON.parse(JSON.stringify(gameTypes.value))
+        } else {
+          addRollover()
+        }
       } else {
         addRollover()
       }
@@ -1165,7 +1337,7 @@ function changePage(page) {
   line-height: 36px;
 }
 
-::v-deep .el-autocomplete input {
+:deep(.el-autocomplete input) {
   /* input { */
   /* background-color: red!important;  调试用的样式 */
   outline: none !important;

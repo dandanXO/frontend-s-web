@@ -147,6 +147,19 @@ export default defineComponent({
       });
     };
 
+    const checkSessStorageItem = () => {
+      const checkItem = sessionStorage.getItem("ERROR_TOKEN_LOGGED");
+      if (checkItem) {
+        sessionStorage.removeItem("ERROR_TOKEN_LOGGED");
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "您账户已在其他设备登录。请注意是否由本人登录，如有异常请及时修改密码。",
+          icon: "report_problem"
+        });
+      }
+    };
+
     onMounted(() => {
       checkServerStatus();
       checkSID();
@@ -155,6 +168,7 @@ export default defineComponent({
       if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock("portrait");
       }
+      checkSessStorageItem();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

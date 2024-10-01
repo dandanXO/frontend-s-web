@@ -295,6 +295,7 @@ export default {
     monthBeforeLastTotal: 'Hoa hồng tháng này',
     monthlyMemberCommission: 'Hoa hồng hàng tháng của Thành viên',
     newMemberCount: 'Số lượng thành viên mới',
+    newMember: 'Đăng ký mới Thành viên',
     activeMemberCount: 'Số lượng thành viên hoạt động',
     totalRegisterCount: 'Tổng số lượng đăng ký',
     myAccount: 'Tài khoản của tôi',

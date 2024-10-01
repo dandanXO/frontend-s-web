@@ -102,6 +102,8 @@ export default defineComponent({
       query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
       if (!query.siteId) {
         query.siteId = store.state.user.siteId;
+      } else {
+        query.siteId = store.state.user.sites[0].id
       }
       return query;
     }

@@ -11,21 +11,23 @@
             <div class="dragon-title"><div class="gradient">活动内容</div></div>
             <div class="centertxt">自注册日两天后可点击领取豪华晋级体验金，礼金三倍流水即可提款。</div>
             <table cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <th>VIP等级</th>
-                <th>参与条件</th>
-                <th>奖金上限</th>
-              </tr>
-              <tr>
-                <td>VIP0</td>
-                <td>注册日两天内晋级VIP1</td>
-                <td>18</td>
-              </tr>
-              <tr>
-                <td>VIP0</td>
-                <td>注册日两天内晋级≥VIP2</td>
-                <td>58</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>VIP等级</th>
+                  <th>参与条件</th>
+                  <th>奖金上限</th>
+                </tr>
+                <tr>
+                  <td>VIP0</td>
+                  <td>注册日两天内晋级VIP1</td>
+                  <td>18</td>
+                </tr>
+                <tr>
+                  <td>VIP0</td>
+                  <td>注册日两天内晋级≥VIP2</td>
+                  <td>58</td>
+                </tr>
+              </tbody>
             </table>
             <span class="example">
               例：用户A在6月11日注册成功，并且在13日成功晋级为VIP1会员，用户A可获得18元晋级体验金。用户B在6月11日注册成功，并且在13日成功晋级为VIP2会员，用户B可获得58元晋级体验金。
@@ -61,31 +63,33 @@
               活动期间，完成每日存款有效流水倍数，即享端午节日奖金，日最高送288元，一倍流水即可提款
             </div>
             <table cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <th>达成条件</th>
-                <th>节日奖金</th>
-                <th>奖金上限</th>
-              </tr>
-              <tr>
-                <td>日存款有效流水3倍</td>
-                <td>日存款X1.0%</td>
-                <td>38</td>
-              </tr>
-              <tr>
-                <td>日存款有效流水5倍</td>
-                <td>日存款X2.0%</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>日存款有效流水8倍</td>
-                <td>日存款X3.0%</td>
-                <td>158</td>
-              </tr>
-              <tr>
-                <td>日存款有效流水15倍</td>
-                <td>日存款X5.0%</td>
-                <td>288</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>达成条件</th>
+                  <th>节日奖金</th>
+                  <th>奖金上限</th>
+                </tr>
+                <tr>
+                  <td>日存款有效流水3倍</td>
+                  <td>日存款X1.0%</td>
+                  <td>38</td>
+                </tr>
+                <tr>
+                  <td>日存款有效流水5倍</td>
+                  <td>日存款X2.0%</td>
+                  <td>88</td>
+                </tr>
+                <tr>
+                  <td>日存款有效流水8倍</td>
+                  <td>日存款X3.0%</td>
+                  <td>158</td>
+                </tr>
+                <tr>
+                  <td>日存款有效流水15倍</td>
+                  <td>日存款X5.0%</td>
+                  <td>288</td>
+                </tr>
+              </tbody>
             </table>
             <span class="example">例：用户A在6月11日存款1,000元，当日有效投注5,000元，即可获得1,000X2.0%=20元</span>
             <div class="dragon-title"><div class="gradient">活动规则</div></div>

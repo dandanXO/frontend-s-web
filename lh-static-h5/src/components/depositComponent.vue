@@ -1,6 +1,7 @@
 <template>
   <div class="loader" v-if="isFetchingApi" />
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
+    <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="deposit" redirect="finance/deposit" style="padding:10px 0px 10px;" />
     <div class="q-mb-sm">
       <!--      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>-->
     </div>
@@ -54,6 +55,143 @@
           </q-btn>
         </div>
       </div>
+    </div>
+    <div class="deposit-container" v-else-if="$q.dark.isActive">
+      <q-form ref="depositForm" class="q-gutter-y-xs deposit-container-form">
+        <div v-if="amountList.length === 0" class="input-money q-mb-xs">
+          <div class="input-currency">
+            {{ isUSDT ? 'USDT' : store.currency.value }}
+          </div>
+
+          <q-input
+            ref="depositAmtRef"
+            class="deposit-field"
+            color="accent"
+            name="localAmount"
+            v-model="form.localAmount"
+            :placeholder="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
+            :rules="verifyDepositAmount"
+            clearable
+            dense
+            flat
+            outlined
+            hide-bottom-space
+          >
+          </q-input>
+        </div>
+        <div v-else class="flex-c-center q-mb-md">
+          <div class="input-currency">
+            {{ store.currency.value }}
+          </div>
+
+          <q-select
+            ref="depositAmtRef"
+            label="选择金额"
+            name="localAmount"
+            class="deposit-selection"
+            flat
+            outlined
+            color="accent"
+            :options="amountList"
+            v-model="form.localAmount"
+            :rules="verifyDepositAmount"
+            padding="none"
+            dense
+          >
+          </q-select>
+        </div>
+
+        <div class="q-mb-xs" style="color:#98a7b5;">
+          单笔存款：{{
+            calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
+          }}
+          -
+          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
+        </div>
+
+        <div v-if="isUSDT && activeMethod.currencyRate" class="currency-info q-mb-xs">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span>实时汇率：</span>
+            <span>
+              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+              {{ store.currency.value }}
+            </span>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <span>预计到帐：</span>
+            <span class="text-white">
+              {{
+                calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                  ? "0.00"
+                  : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+              }}
+            </span>
+            <span>&nbsp;{{ store.currency.value }}</span>
+          </div>
+        </div>
+
+        <BankComponent
+          v-show="selectedPayType && bankCardList.length"
+          ref="payTypeClass"
+          :is="selectedPayType"
+          v-model="form.bankId"
+          :bank-list="bankCardList"
+          @selected="selectedBank"
+          @successful="isDeposited = true"
+        ></BankComponent>
+        <q-select
+          style="width: 100%"
+          ref="offerRef"
+          class="deposit-selection q-mb-md"
+          label="选择优惠"
+          flat
+          outlined
+          :options="unselectedPrivileges"
+          v-model="selectedPrivilege"
+          emit-value
+          v-if="hasPrivilege && !isUSDT"
+          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+          clearable
+          @update:model-value="checkMinDepositAmt"
+          dense
+        >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                  {{ scope.opt.name }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <div
+          class="rollover-info"
+          v-if="
+            selectedPrivilege &&
+            selectedPrivilege.name &&
+            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)
+          "
+        >
+          <span v-if="selectedPrivilege.depositMin">
+            优惠最低存款要求：{{ selectedPrivilege.depositMin }}元，&nbsp;&nbsp;&nbsp;
+          </span>
+          <span v-if="selectedPrivilege.gameTypeRollover && selectedPrivilege.gameTypeRollover !== '{}'">
+            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
+          </span>
+          <span v-else>流水倍数要求（本金+彩金）：{{ selectedPrivilege.rollover }}倍</span>
+        </div>
+
+        <q-btn
+          class="deposit-btn"
+          :loading="btnLoading"
+          @click="confirmDeposit"
+          label="确认"
+        />
+      </q-form>
+      
+      <div class="q-mt-sm active-method-msg" v-html="activeMethod.msg"></div>
     </div>
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
@@ -267,6 +405,7 @@ import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
+import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
 
 var qs = require("qs");
 
@@ -880,13 +1019,6 @@ onMounted(() => {
   }
 }
 
-.body--dark {
-  .deposit-field.q-field {
-    box-shadow: none;
-    background: $background-dark-light;
-  }
-}
-
 .deposit-field {
   width: 75%;
   &.q-field {
@@ -919,6 +1051,56 @@ onMounted(() => {
   color: #bd4646;
   font-size: 12px;
 }
+
+.body--dark {
+  .deposit-field {
+    &.q-field {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+      background: none;
+      height: unset;
+    }
+    
+    .q-field__control {
+      min-height: unset;
+      height: unset;
+    }
+    
+    .q-field__control, .q-field__marginal {
+      background: #273354;
+    }
+
+    &.q-field--dark .q-field__control:before {
+      border-color: #d0a383;
+    }
+
+    .q-field__bottom {
+      padding: 4px;
+    }
+  }
+
+  .deposit-selection {
+    &.q-field {
+      width: 100%;
+      box-shadow: none;
+      background: none;
+    }
+    
+    .q-field__control, .q-field__marginal {
+      background: #273354;
+    }
+
+    &.q-field--dark .q-field__control:before {
+      border-color: #d0a383;
+    }
+
+    .q-field__bottom {
+      padding: 4px;
+    }
+  }
+}
 </style>
 <style scoped lang="scss">
 .loader {
@@ -934,6 +1116,53 @@ onMounted(() => {
 .input-money {
   :deep(.q-field--standard .q-field__control):before {
     border-bottom: 0px;
+  }
+}
+
+.body--dark {
+  .deposit-container-form {
+    background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c);
+    border-radius: 6px;
+    padding: 10px;
+    width: 100%;
+
+    .input-money {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .input-currency, .deposit-btn {
+      background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+      background-size: cover;
+      box-shadow: none;
+      border-radius: 4px;
+      border: 1px solid #3A93CE;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 32px;
+    }
+
+    .deposit-btn {
+      width: 100%;
+      height: 40px;
+      border-radius: 4px;
+ 
+    }
+
+    .currency-info {
+      display:flex;
+      justify-content: space-between;
+      color: #98a7b5;
+      gap: 10px;
+    }
+  }
+
+  .active-method-msg {
+    color: #98a7b5;
   }
 }
 

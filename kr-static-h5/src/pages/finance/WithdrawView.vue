@@ -107,7 +107,7 @@
               (val) =>
                 (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) ||
                 '출금 금액에는 소수점을 사용할 수 없습니다',
-              (val) => isDivisibleBy10000(val) || '출금 금액은 10,000 단위여야 합니다.'
+              // (val) => isDivisibleBy10000(val) || '출금 금액은 10,000 단위여야 합니다.'
             ]"
             clearable
           >

@@ -14,7 +14,11 @@
         <div class="longka-btn2 longka-take-btn waves-effect" style="margin-top: 1.5rem" @click="getNewTigerCard">
           领取龙卡
         </div>
-        <p style="text-align: center">剩余领取次数：<span style="color: #498FFF">{{ cardInfo.cardDetail.leftCount }}</span> 次</p>
+        <p style="text-align: center">
+          剩余领取次数：
+          <span style="color: #498fff">{{ cardInfo.cardDetail.leftCount }}</span>
+          次
+        </p>
       </div>
 
       <div class="content">
@@ -419,16 +423,14 @@ const submitRegisterForm = async (elForm) => {
 
 .tigercard-container {
   .el-table {
-    &__empty-text p {
-      color: #7a8eb9;
-    }
-
     margin: 0 auto;
 
     background: #e7f3ff;
     border-radius: 10px;
     border: 0;
-
+    &__empty-text p {
+      color: #7a8eb9;
+    }
     th {
       text-align: center;
       line-height: 32px;
@@ -473,13 +475,12 @@ const submitRegisterForm = async (elForm) => {
 
       &.is-active,
       &:hover {
+        color: #7a8eb9;
         &:after {
           content: "/";
           display: inline-block;
           margin-left: 8px;
         }
-
-        color: #7a8eb9;
       }
     }
 
@@ -654,7 +655,7 @@ body {
 }
 
 .longka-btn {
-  background: linear-gradient(180deg, #FFE373 0%, #FF9239 100%);
+  background: linear-gradient(180deg, #ffe373 0%, #ff9239 100%);
   border-radius: 30px;
   background-size: cover;
   width: 217px;

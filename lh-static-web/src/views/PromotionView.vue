@@ -11,7 +11,7 @@
         <div class="promo-type-wrapper">
           <div>
             <div class="type-list">
-              <img src="../assets/promo/menu-title.png" />
+              <img width="90%" src="../assets/promo/menu-title.png" />
               <div
                 class="type-item"
                 v-for="p in promoTypes"
@@ -114,12 +114,15 @@
                 ? '#F5F6F8'
                 : selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? '#1D1D1E'
+                : selectedPromo?.promoCode === 'lh1-vip'
+                ? '#E7F1FD'
                 : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
-              selectedPromo?.promoCode === 'lh-lpl-summer24'
+              selectedPromo?.promoCode === 'lh-lpl-summer24' ||
+              selectedPromo?.promoCode === 'lh1-s14-vote'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : ''
           }"
@@ -156,6 +159,9 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
+              <NBAWaterBattle />
+            </div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
@@ -191,12 +197,14 @@ import { useDark } from "@vueuse/core";
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const isDark = useDark();
@@ -219,7 +227,7 @@ export default defineComponent({
       // { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "FTD", img: "deposit", label: "存款优惠" },
-      { code: "VIP", img: "vip", label: "VIP特权" }
+      { code: "VIP", img: "vip", label: "VIP 特权" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -432,9 +440,9 @@ export default defineComponent({
     // background-size: 100% auto;
     // padding-top: max(110px, 16vw);
     width: 100%;
-    padding: 30px 50px 50px;
+    padding: 0px 50px 50px;
     position: relative;
-    background-color: #E7F1FD;
+    background-color: #e7f1fd;
   }
   .promo-view-container {
     line-height: 30px;
@@ -455,6 +463,7 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
+      border-collapse: collapse;
 
       tr:first-child td {
         background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
@@ -468,7 +477,6 @@ export default defineComponent({
         border-top-right-radius: 10px;
       }
 
-      border-collapse: collapse;
       th,
       td {
         padding: 10px;
@@ -543,9 +551,9 @@ export default defineComponent({
       width: 100%;
       max-width: $maxwidth;
       margin: 0 auto;
-      padding: 10px 0;
+      padding: 0;
       display: flex;
-      gap: 30px;
+      gap: 20px;
       min-height: 1250px;
       align-items: flex-start;
       .promo-type-wrapper {
@@ -567,12 +575,11 @@ export default defineComponent({
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 20px;
+          padding: 15px 20px 20px;
           overflow: auto;
           width: 280px;
           flex-direction: column;
-          gap: 25px;
-          min-height: 818px;
+          gap: 10px;
           // position: sticky;
           // top: 100px;
           .type-item {
@@ -587,7 +594,7 @@ export default defineComponent({
             justify-content: center;
             align-items: center;
             gap: 20px;
-            padding: 12px 40px;
+            padding: 10px 40px;
             position: relative;
             width: 100%;
             border-radius: 30px;
@@ -596,7 +603,9 @@ export default defineComponent({
             .label {
               z-index: 0;
               color: #468cff;
-              font-size: 23px;
+              font-size: 18px;
+              font-weight: 700;
+              font-family: "PingFang SC";
             }
 
             &:before {
@@ -640,7 +649,7 @@ export default defineComponent({
         margin: 0 auto;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
         .promo-item {
           position: relative;
           overflow: hidden;
@@ -662,9 +671,6 @@ export default defineComponent({
               }
             }
           }
-          img {
-          }
-          cursor: pointer;
 
           .promo-img-wrapper {
             position: relative;
@@ -685,9 +691,10 @@ export default defineComponent({
               height: 42px;
               .label-type {
                 background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
-                padding: 10px 30px 10px 50px;
+                padding: 10px 30px 10px 40px;
                 color: #ffffff;
                 position: relative;
+                height: 42px;
                 &:after {
                   content: "";
                   border-left: 0 solid transparent;
@@ -705,6 +712,7 @@ export default defineComponent({
                 font-size: 18px;
                 font-weight: 700;
                 padding-left: 30px;
+                font-family: "PingFang SC";
               }
             }
             .promo-type {
@@ -728,9 +736,9 @@ export default defineComponent({
             .promo-details {
               font-family: "Microsoft Yahei UI";
               margin: 20px 0;
-              padding: 50px 0 10px 0;
+              padding: 30px 0 0 0;
               display: flex;
-              gap: 5px;
+              gap: 8px;
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
@@ -751,9 +759,9 @@ export default defineComponent({
               }
               .front-btn {
                 color: #ffffff;
-                padding: 5px 30px;
+                padding: 8px 30px;
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-
+                font-family: "PingFang SC";
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
                 box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
@@ -893,35 +901,13 @@ export default defineComponent({
           padding: 20px;
           color: #333;
           font-size: 20px;
+          overflow: auto;
           ol {
             li {
               margin: 20px 0;
             }
           }
-          // background: #201f29;
-          // background-repeat: no-repeat;
-          // background-position: 95% 90%;
-          // padding: 20px;
-          // border-radius: 10px;
-          overflow: auto;
-          // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
-          // }
+
           &.olympicCheckin {
             border: 1px solid #acd4f6;
             border-radius: 10px;

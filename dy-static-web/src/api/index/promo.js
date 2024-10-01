@@ -1,13 +1,11 @@
 import { server } from "@/utils/request";
 
 export function loadPromo(isLogin = false) {
-  const platformApiUrl = isLogin ? "/session/loggedInPromoPages" : "/promo/page";
-
-  return server.REST.get(platformApiUrl);
+  return server.REST.get("/opt-session/promo/page");
 }
 
 export function loadPromoBanner(category) {
-  return server.REST.get("/promo/banner", {
+  return server.REST.get("/opt-session/promo/banner", {
     params: {
       category: category
     }
@@ -267,19 +265,19 @@ export function loadHomePopup() {
 }
 
 export function getOlympicFirstDeposit() {
-  return server.EVENT.get('/lhOlympicDailyFirstDeposit/init')
+  return server.EVENT.get("/lhOlympicDailyFirstDeposit/init");
 }
 
 export function claimOlympicFirstDeposit() {
-  return server.EVENT.put('/lhOlympicDailyFirstDeposit/claim')
+  return server.EVENT.put("/lhOlympicDailyFirstDeposit/claim");
 }
 
 export function getOlympicDailySportBet() {
-  return server.EVENT.get('/lhOlympicDailySportBet/init')
+  return server.EVENT.get("/lhOlympicDailySportBet/init");
 }
 
 export function claimOlympicDailySportBet() {
-  return server.EVENT.put('/lhOlympicDailySportBet/claim')
+  return server.EVENT.put("/lhOlympicDailySportBet/claim");
 }
 
 export function getNewUserSetupBonusInit() {
@@ -327,15 +325,15 @@ export function getDota2CompetitionBet(promoCode) {
 }
 
 export function getBlastCoupon() {
-  return server.EVENT.get('/session/blastCoupon/init');
+  return server.EVENT.get("/session/blastCoupon/init");
 }
 
 export function claimBlastCoupon(promoCode) {
-  return server.EVENT.post('/session/blastCoupon/claim', {
+  return server.EVENT.post("/session/blastCoupon/claim", {
     params: {
       promoCode
     }
-  })
+  });
 }
 
 export function getBlastCouponInit() {
@@ -343,24 +341,45 @@ export function getBlastCouponInit() {
 }
 
 export function getCompetitionToday() {
-  return server.EVENT.get('/session/competition/today')
+  return server.EVENT.get("/session/competition/today");
 }
 
-export function getCompetitionYesterday() {
-  return server.EVENT.get('/session/competition/yesterday')
+export function getCompetitionYesterday(promoCode) {
+  return server.EVENT.get("/session/competition/yesterday", {
+    params: {
+      promoCode
+    }
+  });
 }
 
-export function claimCompetitionBonus() {
-  return server.EVENT.post('/session/competition/claimBonus')
+export function claimCompetitionBonus(promoCode) {
+  return server.EVENT.post("/session/competition/claimBonus", { promoCode });
 }
 
 export function getNationalDayinit() {
-  return server.EVENT.get('/session/nationalDay/init')
+  return server.EVENT.get("/session/nationalDay/init");
 }
 export function getNationalDayRecords() {
-  return server.EVENT.get('/session/nationalDay/records')
+  return server.EVENT.get("/session/nationalDay/records");
 }
 
 export function claimNationalDayBonus() {
-  return server.EVENT.post('/session/nationalDay/claimBonus')
+  return server.EVENT.post("/session/nationalDay/claimBonus");
+}
+
+export function getCompetitionBetYesterday(promoCode) {
+  return server.EVENT.get("/session/competition-bet/yesterday", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+
+export function getNBAUpcomingMatch() {
+  return server.EVENT.get('/session/nba-match-preseason/upcoming')
+}
+
+export function getNBAClaimHistory() {
+  return server.EVENT.get('/session/nba-match-preseason/history')
 }

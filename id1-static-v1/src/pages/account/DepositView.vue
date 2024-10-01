@@ -1,20 +1,14 @@
 <template>
   <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
-    <div class="method-title q-mb-sm">Deposit Method</div>
-    <div class="deposit-methods-container" v-if="isLoadingInitPay">
-      <div>
-        <q-skeleton style="height: 96px" />
+    <div class="method-title q-mb-sm">{{ $t("deposit.depositMethod") }}</div>
+    <template v-if="isLoadingInitPay">
+      <div class="deposit-methods-container">
+        <div v-for="index in 4" :key="index">
+          <q-skeleton style="height: 96px" />
+        </div>
       </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-    </div>
+    </template>
+
     <template v-else>
       <div class="deposit-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
@@ -24,13 +18,13 @@
             </div>
             <div class="item-title">{{ item.nodeName }}</div>
             <div class="item-ribbon" v-if="isPrivilege && paytypeWithPrivilege.includes(item.code)">
-              <img src="../../assets/images/account/ribbon-five-percent.png" />
+              <img src="@/assets/images/account/ribbon-five-percent.png" />
             </div>
           </div>
         </template>
       </div>
 
-      <div class="method-title q-mt-md q-mb-sm">Payment Channels</div>
+      <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
       <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
@@ -40,13 +34,13 @@
       </div>
 
       <template v-if="selectedChanelExtra.length > 0">
-        <div class="method-title q-mt-md q-mb-sm">Bank</div>
+        <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.bank") }}</div>
         <div>
           <q-select
             v-model="selectedChannelBank"
             :options="selectedChanelExtra"
-            option-label="name"
             option-value="id"
+            option-label="name"
             emit-value
             map-options
             filled
@@ -56,26 +50,24 @@
     </template>
 
     <div class="slot-ftd-section" v-if="isFtdPrivilege">
-      <img src="../../assets/images/bonus/slot-ftd-img.png" />
+      <img src="@/assets/images/bonus/slot-ftd-img.png" />
     </div>
 
     <!-- select amount -->
     <template v-if="isSelectedMethod">
-      <div class="method-title q-mt-md q-mb-sm">Deposit Amount</div>
-      <div class="deposit-methods-container">
+      <div class="method-title q-mt-md q-mb-sm">{{ $t("form.depositAmount") }}</div>
+      <div class="deposit-methods-container col-three">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
             <q-badge
+              v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
               color="orange"
               floating
               rounded
-              v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
             >
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
-
-            <q-badge color="orange" floating rounded v-if="isFtdPrivilege">+{{ getFtdCommaAmount(amount) }}</q-badge>
-
+            <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
             </div>
@@ -86,28 +78,28 @@
       <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
         <div class="submit-message">
           <div class="line">
-            <span>Bank Name:</span>
+            <span>{{ $t("deposit.bankName") }}</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
               {{ copybtntxt0 }}
             </q-btn>
           </div>
           <div class="line">
-            <span>Bank Account:</span>
+            <span>{{ $t("deposit.bankAccount") }}</span>
             <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
               {{ copybtntxt1 }}
             </q-btn>
           </div>
           <div class="line">
-            <span>Bank Card Number:</span>
+            <span>{{ $t("deposit.bankCardNumber") }}</span>
             <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
               {{ copybtntxt2 }}
             </q-btn>
           </div>
           <div class="line">
-            <span>Deposit Amount:</span>
+            <span>{{ $t("deposit.depositAmount") }}</span>
             <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
               {{ copybtntxt3 }}
@@ -120,7 +112,7 @@
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
             <div class="lil-title">
-              Amount ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
+              {{ $t("deposit.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
             </div>
             <q-input
@@ -135,7 +127,7 @@
                 verifyDepositAmount,
                 (val) =>
                   (val >= selectedChannel.depositMin && val <= selectedChannel.depositMax) ||
-                  `Deposit Amount Must In Between ${convertToCommaAmount(
+                  `${$t('deposit.depositAmountMustInBetween')} ${convertToCommaAmount(
                     selectedChannel.depositMin
                   )} - ${convertToCommaAmount(selectedChannel.depositMax)}`
               ]"
@@ -154,20 +146,20 @@
 
               <template v-slot:append>
                 <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
-                  Extra:
-                  <span>{{ getFtdCommaAmount(form.localAmount) }}P</span>
+                  {{ $t("deposit.extra") }}:
+                  <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
 
                 <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
-                  Extra:
-                  <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}P</span>
+                  {{ $t("deposit.extra") }}:
+                  <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
               </template>
             </q-input>
           </div>
 
           <template v-else>
-            <div class="lil-title q-mt-lg">Select Amount</div>
+            <div class="lil-title q-mt-lg">{{ $t("deposit.selectAmount") }}</div>
             <q-select
               ref="depositAmtRef"
               label="Select Amount"
@@ -186,18 +178,6 @@
               </template>
             </q-select>
           </template>
-
-          <!-- <div class="q-mt-md q-mb-md text-grey-7">
-          Minimum Amount:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
-          <br />
-          Maximum Amount:
-          {{
-            activeMethod.depositMax
-              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : "No Limit"
-          }}
-        </div> -->
 
           <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
             <span style="color: #fff">
@@ -223,49 +203,40 @@
       <div class="q-mt-lg">
         <div :class="`btn-submit`" @click="confirmDeposit">
           <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
-          <template v-else>Submit</template>
+          <template v-else>{{ $t("btn.submit") }}</template>
         </div>
       </div>
 
       <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
-        <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-        <div class="q-mt-sm">
-          Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager in slot games
-        </div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
       </div>
       <div
         class="q-mt-lg"
         style="color: #576373"
         v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
       >
-        <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-        <div class="q-mt-sm">
-          Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager
-        </div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
       </div>
     </template>
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
-      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-primary text-white">Deposited</q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-primary text-white">
+        {{ $t("deposit.deposited") }}
+      </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          You will be redirected to your bank page to complete the deposit.
+          {{ $t("deposit.youWillBeRedirect") }}
           <br />
           <br />
-          After deposited successfully, it will be reflected here.
+          {{ $t("deposit.afterDepositSuccessfully") }}
         </q-card-section>
-        <q-btn @click="clearInfo" label="Understood" class="bg-yellow text-black" />
+        <q-btn @click="clearInfo" :label="$t('deposit.understood')" class="bg-yellow text-black" />
       </div>
     </q-card>
-  </q-dialog>
-
-  <!-- <q-dialog width="100%" v-model="guestKYCDialog" persistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
-    </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
@@ -273,23 +244,21 @@
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
-  </q-dialog> -->
+  </q-dialog>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick } from "vue";
-import Node from "../../components/paymentSelect/node.vue";
-import BankComponent from "components/finance/fBank";
-import { api, cashier } from "boot/axios";
-import { Platform, useQuasar, openURL } from "quasar";
+import { api, cashier } from "@/boot/axios";
+import { convertToCommaAmount } from "@/boot/utils";
+import BankComponent from "@/components/finance/fBank";
+import { userStore } from "@/stores/index";
 import liff from "@line/liff";
-import { userStore } from "stores/index";
-import { useRouter, useRoute } from "vue-router";
-import { convertToCommaAmount } from "src/boot/utils";
-import KYCGuestForm from "../../components/KYCGuestForm.vue";
-import KYCUserForm from "../../components/KYCUserForm.vue";
-import { cached } from "boot/cache";
 import { storeToRefs } from "pinia";
+import { openURL, Platform, useQuasar } from "quasar";
+import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { t } from "@/boot/lang";
+import KYCUserForm from "components/KYCUserForm.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -298,36 +267,18 @@ const store = userStore();
 const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
-
-const checkNewUser = () => {
-  if (store.realName == "" || store.realName == null) {
-    emits("closeModal");
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "Please fill in your personal details",
-      icon: "report_problem"
-    });
-    // router.push(`/account/profile`);
-  }
-};
-
 const isSelectedMethod = ref(false);
 const paymentMethodsItems = ref();
 const isDeposited = ref(false);
 const btnLoading = ref(false);
 const payTypeClass = ref();
 const payMethods = ref([]);
-const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
 const amountList = ref([]);
-const privilegeList = ref([]);
-const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
-const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
 const submitMessage = ref([]);
@@ -335,11 +286,10 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
-
-const copybtntxt0 = ref("复制");
-const copybtntxt1 = ref("复制");
-const copybtntxt2 = ref("复制");
-const copybtntxt3 = ref("复制");
+const copybtntxt0 = ref(t("btn.copy"));
+const copybtntxt1 = ref(t("btn.copy"));
+const copybtntxt2 = ref(t("btn.copy"));
+const copybtntxt3 = ref(t("btn.copy"));
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -368,9 +318,6 @@ const blurCode = () => {
 const verifyDepositAmount = ref([
   (val) => !!val || "Please enter the amount",
   (val) => val > calculatedMinDeposit.value - 1 || "Deposit should be more than " + calculatedMinDeposit.value
-  // (val) =>
-  //   val < activeMethod.value.depositMax + 1 ||
-  //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -382,37 +329,19 @@ const form = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
-
-// const depositItems = computed(() => {
-//   //   // if (!activeMethod.value.amountArr) return [];
-//   //   // return activeMethod.value.amountArr.map((amount) => Number(amount));
-
-//   return activeMethod.value;
-// });
-
 const depositItems = ref();
-
 const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
 };
-
 const getFtdCommaAmount = (amount) => {
-  if (amount < 888) {
-    return amount;
+  if (amount < 888000) {
+    return `${amount / 1000}K`;
   } else {
-    return 888;
+    return `888K`;
   }
 };
 
-const handleDepositNodeClick = (item) => {
-  activeMethod.value = item;
-  depositItems.value = item.extra.amountArr;
-  form.localAmount = null;
-  nextTick(() => depositAmtRef.value.resetValidation());
-};
-
 const selectedItem = ref();
-const selectedItemPrivilege = ref();
 const selectedItemPrivilegeId = ref();
 const extraPrivilegeId = ref();
 const selectedItemChannel = ref();
@@ -424,22 +353,18 @@ const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
 const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
-
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   activeMethod.value = item;
   isSelectedMethod.value = true;
   selectedItemChannel.value = item.children;
   selectedChanelExtra.value = [];
-
   goSelectedChannel(item.children[0]);
 };
-
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
   selectedChanelExtra.value = item.extra.banks;
   selectedItemAmount.value = item.extra.amountArr;
-
   selectedChannelBank.value = null;
   if (selectedChanelExtra.value.length > 0) {
     selectedChannelBank.value = item.extra.banks[0].id;
@@ -452,35 +377,27 @@ function initPay() {
   $q.loading.show({
     message: "Loading data... Please wait..."
   });
-
   let promoParam = "";
-
   if (route.query.extra === "true") {
-    // promoParam = "?promo=1";
     isPrivilege.value = true;
     selectedItemPrivilegeId.value = store.extraPrivilegeId;
   } else {
     isPrivilege.value = false;
     selectedItemPrivilegeId.value = "";
   }
-
   if (route.query.privilegeId) {
     extraPrivilegeId.value = route.query.privilegeId;
   } else {
     extraPrivilegeId.value = undefined;
   }
-
   payMethods.value = [];
-
   cashier.get(`/session/php/deposit/index/${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
-
     if (res.code === 0) {
       paymentMethodsItems.value = res.data.payments;
       goSelectedMethod(res.data.payments[0]);
     }
-
     if (
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
@@ -522,12 +439,10 @@ function selectPayType(value) {
 const depositForm = ref(null);
 async function onSelect(value) {
   isDisplay.value = false;
-
   clearInfo();
   if (depositAmtRef.value) {
     depositAmtRef.value.resetValidation();
   }
-
   if (value) {
     if (value.group) {
       value.children.forEach((element) => {
@@ -658,18 +573,6 @@ async function pDepo(deposit) {
     .then((res) => {
       if (res.code === 0) {
         const response = res.data.result;
-
-        // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
-        // if (!isFirstDepo) {
-        //   console.log("First Depo");
-        //   //ADJUST TRACKEVENT.
-        //   var adjustEvent = new AdjustEvent("medfxb");
-        //   adjustEvent.setRevenue(deposit.localAmount, "INR");
-        //   Adjust.trackEvent(adjustEvent);
-        //
-        //   localStorage.setItem("IS_FIRST_DEPOSIT", "1");
-        // }
-
         if (res.data.result.payResultType === "OFFLINE") {
         }
         if (res.data.result.payResultType === "RENDER_HTML") {
@@ -870,7 +773,6 @@ const scrollToInput = () => {
 
 onActivated(() => {
   initPay();
-  // checkNewUser();
   loadInfo();
   resetSelectedMethod();
 });
@@ -878,7 +780,6 @@ onActivated(() => {
 onMounted(() => {
   loadAppTabs();
   initPay();
-  // checkNewUser();
   loadInfo();
 });
 </script>
@@ -1045,7 +946,6 @@ onMounted(() => {
       position: relative;
       &:after {
         content: "";
-        // background-image: url(../../assets/images/index/popout/label-discount.png);
         background-repeat: no-repeat;
         display: block;
         position: absolute;
@@ -1267,7 +1167,7 @@ onMounted(() => {
         position: absolute;
         bottom: 0;
         right: 0;
-        background-image: url(../../assets/images/account/active-tick.png);
+        background-image: url(@/assets/images/account/active-tick.png);
         background-size: cover;
       }
     }
@@ -1315,7 +1215,7 @@ onMounted(() => {
           position: absolute;
           bottom: 0;
           right: 0;
-          background-image: url(../../assets/images/account/active-tick.png);
+          background-image: url(@/assets/images/account/active-tick.png);
           background-size: cover;
         }
       }

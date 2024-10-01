@@ -449,6 +449,11 @@ export default defineComponent({
                   icon: "check_circle_outline"
                 });
 
+                //FB Tracking.
+                if (store.isFbPixel) {
+                  fbq("track", "CompleteRegistration");
+                }
+
                 //ADJUST TRACKEVENT.
                 // debugger;
                 // if (Platform.is.android && Platform.is.capacitor) {

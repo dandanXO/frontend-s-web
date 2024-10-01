@@ -23,7 +23,7 @@ import SectionHeader from "./SectionHeader.vue";
 
   > .rule-content-wrapper {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     background-color: #b4dbff1a;
     padding: 16px 10px 18px 22px;
     border-radius: 19px;

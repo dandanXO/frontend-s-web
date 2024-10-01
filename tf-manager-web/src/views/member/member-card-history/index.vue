@@ -269,7 +269,7 @@ function convertDate(date) {
 function resetQuery() {
   request.loginName = null
   request.cardTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value : null
+  request.siteId = site.value ? site.value : siteList.list[0].id
   request.cardNo = null
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value
@@ -353,7 +353,7 @@ onMounted(async () => {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>

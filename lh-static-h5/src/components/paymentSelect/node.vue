@@ -2,35 +2,43 @@
   <div class="node" v-if="list && list.length !== 0">
     <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
-    <div class="account-title-container" v-else>
+    <div class="account-title-container" v-else-if="!$q.dark.isActive">
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper">
-      <div
-        class="node-item payment-method-item"
-        :id="level + '_' + i"
-        @click="clickItem(item)"
-        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
-        :style="item.group && item.children.length === 0 ? 'display:none' : ''"
-        :key="i"
-        v-for="(item, i) in list"
-      >
-        <div class="node-text">
-          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
-          <div class="overflow txt-title">{{ item.nodeName }}</div>
-          <div class="promo">
-            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
-          </div>
 
-          <div class="payment-method-wrapper">
-            <div
-              class="payment-method-item"
-              v-for="pm in payMethods"
-              :key="pm.id"
-              :class="{ active: pm.nodeName === activeMethod }"
-            >
-              <img :src="imgURL + pm.nodeIcon" />
-              <div>{{ pm.nodeName }}</div>
+    <div class="payment-method-section">
+      <div class="section-title" v-if="$q.dark.isActive">
+        <div class="section-title-decor" />
+        <div class="section-title-text" v-if="level === 1">存款方式</div>
+        <div v-else class="section-title-text">{{ name }}</div>
+      </div>
+      <div class="node-content payment-method-wrapper">
+        <div
+          class="node-item payment-method-item"
+          :id="level + '_' + i"
+          @click="clickItem(item)"
+          :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+          :style="item.group && item.children.length === 0 ? 'display:none' : ''"
+          :key="i"
+          v-for="(item, i) in list"
+        >
+          <div class="node-text">
+            <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
+            <div class="overflow txt-title">{{ item.nodeName }}</div>
+            <div class="promo">
+              <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
+            </div>
+
+            <div class="payment-method-wrapper">
+              <div
+                class="payment-method-item"
+                v-for="pm in payMethods"
+                :key="pm.id"
+                :class="{ active: pm.nodeName === activeMethod }"
+              >
+                <img :src="imgURL + pm.nodeIcon" />
+                <div>{{ pm.nodeName }}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -427,12 +435,51 @@ $node-color: #468cff;
 
 .body--dark {
   .node {
+    .payment-method-section {
+      background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
+      padding: 10px;
+      border-radius: 6px;
+      width: 100%;
+
+      .section-title {
+        display:flex;
+        gap:5px;
+        padding-bottom:5px;
+
+        .section-title-decor {
+          width: 2px;
+          background-color: #fff;
+          margin: 5px 0;
+          border-radius: 10px;
+        }
+        
+        .section-title-text {
+          font-size: 18px;
+        }
+      }
+    }
     .node-content {
+      &.payment-method-wrapper {
+        padding-right: 0;
+      }
       .node-item {
+        .promo {
+          top: -7.5%;
+          right: 15%;
+        }
+
         .node-text {
+          border-radius: 4px;
+          border: 1px solid #d9d9d94d;
+          width: 100%;
+          background: #273354;
+          
           .node-txt-img {
-            border-color: $border-dark;
-            box-shadow: unset
+            // border-color: $border-dark;
+            box-shadow: unset;
+            border: unset;
+            margin: 0;
+            padding: 5px;
           }
           > div {
             color: $font-3-dark;
@@ -440,8 +487,24 @@ $node-color: #468cff;
         }
         &.active {
           .node-text {
+            border-color: #d0a383;
+            border-width: 1px;
+            
             .node-txt-img {
-              border-color: $primary-dark;
+            }
+
+            &:before {
+              display: block;
+              content: "";
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              height: 18px;
+              width: 18px;
+              z-index: 3;
+              background-image: url("../../assets/images/finance/deposit/checkmark-dark.svg");
+              background-size: 100%;
+              background-position: center center;
             }
           }
         }

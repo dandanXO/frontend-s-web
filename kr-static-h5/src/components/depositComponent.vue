@@ -396,7 +396,7 @@ const verifyDepositAmount = ref([
   (val) =>
     parseDigitsWithComma(val) < activeMethod.value.depositMax + 1 ||
     "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
-  (val) => isDivisibleBy10000(val) || "입금 금액은 10,000 단위여야 합니다." //存款金额必须以 10000 为单位
+  //(val) => isDivisibleBy10000(val) || "입금 금액은 10,000 단위여야 합니다." //存款金额必须以 10000 为单位
 ]);
 
 const parseDigitsWithComma = (value) => {
