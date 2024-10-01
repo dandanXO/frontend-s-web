@@ -134,7 +134,7 @@ export default boot(({ app, router }) => {
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED
         ) {
-          if (attemptTimes > 10 || !store.token) {
+          if (attemptTimes > 10) {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
             router.push("/login");
