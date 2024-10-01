@@ -338,7 +338,7 @@
             :hide-on-single-page="true"
             :total="votesData.votesRecord.data.length"
           />
-          <div class="page-info">
+          <div class="page-info" v-if="totalPages > 1">
             {{ votesData.votesRecord.current + '/' + totalPages }}
           </div>
         </div>
@@ -438,8 +438,12 @@ const loadVoteTeam = () => {
     if (res.code === 0) {
       activeTab.value = res.data.period;
       const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
-        const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-        return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+        const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
+        if (voteItems) {
+          const { countryImgUrl, teamNameLocal } = voteItems;
+          return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+        }
+        return []; // Return an empty array to exclude unmatched items
       });
       const votesList = res.data.votesList.map((team) => {
         return {

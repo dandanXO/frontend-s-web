@@ -495,9 +495,12 @@ import { useNotify } from "src/hooks/notify";
         if(res.code===0){
           activeTab.value = res.data.period
           const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
-            const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
-            return extendedVoteRecords
+            const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
+            if (voteItems) {
+              const { countryImgUrl, teamNameLocal } = voteItems;
+              return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+            }
+            return [];
         });
         const votesList = res.data.votesList.map((team) => {
           return {
