@@ -5,6 +5,5 @@ WORKDIR /usr/share/nginx/html
 USER root
 
 RUN mkdir -p ./admin
-ADD build ./
 ADD build ./admin/
 ADD nginx.conf /etc/nginx/nginx.conf
