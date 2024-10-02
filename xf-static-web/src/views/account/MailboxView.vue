@@ -16,55 +16,30 @@
               :label-col="{ span: 2 }"
               label-width="100"
             >
-            
-
-            <el-form-item
-                ref="feedback"
-                prop="feedback"
-                label="意见类型"
-                :wrapperCol="{ span: 6 }"
-              >
-              <el-select
-                    class="feedback-select"
-                    placeholder="意见类型选择"
-                    v-model="mailboxState.mailboxList.write.feedbackType"
+              <el-form-item ref="feedback" prop="feedback" label="意见类型" :wrapperCol="{ span: 6 }">
+                <el-select
+                  class="feedback-select"
+                  placeholder="意见类型选择"
+                  v-model="mailboxState.mailboxList.write.feedbackType"
+                >
+                  <el-option
+                    v-for="(feedback, feedbackIndex) in feedbackTypes"
+                    :key="`feedback-${feedbackIndex}`"
+                    :value="feedback"
                   >
-                    <el-option
-                      v-for="(feedback, feedbackIndex) in feedbackTypes"
-                      :key="`feedback-${feedbackIndex}`"
-                      :value="feedback"
-                    >
-                      {{ feedback }}
-                    </el-option>
-                  </el-select>
+                    {{ feedback }}
+                  </el-option>
+                </el-select>
               </el-form-item>
 
-              <el-form-item
-                ref="title"
-                prop="title"
-                label="标题"
-                :wrapperCol="{ span: 6 }"
-              >
-                <el-input
-                  v-model="mailboxState.mailboxList.write.title"
-                  placeholder="请输入标题"
-                />
+              <el-form-item ref="title" prop="title" label="标题" :wrapperCol="{ span: 6 }">
+                <el-input v-model="mailboxState.mailboxList.write.title" placeholder="请输入标题" />
               </el-form-item>
-              <el-form-item
-                ref="photo"
-                prop="photo"
-                label="上传图片"
-                :wrapperCol="{ span: 6 }"
-              >
-              <FileUpload class="upload-photo-board" @photo-response="getImageLink" ref="uploadFileRef" />
-
+              <el-form-item ref="photo" prop="photo" label="上传图片" :wrapperCol="{ span: 6 }">
+                <FileUpload class="upload-photo-board" @photo-response="getImageLink" ref="uploadFileRef" />
               </el-form-item>
 
-              <el-form-item
-                ref="content"
-                prop="content"
-                label="内容"
-              >
+              <el-form-item ref="content" prop="content" label="内容">
                 <el-input
                   type="textarea"
                   :autosize="{ minRows: 4 }"
@@ -76,22 +51,15 @@
               </el-form-item>
               <el-form-item>
                 <template #label></template>
-                <el-button type="submit" @click="onSubmit">
-                  提交
-                </el-button>
+                <el-button type="submit" @click="onSubmit">提交</el-button>
               </el-form-item>
             </el-form>
           </div>
         </el-tab-pane>
         <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
           <div
-              style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-              v-if="!isLoading['outbox']"
+            style="display: flex; justify-content: center; align-items: center; height: 300px"
+            v-if="!isLoading['outbox']"
           >
             载入中
           </div>
@@ -133,63 +101,53 @@
               />
             </div>
           </div>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-            v-else
-          >
-            暂无记录
-          </div>
+          <div style="display: flex; justify-content: center; align-items: center; height: 300px" v-else>暂无记录</div>
         </el-tab-pane>
-        <el-tab-pane key="inbox" name="inbox" :label="'收件箱'">
-          <div
-              style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-              v-if="!isLoading['inbox']"
-          >
-            载入中
-          </div>
-          <div v-else-if="mailboxState.mailboxList.inbox.list.length > 0">
-            <div class="mailbox-list">
-              <div
-                class="mailbox-item"
-                v-for="m in mailboxState.mailboxList.inbox.list"
-                :key="m.id"
-              >
-                <div class="mailbox-title">{{ m.title }}</div>
-                <div class="mailbox-content" v-html="m.content"></div>
-                <div class="mailbox-date"><el-icon><Calendar /></el-icon>{{ m.sendTime }}</div>
-              </div>
-            </div>
-            <div class="pagination-wrapper">
-              <el-pagination
-                @current-change="changePage"
-                :total="mailboxState.mailboxList.inbox.total"
-                :current-page="mailboxState.mailboxList.inbox.pageNum"
-                :page-size="mailboxState.mailboxList.inbox.pageSize"
-              />
-            </div>
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-            v-else
-          >
-            暂无记录
-          </div>
-        </el-tab-pane>
+        <!--        <el-tab-pane key="inbox" name="inbox" :label="'收件箱'">-->
+        <!--          <div-->
+        <!--              style="-->
+        <!--              display: flex;-->
+        <!--              justify-content: center;-->
+        <!--              align-items: center;-->
+        <!--              height: 300px;-->
+        <!--            "-->
+        <!--              v-if="!isLoading['inbox']"-->
+        <!--          >-->
+        <!--            载入中-->
+        <!--          </div>-->
+        <!--          <div v-else-if="mailboxState.mailboxList.inbox.list.length > 0">-->
+        <!--            <div class="mailbox-list">-->
+        <!--              <div-->
+        <!--                class="mailbox-item"-->
+        <!--                v-for="m in mailboxState.mailboxList.inbox.list"-->
+        <!--                :key="m.id"-->
+        <!--              >-->
+        <!--                <div class="mailbox-title">{{ m.title }}</div>-->
+        <!--                <div class="mailbox-content" v-html="m.content"></div>-->
+        <!--                <div class="mailbox-date"><el-icon><Calendar /></el-icon>{{ m.sendTime }}</div>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--            <div class="pagination-wrapper">-->
+        <!--              <el-pagination-->
+        <!--                @current-change="changePage"-->
+        <!--                :total="mailboxState.mailboxList.inbox.total"-->
+        <!--                :current-page="mailboxState.mailboxList.inbox.pageNum"-->
+        <!--                :page-size="mailboxState.mailboxList.inbox.pageSize"-->
+        <!--              />-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--          <div-->
+        <!--            style="-->
+        <!--              display: flex;-->
+        <!--              justify-content: center;-->
+        <!--              align-items: center;-->
+        <!--              height: 300px;-->
+        <!--            "-->
+        <!--            v-else-->
+        <!--          >-->
+        <!--            暂无记录-->
+        <!--          </div>-->
+        <!--        </el-tab-pane>-->
       </el-tabs>
     </div>
   </div>
@@ -421,10 +379,7 @@ const store = userStore();
       min-height: 740px;
       margin-bottom: 0;
       padding: 0;
-      .ant-form.ant-form-horizontal
-        .ant-form-item
-        .ant-form-item-control-input-content
-        .ant-input {
+      .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
         background: #16151c;
       }
       :deep(.ant-form-horizontal .ant-form-item-label) {
@@ -446,7 +401,7 @@ const store = userStore();
     }
     .mailbox-list {
       min-height: 450px;
-    font-size: 14px;
+      font-size: 14px;
       .mailbox-item {
         background-color: #2a313e;
         border-radius: 3px;

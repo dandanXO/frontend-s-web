@@ -11,9 +11,9 @@
     <el-divider />
     <div class="mail-content" v-html="props.mail?.content.replace(/\n/g, '<br/>')"></div>
     <div class="button-lists" v-if="props.mail?.redirectType !== 'NONE'">
-      <el-button class="common-btn" size="large" @click="handleDetail(props.mail)">
-        {{ props.mail?.redirectButton ?? "立即前往" }}
-      </el-button>
+      <!--      <el-button class="common-btn" size="large" @click="handleDetail(props.mail)">-->
+      <!--        {{ props.mail?.redirectButton ?? "立即前往" }}-->
+      <!--      </el-button>-->
     </div>
   </div>
 
