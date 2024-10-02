@@ -193,7 +193,13 @@
             <Slide v-for="(categoryPair, slideIndex) in categoryPairs" :key="slideIndex">
               <template v-for="category in categoryPair" :key="category.key">
                 <template v-for="item in vipItems" :key="item">
-                  <template v-if="store.token && isFirstTime && vipLevel !== 0 ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
+                  <template
+                    v-if="
+                      store.token && isFirstTime && vipLevel !== 0
+                        ? +item.vipLevel === currentSlide
+                        : +item.vipLevel === currentSlide + 1
+                    "
+                  >
                     <div
                       class="box"
                       :class="{
@@ -1384,6 +1390,17 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-container {
   z-index: 0;
+  position: relative;
+  background-image: url("../../assets/images/vip/vip-bg.jpg");
+  background-color: #f3f7fd;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #8d8d8d;
+  min-height: 100vh;
+  padding: 0 0 80px;
+
   .loading-icon {
     width: 10px;
     height: 10px;
@@ -1411,16 +1428,6 @@ $border-settings: 1px solid #e5e7eb;
       transform: rotate(360deg);
     }
   }
-  position: relative;
-  background-image: url("../../assets/images/vip/vip-bg.jpg");
-  background-color: #f3f7fd;
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-  background-attachment: fixed;
-  color: #8d8d8d;
-  min-height: 100vh;
-  padding: 0 0 80px;
 
   .header-section {
     margin: 0 auto;
@@ -1444,7 +1451,6 @@ $border-settings: 1px solid #e5e7eb;
   .current-vip-status {
     border: 2px solid #799df8;
     max-width: 480px;
-    padding: 10px;
     width: 95%;
     margin: 0 auto;
     background: #212b4ae0;
@@ -1469,10 +1475,12 @@ $border-settings: 1px solid #e5e7eb;
       // width: calc(100% - 120px);
       // margin-left: 80px;
       width: 100%;
+      gap: 20px;
+
       &.load {
         margin-left: 65px;
       }
-      gap: 20px;
+
       .amount {
         display: flex;
         flex-direction: column;
@@ -1575,7 +1583,6 @@ $border-settings: 1px solid #e5e7eb;
       }
       .inner-slide {
         width: 96%;
-        margin: auto;
         overflow: hidden;
         height: 96%;
         margin: 3%;
@@ -1721,7 +1728,6 @@ $border-settings: 1px solid #e5e7eb;
     .linktotable {
       border-bottom: 1px solid #f1dda0;
       color: #f1dda0;
-      display: inline-block;
       display: block;
       margin: 0 auto;
       width: 98px;
@@ -2015,7 +2021,6 @@ $border-settings: 1px solid #e5e7eb;
         border-right: $border-settings;
 
         &:has(.disable) {
-          background-color: #e7e7e7;
           background-color: #e7e7e74f;
         }
       }
@@ -2133,10 +2138,12 @@ $border-settings: 1px solid #e5e7eb;
       justify-content: center;
       align-items: center;
       background: linear-gradient(180deg, #ffffff 18.57%, #b3d7f0 85%);
-      background-clip: text;
       font-size: 18px;
       -webkit-text-fill-color: transparent;
       font-weight: 600;
+      background-clip: text;
+      text-align: center;
+
       &:before {
         content: "";
         background: url(../../assets/images/vip/decal.png);
@@ -2158,8 +2165,6 @@ $border-settings: 1px solid #e5e7eb;
         background-size: cover;
         transform: rotateY(180deg);
       }
-      background-clip: text;
-      text-align: center;
     }
     .accordion {
       cursor: pointer;
@@ -2489,6 +2494,7 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
   }
+
   .carousel__slide--prev + .carousel__slide.carousel__slide--visible {
     .vipcontents {
       &:before {
