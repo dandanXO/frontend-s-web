@@ -16,7 +16,7 @@
             <div>{{ matchInfo.homeTeam }}</div>
           </div>
           <div class="match-info-time">
-            <div class="time-text">{{ moment(matchInfo.matchTime).format('MM月DD日 HH:mm:ss') }}</div>
+            <div class="time-text">{{ moment(matchInfo.matchTime).format("MM月DD日 HH:mm:ss") }}</div>
             <button class="claim-btn" @click="handleClaim(matchInfo.id)">领取奖励</button>
           </div>
           <div class="match-info-team">
@@ -47,7 +47,7 @@
           <td>{{ getStatusLabel(claimHistoryItem.shotPoints) }}</td>
           <td>{{ getStatusLabel(claimHistoryItem.scoringShots) }}</td>
           <td>{{ getStatusLabel(claimHistoryItem.foulOut) }}</td>
-          <td>{{ claimHistoryItem.status }}</td>
+          <td>{{ getClaimStatus(claimHistoryItem.status) }}</td>
           <td>{{ claimHistoryItem.bonus }}</td>
         </tr>
       </table>
@@ -90,12 +90,25 @@ const getStatusLabel = (status) => {
 };
 
 const handleClaim = (id) => {
-  claimNBABonus(id).then(res => {
-    if(res.code === 0) {
-      notify.success('领取成功')
+  claimNBABonus(id).then((res) => {
+    if (res.code === 0) {
+      notify.success("领取成功");
     }
-  })
-}
+  });
+};
+
+const getClaimStatus = (status) => {
+  switch (status) {
+    case "PENDING_SETTLE ":
+      return "待审核";
+    case "SETTLED":
+      return "已发放";
+    case "CANCEL":
+      return "已取消";
+    default:
+      return "";
+  }
+};
 
 watch(
   () => isClaimHistoryDialogVisible.value,
@@ -188,7 +201,7 @@ onMounted(() => {
     border-radius: 100px;
     cursor: pointer;
     z-index: 1;
-    font-size: .75rem;
+    font-size: 0.75rem;
 
     &:hover {
       filter: brightness(1.1);
@@ -212,7 +225,8 @@ onMounted(() => {
     .match-info-time {
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: center;
+      gap: 10px;
       height: 100%;
 
       .time-text {

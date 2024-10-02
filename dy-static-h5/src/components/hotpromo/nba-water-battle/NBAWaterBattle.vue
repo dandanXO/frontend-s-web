@@ -47,7 +47,7 @@
           <td>{{ getStatusLabel(claimHistoryItem.shotPoints) }}</td>
           <td>{{ getStatusLabel(claimHistoryItem.scoringShots) }}</td>
           <td>{{ getStatusLabel(claimHistoryItem.foulOut) }}</td>
-          <td>{{ claimHistoryItem.status }}</td>
+          <td>{{ getClaimStatus(claimHistoryItem.status) }}</td>
           <td>{{ claimHistoryItem.bonus }}</td>
         </tr>
       </table>
@@ -76,6 +76,19 @@ const iniNBAUpcomingMatches = () => {
   getNBAUpcomingMatch().then((res) => {
     matchInfoArr.value = res.data;
   });
+};
+
+const getClaimStatus = (status) => {
+  switch (status) {
+    case "PENDING_SETTLE ":
+      return "待审核";
+    case "SETTLED":
+      return "已发放";
+    case "CANCEL":
+      return "已取消";
+    default:
+      return "";
+  }
 };
 
 const getStatusLabel = (status) => {
@@ -220,7 +233,8 @@ onMounted(() => {
     .match-info-time {
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: center;
+      gap: 10px;
       height: 100%;
 
       .time-text {
