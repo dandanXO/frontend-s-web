@@ -45,10 +45,10 @@
               </div>
 
               <div class="reward-title-wrapper">
-                <div class="reward-title">累计完成场次: 0次剩余开启次数: 0次</div>
+                <div class="reward-title">累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次</div>
               </div>
 
-              <div class="reward-btn-wrapper">
+              <div class="reward-btn-wrapper" @click="handleClaimBonus">
                 <div class="reward-btn">开启宝箱</div>
               </div>
             </div>
@@ -131,9 +131,9 @@
                 </div>
               </q-carousel-slide>
             </q-carousel>
-            <div style="display: flex; justify-content: center; margin-bottom: 12px">
+            <!-- <div style="display: flex; justify-content: center; margin-bottom: 12px">
               <div class="reward-box-btn active">领取</div>
-            </div>
+            </div> -->
             <div class="livepoker-rebate-game-bottom" style="justify-content: end">注：每个奖品仅可兑换1次</div>
           </div>
 
@@ -166,7 +166,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { claimCompetitionBonus, getCompetitionBetYesterday } from "../../../api/index/promo";
+import { getPGLTreasureInit, putPGLTreasureInit } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -180,8 +180,9 @@ const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
 
-const totalValidBet = ref(0);
-const bonus = ref(0);
+const accumulatedClaimed = ref(0);
+const todayLeftClaimCount = ref(0);
+const todayClaimed = ref(0);
 const tabValue = ref(2);
 const slide = ref("1");
 
@@ -221,7 +222,7 @@ const handleClaimBonus = () => {
     });
     return;
   }
-  claimCompetitionBonus(promoCode.value)
+  putPGLTreasureInit()
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -242,13 +243,14 @@ const handleClaimBonus = () => {
 };
 
 const fetchData = async () => {
-  // try {
-  //   const res = await getCompetitionBetYesterday(promoCode.value);
-  //   totalValidBet.value = res.data.totalValidBet;
-  //   bonus.value = res.data.bonus;
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    const res = await getPGLTreasureInit();
+    accumulatedClaimed.value = res.data.accumulatedClaimed;
+    todayLeftClaimCount.value = res.data.todayLeftClaimCount;
+    todayClaimed.value = res.data.todayClaimed;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 onMounted(() => {
@@ -452,7 +454,7 @@ onMounted(() => {
   .reward-box {
     background: url("../../../assets/promo/lh-dota2-pgl/reward-box-bg.png") no-repeat;
     background-size: contain;
-    width: 100%;
+    width: 226px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -548,5 +550,10 @@ onMounted(() => {
     color: #818181;
     box-shadow: none;
   }
+}
+
+::v-deep(.q-carousel__slide) {
+  display: flex;
+  justify-content: center;
 }
 </style>

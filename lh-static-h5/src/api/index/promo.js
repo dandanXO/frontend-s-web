@@ -311,3 +311,11 @@ export function getNBAUpcomingMatch() {
 export function getNBAClaimHistory() {
   return eventapi.get('/session/nba-match-preseason/history')
 }
+
+export function getPGLTreasureInit() {
+  return eventapi.get('/session/pglTreasure/init')
+}
+
+export function putPGLTreasureInit() {
+  return eventapi.put('/session/pglTreasure/claim')
+}
