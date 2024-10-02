@@ -1,24 +1,27 @@
 <template>
-  <div class="nba-water-battle-bg" v-if="matchInfoArr">
+  <div v-if="matchInfoArr" style="position: relative">
     <div class="claim-history-btn" @click="isClaimHistoryDialogVisible = true">领取记录</div>
-    <el-carousel class="match-carousel" indicator-position="none">
-      <el-carousel-item v-for="matchInfo in matchInfoArr" :key="matchInfo.id" class="match-carousel-item">
-        <div class="match-info">
-          <div class="match-info-team">
-            <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.homeTeamIcon}`" /></div>
-            <div>{{ matchInfo.homeTeam }}</div>
+
+    <div class="nba-water-battle-bg" v-for="matchInfo in matchInfoArr" :key="matchInfo.id">
+      <el-carousel class="match-carousel" indicator-position="none">
+        <el-carousel-item class="match-carousel-item">
+          <div class="match-info">
+            <div class="match-info-team">
+              <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.homeTeamIcon}`" /></div>
+              <div>{{ matchInfo.homeTeam }}</div>
+            </div>
+            <div class="match-info-time">
+              <div class="time-text">{{ moment(matchInfo.matchTime).format("MM月DD日 HH:mm:ss") }}</div>
+              <button class="claim-btn" @click="handleClaim(matchInfo.id)">领取奖励</button>
+            </div>
+            <div class="match-info-team">
+              <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.awayTeamIcon}`" /></div>
+              <div>{{ matchInfo.awayTeam }}</div>
+            </div>
           </div>
-          <div class="match-info-time">
-            <div class="time-text">{{ moment(matchInfo.matchTime).format("MM月DD日 HH:mm:ss") }}</div>
-            <button class="claim-btn" @click="handleClaim(matchInfo.id)">领取奖励</button>
-          </div>
-          <div class="match-info-team">
-            <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.awayTeamIcon}`" /></div>
-            <div>{{ matchInfo.awayTeam }}</div>
-          </div>
-        </div>
-      </el-carousel-item>
-    </el-carousel>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
   </div>
 
   <el-dialog v-model="isClaimHistoryDialogVisible" class="nba-water-battle-claim-history-dialog">
@@ -149,6 +152,27 @@ onMounted(() => {
 }
 </style>
 <style lang="scss" scoped>
+.claim-history-btn {
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  padding: 10px 30px;
+  color: #fff;
+  margin-bottom: 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  z-index: 1;
+  width: 160px;
+  margin-left: auto;
+  text-align: center;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
+}
+
 .nba-water-battle-bg {
   background: url("@/assets/images/promotion/hotpromo/nba-water-battle/nba-water-battle-widget-bg.png") no-repeat center
     center;
@@ -161,28 +185,9 @@ onMounted(() => {
 
   .match-carousel {
     height: 100%;
+
     .match-carousel-item {
       overflow: visible;
-    }
-  }
-
-  .claim-history-btn {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    position: absolute;
-    top: 2%;
-    right: 11%;
-    padding: 10px 30px;
-    color: #fff;
-    border-radius: 100px;
-    cursor: pointer;
-    z-index: 1;
-
-    &:hover {
-      filter: brightness(1.1);
-    }
-
-    &:active {
-      transform: translateY(2px);
     }
   }
 
@@ -212,6 +217,7 @@ onMounted(() => {
         line-height: 33.6px;
         color: #479af7;
       }
+
       .claim-btn {
         border-radius: 100px;
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -222,6 +228,7 @@ onMounted(() => {
         font-weight: 600;
         line-height: 34px;
         color: #fff;
+
         &:hover {
           filter: brightness(1.2);
         }
@@ -248,6 +255,10 @@ onMounted(() => {
         // margin-bottom: 20px;
       }
     }
+  }
+
+  :deep(.el-carousel__arrow) {
+    display: none !important;
   }
 }
 </style>
