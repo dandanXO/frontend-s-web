@@ -312,6 +312,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "站内信";
+        } else if (route.path === "/account/message") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "消息中心";
         } else if (route.path === "/account/mail/inbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;

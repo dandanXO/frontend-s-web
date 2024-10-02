@@ -182,8 +182,8 @@
         </router-link>
         <router-link to="/account/message">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.png" />
-            <div class="acct-nav-label">我的消息</div>
+            <img src="../assets/images/account/menu_message.png" />
+            <div class="acct-nav-label">消息中心</div>
             <div class="unread" v-if="store.unreadInboxMail > 0">
               {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
             </div>
