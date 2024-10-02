@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
+      <!-- <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div> -->
     </div>
 
     <div class="right-container">
