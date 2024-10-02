@@ -1436,7 +1436,7 @@ $border-settings: 1px solid #e5e7eb;
     overflow: hidden;
   }
   .vip-header {
-    margin: 10px auto;
+    margin: 10px auto 25px;
     width: 120%;
     margin-left: -10%;
   }
