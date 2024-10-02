@@ -369,9 +369,9 @@ const submit = async (voteData) => {
     }
     if (Number(voteData.votes) > votesData.value.myVotes) {
       ElMessage.error({
-                        type: "error",
-                        message: "投票次数不足"
-                    })
+          type: "error",
+          message: "投票次数不足"
+      })
       return;
     }
       isSubmitting.value = true;
@@ -384,11 +384,15 @@ const submit = async (voteData) => {
         })
         isCastVoteModalVisible.value = false;
         if (votesData.value.myVotes > 0) votesData.value.myVotes--;
-        setTimeout(() => loadVoteTeam(), 2000);
+        voteData.votes = 0;
+        setTimeout(()=>{
+          loadVoteTeam();
+          isSubmitting.value = false;
+        },2000)
       } else {
         ElMessage.error(res.message)
+        isSubmitting.value = false;
       }
-      isSubmitting.value = false;
 };
 
 // Load voting data
@@ -400,7 +404,12 @@ const loadVoteTeam = () => {
         const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
         if (voteItems) {
           const { countryImgUrl, teamNameLocal } = voteItems;
-          return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+          // return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+          return { 
+            ...voteRecordItem, 
+            countryImgUrl, 
+            teamNameLocal 
+          };
         }
         return []; // Return an empty array to exclude unmatched items
       });
