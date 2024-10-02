@@ -380,9 +380,7 @@ import { convertToCommaAmount } from "boot/utils"
 import { userStore } from "src/stores";
 import {useLocalStorage} from "@vueuse/core"
 import moment from "moment";
-import { useNotify } from "src/hooks/notify";
 
-    const notify = useNotify();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
     const store = userStore();
     var qs = require("qs");
@@ -444,17 +442,21 @@ import { useNotify } from "src/hooks/notify";
       //   return;
       // }
       if (voteData.votes === 0) {
-        notify({
-          type: "error",
-          message: "请输入票数",
+        $q.notify({
+            color: "negative",
+            position: "top",
+            message: "请输入票数",
+            icon: "report_problem"
         });
         return;
       }
 
       if (Number(voteData.votes) > votesData.value.myVotes) {
-        notify({
-          type: "error",
-          message: "投票次数不足",
+        $q.notify({
+            color: "negative",
+            position: "top",
+            message: "投票次数不足",
+            icon: "report_problem"
         });
         return;
       }
@@ -467,9 +469,11 @@ import { useNotify } from "src/hooks/notify";
       const res = await poolPrizeCastVote(qs.stringify(params));
 
       if (res.code === 0) {
-        notify({
-          type: "success",
-          message: "投票成功",
+        $q.notify({
+            color: "positive",
+            position: "top",
+            message: "投票成功",
+            icon: "check_circle_outline"
         });
         isCastVoteModalVisible.value= false;
         // loadVoteTeam();
@@ -561,9 +565,19 @@ import { useNotify } from "src/hooks/notify";
   const checkPeriod = (tabClicked) => {
     if (!isClickable.value) return; // Prevent clicks if not clickable
     if (tabClicked > activeTab.value) {
-      notify({ type: "error", message: "该赛段暂未开启" });
+      $q.notify({
+          color: "negative",
+          position: "top",
+          message: "该赛段暂未开启",
+          icon: "report_problem"
+      });
     } else if (tabClicked < activeTab.value) {
-      notify({ type: "error", message: "该赛段已结束" });
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "该赛段已结束",
+        icon: "report_problem"
+    });
     }
     // Disable clicking for 2 seconds
     isClickable.value = false;
