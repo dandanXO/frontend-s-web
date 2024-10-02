@@ -23,6 +23,18 @@ export const getDevice = () => {
   return isMobile() ? "MOBILE" : "WEB";
 };
 
+export const convertToCommaAmount = (amount, isForceDecimal) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+};
+function isNonNumericString(value) {
+  return typeof value === "string" && isNaN(value);
+}
 export function isAndroid() {
   if (Platform.is.android && Platform.is.capacitor) {
     return true;

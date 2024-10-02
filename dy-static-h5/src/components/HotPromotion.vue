@@ -16,6 +16,7 @@
     />
     <TigerCardPromo v-if="list.redirectUrl === 'dy2-tiger-card'" />
     <PrizePoolVotePromo v-if="list.redirectUrl === 'Dongying-team-vote'" />
+    <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <HongBaoYuEurocupPromo
@@ -129,6 +130,9 @@ const PrizePoolVotePromo = defineAsyncComponent(() =>
   import("../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue")
 );
 const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
+const S14VotePromo = defineAsyncComponent(() =>
+import("../components/hotpromo/s14-vote/S14VotePromo.vue")
+);
 const HongBaoPreEurocupPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue")
 );
@@ -218,6 +222,7 @@ export default defineComponent({
     MeiZhouBeiPromoPage,
     PrizePoolVotePromo,
     GoldenEggPromo,
+    S14VotePromo,
     HongBaoYu2024,
     UpcomingMatchPromo,
     InsuranceSubmitPromo,
