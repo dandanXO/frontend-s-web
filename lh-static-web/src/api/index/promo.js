@@ -467,3 +467,10 @@ export function getNBAClaimHistory() {
   return server.EVENT.get('/session/nba-match-preseason/history')
 }
 
+export function getPglTreasureInit() {
+  return server.EVENT.get('/session/pglTreasure/init')
+}
+
+export function putPglTreasureInit() {
+  return server.EVENT.put('/session/pglTreasure/claim')
+}

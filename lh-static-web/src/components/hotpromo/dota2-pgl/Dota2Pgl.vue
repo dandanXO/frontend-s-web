@@ -45,10 +45,10 @@
               </div>
 
               <div class="reward-title-wrapper">
-                <div class="reward-title">累计完成场次: 0次剩余开启次数: 0次</div>
+                <div class="reward-title">累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次</div>
               </div>
 
-              <div class="reward-btn-wrapper">
+              <div class="reward-btn-wrapper" @click="handleClaimBonus">
                 <div class="reward-btn">开启宝箱</div>
               </div>
             </div>
@@ -101,7 +101,7 @@
                   <div>宝箱x1</div>
                   <div class="text">连续存款3天</div>
                 </div>
-                <div class="reward-box-btn">已领取</div>
+                <!-- <div class="reward-box-btn">已领取</div> -->
               </div>
               <div class="reward-box-wrapper">
                 <div class="reward-box">
@@ -109,7 +109,7 @@
                   <div>宝箱x3</div>
                   <div class="text">连续存款3天</div>
                 </div>
-                <div class="reward-box-btn active">领取</div>
+                <!-- <div class="reward-box-btn active">领取</div> -->
               </div>
               <div class="reward-box-wrapper">
                 <div class="reward-box">
@@ -117,7 +117,7 @@
                   <div>宝箱x5</div>
                   <div class="text">连续存款3天</div>
                 </div>
-                <div class="reward-box-btn disabled">领取</div>
+                <!-- <div class="reward-box-btn disabled">领取</div> -->
               </div>
             </div>
 
@@ -152,7 +152,7 @@
 </template>
 
 <script setup>
-import { claimCompetitionBonus, getCompetitionBetYesterday } from "@/api/index/promo";
+import { putPglTreasureInit, getPglTreasureInit } from "@/api/index/promo";
 import { onMounted, ref, defineProps } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
@@ -163,8 +163,9 @@ const promoCode = ref(props.promoCode);
 const notify = useNotify();
 
 const store = userStore();
-const totalValidBet = ref(0);
-const bonus = ref(0);
+const accumulatedClaimed = ref(0);
+const todayLeftClaimCount = ref(0);
+const todayClaimed = ref(0);
 const tabValue = ref(2);
 
 const handleClickTab = (value) => {
@@ -196,7 +197,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBonus(promoCode.value)
+  putPglTreasureInit()
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -217,13 +218,14 @@ const handleClaimBonus = () => {
 };
 
 const fetchData = async () => {
-  // try {
-  //   const res = await getCompetitionBetYesterday(promoCode.value);
-  //   totalValidBet.value = res.data.totalValidBet;
-  //   bonus.value = res.data.bonus;
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    const res = await getPglTreasureInit();
+    accumulatedClaimed.value = res.data.accumulatedClaimed;
+    todayLeftClaimCount.value = res.data.todayLeftClaimCount;
+    todayClaimed.value = res.data.todayClaimed;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 onMounted(() => {
