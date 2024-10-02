@@ -2779,6 +2779,7 @@ export default {
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
+    'Member Vip Upgrade Record': '会员VIP晋级记录',
     'Vip Report': 'VIP投注汇总报表',
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
