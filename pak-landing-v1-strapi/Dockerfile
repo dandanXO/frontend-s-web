@@ -6,4 +6,5 @@ USER root
 
 RUN mkdir -p ./admin
 ADD build ./admin/
+ADD .tmp/data.db ./.tmp/data.db
 ADD nginx.conf /etc/nginx/nginx.conf
