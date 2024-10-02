@@ -41,7 +41,7 @@
                 <div class="reward-item">
                   <div class="reward-item-content">88 元</div>
                 </div>
-                <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
+                <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" style="width: 181px" />
               </div>
 
               <div class="reward-title-wrapper">
@@ -53,7 +53,9 @@
               </div>
             </div>
             <div class="livepoker-rebate-game-bottom">
-              消耗有效投注 1,500 元可开启，每日最多开启 10 次，每十次必中最高奖励
+              消耗有效投注 1,500 元可开启，
+              <br />
+              每日最多开启 10 次，每十次必中最高奖励
             </div>
           </div>
 
@@ -86,7 +88,7 @@
         </div>
       </template>
 
-      <template v-else-if="tabValue === 2">
+      <template v-if="tabValue === 2">
         <div>
           <div class="livepoker-rebate-game-info">
             <div class="title-wrapper">
@@ -94,33 +96,44 @@
               <h1>宝箱抽奖</h1>
               <img src="../../../assets/promo/lh-dota2-pgl/rule-title-right.png" alt="" />
             </div>
-            <div class="reward-box-list">
-              <div class="reward-box-wrapper">
+            <q-carousel
+              v-model="slide"
+              swipeable
+              animated
+              transition-prev="scale"
+              transition-next="scale"
+              control-color="black"
+              navigation
+              padding
+              arrows
+              infinite
+              height="300px"
+            >
+              <q-carousel-slide name="1">
                 <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="">
+                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x1</div>
                   <div class="text">连续存款 3 天</div>
                 </div>
-                <!-- <div class="reward-box-btn">已领取</div> -->
-              </div>
-              <div class="reward-box-wrapper">
+              </q-carousel-slide>
+              <q-carousel-slide name="3" class="column no-wrap flex-center">
                 <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="">
+                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x3</div>
                   <div class="text">连续存款 3 天</div>
                 </div>
-                <!-- <div class="reward-box-btn active">领取</div> -->
-              </div>
-              <div class="reward-box-wrapper">
+              </q-carousel-slide>
+              <q-carousel-slide name="5" class="column no-wrap flex-center">
                 <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="">
+                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x5</div>
                   <div class="text">连续存款 3 天</div>
                 </div>
-                <!-- <div class="reward-box-btn disabled">领取</div> -->
-              </div>
-            </div>
-
+              </q-carousel-slide>
+            </q-carousel>
+            <!-- <div style="display: flex; justify-content: center; margin-bottom: 12px">
+              <div class="reward-box-btn active">领取</div>
+            </div> -->
             <div class="livepoker-rebate-game-bottom" style="justify-content: end">注：每个奖品仅可兑换 1 次</div>
           </div>
 
@@ -152,52 +165,64 @@
 </template>
 
 <script setup>
-import { putPglTreasureInit, getPglTreasureInit } from "@/api/index/promo";
-import { onMounted, ref, defineProps } from "vue";
-import { useNotify } from "@/hooks/notify";
-import { userStore } from "@/store";
-import { ElMessageBox } from "element-plus";
+import { onMounted, ref } from "vue";
+import { getPGLTreasureInit, putPGLTreasureInit } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
+
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
 
 const notify = useNotify();
-
 const store = userStore();
+const $q = useQuasar();
+const router = useRouter();
+
 const accumulatedClaimed = ref(0);
 const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
 const tabValue = ref(2);
+const slide = ref("1");
 
 const handleClickTab = (value) => {
   tabValue.value = value;
 };
 
 const handleClickLogin = () => {
-  store.loginPageVisible = true;
+  router.push("/login");
 };
 
 const handleClickLogout = () => {
-  store.memberLogout().then(() => {
-    location.reload();
-  });
+  store.memberLogout();
 };
 
 const handleClaimBonus = () => {
-  if (!store.hasToken()) {
-    ElMessageBox.alert("请登录后再操作", "系统提示", {
-      autofocus: false,
-      center: true,
-      confirmButtonText: "确认",
-      showClose: false,
-      buttonSize: "large",
-      closeOnClickModal: true
-    }).then(() => {
-      store.loginPageVisible = true;
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
     });
     return;
   }
-
-  putPglTreasureInit()
+  putPGLTreasureInit()
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -219,7 +244,7 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   try {
-    const res = await getPglTreasureInit();
+    const res = await getPGLTreasureInit();
     accumulatedClaimed.value = res.data.accumulatedClaimed;
     todayLeftClaimCount.value = res.data.todayLeftClaimCount;
     todayClaimed.value = res.data.todayClaimed;
@@ -230,10 +255,6 @@ const fetchData = async () => {
 
 onMounted(() => {
   if (!store.token) {
-    // notify({
-    //   message: "请登录后操作",
-    //   type: "error"
-    // });
     return;
   }
   fetchData();
@@ -245,13 +266,19 @@ onMounted(() => {
   display: flex;
   justify-content: center;
 }
+
 .livepoker-rebate-container {
-  width: 1200px;
+  width: 100%;
   height: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .livepoker-rebate-section {
   margin: 10px 0 30px;
+  width: 100%;
 }
 
 .welcomne {
@@ -270,14 +297,15 @@ onMounted(() => {
   .tab {
     border-radius: 60px;
     background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
-    padding: 13px 70px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-size: 18px;
     color: #818181;
     font-weight: bold;
     cursor: pointer;
+    height: 32px;
+    flex: 1;
 
     &.active {
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -292,22 +320,25 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   color: #8c5b00;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
+  text-align: center;
 }
 
 .livepoker-rebate-game-info {
   background: white;
   border-radius: 12px;
-  padding: 40px;
+  padding: 20px 12px 12px;
+  width: 100%;
 
   .reward-item {
     background: url("../../../assets/promo/lh-dota2-pgl/reward-item-bg.png") no-repeat;
+    background-size: 100% 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    height: 200px;
+    width: 57.6px;
+    height: 57.6px;
     position: absolute;
     top: 50%;
     cursor: pointer;
@@ -316,13 +347,13 @@ onMounted(() => {
 
     &:first-child {
       left: 0;
-      top: 60%;
-      --rotation-angle: -15deg;
+      top: 40%;
+      --rotation-angle: -25deg;
     }
 
     &:nth-child(2) {
       left: 17%;
-      top: 20%;
+      top: 15%;
       --rotation-angle: -35deg;
     }
 
@@ -332,24 +363,24 @@ onMounted(() => {
 
     &:nth-child(4) {
       right: 17%;
-      top: 20%;
+      top: 15%;
       --rotation-angle: 35deg;
     }
 
     &:nth-child(5) {
       right: 0;
-      top: 60%;
-      --rotation-angle: 15deg;
+      top: 40%;
+      --rotation-angle: 25deg;
     }
 
     .reward-item-content {
       background: url("../../../assets/promo/lh-dota2-pgl/reward-item.png") no-repeat;
-      width: 140px;
-      height: 54px;
+      width: 40px;
+      height: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 24px;
+      font-size: 12px;
       color: #735700;
       font-weight: 600;
     }
@@ -369,7 +400,7 @@ onMounted(() => {
     position: relative;
     display: flex;
     justify-content: center;
-    padding-top: 250px;
+    padding-top: 100px;
   }
 
   .reward-title-wrapper {
@@ -381,11 +412,12 @@ onMounted(() => {
 
   .reward-title {
     background: url("../../../assets/promo/lh-dota2-pgl/reward-title-bg.png") no-repeat;
-    font-size: 20px;
+    background-size: 100%;
+    font-size: 16px;
     font-weight: 500;
     color: #8c5b00;
-    width: 508px;
-    height: 63px;
+    width: 100%;
+    height: 40px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -395,14 +427,15 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
+    margin: 12px 0;
   }
   .reward-btn {
     background: url("../../../assets/promo/lh-dota2-pgl/reward-btn.png") no-repeat;
-    font-size: 28px;
-    color: black;
-    width: 328px;
-    height: 121px;
+    background-size: contain;
+    font-size: 20px;
+    color: #613f00;
+    width: 195px;
+    height: 72px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -418,65 +451,36 @@ onMounted(() => {
     margin-bottom: 20px;
   }
 
-  .reward-box-wrapper {
+  .reward-box {
+    background: url("../../../assets/promo/lh-dota2-pgl/reward-box-bg.png") no-repeat;
+    background-size: contain;
+    width: 226px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 12px;
-    flex: 1;
+    font-size: 16px;
+    color: #735700;
+    font-weight: 600;
+    padding-bottom: 40px;
+    position: relative;
 
-    .reward-box {
-      background: url("../../../assets/promo/lh-dota2-pgl/reward-box-bg.png") no-repeat;
-      background-size: contain;
-      width: 100%;
-      height: 360px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      color: #735700;
-      font-weight: 600;
-
-      img {
-        width: 149px;
-        height: 175px;
-      }
-
-      .text {
-        background-color: #E3C976;
-        width: 330px;
-        height: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    img {
+      width: 85px !important;
+      height: 100px;
+      margin-bottom: 0;
     }
 
-    .reward-box-btn {
-      width: 196px;
-      height: 48px;
+    .text {
+      background-color: #e3c976;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 32px;
-      color: white;
-      font-size: 20px;
-      background: linear-gradient(180deg, rgba(115, 178, 255, 0.5) 0%, rgba(57, 129, 255, 0.5) 100%);
-      box-shadow: 0px -1.07px 2.45px 0px #B1D7FF inset, 0px -0.54px 1.96px 0px #5894FF inset;
-      cursor: pointer;
-      font-weight: bold;
-
-      &.active {
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-      }
-
-      &.disabled {
-        background: linear-gradient(180deg, #E7E7E7 0%, #C9C9C9 100%);
-        color: #818181;
-        box-shadow: none;
-      }
+      width: 94%;
+      height: 20%;
+      position: absolute;
+      bottom: 15px;
     }
   }
 }
@@ -491,6 +495,9 @@ onMounted(() => {
   h1 {
     margin: 0;
     white-space: nowrap;
+    font-size: 18px;
+    line-height: 0;
+    font-weight: 600;
   }
 }
 
@@ -500,23 +507,53 @@ onMounted(() => {
   margin-top: 40px;
   background: white;
   border-radius: 12px;
-  padding: 40px;
+  padding: 20px 12px 12px;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   .content {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 36px;
     color: #7a8eb9;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 8px;
+
     .item {
-      padding-left: 24px;
       display: flex;
       gap: 10px;
-      margin-bottom: 12px;
     }
   }
+}
+
+.reward-box-btn {
+  width: 120px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 32px;
+  color: white;
+  font-size: 14px;
+  background: linear-gradient(180deg, rgba(115, 178, 255, 0.5) 0%, rgba(57, 129, 255, 0.5) 100%);
+  box-shadow: 0px -1.07px 2.45px 0px #b1d7ff inset, 0px -0.54px 1.96px 0px #5894ff inset;
+  cursor: pointer;
+  font-weight: bold;
+
+  &.active {
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  }
+
+  &.disabled {
+    background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+    color: #818181;
+    box-shadow: none;
+  }
+}
+
+::v-deep(.q-carousel__slide) {
+  display: flex;
+  justify-content: center;
 }
 </style>
