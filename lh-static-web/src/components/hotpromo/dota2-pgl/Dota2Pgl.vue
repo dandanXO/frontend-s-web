@@ -6,10 +6,10 @@
           你好，请
           <span style="color: #2483ff; cursor: pointer" @click="handleClickLogin">【登录】</span>
         </div>
-        <div class="welcomne" v-else>
-          欢迎您，{{ store.realName }}
-          <span style="color: #2483ff; cursor: pointer" @click="handleClickLogout">退出</span>
-        </div>
+        <!--        <div class="welcomne" v-else>-->
+        <!--          欢迎您，{{ store.realName }}-->
+        <!--          <span style="color: #2483ff; cursor: pointer" @click="handleClickLogout">退出</span>-->
+        <!--        </div>-->
         <div class="tab-wrapper">
           <div class="tab" :class="{ active: tabValue === 1 }" @click="handleClickTab(1)">投注宝箱</div>
           <div class="tab" :class="{ active: tabValue === 2 }" @click="handleClickTab(2)">充值宝箱</div>
@@ -45,7 +45,9 @@
               </div>
 
               <div class="reward-title-wrapper">
-                <div class="reward-title">累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次</div>
+                <div class="reward-title">
+                  累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次
+                </div>
               </div>
 
               <div class="reward-btn-wrapper" @click="handleClaimBonus">
@@ -97,7 +99,7 @@
             <div class="reward-box-list">
               <div class="reward-box-wrapper">
                 <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="">
+                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x1</div>
                   <div class="text">连续存款 3 天</div>
                 </div>
@@ -105,7 +107,7 @@
               </div>
               <div class="reward-box-wrapper">
                 <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="">
+                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x3</div>
                   <div class="text">连续存款 3 天</div>
                 </div>
@@ -113,7 +115,7 @@
               </div>
               <div class="reward-box-wrapper">
                 <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="">
+                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x5</div>
                   <div class="text">连续存款 3 天</div>
                 </div>
@@ -131,7 +133,9 @@
               <img src="../../../assets/promo/lh-dota2-pgl/rule-title-right.png" alt="" />
             </div>
             <div class="content">
-              <div class="item">1.活动期间，当日存款≥100 即可计算连续天数，连续存款达档位标准即可获得开启宝箱次数；</div>
+              <div class="item">
+                1.活动期间，当日存款≥100 即可计算连续天数，连续存款达档位标准即可获得开启宝箱次数；
+              </div>
               <div class="item">
                 2.活动期间，每个档位的奖励仅可领取一次，若出现中断连续天数，重新打卡至对应连续天数奖励则不重复派发；
               </div>
@@ -265,7 +269,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  margin-top: 40px;
+  margin-top: 10px;
 
   .tab {
     border-radius: 60px;
@@ -445,7 +449,7 @@ onMounted(() => {
       }
 
       .text {
-        background-color: #E3C976;
+        background-color: #e3c976;
         width: 330px;
         height: 80px;
         display: flex;
@@ -464,16 +468,16 @@ onMounted(() => {
       color: white;
       font-size: 20px;
       background: linear-gradient(180deg, rgba(115, 178, 255, 0.5) 0%, rgba(57, 129, 255, 0.5) 100%);
-      box-shadow: 0px -1.07px 2.45px 0px #B1D7FF inset, 0px -0.54px 1.96px 0px #5894FF inset;
+      box-shadow: 0px -1.07px 2.45px 0px #b1d7ff inset, 0px -0.54px 1.96px 0px #5894ff inset;
       cursor: pointer;
       font-weight: bold;
 
       &.active {
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       }
 
       &.disabled {
-        background: linear-gradient(180deg, #E7E7E7 0%, #C9C9C9 100%);
+        background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
         color: #818181;
         box-shadow: none;
       }

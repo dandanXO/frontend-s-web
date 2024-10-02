@@ -6,10 +6,10 @@
           你好，请
           <span style="color: #2483ff; cursor: pointer" @click="handleClickLogin">【登录】</span>
         </div>
-        <div class="welcomne" v-else>
-          欢迎您，{{ store.realName }}
-          <span style="color: #2483ff; cursor: pointer" @click="handleClickLogout">退出</span>
-        </div>
+        <!--        <div class="welcomne" v-else>-->
+        <!--          欢迎您，{{ store.realName }}-->
+        <!--          <span style="color: #2483ff; cursor: pointer" @click="handleClickLogout">退出</span>-->
+        <!--        </div>-->
         <div class="tab-wrapper">
           <div class="tab" :class="{ active: tabValue === 1 }" @click="handleClickTab(1)">投注宝箱</div>
           <div class="tab" :class="{ active: tabValue === 2 }" @click="handleClickTab(2)">充值宝箱</div>
@@ -45,7 +45,9 @@
               </div>
 
               <div class="reward-title-wrapper">
-                <div class="reward-title">累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次</div>
+                <div class="reward-title">
+                  累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次
+                </div>
               </div>
 
               <div class="reward-btn-wrapper" @click="handleClaimBonus">
@@ -144,7 +146,9 @@
               <img src="../../../assets/promo/lh-dota2-pgl/rule-title-right.png" alt="" />
             </div>
             <div class="content">
-              <div class="item">1.活动期间，当日存款≥100 即可计算连续天数，连续存款达档位标准即可获得开启宝箱次数；</div>
+              <div class="item">
+                1.活动期间，当日存款≥100 即可计算连续天数，连续存款达档位标准即可获得开启宝箱次数；
+              </div>
               <div class="item">
                 2.活动期间，每个档位的奖励仅可领取一次，若出现中断连续天数，重新打卡至对应连续天数奖励则不重复派发；
               </div>
@@ -292,7 +296,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  margin-top: 40px;
+  margin-top: 10px;
 
   .tab {
     border-radius: 60px;
