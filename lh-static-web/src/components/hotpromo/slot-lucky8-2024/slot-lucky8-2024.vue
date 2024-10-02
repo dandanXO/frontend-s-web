@@ -3,9 +3,6 @@
     <div class="luck8-container">
       <div class="luck8-game-money-info">
         <div class="title"></div>
-        <!-- <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
-          还没完成，不要测试先。
-        </div> -->
         <table class="luck8-game-info-table">
           <tr>
             <th>电游平台</th>
