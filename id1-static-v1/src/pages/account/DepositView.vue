@@ -1,6 +1,6 @@
 <template>
   <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
-    <div class="method-title q-mb-sm">{{ $t("deposit.depositMethod") }}</div>
+    <!-- <div class="method-title q-mb-sm">{{ $t("deposit.depositMethod") }}</div> -->
     <template v-if="isLoadingInitPay">
       <div class="deposit-methods-container">
         <div v-for="index in 4" :key="index">
@@ -10,7 +10,7 @@
     </template>
 
     <template v-else>
-      <div class="deposit-methods-container">
+      <!-- <div class="deposit-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
           <div class="content-item" @click="goSelectedMethod(item)" :class="{ active: selectedItem === item }">
             <div class="item-img">
@@ -22,12 +22,15 @@
             </div>
           </div>
         </template>
-      </div>
+      </div> -->
 
-      <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
-      <div class="deposit-methods-container col-three">
+      <div class="method-title q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
+      <div class="deposit-methods-container">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
+            <div class="item-img">
+              <img :src="imgURL + '/payment/' + item.nodeIcon" />
+            </div>
             <div class="item-title">{{ item.nodeName }}</div>
           </div>
         </template>
