@@ -10,7 +10,11 @@
       </div>
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
       <div class="withdraw-remaining-dialog__body">
-        <div class="withdraw-remaining-dialog__body-title">完成 {{ totalRemaining }} 流水，立即享受快速提款</div>
+        <div class="withdraw-remaining-dialog__body-title">
+          完成
+          <span class="text-yellows">{{ totalRemaining }}</span>
+          流水，立即享受快速提款
+        </div>
         <table class="withdraw-remaining-dialog__body-table">
           <thead>
             <tr>
@@ -63,6 +67,8 @@ const getDisplayRemainingType = (type) => {
       return "棋牌";
     case "slot":
       return "电子";
+    case "all":
+      return "任意类型";
   }
 };
 
@@ -241,6 +247,10 @@ onMounted(() => {
         filter: brightness(1.2);
       }
     }
+  }
+
+  .text-yellow2 {
+    color: #a2a213ff;
   }
 }
 
