@@ -379,11 +379,16 @@ const submit = async (voteData) => {
         notify({ type: "success", message: "投票成功" });
         isCastVoteModalVisible.value = false;
         if (votesData.value.myVotes > 0) votesData.value.myVotes--;
-        setTimeout(() => loadVoteTeam(), 2000);
+        
+        voteData.votes = 0;
+        setTimeout(()=>{
+          loadVoteTeam();
+          isSubmitting.value = false;
+        },2000)
       } else {
-        notify.error(res.message);
+        notify({ type: "error", message: res.message });
+        isSubmitting.value = false;
       }
-      isSubmitting.value = false;
 };
 
 // Load voting data
@@ -395,7 +400,12 @@ const loadVoteTeam = () => {
         const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
         if (voteItems) {
           const { countryImgUrl, teamNameLocal } = voteItems;
-          return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+          // return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+          return { 
+            ...voteRecordItem, 
+            countryImgUrl, 
+            teamNameLocal 
+          };
         }
         return []; // Return an empty array to exclude unmatched items
       });

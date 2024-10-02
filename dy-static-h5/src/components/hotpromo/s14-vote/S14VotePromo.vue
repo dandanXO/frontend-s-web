@@ -481,13 +481,17 @@ import moment from "moment";
         if(votesData.value.myVotes > 0){
           votesData.value.myVotes--;
         }
+        voteData.votes = 0;
         setTimeout(()=>{
           loadVoteTeam();
+          isSubmitting.value = false;
         },2000)
 
       }
-
-      isSubmitting.value = false;
+      else {
+        // Handle any error and re-enable the submit button immediately
+        isSubmitting.value = false;
+      }
     }
     const votesRecordChangePage = (page) => {
       const totalPages = Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
@@ -515,7 +519,12 @@ import moment from "moment";
             const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
             if (voteItems) {
               const { countryImgUrl, teamNameLocal } = voteItems;
-              return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+              // return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+              return { 
+                ...voteRecordItem, 
+                countryImgUrl, 
+                teamNameLocal 
+              };
             }
             return [];
         });
