@@ -277,7 +277,7 @@ export default defineComponent({
       //       banner.value = res.data[0]
       //   }
       // })
-      api.get("/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
           // console.log(banner.value)
@@ -329,7 +329,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       api
         .get(platformApiUrl)
