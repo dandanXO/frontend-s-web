@@ -1099,6 +1099,16 @@
               </div>
             </div>
           </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $
+                <span
+                  v-formatter="{data: memberDetail.totalValidBet, type: 'money'}"
+                />
+              </div>
+            </div>
+          </el-descriptions-item>
           <el-descriptions-item :label="t('fields.payout')">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
