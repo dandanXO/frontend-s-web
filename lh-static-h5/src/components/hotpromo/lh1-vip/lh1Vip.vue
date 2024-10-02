@@ -102,7 +102,7 @@
       <p>
         <strong>一。会员晋级/保级/降级规则</strong>
         <ol class="terms got-bullets">
-          <li>会员累计投注额达到相应级别的要求，即可在次日 24 点前晋级相应 VIP 等级；</li>
+          <li>完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</li>
           <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
           <li>会员在达到某 VIP 等级后，90 天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
           <li>
@@ -373,7 +373,7 @@ const formatNumber = (num) => {
   font-family: Arial, sans-serif;
   padding: 1px;
   .table-4{
-    
+
   }
 }
 
