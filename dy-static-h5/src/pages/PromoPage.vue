@@ -132,6 +132,7 @@
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
                   wukong: selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
+                  dy2s14: selectedPromo.redirectUrl === 'dy2-s14-vote',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
                   midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
@@ -1020,6 +1021,10 @@ export default defineComponent({
           background-size: 100% auto;
           background-color: #100a0e;
           padding-top: 0px !important;
+        }
+        &.dy2s14 {
+          margin: 0;
+          width: 100%;
         }
 
         &.lplSummer2024 {

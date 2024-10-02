@@ -124,7 +124,9 @@
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
-              selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+              selectedPromo.promoCode === 'dy2-midautumn-spinwheel' ||
+              selectedPromo.promoCode === 'dy2-s14-vote'
+              ,
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',

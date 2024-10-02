@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 10px;">
     <q-dialog v-model="isCastVoteModalVisible" :title="castVoteFormData.teamNameLocal" width="100%" align-center
               style="max-width: 800px" @close="toggleCastVoteModal(false)">
       <q-card style="width: 100%">
@@ -72,7 +72,7 @@
             {{ convertToCommaAmount(votesData.award) }}
             <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
             <!-- <img style="max-height: 20px; height: 20px; margin-top: 10px;" src="../s14-vote/images/reward.png"> -->
-             <span style="color: white; text-shadow: none; font-size: 16px; margin-bottom: -5px;">奖金</span>
+            <span style="color: white; text-shadow: none; font-size: 16px; margin-bottom: -5px;">奖金</span>
           </div>
         </div>
         
@@ -381,9 +381,7 @@ import { convertToCommaAmount } from "boot/utils"
 import { userStore } from "src/stores";
 import {useLocalStorage} from "@vueuse/core"
 import moment from "moment";
-import { useNotify } from "src/hooks/notify";
 
-    const notify = useNotify();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
     const store = userStore();
     var qs = require("qs");
@@ -445,17 +443,21 @@ import { useNotify } from "src/hooks/notify";
       //   return;
       // }
       if (voteData.votes === 0) {
-        notify({
-          type: "error",
-          message: "请输入票数",
+        $q.notify({
+            color: "negative",
+            position: "top",
+            message: "请输入票数",
+            icon: "report_problem"
         });
         return;
       }
 
       if (Number(voteData.votes) > votesData.value.myVotes) {
-        notify({
-          type: "error",
-          message: "投票次数不足",
+        $q.notify({
+            color: "negative",
+            position: "top",
+            message: "投票次数不足",
+            icon: "report_problem"
         });
         return;
       }
@@ -468,9 +470,11 @@ import { useNotify } from "src/hooks/notify";
       const res = await poolPrizeCastVote(qs.stringify(params));
 
       if (res.code === 0) {
-        notify({
-          type: "success",
-          message: "投票成功",
+        $q.notify({
+            color: "positive",
+            position: "top",
+            message: "投票成功",
+            icon: "check_circle_outline"
         });
         isCastVoteModalVisible.value= false;
         // loadVoteTeam();
@@ -562,9 +566,19 @@ import { useNotify } from "src/hooks/notify";
   const checkPeriod = (tabClicked) => {
     if (!isClickable.value) return; // Prevent clicks if not clickable
     if (tabClicked > activeTab.value) {
-      notify({ type: "error", message: "该赛段暂未开启" });
+      $q.notify({
+          color: "negative",
+          position: "top",
+          message: "该赛段暂未开启",
+          icon: "report_problem"
+      });
     } else if (tabClicked < activeTab.value) {
-      notify({ type: "error", message: "该赛段已结束" });
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "该赛段已结束",
+        icon: "report_problem"
+    });
     }
     // Disable clicking for 2 seconds
     isClickable.value = false;
@@ -781,7 +795,7 @@ background-size: 100% 100%;
 
 .promo-rules-div{
   margin: 10px auto;
-  background-image: url("../eurocup-2024-vote/images/rule-board.png");
+  // background-image: url("../eurocup-2024-vote/images/rule-board.png");
   padding: 40px 20px;
   background-size: 100% 100%;
 
@@ -862,7 +876,7 @@ background-size: 100% 100%;
     position: absolute;
     height: 15px;
     left: -20px;
-    top: 20px;
+    top: 5px;
     width: 15px;
     background-size: contain;
     content: "";
@@ -876,6 +890,7 @@ background-size: 100% 100%;
 }
 .columne {
   margin: 15px auto 40px;
+  padding: 20px;
 }
 .terms {
   font-family: 'HYYakuHei300';
@@ -1306,7 +1321,7 @@ background-size: 100% 100%;
     position: relative;
     top: 0px;
     margin-right: 2px;
-    background: url("../eurocup-2024-vote/images/point-icon.png")no-repeat center center;
+    // background: url("../eurocup-2024-vote/images/point-icon.png")no-repeat center center;
     background-size: contain;
     width: 8px;
     height: 8px;

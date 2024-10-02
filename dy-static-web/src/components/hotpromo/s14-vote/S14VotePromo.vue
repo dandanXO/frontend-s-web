@@ -300,13 +300,12 @@ import { poolPrizeVoteInit, poolPrizeCastVote } from "@/api/promotion/poolPrizeV
 import { convertToCommaAmount } from "@/utils/utils";
 import { userStore } from "@/store/index";
 import { useLocalStorage } from "@vueuse/core";
-import { useNotify } from "@/hooks/notify";
+import { ElMessage } from "element-plus";
 import { RouterLink } from "vue-router";
 import moment from "moment";
 
 // Store and Notify hooks
 const store = userStore();
-const notify = useNotify();
 
 // Image URL from local storage
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -362,26 +361,32 @@ const castVote = ({ teamId, teamName, teamNameLocal }) => {
 const submit = async (voteData) => {
 
     if (voteData.votes === 0) {
-      notify({
-        type: "error",
-        message: "请输入票数",
-      });
+      ElMessage.error({
+          type: "error",
+          message: "请输入票数"
+      })
       return;
     }
     if (Number(voteData.votes) > votesData.value.myVotes) {
-      notify({ type: "error", message: "投票次数不足" });
+      ElMessage.error({
+                        type: "error",
+                        message: "投票次数不足"
+                    })
       return;
     }
       isSubmitting.value = true;
       const params = { teamId: voteData.id, votes: Number(voteData.votes) };
       const res = await poolPrizeCastVote(params);
       if (res.code === 0) {
-        notify({ type: "success", message: "投票成功" });
+      ElMessage.success({
+            type: "success",
+            message: "投票成功"
+        })
         isCastVoteModalVisible.value = false;
         if (votesData.value.myVotes > 0) votesData.value.myVotes--;
         setTimeout(() => loadVoteTeam(), 2000);
       } else {
-        notify.error(res.message);
+        ElMessage.error(res.message)
       }
       isSubmitting.value = false;
 };
@@ -451,9 +456,9 @@ const isClickable = ref(true);
 const checkPeriod = (tabClicked) => {
   if (!isClickable.value) return; // Prevent clicks if not clickable
   if (tabClicked > activeTab.value) {
-    notify({ type: "error", message: "该赛段暂未开启" });
+    ElMessage.error('该赛段暂未开启');
   } else if (tabClicked < activeTab.value) {
-    notify({ type: "error", message: "该赛段已结束" });
+    ElMessage.error('该赛段已结束');
   } else {
     activeTab.value = tabClicked
   }
@@ -1228,7 +1233,7 @@ onMounted(() => {
   gap: 2px;
   &:before {
     content: "";
-    background: url("../../../assets/images/promotion/hotpromo/prizePoolVote/point-icon.png")no-repeat center center;
+    // background: url("../../../assets/images/promotion/hotpromo/prizePoolVote/point-icon.png")no-repeat center center;
     background-size: contain;
     width: 15px;
     height: 15px;
