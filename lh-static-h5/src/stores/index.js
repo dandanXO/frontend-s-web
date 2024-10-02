@@ -126,7 +126,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
-          window.captchaObj.reset()
+          window.captchaObj.reset();
           useUI().notify({
             type: "error",
             message: ret.message
@@ -293,12 +293,10 @@ export const userStore = defineStore("userStore", {
       }
     },
     memberLogout() {
-      return api
-        .post("/session/logout")
-        .then(() => {
-          LocalStorage.remove("TOKEN");
-          SessionStorage.remove("TOKEN");
-          SessionStorage.remove("vipData");
+      return api.post("/session/logout").then(() => {
+        LocalStorage.remove("TOKEN");
+        SessionStorage.remove("TOKEN");
+        SessionStorage.remove("vipData");
 
         location.reload();
       });
