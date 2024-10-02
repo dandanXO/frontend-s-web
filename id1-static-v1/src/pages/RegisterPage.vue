@@ -125,7 +125,8 @@ export default defineComponent({
       codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
-      smsCode: ""
+      smsCode: "",
+      realName: "lee bruce"
     });
     const getCode = () => {
       // api

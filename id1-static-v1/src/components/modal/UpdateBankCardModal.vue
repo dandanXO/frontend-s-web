@@ -10,7 +10,7 @@
 
         <q-card-section>
           <q-form>
-            <div class="q-my-sm">
+            <!-- <div class="q-my-sm">
               <div class="input-title">{{ $t("form.holderName") }}</div>
               <q-input
                 standout
@@ -24,7 +24,7 @@
                 label-color="secondary"
                 disable
               />
-            </div>
+            </div> -->
             <div class="q-my-sm">
               <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
