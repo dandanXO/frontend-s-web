@@ -249,7 +249,7 @@ onMounted(() => {
     }
   }
 
-  .text-yellow2 {
+  .text-yellows {
     color: #a2a213ff;
   }
 }
