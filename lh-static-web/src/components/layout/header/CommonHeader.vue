@@ -340,7 +340,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../../assets/logo-1.png" width="150" />
+            <img src="../../../assets/lh-logo.svg" width="150" />
           </div>
           <div class="acc-dialog-content">
             <LoginDialog
@@ -2508,6 +2508,8 @@ body {
 }
 
 .acc-dialog {
+  font-family: 'PingFang SC';
+  
   &.el-dialog {
     box-shadow: none;
     border-radius: 20px;
@@ -2536,10 +2538,12 @@ body {
           max-width: 963px;
           max-height: 896px;
           border-radius: 20px;
+          height: 100%;
 
           img {
             display: block;
             width: 100%;
+            height: 100%;
             object-fit: contain;
           }
         }

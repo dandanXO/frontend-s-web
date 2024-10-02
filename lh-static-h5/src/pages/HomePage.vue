@@ -1615,7 +1615,7 @@ export default defineComponent({
     const unreadInboxMail = ref(0);
     const getUnreadTotal = () => {
       if (store.token) {
-        return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
+        return api.get("/session/inbox/getUnreadTotal").then((res) => {
           // console.log(res);
           if (res.code === 0) {
             unreadInboxMail.value = res.data;
@@ -2631,9 +2631,9 @@ export default defineComponent({
           background-size: 100% 100%;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
-            top:1px;
-            left:1px;
-            border-top-left-radius:8px;
+            top: 1px;
+            left: 1px;
+            border-top-left-radius: 8px;
           }
           .platform-subtitle {
             color: $font-1-dark;

@@ -123,8 +123,12 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
         return res;
       }
-      if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
+      if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
+        SessionStorage.remove("TOKEN");
+        LocalStorage.remove("TOKEN");
+        router.push("/login");
         location.reload();
+        return;
       } else {
         if (
           res.code === ResponseCode.ERROR_NAME_EXIST ||
@@ -136,6 +140,7 @@ export default boot(({ app, router }) => {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
             router.push("/login");
+            location.reload();
             return;
           }
           return refreshTokenAndRetry(response);

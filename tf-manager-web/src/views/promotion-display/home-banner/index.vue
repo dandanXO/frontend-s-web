@@ -495,6 +495,20 @@
           </el-radio-group>
         </template>
       </el-table-column>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
       <el-table-column prop="createTime" :label="t('fields.createTime')">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>

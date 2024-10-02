@@ -6,6 +6,7 @@
         v-for="(tab, index) in tabs"
         :key="tab.period"
         :class="{ active: activeTab === tab.period }"
+        @click="checkPeriod(tab.period)"
         class="tab-item"
       >
         {{ tab.label }}
@@ -54,7 +55,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
@@ -136,7 +137,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
@@ -181,7 +182,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
@@ -337,7 +338,7 @@
             :hide-on-single-page="true"
             :total="votesData.votesRecord.data.length"
           />
-          <div class="page-info">
+          <div class="page-info" v-if="totalPages > 1">
             {{ votesData.votesRecord.current + '/' + totalPages }}
           </div>
         </div>
@@ -413,6 +414,13 @@ const castVote = ({ teamId, teamName, teamNameLocal }) => {
 // Submit vote function
 const submit = async (voteData) => {
 
+    if (voteData.votes === 0) {
+      notify({
+        type: "error",
+        message: "请输入票数",
+      });
+      return;
+    }
     if (Number(voteData.votes) > votesData.value.myVotes) {
       notify({ type: "error", message: "投票次数不足" });
       return;
@@ -437,13 +445,17 @@ const loadVoteTeam = () => {
     if (res.code === 0) {
       activeTab.value = res.data.period;
       const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
-        const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-        return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+        const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
+        if (voteItems) {
+          const { countryImgUrl, teamNameLocal } = voteItems;
+          return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+        }
+        return []; // Return an empty array to exclude unmatched items
       });
       const votesList = res.data.votesList.map((team) => {
         return {
           ...team,
-          votes: 1 // Initialize each team's votes to 1
+          votes: 0 // Initialize each team's votes to 1
         };
       });
       votesData.value = {
@@ -487,6 +499,20 @@ const totalPages = computed(() => {
   return Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
 });
 
+const isClickable = ref(true); 
+const checkPeriod = (tabClicked) => {
+  if (!isClickable.value) return; // Prevent clicks if not clickable
+  if (tabClicked > activeTab.value) {
+    notify({ type: "error", message: "该赛段暂未开启" });
+  } else if (tabClicked < activeTab.value) {
+    notify({ type: "error", message: "该赛段已结束" });
+  }
+  // Disable clicking for 2 seconds
+  isClickable.value = false;
+  setTimeout(() => {
+    isClickable.value = true; // Re-enable clicking after 2 seconds
+  }, 2000);
+}
 onMounted(() => {
   if (!store.token) return;
   loadVoteTeam();
@@ -567,6 +593,7 @@ onMounted(() => {
 
 .tab-item {
     border-radius: 5px 5px 0 0;
+    cursor: pointer;
     height: 40px;
     width: 23%;
     margin-top: 5px;
@@ -593,7 +620,7 @@ onMounted(() => {
   display: flex;
   max-width: 1250px;
   gap: 20px;
-  margin: 20px auto;
+  margin: 20px auto 0;
   justify-content: center;
   .column {
     background: url(images/dateborder.png)no-repeat left center;
@@ -845,9 +872,9 @@ onMounted(() => {
   margin: 15px auto;
   max-width: 1200px;
 }
-.column {
-  margin: 15px auto 40px;
-}
+// .column {
+//   margin: 15px auto 40px;
+// }
 .terms {
   font-family: 'HYYakuHei300';
   font-size: 20px;
