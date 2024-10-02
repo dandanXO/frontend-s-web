@@ -277,7 +277,7 @@ export const userStore = defineStore("userStore", {
     },
     getUnreadTotal() {
       if (this.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((total) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((total) => {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
@@ -293,10 +293,12 @@ export const userStore = defineStore("userStore", {
       }
     },
     memberLogout() {
-      return api.post("/session/logout").then(() => {
-        LocalStorage.remove("TOKEN");
-        SessionStorage.remove("TOKEN");
-        SessionStorage.remove("vipData");
+      return api
+        .post("/session/logout")
+        .then(() => {
+          LocalStorage.remove("TOKEN");
+          SessionStorage.remove("TOKEN");
+          SessionStorage.remove("vipData");
 
         location.reload();
       });

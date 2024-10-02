@@ -1,4 +1,5 @@
 <template>
+  <button @click="installTest">test</button>
   <router-view />
 </template>
 
@@ -322,9 +323,33 @@ export default defineComponent({
         errorHandler
       );
     };
-
+    const  deferredPrompt = ref(null)
+    const installTest = () =>{
+      console.log(deferredPrompt.value)
+      if (deferredPrompt.value) {
+        deferredPrompt.value.prompt();
+        deferredPrompt.value.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+          } else {
+            console.log('User dismissed the A2HS prompt');
+          }
+          deferredPrompt.value = null;
+        });
+      }
+    }
     onMounted(() => {
+      console.log("22");
       checkServerStatus();
+      console.log('in on mounted dan')
+      window.addEventListener('beforeinstallprompt', (e) => {
+        console.log(e,'dan')
+        e.preventDefault();
+
+        deferredPrompt.value = e;
+        // 这里你可以显示一个按钮或其他 UI 元素来提示用户安装
+      });
+
       checkSID();
       // initCsWeb();
       getCSA();
@@ -355,6 +380,9 @@ export default defineComponent({
     //   clearTimeout(onlineStatTimeout);
     //   clearInterval(onlineStatInterval);
     // });
+    return{
+      installTest
+    }
   }
 });
 </script>
