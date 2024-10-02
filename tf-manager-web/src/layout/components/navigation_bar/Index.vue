@@ -224,7 +224,7 @@ export default {
       updateSiteTitle()
     }
 
-    let intervalId = null; 
+    let intervalId = null;
     function updateSiteTitle() {
       originalSiteTitle = document.querySelector("title").innerText
       let blinkingTitle = originalSiteTitle + ` (${applyWithdrawCount.value})`;
@@ -264,7 +264,7 @@ export default {
         clearInterval(intervalId);
         intervalId = null;
       }
-      
+
       document.title = getSiteTitle(getSelectedSite.id)
       ElMessage({
         message: `switch site to ` + getSelectedSite.siteName,
@@ -274,8 +274,7 @@ export default {
         reload()
         loadMenu()
         updateData()
-        // location.reload()
-      }, 200)
+      }, 500)
     }
 
     function mapMenuPaths(menus, parentPath = '') {

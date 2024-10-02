@@ -184,7 +184,7 @@
             <template v-for="(item, index) in vipItems" :key="index">
               <template
                 v-if="
-                  store.token && isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1
+                  store.token && isFirstTime && vipLevel !== 0 ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1
                 "
               >
                 <div
@@ -600,16 +600,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <!-- <tr>
             <td>VIP0</td>
             <td>0.45%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.60%</td>
-            <!--            <td>0.15%</td>-->
+            <td>0.15%</td>
             <td>8,888</td>
-          </tr>
+          </tr> -->
           <tr>
             <td>VIP1</td>
             <td>0.45%</td>
@@ -793,7 +793,7 @@
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要（本金+彩金一倍流水）即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -1465,7 +1465,8 @@ $border-settings: 1px solid #e5e7eb;
         }
 
         .progressBarDescription {
-          display: flex;
+          // display: flex;
+          display: none;
           // justify-content: space-between;
           color: #333;
           font-size: 17.987px;

@@ -45,6 +45,7 @@
         v-for="(tab) in tabs"
         :key="tab.period"
         :class="{ active: activeTab === tab.period }"
+        @click="checkPeriod(tab.period)"
         class="tab-item"
       >
         {{ tab.label }}
@@ -93,7 +94,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                
@@ -143,7 +144,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                
                 <q-input
@@ -190,7 +191,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <q-input
@@ -437,6 +438,13 @@ import { useNotify } from "src/hooks/notify";
       // if (voteRef.value.hasError) {
       //   return;
       // }
+      if (voteData.votes === 0) {
+        notify({
+          type: "error",
+          message: "请输入票数",
+        });
+        return;
+      }
 
       if (Number(voteData.votes) > votesData.value.myVotes) {
         notify({
@@ -494,14 +502,17 @@ import { useNotify } from "src/hooks/notify";
         if(res.code===0){
           activeTab.value = res.data.period
           const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
-            const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
-            return extendedVoteRecords
+            const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
+            if (voteItems) {
+              const { countryImgUrl, teamNameLocal } = voteItems;
+              return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+            }
+            return [];
         });
         const votesList = res.data.votesList.map((team) => {
           return {
             ...team,
-            votes: 1 // Initialize each team's votes to 1
+            votes: 0 // Initialize each team's votes to 1
           };
         });
 
@@ -540,6 +551,20 @@ import { useNotify } from "src/hooks/notify";
   const selectedDate = computed(() => selectedTabDetails.value.date);
   const selectedTitle = computed(() => selectedTabDetails.value.tabtitle);
 
+  const isClickable = ref(true); 
+  const checkPeriod = (tabClicked) => {
+    if (!isClickable.value) return; // Prevent clicks if not clickable
+    if (tabClicked > activeTab.value) {
+      notify({ type: "error", message: "该赛段暂未开启" });
+    } else if (tabClicked < activeTab.value) {
+      notify({ type: "error", message: "该赛段已结束" });
+    }
+    // Disable clicking for 2 seconds
+    isClickable.value = false;
+    setTimeout(() => {
+      isClickable.value = true; // Re-enable clicking after 2 seconds
+    }, 2000);
+  }
 
     onMounted(() => {
       if (!store.token) {

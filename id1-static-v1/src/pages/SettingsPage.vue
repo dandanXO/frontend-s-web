@@ -154,7 +154,7 @@ const slide = ref(0);
 const imgURL = "";
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-2.jpg")
+    mobileImageUrl: require("../assets/images/account/account-banner-2.png")
   }
 ]);
 

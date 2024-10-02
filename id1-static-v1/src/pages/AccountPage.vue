@@ -3,7 +3,7 @@
     <div class="personal-center-container">
       <ProfileProgressBanner />
       <q-form ref="profileFormRef" class="pc-form">
-        <div class="pc-form-item" @click="openPersonalCenterDialog">
+        <!-- <div class="pc-form-item" @click="openPersonalCenterDialog">
           <div class="pc-form-label">{{ $t("form.fullName") }}</div>
           <div class="pc-form-input">
             <q-input
@@ -17,7 +17,7 @@
               readonly
             ></q-input>
           </div>
-        </div>
+        </div> -->
 
         <div class="pc-form-item" @click="openPersonalCenterDialog">
           <div class="pc-form-label">{{ $t("form.phone") }}</div>

@@ -72,7 +72,7 @@ export default {
     phone: "Nomor Telepon",
     phone_placeholder: "Masukkan nomor ponsel Anda",
     phone_rules_01: "Masukkan nomor telepon",
-    phone_rules_02: "Nomor telepon harus 10 digit",
+    phone_rules_02: "Nomor telepon harus antara 8 hingga 12 digit",
     phone_rules_03: "Nomor telepon harus dimulai dengan '03'",
     prependNumber: "+62",
     password: "Kata Sandi",
@@ -207,6 +207,7 @@ export default {
     confirm: "Konfirmasi",
     submit: "Kirim",
     addNewAccount: "Tambahkan Akun Baru",
+    update: "Pembaruan",
     updated: "Diperbarui",
     updating: "Memperbarui...",
     addCrypto: "Tambahkan kripto",
@@ -222,7 +223,7 @@ export default {
     signOut: "Keluar",
     back: "Kembali",
     moreGames: "Lebih Banyak Permainan",
-    addCash: "Tambah Saldo",
+    addCash: "Tambah uang tunai",
     search: "Cari",
     downloadApp: "Unduh Aplikasi",
     downloadNow: "Unduh Sekarang",
@@ -254,7 +255,8 @@ export default {
     pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda",
     failed: "Gagal",
     updateSucceed: "Pembaruan berhasil",
-    unbindSucceed: "Berhasil dilepaskan"
+    unbindSucceed: "Berhasil dilepaskan",
+    withdrawalSubmitSucceed: "Penarikan Kirim Berhasil"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -678,7 +680,7 @@ export default {
     success: "Berhasil",
     supplementSuccess: "Lengkapi Berhasil",
     closed: "Ditutup",
-    orderNo: "Nomor Pesanan",
+    orderNo: "NO. Order",
     bank: "BANK",
     noRecord: "Tak ada Catatan",
     noMoreRecord: "Tidak temukan catatan apa pun",
@@ -689,7 +691,9 @@ export default {
     noMember: "Tidak Ada Anggota",
     noMessage: "Tidak Ada Pesan",
     level: "Level",
-    turnover: "Perputaran"
+    turnover: "Perputaran",
+    serialNumber: "Nomor seri",
+    vipUpgradeBonus: "Hadiah Upgrade VIP"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -732,12 +736,12 @@ export default {
     }
   },
   maintenance: {
-    underMaintenance: "Under maintenance",
-    content01: "Our website is currently undergoing maintenance...",
-    from: "From",
-    to: "To",
-    content02: "During this period, all games and services will be unavailable.",
-    content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+    underMaintenance: "Sedang dalam pemeliharaan",
+    content01: "Website kami sedang dalam pemeliharaan...",
+    from: "Dari",
+    to: "Sampai",
+    content02: "Selama periode ini, semua permainan dan layanan tidak akan tersedia.",
+    content03: "Kami mohon maaf atas ketidaknyamanan yang ditimbulkan dan menghargai kesabaran Anda!"
   },
   promo_activitiesDetails: {
     activitiesContent:
@@ -757,6 +761,9 @@ export default {
     rules_03:
       "3. Setelah persyaratan deposit terpenuhi, Anda harus bermain mesin slot untuk mulai menghitung turnover, dan bonus akan diberikan setelah turnover selesai.",
     rules_04: "4. Setelah persyaratan terpenuhi, sistem akan secara otomatis mengeluarkan bonus."
+  },
+  promo_ph1SlotFtd: {
+    sorryDesc: "Maaf, akun Anda sudah mendapatkan bonus. Silakan bergabung dengan aktivitas kami yang lain."
   },
   error: {
     101: "Platform tidak ditemukan",

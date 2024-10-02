@@ -1,7 +1,7 @@
 <template>
   <div class="activities-container">
     <div class="activity-banner">
-      <img src="@/assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
+      <img src="@/assets/images/promotion/activities/deposit-promo-topbanner.png" />
     </div>
     <div class="activities-content">
       {{ $t("promo_activitiesDetails.activitiesContent") }}
@@ -211,14 +211,9 @@ onActivated(() => {
             z-index: 2;
             font-size: 10px;
             color: #ffffff;
-            text-shadow:
-              1px 1px 2px rgba(0, 0, 0, 0.7),
-              -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7),
-              -1px 1px 2px rgba(0, 0, 0, 0.7),
-              1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7),
-              1px -1px 2px rgba(255, 255, 255, 0.7),
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
               -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
