@@ -5,109 +5,6 @@
     </div>
     <div class="account-content mail">
       <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-        <el-tab-pane key="inbox" name="inbox" :label="'收件箱'">
-          <div
-              style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-              v-if="!isLoading['inbox']"
-          >
-            载入中
-          </div>
-          <div v-else-if="mailboxState.mailboxList.inbox.list.length > 0">
-            <div class="mailbox-list">
-              <div
-                class="mailbox-item"
-                v-for="m in mailboxState.mailboxList.inbox.list"
-                :key="m.id"
-              >
-                <div class="mailbox-title">{{ m.title }}</div>
-                <div class="mailbox-content" v-html="m.content"></div>
-                <div class="mailbox-date"><el-icon><Calendar /></el-icon>{{ m.sendTime }}</div>
-              </div>
-            </div>
-            <div class="pagination-wrapper">
-              <el-pagination
-                @current-change="changePage"
-                :total="mailboxState.mailboxList.inbox.total"
-                :current-page="mailboxState.mailboxList.inbox.pageNum"
-                :page-size="mailboxState.mailboxList.inbox.pageSize"
-              />
-            </div>
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-            v-else
-          >
-            暂无记录
-          </div>
-        </el-tab-pane>
-        <el-tab-pane key="sent" name="sent" :label="'已发送'">
-          <div
-              style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-              v-if="!isLoading['outbox']"
-          >
-            载入中
-          </div>
-          <div v-else-if="mailboxState.mailboxList.sent.list.length > 0">
-            <div class="mailbox-list">
-              <div
-                class="mailbox-item"
-                v-for="m in mailboxState.mailboxList.sent.list"
-                :key="m.id"
-              >
-                <div class="mailbox-title">{{ m.title }}</div>
-                <div class="mailbox-content" v-html="m.content"></div>
-              </div>
-            </div>
-            <div class="pagination-wrapper" :class="{ hidden: mailOpened }">
-              <!-- <el-pagination
-                v-model:current="
-                  mailboxState.mailboxList[mailboxState.active].pageNum
-                "
-                :total="mailboxState.mailboxList[mailboxState.active].total"
-                show-less-items
-                hideOnSinglePage
-                :defaultPageSize="2"
-                :pageSize="
-                  mailboxState.mailboxList[mailboxState.active].pageSize
-                "
-                @change="changePage(mailboxState.active)"
-              /> -->
-
-              <el-pagination
-                @current-change="changePage"
-                :total="mailboxState.mailboxList[mailboxState.active].total"
-                :current-page="mailboxState.mailboxList[mailboxState.active].pageNum"
-                :page-size="mailboxState.mailboxList[mailboxState.active].pageSize"
-              />
-            </div>
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 300px;
-            "
-            v-else
-          >
-            暂无记录
-          </div>
-        </el-tab-pane>
         <el-tab-pane name="write" :label="'意见反馈'">
           <div>
             <el-form
@@ -186,6 +83,113 @@
             </el-form>
           </div>
         </el-tab-pane>
+        <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
+          <div
+              style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 300px;
+            "
+              v-if="!isLoading['outbox']"
+          >
+            载入中
+          </div>
+          <div v-else-if="mailboxState.mailboxList.sent.list.length > 0">
+            <el-collapse v-model="activeNames">
+              <el-collapse-item
+                v-for="item in mailboxState.mailboxList.sent.list"
+                :key="item.id"
+                @click="openMsg(item)"
+              >
+                <template #title>
+                  <p class="title-p">标题：{{ item.title }}</p>
+                </template>
+                <div>
+                  <div class="content-p">正文：{{ item.content }}</div>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+            <div class="pagination-wrapper" :class="{ hidden: mailOpened }">
+              <!-- <el-pagination
+                v-model:current="
+                  mailboxState.mailboxList[mailboxState.active].pageNum
+                "
+                :total="mailboxState.mailboxList[mailboxState.active].total"
+                show-less-items
+                hideOnSinglePage
+                :defaultPageSize="2"
+                :pageSize="
+                  mailboxState.mailboxList[mailboxState.active].pageSize
+                "
+                @change="changePage(mailboxState.active)"
+              /> -->
+
+              <el-pagination
+                @current-change="changePage"
+                :total="mailboxState.mailboxList[mailboxState.active].total"
+                :current-page="mailboxState.mailboxList[mailboxState.active].pageNum"
+                :page-size="mailboxState.mailboxList[mailboxState.active].pageSize"
+              />
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 300px;
+            "
+            v-else
+          >
+            暂无记录
+          </div>
+        </el-tab-pane>
+        <el-tab-pane key="inbox" name="inbox" :label="'收件箱'">
+          <div
+              style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 300px;
+            "
+              v-if="!isLoading['inbox']"
+          >
+            载入中
+          </div>
+          <div v-else-if="mailboxState.mailboxList.inbox.list.length > 0">
+            <div class="mailbox-list">
+              <div
+                class="mailbox-item"
+                v-for="m in mailboxState.mailboxList.inbox.list"
+                :key="m.id"
+              >
+                <div class="mailbox-title">{{ m.title }}</div>
+                <div class="mailbox-content" v-html="m.content"></div>
+                <div class="mailbox-date"><el-icon><Calendar /></el-icon>{{ m.sendTime }}</div>
+              </div>
+            </div>
+            <div class="pagination-wrapper">
+              <el-pagination
+                @current-change="changePage"
+                :total="mailboxState.mailboxList.inbox.total"
+                :current-page="mailboxState.mailboxList.inbox.pageNum"
+                :page-size="mailboxState.mailboxList.inbox.pageSize"
+              />
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 300px;
+            "
+            v-else
+          >
+            暂无记录
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -215,7 +219,7 @@ const store = userStore();
       outbox: false
     })
     const mailboxState = reactive({
-      active: "inbox",
+      active: "write",
       mailboxList: {
         inbox: {
           list: [],
