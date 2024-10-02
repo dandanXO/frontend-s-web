@@ -95,7 +95,7 @@ const openUrl = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40px 14px 0px 14px;
+  padding: 20px 14px 0px 14px;
 }
 .q-layout__section--marginal {
   background: linear-gradient(90deg, #17221c 0.11%, #171719 39.57%);

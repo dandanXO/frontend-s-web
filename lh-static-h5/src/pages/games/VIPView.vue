@@ -31,7 +31,7 @@
                     >
                       待晋级
                     </span>
-                    <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                    <span v-else>{{ formatNumber(originalUpgradeBetAmounts[vipIndex]) }}</span>
                   </span>
                 </div>
                 <div class="viplevel">VIP {{ vip.vipLevel }}</div>
@@ -193,7 +193,13 @@
             <Slide v-for="(categoryPair, slideIndex) in categoryPairs" :key="slideIndex">
               <template v-for="category in categoryPair" :key="category.key">
                 <template v-for="item in vipItems" :key="item">
-                  <template v-if="isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
+                  <template
+                    v-if="
+                      store.token && isFirstTime && vipLevel !== 0
+                        ? +item.vipLevel === currentSlide
+                        : +item.vipLevel === currentSlide + 1
+                    "
+                  >
                     <div
                       class="box"
                       :class="{
@@ -457,16 +463,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <!-- <tr>
             <td>VIP0</td>
             <td>0.45%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.60%</td>
-            <!--            <td>0.15%</td>-->
+            <td>0.15%</td>
             <td>8,888</td>
-          </tr>
+          </tr> -->
           <tr>
             <td>VIP1</td>
             <td>0.45%</td>
@@ -604,7 +610,7 @@
       </ol> -->
       <h2>一. 会员晋级/保级/降级规则</h2>
       <ol class="terms got-bullets">
-        <li>会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；</li>
+        <li>完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</li>
         <li>VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</li>
         <li>会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
         <li>
@@ -651,7 +657,7 @@
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要（本金+彩金一倍流水）即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -1384,6 +1390,17 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-container {
   z-index: 0;
+  position: relative;
+  background-image: url("../../assets/images/vip/vip-bg.jpg");
+  background-color: #f3f7fd;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #8d8d8d;
+  min-height: 100vh;
+  padding: 0 0 80px;
+
   .loading-icon {
     width: 10px;
     height: 10px;
@@ -1411,16 +1428,6 @@ $border-settings: 1px solid #e5e7eb;
       transform: rotate(360deg);
     }
   }
-  position: relative;
-  background-image: url("../../assets/images/vip/vip-bg.jpg");
-  background-color: #f3f7fd;
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-  background-attachment: fixed;
-  color: #8d8d8d;
-  min-height: 100vh;
-  padding: 0 0 80px;
 
   .header-section {
     margin: 0 auto;
@@ -1429,7 +1436,7 @@ $border-settings: 1px solid #e5e7eb;
     overflow: hidden;
   }
   .vip-header {
-    margin: 10px auto;
+    margin: 10px auto 25px;
     width: 120%;
     margin-left: -10%;
   }
@@ -1444,7 +1451,6 @@ $border-settings: 1px solid #e5e7eb;
   .current-vip-status {
     border: 2px solid #799df8;
     max-width: 480px;
-    padding: 10px;
     width: 95%;
     margin: 0 auto;
     background: #212b4ae0;
@@ -1469,10 +1475,12 @@ $border-settings: 1px solid #e5e7eb;
       // width: calc(100% - 120px);
       // margin-left: 80px;
       width: 100%;
+      gap: 20px;
+
       &.load {
         margin-left: 65px;
       }
-      gap: 20px;
+
       .amount {
         display: flex;
         flex-direction: column;
@@ -1510,7 +1518,8 @@ $border-settings: 1px solid #e5e7eb;
         }
 
         .progressBarDescription {
-          display: flex;
+          // display: flex;
+          display: none;
           justify-content: space-between;
           color: #333;
           font-size: 13.987px;
@@ -1574,7 +1583,6 @@ $border-settings: 1px solid #e5e7eb;
       }
       .inner-slide {
         width: 96%;
-        margin: auto;
         overflow: hidden;
         height: 96%;
         margin: 3%;
@@ -1720,7 +1728,6 @@ $border-settings: 1px solid #e5e7eb;
     .linktotable {
       border-bottom: 1px solid #f1dda0;
       color: #f1dda0;
-      display: inline-block;
       display: block;
       margin: 0 auto;
       width: 98px;
@@ -2014,7 +2021,6 @@ $border-settings: 1px solid #e5e7eb;
         border-right: $border-settings;
 
         &:has(.disable) {
-          background-color: #e7e7e7;
           background-color: #e7e7e74f;
         }
       }
@@ -2132,10 +2138,12 @@ $border-settings: 1px solid #e5e7eb;
       justify-content: center;
       align-items: center;
       background: linear-gradient(180deg, #ffffff 18.57%, #b3d7f0 85%);
-      background-clip: text;
       font-size: 18px;
       -webkit-text-fill-color: transparent;
       font-weight: 600;
+      background-clip: text;
+      text-align: center;
+
       &:before {
         content: "";
         background: url(../../assets/images/vip/decal.png);
@@ -2157,8 +2165,6 @@ $border-settings: 1px solid #e5e7eb;
         background-size: cover;
         transform: rotateY(180deg);
       }
-      background-clip: text;
-      text-align: center;
     }
     .accordion {
       cursor: pointer;
@@ -2488,6 +2494,7 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
   }
+
   .carousel__slide--prev + .carousel__slide.carousel__slide--visible {
     .vipcontents {
       &:before {

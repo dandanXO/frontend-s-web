@@ -308,3 +308,7 @@ export const getAllAffiliateWithdrawRecordEwalltPay = (memberWithdrawRecord) => 
 export const getAllAffiliateWithdrawRecordAliPay = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getAllAffiliateAliPay", Method.GET, memberWithdrawRecord, ContentType.form);
 };
+
+export const sync = (memberWithdrawRecord) => {
+  return https().request(`/memberWithdrawRecord/sync`, Method.POST, memberWithdrawRecord, ContentType.form);
+};

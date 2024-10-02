@@ -45,6 +45,7 @@
         v-for="(tab) in tabs"
         :key="tab.period"
         :class="{ active: activeTab === tab.period }"
+        @click="checkPeriod(tab.period)"
         class="tab-item"
       >
         {{ tab.label }}
@@ -52,13 +53,13 @@
     </div>
     <div class="dates">
       <div class="datecolumn">
-        <span class="title">瑞士轮阶段：</span>10月3日-7日；10月10日-13日
+        <span class="title">瑞士轮阶段：</span>10月3日-10月-13日
       </div>
       <div class="datecolumn">
-        <span class="title">淘汰赛阶段：</span>10月17日-20日，10月26日-27日
+        <span class="title">淘汰赛阶段：</span>10月17日-10月27日
       </div>
       <div class="datecolumn">
-        <span class="title">冠亚军决赛：</span>11月2日
+        <span class="title">冠亚军决赛：</span>11月2日22:00
       </div>
     </div>
     
@@ -74,7 +75,7 @@
           </div>
         </div>
         
-        <div class="main-title-box">活动详细阶段与队伍：投票分为3阶段，每一阶段结算一次</div>
+        <div class="main-title-box">瑞士轮阶段：10月3日-10月-13日</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
@@ -93,7 +94,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                
@@ -124,7 +125,7 @@
           </div>
         </div>
         
-        <div class="main-title-box">活动详细阶段与队伍：投票分为3阶段，每一阶段结算一次</div>
+        <div class="main-title-box">淘汰赛阶段：10月17日-10月27日</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
@@ -143,7 +144,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                
                 <q-input
@@ -172,7 +173,7 @@
           </div>
         </div>
         
-        <div class="main-title-box">活动详细阶段与队伍：投票分为3阶段，每一阶段结算一次</div>
+        <div class="main-title-box">冠亚军决赛：11月2日22:00</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
@@ -190,7 +191,7 @@
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
-                <div class="btn" @click="votesListItem.votes > 1 ? votesListItem.votes-- : null">-</div>
+                <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
                 
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <q-input
@@ -233,7 +234,8 @@
     <div class="columne">
       <div class="main-title-box">获取投票</div>
       <div class="sub-title">
-          活动期间，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；
+        {{ selectedTabDesc }}  
+          <!-- 活动期间，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金； -->
       </div>
       <div class="table">
         <div class="table-header">
@@ -246,7 +248,7 @@
               <tr>
                 <td>单笔存款</td>
                 <td>获得票数</td>
-                <td>票数上限</td>
+                <td>当日票数上限</td>
               </tr>
               <tr>
                 <td>每日登陆</td>
@@ -294,12 +296,16 @@
       <div class="main-title-box">活动规则</div>
       <div class="terms">
         <ol>
-          <li>活动期间，根据对应条件可获得对应票数，获得的票数可以给任意队伍进行投票，当日完成投票需求即可再活动页面点击【点击领取】领取票数，对应档位当日票数已达至所获票数数量上限则无法继续获得；</li>
-          <li>奖金池结算：（1,000,000➗晋级队伍总票数）*用户投票数量=投票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；</li>
-          <li>例：用户投注BLG队伍100票，BLG队伍再此阶段晋级并且BOG队伍总共获得150,000票，那么用户可获得（1,000,000➗150000）*100=666.7元彩金；</li>
-          <li>根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
-          <li>此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</li>
-          <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          <li>活动期间，会员可根据完成的条件获得相应的票数。获得的票数可自由分配给任意队伍进行投票。当日完成获取票数的要求后，即可在活动页面自动获得对应票数。若当日票数已达到对应档位的数量上限，则无法继续获得更多票数；</li>
+          <li v-if="activeTab === 1">瑞士轮奖金池结算：（200,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
+          <span class="eg">例：用户投注BLG队伍100票，BLG队伍在瑞士轮阶段晋级并且8支晋级队伍总共获得150,000票数，那么用户可获得（200,000➗150000）*100=133元彩金；</span></li>
+          <li v-if="activeTab === 2">淘汰赛奖金池结算：（500,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
+            <span class="eg">例：用户投注BLG队伍100票，BLG队伍在淘汰赛阶段决赛并且2支晋级队伍总共获得300,000票数，那么用户可获得（500,000➗300000）*100=166元彩金；</span></li>
+            <li v-if="activeTab === 3">决赛阶段赛奖金池结算：（1000,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
+              <span class="eg">例：用户投注BLG队伍100票，BLG队伍在决赛阶段获得冠军总共获得500,000票数，那么用户可获得（1000,000➗500,000）*100=200元彩金；</span></li>
+          <li> 根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
+          <li> 此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</li>
+          <li> 为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ol>
       </div>
     </div>
@@ -411,32 +417,39 @@ import { useNotify } from "src/hooks/notify";
     });
     // Tabs data
     const tabs = [
-      { label: "瑞士轮", period: 1, date: '瑞士轮阶段活动投票时间：10.03~10.13', tabtitle: 'BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛' },
-      { label: "淘汰赛", period: 2, date: '淘汰赛阶段活动投票时间：10.17~10.27', tabtitle: 'BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛' },
-      { label: "冠亚赛", period: 3, date: '冠亚赛阶段活动投票时间：11.02~11.02', tabtitle: 'BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠' }
+      { label: "瑞士轮", period: 1, date: '瑞士轮阶段活动投票时间：10.03~10.13', tabtitle: 'BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛', tabdetail: '活动期间，统计八支晋级队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；' },
+      { label: "淘汰赛", period: 2, date: '淘汰赛阶段活动投票时间：10.17~10.27', tabtitle: 'BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛', tabdetail: '活动期间，统计2支晋级决赛队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；' },
+      { label: "冠亚赛", period: 3, date: '冠亚赛阶段活动投票时间：11.02~11.02', tabtitle: 'BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠', tabdetail: '活动期间，统计决赛冠军队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍获得冠军后即可瓜分奖金池彩金；' }
     ];
-    const castVote = ({ teamId, teamName, teamNameLocal }) => {
-      toggleCastVoteModal(true)
-      castVoteFormData.teamId = teamId
-      castVoteFormData.teamName = teamName
-      castVoteFormData.teamNameLocal = teamNameLocal
-    }
-    const toggleCastVoteModal = (status) => {
-      if (status === true) {
-        castVoteFormData.teamId = undefined;
-        castVoteFormData.teamName = '';
-        castVoteFormData.teamNameLocal = ""
-        castVoteFormData.votes = '1';
-      }
+    // const castVote = ({ teamId, teamName, teamNameLocal }) => {
+    //   toggleCastVoteModal(true)
+    //   castVoteFormData.teamId = teamId
+    //   castVoteFormData.teamName = teamName
+    //   castVoteFormData.teamNameLocal = teamNameLocal
+    // }
+    // const toggleCastVoteModal = (status) => {
+    //   if (status === true) {
+    //     castVoteFormData.teamId = undefined;
+    //     castVoteFormData.teamName = '';
+    //     castVoteFormData.teamNameLocal = ""
+    //     castVoteFormData.votes = '1';
+    //   }
 
-      isCastVoteModalVisible.value = status;
-    }
+    //   isCastVoteModalVisible.value = status;
+    // }
     const submit = async (voteData) => {
       // voteRef.value.validate();
 
       // if (voteRef.value.hasError) {
       //   return;
       // }
+      if (voteData.votes === 0) {
+        notify({
+          type: "error",
+          message: "请输入票数",
+        });
+        return;
+      }
 
       if (Number(voteData.votes) > votesData.value.myVotes) {
         notify({
@@ -494,14 +507,17 @@ import { useNotify } from "src/hooks/notify";
         if(res.code===0){
           activeTab.value = res.data.period
           const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
-            const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
-            return extendedVoteRecords
+            const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
+            if (voteItems) {
+              const { countryImgUrl, teamNameLocal } = voteItems;
+              return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+            }
+            return [];
         });
         const votesList = res.data.votesList.map((team) => {
           return {
             ...team,
-            votes: 1 // Initialize each team's votes to 1
+            votes: 0 // Initialize each team's votes to 1
           };
         });
 
@@ -539,7 +555,22 @@ import { useNotify } from "src/hooks/notify";
 
   const selectedDate = computed(() => selectedTabDetails.value.date);
   const selectedTitle = computed(() => selectedTabDetails.value.tabtitle);
+  const selectedTabDesc = computed(() => selectedTabDetails.value.tabdetail);
 
+  const isClickable = ref(true); 
+  const checkPeriod = (tabClicked) => {
+    if (!isClickable.value) return; // Prevent clicks if not clickable
+    if (tabClicked > activeTab.value) {
+      notify({ type: "error", message: "该赛段暂未开启" });
+    } else if (tabClicked < activeTab.value) {
+      notify({ type: "error", message: "该赛段已结束" });
+    }
+    // Disable clicking for 2 seconds
+    isClickable.value = false;
+    setTimeout(() => {
+      isClickable.value = true; // Re-enable clicking after 2 seconds
+    }, 2000);
+  }
 
     onMounted(() => {
       if (!store.token) {
@@ -722,8 +753,10 @@ background-size: 100% 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: 'Arial';
+  height: 50px;
   padding: 10px;
+  position: relative;
+  margin: -20px 0 20px;
 }
 
 .promo-title{
@@ -811,7 +844,7 @@ background-size: 100% 100%;
 .main-title-box {
   background: url(images/headerbg.png)no-repeat left center;
   background-size: contain;
-  height: 50px;
+  height: 25px;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
@@ -835,7 +868,7 @@ background-size: 100% 100%;
   }
 }
 .sub-title {
-  font-size: 15px;
+  font-size: 12px;
   color: #ffffff;
   margin: 15px auto;
   max-width: 1200px;
@@ -851,7 +884,13 @@ background-size: 100% 100%;
   margin: 15px auto;
   max-width: 1200px;
   background: url(http://localhost:8090/static/img/box.eadefdb4.png) no-repeat center center;
-    background-size: 100% 100%;
+  background-size: 100% 100%;
+  ol {
+    padding: 16px 15px 16px 30px;
+  }
+  .eg {
+    display: block;
+  }
 }
 
 .table {

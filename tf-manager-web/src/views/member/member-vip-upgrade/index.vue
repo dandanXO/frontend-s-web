@@ -51,6 +51,16 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div class="btn-group">
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:vip-upgrade:export']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
+      </div>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
       <template #header>
@@ -109,12 +119,29 @@
         :current-page="request.current"
       />
     </el-card>
+
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { computed, reactive, ref, onMounted } from 'vue'
-import { getVipUpgradeList } from '@/api/vip-upgrade'
+import { getVipUpgradeList, getExport } from '@/api/vip-upgrade'
 import { getSiteListSimple } from '@/api/site'
 import { hasPermission } from '@/utils/util'
 import { useStore } from '@/store'
@@ -134,6 +161,10 @@ const siteList = reactive({
 })
 const shortcuts = getShortcuts(t)
 let timeZone = null
+
+const uiControl = reactive({
+  messageVisible: false
+})
 
 const date = new Date();
 const defaultStartDate = convertStartDate(date);
@@ -204,6 +235,16 @@ async function loadVipUpgradeList() {
   page.records = result.data.records
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false
+}
+
+async function requestExportExcel() {
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 function changePage(page) {

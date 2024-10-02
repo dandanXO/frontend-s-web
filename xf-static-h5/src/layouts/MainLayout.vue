@@ -1,13 +1,9 @@
 <template>
   <q-layout view="hHh Lpr fFf">
     <q-header v-if="hasPage">
-      <q-card-section
-          v-if="!hasPage"
-          class="top-section justify-between items-center"
-          horizontal
-      >
+      <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo.png"/></router-link>
+          <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>
@@ -16,25 +12,24 @@
         <!-- <q-card-actions v-if="store.hasToken()">
           <q-btn glossy color="brand" @click="logout">Logout</q-btn>
         </q-card-actions> -->
-        <q-btn
-            v-if="store.hasToken()"
-            class="flex"
-            to="/finance/deposit"
-            no-caps
-            flat
-        >
-          <span style="font-size: 10px; margin-left: 5px; display: block"
-          >充值</span
-          >
+        <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
+          <span style="font-size: 10px; margin-left: 5px; display: block">充值</span>
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <a @click="goToPrevPage(prevPage)">
-          <RiArrowDropLeftLine/>
+          <RiArrowDropLeftLine />
         </a>
         {{ pageName }}
-        <q-btn v-if="hasDrawer" style="position:absolute; right: 10px;" flat @click="ui.drawerRight = !ui.drawerRight"
-               round dense icon="menu"/>
+        <q-btn
+          v-if="hasDrawer"
+          style="position: absolute; right: 10px"
+          flat
+          @click="ui.drawerRight = !ui.drawerRight"
+          round
+          dense
+          icon="menu"
+        />
       </q-card-section>
       <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
         <q-card-section class="acct-section">
@@ -51,17 +46,8 @@
       </q-card-actions> -->
     </q-header>
 
-    <q-drawer
-        side="right"
-        elevated
-        v-model="ui.drawerRight"
-        :width="250"
-        :breakpoint="500"
-        v-if="hasDrawer"
-    >
-      <div class="q-pa-md bg-brightbtn">
-        游戏平台
-      </div>
+    <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
+      <div class="q-pa-md bg-brightbtn">游戏平台</div>
       <div class="platforms q-pt-md">
         <!--        <div class="text-bright q-px-sm q-pt-md">-->
         <!--          -->
@@ -69,8 +55,14 @@
       </div>
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
-          <q-btn @click="changePlatform(plat)" size="md" color="brightbtn" v-for="(plat, n) in platformsList" :key="n"
-                 :label="plat.icon"/>
+          <q-btn
+            @click="changePlatform(plat)"
+            size="md"
+            color="brightbtn"
+            v-for="(plat, n) in platformsList"
+            :key="n"
+            :label="plat.icon"
+          />
         </div>
       </q-scroll-area>
     </q-drawer>
@@ -84,41 +76,33 @@
     </q-scroll-area> -->
 
     <q-page-container>
-      <router-view/>
+      <router-view />
     </q-page-container>
-    <q-footer
-        v-if="ui.footer"
-        elevated>
-      <q-tabs
-          v-model="tab"
-          no-caps
-          class="bg-primary text-white shadow-2"
-          :breakpoint="0"
-          align="justify"
-      >
+    <q-footer v-if="ui.footer" elevated>
+      <q-tabs v-model="tab" no-caps class="bg-primary text-white shadow-2" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/home-icon.png">
-          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png">
+          <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
           首页
         </q-route-tab>
         <q-route-tab to="/promo" name="promo">
-          <img class="inactive" src="../assets/images/index/menu/promo-icon.png">
-          <img class="hover" src="../assets/images/index/menu/promo-icon-hover.png">
+          <img class="inactive" src="../assets/images/index/menu/promo-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/promo-icon-hover.png" />
           优惠
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
-          <img class="inactive" src="../assets/images/index/menu/livechat-icon.png">
-          <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png">
+          <img class="inactive" src="../assets/images/index/menu/livechat-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png" />
           客服
         </q-route-tab>
         <q-route-tab to="/affiliate" name="affiliate">
-          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png">
-          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png">
+          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png" />
           加盟
         </q-route-tab>
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/account-icon.png">
-          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png">
+          <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
           我的
         </q-route-tab>
       </q-tabs>
@@ -127,16 +111,14 @@
 </template>
 
 <script>
-import {computed, defineComponent, onMounted, ref, watch} from "vue";
-import {userStore} from "stores/index";
-import {useUI} from "stores/ui";
-import {useRoute, useRouter} from "vue-router";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
+import { useRoute, useRouter } from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
 
-import {
-  RiArrowDropLeftLine
-} from "vue-remix-icons";
-import {translateRecord} from "src/directives/translate";
+import { RiArrowDropLeftLine } from "vue-remix-icons";
+import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({
   name: "MainLayout",
@@ -159,32 +141,32 @@ export default defineComponent({
     //   }
     // });
     const goToPrevPage = (prePage) => {
-      if(prePage === "/"){
-        router.push("/")
-      }else if(window.location.pathname === "/promotion"){
-        window.location.href = "xfapp:/promo"
-      }else{
-        router.push('/' + prePage)
+      if (prePage === "/") {
+        router.push("/");
+      } else if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/" + prePage);
       }
-    }
+    };
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
-        router.push('/')
+        router.push("/");
       });
     };
     watch(
-        () => route.path,
-        async () => {
-          checkRoute();
-        }
+      () => route.path,
+      async () => {
+        checkRoute();
+      }
     );
 
     watch(
-        () => route.query,
-        async () => {
-          checkRoute();
-        }
+      () => route.query,
+      async () => {
+        checkRoute();
+      }
     );
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
@@ -201,7 +183,8 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = "Slot";
           if (route.query.platform) {
-            var platformName = route.query.platform == 'BBINDY' ? 'BBIN' : translateRecord(route.query.platform , "SLOT");
+            var platformName =
+              route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "SLOT");
             pageName.value = `${platformName}游戏大厅`;
           }
         } else if (route.path === "/forgot-account") {
@@ -227,7 +210,7 @@ export default defineComponent({
         } else if (route.path === "/fish") {
           hasPage.value = true;
           pageName.value = "捕鱼达人";
-        }  else if (route.path === "/promo") {
+        } else if (route.path === "/promo") {
           hasPage.value = false;
           pageName.value = "优惠活动";
           prevPage.value = "";
@@ -239,7 +222,7 @@ export default defineComponent({
               prevPage.value = "promo";
             }
           }
-        }else if (route.path === "/promotion") {
+        } else if (route.path === "/promotion") {
           hasPage.value = true;
           pageName.value = "优惠详情";
           prevPage.value = "";
@@ -251,7 +234,7 @@ export default defineComponent({
           //     prevPage.value = "promo";
           //   }
           // }
-        }else if (route.path === "/finance/deposit") {
+        } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "存款";
@@ -312,10 +295,14 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "站内信";
+        } else if (route.path === "/account/message") {
+          prevPage.value = "account";
+          hasPage.value = true;
+          pageName.value = "消息中心";
         } else if (route.path === "/account/mail/inbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;
-          pageName.value = "收件箱";
+          pageName.value = "我的反馈";
         } else if (route.path === "/account/mail/outbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;
@@ -396,65 +383,65 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const platformsFixed = ref([
       {
-        id: '81',
-        code: 'BBINDY',
-        icon: 'bbin',
+        id: "81",
+        code: "BBINDY",
+        icon: "bbin"
       },
       {
-        id: '21',
-        code: 'PG',
-        icon: 'PG',
+        id: "21",
+        code: "PG",
+        icon: "PG"
       },
       {
-        id: '26',
-        code: 'AG',
-        icon: 'XIN',
+        id: "26",
+        code: "AG",
+        icon: "XIN"
       },
       {
-        id: '73',
-        code: 'MGP',
-        icon: 'MG',
+        id: "73",
+        code: "MGP",
+        icon: "MG"
       },
       {
-        id: '55',
-        code: 'TTG',
-        icon: 'ttg',
+        id: "55",
+        code: "TTG",
+        icon: "ttg"
       },
       {
-        id: '72',
-        code: 'SG',
-        icon: 'sg',
+        id: "72",
+        code: "SG",
+        icon: "sg"
       },
       {
-        id: '22',
-        code: 'PP',
-        icon: 'pp',
+        id: "22",
+        code: "PP",
+        icon: "pp"
       },
       {
-        id: '31',
-        code: 'JDB',
-        icon: 'jdb',
+        id: "31",
+        code: "JDB",
+        icon: "jdb"
       },
       {
-        id: '70',
-        code: 'AMEBA',
-        icon: 'AMEBA',
+        id: "70",
+        code: "AMEBA",
+        icon: "AMEBA"
       },
       {
-        id: '54',
-        code: 'PT',
-        icon: 'pt',
+        id: "54",
+        code: "PT",
+        icon: "pt"
       },
       {
-        id: '65',
-        code: 'SW',
-        icon: 'SW',
+        id: "65",
+        code: "SW",
+        icon: "SW"
       },
       {
-        id: '33',
-        code: 'CQ9',
-        icon: 'CQ9',
-      },
+        id: "33",
+        code: "CQ9",
+        icon: "CQ9"
+      }
     ]);
 
     const platformsList = computed(() => {
@@ -491,7 +478,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
 .q-drawer .platform-list {
   display: flex;
   flex-wrap: wrap;

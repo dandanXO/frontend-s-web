@@ -161,6 +161,7 @@
               </div>
               <div class="mid-wrapper">
                 <q-input
+                  :type="currentCardType === 'Bank' ? 'number' : 'text'"
                   filled
                   dense
                   clearable
@@ -195,7 +196,7 @@
               :rules="[
                 (val) => !!val || $t('form.withdrawalAmount_rules_01'),
                 (val) => val > 0 || $t('form.withdrawalAmount_rules_02'),
-                (val) => val < selectedMethodItem.withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
+                (val) => val <= selectedMethodItem.withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
                 (val) =>
                   (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
                   `${$t('form.withdrawalAmount_rules_04')} ${selectedMethodItem.withdrawMin} - ${

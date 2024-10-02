@@ -1,5 +1,5 @@
 <template>
-  <div class="vip-container test-con1">
+  <div class="vip-container">
     <div class="header-section">
       <img src="../assets/vip/vip-header.png" class="vip-header" />
     </div>
@@ -163,100 +163,6 @@
         @click="handleClick('all', vipLevel)"
       >
         {{ isLoading["all"] ? "领取中" : "一键领取" }}
-      </div>
-    </div>
-    <div class="month-birthday-bonus">
-      <div class="left">
-        <img src="../assets/vip/img-border.png" style="pointer-events: none" />
-        <div class="inner-slide">
-          <el-carousel height="440px">
-            <el-carousel-item v-for="item in banners" :key="item">
-              <h3 :href="redirectUrl" class="small justify-center" text="2xl">
-                <a :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.desktopImageUrl" /></a>
-              </h3>
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </div>
-      <div class="right">
-        <div class="vip-boxes">
-          <template v-for="category in categories" :key="category.key">
-            <template v-for="(item, index) in vipItems" :key="index">
-              <template
-                v-if="
-                  store.token && isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1
-                "
-              >
-                <div
-                  class="box"
-                  :class="{
-                    inactive:
-                      (store.token && item[`${category.key}Prize`] === '0') ||
-                      item[`${category.key}Prize`] === 0 ||
-                      item[`${category.key}Prize`] == 'null'
-                  }"
-                >
-                  <div class="vip-inner">
-                    <div class="box-det">
-                      <div class="icon">
-                        <img
-                          :src="
-                            require(`../assets/vip/${category.image}${
-                              (store.token && item[`${category.key}Prize`] === '0') ||
-                              item[`${category.key}Prize`] === 0 ||
-                              item[`${category.key}Prize`] === 'null'
-                                ? '-inactive'
-                                : ''
-                            }.png`)
-                          "
-                        />
-                      </div>
-                      <div>
-                        <div class="item-name">{{ category.displayName }}</div>
-                        <div class="item-amt" v-show="isDataLoaded">
-                          {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
-                        </div>
-                        <div class="loading-blue-icon" v-show="!isDataLoaded"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <template
-                    v-if="
-                      item.redPacketClaimStatus === 'CANT_CLAIM' &&
-                      category.key === 'redPacket' &&
-                      +item.vipLevel === vipLevel
-                    "
-                  >
-                    <div class="claim-now disabled">{{ formatNumber(currentRedPacketAmount, "redPacket") }}</div>
-                  </template>
-                  <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
-                    <div
-                      class="claim-now"
-                      :class="{ disabled: isLoading[category.key] }"
-                      @click="handleClick(category.key, item)"
-                    >
-                      {{
-                        !isLoading[category.key]
-                          ? category.key === "redPacket"
-                            ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
-                              ? formatNumber(currentRedPacketAmount, "redPacket")
-                              : "立即领取"
-                            : "立即领取"
-                          : "领取中"
-                      }}
-                    </div>
-                  </template>
-                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
-                    <div class="claimed">已领取</div>
-                  </template>
-                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'EXPIRED'">
-                    <div class="expired">已过期</div>
-                  </template>
-                </div>
-              </template>
-            </template>
-          </template>
-        </div>
       </div>
     </div>
 
@@ -425,6 +331,104 @@
         </div>
       </div>
     </div>
+
+    <div class="month-birthday-bonus">
+      <div class="left">
+        <img src="../assets/vip/img-border.png" style="pointer-events: none" />
+        <div class="inner-slide">
+          <el-carousel height="440px">
+            <el-carousel-item v-for="item in banners" :key="item">
+              <h3 :href="redirectUrl" class="small justify-center" text="2xl">
+                <a :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.desktopImageUrl" /></a>
+              </h3>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </div>
+      <div class="right">
+        <div class="vip-boxes">
+          <template v-for="category in categories" :key="category.key">
+            <template v-for="(item, index) in vipItems" :key="index">
+              <template
+                v-if="
+                  store.token && isFirstTime && vipLevel !== 0
+                    ? +item.vipLevel === currentSlide
+                    : +item.vipLevel === currentSlide + 1
+                "
+              >
+                <div
+                  class="box"
+                  :class="{
+                    inactive:
+                      (store.token && item[`${category.key}Prize`] === '0') ||
+                      item[`${category.key}Prize`] === 0 ||
+                      item[`${category.key}Prize`] == 'null'
+                  }"
+                >
+                  <div class="vip-inner">
+                    <div class="box-det">
+                      <div class="icon">
+                        <img
+                          :src="
+                            require(`../assets/vip/${category.image}${
+                              (store.token && item[`${category.key}Prize`] === '0') ||
+                              item[`${category.key}Prize`] === 0 ||
+                              item[`${category.key}Prize`] === 'null'
+                                ? '-inactive'
+                                : ''
+                            }.png`)
+                          "
+                        />
+                      </div>
+                      <div>
+                        <div class="item-name">{{ category.displayName }}</div>
+                        <div class="item-amt" v-show="isDataLoaded">
+                          {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
+                        </div>
+                        <div class="loading-blue-icon" v-show="!isDataLoaded"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <template
+                    v-if="
+                      item.redPacketClaimStatus === 'CANT_CLAIM' &&
+                      category.key === 'redPacket' &&
+                      +item.vipLevel === vipLevel
+                    "
+                  >
+                    <div class="claim-now disabled">{{ formatNumber(currentRedPacketAmount, "redPacket") }}</div>
+                  </template>
+                  <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
+                    <div
+                      class="claim-now"
+                      :class="{ disabled: isLoading[category.key] }"
+                      @click="handleClick(category.key, item)"
+                    >
+                      {{
+                        !isLoading[category.key]
+                          ? category.key === "redPacket"
+                            ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
+                              ? formatNumber(currentRedPacketAmount, "redPacket")
+                              : "立即领取"
+                            : "立即领取"
+                          : "领取中"
+                      }}
+                    </div>
+                  </template>
+                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
+                    <div class="claimed">已领取</div>
+                  </template>
+                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'EXPIRED'">
+                    <div class="expired">已过期</div>
+                  </template>
+                </div>
+              </template>
+            </template>
+          </template>
+        </div>
+      </div>
+    </div>
+
     <div class="vip-benefit-section-title"><img src="../assets/vip/instruction.png" /></div>
     <div class="tabs">
       <div class="tab">
@@ -600,16 +604,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <!-- <tr>
             <td>VIP0</td>
             <td>0.45%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.60%</td>
-            <!--            <td>0.15%</td>-->
+            <td>0.15%</td>
             <td>8,888</td>
-          </tr>
+          </tr> -->
           <tr>
             <td>VIP1</td>
             <td>0.45%</td>
@@ -746,7 +750,7 @@
       </ol> -->
       <h2>一. 会员晋级/保级/降级规则</h2>
       <ol class="terms got-bullets">
-        <li>会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；</li>
+        <li>完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</li>
         <li>VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</li>
         <li>会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
         <li>
@@ -793,7 +797,7 @@
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要（本金+彩金一倍流水）即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -1392,10 +1396,8 @@ $border-settings: 1px solid #e5e7eb;
     text-align: center;
   }
   .vip-header {
-    // width: 1200px;
-    // margin: 10px auto;
     width: 800px;
-    margin: 0px auto 10px;
+    margin: 15px auto 20px;
   }
 
   .banner-container {
@@ -1465,7 +1467,8 @@ $border-settings: 1px solid #e5e7eb;
         }
 
         .progressBarDescription {
-          display: flex;
+          // display: flex;
+          display: none;
           // justify-content: space-between;
           color: #333;
           font-size: 17.987px;
@@ -1651,7 +1654,8 @@ $border-settings: 1px solid #e5e7eb;
       position: absolute;
       width: auto;
       z-index: 2;
-      right: 0%;
+      left: 50%;
+      transform: translateX(-50%);
       // width: 98%;
       max-width: 90vw;
     }
@@ -1659,11 +1663,11 @@ $border-settings: 1px solid #e5e7eb;
       top: 40px;
       position: relative;
       background: #1f2231;
-      border: 2px solid #799df8; /*set border colour here*/
+      border: 4px solid #799df8; /*set border colour here*/
       border-radius: 3px;
       -webkit-filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8)); /*set shadow colour  and size here*/
       -moz-box-shadow: 0 1px 10px rgba(113, 158, 206, 0.8);
-      filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8));
+      filter: drop-shadow(0 1px 15px rgba(113, 158, 206, 0.8));
 
       padding: 10px;
       border-radius: 10px;
@@ -1733,16 +1737,14 @@ $border-settings: 1px solid #e5e7eb;
       border-color: rgba(255, 255, 255, 0);
       border-bottom-color: #1f2231;
       border-width: 19px;
-      left: 85%;
-      margin-left: -19px;
+      right: 20%;
     }
 
     .arrow_box:before {
       border-color: rgba(113, 158, 206, 0);
       border-bottom-color: #799df8;
       border-width: 20px;
-      left: 85%;
-      margin-left: -20px;
+      right: calc(20% - 1px);
     }
   }
   .vipitem {

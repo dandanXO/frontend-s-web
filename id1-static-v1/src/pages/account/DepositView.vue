@@ -24,14 +24,17 @@
         </template>
       </div>
 
-      <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
-      <div class="deposit-methods-container col-three">
+      <!-- <div class="method-title q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
+      <div class="deposit-methods-container">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
+            <div class="item-img">
+              <img :src="imgURL + '/payment/' + item.nodeIcon" />
+            </div>
             <div class="item-title">{{ item.nodeName }}</div>
           </div>
         </template>
-      </div>
+      </div> -->
 
       <template v-if="selectedChanelExtra.length > 0">
         <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.bank") }}</div>
@@ -357,9 +360,10 @@ const goSelectedMethod = (item) => {
   selectedItem.value = item;
   activeMethod.value = item;
   isSelectedMethod.value = true;
-  selectedItemChannel.value = item.children;
   selectedChanelExtra.value = [];
-  goSelectedChannel(item.children[0]);
+  // selectedItemChannel.value = item.children;
+  // goSelectedChannel(item.children[0]);
+  goSelectedChannel(item)
 };
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;

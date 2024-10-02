@@ -27,8 +27,8 @@
         <div class="profile-details-container">
           <div class="flex-c-start">
             <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-              <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                <span style="font-family: Times New Roman, Times, serif">
+              <span class="balance-amount" :style="`${store.balance > 999999 && 'font-size: 10px'}`">
+                <span style="font-family: Times New Roman, Times, serif; margin: 0; padding: 0">
                   {{ store.currency.value }}
                 </span>
                 {{ isLoadingBalance ? $t("btn.loading") : convertToCommaAmount(store.balance, false) }}
@@ -317,6 +317,7 @@ onMounted(() => {
   max-width: 500px;
   z-index: 999;
   transition: 0.3s all;
+  overflow: hidden;
 
   &.with-top-download {
     border-top-right-radius: 25px;
@@ -440,7 +441,7 @@ onMounted(() => {
       min-width: 130px;
       width: 100%;
       height: 28px;
-      padding-left: 12px;
+      padding-left: 6px;
       padding-right: 8px;
 
       font-size: 14px;
@@ -483,7 +484,7 @@ onMounted(() => {
     margin: 0 auto;
 
     img {
-      max-width: 100px;
+      max-width: 90px;
       width: 100%;
       text-align: center;
     }

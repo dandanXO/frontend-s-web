@@ -102,7 +102,7 @@
       <p>
         <strong>一。会员晋级/保级/降级规则</strong>
         <ol class="terms got-bullets">
-          <li>会员累计投注额达到相应级别的要求，即可在次日 24 点前晋级相应 VIP 等级；</li>
+          <li>完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</li>
           <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
           <li>会员在达到某 VIP 等级后，90 天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
           <li>
@@ -159,10 +159,10 @@
       </p>
 
       <p>
-        <strong>七。会员充值加码 10%</strong>
+        <strong>七。会员充值加码10%</strong>
         <ol class="terms got-bullets">
           <li class="numbered">
-            VIP1 及以上会员在会员日当天至 21 号 23:59 可登录 VIP 活动页面领取专属充值加码券且加码券需在 7 日内进行使用，成功使用后需要完成相应流水即可提款
+            VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要（本金+彩金一倍流水）即可提款；
           </li>
           <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
         </ol>
@@ -330,7 +330,7 @@ const vipLevel3s = ref([
 ]);
 
 const vipLevel4s = ref([
-  { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
+  // { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP1", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP2", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP3", eSport: "0.48%", sport: "0.45%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "12,888" },
@@ -373,7 +373,7 @@ const formatNumber = (num) => {
   font-family: Arial, sans-serif;
   padding: 1px;
   .table-4{
-    
+
   }
 }
 

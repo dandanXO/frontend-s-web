@@ -375,11 +375,14 @@ export function getCompetitionBetYesterday(promoCode) {
   });
 }
 
-
 export function getNBAUpcomingMatch() {
-  return server.EVENT.get('/session/nba-match-preseason/upcoming')
+  return server.EVENT.get("/session/nba-match-preseason/upcoming");
 }
 
 export function getNBAClaimHistory() {
-  return server.EVENT.get('/session/nba-match-preseason/history')
+  return server.EVENT.get("/session/nba-match-preseason/history");
+}
+
+export function claimNBABonus(matchId) {
+  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
 }

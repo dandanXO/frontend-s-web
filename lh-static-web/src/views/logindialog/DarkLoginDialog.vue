@@ -1,11 +1,16 @@
 <template>
     <el-tabs>
       <el-tab-pane label="账户登录">
-        <AccountLogin
+        <LoginFormDialog
           @close-dialog="closeLoginDialog"
           @open-reg-dialog="openRegDialog"
           @open-forgotpwd-dialog="openForgotpwdDialog"
         />
+        <!-- <AccountLogin
+          @close-dialog="closeLoginDialog"
+          @open-reg-dialog="openRegDialog"
+          @open-forgotpwd-dialog="openForgotpwdDialog"
+        /> -->
       </el-tab-pane>
       <el-tab-pane label="手机登录">
         <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large" class="login-form">
@@ -98,6 +103,7 @@
   import AccountLogin from "@/components/auth/login/index.vue";
   import { useNotify } from "@/hooks/notify";
   import { useRoute, useRouter } from "vue-router";
+import LoginFormDialog from "@/components/auth/login/LoginFormDialog.vue";
   const notify = useNotify();
   
   const captchaRules = {
