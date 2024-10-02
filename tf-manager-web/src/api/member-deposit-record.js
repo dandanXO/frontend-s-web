@@ -24,3 +24,7 @@ export const getTotalDepositAmount = (query) => {
 export const editDeposit = (depositRecord) => {
   return https().request(`/deposit/${depositRecord.id}/edit?_method=PUT`, Method.POST, depositRecord, ContentType.form);
 };
+
+export const sync = (memberDepositRecord) => {
+  return https().request(`/deposit/sync`, Method.POST, memberDepositRecord, ContentType.form);
+};

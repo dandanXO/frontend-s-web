@@ -177,7 +177,7 @@ const imgURL = process.env.IMAGE_CDN + "/promo/";
 const btm_banners = ref([]);
 const getPromoImage = () => {
   api
-    .get("/promo/banner?category=CENTERPROMO")
+    .get("/opt-session/promo/banner?category=CENTERPROMO")
     .then((res) => {
       if (res.code === 0) {
         btm_banners.value = res.data;

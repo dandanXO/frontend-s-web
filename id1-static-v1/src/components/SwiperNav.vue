@@ -25,10 +25,11 @@
 </template>
 
 <script setup>
+import { onActivated, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
-import { useRouter } from "vue-router";
-import { onMounted, ref, onActivated } from "vue";
 
 const props = defineProps(["slideList", "slideListPath", "isActiveSlide"]);
 const router = useRouter();

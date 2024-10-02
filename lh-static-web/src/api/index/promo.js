@@ -226,12 +226,14 @@ export function signIn() {
 }
 
 export function getVIPDetails() {
-  return server.EVENT.get("/vip-bonus/get-detail");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/vip-bonus/get-detail?v=${randNum}`);
 }
 
 export function getVIPDetailsNotLoggedIn() {
   const store = userStore();
-  return server.EVENT.get(`/get-vip-bonus-detail?siteId=${store.siteId}`);
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/get-vip-bonus-detail?siteId=${store.siteId}&v=${randNum}`);
 }
 export function canRedeem() {
   return server.EVENT.get("/vip-upgrade/lh/canRedeem");
@@ -241,6 +243,7 @@ export function claim(level) {
 }
 
 export function claimItems(status, level) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
   if (status === 'upgrade') {return server.EVENT.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", { vipLevel: level })}
   if (status === 'birthday') {return server.EVENT.put("/vip-bonus/claim-birthday-bonus");}
   if (status === 'retain') {return server.EVENT.post("/vip-bonus/claim-first-retain?_method=PUT", { vipLevel: level })}
@@ -467,3 +470,6 @@ export function getNBAClaimHistory() {
   return server.EVENT.get('/session/nba-match-preseason/history')
 }
 
+export function claimNBABonus(matchId) {
+  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`)
+}

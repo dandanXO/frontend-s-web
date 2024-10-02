@@ -9,10 +9,10 @@
         </div>
       </div>
       <div class="discount-row discount-row--content">
-        <div class="discount-col">{{ e.privilegeName }}</div>
+        <div class="discount-col">{{ translateNaming(e.privilegeName) }}</div>
         <div class="discount-col">
           {{ $t("records.amount") }}:
-          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, true) }}</span>
+          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, false) }}</span>
         </div>
       </div>
     </div>
@@ -23,6 +23,7 @@
 import { onActivated, reactive, ref } from "vue";
 
 import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
 import { convertToCommaAmount, convertToGMT8, updateDate } from "@/boot/utils";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import NoInfoComponent from "@/components/NoInfoComponent.vue";
@@ -62,6 +63,14 @@ const searchDiscountRecord = () => {
     .then(() => {
       isLoading.value = false;
     });
+};
+
+const translateNaming = (text) => {
+  if (text === "VIP Upgrade Bonus") {
+    return t("records.vipUpgradeBonus");
+  }
+
+  return text;
 };
 
 onActivated(() => {

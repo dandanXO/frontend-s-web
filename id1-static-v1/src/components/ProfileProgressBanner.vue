@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
+      <!-- <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div> -->
     </div>
 
     <div class="right-container">
@@ -30,7 +30,7 @@
         class="progress-bar"
         color="white"
       ></q-linear-progress>
-      <div class="win-gift-text">{{ $t('settings.depositMonthlytoWinGifts') }}</div>
+      <div class="win-gift-text">{{ $t("settings.depositMonthlytoWinGifts") }}</div>
     </div>
   </div>
 </template>

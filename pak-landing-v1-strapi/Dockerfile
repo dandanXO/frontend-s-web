@@ -4,5 +4,6 @@ FROM $image_proxy/nginx:1.23-alpine
 WORKDIR /usr/share/nginx/html
 USER root
 
-ADD build ./
+RUN mkdir -p ./admin
+ADD build ./admin/
 ADD nginx.conf /etc/nginx/nginx.conf

@@ -98,7 +98,7 @@
         <swiper-slide>
           <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
-              <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
+              <img :src="require(`@/assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
             <div class="cat-title">{{ translateTitle(item.icon) }}</div>
           </div>
@@ -137,7 +137,7 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${require(`@/assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
                               } catch (e) {
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
@@ -168,7 +168,7 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                                return `url(${require(`@/assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
                                 return `url(${
                                   store.h5Url
@@ -203,7 +203,7 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`@/assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
@@ -232,7 +232,7 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                              return `url(${require(`@/assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
                               return `url(${
                                 store.h5Url
@@ -283,7 +283,7 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`@/assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
                               return `url(${
                                 store.h5Url
@@ -295,7 +295,7 @@
                     </div>
 
                     <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
-                      <img src="../assets/images/index/hot.png" />
+                      <img src="@/assets/images/index/hot.png" />
                     </div>
 
                     <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
@@ -340,7 +340,7 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            return `url(${require(`@/assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
                             return `url(${
                               store.h5Url
@@ -352,7 +352,7 @@
                   </div>
 
                   <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
-                    <img src="../assets/images/index/hot.png" />
+                    <img src="@/assets/images/index/hot.png" />
                   </div>
 
                   <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
@@ -387,13 +387,13 @@
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <img src="@/assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                            return `url(${require(`@/assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
                             return `url(${
                               store.h5Url
@@ -408,7 +408,7 @@
                         "
                         class="burning-hot"
                       >
-                        <img src="../assets/images/index/hot.png" />
+                        <img src="@/assets/images/index/hot.png" />
                       </div>
                     </div>
                   </div>
@@ -432,13 +432,13 @@
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <img src="@/assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                            return `url(${require(`@/assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
                             return `url(${
                               store.h5Url
@@ -453,7 +453,7 @@
                         "
                         class="burning-hot"
                       >
-                        <img src="../assets/images/index/hot.png" />
+                        <img src="@/assets/images/index/hot.png" />
                       </div>
                     </div>
                   </div>
@@ -494,7 +494,7 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`@/assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
@@ -526,7 +526,7 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`@/assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
@@ -558,7 +558,7 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`@/assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
@@ -592,7 +592,7 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`@/assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
@@ -621,7 +621,7 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`@/assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
@@ -650,7 +650,7 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`@/assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
@@ -692,13 +692,13 @@
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/sport/item-game-maintenance.png" />
+                <img src="@/assets/images/index/sport/item-game-maintenance.png" />
                 <div
                   class="platform-game-item--img"
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
+                        return `url(${require(`@/assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
                         return `url(${store.h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
@@ -828,7 +828,7 @@
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/logo/logo-${subGameCode.toLowerCase()}.png`)})`;
+                        return `url(${require(`@/assets/images/index/logo/logo-${subGameCode.toLowerCase()}.png`)})`;
                       } catch (e) {
                         return '';
                       }
@@ -886,13 +886,13 @@
                           class="game-platform-label game-platform-label--hot"
                           v-if="item.gameLabel && item.gameLabel.includes('HOT')"
                         >
-                          <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                          <img src="@/assets/images/index/platform-label-hot.png" alt="" />
                         </div>
                         <div
                           class="game-platform-label game-platform-label--new"
                           v-if="item.gameLabel && item.gameLabel.includes('NEW')"
                         >
-                          <img src="../assets/images/index/platform-label-new.png" alt="" />
+                          <img src="@/assets/images/index/platform-label-new.png" alt="" />
                         </div>
                       </div>
                     </template>
@@ -927,13 +927,13 @@
                             (item.gameLabel && item.gameLabel.includes('HOT'))
                           "
                         >
-                          <img src="../assets/images/index/platform-label-hot.png" alt="" />
+                          <img src="@/assets/images/index/platform-label-hot.png" alt="" />
                         </div>
                         <div
                           class="game-platform-label game-platform-label--new"
                           v-if="item.gameLabel && item.gameLabel.includes('NEW')"
                         >
-                          <img src="../assets/images/index/platform-label-new.png" alt="" />
+                          <img src="@/assets/images/index/platform-label-new.png" alt="" />
                         </div>
                       </div>
                     </template>
@@ -2347,7 +2347,7 @@ const setWithExpiry = (key, value, interval) => {
 
 function loadData() {
   api
-    .get("/promo/banner?category=HOME")
+    .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = res.data;
@@ -2535,7 +2535,7 @@ const returnBannerUrl = (banner) => {
     } else {
       bannerImg = bannerSplit[0];
     }
-    return require(`../assets/images/banners/${bannerImg}`);
+    return require(`@/assets/images/banners/${bannerImg}`);
   } catch (e) {
     return imgURLPromo + banner.mobileImageUrl;
   }
@@ -3270,7 +3270,6 @@ onBeforeUnmount(() => {
   }
 
   .popout-dialog-container--yel {
-    // background-image: url(../assets/images/index/popout/deposit-bg.png) !important;
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -3279,7 +3278,6 @@ onBeforeUnmount(() => {
   }
 
   .popout-main-title {
-    // background-image: url(../assets/images/index/popout/popout-title.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -3320,7 +3318,6 @@ onBeforeUnmount(() => {
 
     .deposit-item {
       .deposit-icon {
-        // background-image: url(../assets/images/index/popout/deposit-item-frame.png);
         background-position: top center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -3339,15 +3336,10 @@ onBeforeUnmount(() => {
         }
       }
 
-      &.active > .deposit-icon {
-        // background-image: url(../assets/images/index/popout/deposit-item-frame-active.png);
-      }
-
       .deposit-hot-label {
         position: absolute;
         top: 0;
         right: 0;
-        // background-image: url(../assets/images/index/popout/hot-label.png);
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center center;
@@ -3362,7 +3354,6 @@ onBeforeUnmount(() => {
       }
 
       .deposit-amt {
-        // background-image: url(../assets/images/index/popout/deposit-item-frame-amount.png);
         background-position: center center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -3419,7 +3410,6 @@ onBeforeUnmount(() => {
 
         &:after {
           content: "";
-          // background-image: url(../assets/images/index/popout/label-discount.png);
           background-repeat: no-repeat;
           display: block;
           position: absolute;
@@ -3490,7 +3480,7 @@ onBeforeUnmount(() => {
   display: flex;
   width: 70px;
   height: 76px;
-  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background: url("@/assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
 }
 
@@ -3523,7 +3513,7 @@ onBeforeUnmount(() => {
     transition: 0.3s all;
 
     &--withdrawal {
-      background-image: url(../assets/images/index/action-btn-withdrawal.png);
+      background-image: url(@/assets/images/index/action-btn-withdrawal.png);
       color: #ffffff;
 
       &:before {
@@ -3532,7 +3522,7 @@ onBeforeUnmount(() => {
     }
 
     &--deposit {
-      background-image: url(../assets/images/index/action-btn-deposit.png);
+      background-image: url(@/assets/images/index/action-btn-deposit.png);
       color: #fae576;
 
       &:before {
@@ -3578,7 +3568,7 @@ onBeforeUnmount(() => {
     display: flex;
     gap: 8px;
     align-items: center;
-    background-image: url("../assets/images/index/title-bg.png");
+    background-image: url("@/assets/images/index/title-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -3633,7 +3623,7 @@ onBeforeUnmount(() => {
       background-size: cover;
       background-position: center center;
       position: relative;
-      background-image: url("../assets/images/index/mini-game-bg.png");
+      background-image: url("@/assets/images/index/mini-game-bg.png");
       border-radius: 8px;
 
       &.game-fish {
@@ -3835,7 +3825,7 @@ onBeforeUnmount(() => {
 .fullgame-card {
   margin: 0;
   // background-color: #101114;
-  background-image: url(../assets/images/index/dialog-game-bg.png);
+  background-image: url(@/assets/images/index/dialog-game-bg.png);
   background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -3846,10 +3836,7 @@ onBeforeUnmount(() => {
   padding: 0;
 
   .fullgame-header {
-    // background-image: url(../assets/images/index/fullgame-banner.jpg);
-
     margin: 0 -2.5%;
-    // min-height: 200px;
     padding: 12px;
   }
 
@@ -3901,7 +3888,6 @@ onBeforeUnmount(() => {
 }
 
 .menu-category-btn {
-  // background-image: url("../assets/images/index/category/menu-category-btns.png");
   background-size: 156px 379px;
   background-position: 0px 0px;
   width: 73px;
@@ -4013,8 +3999,7 @@ onBeforeUnmount(() => {
   background-size: cover;
   background-position: center center;
   position: relative;
-  background-image: url("../assets/images/index/mini-game-bg.png");
-  // background-image: url("../assets/images/index/item-game-maintenance.png");
+  background-image: url("@/assets/images/index/mini-game-bg.png");
   border-radius: 8px;
 
   .game--bg {
@@ -4024,7 +4009,6 @@ onBeforeUnmount(() => {
     width: 100%;
     border-radius: 8px;
     background-repeat: no-repeat;
-    // background-image: url("../assets/images/index/mini-game-bg.png");
   }
 }
 
