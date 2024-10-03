@@ -3411,5 +3411,9 @@ body {
     .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
       background-color: #ccc;
     }
+
+    .geetest_captcha.geetest_dark .geetest_holder .geetest_mask, .geetest_popup_wrap.geetest_dark .geetest_holder .geetest_mask {
+      background-color: #fff;
+    }
   }
 </style>

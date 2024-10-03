@@ -588,8 +588,8 @@ export default defineComponent({
             captchaId: "dd6e127216b2108a70fbed280fbc4180",
             language: "zh",
             nativeButton: {
-              width: "100%",
-              height: "45px"
+              width: "calc(100% - 1px)",
+              height: "43px"
             },
             nextWidth: "220px",
             product: "float"
@@ -763,7 +763,6 @@ export default defineComponent({
     .geetest_captcha.geetest_customTheme .geetest_holder .geetest_content, .geetest_popup_wrap.geetest_customTheme .geetest_holder .geetest_content,
     .q-field--standout.q-field--readonly .q-field__control:before {
       border: none;
-      box-shadow: inset 0 0 2.91px 0 #a9c9ea;
     }
   }
   .q-field__prepend {
