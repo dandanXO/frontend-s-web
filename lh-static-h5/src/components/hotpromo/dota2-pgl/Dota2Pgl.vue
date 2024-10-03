@@ -98,43 +98,19 @@
               <h1>宝箱抽奖</h1>
               <img src="../../../assets/promo/lh-dota2-pgl/rule-title-right.png" alt="" />
             </div>
-            <q-carousel
-              v-model="slide"
-              swipeable
-              animated
-              transition-prev="slide-right"
-              transition-next="slide-left"
-              control-color="black"
-              padding
-              arrows
-              infinite
-              height="300px"
-            >
-              <q-carousel-slide name="1">
-                <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
-                  <div>宝箱 x1</div>
-                  <div class="text">连续存款 3 天</div>
-                </div>
-              </q-carousel-slide>
-              <q-carousel-slide name="3" class="column no-wrap flex-center">
-                <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
-                  <div>宝箱 x3</div>
-                  <div class="text">连续存款≥5天</div>
-                </div>
-              </q-carousel-slide>
-              <q-carousel-slide name="5" class="column no-wrap flex-center">
-                <div class="reward-box">
-                  <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
-                  <div>宝箱 x5</div>
-                  <div class="text">连续存款10天</div>
-                </div>
-              </q-carousel-slide>
-            </q-carousel>
-            <!-- <div style="display: flex; justify-content: center; margin-bottom: 12px">
-              <div class="reward-box-btn active">领取</div>
-            </div> -->
+
+            <div class="carousell-div">
+              <Carousel v-model="slide" snapAlign="center" :items-to-show="2" :wrap-around="true">
+                <Slide @click="handleSlideClick(index)" name="1" v-for="(box, index) in boxes" :key="index">
+                  <div class="reward-box">
+                    <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
+                    <div>{{ box.title }}</div>
+                    <div class="text">{{ box.text }}</div>
+                  </div>
+                </Slide>
+              </Carousel>
+            </div>
+
             <div class="livepoker-rebate-game-bottom" style="justify-content: end">注：每个奖品仅可兑换 1 次</div>
           </div>
 
@@ -189,11 +165,30 @@ const router = useRouter();
 const accumulatedClaimed = ref(0);
 const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
-const tabValue = ref(1);
-const slide = ref("1");
+const tabValue = ref(2);
+const slide = ref(2);
+
+const boxes = ref([
+  {
+    title: "宝箱x1",
+    text: "连续存款3天"
+  },
+  {
+    title: "宝箱x3",
+    text: "连续存款≥5天"
+  },
+  {
+    title: "宝箱x5",
+    text: "连续存款10天"
+  }
+]);
 
 const handleClickTab = (value) => {
   tabValue.value = value;
+};
+
+const handleSlideClick = (vipIndex) => {
+  slide.value = vipIndex;
 };
 
 const handleClickLogin = () => {
@@ -271,12 +266,20 @@ onMounted(() => {
 .livepoker-rebate-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
+}
+
+.carousell-div {
+  width: 100vw;
+
+  //:deep(.carousel__slide) {
+  //  width: 280px !important;
+  //}
 }
 
 .livepoker-rebate-container {
   width: 100%;
   height: 100%;
-  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -329,6 +332,9 @@ onMounted(() => {
   font-size: 16px;
   font-weight: 600;
   text-align: center;
+
+  max-width: calc(100vw - 56px);
+  margin: 0 auto 20px;
 }
 
 .livepoker-rebate-game-info {
@@ -414,6 +420,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     margin: 20px 0;
+    width: 100%;
   }
 
   .reward-title {
@@ -461,7 +468,7 @@ onMounted(() => {
     background: url("../../../assets/promo/lh-dota2-pgl/reward-box-bg.png") no-repeat;
     background-size: 100% 100%;
     width: 226px;
-    height: 100%;
+    height: 230px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -496,7 +503,9 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  //margin-bottom: 20px;
+  max-width: calc(100vw - 56px);
+  margin: 0 auto 20px;
 
   h1 {
     margin: 0;
@@ -510,7 +519,7 @@ onMounted(() => {
 .livepoker-rebate-game-bottom-rule {
   width: 100%;
   height: 100%;
-  margin-top: 40px;
+  margin-top: 25px;
   background: white;
   border-radius: 12px;
   padding: 20px 12px 12px;
@@ -526,11 +535,23 @@ onMounted(() => {
     line-height: 20px;
     padding: 8px;
 
+    max-width: calc(100vw - 45px);
+    margin: 0 auto 20px;
+
     .item {
       display: flex;
       gap: 10px;
+      margin-bottom: 10px;
     }
   }
+}
+
+.carousel__slide--next {
+  transform: scale(0.8);
+}
+
+.carousel__slide--prev {
+  transform: scale(0.8);
 }
 
 .reward-box-btn {
