@@ -107,6 +107,7 @@
                 type="text"
                 v-model="loginForm.captchaCode"
                 label-color=""
+                placeholder=""
                 readonly
               >
                 <template v-slot:append>
@@ -723,8 +724,30 @@ export default defineComponent({
       }
     }
 
-    .captcha-input .q-field__control {
-      padding-right: 0;
+    .captcha-input {
+      .q-field__control {
+        padding-right: 0;
+      }
+      .q-field__control-container {
+        display: none;
+        .col, .col-xs {
+          flex: unset;
+        }
+      }
+      .q-field__append.q-field__marginal {
+        width: 100%;
+        padding-left: 0;
+      }
+      .q-field__prepend.q-field__marginal > span {
+        width: 54px !important;
+      }
+      .q-field__prepend {
+        padding-right: 0;
+      }
+    }
+
+    #captchaContainer {
+      width: 100%;
     }
 
     .geetest_captcha.geetest_customTheme .geetest_holder .geetest_content, .geetest_popup_wrap.geetest_customTheme .geetest_holder .geetest_content,
