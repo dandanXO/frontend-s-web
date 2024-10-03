@@ -498,3 +498,11 @@ export function putPglTreasureInit() {
 export function claimNBABonus(matchId) {
   return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
 }
+
+export function getIEMRioInit() {
+  return server.EVENT.get("/session/iem-rio/init");
+}
+export function claimIEMRioBonus() {
+  return server.EVENT.post("/session/iem-rio/claimBonus");
+}
+

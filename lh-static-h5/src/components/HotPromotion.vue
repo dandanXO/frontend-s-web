@@ -106,6 +106,7 @@
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'"/>
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param"/>
     <lh1Vip v-if="list.redirectUrl === 'lh1-vip'"/>
+    <IemMasterPromo v-if="list.redirectUrl === 'lh1-iem-master'" :promo-code="list.promoCode"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -230,6 +231,7 @@ const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/black
 const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
 const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/daili/DailiPromo.vue"));
 const lh1Vip = defineAsyncComponent(()=>import("./hotpromo/lh1-vip/lh1Vip.vue"));
+const IemMasterPromo = defineAsyncComponent(()=>import("./hotpromo/iem-master/IemMasterPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -304,7 +306,8 @@ export default defineComponent({
     BlackMythWuKongPromo,
     SubmitClaimPromo,
     DailiPromo,
-    lh1Vip
+    lh1Vip,
+    IemMasterPromo
   },
   props: {
     list: {
