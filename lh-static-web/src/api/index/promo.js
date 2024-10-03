@@ -500,7 +500,7 @@ export function claimNBABonus(matchId) {
 }
 
 export function getIEMRioInit() {
-  return server.EVENT.put("/session/iem-rio/init");
+  return server.EVENT.get("/session/iem-rio/init");
 }
 export function claimIEMRioBonus() {
   return server.EVENT.post("/session/iem-rio/claimBonus");
