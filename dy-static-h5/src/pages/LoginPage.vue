@@ -386,6 +386,8 @@ export default defineComponent({
                 message: "请完成验证码",
                 icon: "report_problem"
               });
+              $q.loading.hide();
+              return;
             }
             store
               .memberLogin({
@@ -393,7 +395,11 @@ export default defineComponent({
                 password: loginForm.password,
                 sid: sidParam,
                 // captchaCode: loginForm.captchaCode,
-                // codeId: loginForm.codeId
+                // codeId: loginForm.codeId,
+                lotNumber: loginForm.lot_number,
+                captchaOutput: loginForm.captcha_output,
+                passToken: loginForm.pass_token,
+                genTime: loginForm.gen_time
               })
               .then(() => {
                 $q.loading.hide();
@@ -579,7 +585,7 @@ export default defineComponent({
         // Step 2: Call your backend to get Geetest configuration (fake config for demo)
         const geetestConfig = {
           config: {
-            captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+            captchaId: "dd6e127216b2108a70fbed280fbc4180",
             language: "zh",
             nativeButton: {
               width: "100%",
@@ -617,6 +623,10 @@ export default defineComponent({
         })
         .onSuccess(function () {
           console.log("success");
+          let result = window.captchaObj.getValidate();
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
         });
     }
 
@@ -739,7 +749,7 @@ export default defineComponent({
         padding-left: 0;
       }
       .q-field__prepend.q-field__marginal > span {
-        width: 54px !important;
+        width: 56px !important;
       }
       .q-field__prepend {
         padding-right: 0;
@@ -873,4 +883,50 @@ export default defineComponent({
   background: transparent;
 }
 
+#captchaContainer {
+  width: 100%;
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg,#fff,#f4f4f4) !important;
+    border-color: #dcdfe6;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #424f72;
+    font-family: "PingFang SC" !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
+    // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success
+    .geetest_content
+    .geetest_tip_container
+    .geetest_tips_wrap
+    .geetest_tip {
+    color: #39c522 !important;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn {
+    border: 1px solid #dfdfdf;
+    background: #fff;
+  }
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
+    color: #424f72;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
+    background: #fff;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
+  .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
+    background-color: #ccc;
+  }
+}
 </style>
