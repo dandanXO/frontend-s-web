@@ -9,8 +9,12 @@
     </div>
 
     <div v-if="tab === 'login'" style="padding: 15px 20px">
-      <img src="../assets/login/login-top.png" width="100%" />
+      <img :src="loginBannerUrl" width="100%" />
     </div>
+
+    <!-- <div v-if="tab === 'login'" style="padding: 15px 20px">
+      <img src="../assets/login/login-top.png" width="100%" />
+    </div> -->
 
     <div class="login-tab-div">
       <!-- <q-tabs v-model="tab" active-color="white" indicator-color="dark" align="justify" class="bg-dyblue">
@@ -93,6 +97,7 @@
                 </template>
               </q-input>
               <q-input
+                class="captcha-input"
                 height="32px"
                 rounded
                 standout
@@ -101,12 +106,12 @@
                 hide-bottom-space
                 type="text"
                 v-model="loginForm.captchaCode"
-                placeholder="请输入验证码"
-                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
                 label-color=""
+                readonly
               >
                 <template v-slot:append>
-                  <img :src="verificationImg" @click="getCode" />
+                  <div id="captchaContainer"></div>
+                  <!-- <img :src="verificationImg" @click="getCode" /> -->
                 </template>
                 <template v-slot:prepend>
                   <img src="../assets/login/pass-icon.svg" width="14" />
@@ -285,6 +290,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
 import qs from "qs";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "LoginPage",
@@ -322,6 +328,9 @@ export default defineComponent({
     const innerCaptchaCodeId = ref("");
     const showCaptchaDialog = ref(false);
 
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const loginBannerUrl = ref("")
+
     const router = useRouter();
     const route = useRoute();
     const getCode = () => {
@@ -331,7 +340,6 @@ export default defineComponent({
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
             loginForm.codeId = response.data.id;
-            loginForm.captchaCode = "";
           }
         })
         .catch((e) => {
@@ -369,13 +377,22 @@ export default defineComponent({
           if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
             $q.loading.hide();
           } else {
+            const validate = window?.captchaObj.getValidate();
+            if (!validate) {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: "请完成验证码",
+                icon: "report_problem"
+              });
+            }
             store
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
                 sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
+                // captchaCode: loginForm.captchaCode,
+                // codeId: loginForm.codeId
               })
               .then(() => {
                 $q.loading.hide();
@@ -406,7 +423,7 @@ export default defineComponent({
                 }
               })
               .catch((error) => {
-                loginForm.captchaCode = "";
+                window.captchaObj.reset();
                 getCode();
                 $q.loading.hide();
               });
@@ -542,6 +559,66 @@ export default defineComponent({
       }
     };
 
+    // Dynamically load the Geetest script
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    const initGeetestCaptcha = async () => {
+      try {
+        // Step 1: Load Geetest script
+        await loadScript("https://static.geetest.com/v4/gt4.js");
+
+        // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+        const geetestConfig = {
+          config: {
+            captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+            language: "zh",
+            nativeButton: {
+              width: "100%",
+              height: "45px"
+            },
+            nextWidth: "220px",
+            product: "float"
+          },
+          handler: captchaHandler
+        };
+
+        // Step 3: Initialize Geetest with the config
+        await window.initGeetest4(geetestConfig.config, geetestConfig.handler);
+      } catch (error) {
+        // message.value = "Error loading Geetest!";
+        console.error("Geetest loading error:", error);
+      }
+    };
+
+    const captchaHandler = (captchaObj) => {
+      window.captchaObj = captchaObj;
+      captchaObj
+        .appendTo("#captchaContainer")
+        .onReady(function () {
+          console.log("ready");
+        })
+        .onNextReady(function () {
+          console.log("nextReady");
+        })
+        .onBoxShow(function () {
+          console.log("boxShow");
+        })
+        .onError(function (e) {
+          console.log(e);
+        })
+        .onSuccess(function () {
+          console.log("success");
+        });
+    }
+
     onMounted(() => {
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
@@ -549,7 +626,13 @@ export default defineComponent({
         tab.value = "register";
       }
       checkRememberPwd();
+      initGeetestCaptcha();
+
+      api.get('/opt-session/promo/banner?category=LOGIN').then((res) => {
+        loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl
+      })
     });
+
     return {
       header: "Login",
       loginNameRef,
@@ -578,7 +661,8 @@ export default defineComponent({
       getInnerCode,
       refinnerCaptchaRef,
       clearLoginName,
-      clearPwName
+      clearPwName,
+      loginBannerUrl
     };
   }
 });
@@ -637,6 +721,16 @@ export default defineComponent({
       .q-field__marginal {
         height: 45px;
       }
+    }
+
+    .captcha-input .q-field__control {
+      padding-right: 0;
+    }
+
+    .geetest_captcha.geetest_customTheme .geetest_holder .geetest_content, .geetest_popup_wrap.geetest_customTheme .geetest_holder .geetest_content,
+    .q-field--standout.q-field--readonly .q-field__control:before {
+      border: none;
+      box-shadow: inset 0 0 2.91px 0 #a9c9ea;
     }
   }
   .q-field__prepend {
@@ -755,4 +849,5 @@ export default defineComponent({
 .q-toolbar {
   background: transparent;
 }
+
 </style>

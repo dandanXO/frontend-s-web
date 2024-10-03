@@ -1360,7 +1360,7 @@ export default defineComponent({
         // Step 2: Call your backend to get Geetest configuration (fake config for demo)
         const geetestConfig = {
           config: {
-            captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+            captchaId: "dd6e127216b2108a70fbed280fbc4180",
             language: "zh",
             nativeButton: {
               width: "100%",
@@ -1397,7 +1397,12 @@ export default defineComponent({
           console.log(e);
         })
         .onSuccess(function () {
-          console.log("success");
+          let result = window.captchaObj.getValidate();
+          console.log("success", result);
+
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
         });
     }
 
@@ -2001,7 +2006,11 @@ export default defineComponent({
               password: loginForm.password,
               sid: sidParam,
               // captchaCode: loginForm.captchaCode,
-              // codeId: loginForm.codeId
+              // codeId: loginForm.codeId,
+              lotNumber: loginForm.lot_number,
+              captchaOutput: loginForm.captcha_output,
+              passToken: loginForm.pass_token,
+              genTime: loginForm.gen_time
             })
             .then(() => {
               // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
