@@ -3366,14 +3366,13 @@ body {
   right: -4px;
 }
 
-
 #captchaContainer {
     width: 100%;
 
     .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
     .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
-      background-image: linear-gradient(180deg, #ecf3fd, 0%, #ecf3fd 100%) !important;
-      border-color: #424f72;
+      background-image: linear-gradient(180deg,#fff,#f4f4f4) !important;
+      border-color: #dcdfe6;
     }
 
     .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
@@ -3391,6 +3390,26 @@ body {
       .geetest_tips_wrap
       .geetest_tip {
       color: #39c522 !important;
+    }
+
+    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
+    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn {
+      border: 1px solid #dfdfdf;
+      background: #fff;
+    }
+    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
+    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
+      color: #424f72;
+    }
+
+    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
+    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
+      background: #fff;
+    }
+
+    .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
+    .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
+      background-color: hsla(224,98%,66%,1);
     }
   }
 </style>
