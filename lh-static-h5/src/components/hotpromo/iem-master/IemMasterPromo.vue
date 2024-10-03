@@ -70,8 +70,7 @@
               />
               <span>示例</span>
             </div>
-            会员A：IEM
-            里约大师赛在IM电竞投注5,000元后又在雷火电竞投注IEM赛事投注5,000元，会员B在次日可获雷火专属金38元。
+            会员A在IEM里约大师赛时，在IM电竞投注5,000元后又在雷火电竞投注IEM赛事投注5,000元，可在次日领取雷火专属金38元。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
