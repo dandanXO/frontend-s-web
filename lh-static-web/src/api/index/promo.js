@@ -457,6 +457,10 @@ export function claimCompetitionBonus(promoCode) {
   return server.EVENT.post("/session/competition/claimBonus", { promoCode });
 }
 
+export function claimCompetitionBetBonus(promoCode) {
+  return server.EVENT.post("/session/competition-bet/claimBonus", { promoCode });
+}
+
 export function getNationalDayinit() {
   return server.EVENT.get("/session/nationalDay/init");
 }

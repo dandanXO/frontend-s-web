@@ -301,6 +301,9 @@ export function claimCompetitionBonus(promoCode) {
   return eventapi.post("/session/competition/claimBonus", qs.stringify({ promoCode }));
 }
 
+export function claimCompetitionBetBonus(promoCode) {
+  return eventapi.post("/session/competition-bet/claimBonus", qs.stringify({ promoCode }));
+}
 export function getNationalDayRecords() {
   return eventapi.get("/session/nationalDay/records");
 }
