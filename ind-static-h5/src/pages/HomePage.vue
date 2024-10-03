@@ -188,7 +188,7 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(https://ind.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -248,7 +248,7 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(https://ind.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -304,7 +304,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://ind.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -347,7 +347,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://ind.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -416,7 +416,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://ind.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -471,7 +471,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://ind.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -767,7 +767,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://www.55ace.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://ind.55ace.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
