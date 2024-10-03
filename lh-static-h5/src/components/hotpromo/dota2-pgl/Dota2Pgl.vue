@@ -46,7 +46,7 @@
 
               <div class="reward-title-wrapper">
                 <div class="reward-title">
-                  累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次
+                  累计完成场次:{{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次
                 </div>
               </div>
 
@@ -102,10 +102,9 @@
               v-model="slide"
               swipeable
               animated
-              transition-prev="scale"
-              transition-next="scale"
+              transition-prev="slide-right"
+              transition-next="slide-left"
               control-color="black"
-              navigation
               padding
               arrows
               infinite
@@ -122,14 +121,14 @@
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x3</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款≥5天</div>
                 </div>
               </q-carousel-slide>
               <q-carousel-slide name="5" class="column no-wrap flex-center">
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x5</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款10天</div>
                 </div>
               </q-carousel-slide>
             </q-carousel>
@@ -169,12 +168,15 @@
 </template>
 
 <script setup>
+import "vue3-carousel/dist/carousel.css";
 import { onMounted, ref } from "vue";
 import { getPGLTreasureInit, putPGLTreasureInit } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+
+import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
 
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
@@ -187,7 +189,7 @@ const router = useRouter();
 const accumulatedClaimed = ref(0);
 const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
-const tabValue = ref(2);
+const tabValue = ref(1);
 const slide = ref("1");
 
 const handleClickTab = (value) => {
@@ -325,7 +327,7 @@ onMounted(() => {
   align-items: center;
   color: #8c5b00;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
 }
 
@@ -457,7 +459,7 @@ onMounted(() => {
 
   .reward-box {
     background: url("../../../assets/promo/lh-dota2-pgl/reward-box-bg.png") no-repeat;
-    background-size: contain;
+    background-size: 100% 100%;
     width: 226px;
     height: 100%;
     display: flex;
@@ -484,7 +486,7 @@ onMounted(() => {
       width: 94%;
       height: 20%;
       position: absolute;
-      bottom: 15px;
+      bottom: 8px;
     }
   }
 }
@@ -501,7 +503,7 @@ onMounted(() => {
     white-space: nowrap;
     font-size: 18px;
     line-height: 0;
-    font-weight: 600;
+    font-weight: bold;
   }
 }
 

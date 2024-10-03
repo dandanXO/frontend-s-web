@@ -101,7 +101,7 @@
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x1</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款3天</div>
                 </div>
                 <!-- <div class="reward-box-btn">已领取</div> -->
               </div>
@@ -109,7 +109,7 @@
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x3</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款≥5天</div>
                 </div>
                 <!-- <div class="reward-box-btn active">领取</div> -->
               </div>
@@ -117,7 +117,7 @@
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x5</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款10天</div>
                 </div>
                 <!-- <div class="reward-box-btn disabled">领取</div> -->
               </div>
@@ -170,7 +170,7 @@ const store = userStore();
 const accumulatedClaimed = ref(0);
 const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
-const tabValue = ref(2);
+const tabValue = ref(1);
 
 const handleClickTab = (value) => {
   tabValue.value = value;
@@ -297,7 +297,7 @@ onMounted(() => {
   align-items: center;
   color: #8c5b00;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .livepoker-rebate-game-info {
@@ -494,6 +494,7 @@ onMounted(() => {
 
   h1 {
     margin: 0;
+    font-weight: bold;
     white-space: nowrap;
   }
 }
