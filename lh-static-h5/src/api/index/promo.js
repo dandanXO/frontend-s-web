@@ -343,3 +343,11 @@ export function getPGLTreasureInit() {
 export function putPGLTreasureInit() {
   return eventapi.put("/session/pglTreasure/claim");
 }
+
+export function getIEMRioInit() {
+  return eventapi.get("/session/iem-rio/init")
+}
+
+export function claimIEMRioBonus() {
+  return eventapi.post("/session/iem-rio/claimBonus")
+}
