@@ -259,8 +259,10 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await api.post(
-          "/memberStatistics/submit",
+        const res = await axios.post(
+          "https://memberstatistics.j9zwvu1ogrg.com/memberStatistics/submit",
+        // const res = await api.post(
+        //   "/memberStatistics/submit",
           qs.stringify({
             way: way,
             sid: theSid,
