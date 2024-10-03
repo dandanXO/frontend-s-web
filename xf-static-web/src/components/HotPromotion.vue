@@ -696,6 +696,10 @@ export default defineComponent({
         .contents {
           display: flex;
           justify-content: center;
+          flex: 1;
+          color: #ffffff;
+          text-align: center;
+
           form {
             margin-top: 20px;
 
@@ -708,10 +712,6 @@ export default defineComponent({
               display: inline-block;
             }
           }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
         }
       }
 

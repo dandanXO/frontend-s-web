@@ -50,11 +50,6 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    path: "/agency-policy",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AgencyPolicyPage.vue") }]
-  },
-  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
@@ -146,12 +141,12 @@ const routes = [
     children: [{ path: "", component: () => import("pages/account/TransactionLandingView.vue") }],
     meta: { requiresAuth: true }
   },
-  {
-    path: "/account/transit",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/TransitRecordView.vue") }],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/transit",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/account/TransitRecordView.vue") }],
+  //   meta: { requiresAuth: true }
+  // },
   // Always leave this as last one,
   // but you can also remove it
   {

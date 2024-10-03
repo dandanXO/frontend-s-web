@@ -5,13 +5,13 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="12"
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val && val.length === 10) || $t('form.phone_rules_02')
+            (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02')
           ]"
           color="white"
           class="landing-input"
@@ -125,7 +125,8 @@ export default defineComponent({
       codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
-      smsCode: ""
+      smsCode: "",
+      realName: "lee bruce"
     });
     const getCode = () => {
       // api

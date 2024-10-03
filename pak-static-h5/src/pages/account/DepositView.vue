@@ -753,10 +753,12 @@ async function pDepo(deposit) {
         const response = res.data.result;
 
         //FB Tracking.
-        fbq("track", "Purchase", {
-          currency: "PKR",
-          value: obj.localAmount
-        });
+        if (store.isFbPixel) {
+          fbq("track", "Purchase", {
+            currency: "PKR",
+            value: obj.localAmount
+          });
+        }
 
         // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
         // if (!isFirstDepo) {

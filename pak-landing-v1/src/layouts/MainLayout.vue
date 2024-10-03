@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh lpr lFf" container style="height: 100vh">
+  <q-layout view="hHh Lpr fFf">
     <q-header>
       <q-toolbar>
         <div
@@ -9,7 +9,7 @@
           }"
         >
           <img class="logo" src="~assets/imgs/b9-logo.png" />
-          <q-btn class="register-btn" flat label="Register" />
+          <q-btn class="register-btn" flat label="Register" @click="openUrl" />
         </div>
       </q-toolbar>
     </q-header>
@@ -30,9 +30,7 @@
         </q-tabs>
 
         <router-view v-slot="{ Component }">
-          <!-- <KeepAlive :max="8"> -->
           <component :is="Component" />
-          <!-- </KeepAlive> -->
         </router-view>
       </q-page>
     </q-page-container>
@@ -42,10 +40,6 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-// defineOptions({
-//   name: "IndexPage",
-// });
 
 const route = useRoute();
 const router = useRouter();
@@ -73,6 +67,10 @@ watch(
 const onTabClick = () => {
   router.push(`/${mainTabsKey.value}`);
 };
+
+const openUrl = () => {
+  window.open("https://b9game0.com/refer/MDM0NDQ0NTU1MDE=", "_blank");
+};
 </script>
 
 <style scoped lang="scss">
@@ -86,6 +84,7 @@ const onTabClick = () => {
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   height: 34px;
   width: 80px;
+  letter-spacing: 0.5px;
 }
 .q-toolbar {
   padding: 0;
@@ -96,7 +95,7 @@ const onTabClick = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40px 14px 0px 14px;
+  padding: 20px 14px 0px 14px;
 }
 .q-layout__section--marginal {
   background: linear-gradient(90deg, #17221c 0.11%, #171719 39.57%);
@@ -138,7 +137,4 @@ const onTabClick = () => {
   overflow: auto;
   white-space: nowrap;
 }
-// :deep(.q-tabs__arrow) {
-//   display: none;
-// }
 </style>

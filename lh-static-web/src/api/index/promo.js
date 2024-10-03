@@ -2,13 +2,8 @@ import { server } from "@/utils/request";
 import { userStore } from "@/store";
 import cached from "@/utils/cache";
 
-
 export function loadPromo() {
-  const store = userStore();
-
-  const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
-
-  return server.REST.get(platformApiUrl);
+  return server.REST.get("/opt-session/promo/page");
 }
 
 export function loadPromoTypes(category) {
@@ -16,7 +11,7 @@ export function loadPromoTypes(category) {
 }
 
 export function loadPromoBanner(category) {
-  return server.REST.get("/promo/banner", {
+  return server.REST.get("/opt-session/promo/banner", {
     params: {
       category: category
     }
@@ -229,11 +224,49 @@ export function signIn() {
   return server.EVENT.put(`/sign-in/claim`);
 }
 
+export function getVIPDetails() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/vip-bonus/get-detail?v=${randNum}`);
+}
+
+export function getVIPDetailsNotLoggedIn() {
+  const store = userStore();
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/get-vip-bonus-detail?siteId=${store.siteId}&v=${randNum}`);
+}
 export function canRedeem() {
   return server.EVENT.get("/vip-upgrade/lh/canRedeem");
 }
 export function claim(level) {
   return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
+}
+
+export function claimItems(status, level) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  if (status === "upgrade") {
+    return server.EVENT.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", { vipLevel: level });
+  }
+  if (status === "birthday") {
+    return server.EVENT.put("/vip-bonus/claim-birthday-bonus");
+  }
+  if (status === "retain") {
+    return server.EVENT.post("/vip-bonus/claim-first-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "monthly") {
+    return server.EVENT.put("/vip-bonus/claim-monthly-bonus");
+  }
+  if (status === "yearlyRetain") {
+    return server.EVENT.post("/vip-bonus/claim-yearly-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "coupon") {
+    return server.EVENT.put("/vip-bonus/claim-coupon");
+  }
+  if (status === "redPacket") {
+    return server.EVENT.put("/vip-bonus/claim-red-packet");
+  }
+  if (status === "all") {
+    return server.EVENT.put("/vip-bonus/claim-all");
+  }
 }
 
 export function getQuestionnaireList() {
@@ -393,15 +426,15 @@ export function getDota2CompetitionBet(promoCode) {
 }
 
 export function getBlastCoupon() {
-  return server.EVENT.get('/session/blastCoupon/init');
+  return server.EVENT.get("/session/blastCoupon/init");
 }
 
 export function claimBlastCoupon(promoCode) {
-  return server.EVENT.post('/session/blastCoupon/claim', {
+  return server.EVENT.post("/session/blastCoupon/claim", {
     params: {
       promoCode
     }
-  })
+  });
 }
 
 export function getBlastCouponInit() {
@@ -409,36 +442,55 @@ export function getBlastCouponInit() {
 }
 
 export function getCompetitionToday() {
-  return server.EVENT.get('/session/competition/today')
+  return server.EVENT.get("/session/competition/today");
 }
 
 export function getCompetitionYesterday(promoCode) {
-  return server.EVENT.get('/session/competition/yesterday', {
+  return server.EVENT.get("/session/competition/yesterday", {
     params: {
       promoCode
     }
-  })
+  });
 }
 
 export function claimCompetitionBonus(promoCode) {
-  return server.EVENT.post('/session/competition/claimBonus', { promoCode })
+  return server.EVENT.post("/session/competition/claimBonus", { promoCode });
 }
 
 export function getNationalDayinit() {
-  return server.EVENT.get('/session/nationalDay/init')
+  return server.EVENT.get("/session/nationalDay/init");
 }
 export function getNationalDayRecords() {
-  return server.EVENT.get('/session/nationalDay/records')
+  return server.EVENT.get("/session/nationalDay/records");
 }
 
 export function claimNationalDayBonus() {
-  return server.EVENT.post('/session/nationalDay/claimBonus')
+  return server.EVENT.post("/session/nationalDay/claimBonus");
 }
 
 export function getCompetitionBetYesterday(promoCode) {
-  return server.EVENT.get('/session/competition-bet/yesterday', {
+  return server.EVENT.get("/session/competition-bet/yesterday", {
     params: {
       promoCode
     }
-  })
+  });
+}
+
+export function getNBAUpcomingMatch() {
+  return server.EVENT.get("/session/nba-match-preseason/upcoming");
+}
+
+export function getNBAClaimHistory() {
+  return server.EVENT.get("/session/nba-match-preseason/history");
+}
+
+export function getPglTreasureInit() {
+  return server.EVENT.get("/session/pglTreasure/init");
+}
+
+export function putPglTreasureInit() {
+  return server.EVENT.put("/session/pglTreasure/claim");
+}
+export function claimNBABonus(matchId) {
+  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
 }

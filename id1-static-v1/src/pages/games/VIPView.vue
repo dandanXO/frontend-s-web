@@ -43,7 +43,7 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ vip.ugprade }}
+                {{ convertToCommaAmount(Number(vip.ugprade) / 1000) }}K
               </div>
 
               <div class="progress-bar-container">
@@ -86,7 +86,7 @@
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}K</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -105,7 +105,7 @@
               <span class="bold">{{ $t("vip.monthly") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}K</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -124,7 +124,9 @@
               <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
+              <div class="reward-amt bold">
+                {{ convertToCommaAmount(Number(currentVipLevelStats.dailyWithdrawalLimit) / 1000) }}K
+              </div>
             </div>
           </div>
           <div class="unlock-status">
@@ -140,7 +142,14 @@
         <div class="header">{{ $t("vip.monthlyCumulative") }}</div>
       </div>
 
-      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns"
+        :rows="rows1"
+        row-key="name"
+        :rows-per-page-options="[0]"
+      >
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -168,7 +177,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ $t("vip.deposit") }} {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}</span>
+                  <span class="amt-text">{{ col.value }}K</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -222,7 +231,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}</span>
+                  <span class="amt-text">{{ col.value }}K</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -275,7 +284,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: right">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}</span>
+                  <span class="amt-text">{{ col.value }}K</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -323,7 +332,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 {{ store.currency.value }}
-                <span class="amt-text">{{ col.value }}</span>
+                <span class="amt-text">{{ col.value }}K</span>
               </template>
               <template v-else>{{ col.value }}</template>
             </q-td>
@@ -345,6 +354,7 @@
 import { onActivated, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
+import { convertToCommaAmount } from "@/boot/utils";
 import ProfileSummary from "@/components/ProfileSummary.vue";
 import { userStore } from "@/stores/index";
 import { Carousel, Navigation, Slide } from "vue3-carousel";
@@ -396,6 +406,69 @@ const columns = [
   { name: "flow", field: "flow", align: "center" }
 ];
 const rows = [
+  {
+    name: "VIP 1",
+    ugprade: "5000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 2",
+    ugprade: "10000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 3",
+    ugprade: "20000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 4",
+    ugprade: "50000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 5",
+    ugprade: "100000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 6",
+    ugprade: "200000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 7",
+    ugprade: "500000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 8",
+    ugprade: "1000000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 9",
+    ugprade: "2000000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 10",
+    ugprade: "5000000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 11",
+    ugprade: "10000000000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 12",
+    ugprade: "20000000000",
+    flow: "x10"
+  }
+];
+
+const rows1 = [
   {
     name: "VIP 1",
     ugprade: "5,000",
@@ -537,7 +610,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
+      progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(levelUpDeposit)}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
@@ -828,13 +901,14 @@ const swipeRight = () => {
 
       .reward-amt-wrapper {
         background-color: #c9c8ff;
-        padding: 5px 15px;
+        padding: 5px 5px;
         max-width: 100px;
         border-radius: 4px;
         font-family: sans-serif;
         font-size: 12px;
 
         .reward-amt {
+          font-size: 10px;
           line-height: 12px;
           word-wrap: break-word;
           color: #8b36f8;

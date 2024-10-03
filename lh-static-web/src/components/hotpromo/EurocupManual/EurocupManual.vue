@@ -118,6 +118,7 @@
     
       <div class="money-table">
         <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'groupStage'">
+          <tbody>
           <tr>
             <th>任意赛事早盘有效投注</th>
             <th>首当其冲</th>
@@ -154,8 +155,10 @@
             <td>288</td>
             <td>388</td>
           </tr>
+          </tbody>
         </table>
         <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'roundOf16'">
+          <tbody>
           <tr>
             <th>任意赛事早盘有效投注</th>
             <th>扭转乾坤</th>
@@ -191,9 +194,10 @@
             <td>188</td>
             <td>288</td>
             <td>388</td>
-          </tr>
+          </tr></tbody>
         </table>
         <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
+          <tbody>
           <tr>
             <th>任意赛事早盘有效投注</th>
             <th>首当其冲</th>
@@ -248,6 +252,7 @@
             <td>388</td>
             <td>388</td>
           </tr>
+          </tbody>
         </table>
       </div>
     </div>

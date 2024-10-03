@@ -1,7 +1,7 @@
 <template>
   <div class="personal-account">
     <div class="web">专属网址：{{ personalState.memberInfo.evip }}</div>
-    <q-form ref="profileFormRef">
+    <q-form ref="profileFormRef" class="profile-form">
       <q-input
         standout
         class="q-pb-xs"
@@ -70,7 +70,73 @@
         </template>
       </q-input>
 
-      <div class="flex items-baseline no-wrap">
+      <template v-if="$q.dark.isActive">
+        <q-input
+        standout
+        filled
+        class="q-pb-xs"
+        hide-bottom-space
+        v-model="formDetail.phone"
+        type="tel"
+        placeholder="电话"
+        lazy-rules
+        :rules="[(_) => isValidPhone()]"
+        label-color="secondary"
+        color="secondary"
+        readonly
+        style="width: 100%"
+      >
+        <template v-slot:prepend>
+          <span>电话</span>
+        </template>
+        <template v-slot:append>
+          <template v-if="isEditPhone">
+            <div class="q-ml-md">
+              <q-btn
+                class="common-sm-btn"
+                :color="$q.dark.isActive ? '' : 'brightbtn'"
+                label="验证"
+                @click="goToPage('/account/verifyTelephone')"
+                style="white-space: nowrap"
+              />
+            </div>
+          </template>
+        </template>
+      </q-input>
+
+        <q-input
+          standout
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.email"
+          placeholder="邮箱"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
+          label-color="secondary"
+          color="secondary"
+          readonly
+          style="width: 100%"
+        >
+          <template v-slot:prepend>
+            <span>邮箱</span>
+          </template>
+          <template v-slot:append>
+            <template v-if="isEditEmail">
+          <div class="q-ml-md">
+            <q-btn
+              class="common-sm-btn"
+              :color="$q.dark.isActive ? '' : 'brightbtn'"
+              label="验证"
+              @click="goToPage('/account/verifyEmail')"
+              style="white-space: nowrap"
+            />
+          </div>
+        </template>
+          </template>
+        </q-input>
+      </template>
+      <template v-else>
+        <div class="flex items-baseline no-wrap">
         <q-input
           standout
           filled
@@ -94,7 +160,7 @@
           <div class="q-ml-md">
             <q-btn
               class="common-sm-btn"
-              color="brightbtn"
+              :color="$q.dark.isActive ? '' : 'brightbtn'"
               label="验证"
               @click="goToPage('/account/verifyTelephone')"
               style="white-space: nowrap"
@@ -125,7 +191,7 @@
           <div class="q-ml-md">
             <q-btn
               class="common-sm-btn"
-              color="brightbtn"
+              :color="$q.dark.isActive ? '' : 'brightbtn'"
               label="验证"
               @click="goToPage('/account/verifyEmail')"
               style="white-space: nowrap"
@@ -133,8 +199,51 @@
           </div>
         </template>
       </div>
+      </template>
 
-      <div class="text-center q-mt-lg" v-if="isEditBirthday || isEditRealName">
+      <!-- <div class="flex items-baseline no-wrap">
+        <q-input
+          standout
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.gender"
+          placeholder="性别"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入性别']"
+          label-color="secondary"
+          color="secondary"
+          readonly
+          style="width: 100%"
+        >
+          <template v-slot:prepend>
+            <span>性别</span>
+          </template>
+        </q-input>
+      </div> -->
+
+      <div class="flex items-baseline no-wrap q-select">
+        <q-select
+          standout
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.gender"
+          placeholder="选择性别"
+          lazy-rules
+          :options="options"
+          label-color="#7a80a1"
+          color="#7a80a1"
+          :disabled="personalState.memberInfo.gender ? true : false"
+          :readonly="personalState.memberInfo.gender ? true : false"
+          style="width: 100%"
+          :dense="dense"
+        >
+          <template v-slot:prepend>
+            <span>性别</span>
+          </template>
+        </q-select>
+      </div>
+
+      <div class="text-center q-mt-lg" v-if="isEditBirthday || isEditRealName || isEditGender">
         <q-btn class="common-large-btn full-width" color="brightbtn" @click="updateState" label="提交" />
       </div>
     </q-form>
@@ -209,9 +318,12 @@ export default defineComponent({
     const store = userStore();
     const router = useRouter();
 
+    const options = [ { label: '男', value: 'Male' }, { label: '女', value: 'Female' } ]
+
     const isEditEmail = ref(false);
     const isEditPhone = ref(false);
     const isEditBirthday = ref(false);
+    const isEditGender = ref(false);
     const loadInfo = () => {
       personalState.memberInfo = userStore();
       // console.log(personalState.memberInfo.realName);
@@ -226,11 +338,13 @@ export default defineComponent({
       // formDetail.phone = personalState.memberInfo.phone;
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
       formDetail.emailVerified = personalState.memberInfo.emailVerified;
+      formDetail.gender = personalState.memberInfo.gender ? options.find((item) => item.value === personalState.memberInfo.gender) : null;
 
       isEditRealName.value= (formDetail.realName === '' || formDetail.realName === null) ? true : false;
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (!personalState.memberInfo.birthday) ? true : false;
       isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
+      isEditGender.value = !formDetail.gender
     };
 
     const canEdit = computed(() => {
@@ -380,7 +494,9 @@ export default defineComponent({
       if(formDetail.realName){
         updateInfo.realName = formDetail.realName;
       }
-
+      if(formDetail.gender){
+        updateInfo.gender = formDetail.gender.value;
+      }
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
@@ -465,6 +581,7 @@ export default defineComponent({
       isEditPhone,
       loadInfo,
       isEditBirthday,
+      isEditGender,
       formDetail,
       profileFormRef,
       updateState,
@@ -492,7 +609,8 @@ export default defineComponent({
       openVerificationDialog,
       onCaptchaSubmit,
       showDatePopup,
-      toggleShowPopup
+      toggleShowPopup,
+      options
     };
   }
 });
@@ -522,7 +640,13 @@ export default defineComponent({
     }
   }
 
-  .q-field__bottom{
+  .q-select {
+    .q-field__control {
+      padding-bottom: 0px;
+    }
+  }
+
+  .q-field__bottom {
     padding: 0px 8px 10px;
   }
 
@@ -537,12 +661,24 @@ export default defineComponent({
 
 .body--dark {
   .personal-account {
-    .q-field__control {
+    background: url('../../assets/images/profile/personal-bg-dark.jpg') no-repeat center center;
+    padding: 0;
+    height: calc(100vh - 112px);
+    .q-field__control, .q-field--standout.q-field--dark.q-field--readonly .q-field__control:before {
       box-shadow: none;
-      border: 1px solid $border-dark;
+      border: none;
+      background: none;
+      border-radius: 0;
+    }
+    .q-field {
+      border-bottom: 1px solid #b1bad31a;
     }
     .web {
       color: $primary-dark;
+      padding: 10px;
+    }
+    .web, .profile-form {
+      background: #060d1b5c;
     }
   }
 }

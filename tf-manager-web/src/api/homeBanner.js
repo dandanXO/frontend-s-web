@@ -11,11 +11,11 @@ export const getHomeBannerList = (homeBanner) => {
 };
 
 export const createHomeBanner = (homebanner) => {
-  return https().request("/home-banner/create", Method.POST, homebanner, ContentType.json);
+  return https().request("/home-banner/create", Method.POST, homebanner, ContentType.form);
 };
 
 export const updateHomeBanner = (homeBanner) => {
-  return https().request(`/home-banner/update?_method=PUT`, Method.POST, homeBanner, ContentType.json);
+  return https().request(`/home-banner/update?_method=PUT`, Method.POST, homeBanner, ContentType.form);
 };
 
 export const updateBannerState = async (id, state) => {

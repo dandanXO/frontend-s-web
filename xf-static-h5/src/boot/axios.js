@@ -9,10 +9,16 @@ import { getRndInteger } from "boot/utils";
 const rstArray = process.env.RST_API;
 const crArray = process.env.CR_API;
 const evtArray = process.env.EVT_API;
+const imgCDN = process.env.IMAGE_CDN;
 
 console.log(window.location.hostname);
 const globalLinks = ["xf13140"];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
+
+const globalAndCNLinks = ["xingfabet6", "xingfabet8"];
+const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
+
+const REPLACEMENT_DOMAIN = "random";
 
 if (isGlobalLH) {
   var rstApi = "https://apn0zz6gox.330z3w3.com";
@@ -25,6 +31,15 @@ if (isGlobalLH) {
 
   var cdnApi = "https://urle7rqimtl.enkpdmqvhc.com";
   localStorage.setItem("IMAGE_CDN", cdnApi);
+} else if (isGlobalAndCN) {
+  console.log("IS Global + CN");
+  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+
+  var rstApi = getInitApi(rstGlobalArray, "XF_H5_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "XF_H5_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "XF_H5_CRT_URL");
 } else {
   var rstApi = getInitApi(rstArray, "XF_H5_RST_URL");
   var crtApi = getInitApi(crArray, "XF_H5_CRT_URL");
@@ -34,6 +49,16 @@ if (isGlobalLH) {
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
+
+if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
+  const successImgCdn = localStorage.getItem("IMAGE_CDN");
+  if (!successImgCdn) {
+    const newDomain = replaceRndDomain("IMAGE_CDN");
+    const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
+    localStorage.setItem("IMAGE_CDN", newImgCDN);
+  }
+}
+
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
@@ -58,6 +83,10 @@ function getInitApi(apiLinks, urlLsName) {
     } else {
       var apiLists = Object.values(apiLinks);
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
+      if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+        const newDomain = replaceRndDomain(urlLsName);
+        initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+      }
     }
 
     axios.get(initApi + "/ping").then((res) => {
@@ -71,6 +100,37 @@ function getInitApi(apiLinks, urlLsName) {
     return initApi;
   }
 }
+
+function replaceRndDomain(urlLsName) {
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
+  const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${domainPrefix}${rndSecondLevelDomain}`;
+}
+
+function generateRndSecondLevelDomain(unit) {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < unit; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
+function getApiDomainPrefix(urlLsName) {
+  if (urlLsName.indexOf("RST") > -1) {
+    return "ap";
+  } else if (urlLsName.indexOf("CR") > -1) {
+    return "ca";
+  } else if (urlLsName.indexOf("EVT") > -1) {
+    return "pr";
+  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+    return "fi";
+  } else {
+    return "";
+  }
+}
+
 
 export default boot(({ app, router }) => {
   const onRequest = (config) => {

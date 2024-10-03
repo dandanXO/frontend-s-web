@@ -29,11 +29,13 @@ default:
   stage: build
   variables:
     NODE_OPTIONS: "--max-old-space-size=2048"
+    NODE_VERSION: "16.17.0"
   cache:
     paths:
       - node_modules
-  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/node:16.17.0
+  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/node:$NODE_VERSION
   script:
+    - node -v
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
@@ -237,6 +239,13 @@ deploy-ind2-download:
   extends: .s3-deploy
   variables:
     PROJECT: ind2-download
+
+#===============================================================================================
+
+deploy-id1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: id1-download
 
 #===============================================================================================
 
@@ -776,6 +785,34 @@ build-image-pak-static-h5:
 
 #===============================================================================================
 
+build-pak-landing-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-landing-v1
+
+build-image-pak-landing-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-landing-v1
+  needs:
+    - build-pak-landing-v1
+
+#===============================================================================================
+
+build-pak-landing-v1-strapi:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-landing-v1-strapi
+    NODE_VERSION: "20.17.0"
+
+build-image-pak-landing-v1-strapi:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-landing-v1-strapi
+  needs:
+    - build-pak-landing-v1-strapi
+
+#===============================================================================================
 
 build-pak-static-v2:
   extends: .build-projects

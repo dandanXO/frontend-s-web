@@ -318,6 +318,7 @@ export default {
     monthBeforeLastTotal: '累计上上月',
     monthlyMemberCommission: '本月会员佣金',
     newMemberCount: '新成员计数',
+    newMember: '新注冊会员',
     activeMemberCount: '活跃成员计数',
     totalRegisterCount: '总注册数',
     myAccount: '我的账号',

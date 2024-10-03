@@ -72,13 +72,14 @@ export default {
     phone: "Nomor Telepon",
     phone_placeholder: "Masukkan nomor ponsel Anda",
     phone_rules_01: "Masukkan nomor telepon",
-    phone_rules_02: "Nomor telepon harus 10 digit",
+    phone_rules_02: "Nomor telepon harus antara 8 hingga 12 digit",
     phone_rules_03: "Nomor telepon harus dimulai dengan '03'",
     prependNumber: "+62",
     password: "Kata Sandi",
     password_placeholder: "Masukkan kata sandi",
     password_rules_01: "Masukkan kata sandi",
     password_rules_02: "Karakter kata sandi harus lebih dari 6",
+    strongerPasswordRecommended: "Kata Sandi yang Lebih Kuat Direkomendasikan",
     forgotPassword: "Lupa Kata Sandi",
     forgotPassword_desc:
       "Masukkan Nama pengguna Dan Nomor Telepon Anda, Kami Akan Kirim OTP Ke Nomor Telepon Terdaftar Anda.",
@@ -92,7 +93,7 @@ export default {
     verificationCode: "Kode Verifikasi",
     verificationCode_placeholder: "Masukkan Kode Verifikasi",
     verificationCode_rules_01: "Masukkan Kode Verifikasi",
-    otp_sent_title: "OTP telah dikirim ke email Anda, silakan masukkan OTP dan kata sandi baru.",
+    otp_sent_title: "OTP telah dikirim ke Nomor Telepon Anda, silakan masukkan OTP dan kata sandi baru.",
     otp: "OTP",
     otp_placeholder: "Masukkan OTP",
     otp_rules_01: "Masukkan OTP",
@@ -101,9 +102,11 @@ export default {
     newPassword_rules_01: "Masukkan kata sandi baru",
     newPassword_rules_02: "Karakter kata sandi baru harus lebih dari 6",
     confirmNewPassword: "Konfirmasi Kata Sandi Baru",
-    confirmNewPassword_placeholder: "Masukkan konfirmasi kata sandi baru",
+    confirmNewPassword_placeholder: "Masukkan Kata sandi Baru Terkonfirmasi",
     confirmNewPassword_rules_01: "Masukkan konfirmasi kata sandi baru",
+    confirmNewPassword_rules_02: "Kata sandi terkonfirmasi tidak cocok dengan kata sandi baru",
     confirmNewPassword_rules_03: "Konfirmasi kata sandi tidak cocok",
+    mustBeAlphaNumeric: "{field} harus alfanumerik",
     depositAmount: "Jumlah",
     depositAmount_placeholder: "Silakan masukkan jumlah",
     depositAmount_rules_01: "Deposit harus antara ",
@@ -119,6 +122,7 @@ export default {
     estimatedArrival: "Perkiraan kedatangan",
     usdtSpecialNote:
       "*Catatan khusus: Pihak ketiga secara otomatis mengenakan biaya penanganan sebesar {fee} USDT untuk menarik koin!",
+    loginName: "Nama Masuk",
     fullName: "Nama Lengkap",
     fullName_placeholder: "Masukkan nama lengkap Anda",
     fullName_rules_01: "Masukkan nama lengkap Anda",
@@ -126,7 +130,9 @@ export default {
     changePassword: "Ganti Kata Sandi",
     currentPassword: "Kata Sandi Saat Ini",
     currentPassword_placeholder: "Masukkan Kata Sandi Saat Ini",
-    currentPassword_rules_01: "Silakan masukkan kata sandi saat ini",
+    currentPassword_rules_01: "Masukkan kata sandi lama",
+    changeNewpassword: "Ganti Kata Sandi Baru",
+    passwordResetCompleted: "Ganti kata sandi selesaikan",
     pleaseCompleteKYC: "Selesaikan KYC",
     bindEmail: "Ikat Email",
     code: "Kode",
@@ -201,6 +207,7 @@ export default {
     confirm: "Konfirmasi",
     submit: "Kirim",
     addNewAccount: "Tambahkan Akun Baru",
+    update: "Pembaruan",
     updated: "Diperbarui",
     updating: "Memperbarui...",
     addCrypto: "Tambahkan kripto",
@@ -216,7 +223,7 @@ export default {
     signOut: "Keluar",
     back: "Kembali",
     moreGames: "Lebih Banyak Permainan",
-    addCash: "Tambah Saldo",
+    addCash: "Tambah uang tunai",
     search: "Cari",
     downloadApp: "Unduh Aplikasi",
     downloadNow: "Unduh Sekarang",
@@ -229,7 +236,7 @@ export default {
   },
   notify: {
     noRecord: "Tidak Ada Catatan",
-    haventFoundAnyRecord: "Belum menemukan catatan apapun",
+    haventFoundAnyRecord: "Tidak temukan catatan apa pun",
     updatedSuccessfully: "Berhasil diperbarui",
     emailVerificationSent: "Verifikasi email telah dikirim",
     messageSent: "Pesan Terkirim",
@@ -245,7 +252,11 @@ export default {
     registeringInProgress: "Pendaftaran sedang berlangsung",
     refreshing: "Menyegarkan...",
     pleaseLoginToOperate: "Silakan masuk untuk beroperasi",
-    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda"
+    pleaseFillInPersonalDetails: "Silakan isi detail pribadi Anda",
+    failed: "Gagal",
+    updateSucceed: "Pembaruan berhasil",
+    unbindSucceed: "Berhasil dilepaskan",
+    withdrawalSubmitSucceed: "Penarikan Kirim Berhasil"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -292,7 +303,7 @@ export default {
     feedback: "Umpan Balik",
     vip: "VIP",
     logout: "KELUAR",
-    depositMonthlytoWinGifts: "Deposit Bulanan Untuk Mendapatkan Hadiah",
+    depositMonthlytoWinGifts: "Deposit Tiap bulan untuk Memenangi Hadiah",
     interestProfit: "Keuntungan Bunga"
   },
   deposit: {
@@ -480,7 +491,7 @@ export default {
     history: {
       totalRebates: "Total rabat",
       month: "Bulan",
-      week: "Minggu",
+      week: "Pekan",
       date: "Tanggal",
       rebateAmount: "Jumlah Rebate"
     },
@@ -669,7 +680,7 @@ export default {
     success: "Berhasil",
     supplementSuccess: "Lengkapi Berhasil",
     closed: "Ditutup",
-    orderNo: "Nomor Pesanan",
+    orderNo: "NO. Order",
     bank: "BANK",
     noRecord: "Tak ada Catatan",
     noMoreRecord: "Tidak temukan catatan apa pun",
@@ -680,7 +691,9 @@ export default {
     noMember: "Tidak Ada Anggota",
     noMessage: "Tidak Ada Pesan",
     level: "Level",
-    turnover: "Perputaran"
+    turnover: "Perputaran",
+    serialNumber: "Nomor seri",
+    vipUpgradeBonus: "Hadiah Upgrade VIP"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -723,12 +736,12 @@ export default {
     }
   },
   maintenance: {
-    underMaintenance: "Under maintenance",
-    content01: "Our website is currently undergoing maintenance...",
-    from: "From",
-    to: "To",
-    content02: "During this period, all games and services will be unavailable.",
-    content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+    underMaintenance: "Sedang dalam pemeliharaan",
+    content01: "Website kami sedang dalam pemeliharaan...",
+    from: "Dari",
+    to: "Sampai",
+    content02: "Selama periode ini, semua permainan dan layanan tidak akan tersedia.",
+    content03: "Kami mohon maaf atas ketidaknyamanan yang ditimbulkan dan menghargai kesabaran Anda!"
   },
   promo_activitiesDetails: {
     activitiesContent:
@@ -748,6 +761,9 @@ export default {
     rules_03:
       "3. Setelah persyaratan deposit terpenuhi, Anda harus bermain mesin slot untuk mulai menghitung turnover, dan bonus akan diberikan setelah turnover selesai.",
     rules_04: "4. Setelah persyaratan terpenuhi, sistem akan secara otomatis mengeluarkan bonus."
+  },
+  promo_ph1SlotFtd: {
+    sorryDesc: "Maaf, akun Anda sudah mendapatkan bonus. Silakan bergabung dengan aktivitas kami yang lain."
   },
   error: {
     101: "Platform tidak ditemukan",

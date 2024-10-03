@@ -316,9 +316,9 @@ const countiuneSign = computed(() => {
 const countPercent = computed(() => {
   let times = 0;
   sectionOneBoxItems.value.forEach((item) => {
-    console.log(currentActivePoints.value)
-    if ((currentActivePoints.value >= +item.requiredActivePoint)) {
-      times++
+    console.log(currentActivePoints.value);
+    if (currentActivePoints.value >= +item.requiredActivePoint) {
+      times++;
     }
   });
   return times * 25;
@@ -489,12 +489,12 @@ onMounted(async () => {
     .status-img {
       position: absolute;
       bottom: 90px;
+      cursor: pointer;
       img {
         width: 120px;
         height: 40px;
         border-radius: 0px !important;
       }
-      cursor: pointer;
     }
     .status-text {
       position: absolute;
@@ -575,6 +575,10 @@ onMounted(async () => {
   .first {
     width: 1336px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     .title {
       background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/title1.png");
       width: 1060px;
@@ -626,13 +630,15 @@ onMounted(async () => {
         }
       }
     }
+  }
+  .secend {
+    width: 1336px;
+
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-  .secend {
-    width: 1336px;
+
     .title {
       background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/title2.png");
       width: 1060px;
@@ -646,10 +652,6 @@ onMounted(async () => {
       margin-top: 20px;
       margin-bottom: 40px;
     }
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
   }
 }
 .dialog-header {

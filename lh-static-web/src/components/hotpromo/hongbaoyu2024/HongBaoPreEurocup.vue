@@ -30,6 +30,7 @@ import { ref, onMounted, defineProps } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { useNotify } from "@/hooks/notify";
+import { ElMessageBox } from "element-plus";
 
 const props = defineProps({
   promoCode: {
@@ -70,6 +71,21 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
 const getPromotion = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+
+  if (loadingClaim.value) return;
   loadingClaim.value = true;
   claimDailyRainItem(promoCode.value)
     .then((res) => {
@@ -160,6 +176,9 @@ const getPromotionListing = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getPromotionListing();
 });
 </script>

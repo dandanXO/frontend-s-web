@@ -70,6 +70,7 @@
           <span v-else>{{ scope.row.alias }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="platformAccountName" :label="t('fields.platformAccount')" min-width="150" />
       <el-table-column prop="status" :label="t('fields.status')" min-width="280">
         <template #default="scope">
           <el-radio-group

@@ -41,7 +41,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, false) }}</div>
               <div class="order-col">BANK</div>
             </div>
             <div class="order-subrow">
@@ -61,7 +61,7 @@
       <q-tab-panel name="recharge">
         <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
+            <div class="order-col">{{ $t("records.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
 
@@ -77,7 +77,7 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
+              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, false) }}</div>
               <div class="order-col">{{ e.paymentType }}</div>
             </div>
             <div class="order-subrow">
@@ -163,7 +163,7 @@ const copyText = (text) => {
     $q.notify({
       color: "positive",
       position: "top",
-      message: "Serial Number Copied to clipboard.",
+      message: `${t("records.serialNumber")} ${t("notify.copiedtoClipboard")}`,
       icon: "check_circle_outline"
     });
   }, 100);

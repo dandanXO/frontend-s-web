@@ -161,6 +161,7 @@
               </div>
               <div class="mid-wrapper">
                 <q-input
+                  :type="currentCardType === 'Bank' ? 'number' : 'text'"
                   filled
                   dense
                   clearable
@@ -195,7 +196,7 @@
               :rules="[
                 (val) => !!val || $t('form.withdrawalAmount_rules_01'),
                 (val) => val > 0 || $t('form.withdrawalAmount_rules_02'),
-                (val) => val < selectedMethodItem.withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
+                (val) => val <= selectedMethodItem.withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
                 (val) =>
                   (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
                   `${$t('form.withdrawalAmount_rules_04')} ${selectedMethodItem.withdrawMin} - ${
@@ -405,13 +406,6 @@ const getWithdrawalMethods = () => {
       });
 
       selectWithdrawCurrency(paymentMethodsItems.value[0]);
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
     }
     cbCount++;
     checkCb();
@@ -640,7 +634,7 @@ const submitWithdrawBank = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -670,7 +664,7 @@ const withdrawGo = (callback) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();

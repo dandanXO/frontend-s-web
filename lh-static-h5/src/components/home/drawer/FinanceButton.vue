@@ -22,7 +22,12 @@ defineEmits(["click"]);
 
 .body--dark {
   .finance-button {
-    background-image: url("../../../assets/images/download/active-tab-bg-dark.png");
+    background: url('../../../assets/images/account/primary-btn.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3A93CE;
+    color: $white;
   }
 }
 </style>

@@ -303,7 +303,7 @@ export default defineComponent({
       //   }
       // })
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];

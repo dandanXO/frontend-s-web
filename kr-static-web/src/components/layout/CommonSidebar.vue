@@ -21,7 +21,8 @@
       </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
-        <span style="margin-left: 5px">@cityy88</span>
+        <a href="https://t.me/Diahelp7" target="_blank">@Diahelp7</a>
+        <!-- <span style="margin-left: 5px">@Diahelp7</span> -->
       </div>
     </div>
     <div class="sticky-sidebar-items">
@@ -379,6 +380,10 @@ export default defineComponent({
 
     &:hover {
       background-color: #e5f5ff;
+    }
+
+    a {
+      color: inherit;
     }
   }
 }

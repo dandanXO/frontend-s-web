@@ -22,12 +22,12 @@
 
     <div class="light-bg form-field geetest-captcha-form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-        <div class="geetest-captcha-wrapper">
-          <div class="geetest-captcha-label">
-            <span style="color:red;margin-right:4px;">*</span>
-            <span>验证码</span>
-          </div>
-          <!-- <el-input
+      <div class="geetest-captcha-wrapper">
+        <div class="geetest-captcha-label">
+          <span style="color: red; margin-right: 4px">*</span>
+          <span>验证码</span>
+        </div>
+        <!-- <el-input
             v-model="loginForm.captchaCode"
             label="验证码"
             placeholder="请输入验证码"
@@ -35,8 +35,8 @@
             clearable
           ></el-input>
           <img style="width: 100px" :src="verificationImg" @click="getCode" /> -->
-          <div id="captchaContainer"></div>
-        </div>
+        <div id="captchaContainer"></div>
+      </div>
     </div>
 
     <div class="agreement-and-forget-pass">
@@ -94,7 +94,7 @@ const loginRules = {
       message: "长度要在 6-12 之间",
       trigger: "blur"
     }
-  ],
+  ]
   // captchaCode: [
   //   {
   //     required: true,
@@ -137,7 +137,7 @@ const loadScript = (src) => {
 
 // Initialize Geetest with configuration
 const initGeetest = (config) => {
-  console.log(config)
+  console.log(config);
   window.initGeetest4(config.config, config.handler);
 };
 
@@ -151,7 +151,10 @@ const submitLogin = () => {
         if (window.captchaObj) {
           const validate = window.captchaObj.getValidate();
           if (!validate) {
-            alert("Please complete the captcha!");
+            notify({
+              type: "error",
+              message: "请完成验证码"
+            });
             return;
           }
           // You can now send the validate data to your backend
@@ -166,7 +169,7 @@ const submitLogin = () => {
               lotNumber: loginForm.lot_number,
               captchaOutput: loginForm.captcha_output,
               passToken: loginForm.pass_token,
-              genTime: loginForm.gen_time,
+              genTime: loginForm.gen_time
             })
             .then(() => {
               const jumpUrl = route.query.redirect
@@ -188,6 +191,7 @@ const submitLogin = () => {
               }
             })
             .catch((error) => {
+              window.captchaObj.reset();
               console.log(error.message);
               getCode();
             });
@@ -259,11 +263,11 @@ function captchaHandler(captchaObj) {
       console.log(e);
     })
     .onSuccess(function () {
-      let result = window.captchaObj.getValidate()
+      let result = window.captchaObj.getValidate();
       for (let key in result) {
         loginForm[key] = result[key];
       }
-      console.log(loginForm)
+      console.log(loginForm);
     });
 }
 
@@ -278,11 +282,11 @@ onMounted(async () => {
         captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
         language: "zh",
         nativeButton: {
-          width: '100%',
-          height: '48px',
+          width: "100%",
+          height: "48px"
         },
-        nextWidth: '280px',
-        product: 'float',
+        nextWidth: "280px",
+        product: "float"
       },
       handler: captchaHandler
     };
@@ -307,26 +311,32 @@ onMounted(async () => {
   #captchaContainer {
     width: 100%;
 
-    .geetest_captcha.geetest_dark .geetest_holder .geetest_content, .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+    .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
       background-image: linear-gradient(180deg, #ecf3fd, 0%, #ecf3fd 100%) !important;
       border-color: #424f72;
     }
 
     .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
       color: #424f72;
-      font-family: 'PingFang SC' !important;
+      font-family: "PingFang SC" !important;
     }
 
     .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
       // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
     }
 
-    .geetest_captcha.geetest_dark.geetest_lock_success .geetest_content .geetest_tip_container .geetest_tips_wrap .geetest_tip {
+    .geetest_captcha.geetest_dark.geetest_lock_success
+      .geetest_content
+      .geetest_tip_container
+      .geetest_tips_wrap
+      .geetest_tip {
       color: #39c522 !important;
     }
   }
 
-  .form-field-icon, .geetest-captcha-label {
+  .form-field-icon,
+  .geetest-captcha-label {
     padding: 8px 15px;
   }
 
@@ -337,7 +347,7 @@ onMounted(async () => {
     color: black;
 
     .geetest-captcha-label {
-      width:112px;
+      width: 112px;
     }
   }
 }

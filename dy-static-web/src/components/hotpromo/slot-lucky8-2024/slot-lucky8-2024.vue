@@ -308,7 +308,7 @@ onMounted(() => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   padding-bottom: 40px;
 
   .luck8-game-content-left,

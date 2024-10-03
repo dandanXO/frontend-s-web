@@ -6,12 +6,8 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
+    <!-- external promos -->
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'id1-slot-ftd' && store.token" :params="list.param" />
   </div>
 
@@ -32,19 +28,16 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref } from "vue";
-import { userStore } from "stores/index";
-import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { defineComponent, ref } from "vue";
+
+import { eventapi } from "@/boot/axios";
+import ClaimPromo from "@/components/hotpromo/claimPromo.vue";
+import { userStore } from "@/stores/index";
 import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
-import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
-import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
+
+import SlotFtdPromo from "@/components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -52,11 +45,6 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    TigerCardPromo,
-    GoldenEggPromo,
-    HongBaoYuPromo,
-    WelcomeTaskPromo,
-    InviteFriendPromo,
     SlotFtdPromo
   },
   props: {
@@ -107,16 +95,7 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (
-      this.list.redirectUrl === "tigercard" ||
-      this.list.redirectUrl === "goldenegg" ||
-      this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "invitefriend" ||
-      this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "fucaiiphone" ||
-      this.list.redirectUrl === "id1-slot-ftd" ||
-      this.list.id === 40
-    ) {
+    if (this.list.redirectUrl === "id1-slot-ftd" || this.list.id === 40) {
       this.isCommonPromo = false;
     } else {
       this.isCommonPromo = true;
@@ -235,28 +214,6 @@ export default defineComponent({
       });
     };
 
-    // const loadLNWinnerList = () => {
-    //   const winnerUrl = "/privi/winners";
-    //   winnerDataSource.value = [];
-    //   loading.value = true;
-    //   eventapi
-    //     .get(winnerUrl)
-    //     .then((res) => {
-    //       loading.value = false;
-    //       var data = res.data.data;
-
-    //       for (let i in data) {
-    //         _.each(data[i].winners, function (winner, index) {
-
-    //           winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-    //           console.log(winner);
-
-    //           winnerDataSource.value.push(winner);
-    //         })
-    //       }
-    //     });
-    // }
-
     const filterLuckyNumber = () => {
       loading.value = true;
       dataSource.value = [];
@@ -294,23 +251,6 @@ export default defineComponent({
           // });
         });
     };
-    // const ClaimDailyRebate = (id) => {
-    //   if (!store.hasToken()) {
-    //   } else {
-    //     // var user_id = store.id;
-    //     var claim_id = '';
-    //     if (id == 27) {
-    //       claim_id = 'jolly88-daily-rebate';
-    //     } else if (id == 32) {
-    //       claim_id = 'jolly88-daily-slot';
-    //     } else if (id == 31) {
-    //       claim_id = 'jolly88-refund';
-    //     }
-
-    //     // console.log(eventapi);
-
-    // }
-    // }
 
     const submitLuckyNumber = () => {
       console.log(lucky_number.value);
@@ -386,6 +326,7 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="scss">
 .hot-promo {
   border-radius: 10px;
@@ -525,6 +466,10 @@ export default defineComponent({
         padding: 20px;
 
         .contents {
+          flex: 1;
+          color: #ffffff;
+          text-align: center;
+
           form {
             margin-top: 20px;
 
@@ -537,10 +482,6 @@ export default defineComponent({
               display: inline-block;
             }
           }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
         }
       }
 
