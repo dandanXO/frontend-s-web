@@ -201,7 +201,7 @@
                 <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
             </div>
             <div class="contact-buttons skype-buttons">
-              <span style="font-size: 0px;" ref="contact2">live:.cid.1b8d9a018a52a8f5</span>
+              <span style="font-size: 0px;" ref="contact2">live:.cid.1a1ab9b6b5b0721f</span>
                 <button class="copy-btn"  @click="copyMessage('2')">{{ copybtntxt2 }}</button>
                 <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
             </div>
