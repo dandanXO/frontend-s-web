@@ -116,7 +116,7 @@ const initContactList = () => {
     {
       icon: 'cskype',
       type: t('common.skype'),
-      link: 'live:.cid.1b8d9a018a52a8f5',
+      link: 'live:.cid.1a1ab9b6b5b0721f',
       btns: [{
         text: t('common.copy'),
         action: ''
