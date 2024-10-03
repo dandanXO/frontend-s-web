@@ -1,20 +1,15 @@
 <template>
   <div class="welcome-page">
     <div class="promotionlist">
-      <span v-for="i in 4" :key="i">
-        <img
-          @click="checkPromo(i)"
-          :src="require(`../assets/images/welcome/promo-${i}.png`)"
-        />
-      </span>
+      <!-- <span v-for="i in 4" :key="i">
+        <img :src="require(`../assets/images/welcome/promo-${i}.png`)" @click="checkPromo(i)" />
+      </span> -->
     </div>
-    <router-link to="/register"> Register </router-link>
+    <router-link to="/register">Register</router-link>
     <div class="logo">
-      <img src="../assets/images/welcome/logo.png" />
+      <img src="../assets/images/welcome/logo.jpg" />
     </div>
-    <div class="slogan">
-      www.jolly88.com &nbsp; | &nbsp; Casino Online and Slot Game Betting
-    </div>
+    <div class="slogan">www.jolly88.com &nbsp; | &nbsp; Casino Online and Slot Game Betting</div>
   </div>
 </template>
 <script>
@@ -41,9 +36,9 @@ export default defineComponent({
     };
     return {
       router,
-      checkPromo,
+      checkPromo
     };
-  },
+  }
 });
 </script>
 
@@ -53,8 +48,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url("../assets/images/welcome/welcome-bg.png") no-repeat center
-    center;
+  background: url("../assets/images/welcome/welcome-bg.png") no-repeat center center;
   min-height: 100vh;
   width: 100%;
   background-size: cover;
@@ -74,8 +68,7 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../assets/images/welcome/button.png") no-repeat center
-      center;
+    background: url("../assets/images/welcome/button.png") no-repeat center center;
     background-size: cover;
     color: #000000;
     font-size: 35px;
@@ -95,7 +88,6 @@ export default defineComponent({
     }
   }
   .slogan {
-    color: #ffffff;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 30px;
@@ -103,10 +95,9 @@ export default defineComponent({
     margin: 30px 0 140px;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .welcome-page {
-    background: url("../assets/images/welcome/welcome-bg-h5.png") no-repeat
-      center center;
+    background: url("../assets/images/welcome/welcome-bg-h5.png") no-repeat center center;
     background-size: cover;
     .promotionlist {
       display: grid;

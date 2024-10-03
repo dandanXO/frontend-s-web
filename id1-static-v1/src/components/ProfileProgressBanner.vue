@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
+      <!-- <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div> -->
     </div>
 
     <div class="right-container">
@@ -30,15 +30,15 @@
         class="progress-bar"
         color="white"
       ></q-linear-progress>
-      <div class="win-gift-text">Deposit Monthly To Win Gifts</div>
+      <div class="win-gift-text">{{ $t("settings.depositMonthlytoWinGifts") }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { userStore } from "stores/index";
-import { convertToCommaAmount } from "src/boot/utils";
+import { computed, ref } from "vue";
+
+import { userStore } from "@/stores/index";
 
 const store = userStore();
 

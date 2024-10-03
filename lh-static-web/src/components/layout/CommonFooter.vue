@@ -136,11 +136,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .footer {
-  // z-index: 2;
-  // position: absolute;
-  // left: 0;
-  // right: 0;
-  // margin: auto;
   font-size: 0.8rem;
   .top-footer {
     .top-footer-inner {
@@ -177,14 +172,14 @@ export default defineComponent({
         }
       }
       .top-ft-rgt {
-        .s1 {
-          color: #ffffff;
-          font-size: 16px;
-        }
         display: flex;
         justify-content: flex-end;
         align-items: center;
         gap: 10px;
+        .s1 {
+          color: #ffffff;
+          font-size: 16px;
+        }
         .footPayIcon {
           width: 55px;
           height: 40px;

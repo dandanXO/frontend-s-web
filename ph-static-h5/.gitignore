@@ -32,5 +32,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-.dev.env
-.prod.env
+package-lock.json

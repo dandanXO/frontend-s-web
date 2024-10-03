@@ -219,6 +219,19 @@
         :empty-text="t('fields.noData')"
       >
         <el-table-column
+          v-if="hasRole(['ADMIN'])"
+        >
+          <template #default="scope">
+            <el-button
+              type="primary"
+              size="mini"
+              @click="syncRecord(scope.row)"
+            >
+              {{ t('fields.sync') }}
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
           align="center"
@@ -671,9 +684,10 @@ import { getFinancialLevels } from '../../../api/financial-level'
 import {
   getDepositRecord,
   getExportDepositRecord,
+  sync
 } from '../../../api/member-deposit-record'
 import { getSystemPaymentListForDeposit } from '../../../api/system-payment'
-import { hasPermission } from '../../../utils/util'
+import { hasPermission, hasRole } from '../../../utils/util'
 import { useStore } from '../../../store'
 import {
   getAllPrivilegeInfo,
@@ -686,6 +700,7 @@ import { getAllPaymentTypes } from "../../../api/payment-type";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { isInd } from '@/utils/site'
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n()
 const store = useStore()
@@ -1031,6 +1046,11 @@ async function loadThirdParty() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+async function syncRecord(record) {
+  await sync({ depositDate: record.depositDate, serialNumber: record.serialNumber, siteId: request.siteId })
+  ElMessage({ message: t('message.success'), type: 'success' })
 }
 
 onMounted(async () => {

@@ -1,43 +1,32 @@
 <template>
   <div class="promo-container">
-    <div class="all-promotions" v-if="!isPromoDetail">
-      <div
-        v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl"
-        class="banner-container"
-      >
-        <div
-          class="promo-bg isDesktop"
-          :style="
-            'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
-          "
-        ></div>
-        <div
-          class="promo-bg isMobile"
-          :style="
-            'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
-          "
-        ></div>
+    <div v-if="!isPromoDetail" class="all-promotions">
+      <div v-if="banner && banner.desktopImageUrl && banner.mobileImageUrl" class="banner-container">
+        <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'" />
+        <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" />
       </div>
       <div class="promo-main-container">
-        <div class="promo-type-wrapper">
+        <div class="promo-type-wrapper" style="display: none">
           <div class="type-list">
             <div
-              class="type-item"
               v-for="p in promoTypes"
-              :class="{ active: p.value === promoTabActive }"
               :key="p"
+              class="type-item"
+              :class="{ active: p.value === promoTabActive }"
               @click="switchPromoType(p)"
             >
               <RiFunctionLine v-if="p && p.value === 'ALL'" />
-              <template v-else>{{ p.label }}</template>
+              <template v-else>
+                {{ p.label }}
+              </template>
             </div>
           </div>
         </div>
         <div class="promo-list-wrapper">
           <div
-            class="promo-item"
             v-for="(promo, i) in filteredArray"
             :key="i"
+            class="promo-item"
             data-aos="zoom-in"
             data-aos-easing="ease-out"
             data-aos-duration="1000"
@@ -45,14 +34,8 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-bg">
-                  <img
-                    class="promo-content isDesktop"
-                    :src="imgURL + promo.desktopImgUrl"
-                  />
-                  <img
-                    class="promo-content isMobile"
-                    :src="imgURL + promo.mobileImgUrl"
-                  />
+                  <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
+                  <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
                 </div>
               </div>
               <div class="promo-info">
@@ -65,45 +48,35 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container">
+        <div class="banner-container" v-if="!isSpecialPromoBanner">
           <div
             class="promo-bg isDesktop"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              selectedPromo.desktopImgUrl +
-              ')'
-            "
-          ></div>
+            :style="'background-image: url(' + imgURL + selectedPromo.desktopImgUrl + ')'"
+          />
           <div
             class="promo-bg isMobile"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              selectedPromo.mobileImgUrl +
-              ')'
-            "
-          ></div>
+            :style="'background-image: url(' + imgURL + selectedPromo.mobileImgUrl + ')'"
+          />
         </div>
-        <div class="inner">
-          <div class="hot-promo" v-if="selectedPromo.hasPromo">
+        <div class="inner" :class="{ hasMaxWidth: !isSpecialPromo }">
+          <div v-if="selectedPromo.hasPromo" :class="{ 'hot-promo': !isSpecialPromo }">
             <!-- {{ selectedPromo.id = 40 }} -->
             <HotPromotion :list="selectedPromo" />
           </div>
           <div
+            v-if="!isSpecialPromo"
             class="promo-view-container"
             :class="{
               welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
-              liveCasino:
-                selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+              liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
             }"
           >
-            <div class="game-title">Terms and Conditions</div>
-            <div v-html="selectedPromo.pageContent"></div>
+            <div v-if="selectedPromo.pageContent === '<p>&nbsp;</p>'" class="game-title">Promotion</div>
+            <div class="rich-content-control" v-html="selectedPromo.pageContent" />
           </div>
         </div>
       </div>
@@ -128,18 +101,21 @@ export default defineComponent({
   },
   setup() {
     const store = userStore()
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/';
+    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: { value:'ALL', label:'ALL'},
       promoList: [],
     });
+    const isSpecialPromo = ref(false);
+    const isSpecialPromoBanner = ref(false);
     const promoTypes = ref([
       { value: "ALL", label:"ALL"},
       { value: "WELCOME", label:"WELCOME"},
-      { value: "SPORT", label:"SPORT"},
-      { value: "LIVE CASINO", label:"LIVE CASINO"},
-      { value: "SLOT", label:"SLOT"},
+      { value: "VIP", label:"VIP"},
+      // { value: "SPORT", label:"SPORT"},
+      // { value: "LIVE CASINO", label:"LIVE CASINO"},
+      // { value: "SLOT", label:"SLOT"},
     ]);
     const promoTabActive = ref(promoTypes.value[0]);
     const filteredArray = ref([]);
@@ -151,7 +127,7 @@ export default defineComponent({
       if (route.query === null) {
        isPromoDetail.value = false
       } else {
-        isPromoDetail.value = route.query.id
+        isPromoDetail.value = route.query.code
         loadAll()
       }
       // Optionally you can set immediate: true config for the watcher to run on init
@@ -165,7 +141,17 @@ export default defineComponent({
       })
     }
     const showPromoDetails = (promo) => {
-      router.push({name: 'promotion', query: {id: promo.id}})
+      if (promo.promoCode === 'P4W-DOWNLOAD-BONUS' || promo.promoCode === 'P4W-ROULETTE-TOTO' || promo.promoCode === 'P4W-VIP-DAILY-CHECKIN-BONUS' || promo.promoCode === 'P4W-TOP-BET') {
+        isSpecialPromo.value = true
+        isSpecialPromoBanner.value = true
+        if (promo.promoCode === 'P4W-DOWNLOAD-BONUS' || promo.promoCode === 'P4W-ROULETTE-TOTO') {
+          isSpecialPromoBanner.value = false
+        }
+      } else {
+        isSpecialPromo.value = false
+        isSpecialPromoBanner.value = false
+      }
+      router.push({name: 'promotion', query: {code: promo.promoCode}})
       isPromoDetail.value = true
       selectedPromo.value = promo
     }
@@ -183,12 +169,22 @@ export default defineComponent({
       promoState.promoList = []
       loadPromo().then((res) => {
         if(res.code === 0) {
-          promoState.promoList.push(...res.data);
-          res.data.forEach(element => {
-            if (element.id.toString() === route.query.id) {
-              showPromoDetails(element)
-            }
-          });
+
+        // if (store.memberType !== 'TEST' ) {
+        //   res.data = res.data.filter((privilege) => {
+        //     return privilege.privilegeStatus === 'OPEN';
+        //   });
+        //   res.data.forEach((privilege) => {
+        //     console.log(privilege.privilegeStatus)
+        //   })
+        // }
+
+        promoState.promoList.push(...res.data);
+        promoState.promoList.forEach(element => {
+          if (element.promoCode.toString() === route.query.code) {
+            showPromoDetails(element)
+          }
+        });
         }
       }).catch((e) => { console.log("error", e); });
       switchPromoType(promoState.active)
@@ -215,70 +211,43 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      store
+      store,
+      isSpecialPromo,
+      isSpecialPromoBanner
     }
   },
 });
 </script>
 <style lang="scss">
 .promo-container {
+  background-image: url(../assets/images/index/centerbg.png);
   .promo-view-container {
     ol {
       padding: 0 15px;
     }
-    table {
-      margin: 0 15px 20px;
-      width: 98%;
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-      border: 0;
-      tr {
-        th {
-          color: #db7e42;
-          padding: 10px 20px;
-          p {
-            margin: 0;
-          }
-        }
-        td {
-          padding: 10px 20px;
-          border-bottom: 1px solid #2b2b4b;
-          p {
-            margin: 0;
-          }
-        }
-        &:first-child {
-          td {
-            color: #db7e42;
-            white-space: nowrap;
-          }
-        }
-        td:nth-child(odd) {
-          background: #3c3c6a;
-        }
-        td:nth-child(even) {
-          background: #3c3c6a;
-        }
-      }
+
+    tbody {
+      display: inline-table;
+      width: 100%;
     }
   }
   a {
-    color: #db7e42;
+    color: $primary-color-lightest;
     font-size: 17px;
+    &.common-btn {
+      color: #ffffff;
+    }
   }
   .ant-pagination a {
-    color: #ffffff;
   }
 }
 </style>
 <style scoped lang="scss">
 .promo-container {
-  padding-bottom: 80px;
-  background: linear-gradient(to bottom, #23263c, #190f25);
+  // padding-bottom: 80px;
 
   min-height: 70vh;
-  color: #ffffff;
+
   .all-promotions {
     @keyframes fadein {
       100% {
@@ -300,7 +269,7 @@ export default defineComponent({
       }
     }
     .promo-main-container {
-      max-width: 1400px;
+      max-width: $container-width;
       width: 95%;
       margin-left: auto;
       margin-right: auto;
@@ -315,18 +284,18 @@ export default defineComponent({
           border-radius: 20px;
           overflow: hidden;
           gap: 20px;
-          padding: 30px;
+          padding: 1rem 0.2em;
           overflow: auto;
           .type-item {
             padding: 5px 10px;
             cursor: pointer;
             border-radius: 20px;
-            background: #2b2b4b;
             box-shadow: 0 0 10px -3px #000000;
             white-space: nowrap;
+
             svg {
               width: 20px;
-              fill: white;
+              fill: currentColor;
               display: block;
             }
             img {
@@ -335,8 +304,9 @@ export default defineComponent({
             }
             &.active,
             &:hover {
-              background: #4b4e66;
-              box-shadow: 0 0 5px #ffffff;
+              background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+              color: #fff;
+
               img {
                 filter: grayscale(0);
               }
@@ -345,7 +315,8 @@ export default defineComponent({
         }
       }
       .promo-list-wrapper {
-        margin-top: 30px;
+        // margin: 30px 0;
+        padding: 30px 0;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 18px;
@@ -360,7 +331,7 @@ export default defineComponent({
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
-            border-radius: 10px 10px 0 0;
+            border-radius: 10px;
             .promo-bg {
               transition: all 0.5s ease;
               background-size: cover;
@@ -387,19 +358,18 @@ export default defineComponent({
             }
           }
           .promo-info {
-            // position: absolute;
             text-align: right;
             border-radius: 0 0 10px 10px;
 
             left: 0;
             bottom: 0;
             width: 100%;
-            background-color: #23263c;
-            display: flex;
+            background-color: $primary-color-light;
+            color: #333;
+            display: none;
             justify-content: flex-end;
             align-items: center;
             .viewdetail {
-              color: #ffffff;
               padding: 15px;
             }
             .detail-arrow {
@@ -422,7 +392,7 @@ export default defineComponent({
           background-position: center center;
           &.isDesktop {
             display: block;
-            height: 430px;
+            height: 22vw;
           }
           &.isMobile {
             display: none;
@@ -431,18 +401,19 @@ export default defineComponent({
         }
       }
       .inner {
-        max-width: 1400px;
-        width: 95%;
-        margin: 20px auto;
+        &.hasMaxWidth {
+          max-width: $container-width;
+        }
+        width: 100%;
+        margin: 0px auto;
         display: flex;
         flex-direction: column;
         gap: 20px;
         .hot-promo {
-          background: #2b2b4b;
+          padding: 20px;
           border-radius: 10px;
         }
         .promo-view-container {
-          background: #2b2b4b;
           background-repeat: no-repeat;
           background-position: 95% 90%;
           padding: 20px;
@@ -467,10 +438,8 @@ export default defineComponent({
             background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
           }
           .game-title {
-            background-image: linear-gradient(to right, #de4545, #db7e42);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 30px auto 50px;
+            color: $primary-color;
+            margin: 10px auto 10px;
           }
         }
       }
@@ -479,7 +448,7 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .promo-container {
     .all-promotions {
       .banner-container {
@@ -495,7 +464,7 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .promo-container {
     padding-bottom: 60px;
     min-height: 100vh;

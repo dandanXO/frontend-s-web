@@ -97,6 +97,7 @@ export default defineComponent({
     const defaultStartDate = convertDate(startDate);
     const defaultEndDate = convertDate(new Date());
     const hasTips = ref(false);
+    const store = useStore();
     const menu = reactive({
       upperLevelWithdraw: ['Withdrawal Management', 'Withdrawal Process', 'Withdrawal Auto Process'],
       withdraw: 'Applying',
@@ -165,8 +166,9 @@ export default defineComponent({
       query.withdrawDate = query.withdrawDate.join(',');
       query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
       if (!query.siteId) {
-        const store = useStore();
         query.siteId = store.state.user.siteId;
+      } else {
+        query.siteId = store.state.user.sites[0].id
       }
       return query;
     }
@@ -344,7 +346,7 @@ export default defineComponent({
   .el-sub-menu {
     overflow: hidden;
 
-    ::v-deep(.el-sub-menu__title) {
+    :deep(.el-sub-menu__title) {
       display: flex;
 
       & > span {
@@ -358,7 +360,7 @@ export default defineComponent({
 
 .nest-menu {
   .el-sub-menu {
-    ::v-deep(.el-sub-menu__title) {
+    :deep(.el-sub-menu__title) {
       background-color: #1f2d3d !important;
     }
   }
@@ -377,7 +379,7 @@ svg {
     }
   }
 
-  ::v-deep(.el-sub-menu__title) {
+  :deep(.el-sub-menu__title) {
     display: flex;
 
     & > span {

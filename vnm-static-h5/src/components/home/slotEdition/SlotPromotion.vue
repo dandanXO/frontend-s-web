@@ -31,7 +31,7 @@ const store = userStore();
 const promotions = ref([]);
 
 const getPromo = () => {
-  const platformApiUrl = store.hasToken() ? "/session/loggedInPromoPages" : "/promo/page";
+  const platformApiUrl = "/opt-session/promo/page";
   api.get(`${platformApiUrl}?siteType=SLOT`).then((res) => {
     if (res.code === 0) {
       promotions.value = res.data.slice(0, 3);

@@ -38,7 +38,7 @@
     </q-card>
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noRecord')"></NoInfoComponent>
 
     <template v-else>
       <NoInfoComponent
@@ -57,7 +57,7 @@
 
         <q-card-section class="mid-wrapper">
           {{ store.currency.label }}
-          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
+          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, false) }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -66,7 +66,7 @@
             <div class="game-platform">Game Platform</div>
           </div>
           <div class="origin-val">
-            <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
+            <div class="bet-val">{{ convertToCommaAmount(e.bet, false) }}</div>
             <div class="game-platform-val">{{ displayPlatform(e.platform) }}</div>
           </div>
         </q-card-section>

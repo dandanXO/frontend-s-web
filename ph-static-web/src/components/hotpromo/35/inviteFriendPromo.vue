@@ -7,7 +7,7 @@
             <a-form-item>
               <a-date-picker
                 v-model:value="searchForm.regTime"
-                valueFormat="yyyy-MM-DD"
+                value-format="yyyy-MM-DD"
                 placeholder="เลือกวันที่"
               />
             </a-form-item>
@@ -36,8 +36,7 @@
         :loading="btnLoading"
         :pagination="pagination"
         @change="recordPage"
-      >
-      </a-table>
+      />
     </div>
     <div class="invitePromo">
       <p class="game-title" style="font-weight: bold; margin-top: 30px">
@@ -215,7 +214,6 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 :deep(.ant-select:hover .ant-select-clear) {
-  background: #2b2b4b;
 }
 .account-container {
   .account-content-wrapper {
@@ -270,7 +268,6 @@ export default defineComponent({
       }
       tr {
         &:nth-child(even) {
-          background: #2b2b4b;
         }
       }
     }
@@ -300,7 +297,7 @@ export default defineComponent({
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .left {
     flex-direction: column;
     margin-bottom: 10px;

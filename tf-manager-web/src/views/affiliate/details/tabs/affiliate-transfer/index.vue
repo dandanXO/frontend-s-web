@@ -157,7 +157,7 @@ onMounted(() => {
 }
 
 .box-card {
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 0;
   }
 }

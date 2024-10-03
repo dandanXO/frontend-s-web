@@ -2,7 +2,7 @@
   <div class="eurocup-hongbaoyu-container">
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <div @click="getPromotion" class="hongbao-open">
-        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-open.png`)" />
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/claimbg-new.png`)" />
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@ import { ref, onMounted, defineProps } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { useNotify } from "@/hooks/notify";
-
+import { ElMessageBox } from "element-plus";
 
 const props = defineProps({
   promoCode: {
@@ -71,6 +71,21 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
 const getPromotion = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+
+  if (loadingClaim.value) return;
   loadingClaim.value = true;
   claimDailyRainItem(promoCode.value)
     .then((res) => {
@@ -84,7 +99,7 @@ const getPromotion = () => {
         // bonusOpened.value = true;
       } else {
         bonusOpened.value = false;
-        notify.error(res.message)
+        notify.error(res.message);
       }
     })
     .catch((err) => {
@@ -161,6 +176,9 @@ const getPromotionListing = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getPromotionListing();
 });
 </script>
@@ -194,15 +212,20 @@ onMounted(() => {
 
   .receive-container {
     position: relative;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 
     .hongbao-open {
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 60px;
+      max-width: 240px;
+      margin-left: 0px;
+
+      img {
+        width: 100%;
+      }
 
       &:hover {
         filter: brightness(0.9);

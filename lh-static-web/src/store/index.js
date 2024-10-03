@@ -6,6 +6,7 @@ import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
 import { uiStore } from "./ui";
+import { getVIPDetails, getVIPDetailsNotLoggedIn } from "@/api/index/promo";
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -29,7 +30,7 @@ export const userStore = defineStore("userStore", {
       regPageVisible: false,
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
-      siteId: 7,
+      siteId: process.env.VUE_APP_SITEID,
       unreadTotal: 0,
       visitorId: "",
       profilePhoto: "",
@@ -49,6 +50,7 @@ export const userStore = defineStore("userStore", {
             this.getMemberInfo();
             this.getUnreadMail();
           } else {
+            window.captchaObj.reset()
             uiStore().notify({
               type: "error",
               message: ret.message
@@ -140,6 +142,8 @@ export const userStore = defineStore("userStore", {
     memberLogout() {
       return logout().then(() => {
         this.token = null;
+        sessionStorage.removeItem("vipData");
+        sessionStorage.removeItem("TOKEN");
         // this.vip = 'VIP0'
         // this.currentDeposit = "0.0000"
         location.reload();

@@ -18,9 +18,23 @@
         <img class="logo-img" @click="backHome" src="../assets/images/login/logo-login.png" />
       </div>
 
-      <img class="login-banner-img" :src="bannerImage" />
+      <div v-if="$q.dark.isActive" class="login-banner-img-wrapper">
+        <img class="login-banner-img" :src="bannerImage" />
+        <div class="login-banner-filter" />
+      </div>
+      <img v-else class="login-banner-img" :src="bannerImage" />
 
-      <q-form ref="loginFormRef" @submit="onSubmit">
+      <q-form ref="loginFormRef" @submit="onSubmit" class="login-form" :class="{ ['phone-login']: loginType }">
+        <div class="tabs-wrapper" v-if="$q.dark.isActive">
+          <div class="tab-wrapper" @click="loginType = undefined" :class="{ active: !loginType }">
+            <div class="tab">用户名登录</div>
+            <div v-show="!loginType" class="active-tab-border" />
+          </div>
+          <div class="tab-wrapper" @click="loginType = '手机号登录'" :class="{ active: loginType }">
+            <div class="tab">手机号登录</div>
+            <div v-show="loginType" class="active-tab-border" />
+          </div>
+        </div>
         <div v-if="!loginType">
           <q-input
             standout
@@ -76,7 +90,18 @@
             </template>
           </q-input>
 
-          <q-input
+          <div class="geetest-captcha-wrapper">
+            <div class="input-icon-label-wrapper">
+              <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+              <label class="input-label">
+                <em>*</em>
+                验证码
+              </label>
+            </div>
+            <div id="captchaContainer"></div>
+          </div>
+
+          <!-- <q-input
             ref="verificationRef"
             standout
             clearable
@@ -103,7 +128,7 @@
                 </label>
               </div>
             </template>
-          </q-input>
+          </q-input> -->
         </div>
 
         <div v-if="loginType">
@@ -221,7 +246,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, onActivated, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -258,6 +283,25 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
+    const message = ref("Loading Geetest...");
+
+    // Dynamically load the Geetest script
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    // Initialize Geetest with configuration
+    const initGeetest = (config) => {
+      console.log(config);
+      window.initGeetest4(config.config, config.handler);
+    };
+
     const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
     const getCode = () => {
@@ -272,7 +316,7 @@ export default defineComponent({
         .catch((e) => {
           notify({
             type: "error",
-            message: e.message,
+            message: e.message
           });
         });
     };
@@ -318,7 +362,7 @@ export default defineComponent({
       if (!phoneLoginForm.phoneNumber) {
         notify({
           type: "error",
-          message: "手机号码不能为空",
+          message: "手机号码不能为空"
         });
         return;
       }
@@ -369,11 +413,22 @@ export default defineComponent({
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
+
+          if (window.captchaObj) {
+            const validate = window.captchaObj.getValidate();
+            if (!validate) {
+              notify({
+                type: "error",
+                message: "请完成验证码"
+              });
+              return;
+            }
+          }
+          // verificationRef.value.validate();
           $q.loading.show({
             message: "登录中"
           });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
             $q.loading.hide();
           } else {
             store
@@ -381,9 +436,13 @@ export default defineComponent({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
                 sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
-                summoner: loginForm.summoner
+                // captchaCode: loginForm.captchaCode,
+                // codeId: loginForm.codeId,
+                summoner: loginForm.summoner,
+                lotNumber: loginForm.lot_number,
+                captchaOutput: loginForm.captcha_output,
+                passToken: loginForm.pass_token,
+                genTime: loginForm.gen_time
               })
               .then(() => {
                 $q.loading.hide();
@@ -410,6 +469,7 @@ export default defineComponent({
                 }
               })
               .catch((error) => {
+                window.captchaObj.reset();
                 loginForm.captchaCode = "";
                 getCode();
                 $q.loading.hide();
@@ -424,7 +484,7 @@ export default defineComponent({
             if (!phoneLoginForm.smsCodeId) {
               notify({
                 type: "error",
-                message: "请验证手机码",
+                message: "请验证手机码"
               });
               return;
             }
@@ -483,7 +543,7 @@ export default defineComponent({
 
     const getBannerImage = () => {
       api
-        .get("/promo/banner?category=LOGIN")
+        .get("/opt-session/promo/banner?category=LOGIN")
         .then((res) => {
           if (res.code === 0) {
             bannerImage.value = imageDir + res.data[0].mobileImageUrl;
@@ -491,6 +551,67 @@ export default defineComponent({
         })
         .catch(() => {});
     };
+
+    function captchaHandler(captchaObj) {
+      window.captchaObj = captchaObj;
+      captchaObj
+        .appendTo("#captchaContainer")
+        .onReady(function () {
+          console.log("ready");
+        })
+        .onNextReady(function () {
+          console.log("nextReady");
+        })
+        .onBoxShow(function () {
+          console.log("boxShow");
+        })
+        .onError(function (e) {
+          console.log(e);
+        })
+        .onSuccess(function () {
+          let result = window.captchaObj.getValidate();
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
+          console.log(loginForm);
+        });
+    }
+
+    const initGeetestCaptcha = async () => {
+      try {
+        // Step 1: Load Geetest script
+        await loadScript("https://static.geetest.com/v4/gt4.js");
+
+        // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+        const geetestConfig = {
+          config: {
+            captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+            language: "zh",
+            nativeButton: {
+              width: "100%",
+              height: "40px"
+            },
+            nextWidth: "280px",
+            product: "float"
+          },
+          handler: captchaHandler
+        };
+
+        // Step 3: Initialize Geetest with the config
+        await initGeetest(geetestConfig);
+      } catch (error) {
+        message.value = "Error loading Geetest!";
+        console.error("Geetest loading error:", error);
+      }
+    };
+
+    watch(
+      () => loginType.value,
+      () => {
+        initGeetestCaptcha();
+      }
+    );
+
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -498,6 +619,7 @@ export default defineComponent({
       }
       checkRememberPwd();
       getBannerImage();
+      initGeetestCaptcha();
     });
     onActivated(() => {
       getCode();
@@ -539,6 +661,34 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.geetest-captcha-wrapper {
+  #captchaContainer {
+    width: 100%;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg, #ecf3fd, 0%, #ecf3fd 100%) !important;
+    border-color: #424f72;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
+    // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
+  }
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #424f72;
+    font-family: "PingFang SC" !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success
+    .geetest_content
+    .geetest_tip_container
+    .geetest_tips_wrap
+    .geetest_tip {
+    color: #39c522 !important;
+  }
+}
+
 .login-container {
   .q-field--standout .q-field__control {
     border-radius: 8px;
@@ -610,6 +760,21 @@ export default defineComponent({
     .login-banner-img {
       width: 100%;
       border-radius: 10px;
+    }
+
+    .geetest-captcha-wrapper {
+      display: flex;
+      background: #f7f8fb;
+      border-radius: 8px;
+      box-shadow: inset 0 0 4px 0 #a9c9ea;
+      height: 44px;
+      padding-left: 10px;
+      align-items: center;
+
+      #captchaContainer {
+        width: 100%;
+        padding-left: 12px;
+      }
     }
 
     .input-icon-label-wrapper {
@@ -697,18 +862,93 @@ export default defineComponent({
 .body--dark {
   .login-container {
     background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
-    background-size: 100% auto;
+    background-size: auto;
+
     .login-content {
       .login-via-phone-div {
-        color: $primary-dark;
+        color: #b1bad3;
+      }
+
+      .tabs-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: center;
+        background-color: transparent;
+        margin-top: -55px;
+        padding-bottom: 30px;
+
+        .tab-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          gap: 3px;
+          cursor: pointer;
+
+          .active-tab-border {
+            height: 3px;
+            width: 20%;
+            background-color: white;
+            margin: auto;
+            border-radius: 100px;
+          }
+        }
+      }
+
+      .login-banner-img-wrapper {
+        position: relative;
+        display: flex;
+
+        .login-banner-filter {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(#5e698800 25%, #5e6988);
+          border-radius: 10px;
+          border: 1px solid #969696;
+        }
+      }
+
+      .login-form {
+        padding: 65px 20px 20px 20px;
+        background: linear-gradient(180deg, #2e4166 0%, #1a263f 100%);
+        background: url("../assets/images/login/login-acc-bg-dark.png") no-repeat center center;
+        background-size: 100% 100%;
+        // aspect-ratio: 1035 / 1368;
+
+        &.phone-login {
+          background: url("../assets/images/login/login-phone-bg-dark.png") no-repeat center center;
+          background-size: 100% 100%;
+          // aspect-ratio: 1035 / 1368;
+        }
       }
     }
   }
   .common-large-btn {
-    background: $linear-bg-180-dark;
+    background: url("../assets/images/login/login-btn-bg-dark.svg") no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3a93ce;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .common-large-white-btn {
-    color: $white;
+    background: url("../assets/images/login/register-btn-bg-dark.svg") no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #be9457;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5e300e;
   }
 }
 

@@ -7,7 +7,7 @@
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <div class="contents" v-if="!bonusOpened">
         <div @click="getPromotion" class="hongbao-open">
-          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-open.png`)" />
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/claimbg-new.png`)" />
         </div>
       </div>
     </div>
@@ -122,6 +122,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 import { userStore } from "src/stores";
 const props = defineProps({
   promoCode: {
@@ -147,6 +149,9 @@ const promoCode = ref(props.promoCode);
 const promoContent = ref(props.pageContent);
 const promoParam = ref(props.promoParam);
 
+const $q = useQuasar();
+const router = useRouter();
+
 const getDateRange = (param) => {
   try {
     const promoObject = JSON.parse(param);
@@ -159,9 +164,36 @@ const getDateRange = (param) => {
 };
 
 const getPromotion = () => {
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
+  }
+
+  if (loadingClaim.value) return;
   loadingClaim.value = true;
+
+  const randNum = Math.floor(Math.random() * 1000) + 1;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
+    .get(`/redPacketVip/claim?promoCode=${promoCode.value}&v=${randNum}`)
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
@@ -249,9 +281,9 @@ const getPromotionListing = () => {
     });
 };
 onMounted(() => {
-      if (!store.token) {
-        return;
-      }
+  if (!store.token) {
+    return;
+  }
   getPromotionListing();
 });
 </script>
@@ -280,18 +312,25 @@ onMounted(() => {
 
   .receive-container {
     position: relative;
-    margin: 0 0 25px 0;
+    margin: 0 0 0px 0;
+
+    .hongbao-open {
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
+    }
 
     .contents {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 0px;
 
       img {
         display: block;
         width: 100%;
-        max-width: 300px;
+        max-width: 240px;
       }
     }
   }

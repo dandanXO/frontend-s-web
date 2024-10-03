@@ -30,16 +30,16 @@ export const queryDailySummaryTotal = form => {
 
 export const queryPh1DailySummary = form => {
   return https().request(
-    '/ph-affiliate-daily-summary',
+    '/ph-affiliate-daily-summary/list',
     Method.GET,
     form,
     ContentType.form
   )
 }
 
-export const queryPh1DailySummaryTotal = form => {
+export const queryPh1NewRegister = form => {
   return https().request(
-    '/ph-affiliate-daily-summary/getTotal',
+    '/ph-affiliate-daily-summary/newRegister/list',
     Method.GET,
     form,
     ContentType.form

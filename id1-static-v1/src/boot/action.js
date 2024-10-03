@@ -1,4 +1,3 @@
-
 export function doIt(resp) {
   return new Promise((resolve) => {
     switch (resp.data.result.payResultType) {
@@ -33,14 +32,14 @@ function postSubmit(resp) {
 }
 
 function renderPage(resp) {
-  if (resp.payResultType === 'RENDER_HTML') {
-    return resp
+  if (resp.payResultType === "RENDER_HTML") {
+    return resp;
   } else {
     if (isEmpty(resp.paramKey)) {
       location.href = `center/display?data=${resp.data}&payResultType=${resp.payResultType}`;
     } else {
       location.href = `center/display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}`;
     }
-    return null
+    return null;
   }
 }

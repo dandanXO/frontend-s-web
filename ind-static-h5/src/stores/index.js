@@ -44,7 +44,7 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://www.55ace.com/",
+      h5Url: "https://ind.55ace.com/",
       hasUpdatedOneSignal: false,
       walletCurrency: sessionStorage.getItem("WALLET_TYPE") ? sessionStorage.getItem("WALLET_TYPE") : "INR",
       multipleBalance: [],

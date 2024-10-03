@@ -88,7 +88,7 @@ export default defineComponent({
       isFireFox,
       isChrome,
       alertBookmark,
-      bookmarkPopout,
+      bookmarkPopout
     };
   }
 });
@@ -131,13 +131,14 @@ export default defineComponent({
         }
       }
       .top-ft-rgt {
-        .s1 {
-          color: #ffffff;
-        }
         display: flex;
         justify-content: flex-end;
         align-items: center;
         gap: 10px;
+
+        .s1 {
+          color: #ffffff;
+        }
         .footPayIcon {
           width: 55px;
           height: 40px;

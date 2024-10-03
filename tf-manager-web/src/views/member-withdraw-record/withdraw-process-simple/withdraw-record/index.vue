@@ -1252,7 +1252,7 @@ async function loadRecord() {
 }
 
 const convertDateTolastWeek = date => {
-  var m = moment(date).subtract(1, 'weeks').startOf('isoWeek').format('YYYY-MM-DD HH:mm:ss')
+  var m = moment(date).subtract(1, 'weeks').format('YYYY-MM-DD HH:mm:ss')
   return m
 }
 

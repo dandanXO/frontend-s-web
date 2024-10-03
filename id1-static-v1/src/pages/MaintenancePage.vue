@@ -3,21 +3,21 @@
     <div class="maintenance-img">
       <img src="../assets/images/maintenance/maintenance-img.png" />
     </div>
-    <div class="maintenance-title">Under maintenance</div>
+    <div class="maintenance-title">{{ $t("maintenance.underMaintenance") }}</div>
     <div class="maintenance-content">
-      Our website is currently undergoing maintenance...
+      {{ $t("maintenance.content01") }}
       <br />
       <template v-if="ui.maintenanceStartTime">
-        From: {{ ui.maintenanceStartTime }}
+        {{ $t("maintenance.from") }}: {{ ui.maintenanceStartTime }}
         <br />
       </template>
       <template v-if="ui.maintenanceEndTime">
-        To: {{ ui.maintenanceEndTime }}
+        {{ $t("maintenance.to") }}: {{ ui.maintenanceEndTime }}
         <br />
       </template>
-      During this period, all games and services will be unavailable.
+      {{ $t("maintenance.content02") }}
       <br />
-      We sincerely apologize for any inconvenience this may cause and appreciate your patience!
+      {{ $t("maintenance.content03") }}
     </div>
   </div>
 </template>

@@ -4,6 +4,7 @@ import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
 import { isAndroid } from "boot/utils";
 import { useUI } from "./ui";
+import { getVIPDetails, getVIPDetailsNotLoggedIn } from "../api/index/promo";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -32,6 +33,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
+      gender: "",
       currency: { value: "￥", label: "RMB" },
       personalAddress: "",
       unreadInboxMail: 0,
@@ -39,6 +41,8 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
+      currentBetAmt: "",
+      currentUpgradeBetAmt: "",
       visitorId: "",
       profilePhoto: "",
       isDisplayLogin: false,
@@ -122,6 +126,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
+          window.captchaObj.reset()
           useUI().notify({
             type: "error",
             message: ret.message
@@ -205,6 +210,7 @@ export const userStore = defineStore("userStore", {
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
           this.emailVerified = response.data.emailVerified;
+          this.gender = response.data.gender;
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
@@ -216,10 +222,35 @@ export const userStore = defineStore("userStore", {
           this.withdrawType = response.data.withdrawType;
           // this.unreadInboxMail = 16;
           this.getBalance();
+          this.getVIPInfo();
         } else {
           this.memberLogout();
         }
       });
+    },
+    getVIPInfo() {
+      if (this.token) {
+        return getVIPDetails().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("vipData", JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+        });
+      } else {
+        return getVIPDetailsNotLoggedIn().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("vipData", JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+        });
+      }
+    },
+    handleVIPData(res) {
+      this.currentBetAmt = res.data.currentBetAmount;
+      const vipLevel = this.vip.replace("VIP", "");
+      if (res.data.vipBonusVOList && res.data.vipBonusVOList[vipLevel]) {
+        this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
+      }
     },
     getBalance() {
       if (this.token) {
@@ -237,6 +268,12 @@ export const userStore = defineStore("userStore", {
             }
           });
       }
+    },
+    getCurrentDeposit() {
+      return this.currentDeposit;
+    },
+    getLevelUpDeposit() {
+      return this.levelUpDeposit;
     },
     getUnreadTotal() {
       if (this.token) {
@@ -259,6 +296,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
+        SessionStorage.remove("vipData");
 
         location.reload();
       });

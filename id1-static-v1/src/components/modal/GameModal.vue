@@ -5,34 +5,20 @@
         <div class="topActions">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
-            <img src="../../assets/logo.png" />
-            <!-- <div
-              class="game-logo"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return '';
-                  }
-                })()
-              }"
-            >
-              &nbsp;
-            </div> -->
+            <img src="@/assets/logo.png" />
           </div>
 
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
-            Add Cash &nbsp;
+            {{ $t("btn.addCash") }} &nbsp;
             <q-btn dense rounded class="wallet-btn">
-              <img src="../../assets/images/index/icon-wallet.png" />
+              <img src="@/assets/images/index/icon-wallet.png" />
             </q-btn>
           </div>
         </div>
 
         <div class="loader-container">
           <div><q-spinner color="yellow" size="10em" :thickness="10" /></div>
-          <div>Loading... Please wait...</div>
+          <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
         <template v-if="isInnerHtmlSrc === false">
@@ -75,17 +61,17 @@
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-      <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
+      <!-- <img src="@/assets/logo-coming.png" style="width: 80%" /> -->
     </q-dialog>
 
     <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
-          <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
+          <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-            <q-btn label="Confirm" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
+            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+            <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
         </div>
       </div>
@@ -102,7 +88,7 @@
       <q-card class="full-deposit-card" id="fulldeposit">
         <div class="back-bar" @click="closeFullDepositDialog">
           <q-icon name="chevron_left" size="28px" />
-          Back
+          {{ $t("btn.back") }}
         </div>
 
         <q-card-section>
@@ -112,85 +98,33 @@
     </q-dialog>
   </q-scroll-area>
 </template>
+
 <script setup id="GameModal">
-import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
+import { Platform, useQuasar } from "quasar";
+import { defineExpose, ref, shallowRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
-import DepositComponent from "components/depositComponent.vue";
 
+import { api } from "@/boot/axios";
+import { isAndroid } from "@/boot/utils";
+import DepositComponent from "@/components/depositComponent.vue";
+import DepositView from "@/pages/account/DepositView.vue";
+import { userStore } from "@/stores/index";
+import { useUI } from "@/stores/ui";
 import { App } from "@capacitor/app";
-
-// import { transfer } from "api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
-import { api } from "boot/axios";
-import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
-import { isAndroid } from "boot/utils";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import DepositView from "../../pages/account/DepositView.vue";
-import { useUI } from "stores/ui";
 
 const props = defineProps(["closeFullGameDialog"]);
-
 const fullDepositDialog = ref(false);
-
 const $q = useQuasar();
 const ui = useUI();
-
 const store = userStore();
 const { token } = storeToRefs(store);
-
-const formRef = ref();
-const payTypeClass = ref();
-var payMethods = reactive([]);
-const paymentNode = ref([]);
-const activeMethod = ref({});
 const bankCardList = ref([]);
-const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
-const isPaymentLoading = ref(true);
-
-const isMobileDrawerActive = ref(false);
-const values = ref(["100", "200", "300", "500", "1000"]);
-const hasPrivilege = ref(false);
-// const quickTransferTab = ref(false);
-
 const closeFullDepositDialog = () => {
   fullDepositDialog.value = false;
   store.getBalance();
 };
-
-const checkAmount = reactive({
-  flag: true,
-  errorMessage: ""
-});
-
-function selectPayType(value) {
-  if (value) {
-    if (value.payType === "BANK") {
-      selectedPayType.value = Bank;
-      if (!value.extra) {
-        bankCardList.value = [];
-        form.bankId = null;
-      } else if (value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      }
-    } else if (value.payType === "TruePay") {
-      selectedPayType.value = TruePay;
-      if (!value.extra) {
-        bankCardList.value = [];
-        form.bankId = null;
-      } else if (value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      }
-    } else if (value.payType === "OFFLINE") {
-      selectedPayType.value = Offline;
-      form.bankId = null;
-    }
-  }
-}
 
 const drawerVisible = ref(false);
 const isExitDialogOpen = ref(false);
@@ -282,21 +216,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   //TESt
   localStorage.removeItem("isOpenFromAccount");
   localStorage.removeItem("isBacked");
-  // window.addEventListener(
-  //   "message",
-  //   (event) => {
-  //     console.log("Action");
-  //     console.log(event.data);
-  //     if (event.data?.msg) {
-  //       if (event.data.msg === "closemodal") {
-  //         drawerVisible.value= false;
-  //       }
-  //     }
-  //   });
-
-  //     var gameIfrm = document.getElementById('game-iframe');
-  //     gameIfrm.requestFullscreen();
-  // // const iframeRef = ref(null);
   if (isAndroid()) {
     screen.orientation.unlock();
 
@@ -304,26 +223,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       onExitClick();
     });
   }
-  // iframe.find('HTML-Element').touchwipe({
-  // wipeLeft: function() { alert("left"); },
-  // wipeRight: function() { alert("right"); },
-  // wipeUp: function() { alert("up"); },
-  // wipeDown: function() { alert("down"); },
-  // min_move_x: 20,
-  // min_move_y: 20,
-  // preventDefaultEvents: true });
-  // transferInfo.value = {
-  //   platform: platformCode
-  // };
 
-  // Get the iframe
   const iFrame = document.getElementById("game-iframe");
-
-  // Let's say that you want to access a button with the ID `'myButton'`,
-  // you can access via the followi ng code:
-  // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-  // buttonInIFrame.style.visible = visible;
-  //   console.log(iframe)
   title.value = gameName;
   const store = userStore();
 
@@ -331,7 +232,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      if(platformCode !== 'LuckySport'){
+      if (platformCode !== "LuckySport") {
         visible.value = true;
       }
 
@@ -359,9 +260,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if(platformCode === 'LuckySport'){
-            window.open(srcDoc ,"_blank");
-          }else if (firstFourChars === "http") {
+          if (platformCode === "LuckySport") {
+            window.open(srcDoc, "_blank");
+          } else if (firstFourChars === "http") {
             src.value = srcDoc;
           } else {
             isInnerHtmlSrc.value = true;
@@ -374,16 +275,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             src.value = srcDoc;
           }
-
-          // if (platformCode === "PG") {
-          // if (way === "ANDROID") {
-          //   cordova.InAppBrowser.open(res.data, "_blank", "location=no,zoom=no");
-          // } else {
-          //   window.location.href = res.data;
-          // }
-          // } else {
-          //   src.value = res.data;
-          // }
         });
     } else {
       props.closeFullGameDialog();
@@ -684,7 +575,6 @@ defineExpose({
   }
 
   .popout-dialog-container-gold {
-    // background-image: url(../../assets/images/index/popout/deposit-bg.png);
     background-position: bottom center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -693,7 +583,6 @@ defineExpose({
   }
 
   .popout-main-title {
-    // background-image: url(../../assets/images/index/popout/popout-title.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -734,7 +623,6 @@ defineExpose({
 
     .deposit-item {
       .deposit-icon {
-        // background-image: url(../../assets/images/index/popout/deposit-item-frame.png);
         background-position: top center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -752,15 +640,10 @@ defineExpose({
         }
       }
 
-      &.active > .deposit-icon {
-        // background-image: url(../../assets/images/index/popout/deposit-item-frame-active.png);
-      }
-
       .deposit-hot-label {
         position: absolute;
         top: 0;
         right: 0;
-        // background-image: url(../../assets/images/index/popout/hot-label.png);
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center center;
@@ -775,7 +658,6 @@ defineExpose({
       }
 
       .deposit-amt {
-        // background-image: url(../../assets/images/index/popout/deposit-item-frame-amount.png);
         background-position: center center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -830,7 +712,6 @@ defineExpose({
         position: relative;
         &:after {
           content: "";
-          // background-image: url(../../assets/images/index/popout/label-discount.png);
           background-repeat: no-repeat;
           display: block;
           position: absolute;

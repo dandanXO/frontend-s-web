@@ -40,8 +40,8 @@
             </a-form-item>
             <a-form-item ref="password" required name="password">
               <a-input
-                type="password"
                 v-model:value="loginForm.password"
+                type="password"
                 placeholder="รหัสผ่าน"
               >
                 <template #prefix>
@@ -51,8 +51,8 @@
             </a-form-item>
             <a-form-item ref="confirmPwd" required name="confirmPwd">
               <a-input
-                type="password"
                 v-model:value="loginForm.confirmPwd"
+                type="password"
                 placeholder="ยืนยันรหัสผ่าน"
               >
                 <template #prefix>
@@ -69,104 +69,94 @@
             </button>
           </a-form>
         </a-tab-pane>
-        <a-tab-pane key="emailPwd" tab="รีเซ็ตรหัสผ่านด้วยอีเมลล์"
-          ><a-form
-            ref="formRefPwd"
-            :model="passwordForm"
-            :rules="passwordRules"
-          >
-            <a-form-item ref="loginName" required name="loginName">
-              <a-input
-                v-model:value="passwordForm.loginName"
-                placeholder="ชื่อล็อกอิน"
-              >
-                <template #prefix>
-                  <UserOutlined />
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item ref="email" required name="email">
-              <a-input v-model:value="passwordForm.email" placeholder="อีเมลล์">
-                <template #prefix>
-                  <MailOutlined />
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item ref="validCode" required name="validCode">
-              <a-input
-                v-model:value="passwordForm.validCode"
-                maxlength="4"
-                placeholder="รหัสยืนยัน"
-              >
-                <template #prefix>
-                  <SafetyCertificateOutlined />
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item ref="password" required name="password">
-              <a-input
-                type="password"
-                v-model:value="passwordForm.password"
-                placeholder="รหัสผ่าน"
-              >
-                <template #prefix>
-                  <LockOutlined />
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item ref="confirmPwd" required name="confirmPwd">
-              <a-input
-                @pressEnter="onSubmitChangePwd('emailReset')"
-                type="password"
-                v-model:value="passwordForm.confirmPwd"
-                placeholder="ยืนยันรหัสผ่าน"
-              >
-                <template #prefix>
-                  <LockOutlined />
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item class="txt-center">
-              <button
-                class="common-btn login-btn"
-                type="submit"
-                @click="onSubmitChangePwd('emailReset')"
-              >
-                ส่ง
-              </button>
-            </a-form-item>
-          </a-form></a-tab-pane
-        >
-        <a-tab-pane key="emailAccount" tab="รับบัญชีทางอีเมลล์"
-          ><a-form
-            ref="formRefPwd"
-            :model="passwordForm"
-            :rules="passwordRules"
-          >
-            <a-form-item ref="email" required name="email">
-              <a-input v-model:value="passwordForm.email" placeholder="อีเมลล์">
-                <template #prefix>
-                  <MailOutlined />
-                </template>
-              </a-input>
-            </a-form-item>
+        <a-tab-pane key="emailPwd" tab="รีเซ็ตรหัสผ่านด้วยอีเมลล์">
+          ref="formRefPwd" :model="passwordForm" :rules="passwordRules" >
+          <a-form-item ref="loginName" required name="loginName">
+            <a-input
+              v-model:value="passwordForm.loginName"
+              placeholder="ชื่อล็อกอิน"
+            >
+              <template #prefix>
+                <UserOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item ref="email" required name="email">
+            <a-input v-model:value="passwordForm.email" placeholder="อีเมลล์">
+              <template #prefix>
+                <MailOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item ref="validCode" required name="validCode">
+            <a-input
+              v-model:value="passwordForm.validCode"
+              maxlength="4"
+              placeholder="รหัสยืนยัน"
+            >
+              <template #prefix>
+                <SafetyCertificateOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item ref="password" required name="password">
+            <a-input
+              v-model:value="passwordForm.password"
+              type="password"
+              placeholder="รหัสผ่าน"
+            >
+              <template #prefix>
+                <LockOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item ref="confirmPwd" required name="confirmPwd">
+            <a-input
+              v-model:value="passwordForm.confirmPwd"
+              type="password"
+              placeholder="ยืนยันรหัสผ่าน"
+              @pressEnter="onSubmitChangePwd('emailReset')"
+            >
+              <template #prefix>
+                <LockOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item class="txt-center">
+            <button
+              class="common-btn login-btn"
+              type="submit"
+              @click="onSubmitChangePwd('emailReset')"
+            >
+              ส่ง
+            </button>
+          </a-form-item>
+        </a-tab-pane>
+        <a-tab-pane key="emailAccount" tab="รับบัญชีทางอีเมลล์">
+          ref="formRefPwd" :model="passwordForm" :rules="passwordRules" >
+          <a-form-item ref="email" required name="email">
+            <a-input v-model:value="passwordForm.email" placeholder="อีเมลล์">
+              <template #prefix>
+                <MailOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
 
-            <a-form-item class="txt-center">
-              <button
-                class="common-btn login-btn"
-                type="submit"
-                @click="onSubmitChangePwd('retrieveAcc')"
-              >
-                ส่ง
-              </button>
-            </a-form-item>
-          </a-form>
+          <a-form-item class="txt-center">
+            <button
+              class="common-btn login-btn"
+              type="submit"
+              @click="onSubmitChangePwd('retrieveAcc')"
+            >
+              ส่ง
+            </button>
+          </a-form-item>
         </a-tab-pane>
       </a-tabs>
     </div>
     <div class="txt-center">
-      <router-link class="forget-pwd-tip" to="/login"
-        >กลับสู่เข้าสู่ระบบ
+      <router-link class="forget-pwd-tip" to="/login">
+        กลับสู่เข้าสู่ระบบ
       </router-link>
     </div>
   </div>
@@ -347,7 +337,7 @@ export default defineComponent({
   display: inline-block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .login-container
     .login-form-wrapper
     .login-title-container

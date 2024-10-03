@@ -78,3 +78,23 @@ export const getVisitorId = async () => {
     return sidParam;
   }
 };
+
+export const convertToCommaAmount = (amount, isForceDecimal) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+
+  const digits = isForceDecimal ? 2 : 0;
+
+  if(typeof amount === 'number') {
+    return amount.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  } else {
+    return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  }
+};
+function isNonNumericString(value) {
+  return typeof value === "string" && isNaN(value);
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "event_sponsorships",
+  "info": {
+    "singularName": "event-sponsorship",
+    "pluralName": "event-sponsorships",
+    "displayName": "Event Sponsorship"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "charityGallery": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item",
+      "required": false
+    },
+    "bannerTop": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item"
+    },
+    "bannerMid": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item"
+    },
+    "bannerBtm": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.gallery-item"
+    }
+  }
+}

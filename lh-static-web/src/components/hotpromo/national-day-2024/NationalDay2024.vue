@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日存款金额：
+              昨日存款金额：
               <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
@@ -21,8 +21,8 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日流水/倍数：
-              <span class="amount">{{ validBetAmount }}元 / {{ turnOverRequirement }}倍</span>
+              昨日有效流水：
+              <span class="amount">{{ validBetAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -30,7 +30,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日可领彩金：
+              今日可领彩金：
               <span class="amount">{{ bonusAmount }}元</span>
             </div>
           </div>
@@ -61,31 +61,33 @@
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
-          <tr>
-            <th>达成条件 (流水仅限雷火电竞场馆)</th>
-            <th>应发彩金</th>
-            <th>彩金上限</th>
-          </tr>
-          <tr>
-            <td>当日存款 3 倍流水</td>
-            <td>当日存款 1.0%</td>
-            <td>188</td>
-          </tr>
-          <tr>
-            <td>当日存款 5 倍流水</td>
-            <td>当日存款 2.0%</td>
-            <td>588</td>
-          </tr>
-          <tr>
-            <td>当日存款 8 倍流水</td>
-            <td>当日存款 3.0%</td>
-            <td>888</td>
-          </tr>
-          <tr>
-            <td>当日存款 15 倍流水</td>
-            <td>当日存款 5.0%</td>
-            <td>1,888</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>达成条件 (流水仅限雷火电竞场馆)</th>
+              <th>应发彩金</th>
+              <th>彩金上限</th>
+            </tr>
+            <tr>
+              <td>当日存款 3 倍流水</td>
+              <td>当日存款 1.0%</td>
+              <td>188</td>
+            </tr>
+            <tr>
+              <td>当日存款 5 倍流水</td>
+              <td>当日存款 2.0%</td>
+              <td>588</td>
+            </tr>
+            <tr>
+              <td>当日存款 8 倍流水</td>
+              <td>当日存款 3.0%</td>
+              <td>888</td>
+            </tr>
+            <tr>
+              <td>当日存款 15 倍流水</td>
+              <td>当日存款 5.0%</td>
+              <td>1,888</td>
+            </tr>
+          </tbody>
         </table>
 
         <div class="livepoker-rebate-game-bottom">
@@ -203,7 +205,7 @@ const onClickAppliedRecordsBtn = () => {
 const init = () => {
   getNationalDayinit().then((res) => {
     if (res.code === 0) {
-      // 当日存款金额
+      // 昨日存款金额
       depositAmount.value = res.data.depositAmount || 0;
       // 奖金
       bonusAmount.value = res.data.bonusAmount || 0;

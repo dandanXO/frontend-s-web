@@ -223,6 +223,7 @@ export default defineComponent({
     }
     .fishing-right {
       position: relative;
+      flex: 2;
       .absolute {
         position: absolute;
         top: -80px;
@@ -235,7 +236,7 @@ export default defineComponent({
           height: unset;
         }
       }
-      flex: 2;
+
       img {
         width: unset;
         height: 55vh;

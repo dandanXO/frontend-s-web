@@ -88,11 +88,25 @@ export default defineComponent({
       });
     };
 
+    const checkSessStorageItem = () => {
+      const checkItem = sessionStorage.getItem("ERROR_TOKEN_LOGGED");
+      if (checkItem) {
+        sessionStorage.removeItem("ERROR_TOKEN_LOGGED");
+        ui.notify({
+          type: "error",
+          message: "您账户已在其他设备登录。请注意是否由本人登录，如有异常请及时修改密码。",
+          duration: 5000
+        });
+      }
+    };
+
     onMounted(() => {
       checkServerStatus();
       checkSID();
 
       getAffiliateByDomain();
+
+      checkSessStorageItem();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

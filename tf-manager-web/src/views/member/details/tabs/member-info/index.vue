@@ -1099,6 +1099,16 @@
               </div>
             </div>
           </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $
+                <span
+                  v-formatter="{data: memberDetail.totalValidBet, type: 'money'}"
+                />
+              </div>
+            </div>
+          </el-descriptions-item>
           <el-descriptions-item :label="t('fields.payout')">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
@@ -2797,16 +2807,15 @@ export default defineComponent({
 }
 
 .box-card {
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 0;
   }
 }
 
-::v-deep {
-  .el-tabs__content {
+:deep(
+  .el-tabs__content) {
     padding: 0;
   }
-}
 
 .platform {
   display: flex;
@@ -2833,7 +2842,7 @@ export default defineComponent({
   }
 }
 
-::v-deep([class^='el-table']) {
+:deep([class^='el-table']) {
   .cell,
   .remove-padding {
     padding: 0 !important;

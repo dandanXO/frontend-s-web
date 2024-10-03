@@ -348,7 +348,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch } from "vue";
+import { ref, reactive, onMounted, shallowRef, onActivated, watch } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";

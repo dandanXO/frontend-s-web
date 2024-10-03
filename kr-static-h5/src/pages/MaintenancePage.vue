@@ -7,7 +7,6 @@
       <img :src="require('../assets/images/maintenance/maintenance-img.png')" />
     </div>
     <div class="maintenance-details">
-
       <div class="maintenance-title">{{ $t("lang.maintenance_title") }}</div>
       <div class="maintenance-desc">
         {{ $t("lang.maintenance_from") }} {{ ui.maintenanceStartTime }}
@@ -34,7 +33,7 @@
           <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_03") }}
-            <a href="https://t.me/cityy88" target="_blank">@cityy88</a>
+            <a href="https://t.me/Diahelp7" target="_blank">@Diahelp7</a>
           </div>
         </div>
       </div>

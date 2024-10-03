@@ -132,6 +132,7 @@
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
                   wukong: selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
+                  dy2s14: selectedPromo.redirectUrl === 'dy2-s14-vote',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
                   midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
@@ -160,6 +161,9 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
+                    <NBAWaterBattle />
+                  </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"
@@ -313,11 +317,13 @@ import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
+import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    NBAWaterBattle
   },
   setup() {
     const store = userStore();
@@ -416,7 +422,7 @@ export default defineComponent({
       }
     );
     const loadBanner = () => {
-      api.get("/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
         }
@@ -489,10 +495,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl =
-        store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
-          ? "/session/loggedInPromoPages"
-          : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
@@ -1018,6 +1021,10 @@ export default defineComponent({
           background-size: 100% auto;
           background-color: #100a0e;
           padding-top: 0px !important;
+        }
+        &.dy2s14 {
+          margin: 0;
+          width: 100%;
         }
 
         &.lplSummer2024 {

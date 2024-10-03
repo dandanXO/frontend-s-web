@@ -1,7 +1,7 @@
 <template>
   <q-page class="account-table-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noRecord')"></NoInfoComponent>
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">
@@ -9,10 +9,10 @@
         </div>
       </div>
       <div class="discount-row discount-row--content">
-        <div class="discount-col">{{ e.privilegeName }}</div>
+        <div class="discount-col">{{ translateNaming(e.privilegeName) }}</div>
         <div class="discount-col">
-          Amount:
-          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, true) }}</span>
+          {{ $t("records.amount") }}:
+          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, false) }}</span>
         </div>
       </div>
     </div>
@@ -20,33 +20,13 @@
 </template>
 
 <script setup>
-import { onActivated, onMounted, reactive, ref } from "vue";
-import { api } from "boot/axios";
-import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
-import LoadingComponent from "../../components/LoadingComponent.vue";
-import NoInfoComponent from "../../components/NoInfoComponent.vue";
-import { convertToCommaAmount } from "src/boot/utils";
+import { onActivated, reactive, ref } from "vue";
 
-const router = useRouter();
-
-let slideList = ref(["Discount", "Record", "Order", "Bank", "Message", "Personal Center"]);
-let slideListPath = ref([
-  "/account/discount",
-  "/account/record",
-  "/account/order",
-  "/account/bank",
-  "/account/message",
-  "/account"
-]);
-let currentSlide = ref(slideList.value[0]);
-
-const isActiveSlide = (e) => {
-  if (e === currentSlide.value) return true;
-  return false;
-};
+import { api } from "@/boot/axios";
+import { t } from "@/boot/lang";
+import { convertToCommaAmount, convertToGMT8, updateDate } from "@/boot/utils";
+import LoadingComponent from "@/components/LoadingComponent.vue";
+import NoInfoComponent from "@/components/NoInfoComponent.vue";
 
 const isLoading = ref(true);
 const isNoInfo = ref(true);
@@ -83,6 +63,14 @@ const searchDiscountRecord = () => {
     .then(() => {
       isLoading.value = false;
     });
+};
+
+const translateNaming = (text) => {
+  if (text === "VIP Upgrade Bonus") {
+    return t("records.vipUpgradeBonus");
+  }
+
+  return text;
 };
 
 onActivated(() => {

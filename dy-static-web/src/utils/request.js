@@ -14,6 +14,9 @@ const imgCDN = process.env.VUE_APP_IMAGE_CDN;
 console.log(window.location.hostname);
 const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
 
+const globalAndCNLinks = ["dongyingbet6", "dongyingbet8"];
+const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
+
 const REPLACEMENT_DOMAIN = "random";
 
 if (isGlobalDY) {
@@ -24,6 +27,15 @@ if (isGlobalDY) {
   localStorage.setItem("DY_WEB_RST_URL", rstApi);
   localStorage.setItem("DY_WEB_CRT_URL", crtApi);
   localStorage.setItem("DY_WEB_EVT_URL", evtApi);
+} else if (isGlobalAndCN) {
+  console.log("IS Global + CN");
+  var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
+  var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
+  var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
+
+  var rstApi = getInitApi(rstGlobalArray, "DY_WEB_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "DY_WEB_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "DY_WEB_CRT_URL");
 } else {
   var rstApi = getInitApi(rstArray, "DY_WEB_RST_URL");
   var crtApi = getInitApi(crArray, "DY_WEB_CRT_URL");
@@ -168,8 +180,9 @@ const onResponse = (response) => {
         location.reload();
       }
       if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+        sessionStorage.setItem("ERROR_TOKEN_LOGGED", "1");
         store.token = null;
-        location.reload();
+        window.location.href = "/home";
       }
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return response.data;
