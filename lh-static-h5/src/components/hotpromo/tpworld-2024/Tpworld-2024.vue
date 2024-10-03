@@ -155,7 +155,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { claimCompetitionBonus, getCompetitionBetYesterday } from "../../../api/index/promo";
+import { claimCompetitionBetBonus, getCompetitionBetYesterday } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -196,7 +196,7 @@ const handleClaimBonus = () => {
     });
     return;
   }
-  claimCompetitionBonus(promoCode.value)
+  claimCompetitionBetBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
