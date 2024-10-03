@@ -46,7 +46,11 @@
 
               <div class="reward-title-wrapper">
                 <div class="reward-title">
-                  累计完成场次:{{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次
+                  累计完成场次:
+                  <span style="font-weight: bold">{{ accumulatedClaimed }}</span>
+                  次 剩余开启次数:
+                  <span style="font-weight: bold">{{ todayLeftClaimCount }}</span>
+                  次
                 </div>
               </div>
 
@@ -199,6 +203,7 @@ const handleClickLogout = () => {
   store.memberLogout();
 };
 
+const isClaiming = ref(false);
 const handleClaimBonus = () => {
   if (!store.token) {
     $q.dialog({
@@ -223,12 +228,17 @@ const handleClaimBonus = () => {
     });
     return;
   }
+  if (isClaiming.value === true) {
+    return;
+  }
+
+  isClaiming.value = true;
   putPGLTreasureInit()
     .then((res) => {
-      if (res.code === 0) {
+      if (res.code === 0 && res.data) {
         notify({
           type: "success",
-          message: `成功领取`
+          message: `成功领取${res.data}元！`
         });
         fetchData();
       } else {
@@ -237,8 +247,10 @@ const handleClaimBonus = () => {
           message: res.message
         });
       }
+      isClaiming.value = false;
     })
     .catch((err) => {
+      isClaiming.value = false;
       console.log(err);
     });
 };
