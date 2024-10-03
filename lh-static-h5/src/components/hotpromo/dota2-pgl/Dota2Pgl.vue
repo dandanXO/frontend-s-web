@@ -26,21 +26,24 @@
             </div>
             <div>
               <div class="reward-wrapper">
-                <div class="reward-item">
-                  <div class="reward-item-content">1 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">8 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">18 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">58 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">88 元</div>
-                </div>
+                <template v-for="(bonus, index) of bonuses" :key="index">
+                  <div class="reward-item">
+                    <div class="reward-item-content">{{ bonus }} 元</div>
+                  </div>
+                </template>
+
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">8 元</div>-->
+                <!--                </div>-->
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">18 元</div>-->
+                <!--                </div>-->
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">58 元</div>-->
+                <!--                </div>-->
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">88 元</div>-->
+                <!--                </div>-->
                 <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" style="width: 181px" />
               </div>
 
@@ -169,8 +172,10 @@ const router = useRouter();
 const accumulatedClaimed = ref(0);
 const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
-const tabValue = ref(2);
+const tabValue = ref(1);
 const slide = ref(2);
+
+const bonuses = [1, 8, 18, 58, 88];
 
 const boxes = ref([
   {
@@ -261,6 +266,7 @@ const fetchData = async () => {
     accumulatedClaimed.value = res.data.accumulatedClaimed;
     todayLeftClaimCount.value = res.data.todayLeftClaimCount;
     todayClaimed.value = res.data.todayClaimed;
+    bonuses.value = res.data.bonuses;
   } catch (error) {
     console.log(error);
   }
