@@ -345,7 +345,8 @@ export function putPGLTreasureInit() {
 }
 
 export function getIEMRioInit() {
-  return eventapi.get("/session/iem-rio/init")
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/iem-rio/init?v=${randNum}`)
 }
 
 export function claimIEMRioBonus() {
