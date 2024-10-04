@@ -155,7 +155,7 @@ const initContactList = () => {
     {
       icon: 'bubble-logo',
       type: t('common.paopao'),
-      link: 'LH100866',
+      link: 'LH1008666',
       btns: [{
         text: t('common.copy'),
         action: ''

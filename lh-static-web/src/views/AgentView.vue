@@ -213,7 +213,7 @@
             <a target="_blank" class="download-btn" href="https://telegram.org/">下载</a>
           </div>
           <div class="contact-buttons bubble-buttons">
-            <span style="font-size: 0px" ref="contact4">LH100866</span>
+            <span style="font-size: 0px" ref="contact4">LH1008666</span>
             <button class="copy-btn" @click="copyMessage('4')">{{ copybtntxt4 }}</button>
             <a target="_blank" class="download-btn" href="https://paopaoim.com/index.html">下载</a>
           </div>
