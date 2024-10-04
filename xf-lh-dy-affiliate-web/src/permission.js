@@ -35,7 +35,7 @@ router.beforeEach(async (to, _, next) => {
       } else if (currentHost === ph1Host) {
         next(`/ph1/summary`)
       } else {
-        console.log("IS this")
+        console.log("IS Check")
         console.log(siteCode)
         if (siteCode === 'lh1') {
           next(`/lh/login?redirect=${to.path}`)
