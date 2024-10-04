@@ -1455,8 +1455,8 @@ const convertToTwoDecimalAmount = (amount) => {
           cursor: pointer;
 
           .refresh-btn-img {
-            width: 100%;
-            max-width: 20px;
+            width: 20px;
+            height: 20px;
 
             &.rotate {
               animation: rotateTwice 1s infinite linear;
