@@ -390,3 +390,11 @@ export function getNBAClaimHistory() {
 export function claimNBABonus(matchId) {
   return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
 }
+
+export function getPglTreasureInit() {
+  return server.EVENT.get("/session/pglTreasure/init");
+}
+
+export function putPglTreasureInit() {
+  return server.EVENT.put("/session/pglTreasure/claim");
+}

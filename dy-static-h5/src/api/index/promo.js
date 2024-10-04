@@ -290,3 +290,11 @@ export function getNBAClaimHistory() {
 export function claimNBABonus(matchId) {
   return eventapi.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
 }
+
+export function getPGLTreasureInit() {
+  return eventapi.get("/session/pglTreasure/init");
+}
+
+export function putPGLTreasureInit() {
+  return eventapi.put("/session/pglTreasure/claim");
+}
