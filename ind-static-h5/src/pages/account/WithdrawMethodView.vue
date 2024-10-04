@@ -305,7 +305,10 @@
               <div class="desc">Remain Wagers</div>
             </div>
             <div class="desc desc_white">
-              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+              <div class="remain-wager-wrapper">
+                {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                <img class="refresh-btn-img" src="../../assets/images/account/refresh-icon.svg" />
+              </div>
             </div>
           </div>
         </div>
@@ -1422,6 +1425,17 @@ const convertToTwoDecimalAmount = (amount) => {
           font-weight: 400;
           &_white {
             color: #ffffff;
+          }
+        }
+
+        .remain-wager-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+
+          .refresh-btn-img {
+            width: 100%;
+            max-width: 20px;
           }
         }
       }
