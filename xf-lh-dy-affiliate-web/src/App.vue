@@ -43,7 +43,7 @@ onMounted(() => {
   // console.log(window.location.host);
   // debugger;
   if (window.location.pathname === '/login') {
-    console.log("Nside Login.")
+    console.log("Login 11")
     if (window.location.host.indexOf('xf') > -1) {
       window.location.pathname = '/xf/login'
     } else if (window.location.host.indexOf('ind') > -1 || window.location.hostname.indexOf("ind-") > -1 || window.location.href.includes('ind-')) {
