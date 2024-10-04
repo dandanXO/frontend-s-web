@@ -276,7 +276,8 @@
         <div class="fund-container">
           <div>
             <span class="fund-title">Available:</span>
-            {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+            <q-spinner v-if="isRefreshRemainWager" />
+            <span v-else>{{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}</span>
           </div>
           <div v-if="isUSDT">
             ≈ {{ convertToTwoDecimalAmount(withdrawInfo.amount / selectedMethodItem.currencyRate) }} USDT
@@ -302,13 +303,14 @@
           </div>
           <div class="info">
             <div class="desc-wrapper">
-              <div class="remain-wager-wrapper">
-                <div class="desc">Remain Wagers</div>
-                <img class="refresh-btn-img" src="../../assets/images/account/refresh-icon.svg" />
-              </div>
+              <div class="desc">Remain Wagers</div>
             </div>
             <div class="desc desc_white">
-              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+              <div class="remain-wager-wrapper" @click="refreshRemainWager" >
+                <q-spinner v-if="isRefreshRemainWager" />
+                <span v-else>{{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}</span>
+                <img class="refresh-btn-img" src="../../assets/images/account/refresh-icon.svg"/>
+              </div>
             </div>
           </div>
         </div>
@@ -438,6 +440,7 @@ const currencyType = ref("");
 const networkType = ref("");
 const currencyOptions = ref([]);
 const networkOptions = ref([]);
+const isRefreshRemainWager = ref(false);
 
 const refreshBalance = () => {
   if (store.token) store.getBalance();
@@ -459,6 +462,23 @@ const withdrawalMethods = reactive({
 
 const paymentMethodsItems = ref([]);
 const isUSDT = ref(false);
+
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  api.get('/session/withdraw/withdrawableBalance/refresh').then((res) => {
+    selectedMethodItem.value = {
+      ...selectedMethodItem.value,
+      ...res.data,
+    }
+
+    isRefreshRemainWager.value = false;
+  }).catch(() => {
+    isRefreshRemainWager.value = false;
+  }).finally(() => {
+    isRefreshRemainWager.value = false;
+  })
+}
 
 const getWithdrawalMethods = () => {
   isLoadingInitPay.value = true;
@@ -1432,6 +1452,7 @@ const convertToTwoDecimalAmount = (amount) => {
           display: flex;
           align-items: center;
           gap: 3px;
+          cursor: pointer;
 
           .refresh-btn-img {
             width: 100%;
