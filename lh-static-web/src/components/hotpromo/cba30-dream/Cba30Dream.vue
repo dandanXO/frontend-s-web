@@ -43,13 +43,11 @@
             <div class="title"></div>
             <div class="little-title">
               <div class="left">活动时间</div>
-              <div class="right">2024 年 10 月 12 日 00:00 起</div>
+              <div class="right">2024年10月12日00:00起</div>
             </div>
             <div class="little-title">
               <div class="left">活动内容</div>
-              <div class="right">
-                用户每日在电竞场馆投注 TP 世界锦标赛赛事有效投注≥2,000 元即可获得领取彩金，最高可领 1,888 元。
-              </div>
+              <div class="right">在活动期间投注CBA赛事，满足投注要求后即可获得奖金，最高可获1,888元</div>
             </div>
             <table class="livepoker-rebate-game-info-table">
               <tbody>
@@ -60,10 +58,10 @@
                   <th>流水倍数</th>
                 </tr>
                 <tr>
-                  <td :rowspan="8">≥1000 元</td>
+                  <td :rowspan="8">≥1,000元</td>
                   <td>1</td>
                   <td>18</td>
-                  <td :rowspan="8">5 倍流水</td>
+                  <td :rowspan="8">5倍流水</td>
                 </tr>
                 <tr>
                   <td>3</td>
@@ -91,13 +89,13 @@
                 </tr>
                 <tr>
                   <td>100</td>
-                  <td>1888</td>
+                  <td>1,888</td>
                 </tr>
               </tbody>
             </table>
             <div class="livepoker-rebate-game-bottom">
               <div class="livepoker-rebate-game-bottom-left-title">
-                例：用户 A 在 10 月 12 日当天在常规赛辽宁本钢 VS 浙江稠州金租比赛中单笔下注 2000 元客胜、500 元总比分大小和 500 元客队让分，比赛最终赛果为客胜，根据规则会员可获得 18 元奖金，奖金仅需 5 倍水即可出款。
+                例：用户A在10月12日当天在常规赛辽宁本钢VS浙江稠州金租比赛中单笔下注2000元客胜、500元总比分大小和500元客队让分，比赛最终赛果为客胜，根据规则会员可获得18元奖金，奖金仅需5倍水即可出款。
               </div>
             </div>
           </div>
@@ -107,7 +105,8 @@
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
-                当前活动仅计算体育场馆，在 CBA 赛季期间内当日有效投注≥1000 元并完成下注次数即可获得对应彩金，彩金只需 5 倍流水即可出款；
+                当前活动仅计算体育场馆，在CBA赛季期间内当日有效投注≥1000 元并完成下注次数即可获得对应彩金，彩金只需 5
+                倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">2</div>
@@ -119,15 +118,17 @@
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+                任何低于欧洲盘 1.7 或亚洲盘 0.7
+                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                每位有效玩家、手机号码、电子邮箱、银行卡、IP 地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消全部优惠的权利；
+                每位有效玩家、手机号码、电子邮箱、银行卡、IP
+                地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消全部优惠的权利；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞
+                为避免文字理解差异，雷火电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -171,12 +172,12 @@
             <div class="title"></div>
             <div class="little-title">
               <div class="left">活动时间</div>
-              <div class="right">2024 年 10 月 12 日 00:00 起</div>
+              <div class="right">2024年10月12日 00:00起</div>
             </div>
             <div class="little-title">
               <div class="left">活动内容</div>
               <div class="right">
-                在 CBA 常规赛季期间的每周一到周日完成至少一次存款且一周内累计负盈利≥5000 元的会员在下一周的周一即可获得回馈奖金，最高可获 888 元
+                在CBA常规赛季期间的每周一到周日完成至少一次存款且一周内累计负盈利≥5,000元的会员在下一周的周一即可获得回馈奖金，最高可获888元
               </div>
             </div>
             <table class="livepoker-rebate-game-info-table">
@@ -188,7 +189,7 @@
                   <th>流水倍数</th>
                 </tr>
                 <tr>
-                  <td>≥5000 元</td>
+                  <td>≥5,000 元</td>
                   <td>1%</td>
                   <td>888 元</td>
                   <td>8 倍流水</td>
@@ -197,7 +198,9 @@
             </table>
             <div class="livepoker-rebate-game-bottom">
               <div class="livepoker-rebate-game-bottom-left-title">
-                例：用户 A 在 10 月 12 日至 10 月 18 日一周内累计负盈利为 20000 元，在下周一至周日的任意一天即可在优惠页面点击【领取】获得周包赔奖金，根据规则会员可获得 200 元包赔奖金，奖金仅需 8 倍水即可出款。
+                例：用户A 在10月12日至10月18日一周内累计负盈利为 20,000
+                元，在下周一至周日的任意一天即可在优惠页面点击【领取】获得周包赔奖金，根据规则会员可获得200
+                元包赔奖金，奖金仅需8倍水即可出款。
               </div>
             </div>
           </div>
@@ -207,11 +210,13 @@
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
-                当前活动仅计算体育场馆，在 CBA 赛季期间内以周为单位根据累计负盈利计算会员应获得的彩金，彩金只需 8 倍流水即可出款
+                当前活动仅计算体育场馆，在 CBA 赛季期间内以周为单位根据累计负盈利计算会员应获得的彩金，彩金只需 8
+                倍流水即可出款
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                当前活动符合条件的会员可在活动开始后的次周任意一天在优惠界面点击【领取】按钮获得包赔奖金。彩金保留 7 天，每周领取一次。
+                当前活动符合条件的会员可在活动开始后的次周任意一天在优惠界面点击【领取】按钮获得包赔奖金。彩金保留 7
+                天，每周领取一次。
               </div>
               <div class="item">
                 <div class="item-num">3</div>
@@ -219,11 +224,13 @@
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+                任何低于欧洲盘 1.7 或亚洲盘 0.7
+                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                每位有效玩家、手机号码、电子邮箱、银行卡、IP 地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消全部优惠的权利；
+                每位有效玩家、手机号码、电子邮箱、银行卡、IP
+                地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消全部优惠的权利；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
@@ -279,18 +286,22 @@ const handleClaimDailyBonus = () => {
       if (res.code === 0) {
         notify({
           type: "success",
-          message: `成功领取`
+          message: `成功领取${res.data}元`
         });
         fetchData();
       } else {
-        notify({
-          type: "error",
-          message: res.message
-        });
+        // notify({
+        //   type: "error",
+        //   message: res.message
+        // });
       }
     })
     .catch((err) => {
       console.log(err);
+      notify({
+        type: "error",
+        message: err.message
+      });
     });
 };
 
@@ -314,18 +325,22 @@ const handleClaimWeeklyBonus = () => {
       if (res.code === 0) {
         notify({
           type: "success",
-          message: `成功领取`
+          message: `成功领取${res.data}元`
         });
         fetchData();
       } else {
-        notify({
-          type: "error",
-          message: res.message
-        });
+        // notify({
+        //   type: "error",
+        //   message: res.message
+        // });
       }
     })
     .catch((err) => {
       console.log(err);
+      notify({
+        type: "error",
+        message: err.message
+      });
     });
 };
 
@@ -492,6 +507,7 @@ onMounted(() => {
       align-items: center;
       font-size: 16px;
       font-weight: 600;
+      min-width: 120px;
       line-height: 23.33px;
       color: #ffffff;
       margin-right: 16px;
