@@ -309,7 +309,7 @@
               <div class="remain-wager-wrapper" @click="refreshRemainWager" >
                 <q-spinner v-if="isRefreshRemainWager" />
                 <span v-else>{{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}</span>
-                <img class="refresh-btn-img" src="../../assets/images/account/refresh-icon.svg"/>
+                <img class="refresh-btn-img" :class="{rotate: isRefreshRemainWager}" src="../../assets/images/account/refresh-icon.svg"/>
               </div>
             </div>
           </div>
@@ -1457,9 +1457,22 @@ const convertToTwoDecimalAmount = (amount) => {
           .refresh-btn-img {
             width: 100%;
             max-width: 20px;
+
+            &.rotate {
+              animation: rotateTwice 1s infinite linear;
+            }
           }
         }
       }
+    }
+  }
+
+  @keyframes rotateTwice {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 
