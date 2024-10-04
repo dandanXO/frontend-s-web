@@ -62,7 +62,7 @@
         <span class="title">冠亚军决赛：</span>11月2日22:00
       </div>
     </div>
-    
+
     <!-- Tab content -->
     <div class="tabs-content">
       <div v-if="activeTab === 1">
@@ -75,7 +75,7 @@
             <span style="color: white; text-shadow: none; font-size: 16px; margin-bottom: -5px;">奖金</span>
           </div>
         </div>
-        
+
         <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
@@ -96,9 +96,9 @@
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
-               
+
                 <q-input
                   v-model.number="votesListItem.votes"
                   type="number"
@@ -106,8 +106,8 @@
                   :disable="true"
                   style="max-width: 200px"
                 />
-                
-                
+
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
@@ -125,7 +125,7 @@
             <img style="max-height: 20px; margin-top: 10px;" src="../s14-vote/images/reward.png">
           </div>
         </div>
-        
+
         <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
@@ -146,8 +146,8 @@
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
-               
+
+
                 <q-input
                   v-model.number="votesListItem.votes"
                   type="number"
@@ -155,7 +155,7 @@
                   disable
                   style="max-width: 200px"
                 />
-                
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
@@ -173,7 +173,7 @@
             <img style="max-height: 20px; margin-top: 10px;" src="../s14-vote/images/reward.png">
           </div>
         </div>
-        
+
         <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
@@ -193,7 +193,7 @@
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <q-input
                   v-model.number="votesListItem.votes"
@@ -202,8 +202,8 @@
                   :disable="true"
                   style="max-width: 200px"
                 />
-                
-                
+
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
@@ -235,7 +235,7 @@
     <div class="columne">
       <div class="main-title-box">获取投票</div>
       <div class="sub-title">
-        {{ selectedTabDesc }}  
+        {{ selectedTabDesc }}
           <!-- 活动期间，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金； -->
       </div>
       <div class="table">
@@ -306,7 +306,7 @@
               <span class="eg">例：用户投注BLG队伍100票，BLG队伍在决赛阶段获得冠军总共获得500,000票数，那么用户可获得（1000,000➗500,000）*100=200元彩金；</span></li>
           <li> 根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
           <li> 此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</li>
-          <li> 为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          <li> 为避免文字理解差异，东赢电竞保留此活动最终解释权；</li>
         </ol>
       </div>
     </div>
@@ -339,7 +339,7 @@
       <q-dialog v-model="isVoteRecordModalVisible">
         <div class="cast-vote-container">
           <q-btn color="white" flat round dense icon="close" v-close-popup style="position: absolute; right: 10px;top: 10px;" />
-      
+
           <div class=title>投票记录</div>
         <div class="vote-records">
           <table class="table-titles">
@@ -520,10 +520,10 @@ import moment from "moment";
             if (voteItems) {
               const { countryImgUrl, teamNameLocal } = voteItems;
               // return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
-              return { 
-                ...voteRecordItem, 
-                countryImgUrl, 
-                teamNameLocal 
+              return {
+                ...voteRecordItem,
+                countryImgUrl,
+                teamNameLocal
               };
             }
             return [];
@@ -571,7 +571,7 @@ import moment from "moment";
   const selectedTitle = computed(() => selectedTabDetails.value.tabtitle);
   const selectedTabDesc = computed(() => selectedTabDetails.value.tabdetail);
 
-  const isClickable = ref(true); 
+  const isClickable = ref(true);
   const checkPeriod = (tabClicked) => {
     if (!isClickable.value) return; // Prevent clicks if not clickable
     if (tabClicked > activeTab.value) {
@@ -1194,7 +1194,7 @@ background-size: 100% 100%;
       font-family: 'PingFang SC';
     max-width: 90px;
     }
-    
+
   .c-flag {
     // background: #eeeee4;
     // border: 5px solid #53ABFF;
@@ -1351,7 +1351,7 @@ background-size: 100% 100%;
     border-radius: 3px;
     width: 23px;
   }
-  
+
   .el-form {
     width: 40px;
   }
