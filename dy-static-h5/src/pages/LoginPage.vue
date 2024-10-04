@@ -284,7 +284,7 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent, ref, reactive, onMounted } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
@@ -334,6 +334,22 @@ export default defineComponent({
 
     const router = useRouter();
     const route = useRoute();
+
+    watch(tab, (newVal) => {
+      if (newVal === 'login') {
+        initGeetestCaptcha();
+      }
+    });
+
+    watch(
+      () => route.path,
+      (newPath) => {
+        if (newPath === '/login') {
+          window.captchaObj.reset();
+        }
+      }
+    );
+
     const getCode = () => {
       api
         .get("/member/verificationCode")

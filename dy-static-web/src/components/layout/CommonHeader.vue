@@ -1636,9 +1636,6 @@ export default defineComponent({
       window.captchaObj.reset();
     })
     
-    watch(() => {
-      
-    })
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         loginDialogVisible.value = true;
