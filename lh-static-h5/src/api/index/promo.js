@@ -352,3 +352,19 @@ export function getIEMRioInit() {
 export function claimIEMRioBonus() {
   return eventapi.post("/session/iem-rio/claimBonus")
 }
+
+export function getCBAInit() {
+  return eventapi.get("/session/cba/daily/init");
+}
+
+export function claimCBADailyBonus() {
+  return eventapi.post("/session/cba/daily/claimBonus");
+}
+
+export function getCBAWeeklyInit() {
+  return eventapi.get("/session/cba/weekly/init");
+}
+
+export function claimCBAWeeklyBonus() {
+  return eventapi.post("/session/cba/weekly/claimBonus");
+}

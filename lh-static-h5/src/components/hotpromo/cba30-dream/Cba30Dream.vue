@@ -42,12 +42,12 @@
                 </div>
                 <div class="reward-info-content">
                   可领彩金：
-                  <span class="amount">{{ bonus }}元</span>
+                  <span class="amount">{{ dailyBonus }}元</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimDailyBonus" :class="{ disabled: bonus <= 0 }">
                 <img
                   src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
                   alt=""
@@ -174,7 +174,7 @@
                 </div>
                 <div class="reward-info-content">
                   周期总负盈利：
-                  <span class="amount">{{ totalValidBet }}元</span>
+                  <span class="amount">{{ totalLoss }}元</span>
                 </div>
               </div>
               <div class="reward-info">
@@ -187,12 +187,12 @@
                 </div>
                 <div class="reward-info-content">
                   可领彩金：
-                  <span class="amount">{{ bonus }}元</span>
+                  <span class="amount">{{ weeklyBonus }}元</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimWeeklyBonus" :class="{ disabled: bonus <= 0 }">
                 <img
                   src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
                   alt=""
@@ -273,7 +273,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { claimCompetitionBetBonus, getCompetitionBetYesterday } from "../../../api/index/promo";
+import { getCBAInit, claimCBADailyBonus, getCBAWeeklyInit, claimCBAWeeklyBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -288,10 +288,16 @@ const $q = useQuasar();
 const router = useRouter();
 
 const totalValidBet = ref(0);
-const bonus = ref(0);
+const dailyBonus = ref(0);
+const betCount = ref(0);
+
+const weeklyBonus = ref(0);
+const totalLoss = ref(0);
+const claimedBonus = ref(0);
+
 const tabValue = ref(1);
 
-const handleClaimBonus = () => {
+const handleClaimDailyBonus = () => {
   if (!store.token) {
     $q.dialog({
       class: "q-px-md q-pt-md",
@@ -315,34 +321,85 @@ const handleClaimBonus = () => {
     });
     return;
   }
-  // claimCompetitionBetBonus(promoCode.value)
-  //   .then((res) => {
-  //     if (res.code === 0) {
-  //       notify({
-  //         type: "success",
-  //         message: `成功领取`
-  //       });
-  //       fetchData();
-  //     } else {
-  //       notify({
-  //         type: "error",
-  //         message: res.message
-  //       });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  claimCBADailyBonus()
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: `成功领取`
+        });
+        fetchData();
+      } else {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
+const handleClaimWeeklyBonus = () => {
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
+  }
+  claimCBAWeeklyBonus()
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: `成功领取`
+        });
+        fetchData();
+      } else {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 const fetchData = async () => {
-  // try {
-  //   const res = await getCompetitionBetYesterday(promoCode.value);
-  //   totalValidBet.value = res.data.totalValidBet;
-  //   bonus.value = res.data.bonus;
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    const res = await getCBAInit();
+    const res1 = await getCBAWeeklyInit();
+
+    totalValidBet.value = res.data.totalValidBet;
+    betCount.value = res.data.betCount;
+    dailyBonus.value = res.data.bonus;
+
+    totalLoss.value = res1.data.totalLoss;
+    weeklyBonus.value = res1.data.bonus;
+    claimedBonus.value = res1.data.claimedBonus;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 onMounted(() => {
