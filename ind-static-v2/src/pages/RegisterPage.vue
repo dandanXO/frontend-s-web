@@ -421,6 +421,7 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
+                store.initAxiosInterceptors(res.data);
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();
 
