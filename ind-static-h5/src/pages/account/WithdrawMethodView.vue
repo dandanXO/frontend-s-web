@@ -302,13 +302,13 @@
           </div>
           <div class="info">
             <div class="desc-wrapper">
-              <div class="desc">Remain Wagers</div>
-            </div>
-            <div class="desc desc_white">
               <div class="remain-wager-wrapper">
-                {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                <div class="desc">Remain Wagers</div>
                 <img class="refresh-btn-img" src="../../assets/images/account/refresh-icon.svg" />
               </div>
+            </div>
+            <div class="desc desc_white">
+              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
             </div>
           </div>
         </div>
