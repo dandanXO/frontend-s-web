@@ -421,17 +421,16 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-                store.initAxiosInterceptors(res.data);
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();
-
+                
                 $q.notify({
                   color: "positive",
                   position: "top",
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-
+                
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {

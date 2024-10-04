@@ -303,6 +303,7 @@ export const userStore = defineStore("userStore", {
       } else {
         SessionStorage.set("TOKEN", token);
       }
+      this.initAxiosInterceptors(token);
     },
     memberLogout() {
       return api.post("/session/logout").then(() => {
