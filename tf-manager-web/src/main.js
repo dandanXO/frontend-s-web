@@ -90,6 +90,7 @@ switch (currentHost) {
   case process.env.VUE_APP_BR1_HOST:
     baseApi = process.env.VUE_APP_BR1_API;
     baseWss = process.env.VUE_APP_BR1_SOCKET;
+    imageCDNUrl = process.env.VUE_APP_BR1_IMAGE;
     siteId = 'br1';
     break;
   default:
