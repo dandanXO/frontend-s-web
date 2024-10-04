@@ -177,6 +177,24 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/br1/login',
+    name: 'BR1 Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/br1/login/index.vue'
+      ),
+  },
+  {
+    path: '/br1/register',
+    name: 'BR1 Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/br1/register/index.vue'
+      ),
+  },
+  {
     path: '/ph1/summary',
     name: 'Ph1 Summary',
     meta: { hidden: true },
