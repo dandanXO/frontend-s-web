@@ -346,9 +346,27 @@ export function putPGLTreasureInit() {
 
 export function getIEMRioInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/iem-rio/init?v=${randNum}`)
+  return eventapi.get(`/session/iem-rio/init?v=${randNum}`);
 }
 
 export function claimIEMRioBonus() {
-  return eventapi.post("/session/iem-rio/claimBonus")
+  return eventapi.post("/session/iem-rio/claimBonus");
+}
+
+export function getCBAInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/cba/daily/init?v=${randNum}`);
+}
+
+export function claimCBADailyBonus() {
+  return eventapi.post(`/session/cba/daily/claimBonus`);
+}
+
+export function getCBAWeeklyInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/cba/weekly/init?v=${randNum}`);
+}
+
+export function claimCBAWeeklyBonus() {
+  return eventapi.post("/session/cba/weekly/claimBonus");
 }
