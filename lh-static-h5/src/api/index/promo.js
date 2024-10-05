@@ -350,7 +350,8 @@ export function getIEMRioInit() {
 }
 
 export function claimIEMRioBonus() {
-  return eventapi.post("/session/iem-rio/claimBonus");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/iem-rio/claimBonus?v=${randNum}`);
 }
 
 export function getCBAInit() {
