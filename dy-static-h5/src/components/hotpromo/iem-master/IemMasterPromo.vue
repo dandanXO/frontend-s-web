@@ -6,7 +6,7 @@
           <div class="livepoker-rebate-section-title">
             <div>
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-title-img.png"
                 style="width: 20px; height: 20px; margin-bottom: 0px"
               />
             </div>
@@ -15,7 +15,7 @@
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon1.png"
                 alt=""
                 width="100%"
               />
@@ -28,20 +28,20 @@
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon3.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon3.png"
                 alt=""
                 width="100%"
               />
             </div>
             <div class="reward-info-content">
-              昨日雷火有效流水
+              昨日东赢有效流水
               <span class="amount">{{ totalLHValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon2.png"
                 alt=""
                 width="100%"
               />
@@ -53,8 +53,8 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus">
-            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png" alt="" width="100%" />
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+            <img src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/claim-btn.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -64,13 +64,13 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/game-bottom-left-btn.png"
                 alt=""
                 style="width: 10px"
               />
               <span>示例</span>
             </div>
-            会员A在IEM里约大师赛时，在IM电竞投注5,000元后又在雷火电竞投注IEM赛事投注5,000元，可在次日领取雷火专属金38元。
+            会员A在IEM里约大师赛时，在IM电竞投注5,000元后又在东赢电竞投注IEM赛事投注5,000元，可在次日领取东赢专属金38元。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -78,7 +78,7 @@
             <tr>
               <th>有效投注</th>
               <th>投注嘉奖</th>
-              <th>雷火专属金</th>
+              <th>东赢专属金</th>
               <th>流水倍数</th>
             </tr>
             <tr>
@@ -138,8 +138,8 @@
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
               <div>
-                活动期间,投注IEM 里约大师赛有效≥3,000元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注IEM
-                里约大师赛可获更高奖励金额。
+                活动期间,投注IEM 里约大师赛有效≥3,000元或以上可获的对应投注嘉奖，若在东赢电竞场馆进行投注IEM
+                里约大师赛可获更高奖励金额。注：奖金不叠加派发，奖金按最高档位每日派发一次。
               </div>
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
@@ -164,7 +164,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -175,7 +175,6 @@
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
 import { getIEMRioInit, claimIEMRioBonus } from "../../../api/index/promo";
-import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -183,7 +182,6 @@ import { useRouter } from "vue-router";
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
 
-const notify = useNotify();
 const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
@@ -194,9 +192,7 @@ const bonus = ref(0);
 const isClaiming = ref(false);
 
 const handleClaimBonus = () => {
-  if (isClaiming.value === true) {
-    return;
-  }
+  if (isClaiming.value) return;
   isClaiming.value = true;
   if (!store.token) {
     $q.dialog({
@@ -224,18 +220,19 @@ const handleClaimBonus = () => {
   claimIEMRioBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: `领取成功${res.data}元`,
+          icon: "check_circle_outline"
         });
         fetchData();
       } else {
-        notify({
-          type: "error",
-          message: res.message
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
         });
       }
     })
@@ -289,7 +286,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-bg.png");
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
@@ -381,7 +378,7 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-title.png");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 240px;
@@ -394,7 +391,7 @@ onMounted(() => {
     align-items: center;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 64px;
@@ -478,7 +475,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;

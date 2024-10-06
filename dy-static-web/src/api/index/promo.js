@@ -398,3 +398,10 @@ export function getPglTreasureInit() {
 export function putPglTreasureInit() {
   return server.EVENT.put("/session/pglTreasure/claim");
 }
+
+export function getIEMRioInit() {
+  return server.EVENT.get("/session/iem-rio/init");
+}
+export function claimIEMRioBonus() {
+  return server.EVENT.post("/session/iem-rio/claimBonus");
+}
