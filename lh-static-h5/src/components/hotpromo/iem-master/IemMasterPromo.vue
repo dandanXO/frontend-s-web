@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <div class="bonus-image" @click="handleClaimBonus">
             <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -194,7 +194,9 @@ const bonus = ref(0);
 const isClaiming = ref(false);
 
 const handleClaimBonus = () => {
-  if (isClaiming.value) return;
+  if (isClaiming.value === true) {
+    return;
+  }
   isClaiming.value = true;
   if (!store.token) {
     $q.dialog({
@@ -222,7 +224,13 @@ const handleClaimBonus = () => {
   claimIEMRioBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        notify.redPacket("成功领取", res.data);
+        notify({
+          message: "成功领取",
+          type: "red-packet",
+          params: {
+            redPacket: res.data
+          }
+        });
         fetchData();
       } else {
         notify({
