@@ -80,6 +80,7 @@
 
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode"/>
+    <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode"/>
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -157,6 +158,7 @@ import newFootballFight from "../components/hotpromo/newFootballfight/FootballFi
 import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue";
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 import S14VotePromo from "@/components/hotpromo/s14-vote/S14VotePromo.vue";
+import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -228,7 +230,8 @@ export default defineComponent({
     BlackMythWuKongPromo,
     SubmitClaimPromo,
     S14VotePromo,
-    Dota2Pgl
+    Dota2Pgl,
+    IemMasterPromo
   },
   props: {
     list: {

@@ -298,3 +298,13 @@ export function getPGLTreasureInit() {
 export function putPGLTreasureInit() {
   return eventapi.put("/session/pglTreasure/claim");
 }
+
+export function getIEMRioInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/iem-rio/init?v=${randNum}`);
+}
+
+export function claimIEMRioBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/iem-rio/claimBonus?v=${randNum}`);
+}
