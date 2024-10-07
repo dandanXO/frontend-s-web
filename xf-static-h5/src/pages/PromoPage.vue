@@ -119,6 +119,7 @@ import {isAndroid, isHuaweiPhone} from "boot/utils";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
 import {useLocalStorage} from "@vueuse/core";
+import { cached } from "src/boot/cache";
 
 import HotPromotion from 'components/HotPromotion'
 // import HotPromotion from 'components/HotPromotion'
@@ -177,14 +178,14 @@ export default defineComponent({
     };
 
     const tab = ref("all");
-    const tabItems = [
+    const tabItems = ref([
 
       { name:"all", label: '全部' },
       { name: "slot game", label: '电子'},
       { name: "fish", label: '捕鱼'},
       { name: "live casino", label: '真人'},
       { name: "poker", label: '棋牌'},
-    ];
+    ]);
 
     const loadGame = () => {
       if (promoSrc.value !== "") {
@@ -301,6 +302,22 @@ export default defineComponent({
     };
 
     const loadAll = () => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
+          tabItems.value = [];
+          res.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).H5
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
       const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
@@ -326,7 +343,7 @@ export default defineComponent({
 
     }
     onMounted(() => {
-      //TODO:: 我觉得没有Banner，所以我隐藏了
+      //TODO:: 我觉得没有 Banner，所以我隐藏了
       // loadBanner();
 
       checkExtension();
