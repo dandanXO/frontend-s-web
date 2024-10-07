@@ -12,7 +12,7 @@
       <div class="withdraw-remaining-dialog__body">
         <div class="withdraw-remaining-dialog__body-title">
           完成
-          <span class="text-yellows">{{ totalRemaining }}</span>
+          <span class="text-yellows">{{ convertToCommaAmount(totalRemaining) }}</span>
           流水，立即享受快速提款
         </div>
         <table class="withdraw-remaining-dialog__body-table">
@@ -26,7 +26,7 @@
           <tbody>
             <tr v-for="(record, index) in tableData" :key="index">
               <td align="center">{{ getDisplayRemainingType(record.type) }}</td>
-              <td align="center">{{ record.progress }}/{{ record.total }}</td>
+              <td align="center">{{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}</td>
               <td align="center">
                 <router-link class="action-button" to="/home">去完成</router-link>
               </td>
@@ -40,6 +40,7 @@
 </template>
 <script setup>
 import { api } from "src/boot/axios";
+import { convertToCommaAmount } from "src/boot/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
