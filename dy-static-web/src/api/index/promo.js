@@ -1,4 +1,5 @@
 import { server } from "@/utils/request";
+import cached from "@/utils/cache";
 
 export function loadPromo(isLogin = false) {
   return server.REST.get("/opt-session/promo/page");
@@ -11,6 +12,11 @@ export function loadPromoBanner(category) {
     }
   });
 }
+
+export function loadPromoTypes() {
+  return cached.get("PROMOTION_TYPES", () => server.REST.get("/promo/type"));
+}
+
 export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }
