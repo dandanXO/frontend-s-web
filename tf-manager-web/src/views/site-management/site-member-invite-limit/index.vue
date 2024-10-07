@@ -174,14 +174,16 @@
     >
       <div>
         <table class="info-table">
-          <tr>
-            <td>{{ $t('google.register_count') }}</td>
-            <td>{{ regLimitData.regCount }}</td>
-          </tr>
-          <tr>
-            <td>{{ $t('google.register_limit') }}</td>
-            <td>{{ regLimitData.regLimit }}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>{{ $t('google.register_count') }}</td>
+              <td>{{ regLimitData.regCount }}</td>
+            </tr>
+            <tr>
+              <td>{{ $t('google.register_limit') }}</td>
+              <td>{{ regLimitData.regLimit }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </el-dialog>
