@@ -230,7 +230,7 @@ export default defineComponent({
       });
     };
 
-    const loadTabs = () => {
+    const loadTabs = async() => {
       loadPromoTypes().then((res) => {
         promoTypes.value = res.map(({ value, name, iconUrl }) => ({
           code: value,
@@ -311,8 +311,9 @@ export default defineComponent({
           return "";
       }
     };
-    const loadAll = () => {
+    const loadAll = async () => {
       const isLogin = !!store.hasToken();
+      await loadTabs();
       loadPromo(isLogin).then((res) => {
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
@@ -331,15 +332,17 @@ export default defineComponent({
               }
             // }
           });
+
+          if (promoTypes.value.length > 0) {
+            switchPromoType(promoState.active);
+          }
         }
       }).catch((e) => {
         console.log("error", e);
       });
-      switchPromoType(promoState.active);
     };
     onMounted(() => {
       loadBanner();
-      loadTabs();
       loadAll();
     });
 
