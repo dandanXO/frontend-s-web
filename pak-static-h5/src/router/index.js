@@ -20,8 +20,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -82,6 +82,21 @@ export default route(function (/* { store, ssrContext } */) {
       console.log("4");
       fbq("init", "404291659176444");
       fbq("init", "733054452322766");
+      fbq("track", "PageView");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("wd1caof6.cc") > -1) {
+      console.log("5");
+      fbq("init", "1072977007651137");
+      fbq("init", "1254087609071881");
+      fbq("init", "529778216442169");
+      fbq("init", "943006857638809");
+      fbq("init", "555685270320864");
+      fbq("init", "1042339097592319");
+      fbq("init", "484509444603628");
+      fbq("init", "443298088242926");
+      fbq("init", "1008797584264347");
+      fbq("init", "1706878899881106");
+
       fbq("track", "PageView");
       user.isFbPixel = true;
     }
