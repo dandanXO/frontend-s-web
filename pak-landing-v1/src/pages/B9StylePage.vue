@@ -4,7 +4,7 @@
       <div v-for="item in arr" :key="item.id" class="col-4">
         <iframe
           width="100%"
-          :src="item.videoUrl"
+          :src="item.attributes.videoUrl"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen

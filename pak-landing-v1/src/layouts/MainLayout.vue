@@ -104,7 +104,7 @@ const openUrl = () => {
 .q-tabs {
   background-color: #131313;
   position: sticky;
-  top: 101px;
+  top: 81px;
   padding-top: 8px;
   padding-bottom: 8px;
   z-index: 2000;

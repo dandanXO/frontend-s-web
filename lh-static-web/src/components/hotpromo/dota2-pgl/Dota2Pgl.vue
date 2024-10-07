@@ -26,27 +26,37 @@
             </div>
             <div>
               <div class="reward-wrapper">
-                <div class="reward-item">
-                  <div class="reward-item-content">1 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">8 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">18 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">58 元</div>
-                </div>
-                <div class="reward-item">
-                  <div class="reward-item-content">88 元</div>
-                </div>
+                <template v-for="(bonus, index) of bonuses" :key="index">
+                  <div class="reward-item">
+                    <div class="reward-item-content">{{ bonus }} 元</div>
+                  </div>
+                </template>
+
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">1 元</div>-->
+                <!--                </div>-->
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">8 元</div>-->
+                <!--                </div>-->
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">18 元</div>-->
+                <!--                </div>-->
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">58 元</div>-->
+                <!--                </div>-->
+                <!--                <div class="reward-item">-->
+                <!--                  <div class="reward-item-content">88 元</div>-->
+                <!--                </div>-->
                 <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
               </div>
 
               <div class="reward-title-wrapper">
                 <div class="reward-title">
-                  累计完成场次: {{ accumulatedClaimed }}次剩余开启次数: {{ todayLeftClaimCount }}次
+                  累计完成场次:
+                  <span style="font-weight: bold">{{ accumulatedClaimed }}</span>
+                  次&nbsp;&nbsp;剩余开启次数:
+                  <span style="font-weight: bold">{{ todayLeftClaimCount }}</span>
+                  次
                 </div>
               </div>
 
@@ -66,23 +76,13 @@
               <img src="../../../assets/promo/lh-dota2-pgl/rule-title-right.png" alt="" />
             </div>
             <div class="content">
-              <div class="item">
-                1.活动期间，每次开启宝箱需要消耗 PGL 瓦拉几瓦赛事 1,500 元有效投注，每日最高可开启 10 次宝箱；
-              </div>
-              <div class="item">
-                2.开启宝箱每第 10 次开启即可触发最高奖励，开启获得的宝箱彩金实时派发，彩金 5 倍流水即可提款；
-              </div>
-              <div class="item">
-                3.获得的开启宝箱次数可在活动期间内积累，活动结束后清零，请在活动期间内使用，逾期未使用不予补偿；
-              </div>
-              <div class="item">
-                4.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
-              </div>
-              <div class="item">
-                5.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-                地址视为同一账户，若有违规者，将不享受此红利；
-              </div>
-              <div class="item">6.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
+              <div class="item">1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第2季赛事，会员在当日 PGL 瓦拉几亚 第2季中累计有效投注 ≥ 1,500 元即可获得1次开箱次数，每日最高上限获得10次开箱次数，每日最高可开启 10 次宝箱；</div>
+              <div class="item">2. 开启宝箱每第 10 次开启即可触发最高奖励，开启获得的宝箱彩金实时派发，彩金 5 倍流水即可提款；</div>
+              <div class="item">3. 获得的开启宝箱次数在当天内积累，次日清零，请在当天内使用，逾期未使用不予补偿；</div>
+              <div class="item">4. 任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；</div>
+              <div class="item">5. 根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</div>
+              <div class="item">6. 此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</div>
+              <div class="item">7. 为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x1</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款3天</div>
                 </div>
                 <!-- <div class="reward-box-btn">已领取</div> -->
               </div>
@@ -109,7 +109,7 @@
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x3</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款≥5天</div>
                 </div>
                 <!-- <div class="reward-box-btn active">领取</div> -->
               </div>
@@ -117,7 +117,7 @@
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
                   <div>宝箱 x5</div>
-                  <div class="text">连续存款 3 天</div>
+                  <div class="text">连续存款10天</div>
                 </div>
                 <!-- <div class="reward-box-btn disabled">领取</div> -->
               </div>
@@ -170,7 +170,9 @@ const store = userStore();
 const accumulatedClaimed = ref(0);
 const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
-const tabValue = ref(2);
+const tabValue = ref(1);
+
+const bonuses = [1, 8, 18, 58, 88];
 
 const handleClickTab = (value) => {
   tabValue.value = value;
@@ -186,6 +188,7 @@ const handleClickLogout = () => {
   });
 };
 
+const isClaiming = ref(false);
 const handleClaimBonus = () => {
   if (!store.hasToken()) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
@@ -200,13 +203,17 @@ const handleClaimBonus = () => {
     });
     return;
   }
-
+  if (isClaiming.value === true) {
+    return;
+  }
+  isClaiming.value = true;
   putPglTreasureInit()
     .then((res) => {
-      if (res.code === 0) {
+      // debugger;
+      if (res.code === 0 && res.data) {
         notify({
           type: "success",
-          message: `成功领取`
+          message: `成功领取${res.data}元！`
         });
         fetchData();
       } else {
@@ -215,9 +222,11 @@ const handleClaimBonus = () => {
           message: res.message
         });
       }
+      isClaiming.value = false;
     })
     .catch((err) => {
       console.log(err);
+      isClaiming.value = false;
     });
 };
 
@@ -227,6 +236,7 @@ const fetchData = async () => {
     accumulatedClaimed.value = res.data.accumulatedClaimed;
     todayLeftClaimCount.value = res.data.todayLeftClaimCount;
     todayClaimed.value = res.data.todayClaimed;
+    bonuses.value = res.data.bonuses;
   } catch (error) {
     console.log(error);
   }
@@ -297,7 +307,7 @@ onMounted(() => {
   align-items: center;
   color: #8c5b00;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .livepoker-rebate-game-info {
@@ -494,6 +504,7 @@ onMounted(() => {
 
   h1 {
     margin: 0;
+    font-weight: bold;
     white-space: nowrap;
   }
 }

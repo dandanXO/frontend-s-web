@@ -1,6 +1,8 @@
 <template>
   <div class="promo-container">
-    <div class="promo">
+    <div class="promo" :class="{
+      dota2Pgql: selectedPromo.promoCode === 'dy2-dota2-pgl'
+    }">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
@@ -1281,6 +1283,10 @@ export default defineComponent({
       margin-left: auto;
       display: block;
     }
+  }
+
+  &.dota2Pgql {
+    background: #e7f1fd;
   }
 }
 
