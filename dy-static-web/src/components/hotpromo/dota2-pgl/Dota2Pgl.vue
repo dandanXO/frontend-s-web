@@ -108,7 +108,7 @@
               <div class="reward-box-wrapper">
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
-                  <div>宝箱 x3</div>
+                  <div>宝箱 x2</div>
                   <div class="text">连续存款≥5天</div>
                 </div>
                 <!-- <div class="reward-box-btn active">领取</div> -->
@@ -116,7 +116,7 @@
               <div class="reward-box-wrapper">
                 <div class="reward-box">
                   <img src="../../../assets/promo/lh-dota2-pgl/reward.png" alt="" />
-                  <div>宝箱 x5</div>
+                  <div>宝箱 x3</div>
                   <div class="text">连续存款10天</div>
                 </div>
                 <!-- <div class="reward-box-btn disabled">领取</div> -->

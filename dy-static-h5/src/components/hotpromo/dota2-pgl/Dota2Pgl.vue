@@ -171,11 +171,11 @@ const boxes = ref([
     text: "连续存款3天"
   },
   {
-    title: "宝箱x3",
+    title: "宝箱x2",
     text: "连续存款≥5天"
   },
   {
-    title: "宝箱x5",
+    title: "宝箱x3",
     text: "连续存款10天"
   }
 ]);
