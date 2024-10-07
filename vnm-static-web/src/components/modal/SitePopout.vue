@@ -68,8 +68,9 @@ onMounted(() => {
   font-family: "PingFang SC";
   background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
   background-size: 100% 100%;
-  aspect-ratio: 1826 / 1156;
-  padding: 8% 5% 0% 5%;
+  // aspect-ratio: 1826 / 1156;
+  // padding: 8% 5% 0% 5%;
+  padding: 8% 5% 5% 5%;
 
   .header {
     border-bottom: 1px solid black;
