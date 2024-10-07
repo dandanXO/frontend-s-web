@@ -122,7 +122,7 @@ onMounted(() => {
 
     .withdraw-remaining-dialog__header {
       background: url(@/assets/images/finance/withdraw/withdraw-remaining-bg.png) no-repeat;
-      background-size: 100%;
+      background-size: 100% 100%;
       aspect-ratio: 530 / 92;
       padding: 24px 20px 0;
       box-sizing: border-box;
@@ -178,6 +178,7 @@ onMounted(() => {
           background-color: #3981ff3b;
           th {
             padding: 10px 0;
+            text-align: center;
             color: #3981ff;
             &:first-child {
               border-top-left-radius: 4px;

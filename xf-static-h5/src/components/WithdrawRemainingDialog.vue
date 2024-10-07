@@ -26,7 +26,9 @@
           <tbody>
             <tr v-for="(record, index) in tableData" :key="index">
               <td align="center">{{ getDisplayRemainingType(record.type) }}</td>
-              <td align="center">{{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}</td>
+              <td align="center">
+                {{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}
+              </td>
               <td align="center">
                 <router-link class="action-button" to="/home">去完成</router-link>
               </td>
@@ -104,6 +106,7 @@ onMounted(() => {
 .withdraw-remaining-dialog {
   background: transparent;
   box-shadow: none;
+  color: #fff;
 
   .withdraw-remaining-dialog-inner {
     --font-size-small: 14px;
@@ -132,7 +135,6 @@ onMounted(() => {
         font-size: var(--font-size);
         font-weight: 600;
         line-height: var(--line-height);
-        color: #424f72;
         img {
           width: 24px;
           overflow: auto;
@@ -141,7 +143,6 @@ onMounted(() => {
       .withdraw-remaining-dialog__header-help-text {
         font-size: var(--font-size-small);
         line-height: var(--line-height);
-        color: #7a8eb9;
       }
     }
     .withdraw-remaining-dialog__pic {
@@ -152,9 +153,8 @@ onMounted(() => {
     }
 
     .withdraw-remaining-dialog__body {
-      background-color: #fff;
+      background-color: #213057;
       padding: 16px 12px 18px;
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
 
       .withdraw-remaining-dialog__body-title {
         margin-bottom: 12px;
@@ -162,7 +162,6 @@ onMounted(() => {
         font-weight: 600;
         line-height: var(--line-height);
         text-align: center;
-        color: #424f72;
       }
       .withdraw-remaining-dialog__body-table {
         width: 100%;
@@ -171,14 +170,13 @@ onMounted(() => {
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
-        color: #424f72;
         margin-bottom: 12px;
 
         thead {
-          background-color: #3981ff3b;
+          background-color: #00bfd71a;
           th {
             padding: 10px 0;
-            color: #3981ff;
+            color: #00bfd7;
             &:first-child {
               border-top-left-radius: 4px;
             }
@@ -189,11 +187,11 @@ onMounted(() => {
         }
         tbody {
           tr:nth-child(even) {
-            background-color: #f2f8fe;
+            background-color: #2b3d6a;
           }
           tr:last-child {
             td {
-              border-bottom: 1px solid #bed9ff80;
+              border-bottom: 1px solid #446ca680;
 
               &:first-child {
                 border-bottom-left-radius: 4px;
@@ -203,25 +201,29 @@ onMounted(() => {
               }
             }
           }
+          tr:first-child {
+            td {
+              border-top: none;
+            }
+          }
           td {
             padding: 10px 0;
-            border-top: 1px solid #bed9ff80;
-            border-left: 1px solid #bed9ff80;
+            border-top: 1px solid #446ca680;
+            border-left: 1px solid #446ca680;
 
             &:last-child {
-              border-right: 1px solid #bed9ff80;
+              border-right: 1px solid #446ca680;
             }
 
             .action-button {
-              background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%, #3981ff 100%);
+              background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
               border-radius: 30px;
-              box-shadow: 0px -2px 4.58px 0px #93c7ff inset, 0px -1px 3.66px 0px #275ec1 inset;
               padding: 4px 13px;
               font-size: var(--font-size);
               font-weight: 400;
               line-height: var(--line-height);
               text-decoration: none;
-              color: #fff;
+              color: inherit;
               &:hover {
                 filter: brightness(1.2);
               }
@@ -234,15 +236,14 @@ onMounted(() => {
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
-      box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
       border-radius: 4px;
       padding: 10px 0;
       font-size: var(--font-size-large);
       font-weight: 600;
       line-height: var(--line-height);
       text-align: center;
-      color: #fff;
+      color: inherit;
 
       &:hover {
         filter: brightness(1.2);
@@ -252,7 +253,7 @@ onMounted(() => {
 
   .text-yellows {
     font-size: 22px;
-    color: #599cff;
+    color: #00bfd7;
   }
 }
 

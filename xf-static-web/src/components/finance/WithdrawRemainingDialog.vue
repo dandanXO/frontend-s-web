@@ -119,10 +119,11 @@ onMounted(() => {
     // padding: 24px 20px;
     padding: 0;
     position: relative;
+    color: #fff;
 
     .withdraw-remaining-dialog__header {
       background: url(@/assets/images/finance/withdraw/withdraw-remaining-bg.png) no-repeat;
-      background-size: 100%;
+      background-size: 100% 100%;
       aspect-ratio: 530 / 92;
       padding: 24px 20px 0;
       box-sizing: border-box;
@@ -136,12 +137,10 @@ onMounted(() => {
         font-size: 16px;
         font-weight: 600;
         line-height: 22.4px;
-        color: #424f72;
       }
       .withdraw-remaining-dialog__header-help-text {
         font-size: 14px;
         line-height: 24px;
-        color: #7a8eb9;
       }
     }
     .withdraw-remaining-dialog__pic {
@@ -152,9 +151,8 @@ onMounted(() => {
     }
 
     .withdraw-remaining-dialog__body {
-      background-color: #fff;
+      background-color: #213057;
       padding: 22px 20px 24px;
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
 
       .withdraw-remaining-dialog__body-title {
         margin-bottom: 12px;
@@ -162,7 +160,6 @@ onMounted(() => {
         font-weight: 600;
         line-height: 24px;
         text-align: center;
-        color: #424f72;
       }
       .withdraw-remaining-dialog__body-table {
         width: 100%;
@@ -171,14 +168,13 @@ onMounted(() => {
         font-size: 18px;
         font-weight: 600;
         line-height: 24px;
-        color: #424f72;
         margin-bottom: 12px;
 
         thead {
-          background-color: #3981ff3b;
+          background-color: #00bfd71a;
           th {
             padding: 10px 0;
-            color: #3981ff;
+            color: #00bfd7;
             &:first-child {
               border-top-left-radius: 4px;
             }
@@ -189,11 +185,11 @@ onMounted(() => {
         }
         tbody {
           tr:nth-child(even) {
-            background-color: #f2f8fe;
+            background-color: #2b3d6a;
           }
           tr:last-child {
             td {
-              border-bottom: 1px solid #bed9ff80;
+              border-bottom: 1px solid #446ca680;
 
               &:first-child {
                 border-bottom-left-radius: 4px;
@@ -203,24 +199,29 @@ onMounted(() => {
               }
             }
           }
+          tr:first-child {
+            td {
+              border-top: none;
+            }
+          }
           td {
             padding: 10px 0;
-            border-top: 1px solid #bed9ff80;
-            border-left: 1px solid #bed9ff80;
+            border-top: 1px solid #446ca680;
+            border-left: 1px solid #446ca680;
 
             &:last-child {
-              border-right: 1px solid #bed9ff80;
+              border-right: 1px solid #446ca680;
             }
 
             .action-button {
-              background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%, #3981ff 100%);
+              background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
               border-radius: 30px;
-              box-shadow: 0px -2px 4.58px 0px #93c7ff inset, 0px -1px 3.66px 0px #275ec1 inset;
               padding: 4px 13px;
               font-size: 16px;
               font-weight: 400;
               line-height: 24px;
-              color: #fff;
+              text-decoration: none;
+              color: inherit;
               &:hover {
                 filter: brightness(1.2);
               }
@@ -232,15 +233,14 @@ onMounted(() => {
 
     .withdraw-remaining-dialog__action {
       width: 100%;
-      box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      border: none;
+      background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
       border-radius: 4px;
       padding: 10px 0;
       font-size: 18px;
       font-weight: 600;
       line-height: 25.2px;
       text-align: center;
-      color: #fff;
 
       &:hover {
         filter: brightness(1.2);
@@ -250,7 +250,7 @@ onMounted(() => {
 
   .text-yellow {
     font-size: 26px;
-    color: #599cff;
+    color: #00bfd7;
   }
 }
 </style>
