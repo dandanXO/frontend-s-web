@@ -328,6 +328,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const innerCaptchaCodeId = ref("");
     const showCaptchaDialog = ref(false);
+    const isCaptchaLoading = ref(false)
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const loginBannerUrl = ref("")
@@ -383,6 +384,9 @@ export default defineComponent({
 
     const onSubmit = () => {
       (async () => {
+        if (isCaptchaLoading.value) {
+          return
+        }
         const sidParam = store.visitorId;
         if (loginType.value === false) {
           loginNameRef.value.validate();
@@ -633,6 +637,7 @@ export default defineComponent({
         })
         .onBoxShow(function () {
           console.log("boxShow");
+          isCaptchaLoading.value = true
         })
         .onError(function (e) {
           console.log(e);
@@ -643,6 +648,10 @@ export default defineComponent({
           for (let key in result) {
             loginForm[key] = result[key];
           }
+          isCaptchaLoading.value = false
+        }).onClose(function () {
+          console.log("close")
+          isCaptchaLoading.value = false
         });
     }
 
