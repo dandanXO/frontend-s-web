@@ -154,7 +154,7 @@
           :rules="[
             (val) => !!val || 'Please Enter Withdraw Amount',
             (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-            (val) => val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+            (val) => val <= withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
             (val) =>
               (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                 val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
