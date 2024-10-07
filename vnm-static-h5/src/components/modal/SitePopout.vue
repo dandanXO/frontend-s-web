@@ -73,9 +73,11 @@
   .site-popout-carousel {
     background: transparent;
     height: 100%;
-
+    .q-carousel__slides-container {
+      height: 95% !important;
+    }
     .q-carousel__control {
-      bottom: 0% !important;
+      bottom: 1% !important;
     }
 
     .q-carousel__navigation-icon--inactive {
@@ -99,7 +101,7 @@
     font-family: "SF Pro";
     background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
     background-size: 100% 100%;
-    aspect-ratio: 644 / 837;
+    // aspect-ratio: 644 / 837;
     padding: 10% 2% 4%;
     height: 430px;
     margin: auto;
@@ -177,7 +179,11 @@
       .right {
         position: relative;
         height: 100%;
-
+        max-height: 250px;
+        > div {
+          height: 100%;
+          text-align: center;
+        }
         .check-details-btn {
           position: absolute;
           right: 5%;
@@ -199,8 +205,9 @@
         }
         
         img {
-          width: 100%;
+          // width: 100%;
           cursor: pointer;
+          height: 100%;
 
           &:hover {
             filter: brightness(0.9);

@@ -83,11 +83,13 @@ onMounted(() => {
     font-weight: 700;
     line-height: 1rem;
     visibility: hidden;
+    display: none;
   }
 
   .content {
     display: grid;
-    grid-template-columns: 0.5fr 1fr;
+    // grid-template-columns: 0.5fr 1fr;
+    grid-template-columns: 1fr 1fr;
     width: 100%;
     height: 100%;
     min-height: 300px;
@@ -184,7 +186,8 @@ onMounted(() => {
       }
 
       img {
-        width: 100%;
+        // width: 100%;
+        max-height: 300px;
         cursor: pointer;
 
         &:hover {

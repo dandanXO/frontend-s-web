@@ -1,6 +1,6 @@
 <template>
   <el-dialog @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)" class="imptann-modal"
-    v-model="isImportantAnnoucementModal" v-if="!isImpt" width="750px">
+    v-model="isImportantAnnoucementModal" v-if="!isImpt" width="600px">
     <SitePopout />
     <!-- <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
       <img :src="homePopupImg" class="alert-img" />
