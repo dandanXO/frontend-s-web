@@ -91,12 +91,6 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("track", "PageView");
       user.isFbPixel = true;
     } else if (window.location.href.indexOf("MDM2NjU1NDMwMDE=") > -1) {
-      console.log("5");
-      fbq("init", "1072977007651137");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "1072977007651137");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDE=") > -1) {
       console.log("6");
       fbq("init", "1072977007651137");
       fbq("track", "PageView");
