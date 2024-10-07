@@ -29,7 +29,7 @@ onMounted(() => {
     link.href = '/my-favicon.ico';
   }else if(window.location.pathname.indexOf("lh") > -1 || window.location.host.indexOf("lh1-") > -1){
     link.href = '/favicon.ico';
-  }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("ind-") > -1){
+  }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("ind-") > -1 || window.location.hostname.indexOf("br1-") > -1){
     link.href = '/ind-favicon.ico';
   }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("iw2-") > -1){
     link.href = '/ind2-favicon.ico';
@@ -43,7 +43,7 @@ onMounted(() => {
   // console.log(window.location.host);
   // debugger;
   if (window.location.pathname === '/login') {
-    console.log("Nside Login.")
+    console.log("Login 11")
     if (window.location.host.indexOf('xf') > -1) {
       window.location.pathname = '/xf/login'
     } else if (window.location.host.indexOf('ind') > -1 || window.location.hostname.indexOf("ind-") > -1 || window.location.href.includes('ind-')) {
@@ -60,6 +60,8 @@ onMounted(() => {
       window.location.pathname = '/kr/login'
     } else if (window.location.host.indexOf('pak') > -1 || window.location.hostname.indexOf("pak-") > -1 || window.location.href.includes('pak-')) {
       window.location.pathname = '/pak/login'
+    } else if (window.location.host.indexOf('br1') > -1 || window.location.hostname.indexOf("br1-") > -1 || window.location.href.includes('br1-')) {
+      window.location.pathname = '/br1/login'
     } else {
       window.location.pathname = '/dy/login'
     }

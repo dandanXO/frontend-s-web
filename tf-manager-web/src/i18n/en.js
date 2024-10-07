@@ -2054,7 +2054,10 @@ export default {
     threePointShots: 'Entire Match 10 Three Points Shots In',
     shotPoints: 'Any Player Scored 30 Points',
     scoringShots: 'Any Players Scored With 13 Shots',
-    foulOut: 'Any Player Getting Foul Out'
+    foulOut: 'Any Player Getting Foul Out',
+    gender: 'Gender',
+    Male: 'Male',
+    Female: 'Female',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

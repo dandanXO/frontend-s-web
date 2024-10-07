@@ -1008,7 +1008,7 @@ export default defineComponent({
       .inner {
         max-width: 1400px;
         width: 90%;
-        margin: 20px auto;
+        margin: 14px auto 20px;
         display: flex;
         flex-direction: column;
         gap: 20px;

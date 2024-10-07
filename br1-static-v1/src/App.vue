@@ -125,7 +125,7 @@ export default defineComponent({
 
     const trackH5Affiliate = () => {
 
-      var affiliateCode = "A3048D";
+      var affiliateCode = "C402D4";
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
@@ -259,8 +259,10 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await api.post(
-          "/memberStatistics/submit",
+        const res = await axios.post(
+          "https://memberstatistics.j9zwvu1ogrg.com/memberStatistics/submit",
+        // const res = await api.post(
+        //   "/memberStatistics/submit",
           qs.stringify({
             way: way,
             sid: theSid,

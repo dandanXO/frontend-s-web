@@ -185,8 +185,10 @@ export default defineComponent({
 
     const checkOutstandingWithdraw = async () => {
       const query = checkQuery();
-      const { data: ret } = await getMemberWithdrawRecordApply(query);
-      sessionStorage.setItem("WITHDRAW", ret.records.length);
+      setTimeout(async () => {
+        const { data: ret } = await getMemberWithdrawRecordApply(query);
+        sessionStorage.setItem("WITHDRAW", ret.records.length);
+      }, 2000);
     };
 
     const checkOutstandingBeforePaid = async () => {

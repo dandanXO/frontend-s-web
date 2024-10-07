@@ -2053,7 +2053,10 @@ export default {
     threePointShots: '全场进10个三分球',
     shotPoints: '任意球员砍下30分',
     scoringShots: '任意球员拿到13个篮板',
-    foulOut: '任意球员判罚离场'
+    foulOut: '任意球员判罚离场',
+    gender: '性别',
+    Male: '男性',
+    Female: '女性',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

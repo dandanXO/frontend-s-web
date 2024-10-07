@@ -13,13 +13,13 @@
       </div>
     </div>
     <div class="dates">
-      <div class="column">
-        <span class="title">瑞士轮阶段：</span>10月3日-10月-13日
+      <div class="datecolumn">
+        <span class="title">瑞士轮阶段：</span>10月3日~10月14日
       </div>
-      <div class="column">
-        <span class="title">淘汰赛阶段：</span>10月17日-10月27日
+      <div class="datecolumn">
+        <span class="title">淘汰赛阶段：</span>10月17日~10月27日
       </div>
-      <div class="column">
+      <div class="datecolumn">
         <span class="title">冠亚军决赛：</span>11月2日22:00
       </div>
     </div>
@@ -28,15 +28,13 @@
     <div class="tabs-content">
       <div v-if="activeTab === 1">
         <div class="center-numbers">
-          <!--<div class="center-title">总奖金</div>-->
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
-            <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
             <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
           </div>
         </div>
         
-        <div class="main-title-box">瑞士轮阶段：10月3日-10月-13日</div>
+        <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
@@ -74,24 +72,23 @@
       </div>
       <div v-if="activeTab === 2">
         <div class="center-numbers">
-          <!--<div class="center-title">总奖金</div>-->
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
-            <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
             <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
           </div>
         </div>
         
-        <div class="main-title-box">淘汰赛阶段：10月17日-10月27日</div>
+        <!-- <div class="main-title-box">淘汰赛阶段：10月17日~10月27日</div> -->
+        <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
-            <div class="point">参赛队伍：{{votesData.votesList.length}}支</div>
+            <div class="point">参赛队伍：{{votesData.votesList.slice(0, 8).length}}支</div>
             <div class="point">剩余票数：<span id="myVotes">{{ votesData.myVotes }} 次</span><span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">「投票记录」</span></div>
             <!-- <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div> -->
           </div>
           <div class="teams-list" id="countrylist">
-            <div id="btn_1" class="teams-item" v-for="votesListItem in votesData.votesList">
+            <div id="btn_1" class="teams-item" v-for="votesListItem in votesData.votesList.slice(0, 8)">
               <div class="teams-item-bottom-pattern"></div>
               <div class="c-flagname">
                 <div class="c-price">{{ votesListItem.totalVotes }} 票</div>
@@ -128,11 +125,11 @@
           </div>
         </div>
         
-        <div class="main-title-box">冠亚军决赛：11月2日22:00</div>
+        <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
-            <div class="point">参赛队伍：{{votesData.votesList.length}}支</div>
+            <div class="point">参赛队伍：{{votesData.votesList.slice(0, 2).length}}支</div>
             <div class="point">剩余票数：<span id="myVotes">{{ votesData.myVotes }} 次</span><span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">「投票记录」</span></div>
             <!-- <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div> -->
           </div>
@@ -151,7 +148,7 @@
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
                   <el-form-item prop="votes">
-                    <el-input-number :controls="false" v-model="votesListItem.votes" min="1" max="10" />
+                    <el-input-number :controls="false" v-model="votesListItem.votes" min="0" max="10" />
                   </el-form-item>
                 </el-form>
                 
@@ -165,29 +162,9 @@
       </div>
     </div>
     <div class="column">
-      <div class="main-title-box">{{selectedDate}}</div>
-        <div class="table">
-          <div class="table-header">
-            <div class="table-headertext">
-              {{selectedTitle}}
-            </div>
-          </div>
-          <div class="table-content">
-            <table>
-              <tr v-for="(row, rowIndex) in teamRows" :key="rowIndex">
-                <td v-for="(team, index) in row" :key="team.id">
-                  {{ team.teamNameLocal }}
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-    </div>
-    <div class="column">
       <div class="main-title-box">获取投票</div>
       <div class="sub-title">
-        {{ selectedTabDesc }}  
-        <!-- 活动期间，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金； -->
+        {{ selectedTabDesc }}
       </div>
       <div class="table">
         <div class="table-header">
@@ -248,13 +225,6 @@
       <div class="main-title-box">活动规则</div>
       <div class="terms">
         <ol>
-          <!-- <li>活动期间，根据对应条件可获得对应票数，获得的票数可以给任意队伍进行投票，当日完成投票需求即可再活动页面点击【点击领取】领取票数，对应档位当日票数已达至所获票数数量上限则无法继续获得；</li>
-          <li>奖金池结算：（1,000,000➗晋级队伍总票数）*用户投票数量=投票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；</li>
-          <li>例：用户投注BLG队伍100票，BLG队伍再此阶段晋级并且BOG队伍总共获得150,000票，那么用户可获得（1,000,000➗150000）*100=666.7元彩金；</li>
-          <li>根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
-          <li>此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</li>
-          <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
-           -->
           <li>活动期间，会员可根据完成的条件获得相应的票数。获得的票数可自由分配给任意队伍进行投票。当日完成获取票数的要求后，即可在活动页面自动获得对应票数。若当日票数已达到对应档位的数量上限，则无法继续获得更多票数；</li>
           <li v-if="activeTab === 1">瑞士轮奖金池结算：（200,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
           <span class="eg">例：用户投注BLG队伍100票，BLG队伍在瑞士轮阶段晋级并且8支晋级队伍总共获得150,000票数，那么用户可获得（200,000➗150000）*100=133元彩金；</span></li>
@@ -375,7 +345,7 @@ const votesData = ref({
 
 // Tabs data
 const tabs = [
-  { label: "瑞士轮", period: 1, date: '瑞士轮阶段活动投票时间：10.03~10.13', tabtitle: 'BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛', tabdetail: '活动期间，统计八支晋级队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；' },
+  { label: "瑞士轮", period: 1, date: '瑞士轮阶段活动投票时间：10.03~10.14', tabtitle: 'BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛', tabdetail: '活动期间，统计八支晋级队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；' },
   { label: "淘汰赛", period: 2, date: '淘汰赛阶段活动投票时间：10.17~10.27', tabtitle: 'BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛', tabdetail: '活动期间，统计2支晋级决赛队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；' },
   { label: "冠亚赛", period: 3, date: '决赛赛阶段活动投票时间：10月28日00:00至11月2日22:00截止', tabtitle: 'BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠', tabdetail: '活动期间，统计决赛冠军队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍获得冠军后即可瓜分奖金池彩金；' }
 ];
@@ -409,11 +379,16 @@ const submit = async (voteData) => {
         notify({ type: "success", message: "投票成功" });
         isCastVoteModalVisible.value = false;
         if (votesData.value.myVotes > 0) votesData.value.myVotes--;
-        setTimeout(() => loadVoteTeam(), 2000);
+        
+        voteData.votes = 0;
+        setTimeout(()=>{
+          loadVoteTeam();
+          isSubmitting.value = false;
+        },2000)
       } else {
-        notify.error(res.message);
+        notify({ type: "error", message: res.message });
+        isSubmitting.value = false;
       }
-      isSubmitting.value = false;
 };
 
 // Load voting data
@@ -425,7 +400,12 @@ const loadVoteTeam = () => {
         const voteItems = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
         if (voteItems) {
           const { countryImgUrl, teamNameLocal } = voteItems;
-          return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+          // return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+          return { 
+            ...voteRecordItem, 
+            countryImgUrl, 
+            teamNameLocal 
+          };
         }
         return []; // Return an empty array to exclude unmatched items
       });
@@ -602,7 +582,7 @@ onMounted(() => {
   gap: 20px;
   margin: 20px auto 0;
   justify-content: space-around;
-  .column {
+  .datecolumn {
     background: url(images/dateborder.png)no-repeat left center;
     background-size: cover;
     padding: 12px;
@@ -852,9 +832,9 @@ onMounted(() => {
   margin: 15px auto;
   max-width: 1200px;
 }
-// .column {
-//   margin: 15px auto 40px;
-// }
+.column {
+  margin: 15px auto 40px;
+}
 .terms {
   font-family: 'HYYakuHei300';
   font-size: 20px;

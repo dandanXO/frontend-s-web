@@ -1,6 +1,8 @@
 <template>
   <div class="promo-container">
-    <div class="promo">
+    <div class="promo" :class="{
+      dota2Pgql: selectedPromo.promoCode === 'dy2-dota2-pgl'
+    }">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
@@ -132,6 +134,7 @@
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
                   wukong: selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
+                  dy2s14: selectedPromo.redirectUrl === 'dy2-s14-vote',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
                   midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
@@ -1021,6 +1024,10 @@ export default defineComponent({
           background-color: #100a0e;
           padding-top: 0px !important;
         }
+        &.dy2s14 {
+          margin: 0;
+          width: 100%;
+        }
 
         &.lplSummer2024 {
           margin: 0;
@@ -1276,6 +1283,10 @@ export default defineComponent({
       margin-left: auto;
       display: block;
     }
+  }
+
+  &.dota2Pgql {
+    background: #e7f1fd;
   }
 }
 

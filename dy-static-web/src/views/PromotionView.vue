@@ -124,12 +124,15 @@
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
-              selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+              selectedPromo.promoCode === 'dy2-midautumn-spinwheel' ||
+              selectedPromo.promoCode === 'dy2-s14-vote'
+              ,
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
-            dyfootball: selectedPromo?.promoCode === 'dy2-football'
+            dyfootball: selectedPromo?.promoCode === 'dy2-football',
+            dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -870,6 +873,14 @@ export default defineComponent({
             width: 1920px;
           }
         }
+
+        &.dota2Pgql {
+          background-color: #e7f1fd;
+          width: 100%;
+          max-width: 1920px;
+          margin: 0 auto;
+        }
+
         &.duanwujie {
           width: 100%;
           max-width: 1920px;
