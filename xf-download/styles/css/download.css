@@ -3,7 +3,7 @@
     height: auto;
     display: none;
     background: url(../images/bg.png) top center no-repeat;
-    background-size: auto 100%;
+    background-size: auto 50%;
     overflow: hidden;
     font-family: "微软雅黑";
 }
