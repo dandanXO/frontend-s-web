@@ -1,18 +1,27 @@
 <template>
   <div class="container">
-    <div class="header">{{ $t('sitePopout.sitePopout') }}</div>
+    <div class="header">{{ $t("sitePopout.sitePopout") }}</div>
     <div class="content">
       <div class="left">
-        <div class="left-item" :class="index === selectedItemIndex ? 'active' : ''"
-          v-for="popoutListItem, index in popoutList" @click="selectedItemIndex = index">
+        <div
+          class="left-item"
+          :class="index === selectedItemIndex ? 'active' : ''"
+          v-for="(popoutListItem, index) in popoutList"
+          @click="selectedItemIndex = index"
+        >
           <div class="title">{{ popoutListItem.title }}</div>
-          <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">{{ moment(popoutListItem.displayStartTime).format('DD/MM/YYYY') }} - {{
-            moment(popoutListItem.displayEndTime).format('DD/MM/YYYY') }}</div>
+          <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">
+            {{ moment(popoutListItem.displayStartTime).format("DD/MM/YYYY") }} -
+            {{ moment(popoutListItem.displayEndTime).format("DD/MM/YYYY") }}
+          </div>
         </div>
       </div>
       <div class="right">
         <div v-if="selectedItem?.desktopImgUrl">
-          <img @click="onClickPopoutImg(`/promotion?name=${selectedItem.path}`)" :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
+          <img
+            @click="onClickPopoutImg(`/promotion?name=${selectedItem.path}`)"
+            :src="`${imgURL}${selectedItem.desktopImgUrl}`"
+          />
           <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
         </div>
       </div>
@@ -24,19 +33,20 @@
 import { ref, onMounted, computed } from "vue";
 import { getSitePopoutList } from "@/api/personal/common";
 import { useLocalStorage } from "@vueuse/core";
-import moment from 'moment';
+import moment from "moment";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const popoutList = ref([]);
 const selectedItemIndex = ref();
-const selectedItem = computed(() => popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined)
+const selectedItem = computed(() =>
+  popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined
+);
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
-
 const onClickPopoutImg = (path) => {
-  router.push(path)
-}
+  router.push(path);
+};
 
 onMounted(() => {
   getSitePopoutList().then((res) => {
@@ -47,7 +57,7 @@ onMounted(() => {
         selectedItemIndex.value = 0;
       }
     }
-  })
+  });
 });
 </script>
 
@@ -90,7 +100,7 @@ onMounted(() => {
   .content {
     display: grid;
     // grid-template-columns: 0.5fr 1fr;
-    grid-template-columns: .7fr 1fr;
+    grid-template-columns: 0.7fr 1.7fr;
     width: 100%;
     height: 100%;
     min-height: 300px;
@@ -132,7 +142,7 @@ onMounted(() => {
         aspect-ratio: 300 / 100;
 
         .title {
-          font-family: 'SF Pro';
+          font-family: "SF Pro";
           font-size: 14px;
           font-weight: 700;
           line-height: 20px;
@@ -144,13 +154,12 @@ onMounted(() => {
         }
 
         .period {
-          font-family: 'SF Pro';
+          font-family: "SF Pro";
           font-size: 12px;
           font-weight: 400;
           line-height: 17px;
           color: #414252;
         }
-
 
         &.active {
           background: url("../../assets/images/home/site-popout/list-item-bg-active.png") no-repeat center center;
@@ -200,6 +209,8 @@ onMounted(() => {
         height: 100%;
         // transform: scale(1.01);
         cursor: pointer;
+        border-radius: 18px;
+        border: 2px solid #36afe3;
 
         &:hover {
           filter: brightness(0.9);
