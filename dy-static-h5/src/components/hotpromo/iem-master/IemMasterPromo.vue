@@ -138,7 +138,7 @@
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
               <div>
-                活动期间,投注IEM 里约大师赛有效≥3,000元或以上可获的对应投注嘉奖，若在东赢电竞场馆进行投注IEM
+                活动期间,投注IEM 里约大师赛有效≥3,000元或以上可获得对应投注嘉奖，若在东赢电竞场馆进行投注IEM
                 里约大师赛可获更高奖励金额。注：奖金不叠加派发，奖金按最高档位每日派发一次。
               </div>
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
