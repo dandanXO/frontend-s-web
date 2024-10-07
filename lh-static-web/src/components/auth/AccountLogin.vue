@@ -191,7 +191,6 @@ const submitLogin = () => {
               }
             })
             .catch((error) => {
-              window.captchaObj.reset();
               console.log(error.message);
               getCode();
             });

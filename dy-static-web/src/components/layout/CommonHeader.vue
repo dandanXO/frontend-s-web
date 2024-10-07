@@ -159,8 +159,8 @@
         <div class="content-form">
           <div class="dialog-title">登录</div>
           <span>
-            <el-tabs>
-              <el-tab-pane label="账户登录">
+            <el-tabs v-model="activeLoginTab">
+              <el-tab-pane label="账户登录" name="accLogin">
                 <el-form
                   ref="loginRef"
                   :rules="loginRules"
@@ -181,17 +181,18 @@
                     <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
                   </el-form-item>
                   <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                    <el-row :gutter="10" style="justify-content: center; align-items: center">
-                      <el-col :span="12">
+                    <el-row style="justify-content: start; align-items: center">
+                      <!-- <el-col :span="12">
                         <el-input
                           v-model="loginForm.captchaCode"
                           label="验证码"
                           placeholder="验证码"
                           @keyup.enter="submitLogin"
                         />
-                      </el-col>
-                      <el-col :span="12">
-                        <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
+                      </el-col> -->
+                      <el-col :span="24">
+                        <div id="captchaContainer"></div>
+                        <!-- <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" /> -->
                       </el-col>
                     </el-row>
                   </el-form-item>
@@ -207,7 +208,7 @@
                   </el-button>
                 </el-form>
               </el-tab-pane>
-              <el-tab-pane label="手机登录">
+              <el-tab-pane label="手机登录" name="phoneLogin">
                 <el-form
                   ref="mobileLoginRef"
                   :rules="mobileLoginRules"
@@ -819,6 +820,7 @@ import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
 import { useElementSize } from "@vueuse/core";
 import { ArrowDown, Refresh, ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
+import { ElMessageBox } from "element-plus";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 // import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -1070,19 +1072,19 @@ export default defineComponent({
           trigger: "blur"
         }
       ],
-      captchaCode: [
-        {
-          required: true,
-          message: "请输入验证码",
-          trigger: "blur"
-        },
-        {
-          min: 4,
-          max: 4,
-          message: "长度为 4",
-          trigger: "blur"
-        }
-      ]
+      // captchaCode: [
+      //   {
+      //     required: true,
+      //     message: "请输入验证码",
+      //     trigger: "blur"
+      //   },
+      //   {
+      //     min: 4,
+      //     max: 4,
+      //     message: "长度为 4",
+      //     trigger: "blur"
+      //   }
+      // ]
     };
     const mobileLoginRules = {
       telephone: [
@@ -1339,6 +1341,71 @@ export default defineComponent({
       ]
     };
 
+    // Dynamically load the Geetest script
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    const initGeetest = async () => {
+      try {
+        // Step 1: Load Geetest script
+        await loadScript("https://static.geetest.com/v4/gt4.js");
+
+        // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+        const geetestConfig = {
+          config: {
+            captchaId: "dd6e127216b2108a70fbed280fbc4180",
+            language: "zh",
+            nativeButton: {
+              width: "100%",
+              height: "32px"
+            },
+            nextWidth: "220px",
+            product: "float"
+          },
+          handler: captchaHandler
+        };
+
+        // Step 3: Initialize Geetest with the config
+        await window.initGeetest4(geetestConfig.config, geetestConfig.handler);
+      } catch (error) {
+        // message.value = "Error loading Geetest!";
+        console.error("Geetest loading error:", error);
+      }
+    }
+
+    const captchaHandler = (captchaObj) => {
+      window.captchaObj = captchaObj;
+      captchaObj
+        .appendTo("#captchaContainer")
+        .onReady(function () {
+          console.log("ready");
+        })
+        .onNextReady(function () {
+          console.log("nextReady");
+        })
+        .onBoxShow(function () {
+          console.log("boxShow");
+        })
+        .onError(function (e) {
+          console.log(e);
+        })
+        .onSuccess(function () {
+          let result = window.captchaObj.getValidate();
+          console.log("success", result);
+
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
+        });
+    }
+
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
       if (affCode) {
@@ -1537,6 +1604,11 @@ export default defineComponent({
       store.token && checkMailboxUnread();
     });
 
+    const stopWatchLoginDialogVisible = watch(loginDialogVisible, () => {
+      initGeetest()
+      stopWatchLoginDialogVisible();
+    });
+
     onMounted(() => {
       if (regCountdown.value > 0)
         countdownTimer("REGISTER");
@@ -1559,6 +1631,11 @@ export default defineComponent({
       }
     });
 
+    const activeLoginTab = ref("accLogin")
+    watch(activeLoginTab, () => {
+      window.captchaObj.reset();
+    })
+    
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         loginDialogVisible.value = true;
@@ -1608,7 +1685,7 @@ export default defineComponent({
           forgotPwdForm.codeId = res.data.id;
 
           // reset captcha input when captcha changes
-          loginForm.captchaCode = "";
+          // loginForm.captchaCode = "";
           regForm.captchaCode = "";
           forgotPwdForm.captchaCode = "";
         }
@@ -1915,13 +1992,22 @@ export default defineComponent({
       (async () => {
         const sidParam = store.visitorId;
         loginRef.value.validate().then(() => {
+          const validate = window?.captchaObj.getValidate();
+          if (!validate) {
+            ElMessage.error('请完成验证码');
+            return;
+          }
           store
             .memberLogin({
               loginName: loginForm.loginName,
               password: loginForm.password,
               sid: sidParam,
-              captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId
+              // captchaCode: loginForm.captchaCode,
+              // codeId: loginForm.codeId,
+              lotNumber: loginForm.lot_number,
+              captchaOutput: loginForm.captcha_output,
+              passToken: loginForm.pass_token,
+              genTime: loginForm.gen_time
             })
             .then(() => {
               // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
@@ -1933,7 +2019,7 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
                 loginForm.loginName = null;
                 loginForm.password = null;
-                loginForm.captchaCode = null;
+                // loginForm.captchaCode = null;
 
                 checkMailboxUnread();
               } else {
@@ -2143,6 +2229,7 @@ export default defineComponent({
       captchaRules,
       regRules,
       activeTab,
+      activeLoginTab,
       changeTab,
       isSubmitForget,
       forgotPwdFormPhoneRef,
@@ -3275,4 +3362,55 @@ body {
   bottom: 0;
   right: -4px;
 }
+
+#captchaContainer {
+    width: 100%;
+
+    .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+    .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+      background-image: linear-gradient(180deg,#fff,#f4f4f4) !important;
+      border-color: #dcdfe6;
+    }
+
+    .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+      color: #424f72;
+      font-family: "PingFang SC" !important;
+    }
+
+    .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
+      // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
+    }
+
+    .geetest_captcha.geetest_dark.geetest_lock_success
+      .geetest_content
+      .geetest_tip_container
+      .geetest_tips_wrap
+      .geetest_tip {
+      color: #39c522 !important;
+    }
+
+    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
+    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn {
+      border: 1px solid #dfdfdf;
+      background: #fff;
+    }
+    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
+    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
+      color: #424f72;
+    }
+
+    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
+    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
+      background: #fff;
+    }
+
+    .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
+    .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
+      background-color: #ccc;
+    }
+
+    .geetest_captcha.geetest_dark .geetest_holder .geetest_mask, .geetest_popup_wrap.geetest_dark .geetest_holder .geetest_mask {
+      background-color: #fff;
+    }
+  }
 </style>
