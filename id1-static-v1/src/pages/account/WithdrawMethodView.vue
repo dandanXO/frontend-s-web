@@ -253,7 +253,10 @@
           <div class="fund-container q-mt-sm q-mb-md">
             <div>
               <span class="fund-title">{{ $t("withdraw.available") }}:</span>
-              {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+              <q-spinner v-if="isRefreshRemainWager" />
+              <span v-else>
+                {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+              </span>
             </div>
           </div>
 
@@ -276,7 +279,19 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
-              <div class="desc desc_white">{{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}</div>
+              <div class="desc desc_white">
+                <div class="remain-wager-wrapper" @click="refreshRemainWager">
+                  <q-spinner v-if="isRefreshRemainWager" />
+                  <span v-else>
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                  </span>
+                  <img
+                    class="refresh-btn-img"
+                    :class="{ rotate: isRefreshRemainWager }"
+                    src="@/assets/images/account/refresh-icon.svg"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -880,6 +895,30 @@ const loadInfo = () => {
     openUserKYCDialog();
   }
 };
+
+// remain wager refresh
+const isRefreshRemainWager = ref(false);
+
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  api
+    .get("/session/withdraw/withdrawableBalance/refresh")
+    .then((res) => {
+      selectedMethodItem.value = {
+        ...selectedMethodItem.value,
+        ...res.data
+      };
+
+      isRefreshRemainWager.value = false;
+    })
+    .catch(() => {
+      isRefreshRemainWager.value = false;
+    })
+    .finally(() => {
+      isRefreshRemainWager.value = false;
+    });
+};
 </script>
 
 <style scoped lang="scss">
@@ -1244,7 +1283,32 @@ const loadInfo = () => {
             color: #ffffff;
           }
         }
+
+        .remain-wager-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          cursor: pointer;
+
+          .refresh-btn-img {
+            width: 20px;
+            height: 20px;
+
+            &.rotate {
+              animation: rotateTwice 1s infinite linear;
+            }
+          }
+        }
       }
+    }
+  }
+
+  @keyframes rotateTwice {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 
