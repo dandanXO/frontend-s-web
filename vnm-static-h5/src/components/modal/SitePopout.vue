@@ -73,11 +73,12 @@
   .site-popout-carousel {
     background: transparent;
     height: 100%;
+    width: 100%;
     .q-carousel__slides-container {
       height: 95% !important;
     }
     .q-carousel__control {
-      bottom: 1% !important;
+      bottom: -1% !important;
     }
 
     .q-carousel__navigation-icon--inactive {
@@ -103,7 +104,7 @@
     background-size: 100% 100%;
     // aspect-ratio: 644 / 837;
     padding: 10% 2% 4%;
-    height: 430px;
+    height: 400px;
     margin: auto;
   
     .header {
@@ -179,10 +180,13 @@
       .right {
         position: relative;
         height: 100%;
-        max-height: 250px;
         > div {
-          height: 100%;
           text-align: center;
+          height: 100%;
+          width: 100%;
+          img {
+            max-height: 230px;
+          }
         }
         .check-details-btn {
           position: absolute;
@@ -208,7 +212,6 @@
           // width: 100%;
           cursor: pointer;
           height: 100%;
-
           &:hover {
             filter: brightness(0.9);
           }

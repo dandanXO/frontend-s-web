@@ -67,10 +67,11 @@ onMounted(() => {
   align-items: center;
   font-family: "PingFang SC";
   background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
-  background-size: 100% 100%;
+  // background-size: 100% 100%;
   // aspect-ratio: 1826 / 1156;
   // padding: 8% 5% 0% 5%;
   padding: 8% 5% 5% 5%;
+  background-size: contain;
 
   .header {
     border-bottom: 1px solid black;
@@ -89,10 +90,11 @@ onMounted(() => {
   .content {
     display: grid;
     // grid-template-columns: 0.5fr 1fr;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: .7fr 1fr;
     width: 100%;
     height: 100%;
     min-height: 300px;
+    max-height: 400px;
     gap: 2%;
 
     .left {
@@ -164,7 +166,15 @@ onMounted(() => {
     .right {
       position: relative;
       height: 100%;
+      // border-radius: 15px;
+      // border: 2px solid #2cbdff;
+      overflow: hidden;
 
+      text-align: right;
+      > div {
+        width: 100%;
+        height: 100%;
+      }
       .check-details-btn {
         position: absolute;
         right: 5%;
@@ -187,7 +197,8 @@ onMounted(() => {
 
       img {
         // width: 100%;
-        max-height: 300px;
+        height: 100%;
+        // transform: scale(1.01);
         cursor: pointer;
 
         &:hover {
