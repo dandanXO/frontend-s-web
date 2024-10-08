@@ -119,8 +119,10 @@ export default defineComponent({
 
     const checkOutstandingWithdraw = async() => {
       const query = checkQuery();
-      const { data: ret } = await getMemberWithdrawRecordApply(query);
-      sessionStorage.setItem("WITHDRAW", ret.total);
+      if (query.siteId !== null) {
+        const { data: ret } = await getMemberWithdrawRecordApply(query);
+        sessionStorage.setItem("WITHDRAW", ret.total);
+      }
     };
 
     const checkOutstandingAutoWithdraw = async() => {

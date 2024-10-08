@@ -1,6 +1,6 @@
 import { boot } from "quasar/wrappers";
 import axios from "axios";
-import { BASE_STRAPI_URL } from "src/constants/constants";
+import { BASE_STRAPI_URL } from "src/constants/constants.js";
 
 const strapi = axios.create({
   baseURL: BASE_STRAPI_URL,

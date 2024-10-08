@@ -242,6 +242,7 @@ export default {
     message: "پیغام",
     feedback: "فیڈبیک",
     vip: "VIP",
+    charity: "خیرات",
     logout: "لاگ آوٹ",
     depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
     interestProfit: "سود کا منافع"

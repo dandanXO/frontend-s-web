@@ -34,7 +34,7 @@
     <!-- banner.redirectUrl.includes("https://") -->
     <div class="earn-money-details-grid">
       <!-- <div class="details-item" v-if="isShowOnetime"> -->
-        <div class="details-item">
+      <div class="details-item">
         <div class="item-amount">
           Rs
           <span>{{ getRewardAmount("ONE_TIME") }}</span>
@@ -44,7 +44,7 @@
       </div>
 
       <!-- <div class="details-item" v-if="isShowDeposit"> -->
-        <div class="details-item">
+      <div class="details-item">
         <div class="item-amount">
           Rs
           <span>{{ getRewardAmount("DEPOSIT") }}</span>
@@ -54,7 +54,7 @@
       </div>
 
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
-        <div class="details-item details-item">
+      <div class="details-item details-item">
         <div class="item-amount">
           Rs
           <span>{{ getRewardAmount("BET") }}</span>
@@ -158,7 +158,7 @@
 
         <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
 
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+        <div class="q-mt-sm high-light" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
       </div>
     </div>
 
@@ -778,6 +778,9 @@ watch(activeSetting, checkIsShowDetail);
   .table-hint {
     color: #8c968f;
     text-align: left;
+    .high-light {
+      color: #b81212;
+    }
   }
 
   .earn-money-sent-ytd {
