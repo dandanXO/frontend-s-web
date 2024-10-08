@@ -237,7 +237,7 @@
             :rules="[
               (val) => !!val || 'Please Enter Withdraw Amount',
               (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-              (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
+              (val) => val <= selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
               (val) =>
                 (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
                 `Withdraw Amount Must In Between ${convertToCommaAmount(

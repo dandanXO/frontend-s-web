@@ -11,7 +11,7 @@
               :key="p.code"
               @click="switchPromoType(p.code)"
             >
-              <img :src="require('../assets/promo/menu-' + p.img + '.svg')" />
+              <img v-if="p.img" :src="imgURL + p.img" />
               <span class="label">{{ p.label }}</span>
             </div>
           </div>
@@ -178,7 +178,7 @@
 import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
-import { loadPromoBanner } from "@/api/index/promo";
+import { loadPromoBanner, loadPromoTypes } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
@@ -202,19 +202,8 @@ export default defineComponent({
       active: "ALL",
       promoList: []
     });
-    const promoTypes = ref([
-      { code: "ALL", img: "all", label: "所有优惠" },
-      { code: "WELCOME", img: "all", label: "新人优惠" },
-      { code: "ESPORT", img: "esport", label: "电竞活动" },
-      { code: "SPORT", img: "sport", label: "体育活动" },
-      // { code: "POKER", img: 'poker', label: '棋牌'},
-      { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
-      { code: "SLOT GAME", img: "game", label: "电游活动" },
-      { code: "VIP", img: "vip", label: "VIP 特权" },
-      { code: "LIMITED", img: "other", label: "限时热门" },
-      { code: "FTD", img: "ftd", label: "充提优惠" }
-    ]);
-    const promoTabActive = ref(promoTypes.value[0].code);
+    const promoTypes = ref([])
+    const promoTabActive = ref('');
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
@@ -237,6 +226,21 @@ export default defineComponent({
         }
       });
     };
+
+    const loadTabs = async() => {
+      loadPromoTypes().then((res) => {
+        promoTypes.value = res.map(({ value, name, iconUrl }) => ({
+          code: value,
+          label: name ? JSON.parse(name).zh : '',
+          img: iconUrl
+        }));
+        if (promoTypes.value.length > 0) {
+          promoTabActive.value = promoTypes.value[0].code
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
+    }
     const isSpecialPromo = ref(false)
     const showPromoDetails = (promo) => {
       // if (!store.token) {
@@ -304,8 +308,9 @@ export default defineComponent({
           return "";
       }
     };
-    const loadAll = () => {
+    const loadAll = async () => {
       const isLogin = !!store.hasToken();
+      await loadTabs();
       loadPromo(isLogin).then((res) => {
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
@@ -324,11 +329,14 @@ export default defineComponent({
               }
             // }
           });
+
+          if (promoTypes.value.length > 0) {
+            switchPromoType(promoState.active);
+          }
         }
       }).catch((e) => {
         console.log("error", e);
       });
-      switchPromoType(promoState.active);
     };
     onMounted(() => {
       loadBanner();

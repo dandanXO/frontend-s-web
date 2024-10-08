@@ -34,7 +34,7 @@
               />
               <template v-else>{{ p.label }}</template> -->
               <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-              {{ p.label }}
+              {{ p.label.zh||p.label }}
             </div>
           </div>
         </div>
@@ -114,23 +114,23 @@
             <!-- <div class="game-title"><img src="../assets/images/promotion/hotpromo/common/title_txt_content.png"></div> -->
             <div v-html="selectedPromo.pageContent"></div>
             <!-- <table><colgroup><col><col><col><col></colgroup><tbody><tr><th><p>Bonus Type</p></th><th><p>Bonus%</p></th><th><p>Max bonus</p></th><th><p>Turnover</p></th></tr><tr><td><p>Welcome Bonus</p></td><td><p>100%</p></td><td><p>MYR 300</p></td><td><p>12x</p></td></tr></tbody></table>
-            活动内容：最低存款100即可参加，最高奖金无限制，参与次数无限制。
+            活动内容：最低存款 100 即可参加，最高奖金无限制，参与次数无限制。
 
-活动时间：每天下午的19:00至23:59之间。
+活动时间：每天下午的 19:00 至 23:59 之间。
 
 会员等级	存送比例	提款要求	指定场馆
-所有兴發会员	30%	18倍	老虎机
-申请方式：在存款页面下方选择30%存送优惠，奖金与存款同时到账，最低存款100，参与次数无限制，仅限每天下午19:00至23:59
+所有兴發会员	30%	18 倍	老虎机
+申请方式：在存款页面下方选择 30% 存送优惠，奖金与存款同时到账，最低存款 100，参与次数无限制，仅限每天下午 19:00 至 23:59
 
-投注要求：会员选择并申请30%限时存优惠，需在老虎机有效游戏中投注存款加奖金的指定倍数，方可申请提款，不可转账投注其他游戏。
+投注要求：会员选择并申请 30% 限时存优惠，需在老虎机有效游戏中投注存款加奖金的指定倍数，方可申请提款，不可转账投注其他游戏。
 
-例如：会员选择30%限时存送并且成功存款了500元人民币，奖金=500 X 30%=150元。 -->
+例如：会员选择 30% 限时存送并且成功存款了 500 元人民币，奖金=500 X 30%=150 元。 -->
 
             <!-- <div class="game-title"><img src="../assets/images/promotion/hotpromo/common/title_txt_rule.png"></div>
             <div v-html="selectedPromo.pageRules"></div> -->
             <!-- <ol>
-              <li>优惠开始于10月13日00:00，结束时间为12月31日23:59</li>
-              <li>本优惠存款100元或以上即可申请；无最高奖金上限，存的越多送的越多。</li>
+              <li>优惠开始于 10 月 13 日 00:00，结束时间为 12 月 31 日 23:59</li>
+              <li>本优惠存款 100 元或以上即可申请；无最高奖金上限，存的越多送的越多。</li>
               <li>如需取消存送优惠，须在开始游戏前联系“在线客服”并待处理完毕后，才可开始游戏。如已进行转账、游戏，将无法取消存送优惠。</li>
               <li>本优惠奖金仅限转账进行老虎机游戏，并以老虎机有效游戏计算流水，不允许转账进行其他类型的游戏，任何违规行为一经发现，将扣除所有盈利及奖金额度，产生的负盈利不予退还。</li>
               <li>兴發保留对此活动作出修改，终止的权利。</li>
@@ -147,7 +147,7 @@
 import { ref, defineComponent, onMounted, reactive, watch } from "vue";
 import { userStore } from "@/store";
 import { useRoute, useRouter } from "vue-router";
-import { loadPromo } from "@/api/index/promo.js";
+import { loadPromo, loadPromoTypes } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 
 import HotPromotion from "@/components/HotPromotion";
@@ -179,6 +179,9 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
+
+
+
     watch(() => route.query, () => {
       if (route.query === null) {
         isPromoDetail.value = false;
@@ -229,7 +232,24 @@ export default defineComponent({
         filteredArray.value = promoState.promoList;
       }
     };
-    const loadAll = () => {
+    const loadAll = async() => {
+      await loadPromoTypes().then((res) => {
+        if (res.length > 0) {
+          promoTypes.value = [];
+          res.forEach(element => {
+            const obj = {
+              code: element.value,
+              img: 'all',
+              iconUrl: imgURL + element.iconUrl,
+              label: JSON.parse(element.name)
+            };
+            promoTypes.value.push(obj);
+          });
+          switchPromoType(promoTypes.value[0])
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      });
       const isLogin = !!store.token;
       loadPromo(isLogin).then((res) => {
         if (res.code === 0) {

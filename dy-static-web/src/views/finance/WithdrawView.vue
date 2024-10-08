@@ -484,7 +484,7 @@ export default defineComponent({
     const getWithdrawalMethods = () => {
       withdrawEntrance().then((response) => {
         if (response.code === 0) {
-          if(store.withdrawType === "AUTO_WITHDRAW") {
+          if(isAutoWithdrawal.value) {
             isShowRemainingDialog.value = !response.data.withdrawStatus
           }
           withdrawalMethods.value = response.data.withdrawShowList;

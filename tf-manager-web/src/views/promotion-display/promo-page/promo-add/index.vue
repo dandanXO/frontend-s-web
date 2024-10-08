@@ -79,6 +79,7 @@
               />
             </el-select>
           </el-form-item>
+
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.siteType')" prop="siteType">
@@ -117,6 +118,31 @@
               </el-checkbox-group>
             </el-col>
           </el-form-item>
+          <el-form-item v-if="selected.promoTypeChecked.length > 0" class="label-cancel">
+            <el-button type="danger" @click="handleCancelTypeClick">
+              {{ t('fields.labelCancel') }}
+            </el-button>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item label="VIP" prop="vips">
+            <el-checkbox
+              v-model="checkboxes.vip.checkAll"
+              :indeterminate="checkboxes.vip.isIndeterminate"
+              @change="handleVIPCheckAllChange"
+            >
+              {{ t('fields.checkall') }}
+            </el-checkbox>
+            <el-checkbox-group
+              v-model="selectedVIPs.vipChecked"
+              @change="handleCheckedChange"
+              style="width: 300px"
+            >
+              <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
+                {{ v.name }}
+              </el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
 
           <el-col :span="12">
             <el-form-item :label="t('fields.hasPromo')" prop="hasPromo">
@@ -139,26 +165,6 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-form-item label="VIP" prop="vips">
-            <el-checkbox
-              v-model="checkboxes.vip.checkAll"
-              :indeterminate="checkboxes.vip.isIndeterminate"
-              @change="handleVIPCheckAllChange"
-            >
-              {{ t('fields.checkall') }}
-            </el-checkbox>
-            <el-checkbox-group
-              v-model="selectedVIPs.vipChecked"
-              @change="handleCheckedChange"
-              style="width: 300px"
-            >
-              <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
-                {{ v.name }}
-              </el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
         </el-row>
         <el-row v-if="isVnm(form.siteId)">
           <el-form-item :label="t('fields.affiliateCode')" prop="affiliates">
@@ -1520,7 +1526,7 @@ function disabledEndDate(time) {
   return time.getTime() <= Date.now()
 }
 
-function handleCheckedChangePromoType() {
+function handleCheckedChangePromoType(val) {
   form.promoType = selected.promoTypeChecked.join(',')
 }
 
@@ -1842,6 +1848,9 @@ function submitImage() {
 
 const handleCancelClick = () => {
   form.labelType = null
+}
+const handleCancelTypeClick = () => {
+  selected.promoTypeChecked = [];
 }
 
 function showDialog(type) {

@@ -38,16 +38,18 @@ export const userStore = defineStore("userStore", {
     memberLogin(loginInfo) {
       return login(loginInfo)
         .then((ret) => {
-          if (ret.code === 0) {
+          if (ret && ret?.code === 0) {
             this.token = ret.data;
             this.getBalance();
             this.getMemberInfo();
           } else {
+            window.captchaObj.reset();
             // throw new Error(ret.message);
           }
         })
         .catch((err) => {
           console.log(err);
+          window.captchaObj.reset();
           // message.error(err.message);
         });
     },

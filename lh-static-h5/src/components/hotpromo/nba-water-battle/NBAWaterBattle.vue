@@ -63,9 +63,10 @@ import { useLocalStorage } from "@vueuse/core";
 import { getNBAUpcomingMatch, getNBAClaimHistory, claimNBABonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import moment from "moment";
+import { userStore } from "src/stores";
 
 const notify = useNotify();
-
+const store = userStore();
 const matchInfoArr = ref([]);
 const claimHistoryArr = ref([]);
 const isClaimHistoryDialogVisible = ref(false);
@@ -109,6 +110,13 @@ watch(
 );
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   iniNBAUpcomingMatches();
 });
 </script>

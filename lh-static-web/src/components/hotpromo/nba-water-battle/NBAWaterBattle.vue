@@ -54,7 +54,9 @@ import moment from "moment";
 
 import { getNBAUpcomingMatch, getNBAClaimHistory, claimNBABonus } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 
+const store = userStore();
 const notify = useNotify();
 
 const matchInfoArr = ref([]);
@@ -99,6 +101,13 @@ watch(
 );
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   iniNBAUpcomingMatches();
 });
 </script>

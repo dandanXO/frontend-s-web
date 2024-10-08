@@ -60,6 +60,7 @@ export const userStore = defineStore("userStore", {
         })
         .catch((err) => {
           console.log(err);
+          window.captchaObj.reset()
           // message.error(err.message);
         });
     },
