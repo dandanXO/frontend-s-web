@@ -1783,6 +1783,9 @@ export default defineComponent({
         getUnreadTotal();
       }, 750);
 
+      setInterval(() => {
+        getUnreadTotal();
+      }, 60000);
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });
 
