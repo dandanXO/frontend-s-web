@@ -2,80 +2,6 @@
   <div class="service-section">
     <HomeTitle title="TF88 Service"></HomeTitle>
     <div class="service-container">
-      <!-- <div class="top-container" data-aos="fade-down">
-        <div class="counter">
-          <div class="circle">
-            <div class="inner-circle">
-              <div class="type">CURRENT SPEED</div>
-              <Vue3autocounter
-                class="auto-counter"
-                :startAmount="0"
-                :endAmount="Math.floor(Math.random() * 31) + 50"
-                :duration="1"
-                separator=","
-                :autoinit="true"
-              />
-              <div class="unit">秒</div>
-            </div>
-          </div>
-          <div class="title">平均存款时间</div>
-          <div class="title-en">Average Time To Deposit</div>
-        </div>
-        <div class="counter">
-          <div class="circle">
-            <div class="inner-circle">
-              <div class="type">TOTALLY AMOUNT</div>
-              <Vue3autocounter
-                class="auto-counter"
-                :startAmount="0"
-                :endAmount="14"
-                :duration="3"
-                separator=","
-                :autoinit="true"
-              />
-              <div class="unit">家</div>
-            </div>
-          </div>
-          <div class="title">合作支付平台</div>
-          <div class="title-en">Cooperative Payment Platform</div>
-        </div>
-        <div class="counter">
-          <div class="circle">
-            <div class="inner-circle">
-              <div class="type">CURRENT SPEED</div>
-              <Vue3autocounter
-                class="auto-counter"
-                :startAmount="0"
-                :endAmount="Math.floor(Math.random() * 31) + 70"
-                :duration="2"
-                separator=","
-                :autoinit="true"
-              />
-              <div class="unit">秒</div>
-            </div>
-          </div>
-          <div class="title">平均取款时间</div>
-          <div class="title-en">Average time To Withdraw</div>
-        </div>
-        <div class="counter">
-          <div class="circle">
-            <div class="inner-circle">
-              <div class="type">TOTALLY AMOUNT</div>
-              <Vue3autocounter
-                class="auto-counter"
-                :startAmount="0"
-                :endAmount="90"
-                :duration="3"
-                separator=","
-                :autoinit="true"
-              />
-              <div class="unit">家</div>
-            </div>
-          </div>
-          <div class="title">合作游戏平台</div>
-          <div class="title-en">Cooperative Gaming Platform</div>
-        </div>
-      </div> -->
       <div class="bot-container" data-aos="fade-up">
         <div class="item-wrapper">
           <div class="item">
@@ -141,7 +67,7 @@ import HomeTitle from "@/atoms/HomeTitle.vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
-onMounted(() => {});
+onMounted(() => { });
 </script>
 
 <style scoped lang="scss">
@@ -149,6 +75,7 @@ onMounted(() => {});
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
+  font-family: 'Be Vietnam Pro', sans-serif;
 
   .service-container {
     margin: 2.5rem 0 0 0;
@@ -197,7 +124,6 @@ onMounted(() => {});
 
             .auto-counter {
               filter: drop-shadow(0px 2px #c4effa);
-              font-family: FZHanZhenGuangBiaoS-GB;
               font-size: 2.82869rem;
               font-weight: 600;
               line-height: normal;
@@ -224,7 +150,6 @@ onMounted(() => {});
         .title {
           color: #44484b;
           text-align: center;
-          font-family: PingFang SC;
           font-size: 1.125rem;
           font-weight: 400;
           line-height: normal;
@@ -290,6 +215,7 @@ onMounted(() => {});
               margin-bottom: 5px;
               font-weight: 600;
             }
+
             .desc {
               color: #444444;
               display: flex;
