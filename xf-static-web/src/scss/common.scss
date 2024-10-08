@@ -254,3 +254,7 @@ body {
 .noPadding .el-dialog__body {
   padding: 0;
 }
+
+.el-dialog{
+  padding: 0 !important; 
+}
