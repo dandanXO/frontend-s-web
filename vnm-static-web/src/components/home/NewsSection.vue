@@ -7,16 +7,16 @@
           <NewsItem :newsListArr="footballNewsList" :isLoading="isLoading" />
         </el-tab-pane>
         <el-tab-pane :label="t('home.esportNews')" name="esportTab">
-          <NewsItem :newsListArr="esportNewsList" />
+          <NewsItem :newsListArr="esportNewsList" :isLoading="isLoading" />
         </el-tab-pane>
         <el-tab-pane :label="t('home.soccerBetting')" name="soccerBettingTab">
-          <NewsItem :newsListArr="soccerBettingList" />
+          <NewsItem :newsListArr="soccerBettingList" :isLoading="isLoading" />
         </el-tab-pane>
         <el-tab-pane :label="t('home.bettingGuide')" name="bettingGuide">
-          <NewsItem :newsListArr="bettingGuideList" />
+          <NewsItem :newsListArr="bettingGuideList" :isLoading="isLoading" />
         </el-tab-pane>
         <el-tab-pane :label="t('home.weeklyTournament')" name="weeklyTournament">
-          <NewsItem :newsListArr="weeklyTournamentList" />
+          <NewsItem :newsListArr="weeklyTournamentList" :isLoading="isLoading" />
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -32,7 +32,7 @@ import NewsItem from './news/NewsItem.vue';
 
 const { t } = useI18n();
 const activeName = ref('footballTab');
-const newsSectionRef = ref(null)
+const newsSectionRef = ref(null);
 const isNewsSectionVisible = ref(false);
 const newsListArr = ref([]);
 const isLoading = ref(false);

@@ -113,7 +113,7 @@
 <script>
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { userStore } from "@/store";
-import { getAppDownloadUrlFromServer, getRedEnvelopeFromServer, getFloatingItems } from "@/api/index/site";
+import { getRedEnvelopeFromServer, getFloatingItems } from "@/api/index/site";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { uiStore } from "@/store/ui";
@@ -133,17 +133,6 @@ export default defineComponent({
     const router = useRouter();
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
-    const downloadUrl = ref("");
-    const getAppDownloadUrl = () => {
-      getAppDownloadUrlFromServer()
-        .then((res) => {
-          downloadUrl.value = res.downloadPageUrl;
-          ui.downloadUrl = downloadUrl.value;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
 
     const getRedEnvelope = () => {
       router.push("/promotion?name=phongbao-lixi2/9");
@@ -263,7 +252,6 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      getAppDownloadUrl();
       getCheckRedPacket();
       initFloating();
     });
@@ -280,7 +268,6 @@ export default defineComponent({
       store,
       customerHovered,
       scrollToTop,
-      downloadUrl,
       getRedEnvelope,
       isRedPacketShow,
       gameMenu,
