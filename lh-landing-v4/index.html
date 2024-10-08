@@ -234,7 +234,7 @@
   </script>
   <script>
     function updateContactInfoByHostname() {
-      const hostname = window.location.host;
+      const hostname = window.location.host.replace("www.", "");
       console.log(hostname);
 
       const contactInfo = {
