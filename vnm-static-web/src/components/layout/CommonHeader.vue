@@ -13,7 +13,6 @@
       />
     </template>
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
-      <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" alt="TF88 logo" />
@@ -100,12 +99,6 @@
         <LocaleChanger />
 
         <div v-if="!store.token" class="right-contents">
-          <!-- <router-link to="/login" class="action-btn">
-            <a class="header-btn btn-color-blue">登录</a>
-          </router-link>
-          <router-link to="/register" class="action-btn">
-            <a class="header-btn btn-color-white">注册</a>
-          </router-link> -->
           <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t("common.login") }}</a>
           <a class="header-btn btn-color-white" :class="ui.edition" @click="registerDialogVisible = true">
             {{ $t("common.register") }}
@@ -133,12 +126,6 @@
             </div>
             {{ $t("menu.rebate") }}
           </div>
-          <!-- <router-link to="/center/transfer" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
-            </div>
-            {{ $t('menu.transfer') }}
-          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -167,12 +154,6 @@
                     <span>{{ $t("menu.deposit") }}</span>
                   </div>
                 </el-dropdown-item>
-                <!-- <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
-                    <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
-                    <span>{{$t('menu.transfer')}}</span>
-                  </div>
-                </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
@@ -222,126 +203,8 @@
             </a>
           </div>
         </div>
-
-        <!-- <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/mailbox" class="action-btn-full">
-            <div class="icon-full">
-              <img src="../../assets/images/home/nav-icon-mail.png" />
-              <span class="mail-notify"></span>
-            </div>
-            消息
-          </router-link>
-          <div class="action-btn-full" @click="logoutDialogVisible = true">
-            <div class="icon-full">
-              <img src="../../assets/images/home/nav-icon-logout.png" />
-            </div>
-            退出
-          </div>
-        </div> -->
       </div>
-
-      <!-- <div class="side right"><img src="../../assets/home/header_side.png"></div> -->
     </div>
-
-    <!-- <el-dialog
-      v-model="loginDialogVisible"
-      title="会员登录"
-      width="50%"
-      align-center
-      style="max-width: 800px"
-      @close="store.loginPageVisible = false"
-    >
-      <span>
-        <el-tabs>
-          <el-tab-pane label="账户登录">
-            <el-form
-              ref="loginRef"
-              :rules="loginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="用户名" prop="loginName">
-                <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="密码" prop="password">
-                <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
-              </el-form-item>
-              <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="submitLogin"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="submitLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-          <el-tab-pane label="手机登录">
-            <el-form
-              ref="mobileLoginRef"
-              :rules="mobileLoginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
-                <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="code">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input v-model="loginForm.code" label="验证码" placeholder="验证码" @keyup.enter="phoneLogin" />
-                  </el-col>
-                  <el-col :span="12">
-                    <el-button
-                      v-if="loginCountdown === 0"
-                      @click="openCaptchaForm('LOGIN')"
-                      size="small"
-                      color="#3bafda"
-                    >
-                      发送验证码
-                    </el-button>
-                    <el-button v-else disabled size="small" class="common-btn">
-                      已发送（倒数{{ loginCountdown }}秒）
-                    </el-button>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="phoneLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-        </el-tabs>
-      </span>
-    </el-dialog> -->
 
     <el-dialog
       class="acc-dialog"
@@ -356,7 +219,6 @@
         :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''"
       >
         <div class="acc-dialog-left">
-          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
           <img class="paris" v-if="isLandingClub !== 'tf88club'" :src="getLoginBg()" />
           <img v-else src="../../assets/home/tf88club-img.png" />
         </div>
@@ -382,7 +244,6 @@
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
-          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
           <img class="paris" :src="getSignUpBg()" />
         </div>
         <div class="acc-dialog-right">
@@ -461,11 +322,6 @@
       <div class="noticedialog">
         <div class="title">{{ $t("common.systemError") }}</div>
         <div class="contents">
-          <!-- 尊敬的雷火会员：
-          为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
-          2022/10/13
-          尊敬的雷火会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐
-          2022/10/13 -->
         </div>
         <el-button class="common-btn" @click="noticeDialogVisible = false">{{ $t("common.confirm") }}</el-button>
       </div>
@@ -532,7 +388,6 @@ import "vue3-marquee/dist/style.css";
 import { useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
@@ -726,26 +581,7 @@ export default defineComponent({
         result = result >>> 1;
       }
 
-      // console.log(level);
-
       if (pwd.length >= 6) {
-        // switch (level) {
-        //   case 1:
-        //     strength = "weak";
-        //     break;
-        //   case 2:
-        //     strength = "normal";
-        //     break;
-        //   case 3:
-        //   case 4:
-        //     strength = "strong";
-        //     break;
-        // }
-        // } else {
-        // strength = "weak";
-        // }
-        // if (strength === "weak") {
-        // return Promise.reject("密码至少应该是好的");
       } else {
         return Promise.resolve();
       }
@@ -774,7 +610,6 @@ export default defineComponent({
       return v.match(alphanumeric);
     };
     const checkRealName = (v) => {
-      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
       const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
       return v.match(chineseCharOnly);
     };
@@ -933,32 +768,8 @@ export default defineComponent({
           validator: validatePass,
           trigger: "change"
         }
-        // {
-        //   required: true,
-        //   message: "Password is required",
-        //   trigger: "blur",
-        // },
-        // {
-        //   validator: validatePass,
-        //   trigger: "change",
-        // },
-        // {
-        //   validator: validatePassStrength,
-        //   trigger: "change",
-        // },
-        // {
-        //   min: 6,
-        //   max: 12,
-        //   message: "Length should be 6 to 12",
-        //   trigger: "blur",
-        // },
       ],
       confirmPwd: [
-        // {
-        //   required: true,
-        //   message: "Confirm password is required",
-        //   trigger: "blur",
-        // },
         {
           validator: validatePass2,
           trigger: "change"
@@ -970,13 +781,6 @@ export default defineComponent({
           trigger: "change"
         }
       ],
-      // birthday: [
-      //   {
-      //     required: true,
-      //     message: "Birthday is required",
-      //     trigger: "blur",
-      //   },
-      // ],
       smsCode: [
         {
           required: true,
@@ -1278,11 +1082,6 @@ export default defineComponent({
         getUnreadMail();
       }
 
-      // if(store.loginPageVisible) {
-      //   router.push('/login');
-      //   return;
-      // }
-
       if (store.loginPageVisible) {
         loginDialogVisible.value = true;
       } else {
@@ -1386,9 +1185,6 @@ export default defineComponent({
                 loginForm.password = null;
                 loginForm.captchaCode = null;
               } else {
-                // loginForm.loginName = null
-                // loginForm.password = null
-                // loginForm.captchaCode = null
                 getCode();
               }
             }).catch((error) => {
@@ -1415,9 +1211,7 @@ export default defineComponent({
               smsCodeId: loginForm.smsCodeId
             })
             .then(() => {
-              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
               if (store.token) {
-                // router.push(jumpUrl);
                 loginDialogVisible.value = false;
                 store.loginPageVisible = false;
 
@@ -1434,21 +1228,6 @@ export default defineComponent({
       })();
       loadingBtn.value = false;
     };
-    // const submitRegisterForm = () => {
-    //   registerRef.value
-    //     .validate()
-    //     .then(() => {
-    //     alert('!')
-    //     // if (!valid) {
-    //     //   ElMessage({
-    //     //     message: h('p', null, [
-    //     //       h('span', null, 'Message can be ',
-    //     //       h('i', { style: 'color: teal' }, 'VNode',
-    //     //     ]),
-    //     //   })
-    //     // }
-    //   })
-    // }
     const pwdStrength = ref();
 
     function charType(num) {
@@ -1464,47 +1243,6 @@ export default defineComponent({
       return 8;
     }
 
-    // watch(
-    //   () => regForm.password
-    // () => {
-    //   pwdStrength.value = "";
-
-    //   var pwd = regForm.password;
-    //   var result = 0;
-    //   for (var i = 0, len = pwd.length; i < len; ++i) {
-    //     result |= charType(pwd.charCodeAt(i));
-    //   }
-
-    //   var level = 0;
-    //   for (i = 0; i <= 4; i++) {
-    //     if (result & 1) {
-    //       level++;
-    //     }
-    //     result = result >>> 1;
-    //   }
-
-    //   // console.log(level);
-
-    //   if (pwd.length >= 6) {
-    //     switch (level) {
-    //       case 1:
-    //         pwdStrength.value = "weak";
-    //         break;
-    //       case 2:
-    //         pwdStrength.value = "normal";
-    //         break;
-    //       case 3:
-    //       case 4:
-    //         pwdStrength.value = "strong";
-    //         break;
-    //     }
-    //   } else {
-    //     pwdStrength.value = "weak";
-    //   }
-
-    //   // console.log(pwdStrength.value);
-    // },
-    // );
     const todayDate = () => {
       return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
     };
@@ -1669,31 +1407,11 @@ body {
     box-shadow: none;
   }
 
-  // .el-dropdown {
-  //   cursor: pointer;
-  // }
-
-  // .el-popper__arrow::before {
-  //   display: none;
-  // }
-
-  // .el-dropdown-menu {
-  //   background: #3d4145;
-  //   border: 0;
-  // }
-
   .el-dropdown-menu__item {
-    // min-width: 130px;
-    // color: #a8b5c3;
-    // gap: 8px;
     width: 100%;
     justify-content: center;
   }
 
-  // .el-dropdown-menu__item:not(.is-disabled):focus {
-  //   background: #3a4550;
-  //   color: #e1e9ee;
-  // }
 }
 </style>
 <style scoped lang="scss">
@@ -2265,86 +1983,6 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
-
-    // &.slot-ag {
-    //   background-image: url("../../assets/game/header_slot_ag.png");
-    // }
-
-    // &.slot-pt {
-    //   background-image: url("../../assets/game/header_slot_pt.png");
-    // }
-
-    // &.slot-sw {
-    //   background-image: url("../../assets/game/header_slot_sw.png");
-    // }
-
-    // &.slot-bbin {
-    //   background-image: url("../../assets/game/header_slot_bbin.png");
-    // }
-
-    // &.slot-pg {
-    //   background-image: url("../../assets/game/header_slot_pg.png");
-    // }
-
-    // &.slot-mg {
-    //   background-image: url("../../assets/game/header_slot_mg.png");
-    // }
-
-    // &.slot-cq {
-    //   background-image: url("../../assets/game/header_slot_cq.png");
-    // }
-
-    // &.fish-ag {
-    //   background-image: url("../../assets/fishing/ag_fish_king.png");
-    // }
-
-    // &.fish-sg {
-    //   background-image: url("../../assets/fishing/sg_fish_king.png");
-    // }
-
-    // &.fish-at {
-    //   background-image: url("../../assets/fishing/at_fish_king.png");
-    // }
-
-    // &.fish-gps {
-    //   background-image: url("../../assets/fishing/gps_fish_king.png");
-    // }
-
-    // &.live-ag {
-    //   background-image: url("../../assets/live/live_ag.png");
-    // }
-
-    // &.live-allbet {
-    //   background-image: url("../../assets/live/live_allbet.png");
-    // }
-
-    // &.live-bbin {
-    //   background-image: url("../../assets/live/live_bbin.png");
-    // }
-
-    // &.live-pm {
-    //   background-image: url("../../assets/live/live_pm.png");
-    // }
-
-    // &.live-bg {
-    //   background-image: url("../../assets/live/live_bg.png");
-    // }
-
-    // &.live-sexy {
-    //   background-image: url("../../assets/live/live_sexy.png");
-    // }
-
-    // &.lottery-tcg {
-    //   background-image: url("../../assets/lottery/lottery_tcg.webp");
-    // }
-
-    // &.lottery-bbin {
-    //   background-image: url("../../assets/lottery/lottery_bbin.webp");
-    // }
-
-    // &.lottery-sgwin {
-    //   background-image: url("../../assets/lottery/lottery_sgwin.webp");
-    // }
   }
 
   &.games,
@@ -2713,20 +2351,11 @@ body {
           overflow: hidden;
           img {
             display: block;
-            // width: 100%;
-            // width: calc(100% + 70px);
-            // margin: -50px 0px -10px -60px;
             width: calc(80% + 70px);
             margin: -190px 0px -10px -20px;
             &.paris {
               margin: 0;
               width: 100%;
-              // height: 100%;
-              // width: unset;
-              // max-width: 110%;
-              // margin-left: -5%;
-              // margin-left: -5%;
-              // width: 110%;
             }
           }
         }
@@ -2783,21 +2412,6 @@ body {
   justify-content: center;
 }
 
-// .register-dialog {
-//   .el-dialog__header .el-dialog__headerbtn {
-//     .el-dialog {
-//       &__close {
-//         color: #000000;
-//         opacity: 0.5;
-
-//         &:hover {
-//           opacity: 1;
-//           color: #000000;
-//         }
-//       }
-//     }
-//   }
-// }
 
 .mailbox-notify {
   position: relative;
