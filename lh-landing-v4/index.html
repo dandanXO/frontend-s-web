@@ -235,6 +235,7 @@
   <script>
     function updateContactInfoByHostname() {
       const hostname = window.location.host;
+      console.log(hostname);
 
       const contactInfo = {
         '02574.co': {
@@ -314,6 +315,8 @@
       };
 
       const selectedInfo = contactInfo[hostname] || defaultInfo;
+      console.log("ENd Info")
+      console.log(selectedInfo)
 
       document.getElementById("group1-title").textContent = selectedInfo.group1Title;
       document.getElementById("group1-number").textContent = selectedInfo.group1Number;
