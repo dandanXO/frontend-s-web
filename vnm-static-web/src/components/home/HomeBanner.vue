@@ -10,7 +10,8 @@
     </a>
   </el-dialog>
 
-  <el-carousel class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true" :interval="5000">
+  <div v-if="isFetchingBanners" class="banner-placeholder"><h1>{{ $t('common.loading') }}...</h1></div>
+  <el-carousel v-else class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true" :interval="5000">
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goToUrl(banner.redirectUrl)">
         <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div>
@@ -35,6 +36,7 @@ const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 const ui = uiStore();
+const isFetchingBanners = ref(false);
 
 const allGames = ref(null);
 const goToUrl = (redirectUrl) => {
@@ -72,13 +74,21 @@ const loadBanners = () => {
       params = "HOME";
   }
 
+  isFetchingBanners.value = true;
   loadPromoBanner(params).then((res) => {
-    if (res.code === 0) banners.value = res.data;
-    else
+    isFetchingBanners.value = false;
+    if (res.code === 0) {
+      banners.value = res.data;
+    } else {
       ElMessage.error({
         type: "error",
         message: res.message
       });
+    }
+  }).catch(() => {
+    isFetchingBanners.value = false;
+  }).finally(() => {
+    isFetchingBanners.value = false;
   });
 };
 
@@ -180,6 +190,16 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.banner-placeholder {
+  width:1920px;
+  height:568px;
+  width: 100%;
+  background-color:#e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .banner-slider {
   width: 100%;
 
