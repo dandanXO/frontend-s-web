@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { userStore } from "stores/index"
 import LinkableButton from "components/home/drawer/LinkableButton.vue";
 import LinkCommunicationImg from "assets/images/home/link-communication.svg";
@@ -27,6 +27,9 @@ const links = ref([
   { icon: LinkVipImg, label: "VIP特权", href: "/account/vip", iconDark: LinkVipDarkImg },
   { icon: LinkCustomerServiceImg, label: "联系客服", href: "/liveChat", iconDark: LinkCustomerDarkServiceImg }
 ]);
+onMounted(() => {
+  store.getUnreadTotal();
+})
 </script>
 <style scoped lang="scss">
 .link-group-wrapper {
