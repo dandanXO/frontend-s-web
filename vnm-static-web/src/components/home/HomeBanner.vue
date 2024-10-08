@@ -1,17 +1,16 @@
 <template>
-  <el-dialog
-    @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)"
-    class="imptann-modal"
-    v-model="isImportantAnnoucementModal"
-    v-if="!isImpt"
-  >
+  <el-dialog @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)" class="imptann-modal"
+    v-model="isImportantAnnoucementModal" v-if="!isImpt">
     <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
       <img :src="homePopupImg" class="alert-img" />
     </a>
   </el-dialog>
 
-  <div v-if="isFetchingBanners" class="banner-placeholder"><h1>{{ $t('common.loading') }}...</h1></div>
-  <el-carousel v-else class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true" :interval="5000">
+  <div v-if="isFetchingBanners" class="banner-placeholder">
+    <h1>{{ $t('common.loading') }}...</h1>
+  </div>
+  <el-carousel v-else class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true"
+    :interval="5000">
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goToUrl(banner.redirectUrl)">
         <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div>
@@ -146,38 +145,38 @@ const checkShowImgTop = () => {
 
     if (isImpt === null) {
       loadHomePopup(params)
-      .then((res) => {
-        const { code, data } = res;
-        if (code === 0) {
-          switch (data["frequency"]) {
-            case "EVERYTIME":
-              homePopupFrequencyNum.value = 0;
-              break;
-            case "EVERYDAY":
-              homePopupFrequencyNum.value = 86400000; // 24hrs
-              break;
-            case "SESSION":
-              homePopupFrequencyNum.value = 7866432000; // 3months
-              break;
-            default:
-              homePopupFrequencyNum.value = 10000;
-              break;
+        .then((res) => {
+          const { code, data } = res;
+          if (code === 0) {
+            switch (data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
+            }
+            isImportantAnnoucementModal.value = true;
+            if (data["path"].includes("https://")) {
+              homePopupPath.value = data["path"];
+            } else {
+              homePopupPath.value = "/promotion?name=" + data["path"];
+            }
+            homePopupImg.value = imgURL + data["desktopImgUrl"];
+            homePopupContent.value = data["content"];
+            homePopupType.value = data["type"];
+            homePopupId.value = data["id"];
+            homePopupFrequency.value = data["frequency"];
+            isFirstView.value = true;
           }
-          isImportantAnnoucementModal.value = true;
-          if (data["path"].includes("https://")) {
-            homePopupPath.value = data["path"];
-          } else {
-            homePopupPath.value = "/promotion?name=" + data["path"];
-          }
-          homePopupImg.value = imgURL + data["desktopImgUrl"];
-          homePopupContent.value = data["content"];
-          homePopupType.value = data["type"];
-          homePopupId.value = data["id"];
-          homePopupFrequency.value = data["frequency"];
-          isFirstView.value = true;
-        }
-      })
-      .catch(() => {});
+        })
+        .catch(() => { });
     }
   }
 };
@@ -190,10 +189,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .banner-placeholder {
-  width:1920px;
-  height:568px;
+  width: 1920px;
+  height: 568px;
   width: 100%;
-  background-color:#e6e6e6;
+  //background-color:#e6e6e6;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,100 +1,17 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <template v-if="ui.edition === EDITION.SLOT">
-      <img
-        class="header-decoration left"
-        src="@/assets/images/home/header-decoration-slot-left.png"
-        alt="TF88 slot left ribbon"
-      />
-      <img
-        class="header-decoration right"
-        src="@/assets/images/home/header-decoration-slot-right.png"
-        alt="TF88 slot right ribbon"
-      />
+      <img class="header-decoration left" src="@/assets/images/home/header-decoration-slot-left.png"
+        alt="TF88 slot left ribbon" />
+      <img class="header-decoration right" src="@/assets/images/home/header-decoration-slot-right.png"
+        alt="TF88 slot right ribbon" />
     </template>
-    <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
+    <div class="top-nav-wrapper">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" alt="TF88 logo" />
         </router-link>
-        <div class="navigations">
-          <template v-for="nav in navigations" :key="nav.name">
-            <template v-if="!nav.hasicon">
-              <div class="header-menu-item">
-                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
-                  <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
-                    <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                      :alt="nav.code"
-                    />
-                    <h2 class="nav-title active">{{ nav.name }}</h2>
-                  </template>
-                  <template v-else>
-                    <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)"
-                      :alt="nav.code"
-                    />
-                    <h2 class="nav-title">{{ nav.name }}</h2>
-                  </template>
-                </a>
-              </div>
-            </template>
-          </template>
-        </div>
-
-        <div class="navigations second-nav">
-          <template v-for="nav in navigations" :key="nav.name">
-            <template v-if="nav.hasicon">
-              <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
-                  <span>
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-promo-icon.svg"
-                      alt="promotion"
-                      v-if="nav.code === 'Promotion'"
-                    />
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-affiliate-icon.svg"
-                      alt="affiliate"
-                      v-if="nav.code === 'Agent'"
-                    />
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-download-icon.svg"
-                      alt="download TF88 app"
-                      v-if="nav.code === 'App'"
-                    />
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-vip-icon.svg"
-                      alt="vip"
-                      v-if="nav.code === 'VIP'"
-                    />
-                  </span>
-                  <span>{{ nav.name }}</span>
-                </router-link>
-              </div>
-            </template>
-          </template>
-
-          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
-            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
-            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
-            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />
-            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />
-            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
-            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
-            <FishingMenu ref="el" v-if="selectedMenu === 'others'" @load-modal="openGame" />
-            <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />
-            <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />
-            <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
-            <AppMenu ref="el" v-if="selectedMenu === 'App'" />
-          </div>
-        </div>
+        <Navigation />
 
         <LocaleChanger />
 
@@ -138,10 +55,8 @@
               </div>
             </span>
             <template #dropdown>
-              <el-dropdown-menu
-                style="min-width: 180px; display: flex; flex-direction: column; align-items: flex-start"
-                class="profile-info-dropdown-content"
-              >
+              <el-dropdown-menu style="min-width: 180px; display: flex; flex-direction: column; align-items: flex-start"
+                class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
@@ -161,10 +76,8 @@
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="mailbox">
-                  <div
-                    class="mailbox-dropdown"
-                    style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%"
-                  >
+                  <div class="mailbox-dropdown"
+                    style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-inbox-icon.png" />
                     <span>{{ $t("menu.mailbox") }}</span>
                     <div v-if="store.unreadTotal > 0" class="unread-total">
@@ -206,85 +119,49 @@
       </div>
     </div>
 
-    <el-dialog
-      class="acc-dialog"
-      v-model="loginDialogVisible"
-      width="980px"
-      align-center
-      style="max-width: 1080px"
-      @close="store.loginPageVisible = false"
-    >
-      <div
-        class="acc-dialog-container login-container"
-        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''"
-      >
+    <el-dialog class="acc-dialog" v-model="loginDialogVisible" width="980px" align-center style="max-width: 1080px"
+      @close="store.loginPageVisible = false">
+      <div class="acc-dialog-container login-container"
+        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''">
         <div class="acc-dialog-left">
           <img class="paris" v-if="isLandingClub !== 'tf88club'" :src="getLoginBg()" />
           <img v-else src="../../assets/home/tf88club-img.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
-            <LoginDialog
-              @close-dialog="loginDialogVisible = false"
-              @open-reg-dialog="openRegDialog"
-              @open-forgotpwd-dialog="openForgotpwdDialog"
-            />
+            <LoginDialog @close-dialog="loginDialogVisible = false" @open-reg-dialog="openRegDialog"
+              @open-forgotpwd-dialog="openForgotpwdDialog" />
           </div>
         </div>
       </div>
     </el-dialog>
 
-    <el-dialog
-      class="acc-dialog"
-      v-model="registerDialogVisible"
-      width="1300px"
-      align-center
-      @close="store.regPageVisible = false"
-      style="transform: scale(.9);"
-    >
+    <el-dialog class="acc-dialog" v-model="registerDialogVisible" width="1300px" align-center
+      @close="store.regPageVisible = false" style="transform: scale(.9);">
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
           <img class="paris" :src="getSignUpBg()" />
         </div>
         <div class="acc-dialog-right">
-          <RegisterAccount
-            @close-dialog="registerDialogVisible = false"
-            @open-login-dialog="openLoginDialog"
-            @open-welcome-dialog="welcomeDialogVisible = true"
-          />
+          <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog"
+            @open-welcome-dialog="welcomeDialogVisible = true" />
         </div>
       </div>
     </el-dialog>
 
-    <el-dialog
-      v-model="welcomeDialogVisible"
-      width="100%"
-      align-center
-      style="max-width: 1280px"
-      @close="store.welcomeDialogVisible = false"
-    >
+    <el-dialog v-model="welcomeDialogVisible" width="100%" align-center style="max-width: 1280px"
+      @close="store.welcomeDialogVisible = false">
       <HomeWelcome @close-dialog="welcomeDialogVisible = false" />
     </el-dialog>
 
-    <el-dialog
-      v-model="captchaDialogVisible"
-      :title="$t('personal.captcha')"
-      width="50%"
-      align-center
-      style="max-width: 500px"
-      :close-on-click-modal="false"
-      @keydown.enter.prevent
-    >
+    <el-dialog v-model="captchaDialogVisible" :title="$t('personal.captcha')" width="50%" align-center
+      style="max-width: 500px" :close-on-click-modal="false" @keydown.enter.prevent>
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
         <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode">
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input
-                v-model="captchaForm.captchaCode"
-                :label="$t('personal.captcha')"
-                :placeholder="$t('personal.captcha')"
-                @keyup.enter="sendOtp"
-              />
+              <el-input v-model="captchaForm.captchaCode" :label="$t('personal.captcha')"
+                :placeholder="$t('personal.captcha')" @keyup.enter="sendOtp" />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -297,14 +174,8 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog
-      class="acc-dialog"
-      v-model="forgetPassDialogVisible"
-      width="1280px"
-      align-center
-      style="max-width: 1080px"
-      @close="store.forgetPassDialogVisible = false"
-    >
+    <el-dialog class="acc-dialog" v-model="forgetPassDialogVisible" width="1280px" align-center
+      style="max-width: 1080px" @close="store.forgetPassDialogVisible = false">
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
@@ -369,10 +240,11 @@ import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
-import {displayBalance} from "@/utils/utils"
+import { displayBalance } from "@/utils/utils"
 import {
   RiRefreshLine
 } from "vue-remix-icons";
+import Navigation from "@/components/home/navigation/Navigation.vue";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
@@ -419,67 +291,14 @@ export default defineComponent({
     ForgotPwdDialog,
     RegisterAccount,
     LocaleChanger,
-    HomeWelcome
+    HomeWelcome,
+    Navigation
   },
   setup() {
     const { t } = useI18n();
     const i18nStoreLanguage = i18nStore()
     const ui = uiStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const navigations = computed(() => {
-      let index = -1
-      const fixedNavigationList = [
-        { code: "home", name: t('menu.home'), enName: "Home", path: "/home" , role: 'NORMAL',order: 'home'},
-      ]
-      const baseNavigationList = [
-          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true , role: 'NORMAL',order: 1},
-          { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true , role: 'NORMAL',order: 2},
-          { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true , role: 'NORMAL',order: 3},
-          { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true , role: 'NORMAL',order: 4},
-          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true , role: 'NORMAL',order: 5},
-          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true , role: 'NORMAL',order: 6},
-          // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true , role: 'NORMAL',order: 7},
-          { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true , role: 'NORMAL',order: 8},
-          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true , role: 'NORMAL',order: 9},
-          {
-            code: "Promotion",
-            name: t('menu.promotion'),
-            enName: "Promotion",
-            path: "/promotion",
-            submenu: false,
-            hasicon: true, role: 'NORMAL',order: 10
-          },
-          { code: "Agent", name: t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true , role: 'NORMAL',order: 11},
-          { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true , role: 'NORMAL',order: 12},
-          { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true , role: 'NORMAL',order: 13}
-      ]
-      const filteredNavigationList = baseNavigationList.filter(navigation => {
-        if(store && store.token && store.memberType === 'TEST') {
-          return true
-        } else {
-          if(navigation.role === 'TEST') {
-            return false
-          } else {
-            return true
-          }
-        }
-      })
-
-      switch(ui.edition) {
-        case EDITION.NORMAL:
-          break
-          case EDITION.SLOT:
-             index = filteredNavigationList.findIndex(navigation => navigation.code === 'slot')
-            break
-      }
-      if(index > -1) {
-        fixedNavigationList.push(filteredNavigationList[index])
-        filteredNavigationList.splice(index, 1)
-      }
-
-      return [...fixedNavigationList, ...filteredNavigationList]
-
-    });
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
 
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
@@ -542,7 +361,7 @@ export default defineComponent({
       if (command === "promotion") {
         router.push("/promotion");
       }
-      if(command === "mailbox") {
+      if (command === "mailbox") {
         router.push("/center/mailbox")
       }
       if (command === "logout") {
@@ -1037,7 +856,7 @@ export default defineComponent({
     };
     const rebateAmt = ref(0);
     const isRebateDialogVisible = ref(false);
-    const isLandingClub= ref(route.query.landing);
+    const isLandingClub = ref(route.query.landing);
 
     const showRebateValue = () => {
       dailyRebateAmt().then((res) => {
@@ -1050,9 +869,9 @@ export default defineComponent({
       })
     }
     const claimNow = () => {
-      claimRebate().then((res) =>{
+      claimRebate().then((res) => {
 
-        if(res.code === 0) {
+        if (res.code === 0) {
 
           isRebateDialogVisible.value = false;
           ElMessage.success($t('common.claimedSuccess'))
@@ -1064,8 +883,8 @@ export default defineComponent({
     onMounted(() => {
 
       const isGetWelcome = sessionStorage.getItem("IS_GET_WELCOME");
-      if(isGetWelcome){
-        welcomeDialogVisible.value= true;
+      if (isGetWelcome) {
+        welcomeDialogVisible.value = true;
         sessionStorage.removeItem("IS_GET_WELCOME");
       }
 
@@ -1090,7 +909,7 @@ export default defineComponent({
 
 
       // alert(isLanding);
-      if(isLandingClub.value === "tf88club"){
+      if (isLandingClub.value === "tf88club") {
         loginDialogVisible.value = true;
       }
 
@@ -1188,10 +1007,10 @@ export default defineComponent({
                 getCode();
               }
             }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-            getCode();
-          });
+              // message.error(error.message);
+              console.log(error.message);
+              getCode();
+            });
         });
         loadingBtn.value = false;
       })();
@@ -1221,9 +1040,9 @@ export default defineComponent({
                 loginForm.code = null;
               }
             }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-          });
+              // message.error(error.message);
+              console.log(error.message);
+            });
         });
       })();
       loadingBtn.value = false;
@@ -1290,7 +1109,7 @@ export default defineComponent({
     const welcomeDialogVisible = ref(false)
 
     const getLoginBg = () => {
-      switch(ui.edition){
+      switch (ui.edition) {
         case EDITION.SLOT:
           return require(`../../assets/home/acc-dialog-img-login-slot.png`)
         case EDITION.NORMAL:
@@ -1299,7 +1118,7 @@ export default defineComponent({
       }
     }
     const getSignUpBg = () => {
-      switch(ui.edition){
+      switch (ui.edition) {
         case EDITION.SLOT:
           return require(`../../assets/home/acc-dialog-img-login-slot.png`)
         case EDITION.NORMAL:
@@ -1375,7 +1194,6 @@ export default defineComponent({
       openLoginDialog,
       openRegDialog,
       openForgotpwdDialog,
-      navigations,
       languageVal,
       showRebateValue,
       isRebateDialogVisible,
@@ -1394,6 +1212,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 body {
+
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
     background-color: #a8b5c3;
@@ -1639,8 +1458,7 @@ body {
 }
 
 .header-container {
-  &.on-scrolled {
-  }
+  &.on-scrolled {}
 
   width: 100%;
   position: sticky;
@@ -1652,14 +1470,17 @@ body {
     .side {
       position: absolute;
       top: 0;
+
       &.left {
         left: 0px;
       }
+
       &.right {
         right: 0px;
         transform: rotateY(180deg);
       }
     }
+
     padding: 10px;
     background: $color-white;
 
@@ -1701,108 +1522,19 @@ body {
           display: block;
         }
       }
-
-      .navigations {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        // width: 750px;
-        // padding: 0px 16px;
-        gap: 8px;
-        text-align: center;
-        padding: 0px 10px;
-
-        &.second-nav {
-          margin-left: auto;
-          margin-right: auto;
-          gap: 24px;
-        }
-
-        a {
-          // padding-top: 10px;
-          display: flex;
-          flex-direction: column;
-          text-decoration: none;
-          gap: 2px;
-          color: #444444;
-
-          &.icon {
-            gap: 0;
-          }
-
-          &:hover {
-            filter: brightness(0.85);
-          }
-
-          .menu-icon {
-            width: 68px;
-            height: 71px;
-          }
-
-          span:first-child {
-            color: #000000;
-            font-size: 1rem;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-
-          span:last-child {
-            text-transform: uppercase;
-            font-size: 0.55rem;
-            display: flex;
-            flex-direction: column;
-            white-space: nowrap;
-          }
-
-          &:hover,
-          &.router-link-active {
-            span:first-child {
-              color: $link-active;
-            }
-
-            span:last-child {
-              color: $link-active;
-            }
-
-            img.hover-icon {
-              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
-            }
-          }
-        }
-
-        .sub-menu {
-          transition: $page-trans;
-          background: rgba(239, 242, 245, 0.95);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
-          backdrop-filter: blur(24.5px);
-          overflow: hidden;
-          height: 0px;
-          position: absolute;
-          left: 0;
-          top: 100%;
-          width: 100%;
-
-          > div {
-            max-width: $maxwidth;
-            margin: 0 auto;
-            width: 100%;
-            flex-wrap: wrap;
-          }
-        }
-      }
     }
   }
+
   .header-decoration {
     position: absolute;
     top: 0;
     z-index: 1;
     max-height: 77px;
+
     &.left {
       left: 0;
     }
+
     &.right {
       right: 0;
     }
@@ -1927,9 +1659,10 @@ body {
 }
 
 .mailbox-dropdown {
-  > span {
+  >span {
     flex-grow: 1;
   }
+
   .unread-total {
     min-width: 30px;
     border-radius: 25px;
@@ -2279,6 +2012,7 @@ body {
         // padding: 8px;
 
         padding: 0;
+
         img {
           display: block;
           width: 100%;
@@ -2312,6 +2046,7 @@ body {
             width: calc(100% + 90px);
             margin: -50px 0px -45px -90px;
             max-width: 100%;
+
             &.paris {
               margin: 0;
             }
@@ -2349,16 +2084,19 @@ body {
           background-position: center center;
           // background-color:salmon;
           overflow: hidden;
+
           img {
             display: block;
             width: calc(80% + 70px);
             margin: -190px 0px -10px -20px;
+
             &.paris {
               margin: 0;
               width: 100%;
             }
           }
         }
+
         .acc-dialog-right {
           width: 31%;
         }
@@ -2446,6 +2184,7 @@ body {
     box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
     color: #444444;
     position: relative;
+
     img {
       position: absolute;
       right: -10px;
@@ -2455,6 +2194,7 @@ body {
 
   &.SLOT {
     gap: 7px;
+
     img {
       position: unset;
     }
@@ -2469,6 +2209,7 @@ body {
 
 .header-menu-item {
   position: relative;
+
   // display: flex;
   a {
     position: relative;

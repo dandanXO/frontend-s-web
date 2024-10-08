@@ -10,11 +10,6 @@ import { uiStore } from "@/store/ui";
 
 const routes = [
   {
-    path: "/login",
-    name: "login",
-    component: () => import(/* webpackChunkName: "Login" */ "../views/LoginView.vue")
-  },
-  {
     path: "/register",
     name: "register",
     component: () => import(/* webpackChunkName: "Register" */ "../views/RegisterView.vue")
