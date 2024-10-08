@@ -308,3 +308,13 @@ export function claimIEMRioBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/iem-rio/claimBonus?v=${randNum}`);
 }
+
+export function getPullbackInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/pullback-tide/init?v=${randNum}`);
+}
+
+export function claimPullbackBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/pullback-tide/claimBonus?v=${randNum}`);
+}
