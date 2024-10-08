@@ -1,5 +1,6 @@
 <template>
-    <div class="home">
+  <div>sdfsdf</div>
+    <!-- <div class="home">
       <HomeBanner></HomeBanner>
       <div class="home-mid-section">
         <HomeAnnouncement></HomeAnnouncement>
@@ -9,7 +10,7 @@
         <HomeService></HomeService>
       </div>
     </div>
-    <GameModal ref="gameMenu" />
+    <GameModal ref="gameMenu" /> -->
   </template>
   
   <script setup>
