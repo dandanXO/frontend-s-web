@@ -242,13 +242,6 @@ deploy-ind2-download:
 
 #===============================================================================================
 
-deploy-id1-download:
-  extends: .s3-deploy
-  variables:
-    PROJECT: id1-download
-
-#===============================================================================================
-
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
@@ -387,6 +380,20 @@ build-image-tha-static-h5:
     PROJECT: tha-static-h5
   needs:
     - build-tha-static-h5
+
+#===============================================================================================
+
+build-vnm-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: vnm-static-h5
+
+build-image-vnm-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: vnm-static-h5
+  needs:
+    - build-vnm-static-h5
 
 #===============================================================================================
 
@@ -881,6 +888,20 @@ build-image-ph1-static-v1:
     PROJECT: ph1-static-v1
   needs:
     - build-ph1-static-v1
+
+#===============================================================================================
+
+build-id1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: id1-static-v1
+
+build-image-id1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: id1-static-v1
+  needs:
+    - build-id1-static-v1
 
 #===============================================================================================
 

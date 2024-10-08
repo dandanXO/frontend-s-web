@@ -263,13 +263,12 @@ dense
       </div>
     </q-form>
 
-
-    <div class="login-bottom-div" @click="openDialog('hundred')">
-      <img src="../assets/images/login/register-banner.jpg" />
+    <div class="login-bottom-div">
+    <img src="../assets/images/login/register-banner.png" />
     </div>
   </div>
   <q-dialog v-model="showHundredDialog" width="100%" show-close>
-    
+
     <q-card width="100%" class="q-pa-md">
       <q-card-section class="row items-end justify-end q-pb-none">
         <div class="text-h6"></div>
@@ -279,7 +278,7 @@ dense
   <p style="
     width: 85%;
     margin-top: -25px;"><b style="font-size: 14px; color: #0071ed;">THƯỞNG CHÀO MỪNG 100% LÊN ĐẾN 2,000 VNDP</b>
-    
+
   </p>
   Thành Viên có thể tham gia khuyến mãi này tại trang nạp tiền, sau khi nhập <strong>"Số tiền nạp"</strong> ấn chọn khuyến mãi <strong>100% Chào Mừng</strong>, sau đó nhấn <strong>"Xác nhận"</strong>.
 
@@ -323,14 +322,14 @@ dense
   </p>
 </div> </q-card>
   </q-dialog>
-  
+
   <q-dialog v-model="showBetRulesDialog" width="100%" show-close>
     <q-card width="100%" class="q-pa-md">
       <q-card-section class="row items-end justify-end q-pb-none">
         <div class="text-h6"></div>
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
-    
+
     <p style="width: 85%; margin-top: -25px;"><b style="font-size: 16px; color: #0071ed;">{{ $t("lang.about.bettingRules") }}</b></p>
     <ul>
         <li>{{ $t("lang.about.familyRestriction") }}</li>
@@ -425,7 +424,7 @@ export default defineComponent({
         showHundredDialog.value = true
       } else {
         showBetRulesDialog.value = true
-      } 
+      }
     }
     const { t } = useI18n();
     const store = userStore();
@@ -895,6 +894,8 @@ function charType(num) {
       font-size: 1rem;
     }
   }
+
+  padding-bottom: 15px;
 }
 
 .cs-web-id {
@@ -903,13 +904,13 @@ function charType(num) {
 }
 
 .login-bottom-div {
-  // width: 100%;
-    margin: 15px 15px 5px;
-  overflow: hidden;
+  margin: 0 15px;
   border-radius: 10px;
+  overflow: hidden;
+
   img {
     width: 100%;
-    margin: -20px 0;
+    display: block;
   }
 }
 </style>

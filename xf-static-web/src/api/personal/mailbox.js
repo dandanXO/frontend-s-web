@@ -14,14 +14,20 @@ export function mailInbox(mailQuery) {
       type: mailQuery.type,
       current: mailQuery.current,
       size: mailQuery.size,
-      orderBy: mailQuery.orderBy,
-      messageType: mailQuery.messageType
+      orderBy: mailQuery.orderBy
     }
   });
 }
 
-export function mailOutbox() {
-  return server.REST.get("/session/feedback/replies", {});
+export function mailOutbox(mailQuery) {
+  return server.REST.get("/session/outbox", {
+    params: {
+      type: mailQuery.type,
+      current: mailQuery.current,
+      size: mailQuery.size,
+      orderBy: mailQuery.orderBy
+    }
+  });
 }
 
 export function wirteMail(mail) {
@@ -32,36 +38,6 @@ export function mailUnreadTotal() {
   return server.REST.get("/session/inbox/getUnreadTotal", {});
 }
 
-
-export function readMail(mailQuery) {
-  return server.REST.post("/session/inbox/read", {
-    id: mailQuery.id
-  });
-}
-
-export function readAllMail(mailQuery) {
-  return server.REST.post("/session/inbox/readAll", {
-    type: mailQuery !== null ? mailQuery : undefined
-  });
-}
-
-export function deleteAllMail(mailQuery) {
-  return server.REST.post("/session/inbox/deleteAll", {
-    type: mailQuery !== null ? mailQuery : undefined
-  });
-}
-
-export function readMultipleMail(mailQuery) {
-  return server.REST.post("/session/inbox/readMultiple", {
-    ids: mailQuery
-  });
-}
-
-export function deleteMultipleMail(mailQuery) {
-  return server.REST.post("/session/inbox/deleteMultiple", {
-    ids: mailQuery
-  });
-}
 
 // 意见反馈
 export function getFeedbackType() {

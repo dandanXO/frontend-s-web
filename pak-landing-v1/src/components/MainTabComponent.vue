@@ -60,11 +60,9 @@
         <div class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2]?.media.data.attributes?.url"
+              v-if="galleryItems[i * 2]?.media"
               alt=""
-              :src="`${BASE_STRAPI_URL}${
-                galleryItems[i * 2]?.media.data.attributes.url
-              }`"
+              :src="galleryItems[i * 2]?.media.url"
             />
             <iframe
               v-else-if="galleryItems[i * 2]?.videoUrl"
@@ -79,11 +77,9 @@
         <div v-if="galleryItems[i * 2 + 1]" class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2 + 1].media.data.attributes?.url"
+              v-if="galleryItems[i * 2 + 1].media"
               alt=""
-              :src="`${BASE_STRAPI_URL}${
-                galleryItems[i * 2 + 1].media.data.attributes.url
-              }`"
+              :src="galleryItems[i * 2 + 1].media.url"
             />
             <iframe
               v-else-if="galleryItems[i * 2 + 1]?.videoUrl"
@@ -111,7 +107,6 @@
 <script setup>
 import { computed } from "vue";
 import CarouselComponent from "src/components/CarouselComponent.vue";
-import { BASE_STRAPI_URL } from "src/constants/constants";
 
 const props = defineProps(["tabData"]);
 

@@ -11,7 +11,7 @@
     <div class="withdraw-remaining-dialog__header">
       <div class="withdraw-remaining-dialog__header-title">
         <img src="@/assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-        <span>继续提款需完成以下条件</span>
+        <span>继续提款需达成以下条件</span>
       </div>
       <span class="withdraw-remaining-dialog__header-help-text">若有疑问，请联系在线客服核查~</span>
     </div>
@@ -249,8 +249,7 @@ onMounted(() => {
   }
 
   .text-yellow {
-    font-size: 26px;
-    color: #599cff;
+    color: #a2a213ff;
   }
 }
 </style>

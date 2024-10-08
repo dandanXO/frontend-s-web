@@ -6,3 +6,4 @@ USER root
 
 ADD dist/spa ./
 ADD nginx.conf /etc/nginx/nginx.conf
+
