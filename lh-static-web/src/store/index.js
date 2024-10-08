@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { login, logout, mobileLogin } from "@/api/index/login";
+import { login, logout, mobileLogin, register } from "@/api/index/login";
 import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { getUnreadTotal } from "@/api/personal/mailbox";
 import { useSessionStorage } from "@vueuse/core";
@@ -34,7 +34,8 @@ export const userStore = defineStore("userStore", {
       unreadTotal: 0,
       visitorId: "",
       profilePhoto: "",
-      withdrawType: ""
+      withdrawType: "",
+      regSuccessGuideVisible: true
     };
   },
   actions: {

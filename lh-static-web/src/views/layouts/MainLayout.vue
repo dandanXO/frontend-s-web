@@ -1,5 +1,6 @@
 <template>
   <div style="background-color: #e7f1fd">
+    <NewMemberGuide />
     <keep-alive>
       <common-header v-if="!shouldHideHeaderAndFooter" />
     </keep-alive>
@@ -22,13 +23,15 @@ import CommonFooter from "@/components/layout/CommonFooter.vue";
 import CommonSidebar from "@/components/layout/CommonSidebar.vue";
 import { useRoute } from "vue-router";
 import { userStore } from "@/store";
+import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 
 export default defineComponent({
   name: "LayoutView",
   components: {
     CommonHeader,
     CommonFooter,
-    CommonSidebar
+    CommonSidebar,
+    NewMemberGuide
   },
   mounted() {
     this.loadTrackingScript();
