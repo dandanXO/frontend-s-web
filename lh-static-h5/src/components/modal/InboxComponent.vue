@@ -84,6 +84,7 @@ const handleDetail = (mail) => {
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 50px;
 }
 
 .announcement-title {
@@ -105,6 +106,9 @@ const handleDetail = (mail) => {
   justify-content: flex-end;
   gap: 12px;
   align-items: center;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 
   .footer-button {
     cursor: pointer;
