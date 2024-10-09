@@ -4,13 +4,16 @@
       <div class="link-content-wrapper">
         <img :src="$q.dark.isActive ? link.iconDark : link.icon" />
         <span>{{ link.label }}</span>
+        <div class="unread" v-if="link.label === '消息中心' && store.unreadInboxMail > 0">
+          {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+        </div>
       </div>
     </linkable-button>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
-
+import { onMounted, ref } from "vue";
+import { userStore } from "stores/index"
 import LinkableButton from "components/home/drawer/LinkableButton.vue";
 import LinkCommunicationImg from "assets/images/home/link-communication.svg";
 import LinkVipImg from "assets/images/home/link-vip.svg";
@@ -18,12 +21,15 @@ import LinkCustomerServiceImg from "assets/images/home/link-customer-service.svg
 import LinkCommunicationDarkImg from "assets/images/home/link-communication-dark.svg";
 import LinkVipDarkImg from "assets/images/home/link-vip-dark.svg";
 import LinkCustomerDarkServiceImg from "assets/images/home/link-customer-service-dark.svg";
-
+const store = userStore();
 const links = ref([
   { icon: LinkCommunicationImg, label: "消息中心", href: "/account/inbox", iconDark: LinkCommunicationDarkImg },
   { icon: LinkVipImg, label: "VIP特权", href: "/account/vip", iconDark: LinkVipDarkImg },
   { icon: LinkCustomerServiceImg, label: "联系客服", href: "/liveChat", iconDark: LinkCustomerDarkServiceImg }
 ]);
+onMounted(() => {
+  store.getUnreadTotal();
+})
 </script>
 <style scoped lang="scss">
 .link-group-wrapper {
@@ -46,6 +52,18 @@ const links = ref([
   align-items: center;
   img {
     max-width: 20px;
+  }
+  position: relative;
+  
+  .unread {
+    position: absolute;
+    border-radius: 50%;
+    background: #ff0000;
+    left: 110%;
+    top: 2px;
+    color: #ffffff;
+    padding: 1px 5px;
+    font-size: 10px;
   }
 }
 </style>
