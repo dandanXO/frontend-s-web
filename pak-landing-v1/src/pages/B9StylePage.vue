@@ -1,21 +1,26 @@
 <template>
   <div class="b9-style-container">
     <div v-if="!isLoading">
-      <div v-for="item in arr" :key="item.id" class="row" @click="openUrl(item.url)">
-        <div class="col-3" :style="{background: `url(${item.thumbnail})`}">
-          <q-icon name="play_circle" class="pseudo-play-btn"/>
+      <div
+        v-for="item in arr"
+        :key="item.id"
+        class="row"
+        @click="openUrl(item.url)"
+      >
+        <div class="col-3" :style="{ background: `url(${item.thumbnail})` }">
+          <q-icon name="play_circle" class="pseudo-play-btn" />
         </div>
 
         <div class="txt-container col-9">
           <div class="txt title">{{ item.title }}</div>
-          <div class="txt-item-wrap">
-            <div class="txt description">
-              {{ item.description }}
-            </div>
-          </div>
+          <!--          <div class="txt-item-wrap">-->
+          <!--            <div class="txt description">-->
+          <!--              {{ item.description }}-->
+          <!--            </div>-->
+          <!--          </div>-->
           <div class="txt info">
             <div class="views">
-              <q-icon name="visibility"/>
+              <q-icon name="visibility" />
               <span>{{ item.views }}</span>
             </div>
             <span class="time">{{ item.uploadTime }} ago</span>
@@ -41,8 +46,8 @@ const rndUploadTime = [
   "2h 5m",
   "7h 55m",
   "23h 10m",
-  "18h 40m"
-]
+  "18h 40m",
+];
 
 const arr = ref([]);
 const isLoading = ref(true);
@@ -52,13 +57,13 @@ onMounted(() => {
     .get("/api/b9-style?populate[videos][populate]")
     .then((res) => {
       arr.value = res.data.attributes.videos;
-      arr.value.forEach(el => {
+      arr.value.forEach((el) => {
         const min = 1000;
         const max = 10000;
-        el.views = Math.floor(Math.random() * (max - min + 1)) + min
-        el.uploadTime = rndUploadTime[Math.floor(Math.random() * 10)]
-        el.thumbnail = getThumbnailUrl(el.url)
-      })
+        el.views = Math.floor(Math.random() * (max - min + 1)) + min;
+        el.uploadTime = rndUploadTime[Math.floor(Math.random() * 10)];
+        el.thumbnail = getThumbnailUrl(el.url);
+      });
     })
     .catch((e) => {})
     .finally(() => {
@@ -77,8 +82,8 @@ const getThumbnailUrl = (url) => {
   const regex =
     /(?:youtube\.com\/(?:embed\/|watch\?v=|v\/|.*[?&]v=)|youtu\.be\/)([^&\n?]{11})/;
   const match = url.match(regex);
-  return match ? `https://img.youtube.com/vi/${match[1]}/default.jpg` : null
-}
+  return match ? `https://img.youtube.com/vi/${match[1]}/default.jpg` : null;
+};
 
 const openUrl = (url) => {
   const videoId = getVideoId(url);
@@ -92,21 +97,21 @@ const openUrl = (url) => {
   .row {
     line-height: 0;
     margin: 12px;
-    border-radius: 10px;
+    border-radius: 14px;
     overflow: hidden;
     cursor: pointer;
-    min-height: 74px;
+    min-height: 90px;
 
     .col-3 {
       position: relative;
       background-size: cover;
       &::before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, .5);
+        background-color: rgba(0, 0, 0, 0.5);
       }
       .pseudo-play-btn {
         position: absolute;
@@ -139,8 +144,9 @@ const openUrl = (url) => {
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.5;
+        font-weight: bold;
         max-height: 4.5em;
-        font-size: 14px;
+        font-size: 18px;
       }
       .description {
         display: -webkit-box;
@@ -156,16 +162,16 @@ const openUrl = (url) => {
         display: flex;
         gap: 12px;
         align-items: center;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 1.5;
         .views {
-          color: #17DB5D;
+          color: #17db5d;
           .q-icon {
             margin-right: 3px;
           }
         }
         .time {
-          color: #FFFFFF80;
+          color: #ffffff80;
         }
       }
     }
