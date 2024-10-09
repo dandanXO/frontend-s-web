@@ -411,3 +411,20 @@ export function getIEMRioInit() {
 export function claimIEMRioBonus() {
   return server.EVENT.post("/session/iem-rio/claimBonus");
 }
+
+export function getCBAInit() {
+  return server.EVENT.get("/session/cba/daily/init");
+}
+
+export function claimCBADailyBonus() {
+  return server.EVENT.post("/session/cba/daily/claimBonus");
+}
+
+export function getCBAWeeklyInit() {
+  return server.EVENT.get("/session/cba/weekly/init");
+}
+
+export function claimCBAWeeklyBonus() {
+  return server.EVENT.post("/session/cba/weekly/claimBonus");
+}
+
