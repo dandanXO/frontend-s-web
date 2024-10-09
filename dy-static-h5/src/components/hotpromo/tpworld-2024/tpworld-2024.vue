@@ -132,8 +132,7 @@
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7
-            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还,将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还,将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">5</div>
@@ -155,7 +154,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { claimCompetitionBetBonus, getCompetitionBetYesterday } from "../../../api/index/promo";
+import { claimCompetitionBonus, getCompetitionBetYesterday } from "../../../api/index/promo";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -194,7 +193,7 @@ const handleClaimBonus = () => {
     });
     return;
   }
-  claimCompetitionBetBonus(promoCode.value)
+  claimCompetitionBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         $q.notify({

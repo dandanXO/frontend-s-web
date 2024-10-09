@@ -2053,10 +2053,7 @@ export default {
     threePointShots: '全场进10个三分球',
     shotPoints: '任意球员砍下30分',
     scoringShots: '任意球员拿到13个篮板',
-    foulOut: '任意球员判罚离场',
-    gender: '性别',
-    Male: '男性',
-    Female: '女性',
+    foulOut: '任意球员判罚离场'
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2782,6 +2779,7 @@ export default {
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
+    'Member Vip Upgrade Record': '会员VIP晋级记录',
     'Vip Report': 'VIP投注汇总报表',
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',

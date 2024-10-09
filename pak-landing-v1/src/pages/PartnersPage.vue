@@ -19,7 +19,7 @@ onMounted(() => {
       "/api/partner?populate[charityGallery][populate]=media&populate[bannerTop][populate]=media&populate[bannerMid][populate]=media&populate[bannerBtm][populate]=media"
     )
     .then((res) => {
-      tabData.value = res.data.attributes;
+      tabData.value = res.data;
     })
     .catch((e) => {})
     .finally(() => {

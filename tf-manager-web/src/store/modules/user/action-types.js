@@ -9,21 +9,21 @@ export const UserActionTypes = {
 }
 
 export const ADMIN = {
-  name: "ADMIN",
-  value: "ADMIN"
+  name: 'ADMIN',
+  value: 'ADMIN',
 }
 
 export const MANAGER = {
-  name: "System Manager",
-  value: "MANAGER"
+  name: 'System Manager',
+  value: 'MANAGER',
 }
 
 export const TENANT = {
-  name: "Site Manager",
-  value: "TENANT"
+  name: 'Site Manager',
+  value: 'TENANT',
 }
 
 export const SUB_TENANT = {
-  name: "Subsite Manager",
-  value: "SUB_TENANT"
+  name: 'Subsite Manager',
+  value: 'SUB_TENANT',
 }
