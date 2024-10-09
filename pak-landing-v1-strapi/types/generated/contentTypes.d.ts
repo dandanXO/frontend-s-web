@@ -528,8 +528,7 @@ export interface ApiB9StyleB9Style extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    video: Schema.Attribute.Component<'ui.video-item', true> &
-      Schema.Attribute.Required;
+    videos: Schema.Attribute.Component<'ui.video-item', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
