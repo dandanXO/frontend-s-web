@@ -27,11 +27,16 @@
         </div>
         <div class="top-ft-rgt">
           <span class="s1">支付方式：</span>
-          <span class="footPayIcon visa" title="VISA"></span>
-          <span class="footPayIcon masterCard" title="MasterCard"></span>
-          <span class="footPayIcon chineseBank" title="中国银联"></span>
-          <span class="footPayIcon fastBank" title="本地银行转账"></span>
+          <span class="footPayIcon usdt" title="USDT"></span>
+          <span class="footPayIcon unionpay" title="中国银联"></span>
+          <span class="footPayIcon numberpay" title="数字人民币"></span>
           <span class="footPayIcon alipayf" title="支付宝"></span>
+          <span class="footPayIcon wechat" title="Wechat"></span>
+          <span class="footPayIcon qq" title="QQ"></span>
+          <!--          <span class="footPayIcon visa" title="VISA"></span>-->
+          <!--          <span class="footPayIcon masterCard" title="MasterCard"></span>-->
+          <!--          <span class="footPayIcon chineseBank" title="中国银联"></span>-->
+          <!--          <span class="footPayIcon fastBank" title="本地银行转账"></span>-->
         </div>
       </div>
     </div>
@@ -175,17 +180,76 @@ export default defineComponent({
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
         .s1 {
           color: #ffffff;
           font-size: 16px;
         }
         .footPayIcon {
-          width: 55px;
           height: 40px;
-          background-image: url(../../assets/footer/footerlogo-list.png);
-          background-position-y: -2px;
           cursor: pointer;
+          &.numberpay {
+            width: 40px;
+            background-repeat: no-repeat;
+            background-image: url("../../assets/footer/number.png");
+
+            &:hover,
+            &:active {
+              background-image: url("../../assets/footer/number-active.png");
+            }
+          }
+          &.usdt {
+            border-radius: 4px;
+            width: 40px;
+            background-repeat: no-repeat;
+            background-image: url("../../assets/footer/usdt.png");
+
+            &:hover,
+            &:active {
+              background-image: url("../../assets/footer/usdt-active.png");
+            }
+          }
+          &.unionpay {
+            width: 64px;
+            background-image: url("../../assets/footer/union.png");
+
+            &:hover,
+            &:active {
+              background-image: url("../../assets/footer/union-active.png");
+            }
+          }
+          &.alipayf {
+            border-radius: 4px;
+            width: 40px;
+            background-repeat: no-repeat;
+            background-image: url("../../assets/footer/zhifu.png");
+            &:hover {
+              background-image: url("../../assets/footer/zhifu-active.png");
+            }
+          }
+          &.wechat {
+            width: 56px;
+            background-repeat: no-repeat;
+            background-position: initial;
+            background-image: url("../../assets/footer/wechat.png");
+            filter: grayscale(100%);
+
+            &:hover {
+              filter: none;
+            }
+          }
+          &.qq {
+            width: 44px;
+            background-repeat: no-repeat;
+            background-position: initial;
+            background-image: url("../../assets/footer/qqpay.png");
+            filter: grayscale(130%);
+
+            &:hover {
+              filter: none;
+            }
+          }
+
           &.visa {
             width: 55px;
             background-position: -266px -2px;
@@ -214,13 +278,7 @@ export default defineComponent({
               background-position-y: -48px;
             }
           }
-          &.alipayf {
-            width: 67px;
-            background-position: -770px -2px;
-            &:hover {
-              background-position-y: -48px;
-            }
-          }
+
           &.gameCore {
             width: 30px;
             background-position: 450px 0px;
