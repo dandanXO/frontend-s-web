@@ -35,7 +35,7 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       profilePhoto: "",
       withdrawType: "",
-      regSuccessGuideVisible: true
+      regSuccessGuideVisible: false
     };
   },
   actions: {
