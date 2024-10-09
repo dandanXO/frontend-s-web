@@ -119,10 +119,11 @@
           <img src="../../assets/footer/payment/ACB.png" /> -->
             <!--            <img src="../../assets/footer/payment/bank-logo.png" alt="bank" />-->
             <img src="../../assets/footer/payment/napas247.png" alt="napas24/7" />
+            <img src="../../assets/footer/payment/vietqr.png" alt="ViettelPay" />
             <img src="../../assets/footer/payment/momo.png" alt="momo" />
             <img src="../../assets/footer/payment/ZaloPay.png" alt="ZaloPay" />
             <!--            <img src="../../assets/footer/payment/scratch-card-logo.png" alt="scratch card" />-->
-            <img src="../../assets/footer/payment/vietqr.png" alt="ViettelPay" />
+            <img src="../../assets/footer/payment/ViettelPayRed.png" alt="viettelpay" />
             <img src="../../assets/footer/payment/tether-logo.png" alt="tether" />
             <!--            <img src="../../assets/footer/payment/lotterycard.png" alt="lotteryCard" />-->
             <!--            <img src="../../assets/footer/payment/bank-transfer.png" alt="bankTransfer" />-->

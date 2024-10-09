@@ -187,7 +187,7 @@ export default defineComponent({
             }
           }
           &.wechat {
-            width: 50px;
+            width: 43px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: initial;
@@ -199,11 +199,11 @@ export default defineComponent({
             }
           }
           &.qq {
-            width: 41px;
+            width: 32px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: initial;
-            background-image: url("../../assets/footer/qqpay.png");
+            background-image: url("../../assets/footer/qq.png");
             filter: grayscale(130%);
 
             &:hover {
