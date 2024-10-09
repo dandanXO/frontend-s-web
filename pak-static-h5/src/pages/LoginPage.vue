@@ -155,6 +155,10 @@
         <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
         <div>Youtube</div>
       </div>
+      <div class="list-item" @click="openCharity()">
+        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
+        <div>Charity</div>
+      </div>
       <!--      <div class="list-item" @click="openTiktok()">-->
       <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
       <!--        <div>Tiktok</div>-->
@@ -369,6 +373,10 @@ export default defineComponent({
 
     const openYoutube = () => {
       window.open(ui.youtubeUrl, "_blank");
+    };
+
+    const openCharity = () => {
+      window.open(ui.charityUrl, "_blank");
     };
 
     const onSubmit = () => {
@@ -677,7 +685,8 @@ export default defineComponent({
       openWhatsApp,
       openInsta,
       openTiktok,
-      openYoutube
+      openYoutube,
+      openCharity
     };
   }
 });
@@ -755,7 +764,8 @@ export default defineComponent({
   gap: 0px;
   width: 100%;
   margin: 10px auto;
-
+  align-items: flex-start;
+  text-align: center;
   .list-item {
     display: flex;
     justify-content: center;
@@ -764,6 +774,7 @@ export default defineComponent({
     gap: 8px;
     color: #9f9f9f;
     font-size: 12px;
+    flex: 1;
   }
 
   .btn-icon {
@@ -783,21 +794,29 @@ export default defineComponent({
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    animation: smallbeat 2s infinite;
     animation-delay: 1s;
   }
   #whatapp-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    animation: smallbeat 2s infinite;
     animation-delay: 0.5s;
   }
   #download-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    animation: smallbeat 2s infinite;
+    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
+  }
+  #charity-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 1.5s;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
@@ -880,7 +899,7 @@ export default defineComponent({
   height: 60px;
   background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
   background-size: contain;
-  animation: smallbeat 1.5s infinite;
+  animation: smallbeat 2s infinite;
 
   &:active {
     filter: brightness(0.85);
