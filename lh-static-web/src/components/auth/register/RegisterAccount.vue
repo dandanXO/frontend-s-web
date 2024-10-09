@@ -429,6 +429,8 @@ const submitRegisterForm = async (elForm) => {
                 if (store.token) {
                   router.push("/");
                 }
+
+                store.regSuccessGuideVisible = true;
               } else {
                 notify({
                   type: "error",

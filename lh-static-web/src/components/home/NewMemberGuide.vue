@@ -78,7 +78,7 @@
     <div class="step5-container" v-else-if="step === 5">
       <div class="step5-img">
         <div class="image-wrapper">
-          <img src="../../assets/home/guide/step5-img1.png" alt="" />
+          <img class="avatar" src="../../assets/home/guide/step5-img1.png" alt="" />
         </div>
       </div>
       <img src="../../assets/home/guide/step5-arrow.png" alt="" class="arrow" />
@@ -104,7 +104,7 @@
       <div class="arrow2-wrapper">
         <img src="../../assets/home/guide/step6-arrow2.png" alt="" class="arrow2" />
         <div class="confirm-btn">
-            <div class="confirm-btn-content">确定</div>
+          <div class="confirm-btn-content">确定</div>
         </div>
       </div>
 
@@ -115,7 +115,7 @@
           <div>开启您的雷火游戏之旅</div>
         </div>
 
-        <div class="next-button" @click="handleNext(4)">知道了</div>
+        <div class="next-button" @click="closeNewMemerGuide">知道了</div>
 
         <div class="subtitle" style="text-decoration: underline">点击前往新人活动</div>
       </div>
@@ -126,14 +126,30 @@
 <script setup>
 import { ref } from "vue";
 import { userStore } from "@/store";
+import { useRouter } from 'vue-router';
 
 const store = userStore();
 const step = ref(1);
+const router = useRouter();
+
+const props = defineProps(['openAppMenu', 'closeAppMenu']);
 
 const handleNext = (value) => {
   console.log(value);
   step.value = value;
+
+  if(value === 4) {
+    props?.openAppMenu();
+  } else if(value === 5) {
+    props?.closeAppMenu();
+  } else if(value === 6) {
+    router.push('/center/personal');
+  }
 };
+
+const closeNewMemerGuide = () => {
+  store.regSuccessGuideVisible = false;
+}
 </script>
 
 <style lang="scss">
@@ -150,6 +166,7 @@ const handleNext = (value) => {
     padding: 0 !important;
   }
 }
+
 .step1-container,
 .step2-container,
 .step3-container,
@@ -221,7 +238,7 @@ const handleNext = (value) => {
     align-items: center;
     position: fixed;
     top: 0;
-    left: 0;
+    left: -10%;
   }
 }
 
@@ -229,16 +246,19 @@ const handleNext = (value) => {
   .flag {
     left: -100px;
   }
+
   .arrow {
-    top: -5%;
-    right: -10%;
+    top: -10%;
+    right: 15%;
     left: unset;
   }
+
   .step3-img {
     position: fixed;
     width: 500px;
     height: 90px;
     top: 0;
+    right: 43%;
     display: flex;
     justify-content: end;
 
@@ -260,6 +280,8 @@ const handleNext = (value) => {
   align-items: center;
   gap: 200px;
   width: auto;
+  position: absolute;
+  left: -15%;
 
   .arrow {
     right: -50%;
@@ -271,6 +293,7 @@ const handleNext = (value) => {
   .step4-img {
     width: 288px;
     height: 288px;
+    margin-bottom: 15%;
   }
 }
 
@@ -283,24 +306,30 @@ const handleNext = (value) => {
     position: fixed;
     width: 500px;
     height: 90px;
-    top: 0;
+    top: 0.2%;
+    right: 21%;
     display: flex;
     justify-content: end;
 
     .image-wrapper {
       background: url("../../assets/home/guide/step5-img2.png") center no-repeat;
       background-size: contain;
-      width: 82px;
-      height: 82px;
+      width: 125px;
+      height: 125px;
       display: flex;
       justify-content: center;
       padding: 10px;
       align-items: center;
+
+      .avatar {
+        width:100px;
+        height:100px;
+      }
     }
   }
 
   .arrow {
-    right: -15%;
+    right: -55%;
     left: unset;
     top: -5%;
   }
@@ -324,8 +353,8 @@ const handleNext = (value) => {
 
   .arrow1-wrapper {
     position: absolute;
-    top: -25%;
-    left: 15%;
+    top: 0%;
+    left: -85%;
 
     .step6-img {
       display: inline-flex;
@@ -344,29 +373,29 @@ const handleNext = (value) => {
     top: 35%;
 
     .arrow2 {
-        position: relative;
+      position: relative;
     }
 
     .confirm-btn {
-        width: 209px;
-        height: 58px;        
-        background: url('../../assets/home/guide/step6-confirm-btn-bg.png') no-repeat;
-        background-size: contain;
-        padding: 8px;
-        position: relative;
-        top: 40px;
+      width: 209px;
+      height: 58px;
+      background: url('../../assets/home/guide/step6-confirm-btn-bg.png') no-repeat;
+      background-size: contain;
+      padding: 8px;
+      position: relative;
+      top: 40px;
 
-        .confirm-btn-content {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-            border-radius: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 8px white solid;
-            color: white;
-        }
+      .confirm-btn-content {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 8px white solid;
+        color: white;
+      }
     }
   }
 }

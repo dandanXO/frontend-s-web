@@ -453,9 +453,12 @@
 
     <GameModal ref="modalGame"></GameModal>
   </header>
+
+  <NewMemberGuide :openAppMenu="() => selectedMenu = 'App'" :closeAppMenu="() => selectedMenu = ''" />
 </template>
 
 <script lang="js">
+import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -507,7 +510,8 @@ export default defineComponent({
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
-    RegisterAccount
+    RegisterAccount,
+    NewMemberGuide
   },
   setup() {
     const notify = useNotify();
