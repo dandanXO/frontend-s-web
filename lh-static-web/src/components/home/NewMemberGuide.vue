@@ -244,6 +244,7 @@ onMounted(() => {
     align-items: center;
     min-width: 240px;
     gap: 16px;
+    font-family: 'FZZBHJW';
 
     .title {
       color: #3aefff;
