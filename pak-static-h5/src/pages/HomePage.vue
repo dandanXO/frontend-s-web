@@ -1490,7 +1490,12 @@ const checkHash = () => {
   }
 };
 
-const isCharityShow = ref(true);
+const isCharityShow = computed(() => {
+  if (ui.charityUrl) {
+    return true;
+  }
+  return false;
+});
 const charityDragPos = ref([10, 240]);
 const isDraggingCharityGif = ref(false);
 
