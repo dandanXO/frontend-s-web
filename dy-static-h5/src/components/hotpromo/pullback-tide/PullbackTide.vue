@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               当日电子负盈利:
-              <span class="amount">{{ todayNegativeProfit }}元</span>
+              <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <div class="bonus-image" @click="claimHongBao" :class="{ disabled: bonus <= 0 }">
             <img src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/claim-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -140,13 +140,28 @@
           </div>
         </div>
       </div>
+
+      <q-dialog v-model="tableRecordDialog" persistent class="match-table-record-dialog">
+        <q-card class="confirm-vote-card">
+          <div class="title">恭喜你抽中</div>
+          <div class="close-btn" @click="tableRecordDialog = false"></div>
+          <div class="record-dialog-container">
+            <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
+            <div class="record-dialog-content-detail">
+              <span>{{ rewardMoney }}</span>
+              元
+            </div>
+            <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
+          </div>
+        </q-card>
+      </q-dialog>
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getPullbackInit, claimPullbackBonus } from "../../../api/index/promo";
+import { getMatchAndPrizeInfo, getPrizeMoney } from "../../../api/index/promo";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -158,15 +173,13 @@ const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
 
-const todayNegativeProfit = ref(0);
-const totalLHValidBet = ref(0);
+const totalValidBet = ref(0);
+const tableRecordDialog = ref(false);
 const bonus = ref(0);
+const rewardMoney = ref(0);
 const isClaiming = ref(false);
-
-const handleClaimBonus = () => {
-  if (isClaiming.value) return;
-  isClaiming.value = true;
-  if (!store.token) {
+const claimHongBao = async () => {
+  if (!store.hasToken()) {
     $q.dialog({
       class: "q-px-md q-pt-md",
       title: "系统提示",
@@ -187,43 +200,19 @@ const handleClaimBonus = () => {
     }).onOk(() => {
       router.push("/login");
     });
-    return;
   }
-  claimPullbackBonus(promoCode.value)
-    .then((res) => {
-      if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: `领取成功${res.data}元`,
-          icon: "check_circle_outline"
-        });
-        fetchData();
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: res.message,
-          icon: "report_problem"
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      isClaiming.value = false;
-    });
+  const res = await getPrizeMoney(promoCode.value);
+  if (res.code === 0) {
+    tableRecordDialog.value = true;
+    rewardMoney.value = res.data;
+  }
 };
 
-const fetchData = async () => {
-  try {
-    const res = await getPullbackInit(promoCode.value);
-    todayNegativeProfit.value = res.data.totalValidBet;
-    totalLHValidBet.value = res.data.platformValidBet;
-    bonus.value = res.data.bonus;
-  } catch (error) {
-    console.log(error);
+const getMatchData = async () => {
+  const res = await getMatchAndPrizeInfo("profit");
+  if (res.code === 0) {
+    bonus.value = res.data.expectedBonus;
+    totalValidBet.value = res.data.profitAmount;
   }
 };
 
@@ -231,7 +220,7 @@ onMounted(() => {
   if (!store.token) {
     return;
   }
-  fetchData();
+  getMatchData();
 });
 </script>
 
@@ -520,6 +509,385 @@ onMounted(() => {
   .amount {
     color: #00a1ff;
     font-weight: 600;
+  }
+}
+
+:deep(.match-table-record-dialog) {
+  width: 320px;
+  height: 360px;
+  background-color: #fff3df;
+  font-family: "FZHanZhenGuangBiaoS-GB";
+
+  .img {
+    position: absolute;
+    top: -110px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .el-dialog__header {
+    background: #fff3df;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .el-dialog__header .el-dialog__headerbtn {
+    background: url(../../../assets/images/promotion/hotpromo/dy2-blast-premier/close-btn.png);
+    content-visibility: hidden;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    right: 24px;
+  }
+
+  .record-dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 320px;
+
+    .record-dialog-content-title {
+      color: #ea5046;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 16.63px;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .record-dialog-content-detail {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28.5px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: #ea5046;
+
+      span {
+        font-size: 72px;
+      }
+    }
+
+    .hongbao-finish-btn {
+      width: 256px;
+      height: 44px;
+      top: 634px;
+      left: 832px;
+      gap: 0px;
+      border-radius: 100px 0px 0px 0px;
+      background-color: #ea574e;
+
+      color: #fff;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .record-table {
+    width: 100%;
+    height: 100%;
+
+    th {
+      height: 56px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 28px;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      vertical-align: middle;
+      text-align: left;
+
+      &:first-child {
+        border-top-left-radius: 6px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 6px;
+      }
+    }
+
+    tr {
+      height: 56px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 28px;
+      color: #7a8eb9;
+      vertical-align: middle;
+      text-align: left;
+
+      &:nth-child(odd) {
+        background: #f2f8fe;
+      }
+
+      &:nth-child(even) {
+        background: #fff;
+      }
+
+      th {
+        &:first-child {
+          padding-left: 20px;
+        }
+
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      td {
+        &:first-child {
+          padding-left: 20px;
+        }
+
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 6px;
+          }
+        }
+      }
+
+      &:last-child {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 6px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.dialog-header {
+  text-align: center;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.record-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-close-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 12px;
+}
+.match-table-record-dialog {
+  position: relative;
+  .confirm-vote-card {
+    width: 360px;
+    height: 320px;
+    background-color: #fff3df;
+    position: relative;
+    border-radius: 20px;
+    overflow: unset;
+  }
+  .close-btn {
+    background: url(../../../assets/images/promotion/hotpromo/dy2-blast-premier/close-btn.png);
+    content-visibility: hidden;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    right: 14px;
+    position: absolute;
+  }
+
+  .record-dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 320px;
+    .record-dialog-content-title {
+      color: #ea5046;
+      font-family: FZHanZhenGuangBiaoS-GB;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 16.63px;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+    .record-dialog-content-detail {
+      font-family: FZHanZhenGuangBiaoS-GB;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28.5px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: #ea5046;
+      span {
+        font-size: 72px;
+      }
+    }
+    .hongbao-finish-btn {
+      width: 256px;
+      height: 44px;
+      top: 634px;
+      left: 832px;
+      gap: 0px;
+      border-radius: 100px 0px 0px 0px;
+      background-color: #ea574e;
+      font-family: FZHanZhenGuangBiaoS-GB;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .title {
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-dialog-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 244px;
+    height: 44px;
+    font-size: 18px;
+    color: #fff;
+    font-family: FZHanZhenGuangBiaoS-GB;
+    font-weight: 400;
+    line-height: 44px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    position: absolute;
+    top: -1%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+  }
+
+  .record-table {
+    width: 96%;
+    height: 100%;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    border-collapse: collapse !important;
+    th {
+      height: 32px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      vertical-align: middle;
+      text-align: left;
+
+      &:first-child {
+        border-top-left-radius: 6px;
+      }
+      &:last-child {
+        border-top-right-radius: 6px;
+      }
+    }
+    tr {
+      height: 32px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+      color: #7a8eb9;
+      vertical-align: middle;
+      text-align: left;
+      &:nth-child(odd) {
+        background: #f2f8fe;
+      }
+      &:nth-child(even) {
+        background: #fff;
+      }
+      th {
+        &:first-child {
+          padding-left: 20px;
+        }
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      td {
+        &:first-child {
+          padding-left: 20px;
+        }
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 6px;
+          }
+        }
+      }
+      &:last-child {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 6px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// confirm vote dialog
+.confirm-vote-card {
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+
+  :deep(.q-form) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .h6-div {
+    background: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
+    width: calc(100%);
+    text-align: center;
+    line-height: 30px;
+    font-size: 13px;
   }
 }
 </style>

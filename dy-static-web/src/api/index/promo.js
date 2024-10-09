@@ -412,9 +412,10 @@ export function claimIEMRioBonus() {
   return server.EVENT.post("/session/iem-rio/claimBonus");
 }
 
-export function getPullbackInit() {
-  return server.EVENT.get("/session/pullback-tide/init");
+export function getMatchAndPrizeInfo(type) {
+  return server.EVENT.get(`/privi/memberSlotBetInfo?type=${type}`);
 }
-export function claimPullbackBonus() {
-  return server.EVENT.post("/session/pullback-tide/claimBonus");
+
+export function getPrizeMoney(promoCode) {
+  return server.EVENT.put(`/bonus/claim/${promoCode}`);
 }

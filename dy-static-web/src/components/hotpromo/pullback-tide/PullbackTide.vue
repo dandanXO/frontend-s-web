@@ -13,7 +13,7 @@
             </div>
             <div class="reward-info-content">
               当日电子负盈利:
-              <span class="amount">{{ todayNegativeProfit }}元</span>
+              <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <div class="bonus-image" @click="claimHongBao" :class="{ disabled: bonus <= 0 }">
             <img
               v-if="bonus <= 0"
               src="@/assets/promo/lh-livepoker-rebate/reward-btn-disabled.png"
@@ -129,12 +129,31 @@
           </div>
         </div>
       </div>
+      <el-dialog
+        v-model="tableRecordDialog"
+        width="800px"
+        align-center
+        :close-on-click-modal="false"
+        class="match-table-record-dialog"
+      >
+        <template #header>
+          <div class="title">恭喜你抽中</div>
+        </template>
+        <div class="record-dialog-container">
+          <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
+          <div class="record-dialog-content-detail">
+            <span>{{ rewardMoney }}</span>
+            元
+          </div>
+          <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script setup>
-import { getPullbackInit, claimPullbackBonus } from "@/api/index/promo";
+import { getMatchAndPrizeInfo, getPrizeMoney } from "@/api/index/promo";
 import { onMounted, ref, defineProps, toRefs } from "vue";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -142,14 +161,15 @@ const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
 
 const store = userStore();
-const todayNegativeProfit = ref(0);
+const totalValidBet = ref(0);
+const tableRecordDialog = ref(false);
+const rewardMoney = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
 
-const handleClaimBonus = () => {
-  if (isClaiming.value) return;
-  isClaiming.value = true;
-  if (!store.hasToken()) {
+
+const claimHongBao = async () => {
+  if (!store.token) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
       autofocus: false,
       center: true,
@@ -162,31 +182,23 @@ const handleClaimBonus = () => {
     });
     return;
   }
-
-  claimPullbackBonus(promoCode.value)
-    .then((res) => {
-      if (res.code === 0) {
-        ElMessage.success(`成功领取${res.data}元`);
-        fetchData();
-      } else {
-        ElMessage.error(res.message);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      isClaiming.value = false;
-    });
+  const res = await getPrizeMoney(promoCode.value);
+  console.log(res);
+  if (res.code === 0) {
+    tableRecordDialog.value = true;
+    rewardMoney.value = res.data;
+  } else {
+    // notify.error(res.message);
+    ElMessage.error(res.message);
+  }
 };
 
-const fetchData = async () => {
-  try {
-    const res = await getPullbackInit(promoCode.value);
-    todayNegativeProfit.value = res.data.totalValidBet;
-    bonus.value = res.data.bonus;
-  } catch (error) {
-    console.log(error);
+
+const getMatchData = async () => {
+  const res = await getMatchAndPrizeInfo("profit");
+  if (res.code === 0) {
+    bonus.value = res.data.expectedBonus;
+    totalValidBet.value = res.data.profitAmount;
   }
 };
 
@@ -198,7 +210,7 @@ onMounted(() => {
     // });
     return;
   }
-  fetchData();
+  getMatchData();
 });
 </script>
 
@@ -484,6 +496,191 @@ onMounted(() => {
   .amount {
     color: #00a1ff;
     font-weight: 600;
+  }
+}
+
+:deep(.match-table-record-dialog) {
+  width: 320px;
+  height: 360px;
+  background-color: #fff3df;
+  font-family: "FZHanZhenGuangBiaoS-GB";
+
+  .img {
+    position: absolute;
+    top: -110px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .el-dialog__header {
+    background: #fff3df;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .el-dialog__header .el-dialog__headerbtn {
+    background: url(@/assets/promo/lh-livepoker-rebate/close-btn.png);
+    content-visibility: hidden;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    right: 24px;
+  }
+
+  .record-dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 320px;
+
+    .record-dialog-content-title {
+      color: #ea5046;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16.63px;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .record-dialog-content-detail {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 28.5px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: #ea5046;
+
+      span {
+        font-size: 72px;
+      }
+    }
+
+    .hongbao-finish-btn {
+      width: 256px;
+      height: 44px;
+      top: 634px;
+      left: 832px;
+      gap: 0px;
+      border-radius: 100px 0px 0px 0px;
+      background-color: #ea574e;
+
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .title {
+    margin-left: 24px;
+    background-image: url("@/assets/promo/lh-livepoker-rebate/info-dialog-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 244px;
+    height: 44px;
+    margin-top: -5px;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .record-table {
+    width: 100%;
+    height: 100%;
+
+    th {
+      height: 56px;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 28px;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      vertical-align: middle;
+      text-align: left;
+
+      &:first-child {
+        border-top-left-radius: 6px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 6px;
+      }
+    }
+
+    tr {
+      height: 56px;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 28px;
+      color: #7a8eb9;
+      vertical-align: middle;
+      text-align: left;
+
+      &:nth-child(odd) {
+        background: #f2f8fe;
+      }
+
+      &:nth-child(even) {
+        background: #fff;
+      }
+
+      th {
+        &:first-child {
+          padding-left: 20px;
+        }
+
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      td {
+        &:first-child {
+          padding-left: 20px;
+        }
+
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 6px;
+          }
+        }
+      }
+
+      &:last-child {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 6px;
+          }
+        }
+      }
+    }
   }
 }
 </style>

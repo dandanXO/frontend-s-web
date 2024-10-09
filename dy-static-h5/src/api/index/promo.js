@@ -309,12 +309,12 @@ export function claimIEMRioBonus() {
   return eventapi.post(`/session/iem-rio/claimBonus?v=${randNum}`);
 }
 
-export function getPullbackInit() {
+export function getMatchAndPrizeInfo(type) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/pullback-tide/init?v=${randNum}`);
+  return eventapi.get(`/privi/memberSlotBetInfo?type=${type}&v=${randNum}`);
 }
 
-export function claimPullbackBonus() {
+export function getPrizeMoney(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/pullback-tide/claimBonus?v=${randNum}`);
+  return eventapi.put(`/bonus/claim/${promoCode}?v=${randNum}`);
 }
