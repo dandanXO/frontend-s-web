@@ -686,6 +686,8 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  
 </template>
 
 <script>
@@ -699,6 +701,7 @@ import GameModal from "components/modal/GameModal";
 import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
+
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -1787,6 +1790,11 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      if(sessionStorage.getItem('regSuccessGuideVisible')) {
+        store.regSuccessGuideVisible = true;
+        sessionStorage.removeItem('regSuccessGuideVisible');
+      }
+      
       if (store.token) {
         checkShowImgTop();
         setTimeout(() => {
