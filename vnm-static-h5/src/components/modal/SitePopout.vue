@@ -87,7 +87,7 @@ onMounted(() => {
   height: 100%;
   width: 100%;
   .q-carousel__slides-container {
-    height: 95% !important;
+    height: 99% !important;
   }
   .q-carousel__control {
     bottom: -3% !important;
@@ -115,7 +115,7 @@ onMounted(() => {
   background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
   background-size: 100% 100%;
   // aspect-ratio: 644 / 837;
-  padding: 10% 2% 12%;
+  padding: 10% 2% 13.5%;
   min-height: 350px;
   margin: auto;
 
@@ -154,6 +154,7 @@ onMounted(() => {
         align-items: flex-start;
         justify-content: center;
         padding: 2% 6%;
+        min-height: 84px;
         font-weight: 700;
         background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
         background-size: 100% 100%;
