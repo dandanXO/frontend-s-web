@@ -188,6 +188,7 @@ export default defineComponent({
   },
   methods: {
     handleSlot() {
+      const store = userStore();
       const bonusItem = this.list.promoCode;
       const eventUrl = "/session/daily-deposit/claim?promoCode=" + bonusItem;
       this.btnLoading = true;
