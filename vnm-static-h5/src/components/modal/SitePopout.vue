@@ -123,11 +123,14 @@ onMounted(() => {
   height: 70vh;
   max-height: 510px;
   margin: auto;
-  @media (min-width: 400px) {
+  @media (max-width: 430px) {
     max-height: 530px;
   }
-  @media (min-width: 414px) {
+  @media (max-width: 414px) {
     max-height: 510px;
+  }
+  @media (max-width: 390px) {
+    max-height: 490px;
   }
 
   .header {
