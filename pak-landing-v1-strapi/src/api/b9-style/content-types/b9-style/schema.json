@@ -14,7 +14,7 @@
   "attributes": {
     "video": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "component": "ui.video-item",
       "required": true
     }
