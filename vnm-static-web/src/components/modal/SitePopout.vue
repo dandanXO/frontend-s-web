@@ -98,16 +98,18 @@ onMounted(() => {
   }
 
   .content {
-    display: grid;
-    grid-template-columns: 1.5fr 2fr;
+    // display: grid;
+    // grid-template-columns: 1.5fr 2fr;
     // grid-template-columns: 0.7fr 1.7fr;
     width: 100%;
     height: 100%;
     min-height: 300px;
     max-height: 400px;
     gap: 10px;
+    display: flex;
 
     .left {
+      flex: 2;
       display: flex;
       flex-direction: column;
       cursor: pointer;
@@ -178,7 +180,8 @@ onMounted(() => {
       // border-radius: 15px;
       // border: 2px solid #2cbdff;
       overflow: hidden;
-      max-width: 400px;
+      max-width: 475px;
+      flex: 5;
 
       text-align: right;
       > div {
@@ -212,7 +215,7 @@ onMounted(() => {
         cursor: pointer;
         border-radius: 18px;
         border: 2px solid #36afe3;
-        max-height: 400px;
+        max-height: 390px;
 
         &:hover {
           filter: brightness(0.9);
