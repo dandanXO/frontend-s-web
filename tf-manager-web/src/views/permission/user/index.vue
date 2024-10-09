@@ -191,6 +191,32 @@
             @focus="loadSites"
           >
             <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-if="
+            uiControl.siteSelectVisible &&
+              (form.userType === 'MANAGER' || form.userType === 'ADMIN')
+          "
+          :label="t('fields.site')"
+          prop="siteIds"
+        >
+          <el-select
+            v-model="form.siteIdArray"
+            size="small"
+            class="filter-item"
+            style="width: 350px"
+            :placeholder="t('fields.pleaseChoose')"
+            multiple
+            filterable
+            @change="setSiteIdArray"
+          >
+            <el-option
               v-for="item in formSiteList.list"
               :key="item.id"
               :label="item.siteName"
@@ -282,12 +308,10 @@
           v-if="
             uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'
           "
-          :label="t('fields.queryNumber')" prop="queryNumber"
+          :label="t('fields.queryNumber')"
+          prop="queryNumber"
         >
-          <el-input
-            v-model="form.queryNumber"
-            style="width: 350px;"
-          />
+          <el-input v-model="form.queryNumber" style="width: 350px;" />
         </el-form-item>
         <el-form-item
           v-if="
@@ -314,7 +338,9 @@
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="cancel">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -328,8 +354,16 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column type="selection" width="55" />
-      <el-table-column :label="t('fields.site')" :formatter="toSiteName" width="100" />
-      <el-table-column prop="loginName" :label="t('fields.username')" width="200">
+      <el-table-column
+        :label="t('fields.site')"
+        :formatter="toSiteName"
+        width="200"
+      />
+      <el-table-column
+        prop="loginName"
+        :label="t('fields.username')"
+        width="200"
+      >
         <template #default="scope">
           {{ scope.row.loginName }}
           <el-tag
@@ -341,8 +375,16 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="queryRestriction" :label="t('fields.queryRestriction')" width="150" />
-      <el-table-column prop="queryNumber" :label="t('fields.queryNumber')" width="150" />
+      <el-table-column
+        prop="queryRestriction"
+        :label="t('fields.queryRestriction')"
+        width="150"
+      />
+      <el-table-column
+        prop="queryNumber"
+        :label="t('fields.queryNumber')"
+        width="150"
+      />
       <el-table-column prop="status" :label="t('fields.state')" width="100">
         <template #default="scope">
           <el-switch
@@ -353,13 +395,30 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="lockStatus" :label="t('fields.lockStatus')" width="120">
+      <el-table-column
+        prop="lockStatus"
+        :label="t('fields.lockStatus')"
+        width="120"
+      >
         <template #default="scope">
-          <el-tag v-if="scope.row.attempt === 3 && scope.row.lastAttemptDate === today" type="danger">{{ scope.row.lockStatus = 'LOCKED' }}</el-tag>
-          <el-tag v-else type="success">{{ scope.row.lockStatus = 'NORMAL' }}</el-tag>
+          <el-tag
+            v-if="
+              scope.row.attempt === 3 && scope.row.lastAttemptDate === today
+            "
+            type="danger"
+          >
+            {{ (scope.row.lockStatus = 'LOCKED') }}
+          </el-tag>
+          <el-tag v-else type="success">
+            {{ (scope.row.lockStatus = 'NORMAL') }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="vcallName" :label="t('fields.vcallName')" width="200">
+      <el-table-column
+        prop="vcallName"
+        :label="t('fields.vcallName')"
+        width="200"
+      >
         <template #default="scope">
           {{ scope.row.vcallName }}
         </template>
@@ -369,28 +428,60 @@
           {{ getRolesTxt(scope.row.roles) }}
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+      <el-table-column
+        prop="createTime"
+        :label="t('fields.createTime')"
+        width="200"
+      >
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
           <span
             v-if="scope.row.createTime !== null"
-            v-formatter="{data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date'}"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="createBy" :label="t('fields.createBy')" width="100" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200">
+      <el-table-column
+        prop="createBy"
+        :label="t('fields.createBy')"
+        width="100"
+      />
+      <el-table-column
+        prop="updateTime"
+        :label="t('fields.updateTime')"
+        width="200"
+      >
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="100" />
-      <el-table-column :label="t('fields.operate')" align="center" fixed="right" min-width="500"
-                       v-if="hasPermission(['sys:user:update:password'])||hasPermission(['sys:user:update'])||hasPermission(['sys:user:delete'])"
+      <el-table-column
+        prop="updateBy"
+        :label="t('fields.updateBy')"
+        width="100"
+      />
+      <el-table-column
+        :label="t('fields.operate')"
+        align="center"
+        fixed="right"
+        min-width="500"
+        v-if="
+          hasPermission(['sys:user:update:password']) ||
+            hasPermission(['sys:user:update']) ||
+            hasPermission(['sys:user:delete'])
+        "
       >
         <template #default="scope">
           <div v-if="scope.row.loginName !== LOGIN_USER_NAME">
@@ -420,11 +511,12 @@
               v-permission="['sys:user:update']"
               @click="showEdit(scope.row)"
             />
-            <el-button icon="el-icon-remove"
-                       size="mini"
-                       type="danger"
-                       v-permission="['sys:user:delete']"
-                       @click="removeUser(scope.row)"
+            <el-button
+              icon="el-icon-remove"
+              size="mini"
+              type="danger"
+              v-permission="['sys:user:delete']"
+              @click="removeUser(scope.row)"
             />
           </div>
         </template>
@@ -452,11 +544,11 @@ import {
   updateUser,
   updateUserPassword,
   updateUserState,
-  unlockUser
+  unlockUser,
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimple, getSiteListSimpleOri } from '../../../api/site'
+import { getSiteListSimpleOri } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -465,9 +557,9 @@ import {
 } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
 import moment from 'moment'
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const LOGIN_USER_NAME = computed(() => store.state.user.name)
@@ -482,7 +574,7 @@ const userTypeList = computed(() => {
     return [TENANT]
   }
 })
-const today = moment(new Date()).format('YYYY-MM-DD');
+const today = moment(new Date()).format('YYYY-MM-DD')
 const siteList = reactive({ list: [] })
 const formSiteList = reactive({ list: [] })
 const netPhone = reactive({ list: [] })
@@ -502,8 +594,8 @@ const uiControl = reactive({
   ],
   queryRestriction: [
     { key: 1, displayName: 'No Limit', value: 'NO_LIMIT' },
-    { key: 2, displayName: 'At Least One', value: 'AT_LEAST_ONE' }
-  ]
+    { key: 2, displayName: 'At Least One', value: 'AT_LEAST_ONE' },
+  ],
 })
 const page = reactive({
   pages: 0,
@@ -515,7 +607,7 @@ const request = reactive({
   name: null,
   enable: null,
   siteId: null,
-  role: null
+  role: null,
 })
 const options = ref([])
 
@@ -562,7 +654,10 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   userType: [required(t('message.validateUserTypeRequired'))],
   queryRestriction: [required(t('message.validateQueryRestrictionRequired'))],
-  queryNumber: [required(t('message.validateQueryNumberRequired')), numericOnly(t('message.validateNumberOnly'))],
+  queryNumber: [
+    required(t('message.validateQueryNumberRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
   siteIds: [
     {
       required: true,
@@ -654,7 +749,7 @@ function showDialog(type) {
       LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
     form.queryRestriction = null
     form.queryNumber = 10
-    form.vcallId = null;
+    form.vcallId = null
     uiControl.dialogTitle = t('fields.addUser')
     uiControl.userTypeSelect = false
     uiControl.siteSelectVisible = false
@@ -669,9 +764,9 @@ function showDialog(type) {
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 
-  if (form.userType && form.userType === 'TENANT') {
-    form.siteId = store.state.user.siteId
-  }
+  // if (form.userType && form.userType === 'TENANT') {
+  //   form.siteId = store.state.user.siteId
+  // }
 }
 
 function showEdit(user) {
@@ -689,7 +784,7 @@ function showEdit(user) {
         }
       }
     }
-    form.id = user.id;
+    form.id = user.id
   })
 }
 
@@ -714,7 +809,7 @@ function resetFields() {
     LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
   form.queryRestriction = null
   form.queryNumber = 10
-  form.vcallId = null;
+  form.vcallId = null
   uiControl.dialogTitle = t('fields.addUser')
   uiControl.userTypeSelect = false
   uiControl.siteSelectVisible = false
@@ -728,10 +823,10 @@ function create() {
   userForm.value.validate(async valid => {
     if (valid) {
       await createUser(form)
-      uiControl.dialogVisible = false;
+      uiControl.dialogVisible = false
       await loadUser()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' });
-      resetFields();
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      resetFields()
       // setTimeout(() => {
       //   window.location.reload()
       // }, 250)
@@ -748,8 +843,8 @@ function edit() {
       await updateUser(form)
       uiControl.dialogVisible = false
       await loadUser()
-      ElMessage({ message: t('message.editSuccess'), type: 'success' });
-      resetFields();
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+      resetFields()
     }
   })
 }
@@ -759,15 +854,18 @@ function updatePassword() {
     if (valid) {
       await updateUserPassword(form)
       uiControl.dialogVisible = false
-      ElMessage({ message: t('message.updatePasswordSuccess'), type: 'success' })
+      ElMessage({
+        message: t('message.updatePasswordSuccess'),
+        type: 'success',
+      })
     }
   })
 }
 
 async function unlock(id) {
-  await unlockUser(id);
+  await unlockUser(id)
   ElMessage({ message: t('message.unlockUserSuccess'), type: 'success' })
-  await loadUser();
+  await loadUser()
 }
 
 async function changeUserState(id, state) {
@@ -775,14 +873,11 @@ async function changeUserState(id, state) {
 }
 
 async function removeUser(user) {
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: 'warning',
-    }
-  ).then(async () => {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
     if (user) {
       await deleteUser([user.id])
     } else {
@@ -794,8 +889,8 @@ async function removeUser(user) {
 }
 
 function cancel() {
-  uiControl.dialogVisible = false;
-  resetFields();
+  uiControl.dialogVisible = false
+  resetFields()
 }
 
 function submit() {
@@ -809,13 +904,8 @@ function submit() {
 }
 
 async function loadSites() {
-  let response;
-  if (store.state.user.userType === "ADMIN") {
-    response = await getSiteListSimpleOri()
-  } else {
-    response = await getSiteListSimple()
-  }
-  siteList.list = response.data
+  const { data: site } = await getSiteListSimpleOri()
+  siteList.list = site
 }
 
 async function loadDefaultSites() {
@@ -850,7 +940,7 @@ function getRolesTxt(roleIds) {
 function roleTxt(roleId) {
   for (const r of options.value) {
     if (r.id === roleId) {
-      return r.name;
+      return r.name
     }
   }
 }
@@ -884,6 +974,7 @@ watch(
     }
   }
 )
+
 watch(
   () => form.userType,
   async () => {
@@ -913,7 +1004,9 @@ onMounted(async () => {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false
     uiControl.rolesSelect = false
-    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName)
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
     request.siteId = site.value.id
   }
   await loadRoles()

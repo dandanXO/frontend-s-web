@@ -19,7 +19,7 @@
           v-if="carouselItem.media"
           class="carousel-media"
           :style="{
-            backgroundImage: `url(${BASE_STRAPI_URL}${carouselItem.media.data.attributes.url})`,
+            backgroundImage: `url(${carouselItem.media.url})`,
           }"
         ></div>
         <div v-else-if="carouselItem.videoUrl" class="carousel-media">
@@ -49,7 +49,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { BASE_STRAPI_URL } from "src/constants/constants";
 
 const props = defineProps(["carouselData", "hasBg", "margin"]);
 const slide = ref(0);

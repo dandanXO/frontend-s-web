@@ -44,14 +44,13 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://ind.55ace.com/",
+      h5Url: "https://www.55ace.com/",
       hasUpdatedOneSignal: false,
       walletCurrency: sessionStorage.getItem("WALLET_TYPE") ? sessionStorage.getItem("WALLET_TYPE") : "INR",
       multipleBalance: [],
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
-      ftd: true,
-      isAxiosInit: false,
+      ftd: true
     };
   },
   actions: {
@@ -116,7 +115,6 @@ export const userStore = defineStore("userStore", {
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
-          this.initAxiosInterceptors(ret.data);
         } else {
           Notify.create({
             color: "negative",
@@ -168,32 +166,38 @@ export const userStore = defineStore("userStore", {
     setReadMsg() {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
-    initAxiosInterceptors(tokenFromApi) {
-      if(this.isAxiosInit === false) {
-        const token = (() => {
-          if (isAndroid()) {
-            return LocalStorage.getItem("TOKEN");
-          } else {
-            return SessionStorage.getItem("TOKEN");
-          }
-        })();
-  
-        api.interceptors.request.use(async (req) => {
-          req.headers.token = token || tokenFromApi;
-          return req;
-        });
-        cashier.interceptors.request.use(async (req) => {
-          req.headers.TOKEN = token || tokenFromApi;
-          return req;
-        });
-        eventapi.interceptors.request.use(async (req) => {
-          req.headers.TOKEN = token || tokenFromApi;
-          return req;
-        });
-      }
-    },
     getMemberInfo() {
-      this.initAxiosInterceptors();
+      api.interceptors.request.use(async (req) => {
+        var token;
+        if (isAndroid()) {
+          token = LocalStorage.getItem("TOKEN");
+        } else {
+          token = SessionStorage.getItem("TOKEN");
+        }
+        req.headers.token = token;
+        return req;
+      });
+      cashier.interceptors.request.use(async (req) => {
+        var token;
+        if (isAndroid()) {
+          token = LocalStorage.getItem("TOKEN");
+        } else {
+          token = SessionStorage.getItem("TOKEN");
+        }
+        req.headers.TOKEN = token;
+        return req;
+      });
+      eventapi.interceptors.request.use(async (req) => {
+        var token;
+        if (isAndroid()) {
+          token = LocalStorage.getItem("TOKEN");
+        } else {
+          token = SessionStorage.getItem("TOKEN");
+        }
+        req.headers.TOKEN = token;
+        return req;
+      });
+
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -303,7 +307,6 @@ export const userStore = defineStore("userStore", {
       } else {
         SessionStorage.set("TOKEN", token);
       }
-      this.initAxiosInterceptors(token);
     },
     memberLogout() {
       return api.post("/session/logout").then(() => {

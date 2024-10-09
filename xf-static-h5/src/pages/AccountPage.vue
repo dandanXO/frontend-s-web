@@ -180,16 +180,6 @@
             <!--          ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <router-link to="/account/message">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_message.png" />
-            <div class="acct-nav-label">消息中心</div>
-            <div class="unread" v-if="store.unreadInboxMail > 0">
-              {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
-            </div>
-            <!--          ({{ store.unreadInboxMail }})-->
-          </div>
-        </router-link>
       </div>
     </q-item-section>
     <a @click="logout">
@@ -206,7 +196,6 @@ import {
   ref,
   computed,
   onMounted,
-  onActivated,
   onBeforeUnmount
 } from "vue";
 import { userStore } from "stores/index";
@@ -278,16 +267,12 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
-    onActivated(() => {
-      store.getUnreadTotal();
-    });
     onMounted(() => {
       getBalance();
       // store.getUnreadTotal();
       store.getBalance();
       getVersionNo();
       checkPlatform();
-      store.getUnreadTotal();
     });
 
     onBeforeUnmount(() => {
@@ -514,18 +499,6 @@ export default defineComponent({
         color: #bacef1;
         text-decoration: none;
         padding: 10px;
-        position: relative;
-        
-        .unread {
-          position: absolute;
-          border-radius: 50%;
-          background: #ff0000;
-          left: 70%;
-          top: -3px;
-          color: #ffffff;
-          padding: 1px 5px;
-          font-size: 10px;
-        }
 
         img {
           height: 40px;

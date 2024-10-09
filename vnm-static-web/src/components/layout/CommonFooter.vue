@@ -117,14 +117,15 @@
           <img src="../../assets/footer/payment/VP.png" />
           <img src="../../assets/footer/payment/BIDV.png" />
           <img src="../../assets/footer/payment/ACB.png" /> -->
-            <img src="../../assets/footer/payment/bank-logo.png" alt="bank" />
+            <!--            <img src="../../assets/footer/payment/bank-logo.png" alt="bank" />-->
+            <img src="../../assets/footer/payment/napas247.png" alt="napas24/7" />
             <img src="../../assets/footer/payment/momo.png" alt="momo" />
             <img src="../../assets/footer/payment/ZaloPay.png" alt="ZaloPay" />
-            <img src="../../assets/footer/payment/scratch-card-logo.png" alt="scratch card" />
-            <img src="../../assets/footer/payment/ViettelPayRed.png" alt="ViettelPay" />
+            <!--            <img src="../../assets/footer/payment/scratch-card-logo.png" alt="scratch card" />-->
+            <img src="../../assets/footer/payment/vietqr.png" alt="ViettelPay" />
             <img src="../../assets/footer/payment/tether-logo.png" alt="tether" />
-            <img src="../../assets/footer/payment/lotterycard.png" alt="lotteryCard" />
-            <img src="../../assets/footer/payment/bank-transfer.png" alt="bankTransfer" />
+            <!--            <img src="../../assets/footer/payment/lotterycard.png" alt="lotteryCard" />-->
+            <!--            <img src="../../assets/footer/payment/bank-transfer.png" alt="bankTransfer" />-->
           </div>
         </div>
       </div>
@@ -182,6 +183,8 @@ export default defineComponent({
   background-color: #f3f7fd;
   .top-footer {
     background-color: $footer-black;
+    padding-bottom: 16px;
+
     .top-footer-inner {
       border-top: 1px solid $font-1;
       margin: 0 auto;
@@ -225,15 +228,15 @@ export default defineComponent({
         white-space: nowrap;
       }
       .top-ft-rgt {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
         .s1 {
           color: #ffffff;
           font-size: 16px;
         }
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 20px;
-        flex-wrap: wrap;
         img {
           height: 25px;
           // filter: grayscale(1);
