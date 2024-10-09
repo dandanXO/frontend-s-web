@@ -7,11 +7,11 @@
         class="row"
         @click="openUrl(item.url)"
       >
-        <div class="col-3" :style="{ background: `url(${item.thumbnail})` }">
+        <div class="col-5" :style="{ background: `url(${item.thumbnail})` }">
           <q-icon name="play_circle" class="pseudo-play-btn" />
         </div>
 
-        <div class="txt-container col-9">
+        <div class="txt-container col-7">
           <div class="txt title">{{ item.title }}</div>
           <!--          <div class="txt-item-wrap">-->
           <!--            <div class="txt description">-->
@@ -97,20 +97,25 @@ const openUrl = (url) => {
   .row {
     line-height: 0;
     margin: 12px;
-    border-radius: 14px;
+    border-radius: 16px;
+    background-color: #2c2a28;
     overflow: hidden;
+    padding: 8px 5px 8px 14px;
     cursor: pointer;
-    min-height: 90px;
+    min-height: 120px;
 
-    .col-3 {
+    .col-5 {
       position: relative;
-      background-size: cover;
+      border-radius: 12px;
+      background-size: 100% auto !important;
+      //background-size: cover;
       &::before {
         content: "";
         display: block;
         position: absolute;
         width: 100%;
         height: 100%;
+        border-radius: 12px;
         background-color: rgba(0, 0, 0, 0.5);
       }
       .pseudo-play-btn {
@@ -126,7 +131,7 @@ const openUrl = (url) => {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      background-color: #2c2a28;
+      //background-color: #2c2a28;
       padding: 10px;
       .txt-item-wrap {
         display: flex;
