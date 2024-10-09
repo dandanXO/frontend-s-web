@@ -39,7 +39,6 @@ onMounted(() => {
   strapi
     .get("/api/b9-style?populate[videos][populate]")
     .then((res) => {
-      console.log("res", res);
       arr.value = res.data.attributes.videos;
     })
     .catch((e) => {})
@@ -56,9 +55,7 @@ const getVideoId = (url) => {
 };
 
 const openUrl = (url) => {
-  console.log(url);
   const videoId = getVideoId(url);
-  console.log(videoId);
   window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
 };
 </script>
@@ -86,6 +83,13 @@ const openUrl = (url) => {
         font-weight: 500;
       }
       .title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1; /* Limit to 1 lines */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.5;
+        max-height: 4.5em;
         font-size: 14px;
       }
       .description {
@@ -96,6 +100,7 @@ const openUrl = (url) => {
         text-overflow: ellipsis;
         line-height: 1.5;
         max-height: 4.5em;
+        font-size: 10px;
       }
     }
   }
