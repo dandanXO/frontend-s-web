@@ -109,9 +109,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { userStore } from "@/store";
 import { useRouter } from 'vue-router';
+import debounce from "lodash/debounce";
 
 const store = userStore();
 const step = ref(1);
@@ -119,16 +120,15 @@ const router = useRouter();
 
 const props = defineProps(['openAppMenu', 'closeAppMenu']);
 
-const handleNext = (value) => {
-  console.log(value);
-  step.value = value;
+const adjustGuide = () => {
+  const value = step.value;
 
   if(value === 2) {
     setTimeout(() => {
       const { x, y } = document.querySelector('.navigations').getBoundingClientRect();
       const step2img = document.querySelector('.step2-img');
       step2img.style.top = `calc(${y}px - 20px)`;
-      step2img.style.left = `calc(${x}px - 30px)`;
+      step2img.style.left = `calc(${x}px + 55px)`;
       step2img.style.visibility = 'visible';
     }, 500)
   } else if(value === 3) {
@@ -179,11 +179,24 @@ const handleNext = (value) => {
       step6img2.style.visibility = 'visible';
     }, 2000);
   }
+}
+
+const handleNext = (value) => {
+  step.value = value;
+  adjustGuide();
 };
 
 const closeNewMemerGuide = () => {
   store.regSuccessGuideVisible = false;
 }
+
+onMounted(() => {
+  window.addEventListener("resize", debounce((e) => {
+    if(step.value && store.regSuccessGuideVisible) {
+      adjustGuide();
+    }
+  }, 1000));
+})
 </script>
 
 <style lang="scss">
