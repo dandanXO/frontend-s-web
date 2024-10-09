@@ -1,12 +1,14 @@
 <template>
   <div class="promo-container">
-    <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+    <div class="promo" :class="{
+      dota2Pgql: selectedPromo.promoCode === 'dy2-dota2-pgl'
+    }">
+      <q-tabs v-if="!isPromoDetail" v-model="promoTabActive" align="justify">
+        <q-tab v-for="(tab, i) in promoTypes" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
+      <q-tab-panels v-model="promoTabActive" animated>
+        <q-tab-panel v-for="(tab, i) in promoTypes" :key="i" :name="tab.name">
           <div class="all-promotions" v-if="!isPromoDetail">
             <div class="promo-main-container">
               <div class="promo-type-wrapper"></div>
@@ -18,7 +20,7 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div class="promo-item" v-if="promo.promoType.split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
@@ -49,7 +51,7 @@
                     </a>
                   </div>
 
-                  <div class="promo-item" v-if="tab.name === 'all'">
+                  <div class="promo-item" v-if="tab.name === 'ALL'">
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
@@ -307,6 +309,7 @@
 import { ref, defineComponent, onActivated, reactive, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
+import {cached} from "boot/cache";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
@@ -333,19 +336,8 @@ export default defineComponent({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
-    const promoTypes = ref([
-      { code: "ALL", img: "all", label: "所有游戏" },
-      { code: "WELCOME", img: "esport", label: "新人" },
-      { code: "ESPORTS", img: "esport", label: "电竞" },
-      { code: "SPORTS", img: "sport", label: "体育" },
-      { code: "POKER", img: "poker", label: "棋牌" },
-      { code: "SLOT", img: "game", label: "电子" },
-      { code: "VIP", img: "game", label: "VIP" },
-      { code: "LIMITED", img: "live", label: "限时" },
-      { code: "FTD", img: "live", label: "充提" }
-      // { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
-      // { code: "FISH", img: "game", label: "老虎机/捕鱼" }
-    ]);
+    const promoTypes = ref([]);
+    const promoTabActive = ref('');
     const getPromoLabel = (labelType) => {
       switch (labelType) {
         case 0:
@@ -369,7 +361,6 @@ export default defineComponent({
       }
     };
     const isFetchingPromo = ref(false);
-    const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
@@ -379,37 +370,37 @@ export default defineComponent({
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
-    const tab = ref("all");
-    const tabItems = [
-      { name: "all", label: "全部" },
-      { name: "welcome", label: "新人" },
-      { name: "esport", label: "电竞" },
-      {
-        name: "sport",
-        label: "体育"
-      },
-      { name: "live casino", label: "真人" },
-      {
-        name: "slot game",
-        label: "电游"
-      },
-      {
-        name: "vip",
-        label: "VIP"
-      },
-      {
-        name: "limited",
-        label: "限时"
-      },
-      {
-        name: "ftd",
-        label: "充提"
-      }
-      // {
-      //   name: "other",
-      //   label: "其它"
-      // }
-    ];
+    // const tab = ref("all");
+    // const tabItems = [
+    //   { name: "all", label: "全部" },
+    //   { name: "welcome", label: "新人" },
+    //   { name: "esport", label: "电竞" },
+    //   {
+    //     name: "sport",
+    //     label: "体育"
+    //   },
+    //   { name: "live casino", label: "真人" },
+    //   {
+    //     name: "slot game",
+    //     label: "电游"
+    //   },
+    //   {
+    //     name: "vip",
+    //     label: "VIP"
+    //   },
+    //   {
+    //     name: "limited",
+    //     label: "限时"
+    //   },
+    //   {
+    //     name: "ftd",
+    //     label: "充提"
+    //   }
+    //   // {
+    //   //   name: "other",
+    //   //   label: "其它"
+    //   // }
+    // ];
 
     watch(
       () => route.query,
@@ -494,9 +485,25 @@ export default defineComponent({
       return newData;
     };
 
-    const loadAll = () => {
-      const platformApiUrl = "/opt-session/promo/page";
+    const loadTabs = async() => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        promoTypes.value = res.map(({ value, name, iconUrl }) => ({
+          name: value,
+          label: name ? JSON.parse(name).H5 : ''
+        }));
+        if (promoTypes.value.length > 0) {
+          promoTabActive.value = promoTypes.value[0].name
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
+    }
 
+    const loadAll = async () => {
+      await loadTabs()
+
+      const platformApiUrl = "/opt-session/promo/page";
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api
@@ -512,7 +519,9 @@ export default defineComponent({
                 showPromoDetails(element);
               }
             });
-            switchPromoType(promoState.active);
+            if (promoTypes.value.length > 0) {
+              switchPromoType(promoState.active);
+            }
             isFetchingPromo.value = false;
           }
         })
@@ -557,8 +566,8 @@ export default defineComponent({
       banner,
       imgURL,
       store,
-      tab,
-      tabItems,
+      // tab,
+      // tabItems,
       isDisplayLogin,
       getPromoLabel,
       checkExtension,
@@ -1281,6 +1290,10 @@ export default defineComponent({
       margin-left: auto;
       display: block;
     }
+  }
+
+  &.dota2Pgql {
+    background: #e7f1fd;
   }
 }
 

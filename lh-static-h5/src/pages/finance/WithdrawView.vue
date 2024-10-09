@@ -3,10 +3,10 @@
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
         <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
-        <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+        <!-- <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
           <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
           <span>升级快速提款</span>
-        </q-btn>
+        </q-btn> -->
       </div>
 
       <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="withdraw" redirect="finance/withdraw" style="padding:5px 0px 5px 0px;" />
@@ -298,7 +298,7 @@
       </q-card>
     </q-dialog>
   </q-page>
-
+  
   <q-dialog class="modal-common-div" width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 1rem 0.5rem" class="">
       <q-card-section class="contents">
@@ -314,6 +314,8 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+
+  <WithdrawRemainingDialog v-model="isShowRemainingDialog"/>
 </template>
 
 <script lang="js">
@@ -326,10 +328,11 @@ import AcctBal from "../../components/AcctBal.vue";
 import{useLocalStorage} from "@vueuse/core"
 import { useNotify } from "src/hooks/notify";
 import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
+import WithdrawRemainingDialog from "src/components/WithdrawRemainingDialog.vue";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: {AcctBal, DepositWithdrawTransferTabs},
+  components: {AcctBal, DepositWithdrawTransferTabs, WithdrawRemainingDialog},
   setup() {
     const notify = useNotify();
     const store = userStore();
@@ -351,6 +354,8 @@ export default defineComponent({
       amount: ""
     });
     const isLoaded = ref(false);
+    const isShowRemainingDialog = ref(false)
+
     const hasWithdrawCard = computed(() => {
       return (isLoaded == true) && withdrawState.bankCardList.length === 0;
     });
@@ -512,9 +517,12 @@ export default defineComponent({
       });
     };
     const getWithdrawalMethods = () => {
-      api.get("/session/withdraw/entrance").then((response) => {
+      api.get("/session/withdraw/entrance/status").then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data;
+          if(isAutoWithdrawal.value){
+            isShowRemainingDialog.value = !response.data.withdrawStatus
+          }
+          withdrawalMethods.value = response.data.withdrawShowList;
           //Remove this for real data
           // withdrawalMethods.value = [
           //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
@@ -638,6 +646,7 @@ export default defineComponent({
       withdrawLoading,
       isAutoWithdrawal,
       handleUpgradeClick,
+      isShowRemainingDialog
     };
   }
 });

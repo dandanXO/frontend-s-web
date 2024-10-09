@@ -111,8 +111,9 @@ const getPromotion = () => {
 
   loadingClaim.value = true;
 
+  const randNum = Math.floor(Math.random() * 1000) + 1;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=${promoCode.value}`)
+    .get(`/redPacketVip/claim?promoCode=${promoCode.value}&v=${randNum}`)
     .then((res) => {
       loadingClaim.value = false;
 

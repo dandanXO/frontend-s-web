@@ -243,6 +243,7 @@ export default {
     message: "Message",
     feedback: "Feedback",
     vip: "VIP",
+    charity: 'Charity',
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit"

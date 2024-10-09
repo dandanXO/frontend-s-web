@@ -33,7 +33,7 @@
             <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
           </div>
         </div>
-        
+
         <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
@@ -54,14 +54,14 @@
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
                   <el-form-item prop="votes">
                     <el-input-number :controls="false" v-model="votesListItem.votes" min="0" max="10" />
                   </el-form-item>
                 </el-form>
-                
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
@@ -77,7 +77,7 @@
             <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
           </div>
         </div>
-        
+
         <!-- <div class="main-title-box">淘汰赛阶段：10月17日~10月27日</div> -->
         <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
@@ -99,14 +99,14 @@
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
                   <el-form-item prop="votes">
                     <el-input-number :controls="false" v-model="votesListItem.votes" min="0" max="10" />
                   </el-form-item>
                 </el-form>
-                
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
@@ -124,7 +124,7 @@
             <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
           </div>
         </div>
-        
+
         <div class="main-title-box">{{selectedDate}}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
@@ -144,14 +144,14 @@
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
                   <el-form-item prop="votes">
                     <el-input-number :controls="false" v-model="votesListItem.votes" min="0" max="10" />
                   </el-form-item>
                 </el-form>
-                
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
@@ -234,7 +234,7 @@
               <span class="eg">例：用户投注BLG队伍100票，BLG队伍在决赛阶段获得冠军总共获得500,000票数，那么用户可获得（1000,000➗500,000）*100=200元彩金；</span></li>
           <li> 根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
           <li> 此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</li>
-          <li> 为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          <li> 为避免文字理解差异，东赢电竞保留此活动最终解释权；</li>
 
         </ol>
       </div>
@@ -405,10 +405,10 @@ const loadVoteTeam = () => {
         if (voteItems) {
           const { countryImgUrl, teamNameLocal } = voteItems;
           // return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
-          return { 
-            ...voteRecordItem, 
-            countryImgUrl, 
-            teamNameLocal 
+          return {
+            ...voteRecordItem,
+            countryImgUrl,
+            teamNameLocal
           };
         }
         return []; // Return an empty array to exclude unmatched items
@@ -461,7 +461,7 @@ const totalPages = computed(() => {
   return Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
 });
 
-const isClickable = ref(true); 
+const isClickable = ref(true);
 const checkPeriod = (tabClicked) => {
   if (!isClickable.value) return; // Prevent clicks if not clickable
   if (tabClicked > activeTab.value) {
@@ -497,7 +497,7 @@ onMounted(() => {
     // align-items: center;
     // color: #fff;
     // background-color: transparent;
-    
+
     border: 0;
     background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66ACFF 100%);
 
@@ -1056,7 +1056,7 @@ onMounted(() => {
       -webkit-text-fill-color: #ffffff;
       background-clip: text;
       // text-shadow: 20px 45px #000000AA;
-      text-shadow: 20px 35px rgba(0, 0, 0, 0.4); 
+      text-shadow: 20px 35px rgba(0, 0, 0, 0.4);
       font-size: 58px;
       padding-right: 15px;
     }
@@ -1090,7 +1090,7 @@ onMounted(() => {
       font-family: 'PingFang SC';
     max-width: 90px;
     }
-    
+
   .c-flag {
     // background: #eeeee4;
     // border: 5px solid #53ABFF;

@@ -522,7 +522,20 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item />
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.gender') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.gender !== null && memberDetail.gender !== ''">{{ t(`fields.${memberDetail.gender}`) }}</span>
+          <span v-else>-</span>
+        </el-descriptions-item>
         <el-descriptions-item />
       </el-descriptions>
     </el-card>
@@ -1832,6 +1845,7 @@ export default defineComponent({
       fiatBalance: null,
       usdtBalance: null,
       walletType: null,
+      gender: null,
     })
 
     const affiliateDetail = reactive({

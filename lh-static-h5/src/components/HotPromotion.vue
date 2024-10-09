@@ -98,6 +98,7 @@
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode"/>
     <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
     <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
+    <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'lh1-national-day-2024'" :promo-code="list.promoCode" />
@@ -106,6 +107,7 @@
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'"/>
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param"/>
     <lh1Vip v-if="list.redirectUrl === 'lh1-vip'"/>
+    <IemMasterPromo v-if="list.redirectUrl === 'lh1-iem-master'" :promo-code="list.promoCode"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -221,6 +223,7 @@ const BbdachaCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/b
 const EslProCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue"));
 const BlastPremier = defineAsyncComponent(() => import("../components/hotpromo/blast-premier/BlastPremier.vue"))
 const Tpworld2024 = defineAsyncComponent(() => import("./hotpromo/tpworld-2024/Tpworld-2024.vue"));
+const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
 const Dota2Pgl = defineAsyncComponent(() => import("../components/hotpromo/dota2-pgl/Dota2Pgl.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
 const NationalDay2024 = defineAsyncComponent(() => import("../components/hotpromo/national-day-2024/NationalDay2024.vue"));
@@ -230,6 +233,7 @@ const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/black
 const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
 const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/daili/DailiPromo.vue"));
 const lh1Vip = defineAsyncComponent(()=>import("./hotpromo/lh1-vip/lh1Vip.vue"));
+const IemMasterPromo = defineAsyncComponent(()=>import("./hotpromo/iem-master/IemMasterPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -296,6 +300,7 @@ export default defineComponent({
     EslProCsgo2,
     BlastPremier,
     Tpworld2024,
+    Cba30Dream,
     Dota2Pgl,
     NewVipRebate,
     NationalDay2024,
@@ -304,7 +309,8 @@ export default defineComponent({
     BlackMythWuKongPromo,
     SubmitClaimPromo,
     DailiPromo,
-    lh1Vip
+    lh1Vip,
+    IemMasterPromo
   },
   props: {
     list: {

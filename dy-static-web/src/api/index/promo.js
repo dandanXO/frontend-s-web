@@ -1,4 +1,5 @@
 import { server } from "@/utils/request";
+import cached from "@/utils/cache";
 
 export function loadPromo(isLogin = false) {
   return server.REST.get("/opt-session/promo/page");
@@ -11,6 +12,11 @@ export function loadPromoBanner(category) {
     }
   });
 }
+
+export function loadPromoTypes() {
+  return cached.get("PROMOTION_TYPES", () => server.REST.get("/promo/type"));
+}
+
 export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }
@@ -356,6 +362,10 @@ export function claimCompetitionBonus(promoCode) {
   return server.EVENT.post("/session/competition/claimBonus", { promoCode });
 }
 
+export function claimCompetitionBetBonus(promoCode) {
+  return server.EVENT.post("/session/competition-bet/claimBonus", { promoCode });
+}
+
 export function getNationalDayinit() {
   return server.EVENT.get("/session/nationalDay/init");
 }
@@ -385,4 +395,19 @@ export function getNBAClaimHistory() {
 
 export function claimNBABonus(matchId) {
   return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
+}
+
+export function getPglTreasureInit() {
+  return server.EVENT.get("/session/pglTreasure/init");
+}
+
+export function putPglTreasureInit() {
+  return server.EVENT.put("/session/pglTreasure/claim");
+}
+
+export function getIEMRioInit() {
+  return server.EVENT.get("/session/iem-rio/init");
+}
+export function claimIEMRioBonus() {
+  return server.EVENT.post("/session/iem-rio/claimBonus");
 }

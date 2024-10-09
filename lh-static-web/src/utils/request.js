@@ -253,7 +253,8 @@ const onResponse = (response) => {
         res.code === ResponseCode.ERROR_USER_TOO_FAST ||
         res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
         res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
-        res.code === ResponseCode.ERROR_PROMO_CLAIMED
+        res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+        res.code === ResponseCode.ERROR_SYSTEM
       ) {
         ui.notify({
           type: "error",

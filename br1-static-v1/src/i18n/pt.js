@@ -434,7 +434,7 @@ export default {
       benefits_02: "Defendemos benefícios e bônus para todos.",
       agencyPolicy: "Política da Agência",
       tableRewardsAssigned: "A tabela abaixo mostra como as recompensas são atribuídas.",
-      point_01: "Usuários Ativos: valor de aposta diária 2.000",
+      point_01: "Usuários Ativos: valor de aposta diária 200",
       point_02:
         "Sua recompensa será calculada com base no valor total de aposta de seus membros. A recompensa obtida pode ser retirada ou usada para mais apostas.",
       point_03: "Indique o máximo de amigos que puder para obter uma porcentagem maior de reembolsos.",

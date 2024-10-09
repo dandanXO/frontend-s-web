@@ -87,6 +87,12 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.vip") }}</div>
           </router-link>
+          <a :href="ui.charityUrl" v-if="store.memberType === 'TEST'" target="_blank">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/charitable-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
+          </a>
         </div>
       </div>
 
@@ -166,11 +172,13 @@ import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import { api } from "boot/axios";
+import { useUI } from "stores/ui";
 
 const store = userStore();
 const router = useRouter();
 const qs = require("qs");
 const $q = useQuasar();
+const ui = useUI();
 
 const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";

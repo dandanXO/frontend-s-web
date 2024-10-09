@@ -19,8 +19,9 @@
     <div class="withdraw-remaining-dialog__body">
       <div class="withdraw-remaining-dialog__body-title">
         完成
-        <span class="text-yellow">{{ totalRemaining }}</span>
+        <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
         流水，立即享受快速提款
+        <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
       </div>
       <table class="withdraw-remaining-dialog__body-table">
         <thead>
@@ -33,7 +34,7 @@
         <tbody>
           <tr v-for="(record, index) in tableData" :key="index">
             <td align="center">{{ getDisplayRemainingType(record.type) }}</td>
-            <td align="center">{{ record.progress }}/{{ record.total }}</td>
+            <td align="center">{{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}</td>
             <td align="center">
               <router-link class="action-button" to="/home">去完成</router-link>
             </td>
@@ -46,6 +47,7 @@
 </template>
 <script setup>
 import { withdrawRemainingRollover } from "@/api/personal/personal";
+import { convertToCommaAmount } from "@/utils/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -94,6 +96,16 @@ const handleClose = () => {
   router.go(-1);
 };
 
+const isRefreshing = ref(false);
+const refreshTurnOverAmt = () => {
+  if (isRefreshing.value) {
+    return;
+  }
+  isRefreshing.value = true;
+  tableData.value = [];
+  getRemainingRolloverData();
+};
+
 const getRemainingRolloverData = () => {
   withdrawRemainingRollover()
     .then((res) => {
@@ -101,7 +113,13 @@ const getRemainingRolloverData = () => {
         tableData.value = res.data;
       }
     })
-    .catch((e) => console.log(e));
+    .catch((e) => {
+      console.log(e);
+      isRefreshing.value = false;
+    })
+    .finally((e) => {
+      isRefreshing.value = false;
+    });
 };
 
 onMounted(() => {
@@ -162,6 +180,10 @@ onMounted(() => {
         line-height: 24px;
         text-align: center;
         color: #424f72;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
       }
       .withdraw-remaining-dialog__body-table {
         width: 100%;
@@ -250,6 +272,18 @@ onMounted(() => {
   .text-yellow {
     font-size: 26px;
     color: #599cff;
+  }
+
+  .refresh-btn {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.9);
+      transform: translate(0px, 1px);
+    }
   }
 }
 </style>
