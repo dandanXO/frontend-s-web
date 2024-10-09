@@ -80,7 +80,7 @@ onMounted(() => {
   // background-size: 100% 100%;
   // aspect-ratio: 1826 / 1156;
   // padding: 8% 5% 0% 5%;
-  padding: 8% 5% 5% 5%;
+  padding: 64px 40px 50px;
   background-size: contain;
 
   .header {
@@ -105,7 +105,7 @@ onMounted(() => {
     height: 100%;
     min-height: 300px;
     max-height: 400px;
-    gap: 2%;
+    gap: 12px;
 
     .left {
       display: flex;
@@ -205,8 +205,9 @@ onMounted(() => {
       }
 
       img {
-        // width: 100%;
+        width: 100%;
         height: 100%;
+        aspect-ratio: 573/472;
         // transform: scale(1.01);
         cursor: pointer;
         border-radius: 18px;
