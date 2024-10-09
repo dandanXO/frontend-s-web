@@ -913,7 +913,6 @@ export default defineComponent({
     }
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
-    const isCaptchaLoading = ref(false)
 
     const loadingBtn = ref(false);
     const store = userStore();
@@ -1392,7 +1391,7 @@ export default defineComponent({
         })
         .onBoxShow(function () {
           console.log("boxShow");
-          isCaptchaLoading.value = true
+          loadingBtn.value = true;
         })
         .onError(function (e) {
           console.log(e);
@@ -1404,10 +1403,10 @@ export default defineComponent({
           for (let key in result) {
             loginForm[key] = result[key];
           }
-          isCaptchaLoading.value = false
+          loadingBtn.value = false;
         }).onClose(function () {
           console.log("close")
-          isCaptchaLoading.value = false
+          loadingBtn.value = false;
         });
     }
 
@@ -1992,9 +1991,6 @@ export default defineComponent({
 
     };
     const submitLogin = () => {
-      if (isCaptchaLoading.value) {
-        return
-      }
       loadingBtn.value = true;
 
       (async () => {

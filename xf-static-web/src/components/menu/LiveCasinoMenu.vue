@@ -7,10 +7,7 @@
         :key="nav.code"
         @click="$emit('loadModal', nav.label, nav.code, nav.gameCode)"
       >
-        <img
-          :src="require('../../assets/live/live_logo_' + nav.icon + '.png')"
-          style="width: 150px"
-        />
+        <img :src="require('../../assets/live/live_logo_' + nav.icon + '.png')" style="width: 150px" />
         <p class="platform-title">{{ nav.label }} 真人</p>
         <p class="platform-slogan">{{ nav.slogan }}</p>
       </div>
@@ -30,10 +27,7 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -74,6 +68,13 @@ export default defineComponent({
         gameCode: "",
         slogan: "玩法丰富，惊喜不断"
       },
+      {
+        code: "WE",
+        icon: "we",
+        label: "WE",
+        gameCode: "",
+        slogan: "玩法丰富，惊喜不断"
+      }
     ];
 
     const store = userStore();
@@ -83,25 +84,17 @@ export default defineComponent({
       if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LIVE")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LIVE")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
         });
       }
     };
     const filteredNavigations = computed(() => {
-      return navigations.filter((nav) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === nav.code
-        )
-      );
+      return navigations.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
     });
 
     onMounted(() => {

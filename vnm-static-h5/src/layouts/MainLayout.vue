@@ -457,7 +457,18 @@ export default defineComponent({
       const currentDomain = window.location.hostname;
 
       // Determine the tracking script URL based on the current domain
-      let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+      // let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+      let trackingScriptUrl = "";
+      switch (currentDomain) {
+        case "m.tslotf88.com":
+        case "www.tslotf88.com":
+        case "tslotf88.com":
+          trackingScriptUrl = "https://v1.cnzz.com/z.js?id=1281386211";
+          break;
+        default:
+          trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+          break;
+      }
 
       if (isH5.value === true) {
         const script = document.createElement("script");

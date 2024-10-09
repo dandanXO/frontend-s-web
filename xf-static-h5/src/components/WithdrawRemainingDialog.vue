@@ -14,6 +14,7 @@
           完成
           <span class="text-yellows">{{ convertToCommaAmount(totalRemaining) }}</span>
           流水，立即享受快速提款
+          <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
         </div>
         <table class="withdraw-remaining-dialog__body-table">
           <thead>
@@ -43,7 +44,7 @@
 <script setup>
 import { api } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, defineModel } from "vue";
 import { useRouter } from "vue-router";
 
 const isShow = defineModel();
@@ -87,6 +88,16 @@ const handleClose = () => {
   router.go(-1);
 };
 
+const isRefreshing = ref(false);
+const refreshTurnOverAmt = () => {
+  if (isRefreshing.value) {
+    return;
+  }
+  isRefreshing.value = true;
+  tableData.value = [];
+  getRemainingRolloverData();
+};
+
 const getRemainingRolloverData = () => {
   api
     .get("/session/member/remainingRolloverByType")
@@ -95,7 +106,13 @@ const getRemainingRolloverData = () => {
         tableData.value = res.data;
       }
     })
-    .catch((e) => console.log(e));
+    .catch((e) => {
+      console.log(e);
+      isRefreshing.value = false;
+    })
+    .finally((e) => {
+      isRefreshing.value = false;
+    });
 };
 
 onMounted(() => {
@@ -162,6 +179,10 @@ onMounted(() => {
         font-weight: 600;
         line-height: var(--line-height);
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
       }
       .withdraw-remaining-dialog__body-table {
         width: 100%;
@@ -254,6 +275,18 @@ onMounted(() => {
   .text-yellows {
     font-size: 22px;
     color: #00bfd7;
+  }
+
+  .refresh-btn {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.9);
+      transform: translate(0px, 1px);
+    }
   }
 }
 

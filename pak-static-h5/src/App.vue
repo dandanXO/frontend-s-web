@@ -1,4 +1,5 @@
 <template>
+  <button @click="installTest" style="z-index: 10000000; position: absolute">test</button>
   <router-view />
 </template>
 
@@ -268,7 +269,7 @@ export default defineComponent({
           ui.tiktokUrl = data.tiktok;
           ui.whatsappUrl = data.whatsapp;
           ui.youtubeUrl = data.youtube;
-          ui.charityUrl = data.charity_url
+          ui.charityUrl = data.charity_url;
         });
     };
 
@@ -301,6 +302,22 @@ export default defineComponent({
       }
     };
 
+    const deferredPrompt = ref(null);
+    const installTest = () => {
+      console.log(deferredPrompt.value);
+      if (deferredPrompt.value) {
+        deferredPrompt.value.prompt();
+        deferredPrompt.value.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === "accepted") {
+            console.log("User accepted the A2HS prompt");
+          } else {
+            console.log("User dismissed the A2HS prompt");
+          }
+          deferredPrompt.value = null;
+        });
+      }
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -330,12 +347,19 @@ export default defineComponent({
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt.value = e;
+      });
     });
 
     watch(
       () => ui.shouldFetchDownloadAppUrl,
       (value) => value && ui.getTopDownloadUrl()
     );
+
+    return { installTest };
   }
 });
 

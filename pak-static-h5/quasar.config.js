@@ -29,7 +29,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "lang", "fingerprint"],
+    boot: ["axios", "cache", "lang", "fingerprint", "one-signal"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -173,6 +173,7 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
+        $schema: "https://json.schemastore.org/web-manifest-combined.json",
         name: `B9.GAME`,
         short_name: `B9.GAME`,
         description: `APP`,
@@ -180,6 +181,7 @@ module.exports = configure(function (ctx) {
         orientation: "portrait",
         background_color: "#ffffff",
         theme_color: "#027be3",
+        start_url: "/",
         icons: [
           {
             src: "icons/icon-128x128.png",
