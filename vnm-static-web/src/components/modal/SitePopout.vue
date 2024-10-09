@@ -80,7 +80,7 @@ onMounted(() => {
   // background-size: 100% 100%;
   // aspect-ratio: 1826 / 1156;
   // padding: 8% 5% 0% 5%;
-  padding: 64px 40px 50px;
+  padding: 8% 4% 5% 4%;
   background-size: contain;
 
   .header {
@@ -99,13 +99,13 @@ onMounted(() => {
 
   .content {
     display: grid;
-    // grid-template-columns: 0.5fr 1fr;
-    grid-template-columns: 0.7fr 1.7fr;
+    grid-template-columns: 1.5fr 2fr;
+    // grid-template-columns: 0.7fr 1.7fr;
     width: 100%;
     height: 100%;
     min-height: 300px;
     max-height: 400px;
-    gap: 12px;
+    gap: 10px;
 
     .left {
       display: flex;
@@ -114,7 +114,7 @@ onMounted(() => {
       height: 300px;
       overflow: auto;
       height: 100%;
-      gap: 2px;
+      gap: 10px;
 
       // &::-webkit-scrollbar {
       //   -webkit-appearance: none;
@@ -134,12 +134,12 @@ onMounted(() => {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        justify-content: flex-end;
-        padding: 5.5% 3%;
+        justify-content: center;
+        padding: 6%;
         font-weight: 700;
         background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
         background-size: 100% 100%;
-        aspect-ratio: 300 / 100;
+        // aspect-ratio: 300 / 100;
 
         .title {
           font-family: "SF Pro";
@@ -178,6 +178,7 @@ onMounted(() => {
       // border-radius: 15px;
       // border: 2px solid #2cbdff;
       overflow: hidden;
+      max-width: 400px;
 
       text-align: right;
       > div {
@@ -205,13 +206,13 @@ onMounted(() => {
       }
 
       img {
-        width: 100%;
+        // width: 100%;
         height: 100%;
-        aspect-ratio: 573/472;
         // transform: scale(1.01);
         cursor: pointer;
         border-radius: 18px;
         border: 2px solid #36afe3;
+        max-height: 400px;
 
         &:hover {
           filter: brightness(0.9);
