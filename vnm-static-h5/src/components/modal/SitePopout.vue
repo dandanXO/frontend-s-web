@@ -113,24 +113,27 @@ onMounted(() => {
   align-items: center;
   font-family: "SF Pro";
   background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
- 
-  background-size: 100% 100%;
+ justify-content: center;
+  background-size: contain;
 
   // aspect-ratio: 644 / 837;
   // padding: 10% 2%;
   // min-height: 490px;
   
-  height: 70vh;
-  max-height: 510px;
+  height: 65vh;
+  max-height: 420px;
   margin: auto;
   @media (max-width: 430px) {
-    max-height: 530px;
+    max-height: 440px;
   }
   @media (max-width: 414px) {
-    max-height: 510px;
+    max-height: 430px;
   }
   @media (max-width: 390px) {
-    max-height: 490px;
+    max-height: 420px;
+  }
+  @media (max-width: 375px) {
+    max-height: 410px;
   }
 
   .header {
@@ -147,20 +150,23 @@ onMounted(() => {
   }
 
   .content {
-    display: grid;
-    grid-template-rows: 1fr auto;
+    // display: grid;
+    // grid-template-rows: 1fr auto;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    gap: 1.5%;
-    // padding-top: 30px;
-    padding-top: 10vw;
+    gap: 10px;
+    padding-top: 30px;
     .left {
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      width: 100%;
-      max-width: 75vw;
+      width: 95%;
+      // max-width: 300px;
       // margin: 0 auto 25px;
       margin: 0 auto 2vw;
+      justify-content: center;
+      align-items: center;
 
       .left-item {
         font-size: 1rem;
@@ -174,6 +180,7 @@ onMounted(() => {
         background-size: 100% 100%;
         // aspect-ratio: 300 / 50;
         width: 100%;
+        max-width: 300px;
 
         .title {
           font-family: "SF Pro";
@@ -207,11 +214,13 @@ onMounted(() => {
       height: 100%;
       > div {
         text-align: center;
-        height: 100%;
+          height: 60vw;
+          max-height: 240px;
         width: 100%;
         img {
+          // height: 100%;
           width: unset;
-          max-height: 75vw;
+          height: 100%;
           border-radius: 18px;
           border: 2px solid #36afe3;
         }
@@ -239,7 +248,7 @@ onMounted(() => {
       img {
         // width: 100%;
         cursor: pointer;
-        height: 100%;
+        // height: 100%;
         &:hover {
           filter: brightness(0.9);
         }
