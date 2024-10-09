@@ -81,7 +81,8 @@ onMounted(() => {
   // aspect-ratio: 1826 / 1156;
   // padding: 8% 5% 0% 5%;
   padding: 8% 4% 5% 4%;
-  background-size: contain;
+  background-size: 100% 100%;
+  width: 830px;
 
   .header {
     border-bottom: 1px solid black;
