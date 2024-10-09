@@ -12,7 +12,7 @@
     >
       <q-carousel-slide
         :name="index"
-        class="column no-wrap flex-center"
+        class="column no-wrap flex-start"
         v-for="(popoutListItem, index) in popoutList"
         :key="index"
       >
@@ -87,10 +87,10 @@ onMounted(() => {
   height: 100%;
   width: 100%;
   .q-carousel__slides-container {
-    height: 99% !important;
+    height: 100% !important;
   }
   .q-carousel__control {
-    bottom: -3% !important;
+    bottom: 5vw !important;
   }
 
   .q-carousel__navigation-icon--inactive {
@@ -113,11 +113,22 @@ onMounted(() => {
   align-items: center;
   font-family: "SF Pro";
   background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
+ 
   background-size: 100% 100%;
+
   // aspect-ratio: 644 / 837;
-  padding: 10% 2% 13.5%;
-  min-height: 350px;
+  // padding: 10% 2%;
+  // min-height: 490px;
+  
+  height: 70vh;
+  max-height: 510px;
   margin: auto;
+  @media (min-width: 400px) {
+    max-height: 530px;
+  }
+  @media (min-width: 414px) {
+    max-height: 510px;
+  }
 
   .header {
     border-bottom: 1px solid black;
@@ -136,16 +147,17 @@ onMounted(() => {
     display: grid;
     grid-template-rows: 1fr auto;
     width: 100%;
-    height: fit-content;
-    gap: 2%;
-
+    gap: 1.5%;
+    // padding-top: 30px;
+    padding-top: 10vw;
     .left {
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      height: 300px;
-      overflow: auto;
-      height: 100%;
+      width: 100%;
+      max-width: 75vw;
+      // margin: 0 auto 25px;
+      margin: 0 auto 2vw;
 
       .left-item {
         font-size: 1rem;
@@ -153,12 +165,11 @@ onMounted(() => {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        padding: 2% 6%;
-        min-height: 84px;
+        padding: 3% 5%;
         font-weight: 700;
         background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
         background-size: 100% 100%;
-        aspect-ratio: 300 / 50;
+        // aspect-ratio: 300 / 50;
         width: 100%;
 
         .title {
@@ -196,9 +207,8 @@ onMounted(() => {
         height: 100%;
         width: 100%;
         img {
-          width: 100%;
-          min-height: 200px;
-          aspect-ratio: 278/230;
+          width: unset;
+          max-height: 75vw;
           border-radius: 18px;
           border: 2px solid #36afe3;
         }
