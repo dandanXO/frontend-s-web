@@ -349,6 +349,7 @@ export default defineComponent({
       setInterval(getOnlineStatApi, 60000);
 
       window.addEventListener("beforeinstallprompt", (e) => {
+        console.log(1);
         e.preventDefault();
         deferredPrompt.value = e;
       });
