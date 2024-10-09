@@ -135,7 +135,7 @@ onMounted(() => {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        padding: 2% 6%;
+        padding: 2.5% 4.5%;
         font-weight: 700;
         background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
         background-size: 100% 100%;
