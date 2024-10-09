@@ -1,5 +1,5 @@
 <template>
-  <el-dialog class="new-member-guide-dialog" :show-close="false" v-model="store.regSuccessGuideVisible">
+  <div class="new-member-guide-dialog" :show-close="false" v-if="store.regSuccessGuideVisible">
     <div class="step1-container" v-if="step === 1">
       <img src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step1-flag.png" alt="" class="flag" />
@@ -21,7 +21,6 @@
       <div class="step2-img">
         <img src="../../assets/home/guide/step2-img.png" alt="" />
       </div>
-      <img src="../../assets/home/guide/step2-arrow.png" alt="" class="arrow" />
       <img src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step2-flag.png" alt="" class="flag" />
       <div class="content">
@@ -39,11 +38,8 @@
     </div>
     <div class="step3-container" v-else-if="step === 3">
       <div class="step3-img">
-        <div class="image-wrapper">
-          <img src="../../assets/home/guide/step3-img1.png" alt="" />
-        </div>
+        <img src="../../assets/home/guide/step3-img1.png" alt="" /> 
       </div>
-      <img src="../../assets/home/guide/step3-arrow.png" alt="" class="arrow" />
       <img src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step3-flag.png" alt="" class="flag" />
       <div class="content">
@@ -57,7 +53,6 @@
     </div>
     <div class="step4-container" v-else-if="step === 4">
       <div style="position: relative">
-        <img src="../../assets/home/guide/step4-arrow.png" alt="" class="arrow" />
         <img src="../../assets/home/guide/step-bg.png" alt="" />
         <div class="content">
           <div class="title">
@@ -77,11 +72,8 @@
     </div>
     <div class="step5-container" v-else-if="step === 5">
       <div class="step5-img">
-        <div class="image-wrapper">
-          <img class="avatar" src="../../assets/home/guide/step5-img1.png" alt="" />
-        </div>
+        <img src="../../assets/home/guide/step5-img1.png" alt="" />
       </div>
-      <img src="../../assets/home/guide/step5-arrow.png" alt="" class="arrow" />
       <img src="../../assets/home/guide/step-bg.png" alt="" width="100%" />
       <div class="content">
         <div class="title">
@@ -93,19 +85,12 @@
       </div>
     </div>
     <div class="step6-container" v-else-if="step === 6">
-      <div class="arrow1-wrapper">
-        <div class="step6-img">
-          <div class="image-wrapper">
-            <img src="../../assets/home/guide/step6-img1.png" alt="" />
-          </div>
-        </div>
-        <img src="../../assets/home/guide/step6-arrow1.png" alt="" class="arrow1" />
+      <div class="step6-img1">
+        <img src="../../assets/home/guide/step6-img1.png" alt="" />
       </div>
-      <div class="arrow2-wrapper">
-        <img src="../../assets/home/guide/step6-arrow2.png" alt="" class="arrow2" />
-        <div class="confirm-btn">
-          <div class="confirm-btn-content">确定</div>
-        </div>
+
+      <div class="step6-img2">
+        <img src="../../assets/home/guide/step6-img2.png" alt="" />
       </div>
 
       <img src="../../assets/home/guide/step-bg.png" alt="" width="100%" />
@@ -120,7 +105,7 @@
         <div class="subtitle" style="text-decoration: underline">点击前往新人活动</div>
       </div>
     </div>
-  </el-dialog>
+  </div>
 </template>
 
 <script setup>
@@ -138,12 +123,61 @@ const handleNext = (value) => {
   console.log(value);
   step.value = value;
 
-  if(value === 4) {
+  if(value === 2) {
+    setTimeout(() => {
+      const { x, y } = document.querySelector('.navigations').getBoundingClientRect();
+      const step2img = document.querySelector('.step2-img');
+      step2img.style.top = `calc(${y}px - 20px)`;
+      step2img.style.left = `calc(${x}px - 30px)`;
+      step2img.style.visibility = 'visible';
+    }, 500)
+  } else if(value === 3) {
+    setTimeout(() => {
+      const { x, y } = document.querySelector('.hover-icon.promotion').getBoundingClientRect();
+      const step3img = document.querySelector('.step3-img');
+      step3img.style.top = `calc(${y}px - 22px)`;
+      step3img.style.left = `calc(${x}px - 175px)`;
+      step3img.style.visibility = 'visible';
+    }, 500)
+    
+  } else if(value === 4) {
     props?.openAppMenu();
+
+    setTimeout(() => {
+      const { x, y } = document.querySelector('.dl-wrapper').getBoundingClientRect();
+      const step4img = document.querySelector('.step4-img');
+      step4img.style.top = `calc(${y}px - 40px)`;
+      step4img.style.left = `calc(${x}px - 430px)`;
+      step4img.style.visibility = 'visible';
+    }, 500);
   } else if(value === 5) {
     props?.closeAppMenu();
+
+    setTimeout(() => {
+      const { x, y } = document.querySelector('.profile-img').getBoundingClientRect();
+      const step5img = document.querySelector('.step5-img');
+      step5img.style.top = `calc(${y}px - 8px)`;
+      step5img.style.left = `calc(${x}px - 208px)`;
+      step5img.style.visibility = 'visible';
+    }, 500);
   } else if(value === 6) {
-    router.push('/center/personal');
+    router.push('/center/deposit');
+
+    setTimeout(() => {
+      const { x, y } = document.querySelector('.icon-rounded.deposit').getBoundingClientRect();
+      const step6img1 = document.querySelector('.step6-img1');
+      step6img1.style.top = `calc(${y}px - 15px)`;
+      step6img1.style.left = `calc(${x}px - 20px)`;
+      step6img1.style.visibility = 'visible';
+    }, 1000);
+
+    setTimeout(() => {
+      const { x: x2, y: y2 } = document.querySelector('.btn-confirm').getBoundingClientRect();
+      const step6img2 = document.querySelector('.step6-img2');
+      step6img2.style.top = `calc(${y2}px - 80px)`;
+      step6img2.style.left = `calc(${x2}px - 143px)`;
+      step6img2.style.visibility = 'visible';
+    }, 2000);
   }
 };
 
@@ -154,17 +188,16 @@ const closeNewMemerGuide = () => {
 
 <style lang="scss">
 .new-member-guide-dialog {
-  background: transparent !important;
-  display: flex;
+  background: #3f3f3f78;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99999999999;
+  display:flex;
+  align-items: center;
   justify-content: center;
-
-  .el-dialog__header {
-    background: none;
-  }
-
-  .el-dialog__body {
-    padding: 0 !important;
-  }
 }
 
 .step1-container,
@@ -234,11 +267,10 @@ const closeNewMemerGuide = () => {
     width: 100%;
     height: 90px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     position: fixed;
-    top: 0;
-    left: -10%;
+    visibility: hidden;
   }
 }
 
@@ -255,33 +287,18 @@ const closeNewMemerGuide = () => {
 
   .step3-img {
     position: fixed;
-    width: 500px;
-    height: 90px;
-    top: 0;
-    right: 43%;
     display: flex;
     justify-content: end;
-
-    .image-wrapper {
-      background: url("../../assets/home/guide/step3-img2.png") center no-repeat;
-      background-size: contain;
-      width: 82px;
-      height: 82px;
-      display: flex;
-      justify-content: center;
-      padding: 10px;
-      align-items: center;
-    }
+    visibility: hidden;
   }
 }
 
 .step4-container {
   display: flex;
   align-items: center;
-  gap: 200px;
   width: auto;
   position: absolute;
-  left: -15%;
+  left: 7%;
 
   .arrow {
     right: -50%;
@@ -291,9 +308,8 @@ const closeNewMemerGuide = () => {
   }
 
   .step4-img {
-    width: 288px;
-    height: 288px;
-    margin-bottom: 15%;
+    position: fixed;
+    visibility: hidden;
   }
 }
 
@@ -304,99 +320,16 @@ const closeNewMemerGuide = () => {
 
   .step5-img {
     position: fixed;
-    width: 500px;
-    height: 90px;
-    top: 0.2%;
-    right: 21%;
-    display: flex;
-    justify-content: end;
-
-    .image-wrapper {
-      background: url("../../assets/home/guide/step5-img2.png") center no-repeat;
-      background-size: contain;
-      width: 125px;
-      height: 125px;
-      display: flex;
-      justify-content: center;
-      padding: 10px;
-      align-items: center;
-
-      .avatar {
-        width:100px;
-        height:100px;
-      }
-    }
-  }
-
-  .arrow {
-    right: -55%;
-    left: unset;
-    top: -5%;
+    visibility: hidden;
   }
 }
 
 .step6-container {
-  width: 376px;
-  left: -50%;
-  bottom: -30%;
+  top: -5%;
 
-  .image-wrapper {
-    background: url("../../assets/home/guide/step6-img2.png") center no-repeat;
-    background-size: contain;
-    width: 82px;
-    height: 82px;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-    align-items: center;
-  }
-
-  .arrow1-wrapper {
-    position: absolute;
-    top: 0%;
-    left: -85%;
-
-    .step6-img {
-      display: inline-flex;
-    }
-
-    .arrow1 {
-      top: 90px;
-      position: relative;
-    }
-  }
-
-  .arrow2-wrapper {
-    position: absolute;
-    display: flex;
-    right: -70%;
-    top: 35%;
-
-    .arrow2 {
-      position: relative;
-    }
-
-    .confirm-btn {
-      width: 209px;
-      height: 58px;
-      background: url('../../assets/home/guide/step6-confirm-btn-bg.png') no-repeat;
-      background-size: contain;
-      padding: 8px;
-      position: relative;
-      top: 40px;
-
-      .confirm-btn-content {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        border-radius: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 8px white solid;
-        color: white;
-      }
-    }
+  .step6-img1, .step6-img2 {
+    position: fixed;
+    visibility: hidden;
   }
 }
 </style>
