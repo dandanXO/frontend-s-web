@@ -1,17 +1,9 @@
 <template>
   <div class="b9-style-container">
     <div v-if="!isLoading">
-      <div v-for="item in arr" :key="item.id" class="row" @click="openUrl">
-        <div class="col-3" @click.stop>
-          <div class="iframe-container">
-            <div class="overlay" @click.stop="openUrl(item.url)"></div>
-            <iframe
-              width="100%"
-              :src="`${item.url}`"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
-          </div>
+      <div v-for="item in arr" :key="item.id" class="row" @click="openUrl(item.url)">
+        <div class="col-3" :style="{background: `url(${item.thumbnail})`}">
+          <q-icon name="play_circle" class="pseudo-play-btn"/>
         </div>
 
         <div class="txt-container col-9">
@@ -20,6 +12,13 @@
             <div class="txt description">
               {{ item.description }}
             </div>
+          </div>
+          <div class="txt info">
+            <div class="views">
+              <q-icon name="visibility"/>
+              <span>{{ item.views }}</span>
+            </div>
+            <span class="time">{{ item.uploadTime }} ago</span>
           </div>
         </div>
       </div>
@@ -32,6 +31,19 @@
 import { onMounted, ref } from "vue";
 import { strapi } from "boot/axios";
 
+const rndUploadTime = [
+  "3h 15m",
+  "45m",
+  "6h 2m",
+  "12h 50m",
+  "8h 30m",
+  "5h 10m",
+  "2h 5m",
+  "7h 55m",
+  "23h 10m",
+  "18h 40m"
+]
+
 const arr = ref([]);
 const isLoading = ref(true);
 
@@ -40,6 +52,13 @@ onMounted(() => {
     .get("/api/b9-style?populate[videos][populate]")
     .then((res) => {
       arr.value = res.data.attributes.videos;
+      arr.value.forEach(el => {
+        const min = 1000;
+        const max = 10000;
+        el.views = Math.floor(Math.random() * (max - min + 1)) + min
+        el.uploadTime = rndUploadTime[Math.floor(Math.random() * 10)]
+        el.thumbnail = getThumbnailUrl(el.url)
+      })
     })
     .catch((e) => {})
     .finally(() => {
@@ -54,6 +73,13 @@ const getVideoId = (url) => {
   return match ? match[1] : null;
 };
 
+const getThumbnailUrl = (url) => {
+  const regex =
+    /(?:youtube\.com\/(?:embed\/|watch\?v=|v\/|.*[?&]v=)|youtu\.be\/)([^&\n?]{11})/;
+  const match = url.match(regex);
+  return match ? `https://img.youtube.com/vi/${match[1]}/default.jpg` : null
+}
+
 const openUrl = (url) => {
   const videoId = getVideoId(url);
   window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
@@ -66,15 +92,39 @@ const openUrl = (url) => {
   .row {
     line-height: 0;
     margin: 12px;
+    border-radius: 10px;
+    overflow: hidden;
     cursor: pointer;
+    min-height: 74px;
+
+    .col-3 {
+      position: relative;
+      background-size: cover;
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+      }
+      .pseudo-play-btn {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        font-size: 2rem;
+      }
+    }
+
     .txt-container {
-      display: grid;
-      grid-template-rows: 40% 60%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
       background-color: #2c2a28;
       padding: 10px;
       .txt-item-wrap {
         display: flex;
-        align-self: center;
       }
       .txt {
         height: 100%;
@@ -101,6 +151,22 @@ const openUrl = (url) => {
         line-height: 1.5;
         max-height: 4.5em;
         font-size: 10px;
+      }
+      .info {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-size: 12px;
+        line-height: 1.5;
+        .views {
+          color: #17DB5D;
+          .q-icon {
+            margin-right: 3px;
+          }
+        }
+        .time {
+          color: #FFFFFF80;
+        }
       }
     }
   }
