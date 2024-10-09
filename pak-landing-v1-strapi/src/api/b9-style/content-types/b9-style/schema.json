@@ -12,11 +12,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "video": {
+    "videos": {
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "ui.video-item",
-      "required": true
+      "required": false
     }
   }
 }
