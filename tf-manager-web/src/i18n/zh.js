@@ -284,6 +284,7 @@ export default {
     gameMemberCountTotal: '总游戏人数',
     gameBetCountTotal: '总下注笔数',
     gameBetAmountTotal: '总下注金额',
+    gamePayoutAmountTotal: '总派彩金额',
     gameWinLossTotal: '总输/赢金额',
   },
   gameType: {
