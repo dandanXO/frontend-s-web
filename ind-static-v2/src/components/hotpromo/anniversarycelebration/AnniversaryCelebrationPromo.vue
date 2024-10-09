@@ -2,9 +2,7 @@
   <div>
     <template v-if="rewardEligibility">
       <p class="font-bold">
-        Dear players: On the occasion of the 3rd anniversary celebration, we have launched an unprecedented bonus
-        giveaway. A total of 2888rs can be obtained! What are you waiting for? Just go online and you can get a huge
-        bonus!
+        {{ params.top_description }}
       </p>
 
       <div class="q-mt-md">
@@ -32,8 +30,6 @@
           </div>
         </template>
       </div>
-
-
     </template>
 
     <template v-else>
@@ -56,6 +52,9 @@ import { ref, computed, onMounted, onActivated } from "vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
+
+const props = defineProps(["params"]);
+const params = JSON.parse(props.params || "{}");
 
 const $q = useQuasar();
 const isLoading = ref(false);
@@ -88,7 +87,7 @@ const rewardEligibility = ref(true);
 const rewardClaimedToday = ref(true);
 
 const initCheckIn = () => {
-  eventapi.get(`/check-in/init`).then((res) => {
+  eventapi.get(`/session/check-in/init`).then((res) => {
     rewardEligibility.value = res.data.eligibility;
     rewardClaimedToday.value = res.data.claimedToday;
     dailyRewards.value = [

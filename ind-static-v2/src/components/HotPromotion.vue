@@ -13,8 +13,12 @@
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <AnniversaryCelebrationPromo
       v-if="!isCommonPromo && list.redirectUrl === 'anniversary-celebration' && store.token"
+      :params="list.param"
     />
-    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'indwin2-slot-ftd' && store.token" :params="list.param" />
+    <SlotFtdPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'indwin2-slot-ftd' && store.token"
+      :params="list.param"
+    />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">

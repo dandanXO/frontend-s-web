@@ -13,6 +13,7 @@
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <AnniversaryCelebrationPromo
       v-if="!isCommonPromo && list.redirectUrl === 'anniversary-celebration' && store.token"
+      :params="list.param"
     />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'indwin-slot-ftd' && store.token" :params="list.param" />
 
