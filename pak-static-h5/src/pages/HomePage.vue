@@ -59,6 +59,16 @@
     </template>
   </q-carousel>
 
+  <div>
+    <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
+      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
+        <div class="hb-close">
+          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />
+        </div>
+        <img class="charity-gif" src="../assets/images/index/charity-float.gif"/>
+      </div>
+    </q-page-sticky>
+  </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
@@ -1479,6 +1489,10 @@ const checkHash = () => {
     handleActivateSlide("Lobby");
   }
 };
+
+const isCharityShow = ref(true)
+const charityDragPos = ref([10, 120]);
+const isDraggingCharityGif = ref(false);
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
@@ -3305,6 +3319,16 @@ const detectAndroidVersion = () => {
   return "not-android";
 };
 
+const openCharityUrl = () => {
+    window.open(ui.charityUrl, "_blank");
+  };
+
+const moveCharityGif = (ev) => {
+  isDraggingCharityGif.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  charityDragPos.value = [charityDragPos.value[0] - ev.delta.x, charityDragPos.value[1] - ev.delta.y];
+}
+
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -4391,6 +4415,10 @@ const showCongratsModal = () => {
   background: url("../assets/images/index/icon-live.png") no-repeat center center;
   background-size: contain;
   position: relative;
+}
+
+.charity-gif {
+  pointer-events: none;
 }
 
 .cs-icon-wrapper {
