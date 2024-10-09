@@ -102,7 +102,7 @@
 
         <div class="next-button" @click="closeNewMemerGuide">知道了</div>
 
-        <div class="subtitle" style="text-decoration: underline">点击前往新人活动</div>
+        <div class="subtitle" style="text-decoration: underline;cursor:pointer;" @click="goToPromo">点击前往新人活动</div>
       </div>
     </div>
   </div>
@@ -179,6 +179,11 @@ const adjustGuide = () => {
       step6img2.style.visibility = 'visible';
     }, 2000);
   }
+}
+
+const goToPromo = () => {
+  router.push('/promotion?name=lh1-ftd-promo');
+  closeNewMemerGuide();
 }
 
 const handleNext = (value) => {
