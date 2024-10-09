@@ -173,6 +173,10 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="totalPayout"
+        :label="t('reportGame.gamePayoutAmountTotal')"
+      />
+      <el-table-column
         prop="totalWin"
         :label="t('reportGame.gameWinLossTotal')"
       >
