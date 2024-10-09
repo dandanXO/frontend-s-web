@@ -26,7 +26,7 @@
             <div class="item-img">
               <img :src="require(`../../../assets/images/promotion/anniversary-celebration/prize-0${index + 1}.png`)" />
             </div>
-            <div class="item-free">Free {{ item.freeAmount }}rs</div>
+            <div class="item-free">Free {{ item.freeAmount }}{{ store.currency.label }}</div>
           </div>
         </template>
       </div>
@@ -38,8 +38,7 @@
         </div>
 
         <p class="font-gold">
-          We regret to inform you that you did not meet the eligibility criteria for this event. Please stay tuned for
-          our next event
+          {{ params.desc_regret }}
         </p>
       </div>
     </template>
