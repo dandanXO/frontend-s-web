@@ -4,7 +4,7 @@
       <span class="menu-title">
         {{ isAutoWithdrawal ? "快速提款" : "提款" }}
       </span>
-      <!-- <el-button
+      <el-button
         v-if="!isAutoWithdrawal"
         :loading="loadingBtn"
         :disable="loadingBtn"
@@ -14,7 +14,7 @@
       >
         <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
         <span>升级快速提款</span>
-      </el-button> -->
+      </el-button>
     </div>
 
     <div class="menu-title-container">
@@ -978,7 +978,7 @@ export default defineComponent({
   .account-container {
     .account-content-wrapper {
       .step-item {
-        background: linear-gradient(90deg, #344468 0%, #1A2338 100%);
+        background: linear-gradient(90deg, #344468 0%, #1a2338 100%);
         border: 1px solid #78abdb;
       }
       .withdraw-type-item {
