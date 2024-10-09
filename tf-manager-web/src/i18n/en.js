@@ -1054,6 +1054,7 @@ export default {
     gameCode: 'Game Code',
     domainEasy: 'Domain Url',
     videoShiPin: 'Video Url',
+    CHARITY: "Charity Url",
     gameConsolidateReport: 'Game Consolidate Report',
     gameMatch: 'Game Match',
     gameMatchRecord: 'Game Match Record',
