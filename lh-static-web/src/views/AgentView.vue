@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="affiliate-title">
-        <img :src="require(`../../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
+        <img :src="require(`../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
       </div>
       <div class="buttons">
         <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
@@ -13,7 +13,7 @@
       </div>
 
       <div class="affiliate-program">
-        <img src="@/assets/images/affiliate/rules.png" />
+        <img src="../assets/images/affiliate/rules.png" />
 
         <div class="affiliate-subgroup agent-content-item" style="display: none">
           <div class="affiliate-sub">
@@ -79,7 +79,7 @@
           </div>
         </div>
 
-        <img src="@/assets/images/affiliate/calc.png" />
+        <img src="../assets/images/affiliate/calc.png" />
         <div class="affiliate-subgroup agent-content-item" style="display: none">
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">计算公式</div>
@@ -343,7 +343,7 @@ export default defineComponent({
   background-color: #f3f7fd;
 
   .affiliate {
-    background: url("../../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
+    background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
     background-position: top center;
     background-size: 100%;
     background-color: #f3f7fd;
@@ -670,7 +670,7 @@ export default defineComponent({
 .dark {
   .wrapper {
     .affiliate {
-      background: url("../../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top,
+      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top,
         $background-dark;
       background-position: top center;
       background-size: 100%;

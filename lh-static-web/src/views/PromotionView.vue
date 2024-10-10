@@ -2,8 +2,8 @@
   <div class="promo-container">
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
-        <img v-if="!isDark" src="../../assets/promo/top-promo-banner.jpg" />
-        <img v-else src="../../assets/promo/promo-banner-dark.png" />
+        <img v-if="!isDark" src="../assets/promo/top-promo-banner.jpg" />
+        <img v-else src="../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
     <div class="all-promotions" v-if="!isPromoDetail">
@@ -11,7 +11,7 @@
         <div class="promo-type-wrapper">
           <div>
             <div class="type-list">
-              <img src="../../assets/promo/menu-title.png" />
+              <img src="../assets/promo/menu-title.png" />
               <div
                 class="type-item"
                 v-for="p in promoTypes"
@@ -20,7 +20,7 @@
                 @click="switchPromoType(p.code)"
               >
                 <img v-if="p.iconUrl" :src="p.iconUrl" />
-                <img v-else-if="p.img" :src="require('../../assets/promo/menu-' + p.img + '.png')" />
+                <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
                 <span v-else></span>
                 <span style="width: 100px" class="label">{{ p.label.zh }}</span>
               </div>
@@ -172,11 +172,11 @@
             <img
               width="125px"
               v-if="selectedPromo.redirectUrl === 'lh-cs2-copenhagen-major-2024'"
-              src="../../assets/images/promotion/hotpromo/cs2/bottombg.png"
+              src="../assets/images/promotion/hotpromo/cs2/bottombg.png"
             />
             <img
               v-if="selectedPromo.redirectUrl === 'lh-cs2-blast-2024'"
-              src="@/assets/images/promotion/hotpromo/blastpremier/bg.png"
+              src="../assets/images/promotion/hotpromo/blastpremier/bg.png"
             />
           </div>
         </div>
@@ -194,7 +194,7 @@ import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useDark } from "@vueuse/core";
 
-import HotPromotion from "@/components/HotPromotion";
+import HotPromotion from "@/components/HotPromotion.vue";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
@@ -442,7 +442,7 @@ export default defineComponent({
     width: 100%;
     padding: 30px 50px 50px;
     position: relative;
-    background-color: #E7F1FD;
+    background-color: #e7f1fd;
   }
   .promo-view-container {
     line-height: 30px;
@@ -654,7 +654,7 @@ export default defineComponent({
           position: relative;
           overflow: hidden;
           cursor: pointer;
-          background: url(../../assets/promo/front-bg.png) no-repeat center center;
+          background: url(../assets/promo/front-bg.png) no-repeat center center;
           background-size: cover;
           box-shadow: 0px 4px 26px 0px #00000026;
 
@@ -672,7 +672,6 @@ export default defineComponent({
               }
             }
           }
-
 
           .promo-img-wrapper {
             position: relative;
@@ -1094,7 +1093,7 @@ export default defineComponent({
 
         .promo-list-wrapper {
           .promo-item {
-            background: url(../../assets/promo/front-bg-dark.png) no-repeat center center;
+            background: url(../assets/promo/front-bg-dark.png) no-repeat center center;
             background-size: cover;
 
             .promo-img-wrapper {
