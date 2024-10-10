@@ -54,7 +54,27 @@ const globalLinks = [
   "lh571.cc",
   "lh504.cc",
   "lh435.cc",
-  "lh575.cc"
+  "lh575.cc",
+  "lh081.cc",
+  "lh397.cc",
+  "lh408.cc",
+  "lh437.cc",
+  "lh158.cc",
+  "lh225.cc",
+  "lh836.cc",
+  "lh293.cc",
+  "lh049.cc",
+  "lh259.cc",
+  "lh765.cc",
+  "lh469.cc",
+  "lh418.cc",
+  "lh215.cc",
+  "lh604.cc",
+  "lh496.cc",
+  "lh059.cc",
+  "lh865.cc",
+  "lh911.cc",
+  "lh926.cc"
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 

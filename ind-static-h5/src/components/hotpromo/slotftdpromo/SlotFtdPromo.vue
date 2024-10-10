@@ -6,7 +6,7 @@
     </div>
 
     <div class="text-warning" v-if="isFtdPromoEnded">
-      Sorry, account have already get bouns. Please join to our other activity .
+      {{ params.desc_warning }}
     </div>
   </div>
 </template>

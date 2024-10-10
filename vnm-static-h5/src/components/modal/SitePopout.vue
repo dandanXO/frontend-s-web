@@ -115,6 +115,7 @@ onMounted(() => {
   background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
  justify-content: center;
   background-size: contain;
+  transform: scale(.9);
 
   // aspect-ratio: 644 / 837;
   // padding: 10% 2%;

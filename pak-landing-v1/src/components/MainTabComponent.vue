@@ -4,7 +4,7 @@
     </CarouselComponent>
 
     <div class="btn-container q-pb-lg q-pt-xs">
-      <a href="https://www.youtube.com/@B9GamePakistan" target="_blank">
+      <a href="https://www.youtube.com/@B9GAMEpk" target="_blank">
         <img class="icons" alt="" src="~assets/imgs/yt_btn.png" />
       </a>
       <a

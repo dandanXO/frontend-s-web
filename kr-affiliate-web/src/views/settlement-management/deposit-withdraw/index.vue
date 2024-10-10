@@ -8,7 +8,6 @@
               <el-form-item :label="t('fields.type') + ' :'">
                 <el-select clearable v-model="request.type" size="small" :placeholder="t('fields.type')"
                   class="filter-item">
-                  <el-option :label="t('fields.all')" value="" />
                   <el-option :label="t('fields.deposit')" value="DEPOSIT" />
                   <el-option :label="t('fields.withdraw')" value="WITHDRAW" />
                 </el-select>

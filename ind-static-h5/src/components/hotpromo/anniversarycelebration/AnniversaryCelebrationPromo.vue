@@ -2,9 +2,7 @@
   <div>
     <template v-if="rewardEligibility">
       <p class="font-bold">
-        Dear players: On the occasion of the 3rd anniversary celebration, we have launched an unprecedented bonus
-        giveaway. A total of 2888rs can be obtained! What are you waiting for? Just go online and you can get a huge
-        bonus!
+        {{ params.top_description }}
       </p>
 
       <div class="q-mt-md">
@@ -28,7 +26,7 @@
             <div class="item-img">
               <img :src="require(`../../../assets/images/promotion/anniversary-celebration/prize-0${index + 1}.png`)" />
             </div>
-            <div class="item-free">Free {{ item.freeAmount }}rs</div>
+            <div class="item-free">Free {{ item.freeAmount }}{{ store.currency.label }}</div>
           </div>
         </template>
       </div>
@@ -40,8 +38,7 @@
         </div>
 
         <p class="font-gold">
-          We regret to inform you that you did not meet the eligibility criteria for this event. Please stay tuned for
-          our next event
+          {{ params.desc_regret }}
         </p>
       </div>
     </template>
@@ -53,6 +50,9 @@ import { ref, computed, onMounted, onActivated } from "vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
+
+const props = defineProps(["params"]);
+const params = JSON.parse(props.params || "{}");
 
 const $q = useQuasar();
 const isLoading = ref(false);
@@ -85,7 +85,7 @@ const rewardEligibility = ref(true);
 const rewardClaimedToday = ref(true);
 
 const initCheckIn = () => {
-  eventapi.get(`/check-in/init`).then((res) => {
+  eventapi.get(`/session/check-in/init`).then((res) => {
     rewardEligibility.value = res.data.eligibility;
     rewardClaimedToday.value = res.data.claimedToday;
     dailyRewards.value = [

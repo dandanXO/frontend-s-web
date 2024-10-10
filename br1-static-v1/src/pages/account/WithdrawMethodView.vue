@@ -781,6 +781,7 @@ const submitWithdrawBank = () => {
         (bankCardField.cardAccount = store.realName), (bankCardField.cardNumber = "");
         bankCardField.amount = "";
         withdrawInfo.amount = "";
+        bankCardField.bankId = currBankList.value[0].id;
       }
     })
     .catch((error) => {

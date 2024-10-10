@@ -362,6 +362,10 @@ export function claimCompetitionBonus(promoCode) {
   return server.EVENT.post("/session/competition/claimBonus", { promoCode });
 }
 
+export function claimCompetitionBetBonus(promoCode) {
+  return server.EVENT.post("/session/competition-bet/claimBonus", { promoCode });
+}
+
 export function getNationalDayinit() {
   return server.EVENT.get("/session/nationalDay/init");
 }
@@ -381,15 +385,55 @@ export function getCompetitionBetYesterday(promoCode) {
   });
 }
 
-
 export function getNBAUpcomingMatch() {
-  return server.EVENT.get('/session/nba-match-preseason/upcoming')
+  return server.EVENT.get("/session/nba-match-preseason/upcoming");
 }
 
 export function getNBAClaimHistory() {
-  return server.EVENT.get('/session/nba-match-preseason/history')
+  return server.EVENT.get("/session/nba-match-preseason/history");
 }
 
 export function claimNBABonus(matchId) {
-  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`)
+  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
 }
+
+export function getPglTreasureInit() {
+  return server.EVENT.get("/session/pglTreasure/init");
+}
+
+export function putPglTreasureInit() {
+  return server.EVENT.put("/session/pglTreasure/claim");
+}
+
+export function getIEMRioInit() {
+  return server.EVENT.get("/session/iem-rio/init");
+}
+export function claimIEMRioBonus() {
+  return server.EVENT.post("/session/iem-rio/claimBonus");
+}
+
+export function getMatchAndPrizeInfo(type) {
+  return server.EVENT.get(`/privi/memberSlotBetInfo?type=${type}`);
+}
+
+export function getPrizeMoney(promoCode) {
+  return server.EVENT.put(`/bonus/claim/${promoCode}`);
+}
+
+
+export function getCBAInit() {
+  return server.EVENT.get("/session/cba/daily/init");
+}
+
+export function claimCBADailyBonus() {
+  return server.EVENT.post("/session/cba/daily/claimBonus");
+}
+
+export function getCBAWeeklyInit() {
+  return server.EVENT.get("/session/cba/weekly/init");
+}
+
+export function claimCBAWeeklyBonus() {
+  return server.EVENT.post("/session/cba/weekly/claimBonus");
+}
+
