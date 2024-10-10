@@ -123,10 +123,10 @@
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
-            <div v-if="isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
+            <!-- <div v-if="!isShowRemainingDialog && isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
               <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
               <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
-            </div>
+            </div> -->
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "单笔提款: " +
@@ -175,7 +175,7 @@
             </div>
           </div>
 
-          
+
           <div class="q-mt-md text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
           <!-- <a-form-item
             class="select"
@@ -267,6 +267,7 @@
         </q-card-actions>
       </q-card>
     </q-dialog> -->
+    <WithdrawRemainingDialog v-model="isShowRemainingDialog"/>
   </div>
 </template>
 
@@ -279,10 +280,11 @@ import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useLocalStorage } from "@vueuse/core";
 import {useRouter} from "vue-router";
+import WithdrawRemainingDialog from "src/components/WithdrawRemainingDialog.vue";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: {AcctBal},
+  components: {AcctBal, WithdrawRemainingDialog},
   setup() {
     const store = userStore();
     const $q = useQuasar();
@@ -304,6 +306,8 @@ export default defineComponent({
     });
     const isNewUser = ref(false);
     const isLoaded = ref(false);
+    const isShowRemainingDialog = ref(false)
+
     const hasWithdrawCard = computed(() => {
       return (isLoaded == true) && withdrawState.bankCardList.length === 0;
     });
@@ -456,9 +460,12 @@ export default defineComponent({
       });
     };
     const getWithdrawalMethods = () => {
-      api.get("/session/withdraw/entrance").then((response) => {
+      api.get("/session/withdraw/entrance/status").then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data;
+          if(isAutoWithdrawal.value){
+            isShowRemainingDialog.value = !response.data.withdrawStatus
+          }
+          withdrawalMethods.value = response.data.withdrawShowList;
           //Remove this for real data
           // withdrawalMethods.value = [
           //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
@@ -584,7 +591,8 @@ export default defineComponent({
       isAutoWithdrawal,
       handleUpgradeClick,
       isNewUser,
-      router
+      router,
+      isShowRemainingDialog
     };
   }
 });

@@ -852,7 +852,7 @@ export default defineComponent({
       }
       .inner {
         width: 100%;
-        padding: 20px;
+        padding: 14px 20px 20px;
         display: flex;
         flex-direction: column;
         background-size: 100% 100%;

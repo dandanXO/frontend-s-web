@@ -267,9 +267,9 @@ const imageForm = reactive({
 });
 const isLoadingUpload = ref(false);
 const onShowProfile = () => {
-  if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
-    return;
-  }
+  // if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST')){
+  //   return;
+  // }
 
   imageForm.path = null;
   inputImage.value = null;

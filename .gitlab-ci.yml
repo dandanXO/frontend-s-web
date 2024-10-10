@@ -130,13 +130,6 @@ deploy-xf-landing-v6:
 
 #===============================================================================================
 
-deploy-xf-landing-v8:
-  extends: .s3-deploy
-  variables:
-    PROJECT: xf-landing-v8
-
-#===============================================================================================
-
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -186,13 +179,6 @@ deploy-dy-landing-v6:
 
 #===============================================================================================
 
-deploy-dy-landing-v8:
-  extends: .s3-deploy
-  variables:
-    PROJECT: dy-landing-v8
-
-#===============================================================================================
-
 deploy-lh-download:
   extends: .s3-deploy
   variables:
@@ -239,6 +225,13 @@ deploy-ind2-download:
   extends: .s3-deploy
   variables:
     PROJECT: ind2-download
+
+#===============================================================================================
+
+deploy-id1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: id1-download
 
 #===============================================================================================
 
@@ -632,12 +625,6 @@ deploy-lh-landing-v7:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v7
-#===============================================================================================
-
-deploy-lh-landing-v8:
-  extends: .s3-deploy
-  variables:
-    PROJECT: lh-landing-v8
 #===============================================================================================
 
 deploy-lh-redirect:

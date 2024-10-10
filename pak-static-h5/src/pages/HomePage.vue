@@ -1375,6 +1375,7 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
+import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -3028,7 +3029,7 @@ const imgURLPromo = imgURL + "/promo/";
 
 function loadData() {
   api
-    .get("/promo/banner?category=HOME")
+    .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = [];
@@ -3333,6 +3334,27 @@ const populatePushNotificationData = (data) => {
   pushNotificationData.value = data;
 };
 
+const initOneSignal = () => {
+  OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
+
+  let myClickListener = async function (event) {
+    console.log("CLICK PUSH");
+    let notificationData = event;
+    console.log(notificationData);
+    console.log(notificationData.notification.title);
+    console.log(notificationData.notification.body);
+    console.log(notificationData.notification.additionalData);
+    populatePushNotificationData(notificationData.notification);
+  };
+  OneSignal.Notifications.addEventListener("click", myClickListener);
+
+  // Prompts the user for notification permissions.
+  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+  OneSignal.Notifications.requestPermission(true).then((accepted) => {
+    console.log("User accepted notifications: " + accepted);
+  });
+};
+
 const loadCustomerAddress = () => {
   cached
     .get("customerAddress", () =>
@@ -3535,6 +3557,10 @@ onMounted(() => {
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
   afterMounted();
+
+  if (Platform.is.android && Platform.is.capacitor) {
+    initOneSignal();
+  }
 });
 
 watch(

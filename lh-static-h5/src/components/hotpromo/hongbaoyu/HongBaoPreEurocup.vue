@@ -122,6 +122,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 import { userStore } from "src/stores";
 const props = defineProps({
   promoCode: {
@@ -147,6 +149,9 @@ const promoCode = ref(props.promoCode);
 const promoContent = ref(props.pageContent);
 const promoParam = ref(props.promoParam);
 
+const $q = useQuasar();
+const router = useRouter();
+
 const getDateRange = (param) => {
   try {
     const promoObject = JSON.parse(param);
@@ -159,6 +164,30 @@ const getDateRange = (param) => {
 };
 
 const getPromotion = () => {
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
+  }
+
   if (loadingClaim.value) return;
   loadingClaim.value = true;
 
@@ -197,8 +226,9 @@ const maxVisibleItems = ref(5);
 const intervalId = ref(null);
 
 const getPromotionListing = () => {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
   eventapi
-    .get(`/redPacketVip/list?promoCode=${promoCode.value}`)
+    .get(`/redPacketVip/list?promoCode=${promoCode.value}&v=${randNum}`)
     .then((res) => {
       if (res.code === 0) {
         promotionListing.value = res.data;

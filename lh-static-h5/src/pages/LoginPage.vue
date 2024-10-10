@@ -24,13 +24,13 @@
       </div>
       <img v-else class="login-banner-img" :src="bannerImage" />
 
-      <q-form ref="loginFormRef" @submit="onSubmit" class="login-form" :class="{['phone-login']: loginType}">
+      <q-form ref="loginFormRef" @submit="onSubmit" class="login-form" :class="{ ['phone-login']: loginType }">
         <div class="tabs-wrapper" v-if="$q.dark.isActive">
-          <div class="tab-wrapper" @click="loginType = undefined" :class="{active: !loginType}">
+          <div class="tab-wrapper" @click="loginType = undefined" :class="{ active: !loginType }">
             <div class="tab">用户名登录</div>
             <div v-show="!loginType" class="active-tab-border" />
           </div>
-          <div class="tab-wrapper" @click="loginType = '手机号登录'" :class="{active: loginType}">
+          <div class="tab-wrapper" @click="loginType = '手机号登录'" :class="{ active: loginType }">
             <div class="tab">手机号登录</div>
             <div v-show="loginType" class="active-tab-border" />
           </div>
@@ -303,10 +303,9 @@ export default defineComponent({
 
     // Initialize Geetest with configuration
     const initGeetest = (config) => {
-      console.log(config)
+      console.log(config);
       window.initGeetest4(config.config, config.handler);
     };
-
 
     const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
@@ -322,7 +321,7 @@ export default defineComponent({
         .catch((e) => {
           notify({
             type: "error",
-            message: e.message,
+            message: e.message
           });
         });
     };
@@ -368,7 +367,7 @@ export default defineComponent({
       if (!phoneLoginForm.phoneNumber) {
         notify({
           type: "error",
-          message: "手机号码不能为空",
+          message: "手机号码不能为空"
         });
         return;
       }
@@ -420,10 +419,13 @@ export default defineComponent({
           loginNameRef.value.validate();
           passwordRef.value.validate();
 
-          if(window.captchaObj) {
+          if (window.captchaObj) {
             const validate = window.captchaObj.getValidate();
             if (!validate) {
-              alert("Please complete the captcha!");
+              notify({
+                type: "error",
+                message: "请完成验证码"
+              });
               return;
             }
           }
@@ -435,47 +437,48 @@ export default defineComponent({
             $q.loading.hide();
           } else {
             store
-            .memberLogin({
-              loginName: loginForm.loginName,
-              password: loginForm.password,
-              sid: sidParam,
-              // captchaCode: loginForm.captchaCode,
-              // codeId: loginForm.codeId,
-              summoner: loginForm.summoner,
-              lotNumber: loginForm.lot_number,
-              captchaOutput: loginForm.captcha_output,
-              passToken: loginForm.pass_token,
-              genTime: loginForm.gen_time,
-            })
-            .then(() => {
-              $q.loading.hide();
-              sessionStorage.removeItem("REFERRAL_CODE");
-              sessionStorage.removeItem("SUMMON_CODE");
+              .memberLogin({
+                loginName: loginForm.loginName,
+                password: loginForm.password,
+                sid: sidParam,
+                // captchaCode: loginForm.captchaCode,
+                // codeId: loginForm.codeId,
+                summoner: loginForm.summoner,
+                lotNumber: loginForm.lot_number,
+                captchaOutput: loginForm.captcha_output,
+                passToken: loginForm.pass_token,
+                genTime: loginForm.gen_time
+              })
+              .then(() => {
+                $q.loading.hide();
+                sessionStorage.removeItem("REFERRAL_CODE");
+                sessionStorage.removeItem("SUMMON_CODE");
 
-              if (isCheckRmb.value) {
-                localStorage.setItem(
-                  "userpass",
-                  JSON.stringify({
-                    loginName: loginForm.loginName,
-                    password: loginForm.password
-                  })
-                );
-              } else {
-                localStorage.removeItem("userpass");
-              }
+                if (isCheckRmb.value) {
+                  localStorage.setItem(
+                    "userpass",
+                    JSON.stringify({
+                      loginName: loginForm.loginName,
+                      password: loginForm.password
+                    })
+                  );
+                } else {
+                  localStorage.removeItem("userpass");
+                }
 
-              loginFormRef.value.reset();
+                loginFormRef.value.reset();
 
-              if (store.hasToken()) {
-                const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                router.go(jumpUrl);
-              }
-            })
-            .catch((error) => {
-              loginForm.captchaCode = "";
-              getCode();
-              $q.loading.hide();
-            });
+                if (store.hasToken()) {
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  router.go(jumpUrl);
+                }
+              })
+              .catch((error) => {
+                window.captchaObj.reset();
+                loginForm.captchaCode = "";
+                getCode();
+                $q.loading.hide();
+              });
           }
         } else {
           telephoneRef.value.validate();
@@ -486,7 +489,7 @@ export default defineComponent({
             if (!phoneLoginForm.smsCodeId) {
               notify({
                 type: "error",
-                message: "请验证手机码",
+                message: "请验证手机码"
               });
               return;
             }
@@ -571,11 +574,11 @@ export default defineComponent({
           console.log(e);
         })
         .onSuccess(function () {
-          let result = window.captchaObj.getValidate()
+          let result = window.captchaObj.getValidate();
           for (let key in result) {
             loginForm[key] = result[key];
           }
-          console.log(loginForm)
+          console.log(loginForm);
         });
     }
 
@@ -590,11 +593,11 @@ export default defineComponent({
             captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
             language: "zh",
             nativeButton: {
-            width: '100%',
-            height: '40px',
+              width: "100%",
+              height: "40px"
             },
-            nextWidth: '280px',
-            product: 'float',
+            nextWidth: "280px",
+            product: "float"
           },
           handler: captchaHandler
         };
@@ -605,11 +608,14 @@ export default defineComponent({
         message.value = "Error loading Geetest!";
         console.error("Geetest loading error:", error);
       }
-    }
+    };
 
-    watch(() => loginType.value, () => {
-      initGeetestCaptcha();
-    })
+    watch(
+      () => loginType.value,
+      () => {
+        initGeetestCaptcha();
+      }
+    );
 
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -662,10 +668,11 @@ export default defineComponent({
 <style lang="scss">
 .geetest-captcha-wrapper {
   #captchaContainer {
-      width: 100%;
+    width: 100%;
   }
 
-  .geetest_captcha.geetest_dark .geetest_holder .geetest_content, .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
     background-image: linear-gradient(180deg, #ecf3fd, 0%, #ecf3fd 100%) !important;
     border-color: #424f72;
   }
@@ -675,10 +682,14 @@ export default defineComponent({
   }
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
     color: #424f72;
-    font-family: 'PingFang SC' !important;
+    font-family: "PingFang SC" !important;
   }
 
-  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_content .geetest_tip_container .geetest_tips_wrap .geetest_tip {
+  .geetest_captcha.geetest_dark.geetest_lock_success
+    .geetest_content
+    .geetest_tip_container
+    .geetest_tips_wrap
+    .geetest_tip {
     color: #39c522 !important;
   }
 }
@@ -706,7 +717,6 @@ export default defineComponent({
 </style>
 
 <style scoped lang="scss">
-
 .login-container {
   position: relative;
   background: url(../assets/images/login/login-bg.jpg) no-repeat top center;
@@ -758,7 +768,7 @@ export default defineComponent({
     }
 
     .geetest-captcha-wrapper {
-      display:flex;
+      display: flex;
       background: #f7f8fb;
       border-radius: 8px;
       box-shadow: inset 0 0 4px 0 #a9c9ea;
@@ -908,7 +918,7 @@ export default defineComponent({
           left: 0;
           width: 100%;
           height: 100%;
-          background: radial-gradient(#5e698800 25%, #5E6988);
+          background: radial-gradient(#5e698800 25%, #5e6988);
           border-radius: 10px;
           border: 1px solid #969696;
         }
@@ -916,13 +926,13 @@ export default defineComponent({
 
       .login-form {
         padding: 65px 20px 20px 20px;
-        background: linear-gradient(180deg, #2E4166 0%, #1A263F 100%);
-        background: url('../assets/images/login/login-acc-bg-dark.png') no-repeat center center;
+        background: linear-gradient(180deg, #2e4166 0%, #1a263f 100%);
+        background: url("../assets/images/login/login-acc-bg-dark.png") no-repeat center center;
         background-size: 100% 100%;
         // aspect-ratio: 1035 / 1368;
 
         &.phone-login {
-          background: url('../assets/images/login/login-phone-bg-dark.png') no-repeat center center;
+          background: url("../assets/images/login/login-phone-bg-dark.png") no-repeat center center;
           background-size: 100% 100%;
           // aspect-ratio: 1035 / 1368;
         }
@@ -930,21 +940,21 @@ export default defineComponent({
     }
   }
   .common-large-btn {
-    background: url('../assets/images/login/login-btn-bg-dark.svg') no-repeat center center;
+    background: url("../assets/images/login/login-btn-bg-dark.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3A93CE;
+    border: 1px solid #3a93ce;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .common-large-white-btn {
-    background: url('../assets/images/login/register-btn-bg-dark.svg') no-repeat center center;
+    background: url("../assets/images/login/register-btn-bg-dark.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #BE9457;
+    border: 1px solid #be9457;
     display: flex;
     justify-content: center;
     align-items: center;

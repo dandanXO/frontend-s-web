@@ -173,6 +173,9 @@ const getPromotionListing = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getPromotionListing();
 
   const params = props.params ? JSON.parse(props.params) : "";

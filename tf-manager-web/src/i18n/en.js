@@ -279,6 +279,7 @@ export default {
     gameMemberCountTotal: 'Total Bet Member Count',
     gameBetCountTotal: 'Total Bet Transaction Count',
     gameBetAmountTotal: 'Total Bet Amount',
+    gamePayoutAmountTotal: 'Total Payout Amount',
     gameWinLossTotal: 'Total Win/Loss Amount',
   },
   gameType: {
@@ -1054,6 +1055,7 @@ export default {
     gameCode: 'Game Code',
     domainEasy: 'Domain Url',
     videoShiPin: 'Video Url',
+    CHARITY: "Charity Url",
     gameConsolidateReport: 'Game Consolidate Report',
     gameMatch: 'Game Match',
     gameMatchRecord: 'Game Match Record',
@@ -2054,7 +2056,10 @@ export default {
     threePointShots: 'Entire Match 10 Three Points Shots In',
     shotPoints: 'Any Player Scored 30 Points',
     scoringShots: 'Any Players Scored With 13 Shots',
-    foulOut: 'Any Player Getting Foul Out'
+    foulOut: 'Any Player Getting Foul Out',
+    gender: 'Gender',
+    Male: 'Male',
+    Female: 'Female',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

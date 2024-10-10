@@ -295,7 +295,7 @@ function handleSiteChange() {
 
 async function handleExpand(row, expandRow) {
   const requestCopy = { ...request }
-  requestCopy.size = 100
+  requestCopy.size = 1000
   requestCopy.withdrawId = row.withdrawId
   const { data: ret } = await getWithdrawBankList(requestCopy)
   if (ret.size > 0) {

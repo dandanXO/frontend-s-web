@@ -522,7 +522,20 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item />
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.gender') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.gender !== null && memberDetail.gender !== ''">{{ t(`fields.${memberDetail.gender}`) }}</span>
+          <span v-else>-</span>
+        </el-descriptions-item>
         <el-descriptions-item />
       </el-descriptions>
     </el-card>
@@ -1095,6 +1108,16 @@
                 $
                 <span
                   v-formatter="{data: memberDetail.totalBet, type: 'money'}"
+                />
+              </div>
+            </div>
+          </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7">
+            <div style="display: inline-block;" v-loading="loading.total">
+              <div class="balance">
+                $
+                <span
+                  v-formatter="{data: memberDetail.totalValidBet, type: 'money'}"
                 />
               </div>
             </div>
@@ -1822,6 +1845,7 @@ export default defineComponent({
       fiatBalance: null,
       usdtBalance: null,
       walletType: null,
+      gender: null,
     })
 
     const affiliateDetail = reactive({

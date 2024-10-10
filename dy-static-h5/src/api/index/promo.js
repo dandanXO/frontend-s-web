@@ -255,6 +255,10 @@ export function claimCompetitionBonus(promoCode) {
   return eventapi.post("/session/competition/claimBonus", qs.stringify({ promoCode }));
 }
 
+export function claimCompetitionBetBonus(promoCode) {
+  return eventapi.post("/session/competition-bet/claimBonus", qs.stringify({ promoCode }));
+}
+
 export function getNationalDayRecords() {
   return eventapi.get("/session/nationalDay/records");
 }
@@ -276,9 +280,59 @@ export function getCompetitionBetYesterday(promoCode) {
 }
 
 export function getNBAUpcomingMatch() {
-  return eventapi.get('/session/nba-match-preseason/upcoming')
+  return eventapi.get("/session/nba-match-preseason/upcoming");
 }
 
 export function getNBAClaimHistory() {
-  return eventapi.get('/session/nba-match-preseason/history')
+  return eventapi.get("/session/nba-match-preseason/history");
+}
+
+export function claimNBABonus(matchId) {
+  return eventapi.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
+}
+
+export function getPGLTreasureInit() {
+  return eventapi.get("/session/pglTreasure/init");
+}
+
+export function putPGLTreasureInit() {
+  return eventapi.put("/session/pglTreasure/claim");
+}
+
+export function getIEMRioInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/iem-rio/init?v=${randNum}`);
+}
+
+export function claimIEMRioBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/iem-rio/claimBonus?v=${randNum}`);
+}
+
+export function getCBAInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/cba/daily/init?v=${randNum}`);
+}
+
+export function claimCBADailyBonus() {
+  return eventapi.post(`/session/cba/daily/claimBonus`);
+}
+
+export function getCBAWeeklyInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/cba/weekly/init?v=${randNum}`);
+}
+
+export function claimCBAWeeklyBonus() {
+  return eventapi.post("/session/cba/weekly/claimBonus");
+}
+
+export function getMatchAndPrizeInfo(type) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/privi/memberSlotBetInfo?type=${type}&v=${randNum}`);
+}
+
+export function getPrizeMoney(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.put(`/bonus/claim/${promoCode}?v=${randNum}`);
 }

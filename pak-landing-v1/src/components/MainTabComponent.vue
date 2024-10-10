@@ -4,23 +4,38 @@
     </CarouselComponent>
 
     <div class="btn-container q-pb-lg q-pt-xs">
-      <a href="https://www.youtube.com/@B9GamePakistan" target="_blank">
-        <img alt="" src="~assets/imgs/yt_btn.png" />
+      <a href="https://www.youtube.com/@B9GAMEpk" target="_blank">
+        <img class="icons" alt="" src="~assets/imgs/yt_btn.png" />
       </a>
       <a
         href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
         target="_blank"
       >
-        <img alt="" src="~assets/imgs/wa_btn.png" />
+        <img
+          class="icons"
+          alt=""
+          src="~assets/imgs/wa_btn.png"
+          style="animation-delay: 0.5s"
+        />
       </a>
       <a href="https://www.tiktok.com/@b9game2" target="_blank">
-        <img alt="" src="~assets/imgs/tt_btn.png" />
+        <img
+          class="icons"
+          alt=""
+          src="~assets/imgs/tt_btn.png"
+          style="animation-delay: 1s"
+        />
       </a>
       <a
         href="https://www.instagram.com/b9game?igsh=MWJuZjRubjZwdnh0OQ=="
         target="_blank"
       >
-        <img alt="" src="~assets/imgs/ig_btn.png" />
+        <img
+          class="icons"
+          alt=""
+          src="~assets/imgs/ig_btn.png"
+          style="animation-delay: 1.5s"
+        />
       </a>
     </div>
 
@@ -45,9 +60,11 @@
         <div class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2]?.media"
+              v-if="galleryItems[i * 2]?.media.data.attributes?.url"
               alt=""
-              :src="galleryItems[i * 2]?.media.url"
+              :src="`${BASE_STRAPI_URL}${
+                galleryItems[i * 2]?.media.data.attributes.url
+              }`"
             />
             <iframe
               v-else-if="galleryItems[i * 2]?.videoUrl"
@@ -62,9 +79,11 @@
         <div v-if="galleryItems[i * 2 + 1]" class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2 + 1].media"
+              v-if="galleryItems[i * 2 + 1].media.data.attributes?.url"
               alt=""
-              :src="galleryItems[i * 2 + 1].media.url"
+              :src="`${BASE_STRAPI_URL}${
+                galleryItems[i * 2 + 1].media.data.attributes.url
+              }`"
             />
             <iframe
               v-else-if="galleryItems[i * 2 + 1]?.videoUrl"
@@ -92,6 +111,7 @@
 <script setup>
 import { computed } from "vue";
 import CarouselComponent from "src/components/CarouselComponent.vue";
+import { BASE_STRAPI_URL } from "src/constants/constants";
 
 const props = defineProps(["tabData"]);
 
@@ -120,6 +140,9 @@ const carouselBtm = computed(() => {
 .btn-container {
   display: flex;
   justify-content: space-evenly;
+  .icons {
+    animation: smallbeat 2s infinite;
+  }
 }
 
 .carousel-container {
@@ -184,6 +207,30 @@ const carouselBtm = computed(() => {
   span {
     padding: 0 8px;
     overflow-wrap: anywhere;
+  }
+}
+
+@keyframes smallbeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
 </style>

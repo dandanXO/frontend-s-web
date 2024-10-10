@@ -234,10 +234,11 @@
   </script>
   <script>
     function updateContactInfoByHostname() {
-      const hostname = window.location.hostname;
+      const hostname = window.location.host.replace("www.", "");
+      console.log(hostname);
 
       const contactInfo = {
-        'www.02574.co': {
+        '02574.co': {
           group1Title: "LH浮力群",
           group1Number: "887824420",
           group2Title: "LH娱乐城",
@@ -246,7 +247,7 @@
           agent1ID: "nana888",
           agent2ID: "nana988"
         },
-        'www.36100.co': {
+        '36100.co': {
           group1Title: "LH符力群",
           group1Number: "982694108",
           group2Title: "雷火洪礼群",
@@ -255,7 +256,7 @@
           agent1ID: "harry1314",
           agent2ID: "lh138158"
         },
-        'www.02494.co': {
+        '02494.co': {
           group1Title: "LH大红群",
           group1Number: "887853472",
           group2Title: "雷火红火群",
@@ -264,7 +265,7 @@
           agent1ID: "susu08",
           agent2ID: "susu09"
         },
-        'www.25213.co': {
+        '25213.co': {
           group1Title: "红利群",
           group1Number: "812758319",
           group2Title: "大红大紫",
@@ -272,7 +273,34 @@
           landingPageLink: "https://am67.cc",
           agent1ID: "006225",
           agent2ID: "lh1668"
-        }
+        },
+        '03417.cc': {
+          group1Title: "转运群",
+          group1Number: "706924666",
+          group2Title: "福熙阁",
+          group2Number: "875981010",
+          landingPageLink: "https://am787.cc",
+          agent1ID: "vip859",
+          agent2ID: "vip668"
+        },
+        '29982.cc': {
+          group1Title: "转运群",
+          group1Number: "706924666",
+          group2Title: "福熙阁",
+          group2Number: "875981010",
+          landingPageLink: "https://am787.cc",
+          agent1ID: "vip859",
+          agent2ID: "vip668"
+        },
+        '34751.cc': {
+          group1Title: "164富力",
+          group1Number: "925319859",
+          group2Title: "服力群",
+          group2Number: "673169074",
+          landingPageLink: "https://am787.cc",
+          agent1ID: "vip885",
+          agent2ID: "vip856"
+        },
       };
 
       // Default content if no hostname matches
@@ -287,6 +315,8 @@
       };
 
       const selectedInfo = contactInfo[hostname] || defaultInfo;
+      console.log("ENd Info")
+      console.log(selectedInfo)
 
       document.getElementById("group1-title").textContent = selectedInfo.group1Title;
       document.getElementById("group1-number").textContent = selectedInfo.group1Number;
@@ -352,6 +382,12 @@
       LA.init({ id: "KUWGwqvPeljTIRHO", ck: "KUWGwqvPeljTIRHO" })
     } else if (hostname.indexOf("82395.cc") > -1) {
       LA.init({ id: "KUWH14knjPTIVC9r", ck: "KUWH14knjPTIVC9r" })
+    } else if (hostname.indexOf("03417.cc") > -1) {
+      LA.init({ id: "KahNo24ROKNrGEUW", ck: "KahNo24ROKNrGEUW" })
+    } else if (hostname.indexOf("29982.cc") > -1) {
+      LA.init({ id: "KahO2H8ouBTFqdT0", ck: "KahO2H8ouBTFqdT0" })
+    } else if (hostname.indexOf("34751.cc") > -1) {
+      LA.init({ id: "KahOCZSGBrLzdVPx", ck: "KahOCZSGBrLzdVPx" })
     } else {
       LA.init({ id: "KTF9ydpVNaBYTHZs", ck: "KTF9ydpVNaBYTHZs" })
     }

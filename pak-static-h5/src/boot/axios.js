@@ -130,8 +130,12 @@ export default boot(({ app, router }) => {
         // debugger;
       }
 
-      if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
+      if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
+        SessionStorage.remove("TOKEN");
+        LocalStorage.remove("TOKEN");
+        router.push("/login");
         location.reload();
+        return;
       } else {
         if (
           res.code === ResponseCode.ERROR_NAME_EXIST ||

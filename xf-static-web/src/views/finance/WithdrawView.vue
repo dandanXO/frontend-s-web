@@ -96,12 +96,12 @@
             "
           ></div> -->
         </el-form-item>
-        <el-form-item v-if="isAutoWithdrawal" class="helptxt">
+        <!-- <el-form-item v-if="isAutoWithdrawal" class="helptxt">
           <div class="auto-withdraw-amount-wrapper">
             <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
             <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
           </div>
-        </el-form-item>
+        </el-form-item> -->
         <el-row>
           <el-col>
             <div
@@ -234,6 +234,7 @@
         </div>
       </template>
     </el-dialog>
+    <WithdrawRemainingDialog v-model="isShowRemainingDialog" />
   </div>
 </template>
 
@@ -246,11 +247,13 @@ import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import {useLocalStorage} from "@vueuse/core";
+import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialog.vue";
 
 export default defineComponent({
   name: "WithdrawView",
   components: {
-    RiArrowRightSLine
+    RiArrowRightSLine,
+    WithdrawRemainingDialog
   },
   setup() {
     const router = useRouter();
@@ -263,6 +266,7 @@ export default defineComponent({
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
     const isShowSubmitDialog = ref(false);
+    const isShowRemainingDialog = ref(false)
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -483,7 +487,10 @@ export default defineComponent({
     const getWithdrawalMethods = () => {
       withdrawEntrance().then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data;
+          if(isAutoWithdrawal.value) {
+            isShowRemainingDialog.value = !response.data.withdrawStatus
+          }
+          withdrawalMethods.value = response.data.withdrawShowList;
           if (withdrawalMethods.value.length) {
             selectMethod(withdrawalMethods.value[0], 0)
           }
@@ -558,7 +565,8 @@ export default defineComponent({
       isAutoWithdrawal,
       isShowSubmitDialog,
       handleBindRealName,
-      handleBindPhoneNumber
+      handleBindPhoneNumber,
+      isShowRemainingDialog
     };
   },
 });

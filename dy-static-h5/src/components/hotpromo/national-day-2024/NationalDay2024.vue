@@ -77,14 +77,14 @@
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的 3
+            活动期间，会员当日东赢电竞场馆累计效投注金额达到当日总存款金额的 3
             倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 1,888 元，仅需 3
             倍流水即可取款！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
-            <th>达成条件 (流水仅限雷火电竞场馆)</th>
+            <th>达成条件 (流水仅限东赢电竞场馆)</th>
             <th>应发彩金</th>
             <th>彩金上限</th>
           </tr>
@@ -120,7 +120,7 @@
               />
               <span>示例</span>
             </div>
-            会员 A 当日存款 100 元并且在雷火电竞累计有效投注 300 元即可获得 100*1%=1 元彩金。
+            会员 A 当日存款 100 元并且在东赢电竞累计有效投注 300 元即可获得 100*1%=1 元彩金。
           </div>
         </div>
       </div>
@@ -131,7 +131,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              <div>活动仅计算雷火电竞场馆有效投注，其他场馆有效投注不参与本次活动；</div>
+              <div>活动仅计算东赢电竞场馆有效投注，其他场馆有效投注不参与本次活动；</div>
             </div>
           </div>
           <div class="item">

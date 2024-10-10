@@ -4,7 +4,7 @@
       <span class="menu-title">
         {{ isAutoWithdrawal ? "快速提款" : "提款" }}
       </span>
-      <el-button
+      <!--<el-button
         v-if="!isAutoWithdrawal"
         :loading="loadingBtn"
         :disable="loadingBtn"
@@ -14,7 +14,7 @@
       >
         <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
         <span>升级快速提款</span>
-      </el-button>
+      </el-button>-->
     </div>
 
     <div class="menu-title-container">
@@ -100,12 +100,12 @@
           ></div> -->
         </el-form-item>
 
-        <el-form-item v-if="isAutoWithdrawal" class="helptxt">
+        <!-- <el-form-item v-if="isAutoWithdrawal" class="helptxt">
           <div class="auto-withdraw-amount-wrapper">
             <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
             <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
           </div>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-row>
           <el-col>
@@ -199,6 +199,7 @@
         </div>
       </el-form>
     </div>
+    <WithdrawRemainingDialog v-model="isShowRemainingDialog" />
   </div>
 </template>
 
@@ -211,11 +212,13 @@ import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
+import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialog.vue";
 
 export default defineComponent({
   name: "WithdrawView",
   components: {
-    RiArrowRightSLine
+    RiArrowRightSLine,
+    WithdrawRemainingDialog
   },
   setup() {
     const notify = useNotify()
@@ -231,6 +234,7 @@ export default defineComponent({
     const isALIPAY = ref(false);
     const isLoaded = ref(false);
     const isShowSubmitDialog = ref(false);
+    const isShowRemainingDialog = ref(false)
     const withdrawState = reactive({
       bankCardList: []
     });
@@ -451,7 +455,10 @@ export default defineComponent({
     const getWithdrawalMethods = () => {
       withdrawEntrance().then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data;
+          if(isAutoWithdrawal.value) {
+            isShowRemainingDialog.value = !response.data.withdrawStatus
+          }
+          withdrawalMethods.value = response.data.withdrawShowList;
           if (withdrawalMethods.value.length) {
             selectMethod(withdrawalMethods.value[0], 0);
           }
@@ -528,7 +535,8 @@ export default defineComponent({
       tutorialLabel,
       handleUpgradeClick,
       isAutoWithdrawal,
-      isShowSubmitDialog
+      isShowSubmitDialog,
+      isShowRemainingDialog
     };
   }
 });
@@ -970,7 +978,7 @@ export default defineComponent({
   .account-container {
     .account-content-wrapper {
       .step-item {
-        background: linear-gradient(90deg, #344468 0%, #1A2338 100%);
+        background: linear-gradient(90deg, #344468 0%, #1a2338 100%);
         border: 1px solid #78abdb;
       }
       .withdraw-type-item {

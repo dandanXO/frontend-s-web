@@ -102,6 +102,8 @@ export default defineComponent({
       query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
       if (!query.siteId) {
         query.siteId = store.state.user.siteId;
+      } else {
+        query.siteId = store.state.user.sites[0].id
       }
       return query;
     }
@@ -117,8 +119,10 @@ export default defineComponent({
 
     const checkOutstandingWithdraw = async() => {
       const query = checkQuery();
-      const { data: ret } = await getMemberWithdrawRecordApply(query);
-      sessionStorage.setItem("WITHDRAW", ret.total);
+      if (query.siteId !== null) {
+        const { data: ret } = await getMemberWithdrawRecordApply(query);
+        sessionStorage.setItem("WITHDRAW", ret.total);
+      }
     };
 
     const checkOutstandingAutoWithdraw = async() => {

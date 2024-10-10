@@ -1,6 +1,7 @@
 <template>
   <div>
     <MainTabComponent v-if="!isLoading" :tab-data="tabData"></MainTabComponent>
+    <q-inner-loading v-else :showing="isLoading" />
   </div>
 </template>
 
@@ -18,7 +19,7 @@ onMounted(() => {
       "/api/event-sponsorship?populate[charityGallery][populate]=media&populate[bannerTop][populate]=media&populate[bannerMid][populate]=media&populate[bannerBtm][populate]=media"
     )
     .then((res) => {
-      tabData.value = res.data;
+      tabData.value = res.data.attributes;
     })
     .catch((e) => {})
     .finally(() => {

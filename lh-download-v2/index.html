@@ -230,7 +230,7 @@
                         const value = list[key];
                         console.log(`Key: ${key}, Value: ${value}`);
                         if (key !== '网站入口') {
-                            androidHtml = `
+                            androidHtml += `
             <div class="download_btn" id="btn_${index}">
             <a
             class="click-btn"
@@ -239,7 +239,7 @@
             >${key}</a
             >
         </div>
-` + androidHtml;
+`;
                         } else {
                             websiteHtmlAnd = `
                         <div class="download_btn" id="btn_${index}">

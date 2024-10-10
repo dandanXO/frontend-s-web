@@ -21,7 +21,7 @@
     </div>
 
     <div class="light-bg form-field geetest-captcha-form-field">
-      <img class="form-field-icon" src="../../assets/home/auth/verification-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <div class="geetest-captcha-wrapper">
         <div class="geetest-captcha-label">
           <span style="color: red; margin-right: 4px">*</span>
@@ -60,7 +60,7 @@
 <script setup>
 import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
-import { userStore } from "@/store";
+import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "@/hooks/notify";
 
@@ -151,7 +151,10 @@ const submitLogin = () => {
         if (window.captchaObj) {
           const validate = window.captchaObj.getValidate();
           if (!validate) {
-            alert("Please complete the captcha!");
+            notify({
+              type: "error",
+              message: "请完成验证码"
+            });
             return;
           }
           // You can now send the validate data to your backend

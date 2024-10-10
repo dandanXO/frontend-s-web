@@ -4,7 +4,7 @@
 </template>
 <script setup>
 import { useDark } from "@vueuse/core";
-import PromotionView from "../PromotionView.vue";
+import PromotionView from "@/views/PromotionView.vue";
 import DarkPromotionView from "./DarkPromotionView.vue";
 
 const isDark = useDark();

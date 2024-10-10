@@ -12,7 +12,7 @@ const crArray = process.env.VUE_APP_CR_API.split(",");
 const imgCDN = process.env.VUE_APP_IMAGE_CDN;
 
 console.log(window.location.hostname);
-const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
+const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1 || window.location.hostname.indexOf("dy639.") > -1;
 
 const globalAndCNLinks = ["dongyingbet6", "dongyingbet8"];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));

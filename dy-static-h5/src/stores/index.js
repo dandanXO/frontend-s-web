@@ -116,9 +116,11 @@ export const userStore = defineStore("userStore", {
           if (isAndroid()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
+            window.captchaObj.reset();
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
+          window.captchaObj.reset();
           Notify.create({
             color: "negative",
             position: "top",
