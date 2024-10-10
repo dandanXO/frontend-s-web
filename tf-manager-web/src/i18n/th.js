@@ -208,6 +208,7 @@ export default {
     gameMemberCountTotal: 'จำนวนสมาชิกเดิมพันทั้งหมด',
     gameBetCountTotal: 'จำนวนธุรกรรมการเดิมพันทั้งหมด',
     gameBetAmountTotal: 'จำนวนเงินเดิมพันทั้งหมด',
+    gamePayoutAmountTotal: 'ยอดจ่ายทั้งหมด',
     gameWinLossTotal: 'จำนวนเงินชนะ/แพ้ทั้งหมด',
   },
   gameType: {

@@ -104,6 +104,17 @@ const routes = [
     meta: { requiresAuth: true, isApp: true }
   },
   {
+    path: "/affiliatepage",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "affiliatepage",
+        component: () => import("pages/AffiliateView.vue")
+      }
+    ]
+  },
+  {
     path: "/privilege/invite",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }],
@@ -112,7 +123,7 @@ const routes = [
   {
     path: "/app-tutorial",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AppTutorial.vue") }],
+    children: [{ path: "", component: () => import("pages/AppTutorial.vue") }]
   },
   // Always leave this as last one,
   // but you can also remove it
