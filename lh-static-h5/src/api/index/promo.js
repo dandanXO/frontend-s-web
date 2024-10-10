@@ -371,3 +371,13 @@ export function getCBAWeeklyInit() {
 export function claimCBAWeeklyBonus() {
   return eventapi.post("/session/cba/weekly/claimBonus");
 }
+
+export function getBelgradeInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/bb-dacha-belgrade/init?v=${randNum}`);
+}
+
+export function claimBelgradeBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/bb-dacha-belgrade/claimBonus?v=${randNum}`);
+}
