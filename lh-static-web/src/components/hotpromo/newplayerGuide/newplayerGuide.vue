@@ -377,10 +377,10 @@ const getBonus = async (promoCode) => {
         message: `成功领取 ￥${apiRes.data}`
       });
     } else {
-      notify({
-        type: "error",
-        message: apiRes.message
-      });
+      // notify({
+      //   type: "error",
+      //   message: apiRes.message
+      // });
     }
   } catch (err) {
     console.error(err);
