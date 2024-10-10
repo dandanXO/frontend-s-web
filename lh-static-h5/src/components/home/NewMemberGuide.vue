@@ -147,8 +147,8 @@ const adjustGuide = () => {
     setTimeout(() => {
       const { x, y } = document.querySelector('.deposit-btn').getBoundingClientRect();
       const step5img = document.querySelector('.step5-img');
-      step5img.style.top = `calc(${y}px - 13px)`;
-      step5img.style.left = `calc(${x}px - 35px)`;
+      step5img.style.top = `calc(${y}px + 30px)`;
+      step5img.style.left = `calc(${x}px)`;
       step5img.style.visibility = 'visible';
     }, 1000);
   } else if(value === 6) {
@@ -350,6 +350,9 @@ onMounted(() => {
   .step5-img {
     position: fixed;
     visibility: hidden;
+    img {
+      scale: 1.4;
+    }
   }
   .content {
     padding-bottom: 54px;
