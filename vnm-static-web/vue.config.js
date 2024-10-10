@@ -37,7 +37,7 @@ const paths = [
 ];
 
 module.exports = defineConfig({
-  lintOnSave: true,
+  lintOnSave: false,
   productionSourceMap: false,
   runtimeCompiler: true,
   devServer: {
@@ -63,7 +63,7 @@ module.exports = defineConfig({
       splitChunks: process.env.NODE_ENV === "development" ? false : {
         chunks: "all"
       },
-      runtimeChunk: true,
+      runtimeChunk: process.env.NODE_ENV === "development" ? false : true,
       minimize: process.env.NODE_ENV === "development" ? false : true,
       minimizer: process.env.NODE_ENV === "development" ? [] : [
         new TerserPlugin({

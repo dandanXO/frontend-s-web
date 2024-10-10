@@ -111,7 +111,7 @@
                 </span>
               </div>
               <el-icon>
-                <RiRefreshLine color="#468CFF" />
+                <img width="20" height="20" src="../../assets/images/home/header-refresh-icon.svg" />
               </el-icon>
             </a>
           </div>
@@ -240,10 +240,7 @@ import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
-import { displayBalance } from "@/utils/utils"
-import {
-  RiRefreshLine
-} from "vue-remix-icons";
+import { displayBalance } from "@/utils/utils";
 import Navigation from "@/components/home/navigation/Navigation.vue";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
@@ -285,7 +282,6 @@ export default defineComponent({
     MinigameMenu,
     PromotionMenu,
     AppMenu,
-    RiRefreshLine,
     GameModal,
     LoginDialog,
     ForgotPwdDialog,

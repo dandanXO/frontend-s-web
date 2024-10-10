@@ -15,7 +15,7 @@
                 @click="store.openLiveChat()"
                 class="claimBtn vipBirthday"
               >
-                <RiCake2Line />
+                <img width="18" height="18" src="../assets/images/vip/vip-birthday-cake-icon.svg" />
                 {{ $t("vip.birthday") }}
               </a>
               <a
@@ -24,7 +24,7 @@
                 @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly') : null"
                 class="claimBtn vipMonthly"
               >
-                <RiCalendar2Line />
+              <img width="18" height="18" src="../assets/images/vip/vip-calendar-icon.svg" />
                 {{ $t("vip.monthly") }}
               </a>
               <a
@@ -33,7 +33,7 @@
                 @click="!vip.unavailable && !vip.claimed ? claimBonus('welcome', vipIndex + 1) : null"
                 class="claimBtn vipWelcome"
               >
-                <RiMoneyDollarCircleLine />
+              <img width="18" height="18" src="../assets/images/vip/vip-money-icon.svg" />
                 {{ $t("vip.upgrade") }}
               </a>
             </div>
@@ -382,7 +382,6 @@ import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
-import { RiCake2Line, RiCalendar2Line, RiMoneyDollarCircleLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "VIPView",
@@ -390,9 +389,6 @@ export default defineComponent({
     Carousel,
     Slide,
     Navigation,
-    RiCake2Line,
-    RiCalendar2Line,
-    RiMoneyDollarCircleLine
   },
   setup() {
     const { t } = useI18n();

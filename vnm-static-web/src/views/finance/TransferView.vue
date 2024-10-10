@@ -20,7 +20,7 @@
           <span v-else>{{ mainWallet }} {{store.currency.value}}</span>
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon>
-              <Refresh style="color: #000" />
+              <img width="15" height="15" src="../../assets/images/account/transfer-refresh-icon.svg" />
             </el-icon>
           </div>
         </div>
@@ -55,16 +55,16 @@
       <div class="transfer-plat-item card" v-for="p in platforms" :key="p.id">
         <div class="transfer-balance-box">
           <div class="platform-details">
-            <div class="plat-name" v-if="p.code === 'FlashTech'">
-              <RiWirelessChargingLine />
+            <div class="plat-name">
+              <img width="15" height="15" src="../../assets/images/account/transfer-charge-icon.svg" />
               Sport
             </div>
-            <div class="plat-name" v-else>
+            <div class="plat-name">
               <img :src="require(`../../assets/${type(p)}/${type(p)}-logo-${p.code.toLowerCase()}.png`)">
               {{ platNames[p.code] || p.name }}
               <div class="balance-refresh" @click="refreshBalance(p.code)">
                 <el-icon>
-                  <Refresh />
+                  <img width="15" height="15" src="../../assets/images/account/transfer-refresh-icon.svg" />
                 </el-icon>
               </div>
             </div>
@@ -104,7 +104,7 @@
       >
         <el-tag type="danger" effect="dark">主账户</el-tag>
         <el-icon>
-          <Right />
+          <img width="15" height="15" src="../../assets/images/account/transfer-right-icon.svg" />
         </el-icon>
         <el-tag type="success" effect="dark">
           {{ transferInfo.platform }}
@@ -155,17 +155,11 @@ import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList, updateAut
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
-import { Refresh, Right } from "@element-plus/icons-vue"
-import { RiWirelessChargingLine } from "vue-remix-icons";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "TransferView",
   components: {
-    // RiSpamLine, RiRestartLine
-    Refresh,
-    Right,
-    RiWirelessChargingLine
 },
   setup() {
     const store = userStore();
