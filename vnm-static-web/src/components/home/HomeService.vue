@@ -182,14 +182,13 @@ onMounted(() => { });
         flex: 1;
 
         .item {
-          display: flex;
           align-items: center;
           justify-content: space-evenly;
           border-radius: 0.8125rem;
           border: 1px solid #5c9fff;
-          padding: 2rem;
           height: 100%;
-          gap: 16px;
+          display: grid;
+          grid-template-columns: 0.3fr 0.7fr;
 
           .left-container {
             .circle-wrapper {

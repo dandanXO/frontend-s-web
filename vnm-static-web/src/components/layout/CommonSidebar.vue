@@ -9,16 +9,6 @@
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
         <span style="margin-left: 5px">vnsupport@tf88.com</span>
       </div>
-      <!-- <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
-        <span style="margin-left: 5px"
-        ><span class="customer_phone">+84945 091 999</span></span
-        >
-      </div>
-      <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar-zalo-icon.png" />
-        <span style="margin-left: 5px"> +63967 254 1561</span>
-      </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <span style="margin-left: 5px">@TF88_CS</span>
@@ -26,22 +16,22 @@
     </div>
     <div class="sticky-sidebar-items">
       <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
-        <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
-        <div>{{ $t("stickySidebar.hotPromotions") }}</div>
+        <img class="icon" src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
+        <div class="label">{{ $t("stickySidebar.hotPromotions") }}</div>
       </router-link>
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
-        <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
-        <div>{{ $t("stickySidebar.customerService") }}</div>
+        <img class="icon" src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
+        <div class="label">{{ $t("stickySidebar.customerService") }}</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
-          <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
-          <div>{{ $t("stickySidebar.appDownload") }}</div>
+          <img class="icon" src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
+          <div class="label">{{ $t("stickySidebar.appDownload") }}</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
-        <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
-        <div>{{ $t("stickySidebar.backToTop") }}</div>
+        <img class="icon" src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
+        <div class="label">{{ $t("stickySidebar.backToTop") }}</div>
       </div>
     </div>
     <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
@@ -88,11 +78,6 @@
     >
       <div style="position: relative">
         <div class="close-btn" @click="hideFloatPromo()">X</div>
-        <!-- <div @click="gotoPromo(currentPromo.code)" class="rocket-container">
-          <div class="rocket">
-            <img :src="`${imgURL}/promo/${currentPromo.icon}`" />
-          </div>
-        </div> -->
         <el-carousel
           height="130px"
           :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
@@ -376,7 +361,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
-  padding: 15px;
+  padding: 10px 5px;
   background: #ffffff;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -416,6 +401,25 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
+
+  
+  @media (max-width: 768px) {
+    
+    .sticky-sidebar-items {
+      gap: 5px;
+      padding: 5px;
+
+      .sticky-sidebar-item {
+        .label {
+          font-size: 10px;
+        }
+
+        .icon {
+          width: 40px;
+        }
+      }
+    }
+  }
 }
 
 @keyframes shake {

@@ -24,8 +24,6 @@
     "dotenv-cli": "^7.0.0",
     "element-plus": "^2.5.5",
     "fingerprintjs": "^0.5.3",
-    "gsap": "^3.12.1",
-    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "pinia": "^2.0.30",
     "sitemap-webpack-plugin": "^1.1.1",
@@ -33,12 +31,9 @@
     "vue": "^3.4.19",
     "vue-i18n": "^9.10.1",
     "vue-qrcode-component": "^2.1.1",
-    "vue-qrious": "^3.1.0",
     "vue-router": "4.3.0",
-    "vue3-autocounter": "^1.0.6",
     "vue3-carousel": "^0.1.40",
-    "vue3-marquee": "^3.1.2",
-    "vue3-number-counter": "^0.0.2"
+    "vue3-marquee": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

@@ -2218,7 +2218,6 @@ body {
     font-size: 11px;
     line-height: 10px;
     width: 100%;
-    padding: 0px 6px 0px 8px;
     z-index: 2;
     color: #444444;
     letter-spacing: 1px;

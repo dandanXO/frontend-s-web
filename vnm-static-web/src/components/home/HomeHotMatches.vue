@@ -388,7 +388,6 @@ onMounted(() => {
     padding: 24px 24px;
     display: flex;
     justify-content: space-between;
-    width: 100%;
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
     position: relative;
     flex-wrap: wrap;
