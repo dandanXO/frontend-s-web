@@ -298,6 +298,8 @@ export default {
     selectDate: "Chọn ngày",
     btn_lottery_now: "Mở thưởng ngay",
     btn_claim_now: "Yêu cầu ngay",
+    btn_claim_now_sport: "Yêu cầu cho Thể thao",
+    btn_claim_now_other: "Yêu cầu cho Khác",
     net_work_bonus: "Tiền thưởng",
 
     bonus: "Phần thưởng",
