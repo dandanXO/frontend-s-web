@@ -522,3 +522,9 @@ export function claimCBAWeeklyBonus() {
   return server.EVENT.post("/session/cba/weekly/claimBonus");
 }
 
+export function getBelgradeInit() {
+  return server.EVENT.get("/session/bb-dacha-belgrade/init");
+}
+export function claimBelgradeBonus() {
+  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus");
+}
