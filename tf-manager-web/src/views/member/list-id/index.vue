@@ -616,7 +616,6 @@ import { ElMessage } from 'element-plus'
 import { email, required, size } from '../../../utils/validate'
 import {
   getMembers,
-  getMemberCount,
   registerMember,
   distributePromotion,
   requestExportSiteMember,
@@ -957,15 +956,12 @@ async function loadMembers() {
   const query = checkQuery()
   const { data: ret } = await getMembers(query)
   page.pages = ret.pages
+  page.total = ret.total;
   page.records = ret.records
   if (page.records.length / request.size < 1 || page.records.length === 0) {
     page.pages = request.current
   }
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
-
-  const { data: count } = await getMemberCount(query)
-  console.log(count)
-  page.total = count;
 
   page.loading = false
   table.value.clearSelection()
