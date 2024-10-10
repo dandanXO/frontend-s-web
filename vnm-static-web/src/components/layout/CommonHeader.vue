@@ -223,7 +223,6 @@
         </div>
       </div>
     </el-dialog>
-    <GameModal ref="modalGame"></GameModal>
   </header>
 </template>
 
@@ -233,7 +232,7 @@ import "vue3-carousel/dist/carousel.css";
 
 import LocaleChanger from "@/components/LocaleChanger.vue";
 import { useI18n } from "vue-i18n";
-import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
+import { defineComponent, onMounted, ref, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode, register } from "@/api/index/login";
@@ -242,21 +241,9 @@ import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
 import { displayBalance } from "@/utils/utils";
 import Navigation from "@/components/home/navigation/Navigation.vue";
-import GameMenu from "@/components/menu/GameMenu.vue";
-import EsportsMenu from "@/components/menu/EsportsMenu.vue";
-import SportsMenu from "@/components/menu/SportsMenu.vue";
-import LiveCasinoMenu from "@/components/menu/LiveCasinoMenu.vue";
-import LotteryMenu from "@/components/menu/LotteryMenu.vue";
-import PokerMenu from "@/components/menu/PokerMenu.vue";
-import FishingMenu from "@/components/menu/FishingMenu.vue";
-import CockfightMenu from "@/components/menu/CockfightMenu.vue";
-import MinigameMenu from "@/components/menu/MinigameMenu.vue";
-import PromotionMenu from "@/components/menu/PromotionMenu.vue";
-import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
 import { useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
-import GameModal from "@/components/modal/GameModal";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
@@ -268,21 +255,10 @@ import HomeWelcome from "@/components/home/HomeWelcome.vue";
 import { i18nStore } from '@/store/language'
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+
 export default defineComponent({
   name: "CommonHeader",
   components: {
-    GameMenu,
-    EsportsMenu,
-    SportsMenu,
-    LiveCasinoMenu,
-    LotteryMenu,
-    PokerMenu,
-    FishingMenu,
-    CockfightMenu,
-    MinigameMenu,
-    PromotionMenu,
-    AppMenu,
-    GameModal,
     LoginDialog,
     ForgotPwdDialog,
     RegisterAccount,
@@ -847,9 +823,6 @@ export default defineComponent({
     };
 
     const modalGame = ref(null);
-    const openGame = (gameName, code, gameCode) => {
-      modalGame.value.open(gameName, code, gameCode);
-    };
     const rebateAmt = ref(0);
     const isRebateDialogVisible = ref(false);
     const isLandingClub = ref(route.query.landing);
@@ -1171,8 +1144,6 @@ export default defineComponent({
       submitForgetPass,
       pwdStrength,
       resetRegForm,
-      openGame,
-      modalGame,
       todayDate,
       sendOtp,
       phoneLogin,

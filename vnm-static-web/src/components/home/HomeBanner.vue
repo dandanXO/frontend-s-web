@@ -27,9 +27,9 @@ import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
-import GameModal from "@/components/modal/GameModal.vue";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+const GameModal = defineAsyncComponent(() => import('@/components/modal/GameModal.vue'));
 
 const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";

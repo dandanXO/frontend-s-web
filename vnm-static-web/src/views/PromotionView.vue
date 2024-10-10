@@ -256,21 +256,7 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
 .promo-container {
-  // padding-bottom: 80px;
-
-  // min-height: 70vh;
-  // color: #ffffff;
-  .banner-container {
-    // min-height: 500px;
-  }
-
   .all-promotions {
-    @keyframes fadein {
-      100% {
-        opacity: 1;
-      }
-    }
-
     .promo-bg {
       background-size: cover;
       background-repeat: no-repeat;

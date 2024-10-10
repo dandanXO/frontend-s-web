@@ -39,13 +39,9 @@
     </div>
 
     <GameModal ref="gameMenu" />
-    <div
-      class="rocket-wrapper"
-      v-if="showRocket"
-      :class="'show-rocket'"
+    <div class="rocket-wrapper" v-if="showRocket" :class="'show-rocket'"
       :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
-      @mousedown="startDragging('rocket', $event)"
-    >
+      @mousedown="startDragging('rocket', $event)">
       <div>
         <div class="close-btn" @click="hideRocket()">X</div>
         <!-- <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
@@ -53,13 +49,8 @@
           <img :src="`${imgURL}/game/${game.icon}`" />
         </div>
       </div> -->
-        <el-carousel
-          height="100px"
-          :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'"
-          arrow="never"
-          :autoplay="true"
-          :interval="3000"
-        >
+        <el-carousel height="100px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never"
+          :autoplay="true" :interval="3000">
           <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
             <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
               <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
@@ -69,22 +60,13 @@
       </div>
     </div>
 
-    <div
-      class="rocket-wrapper"
-      v-if="showFloatPromo"
-      :class="'show-promo'"
+    <div class="rocket-wrapper" v-if="showFloatPromo" :class="'show-promo'"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
-      @mousedown="startDragging('promo', $event)"
-    >
+      @mousedown="startDragging('promo', $event)">
       <div style="position: relative">
         <div class="close-btn" @click="hideFloatPromo()">X</div>
-        <el-carousel
-          height="130px"
-          :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
-          arrow="never"
-          :autoplay="true"
-          :interval="3000"
-        >
+        <el-carousel height="130px" :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'" arrow="never"
+          :autoplay="true" :interval="3000">
           <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
             <div @click="gotoPromo(promo.code)" class="rocket-container">
               <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
@@ -96,17 +78,17 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineAsyncComponent, defineComponent, onMounted, ref } from "vue";
 import { userStore } from "@/store";
 import { getRedEnvelopeFromServer, getFloatingItems } from "@/api/index/site";
-import GameModal from "@/components/modal/GameModal.vue";
 import { useLocalStorage } from "@vueuse/core";
-import { uiStore } from "@/store/ui";
 import { useRouter } from "vue-router";
+
+const GameModal = defineAsyncComponent(() => import('@/components/modal/GameModal.vue'));
 
 export default defineComponent({
   components: {
-    GameModal
+
   },
   setup() {
     const customerHovered = ref(false);
@@ -114,7 +96,6 @@ export default defineComponent({
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
     const store = userStore();
-    const ui = uiStore();
     const router = useRouter();
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
@@ -240,15 +221,6 @@ export default defineComponent({
       getCheckRedPacket();
       initFloating();
     });
-
-    // watch(
-    //   () => store.token,
-    //   () => {
-    //     if (store.token) {
-    //       initFloating();
-    //     }
-    //   }
-    // );
     return {
       store,
       customerHovered,
@@ -286,7 +258,8 @@ export default defineComponent({
   display: none;
   width: 100px;
   height: 100px;
-  user-select: none; /* Disable text selection */
+  user-select: none;
+  /* Disable text selection */
 
   &.show-promo {
     display: block;
@@ -321,6 +294,7 @@ export default defineComponent({
   .rocket {
     pointer-events: none;
     user-select: none;
+
     img {
       display: block;
       width: 100px;
@@ -402,9 +376,9 @@ export default defineComponent({
   align-items: center;
   gap: 15px;
 
-  
+
   @media (max-width: 768px) {
-    
+
     .sticky-sidebar-items {
       gap: 5px;
       padding: 5px;
@@ -426,15 +400,19 @@ export default defineComponent({
   0% {
     transform: translateX(0);
   }
+
   25% {
     transform: translateX(-10px);
   }
+
   50% {
     transform: translateX(10px);
   }
+
   75% {
     transform: translateX(-10px);
   }
+
   100% {
     transform: translateX(0);
   }
@@ -450,46 +428,59 @@ export default defineComponent({
   bottom: -185px;
   animation: shake 1s ease-in-out infinite;
   animation-delay: 2s;
+
   img {
     width: 100%;
   }
 }
+
 @keyframes tilt-shaking {
   0% {
     transform: rotate(0deg);
   }
+
   25% {
     transform: rotate(5deg);
   }
+
   50% {
     transform: rotate(0eg);
   }
+
   75% {
     transform: rotate(-5deg);
   }
+
   100% {
     transform: rotate(0deg);
   }
 }
+
 @keyframes shake-with-pause {
   0% {
     transform: translateX(0);
   }
+
   10% {
     transform: translateX(-10px);
   }
+
   20% {
     transform: translateX(10px);
   }
+
   30% {
     transform: translateX(-10px);
   }
+
   40% {
     transform: translateX(10px);
   }
+
   50% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(0);
   }
