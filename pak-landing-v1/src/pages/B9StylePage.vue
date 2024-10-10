@@ -12,12 +12,9 @@
         </div>
 
         <div class="txt-container col-7">
-          <div class="txt title">{{ item.title }}</div>
-          <!--          <div class="txt-item-wrap">-->
-          <!--            <div class="txt description">-->
-          <!--              {{ item.description }}-->
-          <!--            </div>-->
-          <!--          </div>-->
+          <div>
+            <div class="txt title">{{ item.title }}</div>
+          </div>
           <div class="txt info">
             <div class="views">
               <q-icon name="visibility" />
@@ -108,7 +105,6 @@ const openUrl = (url) => {
       position: relative;
       border-radius: 12px;
       background-size: 100% auto !important;
-      //background-size: cover;
       &::before {
         content: "";
         display: block;
@@ -131,7 +127,6 @@ const openUrl = (url) => {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      //background-color: #2c2a28;
       padding: 10px;
       .txt-item-wrap {
         display: flex;
@@ -145,23 +140,13 @@ const openUrl = (url) => {
       .title {
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1; /* Limit to 1 lines */
-        overflow: hidden;
-        text-overflow: ellipsis;
-        line-height: 1.5;
-        font-weight: bold;
-        max-height: 4.5em;
-        font-size: 18px;
-      }
-      .description {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
         -webkit-line-clamp: 2; /* Limit to 2 lines */
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.5;
-        max-height: 4.5em;
-        font-size: 10px;
+        font-weight: bold;
+        max-height: 3em;
+        font-size: 18px;
       }
       .info {
         display: flex;
