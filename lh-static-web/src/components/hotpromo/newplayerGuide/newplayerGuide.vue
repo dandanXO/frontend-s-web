@@ -36,8 +36,10 @@
               <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
               <div class="subtitle">奖励说明</div>
             </div>
-            <p>注册后，绑定手机号码、银行账户或USDT地址，并完成任意一笔存款即可立即领取新手礼包。 
-              每绑定一项新的信息，均可获得额外奖励！</p>
+            <p>
+              注册后，绑定手机号码、银行账户或USDT地址，并完成任意一笔存款即可立即领取新手礼包。
+              每绑定一项新的信息，均可获得额外奖励！
+            </p>
           </div>
           <div class="section2">
             <div style="display: flex">
@@ -257,6 +259,7 @@ import { userStore } from "@/store";
 import moment from "moment";
 import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
+import { ResponseCode } from "@/api/response";
 
 const notify = useNotify();
 
@@ -377,11 +380,19 @@ const getBonus = async (promoCode) => {
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });
-    } else {
-      // notify({
-      //   type: "error",
-      //   message: apiRes.message
-      // });
+    } else if (
+      !(
+        apiRes.code === ResponseCode.ERROR_USER_TOO_FAST ||
+        apiRes.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+        apiRes.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+        apiRes.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+        apiRes.code === ResponseCode.ERROR_SYSTEM
+      )
+    ) {
+      notify({
+        type: "error",
+        message: apiRes.message
+      });
     }
   } catch (err) {
     console.error(err);
