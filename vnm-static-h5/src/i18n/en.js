@@ -475,6 +475,8 @@ export default {
     // promo -- vi-penny-bank
     vipenny_lottery_now: "Lottery now",
     vipenny_claim_now: "Claim now",
+    vipenny_claim_now_sport: "Claim for Sport",
+    vipenny_claim_now_other: "Claim for Others",
 
     // promo -- vnm-iphone
     choose_lucky_number: "Choose lucky number",

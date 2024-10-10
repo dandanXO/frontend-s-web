@@ -482,6 +482,8 @@ export default {
     // promo -- vi-penny-bank
     vipenny_lottery_now: "Mở thưởng ngay",
     vipenny_claim_now: "Yêu cầu ngay",
+    vipenny_claim_now_sport: "Yêu cầu cho Thể thao",
+    vipenny_claim_now_other: "Yêu cầu cho Khác",
 
     // promo -- vnm-iphone
     choose_lucky_number: "Chọn số may mắn",

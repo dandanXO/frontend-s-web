@@ -6,7 +6,10 @@
     </div>
     <div class="col">
       <img width="300" height="280" src="../../../assets/images/promotion/hotpromo/penny-bank/penny-bank-pig.png" />
-      <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now') }}</div>
+      <div class="buttons" style="display: flex; width: 100%; gap: 12px">
+      <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now_other') }}</div>
+      <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNowSport">{{ t('promo.btn_claim_now_sport') }}</div>
+    </div>
       <div class="claimAmt">{{ claimAmt }}</div>
     </div>
   </div>
@@ -14,7 +17,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { piggyBankGetLottery, piggyBankClaim,getBonusPiggyCashback } from '../../../api/index/promo';
+import { piggyBankGetLottery, getBonusPiggyCashback, piggyBankClaimSport, piggyBankClaimOther } from '../../../api/index/promo';
 import { useI18n } from "vue-i18n";
 import { ElMessage } from 'element-plus';
 
@@ -42,7 +45,17 @@ const onClickLotteryNow = () => {
 }
 
 const onClickClaimNow = () => {
-  piggyBankClaim().then((res) => {
+  piggyBankClaimOther().then((res) => {
+    if (res.code === 0) {
+      ElMessage.success(t('common.claimedSuccess'))
+
+    } else {
+      ElMessage.error(res.message)
+    }
+  })
+}
+const onClickClaimNowSport = () => {
+  piggyBankClaimSport().then((res) => {
     if (res.code === 0) {
       ElMessage.success(t('common.claimedSuccess'))
 
