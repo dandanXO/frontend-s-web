@@ -1,5 +1,6 @@
 <template>
-  <div class="new-member-guide-dialog" :show-close="false" v-if=store.regSuccessGuideVisible>
+  <!-- <div class="new-member-guide-dialog" :show-close="false" v-if=store.regSuccessGuideVisible> -->
+    <div class="new-member-guide-dialog" :show-close="false">
     <div class="step1-container" v-if="step === 1">
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
       <img src="../../assets/images/home/guide/step1-flag.png" alt="" class="flag" />
@@ -147,8 +148,8 @@ const adjustGuide = () => {
     setTimeout(() => {
       const { x, y } = document.querySelector('.deposit-btn').getBoundingClientRect();
       const step5img = document.querySelector('.step5-img');
-      step5img.style.top = `calc(${y}px + 30px)`;
-      step5img.style.left = `calc(${x}px)`;
+      step5img.style.top = `calc(${y}px + 30px - 11px)`;
+      step5img.style.left = `calc(${x}px - 80px)`;
       step5img.style.visibility = 'visible';
     }, 1000);
   } else if(value === 6) {
@@ -351,7 +352,7 @@ onMounted(() => {
     position: fixed;
     visibility: hidden;
     img {
-      scale: 1.4;
+      scale: 1.3;
     }
   }
   .content {
