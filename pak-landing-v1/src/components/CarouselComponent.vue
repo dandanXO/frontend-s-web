@@ -17,7 +17,7 @@
       >
         <div
           v-if="
-            carouselItem.media &&
+            carouselItem.media.data?.attributes &&
             carouselItem.media.data.attributes.ext === '.mp4'
           "
           class="video-container"
@@ -32,7 +32,7 @@
         </div>
         <div
           v-else-if="
-            carouselItem.media &&
+            carouselItem.media.data?.attributes &&
             (carouselItem.media.data.attributes.ext === '.jpg' ||
               carouselItem.media.data.attributes.ext === '.png')
           "
@@ -55,7 +55,11 @@
       </q-carousel-slide>
     </q-carousel>
 
-    <div class="carousel-nav" :class="{ bg: hasBg }">
+    <div
+      v-if="carouselData.length > 1"
+      class="carousel-nav"
+      :class="{ bg: hasBg }"
+    >
       <span
         v-for="(carouselItem, i) in carouselData"
         :key="i"
