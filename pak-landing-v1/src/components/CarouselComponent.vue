@@ -16,7 +16,26 @@
         class="column no-wrap flex-center"
       >
         <div
-          v-if="carouselItem.media"
+          v-if="
+            carouselItem.media &&
+            carouselItem.media.data.attributes.ext === '.mp4'
+          "
+          class="video-container"
+        >
+          <video style="width: 100%" controls autoplay>
+            <source
+              :src="`${BASE_STRAPI_URL}${carouselItem.media.data.attributes.url}`"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div
+          v-else-if="
+            carouselItem.media &&
+            (carouselItem.media.data.attributes.ext === '.jpg' ||
+              carouselItem.media.data.attributes.ext === '.png')
+          "
           class="carousel-media"
           :style="{
             backgroundImage: `url(${BASE_STRAPI_URL}${carouselItem.media.data.attributes.url})`,
@@ -31,7 +50,7 @@
           ></iframe>
         </div>
         <div class="carousel-description q-pt-xs q-pl-xs q-pr-xs">
-          <span>{{ carouselItem.description }}</span>
+          <span>{{ carouselItem.description }}111</span>
         </div>
       </q-carousel-slide>
     </q-carousel>
@@ -66,6 +85,11 @@ const onCarouselNavDotClick = (i) => {
   display: flex;
   flex-direction: column;
   margin: 12px;
+}
+
+.video-container {
+  width: 100%;
+  min-height: 200px;
 }
 
 .carousel-media {
