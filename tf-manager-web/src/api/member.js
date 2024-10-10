@@ -5,10 +5,6 @@ export const getMembers = members => {
   return https().request('/member', Method.GET, members, ContentType.form)
 }
 
-export const getMemberCount = members => {
-  return https().request('/member/count', Method.GET, members, ContentType.form)
-}
-
 export const getMemberDetails = (id, site) => {
   return https().request(
     `/member/${id}/${site}`,
