@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted,watch } from "vue";
 import NormalHomeViewLayout from "@/components/home/normalEdition/NormalHomeViewLayout.vue";
 import SlotHomeViewLayout from "@/components/home/slotEdition/SlotHomeViewLayout.vue";
 import { uiStore } from "@/store/ui";

@@ -4,7 +4,6 @@ import HomeView from "../views/HomeView.vue";
 import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
-import { ElMessageBox } from "element-plus";
 import { EDITION } from "@/constant/edition";
 import { uiStore } from "@/store/ui";
 

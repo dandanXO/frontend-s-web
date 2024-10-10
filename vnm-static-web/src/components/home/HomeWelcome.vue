@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { defineEmits } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { useI18n } from "vue-i18n";
 import { uiStore } from "@/store/ui";

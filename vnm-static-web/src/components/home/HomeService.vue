@@ -64,8 +64,6 @@
 <script setup>
 import { onMounted } from "vue";
 import HomeTitle from "@/atoms/HomeTitle.vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
 
 onMounted(() => { });
 </script>
