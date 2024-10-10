@@ -7,7 +7,6 @@ import { getCSAFromServer } from "@/api/index/site";
 import { ElMessage } from "element-plus";
 import vueI18n from "@/i18n";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-// import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
 

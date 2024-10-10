@@ -23,7 +23,6 @@
 import { ref } from "vue";
 import { postDeposit } from "@/api/personal/deposit";
 import { doIt } from "@/utils/action";
-// import { message } from "ant-design-vue";
 
 const props = defineProps({
   bankList: {
