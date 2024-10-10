@@ -79,7 +79,9 @@ const getThumbnailUrl = (url) => {
   const regex =
     /(?:youtube\.com\/(?:embed\/|watch\?v=|v\/|.*[?&]v=)|youtu\.be\/)([^&\n?]{11})/;
   const match = url.match(regex);
-  return match ? `https://img.youtube.com/vi/${match[1]}/default.jpg` : null;
+  return match
+    ? `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg`
+    : null;
 };
 
 const openUrl = (url) => {
