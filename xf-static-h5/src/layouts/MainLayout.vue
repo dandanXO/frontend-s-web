@@ -300,7 +300,7 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "消息中心";
           if (route.query.id) {
-            prevPage.value = "/account/message";
+            prevPage.value = "account/message";
           }
         } else if (route.path === "/account/mail/inbox") {
           prevPage.value = "account/mail";
