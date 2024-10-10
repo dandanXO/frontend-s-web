@@ -474,7 +474,7 @@ const submitRegisterForm = async (elForm) => {
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
+                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1 || window.location.href.indexOf("tslotf88.com") > -1) {
                   otag("event", "registration");
                 }
 

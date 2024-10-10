@@ -284,6 +284,7 @@ export default {
     gameMemberCountTotal: '总游戏人数',
     gameBetCountTotal: '总下注笔数',
     gameBetAmountTotal: '总下注金额',
+    gamePayoutAmountTotal: '总派彩金额',
     gameWinLossTotal: '总输/赢金额',
   },
   gameType: {
@@ -1056,6 +1057,7 @@ export default {
     gameCode: '游戏代码',
     domainEasy: 'Domain 易记域名',
     videoShiPin: 'Video 视频',
+    CHARITY: "慈善 Url",
     gameConsolidateReport: '游戏报表',
     gameMatch: '保险投注赛事',
     gameMatchRecord: '玩家保险投注记录',

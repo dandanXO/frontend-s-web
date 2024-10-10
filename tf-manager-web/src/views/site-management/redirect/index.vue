@@ -46,6 +46,7 @@
           <span v-else-if="scope.row.type === 'PROMO'">{{ t('fields.promo') }}</span>
           <span v-else-if="scope.row.type === 'DOMAIN'">{{ t('fields.domainEasy') }}</span>
           <span v-else-if="scope.row.type === 'VIDEO'">{{ t('fields.videoShiPin') }}</span>
+          <span v-else-if="scope.row.type === 'CHARITY'">{{ t('fields.CHARITY') }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="code" :label="t('fields.code')" min-width="250" />
@@ -397,7 +398,8 @@ const uiControl = reactive({
     { key: 0, displayName: 'gameCode', value: 'GAME' },
     { key: 1, displayName: 'promo', value: 'PROMO' },
     { key: 2, displayName: 'domainEasy', value: 'DOMAIN' },
-    { key: 3, displayName: 'videoShiPin', value: 'VIDEO' }
+    { key: 3, displayName: 'videoShiPin', value: 'VIDEO' },
+    { key: 4, displayName: 'CHARITY', value: 'CHARITY' }
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',

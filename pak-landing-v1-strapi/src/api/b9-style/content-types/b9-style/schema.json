@@ -1,19 +1,22 @@
 {
-  "kind": "collectionType",
+  "kind": "singleType",
   "collectionName": "b9_styles",
   "info": {
     "singularName": "b9-style",
     "pluralName": "b9-styles",
-    "displayName": "B9 Style"
+    "displayName": "B9 Style",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "videoUrl": {
-      "type": "string",
-      "required": true
+    "videos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.video-item",
+      "required": false
     }
   }
 }
