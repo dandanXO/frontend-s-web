@@ -15,7 +15,8 @@ function isInApp() {
     window.location.pathname === "/deposit" ||
     window.location.pathname === "/deposittest" ||
     window.location.pathname === "/invitefriend" ||
-    window.location.pathname === "/privilege/invite"
+    window.location.pathname === "/privilege/invite" ||
+    window.location.pathname === "/affiliatepage"
   ) {
     return true;
   }
@@ -62,7 +63,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/viptest" ||
       to.path === "/deposittest" ||
       to.path === "/privilege/invite" ||
-      to.path === "/maintenance"
+      to.path === "/maintenance" ||
+      to.path === "/affiliatepage"
     ) {
       ui.hiddenFooter();
     } else {

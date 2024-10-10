@@ -205,6 +205,7 @@
                 color: white;
               "
               size="16px"
+              :loading="isLoading"
             />
 
             <q-btn
@@ -328,10 +329,10 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const innerCaptchaCodeId = ref("");
     const showCaptchaDialog = ref(false);
-    const isCaptchaLoading = ref(false)
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const loginBannerUrl = ref("")
+    const isLoading = ref(false)
 
     const router = useRouter();
     const route = useRoute();
@@ -384,9 +385,6 @@ export default defineComponent({
 
     const onSubmit = () => {
       (async () => {
-        if (isCaptchaLoading.value) {
-          return
-        }
         const sidParam = store.visitorId;
         if (loginType.value === false) {
           loginNameRef.value.validate();
@@ -637,7 +635,7 @@ export default defineComponent({
         })
         .onBoxShow(function () {
           console.log("boxShow");
-          isCaptchaLoading.value = true
+          isLoading.value = true;
         })
         .onError(function (e) {
           console.log(e);
@@ -648,10 +646,9 @@ export default defineComponent({
           for (let key in result) {
             loginForm[key] = result[key];
           }
-          isCaptchaLoading.value = false
+          isLoading.value = false;
         }).onClose(function () {
-          console.log("close")
-          isCaptchaLoading.value = false
+          isLoading.value = false;
         });
     }
 
@@ -698,7 +695,8 @@ export default defineComponent({
       refinnerCaptchaRef,
       clearLoginName,
       clearPwName,
-      loginBannerUrl
+      loginBannerUrl,
+      isLoading
     };
   }
 });

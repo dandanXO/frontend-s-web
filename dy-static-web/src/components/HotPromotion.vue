@@ -81,6 +81,9 @@
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode"/>
     <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode"/>
+    <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
+    <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
+
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -159,6 +162,8 @@ import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMyt
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 import S14VotePromo from "@/components/hotpromo/s14-vote/S14VotePromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
+import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
+
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -169,6 +174,7 @@ import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
 import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
 import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
+import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -231,7 +237,9 @@ export default defineComponent({
     SubmitClaimPromo,
     S14VotePromo,
     Dota2Pgl,
-    IemMasterPromo
+    IemMasterPromo,
+    PullbackTide,
+    Cba30Dream
   },
   props: {
     list: {
