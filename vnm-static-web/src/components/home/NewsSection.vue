@@ -37,12 +37,12 @@ const isNewsSectionVisible = ref(false);
 const newsListArr = ref([]);
 const isLoading = ref(false);
 
-const { _stop } = useIntersectionObserver(
+const { stop: stopIntersectionObserver } = useIntersectionObserver(
   newsSectionRef,
   ([{ isIntersecting }]) => {
     isNewsSectionVisible.value = isIntersecting
   },
-)
+);
 
 const footballNewsList = computed(() => newsListArr.value.filter((news) => news.category.includes("Soi kèo bóng đá")));
 const soccerBettingList = computed(() => newsListArr.value.filter((news) => news.category.includes("Tin bóng đá")));
@@ -53,6 +53,7 @@ const weeklyTournamentList = computed(() => newsListArr.value.filter((news) => n
 watch(() => isNewsSectionVisible.value, () => {
   if (isNewsSectionVisible.value === true && !newsListArr.value.length) {
     initNewsArticles();
+    stopIntersectionObserver();
   }
 });
 

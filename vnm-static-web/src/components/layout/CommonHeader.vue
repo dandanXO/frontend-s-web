@@ -821,8 +821,6 @@ export default defineComponent({
         }
       });
     };
-
-    const modalGame = ref(null);
     const rebateAmt = ref(0);
     const isRebateDialogVisible = ref(false);
     const isLandingClub = ref(route.query.landing);
@@ -857,10 +855,11 @@ export default defineComponent({
         sessionStorage.removeItem("IS_GET_WELCOME");
       }
 
-      if (regCountdown.value > 0)
+      if (regCountdown.value > 0) {
         countdownTimer("REGISTER");
+      }
+
       getAffiliateCode();
-      getCode();
       getReferalCode();
 
       if (store.token) {

@@ -5,15 +5,11 @@
                 <div class="header-menu-item">
                     <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                         <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
-                            <img class="menu-icon"
-                                :src="require(`../../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                                :alt="nav.code" />
+                            <img class="menu-icon" :src="nav.iconActive" :alt="nav.code" />
                             <h2 class="nav-title active">{{ nav.name }}</h2>
                         </template>
                         <template v-else>
-                            <img class="menu-icon"
-                                :src="require(`../../../assets/images/home/menu/${nav.code}-icon.png`)"
-                                :alt="nav.code" />
+                            <img class="menu-icon" :src="nav.icon" :alt="nav.code" />
                             <h2 class="nav-title">{{ nav.name }}</h2>
                         </template>
                     </a>
@@ -62,25 +58,50 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, defineAsyncComponent } from 'vue';
 import { useI18n } from "vue-i18n";
 import { userStore } from "@/store/index";
 import { EDITION } from "@/constant/edition";
-import GameMenu from "@/components/menu/GameMenu.vue";
-import EsportsMenu from "@/components/menu/EsportsMenu.vue";
-import SportsMenu from "@/components/menu/SportsMenu.vue";
-import LiveCasinoMenu from "@/components/menu/LiveCasinoMenu.vue";
-import LotteryMenu from "@/components/menu/LotteryMenu.vue";
-import PokerMenu from "@/components/menu/PokerMenu.vue";
-import FishingMenu from "@/components/menu/FishingMenu.vue";
-import CockfightMenu from "@/components/menu/CockfightMenu.vue";
-import MinigameMenu from "@/components/menu/MinigameMenu.vue";
-import PromotionMenu from "@/components/menu/PromotionMenu.vue";
-import AppMenu from "@/components/menu/AppMenu.vue";
 import { uiStore } from "@/store/ui";
 import { useRoute, useRouter } from "vue-router";
 import { useElementSize } from "@vueuse/core";
-import GameModal from "@/components/modal/GameModal";
+
+const GameModal = defineAsyncComponent(() =>
+    import('@/components/modal/GameModal')
+);
+const GameMenu = defineAsyncComponent(() =>
+    import('@/components/menu/GameMenu.vue')
+);
+const EsportsMenu = defineAsyncComponent(() =>
+    import('@/components/menu/EsportsMenu.vue')
+);
+const SportsMenu = defineAsyncComponent(() =>
+    import('@/components/menu/SportsMenu.vue')
+);
+const LiveCasinoMenu = defineAsyncComponent(() =>
+    import('@/components/menu/LiveCasinoMenu.vue')
+);
+const LotteryMenu = defineAsyncComponent(() =>
+    import('@/components/menu/LotteryMenu.vue')
+);
+const PokerMenu = defineAsyncComponent(() =>
+    import('@/components/menu/PokerMenu.vue')
+);
+const FishingMenu = defineAsyncComponent(() =>
+    import('@/components/menu/FishingMenu.vue')
+);
+const CockfightMenu = defineAsyncComponent(() =>
+    import('@/components/menu/CockfightMenu.vue')
+);
+const MinigameMenu = defineAsyncComponent(() =>
+    import('@/components/menu/MinigameMenu.vue')
+);
+const PromotionMenu = defineAsyncComponent(() =>
+    import('@/components/menu/PromotionMenu.vue')
+);
+const AppMenu = defineAsyncComponent(() =>
+    import('@/components/menu/AppMenu.vue')
+);
 
 const modalGame = ref(null);
 const el = ref(null);
@@ -94,18 +115,18 @@ const ui = uiStore();
 const navigations = computed(() => {
     let index = -1
     const fixedNavigationList = [
-        { code: "home", name: t('menu.home'), enName: "Home", path: "/home", role: 'NORMAL', order: 'home' },
+        { code: "home", name: t('menu.home'), enName: "Home", path: "/home", role: 'NORMAL', order: 'home', iconActive: require('../../../assets/images/home/menu/home-icon-active.png'), icon: require('../../../assets/images/home/menu/home-icon.png') },
     ]
     const baseNavigationList = [
-        { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true, role: 'NORMAL', order: 1 },
-        { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true, role: 'NORMAL', order: 2 },
-        { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true, role: 'NORMAL', order: 3 },
-        { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true, role: 'NORMAL', order: 4 },
-        { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true, role: 'NORMAL', order: 5 },
-        { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true, role: 'NORMAL', order: 6 },
+        { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true, role: 'NORMAL', order: 1, iconActive: require('../../../assets/images/home/menu/sports-icon-active.png'), icon: require('../../../assets/images/home/menu/sports-icon.png') },
+        { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true, role: 'NORMAL', order: 2, iconActive: require('../../../assets/images/home/menu/live-icon-active.png'), icon: require('../../../assets/images/home/menu/live-icon.png') },
+        { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true, role: 'NORMAL', order: 3, iconActive: require('../../../assets/images/home/menu/slot-icon-active.png'), icon: require('../../../assets/images/home/menu/slot-icon.png') },
+        { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true, role: 'NORMAL', order: 4, iconActive: require('../../../assets/images/home/menu/poker-icon-active.png'), icon: require('../../../assets/images/home/menu/poker-icon.png') },
+        { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true, role: 'NORMAL', order: 5, iconActive: require('../../../assets/images/home/menu/esports-icon-active.png'), icon: require('../../../assets/images/home/menu/esports-icon.png') },
+        { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true, role: 'NORMAL', order: 6, iconActive: require('../../../assets/images/home/menu/lottery-icon-active.png'), icon: require('../../../assets/images/home/menu/lottery-icon.png') },
         // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true , role: 'NORMAL',order: 7},
-        { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true, role: 'NORMAL', order: 8 },
-        { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true, role: 'NORMAL', order: 9 },
+        { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true, role: 'NORMAL', order: 8, iconActive: require('../../../assets/images/home/menu/minigame-icon-active.png'), icon: require('../../../assets/images/home/menu/minigame-icon.png') },
+        { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true, role: 'NORMAL', order: 9, iconActive: require('../../../assets/images/home/menu/others-icon-active.png'), icon: require('../../../assets/images/home/menu/others-icon.png') },
         {
             code: "Promotion",
             name: t('menu.promotion'),
@@ -183,6 +204,7 @@ const openGame = (gameName, code, gameCode) => {
     gap: 8px;
     text-align: center;
     padding: 0px 10px;
+    font-family: 'Be Vietnam Pro';
 
     &.second-nav {
         margin-left: auto;

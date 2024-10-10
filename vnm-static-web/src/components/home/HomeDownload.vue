@@ -24,13 +24,15 @@
             </div>
             <div class="download">
               <div class="dl-wrapper">
-                <span class="dl-frame qr-placeholder" v-if="ui.isFetchingDownloadUrl">{{ $t('common.loading') }}...</span>
+                <span class="dl-frame qr-placeholder" v-if="ui.isFetchingDownloadUrl">{{ $t('common.loading')
+                  }}...</span>
                 <VueQRCodeComponent v-else :size="90" :text="ui.downloadUrl" class="dl-frame" />
                 <img src="../../assets/home/download/download-on-app-store-btn.svg"
                   alt="QR code to download the iOS TF88 app" />
               </div>
               <div class="dl-wrapper">
-                <span class="dl-frame qr-placeholder" v-if="ui.isFetchingDownloadUrl">{{ $t('common.loading') }}...</span>
+                <span class="dl-frame qr-placeholder" v-if="ui.isFetchingDownloadUrl">{{ $t('common.loading')
+                  }}...</span>
                 <VueQRCodeComponent v-else :size="90" :text="ui.downloadUrl" class="dl-frame" />
                 <img src="../../assets/home/download/get-on-play-store-btn.svg"
                   alt="QR code to download the Android TF88 app">
@@ -58,7 +60,7 @@ const { t } = useI18n();
 const appDownloadSectionRef = ref(null);
 const ui = uiStore();
 const isAppDownloadSectionVisible = ref(false);
-const { _stop } = useIntersectionObserver(
+const { stop: stopIntersectionObserver } = useIntersectionObserver(
   appDownloadSectionRef,
   ([{ isIntersecting }]) => {
     isAppDownloadSectionVisible.value = isIntersecting
@@ -68,6 +70,7 @@ const { _stop } = useIntersectionObserver(
 watch(() => isAppDownloadSectionVisible.value, () => {
   if (isAppDownloadSectionVisible.value === true && !ui.downloadUrl) {
     ui.getAppDownloadUrl();
+    stopIntersectionObserver();
   }
 });
 </script>
