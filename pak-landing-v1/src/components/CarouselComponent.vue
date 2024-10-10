@@ -21,6 +21,7 @@
             carouselItem.media.data.attributes.ext === '.mp4'
           "
           class="video-container"
+          :class="{ 'min-height': carouselData.length > 1 }"
         >
           <video style="width: 100%" controls autoplay>
             <source
@@ -50,7 +51,7 @@
           ></iframe>
         </div>
         <div class="carousel-description q-pt-xs q-pl-xs q-pr-xs">
-          <span>{{ carouselItem.description }}111</span>
+          <span>{{ carouselItem.description }}</span>
         </div>
       </q-carousel-slide>
     </q-carousel>
@@ -93,7 +94,10 @@ const onCarouselNavDotClick = (i) => {
 
 .video-container {
   width: 100%;
-  min-height: 200px;
+  min-height: 170px;
+  &.min-height {
+    min-height: 200px;
+  }
 }
 
 .carousel-media {
