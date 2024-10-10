@@ -1,6 +1,5 @@
 <template>
-  <!-- <div class="new-member-guide-dialog" :show-close="false" v-if=store.regSuccessGuideVisible> -->
-    <div class="new-member-guide-dialog" :show-close="false">
+  <div class="new-member-guide-dialog" :show-close="false" v-if=store.regSuccessGuideVisible>
     <div class="step1-container" v-if="step === 1">
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
       <img src="../../assets/images/home/guide/step1-flag.png" alt="" class="flag" />
@@ -78,27 +77,6 @@
         <div class="btm-info" @click="goToPromo">点击前往新人活动</div>
       </div>
     </div>
-    <!-- <div class="step6-container" v-else-if="step === 6">
-      <div class="step6-img1">
-        <img src="../../assets/images/home/guide/step6-img1.png" alt="" />
-      </div>
-
-      <div class="step6-img2">
-        <img src="../../assets/images/home/guide/step6-img2.png" alt="" />
-      </div>
-
-      <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" width="100%" />
-      <div class="content">
-        <div class="title">
-          <div style="font-size: 25px">点击这里充值</div>
-          <div>开启您的雷火游戏之旅</div>
-        </div>
-
-        <div class="next-button" @click="closeNewMemerGuide">知道了</div>
-
-        <div class="description" style="text-decoration: underline;cursor:pointer;" @click="goToPromo">点击前往新人活动</div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -359,13 +337,4 @@ onMounted(() => {
     padding-bottom: 54px;
   }
 }
-
-// .step6-container {
-//   top: -5%;
-
-//   .step6-img1, .step6-img2 {
-//     position: fixed;
-//     visibility: hidden;
-//   }
-// }
 </style>
