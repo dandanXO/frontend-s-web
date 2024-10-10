@@ -5,7 +5,7 @@
       :class="{
         unfixed: selectedPromo.redirectUrl === 'lh1-app-hongbao',
         midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel',
-        lh1Vip: selectedPromo.redirectUrl === 'lh1-vip'
+        lh1Vip:selectedPromo.redirectUrl === 'lh1-vip'
       }"
       :style="
         isPromoDetail
@@ -57,7 +57,7 @@
                           />
                         </div>
                         <div
-                          style="padding-left: 0; font-weight: 400"
+                          style="padding-left:0;font-weight:400;"
                           class="promo-item-date"
                           v-if="parsedParam(promo.param).date && $q.dark.isActive"
                           v-html="parsedParam(promo.param).date"
@@ -207,9 +207,9 @@
                     olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
                   }"
                 >
-                  <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
-                    <NBAWaterBattle />
-                  </div>
+                <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
+                  <NBAWaterBattle />
+                </div>
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
                 <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
@@ -641,11 +641,6 @@ export default defineComponent({
   }
 }
 .secend-rule {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
   .title {
     font-size: 20px;
     width: 100%;
@@ -662,6 +657,10 @@ export default defineComponent({
     margin-top: 8px;
     margin-bottom: 12px;
   }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .promo-container {
   min-height: 100vh;
@@ -683,7 +682,7 @@ export default defineComponent({
       background-attachment: scroll;
     }
 
-    &.lh1Vip {
+    &.lh1Vip{
       background-color: #fff;
     }
   }
@@ -1008,7 +1007,7 @@ export default defineComponent({
       .inner {
         max-width: 1400px;
         width: 90%;
-        margin: 14px auto 20px;
+        margin: 20px auto;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -1345,9 +1344,9 @@ export default defineComponent({
             border-radius: 8px;
             overflow: hidden;
             .promo-label {
-              top: 0px;
-              left: 0px;
-              font-family: "YouSheBiaoTiHei";
+              top:0px;
+              left:0px;
+              font-family: 'YouSheBiaoTiHei';
             }
             .promo-ribbon {
               background: #1475e1;
@@ -1361,18 +1360,18 @@ export default defineComponent({
             }
             .promo-item-title {
               color: $font-3-dark;
-              font-family: "YouSheBiaoTiHei";
+              font-family: 'YouSheBiaoTiHei';
               font-weight: 400;
             }
             .promo-item-deal {
               color: $grey-color;
             }
             .promo-item-btn {
-              background: url("../assets/images/promo/promo-info-btn-bg.svg") no-repeat center center;
+              background: url('../assets/images/promo/promo-info-btn-bg.svg') no-repeat center center;
               background-size: cover;
               box-shadow: none;
               border-radius: 4px;
-              border: 1px solid #3a93ce;
+              border: 1px solid #3A93CE;
             }
           }
         }
@@ -1424,7 +1423,7 @@ export default defineComponent({
 
   .promo:not(.unfixed) {
     .q-tabs {
-      background: #1a2338;
+      background: #1A2338;
       .q-tab--active {
         color: #fff;
       }

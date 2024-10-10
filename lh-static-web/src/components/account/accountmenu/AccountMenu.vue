@@ -1,17 +1,11 @@
 <template>
   <div class="account-menu-container">
     <div class="account-info-wrapper">
-      <div class="account-info-bg">
+      <div class="account-info-bg" >
         <div @click="onShowProfile" class="account-avatar">
           <img v-if="!store.profilePhoto" src="../../../assets/images/home/profile-pic.png" />
-          <img
-            v-if="store.profilePhoto && store.profilePhoto.includes('default')"
-            :src="require(`../../../assets/images/profile/${store.profilePhoto}.png`)"
-          />
-          <img
-            v-if="store.profilePhoto && !store.profilePhoto.includes('default')"
-            :src="imageDir + store.profilePhoto + '?v=' + timestamp"
-          />
+          <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../../../assets/images/profile/${store.profilePhoto}.png`)" />
+          <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
         </div>
         <div class="account-name">欢迎您 {{ loginName }}</div>
         <span class="account-vip-label">{{ vip }}</span>
@@ -21,7 +15,7 @@
             <span v-if="isLoadingBalance">加载中...</span>
             <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ floor(store.balance, 2) }}</span>
           </span>
-          <el-icon style="cursor: pointer">
+          <el-icon style="cursor: pointer;">
             <RiRefreshLine color="#468CFF" />
           </el-icon>
         </div>
@@ -62,134 +56,109 @@
       </div>
     </div>
   </div>
-  <el-dialog v-model="profileDialogVisible" append-to-body :close-on-press-escape="false" class="profile-dialog">
-    <div class="header">修改头像</div>
+  <el-dialog
+    v-model="profileDialogVisible"
+    append-to-body
+    :close-on-press-escape="false"
+    class="profile-dialog"
+  >
+    <div class="header">
+      修改头像
+    </div>
     <el-form :inline="true" size="small" label-width="180px">
       <div class="grid-container">
-        <div
-          class="grid-item"
-          v-for="(profImg, profIndex) in 13"
-          :key="profIndex"
-          :class="{ selected: selectedImage === 'default-' + (profIndex + 1) }"
-          @click="selectImage('default-' + (profIndex + 1))"
-        >
-          <img :src="require(`../../../assets/images/profile/default-${profIndex + 1}.png`)" />
+        <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
+          <img :src="require(`../../../assets/images/profile/default-${profIndex + 1}.png`)">
         </div>
-        <div class="grid-item">
-          <div
-            @click="updateDialogVisible = true"
-            style="
-              border-radius: 50%;
-              width: 100px;
-              height: 100px;
-              background: #e7f3ff;
-              color: #a4aabb;
-              font-size: 80px;
-              cursor: pointer;
-              padding-bottom: 10px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            +
-          </div>
-        </div>
+      <div class="grid-item">
+              <div @click="updateDialogVisible = true" style="border-radius: 50%; width: 100px; height: 100px; background: #E7F3FF; color: #A4AABB; font-size: 80px; cursor: pointer; padding-bottom: 10px; display: flex; justify-content: center; align-items: center;"> +
+              </div>
+    </div>
       </div>
       <div class="dialog-footer">
         <!-- <el-button type="primary" @click="profileDialogVisible = false">取消</el-button> -->
-        <el-button
-          :loading="submitPhotoLoading"
-          type="submit"
-          class="standard-button btn-color-blue"
-          size="large"
-          @click.prevent="submitPhoto"
-        >
-          确认
-        </el-button>
+        <el-button :loading="submitPhotoLoading" type="submit" class="standard-button btn-color-blue" size="large" @click.prevent="submitPhoto">确认</el-button>
       </div>
     </el-form>
   </el-dialog>
-  <el-dialog v-model="updateDialogVisible" append-to-body :close-on-press-escape="false" class="profile-dialog update">
-    <div class="header">上传头像</div>
+  <el-dialog
+    v-model="updateDialogVisible"
+    append-to-body
+    :close-on-press-escape="false"
+    class="profile-dialog update"
+  >
+    <div class="header">
+      上传头像
+    </div>
     <div class="uploader">
       <div class="leftBox">
-        <el-form-item class="upload-box" v-if="!uploadedImage.url" style="margin: 0" prop="path">
-          <!- eslint-disable ->
-          <input
-            id="uploadFile"
-            type="file"
-            ref="inputImage"
-            style="display: none"
-            accept="image/*"
-            @change="attachImage"
-          />
-          <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
-          上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
-        </el-form-item>
-        <cropper
-          v-if="uploadedImage.url"
-          background-class="cropper-background"
-          ref="cropperRef"
-          class="cropper"
-          :src="
-            uploadedImage.url
-              ? uploadedImage.url
-              : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'
-          "
-          circle-stencil
-          :stencil-props="{
-            handlers: {},
-            movable: false,
-            resizable: false,
-            aspectRatio: 1 / 1
-          }"
-          :stencil-size="{
-            width: 150,
-            height: 150
-          }"
-          image-restriction="stencil"
-          @change="change"
-        />
-      </div>
+          <el-form-item class="upload-box" v-if="!uploadedImage.url" style="margin: 0;" prop="path">
+            <!- eslint-disable ->
+            <input
+              id="uploadFile"
+              type="file"
+              ref="inputImage"
+              style="display: none"
+              accept="image/*"
+              @change="attachImage"
+            />
+            <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
+            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
+
+          </el-form-item>
+          <cropper
+            v-if="uploadedImage.url"
+              background-class="cropper-background"
+              ref="cropperRef"
+              class="cropper"
+              :src="uploadedImage.url ? uploadedImage.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'"
+              circle-stencil
+              :stencil-props="{
+                handlers: {},
+                movable: false,
+                resizable: false,
+            aspectRatio: 1/1
+              }"
+              :stencil-size="{
+                width:150,
+                height: 150
+              }"
+              image-restriction="stencil"
+              @change="change"
+            />
+          </div>
       <div class="rightBox">
         <div class="cropped_title">头像预览</div>
         <div v-if="!croppedImg" class="croppedImgHolder"></div>
-        <img v-if="croppedImg" style="border-radius: 50%; width: 250px; height: 250px" :src="croppedImg" />
+        <img v-if="croppedImg" style="border-radius: 50%; width: 250px; height: 250px;" :src="croppedImg">
       </div>
     </div>
 
-    <el-button
-      :loading="isLoadingUpload"
-      class="standard-button btn-color-blue"
-      size="large"
-      v-if="croppedImg"
-      @click="saveCroppedImage()"
-    >
-      保存
-    </el-button>
+    <el-button :loading="isLoadingUpload" class="standard-button btn-color-blue" size="large" v-if="croppedImg" @click="saveCroppedImage()">保存</el-button>
+
   </el-dialog>
 </template>
 
 <script setup>
-import moment from "moment";
+import moment from "moment"
 import { computed, ref, reactive, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
 import { RiRefreshLine, RiAddLine } from "vue-remix-icons";
-import { uploadImage, saveImage } from "@/api/personal/common";
-import { Cropper, CircleStencil } from "vue-advanced-cropper";
-import "vue-advanced-cropper/dist/style.css";
-import "vue-advanced-cropper/dist/theme.compact.css";
+import { uploadImage, saveImage } from '@/api/personal/common';
+import { Cropper, CircleStencil } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css';
+import 'vue-advanced-cropper/dist/theme.compact.css';
 import { useDark, useLocalStorage } from "@vueuse/core";
 import floor from "lodash/floor";
 import { useNotify } from "@/hooks/notify";
 
 components: {
-  Cropper, CircleStencil;
+  Cropper,
+  CircleStencil
 }
 
-const isDark = useDark();
+const isDark = useDark()
 const notify = useNotify();
 
 const timestamp = moment().unix();
@@ -200,15 +169,16 @@ const getImageFromCropper = () => {
   if (cropperRef.value) {
     // Access the cropper instance using the value of cropperRef
     const { coordinates, canvas } = cropperRef.value.getResult();
-    croppedImg.value = canvas.toDataURL("image/jpeg", 0.7);
+    croppedImg.value = canvas.toDataURL('image/jpeg', 0.7);
   }
 };
 const change = ({ coordinates, canvas }) => {
-  console.log(coordinates, canvas);
-  getImageFromCropper();
-};
-const inputImage = ref(null);
-const selectedImage = ref(null);
+  console.log(coordinates, canvas)
+  getImageFromCropper()
+
+}
+const inputImage = ref(null)
+const selectedImage = ref(null)
 const store = userStore();
 const isLoadingBalance = ref(false);
 const refreshBalance = () => {
@@ -217,7 +187,7 @@ const refreshBalance = () => {
     isLoadingBalance.value = false;
   });
 };
-const imageDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
+const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
 const loginName = computed(() => {
   return store.nickName;
@@ -260,43 +230,43 @@ const checkMailboxUnread = () => {
 
 const profileDialogVisible = ref(false);
 const uploadedImage = reactive({
-  url: null
-});
+  url: null,
+})
 const imageForm = reactive({
-  path: null
-});
-const isLoadingUpload = ref(false);
+  path: null,
+})
+const isLoadingUpload = ref(false)
 const onShowProfile = () => {
-  // if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST')){
-  //   return;
-  // }
+  if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST')){
+    return;
+  }
 
-  imageForm.path = null;
-  inputImage.value = null;
-  uploadedImage.url = null;
-  croppedImg.value = null;
-  profileDialogVisible.value = true;
+  imageForm.path = null
+  inputImage.value = null
+  uploadedImage.url = null
+  croppedImg.value = null
+  profileDialogVisible.value = true
 };
 async function saveCroppedImage() {
-  isLoadingUpload.value = true;
+  isLoadingUpload.value = true
   if (croppedImg.value) {
-    const data = await attachPhoto(croppedImg.value);
-    if (data.code === 0) {
-      selectedImage.value = data.data;
-      inputImage.value = "";
-      isLoadingUpload.value = false;
+    const data = await attachPhoto(croppedImg.value)
+  if (data.code === 0) {
+    selectedImage.value = data.data
+    inputImage.value = ''
+    isLoadingUpload.value = false
 
-      submitPhoto();
-      // Reset all values after submission
-      selectedImage.value = "";
-      inputImage.value = "";
-      croppedImg.value = "";
-    } else {
-      // Handle case when croppedImg is not available
-      console.error("No cropped image available");
-      isLoadingUpload.value = false;
-    }
+    submitPhoto();
+    // Reset all values after submission
+    selectedImage.value = '';
+    inputImage.value = '';
+    croppedImg.value = '';
+  } else {
+    // Handle case when croppedImg is not available
+    console.error('No cropped image available');
+    isLoadingUpload.value = false
   }
+}
 }
 
 async function attachImage(event) {
@@ -320,10 +290,10 @@ function isBase64(str) {
 }
 async function attachPhoto(fileImg) {
   var file = null;
-  if (typeof fileImg === "string" && isBase64(fileImg)) {
+  if (typeof fileImg === 'string' && isBase64(fileImg)) {
     console.log("Treating input as base64");
     // Extract the MIME type from the base64 string
-    const mimeType = fileImg.split(";")[0].split(":")[1];
+    const mimeType = fileImg.split(';')[0].split(':')[1];
     var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
     // Decode the Base64 string
     const byteCharacters = atob(data);
@@ -339,86 +309,85 @@ async function attachPhoto(fileImg) {
     const blob = new Blob([byteArray], { type: mimeType });
 
     // Create a File object from the Blob
-    file = new File([blob], "image." + mimeType.split("/")[1], { type: mimeType });
+    file = new File([blob], 'image.' + mimeType.split('/')[1], { type: mimeType });
   } else {
     file = fileImg;
   }
   // Use the File object for further processing
-  const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
-  const dir = "temp";
+  const allowFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  const dir = 'temp';
 
   if (!file || !allowFileTypes.includes(file.type)) {
-    notify({ message: "照片格式错误", type: "error" });
+    notify({ message: '照片格式错误', type: 'error' });
     isLoadingUpload.value = false;
     return null; // Exit the function if file is not valid
   }
-  if (file && file.size > 1024000) {
-    notify({ message: "上传的图片已大于1mb，请刷新页面重新上传", type: "error" });
+  if(file && file.size > 1024000){
+    notify({ message: '上传的图片已大于1mb，请刷新页面重新上传', type: 'error' });
     isLoadingUpload.value = false;
     return null; // Exit the function if file is not valid
   }
 
   var formData = new FormData();
-  formData.append("files", file);
-  formData.append("dir", dir);
-  formData.append("overwrite", false);
+  formData.append('files', file);
+  formData.append('dir', dir);
+  formData.append('overwrite', false);
   selectedImage.value = URL.createObjectURL(file); // Set the URL for preview
 
   return await uploadImage(formData);
 }
-const submitPhotoLoading = ref(false);
+const submitPhotoLoading = ref(false)
 async function submitPhoto() {
   if (!selectedImage.value) {
-    return notify({ type: "warning", message: "请选择图片" });
+    return notify({type: 'warning', message: '请选择图片'});
   }
-  submitPhotoLoading.value = true;
-  isLoadingUpload.value = true;
+  submitPhotoLoading.value = true
+  isLoadingUpload.value = true
   const data = await saveImage(selectedImage.value);
-  profileDialogVisible.value = false;
-  updateDialogVisible.value = false;
-  notify({ message: "修改成功", type: "success" });
-  store.profilePhoto = data.data;
+  profileDialogVisible.value = false
+  updateDialogVisible.value = false
+  notify({ message: '修改成功', type: 'success' })
+  store.profilePhoto = data.data
   store.getMemberInfo();
   window.location.reload();
-  submitPhotoLoading.value = false;
-  isLoadingUpload.value = false;
+  submitPhotoLoading.value = false
+  isLoadingUpload.value = false
 }
 
 const selectImage = (item) => {
-  selectedImage.value = item;
-};
+  selectedImage.value = item
+}
 
 const updateDialogVisible = ref(false);
 onMounted(() => {
   checkMailboxUnread();
   setInterval(checkMailboxUnread, 60000);
-  if (store.profilePhoto && store.profilePhoto.includes("default")) {
-    selectedImage.value = store.profilePhoto;
+  if (store.profilePhoto && store.profilePhoto.includes('default')) {
+    selectedImage.value = store.profilePhoto
   }
 });
 
 const loadMenuItemIcon = (icon) => {
-  if (isDark.value) {
-    try {
-      return require(`@/assets/images/account/menu-icon-${icon}-dark.png`);
-    } catch (e) {
-      return require(`@/assets/images/account/menu-icon-${icon}.png`);
+  if(isDark.value){
+    try{
+      return require(`@/assets/images/account/menu-icon-${icon}-dark.png`)
+    }catch(e) {
+      return require(`@/assets/images/account/menu-icon-${icon}.png`)
     }
-  } else {
-    return require(`@/assets/images/account/menu-icon-${icon}.png`);
+  }else {
+    return require(`@/assets/images/account/menu-icon-${icon}.png`)
   }
-};
+}
 </script>
 <style scoped lang="scss">
 .dark {
   .account-container {
-    .account-container-wrap {
-      .profile-actions {
-        .action-btn {
-          .icon-rounded {
+    .account-container-wrap{
+      .profile-actions{
+        .action-btn{
+          .icon-rounded{
             img {
-              filter: brightness(0) saturate(100%) invert(44%) sepia(45%) saturate(828%) hue-rotate(146deg)
-                brightness(85%) contrast(83%);
+              filter: brightness(0) saturate(100%) invert(44%) sepia(45%) saturate(828%) hue-rotate(146deg) brightness(85%) contrast(83%);
             }
           }
         }
@@ -522,74 +491,78 @@ const loadMenuItemIcon = (icon) => {
 }
 
 .uploader {
-  display: flex;
-  gap: 10px;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 50px 0;
-  .leftBox {
     display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 10px;
-    border-radius: 20px;
-    overflow: hidden;
-    .upload-box {
-      gap: 10px;
-      padding: 10px;
-      width: 250px;
-      height: 250px;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 50px 0;
+    .leftBox {
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #a4aabb;
-      background: #e7f3ff;
+      gap: 10px;
       border-radius: 20px;
-      .el-form-item__content {
+      overflow: hidden;
+      .upload-box {
+        gap: 10px;
+        padding: 10px;
+        width: 250px;
+        height: 250px;
         display: flex;
         justify-content: center;
-        align-items: flex-end;
-        padding: 50px 0;
+        align-items: center;
+        color: #A4AABB;
+        background: #E7F3FF;
+        border-radius: 20px;
+        .el-form-item__content {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          padding: 50px 0;
+          text-align: center;
+          gap: 10px;
+        }
+
+
+        .upload-btn {
+          cursor: pointer;
+           padding: 8px 20px;
+          background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
+
+          box-shadow: 0px -0.96px 3.51px 0px #A2BFF4 inset;
+
+        }
+      }
+    }
+    .rightBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+      .cropped_title {
+        color: #7A80A1;
+        font-family: PingFang SC;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 28px;
         text-align: center;
-        gap: 10px;
+
+
       }
-
-      .upload-btn {
-        cursor: pointer;
-        padding: 8px 20px;
-        background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-
-        box-shadow: 0px -0.96px 3.51px 0px #a2bff4 inset;
+      .croppedImgHolder {
+        border: 3px dotted #7A80A1;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
       }
     }
   }
-  .rightBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
-    .cropped_title {
-      color: #7a80a1;
-      font-family: PingFang SC;
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 28px;
-      text-align: center;
-    }
-    .croppedImgHolder {
-      border: 3px dotted #7a80a1;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-    }
-  }
-}
 .cropper {
-  height: 250px;
-  width: 250px;
+	height: 250px;
+	width: 250px;
   border-radius: 10px;
-  background: aliceblue;
+	background: aliceblue;
 }
 .vue-preview__wrapper {
   border-radius: 20px;
@@ -598,8 +571,9 @@ const loadMenuItemIcon = (icon) => {
   border-radius: 50%;
 }
 .cropper-background {
-  background: aliceblue;
+	background: aliceblue;
 }
 .profile-dialog.update {
+
 }
 </style>

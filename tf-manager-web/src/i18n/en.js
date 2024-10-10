@@ -2056,10 +2056,7 @@ export default {
     threePointShots: 'Entire Match 10 Three Points Shots In',
     shotPoints: 'Any Player Scored 30 Points',
     scoringShots: 'Any Players Scored With 13 Shots',
-    foulOut: 'Any Player Getting Foul Out',
-    gender: 'Gender',
-    Male: 'Male',
-    Female: 'Female',
+    foulOut: 'Any Player Getting Foul Out'
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2836,6 +2833,7 @@ export default {
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
+    'Member Vip Upgrade Record': 'Member Vip Upgrade Record',
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
     'Sites Config': 'Site Config',

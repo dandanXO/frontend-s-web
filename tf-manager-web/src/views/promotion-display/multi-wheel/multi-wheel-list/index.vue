@@ -161,7 +161,12 @@
         <el-input v-model="form.memberName" style="width: 350px" />
       </el-form-item>
       <el-form-item :label="t('fields.bonus')" prop="prize">
-        <el-input v-model="form.prize" style="width: 350px" maxlength="11" :placeholder="t('message.multiwheelprizeform')" />
+        <el-input
+          v-model="form.prize"
+          style="width: 350px"
+          maxlength="11"
+          :placeholder="t('message.multiwheelprizeform')"
+        />
       </el-form-item>
 
       <el-form-item :label="t('fields.date')" prop="date">
@@ -191,7 +196,7 @@ import {
   getMemberMultiWheel,
   deleteMemberMultiWheel,
   addMemberMultiWheel,
-  randomMember
+  randomMember,
 } from '../../../../api/member-multi-wheel'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
@@ -201,7 +206,7 @@ import { getShortcuts } from '@/utils/datetime'
 import { useStore } from '../../../../store'
 import { getSiteListSimple } from '../../../../api/site'
 import { TENANT } from '../../../../store/modules/user/action-types'
-import { required, size, numericOnly } from "../../../../utils/validate";
+import { required, size, numericOnly } from '../../../../utils/validate'
 
 const { t } = useI18n()
 const store = useStore()
@@ -281,10 +286,16 @@ function changePage(page) {
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
-  memberName: [required(t('message.validateLoginNameRequired')), size(6, 12, t('message.length6To12'))],
-  prize: [required(t('message.validateAmountRequired')), numericOnly(t('message.validateNumberOnly'))],
-  date: [required(t('message.validateDateRequired'))]
-});
+  memberName: [
+    required(t('message.validateLoginNameRequired')),
+    size(6, 12, t('message.length6To12')),
+  ],
+  prize: [
+    required(t('message.validateAmountRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
+  date: [required(t('message.validateDateRequired'))],
+})
 
 async function removeMemberMultiWheel(multiwheel) {
   ElMessageBox.confirm(t('message.confirmDelete'), {

@@ -226,9 +226,8 @@ const maxVisibleItems = ref(5);
 const intervalId = ref(null);
 
 const getPromotionListing = () => {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
   eventapi
-    .get(`/redPacketVip/list?promoCode=${promoCode.value}&v=${randNum}`)
+    .get(`/redPacketVip/list?promoCode=${promoCode.value}`)
     .then((res) => {
       if (res.code === 0) {
         promotionListing.value = res.data;

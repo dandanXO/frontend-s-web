@@ -60,6 +60,40 @@
   font-style: normal;
 }
 
+
+@font-face {
+  font-family: "HYYakuHei800";
+  src: url("@/assets/fonts/HYYakuHei800.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HYYakuHei400";
+  src: url("@/assets/fonts/HYYakuHei400.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HYYakuHei300";
+  src: url("@/assets/fonts/HYYakuHei300.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "YouSheBiaoTiHei";
+  src: url("@/assets/fonts/YouSheBiaoTiHei.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @font-face {
   font-family: "HYYakuHei800";
   src: url("@/assets/fonts/HYYakuHei800.ttf");
@@ -625,20 +659,20 @@ button {
 
   .standard-button {
     // background: $active-color-dark-linear;
-    background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center;
+    background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 8px;
-    border: 1px solid #3a93ce;
+    border: 1px solid #3A93CE;
   }
 
   .common-btn,
   .common-btn.el-button {
-    background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center;
+    background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 8px;
-    border: 1px solid #3a93ce;
+    border: 1px solid #3A93CE;
   }
 
   .el-input-group__append {
@@ -655,6 +689,10 @@ button {
   //  background-image: $active-color-dark-linear;
   //  box-shadow: $active-color-dark-shadow;
   //}
+}
+
+body .announcement-modal.el-dialog .el-dialog__body {
+  padding: 0;
 }
 
 body .announcement-modal.el-dialog .el-dialog__body {

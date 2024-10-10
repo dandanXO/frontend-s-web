@@ -1,27 +1,31 @@
 <template>
-  <div v-if="matchInfoArr" style="position: relative">
+  <div class="nba-water-battle-bg" v-if="matchInfoArr">
     <div class="claim-history-btn" @click="isClaimHistoryDialogVisible = true">领取记录</div>
-
-    <div class="nba-water-battle-bg" v-for="matchInfo in matchInfoArr" :key="matchInfo.id">
-      <div class="match-carousel">
-        <div>
-          <div class="match-info">
-            <div class="match-info-team">
-              <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.homeTeamIcon}`" /></div>
-              <div>{{ matchInfo.homeTeam }}</div>
-            </div>
-            <div class="match-info-time">
-              <div class="time-text">{{ moment(matchInfo.matchTime).format("MM月DD日 HH:mm:ss") }}</div>
-              <button class="claim-btn" @click="handleClaim(matchInfo.id)">领取奖励</button>
-            </div>
-            <div class="match-info-team">
-              <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.awayTeamIcon}`" /></div>
-              <div>{{ matchInfo.awayTeam }}</div>
-            </div>
+    <q-carousel
+      v-model="slide"
+      class="match-carousel"
+      transition-prev="slide-right"
+      transition-next="slide-left"
+      animated
+      control-color="primary"
+    >
+      <q-carousel-slide v-for="(matchInfo, index) in matchInfoArr" :key="matchInfo.id" :name="index">
+        <div class="match-info">
+          <div class="match-info-team">
+            <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.homeTeamIcon}`" /></div>
+            <div>{{ matchInfo.homeTeam }}</div>
+          </div>
+          <div class="match-info-time">
+            <div class="time-text">{{ moment(matchInfo.matchTime).format('MM月DD日 HH:mm:ss') }}</div>
+            <button class="claim-btn" @click="handleClaim(matchInfo.id)">领取奖励</button>
+          </div>
+          <div class="match-info-team">
+            <div class="team-img-wrapper"><img class="team-img" :src="`${imageDir}${matchInfo.awayTeamIcon}`" /></div>
+            <div>{{ matchInfo.awayTeam }}</div>
           </div>
         </div>
-      </div>
-    </div>
+      </q-carousel-slide>
+    </q-carousel>
   </div>
 
   <q-dialog v-model="isClaimHistoryDialogVisible">
@@ -43,7 +47,7 @@
           <td>{{ getStatusLabel(claimHistoryItem.shotPoints) }}</td>
           <td>{{ getStatusLabel(claimHistoryItem.scoringShots) }}</td>
           <td>{{ getStatusLabel(claimHistoryItem.foulOut) }}</td>
-          <td>{{ getClaimStatus(claimHistoryItem.status) }}</td>
+          <td>{{ claimHistoryItem.status }}</td>
           <td>{{ claimHistoryItem.bonus }}</td>
         </tr>
       </table>
@@ -87,25 +91,12 @@ const getStatusLabel = (status) => {
 };
 
 const handleClaim = (id) => {
-  claimNBABonus(id).then((res) => {
-    if (res.code === 0) {
-      notify.success("领取成功");
+  claimNBABonus(id).then(res => {
+    if(res.code === 0) {
+      notify.success('领取成功')
     }
-  });
-};
-
-const getClaimStatus = (status) => {
-  switch (status) {
-    case "PENDING_SETTLE ":
-      return "待审核";
-    case "SETTLED":
-      return "已发放";
-    case "CANCEL":
-      return "已取消";
-    default:
-      return "";
-  }
-};
+  })
+}
 
 watch(
   () => isClaimHistoryDialogVisible.value,
@@ -177,28 +168,6 @@ onMounted(() => {
 }
 </style>
 <style lang="scss" scoped>
-.claim-history-btn {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  margin-bottom: 16px;
-  width: 100px;
-  margin-left: auto;
-  text-align: center;
-  padding: 5px 15px;
-  color: #fff;
-  border-radius: 100px;
-  cursor: pointer;
-  z-index: 1;
-  font-size: 0.75rem;
-
-  &:hover {
-    filter: brightness(1.1);
-  }
-
-  &:active {
-    transform: translateY(2px);
-  }
-}
-
 .nba-water-battle-bg {
   background: url("../../../assets/images/promo/hotpromo/nba-water-battle/nba-water-battle-widget-bg.png") no-repeat
     center center;
@@ -217,6 +186,27 @@ onMounted(() => {
     }
   }
 
+  .claim-history-btn {
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    position: absolute;
+    top: 4%;
+    right: 2%;
+    padding: 5px 15px;
+    color: #fff;
+    border-radius: 100px;
+    cursor: pointer;
+    z-index: 1;
+    font-size: .75rem;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
   .match-info {
     gap: 30px;
     position: absolute;
@@ -230,8 +220,7 @@ onMounted(() => {
     .match-info-time {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: 10px;
+      justify-content: space-evenly;
       height: 100%;
 
       .time-text {
