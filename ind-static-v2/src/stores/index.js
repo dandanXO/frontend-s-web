@@ -32,7 +32,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: { value: "₹", label: "INR" },
+      currency: { value: "₹", label: "Rs" },
       personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,
@@ -177,7 +177,7 @@ export const userStore = defineStore("userStore", {
             return SessionStorage.getItem("TOKEN");
           }
         })();
-  
+
         api.interceptors.request.use(async (req) => {
           req.headers.token = token || tokenFromApi;
           return req;

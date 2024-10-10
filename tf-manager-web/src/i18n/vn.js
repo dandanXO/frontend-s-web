@@ -269,6 +269,7 @@ export default {
     gameMemberCountTotal: 'Tổng số thành viên cược',
     gameBetCountTotal: 'Tổng số giao dịch cược',
     gameBetAmountTotal: 'Tổng số tiền cược',
+    gamePayoutAmountTotal: 'Tổng số tiền thanh toán',
     gameWinLossTotal: 'Tổng số tiền thắng/thua',
   },
   gameType: {
