@@ -203,7 +203,6 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
 import { useI18n } from "vue-i18n";

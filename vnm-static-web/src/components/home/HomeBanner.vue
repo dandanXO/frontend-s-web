@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineAsyncComponent } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";

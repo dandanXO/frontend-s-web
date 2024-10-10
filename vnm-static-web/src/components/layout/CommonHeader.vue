@@ -241,20 +241,20 @@ import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
 import { displayBalance } from "@/utils/utils";
 import Navigation from "@/components/home/navigation/Navigation.vue";
-import "vue3-marquee/dist/style.css";
 import { useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-import LoginDialog from "@/views/LoginDialog.vue";
-import RegisterAccount from "@/components/auth/RegisterAccount.vue";
-import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import HomeWelcome from "@/components/home/HomeWelcome.vue";
 
 import { i18nStore } from '@/store/language'
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+
+const LoginDialog = defineAsyncComponent(() => import('@/views/LoginDialog.vue'));
+const RegisterAccount = defineAsyncComponent(() => import('@/components/auth/RegisterAccount.vue'));
+const ForgotPwdDialog = defineAsyncComponent(() => import('@/views/ForgotPwdDialog.vue'));
 
 export default defineComponent({
   name: "CommonHeader",

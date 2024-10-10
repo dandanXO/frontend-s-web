@@ -230,7 +230,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getLoggedInPlatformList, getPlatformGames, getPlatformListDisplay } from "@/api/platform/platform";
 import { userStore } from "@/store";

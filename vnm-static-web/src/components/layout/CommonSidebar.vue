@@ -88,7 +88,7 @@ const GameModal = defineAsyncComponent(() => import('@/components/modal/GameModa
 
 export default defineComponent({
   components: {
-
+    GameModal
   },
   setup() {
     const customerHovered = ref(false);
