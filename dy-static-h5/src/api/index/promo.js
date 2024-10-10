@@ -326,3 +326,13 @@ export function getCBAWeeklyInit() {
 export function claimCBAWeeklyBonus() {
   return eventapi.post("/session/cba/weekly/claimBonus");
 }
+
+export function getMatchAndPrizeInfo(type) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/privi/memberSlotBetInfo?type=${type}&v=${randNum}`);
+}
+
+export function getPrizeMoney(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.put(`/bonus/claim/${promoCode}?v=${randNum}`);
+}
