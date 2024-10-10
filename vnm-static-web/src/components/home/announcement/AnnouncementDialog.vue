@@ -7,7 +7,7 @@
     </div>
 
     <div>
-        <el-tabs type="card" class="announcement-tabs" v-model="announcementActive">
+        <el-tabs type="card" class="announcement-tabs" v-model="props.announcementActive">
             <el-tab-pane v-for="(tab, ind) in props.announcementTypes" :key="tab.id" :tab="ind" :label="tab.name"
                 :name="tab.name">
                 <el-collapse accordion v-model="typeActive">
@@ -28,9 +28,8 @@
 import { ref } from "vue";
 
 const typeActive = ref("");
-const announcementActive = ref("");
 
-const props = defineProps(['closeAnnouncementDialog', 'announcementList', 'announcementTypes'])
+const props = defineProps(['closeAnnouncementDialog', 'announcementList', 'announcementTypes', 'announcementActive'])
 </script>
 
 <style scoped lang="scss">

@@ -63,23 +63,6 @@ export const userStore = defineStore("userStore", {
       this.getBalance();
       this.getMemberInfo();
     },
-    telephoneLogin(loginInfo) {
-      return mobileLogin(loginInfo)
-        .then((ret) => {
-          if (ret.code === 0) {
-            this.token = ret.data;
-            this.getBalance();
-            this.getMemberInfo();
-          } else {
-            ElMessage.error(ret.message);
-            // throw new Error(ret.message);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          // message.error(err.message);
-        });
-    },
     getUnreadMail() {
       getUnreadTotal().then((response) => {
         if (response.code === 0) {

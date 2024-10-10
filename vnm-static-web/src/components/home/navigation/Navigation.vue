@@ -267,7 +267,7 @@ const openGame = (gameName, code, gameCode) => {
     }
 
     .sub-menu {
-        transition: $page-trans;
+        transition: all 0.5s ease-in-out;
         background: rgba(239, 242, 245, 0.95);
         box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
         backdrop-filter: blur(24.5px);
@@ -277,12 +277,42 @@ const openGame = (gameName, code, gameCode) => {
         left: 0;
         top: 100%;
         width: 100%;
+        padding-bottom: 10px;
 
         >div {
             max-width: $maxwidth;
             margin: 0 auto;
             width: 100%;
             flex-wrap: wrap;
+        }
+    }
+}
+
+.header-menu-item {
+    position: relative;
+    cursor: pointer;
+
+    // display: flex;
+    a {
+        position: relative;
+    }
+
+    .nav-title {
+        position: absolute;
+        margin: 0px;
+        bottom: 17px;
+        font-size: 11px;
+        line-height: 10px;
+        width: 100%;
+        z-index: 2;
+        color: #444444;
+        letter-spacing: 1px;
+        text-align: center;
+        font-weight: bold;
+
+        &.active {
+            //font-weight: 500;
+            color: #fff;
         }
     }
 }

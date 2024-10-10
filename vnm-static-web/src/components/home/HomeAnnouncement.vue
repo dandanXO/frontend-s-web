@@ -1,7 +1,8 @@
 <template>
   <el-dialog align-center v-model="isStationNotice" :maskClosable="false" :footer="null"
     style="border-radius: 8px; width: 800px" class="notice-modal">
-    <AnnouncementDialog :announcementList="announcementList" :announcementTypes="announcementTypes" />
+    <AnnouncementDialog :announcementList="announcementList" :announcementTypes="announcementTypes"
+      :announcementActive="announcementActive" />
   </el-dialog>
 
   <div class="top-bar-wrapper">

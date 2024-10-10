@@ -235,19 +235,15 @@ import { useI18n } from "vue-i18n";
 import { defineComponent, onMounted, ref, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
-import { getVerificationCode, register } from "@/api/index/login";
-import { findAccount } from "@/api/index/forgotPwd";
+import { getVerificationCode } from "@/api/index/login";
 import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
 import { displayBalance } from "@/utils/utils";
-import Navigation from "@/components/home/navigation/Navigation.vue";
 import { useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-import HomeWelcome from "@/components/home/HomeWelcome.vue";
-
 import { i18nStore } from '@/store/language'
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
@@ -255,6 +251,8 @@ import { EDITION } from "@/constant/edition";
 const LoginDialog = defineAsyncComponent(() => import('@/views/LoginDialog.vue'));
 const RegisterAccount = defineAsyncComponent(() => import('@/components/auth/RegisterAccount.vue'));
 const ForgotPwdDialog = defineAsyncComponent(() => import('@/views/ForgotPwdDialog.vue'));
+const HomeWelcome = defineAsyncComponent(() => import('@/components/home/HomeWelcome.vue'));
+const Navigation = defineAsyncComponent(() => import('@/components/home/navigation/Navigation.vue'));
 
 export default defineComponent({
   name: "CommonHeader",
@@ -306,7 +304,6 @@ export default defineComponent({
     const captchaDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
-    const selectedMenu = ref(false);
     const { height } = useElementSize(el);
 
     const vipLevel = computed(() => {
@@ -341,88 +338,6 @@ export default defineComponent({
       }
     };
 
-    const showSubMenu = (nav) => {
-      if (nav.submenu === true) {
-        selectedMenu.value = nav.code;
-      } else {
-        selectedMenu.value = "";
-      }
-    };
-    let validatePass = async (r, v) => {
-      if (v === "") {
-        return Promise.reject("请输入密码");
-      } else {
-        return validatePassStrength(r, v);
-      }
-    };
-
-    let validatePassStrength = (r, v) => {
-      var strength = "";
-      var pwd = v;
-      var result = 0;
-      for (var i = 0, len = pwd.length; i < len; ++i) {
-        result |= charType(pwd.charCodeAt(i));
-      }
-
-      var level = 0;
-      for (i = 0; i <= 4; i++) {
-        if (result & 1) {
-          level++;
-        }
-        result = result >>> 1;
-      }
-
-      if (pwd.length >= 6) {
-      } else {
-        return Promise.resolve();
-      }
-    };
-
-    let validateName = async (r, v) => {
-      if (v === "") {
-        return Promise.reject("请输入登录名");
-      } else if (!checkName(v)) {
-        return Promise.reject("不允许使用特殊字符");
-      } else {
-        return Promise.resolve();
-      }
-    };
-    let validateRealName = async (r, v) => {
-      if (v === "") {
-        return Promise.reject("请输入登姓名");
-      } else if (!checkRealName(v)) {
-        return Promise.reject("请输入中文字符");
-      } else {
-        return Promise.resolve();
-      }
-    };
-    const checkName = (v) => {
-      const alphanumeric = /^[\p{L}\p{N}]*$/u;
-      return v.match(alphanumeric);
-    };
-    const checkRealName = (v) => {
-      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
-      return v.match(chineseCharOnly);
-    };
-    let validatePass2 = async (r, v) => {
-      if (v === "") {
-        return Promise.reject(t('placeholder.passwordAgain'));
-      } else if (v !== regForm.password) {
-        return Promise.reject(t('placeholder.passwordDifferent'));
-      } else {
-        return Promise.resolve();
-      }
-    };
-    let validatePhoneNumber = async (r, v) => {
-      var reg = /^\d+$/;
-      if (v === "") {
-        return Promise.reject(t('placeholder.verifyPhone'));
-      } else if (!reg.test(v)) {
-        return Promise.reject(t('placeholder.onlyNumber'));
-      } else {
-        return Promise.resolve();
-      }
-    };
     const loginForm = reactive({
       name: ""
     });
@@ -432,64 +347,6 @@ export default defineComponent({
     const hasAffiliate = ref(false);
     const regCountdown = ref(registerSendOtpDisabledTimeoutLeft);
     const loginCountdown = ref(0);
-
-    const loginRules = {
-      loginName: [
-        {
-          required: true,
-          message: "请输入用户名",
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 12,
-          message: "长度要在 6-12 之间",
-          trigger: "blur"
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: "请输入密码",
-          trigger: "blur"
-        }
-      ],
-      captchaCode: [
-        {
-          required: true,
-          message: "请输入验证码",
-          trigger: "blur"
-        },
-        {
-          min: 4,
-          max: 4,
-          message: "长度为 4",
-          trigger: "blur"
-        }
-      ]
-    };
-    const mobileLoginRules = {
-      telephone: [
-        {
-          required: true,
-          message: "请输入手机号码",
-          trigger: "blur"
-        }
-      ],
-      code: [
-        {
-          required: true,
-          message: "请输入验证码",
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 6,
-          message: "长度为 6",
-          trigger: "blur"
-        }
-      ]
-    };
 
     const captchaForm = reactive({
       type: "",
@@ -527,95 +384,6 @@ export default defineComponent({
       smsCodeId: ""
     });
 
-    const regRules = {
-
-      realName: [
-        {
-          required: false,
-          min: 2,
-          max: 12,
-          message: "长度应为 2 至 12",
-          trigger: "blur"
-        },
-        {
-          validator: validateRealName,
-          trigger: "change"
-        }
-      ],
-      loginName: [
-        {
-          min: 6,
-          max: 12,
-          message: "长度应为 6 至 12",
-          trigger: "blur"
-        },
-        {
-          validator: validateName,
-          trigger: "change"
-        }
-      ],
-      password: [
-        {
-          validator: validatePass,
-          trigger: "change"
-        }
-      ],
-      confirmPwd: [
-        {
-          validator: validatePass2,
-          trigger: "change"
-        }
-      ],
-      telephone: [
-        {
-          validator: validatePhoneNumber,
-          trigger: "change"
-        }
-      ],
-      smsCode: [
-        {
-          required: true,
-          message: "请输入手机验证码",
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 6,
-          message: "长度应为 6",
-          trigger: "blur"
-        }
-      ],
-      email: [
-        {
-          required: true,
-          message: "请输入您的邮箱",
-          trigger: "blur"
-        },
-        {
-          type: "email",
-          message: "电子邮件地址无效",
-          trigger: "blur"
-        },
-        {
-          max: 50,
-          message: "长度应小于 50",
-          trigger: "blur"
-        }
-      ],
-      captchaCode: [
-        {
-          required: true,
-          message: "需要验证码",
-          trigger: "blur"
-        },
-        {
-          min: 4,
-          max: 4,
-          message: "长度应为 4",
-          trigger: "change"
-        }
-      ]
-    };
     const passForm = reactive({
       email: ""
     });
@@ -690,11 +458,6 @@ export default defineComponent({
       store.memberLogout().then(() => {
         location.reload();
       });
-    };
-    const registerRef = ref([]);
-    const resetRegForm = (formEl) => {
-      if (!formEl) return;
-      formEl.resetFields();
     };
 
     const sendOtp = async () => {
@@ -788,39 +551,6 @@ export default defineComponent({
       getCode();
     };
 
-    const submitRegisterForm = async (elForm) => {
-      if (!elForm) return;
-      await elForm.validate((valid) => {
-        if (valid) {
-          (async () => {
-            const sidParam = store.visitorId;
-            regForm.sid = sidParam;
-            register(regForm)
-              .then((response) => {
-                const regResult = response.code;
-                if (regResult === 0) {
-                  ElMessage({
-                    type: "success",
-                    message: t('login.registerSuccess')
-                  });
-                  store.autoLogin(response.data);
-                  registerDialogVisible.value = false;
-                  store.regPageVisible = false;
-                  // loginDialogVisible.value = true;
-
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                  // getCode();
-                } else {
-                  getCode();
-                  // message.error(response.message);
-                }
-              });
-          })();
-        } else {
-          getCode();
-        }
-      });
-    };
     const rebateAmt = ref(0);
     const isRebateDialogVisible = ref(false);
     const isLandingClub = ref(route.query.landing);
@@ -937,84 +667,7 @@ export default defineComponent({
       });
     };
     const verificationImg = ref("");
-    const submitForgetPass = () => {
-      passRef.value.validate().then(() => {
-        findAccount(passForm).then((res) => {
-          if (res.code === 0) {
-            ElMessage.success(t('account.you_account_has_been_sent_email'));
-          }
-        });
-      });
-    };
-    const submitLogin = () => {
-      loadingBtn.value = true;
-      (async () => {
-        const sidParam = store.visitorId;
 
-        loginRef.value.validate().then(() => {
-          store
-            .memberLogin({
-              loginName: loginForm.loginName,
-              password: loginForm.password,
-              sid: sidParam,
-              captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId
-            })
-            .then(() => {
-              // const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-              if (store.token) {
-                // router.push(jumpUrl);
-                loginDialogVisible.value = false;
-                store.loginPageVisible = false;
-
-                sessionStorage.removeItem("REFERRAL_CODE");
-                loginForm.loginName = null;
-                loginForm.password = null;
-                loginForm.captchaCode = null;
-              } else {
-                getCode();
-              }
-            }).catch((error) => {
-              // message.error(error.message);
-              console.log(error.message);
-              getCode();
-            });
-        });
-        loadingBtn.value = false;
-      })();
-    };
-
-    const phoneLogin = () => {
-      loadingBtn.value = true;
-      (async () => {
-        const sidParam = store.visitorId;
-
-        mobileLoginRef.value.validate().then(() => {
-          store
-            .telephoneLogin({
-              phoneNumber: loginForm.phoneNumber,
-              sid: sidParam,
-              code: loginForm.code,
-              smsCodeId: loginForm.smsCodeId
-            })
-            .then(() => {
-              if (store.token) {
-                loginDialogVisible.value = false;
-                store.loginPageVisible = false;
-
-                sessionStorage.removeItem("REFERRAL_CODE");
-              } else {
-                loginForm.phoneNumber = null;
-                loginForm.code = null;
-              }
-            }).catch((error) => {
-              // message.error(error.message);
-              console.log(error.message);
-            });
-        });
-      })();
-      loadingBtn.value = false;
-    };
     const pwdStrength = ref();
 
     function charType(num) {
@@ -1099,16 +752,8 @@ export default defineComponent({
       token,
       el,
       height,
-      showSubMenu,
       goPath,
       scroll,
-      selectedMenu,
-      noticesList: [
-        "尊敬的雷火会员：为了给您带来更好的游戏体验，请您保管好个人账户的全部信息【账户，密码，邮箱，手机】以及个人账户的隐私信息等，不要告知或泄露给其它人，我们为您提供安全的个人信息保护机制，也请您也要保护好个人的账户信息，并建议您不定期修改账户密码，以保障您的账户信息安全和资金安全，若账户信息遇到任何问题，请您立即与在线客服进行联系，给您带来的不便敬请谅解，感谢您的支持与关注！雷火娱乐 2022/10/13",
-        "こんにちは",
-        "bonjour",
-        "안녕하세요"
-      ],
       loginForm,
       loginDialogVisible,
       forgetPassDialogVisible,
@@ -1118,15 +763,9 @@ export default defineComponent({
       loginRef,
       mobileLoginRef,
       captchaRef,
-      submitLogin,
       regForm,
       registerDialogVisible,
-      submitRegisterForm,
-      registerRef,
-      loginRules,
-      mobileLoginRules,
       captchaRules,
-      regRules,
       getCode,
       verificationImg,
       disableSendVerificationButton,
@@ -1140,12 +779,9 @@ export default defineComponent({
       passRules,
       forgetPassRules,
       displayBalance,
-      submitForgetPass,
       pwdStrength,
-      resetRegForm,
       todayDate,
       sendOtp,
-      phoneLogin,
       openCaptchaForm,
       loadingBtn,
       getAffiliateCode,
@@ -2171,33 +1807,5 @@ body {
   // margin-left: 2rem;
   display: flex;
   gap: 1rem;
-}
-
-.header-menu-item {
-  position: relative;
-
-  // display: flex;
-  a {
-    position: relative;
-  }
-
-  .nav-title {
-    position: absolute;
-    margin: 0px;
-    bottom: 17px;
-    font-size: 11px;
-    line-height: 10px;
-    width: 100%;
-    z-index: 2;
-    color: #444444;
-    letter-spacing: 1px;
-    text-align: center;
-    font-weight: bold;
-
-    &.active {
-      //font-weight: 500;
-      color: #fff;
-    }
-  }
 }
 </style>

@@ -14,7 +14,6 @@
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goToUrl(banner.redirectUrl)">
         <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div>
-        <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
       </a>
     </el-carousel-item>
   </el-carousel>
@@ -203,7 +202,7 @@ onMounted(() => {
 
   .banner-container {
     .promo-bg {
-      background-image: url(../../assets/images/mock/home_banner.png);
+      // background-image: url(../../assets/images/mock/home_banner.png);
       background-size: contain;
       background-repeat: no-repeat;
       background-position: top center;
@@ -211,11 +210,6 @@ onMounted(() => {
       &.isDesktop {
         display: block;
         width: 100%;
-        height: 100%;
-      }
-
-      &.isMobile {
-        display: none;
         height: 100%;
       }
     }
