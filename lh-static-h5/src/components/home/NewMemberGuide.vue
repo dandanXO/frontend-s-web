@@ -1,17 +1,17 @@
 <template>
-  <div class="new-member-guide-dialog" :show-close="false" v-if="store.regSuccessGuideVisible">
+  <div class="new-member-guide-dialog" :show-close="false" v-if=store.regSuccessGuideVisible>
     <div class="step1-container" v-if="step === 1">
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
       <img src="../../assets/images/home/guide/step1-flag.png" alt="" class="flag" />
       <div class="content">
-        <div class="title">
-          <div style="font-size: 25px">恭喜您</div>
-          <div>雷火账号创建成功~</div>
+        <div>
+          <div class="title">恭喜您</div>
+          <div class="subtitle q-mt-sm">雷火账号创建成功~</div>
         </div>
         <div>
-          <img src="../../assets/images/home/guide/step1-arrow.png" alt="" />
+          <img src="../../assets/images/home/guide/step1-arrow.png" alt="" style="height: 54px;"/>
         </div>
-        <div class="subtitle">点击跟随新用户小指南</div>
+        <div class="description">点击跟随新用户小指南</div>
 
         <div class="next-button" @click="handleNext(2)">好的</div>
       </div>
@@ -24,44 +24,39 @@
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
       <img src="../../assets/images/home/guide/step2-flag.png" alt="" class="flag" />
       <div class="content">
-        <div class="title">
+        <div class="subtitle q-mt-xl">
           <div>
             电竞/体育/真人/棋牌
             <br />
             电子/小游戏/彩票/捕鱼
           </div>
         </div>
-        <div class="subtitle">一目了然 轻松娱乐</div>
+        <div class="description">一目了然 轻松娱乐</div>
 
-        <div class="next-button" @click="handleNext(3)">下一个</div>
+        <div class="next-button" @click="handleNext(3)">好的</div>
       </div>
     </div>
     <div class="step3-container" v-else-if="step === 3">
       <div class="step3-img">
-        <img src="../../assets/images/home/guide/step3-img1.png" alt="" /> 
+        <img src="../../assets/images/home/guide/step3-img1.png" alt="" />
       </div>
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
       <img src="../../assets/images/home/guide/step3-flag.png" alt="" class="flag" />
       <div class="content">
-        <div class="title">
-          <div style="font-size: 25px">各种优惠红包彩金</div>
+        <div>
+          <div class="subtitle q-mt-xl" style="font-size: 20px;">各种优惠红包彩金</div>
         </div>
-        <div class="subtitle">现金红包拿到手软 轻松娱乐</div>
+        <div class="description">现金红包拿到手软 轻松娱乐</div>
 
-        <div class="next-button" @click="handleNext(4)">下一个</div>
+        <div class="next-button" @click="handleNext(4)">好的</div>
       </div>
     </div>
     <div class="step4-container" v-else-if="step === 4">
       <div style="position: relative">
         <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
         <div class="content">
-          <div class="title">
-            <div class="title">
-              <div style="font-size: 25px">点击这里</div>
-            </div>
-            <div class="subtitle">到个人中心</div>
-          </div>
-
+          <div class="subtitle q-mt-xl" style="font-size: 20px;">点击这里</div>
+          <div class="description">到个人中心</div>
           <div class="next-button" @click="handleNext(5)">好的</div>
         </div>
       </div>
@@ -74,17 +69,15 @@
       </div>
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" width="100%" />
       <div class="content">
-        <div class="title">
-          <div style="font-size: 25px">点击这里充值</div>
-          <div class="subtitle">开启您的雷火游戏之旅</div>
-        </div>
-
+        <div></div>
+        <div class="title" style="font-size: 20px; margin-top: 40px;">点击这里充值</div>
+        <div class="description" style="align-content: start; margin-top: 4px;">开启您的雷火游戏之旅</div>
         <div class="next-button" @click="closeNewMemerGuide">知道了</div>
 
-        <div class="subtitle" style="text-decoration: underline;cursor:pointer;" @click="goToPromo">点击前往新人活动</div>
+        <div class="btm-info" @click="goToPromo">点击前往新人活动</div>
       </div>
     </div>
-    <div class="step6-container" v-else-if="step === 6">
+    <!-- <div class="step6-container" v-else-if="step === 6">
       <div class="step6-img1">
         <img src="../../assets/images/home/guide/step6-img1.png" alt="" />
       </div>
@@ -102,9 +95,9 @@
 
         <div class="next-button" @click="closeNewMemerGuide">知道了</div>
 
-        <div class="subtitle" style="text-decoration: underline;cursor:pointer;" @click="goToPromo">点击前往新人活动</div>
+        <div class="description" style="text-decoration: underline;cursor:pointer;" @click="goToPromo">点击前往新人活动</div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -139,7 +132,7 @@ const adjustGuide = () => {
       step3img.style.left = `calc(${x}px - 25px)`;
       step3img.style.visibility = 'visible';
     }, 500)
-    
+
   } else if(value === 4) {
     setTimeout(() => {
       const { x, y } = document.querySelector('.footer-icon-personal').getBoundingClientRect();
@@ -214,6 +207,11 @@ onMounted(() => {
   display:flex;
   align-items: center;
   justify-content: center;
+  font-family: FZZhanBiHei-M22S;
+  font-size: 16.93px;
+  font-weight: 400;
+  line-height: 19.25px;
+  text-align: center;
 }
 
 .step1-container,
@@ -230,9 +228,9 @@ onMounted(() => {
 
   .flag {
     position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 150px;
+    top: 2px;
+    right: -10px;
+    width: 75px;
   }
 
   .content {
@@ -245,19 +243,32 @@ onMounted(() => {
     align-items: center;
     min-width: 240px;
     gap: 5px;
-    font-family: 'FZZBHJW';
-
-    .title {
+    height: 100%;
+    padding: 56px 36px 68px 36px;
+    .title,
+    .subtitle {
       color: #3aefff;
-      font-size: 18px;
+      font-size: 24px;
       text-align: center;
       white-space: nowrap;
     }
-
     .subtitle {
-      font-size: 14px;
+      font-size: 16px;
+    }
+
+    .description {
+      font-size: 12px;
       color: white;
       text-align: center;
+      flex: 1;
+      align-content: center;
+    }
+
+    .btm-info {
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 12px;
+      color: white;
     }
 
     .next-button {
@@ -265,7 +276,7 @@ onMounted(() => {
       color: white;
       font-size: 16px;
       border-radius: 10px;
-      width: 120px;
+      width: 100px;
       height: 30px;
       display: flex;
       justify-content: center;
@@ -295,7 +306,7 @@ onMounted(() => {
 
 .step3-container {
   .flag {
-    left: -100px;
+    left: -32px;
   }
 
   .arrow {
@@ -309,6 +320,10 @@ onMounted(() => {
     display: flex;
     justify-content: end;
     visibility: hidden;
+  }
+
+  .subtitle {
+    font-size: 20px;
   }
 }
 
@@ -336,14 +351,17 @@ onMounted(() => {
     position: fixed;
     visibility: hidden;
   }
-}
-
-.step6-container {
-  top: -5%;
-
-  .step6-img1, .step6-img2 {
-    position: fixed;
-    visibility: hidden;
+  .content {
+    padding-bottom: 54px;
   }
 }
+
+// .step6-container {
+//   top: -5%;
+
+//   .step6-img1, .step6-img2 {
+//     position: fixed;
+//     visibility: hidden;
+//   }
+// }
 </style>
