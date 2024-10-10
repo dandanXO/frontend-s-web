@@ -126,28 +126,10 @@ const adjustGuide = () => {
     setTimeout(() => {
       const { x, y } = document.querySelector('.deposit-btn').getBoundingClientRect();
       const step5img = document.querySelector('.step5-img');
-      step5img.style.top = `calc(${y}px + 30px - 11px)`;
-      step5img.style.left = `calc(${x}px - 80px)`;
+      step5img.style.top = `calc(${y}px - 15px)`;
+      step5img.style.left = `calc(${x}px - 16px)`;
       step5img.style.visibility = 'visible';
     }, 1000);
-  } else if(value === 6) {
-    router.push('/finance/deposit');
-
-    setTimeout(() => {
-      const { x, y } = document.querySelector('.icon-rounded.deposit').getBoundingClientRect();
-      const step6img1 = document.querySelector('.step6-img1');
-      step6img1.style.top = `calc(${y}px - 15px)`;
-      step6img1.style.left = `calc(${x}px - 20px)`;
-      step6img1.style.visibility = 'visible';
-    }, 1000);
-
-    setTimeout(() => {
-      const { x: x2, y: y2 } = document.querySelector('.btn-confirm').getBoundingClientRect();
-      const step6img2 = document.querySelector('.step6-img2');
-      step6img2.style.top = `calc(${y2}px - 80px)`;
-      step6img2.style.left = `calc(${x2}px - 143px)`;
-      step6img2.style.visibility = 'visible';
-    }, 2000);
   }
 }
 
@@ -329,9 +311,6 @@ onMounted(() => {
   .step5-img {
     position: fixed;
     visibility: hidden;
-    img {
-      scale: 1.3;
-    }
   }
   .content {
     padding-bottom: 54px;
