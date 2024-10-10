@@ -92,14 +92,14 @@
             </tr>
           </tbody>
         </table>
-        
+
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员A在电子投注,当日产生负盈利为68888元,次日即可获得救援金288元。
+            会员A在电子投注,当日产生负盈利为68,888元,次日即可获得救援金288元。
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-                申请方式:账户余额≤5元，次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
+            申请方式：账户余额≤5元，次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -167,7 +167,6 @@ const rewardMoney = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
 
-
 const claimHongBao = async () => {
   if (!store.token) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
@@ -192,7 +191,6 @@ const claimHongBao = async () => {
     ElMessage.error(res.message);
   }
 };
-
 
 const getMatchData = async () => {
   const res = await getMatchAndPrizeInfo("profit");

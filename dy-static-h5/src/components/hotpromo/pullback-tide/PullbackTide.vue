@@ -105,22 +105,22 @@
               <img
                 src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/game-bottom-left-btn.png"
                 alt=""
-                style="width: 10px"
+                style="width: 10px; margin-bottom: 0px"
               />
               <span>示例</span>
             </div>
-            会员A在电子投注,当日产生负盈利为68888元,次日即可获得救援金288元。
+            会员A在电子投注,当日产生负盈利为68,888元,次日即可获得救援金288元。
           </div>
         </div>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">
         <div class="title"></div>
-        
+
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-                申请方式:账户余额≤5元，次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
+            申请方式:账户余额≤5元，次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -282,7 +282,7 @@ onMounted(() => {
 
   .livepoker-rebate-section-title {
     color: #000000;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1;
     font-weight: 600;
     display: flex;
@@ -307,13 +307,13 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   .livepoker-rebate-game-bottom-left-title {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 22.4px;
     color: #ff0000;
   }
   .livepoker-rebate-game-bottom-left-btn {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 22.4px;
     color: #ff0000;
@@ -339,12 +339,13 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-pullback-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/pullbacktide/activity-2.png");
     background-repeat: no-repeat;
     background-size: 100%;
-    width: 240px;
-    height: 26px;
-    margin: 0 auto;
+    width: 100%;
+    min-height: 22px;
+    aspect-ratio: 303/22;
+    margin: 0 auto 10px;
   }
   .little-title {
     display: flex;
@@ -355,19 +356,19 @@ onMounted(() => {
       background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-little-pullback-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 64px;
-      height: 20px;
+      width: 85px;
+      height: 24px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
-      line-height: 23.33px;
+      line-height: 24px;
       color: #ffffff;
       margin-right: 16px;
     }
     .right {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 400;
       line-height: 28px;
       color: #000000;
@@ -384,7 +385,7 @@ onMounted(() => {
   vertical-align: middle;
   th {
     height: 36px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 28px;
     color: #fff;
@@ -416,7 +417,7 @@ onMounted(() => {
     background: transparent;
     border: 1px solid #acd4f6;
     height: 36px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 28px;
     color: #000000;
@@ -436,27 +437,30 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/rule-pullback-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/pullbacktide/activity-rules.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 240px;
-    height: 20px;
-    margin-bottom: 20px;
+    width: 100%;
+    //height: 20px;
+    min-height: 22px;
+    aspect-ratio: 303/22;
+    margin-bottom: 10px;
   }
   .content {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 24px;
     color: #000000;
     padding: 8px;
     .item {
       display: flex;
       gap: 10px;
       align-items: baseline;
+      margin-bottom: 10px;
 
       .item-num {
         color: #ffffff;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 1;
         border-radius: 50%;
         height: 16px !important;
@@ -470,7 +474,7 @@ onMounted(() => {
       }
 
       .hint {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 400;
         line-height: 22.4px;
         color: #ff0000;
@@ -503,7 +507,7 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 16px;
   color: black;
 
   .amount {
@@ -866,7 +870,6 @@ onMounted(() => {
     }
   }
 }
-
 
 // confirm vote dialog
 .confirm-vote-card {
