@@ -2,16 +2,19 @@
 .q-header,
 .q-footer,
 .q-page {
-  max-width: 540px;
   margin: 0 auto;
 }
+.q-header,
+.q-page {
+  max-width: 540px;
+}
+
 .q-layout {
   height: 100vh;
   overflow-y: auto;
 }
 
 html {
-  max-width: 540px;
   width: 100%;
   margin: 0 auto;
 }
