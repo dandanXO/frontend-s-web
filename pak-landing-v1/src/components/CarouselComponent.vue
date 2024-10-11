@@ -6,6 +6,8 @@
       transition-next="jump-left"
       swipeable
       animated
+      infinite
+      :autoplay="autoplay"
       class="text-white rounded-borders"
       :class="{ bg: hasBg }"
       @transition="onTransition"
