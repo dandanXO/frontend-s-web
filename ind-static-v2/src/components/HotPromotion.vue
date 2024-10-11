@@ -6,9 +6,17 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
+
+    <HongBaoYuPromo
+      v-if="listParam.type === 'hongbaoyu'"
+      :promo-id="list.id"
+      :loading-claim="btnLoading"
+      @daily-slot="claimHongBao()"
+    />
+
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
+
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <AnniversaryCelebrationPromo
@@ -243,6 +251,27 @@ export default defineComponent({
   },
   methods: {
     handleSlot() {
+      const store = userStore();
+      const bonusItem = this.list.promoCode;
+      const eventUrl = "/session/daily-deposit/claim?promoCode=" + bonusItem;
+      this.btnLoading = true;
+      eventapi
+        .post(eventUrl)
+        .then((res) => {
+          this.btnLoading = false;
+          if (res.code === 0) {
+            var rebatePoint = res.data;
+            this.claimMsg = store.currency.label + rebatePoint;
+            this.isClaimModal = true;
+          } else {
+            this.btnLoading = false;
+          }
+        })
+        .catch((error) => {
+          this.btnLoading = false;
+        });
+    },
+    claimHongBao() {
       const store = userStore();
       const bonusItem = this.list.promoCode;
       const eventUrl = "/session/daily-deposit/claim?promoCode=" + bonusItem;
