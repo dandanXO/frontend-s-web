@@ -226,7 +226,8 @@ export default defineComponent({
         .then((res) => {
           this.btnLoading = false;
           if (res.code === 0) {
-            var rebatePoint = res.data;
+            var rebatePoint = res.data.lastDigitAmount + res.data.vipAmount;
+
             this.claimMsg = store.currency.label + rebatePoint;
             this.isClaimModal = true;
           } else {
