@@ -1,23 +1,13 @@
 <template>
   <div class="hot-promo">
-    <!-- <PrizePoolVotePromo v-if="list.redirectUrl === 'lh1-s13-vote'" /> -->
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin'" />
     <PennyBank v-if="list.redirectUrl === 'vi-penny-bank'" />
     <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss'" />
-    <tf88Baohiemvon v-if="list.redirectUrl === 'tf88-baohiemvon'" :promo-code="list.promoCode" />
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
     <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone'" :promo-code="list.promoCode" />
-    <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" :promo-code="list.promoCode" />
-    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" :promo-code="list.promoCode" />
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" :promo-code="list.promoCode" />
-    <olympicClaim v-if="list.redirectUrl === 'CHINHPHUC-OLYMPIC'" :promo-code="list.promoCode" />
     <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" />
-
-    <HongBaoYu2024
-      v-if="listParam.type === 'redpacket' && store.token"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />
+    <HongBaoYu2024 v-if="listParam.type === 'redpacket' && store.token" :promo-code="list.promoCode"
+      :params="list.param" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -40,13 +30,8 @@ import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.v
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PennyBank from "../components/hotpromo/penny-bank/PennyBank.vue";
 import SlotNetloss from "../components/hotpromo/slot-netloss/SlotNetloss.vue";
-import tf88Baohiemvon from "../components/hotpromo/tf88Baohiemvon/tf88Baohiemvon.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
-import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
-import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
-import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
-import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -55,21 +40,14 @@ import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
-  // setup: (props, { emit }) => {},
   components: {
-    tf88Baohiemvon,
-    olympicClaim,
     DailyLoginPromo,
     LotteryPromo,
     PennyBank,
     SlotNetloss,
     PokerCashback,
     HongBaoYu2024,
-    Eurocup2024,
-    Eurocup2024bet,
-    EurocupLuckyDraw,
     NewPlayerPromo
-    // DailyBonus
   },
   props: {
     list: {
@@ -92,43 +70,6 @@ export default defineComponent({
       memberId: null,
       amount: "$0",
       hotPromoList: [
-        // {
-        //   id: 19,
-        //   bg: require("../assets/images/promotion/hotpromo/19/bg.png"),
-        //   contents:
-        //     "*The rebate bonus needs 1 times rollover before withdrawing and will be returned if not used within 30 days.",
-        // },
-        // {
-        //   id: 20,
-        //   bg: require("../assets/images/promotion/hotpromo/20/bg.png"),
-        //   contents: "Hello hello",
-        // },
-        // {
-        //   id: 21,
-        //   bg: "",
-        //   contents: "Hello hello",
-        // },
-        // {
-        //   id: 22,
-        //   bg: require("../assets/images/promotion/hotpromo/22/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-        // {
-        //   id: 23,
-        //   bg: require("../assets/images/promotion/hotpromo/23/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
-        // {
-        //   id: 24,
-        //   bg: require("../assets/images/promotion/hotpromo/24/bg.png"),
-        //   contents: {
-        //     tab1: "Fill up the lucky number after the Member need meet deposit minimum amount of 1700VDNP or above. Once per day.",
-        //   },
-        // },
       ],
       selectedHotPromo: {
         id: "",
@@ -448,7 +389,7 @@ export default defineComponent({
       gap: 60px;
       text-align: left;
 
-      .ant-form-item-label > label {
+      .ant-form-item-label>label {
         color: #eeeeee;
       }
     }
@@ -485,11 +426,10 @@ export default defineComponent({
       }
     }
 
-    .ant-tabs-nav-container {
-    }
+    .ant-tabs-nav-container {}
 
-    .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
-    .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
+    .ant-tabs .ant-tabs-top-content>.ant-tabs-tabpane,
+    .ant-tabs .ant-tabs-bottom-content>.ant-tabs-tabpane {
       background: #201f29;
     }
 
@@ -506,7 +446,7 @@ export default defineComponent({
       background-color: transparent;
     }
 
-    .ant-table-thead > tr > th,
+    .ant-table-thead>tr>th,
     .ant-table-placeholder {
       color: #ffffff;
       background-color: #201f29;
@@ -530,6 +470,7 @@ export default defineComponent({
         .contents {
           display: flex;
           justify-content: center;
+
           form {
             margin-top: 20px;
 
@@ -569,7 +510,7 @@ export default defineComponent({
           margin: 0;
         }
 
-        .ant-form-item-label > label {
+        .ant-form-item-label>label {
           color: #ffffff;
         }
 
