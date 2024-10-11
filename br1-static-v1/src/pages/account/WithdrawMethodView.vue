@@ -849,7 +849,7 @@ const resetSelectedMethod = () => {
   isAddNewAccount.value = false;
 };
 
-const isBankType = ref();
+const isBankType = ref('BANK');
 
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
