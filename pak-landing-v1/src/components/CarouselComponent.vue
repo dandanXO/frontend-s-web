@@ -95,12 +95,6 @@ const autoplay = ref(false);
 const carouselHeight = ref("360px");
 const slideRefs = ref([]);
 
-const onCarouselNavDotClick = (i) => {
-  if (slide.value != i) {
-    slide.value = i;
-  }
-};
-
 onMounted(async () => {
   await nextTick();
   nextTick(() => {
@@ -112,11 +106,17 @@ onMounted(async () => {
   }
 });
 
-function setSlideRef(index) {
+const onCarouselNavDotClick = (i) => {
+  if (slide.value != i) {
+    slide.value = i;
+  }
+};
+
+const setSlideRef = (index) => {
   return (el) => {
     slideRefs.value[index] = el;
   };
-}
+};
 
 const adjustCarouselHeight = () => {
   const activeSlide = slideRefs.value[slide.value];
@@ -124,7 +124,6 @@ const adjustCarouselHeight = () => {
   if (activeSlide && activeSlide.$el) {
     let height = 0;
     for (let i = 0; i < activeSlide.$el.children.length; i++) {
-      console.log("x", activeSlide.$el.children[i].clientHeight);
       height += activeSlide.$el.children[i].clientHeight;
     }
     carouselHeight.value = `${height + 8}px`;
@@ -132,13 +131,11 @@ const adjustCarouselHeight = () => {
 };
 
 const checkAutoplay = () => {
-  setTimeout(() => {
-    if (carouselVideo.value && carouselVideo.value[0]) {
-      autoplay.value = carouselVideo.value[0].paused ? 5000 : false;
-    } else {
-      autoplay.value = 5000;
-    }
-  }, "1000");
+  if (carouselVideo.value && carouselVideo.value[0]) {
+    autoplay.value = carouselVideo.value[0].paused ? 5000 : false;
+  } else {
+    autoplay.value = 5000;
+  }
 };
 
 const onTransition = (index) => {
