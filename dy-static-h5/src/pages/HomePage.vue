@@ -1435,7 +1435,8 @@
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%; position:relative;" class="bg-bright text-black">
+      <img v-close-popup class="station-notice-close-btn" src="../assets/images/index/close.png" />
       <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
         <q-tabs v-model="activeKey" dense align="justify">
           <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
@@ -3166,6 +3167,20 @@ export default defineComponent({
     .q-tab-panel {
       padding: 5px;
     }
+  }
+}
+
+.station-notice-close-btn {
+  z-index: 999; 
+  cursor: pointer; 
+  position: absolute; 
+  top: 0; 
+  right: 0;
+  width: 28px; 
+  height: 28px;
+
+  &:hover {
+    filter: brightness(0.9);
   }
 }
 

@@ -628,7 +628,8 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-black">
+    <q-card style="width: 100%; position:relative;" class="bg-primary text-black">
+      <img v-close-popup class="station-notice-close-btn" src="../assets/images/home/close.png" />
       <q-card-section class="q-mb-md">
         <q-tabs
           v-model="activeKey"
@@ -2570,6 +2571,20 @@ export default defineComponent({
 
   .fade-in-image {
     animation: fadeIn 1.5s;
+  }
+}
+
+.station-notice-close-btn {
+  z-index: 999; 
+  cursor: pointer; 
+  position: absolute; 
+  top: 0; 
+  right: 0;
+  width: 28px; 
+  height: 28px;
+
+  &:hover {
+    filter: brightness(0.9);
   }
 }
 
