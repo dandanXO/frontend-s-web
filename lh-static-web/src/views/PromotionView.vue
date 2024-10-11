@@ -1054,6 +1054,16 @@ export default defineComponent({
     }
   }
 }
+</style>
+<style lang="scss">
+.football1 {
+  table {
+    th,
+    td {
+      border: 1px solid #dcdce8;
+    }
+  }
+}
 
 .dark {
   .promo-container {
@@ -1142,16 +1152,6 @@ export default defineComponent({
           }
         }
       }
-    }
-  }
-}
-</style>
-<style lang="scss">
-.football1 {
-  table {
-    th,
-    td {
-      border: 1px solid #dcdce8;
     }
   }
 }
