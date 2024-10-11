@@ -6,6 +6,8 @@
       transition-next="jump-left"
       swipeable
       animated
+      infinite
+      :autoplay="5000"
       class="text-white rounded-borders"
       :class="{ bg: hasBg }"
     >
@@ -17,10 +19,11 @@
       >
         <div
           v-if="
-            carouselItem.media &&
+            carouselItem.media.data?.attributes &&
             carouselItem.media.data.attributes.ext === '.mp4'
           "
           class="video-container"
+          :class="{ 'min-height': carouselData.length > 1 }"
         >
           <video style="width: 100%" controls autoplay>
             <source
@@ -32,7 +35,7 @@
         </div>
         <div
           v-else-if="
-            carouselItem.media &&
+            carouselItem.media.data?.attributes &&
             (carouselItem.media.data.attributes.ext === '.jpg' ||
               carouselItem.media.data.attributes.ext === '.png')
           "
@@ -50,12 +53,16 @@
           ></iframe>
         </div>
         <div class="carousel-description q-pt-xs q-pl-xs q-pr-xs">
-          <span>{{ carouselItem.description }}111</span>
+          <span>{{ carouselItem.description }}</span>
         </div>
       </q-carousel-slide>
     </q-carousel>
 
-    <div class="carousel-nav" :class="{ bg: hasBg }">
+    <div
+      v-if="carouselData.length > 1"
+      class="carousel-nav"
+      :class="{ bg: hasBg }"
+    >
       <span
         v-for="(carouselItem, i) in carouselData"
         :key="i"
@@ -89,7 +96,10 @@ const onCarouselNavDotClick = (i) => {
 
 .video-container {
   width: 100%;
-  min-height: 200px;
+  min-height: 170px;
+  &.min-height {
+    min-height: 200px;
+  }
 }
 
 .carousel-media {

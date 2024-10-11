@@ -46,11 +46,15 @@ export function submitMemberSportMatchQuiz(param) {
 }
 
 export function submitPiggyBankLottery() {
-  return eventapi.post(`/piggy-bank/getLottery`);
+  return eventapi.post(`session/piggy-bank/getLotteryByPromoCode?promoCode=vnm-piggy-bank-sport`);
 }
 
-export function submitPiggyBankClaim() {
-  return eventapi.put(`/piggy-bank/claim`);
+export function submitPiggyBankClaimOther() {
+  return eventapi.put(`session/piggy-bank/claimByPromoCode?promoCode=vnm-piggy-bank-other`);
+}
+
+export function submitPiggyBankClaimSport() {
+  return eventapi.put(`session/piggy-bank/claimByPromoCode?promoCode=vnm-piggy-bank-sport`);
 }
 
 export function getPiggyBankAmt() {

@@ -115,7 +115,7 @@ const request = reactive({
   current: 1,
   recordTime: [convertStartDate(new Date()), convertDate(new Date())],
   loginName: null,
-  type: '',
+  type: 'DEPOSIT',
 })
 
 function convertDate(date) {

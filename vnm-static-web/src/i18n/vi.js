@@ -298,6 +298,8 @@ export default {
     selectDate: "Chọn ngày",
     btn_lottery_now: "Mở thưởng ngay",
     btn_claim_now: "Yêu cầu ngay",
+    btn_claim_now_sport: "Yêu cầu cho Thể thao",
+    btn_claim_now_other: "Yêu cầu cho Khác",
     net_work_bonus: "Tiền thưởng",
 
     bonus: "Phần thưởng",
@@ -910,6 +912,10 @@ export default {
     otp_success_send_email: "OTP Code đã được gửi đến email của bạn",
     otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn.",
     login_to_continue: "Vui lòng đăng nhập để tiếp tục"
+  },
+  sitePopout: {
+    sitePopout: "Thông báo bật lên",
+    checkDetails: "Chi tiết",
   },
   response: {
     101: "Không tìm thấy nền tảng",

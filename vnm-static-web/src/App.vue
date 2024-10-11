@@ -87,6 +87,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("GOGO");
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
