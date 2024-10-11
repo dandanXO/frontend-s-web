@@ -61,6 +61,8 @@ import { hasPermission } from '@/utils/util'
 import { required } from "@/utils/validate";
 
 const { t } = useI18n();
+const promoCodeSport = '-piggy-bank-sport'
+const promoCodeOther = '-piggy-bank-other'
 const siteList = reactive({
   list: []
 });
@@ -89,14 +91,14 @@ const formRules = reactive({
 })
 
 async function loadSites() {
-  const { data: site } = await getSiteWithPromo();
+  const { data: site } = await getSiteWithPromo(promoCodeSport);
   siteList.list = site;
 }
 
 async function loadPiggyBankSettings() {
   rulesParam.value = [];
   formRef.value.resetFields();
-  const { data: ret } = await getPiggyBankSettings(request.siteId);
+  const { data: ret } = await getPiggyBankSettings(request.siteId, promoCodeSport);
   nextTick(() => {
     if (ret) {
       Object.entries(ret).forEach(([key, value]) => {
@@ -125,7 +127,8 @@ function edit() {
   formRef.value.validate(async (valid) => {
     if (valid) {
       const params = constructParam();
-      await updatePiggyBankSettings(request.siteId, params);
+      await updatePiggyBankSettings(request.siteId, params, promoCodeSport);
+      await updatePiggyBankSettings(request.siteId, params, promoCodeOther);
       await loadPiggyBankSettings();
       ElMessage({ message: t('message.editSuccess'), type: "success" });
     }
