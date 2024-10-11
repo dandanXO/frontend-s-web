@@ -34,7 +34,7 @@
             controls
             autoplay
             @play="autoplay = false"
-            @pause="autoplay = 5000"
+            @pause="autoplay = false"
             height="260px"
           >
             <source
