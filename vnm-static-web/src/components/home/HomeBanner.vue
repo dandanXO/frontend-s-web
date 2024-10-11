@@ -1,6 +1,11 @@
 <template>
-  <el-dialog @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)" class="imptann-modal"
-    v-model="isImportantAnnoucementModal" v-if="!isImpt" width="820px">
+  <el-dialog
+    @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)"
+    class="imptann-modal"
+    v-model="isImportantAnnoucementModal"
+    v-if="!isImpt"
+    width="820px"
+  >
     <SitePopout />
     <!-- <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
       <img :src="homePopupImg" class="alert-img" />
@@ -8,10 +13,16 @@
   </el-dialog>
 
   <div v-if="isFetchingBanners" class="banner-placeholder">
-    <h1>{{ $t('common.loading') }}...</h1>
+    <h1>{{ $t("common.loading") }}...</h1>
   </div>
-  <el-carousel v-else class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true"
-    :interval="5000">
+  <el-carousel
+    v-else
+    class="banner-slider"
+    :class="ui.edition"
+    indicator-position="outside"
+    :autoplay="true"
+    :interval="5000"
+  >
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goToUrl(banner.redirectUrl)">
         <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div>
@@ -27,11 +38,10 @@ import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
-import GameModal from "@/components/modal/GameModal.vue";
 import SitePopout from "@/components/modal/SitePopout.vue";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
-const GameModal = defineAsyncComponent(() => import('@/components/modal/GameModal.vue'));
+const GameModal = defineAsyncComponent(() => import("@/components/modal/GameModal.vue"));
 
 const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -76,21 +86,24 @@ const loadBanners = () => {
   }
 
   isFetchingBanners.value = true;
-  loadPromoBanner(params).then((res) => {
-    isFetchingBanners.value = false;
-    if (res.code === 0) {
-      banners.value = res.data;
-    } else {
-      ElMessage.error({
-        type: "error",
-        message: res.message
-      });
-    }
-  }).catch(() => {
-    isFetchingBanners.value = false;
-  }).finally(() => {
-    isFetchingBanners.value = false;
-  });
+  loadPromoBanner(params)
+    .then((res) => {
+      isFetchingBanners.value = false;
+      if (res.code === 0) {
+        banners.value = res.data;
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch(() => {
+      isFetchingBanners.value = false;
+    })
+    .finally(() => {
+      isFetchingBanners.value = false;
+    });
 };
 
 const setWithExpiry = (key, value, interval) => {
@@ -178,7 +191,7 @@ const checkShowImgTop = () => {
             isFirstView.value = true;
           }
         })
-        .catch(() => { });
+        .catch(() => {});
     }
   }
 };
@@ -245,9 +258,8 @@ onMounted(() => {
   }
 
   .el-dialog__close {
-    color: #2792FD !important;
+    color: #2792fd !important;
   }
-
 
   .alert-img {
     display: block;
