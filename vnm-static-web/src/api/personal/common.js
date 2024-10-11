@@ -8,6 +8,6 @@ export function getAnnouncement() {
   return server.REST.get(`/announcement`);
 }
 
-export function getSitePopoutList() {
-  return server.REST.get(`/member/site-popout-list?siteType=main`);
+export function getSitePopoutList(type) {
+  return server.REST.get(`/member/site-popout-list?siteType=${type}`);
 }
