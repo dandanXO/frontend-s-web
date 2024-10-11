@@ -1,7 +1,7 @@
 export default {
   lang: {
-    langVal: "en",
-    language: "Language"
+    langVal: "es",
+    language: "Idioma"
   },
   header: {
     login: "Inicio de Sesión",
