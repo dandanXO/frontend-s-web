@@ -251,7 +251,8 @@ export default {
     notAMember: "Não é um membro?",
     createAccount: "Criar uma conta",
     profit: "Lucro",
-    loss: "Perda"
+    loss: "Perda",
+    withdrawing: "Retirando..."
   },
   notify: {
     noRecord: "Nenhum Registro",
@@ -269,7 +270,8 @@ export default {
     serialNumberCopied: "Número de série copiado para a área de transferência.",
     fillInPersonalDetails: "Por favor, preencha seus dados pessoais",
     addSucceed: "Adição bem-sucedida",
-    areYouSureUnbind: "Tem certeza de que deseja desvincular?"
+    areYouSureUnbind: "Tem certeza de que deseja desvincular?",
+    withdrawSuceed: "Retirada Enviar com sucesso"
   },
   sideNav: {
     inviteToEarn: "Convidar para Ganhar",
