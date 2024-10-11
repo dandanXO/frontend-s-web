@@ -219,10 +219,10 @@ export default defineComponent({
     claimHongBao() {
       const store = userStore();
       const bonusItem = this.list.promoCode;
-      const eventUrl = "/session/daily-deposit/claim?promoCode=" + bonusItem;
+      const eventUrl = "/redPacketVip/claim?promoCode=" + bonusItem;
       this.btnLoading = true;
       eventapi
-        .post(eventUrl)
+        .get(eventUrl)
         .then((res) => {
           this.btnLoading = false;
           if (res.code === 0) {
