@@ -348,80 +348,82 @@
       <div class="right">
         <div class="vip-boxes">
           <template v-for="category in categories" :key="category.key">
-            <template v-for="(item, index) in vipItems" :key="index">
-              <template
-                v-if="
-                  store.token && isFirstTime && vipLevel !== 0
-                    ? +item.vipLevel === currentSlide
-                    : +item.vipLevel === currentSlide + 1
-                "
-              >
-                <div
-                  class="box"
-                  :class="{
-                    inactive:
-                      (store.token && item[`${category.key}Prize`] === '0') ||
-                      item[`${category.key}Prize`] === 0 ||
-                      item[`${category.key}Prize`] == 'null'
-                  }"
+              <template v-for="(item, index) in vipItems" :key="index">
+                <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
+                <template
+                  v-if="
+                    store.token && isFirstTime && vipLevel !== 0
+                      ? +item.vipLevel === currentSlide
+                      : +item.vipLevel === currentSlide + 1
+                  "
                 >
-                  <div class="vip-inner">
-                    <div class="box-det">
-                      <div class="icon">
-                        <img
-                          :src="
-                            require(`../assets/vip/${category.image}${
-                              (store.token && item[`${category.key}Prize`] === '0') ||
-                              item[`${category.key}Prize`] === 0 ||
-                              item[`${category.key}Prize`] === 'null'
-                                ? '-inactive'
-                                : ''
-                            }.png`)
-                          "
-                        />
-                      </div>
-                      <div>
-                        <div class="item-name">{{ category.displayName }}</div>
-                        <div class="item-amt" v-show="isDataLoaded">
-                          {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
-                        </div>
-                        <div class="loading-blue-icon" v-show="!isDataLoaded"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <template
-                    v-if="
-                      item.redPacketClaimStatus === 'CANT_CLAIM' &&
-                      category.key === 'redPacket' &&
-                      +item.vipLevel === vipLevel
-                    "
+                  <div
+                    class="box"
+                    :class="{
+                      inactive:
+                        (store.token && item[`${category.key}Prize`] === '0') ||
+                        item[`${category.key}Prize`] === 0 ||
+                        item[`${category.key}Prize`] == 'null'
+                    }"
                   >
-                    <div class="claim-now disabled">{{ formatNumber(currentRedPacketAmount, "redPacket") }}</div>
-                  </template>
-                  <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
-                    <div
-                      class="claim-now"
-                      :class="{ disabled: isLoading[category.key] }"
-                      @click="handleClick(category.key, item)"
-                    >
-                      {{
-                        !isLoading[category.key]
-                          ? category.key === "redPacket"
-                            ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
-                              ? formatNumber(currentRedPacketAmount, "redPacket")
-                              : "立即领取"
-                            : "立即领取"
-                          : "领取中"
-                      }}
+                    <div class="vip-inner">
+                      <div class="box-det">
+                        <div class="icon">
+                          <img
+                            :src="
+                              require(`../assets/vip/${category.image}${
+                                (store.token && item[`${category.key}Prize`] === '0') ||
+                                item[`${category.key}Prize`] === 0 ||
+                                item[`${category.key}Prize`] === 'null'
+                                  ? '-inactive'
+                                  : ''
+                              }.png`)
+                            "
+                          />
+                        </div>
+                        <div>
+                          <div class="item-name">{{ category.displayName }}</div>
+                          <div class="item-amt" v-show="isDataLoaded">
+                            {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
+                          </div>
+                          <div class="loading-blue-icon" v-show="!isDataLoaded"></div>
+                        </div>
+                      </div>
                     </div>
-                  </template>
-                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
-                    <div class="claimed">已领取</div>
-                  </template>
-                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'EXPIRED'">
-                    <div class="expired">已过期</div>
-                  </template>
-                </div>
+                    <template
+                      v-if="
+                        item.redPacketClaimStatus === 'CANT_CLAIM' &&
+                        category.key === 'redPacket' &&
+                        +item.vipLevel === vipLevel
+                      "
+                    >
+                      <div class="claim-now disabled">{{ formatNumber(currentRedPacketAmount, "redPacket") }}</div>
+                    </template>
+                    <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
+                      <div
+                        class="claim-now"
+                        :class="{ disabled: isLoading[category.key] }"
+                        @click="handleClick(category.key, item)"
+                      >
+                        {{
+                          !isLoading[category.key]
+                            ? category.key === "redPacket"
+                              ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
+                                ? formatNumber(currentRedPacketAmount, "redPacket")
+                                : "立即领取"
+                              : "立即领取"
+                            : "领取中"
+                        }}
+                      </div>
+                    </template>
+                    <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
+                      <div class="claimed">已领取</div>
+                    </template>
+                    <template v-else-if="item[`${category.key}ClaimStatus`] === 'EXPIRED'">
+                      <div class="expired">已过期</div>
+                    </template>
+                  </div>
+                </template>
               </template>
             </template>
           </template>
