@@ -130,13 +130,6 @@ deploy-xf-landing-v6:
 
 #===============================================================================================
 
-deploy-xf-landing-v8:
-  extends: .s3-deploy
-  variables:
-    PROJECT: xf-landing-v8
-
-#===============================================================================================
-
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -183,13 +176,6 @@ deploy-dy-landing-v6:
   extends: .s3-deploy
   variables:
     PROJECT: dy-landing-v6
-
-#===============================================================================================
-
-deploy-dy-landing-v8:
-  extends: .s3-deploy
-  variables:
-    PROJECT: dy-landing-v8
 
 #===============================================================================================
 
@@ -641,12 +627,6 @@ deploy-lh-landing-v7:
     PROJECT: lh-landing-v7
 #===============================================================================================
 
-deploy-lh-landing-v8:
-  extends: .s3-deploy
-  variables:
-    PROJECT: lh-landing-v8
-#===============================================================================================
-
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
@@ -825,6 +805,20 @@ build-image-pak-static-v2:
     PROJECT: pak-static-v2
   needs:
     - build-pak-static-v2
+
+#===============================================================================================
+
+build-pk3-static-v3:
+  extends: .build-projects
+  variables:
+    PROJECT: pk3-static-v3
+
+build-image-pk3-static-v3:
+  extends: .docker-build
+  variables:
+    PROJECT: pk3-static-v3
+  needs:
+    - build-pk3-static-v3
 
 #===============================================================================================
 

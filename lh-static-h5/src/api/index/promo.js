@@ -371,3 +371,23 @@ export function getCBAWeeklyInit() {
 export function claimCBAWeeklyBonus() {
   return eventapi.post("/session/cba/weekly/claimBonus");
 }
+
+export function getBelgradeInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/bb-dacha-belgrade/init?v=${randNum}`);
+}
+
+export function claimBelgradeBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/bb-dacha-belgrade/claimBonus?v=${randNum}`);
+}
+
+export function getYallaCompassInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-deposit/init?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+
+export function claimYallaCompassBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
+}

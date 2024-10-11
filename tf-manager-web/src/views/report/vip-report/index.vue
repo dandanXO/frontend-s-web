@@ -235,6 +235,7 @@ async function loadVipReport() {
     if (request.recordTime.length === 2) {
       query.recordTime = request.recordTime.join(',')
     }
+    query.random = Math.random()
   }
   const { data: ret } = await getVipReport(query)
   page.records = ret.records;

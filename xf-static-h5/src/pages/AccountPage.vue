@@ -111,7 +111,7 @@
             <img src="../assets/images/index/transfer_icon.png" />
             转账
           </router-link>
-          <router-link to="vip" class="button">
+          <router-link to="account/vip" class="button">
             <img src="../assets/images/account/vip_icon.png" />
             VIP
           </router-link>
@@ -515,7 +515,7 @@ export default defineComponent({
         text-decoration: none;
         padding: 10px;
         position: relative;
-        
+
         .unread {
           position: absolute;
           border-radius: 50%;

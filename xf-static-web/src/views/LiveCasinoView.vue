@@ -93,6 +93,14 @@ export default defineComponent({
         message:
           "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
         gameCode: ""
+      },
+      {
+        code: "WE",
+        name: "WE",
+        image: "we",
+        message:
+          "玩放易博尽享金满人生，WE自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
+        gameCode: ""
       }
     ]);
     // const selectedPlat = ref(platforms.value[0].code);

@@ -16,11 +16,18 @@
 </template>
 
 <script lang="js">
-import {defineComponent,computed} from "vue";
-import CommonHeader from "@/components/layout/CommonHeader.vue";
-import CommonFooter from "@/components/layout/CommonFooter.vue";
-import CommonSidebar from "@/components/layout/CommonSidebar.vue";
+import { defineComponent, computed, defineAsyncComponent } from "vue";
 import { useRoute } from "vue-router";
+
+const CommonFooter = defineAsyncComponent(() =>
+  import('@/components/layout/CommonFooter.vue')
+);
+const CommonHeader = defineAsyncComponent(() =>
+  import('@/components/layout/CommonHeader.vue')
+);
+const CommonSidebar = defineAsyncComponent(() =>
+  import('@/components/layout/CommonSidebar.vue')
+);
 
 export default defineComponent({
   name: "LayoutView",
@@ -38,7 +45,19 @@ export default defineComponent({
       const currentDomain = window.location.hostname;
 
       // Determine the tracking script URL based on the current domain
-      let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+      let trackingScriptUrl = "";
+      switch (currentDomain) {
+        case "m.tslotf88.com":
+        case "www.tslotf88.com":
+        case "tslotf88.com":
+          trackingScriptUrl = "https://v1.cnzz.com/z.js?id=1281386211";
+          break;
+        default:
+          trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+          break;
+      }
+
+      // let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
 
       const script = document.createElement("script");
       script.src = trackingScriptUrl;

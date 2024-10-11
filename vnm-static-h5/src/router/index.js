@@ -145,7 +145,8 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (
       window.location.href.indexOf("5svn88.com") > -1 ||
       window.location.href.indexOf("tfpromo88.com") > -1 ||
-      window.location.href.indexOf("tf88bof.com") > -1
+      window.location.href.indexOf("tf88bof.com") > -1 ||
+      window.location.href.indexOf("tslotf88.com") > -1
     ) {
       otag("init", "adv10336256983680");
     } else if (window.location.href.indexOf("tf68688.com") > -1) {

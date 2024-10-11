@@ -4,17 +4,28 @@
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
+    width="820px"
   >
-    <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
+    <SitePopout />
+    <!-- <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
       <img :src="homePopupImg" class="alert-img" />
-    </a>
+    </a> -->
   </el-dialog>
 
-  <el-carousel class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true" :interval="5000">
+  <div v-if="isFetchingBanners" class="banner-placeholder">
+    <h1>{{ $t("common.loading") }}...</h1>
+  </div>
+  <el-carousel
+    v-else
+    class="banner-slider"
+    :class="ui.edition"
+    indicator-position="outside"
+    :autoplay="true"
+    :interval="5000"
+  >
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goToUrl(banner.redirectUrl)">
         <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div>
-        <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
       </a>
     </el-carousel-item>
   </el-carousel>
@@ -22,19 +33,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineAsyncComponent } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
-import GameModal from "@/components/modal/GameModal.vue";
+import SitePopout from "@/components/modal/SitePopout.vue";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+const GameModal = defineAsyncComponent(() => import("@/components/modal/GameModal.vue"));
 
 const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 const ui = uiStore();
+const isFetchingBanners = ref(false);
 
 const allGames = ref(null);
 const goToUrl = (redirectUrl) => {
@@ -72,14 +85,25 @@ const loadBanners = () => {
       params = "HOME";
   }
 
-  loadPromoBanner(params).then((res) => {
-    if (res.code === 0) banners.value = res.data;
-    else
-      ElMessage.error({
-        type: "error",
-        message: res.message
-      });
-  });
+  isFetchingBanners.value = true;
+  loadPromoBanner(params)
+    .then((res) => {
+      isFetchingBanners.value = false;
+      if (res.code === 0) {
+        banners.value = res.data;
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch(() => {
+      isFetchingBanners.value = false;
+    })
+    .finally(() => {
+      isFetchingBanners.value = false;
+    });
 };
 
 const setWithExpiry = (key, value, interval) => {
@@ -133,11 +157,12 @@ const checkShowImgTop = () => {
       default:
       // params = "HOME";
     }
-    loadHomePopup(params)
-      .then((res) => {
-        const { code, data } = res;
-        if (code === 0) {
-          if (isImpt === null) {
+
+    if (isImpt === null) {
+      loadHomePopup(params)
+        .then((res) => {
+          const { code, data } = res;
+          if (code === 0) {
             switch (data["frequency"]) {
               case "EVERYTIME":
                 homePopupFrequencyNum.value = 0;
@@ -164,12 +189,10 @@ const checkShowImgTop = () => {
             homePopupId.value = data["id"];
             homePopupFrequency.value = data["frequency"];
             isFirstView.value = true;
-          } else {
-            isImportantAnnoucementModal.value = false;
           }
-        }
-      })
-      .catch(() => {});
+        })
+        .catch(() => {});
+    }
   }
 };
 
@@ -180,12 +203,22 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.banner-placeholder {
+  width: 1920px;
+  height: 568px;
+  width: 100%;
+  //background-color:#e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .banner-slider {
   width: 100%;
 
   .banner-container {
     .promo-bg {
-      background-image: url(../../assets/images/mock/home_banner.png);
+      // background-image: url(../../assets/images/mock/home_banner.png);
       background-size: contain;
       background-repeat: no-repeat;
       background-position: top center;
@@ -193,11 +226,6 @@ onMounted(() => {
       &.isDesktop {
         display: block;
         width: 100%;
-        height: 100%;
-      }
-
-      &.isMobile {
-        display: none;
         height: 100%;
       }
     }
@@ -216,12 +244,21 @@ onMounted(() => {
   transform: translate(-50%, -50%);
 
   &.el-dialog {
-    --el-dialog-width: 35%;
+    // --el-dialog-width: 35%;
   }
 
   .el-dialog__body {
     padding: 20px !important;
     border-radius: 12px;
+  }
+
+  .el-dialog__headerbtn {
+    background: #ffffff99;
+    border: 1px solid #ffffffb3;
+  }
+
+  .el-dialog__close {
+    color: #2792fd !important;
   }
 
   .alert-img {

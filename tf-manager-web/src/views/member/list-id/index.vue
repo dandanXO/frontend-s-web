@@ -37,33 +37,11 @@
           @blur="regTimeBlur"
           :editable="false"
         />
-        <el-select
-          v-model="request.depositStatus"
-          size="small"
-          :placeholder="t('fields.depositStatus')"
-          class="filter-item"
-          style="width: 100px;margin-left: 5px"
-          default-first-option
-          @change="depositStatusChange"
-        >
-          <el-option
-            v-for="item in uiControl.depositStatus"
-            :key="item.id"
-            :label="item.displayName"
-            :value="item.value"
-          />
-        </el-select>
         <el-input
           v-model="request.upLineLoginName"
           size="small"
           style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.upLineLoginName')"
-        />
-        <el-input
-          v-model="request.lastLoginIp"
-          size="small"
-          style="width: 100px; margin-left: 5px;"
-          :placeholder="t('fields.lastLoginIp')"
         />
         <el-select
           v-model="request.siteId"
@@ -194,20 +172,6 @@
               maxlength="20"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.lastLoginIp')" prop="lastLoginIp">
-            <el-input
-              v-model="request.lastLoginIp"
-              style="width: 300px;"
-              maxlength="50"
-            />
-          </el-form-item>
-          <el-form-item :label="t('fields.registerIp')" prop="regIp">
-            <el-input
-              v-model="request.regIp"
-              style="width: 300px;"
-              maxlength="50"
-            />
-          </el-form-item>
           <el-form-item :label="t('fields.vipLevel')" prop="vipId">
             <el-select
               v-model="request.vipId"
@@ -259,32 +223,6 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item :label="t('fields.totalDeposit')" prop="totalDeposit">
-            <el-input
-              v-model="request.totalDeposit1"
-              style="width: 140px; margin-right: 5px;"
-              maxlength="10"
-            />
-            -
-            <el-input
-              v-model="request.totalDeposit2"
-              style="width: 140px; margin-left: 5px;"
-              maxlength="10"
-            />
-          </el-form-item>
-          <el-form-item :label="t('fields.totalWithdraw')" prop="totalWithdraw">
-            <el-input
-              v-model="request.totalWithdraw1"
-              style="width: 140px; margin-right: 5px;"
-              maxlength="10"
-            />
-            -
-            <el-input
-              v-model="request.totalWithdraw2"
-              style="width: 140px; margin-left: 5px;"
-              maxlength="10"
-            />
-          </el-form-item>
           <el-form-item :label="t('fields.status')" prop="status">
             <el-radio-group v-model="request.status" style="width: 300px;">
               <el-radio
@@ -296,23 +234,6 @@
                 {{ s.displayName }}
               </el-radio>
             </el-radio-group>
-          </el-form-item>
-          <el-form-item :label="t('fields.birthday')" prop="birthday">
-            <el-date-picker
-              v-model="request.birthday"
-              format="DD/MM/YYYY"
-              value-format="YYYY-MM-DD"
-              size="small"
-              type="daterange"
-              range-separator=":"
-              :start-placeholder="t('fields.startDate')"
-              :end-placeholder="t('fields.endDate')"
-              style="width: 300px"
-              :disabled-date="disabledBirthdayDate"
-              @calendar-change="birthdayCalendarChange"
-              @blur="birthdayBlur"
-              :editable="false"
-            />
           </el-form-item>
           <el-form-item :label="t('fields.registerTime')" prop="regTime">
             <el-date-picker
@@ -586,26 +507,6 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="totalDeposit" :label="t('fields.totalDeposit')" width="110">
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="totalWithdraw"
-          :label="t('fields.totalWithdraw')"
-          width="110"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
         <el-table-column
           prop="financialLevel"
           :label="t('fields.financialLevel')"
@@ -697,7 +598,8 @@
       <el-pagination
         class="pagination"
         @current-change="changePage"
-        layout="prev, next"
+        layout="total, prev, pager, next"
+        :total="page.total"
         :page-size="request.size"
         :page-count="page.pages"
         :current-page="request.current"
@@ -721,7 +623,7 @@ import {
 import { getVipList } from '../../../api/vip'
 import { selectList } from '../../../api/risk-level'
 import { getFinancialLevels } from '../../../api/financial-level'
-import { getActivePrivilegeInfo } from '../../../api/privilege-info'
+import { getActivePrivilegeInfoBySiteId } from '../../../api/privilege-info'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
 import { selectIpLabelAll } from '../../../api/ip-label'
@@ -784,14 +686,9 @@ const uiControl = reactive({
     { key: 1, displayName: 'NORMAL', value: 'NORMAL' },
     { key: 2, displayName: 'TEST', value: 'TEST' },
     { key: 3, displayName: 'OUTSIDE', value: 'OUTSIDE' },
-  ],
-  depositStatus: [
-    { key: 1, displayName: t('fields.noDeposit'), value: 0 },
-    { key: 2, displayName: t('fields.deposited'), value: 1 },
-  ],
+  ]
 })
 
-let selectedBirthdayStartDate = ''
 let selectedRegTimeStartDate = ''
 
 // const exportPercentage = ref(0);
@@ -802,6 +699,7 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+  total: 0
 })
 
 const request = reactive({
@@ -812,20 +710,12 @@ const request = reactive({
   email: null,
   telephone: null,
   affiliateCode: null,
-  lastLoginIp: null,
-  regIp: null,
   vipId: null,
   riskId: null,
   financialId: null,
-  totalDeposit1: null,
-  totalDeposit2: null,
-  totalWithdraw1: null,
-  totalWithdraw2: null,
   status: null,
   siteId: null,
-  birthday: [],
   regTime: [],
-  depositStatus: null,
   upLineLoginName: null,
 })
 
@@ -986,29 +876,6 @@ const promoFormRules = reactive({
   bonusAmount: [required(t('message.validateBonusAmountRequired'))],
 })
 
-function disabledBirthdayDate(time) {
-  if (selectedBirthdayStartDate) {
-    return (
-      time.getTime() <=
-        moment(selectedBirthdayStartDate)
-          .subtract(90, 'days')
-          .format('x') ||
-      time.getTime() >=
-        moment(selectedBirthdayStartDate)
-          .add(90, 'days')
-          .format('x')
-    )
-  }
-}
-
-function birthdayCalendarChange(arr) {
-  selectedBirthdayStartDate = arr[0]
-}
-
-function birthdayBlur() {
-  selectedBirthdayStartDate = null
-}
-
 function disabledRegTimeDate(time) {
   if (selectedRegTimeStartDate) {
     return (
@@ -1032,32 +899,15 @@ function regTimeBlur() {
   selectedRegTimeStartDate = null
 }
 
-function depositStatusChange(val) {
-  if (val) {
-    request.totalDeposit1 = 1
-    request.totalDeposit2 = null
-  } else {
-    request.totalDeposit2 = 1
-    request.totalDeposit1 = null
-  }
-}
-
 function resetQuery() {
   request.loginName = null
   request.email = null
   request.telephone = null
-  request.lastLoginIp = null
-  request.regIp = null
   request.vipId = null
   request.riskId = null
   request.financialId = null
-  request.totalDeposit1 = null
-  request.totalDeposit2 = null
-  request.totalWithdraw1 = null
-  request.totalWithdraw2 = null
   request.status = null
   request.siteId = siteList.list[0].id
-  request.birthday = []
   request.regTime = []
   uiControl.searchDialogVisible = false
 }
@@ -1097,9 +947,6 @@ function checkQuery() {
   if (request.regTime.length === 2) {
     query.regTime = request.regTime.join(',')
   }
-  if (request.birthday.length === 2) {
-    query.birthday = request.birthday.join(',')
-  }
   return query
 }
 
@@ -1109,11 +956,13 @@ async function loadMembers() {
   const query = checkQuery()
   const { data: ret } = await getMembers(query)
   page.pages = ret.pages
+  page.total = ret.total;
   page.records = ret.records
   if (page.records.length / request.size < 1 || page.records.length === 0) {
     page.pages = request.current
   }
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+
   page.loading = false
   table.value.clearSelection()
 }
@@ -1207,7 +1056,8 @@ async function loadFinancialLevels(siteId) {
 }
 
 async function loadPrivilegeInfos() {
-  const { data: privilegeInfo } = await getActivePrivilegeInfo()
+  const siteId = request.siteId
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(siteId)
   privilegeInfoList.list = privilegeInfo
 }
 

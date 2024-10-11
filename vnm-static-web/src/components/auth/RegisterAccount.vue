@@ -12,71 +12,25 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item :label="$t('login.password')" prop="password">
-        <el-input
-          class="wTip"
-          v-model="regForm.password"
-          :placeholder="$t('login.password')"
-          type="password"
-          show-password
-          clearable
-        >
+        <el-input class="wTip" v-model="regForm.password" :placeholder="$t('login.password')" type="password"
+          show-password clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
     </div>
-<!-- 
-    <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item :label="$t('login.confirmPwd')" prop="confirmPwd">
-        <el-input
-          class="half wTip"
-          v-model="regForm.confirmPwd"
-          :placeholder="$t('login.confirmPwd')"
-          type="password"
-          show-password
-          clearable
-        >
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div> -->
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.realName')" prop="realName">
-        <el-input
-          class="wTip"
-          v-model="regForm.realName"
-          :placeholder="$t('login.realName')"
-          :rules="[{ required: true, message: t('placeholder.realName') }]"
-          clearable
-        >
+        <el-input class="wTip" v-model="regForm.realName" :placeholder="$t('login.realName')"
+          :rules="[{ required: true, message: t('placeholder.realName') }]" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
     </div>
-    <!-- <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/email-icon.png" />
-      <el-form-item :label="$t('login.email')" prop="email">
-        <el-input
-          class="wTip"
-          v-model="regForm.email"
-          :placeholder="$t('login.email')"
-          :rules="[{ required: true, message: t('placeholder.email') }]"
-          clearable
-        >
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div> -->
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
       <el-form-item :label="$t('login.mobileNo')" prop="telephone">
-        <el-input
-          class="wTip"
-          v-model="regForm.telephone"
-          :placeholder="$t('login.mobileNo')"
-          clearable
-        >
+        <el-input class="wTip" v-model="regForm.telephone" :placeholder="$t('login.mobileNo')" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -84,22 +38,10 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
       <el-form-item :label="t('login.codeAffiliate')" prop="codeAffiliate">
-        <el-input
-          v-if="!hasAffiliate"
-          class="half"
-          v-model="regForm.codeAffiliate"
-          :placeholder="t('login.codeAffiliate')"
-          clearable
-        />
-        <el-input
-          v-else
-          class="half"
-          v-model="regForm.codeAffiliate"
-          :placeholder="t('login.codeAffiliate')"
-          readonly
-          disabled
-          clearable
-        />
+        <el-input v-if="!hasAffiliate" class="half" v-model="regForm.codeAffiliate"
+          :placeholder="t('login.codeAffiliate')" clearable />
+        <el-input v-else class="half" v-model="regForm.codeAffiliate" :placeholder="t('login.codeAffiliate')" readonly
+          disabled clearable />
       </el-form-item>
     </div>
 
@@ -107,20 +49,13 @@
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item :label="$t('login.captcha')" prop="captchaCode">
         <div style="display: flex; width: 100%">
-          <el-input
-            @keyup.enter="submitRegisterForm(registerRef)"
-            v-model="regForm.captchaCode"
-            :placeholder="$t('login.captcha')"
-            clearable
-          />
+          <el-input @keyup.enter="submitRegisterForm(registerRef)" v-model="regForm.captchaCode"
+            :placeholder="$t('login.captcha')" clearable />
           <img style="width: 90px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
     </div>
   </el-form>
-  <!-- <div>
-      <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
-  </div> -->
   <div>
     <button class="primary-btn login-btn" size="large" @click="submitRegisterForm(registerRef)">
       {{ $t("login.register") }}
@@ -128,9 +63,6 @@
 
     <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
       {{ $t("login.registration_hints") }}
-      <!-- <a href="/about?id=info" style="white-space: nowrap">
-        {{ $t("login.user_registration_protocol") }}
-      </a> -->
       <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed;">
         {{ $t("login.user_registration_protocol") }}
       </span>
@@ -138,18 +70,16 @@
 
     <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
       {{ $t("login.already_have_acc") }}
-      <!-- <router-link to="/login"> -->
-        <a @click="openLoginDialog">
-          {{ $t("login.login_here") }}
-        </a>
-      <!-- </router-link> -->
+      <a @click="openLoginDialog">
+        {{ $t("login.login_here") }}
+      </a>
     </div>
   </div>
   <el-dialog class="bettingruledialog" append-to-body align-center style="overflow: auto;
     max-height: 790px; transform: scale(.9);" width="1260px" v-model="showBetRulesDialog">
     <div style="padding: 10px">
-    <p><b style="font-size: 16px; color: #0071ed;">{{ $t("about.bettingRules") }}</b></p>
-    <ul>
+      <p><b style="font-size: 16px; color: #0071ed;">{{ $t("about.bettingRules") }}</b></p>
+      <ul>
         <li>{{ $t("about.familyRestriction") }}</li>
         <li>{{ $t("about.entertainmentPurpose2") }}</li>
         <li>{{ $t("about.modifyPromotion") }}</li>
@@ -187,14 +117,6 @@
     </div>
   </el-dialog>
   <div style="width: 100%; margin-top: 5px">
-    <!-- <div style="visibility:hidden">
-      <a @click="closeRegDialog">先去逛逛</a>
-    </div> -->
-
-    <!--    <div style="text-align: center" class="font-gray">-->
-    <!--      {{ $t('login.alreadyAccount') }}?-->
-    <!--      <a @click="openLoginDialog">{{ $t('login.login') }}</a>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -203,7 +125,6 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
 import { useI18n } from "vue-i18n";
@@ -215,11 +136,6 @@ let cachedTelephone = lsGet(registerTelephoneKey);
 const router = useRouter();
 const route = useRoute();
 const hasAffiliate = ref(false);
-
-const resetRegForm = (formEl) => {
-  if (!formEl) return;
-  formEl.resetFields();
-};
 
 function charType(num) {
   if (num >= 48 && num <= 57) {
@@ -233,17 +149,6 @@ function charType(num) {
   }
   return 8;
 }
-
-const checkName = (v) => {
-  const alphanumeric = /^[\p{L}\p{N}]*$/u;
-  return v.match(alphanumeric);
-};
-
-const checkRealName = (v) => {
-  // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-  const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
-  return v.match(chineseCharOnly);
-};
 
 let validateName = async (r, v) => {
   if (v === "") {
@@ -315,13 +220,6 @@ let validatePass = async (r, v) => {
 
 const regRules = {
   realName: [
-    // {
-    //   required: false,
-    //   min: 2,
-    //   max: 12,
-    //   message: "长度应为 2 至 12",
-    //   trigger: "blur"
-    // },
     {
       required: true,
       trigger: "change",
@@ -474,7 +372,7 @@ const submitRegisterForm = async (elForm) => {
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
+                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1 || window.location.href.indexOf("tslotf88.com") > -1) {
                   otag("event", "registration");
                 }
 
@@ -571,6 +469,7 @@ const openDialog = (currentDialog) => {
 
   position: relative;
   width: 100%;
+
   .form-field-icon {
     margin: auto;
     height: 30px;
@@ -598,6 +497,7 @@ const openDialog = (currentDialog) => {
   background-size: cover;
   padding: 10px 0;
 }
+
 .flex-div {
   margin-top: 10px;
   display: flex;
@@ -611,12 +511,14 @@ body .bettingruledialog .el-dialog__header .el-dialog__headerbtn .el-dialog__clo
   color: #000000 !important;
   opacity: 0.5;
 }
-body .el-dialog.bettingruledialog .el-dialog__body {
-}
+
+body .el-dialog.bettingruledialog .el-dialog__body {}
+
 body .bettingruledialog .el-dialog__header .el-dialog__headerbtn {
   top: 10px;
   right: 10px;
 }
+
 .form-field {
   .el-form-item {
     margin-bottom: 0px;

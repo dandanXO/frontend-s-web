@@ -382,7 +382,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
+                <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
@@ -718,7 +718,7 @@ const submitWithdraw = () => {
     amountRef.value.validate();
 
     $q.loading.show({
-      message: "Withdrawing..."
+      message: t("btn.withdrawing")
     });
 
     // cardRef.value.hasError ||
@@ -771,7 +771,7 @@ const submitWithdrawBank = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawSuceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -781,6 +781,7 @@ const submitWithdrawBank = () => {
         (bankCardField.cardAccount = store.realName), (bankCardField.cardNumber = "");
         bankCardField.amount = "";
         withdrawInfo.amount = "";
+        bankCardField.bankId = currBankList.value[0].id;
       }
     })
     .catch((error) => {
@@ -801,7 +802,7 @@ const withdrawGo = (callback) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawSuceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -834,7 +835,7 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      message: t("notify.fillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/withdraw`);
@@ -848,7 +849,7 @@ const resetSelectedMethod = () => {
   isAddNewAccount.value = false;
 };
 
-const isBankType = ref();
+const isBankType = ref("BANK");
 
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {

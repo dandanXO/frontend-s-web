@@ -100,6 +100,8 @@
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode" />
     <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode"/>
+    <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
+    <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -208,6 +210,8 @@ const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/black
 const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
 const Dota2Pgl = defineAsyncComponent(() => import("../components/hotpromo/dota2-pgl/Dota2Pgl.vue"));
 const IemMasterPromo = defineAsyncComponent(()=>import("./hotpromo/iem-master/IemMasterPromo.vue"));
+const PullbackTide = defineAsyncComponent(()=>import("./hotpromo/pullback-tide/PullbackTide.vue"));
+const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -268,7 +272,9 @@ export default defineComponent({
     Dota2Ti13,
     SubmitClaimPromo,
     Dota2Pgl,
-    IemMasterPromo
+    IemMasterPromo,
+    PullbackTide,
+    Cba30Dream
   },
   props: {
     list: {

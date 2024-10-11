@@ -516,18 +516,19 @@ export interface ApiB9CharityB9Charity extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiB9StyleB9Style extends Struct.CollectionTypeSchema {
+export interface ApiB9StyleB9Style extends Struct.SingleTypeSchema {
   collectionName: 'b9_styles';
   info: {
     singularName: 'b9-style';
     pluralName: 'b9-styles';
     displayName: 'B9 Style';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    videoUrl: Schema.Attribute.String & Schema.Attribute.Required;
+    videos: Schema.Attribute.Component<'ui.video-item', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

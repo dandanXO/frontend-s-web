@@ -85,6 +85,7 @@ const openUrl = () => {
   height: 34px;
   width: 80px;
   letter-spacing: 0.5px;
+  animation: smallbeat 2s infinite;
 }
 .q-toolbar {
   padding: 0;
@@ -107,7 +108,7 @@ const openUrl = () => {
   top: 81px;
   padding-top: 8px;
   padding-bottom: 8px;
-  z-index: 2000;
+  z-index: 1990;
 }
 .q-tab {
   color: #fff;
@@ -136,5 +137,29 @@ const openUrl = () => {
 :deep(.q-tabs__content) {
   overflow: auto;
   white-space: nowrap;
+}
+
+@keyframes smallbeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 </style>

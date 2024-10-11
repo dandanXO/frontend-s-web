@@ -4,16 +4,10 @@ import HomeView from "../views/HomeView.vue";
 import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
-import { ElMessageBox } from "element-plus";
 import { EDITION } from "@/constant/edition";
 import { uiStore } from "@/store/ui";
 
 const routes = [
-  {
-    path: "/login",
-    name: "login",
-    component: () => import(/* webpackChunkName: "Login" */ "../views/LoginView.vue")
-  },
   {
     path: "/register",
     name: "register",
@@ -247,7 +241,8 @@ router.beforeEach((to, from, next) => {
   } else if (
     window.location.href.indexOf("5svn88.com") > -1 ||
     window.location.href.indexOf("tfpromo88.com") > -1 ||
-    window.location.href.indexOf("tf88bof.com") > -1
+    window.location.href.indexOf("tf88bof.com") > -1 || 
+    window.location.href.indexOf("tslotf88.com") > -1
   ) {
     // console.log("5svn88.com 2")
     otag("init", "adv10336256983680");

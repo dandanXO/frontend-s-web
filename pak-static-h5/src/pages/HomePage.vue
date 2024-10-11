@@ -59,6 +59,16 @@
     </template>
   </q-carousel>
 
+  <div>
+    <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
+      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
+        <!--        <div class="hb-close">-->
+        <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
+        <!--        </div>-->
+        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />
+      </div>
+    </q-page-sticky>
+  </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
@@ -88,11 +98,11 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-left" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
       <div>
-        <div class="hb-close">
-          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />
-        </div>
+        <!--        <div class="hb-close">-->
+        <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />-->
+        <!--        </div>-->
         <div>
           <q-carousel
             class="hb-float"
@@ -1480,6 +1490,15 @@ const checkHash = () => {
   }
 };
 
+const isCharityShow = computed(() => {
+  if (ui.charityUrl) {
+    return true;
+  }
+  return false;
+});
+const charityDragPos = ref([10, 240]);
+const isDraggingCharityGif = ref(false);
+
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
 
@@ -1487,7 +1506,7 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 0]);
+const hbDragPos = ref([10, 120]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
@@ -3305,6 +3324,16 @@ const detectAndroidVersion = () => {
   return "not-android";
 };
 
+const openCharityUrl = () => {
+  window.open(ui.charityUrl, "_blank");
+};
+
+const moveCharityGif = (ev) => {
+  isDraggingCharityGif.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  charityDragPos.value = [charityDragPos.value[0] - ev.delta.x, charityDragPos.value[1] - ev.delta.y];
+};
+
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -4393,6 +4422,10 @@ const showCongratsModal = () => {
   position: relative;
 }
 
+.charity-gif {
+  pointer-events: none;
+}
+
 .cs-icon-wrapper {
   width: 70px;
   height: 76px;
@@ -4729,7 +4762,7 @@ const showCongratsModal = () => {
 
   img {
     width: 100%;
-    max-width: 70px;
+    max-width: 100px;
   }
 }
 

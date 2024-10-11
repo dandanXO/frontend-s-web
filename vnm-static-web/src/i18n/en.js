@@ -300,6 +300,8 @@ export default {
     selectDate: "Select date",
     btn_lottery_now: "Lottery Now",
     btn_claim_now: "Claim Now",
+    btn_claim_now_other: "Claim for Other",
+    btn_claim_now_sport: "Claim for Sport",
     net_work_bonus: "Net loss bonus",
     bonus: "Bonus",
     // vi-daily-checkin end
@@ -918,6 +920,10 @@ export default {
     claimed: "Claimed",
     pending: "Pending",
     login_to_continue: "Please login to continue"
+  },
+  sitePopout: {
+    sitePopout: "Site Popout",
+    checkDetails: "Check Details",
   },
   response: {
     101: "Platform not found",

@@ -19,7 +19,6 @@ import en from "element-plus/dist/locale/en.mjs";
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 import { uiStore } from "@/store/ui";
-import { EDITION } from "@/constant/edition";
 import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
@@ -88,6 +87,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("GOGO");
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
@@ -114,6 +114,7 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .component-fade-enter-active,
 .component-fade-leave-active {
   transition: opacity 0.3s ease;
