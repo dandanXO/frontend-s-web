@@ -36,7 +36,10 @@
               <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
               <div class="subtitle">奖励说明</div>
             </div>
-            <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡后任意存款一笔即可领取。</p>
+            <p>
+              注册后，绑定手机号码、银行账户或USDT地址，并完成任意一笔存款即可立即领取新手礼包。
+              每绑定一项新的信息，均可获得额外奖励！
+            </p>
           </div>
           <div class="section2">
             <div style="display: flex">
@@ -53,7 +56,7 @@
                 <span
                   class="status"
                   :class="getStatus(telephoneBindState).class"
-                  @click="handleClickStatusButton(telephoneBindState, 'new-user-setup-bonus-telephone')"
+                  @click="handleClickStatusButton(telephoneBindState, '-new-user-setup-bonus-telephone')"
                 >
                   <img
                     style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
@@ -71,7 +74,7 @@
                 <span
                   class="status"
                   :class="getStatus(bankCardBindState).class"
-                  @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')"
+                  @click="handleClickStatusButton(bankCardBindState, '-new-user-setup-bonus-bankcard')"
                 >
                   <img
                     style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
@@ -89,7 +92,7 @@
                 <span
                   class="status"
                   :class="getStatus(usdtAddrBindState).class"
-                  @click="handleClickStatusButton(usdtAddrBindState, 'new-user-setup-bonus-usdt-addr')"
+                  @click="handleClickStatusButton(usdtAddrBindState, '-new-user-setup-bonus-usdt-addr')"
                 >
                   <img
                     style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
@@ -114,7 +117,7 @@
               <div class="title">首次提款</div>
             </div>
             <div v-if="isValidUser" class="go-btn status" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
-              <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
+              <div @click="handleClickStatusButton(firstWithdrawalState, '-new-user-setup-bonus-first-withdrawal')">
                 <img
                   v-if="firstWithdrawalState === 'CLAIMED'"
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
@@ -167,7 +170,7 @@
             <li>
               <span class="step-number">1</span>
               <div class="content">
-                自注册日起算7天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+                自注册日起算7天内任意存款一次的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
               </div>
             </li>
             <li>
@@ -256,6 +259,7 @@ import { userStore } from "@/store";
 import moment from "moment";
 import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
+import { ResponseCode } from "@/api/response";
 
 const notify = useNotify();
 
@@ -338,13 +342,13 @@ const handleClickStatusButton = (status, promoCode) => {
   if (status === "NO") {
     // need add "gopack here"
     useLocalStorage("need-go-back-newplayer", true);
-    if (promoCode === "new-user-setup-bonus-first-withdrawal") {
+    if (promoCode === "-new-user-setup-bonus-first-withdrawal") {
       router.push({ path: "/center/withdraw" });
     } else {
       router.push({ path: "/center/personal" });
     }
   } else if (status === "YES") {
-    if (promoCode !== "new-user-setup-bonus-first-withdrawal" && depositState.value === "NO") {
+    if (promoCode !== "-new-user-setup-bonus-first-withdrawal" && depositState.value === "NO") {
       notify({
         type: "warning",
         message: "请先完成任意存款一笔即可领取。"
@@ -361,14 +365,14 @@ const getBonus = async (promoCode) => {
     const apiRes = await putNewUserSetupBonusClaim(promoCode);
 
     if (apiRes.code === 0) {
-      if (promoCode === "new-user-setup-bonus-first-withdrawal") {
+      if (promoCode === "-new-user-setup-bonus-first-withdrawal") {
         firstWithdrawalState.value = "CLAIMED";
         progress.value = 1;
-      } else if (promoCode === "new-user-setup-bonus-telephone") {
+      } else if (promoCode === "-new-user-setup-bonus-telephone") {
         telephoneBindState.value = "CLAIMED";
-      } else if (promoCode === "new-user-setup-bonus-bankcard") {
+      } else if (promoCode === "-new-user-setup-bonus-bankcard") {
         bankCardBindState.value = "CLAIMED";
-      } else if (promoCode === "new-user-setup-bonus-usdt-addr") {
+      } else if (promoCode === "-new-user-setup-bonus-usdt-addr") {
         usdtAddrBindState.value = "CLAIMED";
       }
 
@@ -376,7 +380,15 @@ const getBonus = async (promoCode) => {
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });
-    } else {
+    } else if (
+      !(
+        apiRes.code === ResponseCode.ERROR_USER_TOO_FAST ||
+        apiRes.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+        apiRes.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+        apiRes.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+        apiRes.code === ResponseCode.ERROR_SYSTEM
+      )
+    ) {
       notify({
         type: "error",
         message: apiRes.message

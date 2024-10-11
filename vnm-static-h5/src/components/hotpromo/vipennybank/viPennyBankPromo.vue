@@ -8,7 +8,7 @@
         color="brightbtn"
         style="width: 100%; max-width: 200px"
         no-caps
-        :loading="btnLoading"
+        :loading="btnLotteryLoading"
         @click="postPiggyBankLottery()"
         :label="$t('lang.vipenny_lottery_now')"
       />
@@ -21,14 +21,22 @@
 
       <div class="piggy-amount" v-if="lotteryAmount > 0">{{ lotteryAmount }} VNDP</div>
     </div>
-    <div class="input">
+    <div class="input" style="display: flex; flex-direction: row; width: 100%">
+      <q-btn
+        color="brightbtn"
+        style="width: 100%; max-width: 200px"
+        no-caps
+        :loading="btnSportLoading"
+        @click="putPiggyBankClaimSport()"
+        :label="$t('lang.vipenny_claim_now_sport')"
+      />
       <q-btn
         color="brightbtn"
         style="width: 100%; max-width: 200px"
         no-caps
         :loading="btnLoading"
         @click="putPiggyBankClaim()"
-        :label="$t('lang.vipenny_claim_now')"
+        :label="$t('lang.vipenny_claim_now_other')"
       />
     </div>
   </div>
@@ -36,19 +44,26 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue";
-import { submitPiggyBankLottery, submitPiggyBankClaim, getPiggyBankAmt } from "../../../api/index/promo";
+import {
+  submitPiggyBankLottery,
+  getPiggyBankAmt,
+  submitPiggyBankClaimOther,
+  submitPiggyBankClaimSport
+} from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 import { useQuasar } from "quasar";
 
 const { t } = useI18n();
 const newLossBonus = ref(null);
 const btnLoading = ref(false);
+const btnSportLoading = ref(false);
+const btnLotteryLoading = ref(false);
 const lotteryAmount = ref(0);
 const $q = useQuasar();
 
 // piggy-bank/getLottery
 const postPiggyBankLottery = () => {
-  btnLoading.value = true;
+  btnLotteryLoading.value = true;
 
   submitPiggyBankLottery()
     .then((res) => {
@@ -65,7 +80,7 @@ const postPiggyBankLottery = () => {
     })
     .catch(() => {})
     .then(() => {
-      btnLoading.value = false;
+      btnLotteryLoading.value = false;
     });
 };
 
@@ -73,7 +88,7 @@ const postPiggyBankLottery = () => {
 const putPiggyBankClaim = () => {
   btnLoading.value = true;
 
-  submitPiggyBankClaim()
+  submitPiggyBankClaimOther()
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
@@ -90,6 +105,26 @@ const putPiggyBankClaim = () => {
     });
 };
 
+// piggy-bank/claim
+const putPiggyBankClaimSport = () => {
+  btnSportLoading.value = true;
+
+  submitPiggyBankClaimSport()
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          type: "positive",
+          position: "top",
+          message: t("lang.vipoker_submit_successfully"),
+          icon: "check_circle_outline"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnSportLoading.value = false;
+    });
+};
 const loadPiggyBankAmt = () => {
   getPiggyBankAmt().then((res) => {
     if (res.code === 0) {

@@ -104,9 +104,6 @@
 <script lang="js">
 import { defineComponent, reactive, ref, watch, onMounted } from "vue";
 import { getReferralLink, getInviteFriendListCount, getVNMReferred } from "@/api/personal/share"
-import {
-  RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
-} from "vue-remix-icons"
 import { UserFilled, Money } from "@element-plus/icons-vue";
 import moment from 'moment'
 import VueQRCodeComponent from 'vue-qrcode-component'
@@ -119,7 +116,7 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   name: "ShareView",
   components: {
-    RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent, UserFilled, Money, EmptyData
+    VueQRCodeComponent, UserFilled, Money, EmptyData
   },
   setup() {
     const i18nStoreLanguage = i18nStore()

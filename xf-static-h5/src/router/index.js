@@ -4,13 +4,7 @@ import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 
-
-import {
-  createRouter,
-  createMemoryHistory,
-  createWebHistory,
-  createWebHashHistory
-} from "vue-router";
+import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
 
 /*
@@ -22,37 +16,62 @@ import routes from "./routes";
  * with the Router instance.
  */
 
+function isInApp() {
+  const hasToken = new URLSearchParams(window.location.search).get("token");
+  if (
+    (window.location.pathname === "/vip" && hasToken) ||
+    (window.location.pathname === "/promotion" && hasToken) ||
+    window.location.pathname === "/invitefriend" ||
+    window.location.pathname === "/affiliatepage"
+  ) {
+    return true;
+  }
+  return false;
+}
+
+let fullroutes;
+if (isInApp()) {
+  console.log("In App");
+  fullroutes = require("./routers-app").default;
+} else {
+  console.log("Normal");
+  fullroutes = require("./routes").default;
+}
+console.log(fullroutes);
+
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
+    routes: [...fullroutes],
 
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
-    history: createHistory(
-      process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
-    )
+    history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
-    if (to.path === "/login" || to.path === "/register" || to.path==="/promotion") {
-      ui.hiddenFooter()
+    if (
+      to.path === "/login" ||
+      to.path === "/register" ||
+      to.path === "/promotion" ||
+      to.path === "/invitefriend" ||
+      to.path === "/vip" ||
+      to.path === "/affiliatepage"
+    ) {
+      ui.hiddenFooter();
     } else {
-      ui.showFooter()
+      ui.showFooter();
     }
 
-
-    if (
-      to.path === "/promotion"
-    ) {
+    if (to.path === "/promotion" || to.path === "/invitefriend" || to.path === "/vip" || to.path === "/affiliatepage") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
@@ -62,14 +81,13 @@ export default route(function (/* { store, ssrContext } */) {
       user.token = to.query.token;
     }
 
-
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     //   next(`/login?register`);
     // }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-      if(to.query.reg) {
+      if (to.query.reg) {
         next(`/login?register`);
       } else {
         next(`/`);

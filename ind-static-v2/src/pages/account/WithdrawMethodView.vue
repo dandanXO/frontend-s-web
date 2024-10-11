@@ -494,7 +494,14 @@ const isUSDT = ref(false);
 const refreshRemainWager = () => {
   isRefreshRemainWager.value = true;
 
-  api.get('/session/withdraw/withdrawableBalance/refresh').then((res) => {
+  let currencyStr = "";
+  if (withdrawType.value === "usdt") {
+    currencyStr = "?currency=USDT";
+  } else {
+    currencyStr = "?currency=INR";
+  }
+
+  api.get(`/session/withdraw/withdrawableBalance/refresh${currencyStr}`).then((res) => {
     selectedMethodItem.value = {
       ...selectedMethodItem.value,
       ...res.data,

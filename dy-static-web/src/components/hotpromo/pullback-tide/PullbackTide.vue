@@ -48,6 +48,10 @@
           <div class="left">活动对象</div>
           <div class="right">下注电子场馆会员</div>
         </div>
+        <div class="little-title">
+          <div class="left">活动内容</div>
+          <div class="right">活动期间，会员在电子场馆当日总负盈利金额≥500元即可在次日24小时内领取对应档位彩金，每日最高可获888元。</div>
+        </div>
         <table class="livepoker-rebate-game-info-table">
           <tbody>
             <tr>

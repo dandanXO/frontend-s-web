@@ -12,7 +12,6 @@
           <div>
             <div class="img-qr-title">{{ det.name }}APP</div>
             <div class="qrcode-bg">
-              <!-- <vue-qrious :value="`${downloadUrl}`" /> -->
             </div>
             <div class="img-desc">扫一扫下载{{ det.name }}APP</div>
             <div class="img-slogan">支持IOS & Android等全部移动设备</div>
@@ -32,7 +31,6 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import aos from "aos";
-// import VueQrious from "vue-qrious";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 
 export default defineComponent({

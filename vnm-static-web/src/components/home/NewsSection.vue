@@ -1,133 +1,88 @@
 <template>
-  <div class="news-section">
+  <div class="news-section" ref="newsSectionRef">
     <el-card>
       <img src="../../assets/logo.svg" alt="TF88 logo" />
       <el-tabs v-model="activeName" class="demo-tabs">
-        <el-tab-pane :label="t('home.footballNews')" name="first">
-          <div class="news-listing">
-            <div class="news" v-for="news in footballNewsList.slice(0, 5)" @click="open(news.url)">
-              <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title" />
-              </div>
-              <div class="news-contents">
-                <div class="news-title">{{ news.title }}</div>
-                <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue">
-                  {{ $t("home.moreDetails") }}
-                </button>
-              </div>
-            </div>
-          </div>
+        <el-tab-pane :label="t('home.footballNews')" name="footballTab">
+          <NewsItem :newsListArr="footballNewsList" :isLoading="isLoading" />
         </el-tab-pane>
-        <el-tab-pane :label="t('home.esportNews')" name="second">
-          <div class="news-listing">
-            <div class="news" v-for="news in esportNewsList.slice(0, 5)">
-              <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title" />
-              </div>
-              <div class="news-contents" @click="open(news.url)">
-                <div class="news-title">{{ news.title }}</div>
-                <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue">
-                  {{ $t("home.moreDetails") }}
-                </button>
-              </div>
-            </div>
-          </div>
+        <el-tab-pane :label="t('home.esportNews')" name="esportTab">
+          <NewsItem :newsListArr="esportNewsList" :isLoading="isLoading" />
         </el-tab-pane>
-        <el-tab-pane :label="t('home.soccerBetting')" name="third">
-          <div class="news-listing">
-            <div class="news" v-for="news in soccerBettingList.slice(0, 5)">
-              <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title" />
-              </div>
-              <div class="news-contents">
-                <div class="news-title">{{ news.title }}</div>
-                <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue" @click="open(news.url)">
-                  {{ $t("home.moreDetails") }}
-                </button>
-              </div>
-            </div>
-          </div>
+        <el-tab-pane :label="t('home.soccerBetting')" name="soccerBettingTab">
+          <NewsItem :newsListArr="soccerBettingList" :isLoading="isLoading" />
         </el-tab-pane>
-        <el-tab-pane :label="t('home.bettingGuide')" name="fourth">
-          <div class="news-listing">
-            <div class="news" v-for="news in bettingGuideList.slice(0, 5)">
-              <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title" />
-              </div>
-              <div class="news-contents">
-                <div class="news-title">{{ news.title }}</div>
-                <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue" @click="open(news.url)">
-                  {{ $t("home.moreDetails") }}
-                </button>
-              </div>
-            </div>
-          </div>
+        <el-tab-pane :label="t('home.bettingGuide')" name="bettingGuide">
+          <NewsItem :newsListArr="bettingGuideList" :isLoading="isLoading" />
         </el-tab-pane>
-
-        <el-tab-pane :label="t('home.weeklyTournament')" name="fifth">
-          <div class="news-listing">
-            <div class="news" v-for="news in weeklyTournamentList.slice(0, 5)" @click="open(news.url)">
-              <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title" />
-              </div>
-              <div class="news-contents">
-                <div class="news-title">{{ news.title }}</div>
-                <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue">
-                  {{ $t("home.moreDetails") }}
-                </button>
-              </div>
-            </div>
-          </div>
+        <el-tab-pane :label="t('home.weeklyTournament')" name="weeklyTournament">
+          <NewsItem :newsListArr="weeklyTournamentList" :isLoading="isLoading" />
         </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
 </template>
+
 <script lang="js" setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useI18n } from "vue-i18n";
-import { getNews } from '../../api/index/news.js'
+import { getNews } from '../../api/index/news.js';
+import { useIntersectionObserver } from '@vueuse/core';
+import NewsItem from './news/NewsItem.vue';
 
 const { t } = useI18n();
-const activeName = ref('first')
-const footballNewsList = ref([]);
-const soccerBettingList = ref([]);
-const esportNewsList = ref([]);
-const bettingGuideList = ref([]);
-const weeklyTournamentList = ref([])
+const activeName = ref('footballTab');
+const newsSectionRef = ref(null);
+const isNewsSectionVisible = ref(false);
+const newsListArr = ref([]);
+const isLoading = ref(false);
 
-const loadNews = () => {
-    getNews().then((res) => {
+const { stop: stopIntersectionObserver } = useIntersectionObserver(
+  newsSectionRef,
+  ([{ isIntersecting }]) => {
+    isNewsSectionVisible.value = isIntersecting
+  },
+);
+
+const footballNewsList = computed(() => newsListArr.value.filter((news) => news.category.includes("Soi kèo bóng đá")));
+const soccerBettingList = computed(() => newsListArr.value.filter((news) => news.category.includes("Tin bóng đá")));
+const esportNewsList = computed(() => newsListArr.value.filter((news) => news.category.includes("Tin Esport")));
+const bettingGuideList = computed(() => newsListArr.value.filter((news) => news.category.includes("Hướng dẫn cá cược")));
+const weeklyTournamentList = computed(() => newsListArr.value.filter((news) => news.category.includes("Giải Đấu Baccarat hàng tuần")));
+
+watch(() => isNewsSectionVisible.value, () => {
+  if (isNewsSectionVisible.value === true && !newsListArr.value.length) {
+    initNewsArticles();
+    stopIntersectionObserver();
+  }
+});
+
+const initNewsArticles = () => {
+  isLoading.value = true;
+
+  getNews().then((res) => {
     if (res.code === 0) {
-        footballNewsList.value = res.data.filter((news) => news.category.includes("Soi kèo bóng đá"));
-        soccerBettingList.value = res.data.filter((news) => news.category.includes("Tin bóng đá"));
-        esportNewsList.value = res.data.filter((news) => news.category.includes("Tin Esport"));
-        bettingGuideList.value = res.data.filter((news) => news.category.includes("Hướng dẫn cá cược"));
-        weeklyTournamentList.value = res.data.filter((news) => news.category.includes("Giải Đấu Baccarat hàng tuần"));
-    } else ElMessage.error({
-                type: "error",
-                message: res.message
-              });
+      newsListArr.value = res.data;
+    } else {
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
+    }
+  }).catch(() => {
+    isLoading.value = false;
+  }).finally(() => {
+    isLoading.value = false;
   });
 };
 
-const open = (url) => {
-    window.open(url);
-}
-
-onMounted(() => {
-  loadNews();
-});
 </script>
+
 <style lang="scss">
 .news-section {
   max-width: 1350px;
   margin: 30px auto 50px;
+  font-family: "Be Vietnam Pro", sans-serif;
 
   .el-tabs {
     margin-top: -40px;
@@ -149,69 +104,6 @@ onMounted(() => {
 
   .el-card {
     border-radius: 15px;
-  }
-  .news-listing {
-    // font-family: 'Roboto';
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    .news {
-      width: 48%;
-      display: flex;
-      gap: 20px;
-      &:first-child {
-        width: 100%;
-        .news-image {
-          width: 556px;
-          height: 240px;
-        }
-        .news-contents {
-          flex: 4;
-          .news-content {
-            height: 150px;
-          }
-        }
-      }
-      .news-image {
-        flex: 2;
-        width: 270px;
-        height: 165px;
-        overflow: hidden;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-          height: 100%;
-        }
-      }
-      .news-contents {
-        position: relative;
-        padding: 0 30px 30px 0;
-        flex: 3;
-        cursor: pointer;
-        .news-title {
-          color: #444444;
-          font-size: 20px;
-          font-weight: 700;
-          height: 30px;
-          overflow: hidden;
-        }
-        .news-content {
-          height: 60px;
-          font-size: 14px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          color: #444444;
-          margin: 15px 0;
-        }
-        .standard-button {
-          position: absolute;
-          bottom: 0px;
-          right: 30px;
-        }
-      }
-    }
   }
 }
 </style>

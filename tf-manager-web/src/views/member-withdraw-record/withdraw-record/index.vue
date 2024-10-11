@@ -162,6 +162,16 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="withdrawReviewType"
+          :label="t('fields.withdrawReviewType')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawReviewType.' + scope.row.withdrawReviewType) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
           align="center"

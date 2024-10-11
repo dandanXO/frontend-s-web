@@ -324,6 +324,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("22");
       checkServerStatus();
       checkSID();
       // initCsWeb();
