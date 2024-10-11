@@ -85,5 +85,6 @@ export const errorMessages = {
   35008: "You do not have this privilege",
   35009: "The privilege will take effect soon",
   35010: "35010 Member cannot receive this privilege",
-  35011: "35011 Member cannot receive this privilege."
+  35011: "35011 Member cannot receive this privilege.",
+  37001: "The collection time is outside the event period"
 };
