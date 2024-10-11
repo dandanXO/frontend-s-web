@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, defineEmits } from "vue";
+import { ref, reactive, defineEmits } from "vue";
 import {
   sendForgetPasswordPhone,
   verifyForgetPasswordPhone,

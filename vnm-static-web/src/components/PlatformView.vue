@@ -273,7 +273,6 @@ import {
 import { userStore } from "@/store";
 import { Search } from "@element-plus/icons-vue";
 import GameModal from "@/components/modal/GameModal";
-import moment from "moment/moment";
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";

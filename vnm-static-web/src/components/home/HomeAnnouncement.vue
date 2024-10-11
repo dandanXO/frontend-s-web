@@ -1,78 +1,24 @@
 <template>
-  <el-dialog
-    align-center
-    v-model="isStationNotice"
-    :maskClosable="false"
-    :footer="null"
-    style="border-radius: 8px; width: 800px"
-    class="notice-modal"
-  >
-    <div class="notice-header">
-      {{ $t("home.announcementList") }}
-      <div @click="isStationNotice = false">
-        <img src="../../assets//home/announcement/close-btn.png" />
-      </div>
-    </div>
-
-    <div>
-      <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
-        <el-tab-pane
-          v-for="(tab, ind) in announcementTypes"
-          :key="tab.id"
-          :tab="ind"
-          :label="tab.name"
-          :name="tab.name"
-        >
-          <el-collapse accordion v-model="typeActive">
-            <template v-for="(ann, idx) in announcementList" :key="idx">
-              <template v-if="ann.typeId === tab.id">
-                <el-collapse-item :name="idx" :title="ann.title" class="announcement-content">
-                  <p class="announcement-p">{{ ann.content }}</p>
-                </el-collapse-item>
-              </template>
-            </template>
-          </el-collapse>
-
-          <!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
-          <!--            <template v-if="ann.typeId === tab.id">-->
-          <!--              <div class="announcement-content">-->
-          <!--                {{ ann.content }}-->
-          <!--              </div>-->
-          <!--            </template>-->
-          <!--          </template>-->
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+  <el-dialog align-center v-model="isStationNotice" :maskClosable="false" :footer="null"
+    style="border-radius: 8px; width: 800px" class="notice-modal">
+    <AnnouncementDialog :announcementList="announcementList" :announcementTypes="announcementTypes"
+      :announcementActive="announcementActive" />
   </el-dialog>
 
   <div class="top-bar-wrapper">
     <div class="top-bar-inner">
       <div class="station-notice-container">
         <div class="station-notice-box">
-          <img
-            class="announcement-img"
-            src="../../assets/home/announcement/announcement-img.png"
-            alt="announcement"
-            @click="openPopup(announcementList)"
-          />
+          <img class="announcement-img" src="../../assets/home/announcement/announcement-img.png" alt="announcement"
+            @click="openPopup(announcementList)" />
           <div ref="marqueeWrapperRef" class="station-notice">
             <div ref="marqueePseudoRef" class="marquee-pseudo">
-              <div
-                v-for="(word, index) in announcementList"
-                :key="index"
-                v-html="word.content"
-                @click="openPopup(word)"
-                class="station-notice-item"
-              ></div>
+              <div v-for="(word, index) in announcementList" :key="index" v-html="word.content" @click="openPopup(word)"
+                class="station-notice-item"></div>
             </div>
             <Vue3Marquee :clone="false" :duration="marqueeDuration">
-              <div
-                v-for="(word, index) in announcementList"
-                :key="index"
-                v-html="word.content"
-                @click="openPopup(word)"
-                class="station-notice-item"
-              ></div>
+              <div v-for="(word, index) in announcementList" :key="index" v-html="word.content" @click="openPopup(word)"
+                class="station-notice-item"></div>
             </Vue3Marquee>
           </div>
         </div>
@@ -82,16 +28,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, defineAsyncComponent } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
 import { ElMessage } from "element-plus";
 import { EDITION } from "@/constant/edition";
 import { uiStore } from "@/store/ui";
+import "vue3-marquee/dist/style.css";
+
+const AnnouncementDialog = defineAsyncComponent(() =>
+  import('@/components/home/announcement/AnnouncementDialog.vue')
+);
 
 const ui = uiStore();
 
-const typeActive = ref("");
 const marqueeWrapperRef = ref();
 const marqueePseudoRef = ref();
 const marqueeDuration = ref(0);
@@ -99,25 +49,22 @@ const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
 const loadAnnouncement = () => {
-  let params;
-  switch (ui.edition) {
-    case EDITION.SLOT:
-      params = "SLOT";
-      break;
-    case EDITION.NORMAL:
-    default:
-    // params = "HOME";
-  }
+  const params = (() => {
+    switch (ui.edition) {
+      case EDITION.SLOT:
+        return "SLOT";
+      case EDITION.NORMAL:
+      default:
+    }
+  })();
+
   getAnnouncement(params).then((res) => {
     if (res.code === 0) {
-      const d = res.data.announcements;
       announcementTypes.value = res.data.type;
       if (res.data.type && res.data.type.length > 0) {
         announcementActive.value = res.data.type[0].name;
       }
-      announcementList.value = d;
-      // announcementList.value = d.announcements
-      // announcementList.value = res.data.announcements
+      announcementList.value = res.data.announcements;
     } else {
       ElMessage.error({
         type: "error",
@@ -125,14 +72,6 @@ const loadAnnouncement = () => {
       });
     }
   });
-};
-
-const announcementTabChange = () => {
-  // homeState.tabMatchs.forEach(element => {
-  //   if (nk === element.gameId) {
-  //     getMatchData(element);
-  //   }
-  // });
 };
 
 const isStationNotice = ref(false);
@@ -162,39 +101,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.notice-header {
-  color: #468cff;
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 30px;
-  letter-spacing: 0em;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.announcement-tabs {
-  width: 100%;
-}
-
-.announcement-content {
-  color: #7a80a1;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 30px;
-  letter-spacing: 0em;
-  text-align: left;
-  max-width: 1150px;
-  height: auto;
-  margin-top: 20px;
-  padding: 0px 10px;
-
-  .announcement-p {
-    color: #7a80a1;
-  }
-}
-
 .top-bar-wrapper {
   padding: 5px;
   color: #696d70;
@@ -205,6 +111,7 @@ onMounted(() => {
   margin: 0 auto;
   max-width: 1350px;
   overflow: hidden;
+
   .top-bar-inner {
     max-width: $maxwidth;
     width: 100%;
@@ -252,6 +159,7 @@ onMounted(() => {
             width: max-content;
             z-index: -1;
             overflow: hidden;
+
             .station-notice-item {
               flex: 0 0 auto;
             }

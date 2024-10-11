@@ -233,7 +233,6 @@ import { defineComponent, reactive, ref, onMounted } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
-import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
@@ -241,7 +240,6 @@ import { useLocalStorage } from "@vueuse/core";
 export default defineComponent({
   name: "WithdrawView",
   components: {
-    RiArrowRightSLine
   },
   setup() {
     const { t } = useI18n();

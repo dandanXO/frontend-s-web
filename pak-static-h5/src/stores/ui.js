@@ -21,6 +21,7 @@ export const useUI = defineStore("ui-store", {
       tiktokUrl: "",
       whatsappUrl: "",
       youtubeUrl: "",
+      charityUrl: "",
       maintenanceStartTime: "",
       maintenanceEndTime: "",
       isPageInitialized: false,

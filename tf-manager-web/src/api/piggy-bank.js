@@ -4,21 +4,21 @@ import { useStore } from '@/store'
 
 const store = useStore()
 
-export const getPiggyBankSettings = (siteId) => {
-  return https().request("/piggy-bank/settings", Method.GET, { siteId: siteId }, ContentType.form);
+export const getPiggyBankSettings = (siteId, promoCode) => {
+  return https().request("/piggy-bank/settings", Method.GET, { siteId: siteId, promoCode: promoCode }, ContentType.form);
 };
 
-export const updatePiggyBankSettings = (siteId, param) => {
-  return https().request(`/piggy-bank?_method=PUT`, Method.POST, { siteId: siteId, param: param }, ContentType.form);
+export const updatePiggyBankSettings = (siteId, param, promoCode) => {
+  return https().request(`/piggy-bank?_method=PUT`, Method.POST, { siteId: siteId, param: param, promoCode: promoCode }, ContentType.form);
 };
 
 export const getPiggyBankRecords = (piggyBank) => {
   return https().request("/piggy-bank", Method.GET, piggyBank, ContentType.form);
 };
 
-export const getSiteWithPromo = () => {
+export const getSiteWithPromo = (promoCode) => {
   return https()
-    .request("/piggy-bank/sites", Method.GET)
+    .request("/piggy-bank/sites", Method.GET, { promoCode: promoCode }, ContentType.form)
     .then(response => {
       const site = response.data
 

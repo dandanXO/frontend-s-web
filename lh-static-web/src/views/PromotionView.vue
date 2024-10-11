@@ -162,6 +162,9 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
+              <YallaCompass />
+            </div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
@@ -186,7 +189,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo, loadPromoTypes } from "@/api/index/promo.js";
 import { userStore } from "@/store";
@@ -199,12 +202,15 @@ import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
+const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
+
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     BlastPremierMarquee,
-    NBAWaterBattle
+    NBAWaterBattle,
+    YallaCompass
   },
   setup() {
     const isDark = useDark();

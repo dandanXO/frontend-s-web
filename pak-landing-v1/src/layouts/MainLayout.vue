@@ -108,7 +108,7 @@ const openUrl = () => {
   top: 81px;
   padding-top: 8px;
   padding-bottom: 8px;
-  z-index: 2000;
+  z-index: 1990;
 }
 .q-tab {
   color: #fff;

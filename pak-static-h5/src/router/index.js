@@ -74,7 +74,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "864258358743236");
       fbq("track", "PageView");
       user.isFbPixel = true;
-    } else if (window.location.href.indexOf("79hgkvfs.cc") > -1) {
+    } else if (window.location.href.indexOf("79hgkvfs.cc") > -1 || window.location.href.indexOf("q1qf0fa5.cc") > -1) {
       console.log("2");
       fbq("init", "1187424955646133");
       fbq("track", "PageView");

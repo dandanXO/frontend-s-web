@@ -30,6 +30,9 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .common-promo {
+  img {
+    max-width: 250px !important;
+  }
   .contents {
     display: flex;
     flex-direction: column;

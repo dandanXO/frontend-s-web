@@ -204,7 +204,6 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
-// import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
 import { userStore } from "@/store"
 import { ElMessage } from "element-plus";
