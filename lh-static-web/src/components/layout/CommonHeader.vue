@@ -3,7 +3,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../../assets/logo-1.png" />
+          <img class="logo" src="../../assets/logo-1.png" />
         </router-link>
 
         <div class="navigations">
@@ -16,7 +16,7 @@
                 <!-- <img
                   v-if="nav.code === 'sports'"
                   class="hot-label"
-                  :src="require(`../../../assets/images/home/menu/hot-game-label.png`)"
+                  :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
                 /> -->
                 <a
                   v-if="nav.code === 'minigame'"
@@ -31,7 +31,7 @@
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <!-- <img
                       class="menu-icon"
-                      :src="require(`../../../assets/images/home/menu/${nav.code}-icon-active.png`)"
+                      :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
                     /> -->
                     <h2 class="nav-title cn active">{{ nav.name }}</h2>
                     <h2 class="nav-title active">{{ nav.enName }}</h2>
@@ -39,7 +39,7 @@
                   <template v-else>
                     <!-- <img
                       class="menu-icon"
-                      :src="require(`../../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
+                      :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
                     /> -->
                     <h2 class="nav-title cn">{{ nav.name }}</h2>
                     <h2 class="nav-title">{{ nav.enName }}</h2>
@@ -49,7 +49,7 @@
             </template>
           </template>
           <!-- <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
-            <img class="eroup-menu-icon" :src="require(`../../../assets/images/home/header-eroup.png`)" />
+            <img class="eroup-menu-icon" :src="require(`../../assets/images/home/header-eroup.png`)" />
           </div> -->
         </div>
 
@@ -61,22 +61,22 @@
                   <span>
                     <img
                       class="hover-icon"
-                      :src="require(`../../../assets/images/home/header-promo-icon${isDark ? '-dark' : ''}.svg`)"
+                      :src="require(`../../assets/images/home/header-promo-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Promotion'"
                     />
                     <img
                       class="hover-icon"
-                      :src="require(`../../../assets/images/home/header-affiliate-icon${isDark ? '-dark' : ''}.svg`)"
+                      :src="require(`../../assets/images/home/header-affiliate-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Agent'"
                     />
                     <img
                       class="hover-icon"
-                      :src="require(`../../../assets/images/home/header-download-icon${isDark ? '-dark' : ''}.svg`)"
+                      :src="require(`../../assets/images/home/header-download-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'App'"
                     />
                     <img
                       class="hover-icon"
-                      :src="require(`../../../assets/images/home/header-vip-icon${isDark ? '-dark' : ''}.svg`)"
+                      :src="require(`../../assets/images/home/header-vip-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'VIP'"
                     />
                   </span>
@@ -113,19 +113,19 @@
         <div v-if="store.token" class="profile-actions">
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../../assets/images/home/profile-action-deposit.png" />
+              <img src="../../assets/images/home/profile-action-deposit.png" />
             </div>
             存款
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../../assets/images/home/profile-action-withdraw.png" />
+              <img src="../../assets/images/home/profile-action-withdraw.png" />
             </div>
             取款
           </router-link>
           <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../../assets/images/home/profile-action-transfer.png" />
+              <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             转账
           </router-link>
@@ -135,18 +135,18 @@
           <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
-                <img v-if="!store.profilePhoto" class="profile-img" src="../../../assets/images/home/profile-pic.png" />
+                <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img
                   v-if="store.profilePhoto && store.profilePhoto.includes('default')"
                   class="profile-img"
-                  :src="require(`../../../assets/images/profile/${store.profilePhoto}.png`)"
+                  :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)"
                 />
                 <img
                   v-if="store.profilePhoto && !store.profilePhoto.includes('default')"
                   class="profile-img"
                   :src="imageDir + store.profilePhoto + '?v=' + timestamp"
                 />
-                <img class="dropdown-icon" src="../../../assets/images/home/header-dropdown-arrow-icon.png" />
+                <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                 <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
             </span>
@@ -209,14 +209,14 @@
         <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
             <div class="icon-full">
-              <img src="../../../assets/images/home/nav-icon-mail.png" />
+              <img src="../../assets/images/home/nav-icon-mail.png" />
               <span class="mail-notify"></span>
             </div>
             消息
           </router-link>
           <div class="action-btn-full" @click="logoutDialogVisible = true">
             <div class="icon-full">
-              <img src="../../../assets/images/home/nav-icon-logout.png" />
+              <img src="../../assets/images/home/nav-icon-logout.png" />
             </div>
             退出
           </div>
@@ -340,7 +340,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../../assets/lh-logo.svg" width="150" />
+            <img src="../../assets/lh-logo.svg" width="150" />
           </div>
           <div class="acc-dialog-content">
             <LoginDialog
@@ -369,7 +369,7 @@
         </div>
         <div class="acc-dialog-right register">
           <div class="acc-dialog-homelogo">
-            <img src="../../../assets/logo-1.png" width="150" />
+            <img src="../../assets/logo-1.png" width="150" />
           </div>
           <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
@@ -418,7 +418,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../../assets/logo-1.png" width="150" />
+            <img src="../../assets/logo-1.png" width="150" />
           </div>
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
@@ -459,7 +459,7 @@
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { userStore } from "@/store/index";
+import { userStore } from "@/store";
 import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
@@ -477,16 +477,13 @@ import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
 import { useDark, useElementSize, useLocalStorage } from "@vueuse/core";
 import { storeToRefs } from "pinia";
-import GameModal from "@/components/modal/GameModal";
+import GameModal from "@/components/modal/GameModal.vue";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-// import LoginDialog from "@/views/logindialog/index.vue";
-//TODO:Revert.
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/register/index.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
-import { uploadImage, saveImage } from "@/api/personal/common";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import floor from "lodash/floor";
 import { loadPromoBanner } from "@/api/index/promo";
@@ -582,7 +579,7 @@ export default defineComponent({
     const captchaDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
-    const selectedMenu = ref(false);
+    const selectedMenu = ref("");
     const { height } = useElementSize(el);
     const isDark = useDark();
 
@@ -1655,7 +1652,7 @@ body {
     }
 
     .account-vip-label {
-      background-image: url(../../../assets/images/account/vip-label.png);
+      background-image: url(../../assets/images/account/vip-label.png);
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 63px 17px;
@@ -1839,7 +1836,6 @@ body {
 }
 
 .header-container {
-
   width: 100%;
   position: sticky;
   top: 0;
@@ -2002,7 +1998,7 @@ body {
   min-height: 90vh;
 
   .registered-left {
-    background-image: url(../../../assets/home/zc.jpg);
+    background-image: url(../../assets/home/zc.jpg);
     background-size: cover;
     background-position: 100% 100%;
     background-repeat: no-repeat;
@@ -2022,7 +2018,7 @@ body {
     }
 
     .title {
-      background-image: url(../../../assets/home/download.png);
+      background-image: url(../../assets/home/download.png);
       background-position: 100% 100%;
       width: 143px;
       height: 35px;
@@ -2032,7 +2028,7 @@ body {
   .registered-right {
     flex: 2;
     padding: 73px 44px;
-    background: url(../../../assets/images/index/reg-bg.jpg) no-repeat center center;
+    background: url(../../assets/images/index/reg-bg.jpg) no-repeat center center;
     background-size: cover;
 
     .el-row {
@@ -2309,7 +2305,7 @@ body {
     }
 
     .fs-percentage {
-      background-image: url("../../../assets/game/percentage.png");
+      background-image: url("../../assets/game/percentage.png");
       background-size: 1008px 71px;
       background-repeat: no-repeat;
       width: 168px;
@@ -2365,7 +2361,7 @@ body {
       .imgbox {
         width: 310px;
         height: 180px;
-        background-image: url(../../../assets/home/header_esport_new_01.png);
+        background-image: url(../../assets/home/header_esport_new_01.png);
         background-size: cover;
         overflow: hidden;
         -webkit-transition: all 0.5s ease-out;
@@ -2430,7 +2426,7 @@ body {
       padding: 0;
 
       .imgbox {
-        background-image: url(../../../assets/home/header_sport_new_2.png);
+        background-image: url(../../assets/home/header_sport_new_2.png);
         background-size: 410%;
         overflow: hidden;
         transition: all 0.5s ease-out;
@@ -2453,7 +2449,7 @@ body {
       .imgbox {
         width: 225px;
         height: 250px;
-        background-image: url(../../../assets/home/header_live.webp);
+        background-image: url(../../assets/home/header_live.webp);
       }
     }
   }
@@ -2506,8 +2502,8 @@ body {
 }
 
 .acc-dialog {
-  font-family: 'PingFang SC';
-  
+  font-family: "PingFang SC";
+
   &.el-dialog {
     box-shadow: none;
     border-radius: 20px;
