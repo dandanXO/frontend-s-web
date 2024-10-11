@@ -2,18 +2,10 @@
   <div class="home">
     <HomeViewLayoutAdapter />
   </div>
-  <GameModal ref="gameMenu" />
 </template>
 
 <script setup>
-import { ref } from "vue";
-import GameModal from "@/components/modal/GameModal.vue";
 import HomeViewLayoutAdapter from "@/components/home/HomeViewLayoutAdapter.vue";
-
-const gameMenu = ref(null);
-const openGame = (gameName, platType, gameCode, scrollingState) => {
-  gameMenu.value.open(gameName, platType, gameCode, scrollingState);
-};
 </script>
 
 <style scoped lang="scss">

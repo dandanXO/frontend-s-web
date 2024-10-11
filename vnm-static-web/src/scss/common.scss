@@ -52,6 +52,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;400;700&display=swap');
+
 body {
   .roboto {
     font-family: "Roboto";
@@ -531,16 +533,6 @@ button {
 /* Utility Class */
 .mx-auto.mx-auto {
   margin-inline: auto;
-}
-
-/* Overwrite */
-
-.swal2-confirm {
-  width: 200px;
-}
-
-.swal2-styled.swal2-confirm {
-  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
 }
 
 .cursor-pointer {

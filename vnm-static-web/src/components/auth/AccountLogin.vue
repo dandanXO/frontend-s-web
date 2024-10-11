@@ -10,13 +10,8 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item :label="$t('login.password')" prop="password">
-        <el-input
-          v-model="loginForm.password"
-          :placeholder="$t('login.password')"
-          type="password"
-          show-password
-          clearable
-        />
+        <el-input v-model="loginForm.password" :placeholder="$t('login.password')" type="password" show-password
+          clearable />
       </el-form-item>
     </div>
 
@@ -24,13 +19,8 @@
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item :label="$t('login.captcha')" prop="captchaCode">
         <div style="display: flex; width: 100%">
-          <el-input
-            v-model="loginForm.captchaCode"
-            :label="$t('login.captcha')"
-            :placeholder="$t('login.captcha')"
-            @keyup.enter="submitLogin"
-            clearable
-          ></el-input>
+          <el-input v-model="loginForm.captchaCode" :label="$t('login.captcha')" :placeholder="$t('login.captcha')"
+            @keyup.enter="submitLogin" clearable></el-input>
           <img style="width: 100px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
@@ -66,7 +56,6 @@
 <script setup>
 import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
@@ -152,8 +141,8 @@ const submitLogin = () => {
             const jumpUrl = route.query.redirect
               ? route.query.redirect.toString()
               : props.pageType === "view"
-              ? "/"
-              : route.path;
+                ? "/"
+                : route.path;
             if (store.token) {
               router.push(jumpUrl);
 
@@ -176,7 +165,7 @@ const submitLogin = () => {
             getCode();
           });
       })
-      .catch(() => {});
+      .catch(() => { });
     loadingBtn.value = false;
   })();
 };
@@ -250,6 +239,7 @@ onMounted(() => {
     height: 30px;
   }
 }
+
 :deep(.el-form-item--large .el-form-item__label) {
   position: absolute;
   top: -40px;
@@ -259,10 +249,12 @@ onMounted(() => {
 .agreement-and-forget-pass {
   display: flex;
   justify-content: space-between;
+
   .rememberMe {
     display: flex;
     gap: 5px;
   }
+
   .highlight {
     color: #5e8aee;
   }
@@ -280,6 +272,7 @@ onMounted(() => {
   margin-top: 20px;
   width: 100%;
 }
+
 .login-btn {
   color: #fff;
   font-size: 14px;
@@ -288,6 +281,7 @@ onMounted(() => {
   background-size: cover;
   padding: 10px 0;
 }
+
 .reg-btn {
   background: #fcfdfe;
 
