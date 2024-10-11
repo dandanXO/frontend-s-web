@@ -10,9 +10,13 @@
                 {{ $t("promo.promo") }}
                 <div class="lineafter"></div>
               </div>
-              <div class="type-item" v-for="p in currentPromoTypes"
-                :class="{ active: p.code === promoTabActive, slot: ui.edition === EDITION.SLOT }" :key="p.code"
-                @click="switchPromoType(p.code)">
+              <div
+                class="type-item"
+                v-for="p in currentPromoTypes"
+                :class="{ active: p.code === promoTabActive, slot: ui.edition === EDITION.SLOT }"
+                :key="p.code"
+                @click="switchPromoType(p.code)"
+              >
                 <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
                 <span style="width: 100px" class="label">{{ p.label }}</span>
               </div>
@@ -20,30 +24,44 @@
           </div>
         </div>
         <div class="promo-list-wrapper">
-          <div class="promo-item" v-for="(promo, i) in filteredArray" :key="i" data-aos="zoom-in"
-            data-aos-easing="ease-out" data-aos-duration="1000" data-aos-offset="-300">
+          <div
+            class="promo-item"
+            v-for="(promo, i) in filteredArray"
+            :key="i"
+            data-aos="zoom-in"
+            data-aos-easing="ease-out"
+            data-aos-duration="1000"
+            data-aos-offset="-300"
+          >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-label">
-                  <div class="label-type" :class="{
-                    labelhot: promo.labelType === 1,
-                    labelrecommend: promo.labelType === 3 || promo.labelType === 5,
-                    labellimit: promo.labelType === 6,
-                    labelnew: promo.labelType === 0,
-                    labelother:
-                      promo.labelType !== 6 &&
-                      promo.labelType !== 1 &&
-                      promo.labelType !== 0 &&
-                      promo.labelType !== 3 &&
-                      promo.labelType !== 5
-                  }" v-if="promo.labelType !== 2">
+                  <div
+                    class="label-type"
+                    :class="{
+                      labelhot: promo.labelType === 1,
+                      labelrecommend: promo.labelType === 3 || promo.labelType === 5,
+                      labellimit: promo.labelType === 6,
+                      labelnew: promo.labelType === 0,
+                      labelother:
+                        promo.labelType !== 6 &&
+                        promo.labelType !== 1 &&
+                        promo.labelType !== 0 &&
+                        promo.labelType !== 3 &&
+                        promo.labelType !== 5
+                    }"
+                    v-if="promo.labelType !== 2"
+                  >
                     {{ getPromoLabel(promo.labelType) }}
                   </div>
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
-                <div class="promo-details" :class="{
-                  nopaddingtop: promo.labelType === 2
-                }">
+                <div
+                  class="promo-details"
+                  :class="{
+                    nopaddingtop: promo.labelType === 2
+                  }"
+                >
                   <div class="front-title">{{ promo.title }}</div>
                   <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
                   <div class="front-btn">{{ $t("home.moreDetails") }}</div>
@@ -315,7 +333,7 @@ export default defineComponent({
           align-items: center;
           padding: 20px;
           overflow: auto;
-          width: 200px;
+          width: 280px;
           flex-direction: column;
           gap: 20px;
           min-height: 818px;
@@ -385,7 +403,7 @@ export default defineComponent({
             padding: 12px 40px;
             position: relative;
             width: 100%;
-            max-width: 120px;
+            // max-width: 120px;
             border-radius: 30px;
             box-shadow: 0px -1.6610169410705566px 6.085966110229492px 0px #a2bff4 inset;
 
@@ -395,7 +413,8 @@ export default defineComponent({
               font-size: 16px;
             }
 
-            &:before {}
+            &:before {
+            }
 
             img {
               max-height: 30px;
@@ -592,21 +611,21 @@ export default defineComponent({
                 color: #4c88f8;
                 font-size: 20px;
                 font-weight: 700;
-                font-family: 'Be Vietnam Pro'
+                font-family: "Be Vietnam Pro";
               }
 
               .front-sub {
                 color: #7a80a1;
                 font-size: 18px;
                 font-weight: 700;
-                font-family: 'Be Vietnam Pro'
+                font-family: "Be Vietnam Pro";
               }
 
               .front-btn {
                 color: #ffffff;
                 padding: 5px 30px;
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-                font-family: 'Be Vietnam Pro';
+                font-family: "Be Vietnam Pro";
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
                 box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
