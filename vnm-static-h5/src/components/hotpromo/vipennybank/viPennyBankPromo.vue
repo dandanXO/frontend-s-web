@@ -21,15 +21,7 @@
 
       <div class="piggy-amount" v-if="lotteryAmount > 0">{{ lotteryAmount }} VNDP</div>
     </div>
-    <div class="input" style="display: flex; flex-direction: row; width: 100%;">
-      <q-btn
-        color="brightbtn"
-        style="width: 100%; max-width: 200px"
-        no-caps
-        :loading="btnLoading"
-        @click="putPiggyBankClaim()"
-        :label="$t('lang.vipenny_claim_now_other')"
-      />
+    <div class="input" style="display: flex; flex-direction: row; width: 100%">
       <q-btn
         color="brightbtn"
         style="width: 100%; max-width: 200px"
@@ -38,13 +30,26 @@
         @click="putPiggyBankClaimSport()"
         :label="$t('lang.vipenny_claim_now_sport')"
       />
+      <q-btn
+        color="brightbtn"
+        style="width: 100%; max-width: 200px"
+        no-caps
+        :loading="btnLoading"
+        @click="putPiggyBankClaim()"
+        :label="$t('lang.vipenny_claim_now_other')"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue";
-import { submitPiggyBankLottery, getPiggyBankAmt, submitPiggyBankClaimOther, submitPiggyBankClaimSport } from "../../../api/index/promo";
+import {
+  submitPiggyBankLottery,
+  getPiggyBankAmt,
+  submitPiggyBankClaimOther,
+  submitPiggyBankClaimSport
+} from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 import { useQuasar } from "quasar";
 

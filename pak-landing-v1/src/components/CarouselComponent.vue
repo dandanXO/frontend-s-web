@@ -10,9 +10,11 @@
       :autoplay="autoplay"
       class="text-white rounded-borders"
       :class="{ bg: hasBg }"
-      @transition="checkAutoplay"
+      @transition="onTransition"
+      :height="carouselHeight"
     >
       <q-carousel-slide
+        :ref="setSlideRef(i)"
         v-for="(carouselItem, i) in carouselData"
         :key="carouselItem.id"
         :name="i"
@@ -28,11 +30,12 @@
         >
           <video
             ref="carouselVideo"
-            style="width: 100%"
+            style="width: 100%; background-color: black"
             controls
             autoplay
             @play="autoplay = false"
-            @pause="autoplay = 5000"
+            @pause="autoplay = false"
+            height="260px"
           >
             <source
               :src="`${BASE_STRAPI_URL}${carouselItem.media.data.attributes.url}`"
@@ -42,7 +45,7 @@
           </video>
         </div>
         <div
-          v-if="
+          v-else-if="
             carouselItem.media.data?.attributes &&
             (carouselItem.media.data.attributes.ext === '.jpg' ||
               carouselItem.media.data.attributes.ext === '.png')
@@ -82,13 +85,26 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { BASE_STRAPI_URL } from "src/constants/constants";
 
 const props = defineProps(["carouselData", "hasBg", "margin"]);
 const slide = ref(0);
 const carouselVideo = ref(null);
 const autoplay = ref(false);
+const carouselHeight = ref("360px");
+const slideRefs = ref([]);
+
+onMounted(async () => {
+  await nextTick();
+  nextTick(() => {
+    adjustCarouselHeight();
+  });
+
+  if (props.carouselData.length > 1) {
+    checkAutoplay();
+  }
+});
 
 const onCarouselNavDotClick = (i) => {
   if (slide.value != i) {
@@ -96,20 +112,36 @@ const onCarouselNavDotClick = (i) => {
   }
 };
 
-onMounted(() => {
-  if (props.carouselData.length > 1) {
-    checkAutoplay();
+const setSlideRef = (index) => {
+  return (el) => {
+    slideRefs.value[index] = el;
+  };
+};
+
+const adjustCarouselHeight = () => {
+  const activeSlide = slideRefs.value[slide.value];
+
+  if (activeSlide && activeSlide.$el) {
+    let height = 0;
+    for (let i = 0; i < activeSlide.$el.children.length; i++) {
+      height += activeSlide.$el.children[i].clientHeight;
+    }
+    carouselHeight.value = `${height + 8}px`;
   }
-});
+};
 
 const checkAutoplay = () => {
-  setTimeout(() => {
-    if (carouselVideo.value && carouselVideo.value[0]) {
-      autoplay.value = carouselVideo.value[0].paused ? 5000 : false;
-    } else {
-      autoplay.value = 5000;
-    }
-  }, "1000");
+  if (carouselVideo.value && carouselVideo.value[0]) {
+    autoplay.value = carouselVideo.value[0].paused ? 5000 : false;
+  } else {
+    autoplay.value = 5000;
+  }
+};
+
+const onTransition = (index) => {
+  slide.value = index;
+  adjustCarouselHeight();
+  checkAutoplay();
 };
 </script>
 
@@ -122,10 +154,11 @@ const checkAutoplay = () => {
 
 .video-container {
   width: 100%;
-  min-height: 170px;
-  &.min-height {
-    min-height: 200px;
-  }
+  padding-top: 4px;
+  // min-height: 170px;
+  // &.min-height {
+  //   min-height: 200px;
+  // }
 }
 
 .carousel-media {
@@ -154,7 +187,6 @@ const checkAutoplay = () => {
 
 .q-carousel {
   background-color: #131313;
-  height: auto;
   &.bg {
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   }
