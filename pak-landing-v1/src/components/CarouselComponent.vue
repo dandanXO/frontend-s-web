@@ -7,9 +7,10 @@
       swipeable
       animated
       infinite
-      :autoplay="5000"
+      :autoplay="autoplay"
       class="text-white rounded-borders"
       :class="{ bg: hasBg }"
+      @transition="checkAutoplay"
     >
       <q-carousel-slide
         v-for="(carouselItem, i) in carouselData"
@@ -25,7 +26,14 @@
           class="video-container"
           :class="{ 'min-height': carouselData.length > 1 }"
         >
-          <video style="width: 100%" controls autoplay>
+          <video
+            ref="carouselVideo"
+            style="width: 100%"
+            controls
+            autoplay
+            @play="autoplay = false"
+            @pause="autoplay = 5000"
+          >
             <source
               :src="`${BASE_STRAPI_URL}${carouselItem.media.data.attributes.url}`"
               type="video/mp4"
@@ -34,7 +42,7 @@
           </video>
         </div>
         <div
-          v-else-if="
+          v-if="
             carouselItem.media.data?.attributes &&
             (carouselItem.media.data.attributes.ext === '.jpg' ||
               carouselItem.media.data.attributes.ext === '.png')
@@ -74,16 +82,34 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { BASE_STRAPI_URL } from "src/constants/constants";
 
 const props = defineProps(["carouselData", "hasBg", "margin"]);
 const slide = ref(0);
+const carouselVideo = ref(null);
+const autoplay = ref(false);
 
 const onCarouselNavDotClick = (i) => {
   if (slide.value != i) {
     slide.value = i;
   }
+};
+
+onMounted(() => {
+  if (props.carouselData.length > 1) {
+    checkAutoplay();
+  }
+});
+
+const checkAutoplay = () => {
+  setTimeout(() => {
+    if (carouselVideo.value && carouselVideo.value[0]) {
+      autoplay.value = carouselVideo.value[0].paused ? 5000 : false;
+    } else {
+      autoplay.value = 5000;
+    }
+  }, "1000");
 };
 </script>
 
