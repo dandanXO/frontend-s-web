@@ -55,7 +55,7 @@
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">在活动期间投注BB贝尔格莱德别墅杯赛事，满足活动要求后即可获得奖金，最高可获1588元~</div>
+          <div class="right">在活动期间投注BB贝尔格莱德别墅杯赛事，满足活动要求后即可获得奖金，最高可获1,588元</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tbody>
@@ -107,7 +107,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员A在10月19日当天在BB贝尔格莱德别墅杯赛事中累计存款1000元，其中有一笔注单派彩金额为800元，根据规则会员可获得18元奖金，奖金仅需5倍水即可出款。
+            会员A在10月19日当天在BB贝尔格莱德别墅杯赛事中累计存款1,000元，其中有一笔注单派彩金额为800元，根据规则会员可获得18元奖金，奖金仅需5倍水即可出款。
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            当前活动仅计算电竞场馆，在BB贝尔格莱德别墅杯赛事期间内当日累计存款≥1000元且单笔派彩金额≥500元即可获得对应彩金，彩金只需5倍流水即可出款；
+            当前活动仅计算电竞场馆，在BB贝尔格莱德别墅杯赛事期间内当日累计存款≥1,000元且单笔派彩金额≥500元即可获得对应彩金，彩金只需5倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -151,6 +151,7 @@ import { onMounted, ref, defineProps, toRefs } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
+import { ResponseCode } from "@/api/response";
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
 
@@ -184,7 +185,15 @@ const handleClaimBonus = () => {
       if (res.code === 0) {
         notify.redPacket("成功领取", res.data);
         fetchData();
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         notify({
           type: "error",
           message: res.message
@@ -212,10 +221,6 @@ const fetchData = async () => {
 
 onMounted(() => {
   if (!store.token) {
-    // notify({
-    //   message: "请登录后操作",
-    //   type: "error"
-    // });
     return;
   }
   fetchData();
