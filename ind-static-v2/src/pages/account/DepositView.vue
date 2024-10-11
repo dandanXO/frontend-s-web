@@ -675,6 +675,7 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
+  if (btnLoading.value) return;
   btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
@@ -945,7 +946,6 @@ const loadAppTabs = () => {
     }
   });
 };
-
 
 const convertToTwoDecimalAmount = (amount) => {
   if (amount < 3) {
