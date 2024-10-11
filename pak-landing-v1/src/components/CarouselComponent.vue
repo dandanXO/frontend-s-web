@@ -30,7 +30,7 @@
         >
           <video
             ref="carouselVideo"
-            style="width: 100%"
+            style="width: 100%; background-color: black"
             controls
             autoplay
             @play="autoplay = false"
