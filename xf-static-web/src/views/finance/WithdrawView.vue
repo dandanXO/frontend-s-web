@@ -234,7 +234,7 @@
         </div>
       </template>
     </el-dialog>
-    <WithdrawRemainingDialog v-model="isShowRemainingDialog" />
+    <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
   </div>
 </template>
 

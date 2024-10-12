@@ -177,7 +177,9 @@
             </div>
           </div>
 
-          <div class="q-mt-md text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
+          <div class="q-mt-md text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
+          </div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -270,7 +272,7 @@
       </q-card>
     </q-dialog>
 
-    <WithdrawRemainingDialog v-model="isShowRemainingDialog"/>
+    <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
   </div>
 </template>
 
