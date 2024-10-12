@@ -199,7 +199,7 @@
         </div>
       </el-form>
     </div>
-    <WithdrawRemainingDialog v-model="isShowRemainingDialog" />
+    <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
   </div>
 </template>
 

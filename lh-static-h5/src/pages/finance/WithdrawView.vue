@@ -337,7 +337,7 @@
     </q-card>
   </q-dialog>
 
-  <WithdrawRemainingDialog v-model="isShowRemainingDialog" />
+  <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
 </template>
 
 <script lang="js">
