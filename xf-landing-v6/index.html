@@ -55,8 +55,8 @@
                 <img src="./imgs/qq-icon.png" alt="" />
               </div>
               <div style="display: flex; flex-direction: column; align-items: flex-start">
-                <span class="title">164富力</span>
-                <span>925319859</span>
+                <span class="title" id="group1-title">164富力</span>
+                <span id="group1-number">925319859</span>
               </div>
             </div>
             <div class="contact-item w-50">
@@ -64,8 +64,8 @@
                 <img src="./imgs/qq-icon.png" alt="" />
               </div>
               <div style="display: flex; flex-direction: column; align-items: flex-start">
-                <span class="title">服力群</span>
-                <span>673169074</span>
+                <span class="title" id="group2-title">服力群</span>
+                <span id="group2-number">673169074</span>
               </div>
             </div>
           </div>
@@ -77,10 +77,10 @@
               </div>
               <div style="display: flex; flex-direction: column">
                 <span class="title">Amico专员ID</span>
-                <span>vip885</span>
+                <span id="agent1-id">vip885</span>
               </div>
             </div>
-            <a href="https://am787.cc" target="_blank" class="service-icon">
+            <a href="https://am787.cc" id="landing-page-link3" target="_blank" class="service-icon">
               <img src="./imgs/contact-btn.png" alt="" />
             </a>
           </div>
@@ -91,14 +91,14 @@
               </div>
               <div style="display: flex; flex-direction: column">
                 <span class="title">Amico专员ID</span>
-                <span>vip856</span>
+                <span id="agent2-id">vip856</span>
               </div>
             </div>
-            <a href="https://am787.cc" target="_blank" class="service-icon">
+            <a href="https://am787.cc" id="landing-page-link1" target="_blank" class="service-icon">
               <img src="./imgs/contact-btn.png" alt="" />
             </a>
           </div>
-          <a href="https://am787.cc" target="_blank"><img src="./imgs/contact-btn1.png" width="100%" /></a>
+          <a href="https://am787.cc" id="landing-page-link2" target="_blank"><img src="./imgs/contact-btn1.png" width="100%" /></a>
         </div>
       </div>
 
@@ -205,6 +205,72 @@
     } else {
       LA.init({ id: "KSr3RkhpE2hIViNC", ck: "KSr3RkhpE2hIViNC" });
     }
+  </script>
+  <script>
+    function updateContactInfoByHostname() {
+      const hostname = window.location.host.replace("www.", "");
+      console.log(hostname, "dan");
+
+      const contactInfo = {
+        "34321.org": {
+          group1Title: "游溪群",
+          group1Number: "948669296",
+          group2Title: "好运连连",
+          group2Number: "941446940",
+          landingPageLink: "https://am837.cc",
+          agent1ID: "vip516",
+          agent2ID: "vip518"
+        },
+
+        "85886.co": {
+          group1Title: "游溪群",
+          group1Number: "948669296",
+          group2Title: "好运连连",
+          group2Number: "941446940",
+          landingPageLink: "https://am837.cc",
+          agent1ID: "vip516",
+          agent2ID: "vip518"
+        },
+
+        "8693521.com": {
+          group1Title: "游溪群",
+          group1Number: "948669296",
+          group2Title: "好运连连",
+          group2Number: "941446940",
+          landingPageLink: "https://am837.cc",
+          agent1ID: "vip516",
+          agent2ID: "vip518"
+        }
+      };
+
+      // Default content if no hostname matches
+      const defaultInfo = {
+        group1Title: "164 富力",
+        group1Number: "925319859",
+        group2Title: "服力群",
+        group2Number: "673169074",
+        landingPageLink: "https://am787.cc/", // You can set a default link or leave it empty
+        agent1ID: "vip885",
+        agent2ID: "vip856"
+      };
+
+      const selectedInfo = contactInfo[hostname] || defaultInfo;
+      console.log("ENd Info");
+      console.log(selectedInfo);
+
+      document.getElementById("group1-title").textContent = selectedInfo.group1Title;
+      document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+      document.getElementById("group2-title").textContent = selectedInfo.group2Title;
+      document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+      document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
+      document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
+      document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
+      document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
+      document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
+    }
+
+    // Call the function to update content based on the current hostname
+    updateContactInfoByHostname();
   </script>
 </body>
 
