@@ -148,6 +148,81 @@
 
       element.href = tf88Url + "";
       claimBtnElement.href = tf88Url + "";
+
+      function updateContactInfoByHostname() {
+        const hostname = window.location.host.replace("www.", "");
+        console.log(hostname, "dan");
+
+        const contactInfo = {
+          "9150682.com": {
+            group1Title: "转运群",
+            group1Number: "706924666",
+            group2Title: "福熙阁",
+            group2Number: "875981010",
+            landingPageLink: "https://am787.cc",
+            agent1ID: "vip119",
+            agent2ID: "vip116"
+          },
+
+          "gigrv.com": {
+            group1Title: "转运群",
+            group1Number: "706924666",
+            group2Title: "福熙阁",
+            group2Number: "875981010",
+            landingPageLink: "https://am787.cc",
+            agent1ID: "vip119",
+            agent2ID: "vip116"
+          },
+
+          "09987.lc": {
+            group1Title: "164 富力",
+            group1Number: "925319859",
+            group2Title: "服力群  ",
+            group2Number: "673169074",
+            landingPageLink: "https://am787.cc",
+            agent1ID: "vip117",
+            agent2ID: "vip118"
+          },
+
+          "79881.cn": {
+            group1Title: "转运群",
+            group1Number: "706924666",
+            group2Title: "福熙阁",
+            group2Number: "875981010",
+            landingPageLink: "https://am787.cc",
+            agent1ID: "vip119",
+            agent2ID: "vip116"
+          }
+        };
+
+        // Default content if no hostname matches
+        const defaultInfo = {
+          group1Title: "164 富力",
+          group1Number: "925319859",
+          group2Title: "服力群",
+          group2Number: "673169074",
+          landingPageLink: "https://www.am837.cc", // You can set a default link or leave it empty
+          agent1ID: "vip885",
+          agent2ID: "vip856"
+        };
+
+        const selectedInfo = contactInfo[hostname] || defaultInfo;
+        console.log("ENd Info");
+        console.log(selectedInfo);
+
+        document.getElementById("group1-title").textContent = selectedInfo.group1Title;
+        document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+        document.getElementById("group2-title").textContent = selectedInfo.group2Title;
+        document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+        document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
+        document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
+        document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
+        document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
+        document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
+      }
+
+      // Call the function to update content based on the current hostname
+      updateContactInfoByHostname();
     </script>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
@@ -207,82 +282,6 @@
       } else {
         LA.init({ id: "KSr2XZA21Id9HVZ0", ck: "KSr2XZA21Id9HVZ0" });
       }
-    </script>
-    <script>
-      function updateContactInfoByHostname() {
-        const hostname = window.location.host.replace("www.", "");
-        console.log(hostname, "dan");
-
-        const contactInfo = {
-          "9150682.com": {
-            group1Title: "转运群",
-            group1Number: "706924666",
-            group2Title: "福熙阁",
-            group2Number: "875981010",
-            landingPageLink: "https://am787.cc",
-            agent1ID: "vip119",
-            agent2ID: "vip116"
-          },
-
-          "gigrv.com": {
-            group1Title: "转运群",
-            group1Number: "706924666",
-            group2Title: "福熙阁",
-            group2Number: "875981010",
-            landingPageLink: "https://am787.cc",
-            agent1ID: "vip119",
-            agent2ID: "vip116"
-          },
-
-          "09987.lc": {
-            group1Title: "164 富力",
-            group1Number: "925319859",
-            group2Title: "服力群  ",
-            group2Number: "673169074",
-            landingPageLink: "https://am787.cc",
-            agent1ID: "vip117",
-            agent2ID: "vip118"
-          },
-
-          "79881.cn": {
-            group1Title: "转运群",
-            group1Number: "706924666",
-            group2Title: "福熙阁",
-            group2Number: "875981010",
-            landingPageLink: "https://am787.cc",
-            agent1ID: "vip119",
-            agent2ID: "vip116"
-          },
-        };
-
-        // Default content if no hostname matches
-        const defaultInfo = {
-          group1Title: "164 富力",
-          group1Number: "925319859",
-          group2Title: "服力群",
-          group2Number: "673169074",
-          landingPageLink: "https://www.am837.cc", // You can set a default link or leave it empty
-          agent1ID: "vip885",
-          agent2ID: "vip856"
-        };
-
-        const selectedInfo = contactInfo[hostname] || defaultInfo;
-        console.log("ENd Info");
-        console.log(selectedInfo);
-
-        document.getElementById("group1-title").textContent = selectedInfo.group1Title;
-        document.getElementById("group1-number").textContent = selectedInfo.group1Number;
-        document.getElementById("group2-title").textContent = selectedInfo.group2Title;
-        document.getElementById("group2-number").textContent = selectedInfo.group2Number;
-        document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
-        document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
-        document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
-        document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
-        document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
-      }
-
-      // Call the function to update content based on the current hostname
-      updateContactInfoByHostname();
     </script>
   </body>
 </html>
