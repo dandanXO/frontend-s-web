@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>雷火电竞体育官网</title>
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="icon" href="imgs/favicon.ico" type="image/x-icon" />
+
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+  </head>
+
+  <body id="lh-landing-v1">
+    <div class="main-wrapper">
+      <div class="full-container">
+        <div class="top-wrapper">
+          <div class="top-logo">
+            <img src="imgs/logo.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+          </div>
+        </div>
+
+        <div class="banner-wrapper">
+          <img class="title" src="./imgs/title.png" alt="雷火特邀您注册送18-88" title="雷火特邀您注册送18-88" />
+          <a id="tf88Url-btn" class="register-btn" href="#" target="_blank">
+            <img src="./imgs/register-btn.png" />
+          </a>
+        </div>
+
+        <div class="contact-wrapper">
+          <div class="copy-link-wrapper">
+            <div class="title">
+              <span>跳转链接</span>
+              <img src="./imgs/copy-icon.png" />
+            </div>
+            <div class="description">
+              <span id="tf88Url-label"></span>
+              <button class="copy-btn" onclick="copyText()">复制</button>
+            </div>
+          </div>
+
+          <div class="qq-wrapper">
+            <div class="contact-item">
+              <img class="icon" src="./imgs/qq-icon.png" />
+              <div class="info">
+                <span class="title">QQ群</span>
+                <span id="group1-number">892396652</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <img class="icon" src="./imgs/qq-icon.png" />
+              <div class="info">
+                <span class="title">QQ群</span>
+                <span id="group2-number">244357317</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <img class="icon" src="./imgs/amico-icon.png" />
+            <div class="info">
+              <span class="title">AMICO</span>
+              <span id="agent1-id">viplh16888</span>
+            </div>
+            <a id="landing-page-link1" class="link" href="https://www.am35.cc/" target="_blank">咨询</a>
+          </div>
+          <div class="contact-item">
+            <img class="icon" src="./imgs/amico-icon.png" />
+            <div class="info">
+              <span class="title">AMICO</span>
+              <span id="agent2-id">viplh16999</span>
+            </div>
+            <a id="landing-page-link2" class="link" href="https://www.am35.cc/" target="_blank">咨询</a>
+          </div>
+        </div>
+      </div>
+
+      <a id="landing-page-link3" class="main-sticky-btn" href="https://www.am35.cc/" target="_blank">
+        <img src="imgs/amico-btn.png" alt="点击下载加密聊天软件" title="点击下载加密聊天软件" />
+      </a>
+    </div>
+
+    <script type="text/javascript">
+      const host = window.location.hostname;
+      console.log(host);
+      // TODO: change
+      var tf88Url = "https://www.lh36987.com";
+
+      var element = document.getElementById("tf88Url-btn");
+      var labelElement = document.getElementById("tf88Url-label");
+
+      element.href = tf88Url + "";
+      labelElement.innerText = tf88Url;
+
+      function updateContactInfoByHostname() {
+        const hostname = window.location.host.replace("www.", "");
+
+        const contactInfo = {};
+
+        // Default content if no hostname matches
+        const defaultInfo = {
+          group1Number: "892396652",
+          group2Number: "244357317",
+          landingPageLink: "https://www.am35.cc", // You can set a default link or leave it empty
+          agent1ID: "viplh16888",
+          agent2ID: "viplh16999"
+        };
+
+        const selectedInfo = contactInfo[hostname] || defaultInfo;
+        console.log("ENd Info");
+        console.log(selectedInfo);
+
+        // document.getElementById("group1-title").textContent = selectedInfo.group1Title;
+        document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+        // document.getElementById("group2-title").textContent = selectedInfo.group2Title;
+        document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+        document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
+        document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
+        document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
+        document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
+        document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
+      }
+
+      // Call the function to update content based on the current hostname
+      updateContactInfoByHostname();
+
+      function copyText() {
+        navigator.clipboard
+          .writeText(tf88Url)
+          .then(() => {
+            alert("复制成功！");
+            console.log("Text copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy text:", err);
+          });
+      }
+    </script>
+
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>
+      var hostname = window.location.hostname;
+      console.log(hostname);
+      if (hostname.indexOf("71531.org") > -1) {
+        LA.init({ id: "KaSbR7duDHLSAxIE", ck: "KaSbR7duDHLSAxIE" });
+      }
+    </script>
+  </body>
+</html>
