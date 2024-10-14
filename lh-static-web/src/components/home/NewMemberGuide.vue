@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="subtitle">一目了然 轻松娱乐</div>
-
+        <div class="page-count">1/5</div>
         <div class="next-button" @click="handleNext(3)">下一个</div>
       </div>
     </div>
@@ -47,7 +47,7 @@
           <div style="font-size: 48px">各种优惠红包彩金</div>
         </div>
         <div class="subtitle">现金红包拿到手软 轻松娱乐</div>
-
+        <div class="page-count">2/5</div>
         <div class="next-button" @click="handleNext(4)">下一个</div>
       </div>
     </div>
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="subtitle">周六周日准时开启红包雨</div>
-
+          <div class="page-count">3/5</div>
           <div class="next-button" @click="handleNext(5)">下一个</div>
         </div>
       </div>
@@ -80,7 +80,7 @@
           <div style="font-size: 48px">点击这里</div>
         </div>
         <div class="subtitle">到个人中心</div>
-
+        <div class="page-count">4/5</div>
         <div class="next-button" @click="handleNext(6)">下一个</div>
       </div>
     </div>
@@ -99,7 +99,7 @@
           <div style="font-size: 48px">点击这里充值</div>
           <div>开启您的雷火游戏之旅</div>
         </div>
-
+        <div class="page-count">5/5</div>
         <div class="next-button" @click="closeNewMemerGuide">知道了</div>
 
         <div class="subtitle" style="text-decoration: underline;cursor:pointer;" @click="goToPromo">点击前往新人活动</div>
@@ -257,6 +257,13 @@ onMounted(() => {
       font-size: 24px;
       color: white;
       text-align: center;
+    }
+
+    .page-count {
+      font-size: 24px;
+      color: #3aefff;
+      text-align: center;
+      font-family: sans-serif;
     }
 
     .next-button {
