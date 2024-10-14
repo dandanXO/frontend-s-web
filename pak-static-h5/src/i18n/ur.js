@@ -104,6 +104,7 @@ export default {
     withdrawalAmount_rules_02: "واپسی کی رقم 0 سے زیادہ ہونی چاہئے",
     withdrawalAmount_rules_03: "واپسی کی رقم ناکافی ہے",
     withdrawalAmount_rules_04: "واپسی کی رقم کے درمیان ہونی چاہئے",
+    withdrawalAmount_rules_05: "نکاسی کی رقم میں اعشاریے نہیں ہونے چاہئیں",
     realTimeExchangeRates: "ریئل ٹائم ایکسچینج ریٹس",
     estimatedArrival: "متوقع آمد",
     usdtSpecialNote: "*خصوصی نوٹ: تیسرا فریق خود بخود سکے نکالنے کے لیے {fee} USDT کی ہینڈلنگ فیس وصول کرتا ہے!",
