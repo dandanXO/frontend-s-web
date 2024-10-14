@@ -329,7 +329,8 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = "/opt-session/promo/page";
+      const randNum = Math.floor(Math.random() * 1000) + 1;
+      const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
 
       api
         .get(platformApiUrl)
