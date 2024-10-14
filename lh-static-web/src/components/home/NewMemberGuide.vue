@@ -273,9 +273,9 @@ onMounted(() => {
     .next-button {
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       color: white;
-      font-size: 25px;
-      width: 170px;
-      height: 45px;
+      font-size: 20px;
+      width: 140px;
+      height: 40px;
       border-radius: 10px;
       display: flex;
       justify-content: center;
