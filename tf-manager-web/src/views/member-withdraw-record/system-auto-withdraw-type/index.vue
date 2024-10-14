@@ -589,17 +589,17 @@ const formRules = reactive({
 })
 const ruleType = reactive({
   list: [
-    { key: 1, name: t('withdrawRuleType.max') + t('withdrawRuleType.withdrawAmount'), value: '#withdraw<' },
-    { key: 2, name: t('withdrawRuleType.min') + t('withdrawRuleType.withdrawAmount'), value: '#withdraw>' },
+    { key: 1, name: t('withdrawRuleType.withdrawAmount') + t('withdrawRuleType.max'), value: '#withdraw<' },
+    { key: 2, name: t('withdrawRuleType.withdrawAmount') + t('withdrawRuleType.min'), value: '#withdraw>' },
     { key: 3, name: t('withdrawRuleType.financialLevel'), value: "matches '.*,' + T(String).valueOf(#financialLevel) + ',.*'" },
-    { key: 4, name: t('withdrawRuleType.max') + t('withdrawRuleType.todayWithdrawCount'), value: '#withdrawCount<' },
-    { key: 5, name: t('withdrawRuleType.min') + t('withdrawRuleType.todayWithdrawCount'), value: '#withdrawCount>' },
-    { key: 6, name: t('withdrawRuleType.max') + t('withdrawRuleType.profit'), value: '#profit<' },
-    { key: 7, name: t('withdrawRuleType.min') + t('withdrawRuleType.profit'), value: '#profit>' },
-    { key: 8, name: t('withdrawRuleType.max') + t('withdrawRuleType.balanceBeforeWithdrawal'), value: '(#balance + #withdraw)<' },
-    { key: 9, name: t('withdrawRuleType.min') + t('withdrawRuleType.balanceBeforeWithdrawal'), value: '(#balance + #withdraw)>' },
-    { key: 10, name: t('withdrawRuleType.max') + t('withdrawRuleType.balanceAfterWithdrawal'), value: '#balance<' },
-    { key: 11, name: t('withdrawRuleType.min') + t('withdrawRuleType.balanceAfterWithdrawal'), value: '#balance>' },
+    { key: 4, name: t('withdrawRuleType.todayWithdrawCount') + t('withdrawRuleType.max'), value: '#withdrawCount<' },
+    { key: 5, name: t('withdrawRuleType.todayWithdrawCount') + t('withdrawRuleType.min'), value: '#withdrawCount>' },
+    { key: 6, name: t('withdrawRuleType.profit') + t('withdrawRuleType.max'), value: '#profit<' },
+    { key: 7, name: t('withdrawRuleType.profit') + t('withdrawRuleType.min'), value: '#profit>' },
+    { key: 8, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.max'), value: '(#balance + #withdraw)<' },
+    { key: 9, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.min'), value: '(#balance + #withdraw)>' },
+    { key: 10, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.max'), value: '#balance<' },
+    { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#balance>' },
     { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
   ],
 })

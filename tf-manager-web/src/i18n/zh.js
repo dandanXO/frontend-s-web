@@ -108,8 +108,8 @@ export default {
     AUTO: '自动审核',
   },
   withdrawRuleType: {
-    min: '最低',
-    max: '最高',
+    min: '大于',
+    max: '小于',
     withdrawAmount: '提款金额',
     balanceBeforeWithdrawal: '提款前余额',
     balanceAfterWithdrawal: '提款后金额',
