@@ -2078,6 +2078,7 @@ export default {
     gender: 'Gender',
     Male: 'Male',
     Female: 'Female',
+    oldBetAmount: 'Old Site Bet Amount',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2862,6 +2863,7 @@ export default {
     'Site Platform Report': 'Site Platform Report',
     'Refer Friend Eligibility': 'Refer Friend Eligibility',
     'Member Refer Analysis': 'Member Refer Analysis',
+    'LH Old Data': 'LH Old Data',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

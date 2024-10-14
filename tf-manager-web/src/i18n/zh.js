@@ -2077,6 +2077,7 @@ export default {
     gender: '性别',
     Male: '男性',
     Female: '女性',
+    oldBetAmount: '老站流水金额',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2810,6 +2811,7 @@ export default {
     'Site Platform Report': '站点平台报表',
     'Refer Friend Eligibility': '全民代理',
     'Member Refer Analysis': '邀请返佣分析',
+    'LH Old Data': '雷火老站数据',
   },
   google: {
     google_auth_menu: '谷歌验证',
