@@ -332,7 +332,35 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input v-model="form.loginName" style="width: 350px" />
+
+          <div
+              class="el-input-tag input-tag-wrapper"
+              :class="[uiControl.size ? 'el-input-tag--' + uiControl.size : '']"
+              @click="foucusTagInput"
+              style="width: 300px;"
+          >
+            <el-tag
+                v-for="tag in dynamicTags"
+                :key="tag"
+                class="mx-1"
+                closable
+                :disable-transitions="false"
+                @close="handleClose(tag)"
+            >
+              {{ tag }}
+            </el-tag>
+            <el-autocomplete
+                v-model="inputValue"
+                :fetch-suggestions="debouncedFetchSuggestions"
+                :trigger-on-focus="false"
+                class="inline-input"
+                style="outline: none; border: none"
+                @select="handleSelect"
+            />
+          </div>
+
+
+<!--          <el-input v-model="form.loginName" style="width: 350px" />-->
           <span
             v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
             style="display: block"
@@ -580,8 +608,11 @@
 </template>
 
 <script setup>
+/* eslint-disable */
+import { debounce } from "lodash";
 import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx'
+import { getMemberLoginNameList } from "../../../api/system-message-template";
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import moment from 'moment'
@@ -647,6 +678,8 @@ const shortcuts = getShortcuts(t)
 const EXPORT_AMOUNT_ADJUST_LIST_HEADER = ['Login Name', 'Amount']
 
 const IMPORT_AMOUNT_ADJUST_LIST_JSON = ['loginName', 'amount']
+
+
 
 const uiControl = reactive({
   messageVisible: false,
@@ -724,6 +757,35 @@ const importForm = reactive({
   rollover: null,
 })
 
+const list = reactive({
+  vips: [],
+  members: [],
+  sites: [],
+})
+
+
+const selectionList = reactive({
+  members: [],
+})
+
+const inputValue = ref('')
+const dynamicTags = ref([])
+
+const handleClose = tag => {
+  dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
+  const selectionArr = [...selectionList.members]
+  selectionArr.forEach(element => {
+    if (element.value === tag) {
+      list.members.splice(1, 0, element)
+      list.members.sort(function (a, b) {
+        return a.id - b.id
+      })
+      selectionList.members.splice(selectionList.members.indexOf(element), 1)
+    }
+  })
+  inputValue.value = ''
+}
+
 const loginNameValidator = async (rule, value, callback) => {
   let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
@@ -761,7 +823,7 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   loginName: [
     required(t('message.validateLoginNameRequired')),
-    { validator: loginNameValidator, trigger: 'blur' },
+    // { validator: loginNameValidator, trigger: 'blur' },
   ],
   amount: [required(t('message.validateAmountRequired'))],
   // rollover: [required(t('message.validateRolloverRequired'))],
@@ -843,6 +905,86 @@ async function loadSiteConfig() {
 
 async function loadImportSiteConfig() {
   getSiteConfig(importForm.siteId)
+}
+
+const handleSelect = item => {
+  if (item) {
+    if (dynamicTags.value.indexOf(item.value) === -1) {
+      dynamicTags.value.push(item.value)
+      const removed = list.members.splice(list.members.indexOf(item), 1)
+      const removedArr = [...removed]
+      selectionList.members.push(removedArr[0])
+      form.loginName = item.value;
+    }
+  }
+  inputValue.value = ''
+}
+
+function constructRollover() {
+  // debugger;
+  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt &&
+      (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists())) &&
+      (!uiControl.oldRollOver.selectType || (uiControl.oldRollOver.selectType === uiControl.selectedGameTypeRolloverType))
+  ) {
+    form.rollover = uiControl.rollOverAmt;
+    return JSON.stringify(uiControl.oldRollOver.gameTypeRollover);
+  }
+  const json = { newRollover: true };
+  if (uiControl.selectedGameTypeRolloverType === 'GAME_TYPE') {
+    json.rolloverType = 'INDIVIDUAL_' + selectedRolloverType.value + '_SPECIFY_TYPES'
+    Object.values(gameTypes.value).forEach(item => {
+      if (item.key) {
+        json[item.key] = item.value;
+      }
+    });
+  } else {
+    json.rolloverType = 'TOTAL_' + selectedRolloverType.value + '_' + uiControl.selectedGameTypeRolloverType
+    const excludeTypes = [];
+    Object.values(gameTypes.value).forEach(item => {
+      if (item.key) {
+        excludeTypes.push(item.key);
+      }
+    });
+
+    json.gameTypes = excludeTypes;
+  }
+  if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
+    json.rollover = uiControl.rollOverAmt
+  }
+  form.rollover = uiControl.rollOverAmt ? uiControl.rollOverAmt : 1;
+  return JSON.stringify(json)
+}
+
+const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  if (!form.siteId) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
+  querySearch(queryString, callback);
+}, 1500); // Adjust debounce time as needed
+
+
+const querySearch = async (queryString, callback) => {
+  if (!queryString) {
+    callback();
+    return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
+  }
+
+  try {
+    const { data: ret } = await getMemberLoginNameList(form.siteId, queryString);
+
+    const results = ret.map(item => ({
+      value: item.value,
+      id: item.id
+    }));
+    callback(results);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    callback();
+  }
 }
 
 async function getSiteConfig(siteId) {
