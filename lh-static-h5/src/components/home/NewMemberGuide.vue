@@ -24,14 +24,15 @@
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
       <img src="../../assets/images/home/guide/step2-flag.png" alt="" class="flag" />
       <div class="content">
-        <div class="subtitle q-mt-xl">
+        <div class="subtitle q-mt-md">
           <div>
             电竞/体育/真人/棋牌
             <br />
             电子/小游戏/彩票/捕鱼
           </div>
         </div>
-        <div class="description">一目了然 轻松娱乐</div>
+        <div class="description q-pb-md">一目了然 轻松娱乐</div>
+        <div class="step-txt">1/4</div>
 
         <div class="next-button" @click="handleNext(3)">好的</div>
       </div>
@@ -44,10 +45,11 @@
       <img src="../../assets/images/home/guide/step3-flag.png" alt="" class="flag" />
       <div class="content">
         <div>
-          <div class="subtitle q-mt-xl" style="font-size: 20px;">各种优惠红包彩金</div>
+          <div class="subtitle q-mt-lg" style="font-size: 20px;">各种优惠红包彩金</div>
         </div>
         <div class="description">现金红包拿到手软 轻松娱乐</div>
 
+        <div class="step-txt">2/4</div>
         <div class="next-button" @click="handleNext(4)">好的</div>
       </div>
     </div>
@@ -56,7 +58,8 @@
         <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" />
         <div class="content">
           <div class="subtitle q-mt-xl" style="font-size: 20px;">点击这里</div>
-          <div class="description">到个人中心</div>
+          <div class="description q-pb-xs">到个人中心</div>
+          <div class="step-txt">3/4</div>
           <div class="next-button" @click="handleNext(5)">好的</div>
         </div>
       </div>
@@ -70,11 +73,12 @@
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" width="100%" />
       <div class="content">
         <div></div>
-        <div class="title" style="font-size: 20px; margin-top: 40px;">点击这里充值</div>
-        <div class="description" style="align-content: start; margin-top: 4px;">开启您的雷火游戏之旅</div>
-        <div class="next-button" @click="closeNewMemerGuide">知道了</div>
+        <div class="title">点击这里充值</div>
+        <div class="description q-pb-xs">开启您的雷火游戏之旅</div>
+        <div class="step-txt">4/4</div>
+        <div class="next-button" @click="closeNewMemerGuide">好的</div>
 
-        <div class="btm-info" @click="goToPromo">点击前往新人活动</div>
+        <div class="btm-info" @click="goToPromo">新人活动</div>
       </div>
     </div>
   </div>
@@ -225,6 +229,11 @@ onMounted(() => {
       align-content: center;
     }
 
+    .step-txt {
+      color: #3aefff;
+      font-size: 12px;
+    }
+
     .btm-info {
       text-decoration: underline;
       cursor: pointer;
@@ -253,6 +262,13 @@ onMounted(() => {
   }
 }
 
+.step1-container {
+  .flag {
+    width: 100px;
+    top: -6px;
+    right: -20px;
+  }
+}
 .step2-container {
   .step2-img {
     width: 100%;
@@ -267,7 +283,8 @@ onMounted(() => {
 
 .step3-container {
   .flag {
-    left: -32px;
+    left: -26px;
+    top: -32px;
   }
 
   .arrow {
@@ -314,6 +331,13 @@ onMounted(() => {
   }
   .content {
     padding-bottom: 54px;
+  }
+  .title{
+    font-size: 20px !important;
+    margin-top: 40px;
+  }
+  .description{
+    align-content: start;
   }
 }
 </style>
