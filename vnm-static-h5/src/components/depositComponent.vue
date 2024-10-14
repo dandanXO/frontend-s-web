@@ -159,7 +159,7 @@
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-md">
+        <div>
           <q-btn
             class="common-large-btn"
             :loading="btnLoading"
@@ -443,10 +443,10 @@ async function loadPrivilege(val) {
         code: "LATER",
         depositMin: 0,
         id: 0,
-        name: t('lang.choose_later'),
+        name: t("lang.choose_later"),
         payTypes: "",
         triggerType: ""
-      })
+      });
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
@@ -455,10 +455,10 @@ async function loadPrivilege(val) {
 }
 
 watch(selectedPrivilege, (newVal) => {
-  if(newVal && newVal.id ===0){
+  if (newVal && newVal.id === 0) {
     selectedPrivilege.value = null;
   }
-})
+});
 
 function selectPayType(value) {
   if (value) {
@@ -619,7 +619,12 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1 || window.location.href.indexOf("tslotf88.com") > -1) {
+        if (
+          window.location.href.indexOf("5svn88.com") > -1 ||
+          window.location.href.indexOf("tfpromo88.com") > -1 ||
+          window.location.href.indexOf("tf88bof.com") > -1 ||
+          window.location.href.indexOf("tslotf88.com") > -1
+        ) {
           otag("event", "deposit");
         }
 
@@ -841,35 +846,33 @@ onMounted(() => {
   background: #4fb2ff !important;
 }
 
-
 .deposit-selection {
   &.q-field {
     border-radius: 10px;
     box-shadow: $shadow-bg;
   }
-  &.q-field--float .q-field__label{
-    display:none;
+  &.q-field--float .q-field__label {
+    display: none;
   }
-  .q-field--auto-height .q-field__native{
+  .q-field--auto-height .q-field__native {
     line-height: 48px;
   }
-  .q-field__control{
+  .q-field__control {
     min-height: 48px;
     height: 48px;
 
-    .q-field__control-container{
+    .q-field__control-container {
       padding-top: 0px;
     }
-    .q-field__marginal{
+    .q-field__marginal {
       height: 48px;
     }
 
-    .q-field__label{
+    .q-field__label {
       line-height: 16px;
     }
   }
 }
-
 
 .deposit-field {
   &.q-field {
@@ -883,14 +886,14 @@ onMounted(() => {
     color: $dark;
   }
 
-  .q-field__control{
+  .q-field__control {
     min-height: 48px;
     height: 48px;
 
-    .q-field__control-container{
+    .q-field__control-container {
       padding-top: 0px;
     }
-    .q-field__marginal{
+    .q-field__marginal {
       height: 48px;
     }
   }
