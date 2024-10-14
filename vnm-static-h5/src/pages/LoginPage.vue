@@ -17,26 +17,11 @@
     </div>
 
     <div class="login-img">
-      <!-- <img src="../assets/images/login/login-img.png" />
-      <div class="login-text">
-        <div class="text-title">{{ $t("lang.login_title") }}</div>
-        <div class="text-desc">{{ $t("lang.login_desc") }}</div>
-      </div> -->
-      <img :src="require(`../assets/images/login/login-img.png`)" />
     </div>
-
-    <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
-    <!--      <q-tab name="login" label="登录" />-->
-    <!--      <q-tab name="register" label="注册" />-->
-    <!--    </q-tabs>-->
 
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div class="login-form-container">
         <div v-if="!loginType" class="">
-          <!-- <q-label>
-            {{ $t("lang.username") }}
-            <em>*</em>
-          </q-label> -->
           <q-input
             rounded
             standout
@@ -58,10 +43,6 @@
             </template>
           </q-input>
 
-          <!-- <q-label>
-            {{ $t("lang.password") }}
-            <em>*</em>
-          </q-label> -->
           <q-input
             ref="passwordRef"
             rounded
@@ -89,10 +70,6 @@
             </template>
           </q-input>
 
-          <!-- <q-label>
-            {{ $t("lang.verification_code") }}
-            <em>*</em>
-          </q-label> -->
           <q-input
             ref="verificationRef"
             rounded
@@ -120,10 +97,6 @@
         </div>
 
         <div v-if="loginType">
-          <!-- <q-label>
-            {{ $t("lang.phone_number") }}
-            <em>*</em>
-          </q-label> -->
           <q-input
             ref="telephoneRef"
             v-model="phoneLoginForm.phoneNumber"
@@ -187,12 +160,6 @@
             />
           </div>
 
-          <!-- <div class="login-via-phone-div">
-            <span @click="loginType = !loginType">
-              {{ loginType ? $t("lang.username_login") : $t("lang.phone_login") }}
-            </span>
-          </div> -->
-
           <div class="text-center">
             <router-link class="forget-pwd-tip" to="/forgot-password">{{ $t("lang.forgot_password") }}</router-link>
           </div>
@@ -224,10 +191,6 @@
         </router-link>
       </div>
     </q-form>
-
-    <!-- <div class="login-bottom-div">
-      <img src="../assets/images/login/login-banner.png" />
-    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -607,17 +570,11 @@ export default defineComponent({
   background: url(../assets/images/login/login-bg-new.png) no-repeat center 0%;
   background-size: 100% auto;
 
-  // height: 100%;
-  // min-height: 100vh;
-
   &.slot {
     background-image: url(../assets/images/login/login-bg-slot.png);
   }
 
   .back-left {
-    // position: absolute;
-    // left: 6px;
-    // top: 20px;
     height: 30px;
     width: 30px;
     text-align: center;
@@ -661,16 +618,9 @@ export default defineComponent({
   }
 
   .login-img {
-    // padding: 0 0px 16px 0px;
-    // display: flex;
-    // justify-content: center;
-    // position: relative;
     height: 25vh;
     min-height: 160px;
     img {
-      // display: block;
-      // width: 110%;
-      // margin-right: -15%;
       display: none;
     }
 
@@ -843,28 +793,6 @@ export default defineComponent({
         font-size: 80%;
       }
     }
-  }
-
-  .header-lang {
-    // .lang-container {
-    //   img {
-    //     display: block;
-    //     width: 30px;
-    //     height: 30px;
-    //   }
-
-    //   :deep(.q-field__marginal) {
-    //     min-height: 40px;
-    //     height: 40px;
-    //     display: none;
-    //   }
-
-    //   :deep(.q-field__native) {
-    //     min-height: 30px;
-    //     height: 30px;
-    //     padding: 0;
-    //   }
-    // }
   }
 
   .header-right {
