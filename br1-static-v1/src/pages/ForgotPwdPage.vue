@@ -7,14 +7,15 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="11"
           ref="phoneRef"
           hide-bottom-space
           v-model="passwordForm.phone"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val && val.length === 10) || $t('form.phone_rules_02')
+            (val) => (val && val.length === 11) || $t('form.phone_rules_02'),
+            (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04'),
           ]"
           outlined
           label-color="brand"
