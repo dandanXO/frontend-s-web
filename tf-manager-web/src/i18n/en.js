@@ -2078,6 +2078,8 @@ export default {
     gender: 'Gender',
     Male: 'Male',
     Female: 'Female',
+    startHour: 'Start Hour',
+    endHour: 'End Hour',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2862,6 +2864,7 @@ export default {
     'Site Platform Report': 'Site Platform Report',
     'Refer Friend Eligibility': 'Refer Friend Eligibility',
     'Member Refer Analysis': 'Member Refer Analysis',
+    'TF Gaming Config': 'TF Gaming Config',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
