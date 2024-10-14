@@ -150,6 +150,11 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("track", "PageView");
       sessionStorage.setItem("FB_PIXEL_ID", "1706878899881106");
       user.isFbPixel = true;
+    } else if (window.location.href.indexOf("6enl6g7v.cc") > -1) {
+      console.log("6enl6g7v + 1906929669800133");
+      fbq("init", "1906929669800133");
+      fbq("track", "PageView");
+      user.isFbPixel = true;
     }
 
     // if (to.name === "referCode") {
