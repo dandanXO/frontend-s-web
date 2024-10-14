@@ -300,7 +300,7 @@ function changePage(page) {
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
-  siteList.list = site.filter(e => e.id === 11)
+  siteList.list = site.filter(e => e.id === 11 || e.id === 19)
 }
 
 async function showEditDialog(row) {
