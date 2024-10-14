@@ -62,8 +62,8 @@
                 </div>
 
                 <div class="right-title">
-                  <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-                  <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                  <img src="../assets/images/inbox/mail-arrow-up-icon.svg" v-if="isSelectedMail === det.id" />
+                  <img src="../assets/images/inbox/mail-arrow-down-icon.svg" v-if="isSelectedMail !== det.id" />
                 </div>
               </div>
               <div class="mailcontents" v-if="isSelectedMail === det.id">
@@ -119,9 +119,8 @@
   </q-page>
 </template>
 <script>
-import { defineComponent, onActivated, onMounted, ref, computed } from "vue";
+import { defineComponent, onMounted, ref, computed } from "vue";
 import moment from "moment";
-import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
@@ -129,8 +128,6 @@ import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
-    RiArrowDownSLine,
-    RiArrowUpSLine
   },
   props: {
     list: {
