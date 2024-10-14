@@ -78,7 +78,7 @@
         <div class="step-txt">4/4</div>
         <div class="next-button" @click="closeNewMemerGuide">好的</div>
 
-        <div class="btm-info" @click="goToPromo">新人活动</div>
+        <div class="btm-info" @click="goToPromo">点击前往新人活动</div>
       </div>
     </div>
   </div>
@@ -138,7 +138,7 @@ const adjustGuide = () => {
 }
 
 const goToPromo = () => {
-  router.push('/promotion?name=lh1-ftd-promo');
+  router.push('/promotion?name=lh1-newplayer-guide');
   closeNewMemerGuide();
 }
 
@@ -237,7 +237,7 @@ onMounted(() => {
     .btm-info {
       text-decoration: underline;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 14px;
       color: white;
     }
 
