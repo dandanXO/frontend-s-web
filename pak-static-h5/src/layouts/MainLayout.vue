@@ -17,11 +17,11 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
-        <router-link :to="prevPage || '/'" class="q-mt-sm">
+        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
           <img src="../assets/images/index/btn-back.png" width="30" />
           <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
           <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
-        </router-link>
+        </a>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
           <div class="title-container">
@@ -306,6 +306,11 @@ export default defineComponent({
               prevPage.value = "/promo";
             }
           }
+        } else if (route.path === "/promotion") {
+          debugger;
+          hasPage.value = true;
+          pageName.value = t("header.promotion");
+          prevPage.value = "";
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");
@@ -544,6 +549,16 @@ export default defineComponent({
       }
     };
 
+    const goToPrevPage = (prePage) => {
+      if (prePage === "/") {
+        router.push("/");
+      } else if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/" + prePage);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
       checkFirstScreen();
@@ -566,7 +581,8 @@ export default defineComponent({
       hasDrawer,
       platformsList,
       changePlatform,
-      languageVal
+      languageVal,
+      goToPrevPage
     };
   }
 });
