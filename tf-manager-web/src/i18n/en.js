@@ -2080,6 +2080,7 @@ export default {
     Female: 'Female',
     startHour: 'Start Hour',
     endHour: 'End Hour',
+    oldBetAmount: 'Old Site Bet Amount',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2865,6 +2866,7 @@ export default {
     'Refer Friend Eligibility': 'Refer Friend Eligibility',
     'Member Refer Analysis': 'Member Refer Analysis',
     'TF Gaming Config': 'TF Gaming Config',
+    'LH Old Data': 'LH Old Data',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

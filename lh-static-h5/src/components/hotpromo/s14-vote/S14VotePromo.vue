@@ -436,7 +436,7 @@ const allowedVoteRangeRule = (val) => {
 const castVoteValidationRules = [allowedVoteRangeRule];
 const $q = useQuasar();
 const voteRef = ref(null);
-const activeTab = ref(1);
+const activeTab = ref(2);
 const castVoteFormRef = ref();
 const isSubmitting = ref(false);
 const isCastVoteModalVisible = ref(false);
@@ -460,14 +460,6 @@ const votesData = ref({
 // Tabs data
 const tabs = [
   {
-    label: "瑞士轮",
-    period: 1,
-    date: "瑞士轮阶段活动投票时间：10.03~10.14日02:00 截止",
-    tabtitle: "BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛",
-    tabdetail:
-      "活动期间，统计八支晋级队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；"
-  },
-  {
     label: "淘汰赛",
     period: 2,
     date: "淘汰赛阶段活动投票时间：10.17~10.27",
@@ -482,6 +474,14 @@ const tabs = [
     tabtitle: "BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠",
     tabdetail:
       "活动期间，统计决赛冠军队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍获得冠军后即可瓜分奖金池彩金；"
+  },
+  {
+    label: "瑞士轮",
+    period: 1,
+    date: "瑞士轮阶段活动投票时间：10.03~10.14日02:00 截止",
+    tabtitle: "BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛",
+    tabdetail:
+      "活动期间，统计八支晋级队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；"
   }
 ];
 // const castVote = ({ teamId, teamName, teamNameLocal }) => {
@@ -724,6 +724,7 @@ onMounted(() => {
   color: #ffffff;
   background: url(images/activetab.png) no-repeat center center;
   background-size: cover;
+  order: -1;
 }
 
 .tabs-content {

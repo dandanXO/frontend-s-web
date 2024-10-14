@@ -2079,6 +2079,7 @@ export default {
     Female: '女性',
     startHour: '开始小时',
     endHour: '结束小时',
+    oldBetAmount: '老站流水金额',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2813,6 +2814,7 @@ export default {
     'Refer Friend Eligibility': '全民代理',
     'Member Refer Analysis': '邀请返佣分析',
     'TF Gaming Config': 'TF Gaming 设置',
+    'LH Old Data': '雷火老站数据',
   },
   google: {
     google_auth_menu: '谷歌验证',

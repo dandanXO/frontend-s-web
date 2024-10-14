@@ -1,7 +1,7 @@
 <template>
   <div>
-     <!-- Tab headers -->
-     <div class="tabs-header">
+    <!-- Tab headers -->
+    <div class="tabs-header">
       <div
         v-for="(tab, index) in tabs"
         :key="tab.period"
@@ -14,13 +14,16 @@
     </div>
     <div class="dates">
       <div class="datecolumn">
-        <span class="title">瑞士轮阶段：</span>10月3日~10月14日
+        <span class="title">瑞士轮阶段：</span>
+        10月3日~10月14日
       </div>
       <div class="datecolumn">
-        <span class="title">淘汰赛阶段：</span>10月17日~10月27日
+        <span class="title">淘汰赛阶段：</span>
+        10月17日~10月27日
       </div>
       <div class="datecolumn">
-        <span class="title">冠亚军决赛：</span>11月2日22:00
+        <span class="title">冠亚军决赛：</span>
+        11月2日22:00
       </div>
     </div>
 
@@ -30,16 +33,22 @@
         <div class="center-numbers">
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
-            <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
+            <img style="max-height: 40px; margin-top: 15px" src="../s14-vote/images/reward.png" />
           </div>
         </div>
-        
-        <div class="main-title-box">{{selectedDate}}</div>
+
+        <div class="main-title-box">{{ selectedDate }}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
-            <div class="point">参赛队伍：{{votesData.votesList.length}}支</div>
-            <div class="point">剩余票数：<span id="myVotes">{{ votesData.myVotes }} 次</span><span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">「投票记录」</span></div>
+            <div class="point">参赛队伍：{{ votesData.votesList.length }}支</div>
+            <div class="point">
+              剩余票数：
+              <span id="myVotes">{{ votesData.myVotes }} 次</span>
+              <span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">
+                「投票记录」
+              </span>
+            </div>
             <!-- <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div> -->
           </div>
           <div class="teams-list" id="countrylist">
@@ -47,25 +56,24 @@
               <div class="teams-item-bottom-pattern"></div>
               <div class="c-flagname">
                 <div class="c-price">{{ votesListItem.totalVotes }} 票</div>
-                <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl">
-                </div>
+                <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl" /></div>
                 <div class="c-name">{{ votesListItem.teamNameLocal }}</div>
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
                   <el-form-item prop="votes">
                     <el-input-number :controls="false" v-model="votesListItem.votes" min="0" max="10" />
                   </el-form-item>
                 </el-form>
-                
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
-              <div class="c-button"  @click.prevent="submit(votesListItem)">投票</div>
+              <div class="c-button" @click.prevent="submit(votesListItem)">投票</div>
             </div>
           </div>
         </div>
@@ -74,17 +82,23 @@
         <div class="center-numbers">
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
-            <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
+            <img style="max-height: 40px; margin-top: 15px" src="../s14-vote/images/reward.png" />
           </div>
         </div>
-        
+
         <!-- <div class="main-title-box">淘汰赛阶段：10月17日~10月27日</div> -->
-        <div class="main-title-box">{{selectedDate}}</div>
+        <div class="main-title-box">{{ selectedDate }}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
-            <div class="point">参赛队伍：{{votesData.votesList.slice(0, 8).length}}支</div>
-            <div class="point">剩余票数：<span id="myVotes">{{ votesData.myVotes }} 次</span><span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">「投票记录」</span></div>
+            <div class="point">参赛队伍：{{ votesData.votesList.slice(0, 8).length }}支</div>
+            <div class="point">
+              剩余票数：
+              <span id="myVotes">{{ votesData.myVotes }} 次</span>
+              <span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">
+                「投票记录」
+              </span>
+            </div>
             <!-- <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div> -->
           </div>
           <div class="teams-list" id="countrylist">
@@ -92,25 +106,24 @@
               <div class="teams-item-bottom-pattern"></div>
               <div class="c-flagname">
                 <div class="c-price">{{ votesListItem.totalVotes }} 票</div>
-                <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl">
-                </div>
+                <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl" /></div>
                 <div class="c-name">{{ votesListItem.teamNameLocal }}</div>
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
                   <el-form-item prop="votes">
                     <el-input-number :controls="false" v-model="votesListItem.votes" min="0" max="10" />
                   </el-form-item>
                 </el-form>
-                
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
-              <div class="c-button"  @click.prevent="submit(votesListItem)">投票</div>
+              <div class="c-button" @click.prevent="submit(votesListItem)">投票</div>
             </div>
           </div>
         </div>
@@ -121,16 +134,22 @@
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
             <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
-            <img style="max-height: 40px; margin-top: 15px;" src="../s14-vote/images/reward.png">
+            <img style="max-height: 40px; margin-top: 15px" src="../s14-vote/images/reward.png" />
           </div>
         </div>
-        
-        <div class="main-title-box">{{selectedDate}}</div>
+
+        <div class="main-title-box">{{ selectedDate }}</div>
         <div class="teams-wrapper pattern-wrapper">
           <div class="pattern-wrapper-bottom"></div>
           <div class="table-header">
-            <div class="point">参赛队伍：{{votesData.votesList.slice(0, 2).length}}支</div>
-            <div class="point">剩余票数：<span id="myVotes">{{ votesData.myVotes }} 次</span><span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">「投票记录」</span></div>
+            <div class="point">参赛队伍：{{ votesData.votesList.slice(0, 2).length }}支</div>
+            <div class="point">
+              剩余票数：
+              <span id="myVotes">{{ votesData.myVotes }} 次</span>
+              <span class="blue" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">
+                「投票记录」
+              </span>
+            </div>
             <!-- <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div> -->
           </div>
           <div class="teams-final" id="countrylist">
@@ -138,24 +157,23 @@
               <div class="teams-item-bottom-pattern"></div>
               <div class="c-flagname">
                 <div class="c-price">{{ votesListItem.totalVotes }}票</div>
-                <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl">
-                </div>
+                <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl" /></div>
               </div>
               <div class="flexcast">
                 <!-- Vote decrement button -->
                 <div class="btn" @click="votesListItem.votes > 0 ? votesListItem.votes-- : null">-</div>
-                
+
                 <!-- Input for the number of votes (bound to the specific list item) -->
                 <el-form :model="votesListItem">
                   <el-form-item prop="votes">
                     <el-input-number :controls="false" v-model="votesListItem.votes" min="0" max="10" />
                   </el-form-item>
                 </el-form>
-                
+
                 <!-- Vote increment button -->
                 <div class="btn" @click="votesListItem.votes < 10 ? votesListItem.votes++ : null">+</div>
               </div>
-              <div class="c-button"  @click.prevent="submit(votesListItem)">投票</div>
+              <div class="c-button" @click.prevent="submit(votesListItem)">投票</div>
             </div>
           </div>
         </div>
@@ -168,74 +186,90 @@
       </div>
       <div class="table">
         <div class="table-header">
-          <div class="table-headertext">
-            注：获得的投票票数可在活动期间时间段内任意投票，活动结束后，票数清零；
-          </div>
+          <div class="table-headertext">注：获得的投票票数可在活动期间时间段内任意投票，活动结束后，票数清零；</div>
         </div>
         <div class="table-content">
           <table>
-              <tr>
-                <td>单笔存款</td>
-                <td>获得票数</td>
-                <td>当日票数上限</td>
-              </tr>
-              <tr>
-                <td>每日登陆</td>
-                <td>1</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>≥200</td>
-                <td>1</td>
-                <td>3</td>
-              </tr>
-              <tr>
-                <td>≥500</td>
-                <td>1</td>
-                <td>5</td>
-              </tr>
-              <tr>
-                <td>≥1,500</td>
-                <td>2</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <td>≥3,000</td>
-                <td>5</td>
-                <td>35</td>
-              </tr>
-              <tr>
-                <td>≥5,000</td>
-                <td>9</td>
-                <td>72</td>
-              </tr>
-              <tr>
-                <td>≥10,000</td>
-                <td>20</td>
-                <td>200</td>
-              </tr>
+            <tr>
+              <td>单笔存款</td>
+              <td>获得票数</td>
+              <td>当日票数上限</td>
+            </tr>
+            <tr>
+              <td>每日登陆</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>≥200</td>
+              <td>1</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>≥500</td>
+              <td>1</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>≥1,500</td>
+              <td>2</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>≥3,000</td>
+              <td>5</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>≥5,000</td>
+              <td>9</td>
+              <td>72</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>20</td>
+              <td>200</td>
+            </tr>
           </table>
         </div>
       </div>
       <RouterLink to="/center/deposit" class="votebtn">
-        <img src="../s14-vote/images/votebtn.png">
+        <img src="../s14-vote/images/votebtn.png" />
       </RouterLink>
     </div>
     <div class="column">
       <div class="main-title-box">活动规则</div>
       <div class="terms">
         <ol>
-          <li>活动期间，会员可根据完成的条件获得相应的票数。获得的票数可自由分配给任意队伍进行投票。当日完成获取票数的要求后，即可在活动页面自动获得对应票数。若当日票数已达到对应档位的数量上限，则无法继续获得更多票数；</li>
-          <li v-if="activeTab === 1">瑞士轮奖金池结算：（200,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
-          <span class="eg">例：用户投注BLG队伍100票，BLG队伍在瑞士轮阶段晋级并且8支晋级队伍总共获得150,000票数，那么用户可获得（200,000➗150000）*100=133元彩金；</span></li>
-          <li v-if="activeTab === 2">淘汰赛奖金池结算：（500,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
-            <span class="eg">例：用户投注BLG队伍100票，BLG队伍在淘汰赛阶段决赛并且2支晋级队伍总共获得300,000票数，那么用户可获得（500,000➗300000）*100=166元彩金；</span></li>
-            <li v-if="activeTab === 3">决赛阶段赛奖金池结算：（1000,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
-              <span class="eg">例：用户投注BLG队伍100票，BLG队伍在决赛阶段获得冠军总共获得500,000票数，那么用户可获得（1000,000➗500,000）*100=200元彩金；</span></li>
-          <li> 根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
-          <li> 此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</li>
-          <li> 为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
-
+          <li>
+            活动期间，会员可根据完成的条件获得相应的票数。获得的票数可自由分配给任意队伍进行投票。当日完成获取票数的要求后，即可在活动页面自动获得对应票数。若当日票数已达到对应档位的数量上限，则无法继续获得更多票数；
+          </li>
+          <li v-if="activeTab === 1">
+            瑞士轮奖金池结算：（200,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
+            <span class="eg">
+              例：用户投注BLG队伍100票，BLG队伍在瑞士轮阶段晋级并且8支晋级队伍总共获得150,000票数，那么用户可获得（200,000➗150000）*100=133元彩金；
+            </span>
+          </li>
+          <li v-if="activeTab === 2">
+            淘汰赛奖金池结算：（500,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
+            <span class="eg">
+              例：用户投注BLG队伍100票，BLG队伍在淘汰赛阶段决赛并且2支晋级队伍总共获得300,000票数，那么用户可获得（500,000➗300000）*100=166元彩金；
+            </span>
+          </li>
+          <li v-if="activeTab === 3">
+            决赛阶段赛奖金池结算：（1000,000➗晋级队伍总票数）*用户投票数量=单票彩金。彩金于赛事阶段结束后次日24小时内派发，彩金3倍流水即可提款；
+            <span class="eg">
+              例：用户投注BLG队伍100票，BLG队伍在决赛阶段获得冠军总共获得500,000票数，那么用户可获得（1000,000➗500,000）*100=200元彩金；
+            </span>
+          </li>
+          <li>
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+          </li>
+          <li>
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
+          </li>
+          <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ol>
       </div>
     </div>
@@ -257,9 +291,9 @@
       </el-form>
     </el-dialog> -->
 
-    <el-dialog align-center v-model="isVoteRecordModalVisible" width="450" style="background: unset;">
+    <el-dialog align-center v-model="isVoteRecordModalVisible" width="450" style="background: unset">
       <div class="cast-vote-container">
-        <div class=title>投票记录</div>
+        <div class="title">投票记录</div>
         <div class="vote-records">
           <table class="table-titles">
             <tr>
@@ -269,8 +303,8 @@
             </tr>
             <tr v-for="(voteRecord, voteIndex) in paginatedVoteRecords" :key="voteIndex">
               <td>{{ voteRecord.teamNameLocal }}</td>
-              <td>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</td>
-              <td style="font-family: 'HYYakuHei800'; color:#70CBFB;">{{ voteRecord.votes }} 票</td>
+              <td>{{ moment(voteRecord.voteTime, "M/D/YY, h:mm A").format("YYYY年M月D日HH:mm") }}</td>
+              <td style="font-family: 'HYYakuHei800'; color: #70cbfb">{{ voteRecord.votes }} 票</td>
             </tr>
           </table>
         </div>
@@ -286,7 +320,7 @@
             :total="votesData.votesRecord.data.length"
           />
           <div class="page-info" v-if="totalPages > 1">
-            {{ votesData.votesRecord.current + '/' + totalPages }}
+            {{ votesData.votesRecord.current + "/" + totalPages }}
           </div>
         </div>
       </div>
@@ -320,16 +354,16 @@ const castVoteFormValidationRules = {
 };
 
 // Refs and reactive data
-const activeTab = ref(1);
+const activeTab = ref(2);
 const isSubmitting = ref(false);
 const isCastVoteModalVisible = ref(false);
 const isVoteRecordModalVisible = ref(false);
 const castVoteFormRef = ref(null);
 const castVoteFormData = reactive({
   teamId: undefined,
-  teamName: '',
-  teamNameLocal: '',
-  votes: '1'
+  teamName: "",
+  teamNameLocal: "",
+  votes: "1"
 });
 
 const votesData = ref({
@@ -345,9 +379,30 @@ const votesData = ref({
 
 // Tabs data
 const tabs = [
-  { label: "瑞士轮", period: 1, date: '瑞士轮阶段活动投票时间：10.03~10.14日02:00 截止', tabtitle: 'BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛', tabdetail: '活动期间，统计八支晋级队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；' },
-  { label: "淘汰赛", period: 2, date: '淘汰赛阶段活动投票时间：10.17~10.27', tabtitle: 'BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛', tabdetail: '活动期间，统计2支晋级决赛队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；' },
-  { label: "冠亚赛", period: 3, date: '决赛赛阶段活动投票时间：10月28日00:00至11月2日22:00截止', tabtitle: 'BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠', tabdetail: '活动期间，统计决赛冠军队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍获得冠军后即可瓜分奖金池彩金；' }
+  {
+    label: "淘汰赛",
+    period: 2,
+    date: "淘汰赛阶段活动投票时间：10.17~10.27",
+    tabtitle: "BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛",
+    tabdetail:
+      "活动期间，统计2支晋级决赛队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；"
+  },
+  {
+    label: "冠亚赛",
+    period: 3,
+    date: "决赛赛阶段活动投票时间：10月28日00:00至11月2日22:00截止",
+    tabtitle: "BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠",
+    tabdetail:
+      "活动期间，统计决赛冠军队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍获得冠军后即可瓜分奖金池彩金；"
+  },
+  {
+    label: "瑞士轮",
+    period: 1,
+    date: "瑞士轮阶段活动投票时间：10.03~10.14日02:00 截止",
+    tabtitle: "BO1瑞士轮参与队伍：16支队伍中选8支队伍进入淘汰赛",
+    tabdetail:
+      "活动期间，统计八支晋级队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；"
+  }
 ];
 
 // Function to handle casting votes
@@ -360,35 +415,34 @@ const castVote = ({ teamId, teamName, teamNameLocal }) => {
 
 // Submit vote function
 const submit = async (voteData) => {
+  if (voteData.votes === 0) {
+    notify({
+      type: "error",
+      message: "请输入票数"
+    });
+    return;
+  }
+  if (Number(voteData.votes) > votesData.value.myVotes) {
+    notify({ type: "error", message: "投票次数不足" });
+    return;
+  }
+  isSubmitting.value = true;
+  const params = { teamId: voteData.id, votes: Number(voteData.votes) };
+  const res = await poolPrizeCastVote(params);
+  if (res.code === 0) {
+    notify({ type: "success", message: "投票成功" });
+    isCastVoteModalVisible.value = false;
+    if (votesData.value.myVotes > 0) votesData.value.myVotes--;
 
-    if (voteData.votes === 0) {
-      notify({
-        type: "error",
-        message: "请输入票数",
-      });
-      return;
-    }
-    if (Number(voteData.votes) > votesData.value.myVotes) {
-      notify({ type: "error", message: "投票次数不足" });
-      return;
-    }
-      isSubmitting.value = true;
-      const params = { teamId: voteData.id, votes: Number(voteData.votes) };
-      const res = await poolPrizeCastVote(params);
-      if (res.code === 0) {
-        notify({ type: "success", message: "投票成功" });
-        isCastVoteModalVisible.value = false;
-        if (votesData.value.myVotes > 0) votesData.value.myVotes--;
-        
-        voteData.votes = 0;
-        setTimeout(()=>{
-          loadVoteTeam();
-          isSubmitting.value = false;
-        },2000)
-      } else {
-        notify({ type: "error", message: res.message });
-        isSubmitting.value = false;
-      }
+    voteData.votes = 0;
+    setTimeout(() => {
+      loadVoteTeam();
+      isSubmitting.value = false;
+    }, 2000);
+  } else {
+    notify({ type: "error", message: res.message });
+    isSubmitting.value = false;
+  }
 };
 
 // Load voting data
@@ -401,10 +455,10 @@ const loadVoteTeam = () => {
         if (voteItems) {
           const { countryImgUrl, teamNameLocal } = voteItems;
           // return Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
-          return { 
-            ...voteRecordItem, 
-            countryImgUrl, 
-            teamNameLocal 
+          return {
+            ...voteRecordItem,
+            countryImgUrl,
+            teamNameLocal
           };
         }
         return []; // Return an empty array to exclude unmatched items
@@ -426,7 +480,10 @@ const loadVoteTeam = () => {
 
 const paginatedVoteRecords = computed(() => {
   const votesRecord = votesData.value.votesRecord;
-  return votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize);
+  return votesRecord.data.slice(
+    (votesRecord.current - 1) * votesRecord.pageSize,
+    votesRecord.current * votesRecord.pageSize
+  );
 });
 
 const teamRows = computed(() => {
@@ -446,7 +503,7 @@ const teamRows = computed(() => {
 });
 
 const selectedTabDetails = computed(() => {
-  return tabs.find(tab => tab.period === activeTab.value) || {};
+  return tabs.find((tab) => tab.period === activeTab.value) || {};
 });
 
 const selectedDate = computed(() => selectedTabDetails.value.date);
@@ -457,7 +514,7 @@ const totalPages = computed(() => {
   return Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
 });
 
-const isClickable = ref(true); 
+const isClickable = ref(true);
 const checkPeriod = (tabClicked) => {
   if (!isClickable.value) return; // Prevent clicks if not clickable
   if (tabClicked > activeTab.value) {
@@ -465,14 +522,14 @@ const checkPeriod = (tabClicked) => {
   } else if (tabClicked < activeTab.value) {
     notify({ type: "error", message: "该赛段已结束" });
   } else {
-    activeTab.value = tabClicked
+    activeTab.value = tabClicked;
   }
   // Disable clicking for 2 seconds
   isClickable.value = false;
   setTimeout(() => {
     isClickable.value = true; // Re-enable clicking after 2 seconds
   }, 2000);
-}
+};
 onMounted(() => {
   if (!store.token) return;
   loadVoteTeam();
@@ -482,8 +539,10 @@ onMounted(() => {
 <style lang="scss">
 .cast-vote-container {
   height: 296px;
-  background: url(images/dialogbg.png)no-repeat center center;
-  .el-pagination.is-background .el-pager li, .el-pagination.is-background .btn-prev, .el-pagination.is-background .btn-next {
+  background: url(images/dialogbg.png) no-repeat center center;
+  .el-pagination.is-background .el-pager li,
+  .el-pagination.is-background .btn-prev,
+  .el-pagination.is-background .btn-next {
     // border: 2px solid #fff;
     // width: 32px;
     // height: 32px;
@@ -493,17 +552,17 @@ onMounted(() => {
     // align-items: center;
     // color: #fff;
     // background-color: transparent;
-    
-    border: 0;
-    background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66ACFF 100%);
 
-      margin-top: 5px;
+    border: 0;
+    background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66acff 100%);
+
+    margin-top: 5px;
   }
-    .el-pagination.is-background .btn-prev:disabled,
-    .el-pagination.is-background .btn-next:disabled {
-      background: #0E3B87;
-      color: #FFFFFF80;
-    }
+  .el-pagination.is-background .btn-prev:disabled,
+  .el-pagination.is-background .btn-next:disabled {
+    background: #0e3b87;
+    color: #ffffff80;
+  }
   .el-pagination__total {
     color: #fff;
     display: none;
@@ -524,13 +583,13 @@ onMounted(() => {
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #70CBFB; /* Simplified color */
+    background-color: #70cbfb; /* Simplified color */
   }
 
   /* For Firefox */
   * {
     scrollbar-width: thin; /* Simplified width */
-    scrollbar-color: #70CBFB transparent; /* Thumb color, no track background */
+    scrollbar-color: #70cbfb transparent; /* Thumb color, no track background */
   }
 }
 </style>
@@ -542,7 +601,7 @@ onMounted(() => {
 
 .tabs-header {
   display: flex;
-  background: url(images/tabbg.png)no-repeat center center;
+  background: url(images/tabbg.png) no-repeat center center;
   background-size: contain;
   height: 70px;
   justify-content: flex-start;
@@ -552,29 +611,30 @@ onMounted(() => {
 }
 
 .tab-item {
-    border-radius: 5px 5px 0 0;
-    cursor: pointer;
-    height: 40px;
-    width: 23%;
-    margin-top: 5px;
-    margin-left: 25px;
-    color: #52ACFF;
-    text-align: center;
-    font-size: 20px;
-    line-height: 40px;
-    font-weight: bold;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  height: 40px;
+  width: 23%;
+  margin-top: 5px;
+  margin-left: 25px;
+  color: #52acff;
+  text-align: center;
+  font-size: 20px;
+  line-height: 40px;
+  font-weight: bold;
 }
 
 .tab-item.active {
   color: #ffffff;
-  background: url(images/activetab.png)no-repeat center center;
+  background: url(images/activetab.png) no-repeat center center;
   background-size: cover;
+  order: -1;
 }
 
 .tabs-content {
   padding: 20px;
   font-size: 20px;
-  font-family: 'HYYakuHei800';
+  font-family: "HYYakuHei800";
 }
 .dates {
   display: flex;
@@ -583,10 +643,10 @@ onMounted(() => {
   margin: 20px auto 0;
   justify-content: space-around;
   .datecolumn {
-    background: url(images/dateborder.png)no-repeat left center;
+    background: url(images/dateborder.png) no-repeat left center;
     background-size: cover;
     padding: 12px;
-    color: #8DC6FF;
+    color: #8dc6ff;
     font-size: 18px;
     span {
       color: #ffffff;
@@ -600,9 +660,9 @@ onMounted(() => {
 
   .title {
     text-align: left;
-    background: linear-gradient(180deg, #FFFFFF 51.04%, #5AB0FF 100%);
+    background: linear-gradient(180deg, #ffffff 51.04%, #5ab0ff 100%);
     padding: 5px 10px;
-    font-family: 'HYYakuHei800';
+    font-family: "HYYakuHei800";
     font-size: 25px;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -616,19 +676,20 @@ onMounted(() => {
     padding: 0 10px;
     color: #ffffff;
     overflow: auto;
-    height:190px;
+    height: 190px;
     table {
       width: 100%;
       text-align: center;
     }
     .table-titles {
-      td, th {
+      td,
+      th {
         padding: 10px;
       }
       tr:first-child {
         position: sticky;
         top: 0;
-        background: url(images/tblbg.png)no-repeat center center;
+        background: url(images/tblbg.png) no-repeat center center;
         background-size: contain;
         background-color: #002a4d;
       }
@@ -639,8 +700,8 @@ onMounted(() => {
     }
 
     .vote-record-item {
-      background-color: #0A243E;
-      border: 2px solid #00EAFE4D;
+      background-color: #0a243e;
+      border: 2px solid #00eafe4d;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -685,12 +746,20 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: 'DIN';
+  font-family: "DIN";
 }
 
-
 .winner-bar {
-  background: conic-gradient(from 0deg at 50% 50%, #FFFFFF 0deg, #C7D0D4 76.84deg, #4F5F68 89.71deg, #2C3443 180deg, #4F6468 268.86deg, #C7CFD4 282.59deg, #FFFFFF 360deg);
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    #ffffff 0deg,
+    #c7d0d4 76.84deg,
+    #4f5f68 89.71deg,
+    #2c3443 180deg,
+    #4f6468 268.86deg,
+    #c7cfd4 282.59deg,
+    #ffffff 360deg
+  );
   padding: 3px;
   border-radius: 15px;
   width: 80%;
@@ -700,7 +769,7 @@ onMounted(() => {
   &__bg {
     border-radius: 15px;
     padding: 3px;
-    background: linear-gradient(90deg, #0C8AFF 0%, #00F5E6 50%, #0C8AFF 100%);
+    background: linear-gradient(90deg, #0c8aff 0%, #00f5e6 50%, #0c8aff 100%);
   }
   &__inner {
     background: #070030;
@@ -710,7 +779,7 @@ onMounted(() => {
     border-radius: 15px;
   }
   &__text {
-    background: linear-gradient(180deg, #03C3FF 0%, #B8EEFF 50%, #03C3FF 100%);
+    background: linear-gradient(180deg, #03c3ff 0%, #b8eeff 50%, #03c3ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -719,60 +788,59 @@ onMounted(() => {
     font-size: 24px;
     font-weight: 600;
     line-height: 33.6px;
-
   }
-
 }
-.promo-title{
+.promo-title {
   text-align: center;
-  width:100%;
+  width: 100%;
 
-  img{
+  img {
     width: 750px;
   }
 }
 
-.content-info-item{
+.content-info-item {
   color: #fff;
   margin-bottom: 10px;
 }
 
-.content-info{
+.content-info {
   font-size: 16px;
   width: 1200px;
   margin: 10px auto;
 }
 
-.promo-rules-div{
+.promo-rules-div {
   width: 1200px;
   margin: 10px auto;
   background-image: url("../s14-vote/images/rule-board.png");
   padding: 40px 20px;
   background-size: 100% 100%;
 
-  p{
+  p {
     color: #fff;
     font-size: 16px;
     margin-bottom: 14px;
   }
 }
 
-.content-table{
+.content-table {
   color: #fff;
   width: 1200px;
   border-collapse: collapse;
   margin: 20px auto 50px;
   font-size: 18px;
 
-  th, td {
+  th,
+  td {
     border: 1px solid #fff;
     padding: 12px 10px;
     text-align: center;
   }
 
-  thead{
-    background: linear-gradient(180deg, #00E9FE 0%, #0A8AFF 100%);
-    color:#102628;
+  thead {
+    background: linear-gradient(180deg, #00e9fe 0%, #0a8aff 100%);
+    color: #102628;
   }
 }
 
@@ -787,9 +855,9 @@ onMounted(() => {
 .center-numbers .center-number {
   margin-left: 6px;
   font-weight: bold;
-  font-family: 'HYYAKUHEI800';
-  color: #FFCF02;
-  text-shadow: 4px 0px #FC8025;
+  font-family: "HYYAKUHEI800";
+  color: #ffcf02;
+  text-shadow: 4px 0px #fc8025;
   font-size: 72px;
   font-weight: 700;
   line-height: 72px;
@@ -798,10 +866,9 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 .main-title-box {
-  background: url(images/headerbg.png)no-repeat left center;
+  background: url(images/headerbg.png) no-repeat left center;
   background-size: contain;
   height: 50px;
   max-width: 1200px;
@@ -818,7 +885,7 @@ onMounted(() => {
   &:before {
     left: -30px;
     top: 15px;
-    background: url(images/smtri.png)no-repeat center center;
+    background: url(images/smtri.png) no-repeat center center;
     position: absolute;
     width: 20px;
     height: 20px;
@@ -836,67 +903,67 @@ onMounted(() => {
   margin: 15px auto 40px;
 }
 .terms {
-  font-family: 'HYYakuHei300';
+  font-family: "HYYakuHei300";
   font-size: 20px;
   line-height: 45px;
   color: #ffffff;
   margin: 15px auto;
   max-width: 1200px;
   background: url(http://localhost:8090/static/img/box.eadefdb4.png) no-repeat center center;
-    background-size: 100% 100%;
-    padding: 20px 30px 20px 20px;
-    .eg {
-      display: block;
-    }
+  background-size: 100% 100%;
+  padding: 20px 30px 20px 20px;
+  .eg {
+    display: block;
+  }
 }
 
 .table {
   max-width: 1200px;
   margin: 20px auto;
-  background: url(images/box.png)no-repeat center center;
+  background: url(images/box.png) no-repeat center center;
   background-size: 100% 100%;
   font-size: 20px;
   .table-content {
     padding: 10px;
     font-family: "HYYakuHei300";
-  table {
-    width: 100%;
-    text-align: center;
-    color: #ffffff;
-    tr {
-      &:first-child {
-        td {
-          border-top: 0;
-        }
-      }
-      &:last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-      td {
-        padding: 10px;
-        border: 1px solid #11234F;
+    table {
+      width: 100%;
+      text-align: center;
+      color: #ffffff;
+      tr {
         &:first-child {
-          border-left: 0;
+          td {
+            border-top: 0;
+          }
         }
         &:last-child {
-          border-right: 0;
+          td {
+            border-bottom: 0;
+          }
+        }
+        td {
+          padding: 10px;
+          border: 1px solid #11234f;
+          &:first-child {
+            border-left: 0;
+          }
+          &:last-child {
+            border-right: 0;
+          }
         }
       }
     }
   }
-  }
 }
 .table-header {
   font-family: "HYYakuHei400";
-  background: url(images/tblheaderbg.png)no-repeat center center;
+  background: url(images/tblheaderbg.png) no-repeat center center;
   min-height: 50px;
   padding: 10px 20px;
   .table-headertext {
     padding-left: 20px;
     font-size: 20px;
-    background: linear-gradient(180deg, #FFFFFF 0%, #E8F8FF 69.55%, #0066FF 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #e8f8ff 69.55%, #0066ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -908,11 +975,10 @@ onMounted(() => {
   img {
     width: 100%;
   }
-
 }
 .teams-wrapper {
-  background: #00192B33;
-  background: url(images/box.png)no-repeat center center;
+  background: #00192b33;
+  background: url(images/box.png) no-repeat center center;
   background-size: 100% 100%;
   max-width: 1200px;
   margin: 20px auto;
@@ -925,19 +991,18 @@ onMounted(() => {
     align-items: center;
     .point {
       font-family: "HYYakuHei400";
-    font-size: 20px;
-    padding-left: 20px;
-    background: linear-gradient(180deg, #E8F8FF 49.55%, #0066FF 100%);
+      font-size: 20px;
+      padding-left: 20px;
+      background: linear-gradient(180deg, #e8f8ff 49.55%, #0066ff 100%);
 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    .blue {
-      color: #69B4FF;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      .blue {
+        color: #69b4ff;
+      }
     }
   }
-  }
 }
-
 
 //.pattern-wrapper:before,
 //.pattern-wrapper:after,
@@ -984,7 +1049,7 @@ onMounted(() => {
   font-weight: normal;
   color: #fff;
   span {
-    color: #00E9FE;
+    color: #00e9fe;
   }
 
   .vote-record-btn {
@@ -1034,25 +1099,25 @@ onMounted(() => {
     overflow: hidden;
     position: relative;
     font-family: "HYYakuHei400";
-      .c-flagname {
-        padding: 5px 0px;
-        border-radius: 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: row-reverse;
-        width: 100%;
-        gap: 40px;
-        font-family: 'YouSheBiaoTiHei';
-        font-weight: normal;
+    .c-flagname {
+      padding: 5px 0px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row-reverse;
+      width: 100%;
+      gap: 40px;
+      font-family: "YouSheBiaoTiHei";
+      font-weight: normal;
     }
     .c-price {
-      background: linear-gradient(180deg, #FFFFFF 0%, #CAE2FF 74.24%, #8FACD7 102.38%);
+      background: linear-gradient(180deg, #ffffff 0%, #cae2ff 74.24%, #8facd7 102.38%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: #ffffff;
       background-clip: text;
       // text-shadow: 20px 45px #000000AA;
-      text-shadow: 20px 35px rgba(0, 0, 0, 0.4); 
+      text-shadow: 20px 35px rgba(0, 0, 0, 0.4);
       font-size: 58px;
       padding-right: 15px;
     }
@@ -1070,38 +1135,36 @@ onMounted(() => {
       .c-flagname {
         flex-direction: row;
       }
-
     }
     .c-button {
-      border: 0.82px solid #2B9EFF;
+      border: 0.82px solid #2b9eff;
       padding: 5px 20px;
       border-radius: 4px;
-      background: #0075FF29;
+      background: #0075ff29;
       display: block;
       margin-top: 10px;
       width: 80%;
       text-align: center;
       color: #ffffff;
       line-height: 16px;
-      font-family: 'PingFang SC';
-    max-width: 90px;
+      font-family: "PingFang SC";
+      max-width: 90px;
     }
-    
-  .c-flag {
-    // background: #eeeee4;
-    // border: 5px solid #53ABFF;
-    // border-radius: 50%;
-    height: 80px;
-    width: 80px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img {
-      width: 100%;
-    }
-  }
 
+    .c-flag {
+      // background: #eeeee4;
+      // border: 5px solid #53ABFF;
+      // border-radius: 50%;
+      height: 80px;
+      width: 80px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -1149,11 +1212,10 @@ onMounted(() => {
   // border-radius: 10px;
   // color: #498BCB;
   background: #0037ff4a;
-
 }
 
 .teams-wrapper .teams-list .teams-item .c-flagname {
-  background: #00F0FF0D;
+  background: #00f0ff0d;
   padding: 5px 0px;
   border-radius: 6px;
   display: flex;
@@ -1162,7 +1224,6 @@ onMounted(() => {
   flex-direction: column;
   width: 100%;
   gap: 5px;
-
 }
 .teams-wrapper .teams-list .teams-item .c-flag {
   // background: #eeeee4;
@@ -1188,14 +1249,14 @@ onMounted(() => {
 }
 .flexcast {
   display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-    margin: 10px 0 auto;
-    width: 80%;
-    text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  margin: 10px 0 auto;
+  width: 80%;
+  text-align: center;
   .btn {
-    background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66ACFF 100%);
+    background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66acff 100%);
     color: #ffffff;
     padding: 3px 5px;
     border-radius: 3px;
@@ -1231,14 +1292,14 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, #00E0FF 0%, #0075FF 100%);
+  background: linear-gradient(180deg, #00e0ff 0%, #0075ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   gap: 2px;
   &:before {
     content: "";
-    background: url("../../../assets/images/promotion/hotpromo/prizePoolVote/point-icon.png")no-repeat center center;
+    background: url("../../../assets/images/promotion/hotpromo/prizePoolVote/point-icon.png") no-repeat center center;
     background-size: contain;
     width: 15px;
     height: 15px;
@@ -1246,19 +1307,18 @@ onMounted(() => {
 }
 
 .teams-wrapper .teams-list .teams-item .c-button {
-  border: 0.82px solid #2B9EFF;
+  border: 0.82px solid #2b9eff;
   padding: 5px 20px;
   border-radius: 4px;
-  background: #0075FF29;
+  background: #0075ff29;
   display: block;
   margin-top: 10px;
   width: 80%;
   text-align: center;
   color: #ffffff;
   line-height: 16px;
-  font-family: 'PingFang SC'
+  font-family: "PingFang SC";
 }
-
 
 .teams-wrapper .c-note {
   font-family: PingFang SC;
@@ -1266,26 +1326,25 @@ onMounted(() => {
   font-weight: 500;
   line-height: 40px;
   text-align: left;
-  color: #58AEDE;
+  color: #58aede;
 }
 
 .table-details {
-  border: 1px solid #00EAFE;
+  border: 1px solid #00eafe;
   margin: 50px auto;
   max-width: 1200px;
   font-size: 16px;
   font-weight: bold;
   padding: 5px;
   position: relative;
-  .table-title{
+  .table-title {
     font-family: PingFang SC;
     font-size: 24px;
     font-weight: 500;
     line-height: 33.6px;
-    color: #00EAFE;
+    color: #00eafe;
     text-align: center;
     margin: 5px auto;
-
   }
 }
 
@@ -1295,8 +1354,7 @@ onMounted(() => {
 
 .table-details table thead {
   border-bottom: 1px solid #232323;
-  background: #00EAFE;
-
+  background: #00eafe;
 }
 
 .table-details table thead td {
