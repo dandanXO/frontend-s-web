@@ -628,7 +628,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%; position:relative;" class="bg-primary text-black">
+    <q-card style="width: 100%; position: relative" class="bg-primary text-black">
       <img v-close-popup class="station-notice-close-btn" src="../assets/images/home/close.png" />
       <q-card-section class="q-mb-md">
         <q-tabs
@@ -1223,6 +1223,9 @@ export default defineComponent({
               }
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
+              }
+              if (espObj.code === "PMES") {
+                espObj.title = "DB电竞";
               }
               if (espObj.code === "IMES") {
                 espObj.title = "IM 电竞";
@@ -2575,12 +2578,12 @@ export default defineComponent({
 }
 
 .station-notice-close-btn {
-  z-index: 999; 
-  cursor: pointer; 
-  position: absolute; 
-  top: 0; 
+  z-index: 999;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
   right: 0;
-  width: 28px; 
+  width: 28px;
   height: 28px;
 
   &:hover {

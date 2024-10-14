@@ -12,9 +12,13 @@
             <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
               <img
                 :src="
-                  require(
-                    '../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png'
-                  )
+                  require('../assets/' +
+                    platformType +
+                    '/' +
+                    platformType +
+                    '-item-' +
+                    item.code.toLowerCase() +
+                    '.png')
                 "
               />
             </div>
@@ -46,19 +50,17 @@
                   @click="clickPlat(plat)"
                   :class="{ active: selectedPlat === plat.code }"
                 >
-                  <div class="list-item-btn">
+                  <div class="list-item-btn" :id="`id-list-item-${plat.code}`">
                     <span>
                       <img
                         :src="
-                          require(
-                            '../assets/' +
-                              platformType +
-                              '/' +
-                              platformType +
-                              '-logo-' +
-                              plat.code.toLowerCase() +
-                              '.png'
-                          )
+                          require('../assets/' +
+                            platformType +
+                            '/' +
+                            platformType +
+                            '-logo-' +
+                            plat.code.toLowerCase() +
+                            '.png')
                         "
                       />
                     </span>
