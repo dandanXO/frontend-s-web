@@ -658,7 +658,6 @@ export default {
     automaticPayment: "Pago Automático",
     suspend: "Suspendido",
     pending: "Pendiente",
-    success: "Exitoso",
     supplementSuccess: "Complementación Exitosa",
     closed: "Cerrado",
     orderNo: "N° de Pedido",
