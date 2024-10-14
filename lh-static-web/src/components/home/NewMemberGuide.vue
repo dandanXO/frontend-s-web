@@ -1,11 +1,11 @@
 <template>
   <div class="new-member-guide-dialog" :show-close="false" v-if="store.regSuccessGuideVisible">
     <div class="step1-container" v-if="step === 1">
-      <img src="../../assets/home/guide/step-bg.png" alt="" />
+      <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step1-flag.png" alt="" class="flag" />
       <div class="content">
         <div class="title">
-          <div style="font-size: 48px">恭喜您</div>
+          <div style="font-size: 38px">恭喜您</div>
           <div>雷火账号创建成功~</div>
         </div>
         <div>
@@ -21,7 +21,7 @@
       <div class="step2-img">
         <img src="../../assets/home/guide/step2-img.png" alt="" />
       </div>
-      <img src="../../assets/home/guide/step-bg.png" alt="" />
+      <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step2-flag.png" alt="" class="flag" />
       <div class="content">
         <div class="title">
@@ -40,11 +40,11 @@
       <div class="step3-img">
         <img src="../../assets/home/guide/step3-img1.png" alt="" /> 
       </div>
-      <img src="../../assets/home/guide/step-bg.png" alt="" />
+      <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step3-flag.png" alt="" class="flag" />
       <div class="content">
         <div class="title">
-          <div style="font-size: 48px">各种优惠红包彩金</div>
+          <div style="font-size: 38px">各种优惠红包彩金</div>
         </div>
         <div class="subtitle">现金红包拿到手软 轻松娱乐</div>
         <div class="page-count">2/5</div>
@@ -53,10 +53,10 @@
     </div>
     <div class="step4-container" v-else-if="step === 4">
       <div style="position: relative">
-        <img src="../../assets/home/guide/step-bg.png" alt="" />
+        <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" />
         <div class="content">
           <div class="title">
-            <div style="font-size: 48px">
+            <div style="font-size: 38px">
               扫码下载雷火 APP
               <br />
               APP 嗨翻周末夜
@@ -74,10 +74,10 @@
       <div class="step5-img">
         <img src="../../assets/home/guide/step5-img1.png" alt="" />
       </div>
-      <img src="../../assets/home/guide/step-bg.png" alt="" width="100%" />
+      <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" width="100%" />
       <div class="content">
         <div class="title">
-          <div style="font-size: 48px">点击这里</div>
+          <div style="font-size: 38px">点击这里</div>
         </div>
         <div class="subtitle">到个人中心</div>
         <div class="page-count">4/5</div>
@@ -93,10 +93,10 @@
         <img src="../../assets/home/guide/step6-img2.png" alt="" />
       </div>
 
-      <img src="../../assets/home/guide/step-bg.png" alt="" width="100%" />
+      <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" width="100%" />
       <div class="content">
         <div class="title">
-          <div style="font-size: 48px">点击这里充值</div>
+          <div style="font-size: 38px">点击这里充值</div>
           <div>开启您的雷火游戏之旅</div>
         </div>
         <div class="page-count">5/5</div>
@@ -177,12 +177,12 @@ const adjustGuide = () => {
       step6img2.style.top = `calc(${y2}px - 80px)`;
       step6img2.style.left = `calc(${x2}px - 143px)`;
       step6img2.style.visibility = 'visible';
-    }, 2000);
+    }, 2500);
   }
 }
 
 const goToPromo = () => {
-  router.push('/promotion?name=lh1-ftd-promo');
+  router.push('/promotion?name=lh1-newplayer-guide');
   closeNewMemerGuide();
 }
 
@@ -206,7 +206,7 @@ onMounted(() => {
 
 <style lang="scss">
 .new-member-guide-dialog {
-  background: #3f3f3f78;
+  background: #252525d9;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -225,24 +225,28 @@ onMounted(() => {
 .step5-container,
 .step6-container {
   position: relative;
-  width: 464px;
+  width: 350px;
+
+  .step-bg {
+    width: 100%;
+  }
 
   .flag {
     position: absolute;
-    top: -50px;
-    right: -50px;
+    top: -60px;
+    right: -60px;
     width: 195px;
   }
 
   .content {
     position: absolute;
-    bottom: 100px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 240px;
+    min-width: 200px;
     gap: 16px;
     font-family: 'FZZBHJW';
 
@@ -254,13 +258,13 @@ onMounted(() => {
     }
 
     .subtitle {
-      font-size: 24px;
+      font-size: 20px;
       color: white;
       text-align: center;
     }
 
     .page-count {
-      font-size: 24px;
+      font-size: 20px;
       color: #3aefff;
       text-align: center;
       font-family: sans-serif;
@@ -269,10 +273,10 @@ onMounted(() => {
     .next-button {
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       color: white;
-      font-size: 32px;
+      font-size: 25px;
+      width: 170px;
+      height: 45px;
       border-radius: 10px;
-      width: 186px;
-      height: 60px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -302,7 +306,8 @@ onMounted(() => {
 
 .step3-container {
   .flag {
-    left: -100px;
+    left: -60px;
+    width: 130px;
   }
 
   .arrow {
@@ -322,7 +327,6 @@ onMounted(() => {
 .step4-container {
   display: flex;
   align-items: center;
-  width: auto;
   position: absolute;
   left: 7%;
 
@@ -342,7 +346,10 @@ onMounted(() => {
 .step5-container {
   left: 10%;
   top: -5%;
-  width: 409px;
+
+  .content {
+    bottom: 100px;
+  }
 
   .step5-img {
     position: fixed;
