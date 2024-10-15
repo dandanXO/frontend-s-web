@@ -1392,7 +1392,7 @@ export default defineComponent({
 }
 
 .dark-grey-dialog {
-  background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
+  background: linear-gradient(#000000b3, #000000b3);
   background-size: contain;
 }
 </style>
