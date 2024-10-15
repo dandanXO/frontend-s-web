@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimDailyBonus" :class="{ disabled: bonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimDailyBonus" :class="{ disabled: dailyBonus <= 0 }">
                 <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
               </div>
             </div>
@@ -287,7 +287,7 @@ const handleClaimDailyBonus = () => {
         //   type: "success",
         //   message: `成功领取${res.data}元`
         // });
-        ElMessage.success(`成功领取${res.data}元`)
+        ElMessage.success(`成功领取${res.data}元`);
         fetchData();
       } else {
         // notify({
@@ -328,7 +328,7 @@ const handleClaimWeeklyBonus = () => {
         //   type: "success",
         //   message: `成功领取${res.data}元`
         // });
-        ElMessage.success(`成功领取${res.data}元`)
+        ElMessage.success(`成功领取${res.data}元`);
         fetchData();
       } else {
         // notify({
