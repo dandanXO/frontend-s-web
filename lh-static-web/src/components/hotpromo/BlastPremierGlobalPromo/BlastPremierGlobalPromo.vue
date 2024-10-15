@@ -48,7 +48,7 @@
               <div v-else class="img-placeholder" />
               <div class="required-key">
                 <div class="container-description">
-                  <span>普通宝箱</span>
+                  <span>{{getTreasureDescription(item.treasureLevel)}}</span>
                 </div>
                 <div class="key-container">
                   <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
@@ -299,6 +299,17 @@ const openBox = (item) => {
     loading.close();
   }, 2000);
 };
+
+const getTreasureDescription = (treasureLevel) => {
+  if (treasureLevel === 'Normal') {
+    return '普通宝箱';
+  } else if (treasureLevel === 'CS') {
+    return 'CS宝箱';
+  } else if (treasureLevel === 'Dragon'){
+    return '龙宝箱';
+  }
+};
+
 const claimModalClose = () => {
   isClaimModal.value = false;
   store.getBalance();

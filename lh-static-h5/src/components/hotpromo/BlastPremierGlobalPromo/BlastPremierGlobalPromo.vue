@@ -33,7 +33,7 @@
               @click="setActiveItem(item.no)"
             > -->
             <div v-for="(item, i) in items" :key="i" class="item">
-              <span class="container-description">普通宝箱</span>
+              <span class="container-description">{{getTreasureDescription(item.treasureLevel)}}</span>
               <img
                 v-if="item.treasureLevel"
                 :src="
@@ -91,7 +91,7 @@
             </div>
           </div>
         </div>
-        <div v-if="dayList.length % 3 !== 2" class="middle-row">
+        <div v-if="dayList.length % 3 !== 2 || $q.screen.lt.md" class="middle-row">
           <div class="sign-container">
             <div v-for="(day, i) in dayList" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
               <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-${i + 1}.png`)" />
@@ -114,7 +114,7 @@
           </div>
           <div class="sign-container col-2">
             <div v-for="(day, i) in dayList.slice(-2)" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
-              <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-${i + 3}.png`)" />
+              <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-${i + 4}.png`)" />
               <div class="sign-day">累计签到 {{ day.no }} 天</div>
               <div class="btn claimed" v-if="day.claimed">已开启</div>
               <div class="btn to-claim" v-if="day.toClaim" @click="openModal('claim', day, i)">开启</div>
@@ -296,7 +296,6 @@ const setActiveItem = (itemNo) => {
 };
 
 const reorderItems = (activeItem) => {
-  console.log(activeItem.no);
   const index = items.value.findIndex((item) => item.no === activeItem.no);
 
   if (index !== -1) {
@@ -362,6 +361,17 @@ const init = () => {
     }
   });
 };
+
+const getTreasureDescription = (treasureLevel) => {
+  if (treasureLevel === 'Normal') {
+    return '普通宝箱';
+  } else if (treasureLevel === 'CS') {
+    return 'CS宝箱';
+  } else if (treasureLevel === 'Dragon'){
+    return '龙宝箱';
+  }
+};
+
 const populateDayList = (check) => {
   check.claimed.forEach((element) => {
     dayList.value.forEach((day) => {
@@ -660,10 +670,6 @@ onMounted(() => {
               center;
             color: #fffd66;
             background-size: 100% 100%;
-
-            @media (max-width: 400px) {
-              order: -1;
-            }
             .container-description {
               color: #fffd66;
             }
