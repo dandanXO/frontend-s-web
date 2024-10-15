@@ -160,10 +160,10 @@
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
-              <NBAWaterBattle />
+              <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
-              <YallaCompass />
+              <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
