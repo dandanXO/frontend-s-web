@@ -176,7 +176,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isOpenExtension" class="dark-grey-dialog"></q-dialog>
+  <!-- <q-dialog width="100%" v-model="isOpenExtension" class="dark-grey-dialog"></q-dialog> -->
 </template>
 
 <script lang="js">
@@ -384,7 +384,7 @@ export default defineComponent({
             console.log(preUrl);
             // promoSrc.value= preUrl;
             var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes");
-            isOpenExtension.value = true;
+            // isOpenExtension.value = true;
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
@@ -398,9 +398,9 @@ export default defineComponent({
               }
             });
 
-            ref.addEventListener("exit", function () {
-              isOpenExtension.value = false;
-            });
+            // ref.addEventListener("exit", function () {
+            //   isOpenExtension.value = false;
+            // });
 
           } else {
             if (route.query.fromAccount) {
@@ -607,7 +607,7 @@ export default defineComponent({
       fullGameDialog.value = false;
     };
 
-    const isOpenExtension = ref(false);
+    // const isOpenExtension = ref(false);
 
     return {
       promoState,
@@ -644,7 +644,7 @@ export default defineComponent({
       selectedParam,
       isFetchingPromo,
       extensionState,
-      isOpenExtension
+      // isOpenExtension
     }
   },
 });
