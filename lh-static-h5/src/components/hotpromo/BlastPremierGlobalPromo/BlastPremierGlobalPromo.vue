@@ -91,7 +91,8 @@
             </div>
           </div>
         </div>
-        <div v-if="dayList.length % 3 !== 2 || $q.screen.lt.md" class="middle-row">
+        <div>{{$q.screen.width}}</div>
+        <div v-if="dayList.length % 3 !== 2 || $q.screen.width <= 375" class="middle-row">
           <div class="sign-container">
             <div v-for="(day, i) in dayList" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
               <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-${i + 1}.png`)" />
