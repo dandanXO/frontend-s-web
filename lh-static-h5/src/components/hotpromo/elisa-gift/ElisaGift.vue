@@ -21,8 +21,8 @@
               />
             </div>
             <div class="reward-info-content">
-              昨日有效流水
-              <span class="amount">{{ totalValidBet }}元</span>
+              昨日累计存款金额：
+              <span class="amount">{{ formatNumber(totalDeposit) }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -34,8 +34,8 @@
               />
             </div>
             <div class="reward-info-content">
-              昨日雷火有效流水
-              <span class="amount">{{ totalLHValidBet }}元</span>
+              昨日累计有效投注：
+              <span class="amount">{{ formatNumber(totalValidBet) }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -48,7 +48,7 @@
             </div>
             <div class="reward-info-content">
               当日可领彩金：
-              <span class="amount">{{ bonus }}元</span>
+              <span class="amount">{{ formatNumber(bonus) }}元</span>
             </div>
           </div>
         </div>
@@ -186,9 +186,25 @@ const $q = useQuasar();
 const router = useRouter();
 
 const totalValidBet = ref(0);
-const totalLHValidBet = ref(0);
+const totalDeposit = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
+
+
+const formatNumber = (value, type) => {
+  if (value === undefined) {
+    return "-";
+  }
+  value = value.toString().replace(/,/g, "");
+
+  const number = parseFloat(value);
+
+  if (number % 1 !== 0 || type === "redPacket") {
+    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } else {
+    return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+}
 
 const handleClaimBonus = () => {
   if (isClaiming.value === true) {
@@ -247,8 +263,8 @@ const handleClaimBonus = () => {
 const fetchData = async () => {
   try {
     const res = await getElisaGiftInit(promoCode.value);
+    totalDeposit.value = res.data.totalDeposit;
     totalValidBet.value = res.data.totalValidBet;
-    totalLHValidBet.value = res.data.platformValidBet;
     bonus.value = res.data.bonus;
   } catch (error) {
     console.log(error);
