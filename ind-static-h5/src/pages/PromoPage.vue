@@ -171,6 +171,8 @@
       </router-link>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="isOpenExtension" class="dark-grey-dialog"></q-dialog>
 </template>
 
 <script lang="js">
@@ -377,7 +379,8 @@ export default defineComponent({
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes");
+            isOpenExtension.value = true;
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
@@ -390,6 +393,11 @@ export default defineComponent({
                 router.push(message);
               }
             });
+
+            ref.addEventListener("exit", function () {
+              isOpenExtension.value = false;
+            });
+
           } else {
             if (route.query.fromAccount) {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
@@ -596,6 +604,8 @@ export default defineComponent({
       fullGameDialog.value = false;
     };
 
+    const isOpenExtension = ref(false);
+
     return {
       promoState,
       promoTypes,
@@ -630,7 +640,8 @@ export default defineComponent({
       isFtdPromoEnded,
       selectedParam,
       isFetchingPromo,
-      extensionState
+      extensionState,
+      isOpenExtension
     }
   },
 });
@@ -1282,5 +1293,10 @@ export default defineComponent({
       width: 14px !important;
     }
   }
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
+  background-size: contain;
 }
 </style>
