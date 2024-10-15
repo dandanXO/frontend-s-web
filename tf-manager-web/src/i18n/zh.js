@@ -2077,6 +2077,8 @@ export default {
     gender: '性别',
     Male: '男性',
     Female: '女性',
+    startHour: '开始小时',
+    endHour: '结束小时',
     oldBetAmount: '老站流水金额',
   },
   message: {
@@ -2811,6 +2813,7 @@ export default {
     'Site Platform Report': '站点平台报表',
     'Refer Friend Eligibility': '全民代理',
     'Member Refer Analysis': '邀请返佣分析',
+    'TF Gaming Config': 'TF Gaming 设置',
     'LH Old Data': '雷火老站数据',
   },
   google: {
