@@ -117,7 +117,7 @@ export default {
     vip: 'vip',
     financialLevel: 'financial level',
     todayWithdrawCount: 'Today withdraw count',
-    profit: 'profit',
+    profit: 'member profit',
   },
   outboxStatus: {
     0: 'Not reply yet',
@@ -2078,6 +2078,8 @@ export default {
     gender: 'Gender',
     Male: 'Male',
     Female: 'Female',
+    startHour: 'Start Hour',
+    endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
   },
   message: {
@@ -2863,6 +2865,7 @@ export default {
     'Site Platform Report': 'Site Platform Report',
     'Refer Friend Eligibility': 'Refer Friend Eligibility',
     'Member Refer Analysis': 'Member Refer Analysis',
+    'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
   },
   google: {

@@ -61,7 +61,7 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (from.path === "/promotion") {
       // alert(to.path);
-      window.location.href = "xfapp:" + to.path;
+      window.location.href = "xfapp:" + to.fullPath;
     }
 
     if (to.path === "/promotion") {
@@ -173,10 +173,25 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "1906929669800133");
       fbq("track", "PageView");
       user.isFbPixel = true;
-    } else if (window.location.href.indexOf("wd1caof6.cc") > -1) {
-      console.log("17");
+    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDE") > -1) {
       fbq("init", "514007094887323");
       fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "514007094887323");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDI") > -1) {
+      fbq("init", "2334137540252703");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "2334137540252703");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDM") > -1) {
+      fbq("init", "527651743204705");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "527651743204705");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDQ") > -1) {
+      fbq("init", "9489951827699569");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "9489951827699569");
       user.isFbPixel = true;
     }
 

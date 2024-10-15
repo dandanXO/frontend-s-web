@@ -61,7 +61,7 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (from.path === "/promotion") {
       // alert(to.path);
-      window.location.href = "xfapp:" + to.path;
+      window.location.href = "xfapp:" + to.fullPath;
     }
 
     if (to.path === "/promotion") {

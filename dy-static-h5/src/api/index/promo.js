@@ -336,3 +336,23 @@ export function getPrizeMoney(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.put(`/bonus/claim/${promoCode}?v=${randNum}`);
 }
+
+export function getBelgradeInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/bb-dacha-belgrade/init?v=${randNum}`, qs.stringify({ promoCode }));
+}
+
+export function claimBelgradeBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/bb-dacha-belgrade/claimBonus?v=${randNum}`, qs.stringify({ promoCode }));
+}
+
+export function getYallaCompassInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-deposit/init?promoCode=dy2-yalla-compass&v=${randNum}`);
+}
+
+export function claimYallaCompassBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus?promoCode=dy2-yalla-compass&v=${randNum}`);
+}
