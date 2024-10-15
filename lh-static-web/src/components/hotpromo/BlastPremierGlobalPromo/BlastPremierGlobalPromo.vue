@@ -32,7 +32,7 @@
                 :class="{ active: activeItem === item.no }"
                 @click="setActiveItem(item.no)"
               > -->
-              <div v-for="(item, i) in items" :key="i" class="item">
+              <div v-for="(item, i) in items" :key="i" class="item" :class="{ active: activeItem === item.no }" @click="setActiveItem(item.no)">
                 <img
                   v-if="item.treasureLevel"
                   :src="
@@ -55,7 +55,7 @@
             <!-- <div class="tips-p">系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙</div> -->
           </div>
         </div>
-        <div class="useKeys">点击开启</div>
+        <div class="useKeys" @click="openBox(activeItem)">点击开启</div>
         <!-- <div class="tips">
           <div class="tips-inner">系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。</div>
         </div> -->
