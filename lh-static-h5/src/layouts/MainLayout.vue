@@ -1,5 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
+    <NewMemberGuide/>
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
@@ -149,7 +150,7 @@
           v-else
           src="../assets/images/footer/promo-icon-active.png"
         />
-        <span>优惠</span>
+        <span class="footer-icon-promotion">优惠</span>
       </q-route-tab>
 
       <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
@@ -197,7 +198,7 @@
           v-else
           src="../assets/images/footer/account-icon-active.png"
         />
-        <span>我的</span>
+        <span class="footer-icon-personal">我的</span>
       </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -212,12 +213,13 @@ import { useRoute, useRouter } from "vue-router";
 
 import { translateRecord } from "src/directives/translate";
 import { MAILBOX_TYPES } from "src/constant/mailbox";
-
+import NewMemberGuide from 'components/home/NewMemberGuide.vue'
 export default defineComponent({
   name: "MainLayout",
 
   components: {
     // RiArrowDropLeftLine
+    NewMemberGuide
   },
 
   setup() {

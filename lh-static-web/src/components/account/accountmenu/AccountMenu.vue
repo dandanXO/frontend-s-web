@@ -27,7 +27,7 @@
         </div>
         <div class="profile-actions">
           <router-link to="/center/deposit" class="action-btn">
-            <div class="icon-rounded">
+            <div class="icon-rounded deposit">
               <img src="../../../assets/images/home/profile-action-deposit.png" />
             </div>
             存款
