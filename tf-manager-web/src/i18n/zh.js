@@ -116,7 +116,7 @@ export default {
     vip: 'vip组别',
     financialLevel: '财务组别',
     todayWithdrawCount: '当天提款笔数',
-    profit: '盈亏',
+    profit: '会员盈利',
   },
   outboxStatus: {
     0: '未回复',

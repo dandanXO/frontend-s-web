@@ -117,7 +117,7 @@ export default {
     vip: 'vip',
     financialLevel: 'financial level',
     todayWithdrawCount: 'Today withdraw count',
-    profit: 'profit',
+    profit: 'member profit',
   },
   outboxStatus: {
     0: 'Not reply yet',

@@ -885,6 +885,23 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.withdrawReviewType')" prop="withdrawReviewType">
+          <el-select
+            v-model="request.withdrawReviewType"
+            size="small"
+            :placeholder="t('fields.withdrawReviewType')"
+            class="filter-item"
+            style="width: 250px;"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.withdrawReviewType"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="resetQuery()">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="advancedSearch()">{{ t('fields.search') }}</el-button>
@@ -1009,6 +1026,10 @@ const uiControl = reactive({
     { key: 1, displayName: t('withdrawType.Manual'), value: 'Manual' },
     { key: 2, displayName: t('withdrawType.AUTO_WITHDRAW'), value: 'AUTO_WITHDRAW' },
   ],
+  withdrawReviewType: [
+    { key: 1, displayName: t('withdrawReviewType.MANUAL'), value: 'MANUAL' },
+    { key: 2, displayName: t('withdrawReviewType.AUTO'), value: 'AUTO' },
+  ],
 })
 
 const startDate = new Date()
@@ -1054,7 +1075,8 @@ const request = reactive({
   clientType: null,
   sort: 1,
   withdrawType: null,
-  doris: false
+  doris: false,
+  withdrawReviewType: null,
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
