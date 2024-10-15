@@ -71,6 +71,7 @@
     <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot'" />
     <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu'" />
     <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'lh1-blast-premier-global'" :promo-code="list.promoCode" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual'" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao'" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match'" />
@@ -191,6 +192,9 @@ const Shoutouxinxiu = defineAsyncComponent(() => import("./hotpromo/shoutouxinxi
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
+const BlastPremierGlobalPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/BlastPremierGlobalPromo/BlastPremierGlobalPromo.vue")
+);
 const EurocupManual = defineAsyncComponent(() => import("../components/hotpromo/EurocupManual/EurocupManual.vue"));
 const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
 const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
@@ -280,6 +284,7 @@ export default defineComponent({
     EuroCup2024FirstShoot,
     Shoutouxinxiu,
     BlastPremierPromo,
+    BlastPremierGlobalPromo,
     EurocupManual,
     SportZhongChao,
     Nba24Match,
