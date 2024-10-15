@@ -1,6 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -14,18 +14,6 @@
       <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
   </div>
-
-  <!-- <q-tabs
-    scroll-target=".q-tab--active"
-    v-if="!isPromoDetail"
-    v-model="tab"
-    align="justify"
-    class="promo-cat-tab extension-tab"
-  >
-    <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
-  </q-tabs> -->
-
-  <!-- <pre>promoState.promoList{{ promoState.promoList }}</pre> -->
 
   <div class="promo-container">
     <div class="promo">
@@ -85,6 +73,8 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div class="loader" v-if="isFetchingPromo" />
+
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -202,6 +192,8 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
@@ -226,6 +218,7 @@ export default defineComponent({
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
+
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
       promoList: []
@@ -247,6 +240,18 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+
+    const isFetchingPromo = ref(false);
+    const extensionState = ref(false);
+    const extensionToken = ref("");
+
+    const checkExtension = () => {
+      if (route.path === "/promotion") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+    };
 
     // const tab = ref("all");
     // const tabItems = [
@@ -291,9 +296,9 @@ export default defineComponent({
       store.getUnreadTotal();
     });
 
-    // onMounted(() => {
-    //   loadAll();
-    // });
+    onMounted(() => {
+      checkExtension();
+    });
 
     watch(
       () => route.query,
@@ -328,7 +333,11 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      router.push("/promo");
+      if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/promo");
+      }
       isPromoDetailPage.value = false;
     };
 
@@ -357,9 +366,8 @@ export default defineComponent({
     const isMoneyRainModal = ref(false);
 
     const showPromoDetails = (promo) => {
+      // debugger;
       if (!store.token) {
-        // isDisplayLogin.value = true
-
         $q.notify({
           color: "negative",
           position: "top",
@@ -374,13 +382,45 @@ export default defineComponent({
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
           } else {
-            if (route.query.fromAccount) {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+            if (extensionState.value) {
+              isPromoDetail.value = true;
+
+              selectedPromo.value = promo;
+              if (isAndroid()) {
+                LocalStorage.set("TOKEN", extensionToken.value, 86400);
+              } else {
+                SessionStorage.set("TOKEN", extensionToken.value);
+              }
+              store.token = extensionToken.value;
+            } else if (isAndroid()) {
+              // modalVisible.value= true;
+              // store.h5Url = "http://192.168.68.95:9090";
+              var preUrl = store.h5Url + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              // alert(preUrl);
+              console.log(preUrl);
+              // promoSrc.value= preUrl;
+              var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
+
+              ref.addEventListener("loadstart", function (event) {
+                var url = event.url;
+                // alert("This" + url);
+                if (url.indexOf("xfapp:") > -1) {
+                  var message = url.split("xfapp:")[1];
+                  console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                  // alert(message);
+                  ref.close();
+                  router.push(message);
+                }
+              });
             } else {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              if (route.query.fromAccount) {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+              } else {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              }
+              isPromoDetail.value = true;
+              selectedPromo.value = promo;
             }
-            isPromoDetail.value = true;
-            selectedPromo.value = promo;
           }
         }
       }
@@ -398,6 +438,8 @@ export default defineComponent({
 
     const loadAll = () => {
       const platformApiUrl = "/opt-session/promo/page";
+
+      isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api
         .get(platformApiUrl)
@@ -420,9 +462,12 @@ export default defineComponent({
             });
 
             switchPromoType(promoState.active);
+
+            isFetchingPromo.value = false;
           }
         })
         .catch((e) => {
+          isFetchingPromo.value = false;
           console.log("error", e);
         });
     };
@@ -611,13 +656,28 @@ export default defineComponent({
       parsedParamSub,
       parsedParamDate,
       MoneyRainModal,
-      isMoneyRainModal
+      isMoneyRainModal,
+      isFetchingPromo,
+      extensionState
       // MediaSettingsComponent
     };
   }
 });
 </script>
 <style lang="scss" scoped>
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 150px;
+}
+
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;

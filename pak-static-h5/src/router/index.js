@@ -6,6 +6,8 @@ import { createRouter, createMemoryHistory, createWebHistory, createWebHashHisto
 import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
 import { Platform, useQuasar } from "quasar";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 
 /*
  * If not building with SSR mode, you can
@@ -20,8 +22,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -48,12 +50,28 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/verification" ||
       to.path === "/deposit" ||
       to.path === "/withdraw" ||
+      to.path === "/promotion" ||
       to.path === "/language" ||
       to.path === "/maintenance"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
+    }
+
+    if (from.path === "/promotion") {
+      // alert(to.path);
+      window.location.href = "xfapp:" + to.path;
+    }
+
+    if (to.path === "/promotion") {
+      // debugger;
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+      user.token = to.query.token;
     }
 
     if (Platform.is.capacitor && Platform.is.android) {
