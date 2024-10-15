@@ -1071,14 +1071,14 @@ const uiControl = reactive({
   editBtn: true,
   editType: 'One',
   orderBy: [
+    { display: 'registerTime', value: 'reg_time' },
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
-    { display: 'lastLoginTime', value: 'last_login_time' },
-    { display: 'registerTime', value: 'reg_time' },
+    // { display: 'lastLoginTime', value: 'last_login_time' },
   ],
   sortType: [
-    { display: 'DESC', value: 'DESC' },
     { display: 'ASC', value: 'ASC' },
+    { display: 'DESC', value: 'DESC' },
   ],
 })
 
