@@ -43,7 +43,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      :style="{width: 'calc(100vw - 200px)'}"
+      width="1000px"
     >
       <el-form
         ref="autoPaymentForm"
@@ -72,7 +72,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.reviewRule')" prop="reviewRuleList">
+        <el-form-item :label="t('fields.reviewRule')" prop="reviewRuleList" v-if="uiControl.isShowReviewRule">
           <el-table
             :data="form.reviewRuleList"
             style="width: 100%"
@@ -163,7 +163,7 @@
             </el-table-column>
           </el-table>
         </el-form-item>
-        <el-form-item :label="t('fields.autoWithdrawRule')" prop="ruleList">
+        <el-form-item :label="t('fields.autoWithdrawRule')" prop="ruleList" v-if="!uiControl.isShowReviewRule">
           <el-table
             :data="form.ruleList"
             style="width: 100%"
@@ -340,6 +340,10 @@
       </el-form>
     </el-dialog>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
+      <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+        <el-tab-pane :label="t('fields.reviewRule')" name="reviewRule" v-if="uiControl.showReviewRule" />
+        <el-tab-pane :label="t('fields.autoWithdrawRule')" name="autoWithdrawRule" />
+      </el-tabs>
       <template #header>
         <div class="clearfix">
           <span class="role-span">{{ t('fields.autoWithdrawSetting') }}</span>
@@ -465,12 +469,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
-        <el-table-column prop="reviewRuleDisplay" :label="t('fields.reviewRule')">
+        <el-table-column prop="reviewRuleDisplay" :label="t('fields.reviewRule')" v-if="uiControl.isShowReviewRule">
           <template #default="scope">
             <div v-html="scope.row.reviewRuleDisplay.replace(/\n/g, '<br>')" />
           </template>
         </el-table-column>
-        <el-table-column prop="ruleDisplay" :label="t('fields.autoWithdrawRule')">
+        <el-table-column prop="ruleDisplay" :label="t('fields.autoWithdrawRule')" v-if="!uiControl.isShowReviewRule">
           <template #default="scope">
             <div v-html="scope.row.ruleDisplay.replace(/\n/g, '<br>')" />
           </template>
@@ -520,6 +524,7 @@ import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
 import { getActivePaymentTypes } from '../../../api/payment-type'
 import { getCurrencyNames } from '../../../api/currency'
+import { getConfigList } from '../../../api/config'
 import { disableSystemAutoPaymentTypeBySite, getSystemAutoPaymentTypeList, createSystemAutoPaymentType, createSystemAutoPaymentPlaltform, updateystemAutoPaymentType, deleteSystemAutoPaymentPlaltform } from '../../../api/system-auto-withdraw-type'
 import { createWithdrawalChannelOrder, batchupdateWithdrawalOrder } from '../../../api/withdrawal-channel-order'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
@@ -538,6 +543,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const autoPaymentForm = ref(null)
 const platformForm = ref(null)
+const activeName = ref('reviewRule')
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -547,6 +553,8 @@ const uiControl = reactive({
   platformDialogType: 'CREATE',
   dialogLoading: false,
   useRule: true,
+  showReviewRule: true,
+  isShowReviewRule: false
 })
 const request = reactive({
   size: 30,
@@ -596,16 +604,29 @@ const ruleType = reactive({
     { key: 5, name: t('withdrawRuleType.todayWithdrawCount') + t('withdrawRuleType.min'), value: '#withdrawCount>' },
     { key: 6, name: t('withdrawRuleType.profit') + t('withdrawRuleType.max'), value: '#profit<' },
     { key: 7, name: t('withdrawRuleType.profit') + t('withdrawRuleType.min'), value: '#profit>' },
-    { key: 8, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.max'), value: '(#balance + #withdraw)<' },
-    { key: 9, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.min'), value: '(#balance + #withdraw)>' },
-    { key: 10, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.max'), value: '#balance<' },
-    { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#balance>' },
+    { key: 8, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.max'), value: '#balance<' },
+    { key: 9, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.min'), value: '#balance>' },
+    { key: 10, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.max'), value: '#afterBalance<' },
+    { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#afterBalance>' },
     { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
   ],
 })
 
 const ruleTypeList = reactive({ ...ruleType });
 const reviewRuleTypeList = reactive({ ...ruleType });
+
+const handleClick = (tab, event) => {
+  switchToList(tab.props.name)
+}
+
+async function switchToList(type) {
+  console.log(type)
+  if (type === 'reviewRule') {
+    uiControl.isShowReviewRule = true;
+  } else {
+    uiControl.isShowReviewRule = false;
+  }
+}
 
 const repeatNumberValidation = (msg) => {
   return {
@@ -709,8 +730,8 @@ function getValue(str, keyword) {
 }
 
 function getValueList(str) {
-  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(\d+)/g; // For simple variable comparisons
-  const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g; // For matches condition
+  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(\d+)/g;
+  const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
   const results = [];
   let match;
 
@@ -720,30 +741,22 @@ function getValueList(str) {
   }
 
   function extractConditions(conditionStr) {
-    // Handle simple variable conditions
     while ((match = conditionRegex.exec(conditionStr)) !== null) {
-      const variable = match[1] + match[2]; // Variable name
-      const operator = match[2]; // Operator
-      const value = parseInt(match[3], 10); // Numeric value
+      const variable = match[1] + match[2];
+      const operator = match[2];
+      const value = parseInt(match[3], 10);
       results.push({ variable, operator, value });
     }
-
-    // Handle matches conditions separately
     while ((match = matchesRegex.exec(conditionStr)) !== null) {
-      const expression = match[1]; // The entire expression inside parentheses
-      const pattern = match[2]; // The regex pattern
-
-      // Extract the value (like '1,2,3') from the expression
-      let innerValue = expression.replace(/[^0-9,]+/g, ''); // Clean to get only numbers and commas
+      const expression = match[1];
+      const pattern = match[2];
+      let innerValue = expression.replace(/[^0-9,]+/g, '');
       if (innerValue[0] === ',' && innerValue[innerValue.length - 1] === ',') {
         innerValue = innerValue.slice(1, -1);
       }
-      // Set variable to the regex pattern and value to the inner value
       results.push({ variable: "matches '" + pattern + "'", operator: 'matches', value: innerValue });
     }
   }
-
-  // Split the input string into individual conditions using 'and'
   const andConditions = str.split(/\s+and\s+/).filter(condition => condition.trim());
   for (const condition of andConditions) {
     extractConditions(condition.trim());
@@ -859,6 +872,7 @@ function showEdit(data) {
 function showDialog(type) {
   if (type === 'CREATE') {
     if (autoPaymentForm.value) {
+      handleChangeSite()
       autoPaymentForm.value.resetFields()
     }
     form.id = null
@@ -951,19 +965,14 @@ function createConditionString(data) {
   const conditions = data.map(item => {
     const variable = item.variable.trim();
     const value = item.value;
-
-    // Only construct the condition if variable and operator are valid
     if (variable !== '' && value !== null) {
-      // Special handling for the matches operator to format correctly
       if (variable.includes('matches')) {
         return `(',' + '${value}' + ',') ${variable}`;
       }
       return `${variable} ${value}`;
     }
-    return null; // Return null if the condition isn't valid
-  }).filter(Boolean); // Filter out any null values
-
-  // Join the conditions with ' and '
+    return null;
+  }).filter(Boolean);
   return conditions.join(' and ');
 }
 
@@ -1024,6 +1033,8 @@ onMounted(async() => {
   loadPayTypes()
   await loadAutoPaymentType()
   filterPayTypeByCurrency()
+  const { data: config } = await getConfigList("auto_withdraw_review_control", request.siteId);
+  uiControl.showReviewRule = uiControl.isShowReviewRule = config.length > 0 && config[0].value !== 'CLOSE';
 })
 </script>
 

@@ -1,4 +1,6 @@
 <template>
+  <NewMemberGuide :openAppMenu="() => selectedMenu = 'App'" :closeAppMenu="() => selectedMenu = ''" />
+
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
@@ -60,7 +62,7 @@
                 <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
                     <img
-                      class="hover-icon"
+                      class="hover-icon promotion"
                       :src="require(`../../../assets/images/home/header-promo-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Promotion'"
                     />
@@ -456,6 +458,7 @@
 </template>
 
 <script lang="js">
+import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -507,7 +510,8 @@ export default defineComponent({
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
-    RegisterAccount
+    RegisterAccount,
+    NewMemberGuide
   },
   setup() {
     const notify = useNotify();

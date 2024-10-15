@@ -94,7 +94,7 @@
             "
           ></div>
         </div>
-        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
+        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' || selectedPromo?.redirectUrl === 'lh1-blast-premier-global'" />
         <div
           class="inner"
           :style="{

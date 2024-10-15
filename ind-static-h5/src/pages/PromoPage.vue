@@ -1,6 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -73,6 +73,7 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -112,7 +113,9 @@
                 <div
                   class="join-container"
                   v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
-                  :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
+                  :style="{
+                    bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
+                  }"
                 >
                   <template v-if="selectedPromoDate">
                     <div class="promo-date">
@@ -177,6 +180,8 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
+import {isAndroid} from "boot/utils";
+import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
@@ -216,6 +221,18 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+
+    const isFetchingPromo = ref(false);
+    const extensionState = ref(false);
+    const extensionToken = ref("");
+
+    const checkExtension = () => {
+      if (route.path === "/promotion") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+    };
 
     const tab = ref("all");
     const tabItems = [
@@ -284,7 +301,11 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      router.push('/promo');
+      if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/promo");
+      }
       isPromoDetailPage.value = false
     }
 
@@ -321,8 +342,6 @@ export default defineComponent({
     }
     const showPromoDetails = (promo) => {
       if (!store.token) {
-        // isDisplayLogin.value = true
-
         $q.notify({
           color: "negative",
           position: "top",
@@ -336,15 +355,55 @@ export default defineComponent({
         }else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
           router.push({path: '/activities-details'});
         } else {
-          if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
-          } else {
-            router.push({path: '/promo', query: {name: promo.redirectUrl}})
-          }
-          isPromoDetail.value = true
-          selectedPromo.value = promo
+          // if (route.query.fromAccount) {
+          //   router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+          // } else {
+          //   router.push({path: '/promo', query: {name: promo.redirectUrl}})
+          // }
 
-          selectedPromoDate.value = '';
+          if (extensionState.value) {
+            isPromoDetail.value = true;
+
+            selectedPromo.value = promo;
+            if (isAndroid()) {
+              LocalStorage.set("TOKEN", extensionToken.value, 86400);
+            } else {
+              SessionStorage.set("TOKEN", extensionToken.value);
+            }
+            store.token = extensionToken.value;
+          } else if (isAndroid()) {
+            // store.h5Url = "http://192.168.68.74:9090/";
+            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
+            // alert(preUrl);
+            console.log(preUrl);
+            // promoSrc.value= preUrl;
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
+
+            ref.addEventListener("loadstart", function (event) {
+              var url = event.url;
+              // alert("This" + url);
+              if (url.indexOf("xfapp:") > -1) {
+                var message = url.split("xfapp:")[1];
+                console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                // alert(message);
+                ref.close();
+                router.push(message);
+              }
+            });
+          } else {
+            if (route.query.fromAccount) {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+              } else {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              }
+              isPromoDetail.value = true;
+              selectedPromo.value = promo;
+              selectedPromoDate.value = '';
+          }
+
+          // isPromoDetail.value = true
+          // selectedPromo.value = promo
+          // selectedPromoDate.value = '';
 
           if(selectedPromo.value.param){
             let promoDate = JSON.parse(selectedPromo.value.param).promoDate;
@@ -371,6 +430,8 @@ export default defineComponent({
       const randNum = Math.floor(Math.random() * 1000) + 1;
       const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
 
+      isFetchingPromo.value = window.location.pathname === "/promotion";
+
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
@@ -390,8 +451,11 @@ export default defineComponent({
           });
 
           switchPromoType(promoState.active)
+
+          isFetchingPromo.value = false;
         }
       }).catch((e) => {
+        isFetchingPromo.value = false;
         console.log("error", e);
       });
 
@@ -515,11 +579,9 @@ export default defineComponent({
       clearInterval(countdownInterval);
     });
 
-    // onMounted(() => {
-    //   loadBanner();
-    //   loadAll();
-    //   updateCountdown();
-    // });
+    onMounted(() => {
+      checkExtension();
+    });
 
     const swipeLeft = () => {
       router.push('/vip')
@@ -566,12 +628,28 @@ export default defineComponent({
       allGames,
       closeFullGameDialog,
       isFtdPromoEnded,
-      selectedParam
+      selectedParam,
+      isFetchingPromo,
+      extensionState
     }
   },
 });
 </script>
+
 <style lang="scss" scoped>
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 150px;
+}
+
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;
@@ -1174,6 +1252,11 @@ export default defineComponent({
     font-weight: 600;
     font-size: 12px;
     height: 30px;
+
+    &.btn-disabled {
+      pointer-events: none;
+      filter: brightness(0.4);
+    }
   }
 
   .promo-date {
