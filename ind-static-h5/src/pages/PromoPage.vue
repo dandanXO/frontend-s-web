@@ -1252,6 +1252,11 @@ export default defineComponent({
     font-weight: 600;
     font-size: 12px;
     height: 30px;
+
+    &.btn-disabled {
+      pointer-events: none;
+      filter: brightness(0.4);
+    }
   }
 
   .promo-date {
