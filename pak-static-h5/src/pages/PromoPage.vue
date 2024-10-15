@@ -393,9 +393,9 @@ export default defineComponent({
               }
               store.token = extensionToken.value;
             } else if (isAndroid()) {
-              // modalVisible.value= true;
               // store.h5Url = "http://192.168.68.95:9090";
-              var preUrl = store.h5Url + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              const tgDomain = "https://" + store.evip;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
               console.log(preUrl);
               // promoSrc.value= preUrl;
