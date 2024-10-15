@@ -275,7 +275,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if (route.query.name) {
+      if (route.query.name && !isAndroid()) {
         isPromoDetail.value = true;
       }
 
@@ -286,7 +286,7 @@ export default defineComponent({
     });
 
     watch(() => route.query, () => {
-      if (route.query === null) {
+      if (route.query === null || isAndroid()) {
         isPromoDetail.value = false
       } else {
         isPromoDetail.value = route.query.name
@@ -409,9 +409,12 @@ export default defineComponent({
               } else {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl } });
               }
-              isPromoDetail.value = true;
-              selectedPromo.value = promo;
-              selectedPromoDate.value = '';
+              if(!isAndroid()){
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+                selectedPromoDate.value = '';
+              }
+
           }
           // isPromoDetail.value = true
           // selectedPromo.value = promo
