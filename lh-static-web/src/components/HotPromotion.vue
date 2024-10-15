@@ -96,6 +96,7 @@
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <IemMasterPromo v-if="list.redirectUrl === 'lh1-iem-master'" :promo-code="list.promoCode"/>
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode"/>
+    <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -201,6 +202,7 @@ import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo
 import DailiPromo from "@/components/hotpromo/daili/DailiPromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
 import BbDachaBelgrade from "@/components/hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue";
+import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -288,7 +290,8 @@ export default defineComponent({
     BlackMythWuKongPromo,
     DailiPromo,
     IemMasterPromo,
-    BbDachaBelgrade
+    BbDachaBelgrade,
+    ElisaGift
   },
   props: {
     list: {

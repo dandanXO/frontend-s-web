@@ -537,3 +537,9 @@ export function claimYallaCompassBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
 }
+export function getElisaGiftInit() {
+  return server.EVENT.get("/session/elisa-gift/init");
+}
+export function claimElisaGiftBonus() {
+  return server.EVENT.post("/session/elisa-gift/claimBonus");
+}

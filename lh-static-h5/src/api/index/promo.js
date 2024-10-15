@@ -391,3 +391,13 @@ export function claimYallaCompassBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
 }
+
+export function getElisaGiftInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/elisa-gift/init?v=${randNum}`);
+}
+
+export function claimElisaGiftBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/elisa-gift/claimBonus?v=${randNum}`);
+}

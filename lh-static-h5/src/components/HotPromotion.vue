@@ -110,6 +110,7 @@
     <lh1Vip v-if="list.redirectUrl === 'lh1-vip'"/>
     <IemMasterPromo v-if="list.redirectUrl === 'lh1-iem-master'" :promo-code="list.promoCode"/>
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode"/>
+    <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -240,6 +241,7 @@ const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/dai
 const lh1Vip = defineAsyncComponent(()=>import("./hotpromo/lh1-vip/lh1Vip.vue"));
 const IemMasterPromo = defineAsyncComponent(()=>import("./hotpromo/iem-master/IemMasterPromo.vue"));
 const BbDachaBelgrade = defineAsyncComponent(()=>import("./hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue"));
+const ElisaGift = defineAsyncComponent(()=>import("./hotpromo/elisa-gift/ElisaGift.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -318,7 +320,8 @@ export default defineComponent({
     DailiPromo,
     lh1Vip,
     IemMasterPromo,
-    BbDachaBelgrade
+    BbDachaBelgrade,
+    ElisaGift
   },
   props: {
     list: {
