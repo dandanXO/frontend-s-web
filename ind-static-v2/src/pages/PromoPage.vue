@@ -376,7 +376,7 @@ export default defineComponent({
             }
             store.token = extensionToken.value;
           } else if (isAndroid()) {
-            store.h5Url = "http://192.168.68.74:9090/";
+            // store.h5Url = "http://192.168.68.74:9090/";
             var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
             // alert(preUrl);
             console.log(preUrl);
