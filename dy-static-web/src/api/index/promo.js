@@ -437,3 +437,18 @@ export function claimCBAWeeklyBonus() {
   return server.EVENT.post("/session/cba/weekly/claimBonus");
 }
 
+export function getYallaCompassInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition-bet-deposit/init?promoCode=dy2-yalla-compass&v=${randNum}`);
+}
+export function claimYallaCompassBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=dy2-yalla-compass&v=${randNum}`);
+}
+
+export function getBelgradeInit() {
+  return server.EVENT.get("/session/bb-dacha-belgrade/init");
+}
+export function claimBelgradeBonus() {
+  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus");
+}

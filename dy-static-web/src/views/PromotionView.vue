@@ -80,7 +80,9 @@
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
             iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
             isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
-            isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024'
+            isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024',
+            isYallaCompass: selectedPromo.promoCode === 'dy2-yalla-compass',
+            isBbdachaBelgrade: selectedPromo.promoCode === 'dy2-bbdacha-belgrade',
           }"
         >
           <div
@@ -125,14 +127,15 @@
               selectedPromo.promoCode === 'dy2-intel-esl' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
               selectedPromo.promoCode === 'dy2-midautumn-spinwheel' ||
-              selectedPromo.promoCode === 'dy2-s14-vote'
-              ,
+              selectedPromo.promoCode === 'dy2-s14-vote',
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
             dyfootball: selectedPromo?.promoCode === 'dy2-football',
-            dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl'
+            dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl',
+            isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
+            isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -159,6 +162,12 @@
             <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
               <NBAWaterBattle />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-yalla-compass'">
+              <YallaCompass />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
+              <BbdachaBelgrade />
+            </div>
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
             <div
               v-if="['dy2-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
@@ -178,7 +187,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner, loadPromoTypes } from "@/api/index/promo";
@@ -190,12 +199,18 @@ import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
+const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
+const BbdachaBelgrade = defineAsyncComponent(() => import("@/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
+
+
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     BlastPremierMarquee,
-    NBAWaterBattle
+    NBAWaterBattle,
+    YallaCompass,
+    BbdachaBelgrade
   },
   setup() {
     const store = userStore();
@@ -747,6 +762,13 @@ export default defineComponent({
         max-width: 1920px;
         margin: 0 auto;
 
+        &.isYallaCompass, &.isBbdachaBelgrade {
+          max-width: 100%;
+          .promo-bg.isDesktop {
+            height: 568px !important;
+          }
+        }
+
         &.isNationalDay24 {
           .promo-bg.isDesktop {
             height: 585px !important;
@@ -826,6 +848,14 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.isYallaCompass, &.isBbdachaBelgrade {
+          background: #E7F1FD;
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding-bottom: 50px;
+        }
 
         &.dy2quiz {
           background: #e7f1fd;
