@@ -32,11 +32,11 @@ const isFtdPromoEnded = computed(() => {
 
 const gotoDepositPage = () => {
   const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
-  if (window.location.pathname === "/promotion") {
-    window.location.href = `xfapp:${redirectPage}`;
-  } else {
-    router.push(redirectPage);
-  }
+  // if (window.location.pathname === "/promotion") {
+  //   window.location.href = `xfapp:${redirectPage}`;
+  // } else {
+  router.push(redirectPage);
+  // }
 };
 
 const loadAppTabs = () => {
