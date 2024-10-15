@@ -347,7 +347,7 @@ export default {
     beforeBindVerifyPhone: "Trước khi ràng buộc thẻ ngân hàng, vui lòng xác minh số điện thoại của bạn.",
     expectedAmount: "Số coin thực nhận",
     depositAmountRange: "Vui lòng nhập số tiền từ",
-    exchangeRateExample: "*Lưu ý đặc biệt: Hệ thống thu phí 1 $ cho mỗi lần giao dịch rút USDT!",
+    exchangeRateExample: "Hệ thống thu phí 1 $ cho mỗi lần giao dịch rút USDT!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
     accountNo: "Vui lòng nhập số tài khoản ngân hàng",
