@@ -171,6 +171,8 @@
       </router-link>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog"></q-dialog>
 </template>
 
 <script lang="js">
@@ -267,7 +269,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if (route.query.name) {
+      if (route.query.name && !isAndroid()) {
         isPromoDetail.value = true;
       }
 
@@ -278,7 +280,7 @@ export default defineComponent({
     });
 
     watch(() => route.query, () => {
-      if (route.query === null) {
+      if (route.query === null || isAndroid()) {
         isPromoDetail.value = false
       } else {
         isPromoDetail.value = route.query.name
@@ -377,7 +379,8 @@ export default defineComponent({
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes");
+            isOpenExtension.value = true;
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
@@ -390,15 +393,22 @@ export default defineComponent({
                 router.push(message);
               }
             });
+
+            ref.addEventListener("exit", function () {
+              isOpenExtension.value = false;
+            });
+
           } else {
             if (route.query.fromAccount) {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
               } else {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl } });
               }
-              isPromoDetail.value = true;
-              selectedPromo.value = promo;
-              selectedPromoDate.value = '';
+              if(!isAndroid()){
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+                selectedPromoDate.value = '';
+              }
           }
 
           // isPromoDetail.value = true
@@ -439,15 +449,15 @@ export default defineComponent({
           // promoState.promoList.push(...res.data);
 
           promoItems.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // } else {
               promoState.promoList.push(element);
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
-            }
+            // }
           });
 
           switchPromoType(promoState.active)
@@ -596,6 +606,8 @@ export default defineComponent({
       fullGameDialog.value = false;
     };
 
+    const isOpenExtension = ref(false);
+
     return {
       promoState,
       promoTypes,
@@ -630,7 +642,8 @@ export default defineComponent({
       isFtdPromoEnded,
       selectedParam,
       isFetchingPromo,
-      extensionState
+      extensionState,
+      isOpenExtension
     }
   },
 });
@@ -1282,5 +1295,10 @@ export default defineComponent({
       width: 14px !important;
     }
   }
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
+  background-size: contain;
 }
 </style>

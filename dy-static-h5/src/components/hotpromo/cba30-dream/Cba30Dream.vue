@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimDailyBonus" :class="{ disabled: bonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimDailyBonus" :class="{ disabled: dailyBonus <= 0 }">
                 <img
                   src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/claim-btn.png"
                   alt=""
@@ -347,11 +347,11 @@ const handleClaimDailyBonus = () => {
         //   type: "success",
         //   message: `成功领取${res.data}元`
         // });
-        
+
         $q.notify({
           color: "positive",
           position: "top",
-          message:  `成功领取${res.data}元`,
+          message: `成功领取${res.data}元`,
           icon: "check_circle_outline"
         });
         fetchData();
@@ -360,7 +360,7 @@ const handleClaimDailyBonus = () => {
         //   type: "error",
         //   message: res.message
         // });
-        
+
         $q.notify({
           color: "negative",
           position: "top",
@@ -408,7 +408,7 @@ const handleClaimWeeklyBonus = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message:  `成功领取${res.data}元`,
+          message: `成功领取${res.data}元`,
           icon: "check_circle_outline"
         });
         fetchData();
@@ -417,7 +417,7 @@ const handleClaimWeeklyBonus = () => {
         //   type: "error",
         //   message: res.message
         // });
-        
+
         $q.notify({
           color: "negative",
           position: "top",
