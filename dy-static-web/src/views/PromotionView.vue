@@ -160,10 +160,10 @@
             }"
           >
             <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
-              <NBAWaterBattle />
+              <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-yalla-compass'">
-              <YallaCompass />
+              <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
               <BbdachaBelgrade />

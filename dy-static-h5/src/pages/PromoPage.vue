@@ -166,7 +166,13 @@
                   }"
                 >
                   <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
-                    <NBAWaterBattle />
+                    <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
+                  </div>
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-yalla-compass'">
+                    <YallaCompass :promoCode="selectedPromo.promoCode" />
+                  </div>
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
+                    <BbdachaBelgrade :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
@@ -308,7 +314,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onActivated, reactive, watch } from "vue";
+import { ref, defineComponent, onActivated, reactive, watch, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import {cached} from "boot/cache";
@@ -323,12 +329,18 @@ import HotPromotion from "components/HotPromotion";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
+
+const YallaCompass = defineAsyncComponent(() => import("src/components/hotpromo/yalla-compass/YallaCompass.vue"));
+const BbdachaBelgrade = defineAsyncComponent(() => import("src/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
+
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     BlastPremierMarquee,
-    NBAWaterBattle
+    NBAWaterBattle,
+    YallaCompass,
+    BbdachaBelgrade
   },
   setup() {
     const store = userStore();

@@ -372,14 +372,14 @@ export function claimCBAWeeklyBonus() {
   return eventapi.post("/session/cba/weekly/claimBonus");
 }
 
-export function getBelgradeInit() {
+export function getBelgradeInit(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/bb-dacha-belgrade/init?v=${randNum}`);
+  return eventapi.get(`/session/bb-dacha-belgrade/init?v=${randNum}`, qs.stringify({ promoCode }));
 }
 
-export function claimBelgradeBonus() {
+export function claimBelgradeBonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/bb-dacha-belgrade/claimBonus?v=${randNum}`);
+  return eventapi.post(`/session/bb-dacha-belgrade/claimBonus?v=${randNum}`, qs.stringify({ promoCode }));
 }
 
 export function getYallaCompassInit() {

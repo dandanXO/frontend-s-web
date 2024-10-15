@@ -31,6 +31,15 @@ export const useUI = defineStore("ui-store", {
     },
     changePromoName(name) {
       this.pageName = name;
-    }
+    },
+    notify(options) {
+      const id = `${Date.now()}-${Math.floor(Math.random() * 100)}`;
+      this.notificationQueue.push({
+        ...options,
+        id,
+        zIndex: this.notificationZIndex++,
+        timeout: options.timeout ?? 3000
+      });
+    },
   }
 });

@@ -446,9 +446,9 @@ export function claimYallaCompassBonus() {
   return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=dy2-yalla-compass&v=${randNum}`);
 }
 
-export function getBelgradeInit() {
-  return server.EVENT.get("/session/bb-dacha-belgrade/init");
+export function getBelgradeInit(promoCode) {
+  return server.EVENT.get("/session/bb-dacha-belgrade/init", {promoCode});
 }
-export function claimBelgradeBonus() {
-  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus");
+export function claimBelgradeBonus(promoCode) {
+  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus", {promoCode});
 }
