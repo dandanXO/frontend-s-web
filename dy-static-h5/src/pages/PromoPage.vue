@@ -137,7 +137,9 @@
                   dy2s14: selectedPromo.redirectUrl === 'dy2-s14-vote',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
-                  midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
+                  midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+                  isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
+                  isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -950,6 +952,16 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.isYallaCompass, &.isBbdachaBelgrade {
+          gap: 0;
+          margin: 0;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-color:  #E7F1FD;
+          padding: 20px;
+        }
 
         &.midAutumnWukong {
           width: 100%;
