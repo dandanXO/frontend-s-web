@@ -62,7 +62,7 @@
       </div>
       <div class="section second">
         <div class="title">
-          <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-1-spring.png" />
+          <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-2-spring.png" />
         </div>
         <div class="tips">
           <div class="tips-inner">
