@@ -6,6 +6,8 @@ import { createRouter, createMemoryHistory, createWebHistory, createWebHashHisto
 import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
 import { Platform } from "quasar";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 
 /*
  * If not building with SSR mode, you can
@@ -44,11 +46,22 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/login" ||
       to.path === "/register" ||
       to.path === "/forgot-password" ||
-      to.path === "/maintenance"
+      to.path === "/maintenance" ||
+      to.path === "/promotion"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
+    }
+
+    if (to.path === "/promotion") {
+      // debugger;
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+      user.token = to.query.token;
     }
 
     if (Platform.is.capacitor && Platform.is.android) {
