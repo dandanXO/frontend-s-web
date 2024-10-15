@@ -15,7 +15,7 @@
         label-width="150px"
       >
         <el-form-item :label="t('fields.code')" prop="code">
-          <el-input v-model="form.code" style="width: 350px;" readonly />
+          <el-input v-model="form.code" style="width: 350px;" disabled />
         </el-form-item>
         <el-form-item :label="t('fields.status')" prop="status">
           <el-radio-group v-model="form.status">
@@ -46,24 +46,6 @@
             :max="23"
             :controls="false"
           />
-        </el-form-item>
-        <el-form-item label="VIP" prop="vips">
-          <el-checkbox
-            v-model="checkboxes.vip.checkAll"
-            :indeterminate="checkboxes.vip.isIndeterminate"
-            @change="handleVIPCheckAllChange"
-          >
-            {{ t('fields.checkall') }}
-          </el-checkbox>
-          <el-checkbox-group
-            v-model="selectedVIPs.vipChecked"
-            @change="handleCheckedChange('VIP')"
-            style="width: 300px"
-          >
-            <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
-              {{ v.name }}
-            </el-checkbox>
-          </el-checkbox-group>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -126,7 +108,6 @@ import {
   updateConfig,
   getConfigList,
 } from '../../../api/tf-gaming-config'
-import { getVipList } from '../../../api/vip'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
@@ -174,7 +155,6 @@ const form = reactive({
   status: 'OPEN',
   startHour: null,
   endHour: null,
-  vips: null,
   siteId: null,
 })
 
@@ -183,62 +163,7 @@ const formRules = reactive({
   status: [required(t('message.validateStatusRequired'))],
   startHour: [required(t('message.validateStartTimeRequired'))],
   endHour: [required(t('message.validateEndTimeRequired'))],
-  vips: [required(t('message.validateVIPRequired'))],
 })
-
-const vipList = reactive({
-  list: [],
-})
-const paymentTypeList = reactive({
-  list: [],
-})
-
-const selectedVIPs = reactive({ vipChecked: [] })
-const selectedPayTypes = reactive({ payTypeChecked: [] })
-const selectedBonusDays = reactive({ bonusDaysChecked: [] })
-
-const checkboxes = reactive({
-  paymentType: {
-    checkAll: ref(false),
-    isIndeterminate: ref(false),
-  },
-  vip: {
-    checkAll: ref(false),
-    isIndeterminate: ref(false),
-  },
-  bonusDays: {
-    checkAll: ref(false),
-    isIndeterminate: ref(false),
-  },
-})
-
-function handleCheckedChange(type) {
-  if (type === 'VIP') {
-    form.vips = JSON.stringify(selectedVIPs.vipChecked.join(','))
-  } else if (type === 'PAYTYPE') {
-    form.payTypes = JSON.stringify(selectedPayTypes.payTypeChecked.join(','))
-  } else if (type === 'BONUSDAYS') {
-    form.bonusDays = JSON.stringify(
-      selectedBonusDays.bonusDaysChecked.join(',')
-    )
-  }
-  handleIndividualCheckChange()
-}
-
-const handleVIPCheckAllChange = val => {
-  selectedVIPs.vipChecked = []
-  if (val) {
-    vipList.list.forEach(vip => {
-      selectedVIPs.vipChecked.push(vip.id)
-    })
-  }
-  handleCheckedChange('VIP')
-}
-
-async function getVipBySiteId(siteId) {
-  await loadVips()
-  vipList.list = vipList.list.filter(vip => vip.siteId === siteId)
-}
 
 async function loadConfigList() {
   page.loading = true
@@ -252,11 +177,6 @@ async function loadConfigList() {
   })
   page.records = ret
   page.loading = false
-}
-
-async function loadVips() {
-  const { data: vip } = await getVipList()
-  vipList.list = vip
 }
 
 async function loadSites() {
@@ -277,41 +197,12 @@ async function showEdit(config) {
   form.status = config.status
   form.startHour = config.startHour
   form.endHour = config.endHour
-  form.vips = config.vipIds
-  selectedVIPs.vipChecked = config.vipIds.split(",").map(Number)
-  console.log(selectedVIPs)
   showDialog('EDIT')
-  await getVipBySiteId(config.siteId)
-}
-
-function handleCategoryChange(selectedList, checkboxData, dataList) {
-  const selectedCount = selectedList.filter(el => dataList.includes(el)).length
-  const listCount = dataList.length
-  checkboxData.checkAll = selectedCount === listCount
-  checkboxData.isIndeterminate = selectedCount > 0 && selectedCount < listCount
-}
-
-function handleIndividualCheckChange() {
-  const vipIds = [...new Set(vipList.list.map(el => el.id))]
-  handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
-  const paymentCodes = [...new Set(paymentTypeList.list.map(el => el.code))]
-  handleCategoryChange(
-    selectedPayTypes.payTypeChecked,
-    checkboxes.paymentType,
-    paymentCodes
-  )
-  const bonusDays = [...new Set(uiControl.day.map(el => el.value))]
-  handleCategoryChange(
-    selectedBonusDays.bonusDaysChecked,
-    checkboxes.bonusDays,
-    bonusDays
-  )
 }
 
 function edit() {
   configForm.value.validate(async valid => {
     if (valid) {
-      form.vipIds = form.vips.replace(/['"]+/g, '')
       await updateConfig(form)
       uiControl.dialogVisible = false
       await loadConfigList()
