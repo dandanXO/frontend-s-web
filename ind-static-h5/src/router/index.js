@@ -54,6 +54,11 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
+    if (from.path === "/promotion") {
+      // alert(to.path);
+      window.location.href = "xfapp:" + to.path;
+    }
+
     if (to.path === "/promotion") {
       // debugger;
       if (isAndroid()) {

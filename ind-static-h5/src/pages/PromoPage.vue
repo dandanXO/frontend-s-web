@@ -374,10 +374,10 @@ export default defineComponent({
           } else if (isAndroid()) {
             store.h5Url = "http://192.168.68.74:9090/";
             var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
-            alert(preUrl);
+            // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(preUrl, "location=no,zoom=no,footer=no");
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
