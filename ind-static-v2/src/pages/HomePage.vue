@@ -63,6 +63,37 @@
       </div>
     </q-page-sticky>
 
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+      <div>
+        <!--        <div class="hb-close">-->
+        <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />-->
+        <!--        </div>-->
+        <div>
+          <q-carousel
+            class="hb-float"
+            :navigation="hbPromo.length > 1 ? true : false"
+            v-model="hbSlide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+            :autoplay="3000"
+          >
+            <q-carousel-slide
+              v-for="(promo, i) in hbPromo"
+              :key="i"
+              :name="i"
+              @click="gotoFloatPromo(promo)"
+              :img-src="`${imgURL}/promo/${promo.icon}`"
+            >
+              <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
+            </q-carousel-slide>
+          </q-carousel>
+        </div>
+      </div>
+    </q-page-sticky>
+
     <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
@@ -1153,6 +1184,50 @@ const activateSlide = (clickedItem) => {
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
 
+const hbDragPos = ref([10, 120]);
+const isDraggingHbIcon = ref(false);
+const isHbShow = ref(true);
+const hbSlide = ref(0);
+
+const gotoFloatPromo = (val) => {
+  if (val.type === "PROMO") {
+    if (store.hasToken()) {
+      if (val.code.indexOf("url|") > -1) {
+        const page = val.code.replace("url|", "");
+        router.push(page);
+      } else if (val.code === "/activity-details") {
+        router.push(`/activity-details`);
+      } else {
+        router.push(`/promo?name=${val.code}`);
+      }
+    } else {
+      router.push("/promo");
+    }
+  }
+
+  if (val.type === "DOMAIN") {
+    window.open(val.code, "_blank");
+  }
+  if (val.type === "VIDEO") {
+    isMediaSettingsModal.value = true;
+    mediaCode.value = val.code;
+  }
+};
+
+const hbPromo = ref([]);
+
+const checkHbPromo = () => {
+  api
+    .get("/redirect")
+    .then((res) => {
+      return res;
+    })
+    .then((data) => {
+      // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
+      hbPromo.value = data.data;
+    });
+};
+
 const slide = ref(0);
 
 const isFirstView = ref(false);
@@ -2016,7 +2091,7 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-      .get("/sitePlatformAndGamesByLabel", {
+        .get("/sitePlatformAndGamesByLabel", {
           params: {
             gameLabel: "HOT",
             device: regDevice
@@ -2884,6 +2959,8 @@ onMounted(() => {
   loadCustomerAddress();
   loadJILIFishGameList();
   loadJDBFishGameList();
+  checkHbPromo();
+
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -4196,6 +4273,37 @@ onBeforeUnmount(() => {
 
   .q-item__label {
     color: #fff;
+  }
+}
+
+.hb-float {
+  position: relative;
+  height: 100px !important;
+  width: 100px;
+  background: transparent;
+  overflow: hidden;
+
+  .q-carousel__slide {
+    height: 100px !important;
+    width: 100px;
+    padding: 0px;
+  }
+
+  img {
+    height: 100px !important;
+  }
+
+  .q-carousel__control {
+    display: none;
+  }
+}
+
+.floating-btn {
+  z-index: 2001;
+
+  img {
+    width: 100%;
+    max-width: 100px;
   }
 }
 </style>
