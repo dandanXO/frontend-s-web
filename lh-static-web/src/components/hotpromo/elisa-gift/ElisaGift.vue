@@ -49,59 +49,51 @@
       </div>
       <div class="livepoker-rebate-game-info">
         <div class="title"></div>
+        <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">2024年10月16日至2024年10月20日</div>
+        </div>
+        <div class="little-title">
+          <div class="left">活动内容</div>
+          <div class="right">在Elisa大师赛赛事期间当天累计有效投注≥1000元并存款≥200元在次日即可获得对应档位的奖金，最高可获888元~</div>
+        </div>
         <table class="livepoker-rebate-game-info-table">
           <tbody>
             <tr>
-              <th>有效投注</th>
-              <th>投注嘉奖</th>
+              <th>当日存款</th>
+              <th>当日累计有效投注</th>
               <th>雷火专属金</th>
               <th>流水倍数</th>
             </tr>
             <tr>
-              <td>≥3,000</td>
+              <td rowspan="7">≥200元</td>
+              <td>≥1,000</td>
               <td>8元</td>
-              <td>18元</td>
-              <td rowspan="9">5倍流水</td>
+              <td rowspan="7">8倍流水</td>
             </tr>
             <tr>
               <td>≥5,000</td>
-              <td>18元</td>
-              <td>38元</td>
+              <td>28元</td>
             </tr>
             <tr>
               <td>≥10,000</td>
-              <td>38元</td>
               <td>58元</td>
             </tr>
             <tr>
               <td>≥30,000</td>
-              <td>58元</td>
-              <td>88元</td>
-            </tr>
-            <tr>
-              <td>≥50,000</td>
-              <td>88元</td>
               <td>128元</td>
             </tr>
             <tr>
-              <td>≥100,000</td>
-              <td>108元</td>
+              <td>≥50,000</td>
               <td>288元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>588元</td>
             </tr>
             <tr>
               <td>≥200,000</td>
-              <td>288元</td>
-              <td>358元</td>
-            </tr>
-            <tr>
-              <td>≥500,000</td>
-              <td>588元</td>
               <td>888元</td>
-            </tr>
-            <tr>
-              <td>≥1,000,000</td>
-              <td>888元</td>
-              <td>1,088元</td>
             </tr>
           </tbody>
         </table>
@@ -111,7 +103,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员A：ELISA大师赛在IM电竞投注5,000元后又在雷火电竞投注ELISA大师赛投注5,000元,会员B在次日可获雷火专属金38元。
+            10月16日会员A在Eilsa大师赛赛事期间存款500元并且累计有效投注为20000元，10月17日即可在优惠页面点击【领取】获得投注奖金，根据规则会员可获得58元投注奖金，奖金仅需8倍水即可出款
           </div>
         </div>
       </div>
@@ -123,14 +115,14 @@
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
               <div>
-                活动期间，投注ELISA大师赛有效≥3,000元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注ELISA大师赛可获更高奖励金额。
+                活动期间，会员当日投注Eilsa大师赛有效投注≥1,000元且存款≥200元可获得对应投注奖金，满足条件的会员可进入优惠界面点击【领取】按钮获得投注奖金，奖金8倍流水即可提款；
               </div>
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            ELISA大师赛投注嘉奖在结算后24小时内有效，可登入优惠界面点击【领取】按钮获得，彩金5倍流水即可提款；
+            Eilsa大师赛投注奖金在结算后24小时内有效，每天只能领取一次，超出活动时间未领取不予补偿；
           </div>
           <div class="item">
             <div class="item-num">3</div>

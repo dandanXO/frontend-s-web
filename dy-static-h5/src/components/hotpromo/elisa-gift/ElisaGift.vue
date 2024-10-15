@@ -6,7 +6,7 @@
           <div class="livepoker-rebate-section-title">
             <div>
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-title-img.png"
                 style="width: 20px; height: 20px; margin-bottom: 0px"
               />
             </div>
@@ -15,7 +15,7 @@
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon1.png"
                 alt=""
                 width="100%"
               />
@@ -28,7 +28,7 @@
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon3.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon3.png"
                 alt=""
                 width="100%"
               />
@@ -41,7 +41,7 @@
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon2.png"
                 alt=""
                 width="100%"
               />
@@ -54,7 +54,7 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus">
-            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png" alt="" width="100%" />
+            <img src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/claim-btn.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/game-bottom-left-btn.png"
                 alt=""
                 style="width: 10px"
               />
@@ -165,15 +165,12 @@
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
 import { getElisaGiftInit, claimElisaGiftBonus } from "../../../api/index/promo";
-import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
-
-const notify = useNotify();
 const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
@@ -230,18 +227,19 @@ const handleClaimBonus = () => {
   claimElisaGiftBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: `领取成功${res.data}元`,
+          icon: "check_circle_outline"
         });
         fetchData();
       } else {
-        notify({
-          type: "error",
-          message: res.message
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
         });
       }
     })
@@ -295,7 +293,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-bg.png");
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
@@ -387,7 +385,7 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-title.png");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 240px;
@@ -401,7 +399,7 @@ onMounted(() => {
     align-items: flex-start;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 64px;
@@ -485,7 +483,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;
