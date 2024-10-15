@@ -307,7 +307,6 @@ export default defineComponent({
             }
           }
         } else if (route.path === "/promotion") {
-          debugger;
           hasPage.value = true;
           pageName.value = t("header.promotion");
           prevPage.value = "";
