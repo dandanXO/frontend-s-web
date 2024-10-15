@@ -434,6 +434,9 @@ export default defineComponent({
       } else {
         filteredArray.value = promoState.promoList;
       }
+      
+      // remove to show faq as promo item at promo list
+      filteredArray.value = [...filteredArray.value].filter(({ promoCode }) => promoCode !== 'pak-faq');
     };
 
     const loadAll = () => {
