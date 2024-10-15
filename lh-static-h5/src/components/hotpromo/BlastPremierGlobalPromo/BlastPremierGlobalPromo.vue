@@ -91,7 +91,6 @@
             </div>
           </div>
         </div>
-        <div>{{$q.screen.width}}</div>
         <div v-if="dayList.length % 3 !== 2 || $q.screen.width <= 375" class="middle-row">
           <div class="sign-container">
             <div v-for="(day, i) in dayList" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
@@ -756,16 +755,18 @@ onMounted(() => {
         }
 
         .btn {
-          background: url(../../../assets/images/promo/hotpromo/blastpremier/btn.png) no-repeat center center;
-          padding: 10px;
+          // background: url(../../../assets/images/promo/hotpromo/blastpremier/btn.png) no-repeat center center;
+          padding: 4px 2px;
           align-self: normal;
           font-size: 12px;
           font-weight: 500;
           font-family: "PingFang SC";
           color: #000;
-          background-size: contain;
+          // background-size: contain;
           width: 85%;
           margin: 0 auto;
+          background-color: #5B5B21;
+          border-radius: 4px;
 
           &.claimed,
           &.not-complete {
@@ -774,8 +775,9 @@ onMounted(() => {
 
           &.to-claim {
             cursor: pointer;
-            background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
-            background-size: contain;
+            // background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
+            // background-size: contain;
+            background-color: #FFFD66;
           }
         }
       }
@@ -783,6 +785,7 @@ onMounted(() => {
       .sign-container.col-2 {
         grid-template-columns: auto auto;
         max-width: calc(60% - 20px);
+        margin-top: 20px;
         @media (max-width: 375px) {
           grid-template-columns: repeat(2, 1fr);
           max-width: none;
