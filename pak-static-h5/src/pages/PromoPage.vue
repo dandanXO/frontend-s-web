@@ -73,7 +73,10 @@
             </div>
           </div>
           <div v-else class="selected-promo">
-            <div class="loader" v-if="isFetchingPromo" />
+            <!-- <div class="loader" v-if="isFetchingPromo" /> -->
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
 
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
@@ -453,7 +456,8 @@ export default defineComponent({
     const loadAll = () => {
       const platformApiUrl = "/opt-session/promo/page";
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = true;
 
       api
         .get(platformApiUrl)
@@ -1394,5 +1398,17 @@ export default defineComponent({
 .dark-grey-dialog {
   background: linear-gradient(#000000b3, #000000b3);
   background-size: contain;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>
