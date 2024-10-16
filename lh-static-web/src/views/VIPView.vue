@@ -79,92 +79,108 @@
             </div>
           </div>
         </template> -->
+        <div class="bothbars">
+          <div class="amount">
+            <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
+              <div
+                class="text"
+                v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 12"
+              >
+                还需
+                <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
+                有效投注晋升到 VIP {{ vipLevel + 1 }}
+              </div>
 
-        <div class="amount">
-          <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
-            <div
-              class="text"
-              v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 12"
-            >
-              还需
-              <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
-              有效投注晋升到 VIP {{ vipLevel + 1 }}
+              <!-- <div class="text" v-else-if="vipLevel === 0">
+                还需
+                <div class="required-amount">
+                  {{ currentBetAmt }}
+                  {{ currentUpgradeBetAmt }}
+                  {{
+                    currentBetAmt > currentUpgradeBetAmt
+                      ? formatNumber(currentUpgradeBetAmt - currentBetAmt)
+                      : formatNumber(currentUpgradeBetAmt)
+                  }}
+                </div>
+                有效投注晋升到 VIP 1
+              </div> -->
+
+              <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
+              <div class="text" v-else>
+                已到达
+                <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
+                有效流水 VIP {{ vipLevel + 1 }}
+              </div>
             </div>
 
-            <!-- <div class="text" v-else-if="vipLevel === 0">
-              还需
-              <div class="required-amount">
-                {{ currentBetAmt }}
-                {{ currentUpgradeBetAmt }}
+            <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
+
+            <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
+            <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
+              <div class="progressBarOuterBar">
+                <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
+              </div>
+              <div class="progressBarDescription">
                 {{
-                  currentBetAmt > currentUpgradeBetAmt
-                    ? formatNumber(currentUpgradeBetAmt - currentBetAmt)
-                    : formatNumber(currentUpgradeBetAmt)
+                  currentBetAmt <= currentUpgradeBetAmt
+                    ? `${currentBetAmt}/${currentUpgradeBetAmt}`
+                    : `${currentUpgradeBetAmt}/${currentUpgradeBetAmt}`
                 }}
               </div>
-              有效投注晋升到 VIP 1
-            </div> -->
+            </div>
 
-            <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
-            <div class="text" v-else>
-              已到达
-              <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
-              有效流水 VIP {{ vipLevel + 1 }}
+            <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
+              <div class="progressBarOuterBar">
+                <div
+                  class="progressBarInnerBar"
+                  :style="{
+                    width: vipLevel === 12 ? '100%' : vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null
+                  }"
+                ></div>
+              </div>
+              <div class="progressBarDescription" v-if="vipLevel == 0">
+                {{
+                  currentBetAmt <= originalUpgradeBetAmounts[0]
+                    ? `${currentBetAmt}/${originalUpgradeBetAmounts[0]}`
+                    : `${originalUpgradeBetAmounts[0]}/${originalUpgradeBetAmounts[0]}`
+                }}
+              </div>
+              <div class="progressBarDescription" v-if="vipLevel == 12">
+                {{ originalUpgradeBetAmounts[11] + "/" + originalUpgradeBetAmounts[11] }}
+              </div>
+            </div>
+            <div class="progressBarContainer" v-show="!isDataLoaded">
+              <div class="progressBarOuterBar">
+                <div class="progressBarInnerBar" style="width: 0%"></div>
+              </div>
+              <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
             </div>
           </div>
-
-          <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
-
-          <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
-          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
-            <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
-            </div>
-            <div class="progressBarDescription">
-              {{
-                currentBetAmt <= currentUpgradeBetAmt
-                  ? `${currentBetAmt}/${currentUpgradeBetAmt}`
-                  : `${currentUpgradeBetAmt}/${currentUpgradeBetAmt}`
-              }}
-            </div>
           </div>
-
-          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
-            <div class="progressBarOuterBar">
-              <div
-                class="progressBarInnerBar"
-                :style="{
-                  width: vipLevel === 12 ? '100%' : vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null
-                }"
-              ></div>
+          <!-- <div
+            class="claim-btn"
+            :class="{ disabled: isLoading['all'] || !isDataLoaded }"
+            @click="handleClick('all', vipLevel)"
+          >
+            {{ isLoading["all"] ? "领取中" : "一键领取" }}
+          </div> -->
+          <div class="amount">
+            <div class="text" v-show="isDataLoaded">
+                保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
+              </div>
+              <div class="progressBarContainer">
+                <div class="progressBarOuterBar">
+                  <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
+                </div>
+                <div class="progressBarDescriptionRetain">
+                  {{
+                    currentRetainDay + '/' + retainDayRequired
+                  }}
+                </div>
+              </div>
             </div>
-            <div class="progressBarDescription" v-if="vipLevel == 0">
-              {{
-                currentBetAmt <= originalUpgradeBetAmounts[0]
-                  ? `${currentBetAmt}/${originalUpgradeBetAmounts[0]}`
-                  : `${originalUpgradeBetAmounts[0]}/${originalUpgradeBetAmounts[0]}`
-              }}
-            </div>
-            <div class="progressBarDescription" v-if="vipLevel == 12">
-              {{ originalUpgradeBetAmounts[11] + "/" + originalUpgradeBetAmounts[11] }}
-            </div>
-          </div>
-          <div class="progressBarContainer" v-show="!isDataLoaded">
-            <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" style="width: 0%"></div>
-            </div>
-            <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
           </div>
         </div>
-      </div>
-      <div
-        class="claim-btn"
-        :class="{ disabled: isLoading['all'] || !isDataLoaded }"
-        @click="handleClick('all', vipLevel)"
-      >
-        {{ isLoading["all"] ? "领取中" : "一键领取" }}
-      </div>
-    </div>
 
     <div class="tips">
       等级晋升后开启90天保级期，保级期内完成有效投注要求则保级成功，未完成则降一级。
@@ -863,6 +879,9 @@ const toggleAccordion = () => {
 };
 const currentDepAmt = ref(0);
 const currentBetAmt = ref(0);
+const currentRetainDay = ref(0);
+const retainDayRequired = ref(0);
+const balanceRetainDay = ref(0);
 const currentRedPacketAmount = ref(0);
 const currentUpgradeDepAmt = ref(0);
 const currentUpgradeBetAmt = ref(0);
@@ -1160,6 +1179,9 @@ const runVipAPI = (res) => {
 
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    currentRetainDay.value = res.data.currentRetainDay;
+    retainDayRequired.value = res.data.retainDayRequired;
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     isDataLoaded.value = true;
     getVipLevelProgress(vipLevel.value, "bet");
@@ -1421,7 +1443,7 @@ $border-settings: 1px solid #e5e7eb;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
-    padding-right: 20px;
+    padding-right: 40px;
     .badge {
       width: 250px;
       padding: 20px;
@@ -1434,18 +1456,19 @@ $border-settings: 1px solid #e5e7eb;
       flex-direction: column;
       width: 100%;
       gap: 20px;
+      padding-bottom: 20px;
       .amount {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         .text {
           display: flex;
           gap: 2px;
-          font-size: 24px;
+          font-size: 20px;
           color: #ffffff;
           white-space: nowrap;
           .required-amount {
-            color: #799df8;
+            color: #FFDD00;
             font-weight: 600;
           }
         }
@@ -1458,7 +1481,7 @@ $border-settings: 1px solid #e5e7eb;
 
         .progressBarOuterBar {
           border-radius: 16px;
-          background: grey;
+          background: #405471;
           width: 100%;
           overflow: hidden;
         }
@@ -1483,6 +1506,18 @@ $border-settings: 1px solid #e5e7eb;
           text-align: center;
           margin: -30px auto;
           justify-content: center;
+          &Retain {
+            display: flex;
+          color: #fff;
+          font-size: 17.987px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          width: 100%;
+          text-align: center;
+          margin: -30px auto;
+          justify-content: center;
+          }
         }
       }
     }

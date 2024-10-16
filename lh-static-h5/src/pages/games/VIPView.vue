@@ -157,14 +157,29 @@
             <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
           </div>
         </div>
+        <div class="amount">
+            <div class="text" v-show="isDataLoaded">
+                保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
+              </div>
+              <div class="progressBarContainer">
+                <div class="progressBarOuterBar">
+                  <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
+                </div>
+                <div class="progressBarDescriptionRetain">
+                  {{
+                    currentRetainDay + '/' + retainDayRequired
+                  }}
+                </div>
+              </div>
+            </div>
       </div>
-      <div
+      <!-- <div
         class="claim-btn"
         :class="{ disabled: isLoading['all'] || !isDataLoaded }"
         @click="handleClick('all', vipLevel)"
       >
         {{ isLoading["all"] ? "领取中" : "一键领取" }}
-      </div>
+      </div> -->
     </div>
 
     <div class="tips">
@@ -900,6 +915,9 @@ const toggleAccordion = () => {
 };
 const currentDepAmt = ref(0);
 const currentBetAmt = ref(0);
+const currentRetainDay = ref(0);
+const retainDayRequired = ref(0);
+const balanceRetainDay = ref(0);
 const currentRedPacketAmount = ref(0);
 const currentUpgradeDepAmt = ref(0);
 const currentUpgradeBetAmt = ref(0);
@@ -1205,6 +1223,9 @@ const runVipAPI = (res) => {
     });
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    currentRetainDay.value = res.data.currentRetainDay;
+    retainDayRequired.value = res.data.retainDayRequired;
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     getVipLevelProgress(vipLevel.value, "bet");
     isDataLoaded.value = true;
@@ -1491,7 +1512,7 @@ $border-settings: 1px solid #e5e7eb;
         // gap: 10px;
         gap: 5px;
         .text {
-          font-size: 14px;
+          font-size: 12px;
           color: #ffffff;
           // white-space: nowrap;
           .required-amount {
@@ -1509,7 +1530,7 @@ $border-settings: 1px solid #e5e7eb;
 
         .progressBarOuterBar {
           border-radius: 16px;
-          background: grey;
+          background: #405471;
           width: 100%;
           overflow: hidden;
         }
@@ -1518,7 +1539,7 @@ $border-settings: 1px solid #e5e7eb;
           color: #fff;
           border-radius: 16px;
           background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
-          height: 16px;
+          height: 14px;
         }
 
         .progressBarDescription {
@@ -1531,6 +1552,17 @@ $border-settings: 1px solid #e5e7eb;
           font-weight: 400;
           line-height: normal;
           margin: -28px auto 0;
+          &Retain {
+            display: flex;
+            justify-content: space-between;
+            color: #fff;
+            font-size: 9.987px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin: -24px auto 0;
+
+          }
         }
       }
     }
