@@ -399,6 +399,14 @@ export default defineComponent({
                 ref.close();
                 router.push(message);
               }
+
+              ref.executeScript({
+                code: `
+                  var style = document.createElement('style');
+                  style.innerHTML = 'html, body { background:#11131f !important }';
+                  document.head.appendChild(style);
+                `
+              });
             });
 
             ref.addEventListener("exit", function () {
