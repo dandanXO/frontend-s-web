@@ -1,6 +1,7 @@
-import { boot, store } from "quasar/wrappers";
+import { boot } from "quasar/wrappers";
 import { createPinia } from "pinia";
 import { Loading, Notify, SessionStorage, Dialog } from "quasar";
+import { userStore } from "src/stores";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
@@ -37,6 +38,8 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 export default boot(({ app, router }) => {
+  app.use(createPinia());
+  const store = userStore();
   const onRequest = (config) => {
     if (store.token) {
       api.defaults.headers["token"] = store.token;
@@ -63,7 +66,7 @@ export default boot(({ app, router }) => {
     return Promise.reject(error);
   };
 
-  var attemptTimes= 0;
+  var attemptTimes = 0;
   async function refreshTokenAndRetry(errorresp) {
     attemptTimes++;
     Notify.create({
@@ -87,7 +90,7 @@ export default boot(({ app, router }) => {
       // 重新发起请求
       axios(originalRequest)
         .then((response) => {
-          attemptTimes= 0;
+          attemptTimes = 0;
           resolve(response.data);
         })
         .catch((err) => {
@@ -135,7 +138,7 @@ export default boot(({ app, router }) => {
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED
         ) {
           // debugger;
-          if(attemptTimes > 10){
+          if (attemptTimes > 10) {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
             router.push("/login");
@@ -144,7 +147,7 @@ export default boot(({ app, router }) => {
           return refreshTokenAndRetry(response);
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          if(response.config.url && response.config.url.indexOf("/balance") > -1){
+          if (response.config.url && response.config.url.indexOf("/balance") > -1) {
             return res;
           }
           return Dialog.create({
@@ -173,7 +176,6 @@ export default boot(({ app, router }) => {
     }
   };
 
-  app.use(createPinia());
   api.defaults.headers["Authorization"] = process.env.SITE;
   cashier.defaults.headers["Authorization"] = process.env.SITE;
   eventapi.defaults.headers["Authorization"] = process.env.SITE;
