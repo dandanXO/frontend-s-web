@@ -20,6 +20,25 @@ const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
 
+let isRefreshing = false;
+
+const refreshWitheList = ["/member/token/refresh"];
+
+const finishRefreshEvent = new CustomEvent("finishRefresh");
+
+const getCurrentAxiosInstance = (config) => {
+  switch (config.baseURL) {
+    case rstApi:
+      return api;
+    case crtApi:
+      return cashier;
+    case evtApi:
+      return eventapi;
+    default:
+      return axios;
+  }
+};
+
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = sessionStorage.getItem(urlLsName);
   if (successRstUrl) {
@@ -40,17 +59,32 @@ function getInitApi(apiLinks, urlLsName) {
 export default boot(({ app, router }) => {
   app.use(createPinia());
   const store = userStore();
-  const onRequest = (config) => {
+
+  const onRequest = async (config) => {
+    if (isRefreshing && !refreshWitheList.includes(config.url)) {
+      const retry = await new Promise((resolve) => {
+        const handleRefreshEnd = () => {
+          config.headers.token = store.token;
+          document.removeEventListener("finishRefresh", handleRefreshEnd);
+          resolve(config);
+        };
+
+        document.addEventListener("finishRefresh", handleRefreshEnd);
+      });
+      return retry;
+    }
+
     if (store.token) {
-      api.defaults.headers["token"] = store.token;
-      cashier.defaults.headers["TOKEN"] = store.token;
-      eventapi.defaults.headers["token"] = store.token;
+      config.headers.token = store.token;
+      //   api.defaults.headers["token"] = store.token;
+      //   cashier.defaults.headers["token"] = store.token;
+      //   eventapi.defaults.headers["token"] = store.token;
     }
     // config.headers["Authorization"] = process.env.SITE;
 
-    if (config.data) {
-      config.data = config.data;
-    }
+    // if (config.data) {
+    //   config.data = config.data;
+    // }
     return config;
   };
 
@@ -68,7 +102,14 @@ export default boot(({ app, router }) => {
 
   var attemptTimes = 0;
   async function refreshTokenAndRetry(errorresp) {
+    const originalRequest = errorresp.config;
+    const originalInstance = getCurrentAxiosInstance(originalRequest);
+
     attemptTimes++;
+    if (isRefreshing) {
+      const res = await originalInstance(originalRequest);
+      return res.data;
+    }
     Notify.create({
       spinner: true,
       type: "warning",
@@ -76,8 +117,8 @@ export default boot(({ app, router }) => {
       position: "top",
       message: "Refreshing..."
     });
-    // debugger;
-    const originalRequest = errorresp.config;
+    isRefreshing = true;
+
     const res = await api.post("/member/token/refresh");
     // console.log(res);
     SessionStorage.set("TOKEN", res.data);
@@ -85,18 +126,12 @@ export default boot(({ app, router }) => {
     store.token = res.data;
     originalRequest.headers.token = store.token;
 
-    return new Promise((resolve, reject) => {
-      // 在这里可以修改原始请求的配置，例如添加新的令牌
-      // 重新发起请求
-      axios(originalRequest)
-        .then((response) => {
-          attemptTimes = 0;
-          resolve(response.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+    isRefreshing = false;
+    document.dispatchEvent(finishRefreshEvent);
+    const newRes = await axios(originalRequest);
+    attemptTimes = 0;
+
+    return newRes.data;
   }
 
   // const route = useRoute();
@@ -147,7 +182,7 @@ export default boot(({ app, router }) => {
           return refreshTokenAndRetry(response);
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          if (response.config.url && response.config.url.indexOf("/balance") > -1) {
+          if (response.config.url) {
             return res;
           }
           return Dialog.create({

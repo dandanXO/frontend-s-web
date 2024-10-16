@@ -184,7 +184,7 @@ export const userStore = defineStore("userStore", {
         } else {
           token = SessionStorage.getItem("TOKEN");
         }
-        req.headers.TOKEN = token;
+        req.headers.token = token;
         return req;
       });
       eventapi.interceptors.request.use(async (req) => {
@@ -194,7 +194,7 @@ export const userStore = defineStore("userStore", {
         } else {
           token = SessionStorage.getItem("TOKEN");
         }
-        req.headers.TOKEN = token;
+        req.headers.token = token;
         return req;
       });
 
