@@ -164,8 +164,8 @@
           >
             {{ isLoading["all"] ? "领取中" : "一键领取" }}
           </div> -->
-          <div class="amount">
-            <div class="text" v-show="isDataLoaded">
+          <div class="amount" v-show="isDataLoaded">
+            <div class="text">
                 保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
               </div>
               <div class="progressBarContainer">
