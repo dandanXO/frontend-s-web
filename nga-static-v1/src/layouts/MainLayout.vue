@@ -17,10 +17,10 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage || '/'">
+        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
           <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
-        </router-link>
+        </a>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
           <div class="title-container">
@@ -268,6 +268,10 @@ export default defineComponent({
               prevPage.value = "/promo";
             }
           }
+        } else if (route.path === "/promotion") {
+          hasPage.value = true;
+          pageName.value = "Promotion";
+          prevPage.value = "";
         }else if (route.path === "/activities-details") {
           prevPage.value = "/promo";
           hasPage.value = true;
@@ -498,6 +502,16 @@ export default defineComponent({
     });
     // console.log(platformsList.value);
 
+    const goToPrevPage = (prePage) => {
+      if (prePage === "/") {
+        router.push("/");
+      } else if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/" + prePage);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
     });
@@ -518,7 +532,8 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      goToPrevPage
     };
   }
 });
