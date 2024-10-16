@@ -170,7 +170,7 @@
               </div>
               <div class="progressBarContainer">
                 <div class="progressBarOuterBar">
-                  <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
+                  <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
                 </div>
                 <div class="progressBarDescriptionRetain">
                   {{
@@ -881,6 +881,10 @@ const currentDepAmt = ref(0);
 const currentBetAmt = ref(0);
 const currentRetainDay = ref(0);
 const retainDayRequired = ref(0);
+const retainPercentage = computed(() => {
+  if (retainDayRequired.value === 0) return 0; // Prevent division by 0
+  return ((+currentRetainDay.value / +retainDayRequired.value) * 100).toFixed(2);
+});
 const balanceRetainDay = ref(0);
 const currentRedPacketAmount = ref(0);
 const currentUpgradeDepAmt = ref(0);
