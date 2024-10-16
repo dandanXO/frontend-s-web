@@ -1153,13 +1153,13 @@ const handleSelect = item => {
     // Clear previous selections
     dynamicTags.value = []
     selectionList.members = []
-    
+
     // Push the new selected item
     dynamicTags.value.push(item.value)
     const removed = list.members.splice(list.members.indexOf(item), 1)
     const removedArr = [...removed]
     selectionList.members.push(removedArr[0])
-    
+
     // Reset input
     inputValue.value = ''
     form.loginName = item.value;
@@ -1450,12 +1450,14 @@ async function handleBalanceType(value) {
 }
 
 function createAdd() {
+  // debugger;
   memberAmountAdjustForm.value.validate(async valid => {
     form.id = null
     form.memberId = null
     const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
     form.memberId = id
-    if (isAffiliateUser) {
+
+    if (isAffiliateUser.value===true) {
       form.rollover = 0
       form.gameTypeRollover = null
     } else {
@@ -1476,7 +1478,7 @@ function createDeduct() {
     form.memberId = null
     const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
     form.memberId = id
-    if (isAffiliateUser) {
+    if (isAffiliateUser.value===true) {
       form.rollover = 0
       form.gameTypeRollover = null
     } else {
