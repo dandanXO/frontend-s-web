@@ -73,7 +73,10 @@
             </div>
           </div>
           <div v-else class="selected-promo">
-            <div class="loader" v-if="isFetchingPromo" />
+            <!-- <div class="loader" v-if="isFetchingPromo" /> -->
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -84,10 +87,6 @@
                 />
               </div>
               <div class="inner">
-                <div class="top-float">
-                  <div class="top-subtitle">Get unlimited rewards!</div>
-                  <div class="top-title">{{ selectedPromo.title }}</div>
-                </div>
                 <div class="promo-content-inner">
                   <div class="content-title">{{ selectedPromo.title }}</div>
                 </div>
@@ -374,7 +373,7 @@ export default defineComponent({
             }
             store.token = extensionToken.value;
           } else if (isAndroid()) {
-            // store.h5Url = "http://192.168.68.74:9090/";
+            // store.h5Url = "http://192.168.68.105:9090/";
             var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
             // alert(preUrl);
             console.log(preUrl);
@@ -440,7 +439,8 @@ export default defineComponent({
       const randNum = Math.floor(Math.random() * 1000) + 1;
       const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = true;
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -1300,5 +1300,17 @@ export default defineComponent({
 .dark-grey-dialog {
   background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
   background-size: contain;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>
