@@ -1,4 +1,4 @@
-import { boot, store } from "quasar/wrappers";
+import { boot } from "quasar/wrappers";
 import { createPinia } from "pinia";
 import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
@@ -7,6 +7,7 @@ import i18n from "../i18n/index";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 import { errorMessages } from "./error-messages";
+import { userStore } from "src/stores";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -38,6 +39,9 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 export default boot(({ app, router }) => {
+  app.use(createPinia());
+  const store = userStore();
+
   const onRequest = (config) => {
     if (store.token) {
       api.defaults.headers["token"] = store.token;
@@ -123,7 +127,6 @@ export default boot(({ app, router }) => {
         res.code === ResponseCode.ERROR_NO_ELIGIBLE_PLAN_FOUND ||
         res.code === ResponseCode.ERROR_NO_CASH_FLOW
       ) {
-
         res.message =
           i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";
         return res;
@@ -191,8 +194,6 @@ export default boot(({ app, router }) => {
       return res;
     }
   };
-
-  app.use(createPinia());
   api.defaults.headers["Authorization"] = process.env.SITE;
   cashier.defaults.headers["Authorization"] = process.env.SITE;
   eventapi.defaults.headers["Authorization"] = process.env.SITE;
