@@ -38,7 +38,7 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
 
-    if (user.token && from && from.href) {
+    if (user.token && from && from.href && from.path !== "/register") {
       user.getBalance();
     }
 
