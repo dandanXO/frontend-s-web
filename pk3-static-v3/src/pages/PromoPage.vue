@@ -1,6 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -105,7 +105,9 @@
                   <div
                     class="join-container"
                     v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
-                    :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
+                    :style="{
+                      bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
+                    }"
                   >
                     <div class="promo-date">
                       <div class="date-txt">{{ $t("promo.promotionEnds") }}</div>
@@ -137,10 +139,12 @@
     ref="allGames"
     :closeFullGameDialog="closeFullGameDialog"
   ></GameModal>
+
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog"></q-dialog>
 </template>
 
 <script lang="js">
-import { computed, defineComponent, onActivated, onBeforeUnmount, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onActivated, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
@@ -150,7 +154,8 @@ import ProfileSummary from "@/components/ProfileSummary.vue";
 import { userStore } from "@/stores/index";
 import { t } from "@/boot/lang";
 import { useUI } from "@/stores/ui";
-import { useQuasar } from "quasar";
+import {useQuasar,SessionStorage} from "quasar";
+import {isAndroid} from "boot/utils";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -184,6 +189,19 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
 
+    const isFetchingPromo = ref(false);
+    const extensionState = ref(false);
+    const extensionToken = ref("");
+    const isOpenExtension = ref(false);
+
+    const checkExtension = () => {
+      if (route.path === "/promotion") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+    };
+
     const tab = ref("all");
     const tabItems = [
       { name: "all", label: "全部" }
@@ -216,7 +234,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if (route.query.name) {
+      if (route.query.name && !isAndroid()) {
         isPromoDetail.value = true;
       }
 
@@ -229,7 +247,7 @@ export default defineComponent({
     watch(
       () => route.query,
       () => {
-        if (route.query === null) {
+        if (route.query === null || isAndroid()) {
           isPromoDetail.value = false;
         } else {
           isPromoDetail.value = route.query.name;
@@ -259,7 +277,11 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      router.push("/promo");
+      if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/promo");
+      }
       isPromoDetailPage.value = false;
     };
 
@@ -307,13 +329,68 @@ export default defineComponent({
         } else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
           router.push({ path: "/activities-details" });
         } else {
+          // if (route.query.fromAccount) {
+          //   router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+          // } else {
+          //   router.push({path: '/promo', query: {name: promo.redirectUrl}})
+          // }
+          // isPromoDetail.value = true
+          // selectedPromo.value = promo
+
+          if (extensionState.value) {
+            isPromoDetail.value = true;
+
+            selectedPromo.value = promo;
+            if (isAndroid()) {
+              LocalStorage.set("TOKEN", extensionToken.value, 86400);
+            } else {
+              SessionStorage.set("TOKEN", extensionToken.value);
+            }
+            store.token = extensionToken.value;
+          } else if (isAndroid()) {
+            // store.h5Url = "http://192.168.68.86:9090/";
+            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
+            // alert(preUrl);
+            console.log(preUrl);
+            // promoSrc.value= preUrl;
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes");
+            isOpenExtension.value = true;
+
+            ref.addEventListener("loadstart", function (event) {
+              var url = event.url;
+              // alert("This" + url);
+              if (url.indexOf("xfapp:") > -1) {
+                var message = url.split("xfapp:")[1];
+                console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                // alert(message);
+                ref.close();
+                router.push(message);
+              }
+            });
+
+            ref.addEventListener("exit", function () {
+              isOpenExtension.value = false;
+            });
+        } else {
           if (route.query.fromAccount) {
             router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
           } else {
             router.push({ path: "/promo", query: { name: promo.redirectUrl } });
           }
-          isPromoDetail.value = true;
-          selectedPromo.value = promo;
+          if(!isAndroid()){
+              isPromoDetail.value = true;
+              selectedPromo.value = promo;
+              // selectedPromoDate.value = '';
+            }
+          }
+
+          if(selectedPromo.value.param){
+            let promoDate = JSON.parse(selectedPromo.value.param).promoDate;
+
+            // if(promoDate) {
+            //   selectedPromoDate.value = promoDate;
+            // }
+          }
         }
       }
     };
@@ -332,6 +409,8 @@ export default defineComponent({
       const randNum = Math.floor(Math.random() * 1000) + 1;
       const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
 
+      isFetchingPromo.value = window.location.pathname === "/promotion";
+
       api
         .get(platformApiUrl)
         .then((res) => {
@@ -341,21 +420,24 @@ export default defineComponent({
             // promoState.promoList.push(...res.data);
 
             promoItems.forEach((element) => {
-              if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
                 // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              } else {
+              // } else {
                 promoState.promoList.push(element);
 
                 if (route.query.name && String(element.redirectUrl) === route.query.name) {
                   showPromoDetails(element);
                 }
-              }
+              // }
             });
 
             switchPromoType(promoState.active);
+
+            isFetchingPromo.value = false;
           }
         })
         .catch((e) => {
+          isFetchingPromo.value = false;
           console.log("error", e);
         });
     };
@@ -474,6 +556,10 @@ export default defineComponent({
       clearInterval(countdownInterval);
     });
 
+    onMounted(() => {
+      checkExtension();
+    });
+
     const swipeLeft = () => {
       router.push("/vip");
     };
@@ -516,7 +602,10 @@ export default defineComponent({
       route,
       allGames,
       closeFullGameDialog,
-      isFtdPromoEnded
+      isFtdPromoEnded,
+      isFetchingPromo,
+      extensionState,
+      isOpenExtension
     };
   }
 });
@@ -1140,5 +1229,11 @@ export default defineComponent({
 
 .btn-disabled {
   filter: brightness(0.6);
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  // background: #3e1474;
+  background-size: contain;
 }
 </style>
