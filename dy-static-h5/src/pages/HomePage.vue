@@ -1434,10 +1434,20 @@
 
   <GameModal ref="allGames"></GameModal>
 
-  <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%; position:relative; padding: 20px 12px 12px 12px" class="bg-[#0000001A] text-black">
+  <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
+    <q-card
+      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px"
+      class="bg-[#0000001A] text-black"
+    >
       <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
-        <q-tabs v-model="activeKey" dense align="justify" active-class="tab-active" content-class="tabs-wrapper" indicator-color="transparent">
+        <q-tabs
+          v-model="activeKey"
+          dense
+          align="justify"
+          active-class="tab-active"
+          content-class="tabs-wrapper"
+          indicator-color="transparent"
+        >
           <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
         </q-tabs>
 
@@ -1449,14 +1459,14 @@
               <div v-for="(ann, idx) in announcementList" :key="idx">
                 <span v-if="ann.typeId === tab.id">
                   <q-expansion-item
-                    style="max-height: 65vh; overflow: auto; color: #6C6C6E"
+                    style="max-height: 65vh; overflow: auto; color: #6c6c6e"
                     expand-icon-class="text-grey-5"
                     group="somegroup"
                     icon="notifications_none"
                     :label="ann.title"
                   >
                     <q-card>
-                      <q-card-section style="color: #9F9F9F">
+                      <q-card-section style="color: #9f9f9f">
                         {{ ann.content }}
                       </q-card-section>
                     </q-card>
@@ -3171,12 +3181,12 @@ export default defineComponent({
 }
 
 .station-notice-close-btn {
-  z-index: 999; 
-  cursor: pointer; 
-  position: absolute; 
-  top: 0; 
+  z-index: 999;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
   right: 0;
-  width: 28px; 
+  width: 28px;
   height: 28px;
 
   &:hover {
@@ -3255,7 +3265,7 @@ export default defineComponent({
   }
 }
 </style>
-<style>
+<style lang="scss">
 .alert-image {
   width: 100%;
   margin: auto;
@@ -3409,15 +3419,25 @@ export default defineComponent({
 }
 
 .tabs-wrapper {
-  background: #ECECEC;
+  background: #ececec;
   border-radius: 6px !important;
   padding: 8px;
   color: #737373;
 }
 
 .tab-active {
-  background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+  background: linear-gradient(180deg, #52acff 0%, #3559da 100%);
   color: white;
   border-radius: 6px;
+}
+
+.station-notice-dialog {
+  :deep(.q-card) {
+    width: 80%;
+  }
+  :deep(.q-tabs__content) {
+    background: #ececec;
+    padding: 5px 8px;
+  }
 }
 </style>
