@@ -187,7 +187,9 @@
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
 
-  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog"></q-dialog>
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
+    <div class="dialog-mid-text">Loading...</div>
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -406,8 +408,14 @@ export default defineComponent({
               // alert(preUrl);
               console.log(preUrl);
               // promoSrc.value= preUrl;
-              var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
+              var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
               isOpenExtension.value = true;
+
+              ref.addEventListener('loadstop', function() {
+                setTimeout(()=>{
+                  ref.show();
+                },500)
+              });
 
               ref.addEventListener("loadstart", function (event) {
                 var url = event.url;
@@ -1398,6 +1406,17 @@ export default defineComponent({
 .dark-grey-dialog {
   background: linear-gradient(#000000b3, #000000b3);
   background-size: contain;
+
+  .dialog-mid-text {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    top: 48%;
+  }
 }
 
 .spinner-container {
