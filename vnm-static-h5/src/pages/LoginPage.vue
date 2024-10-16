@@ -28,7 +28,7 @@
               (val) => (val && val.length >= 6 && val.length <= 12) || $t('lang.length_between_6_12')
             ]" color="white" label-color="secondary" autocomplete="username">
             <template v-slot:prepend>
-              <img src="../assets/images/login/user-icon.png" width="24" />
+              <div class="user-icon" />
             </template>
           </q-input>
 
@@ -37,7 +37,7 @@
             :rules="[(val) => (val && val.length > 0) || $t('lang.please_type_the_password')]" color="white"
             label-color="brand" autocomplete="current-password">
             <template v-slot:prepend>
-              <img src="../assets/images/login/password-icon.png" width="24" />
+              <div class="password-icon" />
             </template>
             <template v-slot:append>
               <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -54,7 +54,7 @@
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
-              <img src="../assets/images/login/veri-icon.png" width="24" />
+              <div class="veri-icon" />
             </template>
           </q-input>
         </div>
@@ -111,6 +111,7 @@ const loginForm = reactive({
   captchaCode: "",
   codeId: ""
 });
+const isPwd = ref(true);
 const $q = useQuasar();
 const loginFormRef = ref();
 const loginNameRef = ref();

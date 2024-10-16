@@ -611,3 +611,34 @@ svg {
     font-size: 70% !important;
   }
 }
+
+.user-icon,
+.password-icon,
+.veri-icon,
+.phone-icon, .mail-icon {
+  background: url('../assets/images/login/login-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  width: 28px;
+  height: 30px;
+}
+
+.user-icon {
+  background-position: 3% 0%;
+}
+
+.password-icon {
+  background-position: 28% 0%;
+}
+
+.veri-icon {
+  background-position: 51% 0%;
+}
+
+.phone-icon {
+  background-position: 74% 0%;
+}
+
+.mail-icon {
+  background-position: 96% 0%;
+}
