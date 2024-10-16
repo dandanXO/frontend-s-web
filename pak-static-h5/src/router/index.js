@@ -108,7 +108,12 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "733054452322766");
       fbq("track", "PageView");
       user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDE=") > -1) {
+    } else if (window.location.href.indexOf("vnizsxdc.cc") > -1) {
+      fbq("init", "4664351116937750");
+      fbq("track", "PageView");
+      user.isFbPixel = true;
+    }
+    else if (window.location.href.indexOf("MDM2NjU1NDMwMDE=") > -1) {
       console.log("6");
       fbq("init", "1072977007651137");
       fbq("track", "PageView");
