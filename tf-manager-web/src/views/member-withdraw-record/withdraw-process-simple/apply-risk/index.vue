@@ -600,7 +600,7 @@ const request = reactive({
   siteId: null,
   doris: false,
   withdrawCode: null,
-  notEqualRiskId: null,
+  riskId: null,
 })
 const failForm = reactive({
   id: null,
@@ -893,7 +893,7 @@ onMounted(async () => {
   request.siteId = siteList.list[0].id
   const { data: config } = await getConfigList("withdraw_risk_apply", request.siteId);
   if (config.length !== 0) {
-    request.notEqualRiskId = config[0].value
+    request.riskId = config[0].value
   }
   loadVips()
   loadFinancialLevels()

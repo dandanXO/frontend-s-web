@@ -28,3 +28,7 @@ export const updateSystemAutoPaymentPlaltform = (systemAutoPaymentType) => {
 export const deleteSystemAutoPaymentPlaltform = (systemAutoPaymentType) => {
   return https().request(`/system-auto-withdraw/delete?_method=DELETE`, Method.POST, systemAutoPaymentType, ContentType.form);
 };
+
+export const updateWithdrawReviewRule = (systemAutoPaymentType) => {
+  return https().request(`/system-auto-withdraw/updateWithdrawReviewRule?_method=PUT`, Method.POST, systemAutoPaymentType, ContentType.form);
+};
