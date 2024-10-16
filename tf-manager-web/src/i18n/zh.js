@@ -2631,6 +2631,7 @@ export default {
     'Automatic Payment': '自动支付',
     'Waiting Auto Pay': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
+    'AutoWithdraw Under review Risk': '风险提现终审',
     'AutoWithdraw Withdrawal Record': '提交记录',
     'Fail Review': '失败审核',
     Suspend: '暂不处理',
