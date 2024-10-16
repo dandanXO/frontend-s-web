@@ -1435,10 +1435,9 @@
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%; position:relative;" class="bg-bright text-black">
-      <img v-close-popup class="station-notice-close-btn" src="../assets/images/index/close.png" />
+    <q-card style="width: 100%; position:relative; padding: 20px 12px 12px 12px" class="bg-[#0000001A] text-black">
       <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
-        <q-tabs v-model="activeKey" dense align="justify">
+        <q-tabs v-model="activeKey" dense align="justify" active-class="tab-active" content-class="tabs-wrapper" indicator-color="transparent">
           <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
         </q-tabs>
 
@@ -1450,13 +1449,14 @@
               <div v-for="(ann, idx) in announcementList" :key="idx">
                 <span v-if="ann.typeId === tab.id">
                   <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
+                    style="max-height: 65vh; overflow: auto; color: #6C6C6E"
+                    expand-icon-class="text-grey-5"
                     group="somegroup"
-                    icon="volume_up"
+                    icon="notifications_none"
                     :label="ann.title"
                   >
                     <q-card>
-                      <q-card-section>
+                      <q-card-section style="color: #9F9F9F">
                         {{ ann.content }}
                       </q-card-section>
                     </q-card>
@@ -3406,5 +3406,18 @@ export default defineComponent({
     min-width: 50px;
     color: #333333;
   }
+}
+
+.tabs-wrapper {
+  background: #ECECEC;
+  border-radius: 6px !important;
+  padding: 8px;
+  color: #737373;
+}
+
+.tab-active {
+  background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+  color: white;
+  border-radius: 6px;
 }
 </style>
