@@ -252,11 +252,11 @@ onActivated(() => {
 <style scoped lang="scss">
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg-new.png) no-repeat center 0%;
+  background: url(../assets/images/login/login-bg-new.jpg) no-repeat center 0%;
   background-size: 100% auto;
 
   &.slot {
-    background-image: url(../assets/images/login/login-bg-slot.png);
+    background-image: url(../assets/images/login/login-bg-slot.jpg);
   }
 
   .back-left {
