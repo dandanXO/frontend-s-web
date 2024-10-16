@@ -214,7 +214,7 @@ import { userStore } from "stores/index";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import HotPromotion from "components/HotPromotion";
 import { useI18n } from "vue-i18n";
 import { EDITION } from "src/constant/edition";
@@ -226,7 +226,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const { t } = useI18n();
 
@@ -262,7 +262,7 @@ export default defineComponent({
       { name: "all", label: t("lang.type_all") },
       { name: "sport", label: t("lang.type_sport") },
       { name: "live casino", label: t("lang.type_livecasino") },
-      {name: "slot game", label: t("lang.type_slot") },
+      { name: "slot game", label: t("lang.type_slot") },
       // { name: "esport", label: t("lang.type_esport") },
       // {name: "fish", label: '捕鱼'},
       { name: "others", label: t("lang.type_others") }
@@ -271,43 +271,44 @@ export default defineComponent({
       { name: "all", label: t("lang.type_all") },
       { name: "slot welcome", label: t("lang.type_slot_welcome") },
       { name: "slot daily", label: t("lang.type_slot_daily") },
-      { name: "slot other", label: t("lang.type_slot_other") },
-    ])
+      { name: "slot other", label: t("lang.type_slot_other") }
+    ]);
     const currentTabItems = computed(() => {
-      switch(ui.edition) {
+      switch (ui.edition) {
         case EDITION.SLOT:
-          return slotTabItems.value
+          return slotTabItems.value;
         case EDITION.NORMAL:
         default:
-          return tabItems.value
-      }
-    })
-
-    watch(() => route.query, () => {
-      if (route.query === null) {
-        isPromoDetail.value = false;
-      } else {
-        isPromoDetail.value = route.query.name;
-        ui.setScrollPosition("vertical", 0, 200);
+          return tabItems.value;
       }
     });
 
+    watch(
+      () => route.query,
+      () => {
+        if (route.query === null) {
+          isPromoDetail.value = false;
+        } else {
+          isPromoDetail.value = route.query.name;
+          ui.setScrollPosition("vertical", 0, 200);
+        }
+      }
+    );
+
     const loadBanner = () => {
-      api
-        .get("/opt-session/promo/banner?category=PROMO")
-        .then((response) => {
-          if (response.code === 0) {
-            banner.value = response.data[0];
-            // console.log(banner.value)
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: ret.message,
-            //   icon: "report_problem"
-            // });
-          }
-        });
+      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
+        if (response.code === 0) {
+          banner.value = response.data[0];
+          // console.log(banner.value)
+        } else {
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: ret.message,
+          //   icon: "report_problem"
+          // });
+        }
+      });
     };
     const showPromoDetails = (promo) => {
       // extension
@@ -325,26 +326,19 @@ export default defineComponent({
           SessionStorage.set("TOKEN", extensionToken.value);
         }
         store.token = extensionToken.value;
-
       } else {
-
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/account/vip?from=promo");
         } else {
-
-          if(isAndroid()){
+          if (isAndroid()) {
             // modalVisible.value= true;
-            var preUrl = 'https://' + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
+            var preUrl = "https://" + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
             // alert(preUrl);
-            console.log(preUrl)
+            console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(
-              preUrl,
-              "_blank",
-              "location=no,zoom=no,footer=no"
-            );
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
 
-            ref.addEventListener('loadstart', function(event) {
+            ref.addEventListener("loadstart", function (event) {
               var url = event.url;
               // alert("This" + url);
               if (url.indexOf("vnmapp:") > -1) {
@@ -352,11 +346,10 @@ export default defineComponent({
                 console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
                 // alert(message);
                 ref.close();
-                router.push(message)
+                router.push(message);
               }
             });
-
-          }else{
+          } else {
             if (route.query.fromAccount) {
               router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
             } else {
@@ -364,9 +357,7 @@ export default defineComponent({
             }
             isPromoDetail.value = true;
             selectedPromo.value = promo;
-
           }
-
         }
         // }
       }
@@ -375,7 +366,7 @@ export default defineComponent({
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function(promo) {
+        filteredArray.value = promoState.promoList.filter(function (promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
@@ -385,59 +376,62 @@ export default defineComponent({
 
     const loadAll = () => {
       const platformApiUrl = "/opt-session/promo/page";
-      let siteType
-      switch(ui.edition) {
+      let siteType;
+      switch (ui.edition) {
         case EDITION.SLOT:
-          siteType = "SLOT"
-          break
+          siteType = "SLOT";
+          break;
       }
 
       isFetchingPromo.value = window.location.pathname === "/promoapp";
 
-      api.get(platformApiUrl, { params: { siteType } }).then((res) => {
-        if (res.code === 0) {
-          promoState.promoList = [];
-          var promoItems = res.data;
-          // promoState.promoList.push(...res.data);
+      api
+        .get(platformApiUrl, { params: { siteType } })
+        .then((res) => {
+          if (res.code === 0) {
+            promoState.promoList = [];
+            var promoItems = res.data;
+            // promoState.promoList.push(...res.data);
 
-          promoItems.forEach(element => {
-            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-            // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            // } else {
-            promoState.promoList.push(element);
+            promoItems.forEach((element) => {
+              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              // } else {
+              promoState.promoList.push(element);
 
-            if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
-              showPromoDetails(element);
-            }
+              if (
+                (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") &&
+                String(element.redirectUrl) === "lh1-invite"
+              ) {
+                showPromoDetails(element);
+              }
 
-            if (route.query.name && String(element.redirectUrl) === route.query.name) {
-              showPromoDetails(element);
-            }
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                showPromoDetails(element);
+              }
 
-            if ((route.query.name === "/vip")) {
-              router.push("/account/vip");
-            }
-            // }
-          });
+              if (route.query.name === "/vip") {
+                router.push("/account/vip");
+              }
+              // }
+            });
 
+            // console.log("route.query.name", route.query.name);
 
-          // console.log("route.query.name", route.query.name);
-
-          switchPromoType(promoState.active);
+            switchPromoType(promoState.active);
+            isFetchingPromo.value = false;
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
           isFetchingPromo.value = false;
-        }
-      }).catch((e) => {
-        console.log("error", e);
-        isFetchingPromo.value = false;
-      });
-
+        });
     };
 
     // extension
     const currentPath = ref(route.path);
     const extensionState = ref(false);
     const extensionToken = ref("");
-
 
     const checkExtension = () => {
       if (currentPath.value === "/promoapp") {
@@ -472,8 +466,8 @@ export default defineComponent({
     };
 
     onActivated(() => {
-      isPromoDetail.value= false;
-      selectedPromo.value= {};
+      isPromoDetail.value = false;
+      selectedPromo.value = {};
       // if promo name is present, do not show promo list on first load
       if (route.query.name) {
         isPromoDetail.value = true;
@@ -1052,7 +1046,7 @@ export default defineComponent({
 
 .promo-cat-tab {
   position: sticky;
-  top: 61px;
+  top: 42px;
   z-index: 3;
 
   &.extension-tab {
