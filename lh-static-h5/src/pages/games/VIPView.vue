@@ -157,7 +157,7 @@
             <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
           </div>
         </div>
-        <div class="amount" v-show="isDataLoaded">
+        <!-- putback when done <div class="amount" v-show="isDataLoaded">
             <div class="text">
                 保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
               </div>
@@ -171,7 +171,7 @@
                   }}
                 </div>
               </div>
-            </div>
+            </div> -->
       </div>
       <!-- <div
         class="claim-btn"
