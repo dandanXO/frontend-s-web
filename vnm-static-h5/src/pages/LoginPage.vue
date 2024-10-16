@@ -22,71 +22,34 @@
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div class="login-form-container">
         <div v-if="!loginType" class="">
-          <q-input
-            rounded
-            standout
-            dense
-            clearable
-            ref="loginNameRef"
-            v-model="loginForm.loginName"
-            :placeholder="$t('lang.username')"
-            :rules="[
+          <q-input rounded standout dense clearable ref="loginNameRef" v-model="loginForm.loginName"
+            :placeholder="$t('lang.username')" :rules="[
               (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
               (val) => (val && val.length >= 6 && val.length <= 12) || $t('lang.length_between_6_12')
-            ]"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
+            ]" color="white" label-color="secondary" autocomplete="username">
             <template v-slot:prepend>
               <img src="../assets/images/login/user-icon.png" width="24" />
             </template>
           </q-input>
 
-          <q-input
-            ref="passwordRef"
-            rounded
-            standout
-            dense
-            clearable
-            v-model="loginForm.password"
-            :placeholder="$t('lang.password')"
-            :type="isPwd ? 'password' : 'text'"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_type_the_password')]"
-            color="white"
-            label-color="brand"
-            autocomplete="current-password"
-          >
+          <q-input ref="passwordRef" rounded standout dense clearable v-model="loginForm.password"
+            :placeholder="$t('lang.password')" :type="isPwd ? 'password' : 'text'"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_type_the_password')]" color="white"
+            label-color="brand" autocomplete="current-password">
             <template v-slot:prepend>
               <img src="../assets/images/login/password-icon.png" width="24" />
             </template>
             <template v-slot:append>
-              <q-icon
-                color="dark"
-                :name="isPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPwd = !isPwd"
-              />
+              <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                @click="isPwd = !isPwd" />
             </template>
           </q-input>
 
-          <q-input
-            ref="verificationRef"
-            rounded
-            standout
-            dense
-            clearable
-            type="text"
-            maxlength="4"
-            v-model="loginForm.captchaCode"
-            :placeholder="$t('lang.verification_code')"
-            :rules="[
+          <q-input ref="verificationRef" rounded standout dense clearable type="text" maxlength="4"
+            v-model="loginForm.captchaCode" :placeholder="$t('lang.verification_code')" :rules="[
               (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
               (val) => (val && val.length > 3 && val.length < 5) || $t('lang.length_is_4')
-            ]"
-            color="white"
-            label-color="brand"
-          >
+            ]" color="white" label-color="brand">
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
@@ -96,68 +59,10 @@
           </q-input>
         </div>
 
-        <div v-if="loginType">
-          <q-input
-            ref="telephoneRef"
-            v-model="phoneLoginForm.phoneNumber"
-            :placeholder="$t('lang.phone_number')"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number')]"
-            color="white"
-            :readonly="phoneLoginForm.smsCodeId ? true : false"
-            clearable
-            autocomplete="username"
-            rounded
-            type="number"
-            standout
-            dense
-          >
-            <template v-slot:prepend>
-              <q-icon color="bright" name="phone" />
-            </template>
-          </q-input>
-          <q-label>
-            {{ $t("lang.verification_code") }}
-            <em>*</em>
-          </q-label>
-          <q-input
-            @pressEnter="alert('ah')"
-            ref="phoneVerificationRef"
-            type="text"
-            v-model="phoneLoginForm.code"
-            :placeholder="$t('lang.verification_code')"
-            clearable
-            :rules="[(val) => (val && val.length > 3) || $t('lang.verification_code_empty')]"
-            color="white"
-            rounded
-            standout
-            dense
-          >
-            <template v-slot:append>
-              <q-btn
-                size="md"
-                color="brightbtn"
-                :label="$t('lang.verification_code_send')"
-                @click="toggleInnerCode"
-                style="white-space: nowrap"
-              />
-            </template>
-            <template v-slot:prepend>
-              <q-icon color="bright" name="security" />
-            </template>
-          </q-input>
-        </div>
-
         <div class="row items-center justify-between q-mt-xs">
           <div :class="isCheckRmb ? 'checked' : ''">
-            <q-checkbox
-              rounded
-              v-model="isCheckRmb"
-              :label="$t('lang.remember_me')"
-              size="xs"
-              checked-icon="task_alt"
-              unchecked-icon="highlight_off"
-              color="light-blue-4"
-            />
+            <q-checkbox rounded v-model="isCheckRmb" :label="$t('lang.remember_me')" size="xs" checked-icon="task_alt"
+              unchecked-icon="highlight_off" color="light-blue-4" />
           </div>
 
           <div class="text-center">
@@ -166,23 +71,11 @@
         </div>
       </div>
       <div class="bottom-btn-list">
-        <q-btn
-          @click.prevent="onSubmit"
-          type="submit"
-          class="common-large-btn bottom-btn"
-          :label="$t('lang.login_btn')"
-          color="brightbtn"
-          no-caps
-          rounded
-        />
+        <q-btn @click.prevent="onSubmit" type="submit" class="common-large-btn bottom-btn" :label="$t('lang.login_btn')"
+          color="brightbtn" no-caps rounded />
         <div>
-          <q-btn
-            @click="goToRegister"
-            class="common-large-white-btn bottom-btn"
-            :label="$t('lang.register_btn')"
-            no-caps
-            rounded
-          />
+          <q-btn @click="goToRegister" class="common-large-white-btn bottom-btn" :label="$t('lang.register_btn')"
+            no-caps rounded />
         </div>
       </div>
       <div class="text-center q-pb-lg">
@@ -205,12 +98,8 @@
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" :placeholder="$t('lang.enter_captcha_code')">
             <template v-slot:append>
-              <img
-                :src="phoneVerificationImg"
-                :title="$t('lang.captcha_refresh')"
-                style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode"
-              />
+              <img :src="phoneVerificationImg" :title="$t('lang.captcha_refresh')"
+                style="margin-top: 6px; cursor: pointer" @click="getInnerCode" />
             </template>
           </q-input>
         </q-card-section>
@@ -432,44 +321,6 @@ export default defineComponent({
                 $q.loading.hide();
               });
           }
-        } else {
-          telephoneRef.value.validate();
-          phoneVerificationRef.value.validate();
-          if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
-            $q.loading.hide();
-          } else {
-            if (!phoneLoginForm.smsCodeId) {
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: t("lang.personal_mobilenumber_verify"),
-                icon: "report_problem"
-              });
-              return;
-            }
-            $q.loading.show({
-              message: t("lang.logging_in")
-            });
-            store
-              .memberLoginviaPhone({
-                phoneNumber: phoneLoginForm.phoneNumber,
-                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
-                code: phoneLoginForm.code,
-                smsCodeId: phoneLoginForm.smsCodeId
-              })
-              .then(() => {
-                $q.loading.hide();
-                sessionStorage.removeItem("REFERRAL_CODE");
-                loginFormRef.value.reset();
-                if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
-                }
-              })
-              .catch((error) => {
-                $q.loading.hide();
-              });
-          }
         }
       })();
     };
@@ -582,6 +433,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     filter: brightness(100);
+
     img {
       width: 10px;
 
@@ -620,6 +472,7 @@ export default defineComponent({
   .login-img {
     height: 25vh;
     min-height: 160px;
+
     img {
       display: none;
     }
@@ -633,11 +486,13 @@ export default defineComponent({
       background: linear-gradient(180deg, rgba(228, 242, 253, 0.1) 0%, #f3f7fd 100%);
       padding: 16px;
     }
+
     .text-title {
       font-size: 24px;
       color: #333333;
       font-weight: 800;
     }
+
     .text-desc {
       font-size: 14px;
       color: #424f72;
@@ -789,6 +644,7 @@ export default defineComponent({
     :deep(.q-btn) {
       min-height: 12px;
       font-weight: bold;
+
       @media (max-width: 400px) {
         font-size: 80%;
       }
@@ -824,6 +680,7 @@ export default defineComponent({
       width: 30px;
       height: 30px;
     }
+
     display: none;
   }
 }
