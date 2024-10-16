@@ -85,333 +85,166 @@
       </div>
     </q-form>
   </div>
-
-  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
-    <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
-        <q-toolbar>
-          <q-toolbar-title>{{ $t("lang.captcha_code") }}</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
-        </q-toolbar>
-      </q-card-section>
-      <div class="q-px-lg q-pt-sm q-pb-lg">
-        <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" :placeholder="$t('lang.enter_captcha_code')">
-            <template v-slot:append>
-              <img :src="phoneVerificationImg" :title="$t('lang.captcha_refresh')"
-                style="margin-top: 6px; cursor: pointer" @click="getInnerCode" />
-            </template>
-          </q-input>
-        </q-card-section>
-        <q-btn @click="sendOtpSms" no-caps :label="$t('lang.verification_code_send')" color="brightbtn" />
-      </div>
-    </q-card>
-  </q-dialog>
 </template>
 
-<script>
-import { defineComponent, ref, reactive, onMounted, onActivated } from "vue";
+<script setup>
+import { ref, reactive, onMounted, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import LangOptions from "components/LangOptions";
-import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { App } from "@capacitor/app";
-import { i18nStore } from "src/router/language";
-import { storeToRefs } from "pinia";
 import { isAndroid } from "src/boot/utils";
 import { useUI } from "stores/ui";
 import { EDITION } from "src/constant/edition";
 
-export default defineComponent({
-  name: "LoginPage",
-  components: {
-    LangOptions
-  },
-  setup() {
-    const i18nStoreLanguage = i18nStore();
-    const { languageVal } = storeToRefs(i18nStoreLanguage);
-    const { t } = useI18n();
-    const tab = ref("login");
-    const loginType = ref(false);
-    const store = userStore();
-    const verificationImg = ref("");
-    const loginForm = reactive({
-      loginName: "",
-      password: "",
-      captchaCode: "",
-      codeId: ""
-    });
-    const phoneLoginForm = reactive({
-      phoneNumber: "",
-      code: "",
-      smsCodeId: ""
-    });
-    const $q = useQuasar();
-    const loginFormRef = ref();
-    const loginNameRef = ref();
-    const passwordRef = ref();
-    const verificationRef = ref();
-    const router = useRouter();
-    const route = useRoute();
-    const getCode = () => {
-      api
-        .get("/member/verificationEasyCode")
-        .then((response) => {
-          if (response.code === 0) {
-            verificationImg.value = "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
-        });
-    };
-
-    const isCheckRmb = ref(false);
-
-    const phoneVerificationRef = ref();
-    const telephoneRef = ref();
-    const phoneVerificationImg = ref("");
-
-    const innerCaptchaRef = ref("");
-    const innerCaptchaCodeId = ref("");
-    const showCaptchaDialog = ref(false);
-    const toggleInnerCode = () => {
-      telephoneRef.value.validate();
-      if (!telephoneRef.value.hasError) {
-        showCaptchaDialog.value = true;
-        getInnerCode();
+const { t } = useI18n();
+const tab = ref("login");
+const loginType = ref(false);
+const store = userStore();
+const verificationImg = ref("");
+const loginForm = reactive({
+  loginName: "",
+  password: "",
+  captchaCode: "",
+  codeId: ""
+});
+const $q = useQuasar();
+const loginFormRef = ref();
+const loginNameRef = ref();
+const passwordRef = ref();
+const verificationRef = ref();
+const router = useRouter();
+const route = useRoute();
+const getCode = () => {
+  api
+    .get("/member/verificationEasyCode")
+    .then((response) => {
+      if (response.code === 0) {
+        verificationImg.value = "data:image/png;base64," + response.data.img;
+        loginForm.codeId = response.data.id;
       }
-    };
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+};
 
-    const isValidCnPhone = () => {
-      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-      return phonePattern.test(phoneLoginForm.phoneNumber) || "请输入有效的电话号码";
-    };
+const isCheckRmb = ref(false);
 
-    const getInnerCode = () => {
-      api
-        .get("/member/verificationEasyCode")
-        .then((response) => {
-          if (response.code === 0) {
-            phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
-            innerCaptchaCodeId.value = response.data.id;
-            innerCaptchaRef.value = "";
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
+const onSubmit = () => {
+  const sidParam = store.visitorId;
 
-    const sendOtpSms = () => {
-      if (!phoneLoginForm.phoneNumber) {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: "手机号码不能为空",
-          icon: "report_problem"
-        });
-        return;
-      }
-      api
-        .post(
-          `/otp/sendSms`,
-          qs.stringify({
-            telephone: phoneLoginForm.phoneNumber,
-            captchaCode: innerCaptchaRef.value,
-            codeId: innerCaptchaCodeId.value
+  (async () => {
+    const appVer = appVersionNo.value;
+
+    if (loginType.value === false) {
+      loginNameRef.value.validate();
+      passwordRef.value.validate();
+      verificationRef.value.validate();
+      $q.loading.show({
+        message: t("lang.logging_in")
+      });
+      if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+        $q.loading.hide();
+      } else {
+        store
+          .memberLogin({
+            loginName: loginForm.loginName,
+            password: loginForm.password,
+            sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+            captchaCode: loginForm.captchaCode,
+            codeId: loginForm.codeId,
+            ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
           })
-        )
-        .then((res) => {
-          getCode();
-          let message = res.message || "发送手机验证码成功",
-            color = "positive";
-
-          if (res.code === 0) {
-            showCaptchaDialog.value = false;
-            phoneLoginForm.smsCodeId = res.data.codeId;
-            phoneLoginForm.code = "";
-            // console.log(res.data.codeId);
-          } else {
-            color = "negative";
-            getInnerCode();
-          }
-
-          if (message) {
-            $q.notify({ message, color });
-          }
-
-          // console.log("onCaptchaSubmit", res);
-        })
-        .catch(() => {
-          console.log("Err");
-          getInnerCode();
-        });
-    };
-
-    const goRegister = () => {
-      router.push("/register");
-    };
-
-    const onSubmit = () => {
-      const sidParam = store.visitorId;
-
-      (async () => {
-        const appVer = appVersionNo.value;
-
-        if (loginType.value === false) {
-          loginNameRef.value.validate();
-          passwordRef.value.validate();
-          verificationRef.value.validate();
-          $q.loading.show({
-            message: t("lang.logging_in")
-          });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          .then(() => {
             $q.loading.hide();
-          } else {
-            store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
-                ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
-              })
-              .then(() => {
-                $q.loading.hide();
-                sessionStorage.removeItem("REFERRAL_CODE");
+            sessionStorage.removeItem("REFERRAL_CODE");
 
-                // FB tracking :: login-success
-                if (store.isAffiliateA) {
-                  fbq("track", "login-success");
-                }
+            // FB tracking :: login-success
+            if (store.isAffiliateA) {
+              fbq("track", "login-success");
+            }
 
-                if (isCheckRmb.value) {
-                  localStorage.setItem(
-                    "userpass",
-                    JSON.stringify({
-                      loginName: loginForm.loginName,
-                      password: loginForm.password
-                    })
-                  );
-                } else {
-                  localStorage.removeItem("userpass");
-                }
+            if (isCheckRmb.value) {
+              localStorage.setItem(
+                "userpass",
+                JSON.stringify({
+                  loginName: loginForm.loginName,
+                  password: loginForm.password
+                })
+              );
+            } else {
+              localStorage.removeItem("userpass");
+            }
 
-                loginFormRef.value.reset();
+            loginFormRef.value.reset();
 
-                if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
-                }
-              })
-              .catch((error) => {
-                loginForm.captchaCode = "";
-                getCode();
-                $q.loading.hide();
-              });
-          }
-        }
-      })();
-    };
-
-    const checkRememberPwd = () => {
-      const d = localStorage.getItem("userpass");
-      let rememberJson = JSON.parse(d);
-      if (rememberJson) {
-        isCheckRmb.value = true;
-        loginForm.loginName = rememberJson.loginName;
-        loginForm.password = rememberJson.password;
+            if (store.hasToken()) {
+              const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+              router.go(jumpUrl);
+            }
+          })
+          .catch((error) => {
+            loginForm.captchaCode = "";
+            getCode();
+            $q.loading.hide();
+          });
       }
-    };
+    }
+  })();
+};
 
-    const backHome = () => {
-      router.push("/");
-    };
-
-    const appVersionNo = ref("");
-    const getVersionNo = async () => {
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        appVersionNo.value = info.version;
-      }
-    };
-
-    const ui = useUI();
-
-    const trackRegisterClickEvent = () => {
-      if (ui.adjust_click_register_event && isAndroid()) {
-        console.log("Track Click Reg");
-        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
-        Adjust.trackEvent(adjustEvent);
-      }
-    };
-
-    const goToRegister = () => {
-      trackRegisterClickEvent();
-      router.push("/register");
-    };
-
-    onMounted(() => {
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has("register")) {
-        tab.value = "register";
-      }
-      checkRememberPwd();
-      getVersionNo();
-    });
-    onActivated(() => {
-      getCode();
-    });
-
-    return {
-      header: "Login",
-      loginNameRef,
-      passwordRef,
-      verificationRef,
-      verificationImg,
-      loginForm,
-      loginFormRef,
-      onSubmit,
-      goRegister,
-      store,
-      isPwd: ref(true),
-      tab,
-      loginType,
-      backHome,
-      isCheckRmb,
-      getCode,
-      phoneLoginForm,
-      sendOtpSms,
-      innerCaptchaRef,
-      innerCaptchaCodeId,
-      showCaptchaDialog,
-      toggleInnerCode,
-      phoneVerificationRef,
-      phoneVerificationImg,
-      getInnerCode,
-      isValidCnPhone,
-      telephoneRef,
-      LangOptions,
-      appVersionNo,
-      getVersionNo,
-      languageVal,
-      trackRegisterClickEvent,
-      ui,
-      EDITION,
-      goToRegister
-    };
+const checkRememberPwd = () => {
+  const d = localStorage.getItem("userpass");
+  let rememberJson = JSON.parse(d);
+  if (rememberJson) {
+    isCheckRmb.value = true;
+    loginForm.loginName = rememberJson.loginName;
+    loginForm.password = rememberJson.password;
   }
+};
+
+const appVersionNo = ref("");
+const getVersionNo = async () => {
+  if (Platform.is.android && Platform.is.capacitor) {
+    const info = await App.getInfo();
+    appVersionNo.value = info.version;
+  }
+};
+
+const ui = useUI();
+
+const trackRegisterClickEvent = () => {
+  if (ui.adjust_click_register_event && isAndroid()) {
+    console.log("Track Click Reg");
+    var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+    Adjust.trackEvent(adjustEvent);
+  }
+};
+
+const goToRegister = () => {
+  trackRegisterClickEvent();
+  router.push("/register");
+};
+
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("register")) {
+    tab.value = "register";
+  }
+  checkRememberPwd();
+  getVersionNo();
+});
+onActivated(() => {
+  getCode();
 });
 </script>
 
@@ -459,16 +292,6 @@ export default defineComponent({
     }
   }
 
-  .login-h2 {
-    width: 200px;
-    text-align: center;
-    margin: 0 auto 10px;
-
-    img {
-      width: 100%;
-    }
-  }
-
   .login-img {
     height: 25vh;
     min-height: 160px;
@@ -497,36 +320,6 @@ export default defineComponent({
       font-size: 14px;
       color: #424f72;
     }
-  }
-
-  .q-tabs {
-    background: rgba(113, 125, 146, 0.2);
-    border-radius: 30px;
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  .q-tab {
-    min-height: 40px;
-  }
-
-  .q-tab__content {
-    width: 100%;
-  }
-
-  .q-tab--active .q-tab__indicator {
-    height: 100%;
-
-    border-radius: 30px;
-  }
-
-  .q-tab__label {
-    z-index: 1;
-  }
-
-  .q-tab-panels {
-    background: none;
-    padding: 10px;
   }
 
   .align-right {
@@ -617,71 +410,12 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    // height: 50px;
-    // margin-right: auto;
-    // margin-left: 12px;
-
-    // @media (max-width: 400px) {
-    // height: 40px;
-    // }
 
     img {
-      // height: 100%;
-      // width: auto;
       width: 100%;
       max-width: 135px;
       opacity: 0;
     }
-  }
-
-  .header-middle {
-    margin-left: auto;
-    margin-right: 12px;
-    margin-top: 3px;
-    display: flex;
-    gap: 12px;
-
-    :deep(.q-btn) {
-      min-height: 12px;
-      font-weight: bold;
-
-      @media (max-width: 400px) {
-        font-size: 80%;
-      }
-    }
-  }
-
-  .header-right {
-    height: 25px;
-    position: relative;
-
-    img {
-      height: 100%;
-      width: auto;
-    }
-
-    .red-dot {
-      height: 10px;
-      width: 10px;
-      background: #db0011;
-      border-radius: 50%;
-      position: absolute;
-      top: -3px;
-      right: -3px;
-    }
-  }
-}
-</style>
-
-<style lang="scss">
-.q-select__dialog {
-  label {
-    img {
-      width: 30px;
-      height: 30px;
-    }
-
-    display: none;
   }
 }
 </style>
