@@ -84,7 +84,7 @@ export default {
     phone: "Phone Number",
     phone_placeholder: "Please enter phone number",
     phone_rules_01: "Please insert Phone number",
-    phone_rules_02: "The phone number must have 11 digits",
+    phone_rules_02: "The phone number must have 8 digits",
     phone_rules_03: "The phone number must not start with '0'",
     phone_rules_04: "Please insert the valid phone number",
     password: "Password",
