@@ -187,15 +187,15 @@ function convertDate(date) {
 }
 
 function checkDateRange() {
-  if (this.request.createTime && this.request.createTime.length > 1) {
-    const diffTime = Math.abs(new Date(this.request.createTime[1]) - new Date(this.request.createTime[0]))
+  if (request.createTime && request.createTime.length > 1) {
+    const diffTime = Math.abs(new Date(request.createTime[1]) - new Date(request.createTime[0]))
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     if (diffDays > 90) {
       ElMessage({
         message: t('message.selectDateNotMoreThan3Month'),
         type: 'error',
       })
-      this.request.createTime = []
+      request.createTime = []
     }
   }
 }
