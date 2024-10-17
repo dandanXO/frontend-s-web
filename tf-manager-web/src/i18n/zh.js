@@ -541,6 +541,11 @@ export default {
     kr: '韩语',
     vn: '越南语'
   },
+  rewardStatus: {
+    PENDING: '审核中',
+    DISTRIBUTED: '已派发',
+    REJECTED: '已拒绝',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',

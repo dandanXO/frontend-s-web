@@ -538,6 +538,11 @@ export default {
     kr: 'Korean',
     vn: 'Vietnamese'
   },
+  rewardStatus: {
+    PENDING: 'PENDING',
+    DISTRIBUTED: 'DISTRIBUTED',
+    REJECTED: 'REJECTED',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
