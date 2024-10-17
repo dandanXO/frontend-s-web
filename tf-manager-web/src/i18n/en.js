@@ -3120,6 +3120,7 @@ export default {
     12000: 'System privilege info name already exist',
     12001: 'System privilege info code already exist',
     12002: 'Please insert privilege group',
+    12009: "Format of Turnover is incorrect, please check again.",
     12010: 'Currency name already exist',
     12011: 'Currency rate already set for this site',
     12020: "Current record's status is not SENDING",
