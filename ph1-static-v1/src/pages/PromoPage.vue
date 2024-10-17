@@ -178,7 +178,9 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog"></q-dialog>
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
+    <div class="dialog-mid-text">Loading...</div>
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -389,7 +391,7 @@ export default defineComponent({
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes");
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
             isOpenExtension.value = true;
 
             ref.addEventListener("loadstart", function (event) {
@@ -402,6 +404,12 @@ export default defineComponent({
                 ref.close();
                 router.push(message);
               }
+            });
+
+            ref.addEventListener('loadstop', function() {
+              setTimeout(()=>{
+                ref.show();
+              },500)
             });
 
             ref.addEventListener("exit", function () {
@@ -1286,5 +1294,16 @@ export default defineComponent({
   background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
   // background: #3e1474;
   background-size: contain;
+
+  .dialog-mid-text {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    top: 48%;
+  }
 }
 </style>
