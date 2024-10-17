@@ -157,7 +157,7 @@
             <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
           </div>
         </div>
-        <!-- putback when done <div class="amount" v-show="isDataLoaded">
+        <div class="amount" v-show="isDataLoaded">
             <div class="text">
                 保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
               </div>
@@ -167,11 +167,11 @@
                 </div>
                 <div class="progressBarDescriptionRetain">
                   {{
-                    currentRetainDay + '/' + retainDayRequired
+                    currentRetainAmount + '/' + retainAmountRequired
                   }}
                 </div>
               </div>
-            </div> -->
+            </div>
       </div>
       <!-- <div
         class="claim-btn"
@@ -915,11 +915,13 @@ const toggleAccordion = () => {
 };
 const currentDepAmt = ref(0);
 const currentBetAmt = ref(0);
+const currentRetainAmount = ref(0);
+const retainAmountRequired = ref(0);
 const currentRetainDay = ref(0);
 const retainDayRequired = ref(0);
 const retainPercentage = computed(() => {
-  if (retainDayRequired.value === 0) return 0; // Prevent division by 0
-  return ((+currentRetainDay.value / +retainDayRequired.value) * 100).toFixed(2);
+  if (retainAmountRequired.value === 0) return 0; // Prevent division by 0
+  return ((+currentRetainAmount.value / +retainAmountRequired.value) * 100).toFixed(2);
 });
 const balanceRetainDay = ref(0);
 const currentRedPacketAmount = ref(0);
@@ -1227,6 +1229,9 @@ const runVipAPI = (res) => {
     });
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    currentRetainAmount.value = res.data.currentRetainAmount;
+    retainAmountRequired.value = res.data.retainAmountRequired;
+    // balanceRetainAmount.value = +res.data.retainAmountRequired - +res.data.currentRetainAmount
     currentRetainDay.value = res.data.currentRetainDay;
     retainDayRequired.value = res.data.retainDayRequired;
     balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
