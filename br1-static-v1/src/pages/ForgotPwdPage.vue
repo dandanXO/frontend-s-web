@@ -143,6 +143,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 import ConfirmButton from "src/atoms/ConfirmButton.vue";
+import { t } from "src/boot/lang";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -249,7 +250,7 @@ const onVerifyForgotPassword = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: $t("notify.passwordResetcompleted"),
+            message: t("notify.passwordResetcompleted"),
             icon: "check_circle_outline"
           });
 
