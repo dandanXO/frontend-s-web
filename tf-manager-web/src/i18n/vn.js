@@ -2658,6 +2658,7 @@ export default {
     Mobile: 'Di động',
     PC: 'PC',
     APPLY_WITHDRAW: 'Đăng ký rút tiền',
+    APPLY_WITHDRAW_RISK: 'Áp dụng rủi ro rút tiền'
   },
   loginDevice: {
     WEB: 'Web',

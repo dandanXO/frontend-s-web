@@ -2921,6 +2921,7 @@ export default {
     Mobile: 'Mobile',
     PC: 'PC',
     APPLY_WITHDRAW: '提现终审',
+    APPLY_WITHDRAW_RISK: '风险终审'
   },
   loginDevice: {
     WEB: '网页',

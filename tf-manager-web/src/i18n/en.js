@@ -2974,6 +2974,7 @@ export default {
     Mobile: 'Mobile',
     PC: 'PC',
     APPLY_WITHDRAW: 'Apply Withdraw',
+    APPLY_WITHDRAW_RISK: 'Apply Withdraw Risk'
   },
   loginDevice: {
     WEB: 'WEB',
