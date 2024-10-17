@@ -642,3 +642,47 @@ svg {
 .mail-icon {
   background-position: 96% 0%;
 }
+
+.personal-icon, .bank-card-icon, .transaction-icon, .mailbox-icon, .refer-icon, .change-password-icon, .affiliate-icon, .about-icon, .logout-icon {
+  background: url('../assets/images/account/account-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  width: 35px;
+  height: 35px;
+}
+
+.personal-icon {
+  background-position: 2% 0%;
+}
+
+.bank-card-icon {
+  background-position: 14% 0%;
+}
+
+.transaction-icon {
+  background-position: 26% 0%;
+}
+
+.mailbox-icon {
+  background-position: 38.5% 0%;
+}
+
+.refer-icon {
+  background-position: 51.5% 0%;
+}
+
+.change-password-icon {
+  background-position: 64% 0%;
+}
+
+.affiliate-icon {
+  background-position: 76% 0%;
+}
+
+.about-icon {
+  background-position: 88.5% 0%;
+}
+
+.logout-icon {
+  background-position: 100% 0%;
+}

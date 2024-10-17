@@ -109,11 +109,6 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/news",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", name: "news", component: () => import("pages/NewsPage.vue") }]
-  },
-  {
     path: "/vip",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "vip", component: () => import("pages/games/VIPView.vue") }]
