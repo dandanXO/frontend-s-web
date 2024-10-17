@@ -1477,7 +1477,7 @@ $border-settings: 1px solid #e5e7eb;
           color: #ffffff;
           white-space: nowrap;
           .required-amount {
-            color: #FFDD00;
+            color: #799df8;
             font-weight: 600;
           }
         }
