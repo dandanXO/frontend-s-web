@@ -117,7 +117,7 @@ import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
+import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated, watch } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -303,6 +303,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     App.addListener("backButton", (backEvent) => {
       onExitClick();
     });
+  } else {
+    router.push({ query: { ...route.query, gameModal: "true" } });
   }
   // iframe.find('HTML-Element').touchwipe({
   // wipeLeft: function() { alert("left"); },
@@ -331,7 +333,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      if(platformCode !== 'LuckySport'){
+      if (platformCode !== "LuckySport") {
         visible.value = true;
       }
 
@@ -359,9 +361,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if(platformCode === 'LuckySport'){
-            window.open(srcDoc ,"_blank");
-          }else if (firstFourChars === "http") {
+          if (platformCode === "LuckySport") {
+            window.open(srcDoc, "_blank");
+          } else if (firstFourChars === "http") {
             src.value = srcDoc;
           } else {
             isInnerHtmlSrc.value = true;
@@ -404,6 +406,15 @@ const close = () => {
   logoShow.value = true;
   payMethods = [];
 };
+
+watch(
+  () => route.query,
+  (newVal, oldVal) => {
+    if (oldVal.gameModal && !newVal.gameModal) {
+      closeDialog();
+    }
+  }
+);
 
 defineExpose({
   open
