@@ -8,6 +8,7 @@ export const mutations = {
   },
 
   [UserMutationTypes.SET_LOGIN_USER](state, loginInfo) {
+    state.id = loginInfo.id
     state.name = loginInfo.loginName
     state.permissions = loginInfo.permissions
     state.userType = loginInfo.userType
