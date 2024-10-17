@@ -60,6 +60,20 @@
           />
         </el-select>
         <el-select
+          v-model="request.status"
+          size="small"
+          :placeholder="t('fields.status')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in rewardStatus"
+            :key="item.id"
+            :label="item.name"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -277,6 +291,12 @@ const gameType = [
   { name: t('gameType.POKER'), value: 'POKER' },
 ]
 
+const rewardStatus = [
+  { name: t('rewardStatus.PENDING'), value: 'PENDING' },
+  { name: t('rewardStatus.DISTRIBUTED'), value: 'DISTRIBUTED' },
+  { name: t('rewardStatus.REJECTED'), value: 'REJECTED' },
+]
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -293,6 +313,7 @@ const request = reactive({
   loginName: null,
   rewardType: null,
   gameType: null,
+  status: "PENDING",
 })
 
 function disabledDate(time) {
@@ -312,6 +333,7 @@ function resetQuery() {
   request.loginName = null
   request.gameType = null
   request.rewardType = null
+  request.status = "PENDING"
 }
 
 function checkQuery() {
