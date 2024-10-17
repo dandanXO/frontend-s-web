@@ -458,7 +458,7 @@
 <!--          </div>-->
 
 
-          <el-input v-model="form.loginName" style="width: 350px" />
+          <el-input @focus="handleSelect" v-model="form.loginName" style="width: 350px" />
           <span
             v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
             style="display: block"
@@ -1060,7 +1060,7 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   loginName: [
     required(t('message.validateLoginNameRequired')),
-    // { validator: loginNameValidator, trigger: 'blur' },
+    { validator: loginNameValidator, trigger: 'blur' },
   ],
   amount: [required(t('message.validateAmountRequired'))],
   // rollover: [required(t('message.validateRolloverRequired'))],
@@ -1146,9 +1146,11 @@ async function loadImportSiteConfig() {
 const isAffiliateUser = ref(false)
 const handleSelect = item => {
   if (item) {
-    if (item.ref === 'AFFILIATE') {
+    if (item.ref === 'AFFILIATE' || uiControl.dialogType === 'CREATE_DEDUCT') {
       isAffiliateUser.value = true
       uiControl.rollOverAmt = 0
+    }else{
+      isAffiliateUser.value = false;
     }
     // Clear previous selections
     dynamicTags.value = []
