@@ -4,7 +4,7 @@ import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
-import { getRndInteger } from "boot/utils";
+import { getRndInteger, isAndroid } from "boot/utils";
 import { errorMessages } from "./error-messages";
 import { userStore } from "src/stores";
 
@@ -74,8 +74,15 @@ export default boot(({ app, router }) => {
       return retry;
     }
 
-    if (store.token) {
-      config.headers.token = store.token;
+    let token;
+    if (isAndroid()) {
+      token = LocalStorage.getItem("TOKEN");
+    } else {
+      token = SessionStorage.getItem("TOKEN");
+    }
+
+    if (token || store.token) {
+      config.headers.token = token || store.token;
       //   api.defaults.headers["token"] = store.token;
       //   cashier.defaults.headers["token"] = store.token;
       //   eventapi.defaults.headers["token"] = store.token;
