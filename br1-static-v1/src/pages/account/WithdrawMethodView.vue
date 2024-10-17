@@ -901,7 +901,7 @@ const isValidCardNumber = () => {
     return t("form.phone_rules_03");
   }
   const digitCount = cardNumber.match(/\d/g)?.length || 0;
-  if (digitCount !== 11) {
+  if (digitCount !== 8) {
     return t("form.phone_rules_02");
   }
   // } else if (typeVal.value === "email") {
