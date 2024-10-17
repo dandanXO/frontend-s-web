@@ -112,7 +112,7 @@
           size="mini"
           type="success"
           v-permission="['sys:amount:adjust:import']"
-          @click="uiControl.importDialogVisible = true"
+          @click="showImportDialog()"
         >
           {{ t('fields.massImport') }}
         </el-button>
@@ -152,6 +152,7 @@
       >
         {{ t('fields.import') }}
       </el-button>
+      <div style="margin-bottom: 20px;" />
       <!-- eslint-disable -->
       <input
         id="importFile"
@@ -228,7 +229,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.rollover')" prop="rollover">
+        <!-- <el-form-item :label="t('fields.rollover')" prop="rollover">
           <el-input-number
             v-model="adjustRollover.importedSelectedItem"
             style="width: 350px;"
@@ -238,7 +239,103 @@
             @keypress="restrictInput($event)"
             disabled="disabled"
           />
-        </el-form-item>
+        </el-form-item> -->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="t('fields.rolloverType')" prop="rolloverType">
+              <el-select
+                v-model="selectedRolloverType"
+                style="width: 100%;"
+                filterable
+                default-first-option
+                @change="checkRolloverType"
+              >
+                <el-option
+                  v-for="f in uiControl.rolloverType"
+                  :key="f.key"
+                  :label="f.displayName"
+                  :value="f.value"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
+            <el-form-item prop="rollover">
+              <el-input-number
+                v-model="uiControl.rollOverAmt"
+                style="width: 145px"
+                :min="1"
+                :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item
+            :label="t('fields.gameTypeRollover')"
+            prop="gameTypeRollover"
+          >
+            <el-select
+              v-model="uiControl.selectedGameTypeRolloverType"
+              style="width: 250px"
+              filterable
+            >
+              <el-option
+                v-for="f in uiControl.gameTypeRolloverTypes"
+                :key="f.key"
+                :label="f.displayName"
+                :value="f.value"
+              />
+            </el-select>
+            <div v-if="uiControl.selectedGameTypeRolloverType !== null && uiControl.selectedGameTypeRolloverType !== 'ALL_TYPES'">
+              <div v-for="(item, index) in gameTypes" :key="index">
+                <el-select
+                  v-model="item.key"
+                  size="small"
+                  :placeholder="t('fields.gameType')"
+                  class="filter-item"
+                  style="width: 100px; margin-top: 5px"
+                >
+                  <el-option
+                    v-for="gameType in uiControl.gameTypeRollover"
+                    :key="gameType.key"
+                    :label="t(`gameType.${gameType.displayName}`)"
+                    :value="gameType.value"
+                  />
+                </el-select>
+                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
+                  :
+                  <el-input-number v-if="item.key" :controls="false" style="width: 100px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
+                  <el-input-number v-else :controls="false" style="width: 100px " v-model="item.value" />
+                </span>
+                <el-button
+                  v-if="index === gameTypes.length - 1"
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  style="margin-left: 20px"
+                  @click="addRollover()"
+                  plain
+                >
+                  {{ t('fields.add') }}
+                </el-button>
+                <el-button
+                  v-else
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  style="margin-left: 20px"
+                  @click="delRollover(index)"
+                  plain
+                >
+                  {{ t('fields.delete') }}
+                </el-button>
+              </div>
+            </div>
+          </el-form-item>
+        </el-row>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input
             type="textarea"
@@ -332,7 +429,36 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input v-model="form.loginName" style="width: 350px" />
+
+          <div
+              class="el-input-tag input-tag-wrapper"
+              :class="[uiControl.size ? 'el-input-tag--' + uiControl.size : '']"
+              @click="foucusTagInput"
+              style="width: 300px;"
+          >
+            <el-tag
+                v-for="tag in dynamicTags"
+                :key="tag"
+                class="mx-1"
+                closable
+                :disable-transitions="false"
+                @close="handleClose(tag)"
+            >
+              {{ tag }}
+            </el-tag>
+            <el-autocomplete
+                v-if="dynamicTags.length === 0"
+                v-model="inputValue"
+                :fetch-suggestions="debouncedFetchSuggestions"
+                :trigger-on-focus="false"
+                class="inline-input"
+                style="outline: none; border: none"
+                @select="handleSelect"
+            />
+          </div>
+
+
+<!--          <el-input v-model="form.loginName" style="width: 350px" />-->
           <span
             v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
             style="display: block"
@@ -392,7 +518,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.rollover')" prop="rollover">
+        <!-- <el-form-item :label="t('fields.rollover')" prop="rollover">
           <el-input-number
             v-model="adjustRollover.selectedItem"
             style="width: 145px"
@@ -402,7 +528,113 @@
             @keypress="restrictInput($event)"
             disabled="disabled"
           />
-        </el-form-item>
+        </el-form-item> -->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="t('fields.rolloverType')" prop="rolloverType">
+              <el-select v-if="!isAffiliateUser"
+                v-model="selectedRolloverType"
+                style="width: 100%;"
+                filterable
+                default-first-option
+                @change="checkRolloverType"
+              >
+                <el-option
+                  v-for="f in uiControl.rolloverType"
+                  :key="f.key"
+                  :label="f.displayName"
+                  :value="f.value"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col v-if="!isAffiliateUser && uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
+            <el-form-item prop="rollover">
+              <el-input-number
+                v-model="uiControl.rollOverAmt"
+                style="width: 145px"
+                :min="1"
+                :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-else>
+            <el-form-item prop="rollover">
+              <el-input-number
+                v-model="uiControl.rollOverAmt"
+                style="width: 145px"
+                :controls="false"
+                :disabled="isAffiliateUser"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-if="!isAffiliateUser">
+          <el-form-item
+            :label="t('fields.gameTypeRollover')"
+            prop="gameTypeRollover"
+          >
+            <el-select
+              v-model="uiControl.selectedGameTypeRolloverType"
+              style="width: 250px"
+              filterable
+            >
+              <el-option
+                v-for="f in uiControl.gameTypeRolloverTypes"
+                :key="f.key"
+                :label="f.displayName"
+                :value="f.value"
+              />
+            </el-select>
+            <div v-if="uiControl.selectedGameTypeRolloverType !== null && uiControl.selectedGameTypeRolloverType !== 'ALL_TYPES'">
+              <div v-for="(item, index) in gameTypes" :key="index">
+                <el-select
+                  v-model="item.key"
+                  size="small"
+                  :placeholder="t('fields.gameType')"
+                  class="filter-item"
+                  style="width: 100px; margin-top: 5px"
+                >
+                  <el-option
+                    v-for="gameType in uiControl.gameTypeRollover"
+                    :key="gameType.key"
+                    :label="t(`gameType.${gameType.displayName}`)"
+                    :value="gameType.value"
+                  />
+                </el-select>
+                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
+                  :
+                  <el-input-number v-if="item.key" :controls="false" style="width: 100px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
+                  <el-input-number v-else :controls="false" style="width: 100px " v-model="item.value" />
+                </span>
+                <el-button
+                  v-if="index === gameTypes.length - 1"
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  style="margin-left: 20px"
+                  @click="addRollover()"
+                  plain
+                >
+                  {{ t('fields.add') }}
+                </el-button>
+                <el-button
+                  v-else
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  style="margin-left: 20px"
+                  @click="delRollover(index)"
+                  plain
+                >
+                  {{ t('fields.delete') }}
+                </el-button>
+              </div>
+            </div>
+          </el-form-item>
+        </el-row>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input
             type="textarea"
@@ -580,8 +812,11 @@
 </template>
 
 <script setup>
+/* eslint-disable */
+import { debounce } from "lodash";
 import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx'
+import { getMemberLoginNameList } from "../../../api/system-message-template";
 import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import moment from 'moment'
@@ -648,12 +883,18 @@ const EXPORT_AMOUNT_ADJUST_LIST_HEADER = ['Login Name', 'Amount']
 
 const IMPORT_AMOUNT_ADJUST_LIST_JSON = ['loginName', 'amount']
 
+
+
 const uiControl = reactive({
   messageVisible: false,
   colors: [
     { color: '#f56c6c', percentage: 30 },
     { color: '#e6a23c', percentage: 70 },
     { color: '#5cb87a', percentage: 100 },
+  ],
+  rolloverType: [
+    { key: 1, displayName: t('fields.rollOverAmt'), value: 'AMOUNT' },
+    { key: 2, displayName: t('fields.rollOverMulti'), value: 'MULTIPLE' },
   ],
   dialogVisible: false,
   dialogTitle: '',
@@ -666,7 +907,35 @@ const uiControl = reactive({
   ],
   importDialogVisible: false,
   balance: null,
+  gameTypeRolloverTypes: [
+    { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ALL_TYPES' },
+    { key: 2, displayName: t('gameTypeRolloverSetting.specifyTypes'), value: 'SPECIFY_TYPES' },
+    { key: 3, displayName: t('gameTypeRolloverSetting.excludeTypes'), value: 'EXCLUDE_TYPES' },
+    { key: 4, displayName: t('gameTypeRolloverSetting.specifyGameType'), value: 'GAME_TYPE' },
+  ],
+  gameTypeRollover: [
+    { key: 1, displayName: 'SLOT', value: 'slot' },
+    { key: 2, displayName: 'LIVE', value: 'live' },
+    { key: 3, displayName: 'FISH', value: 'fish' },
+    { key: 4, displayName: 'SPORT', value: 'sport' },
+    { key: 5, displayName: 'ESPORT', value: 'esport' },
+    { key: 6, displayName: 'POKER', value: 'poker' },
+    { key: 7, displayName: 'LOTTERY', value: 'lottery' },
+    { key: 8, displayName: 'CASUAL', value: 'casual' },
+  ],
+  selectedGameTypeRolloverType: null,
+  rollOverAmt: null,
+  isNewRollover: true,
+  oldRollOver: {
+    rollover: 0,
+    gameTypeRollover: null,
+    gameLists: [],
+    selectType: null
+  }
 })
+
+const gameTypes = ref([])
+const selectedRolloverType = ref();
 
 const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
@@ -713,7 +982,7 @@ const form = reactive({
   rollover: null,
   cause: null,
   remark: null,
-  currency: null,
+  currency: null
 })
 
 const importForm = reactive({
@@ -722,7 +991,37 @@ const importForm = reactive({
   cause: null,
   remark: null,
   rollover: null,
+  gameTypeRollover: null
 })
+
+const list = reactive({
+  vips: [],
+  members: [],
+  sites: [],
+})
+
+
+const selectionList = reactive({
+  members: [],
+})
+
+const inputValue = ref('')
+const dynamicTags = ref([])
+
+const handleClose = tag => {
+  dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
+  const selectionArr = [...selectionList.members]
+  selectionArr.forEach(element => {
+    if (element.value === tag) {
+      list.members.splice(1, 0, element)
+      list.members.sort(function (a, b) {
+        return a.id - b.id
+      })
+      selectionList.members.splice(selectionList.members.indexOf(element), 1)
+    }
+  })
+  inputValue.value = ''
+}
 
 const loginNameValidator = async (rule, value, callback) => {
   let bal
@@ -761,7 +1060,7 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   loginName: [
     required(t('message.validateLoginNameRequired')),
-    { validator: loginNameValidator, trigger: 'blur' },
+    // { validator: loginNameValidator, trigger: 'blur' },
   ],
   amount: [required(t('message.validateAmountRequired'))],
   // rollover: [required(t('message.validateRolloverRequired'))],
@@ -843,6 +1142,136 @@ async function loadSiteConfig() {
 
 async function loadImportSiteConfig() {
   getSiteConfig(importForm.siteId)
+}
+const isAffiliateUser = ref(false)
+const handleSelect = item => {
+  if (item) {
+    if (item.ref === 'AFFILIATE') {
+      isAffiliateUser.value = true
+      uiControl.rollOverAmt = 0
+    }
+    // Clear previous selections
+    dynamicTags.value = []
+    selectionList.members = []
+
+    // Push the new selected item
+    dynamicTags.value.push(item.value)
+    const removed = list.members.splice(list.members.indexOf(item), 1)
+    const removedArr = [...removed]
+    selectionList.members.push(removedArr[0])
+
+    // Reset input
+    inputValue.value = ''
+    form.loginName = item.value;
+  }
+
+  inputValue.value = ''
+}
+
+const cachedGameTypes = ref([]);
+const cachedUIAmt = ref([]);
+const checkRolloverType = () => {
+  if (selectedRolloverType.value === 'MULTIPLE') {
+    cachedUIAmt.value = uiControl.rollOverAmt
+    if (uiControl.rollOverAmt > 100) {
+      uiControl.rollOverAmt = 100
+    } else {
+      uiControl.rollOverAmt = null
+    }
+    cachedGameTypes.value = gameTypes.value.map(type => ({ ...type }));
+    gameTypes.value.forEach(type => {
+      if (type.value > 100) {
+        type.value = 100;
+      }
+    });
+  } else {
+    // gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
+    if (cachedGameTypes.value.length > 0) {
+      gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
+    }
+    if (cachedUIAmt.value) {
+      uiControl.rollOverAmt = cachedUIAmt.value
+    }
+  }
+}
+function delRollover(index) {
+  gameTypes.value.splice(index, 1)
+}
+function compareOldGameLists () {
+  if (uiControl.oldRollOver.gameLists.length !== gameTypes.value.length) {
+    return false;
+  }
+  if (JSON.stringify(uiControl.oldRollOver.gameLists) !== JSON.stringify(gameTypes.value)) {
+    return false;
+  }
+  return true;
+}
+function constructRollover() {
+  // debugger;
+  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt &&
+      (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists())) &&
+      (!uiControl.oldRollOver.selectType || (uiControl.oldRollOver.selectType === uiControl.selectedGameTypeRolloverType))
+  ) {
+    form.rollover = uiControl.rollOverAmt;
+    return JSON.stringify(uiControl.oldRollOver.gameTypeRollover);
+  }
+  const json = { newRollover: true };
+  if (uiControl.selectedGameTypeRolloverType === 'GAME_TYPE') {
+    json.rolloverType = 'INDIVIDUAL_' + selectedRolloverType.value + '_SPECIFY_TYPES'
+    Object.values(gameTypes.value).forEach(item => {
+      if (item.key) {
+        json[item.key] = item.value;
+      }
+    });
+  } else {
+    json.rolloverType = 'TOTAL_' + selectedRolloverType.value + '_' + uiControl.selectedGameTypeRolloverType
+    const excludeTypes = [];
+    Object.values(gameTypes.value).forEach(item => {
+      if (item.key) {
+        excludeTypes.push(item.key);
+      }
+    });
+
+    json.gameTypes = excludeTypes;
+  }
+  if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
+    json.rollover = uiControl.rollOverAmt
+  }
+  form.rollover = uiControl.rollOverAmt ? uiControl.rollOverAmt : 1;
+  return JSON.stringify(json)
+}
+
+const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  if (!form.siteId) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
+  querySearch(queryString, callback);
+}, 1500); // Adjust debounce time as needed
+
+
+const querySearch = async (queryString, callback) => {
+  if (!queryString) {
+    callback();
+    return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
+  }
+
+  try {
+    const { data: ret } = await getMemberLoginNameList(form.siteId, queryString);
+
+    const results = ret.map(item => ({
+      value: item.value,
+      id: item.id,
+      ref: item.ref
+    }));
+    callback(results);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    callback();
+  }
 }
 
 async function getSiteConfig(siteId) {
@@ -966,8 +1395,22 @@ async function showDialog(type) {
   await loadFormSelect()
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+  uiControl.selectedGameTypeRolloverType = null
+  gameTypes.value = []
+  addRollover()
 }
-
+async function showImportDialog() {
+  uiControl.importDialogVisible = true
+  uiControl.selectedGameTypeRolloverType = null
+  gameTypes.value = []
+  addRollover()
+}
+function addRollover() {
+  gameTypes.value.push({
+    key: '',
+    value: '',
+  })
+}
 function handleCauseChange(selectedValue) {
   const selectedItem = adjustTypeList.formList.find(
     item => item.reason === selectedValue
@@ -1007,11 +1450,19 @@ async function handleBalanceType(value) {
 }
 
 function createAdd() {
+  // debugger;
   memberAmountAdjustForm.value.validate(async valid => {
     form.id = null
     form.memberId = null
     const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
     form.memberId = id
+
+    if (isAffiliateUser.value===true) {
+      form.rollover = 0
+      form.gameTypeRollover = null
+    } else {
+      form.gameTypeRollover = constructRollover()
+    }
     if (valid) {
       await createAddMemberAmountAdjust(form)
       uiControl.dialogVisible = false
@@ -1027,6 +1478,12 @@ function createDeduct() {
     form.memberId = null
     const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
     form.memberId = id
+    if (isAffiliateUser.value===true) {
+      form.rollover = 0
+      form.gameTypeRollover = null
+    } else {
+      form.gameTypeRollover = constructRollover()
+    }
     if (valid) {
       await createDeductMemberAmountAdjust(form)
       uiControl.dialogVisible = false
