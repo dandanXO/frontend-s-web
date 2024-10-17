@@ -430,35 +430,35 @@
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
 
-          <div
-              class="el-input-tag input-tag-wrapper"
-              :class="[uiControl.size ? 'el-input-tag--' + uiControl.size : '']"
-              @click="foucusTagInput"
-              style="width: 300px;"
-          >
-            <el-tag
-                v-for="tag in dynamicTags"
-                :key="tag"
-                class="mx-1"
-                closable
-                :disable-transitions="false"
-                @close="handleClose(tag)"
-            >
-              {{ tag }}
-            </el-tag>
-            <el-autocomplete
-                v-if="dynamicTags.length === 0"
-                v-model="inputValue"
-                :fetch-suggestions="debouncedFetchSuggestions"
-                :trigger-on-focus="false"
-                class="inline-input"
-                style="outline: none; border: none"
-                @select="handleSelect"
-            />
-          </div>
+<!--          <div-->
+<!--              class="el-input-tag input-tag-wrapper"-->
+<!--              :class="[uiControl.size ? 'el-input-tag&#45;&#45;' + uiControl.size : '']"-->
+<!--              @click="foucusTagInput"-->
+<!--              style="width: 300px;"-->
+<!--          >-->
+<!--            <el-tag-->
+<!--                v-for="tag in dynamicTags"-->
+<!--                :key="tag"-->
+<!--                class="mx-1"-->
+<!--                closable-->
+<!--                :disable-transitions="false"-->
+<!--                @close="handleClose(tag)"-->
+<!--            >-->
+<!--              {{ tag }}-->
+<!--            </el-tag>-->
+<!--            <el-autocomplete-->
+<!--                v-if="dynamicTags.length === 0"-->
+<!--                v-model="inputValue"-->
+<!--                :fetch-suggestions="debouncedFetchSuggestions"-->
+<!--                :trigger-on-focus="false"-->
+<!--                class="inline-input"-->
+<!--                style="outline: none; border: none"-->
+<!--                @select="handleSelect"-->
+<!--            />-->
+<!--          </div>-->
 
 
-<!--          <el-input v-model="form.loginName" style="width: 350px" />-->
+          <el-input v-model="form.loginName" style="width: 350px" />
           <span
             v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
             style="display: block"
