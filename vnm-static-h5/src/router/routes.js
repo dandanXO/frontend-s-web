@@ -372,11 +372,6 @@ const routes = [
     children: [{ path: "", name: "about", component: () => import("pages/AboutView.vue") }]
   },
   {
-    path: "/landing",
-    name: "landing",
-    component: () => import("pages/LandingPage.vue")
-  },
-  {
     path: "/home",
     redirect: "/"
   },
