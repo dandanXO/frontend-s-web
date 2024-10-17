@@ -859,6 +859,7 @@ export default {
     35008: "Você não tem esse privilégio",
     35009: "O privilégio entrará em vigor em breve",
     35010: "35010 Membro não pode receber este privilégio",
-    35011: "35011 Membro não pode receber este privilégio."
+    35011: "35011 Membro não pode receber este privilégio.",
+    37001: "O horário de coleta é fora do período do evento"
   }
 };

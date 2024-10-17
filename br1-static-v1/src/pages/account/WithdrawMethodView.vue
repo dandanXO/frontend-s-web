@@ -603,7 +603,7 @@ const filterCards = (type) => {
       if (res.code === 0) {
         let filteredData = [];
         if (isBankType.value === "BANK") {
-          const bankType = type.bankType;
+          const bankType = type.bankType ? type.bankType : "BANK";
           filteredData = res.data.filter((item) => item.bankType === bankType);
           const bankCodes = filteredBankList.value.map((bank) => bank.code);
           filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
