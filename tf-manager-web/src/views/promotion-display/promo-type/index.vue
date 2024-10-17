@@ -141,6 +141,26 @@
                 :label="t(`language.${lang.displayName}`)"
                 :value="lang.value"
               />
+              <el-option
+                key="6"
+                label="H5"
+                value="H5"
+              />
+              <el-option
+                key="7"
+                label="H5_vi"
+                value="H5_vi"
+              />
+              <el-option
+                key="8"
+                label="H5_kr"
+                value="H5_kr"
+              />
+              <el-option
+                key="9"
+                label="H5_ur"
+                value="H5_ur"
+              />
             </el-select>
             :
             <el-input style="width: 170px " v-model="item.value" />
@@ -561,10 +581,6 @@ const uiControl = reactive({
     { key: 3, displayName: 'th', value: 'th' },
     { key: 4, displayName: 'kr', value: 'kr' },
     { key: 5, displayName: 'vn', value: 'vn' },
-    { key: 6, displayName: 'H5', value: 'H5' },
-    { key: 7, displayName: 'H5_vi', value: 'H5_vi' },
-    { key: 8, displayName: 'H5_kr', value: 'H5_kr' },
-    { key: 9, displayName: 'H5_ur', value: 'H5_ur' },
   ]
 });
 
