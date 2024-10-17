@@ -47,6 +47,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { api } from "boot/axios";
 import moment from "moment";
 import { useRouter } from "vue-router";
+import { EDITION } from "src/constant/edition";
 
 const router = useRouter();
 const props = defineProps(["closePopout"]);
@@ -63,7 +64,16 @@ const onClickPopoutImg = (path) => {
 };
 
 onMounted(() => {
-  api.get("/member/site-popout-list?siteType=main").then((res) => {
+  let siteType;
+  switch (ui.edition) {
+    case EDITION.SLOT:
+      siteType = "SLOT";
+      break;
+    case EDITION.NORMAL:
+    default:
+    // siteType = "HOME";
+  }
+  api.get(`/member/site-popout-list?siteType=${siteType}`).then((res) => {
     if (res.code === 0) {
       popoutList.value = res.data;
 
@@ -113,14 +123,14 @@ onMounted(() => {
   align-items: center;
   font-family: "SF Pro";
   background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
- justify-content: center;
+  justify-content: center;
   background-size: contain;
-  transform: scale(.9);
+  transform: scale(0.9);
 
   // aspect-ratio: 644 / 837;
   // padding: 10% 2%;
   // min-height: 490px;
-  
+
   height: 65vh;
   max-height: 420px;
   margin: auto;
@@ -215,8 +225,8 @@ onMounted(() => {
       height: 100%;
       > div {
         text-align: center;
-          height: 60vw;
-          max-height: 240px;
+        height: 60vw;
+        max-height: 240px;
         width: 100%;
         img {
           // height: 100%;
