@@ -84,7 +84,7 @@
         <div class="popout-dialog-container">
           <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
+            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup @click="cancelCloseDialog" />
             <q-btn label="Confirm" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
         </div>
@@ -151,6 +151,7 @@ const bankCardList = ref([]);
 const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
+const isOpenCalled = ref(false);
 
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
@@ -255,6 +256,13 @@ const closeDialog = () => {
   visible.value = false;
   src.value = "";
   store.getBalance();
+  isOpenCalled.value = false;
+  router.replace({
+    query: {
+      ...route.query,
+      gameModal: undefined
+    }
+  });
   // AppFullscreen.exit()
   if (isAndroid()) {
     screen.orientation.lock("portrait");
@@ -278,6 +286,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
   platformCodeImg.value = platformCode;
+  isOpenCalled.value = true;
 
   //TESt
   localStorage.removeItem("isOpenFromAccount");
@@ -304,6 +313,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       onExitClick();
     });
   } else {
+    window.addEventListener("popstate", handleBackButtonClick);
     router.push({ query: { ...route.query, gameModal: "true" } });
   }
   // iframe.find('HTML-Element').touchwipe({
@@ -407,11 +417,27 @@ const close = () => {
   payMethods = [];
 };
 
+const handleBackButtonClick = async () => {
+  if (!visible.value) return;
+  onExitClick();
+};
+
+const cancelCloseDialog = () => {
+  isExitDialogOpen.value = false;
+  router.push({ query: { ...route.query, gameModal: "true" } });
+};
+
+onUnmounted(() => {
+  window.removeEventListener("popstate", handleBackButtonClick);
+});
+
 watch(
   () => route.query,
-  (newVal, oldVal) => {
-    if (oldVal.gameModal && !newVal.gameModal) {
-      closeDialog();
+  (query) => {
+    if (query.gameModal && !isOpenCalled.value) {
+      const _query = { ...query };
+      delete _query.gameModal;
+      router.push({ query: _query });
     }
   }
 );
