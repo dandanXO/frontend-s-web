@@ -251,7 +251,7 @@ const { t } = useI18n()
 const shortcuts = getShortcuts(t)
 
 const startDate = new Date()
-startDate.setDate(startDate.getDate() - 2)
+startDate.setDate(startDate.getDate() - 1)
 const defaultStartDate = convertDateToStart(startDate)
 const defaultEndDate = convertDateToEnd(new Date())
 const site = ref(null)
