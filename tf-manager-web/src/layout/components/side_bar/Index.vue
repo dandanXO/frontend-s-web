@@ -36,13 +36,14 @@
 
 <script>
 import { computed, defineComponent, onMounted, ref } from 'vue'
+import { getConfigList } from '../../../api/config'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
 import SidebarSearchInput from "./SidebarSearchInput.vue";
 import variables from '@/styles/_variables.scss'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
-import { getMemberWithdrawRecordApplySimple, getMemberWithdrawRecordApply, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from '../../../api/member-withdraw-record'
+import { getMemberWithdrawRecordApplySimple, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from '../../../api/member-withdraw-record'
 import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
@@ -119,9 +120,24 @@ export default defineComponent({
 
     const checkOutstandingWithdraw = async() => {
       const query = checkQuery();
+      let riskId = 0;
+      const { data: config } = await getConfigList("withdraw_risk_apply", query.siteId);
+      if (config.length !== 0) {
+        riskId = config[0].value
+      }
+
       if (query.siteId !== null) {
-        const { data: ret } = await getMemberWithdrawRecordApply(query);
+        query.notEqualRiskId = riskId || "";
+        const { data: ret } = await getMemberWithdrawRecordApplySimple(query);
         sessionStorage.setItem("WITHDRAW", ret.total);
+      }
+
+      const query2 = checkQuery();
+      if (query2.siteId !== null) {
+        query2.riskId = riskId || "";
+        const { data: ret } = await getMemberWithdrawRecordApplySimple(query2);
+        // THIS one Will be the count num of 风险终审:
+        sessionStorage.setItem("WITHDRAW_RISK", ret.total);
       }
     };
 
