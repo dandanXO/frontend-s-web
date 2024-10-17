@@ -35,9 +35,9 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px;margin-left: 5px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
+          @change="checkDateRange()"
         />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadWithdrawalBankBlacklist" :disabled="page.loading">
           {{ t('fields.search') }}
@@ -186,14 +186,18 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
 
-function disabledDate(time) {
-  return (
-    time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
+function checkDateRange() {
+  if (this.request.createTime && this.request.createTime.length > 1) {
+    const diffTime = Math.abs(new Date(this.request.createTime[1]) - new Date(this.request.createTime[0]))
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    if (diffDays > 90) {
+      ElMessage({
+        message: t('message.selectDateNotMoreThan3Month'),
+        type: 'error',
+      })
+      this.request.createTime = []
+    }
+  }
 }
 
 const request = reactive({
