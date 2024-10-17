@@ -10,15 +10,8 @@
       </div>
 
       <div class="wallet-btn">
-        <q-btn
-          label="一键刷新"
-          dense
-          color="brightbtn"
-          class="wallet-refresh-btn"
-          icon="refresh"
-          @click="loadBalance"
-          :loading="isLoadingBalance"
-        />
+        <q-btn label="一键刷新" dense color="brightbtn" class="wallet-refresh-btn" icon="refresh" @click="loadBalance"
+          :loading="isLoadingBalance" />
       </div>
     </div>
 
@@ -27,7 +20,7 @@
         <div class="asset-game">
           <div class="game-detail">
             <div class="game-detail-logo">
-              <img src="../../assets/images/account/assets/logo_tf.png" alt="" />
+              <div class="tf-logo" />
             </div>
             <div>雷火体育</div>
           </div>
@@ -40,7 +33,7 @@
         <div class="asset-game">
           <div class="game-detail">
             <div class="game-detail-logo">
-              <img src="../../assets/images/account/assets/logo_tf.png" alt="" />
+              <div class="tf-logo" />
             </div>
             <div>雷火体育</div>
           </div>
@@ -57,7 +50,7 @@
         <template v-for="(item, index) in assetOptions" :key="index">
           <div class="asset-option-item" @click="router.push(item.link)">
             <div class="option-item-icon">
-              <img :src="require(`../../assets/images/account/assets/${item.icon.toLowerCase()}.png`)" />
+              <div :class="item.icon"></div>
             </div>
             <div class="option-item-txt">{{ item.title }}</div>
           </div>
@@ -198,16 +191,19 @@ onMounted(() => {
 
       .game-detail-logo {
         width: 1.5rem;
+
         img {
           display: block;
           width: 100%;
         }
       }
     }
+
     .game-refresh {
       grid-area: refresh;
       margin-left: auto;
     }
+
     .game-balance {
       grid-area: balance;
       margin-left: auto;
@@ -220,6 +216,7 @@ onMounted(() => {
 .asset-option-list {
   padding-top: 1rem;
   padding-bottom: 1rem;
+
   .asset-option-item {
     padding: 0.5rem 1rem;
     margin: 0.25rem 0;
@@ -231,10 +228,10 @@ onMounted(() => {
 
     &:after {
       content: "";
-      background-image: url(../../assets/images/account/assets/chevron-right.png);
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcBAMAAACaHyIpAAAAG1BMVEUAAABBT3JAUHBCT3JCUHJAUHBBT3FCT3NCT3KpEvsSAAAACHRSTlMA3yCffxDPv4ZQ4twAAAA8SURBVAjXY/AwZYCAjnYoo6LDAMII62iGMFgzaCEU2NEEYXh0CIBplo5GBaiAENUEGGACDBZQAQYmKA0Amy0dVmFsd2oAAAAASUVORK5CYII=');
       width: 6px;
       height: 11px;
-      background-size: 100%;
+      background-size: 100% 100%;
       margin-left: auto;
     }
 
@@ -244,13 +241,14 @@ onMounted(() => {
 
     .option-item-icon {
       width: 1.5rem;
+
       img {
         display: block;
         width: 100%;
       }
     }
-    .option-item-txt {
-    }
+
+    .option-item-txt {}
   }
 }
 </style>

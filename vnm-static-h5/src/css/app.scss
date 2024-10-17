@@ -686,3 +686,32 @@ svg {
 .logout-icon {
   background-position: 100% 0%;
 }
+
+.icon-deposit, .icon-withdrawal, .icon-transfer {
+  background: url('../assets/images/account/assets/assets-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-deposit {
+  background-position: 2% 0%;
+}
+
+.icon-withdrawal {
+  background-position: 34% 0%;
+}
+
+.icon-transfer {
+  background-position: 67% 0%;
+}
+
+.tf-logo {
+  background: url('../assets/images/account/assets/assets-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  width: 30px;
+  height: 30px;
+  background-position: 99% 0%;
+}

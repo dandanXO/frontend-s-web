@@ -25,7 +25,8 @@
               <img src="../assets/images/account/account-wallet-icon.png" />
               <span>{{ $t("lang.central_wallet") }}</span>
               <div class="refresh-btn" @click="getBalance">
-                <img src="../assets/images/account/account-refresh-btn.png" />
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAoCAMAAAChHKjRAAAAOVBMVEUAAAD///////////////////////////////////////////////////////////////////////8KOjVvAAAAEnRSTlMAoCAQv0DPYN/vgDBwkFCvb3+yRuHQAAABGElEQVQ4y42UWZKEIBBEEShZtXvq/oedMUE0WCe/BF5UJgUoig4l1tK7+gfEoAKRVBMIVHDMbD9GDqBCQVuLqYO5ohqMLHNLWXozJs/qb7hCS6/zRHyYL0PvTsmtokKqHR4EWEpA75FWzV5QzKV5fHfbjZUNheDV7Z3aYXjjRnRFCPJHoxCmRoZKmFxoUsrc7EgW0TVchzqunQsHdCSkceJy83OIV9AJaGEXYbcj2SL4hkMcQjuM4rSZMq0qHM/0WGR6JUzjQtgWTa6KzYVQannphHSgZPf6Fg/DGPWf4nmPfftiCWVwYhXFuz9B/GiuGDgi12vDkDNVRz6FKil12xejK0r3++t1oeLsUgfKv0MPaKUIaKUn9i9rNhpnjIgaUQAAAABJRU5ErkJggg==" />
               </div>
             </div>
             <div class="amt">
@@ -592,6 +593,13 @@ export default defineComponent({
       align-items: center;
       gap: 10px;
 
+      .refresh-btn {
+        width: 15px;
+        height: 16.66px;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAoCAMAAAChHKjRAAAAOVBMVEUAAAD///////////////////////////////////////////////////////////////////////8KOjVvAAAAEnRSTlMAoCAQv0DPYN/vgDBwkFCvb3+yRuHQAAABGElEQVQ4y42UWZKEIBBEEShZtXvq/oedMUE0WCe/BF5UJgUoig4l1tK7+gfEoAKRVBMIVHDMbD9GDqBCQVuLqYO5ohqMLHNLWXozJs/qb7hCS6/zRHyYL0PvTsmtokKqHR4EWEpA75FWzV5QzKV5fHfbjZUNheDV7Z3aYXjjRnRFCPJHoxCmRoZKmFxoUsrc7EgW0TVchzqunQsHdCSkceJy83OIV9AJaGEXYbcj2SL4hkMcQjuM4rSZMq0qHM/0WGR6JUzjQtgWTa6KzYVQannphHSgZPf6Fg/DGPWf4nmPfftiCWVwYhXFuz9B/GiuGDgi12vDkDNVRz6FKil12xejK0r3++t1oeLsUgfKv0MPaKUIaKUn9i9rNhpnjIgaUQAAAABJRU5ErkJggg==');
+        background-size: 100% 100%;
+      }
+
       .label {
         display: flex;
         justify-content: flex-start;
@@ -672,43 +680,6 @@ export default defineComponent({
 
         &.opacity-0 {
           opacity: 0;
-        }
-      }
-
-      .vip-left {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 13px;
-        color: $grey-color;
-        font-size: 1.2rem;
-
-        .vip-level {
-          background-image: url("../assets/images/account/account-vip-tab.png");
-          width: 90px;
-          aspect-ratio: 168/45;
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-          text-align: center;
-          color: $white;
-          font-size: 1.2rem;
-          font-style: italic;
-          padding-left: 28px;
-          padding-right: 10px;
-        }
-      }
-
-      .vip-right {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 6px;
-
-        color: $grey-color;
-        font-size: 0.875rem;
-
-        img {
-          width: 7px;
         }
       }
     }
