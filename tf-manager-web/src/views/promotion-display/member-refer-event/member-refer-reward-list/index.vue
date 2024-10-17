@@ -98,22 +98,18 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column
-        prop="referrerName"
-        :label="t('fields.referrer')"
-      >
+      <el-table-column prop="referrerName" :label="t('fields.referrer')">
         <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
           <router-link
-            :to="`/member/details/${scope.row.referrerId}?site=${request.siteId}`"
+            :to="
+              `/member/details/${scope.row.referrerId}?site=${request.siteId}`
+            "
           >
             <el-link type="primary">{{ scope.row.referrerName }}</el-link>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="memberName"
-        :label="t('fields.member')"
-      >
+      <el-table-column prop="memberName" :label="t('fields.member')">
         <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
           <router-link
             :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`"
@@ -122,20 +118,14 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="rewardType"
-        :label="t('fields.rewardType')"
-      >
+      <el-table-column prop="rewardType" :label="t('fields.rewardType')">
         <template #default="scope">
           <span>
             {{ t(`rewardType.${scope.row.rewardType}`) }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="gameType"
-        :label="t('fields.gameType')"
-      >
+      <el-table-column prop="gameType" :label="t('fields.gameType')">
         <template #default="scope">
           <span v-if="scope.row.gameType !== null">
             {{ t(`gameType.${scope.row.gameType}`) }}
@@ -145,10 +135,14 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="amount" :label="t('fields.amount') + '/' + t('dashboard.memberCount')">
+      <el-table-column
+        prop="amount"
+        :label="t('fields.amount') + '/' + t('dashboard.memberCount')"
+      >
         <template #default="scope">
           <div v-if="scope.row.rewardType !== 'ONE_TIME'">
-            $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+            $
+            <span v-formatter="{data: scope.row.amount, type: 'money'}" />
           </div>
           <div v-else>
             {{ scope.row.amount }}
@@ -157,18 +151,19 @@
       </el-table-column>
       <el-table-column prop="commissionAmount" :label="t('fields.commission')">
         <template #default="scope">
-          $ <span v-formatter="{data: scope.row.commissionAmount, type: 'money'}" />
+          $
+          <span
+            v-formatter="{data: scope.row.commissionAmount, type: 'money'}"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="finalAmount" :label="t('fields.finalAmount')">
         <template #default="scope">
-          $ <span v-formatter="{data: scope.row.finalAmount, type: 'money'}" />
+          $
+          <span v-formatter="{data: scope.row.finalAmount, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column
-        prop="recordTime"
-        :label="t('fields.recordTime')"
-      >
+      <el-table-column prop="recordTime" :label="t('fields.recordTime')">
         <template #default="scope">
           <span v-if="scope.row.recordTime === null">-</span>
           <!-- eslint-disable -->
@@ -179,6 +174,33 @@
               timeZone: timeZone,
               type: 'date',
             }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="status" :label="t('fields.status')">
+        <template #default="scope">
+          <span v-if="scope.row.status !== null">
+            {{ t(`rewardStatus.${scope.row.status}`) }}
+          </span>
+          <span v-else>
+            -
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :label="t('fields.operate')"
+        align="right"
+        fixed="right"
+        v-if="hasPermission(['sys:member-refer-friend-reward:reject'])"
+      >
+        <template #default="scope">
+          <el-button
+            v-if="scope.row.status === 'PENDING'"
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            v-permission="['sys:member-refer-friend-reward:reject']"
+            @click="reject(scope.row)"
           />
         </template>
       </el-table-column>
@@ -195,31 +217,41 @@
       @size-change="loadRecord"
     />
     <div class="table-footer">
-        <span>{{ t('fields.noOfBonusRecord') }} :</span>
-        <span style="margin-left: 10px">{{ page.total }}</span>
-        <span style="margin-left: 30px">{{ t('fields.totalAmountDistribute') }} :</span>
-        <span style="margin-left: 10px">$ </span>
-        <span v-formatter="{data: page.totalAmount, type: 'money'}" />
-      </div>
+      <span>{{ t('fields.noOfBonusRecord') }} :</span>
+      <span style="margin-left: 10px">{{ page.total }}</span>
+      <span style="margin-left: 30px">
+        {{ t('fields.totalAmountDistribute') }} :
+      </span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: page.totalAmount, type: 'money' }" />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
 import moment from 'moment'
-import { getMemberReferRewardRecord } from '../../../../api/member-refer-event'
+import {
+  getMemberReferRewardRecord,
+  rejectRecord,
+} from '../../../../api/member-refer-event'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../../utils/util'
-import { convertDateToEnd, convertDateToStart, getShortcuts } from '@/utils/datetime'
+import {
+  convertDateToEnd,
+  convertDateToStart,
+  getShortcuts,
+} from '@/utils/datetime'
 import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
 
 const startDate = new Date()
-startDate.setDate(startDate.getDate() - 2)
+startDate.setDate(startDate.getDate() - 1)
 const defaultStartDate = convertDateToStart(startDate)
 const defaultEndDate = convertDateToEnd(new Date())
 const site = ref(null)
@@ -232,17 +264,17 @@ const sites = reactive({
 })
 
 const rewardType = [
-  { name: t('rewardType.BET'), value: "BET" },
-  { name: t('rewardType.DEPOSIT'), value: "DEPOSIT" },
-  { name: t('rewardType.ONE_TIME'), value: "ONE_TIME" },
+  { name: t('rewardType.BET'), value: 'BET' },
+  { name: t('rewardType.DEPOSIT'), value: 'DEPOSIT' },
+  { name: t('rewardType.ONE_TIME'), value: 'ONE_TIME' },
 ]
 
 const gameType = [
-  { name: t('gameType.SLOT'), value: "SLOT" },
-  { name: t('gameType.LIVE'), value: "LIVE" },
-  { name: t('gameType.FISH'), value: "FISH" },
-  { name: t('gameType.SPORT'), value: "SPORT" },
-  { name: t('gameType.POKER'), value: "POKER" },
+  { name: t('gameType.SLOT'), value: 'SLOT' },
+  { name: t('gameType.LIVE'), value: 'LIVE' },
+  { name: t('gameType.FISH'), value: 'FISH' },
+  { name: t('gameType.SPORT'), value: 'SPORT' },
+  { name: t('gameType.POKER'), value: 'POKER' },
 ]
 
 const page = reactive({
@@ -313,17 +345,18 @@ function checkQuery() {
 
 function formatInputTimeZone(time, timezone, type = '') {
   if (!timezone) {
-    return moment(time).format('YYYY-MM-DD HH:mm:ss');
+    return moment(time).format('YYYY-MM-DD HH:mm:ss')
   }
 
-  var oriTimeZone = moment(time).add(8, 'hour');
-  var hourDifferent = timezone.substring(1);
+  var oriTimeZone = moment(time).add(8, 'hour')
+  var hourDifferent = timezone.substring(1)
 
-  var formattedTimeZone = timezone.charAt(0) === '+'
-    ? moment(oriTimeZone).subtract(hourDifferent, 'hours')
-    : moment(oriTimeZone).add(hourDifferent, 'hours');
+  var formattedTimeZone =
+    timezone.charAt(0) === '+'
+      ? moment(oriTimeZone).subtract(hourDifferent, 'hours')
+      : moment(oriTimeZone).add(hourDifferent, 'hours')
 
-  return moment(formattedTimeZone).format('YYYY-MM-DD HH:mm:ss');
+  return moment(formattedTimeZone).format('YYYY-MM-DD HH:mm:ss')
 }
 
 async function loadRecord() {
@@ -334,9 +367,9 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {
-    page.totalAmount = ret.sums.finalAmount;
+    page.totalAmount = ret.sums.finalAmount
   } else {
-    page.totalAmount = 0;
+    page.totalAmount = 0
   }
   page.loading = false
 }
@@ -344,6 +377,20 @@ async function loadRecord() {
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   sites.list = ret
+}
+
+async function reject(record) {
+  ElMessageBox.confirm(t('message.confirmCancel'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    if (record) {
+      await rejectRecord(record.id, record.recordTime)
+    }
+    await loadRecord()
+    ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
+  })
 }
 
 onMounted(async () => {

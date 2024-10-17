@@ -541,6 +541,11 @@ export default {
     kr: '韩语',
     vn: '越南语'
   },
+  rewardStatus: {
+    PENDING: '审核中',
+    DISTRIBUTED: '已派发',
+    REJECTED: '已拒绝',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -3067,6 +3072,7 @@ export default {
     12000: '优惠名称已存在',
     12001: '优惠代码已存在',
     12002: '请输入优惠组别',
+    12009: "流水格式错误，请检查一遍。",
     12010: '货币名称已存在',
     12011: '此站点已设置汇率',
     12020: '此记录状态并不是 SENDING',
