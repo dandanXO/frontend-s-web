@@ -4,8 +4,8 @@ export default {
     language: "Idioma"
   },
   header: {
-    login: "Inicio de Sesión",
-    register: "Registrarse",
+    login: "Login",
+    register: "Register",
     download: "Descargar",
     withdraw: "Retirar",
     personalCenter: "Centro Personal",
@@ -274,13 +274,13 @@ export default {
     downloadApp: "Descargar APP"
   },
   home: {
-    menu_lobby: "Hall",
-    menu_hot: "Popular",
-    menu_live: "Casino en vivo",
-    menu_fish: "Juegos de pesca",
-    menu_slot: "Máquinas de premio",
-    menu_poker: "Póker",
-    menu_sport: "Deportes",
+    menu_lobby: "Lobby",
+    menu_hot: "Hot",
+    menu_live: "Live",
+    menu_fish: "Fish",
+    menu_slot: "Slot",
+    menu_poker: "Poker",
+    menu_sport: "Sport",
     cat_hotgames: "Juegos más populares",
     cat_livecasino: "Casino en vivo",
     cat_slotsgame: "Máquinas de premio",
