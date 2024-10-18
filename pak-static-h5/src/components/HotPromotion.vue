@@ -20,6 +20,7 @@
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-slot-ftd' && store.token" :params="list.param" />
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -200,6 +201,7 @@ import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPl
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
+import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -217,7 +219,8 @@ export default defineComponent({
     NewPlayerSpinWheelPromo,
     RedPacketRainPromo,
     InterestProfitPromo,
-    NewPlayersPromo
+    NewPlayersPromo,
+    SlotFtdPromo
   },
   props: {
     list: {
@@ -280,6 +283,7 @@ export default defineComponent({
       this.list.redirectUrl === "pak-redpacketrain" ||
       this.list.redirectUrl === "interest-profit" ||
       this.list.redirectUrl === "pak-new-players" ||
+      this.list.redirectUrl === "pak-slot-ftd" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
