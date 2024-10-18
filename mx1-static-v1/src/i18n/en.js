@@ -274,7 +274,7 @@ export default {
     downloadApp: "Descargar APP"
   },
   home: {
-    menu_lobby: "Lobby",
+    menu_lobby: "Hall",
     menu_hot: "Popular",
     menu_live: "Casino en vivo",
     menu_fish: "Juegos de pesca",
@@ -430,7 +430,7 @@ export default {
       weAdvocateBenefits: "Apoyamos beneficios y bonificaciones para todos.",
       agencyPolicy: "Política de Agencia",
       theTableBelowShows: "La tabla a continuación muestra cómo se establecen los premios.",
-      point_01: "Usuario activo: monto de apuesta diaria Rp2,000K",
+      point_01: "Usuario activo: monto de apuesta diaria Mx$400",
       point_02: "Tu premio se calculará en función del monto total apostado por tus miembros. Los premios obtenidos se pueden retirar o usar para futuras apuestas.",
       point_03: "Invita a tantos amigos como puedas para obtener un mayor porcentaje de reembolso.",
       point_04: "Gana ingresos de por vida de los jugadores que invites.",
