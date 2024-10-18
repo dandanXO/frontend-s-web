@@ -544,7 +544,7 @@
                 </swiper-slide>
               </template>
 
-              <template v-for="(item, index) in fishGameJILIList" :key="index">
+              <!-- <template v-for="(item, index) in fishGameJILIList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
@@ -574,7 +574,7 @@
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
-              </template>
+              </template> -->
 
               <template v-for="(item, index) in fishGameJDBList" :key="index">
                 <swiper-slide
@@ -640,7 +640,7 @@
               </div>
             </template>
 
-            <template v-for="(item, index) in fishGameJILIList" :key="index">
+            <!-- <template v-for="(item, index) in fishGameJILIList" :key="index">
               <div
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
@@ -667,7 +667,7 @@
                 </div>
                 <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-            </template>
+            </template> -->
 
             <template v-for="(item, index) in fishGameJDBList" :key="index">
               <div
