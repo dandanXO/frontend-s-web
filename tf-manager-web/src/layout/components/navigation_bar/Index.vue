@@ -36,6 +36,7 @@
           </div>
           <div class="text-2">
             <router-link
+              v-if="hasPermission(['sys:withdraw:simple:list'])"
               :to="{
                 path: `/withdraw/withdraw-process-simple/apply`,
                 force: true,
