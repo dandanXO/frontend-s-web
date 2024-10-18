@@ -209,6 +209,7 @@ import { ref, defineComponent, onActivated, reactive, watch, computed } from "vu
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import {cached} from "boot/cache";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
 import { isAndroid } from "boot/utils";
@@ -234,14 +235,9 @@ export default defineComponent({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
-    const promoTypes = computed(() => [
+    const promoTypes = ref( [
       { code: "ALL", img: "all", label: t("lang.type_all") },
-      { code: "ESPORTS", img: "esport", label: t("lang.type_esport") },
-      { code: "SPORTS", img: "sport", label: t("lang.type_sport") },
-      { code: "POKER", img: "poker", label: t("lang.type_poker") },
-      { name: "SLOT GAME", label: t("lang.type_slot") },
-      { name: "LIVE CASINO", label: t("lang.type_livecasino") },
-      { name: "FISH", label: t("lang.type_fish") }
+     
     ]);
 
     const isFetchingPromo = ref(false);
@@ -373,8 +369,23 @@ export default defineComponent({
         filteredArray.value = promoState.promoList;
       }
     };
+    const loadTabs = async() => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        promoTypes.value = res.map(({ value, name, iconUrl }) => ({
+          name: value,
+          label: name ? JSON.parse(name).H5 : ''
+        }));
+        if (promoTypes.value.length > 0) {
+          promoTabActive.value = promoTypes.value[0].name
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
+    }
 
-    const loadAll = () => {
+    const loadAll = async () => {
+      await loadTabs()
       const platformApiUrl = "/opt-session/promo/page";
       let siteType;
       switch (ui.edition) {
