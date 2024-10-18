@@ -405,3 +405,44 @@ export function claimElisaGiftBonus() {
   // const randNum = Math.floor(Math.random() * 1000) + 1;
   // return eventapi.post(`/session/elisa-gift/claimBonus?v=${randNum}`);
 }
+export function getGlobalTreasureDetail(promoCode) {
+  return eventapi.get(`/session/treasure-key/init`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function openGlobalTreasure(promoCode, treasure) {
+  return eventapi.post(`/session/treasure-key/claimBonus`, qs.stringify({ promoCode, treasure }));
+}
+
+export function getGlobalCheckInRecord(promoCode) {
+  return eventapi.get(`/session/treasure-key/init-check-in`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getGlobalOpenRecord(promoCode, page) {
+  console.log(page);
+  return eventapi.get(`/session/treasure-key/treasure-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
+}
+
+export function getGlobalKeyRecord(promoCode, page) {
+  return eventapi.get(`/session/treasure-key/key-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
+}
+
