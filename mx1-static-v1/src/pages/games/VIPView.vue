@@ -833,7 +833,7 @@ const rows4 = [
   },
   {
     name: "VIP 11",
-    ugprade: "11,888",
+    ugprade: "11,777",
     flow: "x10"
   },
   {
