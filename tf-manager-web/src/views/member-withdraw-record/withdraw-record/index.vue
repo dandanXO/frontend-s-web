@@ -902,6 +902,24 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.currency')" prop="currencyId">
+          <el-select
+            v-model="request.currencyId"
+            size="small"
+            :placeholder="t('fields.currency')"
+            class="filter-item"
+            style="width: 250px;"
+            default-first-option
+            @focus="loadCurrencys"
+          >
+            <el-option
+              v-for="item in currencyList.list"
+              :key="item.id"
+              :label="item.currencyCode"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="resetQuery()">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="advancedSearch()">{{ t('fields.search') }}</el-button>
@@ -933,7 +951,7 @@ import { hasPermission, hasRole } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
-import { getSiteListSimple } from "@/api/site";
+import { getSiteListSimple, getSupportedCurrencyBySiteId } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage } from "element-plus";
@@ -961,6 +979,9 @@ const cancelTypeList = reactive({
   list: [],
 })
 const siteList = reactive({
+  list: [],
+})
+const currencyList = reactive({
   list: [],
 })
 let timeZone = null;
@@ -1077,6 +1098,7 @@ const request = reactive({
   withdrawType: null,
   doris: false,
   withdrawReviewType: null,
+  currencyId: null
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -1113,6 +1135,7 @@ function resetQuery() {
   request.status = uiControl.statusList[0].value
   request.loginName = null
   request.financialId = financialList.list[0].id
+  request.currencyId = currencyList.list[0].id
   request.cardAccount = null
   request.bankName = bankList.list[0].id
   request.minWithdrawAmount = null
@@ -1179,6 +1202,19 @@ async function loadFinancialLevels() {
 
   if (!request.financialId) {
     request.financialId = financialList.list[0].id
+  }
+}
+
+async function loadCurrencys() {
+  const { data: currency } = await getSupportedCurrencyBySiteId(siteId.value)
+  currencyList.list = currency
+  currencyList.list.unshift({
+    id: 0,
+    currencyCode: 'ALL',
+  })
+
+  if (!request.currencyId) {
+    request.currencyId = currencyList.list[0].id
   }
 }
 
@@ -1400,6 +1436,7 @@ onMounted(async () => {
   }
   loadVips()
   loadFinancialLevels()
+  loadCurrencys()
   loadBanks()
   loadPaymentCards()
   loadCancelTypes()
