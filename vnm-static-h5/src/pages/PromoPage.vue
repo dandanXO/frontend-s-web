@@ -16,7 +16,13 @@
         class="promo-cat-tab"
         :class="extensionState ? 'extension-tab' : ''"
       >
-        <q-tab v-for="(tab, i) in currentTabItems" :key="i" :name="tab.name" :label="tab.label" no-caps />
+        <q-tab
+          v-for="(tab, i) in currentTabItems"
+          :key="i"
+          :name="tab.name"
+          :label="langVal === 'vi' ? tab.label_vi : tab.label"
+          no-caps
+        />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -209,6 +215,7 @@ import { ref, defineComponent, onActivated, reactive, watch, computed } from "vu
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { cached } from "boot/cache";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
 import { isAndroid } from "boot/utils";
@@ -230,19 +237,12 @@ export default defineComponent({
     const banner = ref([]);
     const { t } = useI18n();
 
+    const langVal = localStorage.getItem("languageLocale") || "vi";
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
-    const promoTypes = computed(() => [
-      { code: "ALL", img: "all", label: t("lang.type_all") },
-      { code: "ESPORTS", img: "esport", label: t("lang.type_esport") },
-      { code: "SPORTS", img: "sport", label: t("lang.type_sport") },
-      { code: "POKER", img: "poker", label: t("lang.type_poker") },
-      { name: "SLOT GAME", label: t("lang.type_slot") },
-      { name: "LIVE CASINO", label: t("lang.type_livecasino") },
-      { name: "FISH", label: t("lang.type_fish") }
-    ]);
+    const promoTypes = ref([{ code: "ALL", img: "all", label: t("lang.type_all") }]);
 
     const isFetchingPromo = ref(false);
     const promoTabActive = ref(promoTypes.value[0].value);
@@ -258,7 +258,7 @@ export default defineComponent({
     // const routeQuery  = computed(() => route.query || {});
 
     const tab = ref("all");
-    const tabItems = computed(() => [
+    const tabItems = ref([
       { name: "all", label: t("lang.type_all") },
       { name: "sport", label: t("lang.type_sport") },
       { name: "live casino", label: t("lang.type_livecasino") },
@@ -268,10 +268,10 @@ export default defineComponent({
       { name: "others", label: t("lang.type_others") }
     ]);
     const slotTabItems = computed(() => [
-      { name: "all", label: t("lang.type_all") },
-      { name: "slot welcome", label: t("lang.type_slot_welcome") },
-      { name: "slot daily", label: t("lang.type_slot_daily") },
-      { name: "slot other", label: t("lang.type_slot_other") }
+      { name: "all", label: t("lang.type_all"), label_vi: t("lang.type_all") },
+      { name: "slot welcome", label: t("lang.type_slot_welcome"), label_vi: t("lang.type_slot_welcome") },
+      { name: "slot daily", label: t("lang.type_slot_daily"), label_vi: t("lang.type_slot_daily") },
+      { name: "slot other", label: t("lang.type_slot_other"), label_vi: t("lang.type_slot_other") }
     ]);
     const currentTabItems = computed(() => {
       switch (ui.edition) {
@@ -373,8 +373,36 @@ export default defineComponent({
         filteredArray.value = promoState.promoList;
       }
     };
+    const loadTabs = async () => {
+      var params = "HOME";
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          params = "SLOT";
+          break;
+        case EDITION.NORMAL:
+        default:
+          params = "HOME";
+      }
 
-    const loadAll = () => {
+      const key = "PROMOTION_TYPES";
+      cached
+        .get(key, () => api.get(`/promo/type?category=${params}`))
+        .then((res) => {
+          tabItems.value = res.map(({ value, name, iconUrl }) => ({
+            name: value.toLowerCase(),
+            label: name ? JSON.parse(name).H5 : "",
+            label_vi: name ? JSON.parse(name).H5_vi : ""
+          }));
+          if (tabItems.value.length > 0) {
+            promoTabActive.value = tabItems.value[0].name;
+          } else {
+            console.warn("No promo types loaded, using default promo types.");
+          }
+        });
+    };
+
+    const loadAll = async () => {
+      await loadTabs();
       const platformApiUrl = "/opt-session/promo/page";
       let siteType;
       switch (ui.edition) {
@@ -480,6 +508,7 @@ export default defineComponent({
 
     return {
       promoState,
+      langVal,
       promoTypes,
       promoTabActive,
       switchPromoType,

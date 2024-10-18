@@ -1,5 +1,6 @@
 import { server } from "@/utils/request";
 import { userStore } from "@/store";
+import cached from "@/utils/cache";
 
 export function loadPromo(siteType) {
   return server.REST.get("/opt-session/promo/page", { params: { siteType } });
@@ -305,4 +306,7 @@ export function getWinners(promoCode) {
 }
 export function getPrizeAmount(promoCode) {
   return server.EVENT.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`);
+}
+export function loadPromoTypes(siteType) {
+  return cached.get("PROMOTION_TYPES", () => server.REST.get(`/promo/type`));
 }
