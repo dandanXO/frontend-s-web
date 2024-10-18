@@ -558,6 +558,7 @@ export default {
     603: "Token not found",
     608: "The current user's operations are too frequent. Please try again.",
     609: "Platform in maintenance",
+    610: "Forbidden to participate game, please contact the administrator",
     604: "Logged in successfully",
     707: "Insufficient balance",
     710: "Insufficient balance",
