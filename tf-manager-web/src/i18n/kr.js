@@ -2657,6 +2657,7 @@ export default {
     Mobile: '모바일',
     PC: 'PC',
     APPLY_WITHDRAW: '출금 신청',
+    APPLY_WITHDRAW_RISK: '철회 위험을 적용'
   },
   loginDevice: {
     WEB: '웹',
