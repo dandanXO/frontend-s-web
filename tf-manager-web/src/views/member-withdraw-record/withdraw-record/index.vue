@@ -951,11 +951,10 @@ import { hasPermission, hasRole } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
-import { getSiteListSimple } from "@/api/site";
+import { getSiteListSimple, getSupportedCurrencyBySiteId } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage } from "element-plus";
-import { getSupportedCurrencyBySiteId } from "../../../api/site";
 
 const { t } = useI18n();
 const store = useStore()
@@ -1211,7 +1210,7 @@ async function loadCurrencys() {
   currencyList.list = currency
   currencyList.list.unshift({
     id: 0,
-    name: 'ALL',
+    currencyCode: 'ALL',
   })
 
   if (!request.currencyId) {
