@@ -232,7 +232,7 @@ const vip = computed(() => {
 
 const menuItems = ref([
   // { route: "/center/deposit", label: "充值中心", icon: "transitrecord" },
-  { route: "/center/withdraw", label: "快速提款", icon: "transitrecord" }, 
+  // { route: "/center/withdraw", label: "快速提款", icon: "transitrecord" },
   // { route: "/center/transfer", label: "快速转账", icon: "transitrecord" },
   { route: "/center/transit-record", label: "交易记录", icon: "transitrecord" },
   // { route: "/center/transit-record?type=6", label: "投注记录", icon: "betrecord" },
