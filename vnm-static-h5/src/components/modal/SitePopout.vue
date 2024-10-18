@@ -49,6 +49,8 @@ import moment from "moment";
 import { useRouter } from "vue-router";
 import { EDITION } from "src/constant/edition";
 
+import { useUI } from "src/stores/ui";
+const ui = useUI();
 const router = useRouter();
 const props = defineProps(["closePopout"]);
 const popoutList = ref([]);
@@ -67,9 +69,11 @@ onMounted(() => {
   let siteType;
   switch (ui.edition) {
     case EDITION.SLOT:
-      siteType = "SLOT";
+      siteType = "slot";
       break;
     case EDITION.NORMAL:
+      siteType = "main";
+      break;
     default:
     // siteType = "HOME";
   }
