@@ -20,7 +20,7 @@
                 <img v-if="p.iconUrl" :src="p.iconUrl" />
                 <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
                 <span v-else></span>
-                <span style="width: 100px" class="label">{{ languageVal === 'en' ? p.label.en : p.label.vn }}</span>
+                <span style="width: 100px" class="label">{{ languageVal === "en" ? p.label.en : p.label.vn }}</span>
               </div>
             </div>
           </div>
@@ -113,7 +113,21 @@ export default defineComponent({
       promoList: [],
     });
     const currentPromoType = ref([])
-    const currentPromoTypes = computed(() => currentPromoType.value)
+    const promoTypesSlot = ref( [
+      { code:"ALL", img: 'all', label: {en: t('promo.all'), vn: t('promo.all')} },
+      { code: "SLOT WELCOME", img: 'sport', label: {en:  t('promo.slotWelcome'),vn:  t('promo.slotWelcome')} },
+      { code: "SLOT DAILY", img: 'live', label: {en: t('promo.slotDaily'), vn: t('promo.slotDaily')}},
+      { code: "SLOT OTHER", img: 'slot', label: {en: t('promo.slotOther'), vn: t('promo.slotOther')}},
+    ])
+    const currentPromoTypes = computed(() =>{
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          return promoTypesSlot.value;
+        case EDITION.NORMAL:
+        default:
+          return  currentPromoType.value;
+      }
+    })
     const promoTabActive = ref('ALL');
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
@@ -136,6 +150,8 @@ export default defineComponent({
         selectedPromo.value = promo
       }
     }
+
+
 
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
@@ -162,23 +178,30 @@ export default defineComponent({
       }
     };
     const loadAll = async () => {
-      await loadPromoTypes().then((res) => {
-        currentPromoType.value = res.map((item) => {
-          return {
-            code: item.value,
-            img: 'all',
-            iconUrl: imgURL + item.iconUrl,
-            label: JSON.parse(item.name)
-          }
-        })
-      });
-
       let siteType
       switch (ui.edition) {
         case EDITION.SLOT:
           siteType = "SLOT";
           break
       }
+
+      if(siteType==="SLOT"){
+        currentPromoType.value= promoTypesSlot.value
+      }else{
+        await loadPromoTypes().then((res) => {
+          currentPromoType.value = res.map((item) => {
+            return {
+              code: item.value,
+              img: 'all',
+              iconUrl: imgURL + item.iconUrl,
+              label: JSON.parse(item.name)
+            }
+          })
+        });
+      }
+
+
+
 
       loadPromo(siteType).then((res) => {
         if (res.code === 0) {
