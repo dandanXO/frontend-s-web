@@ -202,10 +202,10 @@ export default defineComponent({
     }
 
     onMounted(async() => {
-      if (!hasPermission(["sys:withdraw:apply"]) && hasPermission(["sys:withdraw:simple:list"]) && hasPermission(["sys:withdraw:simple:list:risk"])) {
+      if (!hasPermission(["sys:withdraw:apply"]) && (hasPermission(["sys:withdraw:simple:list"]) && hasPermission(["sys:withdraw:simple:list:risk"]))) {
         await checkOutstandingAutoWithdraw();
       }
-      if (hasPermission(["sys:withdraw:apply"]) && hasPermission(["sys:withdraw:simple:list"]) && hasPermission(["sys:withdraw:simple:list:risk"])) {
+      if (hasPermission(["sys:withdraw:apply"]) || (hasPermission(["sys:withdraw:simple:list"]) &&  hasPermission(["sys:withdraw:simple:list:risk"]))) {
         await checkOutstandingWithdraw();
       }
       if (hasPermission(["sys:withdraw:before-paid"])) {
