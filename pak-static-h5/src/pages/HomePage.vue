@@ -5266,7 +5266,7 @@ const showCongratsModal = () => {
 }
 
 .hb-float {
-  posiiton: relative;
+  position: relative;
   height: 100px;
   width: 100px;
   background: transparent;

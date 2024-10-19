@@ -4,7 +4,7 @@
 </template>
 <script setup>
 import { useDark } from "@vueuse/core";
-import AccountMenu from "../AccountMenu.vue";
+import AccountMenu from "@/components/account/AccountMenu.vue";
 import DarkAccountMenu from "./DarkAccountMenu.vue";
 
 const isDark = useDark();

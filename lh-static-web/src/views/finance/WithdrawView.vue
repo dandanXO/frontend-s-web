@@ -4,7 +4,7 @@
       <span class="menu-title">
         {{ isAutoWithdrawal ? "快速提款" : "提款" }}
       </span>
-      <!--<el-button
+      <el-button
         v-if="!isAutoWithdrawal"
         :loading="loadingBtn"
         :disable="loadingBtn"
@@ -14,7 +14,7 @@
       >
         <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
         <span>升级快速提款</span>
-      </el-button>-->
+      </el-button>
     </div>
 
     <div class="menu-title-container">

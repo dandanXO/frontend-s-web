@@ -149,7 +149,7 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' || selectedPromo?.redirectUrl === 'lh1-blast-premier-global'" />
               <div
                 class="inner"
                 :class="{
@@ -209,10 +209,10 @@
                   }"
                 >
                   <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
-                    <NBAWaterBattle />
+                    <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
-                    <YallaCompass />
+                    <YallaCompass :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>

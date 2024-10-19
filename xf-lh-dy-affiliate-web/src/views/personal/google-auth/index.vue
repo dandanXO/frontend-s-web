@@ -13,6 +13,7 @@
         v-model="uiControl.defaultDialogVisible"
         append-to-body
         width="500px"
+        modal-class="google-auth-dialog"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
         :show-close="false"
@@ -55,10 +56,11 @@
       <el-dialog
         v-model="isPassDialog"
         append-to-body
+        modal-class="google-auth-dialog"
+        width="500px"
         :close-on-click-modal="true"
         :close-on-press-escape="true"
         :show-close="false"
-        width="500px"
       >
         <div class="dialog-body">
           <div>
@@ -357,7 +359,8 @@ const uiControl = reactive({
 }
 
 .auth-container {
-  width: 900px;
+  width: 100%;
+  max-width: 900px;
   margin: 20px 150px;
   padding: 0 20px 0 20px;
 
@@ -394,8 +397,10 @@ const uiControl = reactive({
     background: var(--el-background-color-base);
 
     span {
+      overflow: hidden;
       font-size: 20px;
       font-weight: bold;
+      text-overflow: ellipsis;
     }
 
     .auth-key-copy {
@@ -496,5 +501,45 @@ const uiControl = reactive({
 .step2-modal-img {
   width: 100%;
   height: auto;
+}
+
+@media (max-width: 1200px) {
+  .auth-container {
+    margin: 20px auto;
+  }
+  .list-title {
+    margin-bottom: 20px;
+  }
+  .flex-base-start {
+    flex-direction: column;
+    gap: 20px;
+  }
+  #google-qrcode {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-lists {
+    display: grid;
+    row-gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .el-button {
+      width: 100%;
+      margin: unset;
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 550px) {
+
+  .google-auth-dialog {
+    .el-dialog {
+      --el-dialog-width: 90% !important;
+    }
+  }
 }
 </style>

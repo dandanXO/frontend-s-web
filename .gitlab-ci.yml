@@ -579,6 +579,13 @@ deploy-lh-landing:
 
 #===============================================================================================
 
+deploy-lh-landing-v1:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v1
+
+#===============================================================================================
+
 deploy-lh-landing-v2:
   extends: .s3-deploy
   variables:
@@ -776,6 +783,13 @@ build-image-pak-landing-v1:
     PROJECT: pak-landing-v1
   needs:
     - build-pak-landing-v1
+
+#===============================================================================================
+
+deploy-pak-landing-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pak-landing-v2
 
 #===============================================================================================
 

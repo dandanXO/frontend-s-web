@@ -367,6 +367,8 @@ export default defineComponent({
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
+
+                sessionStorage.setItem('regSuccessGuideVisible', true);
               } else {
                 notify({
                   type: "error",
