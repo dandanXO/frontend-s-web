@@ -192,25 +192,26 @@ export default boot(({ app, router }) => {
         if (
           res.code === ResponseCode.ERROR_NAME_EXIST ||
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
-          res.code === ResponseCode.ERROR_TOKEN_EXPIRED
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+          res.code === ResponseCode.ERROR_TOKEN_INVALID
         ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
           router.push("/login");
           return;
         }
-        if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          return Dialog.create({
-            class: "login-card",
-            title: "Please Login",
-            message: "Please log in to operate",
-            cancel: { color: "negative", label: "Cancel" },
-            ok: { color: "brightbtn", label: "Login" },
-            padding: "20px"
-          }).onOk(() => {
-            router.push("/login");
-          });
-        }
+        // if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
+        //   return Dialog.create({
+        //     class: "login-card",
+        //     title: "Please Login",
+        //     message: "Please log in to operate",
+        //     cancel: { color: "negative", label: "Cancel" },
+        //     ok: { color: "brightbtn", label: "Login" },
+        //     padding: "20px"
+        //   }).onOk(() => {
+        //     router.push("/login");
+        //   });
+        // }
         if (
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
           res.code === ResponseCode.ERROR_NAME_EXIST ||
@@ -218,7 +219,7 @@ export default boot(({ app, router }) => {
         ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
-          window.location.href = "/";
+          router.push("/login");
         }
         if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
           SessionStorage.remove("TOKEN");
