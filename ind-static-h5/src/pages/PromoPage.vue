@@ -73,7 +73,10 @@
             </div>
           </div>
           <div v-else class="selected-promo">
-            <div class="loader" v-if="isFetchingPromo" />
+            <!-- <div class="loader" v-if="isFetchingPromo" /> -->
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -84,10 +87,6 @@
                 />
               </div>
               <div class="inner">
-                <div class="top-float">
-                  <div class="top-subtitle">Get unlimited rewards!</div>
-                  <div class="top-title">{{ selectedPromo.title }}</div>
-                </div>
                 <div class="promo-content-inner">
                   <div class="content-title">{{ selectedPromo.title }}</div>
                 </div>
@@ -170,6 +169,10 @@
         <q-btn label="Login" color="primary" />
       </router-link>
     </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
+    <div class="dialog-mid-text">Loading...</div>
   </q-dialog>
 </template>
 
@@ -267,7 +270,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if (route.query.name) {
+      if (route.query.name && !isAndroid()) {
         isPromoDetail.value = true;
       }
 
@@ -278,7 +281,7 @@ export default defineComponent({
     });
 
     watch(() => route.query, () => {
-      if (route.query === null) {
+      if (route.query === null || isAndroid()) {
         isPromoDetail.value = false
       } else {
         isPromoDetail.value = route.query.name
@@ -372,12 +375,19 @@ export default defineComponent({
             }
             store.token = extensionToken.value;
           } else if (isAndroid()) {
-            // store.h5Url = "http://192.168.68.74:9090/";
+            // store.h5Url = "http://192.168.68.105:9090/";
             var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
+            isOpenExtension.value = true;
+
+            ref.addEventListener('loadstop', function() {
+              setTimeout(()=>{
+                ref.show();
+              },500)
+            });
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
@@ -389,16 +399,31 @@ export default defineComponent({
                 ref.close();
                 router.push(message);
               }
+
+              ref.executeScript({
+                code: `
+                  var style = document.createElement('style');
+                  style.innerHTML = 'html, body { background:#11131f !important }';
+                  document.head.appendChild(style);
+                `
+              });
             });
+
+            ref.addEventListener("exit", function () {
+              isOpenExtension.value = false;
+            });
+
           } else {
             if (route.query.fromAccount) {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
               } else {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl } });
               }
-              isPromoDetail.value = true;
-              selectedPromo.value = promo;
-              selectedPromoDate.value = '';
+              if(!isAndroid()){
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+                selectedPromoDate.value = '';
+              }
           }
 
           // isPromoDetail.value = true
@@ -430,7 +455,8 @@ export default defineComponent({
       const randNum = Math.floor(Math.random() * 1000) + 1;
       const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = true;
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -439,15 +465,15 @@ export default defineComponent({
           // promoState.promoList.push(...res.data);
 
           promoItems.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // } else {
               promoState.promoList.push(element);
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
-            }
+            // }
           });
 
           switchPromoType(promoState.active)
@@ -596,6 +622,8 @@ export default defineComponent({
       fullGameDialog.value = false;
     };
 
+    const isOpenExtension = ref(false);
+
     return {
       promoState,
       promoTypes,
@@ -630,7 +658,8 @@ export default defineComponent({
       isFtdPromoEnded,
       selectedParam,
       isFetchingPromo,
-      extensionState
+      extensionState,
+      isOpenExtension
     }
   },
 });
@@ -1282,5 +1311,33 @@ export default defineComponent({
       width: 14px !important;
     }
   }
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
+  background-size: contain;
+
+  .dialog-mid-text {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    top: 48%;
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>

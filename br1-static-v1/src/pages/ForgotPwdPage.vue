@@ -7,14 +7,14 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="11"
+          maxlength="8"
           ref="phoneRef"
           hide-bottom-space
           v-model="passwordForm.phone"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val && val.length === 11) || $t('form.phone_rules_02'),
+            (val) => (val && val.length === 8) || $t('form.phone_rules_02'),
             (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04'),
           ]"
           outlined
@@ -143,6 +143,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 import ConfirmButton from "src/atoms/ConfirmButton.vue";
+import { t } from "src/boot/lang";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -249,7 +250,7 @@ const onVerifyForgotPassword = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: $t("notify.passwordResetcompleted"),
+            message: t("notify.passwordResetcompleted"),
             icon: "check_circle_outline"
           });
 

@@ -17,8 +17,10 @@
                 :key="p.code"
                 @click="switchPromoType(p.code)"
               >
-                <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <img v-if="p.iconUrl" :src="p.iconUrl" />
+                <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                <span v-else></span>
+                <span style="width: 100px" class="label">{{ languageVal === "en" ? p.label.en : p.label.vn }}</span>
               </div>
             </div>
           </div>
@@ -90,6 +92,7 @@ import { storeToRefs } from 'pinia'
 import { useLocalStorage } from "@vueuse/core";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+import { loadPromoTypes } from "@/api/index/promo.js";
 
 const PromoDetail = defineAsyncComponent(() => import('@/components/promo/PromoDetail.vue'));
 
@@ -109,31 +112,23 @@ export default defineComponent({
       active: "ALL",
       promoList: [],
     });
-    const promoTypes = computed(() => [
-      { code: "ALL", img: 'all', label: t('promo.all') },
-      { code: "SPORT", img: 'sport', label: t('promo.sports') },
-      { code: "LIVE CASINO", img: 'live', label: t('promo.casino') },
-      { code: "SLOT GAME", img: 'slot', label: t('promo.slot') },
-      { code: "POKER", img: 'poker', label: t('promo.poker') },
-      { code: "LOTTERY", img: 'lottery', label: t('promo.lottery') },
-      { code: "FISH", img: 'fish', label: t('promo.fish') },
-    ]);
-    const promoTypesSlot = computed(() => [
-      { code: "ALL", img: 'all', label: t('promo.all') },
-      { code: "SLOT WELCOME", img: 'slot-welcome', label: t('promo.slotWelcome') },
-      { code: "SLOT DAILY", img: 'slot-daily', label: t('promo.slotDaily') },
-      { code: "SLOT OTHER", img: 'slot-other', label: t('promo.slotOther') },
+    const currentPromoType = ref([])
+    const promoTypesSlot = ref( [
+      { code:"ALL", img: 'all', label: {en: t('promo.all'), vn: t('promo.all')} },
+      { code: "SLOT WELCOME", img: 'sport', label: {en:  t('promo.slotWelcome'),vn:  t('promo.slotWelcome')} },
+      { code: "SLOT DAILY", img: 'live', label: {en: t('promo.slotDaily'), vn: t('promo.slotDaily')}},
+      { code: "SLOT OTHER", img: 'slot', label: {en: t('promo.slotOther'), vn: t('promo.slotOther')}},
     ])
-    const currentPromoTypes = computed(() => {
+    const currentPromoTypes = computed(() =>{
       switch (ui.edition) {
         case EDITION.SLOT:
-          return promoTypesSlot.value
+          return promoTypesSlot.value;
         case EDITION.NORMAL:
         default:
-          return promoTypes.value
+          return  currentPromoType.value;
       }
     })
-    const promoTabActive = ref(currentPromoTypes.value[0].code);
+    const promoTabActive = ref('ALL');
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
       if (route.query && route.query?.name) {
@@ -155,6 +150,8 @@ export default defineComponent({
         selectedPromo.value = promo
       }
     }
+
+
 
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
@@ -180,13 +177,32 @@ export default defineComponent({
         filteredArray.value = promoState.promoList
       }
     };
-    const loadAll = () => {
+    const loadAll = async () => {
       let siteType
       switch (ui.edition) {
         case EDITION.SLOT:
           siteType = "SLOT";
           break
       }
+
+      if(siteType==="SLOT"){
+        currentPromoType.value= promoTypesSlot.value
+      }else{
+        await loadPromoTypes().then((res) => {
+          currentPromoType.value = res.map((item) => {
+            return {
+              code: item.value,
+              img: 'all',
+              iconUrl: imgURL + item.iconUrl,
+              label: JSON.parse(item.name)
+            }
+          })
+        });
+      }
+
+
+
+
       loadPromo(siteType).then((res) => {
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
@@ -235,7 +251,6 @@ export default defineComponent({
 
     return {
       promoState,
-      promoTypes,
       promoTabActive,
       switchPromoType,
       filteredArray,

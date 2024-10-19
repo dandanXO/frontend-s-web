@@ -19,7 +19,7 @@
         <img src="../../assets/images/home/sticky-sidebar-zalo-icon.png" />
         <span style="margin-left: 5px"> +63967 254 1561</span>
       </div> -->
-      <div class="additional-info-item">
+      <div class="additional-info-item" v-if="store.token">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <a href="https://t.me/Diahelp7" target="_blank">@Diahelp7</a>
         <!-- <span style="margin-left: 5px">@Diahelp7</span> -->

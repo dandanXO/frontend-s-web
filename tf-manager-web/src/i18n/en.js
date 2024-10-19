@@ -538,6 +538,16 @@ export default {
     kr: 'Korean',
     vn: 'Vietnamese'
   },
+  rewardStatus: {
+    PENDING: 'PENDING',
+    DISTRIBUTED: 'DISTRIBUTED',
+    REJECTED: 'REJECTED',
+  },
+  treasure: {
+    NORMAL: 'Normal Treasure',
+    CS: 'CS Treasure',
+    DRAGON: 'Dragon Treasure'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -783,11 +793,13 @@ export default {
     checkDate: 'Check Date',
     checkExclusiveUrl: 'Check Exclusive Url',
     checkFail: 'REVIEW_FAIL',
+    checkInRecord: 'Check In Record',
     checkTime: 'Check Time',
     choice: 'Choices',
     choiceOne: 'Question One Choices',
     choiceTwo: 'Question Two Choices',
     choiceThree: 'Question Three Choices',
+    claimRecord: 'Claim Record',
     claimTime: 'Claim Time',
     claimableRebate: 'Claimable Rebate',
     className: 'Class Name',
@@ -1112,6 +1124,9 @@ export default {
     jobLog: 'Job Log',
     jobName: 'Job Name',
     jobType: 'Job Type',
+    keysAcquired: 'Keys Acquired',
+    keyRecord: 'Key Acquire Record',
+    keyUsed: 'Key Used',
     label: 'Label',
     labelCancel: 'cancel',
     language: 'Language',
@@ -1700,6 +1715,7 @@ export default {
     transferTime: 'Transfer Time',
     transferType: 'Transfer Type',
     triggerType: 'Trigger Type',
+    treasure: 'Treasure',
     turnoverMultiple: 'Turnover Multiple',
     txnId: 'Txn ID',
     txnTime: 'Txn Time',
@@ -2078,6 +2094,8 @@ export default {
     gender: 'Gender',
     Male: 'Male',
     Female: 'Female',
+    startHour: 'Start Hour',
+    endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
   },
   message: {
@@ -2682,6 +2700,7 @@ export default {
     'Automatic Payment': 'Automatic Paying',
     'Waiting Auto Pay': 'Waiting Auto Pay',
     'AutoWithdraw Under review': 'Under review',
+    'AutoWithdraw Under review Risk': 'Under review risk',
     'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
     'Fail Review': 'Fail Review',
     Suspend: 'Suspend',
@@ -2729,6 +2748,7 @@ export default {
     'Site Interest Plan': 'Site Interest Plan',
     'Interest Plan Order Record': 'Interest Plan Order Record',
     'Promo Type': 'Promo Type',
+    Treasure: 'Treasure Bonus',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
@@ -2863,6 +2883,7 @@ export default {
     'Site Platform Report': 'Site Platform Report',
     'Refer Friend Eligibility': 'Refer Friend Eligibility',
     'Member Refer Analysis': 'Member Refer Analysis',
+    'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
   },
   google: {
@@ -2965,6 +2986,7 @@ export default {
     Mobile: 'Mobile',
     PC: 'PC',
     APPLY_WITHDRAW: 'Apply Withdraw',
+    APPLY_WITHDRAW_RISK: 'Apply Withdraw Risk'
   },
   loginDevice: {
     WEB: 'WEB',
@@ -3116,6 +3138,7 @@ export default {
     12000: 'System privilege info name already exist',
     12001: 'System privilege info code already exist',
     12002: 'Please insert privilege group',
+    12009: "Format of Turnover is incorrect, please check again.",
     12010: 'Currency name already exist',
     12011: 'Currency rate already set for this site',
     12020: "Current record's status is not SENDING",

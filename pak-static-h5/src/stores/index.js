@@ -48,7 +48,7 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       h5Url: "https://m.b9mega1.com/",
       isFbPixel: false,
-      hasUpdatedOneSignal: false,
+      hasUpdatedOneSignal: false
     };
   },
   actions: {
@@ -166,36 +166,36 @@ export const userStore = defineStore("userStore", {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
-      api.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      cashier.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      eventapi.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
+      // api.interceptors.request.use(async (req) => {
+      //   var token;
+      //   if (isAndroid()) {
+      //     token = LocalStorage.getItem("TOKEN");
+      //   } else {
+      //     token = SessionStorage.getItem("TOKEN");
+      //   }
+      //   req.headers.token = token;
+      //   return req;
+      // });
+      // cashier.interceptors.request.use(async (req) => {
+      //   var token;
+      //   if (isAndroid()) {
+      //     token = LocalStorage.getItem("TOKEN");
+      //   } else {
+      //     token = SessionStorage.getItem("TOKEN");
+      //   }
+      //   req.headers.token = token;
+      //   return req;
+      // });
+      // eventapi.interceptors.request.use(async (req) => {
+      //   var token;
+      //   if (isAndroid()) {
+      //     token = LocalStorage.getItem("TOKEN");
+      //   } else {
+      //     token = SessionStorage.getItem("TOKEN");
+      //   }
+      //   req.headers.token = token;
+      //   return req;
+      // });
       this.token = isAndroid() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {

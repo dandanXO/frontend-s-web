@@ -2658,6 +2658,7 @@ export default {
     Mobile: 'Di động',
     PC: 'PC',
     APPLY_WITHDRAW: 'Đăng ký rút tiền',
+    APPLY_WITHDRAW_RISK: 'Áp dụng rủi ro rút tiền'
   },
   loginDevice: {
     WEB: 'Web',
@@ -2767,6 +2768,7 @@ export default {
     12000: 'Tên thông tin quyền hệ thống đã tồn tại',
     12001: 'Mã thông tin quyền hệ thống đã tồn tại',
     12002: 'Vui lòng chèn nhóm quyền',
+    12009: "Định dạng dòng không đúng, vui lòng kiểm tra lại.",
     12010: 'Tên tiền tệ đã tồn tại',
     12011: 'Tỷ giá tiền tệ đã được cài đặt cho trang web này',
     12020: "Trạng thái bản ghi hiện tại không phải là 'Đang gửi'",

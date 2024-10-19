@@ -40,19 +40,19 @@
               @click="setActiveItem(item.no)"
             >
               <img
-                v-if="item.treasureLevel"
+                v-if="item.treasure"
                 :src="
-                  require(`@/assets/images/promotion/hotpromo/blastpremier/treasure-level-${item.treasureLevel.toLowerCase()}.png`)
+                  require(`@/assets/images/promotion/hotpromo/blastpremier/treasure-level-${item.treasure.toLowerCase()}.png`)
                 "
               />
               <div v-else class="img-placeholder" />
               <div class="required-key">
                 <div class="container-description">
-                  <span>{{getTreasureDescription(item.treasureLevel)}}</span>
+                  <span>{{getTreasureDescription(item.treasure)}}</span>
                 </div>
                 <div class="key-container">
                   <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
-                  <span>x{{ item.quantity }}</span>
+                  <span>x{{ item.keyRequired }}</span>
                 </div>
               </div>
             </div>
@@ -219,13 +219,11 @@ import { ref, onMounted, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import {
-  getTreasureDetail,
-  getKeyCount,
-  getCheckInRecord,
-  openTreasure,
-  getKeyRecord,
-  getOpenRecord,
-  claimCheckInTreasure
+  getGlobalCheckInRecord,
+  openGlobalTreasure,
+  getGlobalKeyRecord,
+  getGlobalOpenRecord,
+  getGlobalTreasureDetail
 } from "@/api/index/promo";
 import { ElLoading } from "element-plus";
 import { useNotify } from "@/hooks/notify";
@@ -242,12 +240,12 @@ const items = ref([
   { no: 3, amt: 30 }
 ]);
 const activeItem = ref(3);
-const selectedTreasureLevel = ref("Dragon");
+const selectedTreasureLevel = ref("DRAGON");
 
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
-    selectedTreasureLevel.value = item.treasureLevel;
+    selectedTreasureLevel.value = item.treasure;
     activeItem.value = item.no;
     reorderItems(item);
   }
@@ -283,7 +281,7 @@ const openBox = (item) => {
     background: "rgba(0, 0, 0, 0.7)"
   });
 
-  openTreasure(props.promoCode, item).then((res) => {
+  openGlobalTreasure(props.promoCode, item).then((res) => {
     if (res.code === 0) {
       // Open Dialog
       openModal("amt", res.data);
@@ -301,11 +299,11 @@ const openBox = (item) => {
 };
 
 const getTreasureDescription = (treasureLevel) => {
-  if (treasureLevel === 'Normal') {
+  if (treasureLevel === 'NORMAL') {
     return '普通宝箱';
   } else if (treasureLevel === 'CS') {
     return 'CS宝箱';
-  } else if (treasureLevel === 'Dragon'){
+  } else if (treasureLevel === 'DRAGON'){
     return '龙宝箱';
   }
 };
@@ -317,61 +315,79 @@ const claimModalClose = () => {
 
 const checkInDetails = ref();
 const dayList = ref([
+  // { no: 3, claimed: false, toClaim: false },
+  // { no: 5, claimed: false, toClaim: false },
+  // { no: 7, claimed: false, toClaim: false }
+  { no: 1, claimed: false, toClaim: false },
+  { no: 2, claimed: false, toClaim: false },
   { no: 3, claimed: false, toClaim: false },
-  { no: 5, claimed: false, toClaim: false },
-  { no: 7, claimed: false, toClaim: false }
+  { no: 4, claimed: false, toClaim: false },
+  { no: 5, claimed: false, toClaim: false }
 ]);
 
 const init = () => {
-  getTreasureDetail(props.promoCode).then((res) => {
-    if (res.code === 0) {
-      res.data.forEach((element, i) => {
-        element.no = i + 1;
-      });
-      items.value = res.data;
-      setActiveItem(activeItem.value);
-    }
-  });
+  // getTreasureDetail(props.promoCode).then((res) => {
+  //   if (res.code === 0) {
+  //     res.data.forEach((element, i) => {
+  //       element.no = i + 1;
+  //     });
+  //     items.value = res.data;
+  //     setActiveItem(activeItem.value);
+  //   }
+  // });
   // First Privilege
-  getKeyCount(props.promoCode).then((res) => {
+  getGlobalTreasureDetail(props.promoCode).then((res) => {
     if (res.code === 0) {
-      keyNumber.value = res.data;
+      keyNumber.value = res.data.keyLeft;
+        res.data.treasures.forEach((element, i) => {
+          element.no = i + 1;
+        });
+        items.value = res.data.treasures
+        setActiveItem(activeItem.value);
     }
   });
   //   Second Privilege
-  getCheckInRecord(props.promoCode).then((res) => {
+  getGlobalCheckInRecord('lh1-blast-premier-check-in').then((res) => {
     if (res.code === 0) {
       checkInDetails.value = res.data;
-      signNumber.value = checkInDetails.value.currentConsecutiveDay;
-      dayList.value = [];
-      checkInDetails.value.dayList.forEach((day) => {
-        const obj = {
-          no: day,
-          claimed: false,
-          toClaim: false
-        };
-        dayList.value.push(obj);
-      });
-      populateDayList(checkInDetails.value);
+      signNumber.value = checkInDetails.value.dailyCheckInClaimed;
+      if (signNumber.value) {
+        dayList.value.forEach((day, index) => {
+          if (index < signNumber.value) {
+            day.claimed = true;
+            day.toClaim = false; 
+          }
+        });
+      }
+      // dayList.value = [];
+      // checkInDetails.value.dayList.forEach((day) => {
+      //   const obj = {
+      //     no: day,
+      //     claimed: false,
+      //     toClaim: false
+      //   };
+      //   dayList.value.push(obj);
+      // });
+      // populateDayList(checkInDetails.value);
     }
   });
 };
-const populateDayList = (check) => {
-  check.claimed.forEach((element) => {
-    dayList.value.forEach((day) => {
-      if (day.no === element) {
-        day.claimed = true;
-      }
-    });
-  });
-  check.toClaim.forEach((element) => {
-    dayList.value.forEach((day) => {
-      if (day.no === element) {
-        day.toClaim = true;
-      }
-    });
-  });
-};
+// const populateDayList = (check) => {
+//   check.claimed.forEach((element) => {
+//     dayList.value.forEach((day) => {
+//       if (day.no === element) {
+//         day.claimed = true;
+//       }
+//     });
+//   });
+//   check.toClaim.forEach((element) => {
+//     dayList.value.forEach((day) => {
+//       if (day.no === element) {
+//         day.toClaim = true;
+//       }
+//     });
+//   });
+// };
 const amountClaimed = ref(0);
 const isClaimModal = ref(false);
 // Dialogs
@@ -405,7 +421,7 @@ const openModal = (modal, item, itemIndex) => {
       text: "加载记录中",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    getKeyRecord(props.promoCode, search.value).then((res) => {
+    getGlobalKeyRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         keyRecords.value = res.data.records;
         isKeyRecordModal.value = true;
@@ -421,12 +437,10 @@ const openModal = (modal, item, itemIndex) => {
       text: "加载记录中",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    getOpenRecord(props.promoCode, search.value).then((res) => {
+    getGlobalOpenRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
-      } else {
-        notify.error(res.message);
       }
     });
     setTimeout(() => {
@@ -437,24 +451,24 @@ const openModal = (modal, item, itemIndex) => {
     isClaimModal.value = true;
     amountClaimed.value = item;
   }
-  if (modal === "claim") {
-    const loading = ElLoading.service({
-      lock: true,
-      text: "开启中",
-      background: "rgba(0, 0, 0, 0.7)"
-    });
-    claimCheckInTreasure(props.promoCode, item.no).then((res) => {
-      if (res.code === 0) {
-        amountClaimed.value = res.data;
-        isClaimModal.value = true;
-        dayList.value[itemIndex].toClaim = false;
-        dayList.value[itemIndex].claimed = true;
-      }
-    });
-    setTimeout(() => {
-      loading.close();
-    }, 1000);
-  }
+  // if (modal === "claim") {
+  //   const loading = ElLoading.service({
+  //     lock: true,
+  //     text: "开启中",
+  //     background: "rgba(0, 0, 0, 0.7)"
+  //   });
+  //   claimCheckInTreasure(props.promoCode, item.no).then((res) => {
+  //     if (res.code === 0) {
+  //       amountClaimed.value = res.data;
+  //       isClaimModal.value = true;
+  //       dayList.value[itemIndex].toClaim = false;
+  //       dayList.value[itemIndex].claimed = true;
+  //     }
+  //   });
+  //   setTimeout(() => {
+  //     loading.close();
+  //   }, 1000);
+  // }
 };
 
 // Reference
@@ -622,6 +636,7 @@ onMounted(() => {
             @include animation-btn;
             cursor: pointer;
             background: url(@/assets/images/promotion/hotpromo/blastpremier/btn-active.png) no-repeat center center;
+            color: #000000;
           }
         }
         .item {
@@ -867,6 +882,7 @@ onMounted(() => {
             @include animation-btn;
             cursor: pointer;
             background: url(@/assets/images/promotion/hotpromo/blastpremier/btn-active.png) no-repeat center center;
+            color: #000000;
           }
         }
       }

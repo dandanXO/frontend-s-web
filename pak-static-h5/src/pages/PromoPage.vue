@@ -73,7 +73,10 @@
             </div>
           </div>
           <div v-else class="selected-promo">
-            <div class="loader" v-if="isFetchingPromo" />
+            <!-- <div class="loader" v-if="isFetchingPromo" /> -->
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
 
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
@@ -183,6 +186,10 @@
     <MoneyRainModal />
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
+
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
+    <div class="dialog-mid-text">Loading...</div>
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -241,6 +248,8 @@ export default defineComponent({
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
+    const isOpenExtension = ref(false);
+
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
     const extensionToken = ref("");
@@ -286,7 +295,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if (route.query.name) {
+      if (route.query.name && !isAndroid()) {
         isPromoDetail.value = true;
       }
 
@@ -303,7 +312,7 @@ export default defineComponent({
     watch(
       () => route.query,
       () => {
-        if (route.query === null) {
+        if (route.query === null || isAndroid()) {
           isPromoDetail.value = false;
         } else {
           isPromoDetail.value = route.query.name;
@@ -399,7 +408,14 @@ export default defineComponent({
               // alert(preUrl);
               console.log(preUrl);
               // promoSrc.value= preUrl;
-              var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
+              var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
+              isOpenExtension.value = true;
+
+              ref.addEventListener('loadstop', function() {
+                setTimeout(()=>{
+                  ref.show();
+                },500)
+              });
 
               ref.addEventListener("loadstart", function (event) {
                 var url = event.url;
@@ -412,14 +428,20 @@ export default defineComponent({
                   router.push(message);
                 }
               });
+
+              ref.addEventListener("exit", function () {
+                isOpenExtension.value = false;
+              });
             } else {
               if (route.query.fromAccount) {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
               } else {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl } });
               }
-              isPromoDetail.value = true;
-              selectedPromo.value = promo;
+              if (!isAndroid()) {
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+              }
             }
           }
         }
@@ -434,12 +456,16 @@ export default defineComponent({
       } else {
         filteredArray.value = promoState.promoList;
       }
+
+      // remove to show faq as promo item at promo list
+      filteredArray.value = [...filteredArray.value].filter(({ promoCode }) => promoCode !== "pak-faq");
     };
 
     const loadAll = () => {
       const platformApiUrl = "/opt-session/promo/page";
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = true;
 
       api
         .get(platformApiUrl)
@@ -450,15 +476,15 @@ export default defineComponent({
             // promoState.promoList.push(...res.data);
 
             promoItems.forEach((element) => {
-              if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-                // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              } else {
-                promoState.promoList.push(element);
+              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              // } else {
+              promoState.promoList.push(element);
 
-                if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                  showPromoDetails(element);
-                }
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                showPromoDetails(element);
               }
+              // }
             });
 
             switchPromoType(promoState.active);
@@ -658,7 +684,8 @@ export default defineComponent({
       MoneyRainModal,
       isMoneyRainModal,
       isFetchingPromo,
-      extensionState
+      extensionState,
+      isOpenExtension
       // MediaSettingsComponent
     };
   }
@@ -1374,5 +1401,33 @@ export default defineComponent({
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(#000000b3, #000000b3);
+  background-size: contain;
+
+  .dialog-mid-text {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    top: 48%;
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>

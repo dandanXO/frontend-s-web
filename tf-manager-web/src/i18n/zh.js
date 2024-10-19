@@ -541,6 +541,16 @@ export default {
     kr: '韩语',
     vn: '越南语'
   },
+  rewardStatus: {
+    PENDING: '审核中',
+    DISTRIBUTED: '已派发',
+    REJECTED: '已拒绝',
+  },
+  treasure: {
+    NORMAL: '正常宝箱',
+    CS: 'CS宝箱',
+    DRAGON: '龙宝箱'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -786,11 +796,13 @@ export default {
     checkDate: '审核日期',
     checkExclusiveUrl: '查看专属网址',
     checkFail: '审核失败',
+    checkInRecord: '签到记录',
     checkTime: '审核时长',
     choice: '选项',
     choiceOne: '题目一选项',
     choiceTwo: '题目二选项',
     choiceThree: '题目三选项',
+    claimRecord: '领取记录',
     claimTime: '领取时间',
     claimableRebate: '可领取返水金额',
     className: '类别名',
@@ -1114,6 +1126,9 @@ export default {
     jobLog: '日志列表',
     jobName: '任务名称',
     jobType: '任务类型',
+    keysAcquired: '获取钥匙',
+    keyRecord: '获取钥匙记录',
+    keyUsed: '已使用钥匙',
     label: '标签',
     labelCancel: '取消',
     language: '语言',
@@ -1700,6 +1715,7 @@ export default {
     transferTime: '转账时间',
     transferType: '转账类型',
     triggerType: '触发类型',
+    treasure: '宝箱',
     turnoverMultiple: '流水倍数',
     txnId: '交易ID',
     txnTime: '交易时间',
@@ -2077,6 +2093,8 @@ export default {
     gender: '性别',
     Male: '男性',
     Female: '女性',
+    startHour: '开始小时',
+    endHour: '结束小时',
     oldBetAmount: '老站流水金额',
   },
   message: {
@@ -2629,6 +2647,7 @@ export default {
     'Automatic Payment': '自动支付',
     'Waiting Auto Pay': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
+    'AutoWithdraw Under review Risk': '风险提现终审',
     'AutoWithdraw Withdrawal Record': '提交记录',
     'Fail Review': '失败审核',
     Suspend: '暂不处理',
@@ -2677,6 +2696,7 @@ export default {
     'Site Interest Plan': '利息宝投资方案',
     'Interest Plan Order Record': '利息宝投资记录',
     'Promo Type': '优惠类型管理',
+    Treasure: '宝箱记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
@@ -2811,6 +2831,7 @@ export default {
     'Site Platform Report': '站点平台报表',
     'Refer Friend Eligibility': '全民代理',
     'Member Refer Analysis': '邀请返佣分析',
+    'TF Gaming Config': 'TF Gaming 设置',
     'LH Old Data': '雷火老站数据',
   },
   google: {
@@ -2912,6 +2933,7 @@ export default {
     Mobile: 'Mobile',
     PC: 'PC',
     APPLY_WITHDRAW: '提现终审',
+    APPLY_WITHDRAW_RISK: '风险终审'
   },
   loginDevice: {
     WEB: '网页',
@@ -3063,6 +3085,7 @@ export default {
     12000: '优惠名称已存在',
     12001: '优惠代码已存在',
     12002: '请输入优惠组别',
+    12009: "流水格式错误，请检查一遍。",
     12010: '货币名称已存在',
     12011: '此站点已设置汇率',
     12020: '此记录状态并不是 SENDING',

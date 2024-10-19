@@ -136,15 +136,30 @@
               style="width: 170px; margin-top: 5px"
             >
               <el-option
-                key="H5"
-                label="H5"
-                value="H5"
-              />
-              <el-option
                 v-for="lang in uiControl.language"
                 :key="lang.key"
                 :label="t(`language.${lang.displayName}`)"
                 :value="lang.value"
+              />
+              <el-option
+                key="6"
+                label="H5"
+                value="H5"
+              />
+              <el-option
+                key="7"
+                label="H5_vi"
+                value="H5_vi"
+              />
+              <el-option
+                key="8"
+                label="H5_kr"
+                value="H5_kr"
+              />
+              <el-option
+                key="9"
+                label="H5_ur"
+                value="H5_ur"
               />
             </el-select>
             :

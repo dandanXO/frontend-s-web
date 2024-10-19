@@ -22,8 +22,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -173,25 +173,58 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "1906929669800133");
       fbq("track", "PageView");
       user.isFbPixel = true;
-    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDE") > -1) {
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDE") > -1
+    ) {
       fbq("init", "514007094887323");
       fbq("track", "PageView");
       sessionStorage.setItem("FB_PIXEL_ID", "514007094887323");
       user.isFbPixel = true;
-    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDI") > -1) {
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDI") > -1
+    ) {
       fbq("init", "2334137540252703");
       fbq("track", "PageView");
       sessionStorage.setItem("FB_PIXEL_ID", "2334137540252703");
       user.isFbPixel = true;
-    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDM") > -1) {
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDM") > -1
+    ) {
       fbq("init", "527651743204705");
       fbq("track", "PageView");
       sessionStorage.setItem("FB_PIXEL_ID", "527651743204705");
       user.isFbPixel = true;
-    } else if (window.location.href.indexOf("wd1caof6.cc") > -1 && window.location.href.indexOf("MDMzMDU5OTAwMDQ") > -1) {
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDQ") > -1
+    ) {
       fbq("init", "9489951827699569");
       fbq("track", "PageView");
       sessionStorage.setItem("FB_PIXEL_ID", "9489951827699569");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("vnizsxdc.cc") > -1 &&
+      window.location.href.indexOf("MDMyMjMzODkwMDE=") > -1
+    ) {
+      fbq("init", "529666413258940");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "529666413258940");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("vnizsxdc.cc") > -1 &&
+      window.location.href.indexOf("MDMyMjMzODkwMDI=") > -1
+    ) {
+      fbq("init", "529666413258940");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "529666413258940");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("r3fac87x.cc") > -1) {
+      fbq("init", "1214838756433629");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "1214838756433629");
       user.isFbPixel = true;
     }
 
