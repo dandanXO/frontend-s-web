@@ -102,6 +102,7 @@
     <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode"/>
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
+    <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -212,6 +213,7 @@ const Dota2Pgl = defineAsyncComponent(() => import("../components/hotpromo/dota2
 const IemMasterPromo = defineAsyncComponent(()=>import("./hotpromo/iem-master/IemMasterPromo.vue"));
 const PullbackTide = defineAsyncComponent(()=>import("./hotpromo/pullback-tide/PullbackTide.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
+const ElisaGift = defineAsyncComponent(()=>import("./hotpromo/elisa-gift/ElisaGift.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -274,7 +276,8 @@ export default defineComponent({
     Dota2Pgl,
     IemMasterPromo,
     PullbackTide,
-    Cba30Dream
+    Cba30Dream,
+    ElisaGift
   },
   props: {
     list: {

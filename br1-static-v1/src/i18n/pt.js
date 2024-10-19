@@ -84,9 +84,9 @@ export default {
     phone: "Telefone",
     phone_placeholder: "Por favor, insira o número de telefone",
     phone_rules_01: "Por favor, insira o número de telefone",
-    phone_rules_02: "O número de telefone deve ter 11 dígitos",
+    phone_rules_02: "O número de telefone deve ter 8 dígitos",
     phone_rules_03: "O número de telefone não deve começar com '0'",
-    phone_rules_04: "Por favor insira o número de conta correto",
+    phone_rules_04: "Por favor insira o número de telefone válido",
     password: "Senha",
     password_placeholder: "Insira a Senha",
     password_rules_01: "Por favor, insira a senha",
@@ -859,6 +859,7 @@ export default {
     35008: "Você não tem esse privilégio",
     35009: "O privilégio entrará em vigor em breve",
     35010: "35010 Membro não pode receber este privilégio",
-    35011: "35011 Membro não pode receber este privilégio."
+    35011: "35011 Membro não pode receber este privilégio.",
+    37001: "O horário de coleta é fora do período do evento"
   }
 };

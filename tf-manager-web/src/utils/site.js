@@ -14,6 +14,7 @@ const PH1_SITE_ID = 16;
 const ID1_SITE_ID = 17;
 const BR1_SITE_ID = 18;
 const PAK2_SITE_ID = 19;
+const MX1_SITE_ID = 21;
 
 export const isIndiaSite = (siteId) => {
   return parseInt(siteId) === IND_SITE_ID || parseInt(siteId) === IND2_SITE_ID;
@@ -83,6 +84,10 @@ export const isBr1 = (siteId) => {
   return parseInt(siteId) === BR1_SITE_ID;
 }
 
+export const isMx1 = (siteId) => {
+  return parseInt(siteId) === MX1_SITE_ID;
+}
+
 export const isId1 = (siteId) => {
   return parseInt(siteId) === ID1_SITE_ID;
 }
@@ -133,7 +138,10 @@ export const getSiteTitle = (siteId) => {
       siteTitle = "后台 "
       break;
     case BR1_SITE_ID :
-      siteTitle = "后台 "
+      siteTitle = "55Ace "
+      break;
+    case MX1_SITE_ID :
+      siteTitle = "55Ace "
       break;
     case PAK2_SITE_ID :
       siteTitle = "后台 "

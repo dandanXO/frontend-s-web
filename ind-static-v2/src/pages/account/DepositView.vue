@@ -467,7 +467,7 @@ function initPay() {
   let promoParam = "";
 
   if (route.query.extra === "true") {
-    // promoParam = "&promo=1";
+    promoParam = "&promo=1";
     isPrivilege.value = true;
     selectedItemPrivilegeId.value = store.extraPrivilegeId;
   } else {
@@ -937,6 +937,8 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
+
+        selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }

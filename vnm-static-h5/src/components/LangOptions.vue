@@ -51,14 +51,14 @@ const langOptions = [
   }
 
   :deep(.q-field__marginal) {
-    min-height: 40px;
-    height: 40px;
+    min-height: 36px;
+    height: 36px;
     display: none;
   }
 
   :deep(.q-field__control) {
-    min-height: 40px;
-    height: 40px;
+    min-height: 36px;
+    height: 36px;
 
     &:after {
       display: none;

@@ -157,14 +157,29 @@
             <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
           </div>
         </div>
+        <div class="amount" v-show="isDataLoaded && vipLevel !== 0">
+            <div class="text">
+                保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
+              </div>
+              <div class="progressBarContainer">
+                <div class="progressBarOuterBar">
+                  <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
+                </div>
+                <div class="progressBarDescriptionRetain">
+                  {{
+                    currentRetainAmount + '/' + retainAmountRequired
+                  }}
+                </div>
+              </div>
+            </div>
       </div>
-      <div
+      <!-- <div
         class="claim-btn"
         :class="{ disabled: isLoading['all'] || !isDataLoaded }"
         @click="handleClick('all', vipLevel)"
       >
         {{ isLoading["all"] ? "领取中" : "一键领取" }}
-      </div>
+      </div> -->
     </div>
 
     <div class="tips">
@@ -434,7 +449,7 @@
             <!--            <td>888</td>-->
             <td>1.8%</td>
             <td>888</td>
-            <td>1888</td>
+            <td>1,288</td>
           </tr>
           <tr>
             <td>VIP12</td>
@@ -654,14 +669,14 @@
       <h2>六. 会员日</h2>
       <ol class="terms">
         <li>
-          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至24号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
+          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至21号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
         </li>
       </ol>
 
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要（本金+彩金一倍流水）即可提款；
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金一倍流水）即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -900,6 +915,15 @@ const toggleAccordion = () => {
 };
 const currentDepAmt = ref(0);
 const currentBetAmt = ref(0);
+const currentRetainAmount = ref(0);
+const retainAmountRequired = ref(0);
+const currentRetainDay = ref(0);
+const retainDayRequired = ref(0);
+const retainPercentage = computed(() => {
+  if (retainAmountRequired.value === 0) return 0; // Prevent division by 0
+  return ((+currentRetainAmount.value / +retainAmountRequired.value) * 100).toFixed(2);
+});
+const balanceRetainDay = ref(0);
 const currentRedPacketAmount = ref(0);
 const currentUpgradeDepAmt = ref(0);
 const currentUpgradeBetAmt = ref(0);
@@ -1205,6 +1229,12 @@ const runVipAPI = (res) => {
     });
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    currentRetainAmount.value = res.data.currentRetainAmount;
+    retainAmountRequired.value = res.data.retainAmountRequired;
+    // balanceRetainAmount.value = +res.data.retainAmountRequired - +res.data.currentRetainAmount
+    currentRetainDay.value = res.data.currentRetainDay;
+    retainDayRequired.value = res.data.retainDayRequired;
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     getVipLevelProgress(vipLevel.value, "bet");
     isDataLoaded.value = true;
@@ -1491,7 +1521,7 @@ $border-settings: 1px solid #e5e7eb;
         // gap: 10px;
         gap: 5px;
         .text {
-          font-size: 14px;
+          font-size: 12px;
           color: #ffffff;
           // white-space: nowrap;
           .required-amount {
@@ -1509,7 +1539,7 @@ $border-settings: 1px solid #e5e7eb;
 
         .progressBarOuterBar {
           border-radius: 16px;
-          background: grey;
+          background: #405471;
           width: 100%;
           overflow: hidden;
         }
@@ -1518,7 +1548,7 @@ $border-settings: 1px solid #e5e7eb;
           color: #fff;
           border-radius: 16px;
           background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
-          height: 16px;
+          height: 14px;
         }
 
         .progressBarDescription {
@@ -1531,6 +1561,17 @@ $border-settings: 1px solid #e5e7eb;
           font-weight: 400;
           line-height: normal;
           margin: -28px auto 0;
+          &Retain {
+            display: flex;
+            justify-content: space-between;
+            color: #fff;
+            font-size: 9.987px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin: -24px auto 0;
+
+          }
         }
       }
     }

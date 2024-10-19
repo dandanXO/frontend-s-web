@@ -603,7 +603,7 @@ const filterCards = (type) => {
       if (res.code === 0) {
         let filteredData = [];
         if (isBankType.value === "BANK") {
-          const bankType = type.bankType;
+          const bankType = type.bankType ? type.bankType : "BANK";
           filteredData = res.data.filter((item) => item.bankType === bankType);
           const bankCodes = filteredBankList.value.map((bank) => bank.code);
           filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
@@ -901,7 +901,7 @@ const isValidCardNumber = () => {
     return t("form.phone_rules_03");
   }
   const digitCount = cardNumber.match(/\d/g)?.length || 0;
-  if (digitCount !== 11) {
+  if (digitCount !== 8) {
     return t("form.phone_rules_02");
   }
   // } else if (typeVal.value === "email") {

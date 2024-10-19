@@ -74,6 +74,7 @@ export default {
     phone_rules_01: "Enter phone number",
     phone_rules_02: "Phone number must be between 8 to 12 digits",
     phone_rules_03: "Phone number must start with '03'",
+    phone_rules_04: "Please insert the valid phone number",
     prependNumber: "+92",
     password: "Password",
     password_placeholder: "Enter password",

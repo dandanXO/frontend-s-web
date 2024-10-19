@@ -6,6 +6,8 @@ import { createRouter, createMemoryHistory, createWebHistory, createWebHashHisto
 import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
 import { Platform, useQuasar } from "quasar";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 
 /*
  * If not building with SSR mode, you can
@@ -20,8 +22,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -48,12 +50,28 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/verification" ||
       to.path === "/deposit" ||
       to.path === "/withdraw" ||
+      to.path === "/promotion" ||
       to.path === "/language" ||
       to.path === "/maintenance"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
+    }
+
+    if (from.path === "/promotion") {
+      // alert(to.path);
+      window.location.href = "xfapp:" + to.fullPath;
+    }
+
+    if (to.path === "/promotion") {
+      // debugger;
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+      user.token = to.query.token;
     }
 
     if (Platform.is.capacitor && Platform.is.android) {
@@ -149,6 +167,64 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "1706878899881106");
       fbq("track", "PageView");
       sessionStorage.setItem("FB_PIXEL_ID", "1706878899881106");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("6enl6g7v.cc") > -1) {
+      console.log("6enl6g7v + 1906929669800133");
+      fbq("init", "1906929669800133");
+      fbq("track", "PageView");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDE") > -1
+    ) {
+      fbq("init", "514007094887323");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "514007094887323");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDI") > -1
+    ) {
+      fbq("init", "2334137540252703");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "2334137540252703");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDM") > -1
+    ) {
+      fbq("init", "527651743204705");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "527651743204705");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("wd1caof6.cc") > -1 &&
+      window.location.href.indexOf("MDMzMDU5OTAwMDQ") > -1
+    ) {
+      fbq("init", "9489951827699569");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "9489951827699569");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("vnizsxdc.cc") > -1 &&
+      window.location.href.indexOf("MDMyMjMzODkwMDE=") > -1
+    ) {
+      fbq("init", "529666413258940");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "529666413258940");
+      user.isFbPixel = true;
+    } else if (
+      window.location.href.indexOf("vnizsxdc.cc") > -1 &&
+      window.location.href.indexOf("MDMyMjMzODkwMDI=") > -1
+    ) {
+      fbq("init", "529666413258940");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "529666413258940");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("r3fac87x.cc") > -1) {
+      fbq("init", "1214838756433629");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "1214838756433629");
       user.isFbPixel = true;
     }
 

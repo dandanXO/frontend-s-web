@@ -63,6 +63,36 @@
       </div>
     </q-page-sticky>
 
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+      <div>
+        <!-- <div class="hb-close">
+          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />
+        </div> -->
+        <div>
+          <q-carousel
+            class="hb-float"
+            :navigation="hbPromo.length > 1 ? true : false"
+            v-model="hbSlide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+            :autoplay="3000"
+          >
+            <q-carousel-slide
+              v-for="(promo, i) in hbPromo"
+              :key="i"
+              :name="i"
+              @click="gotoFloatPromo(promo)"
+              :img-src="`${imgURL}/promo/${promo.icon}`"
+            >
+            </q-carousel-slide>
+          </q-carousel>
+        </div>
+      </div>
+    </q-page-sticky>
+
     <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
@@ -1106,446 +1136,10 @@ const depositItems = reactive([
 
 const esport = ref([]);
 const sport = ref([]);
-const livecasino = ref([
-  {
-    id: 4,
-    name: "Awc",
-    code: "AWC",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 0
-  },
-  {
-    id: 123,
-    name: "Evo",
-    code: "WCEvo",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Evolution",
-    sequence: 0
-  },
-  {
-    id: 103,
-    name: "WCPT",
-    code: "WCPT",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "PlayTech",
-    sequence: 901
-  },
-  {
-    id: 5,
-    name: "Ezugi",
-    code: "EZUGI",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Ezugi",
-    sequence: 902
-  },
-  {
-    id: 102,
-    name: "WCSW",
-    code: "WCSW",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 101,
-    name: "WCMG",
-    code: "WCMG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 100,
-    name: "WCOT",
-    code: "WCOT",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 99,
-    name: "WCAG",
-    code: "WCAG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 98,
-    name: "WCBG",
-    code: "WCBG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  }
-]);
+const livecasino = ref([{"id":22,"name":"PP","code":"PP","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,LIVE","followType":"NEW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":4},{"id":102,"name":"WCSW","code":"WCSW","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":4,"name":"Awc","code":"AWC","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":5,"name":"Ezugi","code":"EZUGI","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":123,"name":"Evo","code":"WCEvo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":101,"name":"WCMG","code":"WCMG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99}]);
 const poker = ref([]);
 const lottery = ref([]);
-const slot = ref([
-  {
-    id: 124,
-    name: "Turbo",
-    code: "Turbo",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 890
-  },
-  {
-    id: 21,
-    name: "PG",
-    code: "PG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "PG",
-    sequence: 900
-  },
-  {
-    id: 31,
-    name: "JDB",
-    code: "JDB",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT,FISH",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "JDB",
-    sequence: 901
-  },
-  {
-    id: 8,
-    name: "JiliGames",
-    code: "JILI",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT,FISH",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "JiliGames",
-    sequence: 902
-  },
-  {
-    id: 111,
-    name: "Relax",
-    code: "WCRelax",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 121,
-    name: "Spinix",
-    code: "WCSpinix",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 120,
-    name: "World Match",
-    code: "WCWM",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 119,
-    name: "PT",
-    code: "WCPTS",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 118,
-    name: "MG",
-    code: "WCMGS",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 116,
-    name: "Habanero",
-    code: "WCHB",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 115,
-    name: "Playson",
-    code: "WCPS",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 114,
-    name: "BNG",
-    code: "WCBNG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 113,
-    name: "PNG",
-    code: "WCPNG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 112,
-    name: "Quick Spin",
-    code: "WCQS",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 51,
-    name: "JOKER",
-    code: "JOKER",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT,FISH",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "JOKER",
-    sequence: 1000
-  },
-  {
-    id: 110,
-    name: "Skywind",
-    code: "WCSWS",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 109,
-    name: "One touch",
-    code: "WCOTS",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 108,
-    name: "Wazdan",
-    code: "WCWazdan",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 107,
-    name: "Big time Gaming",
-    code: "WCBTG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 106,
-    name: "No limit city",
-    code: "WCNLC",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 105,
-    name: "Red tiger",
-    code: "WCRT",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  },
-  {
-    id: 104,
-    name: "Netent",
-    code: "WCNetent",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 1000
-  }
-]);
+const slot = ref([{"id":21,"name":"PG","code":"PG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1},{"id":152,"name":"TaDa","code":"TaDa","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":3},{"id":22,"name":"PP","code":"PP","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,LIVE","followType":"NEW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":4},{"id":31,"name":"JDB","code":"JDB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":5},{"id":36,"name":"FC","code":"FC","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":6},{"id":142,"name":"FiveG","code":"FiveG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"5G","sequence":99},{"id":33,"name":"CQ9","code":"CQ9","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"NEW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":151,"name":"TurboGames","code":"TurboGames","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":51,"name":"JOKER","code":"JOKER","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":147,"name":"Aviatrix","code":"Aviatrix","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":93,"name":"Spribe","code":"Spribe","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"NEW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":116,"name":"Habanero","code":"WCHB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":146,"name":"Booming Games","code":"WCBMG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":121,"name":"Spinix","code":"WCSpinix","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":111,"name":"Relax","code":"WCRelax","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":106,"name":"No limit city","code":"WCNLC","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":107,"name":"Big time Gaming","code":"WCBTG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":108,"name":"Wazdan","code":"WCWazdan","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":110,"name":"Skywind","code":"WCSWS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":104,"name":"Netent","code":"WCNetent","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":105,"name":"Red tiger","code":"WCRT","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":109,"name":"One touch","code":"WCOTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":118,"name":"MG","code":"WCMGS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":120,"name":"World Match","code":"WCWM","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99},{"id":113,"name":"PNG","code":"WCPNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":99}]);
 const fishing = ref([]);
 const casuals = ref([]);
 
@@ -1636,314 +1230,7 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([
-  {
-    id: 163,
-    name: "Fortune Gems",
-    code: "109",
-    status: "OPEN",
-    icon: "18/TaDa/109.png",
-    sequence: 1,
-    siteName: null,
-    platformId: 152,
-    platformName: "TaDa",
-    platformCode: "TaDa",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 164,
-    name: "Fortune Tiger",
-    code: "WCPG_90",
-    status: "OPEN",
-    icon: "16/WCPG/90.png",
-    sequence: 2,
-    siteName: null,
-    platformId: 155,
-    platformName: "PG",
-    platformCode: "WCPG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 165,
-    name: "Fortune Rabbit",
-    code: "WCPG_105",
-    status: "OPEN",
-    icon: "16/WCPG/105.png",
-    sequence: 3,
-    siteName: null,
-    platformId: 155,
-    platformName: "PG",
-    platformCode: "WCPG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 166,
-    name: "Fortune Ox",
-    code: "WCPG_65",
-    status: "OPEN",
-    icon: "16/WCPG/65.png",
-    sequence: 4,
-    siteName: null,
-    platformId: 155,
-    platformName: "PG",
-    platformCode: "WCPG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 167,
-    name: "Fortune Dragon",
-    code: "WCPG_125",
-    status: "OPEN",
-    icon: "16/WCPG/125.png",
-    sequence: 5,
-    siteName: null,
-    platformId: 155,
-    platformName: "PG",
-    platformCode: "WCPG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 168,
-    name: "Fortune Mouse",
-    code: "WCPG_41",
-    status: "OPEN",
-    icon: "16/WCPG/41.png",
-    sequence: 6,
-    siteName: null,
-    platformId: 155,
-    platformName: "PG",
-    platformCode: "WCPG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 169,
-    name: "Turbo Mines",
-    code: "turbomines",
-    status: "OPEN",
-    icon: "11/TurboGames/turbomines.jpg",
-    sequence: 7,
-    siteName: null,
-    platformId: 151,
-    platformName: "TurboGames",
-    platformCode: "TurboGames",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 170,
-    name: "Money Coming",
-    code: "51",
-    status: "OPEN",
-    icon: "18/TaDa/51.png",
-    sequence: 9,
-    siteName: null,
-    platformId: 152,
-    platformName: "TaDa",
-    platformCode: "TaDa",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 171,
-    name: "Joker’s Jewels Wild",
-    code: "vs5jjwild",
-    status: "OPEN",
-    icon: "14/PP/vs5jjwild.png",
-    sequence: 10,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 172,
-    name: "Fortune Monkey",
-    code: "303",
-    status: "OPEN",
-    icon: "18/TaDa/303.png",
-    sequence: 11,
-    siteName: null,
-    platformId: 152,
-    platformName: "TaDa",
-    platformCode: "TaDa",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 177,
-    name: "Gates of Olympus 1000",
-    code: "vs20olympx",
-    status: "OPEN",
-    icon: "14/PP/vs20olympx.png",
-    sequence: 12,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 173,
-    name: "Devil Fire",
-    code: "193",
-    status: "OPEN",
-    icon: "18/TaDa/193.png",
-    sequence: 13,
-    siteName: null,
-    platformId: 152,
-    platformName: "TaDa",
-    platformCode: "TaDa",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 174,
-    name: "Jackpot Joker",
-    code: "301",
-    status: "OPEN",
-    icon: "18/TaDa/301.png",
-    sequence: 14,
-    siteName: null,
-    platformId: 152,
-    platformName: "TaDa",
-    platformCode: "TaDa",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 178,
-    name: "Gold Party",
-    code: "vs25goldparty",
-    status: "OPEN",
-    icon: "14/PP/vs25goldparty.png",
-    sequence: 15,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 175,
-    name: "Crazy777",
-    code: "35",
-    status: "OPEN",
-    icon: "18/TaDa/35.png",
-    sequence: 17,
-    siteName: null,
-    platformId: 152,
-    platformName: "TaDa",
-    platformCode: "TaDa",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 176,
-    name: "Dragon Tiger Luck",
-    code: "WCPG_37",
-    status: "OPEN",
-    icon: "16/WCPG/37.png",
-    sequence: 18,
-    siteName: null,
-    platformId: 155,
-    platformName: "PG",
-    platformCode: "WCPG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  },
-  {
-    id: 179,
-    name: "Aviator",
-    code: "27",
-    status: "OPEN",
-    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
-    sequence: 23,
-    siteName: null,
-    platformId: 16,
-    platformName: "TFGaming",
-    platformCode: "TFGaming",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game"
-  }
-]);
+const hotGameList = ref([{"id":163,"name":"Fortune Gems","code":"109","status":"OPEN","icon":"18/TaDa/109.png","sequence":1,"siteName":null,"platformId":152,"platformName":"TaDa","platformCode":"TaDa","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TaDa"},{"id":164,"name":"Fortune Tiger","code":"126","status":"OPEN","icon":"13/PG/126.png","sequence":2,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":165,"name":"Fortune Rabbit","code":"1543462","status":"OPEN","icon":"13/PG/1543462.png","sequence":3,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":166,"name":"Fortune Ox","code":"98","status":"OPEN","icon":"13/PG/98.png","sequence":4,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":167,"name":"Fortune Dragon","code":"1695365","status":"OPEN","icon":"16/PG/1695365.png","sequence":5,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":168,"name":"Fortune Mouse","code":"68","status":"OPEN","icon":"13/PG/68.png","sequence":6,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":169,"name":"Turbo Mines","code":"turbomines","status":"OPEN","icon":"11/TurboGames/turbomines.jpg","sequence":7,"siteName":null,"platformId":151,"platformName":"TurboGames","platformCode":"TurboGames","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TurboGames"},{"id":170,"name":"Money Coming","code":"51","status":"OPEN","icon":"18/TaDa/51.png","sequence":9,"siteName":null,"platformId":152,"platformName":"TaDa","platformCode":"TaDa","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TaDa"},{"id":171,"name":"Joker’s Jewels Wild","code":"vs5jjwild","status":"OPEN","icon":"14/PP/vs5jjwild.png","sequence":10,"siteName":null,"platformId":22,"platformName":"PP","platformCode":"PP","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PP"},{"id":172,"name":"Fortune Monkey","code":"303","status":"OPEN","icon":"18/TaDa/303.png","sequence":11,"siteName":null,"platformId":152,"platformName":"TaDa","platformCode":"TaDa","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TaDa"},{"id":177,"name":"Gates of Olympus 1000","code":"vs20olympx","status":"OPEN","icon":"14/PP/vs20olympx.png","sequence":12,"siteName":null,"platformId":22,"platformName":"PP","platformCode":"PP","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PP"},{"id":173,"name":"Devil Fire","code":"193","status":"OPEN","icon":"18/TaDa/193.png","sequence":13,"siteName":null,"platformId":152,"platformName":"TaDa","platformCode":"TaDa","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TaDa"},{"id":174,"name":"Jackpot Joker","code":"301","status":"OPEN","icon":"18/TaDa/301.png","sequence":14,"siteName":null,"platformId":152,"platformName":"TaDa","platformCode":"TaDa","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TaDa"},{"id":178,"name":"Gold Party","code":"vs25goldparty","status":"OPEN","icon":"14/PP/vs25goldparty.png","sequence":15,"siteName":null,"platformId":22,"platformName":"PP","platformCode":"PP","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PP"},{"id":175,"name":"Crazy777","code":"35","status":"OPEN","icon":"18/TaDa/35.png","sequence":17,"siteName":null,"platformId":152,"platformName":"TaDa","platformCode":"TaDa","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TaDa"},{"id":176,"name":"Dragon Tiger Luck","code":"63","status":"OPEN","icon":"13/PG/63.png","sequence":18,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":179,"name":"Aviator","code":"27","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":23,"siteName":null,"platformId":16,"platformName":"TFGaming","platformCode":"TFGaming","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TFGaming"}]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -2019,7 +1306,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
+          console.log("End Hot");
+          console.log(JSON.stringify(hotGameList.value))
           isHotGameLoading.value = false;
         });
     });
@@ -2083,127 +1371,7 @@ const loadJILIFishGameList = () => {
     });
 };
 
-const fishGameJDBList = ref([
-  {
-    id: 9765,
-    name: "Dragon Fishing",
-    code: "7001",
-    status: "OPEN",
-    icon: "5/JDB/7001.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 31,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "1/5/24, 5:18 PM"
-  },
-  {
-    id: 9766,
-    name: "Dragon Fishing II",
-    code: "7002",
-    status: "OPEN",
-    icon: "5/JDB/7002.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 31,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "1/5/24, 5:18 PM"
-  },
-  {
-    id: 9767,
-    name: "Cai Shen Fishing",
-    code: "7003",
-    status: "OPEN",
-    icon: "5/JDB/7003.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 31,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "1/5/24, 5:18 PM"
-  },
-  {
-    id: 9768,
-    name: "Shade Dragons Fishing",
-    code: "7004",
-    status: "OPEN",
-    icon: "5/JDB/7004.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 31,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "1/5/24, 5:18 PM"
-  },
-  {
-    id: 9769,
-    name: "Fishing YiLuFa",
-    code: "7005",
-    status: "OPEN",
-    icon: "5/JDB/7005.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 31,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "1/5/24, 5:18 PM"
-  },
-  {
-    id: 9770,
-    name: "Dragon Master",
-    code: "7006",
-    status: "OPEN",
-    icon: "5/JDB/7006.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 31,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "1/5/24, 5:18 PM"
-  },
-  {
-    id: 9771,
-    name: "Fishing Disco",
-    code: "7007",
-    status: "OPEN",
-    icon: "5/JDB/7007.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 31,
-    platformName: null,
-    platformCode: null,
-    gameType: "FISH",
-    device: "ALL",
-    gameLabel: null,
-    updateBy: "admin",
-    updateTime: "1/5/24, 5:18 PM"
-  }
-]);
+const fishGameJDBList = ref([{"id":56236,"name":"Cai Shen Fishing","code":"7003","status":"OPEN","icon":"13/JDB/7003.png","sequence":999,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"xf-martin","updateTime":"8/28/24, 4:16 PM","type":null},{"id":56237,"name":"Shade Dragons Fishing","code":"7004","status":"OPEN","icon":"13/JDB/7004.png","sequence":999,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"xf-martin","updateTime":"8/28/24, 4:16 PM","type":null},{"id":56238,"name":"Fishing YiLuFa","code":"7005","status":"OPEN","icon":"13/JDB/7005.png","sequence":999,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"xf-martin","updateTime":"8/28/24, 4:16 PM","type":null},{"id":56239,"name":"Dragon Master","code":"7006","status":"OPEN","icon":"13/JDB/7006.png","sequence":999,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"xf-martin","updateTime":"8/28/24, 4:16 PM","type":null}]);
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -2416,7 +1584,7 @@ const getPlatList = () => {
 
       isPlatLoading.value = false;
       console.log("After");
-      console.log(sport.value);
+      console.log(JSON.stringify(livecasino.value));
       loadHotGameList();
     })
     .catch((err) => {});
@@ -2735,6 +1903,43 @@ const loadAppTabs = () => {
     });
 };
 
+const hbDragPos = ref([10, 120]);
+const isHbShow = ref(true);
+const hbSlide = ref(0);
+const hbPromo = ref([]);
+
+const checkHbPromo = () => {
+  api
+    .get("/redirect")
+    .then((res) => {
+      return res;
+    })
+    .then((data) => {
+      hbPromo.value = data.data;
+    });
+};
+
+const gotoFloatPromo = (val) => {
+  if (val.type === "PROMO") {
+    if (store.hasToken()) {
+      if (val.code.indexOf("url|") > -1) {
+        const page = val.code.replace("url|", "");
+        router.push(page);
+      } else if (val.code === "/activity-details") {
+        router.push(`/activity-details`);
+      } else {
+        router.push(`/promo?name=${val.code}`);
+      }
+    } else {
+      router.push("/promo");
+    }
+  }
+
+  if (val.type === "DOMAIN") {
+    window.open(val.code, "_blank");
+  }
+};
+
 let intervalId;
 
 onActivated(() => {
@@ -2752,6 +1957,7 @@ onMounted(() => {
   loadJDBFishGameList();
   loadTADAFishGameList();
   loadCustomerAddress();
+  checkHbPromo();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -3785,6 +2991,28 @@ onBeforeUnmount(() => {
       display: block;
       width: 100%;
     }
+  }
+}
+
+.hb-float {
+  position: relative;
+  height: 100px !important;
+  width: 100px;
+  background: transparent;
+  overflow: hidden;
+
+  .q-carousel__slide {
+    height: 100px !important;
+    width: 100px;
+    padding: 0px;
+  }
+
+  img {
+    height: 100px !important;
+  }
+
+  .q-carousel__control {
+    display: none;
   }
 }
 
