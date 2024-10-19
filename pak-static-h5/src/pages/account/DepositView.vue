@@ -97,7 +97,10 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
-          <div class="lil-title flex-div" style="justify-content: flex-end">
+          <div class="lil-title flex-div" style="justify-content: space-between">
+            <q-checkbox v-if="isFromFtdPromo" v-model="isFtdPrivilegeEnable">
+              {{ $t("deposit.useFtdPrivilege") }}
+            </q-checkbox>
             <!--            {{ $t("form.depositAmount") }}-->
             <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
             <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
@@ -427,8 +430,10 @@ const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
+const isFtdPrivilegeEnable = ref(false);
 
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === "OPEN");
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
+const isFtdPrivilege = computed(() => isFtdPrivilegeEnable.value && extraPrivilegeId.value && ftd.value === "OPEN");
 
 const isFtdPrivilegePayType = computed(
   () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
@@ -979,6 +984,16 @@ const convertToTwoDecimalAmount = (amount) => {
   let formattedAmount = parseFloat(amount).toFixed(2);
   return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    }
+  },
+  { immediate: true }
+);
 
 onActivated(() => {
   // checkNewUser();
