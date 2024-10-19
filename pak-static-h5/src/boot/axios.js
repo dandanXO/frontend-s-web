@@ -114,6 +114,12 @@ export default boot(({ app, router }) => {
     const originalInstance = getCurrentAxiosInstance(originalRequest);
 
     attemptTimes++;
+    if (attemptTimes > 10) {
+      SessionStorage.remove("TOKEN");
+      LocalStorage.remove("TOKEN");
+      router.push("/login");
+      return;
+    }
     if (isRefreshing) {
       const res = await originalInstance(originalRequest);
       return res.data;
@@ -129,16 +135,20 @@ export default boot(({ app, router }) => {
 
     const res = await api.post("/member/token/refresh");
     // console.log(res);
-    SessionStorage.set("TOKEN", res.data);
-    LocalStorage.set("TOKEN", res.data);
-    store.token = res.data;
+    if (res.code === 0) {
+      SessionStorage.set("TOKEN", res.data);
+      LocalStorage.set("TOKEN", res.data);
+      store.token = res.data;
+    } else {
+      isRefreshing = false;
+      return refreshTokenAndRetry(errorresp);
+    }
     originalRequest.headers.token = store.token;
 
     isRefreshing = false;
     document.dispatchEvent(finishRefreshEvent);
     const newRes = await axios(originalRequest);
     attemptTimes = 0;
-
     return newRes.data;
   }
 
