@@ -185,8 +185,13 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
         SessionStorage.remove("TOKEN");
         LocalStorage.remove("TOKEN");
-        router.push("/login");
-        location.reload();
+        if (window.location.pathname === "/promotion") {
+          document.location.href = "xfapp:/login";
+        } else {
+          router.push("/login");
+          location.reload();
+        }
+
         return;
       } else {
         if (
@@ -197,7 +202,21 @@ export default boot(({ app, router }) => {
         ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
-          router.push("/login");
+
+          Notify.create({
+            type: "negative",
+            timeout: 1000,
+            position: "top",
+            // message: res.message || "错误"
+            message: i18n.global.t("notify.plsLoginToContinue")
+          });
+
+          if (window.location.pathname === "/promotion") {
+            document.location.href = "xfapp:/login";
+          } else {
+            router.push("/login");
+          }
+
           return;
         }
         // if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
