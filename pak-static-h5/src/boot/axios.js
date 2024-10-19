@@ -62,18 +62,18 @@ export default boot(({ app, router }) => {
   const store = userStore();
 
   const onRequest = async (config) => {
-    if (isRefreshing && !refreshWitheList.includes(config.url)) {
-      const retry = await new Promise((resolve) => {
-        const handleRefreshEnd = () => {
-          config.headers.token = store.token;
-          document.removeEventListener("finishRefresh", handleRefreshEnd);
-          resolve(config);
-        };
-
-        document.addEventListener("finishRefresh", handleRefreshEnd);
-      });
-      return retry;
-    }
+    // if (isRefreshing && !refreshWitheList.includes(config.url)) {
+    //   const retry = await new Promise((resolve) => {
+    //     const handleRefreshEnd = () => {
+    //       config.headers.token = store.token;
+    //       document.removeEventListener("finishRefresh", handleRefreshEnd);
+    //       resolve(config);
+    //     };
+    //
+    //     document.addEventListener("finishRefresh", handleRefreshEnd);
+    //   });
+    //   return retry;
+    // }
 
     let token;
     if (isAndroid()) {
@@ -108,39 +108,49 @@ export default boot(({ app, router }) => {
     return Promise.reject(error);
   };
 
-  var attemptTimes = 0;
-  async function refreshTokenAndRetry(errorresp) {
-    const originalRequest = errorresp.config;
-    const originalInstance = getCurrentAxiosInstance(originalRequest);
-
-    attemptTimes++;
-    if (isRefreshing) {
-      const res = await originalInstance(originalRequest);
-      return res.data;
-    }
-    Notify.create({
-      spinner: true,
-      type: "warning",
-      timeout: 1000,
-      position: "top",
-      message: "Refreshing..."
-    });
-    isRefreshing = true;
-
-    const res = await api.post("/member/token/refresh");
-    // console.log(res);
-    SessionStorage.set("TOKEN", res.data);
-    LocalStorage.set("TOKEN", res.data);
-    store.token = res.data;
-    originalRequest.headers.token = store.token;
-
-    isRefreshing = false;
-    document.dispatchEvent(finishRefreshEvent);
-    const newRes = await axios(originalRequest);
-    attemptTimes = 0;
-
-    return newRes.data;
-  }
+  // var attemptTimes = 0;
+  // async function refreshTokenAndRetry(errorresp) {
+  //   const originalRequest = errorresp.config;
+  //   const originalInstance = getCurrentAxiosInstance(originalRequest);
+  //
+  //   attemptTimes++;
+  //   if (attemptTimes > 10) {
+  //     SessionStorage.remove("TOKEN");
+  //     LocalStorage.remove("TOKEN");
+  //     router.push("/login");
+  //     return;
+  //   }
+  //   if (isRefreshing) {
+  //     const res = await originalInstance(originalRequest);
+  //     return res.data;
+  //   }
+  //   Notify.create({
+  //     spinner: true,
+  //     type: "warning",
+  //     timeout: 1000,
+  //     position: "top",
+  //     message: "Refreshing..."
+  //   });
+  //   isRefreshing = true;
+  //
+  //   const res = await api.post("/member/token/refresh");
+  //   // console.log(res);
+  //   if (res.code === 0) {
+  //     SessionStorage.set("TOKEN", res.data);
+  //     LocalStorage.set("TOKEN", res.data);
+  //     store.token = res.data;
+  //   } else {
+  //     isRefreshing = false;
+  //     return refreshTokenAndRetry(errorresp);
+  //   }
+  //   originalRequest.headers.token = store.token;
+  //
+  //   isRefreshing = false;
+  //   document.dispatchEvent(finishRefreshEvent);
+  //   const newRes = await axios(originalRequest);
+  //   attemptTimes = 0;
+  //   return newRes.data;
+  // }
 
   // const route = useRoute();
   // const router = useRouter();
@@ -182,28 +192,26 @@ export default boot(({ app, router }) => {
         if (
           res.code === ResponseCode.ERROR_NAME_EXIST ||
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
-          res.code === ResponseCode.ERROR_TOKEN_EXPIRED
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+          res.code === ResponseCode.ERROR_TOKEN_INVALID
         ) {
-          if (attemptTimes > 10) {
-            SessionStorage.remove("TOKEN");
-            LocalStorage.remove("TOKEN");
-            router.push("/login");
-            return;
-          }
-          return refreshTokenAndRetry(response);
+          SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
+          router.push("/login");
+          return;
         }
-        if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          return Dialog.create({
-            class: "login-card",
-            title: "Please Login",
-            message: "Please log in to operate",
-            cancel: { color: "negative", label: "Cancel" },
-            ok: { color: "brightbtn", label: "Login" },
-            padding: "20px"
-          }).onOk(() => {
-            router.push("/login");
-          });
-        }
+        // if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
+        //   return Dialog.create({
+        //     class: "login-card",
+        //     title: "Please Login",
+        //     message: "Please log in to operate",
+        //     cancel: { color: "negative", label: "Cancel" },
+        //     ok: { color: "brightbtn", label: "Login" },
+        //     padding: "20px"
+        //   }).onOk(() => {
+        //     router.push("/login");
+        //   });
+        // }
         if (
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
           res.code === ResponseCode.ERROR_NAME_EXIST ||
@@ -211,7 +219,7 @@ export default boot(({ app, router }) => {
         ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
-          window.location.href = "/";
+          router.push("/login");
         }
         if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
           SessionStorage.remove("TOKEN");

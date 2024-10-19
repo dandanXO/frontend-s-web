@@ -22,6 +22,7 @@ export const useUI = defineStore("ui-store", {
       whatsappUrl: "",
       youtubeUrl: "",
       charityUrl: "",
+      footerIcon: "",
       maintenanceStartTime: "",
       maintenanceEndTime: "",
       isPageInitialized: false,
