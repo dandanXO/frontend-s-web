@@ -338,6 +338,21 @@
         </div>
       </template>
 
+      <div class="q-mt-md q-mb-sm">
+        <div style="background-color: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 8px; color: #8c968f">
+          <p style="color: #fff"><strong>Announcement: Official Bank Withdrawal Fee Adjustment Notice</strong></p>
+          <p>B9.GAME User,</p>
+          <p>
+            To further optimize platform services and comply with bank policy adjustments, our platform will charge a 3%
+            fee on all withdrawal transactions through the official bank starting from October 20, 2024. This fee will
+            be automatically deducted by the bank system, and the platform will not impose any additional charges.
+          </p>
+          <p>Thank you for your cooperation!</p>
+          <p style="color: #fff">B9.GAME Team</p>
+          <p style="color: #fff">Release Date: October 20, 2024</p>
+        </div>
+      </div>
+
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
@@ -979,6 +994,7 @@ const openWithdrawTutorialVideo = () => {
   text-decoration: underline;
 }
 .step-desc-div {
+  margin-bottom: 105px;
   color: #bacef1;
 
   p {
