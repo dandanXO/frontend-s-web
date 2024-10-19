@@ -337,7 +337,7 @@
           </q-btn>
         </div>
       </template>
-      <div v-if="selectedWithdrawalMethod.tips" class="q-mt-md q-mb-sm" v-html="selectedWithdrawalMethod.tips"></div>
+      <!--      <div v-if="selectedWithdrawalMethod.tips" class="q-mt-md q-mb-sm" v-html="selectedWithdrawalMethod.tips"></div>-->
 
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
