@@ -112,6 +112,11 @@
         Whatsapp
       </a>
 
+      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=pak-faq">
+        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
+        Faq
+      </router-link>
+
       <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
         <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
         TikTok

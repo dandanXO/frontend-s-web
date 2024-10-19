@@ -74,6 +74,7 @@ export default {
     phone_rules_01: "Masukkan nomor telepon",
     phone_rules_02: "Nomor telepon harus antara 8 hingga 12 digit",
     phone_rules_03: "Nomor telepon harus dimulai dengan '03'",
+    phone_rules_04: "Masukkan nomor telepon yang valid",
     prependNumber: "+62",
     password: "Kata Sandi",
     password_placeholder: "Masukkan kata sandi",

@@ -186,6 +186,12 @@
           .list-item-txt {
             color: $font-3;
           }
+
+          #id-list-item-PMES {
+            img {
+              filter: brightness(0) invert(1);
+            }
+          }
         }
 
         .list-item-btn {
@@ -790,7 +796,7 @@
       }
 
       .plat-options-container {
-        background: #272F3D;
+        background: #272f3d;
         box-shadow: none;
         .plat-option {
           .text {
@@ -809,8 +815,8 @@
 
       .game-list-wrapper {
         .game-slot {
-          background: #FFFFFF0D;
-          box-shadow: 0px 0px 10px 0px #0000001A;
+          background: #ffffff0d;
+          box-shadow: 0px 0px 10px 0px #0000001a;
         }
       }
     }
@@ -820,7 +826,7 @@
     &:deep(.el-pagination) {
       .el-pager {
         li {
-          background: #2C5252;
+          background: #2c5252;
           border: 1px solid #dfe3e8;
           color: $color-white;
 
@@ -834,7 +840,7 @@
 
       .btn-prev,
       .btn-next {
-        background: #2C5252;
+        background: #2c5252;
         color: #c4cdd5;
         border: 1px solid #dfe3e8;
 

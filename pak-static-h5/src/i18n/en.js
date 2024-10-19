@@ -104,6 +104,7 @@ export default {
     withdrawalAmount_rules_02: "Withdraw Amount Must Be Greater Than 0",
     withdrawalAmount_rules_03: "Withdraw Amount Insufficient",
     withdrawalAmount_rules_04: "Withdraw Amount Must In Between",
+    withdrawalAmount_rules_05: "Withdraw Amount Must Not Have Decimals",
     realTimeExchangeRates: "Real Time Exchange Rates",
     estimatedArrival: "Estimated arrival",
     usdtSpecialNote:
@@ -243,7 +244,7 @@ export default {
     message: "Message",
     feedback: "Feedback",
     vip: "VIP",
-    charity: 'Charity',
+    charity: "Charity",
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit"
@@ -346,7 +347,10 @@ export default {
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
-      multiple_acc_hint: "Note: It is prohibited for the same person to use multiple accounts to maliciously obtain commissions. Violators will have their accounts frozen.",
+      multiple_acc_hint: `Notice:
+    It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
+    Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
+    `,
       shareTitle: "B9GAME Share and Earn",
       shareText:
         "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
@@ -553,6 +557,7 @@ export default {
     603: "Token not found",
     608: "The current user's operations are too frequent. Please try again.",
     609: "Platform in maintenance",
+    610: "Forbidden to participate game, please contact the administrator",
     604: "Logged in successfully",
     707: "Insufficient balance",
     710: "Insufficient balance",
@@ -614,6 +619,7 @@ export default {
     12104: "This feature is disabled, please contact customer service",
     12105:
       "Your withdrawal operation has a network delay, resulting in payment failure. Please wait 30 minutes before withdrawing again, thank you!",
+    12106: "Withdraw Amount Must Not Have Decimals",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",

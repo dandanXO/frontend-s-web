@@ -234,8 +234,8 @@
             v-if="scope.row.photos.endsWith('.png') || scope.row.photos.endsWith('.jpeg') || scope.row.photos.endsWith('.jpg')"
             hide-on-click-modal
             style="width: 30px; height: 30px; border: 1px solid grey"
-            :src="scope.row.photos"
-            :preview-src-list="[scope.row.photos]"
+            :src="fixOldImgUrl(scope.row.photos)"
+            :preview-src-list="[fixOldImgUrl(scope.row.photos)]"
             fit="cover"
           />
         </template>
@@ -542,6 +542,10 @@ async function showDialog(record) {
   }
   form.id = record.id
   uiControl.dialogVisible = true
+}
+
+function fixOldImgUrl(url) {
+  return url.replace(/https:\/\/(.*?)\/\//g, 'https://$1/');
 }
 </script>
 

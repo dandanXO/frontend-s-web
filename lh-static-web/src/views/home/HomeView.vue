@@ -11,6 +11,7 @@
   </div>
   <GameModal ref="gameMenu" />
   <AnnouncementModal />
+  <!-- <NewMemberGuide /> -->
 </template>
 
 <script setup>
@@ -25,6 +26,7 @@ import HomeHotGame from "@/components/home/hotgame/index.vue";
 import HomeService from "@/components/home/service/index.vue";
 import { userStore } from "@/store";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
+// import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 
 const store = userStore();
 const gameMenu = ref(null);

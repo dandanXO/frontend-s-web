@@ -71,6 +71,7 @@
     <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot'" />
     <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu'" />
     <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'lh1-blast-premier-global'" :promo-code="list.promoCode" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual'" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao'" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match'" />
@@ -109,6 +110,8 @@
     <lh1Vip v-if="list.redirectUrl === 'lh1-vip'"/>
     <IemMasterPromo v-if="list.redirectUrl === 'lh1-iem-master'" :promo-code="list.promoCode"/>
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode"/>
+    <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode"/>
+    <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -191,6 +194,9 @@ const Shoutouxinxiu = defineAsyncComponent(() => import("./hotpromo/shoutouxinxi
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
+const BlastPremierGlobalPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/BlastPremierGlobalPromo/BlastPremierGlobalPromo.vue")
+);
 const EurocupManual = defineAsyncComponent(() => import("../components/hotpromo/EurocupManual/EurocupManual.vue"));
 const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
 const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
@@ -236,6 +242,8 @@ const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/dai
 const lh1Vip = defineAsyncComponent(()=>import("./hotpromo/lh1-vip/lh1Vip.vue"));
 const IemMasterPromo = defineAsyncComponent(()=>import("./hotpromo/iem-master/IemMasterPromo.vue"));
 const BbDachaBelgrade = defineAsyncComponent(()=>import("./hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue"));
+const ElisaGift = defineAsyncComponent(()=>import("./hotpromo/elisa-gift/ElisaGift.vue"));
+const PokerWinningPromo = defineAsyncComponent(()=>import("./hotpromo/poker-winning/PokerWinningPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -280,6 +288,7 @@ export default defineComponent({
     EuroCup2024FirstShoot,
     Shoutouxinxiu,
     BlastPremierPromo,
+    BlastPremierGlobalPromo,
     EurocupManual,
     SportZhongChao,
     Nba24Match,
@@ -313,7 +322,9 @@ export default defineComponent({
     DailiPromo,
     lh1Vip,
     IemMasterPromo,
-    BbDachaBelgrade
+    BbDachaBelgrade,
+    ElisaGift,
+    PokerWinningPromo
   },
   props: {
     list: {

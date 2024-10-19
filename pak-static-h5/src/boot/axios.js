@@ -1,12 +1,13 @@
-import { boot, store } from "quasar/wrappers";
+import { boot } from "quasar/wrappers";
 import { createPinia } from "pinia";
 import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import i18n from "../i18n/index";
 import axios from "axios";
-import { getRndInteger } from "boot/utils";
+import { getRndInteger, isAndroid } from "boot/utils";
 import { errorMessages } from "./error-messages";
+import { userStore } from "src/stores";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -19,6 +20,25 @@ var evtApi = getInitApi(evtArray, "PAK_EVT_URL");
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
+
+let isRefreshing = false;
+
+const refreshWitheList = ["/member/token/refresh"];
+
+const finishRefreshEvent = new CustomEvent("finishRefresh");
+
+const getCurrentAxiosInstance = (config) => {
+  switch (config.baseURL) {
+    case rstApi:
+      return api;
+    case crtApi:
+      return cashier;
+    case evtApi:
+      return eventapi;
+    default:
+      return axios;
+  }
+};
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = sessionStorage.getItem(urlLsName);
@@ -38,17 +58,41 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 export default boot(({ app, router }) => {
-  const onRequest = (config) => {
-    if (store.token) {
-      api.defaults.headers["token"] = store.token;
-      cashier.defaults.headers["token"] = store.token;
-      eventapi.defaults.headers["token"] = store.token;
+  app.use(createPinia());
+  const store = userStore();
+
+  const onRequest = async (config) => {
+    if (isRefreshing && !refreshWitheList.includes(config.url)) {
+      const retry = await new Promise((resolve) => {
+        const handleRefreshEnd = () => {
+          config.headers.token = store.token;
+          document.removeEventListener("finishRefresh", handleRefreshEnd);
+          resolve(config);
+        };
+
+        document.addEventListener("finishRefresh", handleRefreshEnd);
+      });
+      return retry;
+    }
+
+    let token;
+    if (isAndroid()) {
+      token = LocalStorage.getItem("TOKEN");
+    } else {
+      token = SessionStorage.getItem("TOKEN");
+    }
+
+    if (token || store.token) {
+      config.headers.token = token || store.token;
+      //   api.defaults.headers["token"] = store.token;
+      //   cashier.defaults.headers["token"] = store.token;
+      //   eventapi.defaults.headers["token"] = store.token;
     }
     // config.headers["Authorization"] = process.env.SITE;
 
-    if (config.data) {
-      config.data = config.data;
-    }
+    // if (config.data) {
+    //   config.data = config.data;
+    // }
     return config;
   };
 
@@ -66,7 +110,14 @@ export default boot(({ app, router }) => {
 
   var attemptTimes = 0;
   async function refreshTokenAndRetry(errorresp) {
+    const originalRequest = errorresp.config;
+    const originalInstance = getCurrentAxiosInstance(originalRequest);
+
     attemptTimes++;
+    if (isRefreshing) {
+      const res = await originalInstance(originalRequest);
+      return res.data;
+    }
     Notify.create({
       spinner: true,
       type: "warning",
@@ -74,29 +125,21 @@ export default boot(({ app, router }) => {
       position: "top",
       message: "Refreshing..."
     });
-    // debugger;
-    const originalRequest = errorresp.config;
-    console.log(originalRequest);
+    isRefreshing = true;
+
     const res = await api.post("/member/token/refresh");
     // console.log(res);
-    // debugger;
     SessionStorage.set("TOKEN", res.data);
     LocalStorage.set("TOKEN", res.data);
     store.token = res.data;
     originalRequest.headers.token = store.token;
 
-    // originalRequest.headers.TOKEN = store.token;
+    isRefreshing = false;
+    document.dispatchEvent(finishRefreshEvent);
+    const newRes = await axios(originalRequest);
+    attemptTimes = 0;
 
-    return new Promise((resolve, reject) => {
-      axios(originalRequest)
-        .then((response) => {
-          attemptTimes = 0;
-          resolve(response.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+    return newRes.data;
   }
 
   // const route = useRoute();
@@ -123,7 +166,6 @@ export default boot(({ app, router }) => {
         res.code === ResponseCode.ERROR_NO_ELIGIBLE_PLAN_FOUND ||
         res.code === ResponseCode.ERROR_NO_CASH_FLOW
       ) {
-
         res.message =
           i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";
         return res;
@@ -191,8 +233,6 @@ export default boot(({ app, router }) => {
       return res;
     }
   };
-
-  app.use(createPinia());
   api.defaults.headers["Authorization"] = process.env.SITE;
   cashier.defaults.headers["Authorization"] = process.env.SITE;
   eventapi.defaults.headers["Authorization"] = process.env.SITE;

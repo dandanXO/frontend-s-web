@@ -191,20 +191,26 @@
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 2">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+              <span style="flex: 3" class="bg-neontb text-neontb">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27">
-              <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+              <span style="flex: 2; white-space: nowrap">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
+              <span style="flex: 3" class="bg-neontb text-neontb">
                 {{
                   selectedWithdrawalMethod &&
                   (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
+                    (
+                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                      selectedWithdrawalMethod.withdrawFee
+                    ).toFixed(2) < 0)
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                    : (
+                        withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                        selectedWithdrawalMethod.withdrawFee
+                      ).toFixed(2)
                 }}
                 USDT
               </span>
@@ -224,7 +230,9 @@
             </div>
           </div>
 
-          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("lang.withdraw_usdtspecialnote", {fee:selectedWithdrawalMethod.withdrawFee}) }}</div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            {{ $t("lang.withdraw_usdtspecialnote", { fee: selectedWithdrawalMethod.withdrawFee }) }}
+          </div>
           <!-- <a-form-item
             class="select"
             name="cardId"

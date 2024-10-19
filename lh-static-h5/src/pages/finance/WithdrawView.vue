@@ -3,10 +3,10 @@
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
         <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
-        <!--<q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+        <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
           <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
           <span>升级快速提款</span>
-        </q-btn>-->
+        </q-btn>
       </div>
 
       <DepositWithdrawTransferTabs
@@ -235,7 +235,7 @@
                 {{
                   selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
                 }}
                 USDT
               </span>
@@ -337,7 +337,7 @@
     </q-card>
   </q-dialog>
 
-  <WithdrawRemainingDialog v-model="isShowRemainingDialog" />
+  <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
 </template>
 
 <script lang="js">
