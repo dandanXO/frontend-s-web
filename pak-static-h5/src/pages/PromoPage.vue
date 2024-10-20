@@ -318,6 +318,7 @@ export default defineComponent({
           isPromoDetail.value = route.query.name;
           ui.setScrollPosition("vertical", 0, 200);
         }
+        if(currentPromoDetail.value) showPromoDetails(currentPromoDetail.value)
       }
     );
 
@@ -474,18 +475,19 @@ export default defineComponent({
             promoState.promoList = [];
             var promoItems = res.data;
             // promoState.promoList.push(...res.data);
+            promoState.promoList.push(...promoItems)
+            if(currentPromoDetail.value) showPromoDetails(currentPromoDetail.value)
+            // promoItems.forEach((element) => {
+            //   // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            //   // } else {
+            //   promoState.promoList.push(element);
 
-            promoItems.forEach((element) => {
-              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              // } else {
-              promoState.promoList.push(element);
-
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element);
-              }
-              // }
-            });
+            //   if (route.query.name && String(element.redirectUrl) === route.query.name) {
+            //     showPromoDetails(element);
+            //   }
+            //   // }
+            // });
 
             switchPromoType(promoState.active);
 
@@ -648,6 +650,13 @@ export default defineComponent({
 
     const parsedParamSub = computed(() => parsedParam.value.sub || "");
     const parsedParamDate = computed(() => parsedParam.value.date || "");
+
+    const currentPromoDetail = computed(() => {
+      if(!route.query.name || !promoState.promoList.length) return null
+
+      const targetPromo = promoState.promoList.find(promo =>promo.redirectUrl === route.query.name)
+      return targetPromo || null
+    })
 
     return {
       promoState,
