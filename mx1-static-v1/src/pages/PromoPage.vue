@@ -290,7 +290,7 @@ export default defineComponent({
     };
 
     const isFtdPromoEnded = computed(() => {
-      if (selectedPromo.value && selectedPromo.value.promoCode === "id1-slot-ftd" && store.ftd === true) {
+      if (selectedPromo.value && selectedPromo.value.promoCode === "mx1-slot-ftd" && store.ftd === true) {
         return true;
       }
 

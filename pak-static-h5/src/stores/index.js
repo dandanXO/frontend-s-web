@@ -48,7 +48,10 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       h5Url: "https://m.b9mega1.com/",
       isFbPixel: false,
-      hasUpdatedOneSignal: false
+      hasUpdatedOneSignal: false,
+      paytypeWithPrivilege: "",
+      extraPrivilegeId: "",
+      ftd: "CLOSE"
     };
   },
   actions: {
