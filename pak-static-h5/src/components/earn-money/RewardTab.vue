@@ -23,7 +23,12 @@
           RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
-        <div class="item-img"><img src="../../assets/images/earn-money/pot-item-01.png" /></div>
+        <div class="item-img with-btn">
+          <img src="../../assets/images/earn-money/pot-item-01.png" />
+          <div class="amount" data-text="888,888.00">888,888.00</div>
+          <div class="currency" data-text="PKR">PKR</div>
+        </div>
+        <button class="claim-btn"></button>
       </div>
       <div class="pot-item pot-item__2">
         <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
@@ -552,14 +557,71 @@ watch(activeSetting, checkIsShowDetail);
 
       .item-img {
         position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 5px;
         right: 0;
         top: 50%;
         transform: translateY(-50%);
 
+        &.with-btn {
+          right: 2px;
+          top: 39px;
+        }
+
         img {
           display: block;
           width: 100%;
-          max-width: 160px;
+          max-width: 56px;
+        }
+
+        .amount {
+          position: relative;
+          background: linear-gradient(180deg, #fffee1 24.43%, #ffe69d 76.41%);
+          background-clip: text;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 20px;
+          color: transparent;
+
+          &::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            -webkit-text-stroke: 2px #ff3e27;
+          }
+        }
+
+        .currency {
+          position: relative;
+          font-size: 15.46px;
+          font-weight: 400;
+          line-height: 20.61px;
+          color: #ff3e27;
+
+          &::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            -webkit-text-stroke: 2.4px #fff;
+          }
+        }
+      }
+
+      .claim-btn {
+        position: absolute;
+        bottom: 0;
+        right: 33px;
+        background: url(../../assets/images/earn-money/get-it-now-btn.png) no-repeat;
+        background-size: cover;
+        border: none;
+        aspect-ratio: 74 / 30;
+        width: 74px;
+
+        &:hover {
+          filter: brightness(1.2);
         }
       }
     }
