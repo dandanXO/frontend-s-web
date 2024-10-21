@@ -43,7 +43,7 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ convertToCommaAmount(Number(vip.ugprade) / 5000) }}K
+                {{ convertToCommaAmount(Number(vip.ugprade) / 5000) }}
               </div>
 
               <div class="progress-bar-container">
@@ -86,7 +86,7 @@
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade / 5 }}K</div>
+              <div class="reward-amt bold">{{ convertToCommaAmount(currentVipLevelStats.levelUpgrade) }}</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -105,7 +105,7 @@
               <span class="bold">{{ $t("vip.monthly") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward / 5 }}K</div>
+              <div class="reward-amt bold">{{ convertToCommaAmount(currentVipLevelStats.monthlyReward) }}</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -125,7 +125,7 @@
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">
-                {{ convertToCommaAmount(currentVipLevelStats.dailyWithdrawalLimit / 5000) }}K
+                {{ convertToCommaAmount(currentVipLevelStats.dailyWithdrawalLimit / 5000) }}
               </div>
             </div>
           </div>
@@ -591,8 +591,6 @@ watch(
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
     const vipLevel = Number(store.vip.replace("VIP", ""));
     const currentDeposit = Number(store.getCurrentDeposit());
-    // const upgradeStatus = vipInfo.ugprade;
-    // const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
       if (vipLevel > +vipInfo.vipLevel) {
@@ -610,7 +608,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(vipInfo.ugprade / 5)}`,
+      progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(vipInfo.ugprade / 5000)}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
