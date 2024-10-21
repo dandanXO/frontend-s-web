@@ -313,6 +313,7 @@
                 }"
               />
               <el-button
+                v-if="affInfo.recycleMoney"
                 :disabled="!scope.row.canEdit"
                 size="small"
                 style="float:right"
