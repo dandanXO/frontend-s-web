@@ -98,9 +98,10 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
           <div class="lil-title flex-div" style="justify-content: space-between">
-            <q-checkbox v-model="isFtdPrivilegeEnable">
+            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN'">
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
+            <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
             <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
             <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
