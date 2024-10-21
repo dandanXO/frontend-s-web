@@ -24,11 +24,16 @@
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-img with-btn">
-          <img src="../../assets/images/earn-money/pot-item-01.png" />
-          <div class="amount" data-text="888,888.00">888,888.00</div>
-          <div class="currency" data-text="PKR">PKR</div>
+          <div class="flex-item">
+            <div class="title" data-text="Commission not claimed:">Commission not claimed:</div>
+            <!--          <img src="../../assets/images/earn-money/pot-item-01.png" />-->
+            <div class="amount-div">
+              <span class="currency" data-text="Rs">Rs</span>
+              <span class="amount" data-text="8,888.00">8,888.00</span>
+            </div>
+            <button class="claim-btn"></button>
+          </div>
         </div>
-        <button class="claim-btn"></button>
       </div>
       <div class="pot-item pot-item__2">
         <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
@@ -533,7 +538,7 @@ watch(activeSetting, checkIsShowDetail);
       background-position: center center;
       background-size: cover;
       display: flex;
-      gap: 4px;
+      gap: 8px;
       flex-direction: column;
       padding: 28px 20px;
       border-radius: 8px;
@@ -564,9 +569,48 @@ watch(activeSetting, checkIsShowDetail);
         top: 50%;
         transform: translateY(-50%);
 
+        .flex-item {
+          display: flex;
+          gap: 3px;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+
+        .amount-div {
+          display: flex;
+          align-content: center;
+          align-items: center;
+          gap: 8px;
+        }
+
         &.with-btn {
-          right: 2px;
-          top: 39px;
+          right: 4px;
+          top: 50%;
+          padding-right: 4px;
+        }
+
+        .title {
+          font-style: italic;
+          text-transform: uppercase;
+          position: relative;
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 20.61px;
+          color: #ff3e27;
+          text-shadow:
+            -1px 1px 0 #fff,
+            1px 1px 0 #fff,
+            1px -1px 0 #fff,
+            -1px -1px 0 #fff;
+
+          &::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            -webkit-text-stroke: 1px #fff;
+          }
         }
 
         img {
@@ -579,9 +623,9 @@ watch(activeSetting, checkIsShowDetail);
           position: relative;
           background: linear-gradient(180deg, #fffee1 24.43%, #ffe69d 76.41%);
           background-clip: text;
-          font-size: 15px;
-          font-weight: 400;
-          line-height: 20px;
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 22px;
           color: transparent;
 
           &::before {
@@ -595,30 +639,33 @@ watch(activeSetting, checkIsShowDetail);
 
         .currency {
           position: relative;
-          font-size: 15.46px;
-          font-weight: 400;
+          font-size: 16px;
+          font-weight: bold;
           line-height: 20.61px;
           color: #ff3e27;
+          text-shadow:
+            -1px 1px 0 #fff,
+            1px 1px 0 #fff,
+            1px -1px 0 #fff,
+            -1px -1px 0 #fff;
 
           &::before {
             content: attr(data-text);
             position: absolute;
             inset: 0;
             z-index: -1;
-            -webkit-text-stroke: 2.4px #fff;
+            -webkit-text-stroke: 1px #fff;
           }
         }
       }
 
       .claim-btn {
-        position: absolute;
-        bottom: 0;
-        right: 33px;
         background: url(../../assets/images/earn-money/get-it-now-btn.png) no-repeat;
-        background-size: cover;
+        background-size: contain;
         border: none;
-        aspect-ratio: 74 / 30;
-        width: 74px;
+        aspect-ratio: 113 / 30;
+        width: 125px;
+        min-height: 32px;
 
         &:hover {
           filter: brightness(1.2);
