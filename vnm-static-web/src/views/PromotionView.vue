@@ -120,13 +120,7 @@ export default defineComponent({
       { code: "SLOT OTHER", img: 'slot', label: {en: t('promo.slotOther'), vn: t('promo.slotOther')}},
     ])
     const currentPromoTypes = computed(() =>{
-      switch (ui.edition) {
-        case EDITION.SLOT:
-          return promoTypesSlot.value;
-        case EDITION.NORMAL:
-        default:
-          return  currentPromoType.value;
-      }
+      return  currentPromoType.value;
     })
     const promoTabActive = ref('ALL');
     const filteredArray = ref([]);
@@ -185,20 +179,33 @@ export default defineComponent({
           break
       }
 
+
+      await loadPromoTypes().then((res) => {
+        currentPromoType.value = res.map((item) => {
+          return {
+            code: item.value,
+            img: 'all',
+            iconUrl: imgURL + item.iconUrl,
+            label: JSON.parse(item.name)
+          }
+        })
+      });
+      console.log(currentPromoType.value)
+
       if(siteType==="SLOT"){
-        currentPromoType.value= promoTypesSlot.value
-      }else{
-        await loadPromoTypes().then((res) => {
-          currentPromoType.value = res.map((item) => {
-            return {
-              code: item.value,
-              img: 'all',
-              iconUrl: imgURL + item.iconUrl,
-              label: JSON.parse(item.name)
-            }
-          })
-        });
+        const allItem = currentPromoType.value.find(item => item.code === 'ALL');
+        const slotGameItem = currentPromoType.value.find(item => item.code === 'SLOT GAME');
+
+        const filteredArr = currentPromoType.value.filter(item => item.code !== 'ALL' && item.code !== 'SLOT GAME');
+
+        const newArr = [];
+        if (allItem) newArr.push(allItem);  // 放到第一位
+        if (slotGameItem) newArr.push(slotGameItem);  // 放到第二位
+        newArr.push(...filteredArr);  // 添加其余的项目
+
+        currentPromoType.value= newArr;
       }
+
 
 
 
