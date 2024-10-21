@@ -1,8 +1,11 @@
 <template>
   <div class="promo-container">
-    <div class="promo" :class="{
-      dota2Pgql: selectedPromo.promoCode === 'dy2-dota2-pgl'
-    }">
+    <div
+      class="promo"
+      :class="{
+        dota2Pgql: selectedPromo.promoCode === 'dy2-dota2-pgl'
+      }"
+    >
       <q-tabs v-if="!isPromoDetail" v-model="promoTabActive" align="justify">
         <q-tab v-for="(tab, i) in promoTypes" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
@@ -20,7 +23,12 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="
+                      tab.name === 'ALL' || promo.promoType.toLowerCase().split(',').includes(tab.name.toLowerCase())
+                    "
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
@@ -34,36 +42,6 @@
                           />
                         </div>
 
-                        <div class="promo-item-title" v-html="promo.title"></div>
-                        <div
-                          class="promo-item-deal"
-                          v-if="parsedParam(promo.param).sub"
-                          v-html="parsedParam(promo.param).sub"
-                        />
-                        <div>
-                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
-                        </div>
-
-                        <div class="promo-item-side-img">
-                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-
-                  <div class="promo-item" v-if="tab.name === 'ALL'">
-                    <a @click="showPromoDetails(promo)">
-                      <div>
-                        <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
-                            {{ getPromoLabel(promo.labelType) }}
-                          </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
-                        </div>
                         <div class="promo-item-title" v-html="promo.title"></div>
                         <div
                           class="promo-item-deal"
@@ -95,7 +73,11 @@
             <div class="loader" v-if="isFetchingPromo" />
             <div
               class="selected-promo-wrapper"
-              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' || selectedPromo.promoCode === 'dy2-quiz' ? 'background:#E7F1FD;' : '']"
+              :style="[
+                selectedPromo.promoCode === 'lh1-slot-lucky8' || selectedPromo.promoCode === 'dy2-quiz'
+                  ? 'background:#E7F1FD;'
+                  : ''
+              ]"
             >
               <div
                 class="banner-container"
@@ -139,7 +121,7 @@
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
                   midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
                   isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
-                  isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
+                  isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -965,13 +947,14 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
-        &.isYallaCompass, &.isBbdachaBelgrade {
+        &.isYallaCompass,
+        &.isBbdachaBelgrade {
           gap: 0;
           margin: 0;
           width: 100%;
           background-repeat: no-repeat;
           background-size: 100% auto;
-          background-color:  #E7F1FD;
+          background-color: #e7f1fd;
           padding: 20px;
         }
 
