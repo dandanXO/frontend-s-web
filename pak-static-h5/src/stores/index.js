@@ -117,6 +117,7 @@ export const userStore = defineStore("userStore", {
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
+          this.token = ret.data;
         } else {
           Notify.create({
             color: "negative",
