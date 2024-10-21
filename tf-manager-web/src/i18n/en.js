@@ -118,6 +118,7 @@ export default {
     financialLevel: 'financial level',
     todayWithdrawCount: 'Today withdraw count',
     profit: 'member profit',
+    risk: 'risk level'
   },
   outboxStatus: {
     0: 'Not reply yet',

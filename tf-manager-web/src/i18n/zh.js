@@ -117,6 +117,7 @@ export default {
     financialLevel: '财务组别',
     todayWithdrawCount: '当天提款笔数',
     profit: '会员盈利',
+    risk: '风险等级'
   },
   outboxStatus: {
     0: '未回复',
