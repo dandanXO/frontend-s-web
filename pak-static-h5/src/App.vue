@@ -268,7 +268,8 @@ export default defineComponent({
           ui.tiktokUrl = data.tiktok;
           ui.whatsappUrl = data.whatsapp;
           ui.youtubeUrl = data.youtube;
-          ui.charityUrl = data.charity_url
+          ui.charityUrl = data.charity_url;
+          ui.footerIcon = data.footer_icon;
         });
     };
 

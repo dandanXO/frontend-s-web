@@ -22,8 +22,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -220,6 +220,11 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "529666413258940");
       fbq("track", "PageView");
       sessionStorage.setItem("FB_PIXEL_ID", "529666413258940");
+      user.isFbPixel = true;
+    } else if (window.location.href.indexOf("r3fac87x.cc") > -1) {
+      fbq("init", "1214838756433629");
+      fbq("track", "PageView");
+      sessionStorage.setItem("FB_PIXEL_ID", "1214838756433629");
       user.isFbPixel = true;
     }
 

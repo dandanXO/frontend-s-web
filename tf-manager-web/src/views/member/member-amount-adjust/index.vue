@@ -245,6 +245,7 @@
             <el-form-item :label="t('fields.rolloverType')" prop="rolloverType">
               <el-select
                 v-model="selectedRolloverType"
+                :placeholder="t('fields.select')"
                 style="width: 100%;"
                 filterable
                 default-first-option
@@ -280,6 +281,7 @@
             <el-select
               v-model="uiControl.selectedGameTypeRolloverType"
               style="width: 250px"
+              :placeholder="t('fields.select')"
               filterable
             >
               <el-option
@@ -458,7 +460,7 @@
 <!--          </div>-->
 
 
-          <el-input v-model="form.loginName" style="width: 350px" />
+          <el-input @focus="handleSelect" v-model="form.loginName" style="width: 350px" />
           <span
             v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
             style="display: block"
@@ -1060,7 +1062,7 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   loginName: [
     required(t('message.validateLoginNameRequired')),
-    // { validator: loginNameValidator, trigger: 'blur' },
+    { validator: loginNameValidator, trigger: 'blur' },
   ],
   amount: [required(t('message.validateAmountRequired'))],
   // rollover: [required(t('message.validateRolloverRequired'))],
@@ -1146,9 +1148,12 @@ async function loadImportSiteConfig() {
 const isAffiliateUser = ref(false)
 const handleSelect = item => {
   if (item) {
-    if (item.ref === 'AFFILIATE') {
+    if (item.ref === 'AFFILIATE' || uiControl.dialogType === 'CREATE_DEDUCT') {
       isAffiliateUser.value = true
       uiControl.rollOverAmt = 0
+    }else{
+
+      isAffiliateUser.value = false;
     }
     // Clear previous selections
     dynamicTags.value = []
@@ -1382,6 +1387,7 @@ async function showDialog(type) {
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
     }
+   /*  uiControl.rollOverAmt= null; */
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
@@ -1389,6 +1395,7 @@ async function showDialog(type) {
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
     }
+    // uiControl.rollOverAmt= 0;
     uiControl.balance = null
     uiControl.dialogTitle = t('fields.deductMemberAmountAdjust')
   }

@@ -460,6 +460,23 @@ export default {
     main: 'MAIN',
     slot: 'SLOT',
   },
+  rewardStatus: {
+    PENDING: 'PENDING',
+    DISTRIBUTED: 'DISTRIBUTED',
+    REJECTED: 'REJECTED',
+  },
+  language: {
+    en: 'English',
+    zh: 'Chinese',
+    th: 'Thai',
+    kr: 'Korean',
+    vn: 'Vietnamese'
+  },
+  treasure: {
+    NORMAL: '일반 보물',
+    CS: 'CS 보물',
+    DRAGON: '드래곤 보물'
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -1345,6 +1362,9 @@ export default {
     roleList: '역할 목록',
     roleName: '역할 이름',
     rollover: '롤오버',
+    rollOverAmt: '롤오버 금액',
+    rolloverType: '롤오버 유형',
+    rollOverMulti: '롤오버 다중 금액',
     rolloverAmount: '롤오버 금액',
     rolloverRecord: '롤오버 기록',
     gameTypeRollover: '게임 유형 롤오버',
@@ -2657,6 +2677,7 @@ export default {
     Mobile: '모바일',
     PC: 'PC',
     APPLY_WITHDRAW: '출금 신청',
+    APPLY_WITHDRAW_RISK: '철회 위험을 적용'
   },
   loginDevice: {
     WEB: '웹',
@@ -2688,6 +2709,13 @@ export default {
     friday: '금요일',
     saturday: '토요일',
     sunday: '일요일',
+  },
+  gameTypeRolloverSetting: {
+    anyTypes: '모든 게임 유형',
+    specifyTypes: '게임 유형 지정',
+    excludeTypes: '게임 유형 제외',
+    specifyTypesAmount: '게임 유형 수량 지정',
+    specifyGameType: '특정 게임 유형 및 수량',
   },
   domainType: {
     LANDING: '방문 페이지',

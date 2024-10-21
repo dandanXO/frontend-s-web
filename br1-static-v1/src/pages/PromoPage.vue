@@ -73,6 +73,9 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -231,6 +234,7 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+    const isFtdEnded = ref(false);
 
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
@@ -321,7 +325,7 @@ export default defineComponent({
     }
 
     const isFtdPromoEnded = computed(() => {
-      if(selectedPromo.value && selectedPromo.value.promoCode==="br1-slot-ftd" && store.ftd===true){
+      if(selectedPromo.value && selectedPromo.value.promoCode==="br1-slot-ftd" && isFtdEnded.value===true){
         return true;
       }
 
@@ -426,16 +430,16 @@ export default defineComponent({
               if(!isAndroid()){
                 isPromoDetail.value = true;
                 selectedPromo.value = promo;
-                selectedPromoDate.value = '';
+                // selectedPromoDate.value = '';
               }
           }
 
           if(selectedPromo.value.param){
             let promoDate = JSON.parse(selectedPromo.value.param).promoDate;
 
-            if(promoDate) {
-              selectedPromoDate.value = promoDate;
-            }
+            // if(promoDate) {
+            //   selectedPromoDate.value = promoDate;
+            // }
           }
         }
       }
@@ -481,6 +485,22 @@ export default defineComponent({
         }
       }).catch((e) => {
         isFetchingPromo.value = false;
+        console.log("error", e);
+      });
+
+      api
+      .get("/opt-session/getAppTabs")
+      .then((res) => {
+        // debugger;
+        if (res.code === 0) {
+          const { data } = res;
+          if (data && data.hasOwnProperty("ftd")) {
+            isFtdEnded.value = data.ftd;
+            store.ftd = data.ftd;
+          }
+        }
+      })
+      .catch((e) => {
         console.log("error", e);
       });
 
@@ -1307,5 +1327,17 @@ export default defineComponent({
     position: relative;
     top: 48%;
   }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>

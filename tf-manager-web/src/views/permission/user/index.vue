@@ -620,6 +620,7 @@ async function loadUser() {
         })
     }
   })
+
   page.records = ret.records
 }
 
@@ -829,11 +830,15 @@ async function loadNetPhone() {
 
 function toSiteName(row, column, cellValue, index) {
   if (row.siteIds !== null && row.siteIds !== "") {
-    const siteIdsArray = row.siteIds.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
-    const siteNames = siteIdsArray
-      .map(siteId => siteList.list.find(site => site.id === siteId)?.siteName)
-      .filter(Boolean)
-    return siteNames.join(', ');
+    if (LOGIN_USER_TYPE.value === TENANT.value) {
+      return store.state.user.siteName
+    } else {
+      const siteIdsArray = row.siteIds.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+      const siteNames = siteIdsArray
+        .map(siteId => siteList.list.find(site => site.id === siteId)?.siteName)
+        .filter(Boolean)
+      return siteNames.join(', ');
+    }
   } else {
     if (row.siteId) {
       if (row.siteId === 0) {
