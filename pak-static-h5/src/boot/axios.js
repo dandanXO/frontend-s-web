@@ -214,6 +214,7 @@ export default boot(({ app, router }) => {
           if (window.location.pathname === "/promotion") {
             document.location.href = "xfapp:/login";
           } else {
+            store.$reset();
             router.push("/login");
           }
 
