@@ -435,7 +435,9 @@ const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === "OPEN");
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === "OPEN" && isFtdPrivilegeEnable.value === true
+);
 
 const isFtdPrivilegePayType = computed(
   () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
