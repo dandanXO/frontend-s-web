@@ -1065,7 +1065,9 @@ const formRules = reactive({
     { validator: loginNameValidator, trigger: 'blur' },
   ],
   amount: [required(t('message.validateAmountRequired'))],
-  // rollover: [required(t('message.validateRolloverRequired'))],
+  rollover: computed(() => 
+    uiControl.dialogType === 'CREATE_ADD' ? [required(t('message.validateRolloverRequired'))] : []
+  ), // Use computed to make it reactive
   cause: [required(t('message.validateCauseRequired'))],
 })
 
@@ -1387,7 +1389,7 @@ async function showDialog(type) {
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
     }
-   /*  uiControl.rollOverAmt= null; */
+   uiControl.rollOverAmt= null;
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
@@ -1395,7 +1397,7 @@ async function showDialog(type) {
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
     }
-    // uiControl.rollOverAmt= 0;
+    uiControl.rollOverAmt= 0;
     uiControl.balance = null
     uiControl.dialogTitle = t('fields.deductMemberAmountAdjust')
   }
