@@ -313,8 +313,8 @@ export default {
     incorrectPrivilege: "La promoción de depósito que enviaste es incorrecta. Por favor, intenta enviar el depósito nuevamente.",
     depositMethod: "Método de depósito",
     paymentChannels: "Medios de pago",
-    wagerRequirement: "Requisito de Apuesta (para retiro): 10 veces el monto de tu depósito",
-    wagerExample: "p. ej., Deposita Rp1,000, requiere Rp10,000 apostados en juegos de tragamonedas",
+    wagerRequirement: "Requisito de apuesta (para retiro): 10 veces el monto de su depósito",
+    wagerExample: "Por ejemplo, deposite Mx$200, se requiere una apuesta de Mx$2,000",
     deposited: "Enviado",
     youWillBeRedirect: "Serás redirigido a la página de tu banco para completar el depósito.",
     afterDepositSuccessfully: "Después de un depósito exitoso, se reflejará aquí.",
@@ -773,6 +773,12 @@ export default {
     1000: "Error de Inicio de Sesión en el nombre de usuario o la contraseña",
     1001: "Cuenta cerrada",
     1002: "La cuenta es para miembros registrados",
+    1004: "El nombre de usuario solo puede consistir en números y letras.",
+    1011: "La cuenta actual ya ha vinculado un número de teléfono.",
+    1012: "La cuenta actual ya ha vinculado una dirección de correo electrónico.",
+    1013: "La cuenta actual ya ha vinculado una fecha de nacimiento.",
+    1014: "La cuenta actual ya ha vinculado un nombre.",
+    1015: "La cuenta actual ya ha vinculado un apodo.",
     1300: "El importe debe ser un número superior a 0",
     1301: "Esta tarjeta no es compatible",
     1302: "Esta moneda no es compatible",
@@ -830,6 +836,7 @@ export default {
     35008: "Usted no dispone de este beneficio",
     35009: "Este beneficio entrará en vigor en breve",
     35010: "El miembro registrado 35010 no puede recibir este beneficio",
-    35011: "El miembro registrado 35011 no puede recibir este beneficio"
+    35011: "El miembro registrado 35011 no puede recibir este beneficio",
+    37001: "El tiempo de recogida está fuera del período del evento"
   }
 };

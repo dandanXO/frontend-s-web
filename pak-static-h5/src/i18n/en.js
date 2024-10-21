@@ -253,7 +253,8 @@ export default {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
-    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again."
+    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
+    useFtdPrivilege: "Use Slot First Deposit Privilege"
   },
   withdraw: {
     cashBalance: "Cash Balance",
