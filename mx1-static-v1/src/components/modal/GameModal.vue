@@ -144,6 +144,7 @@ const handleDrawerVisible = () => {
 };
 
 const router = useRouter();
+const isOpenCalled= ref(false);
 const route = useRoute();
 const visible = ref(false);
 const isInnerHtmlSrc = ref(false);
