@@ -39,11 +39,11 @@
           </div>
 
           <div class="unlink-btn" @click="unbindBankCard(bc)">
-            <RiLinkUnlink />
+            <img width="20" height="20" src="../../assets/images/finance/bank-card-unlink-icon.svg" />
           </div>
         </div>
         <div class="bank-card-item add" @click="bankCardModal('bank')">
-          <RiLink />
+          <img width="20" height="20" src="../../assets/images/finance/bank-card-link-icon.svg" />
           <span class="lock-card-txt">{{ $t('withdraw.addBankCard') }}</span>
         </div>
       </div>
@@ -242,10 +242,7 @@
 <script lang="js">
 import { defineComponent, reactive, ref, watch, onMounted } from "vue";
 import { getVerificationCode } from "@/api/index/login";
-// import { Modal, message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-// import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 import {
   loadBanks,
   loadBankCards,
@@ -270,7 +267,7 @@ export default defineComponent({
   name: "WithdrawBankView",
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    InfoFilled, RiLink, RiLinkUnlink, emptyData
+    InfoFilled, emptyData
   },
   setup() {
     const { t } = useI18n();

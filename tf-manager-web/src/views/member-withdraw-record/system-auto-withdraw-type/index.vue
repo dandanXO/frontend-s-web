@@ -43,7 +43,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="600px"
+      width="1000px"
     >
       <el-form
         ref="autoPaymentForm"
@@ -52,9 +52,9 @@
         :rules="formRules"
         :inline="true"
         size="small"
-        label-width="250px"
+        label-width="150px"
       >
-        <el-form-item :label="t('fields.payTypeName')" prop="paymentTypeCode" required>
+        <el-form-item :label="t('fields.payTypeName')" :required="!uiControl.isShowReviewRule" prop="paymentTypeCode" v-if="!uiControl.isShowReviewRule">
           <el-select
             filterable
             clearable
@@ -72,27 +72,216 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.rule')" prop="rule" v-if="uiControl.useRule">
-          <el-input type="textarea" :rows="6" v-model="form.rule" class="form-input" style="width: 300px;" />
+        <el-form-item :label="t('fields.reviewRule')" prop="reviewRuleList" v-if="uiControl.isShowReviewRule">
+          <el-table
+            :data="form.reviewRuleList"
+            style="width: 100%"
+            size="small"
+            :show-header="false"
+            :border="false"
+          >
+            <el-table-column prop="variable" width="310">
+              <template #default="scope">
+                <template v-if="!scope.row.variable || scope.row.variable.trim() === ''">
+                  <el-select
+                    v-model="scope.row.variable"
+                    size="small"
+                    filterable
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 300px;"
+                  >
+                    <el-option
+                      v-for="item in reviewRuleTypeList.list.filter(x => !form.reviewRuleList.some(y => y.variable === x.value))"
+                      :key="item.value"
+                      :label="item.name"
+                      :value="item.value"
+                      :disabled="form.reviewRuleList.some(y => y.variable === item.value)"
+                    />
+                  </el-select>
+                </template>
+                <template v-if="scope.row.variable && scope.row.variable.trim() !== ''">
+                  <el-select
+                    v-model="scope.row.variable"
+                    size="small"
+                    filterable
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 300px;"
+                    disabled
+                  >
+                    <el-option
+                      v-for="item in ruleType.list"
+                      :key="item.value"
+                      :label="item.name"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </template>
+              </template>
+            </el-table-column>
+            <el-table-column prop="value" width="210">
+              <template #default="scope">
+                <template v-if="scope.row.variable && scope.row.variable.includes('financial')">
+                  <el-select
+                    v-model="scope.row.value"
+                    size="small"
+                    filterable
+                    multiple
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 200px;"
+                  >
+                    <el-option
+                      v-for="item in list.financials"
+                      :key="item.level"
+                      :label="item.name"
+                      :value="item.level"
+                    />
+                  </el-select>
+                </template>
+                <template v-else-if="scope.row.variable && scope.row.variable.includes('vip')">
+                  <el-select
+                    v-model="scope.row.value"
+                    size="small"
+                    filterable
+                    multiple
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 200px;"
+                  >
+                    <el-option
+                      v-for="item in list.vips"
+                      :key="item.level"
+                      :label="item.name"
+                      :value="item.level"
+                    />
+                  </el-select>
+                </template>
+                <template v-else>
+                  <el-input-number
+                    v-model="scope.row.value"
+                    :min="0"
+                    class="form-input"
+                    :controls="false"
+                    :step="1"
+                    :precision="0"
+                    style="width: 200px;"
+                  />
+                </template>
+              </template>
+            </el-table-column>
+            <el-table-column prop="action" width="50">
+              <template #default="scope">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  size="mini"
+                  @click="removeReviewRuleRow(scope.$index)"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column prop="action" width="50">
+              <template #default="scope">
+                <el-button
+                  type="primary"
+                  icon="el-icon-plus"
+                  size="mini"
+                  @click="addReviewRuleRow(scope.$index)"
+                />
+              </template>
+            </el-table-column>
+          </el-table>
         </el-form-item>
-        <el-form-item
-          :label="t('fields.maxWithdrawAmount')"
-          prop="withdrawAmountMax"
-          v-if="!uiControl.useRule"
-          required
-        >
-          <el-input-number
-            v-model="form.withdrawAmountMax"
-            :min="0"
-            class="form-input"
-            :controls="false"
-            :step="1"
-            :precision="0"
-            style="width: 200px;"
-          />
+        <el-form-item :label="t('fields.autoWithdrawRule')" prop="ruleList" v-if="!uiControl.isShowReviewRule">
+          <el-table
+            :data="form.ruleList"
+            style="width: 100%"
+            size="small"
+            :show-header="false"
+            :border="false"
+          >
+            <el-table-column prop="variable" width="310">
+              <template #default="scope">
+                <template v-if="!scope.row.variable || scope.row.variable.trim() === ''">
+                  <el-select
+                    v-model="scope.row.variable"
+                    size="small"
+                    filterable
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 300px;"
+                  >
+                    <el-option
+                      v-for="item in ruleTypeList.list.filter(x => !form.ruleList.some(y => y.variable === x.value))"
+                      :key="item.value"
+                      :label="item.name"
+                      :value="item.value"
+                      :disabled="form.ruleList.some(y => y.variable === item.value)"
+                    />
+                  </el-select>
+                </template>
+                <template v-if="scope.row.variable && scope.row.variable.trim() !== ''">
+                  <el-select
+                    v-model="scope.row.variable"
+                    size="small"
+                    filterable
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 300px;"
+                    disabled
+                  >
+                    <el-option
+                      v-for="item in ruleType.list"
+                      :key="item.value"
+                      :label="item.name"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </template>
+              </template>
+            </el-table-column>
+            <el-table-column prop="value" width="210">
+              <template #default="scope">
+                <template v-if="scope.row.variable && scope.row.variable.includes('matches')">
+                  <el-input
+                    v-model="scope.row.value"
+                    class="form-input"
+                    :placeholder="t('fields.pleaseInput')"
+                    style="width: 200px;"
+                  />
+                </template>
+                <template v-else>
+                  <el-input-number
+                    v-model="scope.row.value"
+                    :min="0"
+                    class="form-input"
+                    :controls="false"
+                    :step="1"
+                    :precision="0"
+                    style="width: 200px;"
+                  />
+                </template>
+              </template>
+            </el-table-column>
+            <el-table-column prop="action" width="50">
+              <template #default="scope">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  size="mini"
+                  @click="removeRuleRow(scope.$index)"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column prop="action" width="50">
+              <template #default="scope">
+                <el-button
+                  type="primary"
+                  icon="el-icon-plus"
+                  size="mini"
+                  @click="addRuleRow(scope.$index)"
+                />
+              </template>
+            </el-table-column>
+          </el-table>
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button @click="cancelDialog">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
@@ -177,6 +366,10 @@
       </el-form>
     </el-dialog>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
+      <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+        <el-tab-pane :label="t('fields.reviewRule')" name="reviewRule" v-if="uiControl.showReviewRule" />
+        <el-tab-pane :label="t('fields.autoWithdrawRule')" name="autoWithdrawRule" />
+      </el-tabs>
       <template #header>
         <div class="clearfix">
           <span class="role-span">{{ t('fields.autoWithdrawSetting') }}</span>
@@ -191,6 +384,7 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
         style="width: 100%;"
+        v-if="!uiControl.isShowReviewRule"
       >
         <el-table-column type="expand">
           <template #default="props">
@@ -302,10 +496,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
-        <el-table-column prop="rule" :label="t('fields.rule')" v-if="uiControl.useRule" />
-        <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" align="center" v-if="!uiControl.useRule">
+        <el-table-column prop="ruleDisplay" :label="t('fields.autoWithdrawRule')">
           <template #default="scope">
-            $ <span v-formatter="{data: scope.row.withdrawAmountMax, type: 'money'}" />
+            <div v-html="scope.row.ruleDisplay.replace(/\n/g, '<br>')" />
           </template>
         </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
@@ -343,7 +536,45 @@
         :page-size="request.size"
         :page-count="page.pages"
         :current-page="request.current"
+        v-if="!uiControl.isShowReviewRule"
       />
+      <el-table
+        :data="list.reviewRuleRecord"
+        v-loading="page.loading"
+        ref="table"
+        row-key="id"
+        size="small"
+        highlight-current-row
+        :empty-text="t('fields.noData')"
+        style="width: 100%;"
+        v-if="uiControl.isShowReviewRule"
+      >
+        <el-table-column prop="ruleDisplay" :label="t('fields.autoWithdrawRule')">
+          <template #default="scope">
+            <div v-html="scope.row.reviewRuleDisplay.replace(/\n/g, '<br>')" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+              @change="changeWithdrawReviewStatus(scope.row, scope.row.status)"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+          <template #default="scope">
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="success"
+              @click="showEditWithdrawReview(scope.row)"
+            />
+          </template>
+        </el-table-column>
+      </el-table>
     </el-card>
   </div>
 </template>
@@ -353,7 +584,8 @@ import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
 import { getActivePaymentTypes } from '../../../api/payment-type'
 import { getCurrencyNames } from '../../../api/currency'
-import { disableSystemAutoPaymentTypeBySite, getSystemAutoPaymentTypeList, createSystemAutoPaymentType, createSystemAutoPaymentPlaltform, updateystemAutoPaymentType, deleteSystemAutoPaymentPlaltform } from '../../../api/system-auto-withdraw-type'
+import { getConfigList } from '../../../api/config'
+import { disableSystemAutoPaymentTypeBySite, getSystemAutoPaymentTypeList, createSystemAutoPaymentType, createSystemAutoPaymentPlaltform, updateystemAutoPaymentType, deleteSystemAutoPaymentPlaltform, updateWithdrawReviewRule } from '../../../api/system-auto-withdraw-type'
 import { createWithdrawalChannelOrder, batchupdateWithdrawalOrder } from '../../../api/withdrawal-channel-order'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
@@ -364,6 +596,8 @@ import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
 import { isPak, isIndiaSite, isPh1, isBr1, isNga, isId1 } from '@/utils/site'
+import { getFinancialLevels } from "../../../api/financial-level";
+import { getVipList } from "../../../api/vip";
 
 const { t } = useI18n()
 const store = useStore()
@@ -371,6 +605,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const autoPaymentForm = ref(null)
 const platformForm = ref(null)
+const activeName = ref('reviewRule')
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -380,6 +615,8 @@ const uiControl = reactive({
   platformDialogType: 'CREATE',
   dialogLoading: false,
   useRule: true,
+  showReviewRule: true,
+  isShowReviewRule: false
 })
 const request = reactive({
   size: 30,
@@ -396,6 +633,9 @@ const list = reactive({
   siteWithdrawPlatform: [],
   withdrawPlatformByPayType: [],
   exclusionList: [],
+  financials: [],
+  reviewRuleRecord: [],
+  vips: [],
 })
 const page = reactive({
   pages: 1,
@@ -412,11 +652,47 @@ const form = reactive({
   withdrawAmountMax: 0,
   withdrawAmountMin: 0,
   rule: null,
+  reviewRule: null,
+  ruleList: [],
+  reviewRuleList: [],
 })
 const formRules = reactive({
   name: [required(t('message.validateNameRequired'))],
   code: [required(t('message.validateCodeRequired'))],
 })
+const ruleType = reactive({
+  list: [
+    { key: 1, name: t('withdrawRuleType.withdrawAmount') + t('withdrawRuleType.max'), value: '#withdraw<' },
+    { key: 2, name: t('withdrawRuleType.withdrawAmount') + t('withdrawRuleType.min'), value: '#withdraw>' },
+    { key: 3, name: t('withdrawRuleType.financialLevel'), value: "matches '.*,' + T(String).valueOf(#financialLevel) + ',.*'" },
+    { key: 4, name: t('withdrawRuleType.todayWithdrawCount') + t('withdrawRuleType.max'), value: '#withdrawCount<' },
+    { key: 5, name: t('withdrawRuleType.todayWithdrawCount') + t('withdrawRuleType.min'), value: '#withdrawCount>' },
+    { key: 6, name: t('withdrawRuleType.profit') + t('withdrawRuleType.max'), value: '#profit<' },
+    { key: 7, name: t('withdrawRuleType.profit') + t('withdrawRuleType.min'), value: '#profit>' },
+    { key: 8, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.max'), value: '#balance<' },
+    { key: 9, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.min'), value: '#balance>' },
+    { key: 10, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.max'), value: '#afterBalance<' },
+    { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#afterBalance>' },
+    { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
+  ],
+})
+
+const ruleTypeList = reactive({
+  list: ruleType.list.filter(x => [1, 2].includes(x.key)),
+})
+const reviewRuleTypeList = reactive({ ...ruleType });
+
+const handleClick = (tab, event) => {
+  switchToList(tab.props.name)
+}
+
+async function switchToList(type) {
+  if (type === 'reviewRule') {
+    uiControl.isShowReviewRule = true;
+  } else {
+    uiControl.isShowReviewRule = false;
+  }
+}
 
 const repeatNumberValidation = (msg) => {
   return {
@@ -432,6 +708,34 @@ const repeatNumberValidation = (msg) => {
     }
   };
 };
+
+function removeRuleRow(index) {
+  form.ruleList.splice(index, 1)
+  if (form.ruleList.length === 0) {
+    addRuleRow(index)
+  }
+}
+
+function addRuleRow(index) {
+  form.ruleList.splice(index + 1, 0, {
+    variable: '',
+    value: 0
+  })
+}
+
+function removeReviewRuleRow(index) {
+  form.reviewRuleList.splice(index, 1)
+  if (form.reviewRuleList.length === 0) {
+    addReviewRuleRow(index)
+  }
+}
+
+function addReviewRuleRow(index) {
+  form.reviewRuleList.splice(index + 1, 0, {
+    variable: '',
+    value: 0
+  })
+}
 
 const numberRules = reactive({
   repeatNumberValidation: [repeatNumberValidation(t('message.validateNoRepeatAmount'))],
@@ -455,20 +759,97 @@ async function loadCurrency() {
 async function loadAutoPaymentType() {
   const { data: ret } = await getSystemAutoPaymentTypeList(request)
   ret.forEach(item => {
-    item.withdrawAmountMax = getMaxWithdrawNumber(item.rule)
+    item.withdrawAmountMax = getValue(item.rule, '#withdraw')
+    item.ruleList = getValueList(item.rule)
+    item.ruleDisplay = createVariableValueString(item.ruleList)
+    item.reviewRuleList = getValueList(item.reviewRule)
+    item.reviewRuleDisplay = createVariableValueString(item.reviewRuleList)
   })
   page.records = ret
 }
 
-function getMaxWithdrawNumber(str) {
+async function loadSearchConditionFinancial() {
+  const { data: financial } = await getFinancialLevels({
+    siteId: request.siteId,
+  })
+  list.financials = financial
+}
+
+async function loadWithdrawReviewRule() {
+  const { data: reviewRule } = await getConfigList("auto_withdraw_review_rule", request.siteId);
+  if (reviewRule.length === 0) {
+    reviewRule.push({ value: 0, describes: "" })
+  }
+  reviewRule.forEach(item => {
+    item.paymentTypeCode = 'ALL'
+    item.status = item.value === '1'
+    item.reviewRule = item.describes
+    item.reviewRuleList = getValueList(item.reviewRule)
+    item.reviewRuleDisplay = createVariableValueString(item.reviewRuleList)
+    item.siteId = request.siteId
+  })
+  list.reviewRuleRecord = reviewRule
+  console.log(list.reviewRuleRecord)
+}
+
+function createVariableValueString(originalData) {
+  const data = JSON.parse(JSON.stringify(originalData))
+  const result = data.map(item => {
+    if (item.variable && item.value !== null) {
+      item.variable = item.variable.trim()
+      const variableName = ruleType.list.find(a => a.value === item.variable)?.name;
+      item.variable = variableName ?? item.variable;
+      return `${item.variable} : ${item.value}`;
+    }
+    return null;
+  }).filter(Boolean);
+  return result.join('\n');
+}
+
+function getValue(str, keyword) {
   if (!str) return null;
-  const matches = str.match(/#withdraw\s*[<>]\s*\d+/g);
+  const regex = new RegExp(`${keyword}\\s*[<>]\\s*\\d+`, 'g');
+  const matches = str.match(regex);
   if (matches === null) return null;
   const numbers = matches.map(match => {
     const num = match.match(/\d+/);
-    return parseInt(num, 10); // Convert the number to an integer
+    return parseInt(num, 10);
   });
   return Math.max(...numbers);
+}
+
+function getValueList(str) {
+  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(\d+)/g;
+  const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
+  const results = [];
+  let match;
+
+  if (!str) {
+    results.push({ variable: '', operator: '', value: null });
+    return results;
+  }
+
+  function extractConditions(conditionStr) {
+    while ((match = conditionRegex.exec(conditionStr)) !== null) {
+      const variable = match[1] + match[2];
+      const operator = match[2];
+      const value = parseInt(match[3], 10);
+      results.push({ variable, operator, value });
+    }
+    while ((match = matchesRegex.exec(conditionStr)) !== null) {
+      const expression = match[1];
+      const pattern = match[2];
+      const innerValue = expression.replace(/[^0-9,]+/g, '').split(',').filter(item => item !== '').map(Number);
+      results.push({ variable: "matches '" + pattern + "'", operator: 'matches', value: innerValue });
+    }
+  }
+  const andConditions = str.split(/\s+and\s+/).filter(condition => condition.trim());
+  for (const condition of andConditions) {
+    extractConditions(condition.trim());
+  }
+
+  results.push({ variable: '', operator: '', value: null });
+  return results.length > 0 ? results : null;
 }
 
 async function loadSiteWithdrawPlatform(siteId) {
@@ -489,6 +870,11 @@ async function loadSiteWithdrawPlatform(siteId) {
 async function loadWithdrawPlatform() {
   const { data: ret } = await getWithdrawPlatforms(request);
   list.withdrawPlatform = ret.records
+}
+
+const loadVips = async () => {
+  const { data: vip } = await getVipList({ siteId: request.siteId })
+  list.vips = vip
 }
 
 function filterPayTypeByCurrency() {
@@ -535,6 +921,13 @@ function changeStatus(data, status) {
   updateystemAutoPaymentType(data)
 }
 
+async function changeWithdrawReviewStatus(data, status) {
+  data.status = status
+  await updateWithdrawReviewRule(data)
+  await loadWithdrawReviewRule()
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+}
+
 async function saveOrder(data) {
   data.siteId = request.siteId
   await createWithdrawalChannelOrder(data)
@@ -574,12 +967,26 @@ function showEdit(data) {
   })
 }
 
+function showEditWithdrawReview(data) {
+  showDialog('EDIT_REVIEW_RULE')
+  nextTick(() => {
+    for (const key in data) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = data[key]
+      }
+    }
+  })
+}
+
 function showDialog(type) {
   if (type === 'CREATE') {
     if (autoPaymentForm.value) {
+      handleChangeSite()
       autoPaymentForm.value.resetFields()
     }
     form.id = null
+    form.ruleList = getValueList(null)
+    form.reviewRuleList = getValueList(null)
     uiControl.dialogTitle = t('fields.addPayType')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editPayType')
@@ -624,7 +1031,8 @@ function create() {
   autoPaymentForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
-      form.rule = uiControl.useRule ? form.rule : "#withdraw < " + form.withdrawAmountMax
+      form.rule = createConditionString(form.ruleList)
+      form.reviewRule = createConditionString(form.reviewRuleList)
       await createSystemAutoPaymentType(form)
       uiControl.dialogVisible = false
       await loadAutoPaymentType()
@@ -647,17 +1055,52 @@ function createPlatform() {
   })
 }
 
+async function editReviewRule() {
+  form.siteId = request.siteId
+  form.reviewRule = createConditionString(form.reviewRuleList)
+  await updateWithdrawReviewRule(form)
+  uiControl.dialogVisible = false
+  await loadWithdrawReviewRule()
+  ElMessage({ message: t('message.addSuccess'), type: 'success' })
+}
+
 function edit() {
   autoPaymentForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
-      form.rule = uiControl.useRule ? form.rule : "#withdraw < " + form.withdrawAmountMax
+      form.rule = createConditionString(form.ruleList)
+      form.reviewRule = createConditionString(form.reviewRuleList)
       await updateystemAutoPaymentType(form)
       uiControl.dialogVisible = false
       await loadAutoPaymentType()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
+}
+
+function createConditionString(data) {
+  const conditions = data.map(item => {
+    const variable = item.variable.trim();
+    const value = item.value;
+    if (variable !== '' && value !== null) {
+      if (variable.includes('matches')) {
+        return `(',' + '${value}' + ',') ${variable}`;
+      }
+      return `${variable} ${value}`;
+    }
+    return null;
+  }).filter(Boolean);
+  return conditions.join(' and ');
+}
+
+function cancelDialog() {
+  page.records.forEach(item => {
+    item.ruleList = getValueList(item.rule)
+    item.ruleDisplay = createVariableValueString(item.ruleList)
+    item.reviewRuleList = getValueList(item.reviewRule)
+    item.reviewRuleDisplay = createVariableValueString(item.reviewRuleList)
+  })
+  uiControl.dialogVisible = false
 }
 
 function submit() {
@@ -667,6 +1110,8 @@ function submit() {
     payTypeByExistingPayType()
   } else if (uiControl.dialogType === 'EDIT') {
     edit()
+  } else if (uiControl.dialogType === 'EDIT_REVIEW_RULE') {
+    editReviewRule()
   }
   uiControl.dialogLoading = false
 }
@@ -707,6 +1152,13 @@ onMounted(async() => {
   loadPayTypes()
   await loadAutoPaymentType()
   filterPayTypeByCurrency()
+  const { data: config } = await getConfigList("auto_withdraw_review_control", request.siteId);
+  uiControl.showReviewRule = uiControl.isShowReviewRule = config.length > 0 && config[0].value !== 'CLOSE';
+  if (uiControl.showReviewRule) {
+    await loadWithdrawReviewRule()
+    await loadSearchConditionFinancial()
+    await loadVips()
+  }
 })
 </script>
 

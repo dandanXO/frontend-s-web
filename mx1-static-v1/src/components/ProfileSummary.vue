@@ -212,7 +212,7 @@ const checkTopDownloadAppear = () => {
 
 const topDownloadUrl = ref("");
 const getTopDownloadUrl = () => {
-  api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=77A4DF`).then((res) => {
+  api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=969493`).then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }

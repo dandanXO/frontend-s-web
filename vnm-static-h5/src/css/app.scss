@@ -100,7 +100,7 @@ a:focus {
 }
 
 .page-title {
-  min-height: 50px;
+  min-height: 36px;
   color: $font-2;
   font-size: 1.3rem;
   text-align: center;
@@ -162,8 +162,8 @@ body.platform-ios .q-dialog__inner--minimized > div {
 }
 
 body .q-header {
-  padding: 3px 10px 8px;
-  padding-top: calc(3px + env(safe-area-inset-top, 0));
+  padding: 1px 10px 5px;
+  padding-top: calc(2px + env(safe-area-inset-top, 0));
   background: $secondary;
 
   &.with-shadow {

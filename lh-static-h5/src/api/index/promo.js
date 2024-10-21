@@ -316,3 +316,78 @@ export function getNBAClaimHistory() {
 export function claimNBABonus(matchId) {
   return eventapi.post(`/session/nba-match-preseason/claim?matchId=${matchId}`)
 }
+
+export function getBelgradeInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/bb-dacha-belgrade/init?v=${randNum}`, qs.stringify({ promoCode }));
+}
+
+export function claimBelgradeBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/bb-dacha-belgrade/claimBonus?v=${randNum}`, qs.stringify({ promoCode }));
+}
+
+export function getYallaCompassInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-deposit/init?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+
+export function claimYallaCompassBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+
+export function getElisaGiftInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-deposit/init?promoCode=lh1-yalla-compass&v=${randNum}`);
+  // const randNum = Math.floor(Math.random() * 1000) + 1;
+  // return eventapi.get(`/session/elisa-gift/init?v=${randNum}`);
+}
+
+export function claimElisaGiftBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
+  // const randNum = Math.floor(Math.random() * 1000) + 1;
+  // return eventapi.post(`/session/elisa-gift/claimBonus?v=${randNum}`);
+}
+export function getGlobalTreasureDetail(promoCode) {
+  return eventapi.get(`/session/treasure-key/init`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function openGlobalTreasure(promoCode, treasure) {
+  return eventapi.post(`/session/treasure-key/claimBonus`, qs.stringify({ promoCode, treasure }));
+}
+
+export function getGlobalCheckInRecord(promoCode) {
+  return eventapi.get(`/session/treasure-key/init-check-in`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getGlobalOpenRecord(promoCode, page) {
+  console.log(page);
+  return eventapi.get(`/session/treasure-key/treasure-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
+}
+
+export function getGlobalKeyRecord(promoCode, page) {
+  return eventapi.get(`/session/treasure-key/key-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
+}
+

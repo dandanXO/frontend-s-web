@@ -6,10 +6,15 @@
       transition-next="jump-left"
       swipeable
       animated
+      infinite
+      :autoplay="autoplay"
       class="text-white rounded-borders"
       :class="{ bg: hasBg }"
+      @transition="onTransition"
+      :height="carouselHeight"
     >
       <q-carousel-slide
+        :ref="setSlideRef(i)"
         v-for="(carouselItem, i) in carouselData"
         :key="carouselItem.id"
         :name="i"
@@ -17,12 +22,21 @@
       >
         <div
           v-if="
-            carouselItem.media &&
+            carouselItem.media.data?.attributes &&
             carouselItem.media.data.attributes.ext === '.mp4'
           "
           class="video-container"
+          :class="{ 'min-height': carouselData.length > 1 }"
         >
-          <video style="width: 100%" controls autoplay>
+          <video
+            ref="carouselVideo"
+            style="width: 100%; background-color: black"
+            controls
+            autoplay
+            @play="autoplay = false"
+            @pause="autoplay = false"
+            height="260px"
+          >
             <source
               :src="`${BASE_STRAPI_URL}${carouselItem.media.data.attributes.url}`"
               type="video/mp4"
@@ -32,13 +46,13 @@
         </div>
         <div
           v-else-if="
-            carouselItem.media &&
+            carouselItem.media.data?.attributes &&
             (carouselItem.media.data.attributes.ext === '.jpg' ||
               carouselItem.media.data.attributes.ext === '.png')
           "
           class="carousel-media"
           :style="{
-            backgroundImage: `url(${carouselItem.media.url})`,
+            backgroundImage: `url(${BASE_STRAPI_URL}${carouselItem.media.data.attributes.url})`,
           }"
         ></div>
         <div v-else-if="carouselItem.videoUrl" class="carousel-media">
@@ -50,12 +64,16 @@
           ></iframe>
         </div>
         <div class="carousel-description q-pt-xs q-pl-xs q-pr-xs">
-          <span>{{ carouselItem.description }}111</span>
+          <span>{{ carouselItem.description }}</span>
         </div>
       </q-carousel-slide>
     </q-carousel>
 
-    <div class="carousel-nav" :class="{ bg: hasBg }">
+    <div
+      v-if="carouselData.length > 1"
+      class="carousel-nav"
+      :class="{ bg: hasBg }"
+    >
       <span
         v-for="(carouselItem, i) in carouselData"
         :key="i"
@@ -67,15 +85,63 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, nextTick } from "vue";
+import { BASE_STRAPI_URL } from "src/constants/constants";
 
 const props = defineProps(["carouselData", "hasBg", "margin"]);
 const slide = ref(0);
+const carouselVideo = ref(null);
+const autoplay = ref(false);
+const carouselHeight = ref("360px");
+const slideRefs = ref([]);
+
+onMounted(async () => {
+  await nextTick();
+  nextTick(() => {
+    adjustCarouselHeight();
+  });
+
+  if (props.carouselData.length > 1) {
+    checkAutoplay();
+  }
+});
 
 const onCarouselNavDotClick = (i) => {
   if (slide.value != i) {
     slide.value = i;
   }
+};
+
+const setSlideRef = (index) => {
+  return (el) => {
+    slideRefs.value[index] = el;
+  };
+};
+
+const adjustCarouselHeight = () => {
+  const activeSlide = slideRefs.value[slide.value];
+
+  if (activeSlide && activeSlide.$el) {
+    let height = 0;
+    for (let i = 0; i < activeSlide.$el.children.length; i++) {
+      height += activeSlide.$el.children[i].clientHeight;
+    }
+    carouselHeight.value = `${height + 8}px`;
+  }
+};
+
+const checkAutoplay = () => {
+  if (carouselVideo.value && carouselVideo.value[0]) {
+    autoplay.value = carouselVideo.value[0].paused ? 5000 : false;
+  } else {
+    autoplay.value = 5000;
+  }
+};
+
+const onTransition = (index) => {
+  slide.value = index;
+  adjustCarouselHeight();
+  checkAutoplay();
 };
 </script>
 
@@ -88,7 +154,11 @@ const onCarouselNavDotClick = (i) => {
 
 .video-container {
   width: 100%;
-  min-height: 200px;
+  padding-top: 4px;
+  // min-height: 170px;
+  // &.min-height {
+  //   min-height: 200px;
+  // }
 }
 
 .carousel-media {
@@ -117,7 +187,6 @@ const onCarouselNavDotClick = (i) => {
 
 .q-carousel {
   background-color: #131313;
-  height: auto;
   &.bg {
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   }

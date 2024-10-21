@@ -35,8 +35,7 @@
           </li>
           <li>
             <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE"
-            >
+              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">
               IE9浏览器
             </a>
           </li>
@@ -182,6 +181,7 @@ export default defineComponent({
   font-size: 0.8rem;
   position: relative;
   background-color: #f3f7fd;
+
   .top-footer {
     background-color: $footer-black;
     padding-bottom: 16px;
@@ -196,31 +196,38 @@ export default defineComponent({
       align-items: flex-start;
       width: 100%;
       max-width: $maxwidth;
+
       .top-ft-left {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         padding: 10px;
+
         .icon {
           width: 40px;
           height: 40px;
           background-repeat: no-repeat;
           background-image: url("../../assets/footer/download.png");
           cursor: pointer;
+
           &.firefox {
             background-position: -40px -160px;
+
             &.hovering {
               background-position-x: -137px;
             }
           }
+
           &.chrome {
             background-position: -40px -110px;
+
             &.hovering {
               background-position-x: -137px;
             }
           }
         }
       }
+
       .title {
         color: #a4aabb;
         text-decoration: none;
@@ -228,45 +235,55 @@ export default defineComponent({
         display: block;
         white-space: nowrap;
       }
+
       .top-ft-rgt {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         gap: 15px;
         flex-wrap: wrap;
+
         .s1 {
           color: #ffffff;
           font-size: 16px;
         }
+
         img {
           height: 25px;
           // filter: grayscale(1);
           filter: brightness(0.5);
           mix-blend-mode: luminosity;
+
           &:hover {
             mix-blend-mode: normal;
             filter: brightness(1);
           }
         }
+
         .recBrowser {
           width: 40px;
           height: 40px;
           background-image: url(../../assets/footer/download.png);
           background-position-y: -2px;
+
           &.bchrome {
             background-position: -40px -110px;
+
             &:hover {
               background-position-x: -137px;
             }
           }
+
           &.bfirefox {
             background-position: -40px -160px;
+
             &:hover {
               background-position-x: -137px;
             }
           }
         }
       }
+
       .brush {
         width: 130px;
         height: 40px;
@@ -278,6 +295,7 @@ export default defineComponent({
         cursor: pointer;
         font-size: 0.8rem;
         color: #c2c2c2;
+
         svg {
           width: 20px;
           fill: #c2c2c2;
@@ -285,8 +303,10 @@ export default defineComponent({
       }
     }
   }
+
   .bottom-footer {
     background: $footer-black;
+
     .bottom-footer-inner {
       color: #ffffff;
       display: flex;
@@ -295,9 +315,11 @@ export default defineComponent({
       margin: 0 auto;
       padding: 20px 0px;
       gap: 50px;
+
       img {
         height: 60px;
       }
+
       ul {
         width: 100%;
         display: flex;
@@ -307,6 +329,7 @@ export default defineComponent({
         margin: 0;
         padding: 0;
         flex-wrap: wrap;
+
         li {
           a {
             display: block;
@@ -318,6 +341,7 @@ export default defineComponent({
         }
       }
     }
+
     .sitemap {
       max-width: $maxwidth;
       margin: 0px auto;
@@ -325,6 +349,7 @@ export default defineComponent({
       display: flex;
       justify-content: space-evenly;
       align-items: flex-start;
+
       ul {
         display: flex;
         flex-direction: column;
@@ -333,18 +358,21 @@ export default defineComponent({
         gap: 5px;
         margin: 0;
         padding: 0;
+
         li {
           list-style: none;
           cursor: pointer;
           font-size: 12px;
           color: #899dc7;
           letter-spacing: -0.46px;
+
           &:first-child {
             font-family: PingFangSC-Semibold;
             font-size: 14px;
             color: #fff;
             letter-spacing: -0.45px;
           }
+
           a {
             text-decoration: none;
             color: #899dc7;
@@ -352,6 +380,7 @@ export default defineComponent({
         }
       }
     }
+
     .tagline {
       padding: 10px;
       text-align: center;

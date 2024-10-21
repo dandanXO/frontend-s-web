@@ -1,36 +1,53 @@
 <template>
   <div class="btn-container">
-    <div class="go-deposit-btn" :class="isFtdPromoEnded ? 'is-disabled' : ''" @click="gotoDepositPage(param)">
+    <div class="go-deposit-btn" :class="isFtdEnded ? 'is-disabled' : ''" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
       <span>{{ $t("promo_br1SlotFtd.joinNow") }}</span>
     </div>
 
-    <div class="text-warning" v-if="isFtdPromoEnded">
+    <div class="text-warning" v-if="isFtdEnded">
       {{ $t("promo_br1SlotFtd.sorryDesc") }}
     </div>
   </div>
 </template>
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { userStore } from "src/stores";
+import { api } from "boot/axios";
 
 const router = useRouter();
-
-const store = userStore();
+const isFtdEnded = ref(false)
 
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
-onMounted(() => {});
+const loadAppTabs = () => {
+  api
+    .get("/opt-session/getAppTabs")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        const { data } = res;
+        if (data && data.hasOwnProperty("ftd")) {
+          isFtdEnded.value = data.ftd;
+          store.ftd = data.ftd;
+        }
+      }
+    })
+    .catch((e) => {});
+};
 
-const isFtdPromoEnded = computed(() => {
-  if (store.ftd === true) {
-    return true;
-  }
-
-  return false;
+onMounted(() => {
+  loadAppTabs();
 });
+
+// const isFtdPromoEnded = computed(() => {
+//   if (store.ftd === true) {
+//     return true;
+//   }
+
+//   return false;
+// });
 const gotoDepositPage = () => {
   const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
   router.push(redirectPage);

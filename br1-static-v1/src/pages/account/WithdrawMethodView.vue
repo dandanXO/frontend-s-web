@@ -382,7 +382,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
+                <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
@@ -603,7 +603,7 @@ const filterCards = (type) => {
       if (res.code === 0) {
         let filteredData = [];
         if (isBankType.value === "BANK") {
-          const bankType = type.bankType;
+          const bankType = type.bankType ? type.bankType : "BANK";
           filteredData = res.data.filter((item) => item.bankType === bankType);
           const bankCodes = filteredBankList.value.map((bank) => bank.code);
           filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
@@ -718,7 +718,7 @@ const submitWithdraw = () => {
     amountRef.value.validate();
 
     $q.loading.show({
-      message: "Withdrawing..."
+      message: t("btn.withdrawing")
     });
 
     // cardRef.value.hasError ||
@@ -771,7 +771,7 @@ const submitWithdrawBank = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawSuceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -802,7 +802,7 @@ const withdrawGo = (callback) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawSuceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -835,7 +835,7 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      message: t("notify.fillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/withdraw`);
@@ -849,7 +849,7 @@ const resetSelectedMethod = () => {
   isAddNewAccount.value = false;
 };
 
-const isBankType = ref();
+const isBankType = ref("BANK");
 
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
@@ -901,7 +901,7 @@ const isValidCardNumber = () => {
     return t("form.phone_rules_03");
   }
   const digitCount = cardNumber.match(/\d/g)?.length || 0;
-  if (digitCount !== 11) {
+  if (digitCount !== 8) {
     return t("form.phone_rules_02");
   }
   // } else if (typeVal.value === "email") {

@@ -63,6 +63,36 @@
       </div>
     </q-page-sticky>
 
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+      <div>
+        <!-- <div class="hb-close">
+          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />
+        </div> -->
+        <div>
+          <q-carousel
+            class="hb-float"
+            :navigation="hbPromo.length > 1 ? true : false"
+            v-model="hbSlide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+            :autoplay="3000"
+          >
+            <q-carousel-slide
+              v-for="(promo, i) in hbPromo"
+              :key="i"
+              :name="i"
+              @click="gotoFloatPromo(promo)"
+              :img-src="`${imgURL}/promo/${promo.icon}`"
+            >
+            </q-carousel-slide>
+          </q-carousel>
+        </div>
+      </div>
+    </q-page-sticky>
+
     <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
@@ -2749,6 +2779,43 @@ const transformTitle = (title) => {
   return title === "Fishing" ? "Minigames" : title;
 };
 
+const hbDragPos = ref([10, 120]);
+const isHbShow = ref(true);
+const hbSlide = ref(0);
+const hbPromo = ref([]);
+
+const checkHbPromo = () => {
+  api
+    .get("/redirect")
+    .then((res) => {
+      return res;
+    })
+    .then((data) => {
+      hbPromo.value = data.data;
+    });
+};
+
+const gotoFloatPromo = (val) => {
+  if (val.type === "PROMO") {
+    if (store.hasToken()) {
+      if (val.code.indexOf("url|") > -1) {
+        const page = val.code.replace("url|", "");
+        router.push(page);
+      } else if (val.code === "/activity-details") {
+        router.push(`/activity-details`);
+      } else {
+        router.push(`/promo?name=${val.code}`);
+      }
+    } else {
+      router.push("/promo");
+    }
+  }
+
+  if (val.type === "DOMAIN") {
+    window.open(val.code, "_blank");
+  }
+};
+
 let intervalId;
 
 onActivated(() => {
@@ -2765,6 +2832,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadCustomerAddress();
+  checkHbPromo();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -3798,6 +3866,28 @@ onBeforeUnmount(() => {
       display: block;
       width: 100%;
     }
+  }
+}
+
+.hb-float {
+  position: relative;
+  height: 100px !important;
+  width: 100px;
+  background: transparent;
+  overflow: hidden;
+
+  .q-carousel__slide {
+    height: 100px !important;
+    width: 100px;
+    padding: 0px;
+  }
+
+  img {
+    height: 100px !important;
+  }
+
+  .q-carousel__control {
+    display: none;
   }
 }
 

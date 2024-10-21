@@ -41,6 +41,8 @@ router.beforeEach(async (to, _, next) => {
           next(`/lh/login?redirect=${to.path}`)
         } else if (siteCode === 'dy2') {
           next(`/dy/login?redirect=${to.path}`)
+        } else if (siteCode === 'xf1') {
+          next(`/xf/login?redirect=${to.path}`)
         } else if (siteCode === 'iw2') {
           next(`/ind2/login?redirect=${to.path}`)
         } else if (siteCode === 'ind') {

@@ -467,7 +467,7 @@ function initPay() {
   let promoParam = "";
 
   if (route.query.extra === "true") {
-    // promoParam = "&promo=1";
+    promoParam = "&promo=1";
     isPrivilege.value = true;
     selectedItemPrivilegeId.value = store.extraPrivilegeId;
   } else {
@@ -675,6 +675,7 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
+  if (btnLoading.value) return;
   btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
@@ -937,6 +938,8 @@ const loadAppTabs = () => {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
 
+        selectedItemPrivilegeId.value = store.extraPrivilegeId;
+
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
       if (data && data.hasOwnProperty("ftd")) {
@@ -945,7 +948,6 @@ const loadAppTabs = () => {
     }
   });
 };
-
 
 const convertToTwoDecimalAmount = (amount) => {
   if (amount < 3) {

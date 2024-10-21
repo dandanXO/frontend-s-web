@@ -104,6 +104,7 @@ export default {
     withdrawalAmount_rules_02: "Withdraw Amount Must Be Greater Than 0",
     withdrawalAmount_rules_03: "Withdraw Amount Insufficient",
     withdrawalAmount_rules_04: "Withdraw Amount Must In Between",
+    withdrawalAmount_rules_05: "Withdraw Amount Must Not Have Decimals",
     realTimeExchangeRates: "Real Time Exchange Rates",
     estimatedArrival: "Estimated arrival",
     usdtSpecialNote:
@@ -557,6 +558,7 @@ export default {
     603: "Token not found",
     608: "The current user's operations are too frequent. Please try again.",
     609: "Platform in maintenance",
+    610: "Forbidden to participate game, please contact the administrator",
     604: "Logged in successfully",
     707: "Insufficient balance",
     710: "Insufficient balance",

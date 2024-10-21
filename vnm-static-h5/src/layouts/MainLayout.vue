@@ -570,7 +570,7 @@ svg path {
 
 .header-lang {
   position: absolute;
-  top: 8px;
+  top: 4px;
   right: 12px;
 }
 

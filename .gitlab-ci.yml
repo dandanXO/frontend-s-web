@@ -586,6 +586,13 @@ deploy-lh-landing:
 
 #===============================================================================================
 
+deploy-lh-landing-v1:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v1
+
+#===============================================================================================
+
 deploy-lh-landing-v2:
   extends: .s3-deploy
   variables:
@@ -819,6 +826,34 @@ build-image-pak-static-v2:
     PROJECT: pak-static-v2
   needs:
     - build-pak-static-v2
+
+#===============================================================================================
+
+build-pk3-static-v3:
+  extends: .build-projects
+  variables:
+    PROJECT: pk3-static-v3
+
+build-image-pk3-static-v3:
+  extends: .docker-build
+  variables:
+    PROJECT: pk3-static-v3
+  needs:
+    - build-pk3-static-v3
+
+#===============================================================================================
+
+build-mx1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: mx1-static-v1
+
+build-image-mx1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: mx1-static-v1
+  needs:
+    - build-mx1-static-v1
 
 #===============================================================================================
 

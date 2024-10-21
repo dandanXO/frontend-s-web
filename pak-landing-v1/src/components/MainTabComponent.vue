@@ -60,9 +60,11 @@
         <div class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2]?.media"
+              v-if="galleryItems[i * 2]?.media.data?.attributes?.url"
               alt=""
-              :src="galleryItems[i * 2]?.media.url"
+              :src="`${BASE_STRAPI_URL}${
+                galleryItems[i * 2]?.media.data.attributes.url
+              }`"
             />
             <iframe
               v-else-if="galleryItems[i * 2]?.videoUrl"
@@ -77,9 +79,11 @@
         <div v-if="galleryItems[i * 2 + 1]" class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2 + 1].media"
+              v-if="galleryItems[i * 2 + 1].media.data?.attributes?.url"
               alt=""
-              :src="galleryItems[i * 2 + 1].media.url"
+              :src="`${BASE_STRAPI_URL}${
+                galleryItems[i * 2 + 1].media.data.attributes.url
+              }`"
             />
             <iframe
               v-else-if="galleryItems[i * 2 + 1]?.videoUrl"
@@ -92,11 +96,23 @@
         </div>
         <div v-else class="image-row col-6"></div>
 
-        <div class="description-row col-6">
+        <div
+          v-if="
+            galleryItems[i * 2]?.media.data?.attributes?.url &&
+            galleryItems[i * 2]
+          "
+          class="description-row col-6"
+        >
           <span>{{ galleryItems[i * 2]?.description }}</span>
         </div>
 
-        <div v-if="galleryItems[i * 2 + 1]" class="description-row col-6">
+        <div
+          v-if="
+            galleryItems[i * 2 + 1]?.media.data?.attributes?.url &&
+            galleryItems[i * 2 + 1]
+          "
+          class="description-row col-6"
+        >
           <span>{{ galleryItems[i * 2 + 1].description }}</span>
         </div>
       </template>
@@ -107,6 +123,7 @@
 <script setup>
 import { computed } from "vue";
 import CarouselComponent from "src/components/CarouselComponent.vue";
+import { BASE_STRAPI_URL } from "src/constants/constants";
 
 const props = defineProps(["tabData"]);
 

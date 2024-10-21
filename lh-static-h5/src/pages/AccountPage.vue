@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="right-sect">
-            <q-btn label="存款" class="btn-main btn-pointer" style="" @click="openDeposit" />
+            <q-btn label="存款" class="btn-main btn-pointer deposit-btn" style="" @click="openDeposit" />
 
             <q-btn label="提款" class="btn-main btn-pointer" style="" @click="openWithdraw" />
 

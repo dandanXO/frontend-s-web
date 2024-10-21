@@ -111,8 +111,9 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
-  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
+
 
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);

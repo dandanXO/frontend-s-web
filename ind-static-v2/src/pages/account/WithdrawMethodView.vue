@@ -276,7 +276,10 @@
         <div class="fund-container q-mt-sm q-mb-md">
           <div>
             <span class="fund-title">Available:</span>
-            {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+            <q-spinner v-if="isRefreshRemainWager" />
+            <span v-else>
+              {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+            </span>
           </div>
           <div v-if="isUSDT">
             ≈ {{ convertToTwoDecimalAmount(withdrawInfo.amount / selectedMethodItem.currencyRate) }} USDT
@@ -305,7 +308,11 @@
               <div class="desc">Remain Wagers</div>
             </div>
             <div class="desc desc_white">
-              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+              <div class="remain-wager-wrapper" @click="refreshRemainWager" >
+                <q-spinner v-if="isRefreshRemainWager" />
+                <span v-else>{{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}</span>
+                <img class="refresh-btn-img" :class="{rotate: isRefreshRemainWager}" src="../../assets/images/account/refresh-icon.svg"/>
+              </div>
             </div>
           </div>
         </div>
@@ -461,6 +468,7 @@ const currencyType = ref("");
 const networkType = ref("");
 const currencyOptions = ref([]);
 const networkOptions = ref([]);
+const isRefreshRemainWager = ref(false);
 
 const refreshBalance = () => {
   if (store.token) store.getBalance();
@@ -482,6 +490,30 @@ const withdrawalMethods = reactive({
 
 const paymentMethodsItems = ref([]);
 const isUSDT = ref(false);
+
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  let currencyStr = "";
+  if (withdrawType.value === "usdt") {
+    currencyStr = "?currency=USDT";
+  } else {
+    currencyStr = "?currency=INR";
+  }
+
+  api.get(`/session/withdraw/withdrawableBalance/refresh${currencyStr}`).then((res) => {
+    selectedMethodItem.value = {
+      ...selectedMethodItem.value,
+      ...res.data,
+    }
+
+    isRefreshRemainWager.value = false;
+  }).catch(() => {
+    isRefreshRemainWager.value = false;
+  }).finally(() => {
+    isRefreshRemainWager.value = false;
+  })
+}
 
 const getWithdrawalMethods = () => {
   isLoadingInitPay.value = true;
@@ -1424,7 +1456,32 @@ const convertToTwoDecimalAmount = (amount) => {
             color: #ffffff;
           }
         }
+
+        .remain-wager-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          cursor: pointer;
+
+          .refresh-btn-img {
+            width: 20px;
+            height: 20px;
+
+            &.rotate {
+              animation: rotateTwice 1s infinite linear;
+            }
+          }
+        }
       }
+    }
+  }
+
+  @keyframes rotateTwice {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 

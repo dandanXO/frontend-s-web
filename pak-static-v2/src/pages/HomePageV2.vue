@@ -2172,10 +2172,12 @@ function loadData() {
     .catch(() => {});
 }
 
-var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
-var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+// var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+// var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
 const getPlatList = () => {
+  const platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
+  const platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
   cached
     .get(platformApiKey, () =>
       api.get(platformApiUrl).then((res) => {
@@ -2662,6 +2664,15 @@ watch(
   (newHash) => {
     if (newHash) {
       checkHash();
+    }
+  }
+);
+
+watch(
+  () => store.token,
+  (newToken, oldToken) => {
+    if (!oldToken && newToken) {
+      getPlatList();
     }
   }
 );

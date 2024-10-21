@@ -7,7 +7,6 @@ import { getCSAFromServer } from "@/api/index/site";
 import { ElMessage } from "element-plus";
 import vueI18n from "@/i18n";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-// import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
 
@@ -63,23 +62,6 @@ export const userStore = defineStore("userStore", {
       this.token = token;
       this.getBalance();
       this.getMemberInfo();
-    },
-    telephoneLogin(loginInfo) {
-      return mobileLogin(loginInfo)
-        .then((ret) => {
-          if (ret.code === 0) {
-            this.token = ret.data;
-            this.getBalance();
-            this.getMemberInfo();
-          } else {
-            ElMessage.error(ret.message);
-            // throw new Error(ret.message);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          // message.error(err.message);
-        });
     },
     getUnreadMail() {
       getUnreadTotal().then((response) => {

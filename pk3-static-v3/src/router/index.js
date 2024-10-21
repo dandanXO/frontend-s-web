@@ -5,8 +5,8 @@ import { useUI } from "stores/ui";
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
-import { Platform } from "quasar";
-
+import { Platform, SessionStorage } from "quasar";
+import { isAndroid } from "boot/utils";
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -45,7 +45,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/register" ||
       to.path === "/forgot-password" ||
       to.path === "/withdraw" ||
-      to.path === "/deposit"
+      to.path === "/deposit" ||
+      to.path === "/promotion"
     ) {
       ui.hiddenFooter();
     } else {
@@ -54,6 +55,21 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (Platform.is.capacitor && Platform.is.android) {
       StatusBar.hide();
+    }
+
+    if (from.path === "/promotion") {
+      // console.log(to);
+      window.location.href = "xfapp:" + to.fullPath;
+    }
+
+    if (to.path === "/promotion") {
+      // debugger;
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+      user.token = to.query.token;
     }
 
     // if (to.name === "referCode") {

@@ -722,7 +722,7 @@ import {
 import { getVipList } from '../../../api/vip'
 import { selectList } from '../../../api/risk-level'
 import { getFinancialLevels } from '../../../api/financial-level'
-import { getActivePrivilegeInfo } from '../../../api/privilege-info'
+import { getActivePrivilegeInfoBySiteId } from '../../../api/privilege-info'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
 import { selectIpLabelAll } from '../../../api/ip-label'
@@ -1150,7 +1150,8 @@ async function loadFinancialLevels(siteId) {
 }
 
 async function loadPrivilegeInfos() {
-  const { data: privilegeInfo } = await getActivePrivilegeInfo()
+  const siteId = request.siteId
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(siteId)
   privilegeInfoList.list = privilegeInfo
 }
 

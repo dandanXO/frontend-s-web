@@ -36,6 +36,7 @@
           </div>
           <div class="text-2">
             <router-link
+              v-if="hasPermission(['sys:withdraw:simple:list'])"
               :to="{
                 path: `/withdraw/withdraw-process-simple/apply`,
                 force: true,
@@ -47,6 +48,23 @@
               >
                 {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}:
                 <span>{{ applyWithdrawCount }}</span>
+              </el-link>
+            </router-link>
+          </div>
+          <div class="text-2">
+            <router-link
+              v-if="hasPermission(['sys:withdraw:simple:list:risk'])"
+              :to="{
+                path: `/withdraw/withdraw-process-simple/apply-risk`,
+                force: true,
+              }"
+            >
+              <el-link
+                :disabled="!hasPermission(['sys:withdraw:simple:list:risk'])"
+                type="primary"
+              >
+                {{ $t('realtimeStatistics.APPLY_WITHDRAW_RISK') }}:
+                <span>{{ applyWithdrawRiskCount }}</span>
               </el-link>
             </router-link>
           </div>
@@ -76,8 +94,7 @@
         trigger="click"
       >
         <div class="avatar-wrapper">
-          <!-- eslint-disable -->
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
         </div>
         <template #dropdown>
           <el-dropdown-menu>
@@ -122,7 +139,7 @@ import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
-import { hasPermission, hasRole } from '@/utils/util'
+import { hasPermission, hasRole } from "@/utils/util";
 import { showAlert } from '../../../api/member'
 // import { getSiteListSimple } from '@/api/site'
 /* eslint-disable */
@@ -159,7 +176,7 @@ export default {
       return store.state.user.name
     })
     const sites = computed(() => {
-      return store.state.user.sites.filter(site => site.id !== 9999);
+      return store.state.user.sites.filter(site => site.id !== 9999)
     })
     // const sites = ref([])
     // const loadSites = async () => {
@@ -197,18 +214,17 @@ export default {
       list: [],
     })
 
-    const selectedSite = ref(null)
-    const selectedData = ref(null)
-    const applyWithdrawCount = ref(0)
-    const message = ref(null)
+    const selectedSite = ref(null);
+    const selectedData = ref(null);
+    const applyWithdrawCount = ref(0);
+    const applyWithdrawRiskCount = ref(0);
+    const message = ref(null);
 
     async function loadMemberStatistics() {
-      const response = await getMemberStatistics()
-      const { data: memberStatistics } = response
-      const parsedStatistics = JSON.parse(memberStatistics)
-      statisticsList.list = Array.isArray(parsedStatistics)
-        ? parsedStatistics
-        : []
+      const response = await getMemberStatistics();
+      const { data: memberStatistics } = response;
+      const parsedStatistics = JSON.parse(memberStatistics);
+      statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
     }
 
     function updateData() {
@@ -221,12 +237,17 @@ export default {
 
     function updateApplyWithdrawCount() {
       applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0
+      applyWithdrawRiskCount.value = sessionStorage.getItem('WITHDRAW_RISK') || 0
       updateSiteTitle()
     }
 
-    let intervalId = null;
+    let intervalId = null; // To store the interval ID and control blinking
     function updateSiteTitle() {
       originalSiteTitle = document.querySelector("title").innerText
+      
+      const existingCountRegex = /\(\d+\)$/; 
+      originalSiteTitle = originalSiteTitle.replace(existingCountRegex, "").trim();
+
       let blinkingTitle = originalSiteTitle + ` (${applyWithdrawCount.value})`;
 
       if (intervalId !== null) {
@@ -243,7 +264,7 @@ export default {
         document.title = originalSiteTitle;
       }
     }
-
+    
     const reload = inject('reload')
     const changeSite = async () => {
       const getSelectedSite = sites.value.find(
@@ -264,7 +285,6 @@ export default {
         clearInterval(intervalId);
         intervalId = null;
       }
-
       document.title = getSiteTitle(getSelectedSite.id)
       ElMessage({
         message: `switch site to ` + getSelectedSite.siteName,
@@ -293,22 +313,19 @@ export default {
     async function loadMenu(){
       const { data : menus } = await loadAuthMenu()
       await store.dispatch(MenuActionType.ACTION_SET_ROUTES, menus);
-        const mappedPaths = mapMenuPaths(menus);
-        const currentRoute = router.currentRoute.value;
 
-        const isRouteMatched = mappedPaths.includes(currentRoute.path);
-        if (!isRouteMatched) {
-            router.push({ path: '/welcome' });
-        }
+      const mappedPaths = mapMenuPaths(menus);
+      const currentRoute = router.currentRoute.value;
+
+      const isRouteMatched = mappedPaths.includes(currentRoute.path);
+      if (!isRouteMatched) {
+          router.push({ path: '/welcome' });
+      }
     }
-    // logout: async () => {
-    //     await store.dispatch(UserActionTypes.ACTION_LOGOUT)
-    //     location.reload()
-    //   },
 
     async function showAlertMessage() {
       const response = await showAlert()
-      const { data: alert } = response
+      const { data: alert } = response;
       if (alert) {
         message.value = t('fields.' + alert)
       }
@@ -334,10 +351,10 @@ export default {
       // }
       // 根据情况捞取所需的统计资料
       if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
-        loadMemberStatistics()
-        updateApplyWithdrawCount()
-      } else if (hasRole(['ADMIN', 'MANAGER'])) {
-        loadMemberStatistics()
+        loadMemberStatistics();
+        updateApplyWithdrawCount();
+      } else if (hasRole(["ADMIN", "MANAGER"])) {
+        loadMemberStatistics();
       }
       if (hasPermission(['sys:member:alert'])) {
         showAlertMessage()
@@ -346,27 +363,45 @@ export default {
 
     watch(statisticsList, () => {
       if (statisticsList.list.length > 0) {
-        statisticsList.list.sort((a, b) => b.APPLY_WITHDRAW - a.APPLY_WITHDRAW)
+        statisticsList.list.sort((a, b) => b.APPLY_WITHDRAW - a.APPLY_WITHDRAW);
       }
-      updateData()
-    })
+      updateData();
+    });
 
-    watch(
-      () => useStore().state.socket.event,
-      () => {
-        const memberStatistics = useStore().state.socket.event.filter(
-          e => e.event === 'MEMBER_STATISTICS'
-        )
-        if (memberStatistics.length > 0) {
-          const parsedStatistics = JSON.parse(memberStatistics[0].statistics)
-          statisticsList.list = Array.isArray(parsedStatistics)
-            ? parsedStatistics
-            : []
+    // watch(() => useStore().state.socket.event, () => {
+    //   const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
+    //   if (memberStatistics.length > 0) {
+    //     const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
+    //     statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+    //   }
+    //   updateApplyWithdrawCount();
+    // }, { deep: true });
+
+    const previousStatisticsMap = {};
+    watch(() => useStore().state.socket.event, () => {
+      const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
+      if (memberStatistics.length > 0) {
+        const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
+        
+        const siteId = String(useStore().state.user.siteId);
+        const getStatisticBySiteId = parsedStatistics.find(e => String(e.siteId) === siteId);
+
+        // Store previous data specific to each siteId
+        if (!previousStatisticsMap[siteId]) {
+          previousStatisticsMap[siteId] = [];
         }
-        updateApplyWithdrawCount()
-      },
-      { deep: true }
-    )
+
+        if (getStatisticBySiteId === undefined) {
+          // If undefined, keep the previous statistics for this specific siteId
+          statisticsList.list = previousStatisticsMap[siteId];
+        } else {
+          // If valid, update and store the new data for this siteId
+          statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+          previousStatisticsMap[siteId] = statisticsList.list;
+        }
+        updateApplyWithdrawCount();
+      }
+    }, { deep: true });
 
     return {
       sidebar,
@@ -386,11 +421,13 @@ export default {
       updateData,
       changeSite,
       applyWithdrawCount,
+      applyWithdrawRiskCount,
       updateApplyWithdrawCount,
       message,
     }
   },
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -401,7 +438,7 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
-  display: flex;
+  display:flex;
   justify-content: flex-start;
 
   .hamburger-container {
@@ -428,10 +465,10 @@ export default {
   }
 
   .right-menu {
-    margin-left: auto;
+    margin-left:auto;
     //float: right;
     height: 100%;
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: flex-start;
     gap: 4px;
@@ -464,7 +501,7 @@ export default {
         //margin-top: 5px;
         margin-right: 16px;
         margin-left: 16px;
-        width: 40px;
+        width:40px;
         height: 40px;
         position: relative;
 
@@ -484,62 +521,62 @@ export default {
         }
       }
     }
-    .statistics-container {
-      display: flex;
+    .statistics-container{
+      display:flex;
       align-items: center;
       //margin-top: 5px;
       //right: 200px;
       //position: absolute;
 
-      .el-select {
+      .el-select{
         line-height: 36px;
         height: 36px;
       }
     }
 
     .key-value-container {
-      display: flex;
+      display:flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 5px;
+      gap:5px;
       margin-right: 16px;
     }
 
-    .flex-div {
-      display: flex;
+    .flex-div{
+      display:flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 10px;
+      gap:10px;
 
-      .text-1 {
+      .text-1{
         font-size: 14px;
         line-height: 14px;
         margin-right: 8px;
         color: rgba(0, 0, 0, 0.45);
       }
 
-      .text-2 {
+      .text-2{
         color: rgba(0, 0, 0, 0.8);
 
-        span {
+        span{
           color: #000;
           font-weight: bold;
         }
       }
-      .text-3 {
+      .text-3{
         color: rgba(0, 0, 0, 0.8);
 
-        span {
+        span{
           color: #000;
           font-weight: bold;
         }
       }
     }
 
-    .green-circle-dot {
-      display: inline-block;
+    .green-circle-dot{
+      display:inline-block;
       width: 8px;
-      height: 8px;
+      height:8px;
       background: #67c23a;
       border-radius: 50%;
     }

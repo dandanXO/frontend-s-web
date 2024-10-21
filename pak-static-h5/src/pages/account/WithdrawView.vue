@@ -201,7 +201,8 @@
                         (val >= selectedWithdrawalMethod.withdrawMin && val <= selectedWithdrawalMethod.withdrawMax) ||
                         `${$t('form.withdrawalAmount_rules_04')} ${selectedWithdrawalMethod.withdrawMin} - ${
                           selectedWithdrawalMethod.withdrawMax
-                        }`
+                        }`,
+                      (val) => Number.isInteger(+val) || $t('form.withdrawalAmount_rules_05')
                     ]"
                     hide-bottom-space
                   ></q-input>
@@ -247,9 +248,15 @@
                 {{
                   selectedWithdrawalMethod &&
                   (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
+                    (
+                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                      selectedWithdrawalMethod.withdrawFee
+                    ).toFixed(2) < 0)
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                    : (
+                        withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                        selectedWithdrawalMethod.withdrawFee
+                      ).toFixed(2)
                 }}
                 USDT
               </span>
@@ -330,6 +337,7 @@
           </q-btn>
         </div>
       </template>
+      <div v-if="selectedWithdrawalMethod.tips" class="q-mt-md q-mb-sm" v-html="selectedWithdrawalMethod.tips"></div>
 
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
@@ -972,6 +980,7 @@ const openWithdrawTutorialVideo = () => {
   text-decoration: underline;
 }
 .step-desc-div {
+  margin-bottom: 105px;
   color: #bacef1;
 
   p {

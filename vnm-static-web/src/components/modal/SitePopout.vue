@@ -35,10 +35,15 @@ import { getSitePopoutList } from "@/api/personal/common";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import { useRouter } from "vue-router";
+import { uiStore } from "@/store/ui";
+import { EDITION } from "@/constant/edition";
 
 const router = useRouter();
+const ui = uiStore();
+
 const popoutList = ref([]);
 const selectedItemIndex = ref();
+
 const selectedItem = computed(() =>
   popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined
 );
@@ -49,7 +54,12 @@ const onClickPopoutImg = (path) => {
 };
 
 onMounted(() => {
-  getSitePopoutList().then((res) => {
+  let siteType = "main";
+  switch (ui.edition) {
+    case EDITION.SLOT:
+      siteType = "slot";
+  }
+  getSitePopoutList(siteType).then((res) => {
     if (res.code === 0) {
       popoutList.value = res.data;
 

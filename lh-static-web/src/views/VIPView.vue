@@ -1,5 +1,5 @@
 <template>
-  <div class="vip-container test-con1">
+  <div class="vip-container">
     <div class="header-section">
       <img src="../assets/vip/vip-header.png" class="vip-header" />
     </div>
@@ -79,186 +79,108 @@
             </div>
           </div>
         </template> -->
+        <div class="bothbars">
+          <div class="amount">
+            <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
+              <div
+                class="text"
+                v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 12"
+              >
+                还需
+                <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
+                有效投注晋升到 VIP {{ vipLevel + 1 }}
+              </div>
 
-        <div class="amount">
-          <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
-            <div
-              class="text"
-              v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 12"
-            >
-              还需
-              <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
-              有效投注晋升到 VIP {{ vipLevel + 1 }}
+              <!-- <div class="text" v-else-if="vipLevel === 0">
+                还需
+                <div class="required-amount">
+                  {{ currentBetAmt }}
+                  {{ currentUpgradeBetAmt }}
+                  {{
+                    currentBetAmt > currentUpgradeBetAmt
+                      ? formatNumber(currentUpgradeBetAmt - currentBetAmt)
+                      : formatNumber(currentUpgradeBetAmt)
+                  }}
+                </div>
+                有效投注晋升到 VIP 1
+              </div> -->
+
+              <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
+              <div class="text" v-else>
+                已到达
+                <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
+                有效流水 VIP {{ vipLevel + 1 }}
+              </div>
             </div>
 
-            <!-- <div class="text" v-else-if="vipLevel === 0">
-              还需
-              <div class="required-amount">
-                {{ currentBetAmt }}
-                {{ currentUpgradeBetAmt }}
+            <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
+
+            <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
+            <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
+              <div class="progressBarOuterBar">
+                <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
+              </div>
+              <div class="progressBarDescription">
                 {{
-                  currentBetAmt > currentUpgradeBetAmt
-                    ? formatNumber(currentUpgradeBetAmt - currentBetAmt)
-                    : formatNumber(currentUpgradeBetAmt)
+                  currentBetAmt <= currentUpgradeBetAmt
+                    ? `${currentBetAmt}/${currentUpgradeBetAmt}`
+                    : `${currentUpgradeBetAmt}/${currentUpgradeBetAmt}`
                 }}
               </div>
-              有效投注晋升到 VIP 1
-            </div> -->
+            </div>
 
-            <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
-            <div class="text" v-else>
-              已到达
-              <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
-              有效流水 VIP {{ vipLevel + 1 }}
-            </div>
-          </div>
-
-          <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
-
-          <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
-          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
-            <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
-            </div>
-            <div class="progressBarDescription">
-              {{
-                currentBetAmt <= currentUpgradeBetAmt
-                  ? `${currentBetAmt}/${currentUpgradeBetAmt}`
-                  : `${currentUpgradeBetAmt}/${currentUpgradeBetAmt}`
-              }}
-            </div>
-          </div>
-
-          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
-            <div class="progressBarOuterBar">
-              <div
-                class="progressBarInnerBar"
-                :style="{
-                  width: vipLevel === 12 ? '100%' : vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null
-                }"
-              ></div>
-            </div>
-            <div class="progressBarDescription" v-if="vipLevel == 0">
-              {{
-                currentBetAmt <= originalUpgradeBetAmounts[0]
-                  ? `${currentBetAmt}/${originalUpgradeBetAmounts[0]}`
-                  : `${originalUpgradeBetAmounts[0]}/${originalUpgradeBetAmounts[0]}`
-              }}
-            </div>
-            <div class="progressBarDescription" v-if="vipLevel == 12">
-              {{ originalUpgradeBetAmounts[11] + "/" + originalUpgradeBetAmounts[11] }}
-            </div>
-          </div>
-          <div class="progressBarContainer" v-show="!isDataLoaded">
-            <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" style="width: 0%"></div>
-            </div>
-            <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="claim-btn"
-        :class="{ disabled: isLoading['all'] || !isDataLoaded }"
-        @click="handleClick('all', vipLevel)"
-      >
-        {{ isLoading["all"] ? "领取中" : "一键领取" }}
-      </div>
-    </div>
-    <div class="month-birthday-bonus">
-      <div class="left">
-        <img src="../assets/vip/img-border.png" style="pointer-events: none" />
-        <div class="inner-slide">
-          <el-carousel height="440px">
-            <el-carousel-item v-for="item in banners" :key="item">
-              <h3 :href="redirectUrl" class="small justify-center" text="2xl">
-                <a :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.desktopImageUrl" /></a>
-              </h3>
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </div>
-      <div class="right">
-        <div class="vip-boxes">
-          <template v-for="category in categories" :key="category.key">
-            <template v-for="(item, index) in vipItems" :key="index">
-              <template
-                v-if="
-                  store.token && isFirstTime && vipLevel !== 0 ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1
-                "
-              >
+            <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
+              <div class="progressBarOuterBar">
                 <div
-                  class="box"
-                  :class="{
-                    inactive:
-                      (store.token && item[`${category.key}Prize`] === '0') ||
-                      item[`${category.key}Prize`] === 0 ||
-                      item[`${category.key}Prize`] == 'null'
+                  class="progressBarInnerBar"
+                  :style="{
+                    width: vipLevel === 12 ? '100%' : vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null
                   }"
-                >
-                  <div class="vip-inner">
-                    <div class="box-det">
-                      <div class="icon">
-                        <img
-                          :src="
-                            require(`../assets/vip/${category.image}${
-                              (store.token && item[`${category.key}Prize`] === '0') ||
-                              item[`${category.key}Prize`] === 0 ||
-                              item[`${category.key}Prize`] === 'null'
-                                ? '-inactive'
-                                : ''
-                            }.png`)
-                          "
-                        />
-                      </div>
-                      <div>
-                        <div class="item-name">{{ category.displayName }}</div>
-                        <div class="item-amt" v-show="isDataLoaded">
-                          {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
-                        </div>
-                        <div class="loading-blue-icon" v-show="!isDataLoaded"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <template
-                    v-if="
-                      item.redPacketClaimStatus === 'CANT_CLAIM' &&
-                      category.key === 'redPacket' &&
-                      +item.vipLevel === vipLevel
-                    "
-                  >
-                    <div class="claim-now disabled">{{ formatNumber(currentRedPacketAmount, "redPacket") }}</div>
-                  </template>
-                  <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
-                    <div
-                      class="claim-now"
-                      :class="{ disabled: isLoading[category.key] }"
-                      @click="handleClick(category.key, item)"
-                    >
-                      {{
-                        !isLoading[category.key]
-                          ? category.key === "redPacket"
-                            ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
-                              ? formatNumber(currentRedPacketAmount, "redPacket")
-                              : "立即领取"
-                            : "立即领取"
-                          : "领取中"
-                      }}
-                    </div>
-                  </template>
-                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
-                    <div class="claimed">已领取</div>
-                  </template>
-                  <template v-else-if="item[`${category.key}ClaimStatus`] === 'EXPIRED'">
-                    <div class="expired">已过期</div>
-                  </template>
+                ></div>
+              </div>
+              <div class="progressBarDescription" v-if="vipLevel == 0">
+                {{
+                  currentBetAmt <= originalUpgradeBetAmounts[0]
+                    ? `${currentBetAmt}/${originalUpgradeBetAmounts[0]}`
+                    : `${originalUpgradeBetAmounts[0]}/${originalUpgradeBetAmounts[0]}`
+                }}
+              </div>
+              <div class="progressBarDescription" v-if="vipLevel == 12">
+                {{ originalUpgradeBetAmounts[11] + "/" + originalUpgradeBetAmounts[11] }}
+              </div>
+            </div>
+            <div class="progressBarContainer" v-show="!isDataLoaded">
+              <div class="progressBarOuterBar">
+                <div class="progressBarInnerBar" style="width: 0%"></div>
+              </div>
+              <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
+            </div>
+          </div>
+          </div>
+          <!-- <div
+            class="claim-btn"
+            :class="{ disabled: isLoading['all'] || !isDataLoaded }"
+            @click="handleClick('all', vipLevel)"
+          >
+            {{ isLoading["all"] ? "领取中" : "一键领取" }}
+          </div> -->
+          <div class="amount" v-show="isDataLoaded && vipLevel !== 0">
+            <div class="text">
+                保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
+              </div>
+              <div class="progressBarContainer">
+                <div class="progressBarOuterBar">
+                  <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
                 </div>
-              </template>
-            </template>
-          </template>
+                <div class="progressBarDescriptionRetain">
+                  {{
+                     currentRetainAmount+ '/' + retainAmountRequired
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
     <div class="tips">
       等级晋升后开启90天保级期，保级期内完成有效投注要求则保级成功，未完成则降一级。
@@ -425,6 +347,106 @@
         </div>
       </div>
     </div>
+
+    <div class="month-birthday-bonus">
+      <div class="left">
+        <img src="../assets/vip/img-border.png" style="pointer-events: none" />
+        <div class="inner-slide">
+          <el-carousel height="440px">
+            <el-carousel-item v-for="item in banners" :key="item">
+              <h3 :href="redirectUrl" class="small justify-center" text="2xl">
+                <a :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.desktopImageUrl" /></a>
+              </h3>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </div>
+      <div class="right">
+        <div class="vip-boxes">
+          <template v-for="category in categories" :key="category.key">
+              <template v-for="(item, index) in vipItems" :key="index">
+                <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
+                <template
+                  v-if="
+                    store.token && isFirstTime && vipLevel !== 0
+                      ? +item.vipLevel === currentSlide
+                      : +item.vipLevel === currentSlide + 1
+                  "
+                >
+                  <div
+                    class="box"
+                    :class="{
+                      inactive:
+                        (store.token && item[`${category.key}Prize`] === '0') ||
+                        item[`${category.key}Prize`] === 0 ||
+                        item[`${category.key}Prize`] == 'null'
+                    }"
+                  >
+                    <div class="vip-inner">
+                      <div class="box-det">
+                        <div class="icon">
+                          <img
+                            :src="
+                              require(`../assets/vip/${category.image}${
+                                (store.token && item[`${category.key}Prize`] === '0') ||
+                                item[`${category.key}Prize`] === 0 ||
+                                item[`${category.key}Prize`] === 'null'
+                                  ? '-inactive'
+                                  : ''
+                              }.png`)
+                            "
+                          />
+                        </div>
+                        <div>
+                          <div class="item-name">{{ category.displayName }}</div>
+                          <div class="item-amt" v-show="isDataLoaded">
+                            {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
+                          </div>
+                          <div class="loading-blue-icon" v-show="!isDataLoaded"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <template
+                      v-if="
+                        item.redPacketClaimStatus === 'CANT_CLAIM' &&
+                        category.key === 'redPacket' &&
+                        +item.vipLevel === vipLevel
+                      "
+                    >
+                      <div class="claim-now disabled">{{ formatNumber(currentRedPacketAmount, "redPacket") }}</div>
+                    </template>
+                    <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
+                      <div
+                        class="claim-now"
+                        :class="{ disabled: isLoading[category.key] }"
+                        @click="handleClick(category.key, item)"
+                      >
+                        {{
+                          !isLoading[category.key]
+                            ? category.key === "redPacket"
+                              ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
+                                ? formatNumber(currentRedPacketAmount, "redPacket")
+                                : "立即领取"
+                              : "立即领取"
+                            : "领取中"
+                        }}
+                      </div>
+                    </template>
+                    <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
+                      <div class="claimed">已领取</div>
+                    </template>
+                    <template v-else-if="item[`${category.key}ClaimStatus`] === 'EXPIRED'">
+                      <div class="expired">已过期</div>
+                    </template>
+                  </div>
+                </template>
+              </template>
+            </template>
+          </template>
+        </div>
+      </div>
+    </div>
+
     <div class="vip-benefit-section-title"><img src="../assets/vip/instruction.png" /></div>
     <div class="tabs">
       <div class="tab">
@@ -569,7 +591,7 @@
             <!--            <td>888</td>-->
             <td>1.8%</td>
             <td>888</td>
-            <td>1888</td>
+            <td>1,288</td>
           </tr>
           <tr>
             <td>VIP12</td>
@@ -746,7 +768,7 @@
       </ol> -->
       <h2>一. 会员晋级/保级/降级规则</h2>
       <ol class="terms got-bullets">
-        <li>会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；</li>
+        <li>完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</li>
         <li>VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</li>
         <li>会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
         <li>
@@ -779,21 +801,23 @@
       <h2>五. 每日返水红包</h2>
       <ol class="terms">
         <li>
-          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水加赠礼金，返水加赠礼金达到10元即可领取，彩金1倍流水即可提款
+          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
+          <br />
+          例：VIP12会员当日的返水金额为1000元，则按照VIP12每日返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
         </li>
       </ol>
 
       <h2>六. 会员日</h2>
       <ol class="terms">
         <li>
-          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至24号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
+          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至21号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
         </li>
       </ol>
 
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要（本金+彩金一倍流水）即可提款；
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金一倍流水）即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -855,6 +879,15 @@ const toggleAccordion = () => {
 };
 const currentDepAmt = ref(0);
 const currentBetAmt = ref(0);
+const currentRetainAmount = ref(0);
+const retainAmountRequired = ref(0);
+const currentRetainDay = ref(0);
+const retainDayRequired = ref(0);
+const retainPercentage = computed(() => {
+  if (retainAmountRequired.value === 0) return 0; // Prevent division by 0
+  return ((+currentRetainAmount.value / +retainAmountRequired.value) * 100).toFixed(2);
+});
+const balanceRetainDay = ref(0);
 const currentRedPacketAmount = ref(0);
 const currentUpgradeDepAmt = ref(0);
 const currentUpgradeBetAmt = ref(0);
@@ -1152,6 +1185,12 @@ const runVipAPI = (res) => {
 
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    currentRetainAmount.value = res.data.currentRetainAmount;
+    retainAmountRequired.value = res.data.retainAmountRequired;
+    // balanceRetainAmount.value = +res.data.retainAmountRequired - +res.data.currentRetainAmount
+    currentRetainDay.value = res.data.currentRetainDay;
+    retainDayRequired.value = res.data.retainDayRequired;
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     isDataLoaded.value = true;
     getVipLevelProgress(vipLevel.value, "bet");
@@ -1392,10 +1431,8 @@ $border-settings: 1px solid #e5e7eb;
     text-align: center;
   }
   .vip-header {
-    // width: 1200px;
-    // margin: 10px auto;
     width: 800px;
-    margin: 0px auto 10px;
+    margin: 15px auto 20px;
   }
 
   .banner-container {
@@ -1415,7 +1452,7 @@ $border-settings: 1px solid #e5e7eb;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
-    padding-right: 20px;
+    padding-right: 40px;
     .badge {
       width: 250px;
       padding: 20px;
@@ -1428,14 +1465,15 @@ $border-settings: 1px solid #e5e7eb;
       flex-direction: column;
       width: 100%;
       gap: 20px;
+      padding-bottom: 20px;
       .amount {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         .text {
           display: flex;
           gap: 2px;
-          font-size: 24px;
+          font-size: 20px;
           color: #ffffff;
           white-space: nowrap;
           .required-amount {
@@ -1452,7 +1490,7 @@ $border-settings: 1px solid #e5e7eb;
 
         .progressBarOuterBar {
           border-radius: 16px;
-          background: grey;
+          background: #405471;
           width: 100%;
           overflow: hidden;
         }
@@ -1477,6 +1515,18 @@ $border-settings: 1px solid #e5e7eb;
           text-align: center;
           margin: -30px auto;
           justify-content: center;
+          &Retain {
+            display: flex;
+          color: #fff;
+          font-size: 17.987px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          width: 100%;
+          text-align: center;
+          margin: -30px auto;
+          justify-content: center;
+          }
         }
       }
     }
@@ -1652,7 +1702,8 @@ $border-settings: 1px solid #e5e7eb;
       position: absolute;
       width: auto;
       z-index: 2;
-      right: 0%;
+      left: 50%;
+      transform: translateX(-50%);
       // width: 98%;
       max-width: 90vw;
     }
@@ -1660,11 +1711,11 @@ $border-settings: 1px solid #e5e7eb;
       top: 40px;
       position: relative;
       background: #1f2231;
-      border: 2px solid #799df8; /*set border colour here*/
+      border: 4px solid #799df8; /*set border colour here*/
       border-radius: 3px;
       -webkit-filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8)); /*set shadow colour  and size here*/
       -moz-box-shadow: 0 1px 10px rgba(113, 158, 206, 0.8);
-      filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8));
+      filter: drop-shadow(0 1px 15px rgba(113, 158, 206, 0.8));
 
       padding: 10px;
       border-radius: 10px;
@@ -1734,16 +1785,14 @@ $border-settings: 1px solid #e5e7eb;
       border-color: rgba(255, 255, 255, 0);
       border-bottom-color: #1f2231;
       border-width: 19px;
-      left: 85%;
-      margin-left: -19px;
+      right: 20%;
     }
 
     .arrow_box:before {
       border-color: rgba(113, 158, 206, 0);
       border-bottom-color: #799df8;
       border-width: 20px;
-      left: 85%;
-      margin-left: -20px;
+      right: calc(20% - 1px);
     }
   }
   .vipitem {

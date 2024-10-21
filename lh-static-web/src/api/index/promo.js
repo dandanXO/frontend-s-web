@@ -2,7 +2,6 @@ import { server } from "@/utils/request";
 import { userStore } from "@/store";
 import cached from "@/utils/cache";
 
-
 export function loadPromo() {
   return server.REST.get("/opt-session/promo/page");
 }
@@ -244,16 +243,31 @@ export function claim(level) {
 
 export function claimItems(status, level) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  if (status === 'upgrade') {return server.EVENT.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", { vipLevel: level })}
-  if (status === 'birthday') {return server.EVENT.put("/vip-bonus/claim-birthday-bonus");}
-  if (status === 'retain') {return server.EVENT.post("/vip-bonus/claim-first-retain?_method=PUT", { vipLevel: level })}
-  if (status === 'monthly') {return server.EVENT.put("/vip-bonus/claim-monthly-bonus");}
-  if (status === 'yearlyRetain') {return server.EVENT.post("/vip-bonus/claim-yearly-retain?_method=PUT", { vipLevel: level })}
-  if (status === 'coupon') {return server.EVENT.put("/vip-bonus/claim-coupon");}
-  if (status === 'redPacket') {return server.EVENT.put("/vip-bonus/claim-red-packet");}
-  if (status === 'all') {return server.EVENT.put("/vip-bonus/claim-all")}
+  if (status === "upgrade") {
+    return server.EVENT.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", { vipLevel: level });
+  }
+  if (status === "birthday") {
+    return server.EVENT.put("/vip-bonus/claim-birthday-bonus");
+  }
+  if (status === "retain") {
+    return server.EVENT.post("/vip-bonus/claim-first-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "monthly") {
+    return server.EVENT.put("/vip-bonus/claim-monthly-bonus");
+  }
+  if (status === "yearlyRetain") {
+    return server.EVENT.post("/vip-bonus/claim-yearly-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "coupon") {
+    return server.EVENT.put("/vip-bonus/claim-coupon");
+  }
+  if (status === "redPacket") {
+    return server.EVENT.put("/vip-bonus/claim-red-packet");
+  }
+  if (status === "all") {
+    return server.EVENT.put("/vip-bonus/claim-all");
+  }
 }
-
 
 export function getQuestionnaireList() {
   return server.EVENT.get("/questionnaire/list");
@@ -412,15 +426,15 @@ export function getDota2CompetitionBet(promoCode) {
 }
 
 export function getBlastCoupon() {
-  return server.EVENT.get('/session/blastCoupon/init');
+  return server.EVENT.get("/session/blastCoupon/init");
 }
 
 export function claimBlastCoupon(promoCode) {
-  return server.EVENT.post('/session/blastCoupon/claim', {
+  return server.EVENT.post("/session/blastCoupon/claim", {
     params: {
       promoCode
     }
-  })
+  });
 }
 
 export function getBlastCouponInit() {
@@ -428,48 +442,149 @@ export function getBlastCouponInit() {
 }
 
 export function getCompetitionToday() {
-  return server.EVENT.get('/session/competition/today')
+  return server.EVENT.get("/session/competition/today");
 }
 
 export function getCompetitionYesterday(promoCode) {
-  return server.EVENT.get('/session/competition/yesterday', {
+  return server.EVENT.get("/session/competition/yesterday", {
     params: {
       promoCode
     }
-  })
+  });
 }
 
 export function claimCompetitionBonus(promoCode) {
-  return server.EVENT.post('/session/competition/claimBonus', { promoCode })
+  return server.EVENT.post("/session/competition/claimBonus", { promoCode });
+}
+
+export function claimCompetitionBetBonus(promoCode) {
+  return server.EVENT.post("/session/competition-bet/claimBonus", { promoCode });
 }
 
 export function getNationalDayinit() {
-  return server.EVENT.get('/session/nationalDay/init')
+  return server.EVENT.get("/session/nationalDay/init");
 }
 export function getNationalDayRecords() {
-  return server.EVENT.get('/session/nationalDay/records')
+  return server.EVENT.get("/session/nationalDay/records");
 }
 
 export function claimNationalDayBonus() {
-  return server.EVENT.post('/session/nationalDay/claimBonus')
+  return server.EVENT.post("/session/nationalDay/claimBonus");
 }
 
 export function getCompetitionBetYesterday(promoCode) {
-  return server.EVENT.get('/session/competition-bet/yesterday', {
+  return server.EVENT.get("/session/competition-bet/yesterday", {
     params: {
       promoCode
     }
-  })
+  });
 }
 
 export function getNBAUpcomingMatch() {
-  return server.EVENT.get('/session/nba-match-preseason/upcoming')
+  return server.EVENT.get("/session/nba-match-preseason/upcoming");
 }
 
 export function getNBAClaimHistory() {
-  return server.EVENT.get('/session/nba-match-preseason/history')
+  return server.EVENT.get("/session/nba-match-preseason/history");
 }
 
+export function getPglTreasureInit() {
+  return server.EVENT.get("/session/pglTreasure/init");
+}
+
+export function putPglTreasureInit() {
+  return server.EVENT.put("/session/pglTreasure/claim");
+}
 export function claimNBABonus(matchId) {
-  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`)
+  return server.EVENT.post(`/session/nba-match-preseason/claim?matchId=${matchId}`);
+}
+
+export function getIEMRioInit() {
+  return server.EVENT.get("/session/iem-rio/init");
+}
+export function claimIEMRioBonus() {
+  return server.EVENT.post("/session/iem-rio/claimBonus");
+}
+
+export function getCBAInit() {
+  return server.EVENT.get("/session/cba/daily/init");
+}
+
+export function claimCBADailyBonus() {
+  return server.EVENT.post("/session/cba/daily/claimBonus");
+}
+
+export function getCBAWeeklyInit() {
+  return server.EVENT.get("/session/cba/weekly/init");
+}
+
+export function claimCBAWeeklyBonus() {
+  return server.EVENT.post("/session/cba/weekly/claimBonus");
+}
+
+export function getBelgradeInit(promoCode) {
+  return server.EVENT.get("/session/bb-dacha-belgrade/init", { promoCode });
+}
+export function claimBelgradeBonus(promoCode) {
+  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus", { promoCode });
+}
+
+export function getYallaCompassInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition-bet-deposit/init?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+export function claimYallaCompassBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+export function getElisaGiftInit() {
+  // return server.EVENT.get("/session/elisa-gift/init");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition-bet-deposit/init?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+export function claimElisaGiftBonus() {
+  // return server.EVENT.post("/session/elisa-gift/claimBonus");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+
+export function getGlobalTreasureDetail(promoCode) {
+  return server.EVENT.get(`/session/treasure-key/init`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function openGlobalTreasure(promoCode, treasure) {
+  return server.EVENT.post(`/session/treasure-key/claimBonus`, { promoCode, treasure });
+}
+
+export function getGlobalCheckInRecord(promoCode) {
+  return server.EVENT.get(`/session/treasure-key/init-check-in`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getGlobalOpenRecord(promoCode, page) {
+  console.log(page);
+  return server.EVENT.get(`/session/treasure-key/treasure-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
+}
+
+export function getGlobalKeyRecord(promoCode, page) {
+  return server.EVENT.get(`/session/treasure-key/key-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
 }

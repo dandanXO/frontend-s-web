@@ -247,28 +247,39 @@ export default {
     promotionStart: "Thời gian: 09/09/2024 – 31/12/2024",
     applicableTo: "<b>Áp dụng:</b> Tất cả Thành Viên TF88",
     promotionDetailsLabel: "Chi tiết khuyến mãi:",
-    promotionDetails: "Thành Viên tham gia cược tại TF88, sau khi giới thiệu thành công bạn bè tham gia với TF88 thì sẽ nhận được 10%~20% tiền thưởng từ tổng nạp của Người Được Giới Thiệu, tiền thưởng tối đa cho mỗi một lần giới thiệu thành công là 800 VNDP, và không giới hạn số lượng Người Được Giới Thiệu, giới thiệu càng nhiều, tiền thưởng càng cao.",
+    promotionDetails:
+      "Thành Viên tham gia cược tại TF88, sau khi giới thiệu thành công bạn bè tham gia với TF88 thì sẽ nhận được 10%~20% tiền thưởng từ tổng nạp của Người Được Giới Thiệu, tiền thưởng tối đa cho mỗi một lần giới thiệu thành công là 800 VNDP, và không giới hạn số lượng Người Được Giới Thiệu, giới thiệu càng nhiều, tiền thưởng càng cao.",
     howToParticipateLabel: "Cách tham gia:",
-    howToParticipate1: "Người Giới Thiệu cần có tài khoản TF88 và đã từng có 1 lệnh nạp tiền tối thiểu 300 VNDP và tham gia cược trước đó.",
+    howToParticipate1:
+      "Người Giới Thiệu cần có tài khoản TF88 và đã từng có 1 lệnh nạp tiền tối thiểu 300 VNDP và tham gia cược trước đó.",
     howToParticipate2: `Vào mục "Tài khoản - Giới thiệu". Sau đó Thành Viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này.`,
-    howToParticipate3: "Người Được Giới Thiệu sau khi đăng ký tài khoản thành công, và tích lũy đủ tổng nạp từ 1,000 VDP trở lên, Người Giới Thiệu sẽ nhận được 10%~20% tiền thưởng từ tổng nạp của Người Được Giới Thiệu.",
-    howToParticipate4: "Tiền thưởng tối đa cho mỗi một Người Được Giới Thiệu thành công là 800 VNDP, không giới hạn tối đa số lượng Người Được Giới Thiệu đến, giới thiệu càng nhiều bạn bè đến tham gia, tiền thưởng sẽ càng cao.",
+    howToParticipate3:
+      "Người Được Giới Thiệu sau khi đăng ký tài khoản thành công, và tích lũy đủ tổng nạp từ 1,000 VDP trở lên, Người Giới Thiệu sẽ nhận được 10%~20% tiền thưởng từ tổng nạp của Người Được Giới Thiệu.",
+    howToParticipate4:
+      "Tiền thưởng tối đa cho mỗi một Người Được Giới Thiệu thành công là 800 VNDP, không giới hạn tối đa số lượng Người Được Giới Thiệu đến, giới thiệu càng nhiều bạn bè đến tham gia, tiền thưởng sẽ càng cao.",
     howToParticipate5: "Thông tin chi tiết tiền thưởng như sau:",
     numOfReferredFriends: "Số Lượng Bạn Bè Giới Thiệu",
     bonusPercentage: "% Thưởng",
     minimumBonusAmt: "Tiền Thưởng Tối Thiểu",
     maximumBonusPerReferredPerson: "Thưởng Tối Đa Trên 1 Người Được Giới Thiệu",
-    additionalCommissionHint: "Khi giới thiệu được từ người thứ 5 trở lên sẽ được hưởng thêm triết khấu hoa hồng từ chương trình đại lý TF88 với tỷ lệ phần trăm thưởng từ 40% trở lên.",
+    additionalCommissionHint:
+      "Khi giới thiệu được từ người thứ 5 trở lên sẽ được hưởng thêm triết khấu hoa hồng từ chương trình đại lý TF88 với tỷ lệ phần trăm thưởng từ 40% trở lên.",
     termsCondition: "Điều khoản và điều kiện:",
     termsCondition1: "Khuyến mãi chỉ dành riêng cho Thành Viên đã từng nạp tiền và tham gia cược trước đó.",
     termsCondition2: "Người Được Giới Thiệu chưa từng đăng ký tại TF88 và không có bất kỳ tài khoản nào khác tại TF88.",
-    termsCondition3: "Thời gian thống kê tiền thưởng từ Thứ Hai đến Chủ Nhật hàng tuần, Người Giới Thiệu cần liên lạc với CSKH vào Thứ Hai tuần sau để yêu cầu cộng thưởng của tuần trước.",
-    termsCondition4: "Liên kết giới thiệu bạn bè sẽ được làm mới vào ngày 1 hàng tháng, vì vậy tất cả bạn bè được giới thiệu của tháng trước đó sẽ không còn hiệu lực.",
+    termsCondition3:
+      "Thời gian thống kê tiền thưởng từ Thứ Hai đến Chủ Nhật hàng tuần, Người Giới Thiệu cần liên lạc với CSKH vào Thứ Hai tuần sau để yêu cầu cộng thưởng của tuần trước.",
+    termsCondition4:
+      "Liên kết giới thiệu bạn bè sẽ được làm mới vào ngày 1 hàng tháng, vì vậy tất cả bạn bè được giới thiệu của tháng trước đó sẽ không còn hiệu lực.",
     termsCondition5: "Tiền thưởng cần hoàn thành 5 vòng cược trước khi rút tiền.",
-    termsCondition6: "Tiền thưởng sau khi được cập nhật tài khoản Người Giới Thiệu, Thành Viên cần hoàn thành vòng cược yêu cầu trong vòng 60 ngày, nếu Thành Viên không thể hoàn thành vòng cược yêu cầu, tiền thưởng và tiền thằng (nếu có) sẽ bị thu hồi.",
-    termsCondition7: "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
-    termsCondition8: "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần báo trước.",
-    termsCondition9: "Khuyến mãi sẽ không được áp dụng cùng với các khuyến mãi gửi tiền khác, sau khi Thành Viên tham gia khuyến mãi , yêu cầu doanh thu cược hợp lệ cần hoàn thành trong vòng 30 ngày, nếu không tất cả lợi nhuận và tiền thưởng sẽ bị khấu trừ.",
+    termsCondition6:
+      "Tiền thưởng sau khi được cập nhật tài khoản Người Giới Thiệu, Thành Viên cần hoàn thành vòng cược yêu cầu trong vòng 60 ngày, nếu Thành Viên không thể hoàn thành vòng cược yêu cầu, tiền thưởng và tiền thằng (nếu có) sẽ bị thu hồi.",
+    termsCondition7:
+      "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
+    termsCondition8:
+      "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần báo trước.",
+    termsCondition9:
+      "Khuyến mãi sẽ không được áp dụng cùng với các khuyến mãi gửi tiền khác, sau khi Thành Viên tham gia khuyến mãi , yêu cầu doanh thu cược hợp lệ cần hoàn thành trong vòng 30 ngày, nếu không tất cả lợi nhuận và tiền thưởng sẽ bị khấu trừ.",
     termsCondition10: "Điều khoản & Điều kiện khuyến mãi chung được áp dụng.",
     share_promoshare: "Quảng bá và chia sẻ",
     share_promodesc:
@@ -380,9 +391,9 @@ export default {
     withdraw_remaining: "Lần rút tiền còn lại",
     withdraw_times: "Lần",
     withdraw_realtimeexchangerates: "Tỷ giá trực tuyến",
-    withdraw_estimatedarrival: "Dự kiến ​​đến",
-    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là {fee} USDT cho việc rút tiền coin!",
-    withdraw_ewalletspecialnote: "*Lưu ý đặc biệt: Tên của ví rút tiền và tài khoản game phải giống nhau.",
+    withdraw_estimatedarrival: "Số coin thực nhận",
+    withdraw_usdtspecialnote: "Hệ thống thu phí 1 $ cho mỗi lần giao dịch rút USDT!",
+    withdraw_ewalletspecialnote: "Tên của ví rút tiền và tài khoản game phải giống nhau.",
     withdraw_choose: "Chọn",
     withdraw_pleasechoose: "Vui lòng chọn",
     withdraw_nonavailable: "Chưa thêm",
@@ -482,6 +493,8 @@ export default {
     // promo -- vi-penny-bank
     vipenny_lottery_now: "Mở thưởng ngay",
     vipenny_claim_now: "Yêu cầu ngay",
+    vipenny_claim_now_sport: "Sản Phẩm Thể Thao",
+    vipenny_claim_now_other: "Sản Phẩm Khác",
 
     // promo -- vnm-iphone
     choose_lucky_number: "Chọn số may mắn",
