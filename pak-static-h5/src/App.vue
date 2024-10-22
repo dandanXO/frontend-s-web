@@ -333,7 +333,9 @@ export default defineComponent({
         const referralCode =
           route.name === "referCode" && route.params.referralCode
             ? route.params.referralCode
-            : sessionStorage.getItem("REFERRAL_CODE");
+            : sessionStorage.getItem("REFERRAL_CODE")
+              ? sessionStorage.getItem("REFERRAL_CODE")
+              : localStorage.getItem("REG_REFERRAL_CODE");
         const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
         if (!_fbId) return;
         fbq("init", _fbId);
