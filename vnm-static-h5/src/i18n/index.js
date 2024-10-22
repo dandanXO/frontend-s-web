@@ -1,7 +1,6 @@
 import { createI18n } from "vue-i18n";
-import vi from "./vi";
-import cn from "./cn";
-import en from "./en";
+import vi from "./vi.json";
+import en from "./en.json";
 
 const i18n = createI18n({
   legacy: false,
@@ -9,8 +8,7 @@ const i18n = createI18n({
   allowComposition: true,
   messages: {
     vi,
-    en,
-    cn
+    en
   },
   globalInjection: true
 });

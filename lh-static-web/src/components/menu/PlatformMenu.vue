@@ -1,52 +1,57 @@
 <template>
-  <div class="platform-menu-container">
+  <div class="platform-menu-container" :id="`platform-menu-${props.platformType}`">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-    <template v-for="(item, index) in platformsListDisplay.slice(0, numberToShow)" :key="index">
-      <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
-      <div
-        class="platform-menu-item"
-        @click="gotoGame(item, platformType)"
-        :class="item.underMaintenance === true ? 'maintenance' : ''"
-      >
-        <div class="maintenance-box" v-if="item.underMaintenance === true">
-          <p>维护中</p>
-          <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-            维护时间：
-            <br />
-            {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }}
-            <br />
-            -
-            {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD HH:mm") }}
-          </p>
-          <p class="small-size">请先前往其他场馆娱乐</p>
-        </div>
+    <el-carousel :arrow="arrowStatus" :autoplay="false">
+      <el-carousel-item v-for="(platformsListDisplay, index) in platformsListDisplayByChunk" :key="index">
+        <div style="display: flex; justify-content: center">
+          <template v-for="(item, index) in platformsListDisplay" :key="index">
+            <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
+            <div
+              class="platform-menu-item"
+              @click="gotoGame(item, platformType)"
+              :class="item.underMaintenance === true ? 'maintenance' : ''"
+            >
+              <div class="maintenance-box" v-if="item.underMaintenance === true">
+                <p>维护中</p>
+                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
+                  维护时间：
+                  <br />
+                  {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }}
+                  <br />
+                  -
+                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD HH:mm") }}
+                </p>
+                <p class="small-size">请先前往其他场馆娱乐</p>
+              </div>
 
-        <div class="platform-menu-title" v-html="item.cnname" />
-        <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
-        <div class="platform-menu-img">
-          <img
-            :src="
-              require(
-                '../../assets/' +
-                  props.platformType +
-                  '/' +
-                  props.platformType +
-                  '-item-' +
-                  item.code.toLowerCase() +
-                  '.png'
-              )
-            "
-          />
+              <div class="platform-menu-title" v-html="item.cnname" />
+              <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
+              <div class="platform-menu-img">
+                <img
+                  :src="
+                    require('../../assets/' +
+                      props.platformType +
+                      '/' +
+                      props.platformType +
+                      '-item-' +
+                      item.code.toLowerCase() +
+                      '.png')
+                  "
+                />
+              </div>
+
+              <div class="platform-menu-btn"><a>进入场馆</a></div>
+            </div>
+            <!--      </router-link>-->
+          </template>
         </div>
-        <div class="platform-menu-btn"><a>进入场馆</a></div>
-      </div>
-      <!--      </router-link>-->
-    </template>
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
@@ -63,6 +68,27 @@ const store = userStore();
 const platformsList = ref([]);
 const numberToShow = ref(5);
 const platformsListDisplay = ref([]);
+
+const getChunk = (list, size) =>
+  [...Array(Math.ceil(list.length / size))].map((_, i) => list.slice(i * size, i * size + size));
+
+const platformsListDisplayByChunk = computed(() => {
+  if (platformsListDisplay.value.length > 0) {
+    // console.log("here", numberToShow.value, getChunk(platformsListDisplay.value, numberToShow.value));
+    return getChunk(platformsListDisplay.value, numberToShow.value);
+  }
+
+  return [];
+});
+
+const arrowStatus = computed(() => {
+  if (props.platformType === "live") {
+    return "always";
+  } else {
+    return "never";
+  }
+});
+
 const getPlatformList = () => {
   const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
 
@@ -98,18 +124,18 @@ const gotoGame = (item, platformType) => {
 const checkWindowSize = () => {
   // console.log('resize');
   // Access and modify the ref here
-  if (window.innerWidth < 1700) {
-    numberToShow.value = 5;
-  }
-  if (window.innerWidth > 1700) {
-    numberToShow.value = 6;
-  }
-  if (window.innerWidth > 1900) {
-    numberToShow.value = 7;
-  }
-  if (window.innerWidth > 2000) {
-    numberToShow.value = 10;
-  }
+  // if (window.innerWidth < 1700) {
+  //   numberToShow.value = 3;
+  // }
+  // if (window.innerWidth > 1700) {
+  //   numberToShow.value = 4;
+  // }
+  // if (window.innerWidth > 1900) {
+  //   numberToShow.value = 5;
+  // }
+  // if (window.innerWidth > 2000) {
+  //   numberToShow.value = 8;
+  // }
 };
 
 onMounted(() => {
@@ -118,4 +144,65 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss" src="../../scss/pages/submenu.scss" />
+<style scoped lang="scss" src="../../scss/pages/submenu/submenu.scss" />
+
+<style lang="scss" scoped>
+:deep(.el-carousel) {
+  width: 100%;
+}
+
+:deep(.el-carousel__arrow) {
+  background-image: url("../../assets/home/arrow-bg.png");
+}
+
+:deep(.el-carousel__arrow--left) {
+  left: 0px;
+}
+:deep(.el-carousel__arrow--right) {
+  right: 0px;
+}
+
+:deep(.el-carousel__arrow--left),
+:deep(.el-carousel__arrow--right) {
+  border-radius: 50%;
+  background-size: contain;
+  width: 55px;
+  height: 55px;
+
+  .el-icon {
+    color: #4e93ff;
+  }
+
+  &:hover {
+    background-image: none;
+    background-color: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+
+    .el-icon {
+      color: #fff;
+    }
+  }
+  &:active,
+  &:focus {
+    background-image: none;
+  }
+}
+
+:deep(.el-carousel__container) {
+  height: 400px;
+  width: 100%;
+}
+
+.platform-menu-container {
+  //background: url("@/assets/home/plat-items-bg.png") no-repeat center center;
+  background-size: 100% 100%;
+}
+
+:deep(.el-carousel__indicators) {
+  display: none;
+}
+#platform-menu-live {
+  :deep(.el-carousel__indicators) {
+    display: initial;
+  }
+}
+</style>

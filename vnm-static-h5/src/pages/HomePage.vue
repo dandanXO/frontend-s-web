@@ -2663,7 +2663,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+    gap: 0.5rem;
     max-width: 58px;
 
     > div {

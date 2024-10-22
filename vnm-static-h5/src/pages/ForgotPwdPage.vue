@@ -31,19 +31,11 @@
             {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormPhone.loginName"
-            :placeholder="$t('lang.username')"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_username')]"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
+          <q-input rounded standout clearable v-model="passwordFormPhone.loginName" :placeholder="$t('lang.username')"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_username')]" color="white"
+            label-color="secondary" autocomplete="username">
             <template v-slot:prepend>
-              <img src="../assets/images/login/user-icon.png" width="24" />
+              <div class="user-icon" />
             </template>
           </q-input>
 
@@ -51,23 +43,13 @@
             {{ $t("lang.phone_number") }}
             <em>*</em>
           </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormPhone.phone"
-            :placeholder="$t('lang.phone_number')"
+          <q-input rounded standout clearable v-model="passwordFormPhone.phone" :placeholder="$t('lang.phone_number')"
             :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number'),
-              (val) => isValidVnmPhone(val)
-            ]"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-            type="number"
-          >
+            (val) => isValidVnmPhone(val)
+            ]" color="white" label-color="secondary" autocomplete="username" type="number">
             <template v-slot:prepend>
-              <div style="width: 24px; display: flex; align-items: center">
-                <img src="../assets/images/login/phone-icon.png" width="18" />
+              <div style="width: 26px; display: flex; align-items: center">
+                <div class="phone-icon" />
               </div>
             </template>
           </q-input>
@@ -76,40 +58,22 @@
             {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
-          <q-input
-            ref="ftCaptchaRef"
-            rounded
-            standout
-            clearable
-            type="text"
-            maxlength="4"
-            v-model="passwordFormPhone.captchaCode"
-            :placeholder="$t('lang.verification_code')"
-            :rules="[
+          <q-input ref="ftCaptchaRef" rounded standout clearable type="text" maxlength="4"
+            v-model="passwordFormPhone.captchaCode" :placeholder="$t('lang.verification_code')" :rules="[
               (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
               (val) => (val && val.length > 3 && val.length < 5) || $t('lang.length_is_4')
-            ]"
-            color="white"
-            label-color="brand"
-          >
+            ]" color="white" label-color="brand">
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
-              <img src="../assets/images/login/veri-icon.png" width="24" />
+              <div class="veri-icon" />
             </template>
           </q-input>
 
           <div class="row justify-between items-center">
-            <q-btn
-              @click.prevent="onSubmitForgotPwd('phone')"
-              class="common-large-btn"
-              :label="$t('lang.change_password_btn')"
-              width="100%"
-              color="brightbtn"
-              no-caps
-              style="width: 100%"
-            />
+            <q-btn @click.prevent="onSubmitForgotPwd('phone')" class="common-large-btn"
+              :label="$t('lang.change_password_btn')" width="100%" color="brightbtn" no-caps style="width: 100%" />
           </div>
         </template>
 
@@ -118,19 +82,11 @@
             {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormEmail.loginName"
-            :placeholder="$t('lang.username')"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_username')]"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
+          <q-input rounded standout clearable v-model="passwordFormEmail.loginName" :placeholder="$t('lang.username')"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_username')]" color="white"
+            label-color="secondary" autocomplete="username">
             <template v-slot:prepend>
-              <img src="../assets/images/login/user-icon.png" width="24" />
+              <div class="user-icon" />
             </template>
           </q-input>
 
@@ -138,20 +94,12 @@
             {{ $t("lang.email") }}
             <em>*</em>
           </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormEmail.email"
-            :placeholder="$t('lang.email')"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_email'), isValidEmail]"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
+          <q-input rounded standout clearable v-model="passwordFormEmail.email" :placeholder="$t('lang.email')"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_email'), isValidEmail]" color="white"
+            label-color="secondary" autocomplete="username">
             <template v-slot:prepend>
-              <div style="width: 24px; display: flex; align-items: center">
-                <img src="../assets/images/login/mail-icon.png" width="27" />
+              <div style="width: 26px; display: flex; align-items: center">
+                <div class="mail-icon" />
               </div>
             </template>
           </q-input>
@@ -160,40 +108,22 @@
             {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
-          <q-input
-            ref="ftCaptchaRef"
-            rounded
-            standout
-            clearable
-            type="text"
-            maxlength="4"
-            v-model="passwordFormEmail.captchaCode"
-            :placeholder="$t('lang.verification_code')"
-            :rules="[
+          <q-input ref="ftCaptchaRef" rounded standout clearable type="text" maxlength="4"
+            v-model="passwordFormEmail.captchaCode" :placeholder="$t('lang.verification_code')" :rules="[
               (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
               (val) => (val && val.length > 3 && val.length < 5) || $t('lang.length_is_4')
-            ]"
-            color="white"
-            label-color="brand"
-          >
+            ]" color="white" label-color="brand">
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
-              <img src="../assets/images/login/veri-icon.png" width="24" />
+              <div class="veri-icon" />
             </template>
           </q-input>
 
           <div class="row justify-between items-center">
-            <q-btn
-              @click.prevent="onSubmitForgotPwd('email')"
-              class="common-large-btn"
-              :label="$t('lang.change_password_btn')"
-              no-caps
-              width="100%"
-              color="brightbtn"
-              style="width: 100%"
-            />
+            <q-btn @click.prevent="onSubmitForgotPwd('email')" class="common-large-btn"
+              :label="$t('lang.change_password_btn')" no-caps width="100%" color="brightbtn" style="width: 100%" />
           </div>
         </template>
 
@@ -202,19 +132,12 @@
             {{ $t("lang.email") }}
             <em>*</em>
           </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormEmail.email"
-            :placeholder="$t('lang.email')"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_email'), isValidEmail]"
-            color="white"
-            label-color="secondary"
-          >
+          <q-input rounded standout clearable v-model="passwordFormEmail.email" :placeholder="$t('lang.email')"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_email'), isValidEmail]" color="white"
+            label-color="secondary">
             <template v-slot:prepend>
-              <div style="width: 24px; display: flex; align-items: center">
-                <img src="../assets/images/login/mail-icon.png" width="27" />
+              <div style="width: 26px; display: flex; align-items: center">
+                <div class="mail-icon" />
               </div>
             </template>
           </q-input>
@@ -223,121 +146,71 @@
             {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
-          <q-input
-            ref="ftCaptchaRef"
-            rounded
-            standout
-            clearable
-            type="text"
-            maxlength="4"
-            v-model="passwordFormEmail.captchaCode"
-            :placeholder="$t('lang.verification_code')"
-            :rules="[
+          <q-input ref="ftCaptchaRef" rounded standout clearable type="text" maxlength="4"
+            v-model="passwordFormEmail.captchaCode" :placeholder="$t('lang.verification_code')" :rules="[
               (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
               (val) => (val && val.length > 3 && val.length < 5) || $t('lang.length_is_4')
-            ]"
-            color="white"
-            label-color="brand"
-          >
+            ]" color="white" label-color="brand">
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
-              <img src="../assets/images/login/veri-icon.png" width="24" />
+              <div class="veri-icon" />
             </template>
           </q-input>
 
           <div class="row justify-between items-center">
-            <q-btn
-              @click.prevent="onSubmitForgotPwd('acc')"
-              class="common-large-btn"
-              :label="$t('lang.change_password_btn')"
-              no-caps
-              width="100%"
-              color="brightbtn"
-              style="width: 100%"
-            />
+            <q-btn @click.prevent="onSubmitForgotPwd('acc')" class="common-large-btn"
+              :label="$t('lang.change_password_btn')" no-caps width="100%" color="brightbtn" style="width: 100%" />
           </div>
         </template>
       </q-form>
 
       <div v-if="isEmailSent" class="text-blue q-px-md">{{ $t("lang.email_sent_txt") }}</div>
       <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders">
-        <q-input
-          ref="codeRef"
-          filled
-          hide-bottom-space
-          v-model="verificationForm.code"
-          :label="$t('lang.otp_code')"
-          lazy-rules
-          clearable
-          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_otp')]"
-        >
+        <q-input ref="codeRef" filled hide-bottom-space v-model="verificationForm.code" :label="$t('lang.otp_code')"
+          lazy-rules clearable :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_otp')]">
           <template v-slot:prepend>
             <q-icon name="qr_code" />
           </template>
         </q-input>
 
-        <q-input
-          ref="newPwdRef"
-          :type="isPwd ? 'password' : 'text'"
-          filled
-          hide-bottom-space
-          v-model="verificationForm.newPassword"
-          :label="$t('lang.new_password')"
-          clearable
-          lazy-rules
-          :rules="[
+        <q-input ref="newPwdRef" :type="isPwd ? 'password' : 'text'" filled hide-bottom-space
+          v-model="verificationForm.newPassword" :label="$t('lang.new_password')" clearable lazy-rules :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_new_password'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_length_is_6_to_12'),
             (val) =>
               (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) ||
               $t('lang.password_security_level_must_be_at_least_good')
-          ]"
-        >
+          ]">
           <template v-slot:prepend>
             <q-icon name="lock_open" />
           </template>
           <template v-slot:append>
-            <q-icon
-              color="bright"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
+            <q-icon color="bright" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+              @click="isPwd = !isPwd" />
           </template>
         </q-input>
         <div v-if="verificationForm.newPassword" class="password-str-div">
-          <span
-            :class="{
-              'weak-pwd': pwdStrength == 'weak',
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
+          <span :class="{
+            'weak-pwd': pwdStrength == 'weak',
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }">
             {{ $t("lang.password_weak") }}
           </span>
-          <span
-            :class="{
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
+          <span :class="{
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }">
             {{ $t("lang.password_good") }}
           </span>
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.password_strong") }}</span>
         </div>
 
-        <q-input
-          ref="captchaRef"
-          filled
-          hide-bottom-space
-          type="text"
-          v-model="verificationForm.captchaCode"
-          :label="$t('lang.verification_code')"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 3) || $t('lang.please_enter_verification_code')]"
-        >
+        <q-input ref="captchaRef" filled hide-bottom-space type="text" v-model="verificationForm.captchaCode"
+          :label="$t('lang.verification_code')" lazy-rules
+          :rules="[(val) => (val && val.length > 3) || $t('lang.please_enter_verification_code')]">
           <template v-slot:append>
             <img :src="verificationImg" @click="getCode()" />
           </template>
@@ -347,15 +220,8 @@
         </q-input>
 
         <div class="row justify-between items-center">
-          <q-btn
-            @click.prevent="onVerifyForgotPassword"
-            :label="$t('lang.change_password_btn')"
-            no-caps
-            width="100%"
-            class="common-large-btn"
-            color="brightbtn"
-            style="width: 100%"
-          />
+          <q-btn @click.prevent="onVerifyForgotPassword" :label="$t('lang.change_password_btn')" no-caps width="100%"
+            class="common-large-btn" color="brightbtn" style="width: 100%" />
         </div>
       </q-form>
     </div>
@@ -686,7 +552,7 @@ function charType(num) {
   background-image: linear-gradient(to right, #de4545, #db7e42);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 28px;
+  font-size: 26px;
   text-align: center;
 
   padding: 10px;

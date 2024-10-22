@@ -611,3 +611,296 @@ svg {
     font-size: 70% !important;
   }
 }
+
+.user-icon,
+.password-icon,
+.veri-icon,
+.phone-icon, .mail-icon {
+  background: url('../assets/images/login/login-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  width: 28px;
+  height: 30px;
+}
+
+.user-icon {
+  background-position: 3% 0%;
+}
+
+.password-icon {
+  background-position: 28% 0%;
+}
+
+.veri-icon {
+  background-position: 51% 0%;
+}
+
+.phone-icon {
+  background-position: 74% 0%;
+}
+
+.mail-icon {
+  background-position: 96% 0%;
+}
+
+.personal-icon, .bank-card-icon, .transaction-icon, .mailbox-icon, .refer-icon, .change-password-icon, .affiliate-icon, .about-icon, .logout-icon {
+  background: url('../assets/images/account/account-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 35px;
+}
+
+.personal-icon {
+  background-position: 2% 0%;
+}
+
+.bank-card-icon {
+  background-position: 14% 0%;
+}
+
+.transaction-icon {
+  background-position: 26% 0%;
+}
+
+.mailbox-icon {
+  background-position: 38.5% 0%;
+}
+
+.refer-icon {
+  background-position: 51.5% 0%;
+}
+
+.change-password-icon {
+  background-position: 64% 0%;
+}
+
+.affiliate-icon {
+  background-position: 76% 0%;
+}
+
+.about-icon {
+  background-position: 88.5% 0%;
+}
+
+.logout-icon {
+  background-position: 100% 0%;
+}
+
+.icon-deposit, .icon-withdrawal, .icon-transfer {
+  background: url('../assets/images/account/assets/assets-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-deposit {
+  background-position: 2% 0%;
+}
+
+.icon-withdrawal {
+  background-position: 34% 0%;
+}
+
+.icon-transfer {
+  background-position: 67% 0%;
+}
+
+.tf-logo {
+  background: url('../assets/images/account/assets/assets-page-icons.png');
+  background-position: 0% 0%;
+  background-size: auto 100%;
+  width: 30px;
+  height: 30px;
+  background-position: 99% 0%;
+  background-repeat: no-repeat;
+}
+
+.game-tab-bg {
+  background: url('../assets/images/home/games/game-tab-bg.png');
+  background-position: 7% 0%;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 63px;
+  width: 58px;
+  position: relative;
+
+  .game-tab-content {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-55%, -50%);
+
+    .label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #7a80a1;
+      line-height: 0.8rem;
+      text-align: center;
+    }
+  }
+
+  .sport-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 5.5% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 30px;
+  }
+
+  .live-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 16% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 30px;
+  }
+
+  .slot-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 41% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 30px;
+  }
+
+  .poker-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 28.7% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 30px;
+  }
+
+  .esport-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 61% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 30px;
+  }
+
+  .lottery-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 50.1% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 30px;
+  }
+
+  .minigame-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 89.8% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 30px;
+  }
+
+  .others-icon {
+    background: url('../assets/images/home/games/game-tab-icons.png');
+    background-position: 98.7% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 30px;
+  }
+
+  &.active {
+    background-position: 100% 0%;
+
+    .sport-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 0.7% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 26px;
+      height: 30px;
+    }
+
+    .live-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 10.7% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 26px;
+      height: 30px;
+    }
+
+    .slot-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 34.5% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 36px;
+      height: 30px;
+    }
+
+    .poker-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 22.2% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 28px;
+      height: 30px;
+    }
+
+    .esport-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 55.4% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 28px;
+      height: 30px;
+    }
+
+    .lottery-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 45.7% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 30px;
+    }
+
+    .minigame-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 86.3% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 18px;
+      height: 30px;
+    }
+
+    .others-icon {
+      background: url('../assets/images/home/games/game-tab-icons.png');
+      background-position: 94.8% 0%;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      width: 25px;
+      height: 30px;
+    }
+  
+
+    .game-tab-content {
+      .label {
+        color: #fff;
+      }
+    }
+  }
+}
