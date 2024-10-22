@@ -1037,7 +1037,7 @@ async function showEdit(privilegeInfo) {
       Object.entries(gameTypeRollover).forEach(([key, value]) => {
         if (key === 'rollover') {
           uiControl.rollOverAmt = value; // Set rollover amount
-        } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes' && key !== 'excludeTypes') {
+        } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes' && key !== 'excludePlatformGame' && key !== 'excludeTypes') {
           gameTypes.value.push({ key, value });
         } else if (key === 'gameTypes' && Array.isArray(value)) {
           value.forEach(type => {
