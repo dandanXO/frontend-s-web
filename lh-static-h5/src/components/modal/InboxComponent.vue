@@ -6,7 +6,7 @@
     :navigation="false"
     padding
     :arrows="false"
-    @update:model-value="emits('chageSlide', $event)"
+    @update:model-value="emits('chageSlide',$event)"
   >
     <q-carousel-slide v-for="(item, index) in mailData" :key="item.id" :name="index" class="column no-wrap flex-center">
       <div class="announcement-component">
@@ -15,11 +15,11 @@
         <div class="announcement-footer">
           <div class="footer-button" @click="handleService">
             联系客服
-            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
+            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
           </div>
           <div class="footer-button" @click="handleDetail(item)">
             查看详情
-            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
+            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
           </div>
         </div>
       </div>
@@ -28,10 +28,10 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, watch } from "vue";
-import { useRouter } from "vue-router";
+import { ref,defineEmits ,watch } from "vue";
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 const props = defineProps({
   slide: {
@@ -42,48 +42,44 @@ const props = defineProps({
     type: Array,
     default: () => []
   }
-});
-const emits = defineEmits(["chageSlide"]);
-const innerSlide = ref(0);
-watch(
-  () => props.slide,
-  (newV, oldV) => {
-    innerSlide.value = newV;
+})
+const emits = defineEmits(['chageSlide']);
+const innerSlide = ref(0)
+watch(()=>props.slide,(newV, oldV)=>{
+  innerSlide.value = newV
 
-    if (newV != oldV) {
-    }
-  },
-  { immediate: true }
-);
-watch(
-  () => innerSlide,
-  (newV) => {
-    console.log("inin");
-    emits("chageSlide", newV);
+  if(newV!=oldV){
+
+
   }
-);
+
+},{immediate: true})
+watch(()=> innerSlide, (newV)=>{
+  console.log('inin')
+  emits('chageSlide',newV)
+})
+
 
 const handleService = () => {
-  router.push("/liveChat");
+  router.push('/liveChat')
 };
 
 const handleDetail = (mail) => {
   router.push({
-    path: "/account/inbox",
+    path: '/account/inbox',
     query: {
       id: mail.id,
       type: mail.type
     }
-  });
+  })
 };
 </script>
 
 <style lang="scss" scoped>
 .announcement-component {
-  padding: 10px 12px 66px;
+  padding: 10px 12px 16px;
   background: white;
   height: 100%;
-  position: relative;
   overflow: auto;
   width: 100%;
   display: flex;
@@ -109,9 +105,6 @@ const handleDetail = (mail) => {
   justify-content: flex-end;
   gap: 12px;
   align-items: center;
-  position: absolute;
-  right: 20px;
-  bottom: 2px;
 
   .footer-button {
     cursor: pointer;
@@ -126,7 +119,7 @@ const handleDetail = (mail) => {
     padding: 8px 12px;
     color: white;
     &:hover {
-      filter: brightness(0.9);
+      filter: brightness(.9);
     }
   }
 }

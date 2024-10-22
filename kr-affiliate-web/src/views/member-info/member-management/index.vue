@@ -790,7 +790,7 @@
     </el-form>
 
     <div class="dialog-footer" style="margin-top:10px">
-      <el-button @click="uiControl.tagDialogVisible = false">
+      <el-button @click="uiControl.recycleDialogVisible = false">
         {{ $t('fields.cancel') }}
       </el-button>
       <el-button type="primary" @click="confirmRecycle()">
