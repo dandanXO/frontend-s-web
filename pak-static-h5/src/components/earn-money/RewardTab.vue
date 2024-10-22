@@ -38,7 +38,7 @@
       <div class="pot-item pot-item__2">
         <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalNumberOfInvites") }}</div>
-        <div class="item-img"><img src="../../assets/images/earn-money/pot-item-02.png" /></div>
+        <!--        <div class="item-img"><img src="../../assets/images/earn-money/pot-item-02.png" /></div>-->
       </div>
     </div>
     <!-- banner.redirectUrl.includes("https://") -->
@@ -594,23 +594,23 @@ watch(activeSetting, checkIsShowDetail);
           font-style: italic;
           text-transform: uppercase;
           position: relative;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: bold;
           line-height: 20.61px;
-          color: #ff3e27;
-          text-shadow:
-            -1px 1px 0 #fff,
-            1px 1px 0 #fff,
-            1px -1px 0 #fff,
-            -1px -1px 0 #fff;
+          color: #fff;
+          //text-shadow:
+          //  -1px 1px 0 #fff,
+          //  1px 1px 0 #fff,
+          //  1px -1px 0 #fff,
+          //  -1px -1px 0 #fff;
 
-          &::before {
-            content: attr(data-text);
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            -webkit-text-stroke: 1px #fff;
-          }
+          //&::before {
+          //  content: attr(data-text);
+          //  position: absolute;
+          //  inset: 0;
+          //  z-index: -1;
+          //  -webkit-text-stroke: 1px #fff;
+          //}
         }
 
         img {
@@ -623,9 +623,9 @@ watch(activeSetting, checkIsShowDetail);
           position: relative;
           background: linear-gradient(180deg, #fffee1 24.43%, #ffe69d 76.41%);
           background-clip: text;
-          font-size: 20px;
+          font-size: 18px;
           font-weight: bold;
-          line-height: 22px;
+          line-height: 20px;
           color: transparent;
 
           &::before {
