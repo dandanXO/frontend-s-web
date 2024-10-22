@@ -98,10 +98,9 @@
     </q-dialog>
   </q-scroll-area>
 </template>
-
 <script setup id="GameModal">
 import { Platform, useQuasar } from "quasar";
-import { defineExpose, ref, shallowRef } from "vue";
+import { defineExpose, ref, shallowRef, onUnmounted, watch  } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
@@ -114,9 +113,12 @@ import { App } from "@capacitor/app";
 import { storeToRefs } from "pinia";
 
 const props = defineProps(["closeFullGameDialog"]);
+
 const fullDepositDialog = ref(false);
+
 const $q = useQuasar();
 const ui = useUI();
+
 const store = userStore();
 const { token } = storeToRefs(store);
 const bankCardList = ref([]);
@@ -142,6 +144,7 @@ const handleDrawerVisible = () => {
 };
 
 const router = useRouter();
+const isOpenCalled= ref(false);
 const route = useRoute();
 const visible = ref(false);
 const isInnerHtmlSrc = ref(false);
@@ -189,6 +192,13 @@ const closeDialog = () => {
   visible.value = false;
   src.value = "";
   store.getBalance();
+  isOpenCalled.value = false;
+  router.replace({
+    query: {
+      ...route.query,
+      gameModal: undefined
+    }
+  });
   // AppFullscreen.exit()
   if (isAndroid()) {
     screen.orientation.lock("portrait");
@@ -212,6 +222,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
   platformCodeImg.value = platformCode;
+  isOpenCalled.value = true;
 
   //TESt
   localStorage.removeItem("isOpenFromAccount");
@@ -222,8 +233,23 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     App.addListener("backButton", (backEvent) => {
       onExitClick();
     });
+  } else {
+    window.addEventListener("popstate", handleBackButtonClick);
+    router.push({ query: { ...route.query, gameModal: "true" } });
   }
+  // iframe.find('HTML-Element').touchwipe({
+  // wipeLeft: function() { alert("left"); },
+  // wipeRight: function() { alert("right"); },
+  // wipeUp: function() { alert("up"); },
+  // wipeDown: function() { alert("down"); },
+  // min_move_x: 20,
+  // min_move_y: 20,
+  // preventDefaultEvents: true });
+  // transferInfo.value = {
+  //   platform: platformCode
+  // };
 
+  // Get the iframe
   const iFrame = document.getElementById("game-iframe");
   title.value = gameName;
   const store = userStore();
@@ -295,6 +321,31 @@ const close = () => {
   logoShow.value = true;
   payMethods = [];
 };
+
+const handleBackButtonClick = async () => {
+  if (!visible.value) return;
+  onExitClick();
+};
+
+const cancelCloseDialog = () => {
+  isExitDialogOpen.value = false;
+  router.push({ query: { ...route.query, gameModal: "true" } });
+};
+
+onUnmounted(() => {
+  window.removeEventListener("popstate", handleBackButtonClick);
+});
+
+watch(
+  () => route.query,
+  (query) => {
+    if (query.gameModal && !isOpenCalled.value) {
+      const _query = { ...query };
+      delete _query.gameModal;
+      router.push({ query: _query });
+    }
+  }
+);
 
 defineExpose({
   open

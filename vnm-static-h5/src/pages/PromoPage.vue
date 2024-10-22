@@ -274,13 +274,14 @@ export default defineComponent({
       { name: "slot other", label: t("lang.type_slot_other"), label_vi: t("lang.type_slot_other") }
     ]);
     const currentTabItems = computed(() => {
-      switch (ui.edition) {
-        case EDITION.SLOT:
-          return slotTabItems.value;
-        case EDITION.NORMAL:
-        default:
-          return tabItems.value;
-      }
+      return tabItems.value;
+      // switch (ui.edition) {
+      //   case EDITION.SLOT:
+      //     return slotTabItems.value;
+      //   case EDITION.NORMAL:
+      //   default:
+      //     return tabItems.value;
+      // }
     });
 
     watch(
@@ -389,10 +390,24 @@ export default defineComponent({
         .get(key, () => api.get(`/promo/type?category=${params}`))
         .then((res) => {
           tabItems.value = res.map(({ value, name, iconUrl }) => ({
+            code: value,
             name: value.toLowerCase(),
             label: name ? JSON.parse(name).H5 : "",
             label_vi: name ? JSON.parse(name).H5_vi : ""
           }));
+
+          if (params === "SLOT") {
+            const allItem = tabItems.value.find((item) => item.code === "ALL");
+            const slotGameItem = tabItems.value.find((item) => item.code === "SLOT GAME");
+            const filteredArr = tabItems.value.filter((item) => item.code !== "ALL" && item.code !== "SLOT GAME");
+            const newArr = [];
+            if (allItem) newArr.push(allItem); // 放到第一位
+            if (slotGameItem) newArr.push(slotGameItem); // 放到第二位
+            newArr.push(...filteredArr); // 添加其余的项目
+
+            tabItems.value = newArr;
+          }
+
           if (tabItems.value.length > 0) {
             promoTabActive.value = tabItems.value[0].name;
           } else {

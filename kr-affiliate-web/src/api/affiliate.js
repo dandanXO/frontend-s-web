@@ -140,3 +140,7 @@ export const getAffiliatePoint = () => {
 export const redeemPoint = () => {
   return https().request('/affiliate/redeem-point?_method=PUT', Method.POST);
 };
+
+export const getDownlineAffiliates = () => {
+  return https().request('/downline/getAllDownlines', Method.GET);
+};
