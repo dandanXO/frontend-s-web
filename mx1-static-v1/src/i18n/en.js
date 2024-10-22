@@ -435,7 +435,7 @@ export default {
       point_03: "Recomiende a tantos amigos como pueda para obtener un mayor porcentaje de reembolsos.",
       point_04: "Obtenga ingresos vitalicios por los jugadores referidos por Ud.",
       faq: "PREGUNTAS FRECUENTES",
-      faq_01: "1. ¿Cómo puedo ganar comisiones?",
+      faq_01: "1. ¿Cómo obtener ingresos por comisiones?",
       faq_01_01: "Puede ganar hasta un 1.5% del importe de las puestas diarias de los jugadores que nos haya referido. Cuanto mayor sea su nivel, mayor será el porcentaje de las comisiones que podrá obtener.",
       faq_01_02: "Si el usuario o los usuarios referidos por Ud. se convierten a su vez en agentes y se hallan en un nivel inferior al de su superior inmediato, entonces usted podrá recibir hasta el 1.2% del importe de las bonificaciones en las apuestas de los usuarios referidos por Ud. El porcentaje de las comisiones dependen de la diferencia en el nivel entre usted y los usuarios referidos por Ud., cuanto mayores sean dichas diferencias de nivel, mayores serán las comisiones que obtendrá.",
       faq_02: "2.  ¿Cómo invitar a tus amigos?",
