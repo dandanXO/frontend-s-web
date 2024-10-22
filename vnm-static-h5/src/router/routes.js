@@ -109,11 +109,6 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/news",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", name: "news", component: () => import("pages/NewsPage.vue") }]
-  },
-  {
     path: "/vip",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "vip", component: () => import("pages/games/VIPView.vue") }]
@@ -370,11 +365,6 @@ const routes = [
     path: "/about",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "about", component: () => import("pages/AboutView.vue") }]
-  },
-  {
-    path: "/landing",
-    name: "landing",
-    component: () => import("pages/LandingPage.vue")
   },
   {
     path: "/home",

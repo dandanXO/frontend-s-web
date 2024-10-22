@@ -2454,6 +2454,7 @@ export default {
     VIP: 'VIP',
     Game: 'Trò chơi',
     'Game Tag': 'Thẻ trò chơi',
+    'TFG Member Game Map': 'Ràng buộc mã trò chơi TFG',
     'Financial Level': 'Mức tài chính',
     'Risk Level': 'Mức độ rủi ro',
     'Ip Label': 'Nhãn IP',

@@ -1984,7 +1984,7 @@ body {
           width: 100%;
 
           > div {
-            max-width: $maxwidth;
+            max-width: 1450px;
             margin: 0 auto;
           }
         }

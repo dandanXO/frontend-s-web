@@ -15,13 +15,8 @@
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
-          <div
-            v-for="(method, i) in withdrawalMethods"
-            :key="i"
-            class="withdraw-type-item"
-            @click="selectMethod(method, i)"
-            :class="{ active: i === activeItem }"
-          >
+          <div v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"
+            @click="selectMethod(method, i)" :class="{ active: i === activeItem }">
             <span class="promo" v-if="method.recommended">Recommended</span>
             <div class="withdraw-img">
               <img :src="imgURL + '/withdraw/' + method.icon" />
@@ -30,20 +25,10 @@
           </div>
         </div>
         <q-form ref="withdrawFormRef">
-          <q-select
-            v-show="isLoaded"
-            hide-bottom-space
-            filled
-            ref="cardRef"
-            v-model="withdrawInfo.cardId"
-            option-value="id"
-            emit-value
-            :label="$t('lang.withdraw_choose') + ' ' + chooseLabel()"
-            class="withdraw-selection q-mt-sm q-mb-sm"
-            :options="withdrawState.bankCardList"
-            map-options
-            :rules="[(val) => !!val || $t('lang.withdraw_pleasechoose') + ' ' + chooseLabel()]"
-          >
+          <q-select v-show="isLoaded" hide-bottom-space filled ref="cardRef" v-model="withdrawInfo.cardId"
+            option-value="id" emit-value :label="$t('lang.withdraw_choose') + ' ' + chooseLabel()"
+            class="withdraw-selection q-mt-sm q-mb-sm" :options="withdrawState.bankCardList" map-options
+            :rules="[(val) => !!val || $t('lang.withdraw_pleasechoose') + ' ' + chooseLabel()]">
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey">
@@ -74,10 +59,8 @@
             </template>
             <template v-slot:selected-item="scope">
               <q-item-section avatar v-if="scope.opt.bankIcon">
-                <img
-                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                />
+                <img style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                  :src="imgURL + '/payment/' + scope.opt.bankIcon" />
               </q-item-section>
               <q-item-section>
                 <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
@@ -95,14 +78,8 @@
           trigger: "change",
         }, -->
 
-          <q-input
-            hide-bottom-space
-            ref="amountRef"
-            type="number"
-            v-model="withdrawInfo.amount"
-            :label="$t('lang.withdraw_amount')"
-            class="withdraw-field q-mt-sm q-mb-sm"
-            :rules="[
+          <q-input hide-bottom-space ref="amountRef" type="number" v-model="withdrawInfo.amount"
+            :label="$t('lang.withdraw_amount')" class="withdraw-field q-mt-sm q-mb-sm" :rules="[
               (val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_amount'),
               (val) =>
                 val >= selectedWithdrawalMethod.withdrawMin || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
@@ -110,9 +87,7 @@
                 val <= selectedWithdrawalMethod.withdrawMax || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
               (val) => (val && /^([1-9][0-9]*)$/.test(val)) || $t('lang.withdraw_amt_no_decimal_allow'),
               isValidUSDTAmt
-            ]"
-            clearable
-          >
+            ]" clearable>
             <template v-slot:prepend>
               <span style="font-size: 18px" class="text-bright">
                 {{ store.currency.value }}
@@ -120,43 +95,27 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 18px" class="text-bright">
-                <q-btn
-                  @click="updateWithdrawAmt"
-                  no-caps
-                  :label="$t('lang.withdraw_withdrawallamount')"
-                  color="brightbtn"
-                />
+                <q-btn @click="updateWithdrawAmt" no-caps :label="$t('lang.withdraw_withdrawallamount')"
+                  color="brightbtn" />
               </span>
             </template>
           </q-input>
 
-          <q-input
-            hide-bottom-space
-            ref="withdrawPwdRef"
-            v-model="withdrawInfo.withdrawPassword"
-            :label="$t('lang.withdraw_password')"
-            class="withdraw-field"
-            :type="isPwd ? 'password' : 'text'"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_password')]"
-            clearable
-          >
+          <q-input hide-bottom-space ref="withdrawPwdRef" v-model="withdrawInfo.withdrawPassword"
+            :label="$t('lang.withdraw_password')" class="withdraw-field" :type="isPwd ? 'password' : 'text'"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_password')]" clearable>
             <template v-slot:prepend>
-              <img src="../../assets/images/login/password-icon.png" width="24" />
+              <div style="width: 28px; display: flex; align-items: center">
+                <div class="password-icon" />
+              </div>
             </template>
             <template v-slot:append>
-              <q-icon
-                color="dark"
-                :name="isPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPwd = !isPwd"
-              />
+              <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <div
-            class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
-            style="border-bottom: 1px solid #434343"
-            v-show="selectedWithdrawalMethod"
-          >
+          <div class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm" style="border-bottom: 1px solid #434343"
+            v-show="selectedWithdrawalMethod">
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 $t("lang.withdraw_singlewithdrawal") +
@@ -201,19 +160,10 @@
               <span style="flex: 3" class="bg-neontb text-neontb">
                 {{
                   selectedWithdrawalMethod &&
-                  (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                    (
-                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
-                      selectedWithdrawalMethod.withdrawFee
-                    ).toFixed(2) < 0)
-                    ? "0.00"
-                    : (
-                        withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
-                        selectedWithdrawalMethod.withdrawFee
-                      ).toFixed(2)
-                }}
-                USDT
-              </span>
+                    (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount /
+                      selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2) < 0) ? "0.00"
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                      selectedWithdrawalMethod.withdrawFee).toFixed(2) }} USDT </span>
             </div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
@@ -222,17 +172,14 @@
           <div v-else-if="isEWALLET">
             <div class="q-mt-sm text-neontb">{{ $t("lang.withdraw_ewalletspecialnote") }}</div>
             <div class="q-mt-sm q-mb-sm text-center">
-              <q-btn
-                style="border: 1px solid #33bcd4; color: #33bcd4"
-                @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
-                :label="tutorialLabel()"
-              />
+              <q-btn style="border: 1px solid #33bcd4; color: #33bcd4"
+                @click="openEWalletTutorial(selectedWithdrawalMethod.code)" :label="tutorialLabel()" />
             </div>
           </div>
 
-          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
-            {{ $t("lang.withdraw_usdtspecialnote", { fee: selectedWithdrawalMethod.withdrawFee }) }}
-          </div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{
+            $t("lang.withdraw_usdtspecialnote",
+              { fee: selectedWithdrawalMethod.withdrawFee }) }}</div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -253,19 +200,12 @@
             </a-select>
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
-            <q-btn
-              class="q-mt-md common-large-btn quick-withdraw-btn"
-              @click="submitWithdraw"
-              no-caps
-              :label="$t('lang.withdraw_confirm')"
-            />
+            <q-btn class="q-mt-md common-large-btn quick-withdraw-btn" @click="submitWithdraw" no-caps
+              :label="$t('lang.withdraw_confirm')" />
           </div>
           <div class="q-py-md">
-            <div
-              v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
-              class="selected-tip"
-              v-html="selectedWithdrawalMethod.tips"
-            ></div>
+            <div v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips" class="selected-tip"
+              v-html="selectedWithdrawalMethod.tips"></div>
             <div v-if="isALIPAY" class="selected-tip">
               “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
             </div>
@@ -656,6 +596,7 @@ export default defineComponent({
   box-shadow: $shadow-bg;
   background: $white;
 }
+
 .withdrawalmethod {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -688,6 +629,7 @@ export default defineComponent({
     }
 
     &.active {
+
       // background: #212534;
       // color: #db7e42;
       // box-shadow: none;
@@ -741,6 +683,7 @@ export default defineComponent({
     }
   }
 }
+
 .selected-tip {
   color: $warning;
 }

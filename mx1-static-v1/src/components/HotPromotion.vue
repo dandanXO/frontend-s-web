@@ -8,7 +8,7 @@
     />
 
     <!-- external promos -->
-    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'id1-slot-ftd' && store.token" :params="list.param" />
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'mx1-slot-ftd' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -95,7 +95,7 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (this.list.redirectUrl === "id1-slot-ftd" || this.list.id === 40) {
+    if (this.list.redirectUrl === "mx1-slot-ftd" || this.list.id === 40) {
       this.isCommonPromo = false;
     } else {
       this.isCommonPromo = true;

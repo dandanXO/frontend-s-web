@@ -75,7 +75,8 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <component v-if="isGuessRoute" :is="Component" />
+        <KeepAlive v-else :max="8">
           <component :is="Component" />
         </KeepAlive>
       </router-view>
@@ -115,6 +116,11 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
+
+    const isGuessRoute = computed(() => {
+      if (route.path === "/login" || route.path === "register") return true;
+      return false;
+    });
     // ui.$onAction(({ name, args }) => {
     //   switch (name) {
     //     case "setScrollPosition":
@@ -309,6 +315,9 @@ export default defineComponent({
         } else if (route.path === "/promotion") {
           hasPage.value = true;
           pageName.value = t("header.promotion");
+          if (route.fullPath.indexOf("pak-faq") > -1) {
+            pageName.value = "FAQ";
+          }
           prevPage.value = "";
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
@@ -581,7 +590,8 @@ export default defineComponent({
       platformsList,
       changePlatform,
       languageVal,
-      goToPrevPage
+      goToPrevPage,
+      isGuessRoute
     };
   }
 });

@@ -829,10 +829,6 @@ export default defineComponent({
           background: #4f366c;
           box-shadow: 0px 7.5px 20px 0px #1411321a;
 
-          img {
-          }
-
-          cursor: pointer;
 
           .promo-img-wrapper {
             position: relative;
@@ -847,14 +843,16 @@ export default defineComponent({
               // border-radius: 10px 10px 0 0;
               border-radius: 17px;
 
-              &:hover {
-                transform: scale(1.2);
-              }
+
 
               display: flex;
               justify-content: center;
               align-items: center;
               gap: 30px;
+
+              &:hover {
+                transform: scale(1.2);
+              }
 
               .promo-content {
                 width: 100%;
@@ -905,32 +903,6 @@ export default defineComponent({
               line-height: 40px;
               padding: 0 100px 0 10px;
               font-weight: 500;
-
-              // &:before {
-              //   background: #043d4f;
-              //   content: "";
-              //   display: block;
-              //   height: 100%;
-              //   position: absolute;
-              //   right: 0;
-              //   top: 0;
-              //   width: 70px;
-              // }
-
-              // &:after {
-              //   border-left: 20px solid transparent;
-              //   border-right: 30px solid transparent;
-              //   border-top: 30px solid #043d4f;
-              //   clear: both;
-              //   content: "";
-              //   display: block;
-              //   height: 0;
-              //   position: absolute;
-              //   right: 50px;
-              //   top: 0;
-              //   transform: rotate(180deg);
-              //   width: 0;
-              // }
             }
 
             .detail-arrow {
@@ -948,6 +920,10 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       .banner-container {
+
+
+        width: 100%;
+
         &:after {
           content: "";
           background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
@@ -957,8 +933,6 @@ export default defineComponent({
           height: 80px;
           width: 100%;
         }
-
-        width: 100%;
 
         .promo-bg {
           background-size: cover;
@@ -1046,24 +1020,7 @@ export default defineComponent({
           padding: 20px;
           border-radius: 10px;
           overflow: auto;
-          // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
-          // }
+
         }
       }
     }
