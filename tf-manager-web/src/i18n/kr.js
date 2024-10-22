@@ -2473,6 +2473,7 @@ export default {
     VIP: 'VIP',
     Game: '게임',
     'Game Tag': '게임 태그',
+    'TFG Member Game Map': 'TFG 게임 코드 바인딩',
     'Financial Level': '금융 레벨',
     'Risk Level': '리스크 레벨',
     'Ip Label': 'IP 라벨',
