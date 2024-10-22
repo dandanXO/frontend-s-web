@@ -209,7 +209,7 @@ import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { isAndroid } from "boot/utils";
+import { isAndroid, trackNewUserFtd } from "boot/utils";
 import { App } from "@capacitor/app";
 
 export default defineComponent({
@@ -410,6 +410,11 @@ export default defineComponent({
                 $q.loading.hide();
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
+
+                const isNewUser = sessionStorage.getItem("newUserFtd");
+                if (store.isFbPixel && isNewUser) {
+                  document.addEventListener("ftdSuccess", trackNewUserFtd);
+                }
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
