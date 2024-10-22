@@ -957,7 +957,7 @@ const uiControl = reactive({
     { key: 7, displayName: 'LOTTERY', value: 'lottery' },
     { key: 8, displayName: 'CASUAL', value: 'casual' },
   ],
-  selectedGameTypeRolloverType: null,
+  selectedGameTypeRolloverType: 'MULTIPLE',
   rollOverAmt: null,
   isNewRollover: true,
   oldRollOver: {
@@ -969,7 +969,7 @@ const uiControl = reactive({
 })
 
 const gameTypes = ref([])
-const selectedRolloverType = ref();
+const selectedRolloverType = ref('MULTIPLE');
 
 const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
@@ -1457,8 +1457,8 @@ async function showDialog(type) {
       memberAmountAdjustForm.value.resetFields()
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
-      uiControl.rollOverAmt = undefined
     }
+      uiControl.rollOverAmt = undefined
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
