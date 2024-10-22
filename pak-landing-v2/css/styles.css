@@ -2,7 +2,7 @@ body {
   margin: 0;
   background-color: #000;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
 }
 
@@ -13,6 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   padding-bottom: 48px;
   min-height: calc(100% - 48px);
 }
@@ -90,7 +91,7 @@ body {
 .call-to-action-pointer {
   width: 32px;
   position: relative;
-  top: 100px;
+  top: 65px;
   right: -18%;
   animation: smallbeat 1s infinite;
   z-index: 2;
