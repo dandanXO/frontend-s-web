@@ -336,7 +336,7 @@ export default {
     withdrewAmount: "Monto Retirado",
     withdrawMaxTimes: "Intentos de Retiro Restantes",
     dailyLimit: "Límite Diario",
-    remainWagers: "Apuestas Restantes",
+    remainWagers: "Saldo restante",
     withdrawTutorial: "Tutorial de Retiro",
     withdrawalMethodInMaintenance: "Este canal está en mantenimiento de {startTime} a {endTime}. Por favor, utiliza otro canal para operaciones de retiro. ¡Gracias!",
     bankName: "Nombre del Banco",
