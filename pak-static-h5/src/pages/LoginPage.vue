@@ -411,11 +411,6 @@ export default defineComponent({
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
-                const isNewUser = sessionStorage.getItem("newUserFtd");
-                if (store.isFbPixel && isNewUser) {
-                  document.addEventListener("ftdSuccess", trackNewUserFtd);
-                }
-
                 if (isCheckRmb.value) {
                   localStorage.setItem(
                     "userpass",
