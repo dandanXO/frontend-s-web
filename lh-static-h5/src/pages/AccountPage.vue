@@ -47,7 +47,7 @@
             <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" />
           </div>
         </q-card-section>
-        <hr v-if="$q.dark.isActive" style="width: 100%;border:1px solid #3b5385;" />
+        <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385" />
         <q-card-section class="acct-btm-section">
           <div class="vip-level-detail">
             <div class="vip-link">{{ store.vip }}</div>
@@ -69,8 +69,12 @@
             <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
               <div>晋级流水（元）</div>
               <div v-if="store.currentBetAmt !== ''">
-                <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">{{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}</div>
-                <div v-else>{{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}</div>
+                <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">
+                  {{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
+                </div>
+                <div v-else>
+                  {{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
+                </div>
               </div>
               <div v-else>计算中...</div>
             </div>
@@ -171,196 +175,196 @@
 
     <template v-if="$q.dark.isActive">
       <q-item-section class="acct-nav">
-      <div class="acct-menu" id="id-acct-menu">
-        <router-link to="/account/personal">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-personal-icon-dark.svg" />
-            <div class="acct-nav-label">账户信息</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/withdraw">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-bank-icon-dark.svg" />
-            <div class="acct-nav-label">银行信息</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/records">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-icon-dark.svg" />
-            <div class="acct-nav-label">交易信息</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/records/bet">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-bet-icon-dark.svg" />
-            <div class="acct-nav-label">投注记录</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/inbox">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-notice-icon-dark.svg" />
-            <div class="acct-nav-label">消息提醒</div>
-            <div class="unread" v-if="store.unreadInboxMail > 0">
-              {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+        <div class="acct-menu" id="id-acct-menu">
+          <router-link to="/account/personal">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-personal-icon-dark.svg" />
+              <div class="acct-nav-label">账户信息</div>
             </div>
-          </div>
-        </router-link>
+          </router-link>
 
-        <router-link to="/account/letters">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/user-feedback-icon-dark.svg" />
-            <div class="acct-nav-label">意见反馈</div>
-          </div>
-        </router-link>
+          <router-link to="/account/withdraw">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-bank-icon-dark.svg" />
+              <div class="acct-nav-label">银行信息</div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/vip?from=account">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.svg" />
-            <div class="acct-nav-label">VIP 特权</div>
-          </div>
-        </router-link>
+          <router-link to="/account/records">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-icon-dark.svg" />
+              <div class="acct-nav-label">交易信息</div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/changePwd">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-changepwd-icon-dark.svg" />
-            <div class="acct-nav-label">修改密码</div>
-          </div>
-        </router-link>
-        <router-link to="/promo">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-promo-icon-dark.svg" />
-            <div class="acct-nav-label">优惠活动</div>
-          </div>
-        </router-link>
+          <router-link to="/account/records/bet">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-bet-icon-dark.svg" />
+              <div class="acct-nav-label">投注记录</div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/invite">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-share-icon-dark.svg" />
-            <div class="acct-nav-label">推广赚钱</div>
-          </div>
-        </router-link>
+          <router-link to="/account/inbox">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-notice-icon-dark.svg" />
+              <div class="acct-nav-label">消息提醒</div>
+              <div class="unread" v-if="store.unreadInboxMail > 0">
+                {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+              </div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/invite#summon-share">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.svg" />
-            <div class="acct-nav-label">召回奖金</div>
-          </div>
-        </router-link>
+          <router-link to="/account/letters">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/user-feedback-icon-dark.svg" />
+              <div class="acct-nav-label">意见反馈</div>
+            </div>
+          </router-link>
 
-        <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img v-if="$q.dark.isActive" src="../assets/images/account/account-affiliate-icon-dark.svg" />
-            <div class="acct-nav-label">合作加盟</div>
-          </div>
-        </router-link>
-      </div>
-    </q-item-section>
+          <router-link to="/account/vip?from=account">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.svg" />
+              <div class="acct-nav-label">VIP 特权</div>
+            </div>
+          </router-link>
+
+          <router-link to="/account/changePwd">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-changepwd-icon-dark.svg" />
+              <div class="acct-nav-label">修改密码</div>
+            </div>
+          </router-link>
+          <router-link to="/promo">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-promo-icon-dark.svg" />
+              <div class="acct-nav-label">优惠活动</div>
+            </div>
+          </router-link>
+
+          <router-link to="/account/invite">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-share-icon-dark.svg" />
+              <div class="acct-nav-label">推广赚钱</div>
+            </div>
+          </router-link>
+
+          <router-link to="/account/invite#summon-share">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.svg" />
+              <div class="acct-nav-label">召回奖金</div>
+            </div>
+          </router-link>
+
+          <router-link to="/affiliate">
+            <div class="acct-nav-item">
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-affiliate-icon-dark.svg" />
+              <div class="acct-nav-label">合作加盟</div>
+            </div>
+          </router-link>
+        </div>
+      </q-item-section>
     </template>
     <template v-else>
       <q-item-section class="acct-nav">
-      <div class="acct-title">
-        <div class="acct-title-1">功能区</div>
-      </div>
-      <div class="acct-menu" id="id-acct-menu">
-        <router-link to="/account/personal">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-personal-icon.png" />
-            <div class="acct-nav-label">账户信息</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-bank-icon.png" />
-            <div class="acct-nav-label">银行信息</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/records">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-record-icon.png" />
-            <div class="acct-nav-label">交易信息</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/records/bet">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-record-bet-icon.png" />
-            <div class="acct-nav-label">投注记录</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/inbox">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-notice-icon.png" />
-            <div class="acct-nav-label">消息提醒</div>
-            <div class="unread" v-if="store.unreadInboxMail > 0">
-              {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+        <div class="acct-title">
+          <div class="acct-title-1">功能区</div>
+        </div>
+        <div class="acct-menu" id="id-acct-menu">
+          <router-link to="/account/personal">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-personal-icon.png" />
+              <div class="acct-nav-label">账户信息</div>
             </div>
-          </div>
-        </router-link>
+          </router-link>
 
-        <router-link to="/account/letters">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/user-feedback-icon.png" />
-            <div class="acct-nav-label">意见反馈</div>
-          </div>
-        </router-link>
+          <router-link to="/account/withdraw">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-bank-icon.png" />
+              <div class="acct-nav-label">银行信息</div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/vip?from=account">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-vip-icon.png" />
-            <div class="acct-nav-label">VIP 特权</div>
-          </div>
-        </router-link>
+          <router-link to="/account/records">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-record-icon.png" />
+              <div class="acct-nav-label">交易信息</div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/changePwd">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-changepwd-icon.png" />
-            <div class="acct-nav-label">修改密码</div>
-          </div>
-        </router-link>
-      </div>
-    </q-item-section>
+          <router-link to="/account/records/bet">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-record-bet-icon.png" />
+              <div class="acct-nav-label">投注记录</div>
+            </div>
+          </router-link>
 
-    <q-item-section class="acct-nav">
-      <div class="acct-title">
-        <div class="acct-title-1">热门推荐</div>
-      </div>
-      <div class="acct-menu" id="id-acct-menu">
-        <router-link to="/promo">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-promo-icon.png" />
-            <div class="acct-nav-label">优惠活动</div>
-          </div>
-        </router-link>
+          <router-link to="/account/inbox">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-notice-icon.png" />
+              <div class="acct-nav-label">消息提醒</div>
+              <div class="unread" v-if="store.unreadInboxMail > 0">
+                {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+              </div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/invite">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-share-icon.png" />
-            <div class="acct-nav-label">推广赚钱</div>
-          </div>
-        </router-link>
+          <router-link to="/account/letters">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/user-feedback-icon.png" />
+              <div class="acct-nav-label">意见反馈</div>
+            </div>
+          </router-link>
 
-        <router-link to="/account/invite#summon-share">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-summon-share-icon.png" />
-            <div class="acct-nav-label">召回奖金</div>
-          </div>
-        </router-link>
+          <router-link to="/account/vip?from=account">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-vip-icon.png" />
+              <div class="acct-nav-label">VIP 特权</div>
+            </div>
+          </router-link>
 
-        <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
-            <div class="acct-nav-label">合作加盟</div>
-          </div>
-        </router-link>
-      </div>
-    </q-item-section>
+          <router-link to="/account/changePwd">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-changepwd-icon.png" />
+              <div class="acct-nav-label">修改密码</div>
+            </div>
+          </router-link>
+        </div>
+      </q-item-section>
+
+      <q-item-section class="acct-nav">
+        <div class="acct-title">
+          <div class="acct-title-1">热门推荐</div>
+        </div>
+        <div class="acct-menu" id="id-acct-menu">
+          <router-link to="/promo">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-promo-icon.png" />
+              <div class="acct-nav-label">优惠活动</div>
+            </div>
+          </router-link>
+
+          <router-link to="/account/invite">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-share-icon.png" />
+              <div class="acct-nav-label">推广赚钱</div>
+            </div>
+          </router-link>
+
+          <router-link to="/account/invite#summon-share">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-summon-share-icon.png" />
+              <div class="acct-nav-label">召回奖金</div>
+            </div>
+          </router-link>
+
+          <router-link to="/affiliate">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/account-affiliate-icon.png" />
+              <div class="acct-nav-label">合作加盟</div>
+            </div>
+          </router-link>
+        </div>
+      </q-item-section>
     </template>
 
     <q-card class="card-account-banner">
@@ -766,9 +770,9 @@ export default defineComponent({
     });
     const isLoadingUpload = ref(false);
     const updateProfilePhoto = () => {
-      if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
-        return;
-      }
+      // if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
+      //   return;
+      // }
 
       profileDialogVisible.value = true;
     };
@@ -776,9 +780,9 @@ export default defineComponent({
       selectedImage.value = item;
     };
     const onShowProfile = () => {
-      if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
-        return;
-      }
+      // if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
+      //   return;
+      // }
 
       imageForm.path = null;
       inputImage.value = null;
@@ -1563,11 +1567,11 @@ export default defineComponent({
 
   .acct-logout {
     @include content-block-dark;
-    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3A93CE;
+    border: 1px solid #3a93ce;
 
     .acct-nav-label {
       color: #fff;
@@ -1578,15 +1582,15 @@ export default defineComponent({
     background: none;
 
     .top-section {
-      background: linear-gradient(180deg, #384E79 0%, #212E4B 100%);
+      background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
     }
     .btn-main {
       // background-image: url("../assets/images/account/account-btn-dark.png");
-      background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+      background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
       background-size: cover;
       box-shadow: none;
       border-radius: 4px;
-      border: 1px solid #3A93CE;
+      border: 1px solid #3a93ce;
     }
 
     .acct-btm-section {
@@ -1596,13 +1600,13 @@ export default defineComponent({
         .vip-right {
           color: #fff;
           font-size: 18px;
-          font-family: 'YouSheBiaoTiHei';
-          background: url('../assets/images/account/vip-right-bg-dark.svg') no-repeat center center;
+          font-family: "YouSheBiaoTiHei";
+          background: url("../assets/images/account/vip-right-bg-dark.svg") no-repeat center center;
           background-size: 100% 100%;
           padding: 4px 10px 4px 20px;
           margin-right: -14px;
           margin-bottom: -12px;
-          
+
           img {
             width: 9px;
           }

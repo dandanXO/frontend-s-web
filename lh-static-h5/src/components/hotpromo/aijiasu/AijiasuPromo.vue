@@ -28,10 +28,7 @@
         </div>
         <div class="info">
           <img src="../../../assets/promo/aijiasu/item-img.png" alt="" />
-          <div class="item-text1" v-if="store.token && store.memberType === 'TEST'" style="color: #ff0000">
-            无需配置，一键连接TEST
-          </div>
-          <div class="item-text1" v-else>无需配置，一键连接</div>
+          <div class="item-text1">无需配置，一键连接</div>
           <div class="item-text2">长按图片扫码</div>
         </div>
       </div>
