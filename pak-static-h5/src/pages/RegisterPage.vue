@@ -457,7 +457,7 @@ export default defineComponent({
                 if (store.isFbPixel) {
                   fbq("track", "CompleteRegistration");
                   document.addEventListener("ftdSuccess", trackNewUserFtd);
-                  sessionStorage.setItem("newUserFtd", "1");
+                  sessionStorage.setItem("newUserFtd", regForm.loginName);
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
 

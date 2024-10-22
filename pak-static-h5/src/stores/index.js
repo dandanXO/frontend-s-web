@@ -270,11 +270,11 @@ export const userStore = defineStore("userStore", {
           .then((res) => {
             console.log(res);
             if (res.code === 0) {
-              console.log("Balance");
-              console.log(this.isFbPixel + " | " + this.balance + " | " + res.code);
               if (this.isFbPixel && this.balance === 0 && res.data !== 0) {
-                console.log("IS HEre.");
-                document.dispatchEvent(ftdEvent);
+                const isNewUser = sessionStorage.getItem("newUserFtd");
+                if (isNewUser && isNewUser === this.nickName) {
+                  document.dispatchEvent(ftdEvent);
+                }
               }
               this.balance = res.data;
             } else {
