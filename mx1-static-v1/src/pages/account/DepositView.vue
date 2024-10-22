@@ -337,10 +337,10 @@ const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
 };
 const getFtdCommaAmount = (amount) => {
-  if (amount < 888000) {
-    return `${amount / 1000}K`;
+  if (amount <= 177) {
+    return `${amount}`;
   } else {
-    return `888K`;
+    return `177`;
   }
 };
 
