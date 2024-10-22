@@ -263,12 +263,12 @@
           <el-col v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
             <el-form-item prop="rollover">
               <el-input-number
-                v-model="uiControl.rollOverAmt"
+                v-model="form.rollover"
                 style="width: 145px"
-                :min="0"
                 :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                 :controls="false"
                 @keypress="restrictInput($event)"
+                @input="validateField('rollover')"
               />
             </el-form-item>
           </el-col>
@@ -578,7 +578,7 @@
             <el-col v-if="!isAffiliateUser" :span="7">
               <el-form-item prop="rollover">
                 <el-input-number
-                  v-model="uiControl.rollOverAmt"
+                  v-model="form.rollover"
                   style="width: 145px"
                   :min="0"
                   :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
@@ -590,7 +590,7 @@
             <el-col :span="7" v-else>
               <el-form-item prop="rollover">
                 <el-input-number
-                  v-model="uiControl.rollOverAmt"
+                  v-model="form.rollover"
                   style="width: 145px"
                   :controls="false"
                   :disabled="isAffiliateUser"
@@ -964,7 +964,6 @@ const uiControl = reactive({
     { key: 8, displayName: 'CASUAL', value: 'casual' },
   ],
   selectedGameTypeRolloverType: 'MULTIPLE',
-  rollOverAmt: null,
   isNewRollover: true,
   oldRollOver: {
     rollover: 0,
@@ -1110,6 +1109,12 @@ const formRules = reactive({
   cause: [required(t('message.validateCauseRequired'))],
 })
 
+function validateField(field) {
+  if (formRef.value) {
+    formRef.value.validateField(field);
+  }
+}
+
 const importRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   cause: [required(t('message.validateCauseRequired'))],
@@ -1198,10 +1203,10 @@ const handleSelect = item => {
   if (item) {
     if (item.ref === 'AFFILIATE' || uiControl.dialogType === 'CREATE_DEDUCT') {
       isAffiliateUser.value = true
-      uiControl.rollOverAmt = 0
+      form.rollover = 0
     }else{
       isAffiliateUser.value = false;
-      uiControl.rollOverAmt = undefined
+      form.rollover = undefined
     }
     // Clear previous selections
     dynamicTags.value = []
@@ -1225,11 +1230,11 @@ const cachedGameTypes = ref([]);
 const cachedUIAmt = ref([]);
 const checkRolloverType = () => {
   if (selectedRolloverType.value === 'MULTIPLE') {
-    cachedUIAmt.value = uiControl.rollOverAmt
-    if (uiControl.rollOverAmt > 100) {
-      uiControl.rollOverAmt = 100
+    cachedUIAmt.value = form.rollover
+    if (form.rollover > 100) {
+      form.rollover = 100
     } else {
-      uiControl.rollOverAmt = undefined
+      form.rollover = undefined
     }
     cachedGameTypes.value = gameTypes.value.map(type => ({ ...type }));
     gameTypes.value.forEach(type => {
@@ -1243,7 +1248,7 @@ const checkRolloverType = () => {
       gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
     }
     if (cachedUIAmt.value) {
-      uiControl.rollOverAmt = cachedUIAmt.value
+      form.rollover = cachedUIAmt.value
     }
   }
 }
@@ -1261,11 +1266,11 @@ function compareOldGameLists () {
 }
 function constructRollover() {
   // debugger;
-  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt &&
+  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === form.rollover &&
       (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists())) &&
       (!uiControl.oldRollOver.selectType || (uiControl.oldRollOver.selectType === uiControl.selectedGameTypeRolloverType))
   ) {
-    form.rollover = uiControl.rollOverAmt;
+    form.rollover = form.rollover;
     return JSON.stringify(uiControl.oldRollOver.gameTypeRollover);
   }
   const json = { newRollover: true };
@@ -1302,7 +1307,7 @@ function constructRollover() {
       json.rolloverType = 'TOTAL_AMOUNT_' + uiControl.selectedGameTypeRolloverType
       json.rollover = calculateRollover()
     } else {
-      json.rollover = uiControl.rollOverAmt
+      json.rollover = form.rollover
     }
     const excludeTypes = [];
     Object.values(gameTypes.value).forEach(item => {
@@ -1315,9 +1320,9 @@ function constructRollover() {
   }
   
   if (addAmountAdjustmentType.value === 'CALCULATE' && uiControl.dialogType === 'CREATE_ADD') {
-    form.rollover = uiControl.rollOverAmt ? calculateRollover() : 1
+    form.rollover = form.rollover ? calculateRollover() : 1
   } else {
-    form.rollover = uiControl.rollOverAmt ? uiControl.rollOverAmt : 1;
+    form.rollover = form.rollover ? form.rollover : 1;
   }
   return JSON.stringify(json)
 }
@@ -1463,8 +1468,9 @@ async function showDialog(type) {
       memberAmountAdjustForm.value.resetFields()
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
+      form.rollover = undefined
     }
-      uiControl.rollOverAmt = undefined
+      form.rollover = undefined
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
@@ -1472,7 +1478,7 @@ async function showDialog(type) {
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
     }
-    uiControl.rollOverAmt= 0;
+    form.rollover= 0;
     uiControl.balance = null
     uiControl.dialogTitle = t('fields.deductMemberAmountAdjust')
   }
@@ -1542,7 +1548,7 @@ function calculateRollover(item) {
     const multi = +item || 1
     return ((amount + deposit) * multi) - deposit;
   } else {
-    const multi = uiControl.rollOverAmt || 1;
+    const multi = form.rollover || 1;
     return ((amount + deposit) * multi) - deposit;
   }
 
@@ -1568,6 +1574,7 @@ function createAdd() {
 
       if (valid) {
         delete form.deposit;
+        delete form.rollover;
         await createAddMemberAmountAdjust(form);
         uiControl.dialogVisible = false;
         await loadMemberAmountAdjust();
