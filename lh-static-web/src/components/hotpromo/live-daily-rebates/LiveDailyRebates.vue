@@ -2,11 +2,11 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="tab-wrapper">
-        <div class="tab" :class="{ active: tabValue === 1 }" @click="tabValue = 1">活动1</div>
-        <div class="tab" :class="{ active: tabValue === 2 }" @click="tabValue = 2">活动2</div>
+        <div class="tab" :class="{ active: tabValue === 'lh1-live-daily-bonus' }" @click="tabValue = 'lh1-live-daily-bonus'">活动1</div>
+        <div class="tab" :class="{ active: tabValue === 'lh1-live-weekly-bonus' }" @click="tabValue = 'lh1-live-weekly-bonus'">活动2</div>
       </div>
 
-      <template v-if="tabValue === 1">
+      <template v-if="tabValue === 'lh1-live-daily-bonus'">
         <div>
           <div class="livepoker-rebate-section">
             <div class="livepoker-rebate-section-left">
@@ -29,12 +29,12 @@
                 </div>
                 <div class="reward-info-content">
                   今日可领取彩金：
-                  <span class="amount">{{ dailyBonus }}元</span>
+                  <span class="amount">{{ bonus }}元</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimDailyBonus" :class="{ disabled: dailyBonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
               </div>
             </div>
@@ -116,7 +116,7 @@
         </div>
       </template>
 
-      <template v-if="tabValue === 2">
+      <template v-if="tabValue === 'lh1-live-weekly-bonus'">
         <div>
           <div class="livepoker-rebate-section">
             <div class="livepoker-rebate-section-left">
@@ -130,7 +130,7 @@
                 </div>
                 <div class="reward-info-content">
                   上周期累计有效投注：
-                  <span class="amount">{{ totalLoss }}元</span>
+                  <span class="amount">{{ totalValidBet }}元</span>
                 </div>
               </div>
               <div class="reward-info">
@@ -139,12 +139,12 @@
                 </div>
                 <div class="reward-info-content">
                   可领取周彩金：
-                  <span class="amount">{{ weeklyBonus }}元</span>
+                  <span class="amount">{{ bonus }}元</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimWeeklyBonus" :class="{ disabled: dailyBonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
               </div>
             </div>
@@ -220,8 +220,8 @@
 </template>
 
 <script setup>
-import { getCBAInit, claimCBADailyBonus, getCBAWeeklyInit, claimCBAWeeklyBonus } from "@/api/index/promo";
-import { onMounted, ref, defineProps } from "vue";
+import { getGameTypeBonusInit, claimGameTypeBonus } from "@/api/index/promo";
+import { watch, ref, defineProps } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
@@ -232,16 +232,11 @@ const notify = useNotify();
 
 const store = userStore();
 const totalValidBet = ref(0);
-const dailyBonus = ref(0);
-const betCount = ref(0);
+const bonus = ref(0);
 
-const weeklyBonus = ref(0);
-const totalLoss = ref(0);
-const claimedBonus = ref(0);
+const tabValue = ref('lh1-live-daily-bonus');
 
-const tabValue = ref(1);
-
-const handleClaimDailyBonus = () => {
+const handleClaimBonus = () => {
   if (!store.hasToken()) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
       autofocus: false,
@@ -256,46 +251,7 @@ const handleClaimDailyBonus = () => {
     return;
   }
 
-  claimCBADailyBonus()
-    .then((res) => {
-      if (res.code === 0) {
-        notify({
-          type: "success",
-          message: `成功领取${res.data}元`
-        });
-        fetchData();
-      } else {
-        // notify({
-        //   type: "error",
-        //   message: res.message
-        // });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      notify({
-        type: "error",
-        message: err.message
-      });
-    });
-};
-
-const handleClaimWeeklyBonus = () => {
-  if (!store.hasToken()) {
-    ElMessageBox.alert("请登录后再操作", "系统提示", {
-      autofocus: false,
-      center: true,
-      confirmButtonText: "确认",
-      showClose: false,
-      buttonSize: "large",
-      closeOnClickModal: true
-    }).then(() => {
-      store.loginPageVisible = true;
-    });
-    return;
-  }
-
-  claimCBAWeeklyBonus()
+  claimGameTypeBonus(tabValue.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -321,31 +277,31 @@ const handleClaimWeeklyBonus = () => {
 
 const fetchData = async () => {
   try {
-    const res = await getCBAInit();
-    const res1 = await getCBAWeeklyInit();
+    const res = await getGameTypeBonusInit(tabValue.value);
 
     totalValidBet.value = res.data.totalValidBet;
-    betCount.value = res.data.betCount;
-    dailyBonus.value = res.data.bonus;
-
-    totalLoss.value = res1.data.totalLoss;
-    weeklyBonus.value = res1.data.bonus;
-    claimedBonus.value = res1.data.claimedBonus;
+    bonus.value = res.data.bonus;
   } catch (error) {
     console.log(error);
   }
 };
 
-onMounted(() => {
-  if (!store.token) {
+watch(
+  () => tabValue.value,
+  () => {
+    if (!store.token) {
     // notify({
     //   message: "请登录后操作",
     //   type: "error"
     // });
     return;
   }
-  fetchData();
-});
+    fetchData();
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <style scoped lang="scss">
