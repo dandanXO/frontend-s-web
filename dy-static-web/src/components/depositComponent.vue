@@ -172,7 +172,6 @@
 <script setup>
 import { ref, reactive, onMounted, shallowRef, computed } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
-// import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";

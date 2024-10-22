@@ -238,7 +238,6 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
-// import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";

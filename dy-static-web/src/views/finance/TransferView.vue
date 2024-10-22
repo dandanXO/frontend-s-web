@@ -142,7 +142,6 @@
 import { defineComponent, ref, reactive, computed, onMounted } from "vue";
 import { loadBalance } from "@/api/personal/personal";
 import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList, updateAutoTransferState, getAutoTransferState } from "@/api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
