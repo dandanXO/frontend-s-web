@@ -604,7 +604,7 @@ export default {
     addMemberAmountAdjust: '新增会员平账',
     amountAdjustType: '平账类型',
     addNormalAmountAdjust: '普通平账',
-    addCalculateAmountAdjust: '计算平账',
+    addCalculateAmountAdjust: '存送平账',
     addMemberPrivilegeBlacklist: '新增会员优惠黑名单',
     addMemberRebateRule: '新增会员特殊返水条例',
     addMenu: '新增菜单',
