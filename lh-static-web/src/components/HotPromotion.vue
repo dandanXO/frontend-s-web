@@ -68,7 +68,7 @@
     <Europe2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot'" />
     <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu'" />
     <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024'" :promo-code="list.promoCode" />
-    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'lh1-blast-premier-treasure\n'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'lh1-blast-premier-treasure'" :promo-code="list.promoCode" />
     <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual'" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao'" />
