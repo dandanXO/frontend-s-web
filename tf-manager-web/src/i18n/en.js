@@ -2758,6 +2758,7 @@ export default {
     VIP: 'VIP',
     Game: 'Game',
     'Game Tag': 'Game Tag',
+    'TFG Member Game Map': 'TFG Game Map',
     'Financial Level': 'Financial Level',
     'Risk Level': 'Risk Level',
     'Ip Label': 'IP Label',

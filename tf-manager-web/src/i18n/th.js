@@ -1690,6 +1690,7 @@ export default {
     VIP: 'VIP',
     Game: 'เกม',
     'Game Tag': 'แท็กเกม',
+    'TFG Member Game Map': 'TFGการผูกโค้ดเกม',
     'Financial Level': 'ระดับการเงิน',
     'Risk Level': 'ระดับความเสี่ยง',
     'IP Label': 'ฉลากไอพี',

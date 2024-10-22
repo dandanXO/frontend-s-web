@@ -2706,6 +2706,7 @@ export default {
     VIP: 'VIP',
     Game: '游戏',
     'Game Tag': '游戏标签',
+    'TFG Member Game Map': 'TFG游戏码绑定',
     'Financial Level': '会员组别',
     'Risk Level': '风险等级',
     'Ip Label': 'IP 标签',
