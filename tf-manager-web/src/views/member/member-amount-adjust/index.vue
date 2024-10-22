@@ -265,6 +265,7 @@
               <el-input-number
                 v-model="uiControl.rollOverAmt"
                 style="width: 145px"
+                :min="0"
                 :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                 :controls="false"
                 @keypress="restrictInput($event)"
@@ -423,7 +424,7 @@
               :key="item.key"
               :label="item.value"
             >
-              {{ item.displayName }} <!-- Use the display name here for the label text -->
+              {{ item.displayName }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
@@ -574,18 +575,19 @@
             </el-form-item>
           </el-col>
           <template v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'">
-            <el-col v-if="!isAffiliateUser" :span="12">
+            <el-col v-if="!isAffiliateUser" :span="7">
               <el-form-item prop="rollover">
                 <el-input-number
                   v-model="uiControl.rollOverAmt"
                   style="width: 145px"
+                  :min="0"
                   :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                   :controls="false"
                   @keypress="restrictInput($event)"
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-else>
+            <el-col :span="7" v-else>
               <el-form-item prop="rollover">
                 <el-input-number
                   v-model="uiControl.rollOverAmt"
@@ -594,6 +596,9 @@
                   :disabled="isAffiliateUser"
                 />
               </el-form-item>
+            </el-col>
+            <el-col style="padding:8px 0;" :span="4" v-if="addAmountAdjustmentType === 'CALCULATE'">
+              {{ calculateRollover() }}
             </el-col>
           </template>
         </el-row>
@@ -657,6 +662,7 @@
                 >
                   {{ t('fields.delete') }}
                 </el-button>
+                <span style="padding: 8px; text-align: center;" v-if="item.key && item.value && addAmountAdjustmentType === 'CALCULATE'">{{ calculateRollover(item.value) }}</span>
               </div>
             </div>
           </el-form-item>
@@ -1526,12 +1532,20 @@ async function handleBalanceType(value) {
     }
   }
 }
-function calculateRollover() {
+function calculateRollover(item) {
+  if (!form.amount || !form.deposit) {
+    return undefined
+  }
   const amount = +form.amount || 0; 
   const deposit = +form.deposit || 0;
-  const multi = uiControl.rollOverAmt || 1;
+  if (item) {
+    const multi = +item || 1
+    return ((amount + deposit) * multi) - deposit;
+  } else {
+    const multi = uiControl.rollOverAmt || 1;
+    return ((amount + deposit) * multi) - deposit;
+  }
 
-  return ((amount + deposit) * multi) - deposit;
 }
 function createAdd() {
   const originalDeposit = form.deposit;
