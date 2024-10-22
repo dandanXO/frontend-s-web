@@ -2,11 +2,11 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="tab-wrapper">
-        <div class="tab" :class="{ active: tabValue === 1 }" @click="tabValue = 1">活动1</div>
-        <div class="tab" :class="{ active: tabValue === 2 }" @click="tabValue = 2">活动2</div>
+        <div class="tab" :class="{ active: tabValue === 'lh1-live-daily-bonus' }" @click="tabValue = 'lh1-live-daily-bonus'">活动 1</div>
+        <div class="tab" :class="{ active: tabValue === 'lh1-live-weekly-bonus' }" @click="tabValue = 'lh1-live-weekly-bonus'">活动 2</div>
       </div>
 
-      <template v-if="tabValue === 1">
+      <template v-if="tabValue === 'lh1-live-daily-bonus'">
         <div>
           <div class="livepoker-rebate-section">
             <div class="livepoker-rebate-section-left">
@@ -42,12 +42,12 @@
                 </div>
                 <div class="reward-info-content">
                   今日可领取彩金：
-                  <span class="amount">{{ dailyBonus }}元</span>
+                  <span class="amount">{{ bonus }}元</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimDailyBonus" :class="{ disabled: dailyBonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img
                   src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
                   alt=""
@@ -81,32 +81,32 @@
                 </tr>
                 <tr>
                   <td>≥8,000</td>
-                  <td>8元</td>
-                  <td :rowspan="7">12倍流水</td>
+                  <td>8 元</td>
+                  <td :rowspan="7">12 倍流水</td>
                 </tr>
                 <tr>
                   <td>≥30,000</td>
-                  <td>18元</td>
+                  <td>18 元</td>
                 </tr>
                 <tr>
                   <td>≥60,000</td>
-                  <td>32元</td>
+                  <td>32 元</td>
                 </tr>
                 <tr>
                   <td>≥300,000</td>
-                  <td>188元</td>
+                  <td>188 元</td>
                 </tr>
                 <tr>
                   <td>≥600,000</td>
-                  <td>318元</td>
+                  <td>318 元</td>
                 </tr>
                 <tr>
                   <td>≥3,000,000</td>
-                  <td>1688元</td>
+                  <td>1688 元</td>
                 </tr>
                 <tr>
                   <td>≥6,000,000</td>
-                  <td>2888元</td>
+                  <td>2888 元</td>
                 </tr>
               </tbody>
             </table>
@@ -117,19 +117,19 @@
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
-                活动一:活动仅限真人视讯类游戏当日有效投注，彩金只需完成12倍流水即可出款
+                活动一：活动仅限真人视讯类游戏当日有效投注，彩金只需完成 12 倍流水即可出款
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动二:活动仅限真人视讯类游戏指定周期有效投注，彩金只需完成8倍流水即可出款
+                活动二：活动仅限真人视讯类游戏指定周期有效投注，彩金只需完成 8 倍流水即可出款
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过24个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过 24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                同一手机号、姓名、邮箱地址、银行卡号、IP地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+                同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
               </div>
               <div class="item">
                 <div class="item-num">5</div>为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
@@ -139,7 +139,7 @@
         </div>
       </template>
 
-      <template v-if="tabValue === 2">
+      <template v-if="tabValue === 'lh1-live-weekly-bonus'">
         <div>
           <div class="livepoker-rebate-section">
             <div class="livepoker-rebate-section-left">
@@ -162,7 +162,7 @@
                 </div>
                 <div class="reward-info-content">
                   上周期累计有效投注：
-                  <span class="amount">{{ totalLoss }}元</span>
+                  <span class="amount">{{ totalValidBet }}元</span>
                 </div>
               </div>
               <div class="reward-info">
@@ -175,12 +175,12 @@
                 </div>
                 <div class="reward-info-content">
                   可领取周彩金：
-                  <span class="amount">{{ weeklyBonus }}元</span>
+                  <span class="amount">{{ bonus }}元</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimWeeklyBonus" :class="{ disabled: dailyBonus <= 0 }">
+              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img
                   src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
                   alt=""
@@ -204,7 +204,7 @@
             >
               <div class="left">活动内容</div>
               <div class="right">
-                每周五至隔周四，在真人视讯场馆投注，有效投注满足以下门槛，即可在下周期周五23:59:59点前在活动页领取周打码流水彩金
+                每周五至隔周四，在真人视讯场馆投注，有效投注满足以下门槛，即可在下周期周五 23:59:59 点前在活动页领取周打码流水彩金
               </div>
             </div>
             <table class="livepoker-rebate-game-info-table">
@@ -215,21 +215,21 @@
                   <th>流水倍数</th>
                 </tr>
                 <tr>
-                  <td>≥8,800,000元</td>
-                  <td>138元</td>
-                  <td :rowspan="4">8倍流水</td>
+                  <td>≥8,800,000 元</td>
+                  <td>138 元</td>
+                  <td :rowspan="4">8 倍流水</td>
                 </tr>
                 <tr>
-                  <td>≥12,000,000元</td>
-                  <td>388元</td>
+                  <td>≥12,000,000 元</td>
+                  <td>388 元</td>
                 </tr>
                 <tr>
-                  <td>≥28,000,000元</td>
-                  <td>988元</td>
+                  <td>≥28,000,000 元</td>
+                  <td>988 元</td>
                 </tr>
                 <tr>
-                  <td>≥60,000,000元</td>
-                  <td>2388元</td>
+                  <td>≥60,000,000 元</td>
+                  <td>2388 元</td>
                 </tr>
               </tbody>
             </table>
@@ -240,19 +240,19 @@
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
-                活动一:活动仅限真人视讯类游戏当日有效投注，彩金只需完成12倍流水即可出款
+                活动一：活动仅限真人视讯类游戏当日有效投注，彩金只需完成 12 倍流水即可出款
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动二:活动仅限真人视讯类游戏指定周期有效投注，彩金只需完成8倍流水即可出款
+                活动二：活动仅限真人视讯类游戏指定周期有效投注，彩金只需完成 8 倍流水即可出款
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过24个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过 24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                同一手机号、姓名、邮箱地址、银行卡号、IP地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+                同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
               </div>
               <div class="item">
                 <div class="item-num">5</div>为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
@@ -266,8 +266,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { getCBAInit, claimCBADailyBonus, getCBAWeeklyInit, claimCBAWeeklyBonus } from "../../../api/index/promo";
+import { ref, watch } from "vue";
+import { getGameTypeBonusInit, claimGameTypeBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -282,16 +282,11 @@ const $q = useQuasar();
 const router = useRouter();
 
 const totalValidBet = ref(0);
-const dailyBonus = ref(0);
-const betCount = ref(0);
+const bonus = ref(0);
 
-const weeklyBonus = ref(0);
-const totalLoss = ref(0);
-const claimedBonus = ref(0);
+const tabValue = ref('lh1-live-daily-bonus');
 
-const tabValue = ref(1);
-
-const handleClaimDailyBonus = () => {
+const handleClaimBonus = () => {
   if (!store.token) {
     $q.dialog({
       class: "q-px-md q-pt-md",
@@ -315,51 +310,7 @@ const handleClaimDailyBonus = () => {
     });
     return;
   }
-  claimCBADailyBonus()
-    .then((res) => {
-      if (res.code === 0) {
-        notify({
-          type: "success",
-          message: `成功领取${res.data}元`
-        });
-        fetchData();
-      } else {
-        notify({
-          type: "error",
-          message: res.message
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-const handleClaimWeeklyBonus = () => {
-  if (!store.token) {
-    $q.dialog({
-      class: "q-px-md q-pt-md",
-      title: "系统提示",
-      message: "请登录后再操作",
-      ok: {
-        push: true,
-        color: "primary",
-        label: "去登录",
-        tabindex: 1
-      },
-      cancel: {
-        push: true,
-        color: "warning",
-        label: "取消",
-        tabindex: 0
-      },
-      persistent: true
-    }).onOk(() => {
-      router.push("/login");
-    });
-    return;
-  }
-  claimCBAWeeklyBonus()
+  claimGameTypeBonus(tabValue.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -381,27 +332,26 @@ const handleClaimWeeklyBonus = () => {
 
 const fetchData = async () => {
   try {
-    const res = await getCBAInit();
-    const res1 = await getCBAWeeklyInit();
+    const res = await getGameTypeBonusInit(tabValue.value);
 
     totalValidBet.value = res.data.totalValidBet;
-    betCount.value = res.data.betCount;
-    dailyBonus.value = res.data.bonus;
-
-    totalLoss.value = res1.data.totalLoss;
-    weeklyBonus.value = res1.data.bonus;
-    claimedBonus.value = res1.data.claimedBonus;
+    bonus.value = res.data.bonus;
   } catch (error) {
     console.log(error);
   }
 };
 
-onMounted(() => {
-  if (!store.token) {
+watch(
+  () => tabValue.value,
+  () => {
+    if (!store.token) {
     return;
   }
-  fetchData();
-});
+    fetchData();
+  }, {
+    immediate: true
+  }
+)
 </script>
 
 <style scoped lang="scss">
