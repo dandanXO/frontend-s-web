@@ -265,7 +265,6 @@
               <el-input-number
                 v-model="uiControl.rollOverAmt"
                 style="width: 145px"
-                :min="0"
                 :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                 :controls="false"
                 @keypress="restrictInput($event)"
@@ -508,17 +507,17 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.amount')" prop="amount">
+        <el-form-item v-if="addAmountAdjustmentType === 'CALCULATE'" :label="t('fields.deposit')" prop="deposit">
           <el-input
-            v-model="form.amount"
+            v-model="form.deposit"
             style="width: 350px"
             maxlength="11"
             @keypress="restrictDecimalInput($event)"
           />
         </el-form-item>
-        <el-form-item v-if="addAmountAdjustmentType === 'CALCULATE'" :label="t('fields.deposit')" prop="deposit">
+        <el-form-item :label="t('fields.amount')" prop="amount">
           <el-input
-            v-model="form.deposit"
+            v-model="form.amount"
             style="width: 350px"
             maxlength="11"
             @keypress="restrictDecimalInput($event)"
@@ -580,7 +579,6 @@
                 <el-input-number
                   v-model="uiControl.rollOverAmt"
                   style="width: 145px"
-                  :min="0"
                   :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                   :controls="false"
                   @keypress="restrictInput($event)"
@@ -1196,8 +1194,8 @@ const handleSelect = item => {
       isAffiliateUser.value = true
       uiControl.rollOverAmt = 0
     }else{
-
       isAffiliateUser.value = false;
+      uiControl.rollOverAmt = undefined
     }
     // Clear previous selections
     dynamicTags.value = []
@@ -1225,7 +1223,7 @@ const checkRolloverType = () => {
     if (uiControl.rollOverAmt > 100) {
       uiControl.rollOverAmt = 100
     } else {
-      uiControl.rollOverAmt = null
+      uiControl.rollOverAmt = undefined
     }
     cachedGameTypes.value = gameTypes.value.map(type => ({ ...type }));
     gameTypes.value.forEach(type => {
@@ -1459,8 +1457,8 @@ async function showDialog(type) {
       memberAmountAdjustForm.value.resetFields()
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
+      uiControl.rollOverAmt = undefined
     }
-   uiControl.rollOverAmt= null;
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
