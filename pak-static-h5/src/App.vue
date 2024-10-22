@@ -8,7 +8,7 @@ import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
+import { isAndroid, trackNewUserFtd } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -342,6 +342,11 @@ export default defineComponent({
       }
       fbq("track", "PageView");
       store.isFbPixel = true;
+
+      const isNewUser = sessionStorage.getItem("newUserFtd");
+      if (isNewUser) {
+        document.addEventListener("ftdSuccess", trackNewUserFtd);
+      }
     };
 
     onMounted(async () => {
