@@ -26,7 +26,7 @@
         <div class="platform-menu-img">
           <img
             :src="
-              require('../../../assets/' +
+              require('../../assets/' +
                 props.platformType +
                 '/' +
                 props.platformType +
