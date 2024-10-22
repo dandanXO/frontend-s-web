@@ -2,8 +2,20 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="tab-wrapper">
-        <div class="tab" :class="{ active: tabValue === 'lh1-live-daily-bonus' }" @click="tabValue = 'lh1-live-daily-bonus'">活动 1</div>
-        <div class="tab" :class="{ active: tabValue === 'lh1-live-weekly-bonus' }" @click="tabValue = 'lh1-live-weekly-bonus'">活动 2</div>
+        <div
+          class="tab"
+          :class="{ active: tabValue === 'lh1-live-daily-bonus' }"
+          @click="tabValue = 'lh1-live-daily-bonus'"
+        >
+          活动 1
+        </div>
+        <div
+          class="tab"
+          :class="{ active: tabValue === 'lh1-live-weekly-bonus' }"
+          @click="tabValue = 'lh1-live-weekly-bonus'"
+        >
+          活动 2
+        </div>
       </div>
 
       <template v-if="tabValue === 'lh1-live-daily-bonus'">
@@ -47,7 +59,10 @@
             </div>
             <div class="little-title">
               <div class="left">活动内容</div>
-              <div class="right">活动期间，统计当日真人视讯场馆游戏总有效投注≥8,000 元或以上，次日 00:00 起，即可在本活动页面点击 [点击领取] 按钮领取彩金</div>
+              <div class="right">
+                活动期间，统计当日真人视讯场馆游戏总有效投注≥8,000 元或以上，次日 00:00 起，即可在本活动页面点击
+                [点击领取] 按钮领取彩金
+              </div>
             </div>
             <table class="livepoker-rebate-game-info-table">
               <tbody>
@@ -79,11 +94,11 @@
                 </tr>
                 <tr>
                   <td>≥3,000,000</td>
-                  <td>1688 元</td>
+                  <td>1,688 元</td>
                 </tr>
                 <tr>
                   <td>≥6,000,000</td>
-                  <td>2888 元</td>
+                  <td>2,888 元</td>
                 </tr>
               </tbody>
             </table>
@@ -102,14 +117,17 @@
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过 24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
+                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+                同一手机号、姓名、邮箱地址、银行卡号、IP
+                地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
               </div>
               <div class="item">
-                <div class="item-num">5</div>为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
+                <div class="item-num">5</div>
+                为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
               </div>
             </div>
           </div>
@@ -158,7 +176,8 @@
             <div class="little-title">
               <div class="left">活动内容</div>
               <div class="right">
-                每周五至隔周四，在真人视讯场馆投注，有效投注满足以下门槛，即可在下周期周五 23:59:59 点前在活动页领取周打码流水彩金
+                每周五至隔周四，在真人视讯场馆投注，有效投注满足以下门槛，即可在下周期周五 23:59:59
+                点前在活动页领取周打码流水彩金
               </div>
             </div>
             <table class="livepoker-rebate-game-info-table">
@@ -183,7 +202,7 @@
                 </tr>
                 <tr>
                   <td>≥60,000,000 元</td>
-                  <td>2388 元</td>
+                  <td>2,388 元</td>
                 </tr>
               </tbody>
             </table>
@@ -202,14 +221,17 @@
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过 24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
+                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+                同一手机号、姓名、邮箱地址、银行卡号、IP
+                地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
               </div>
               <div class="item">
-                <div class="item-num">5</div>为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
+                <div class="item-num">5</div>
+                为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
               </div>
             </div>
           </div>
@@ -234,7 +256,7 @@ const store = userStore();
 const totalValidBet = ref(0);
 const bonus = ref(0);
 
-const tabValue = ref('lh1-live-daily-bonus');
+const tabValue = ref("lh1-live-daily-bonus");
 
 const handleClaimBonus = () => {
   if (!store.hasToken()) {
@@ -277,6 +299,9 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   try {
+    totalValidBet.value = 0;
+    bonus.value = 0;
+
     const res = await getGameTypeBonusInit(tabValue.value);
 
     totalValidBet.value = res.data.totalValidBet;
@@ -290,18 +315,18 @@ watch(
   () => tabValue.value,
   () => {
     if (!store.token) {
-    // notify({
-    //   message: "请登录后操作",
-    //   type: "error"
-    // });
-    return;
-  }
+      // notify({
+      //   message: "请登录后操作",
+      //   type: "error"
+      // });
+      return;
+    }
     fetchData();
   },
   {
     immediate: true
   }
-)
+);
 </script>
 
 <style scoped lang="scss">
