@@ -8,6 +8,7 @@ import OneSignal from "onesignal-cordova-plugin";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
+const ftdEvent = new Event("ftdSuccess");
 
 export const userStore = defineStore("userStore", {
   state: () => {
@@ -268,6 +269,9 @@ export const userStore = defineStore("userStore", {
           })
           .then((res) => {
             if (res.code === 0) {
+              if (this.isFbPixel && this.balance === 0 && res.data !== 0) {
+                document.dispatchEvent(ftdEvent);
+              }
               this.balance = res.data;
             } else {
               this.balance = 0;
