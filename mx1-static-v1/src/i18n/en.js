@@ -734,10 +734,10 @@ export default {
     wagerX5: "Apuesta x5",
     deposit: "Depósito",
     noticeDesc: "Aviso: ¡Esta promoción no cuenta para las apuestas de CASINO y DEPORTES!",
-    rules_01: "1. Ejemplo: En el primer día, si depositas 1,000 IDR, recibirás 88 IDR después de completar el turnover. Si no hay depósito en el segundo día, pero depositas en el tercer día, se contará nuevamente como el primer día.",
-    rules_02: "2. Las bonificaciones de ese día solo se pueden reclamar una vez; por ejemplo: cada cuenta solo puede reclamar 88 IDR en el primer día.",
-    rules_03: "3. Después de cumplir con los requisitos de depósito, debes jugar a las máquinas tragamonedas para comenzar a contar el turnover, y la bonificación se otorgará una vez que se complete el turnover.",
-    rules_04: "4. Una vez que se cumplan los requisitos, el sistema emitirá automáticamente la bonificación."
+    rules_01: "1. Ejemplo: En el primer día, si depositas Mx$200, se te darán Mx$17 después de completar el requisito de facturación. Si no haces un depósito el segundo día, pero haces un depósito el tercer día, se recalculará como si fuera el primer día.",
+    rules_02: "2. .El bono del día solo se puede reclamar una vez. Por ejemplo, cada cuenta solo puede reclamar Mx$17 el primer día.",
+    rules_03: "3. .Después de cumplir con el requisito de depósito, debes jugar en las máquinas tragamonedas para comenzar a calcular la facturación, y el bono se otorgará después de completar la facturación.",
+    rules_04: "4. Una vez que se cumplan los requisitos, el sistema emitirá automáticamente el bono."
   },
   promo_ph1SlotFtd: {
     sorryDesc: "Lo sentimos, tu cuenta ya ha recibido la bonificación. Por favor, únete a nuestras otras actividades."
