@@ -458,6 +458,7 @@ export default defineComponent({
                   fbq("track", "CompleteRegistration");
                   document.addEventListener("ftdSuccess", trackNewUserFtd);
                   sessionStorage.setItem("newUserFtd", "1");
+                  localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
 
                 //ADJUST TRACKEVENT.

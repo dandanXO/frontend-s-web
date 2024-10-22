@@ -146,4 +146,5 @@ export const trackNewUserFtd = () => {
   fbq("track", "PurchaseComplete");
   sessionStorage.removeItem("newUserFtd");
   document.removeEventListener("ftdSuccess", trackNewUserFtd);
+  localStorage.removeItem("REG_REFERRAL_CODE");
 };
