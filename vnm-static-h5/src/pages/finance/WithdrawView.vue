@@ -8,10 +8,14 @@
       </router-link>
       <div>
         <div class="account-item is-active">
-          <span>{{ $t("lang.transfer_withdraw") }}</span>
+          <span>{{ isAutoWithdrawal ? $t("lang.transfer_quickWithdraw") : $t("lang.transfer_withdraw") }}</span>
         </div>
       </div>
     </div>
+    <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+        <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+        <span>{{ $t("lang.transfer_upgradeWithdraw") }}</span>
+    </q-btn>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -528,6 +532,28 @@ export default defineComponent({
         window.open(url);
       }
     };
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: "升级中。。。"
+      });
+      api.get("/session/updateAutoWithdraw").then(async (res) => {
+        if(res.code === 0) {
+          notify({
+            type: "success",
+            message: "成功升级为快速提款!"
+          });
+
+          await store.getMemberInfo()
+        } else {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
+      }).finally(() => $q.loading.hide())
+    }
 
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || "金额应为正数",
@@ -560,7 +586,9 @@ export default defineComponent({
       isNewUser,
       checkNewUser,
       isValidUSDTAmt,
-      isPwd: ref(true)
+      isPwd: ref(true),
+      isAutoWithdrawal,
+      handleUpgradeClick,
     };
   }
 });
@@ -688,6 +716,16 @@ export default defineComponent({
   color: $warning;
 }
 
+.upgrade-btn {
+    padding: 1px 12px;
+    margin: 0 auto;
+    width: 90%;
+    display: flex;
+    text-transform: none;
+    img {
+      height: 30px;
+    }
+  }
 .quick-withdraw-btn {
   width: 100%;
 }

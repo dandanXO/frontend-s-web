@@ -1,7 +1,18 @@
 <template>
   <div class="card">
     <div class="menu-title-container">
-      <span class="menu-title">{{ $t("withdraw.withdraw") }}</span>
+      <span class="menu-title">{{ isAutoWithdrawal ? $t("withdraw.quickWithdraw") : $t("withdraw.withdraw") }}</span>
+      <el-button
+        v-if="!isAutoWithdrawal"
+        :loading="loadingBtn"
+        :disable="loadingBtn"
+        size="large"
+        class="common-btn upgrade-btn"
+        @click="handleUpgradeClick"
+      >
+        <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
+        <span>{{ $t("withdraw.upgradeWithdraw") }}</span>
+      </el-button>
     </div>
 
     <!-- <div class="menu-title-container">
@@ -229,8 +240,8 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
-import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal  } from "@/api/personal/personal";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
@@ -498,6 +509,20 @@ export default defineComponent({
         window.open(url);
       }
     };
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+    
+    const handleUpgradeClick = () => {
+      loadingBtn.value = true
+      upgradeToAutoWithdrawal().then(async (res) => {
+        if(res.code === 0) {
+          ElMessage.success("成功升级为快速提款!");
+
+          await store.getMemberInfo()
+        } else {
+          ElMessage.error(res.message);
+        }
+      }).finally(() => loadingBtn.value = false)
+    }
     return {
       formRef,
       withdrawInfo,
@@ -520,7 +545,9 @@ export default defineComponent({
       cardLabel,
       openEWalletTutorial,
       isLoaded,
-      amounts
+      amounts,
+      handleUpgradeClick,
+      isAutoWithdrawal
     };
   }
 });
@@ -968,6 +995,21 @@ export default defineComponent({
   color: #ff7f10;
 }
 
+.upgrade-btn {
+  margin-left: 30px;
+  padding: 1px 7px;
+  height: 35px;
+  width: auto;
+  border-radius: 8px;
+  align-self: center;
+  img {
+    height: 20px;
+  }
+  span {
+    line-height: 20px;
+    text-transform: none;
+  }
+}
 .tip-text {
   margin-bottom: 10px;
   display: block;

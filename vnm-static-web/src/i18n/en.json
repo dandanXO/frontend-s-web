@@ -286,6 +286,8 @@
   },
   "withdraw": {
     "withdraw": "Withdraw",
+    "upgradeWithdraw": "Upgrade quick withdrawal",
+    "quickWithdraw": "Quick withdrawal",
     "bankcard": "Withdraw Bank card",
     "addBankCard": "Add new account",
     "bindCard": "Bind card",
@@ -775,6 +777,7 @@
     "1402": "OTP sending schedule error, please resend OTP",
     "1403": "OTP verification error",
     "1404": "Failed to send OTP code",
+    "1409": "The player does not meet the requirements for quick withdrawal",
     "10000": "Insufficient remaining balance error",
     "10001": "Withdrawal error",
     "10002": "Deposit error",

@@ -90,6 +90,10 @@ export function withdrawEntrance() {
   return server.REST.get("/session/withdraw/entrance");
 }
 
+export const upgradeToAutoWithdrawal = () => {
+  return server.REST.get("/session/updateAutoWithdraw");
+};
+
 export function deleteBankCard(cardId) {
   return server.REST.post(`/session/bankCard/${cardId}?_method=delete`);
 }
