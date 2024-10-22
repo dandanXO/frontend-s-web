@@ -274,8 +274,8 @@ export default {
     downloadApp: "Descargar APP"
   },
   home: {
-    menu_lobby: "Lobby",
-    menu_hot: "Hot",
+    menu_lobby: "Hall",
+    menu_hot: "Popular",
     menu_live: "Live",
     menu_fish: "Fish",
     menu_slot: "Slot",
