@@ -172,7 +172,6 @@
 <script setup>
 import { ref, reactive, onMounted, shallowRef, computed } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
-import { RiSpamLine } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
@@ -182,9 +181,6 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
-{
-  RiSpamLine;
-}
 const router = useRouter();
 const loadingBtn = ref(false);
 const store = userStore();

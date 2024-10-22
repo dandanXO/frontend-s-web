@@ -54,11 +54,11 @@
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
               <div class="plat-name" v-if="p.code === 'FlashTech'">
-                <RiWirelessChargingLine />
+                <div class="charge-icon" />
                 Sport
               </div>
               <div class="plat-name" v-else>
-                <RiWirelessChargingLine />
+                <div class="charge-icon" />
                 {{ platNames[p.code] || p.name }}
               </div>
               <div class="balance-wrapper">
@@ -67,7 +67,8 @@
               </div>
             </div>
             <div class="balance-refresh" @click="refreshBalance(p.code)">
-              <el-icon><Refresh /></el-icon>
+              <!-- <el-icon><Refresh /></el-icon> -->
+              <div class="refresh-icon" />
             </div>
           </div>
           <div class="flex-box flex-justify-space flex-wrap transfer-action-box">
@@ -99,7 +100,7 @@
           class="el-dialog__title"
         >
           <el-tag type="danger" effect="dark">主账户</el-tag>
-          <el-icon><Right /></el-icon>
+          <div class="right-icon" />
           <el-tag type="success" effect="dark">
             {{ transferInfo.platform }}
           </el-tag>
@@ -145,18 +146,10 @@ import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList, updateAut
 import { ElMessage } from "element-plus";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
-import { Refresh, Right } from "@element-plus/icons-vue"
-import { RiWirelessChargingLine } from "vue-remix-icons";
 // import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "TransferView",
-  components: {
-    // RiSpamLine, RiRestartLine
-    Refresh,
-    Right,
-    RiWirelessChargingLine
-},
   setup() {
     const store = userStore();
     const platforms = reactive([]);
@@ -748,5 +741,24 @@ body .transferinout .el-dialog__header .el-dialog__title {
   gap: 10px;
   align-items: center;
   font-size: 14px;
+}
+
+.charge-icon, .refresh-icon, .right-icon {
+  background: url("../../assets/images/account/charge-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  width: 28px;
+  height: 28px;
+}
+
+.charge-icon {
+  background-position: 0% 0%;
+}
+
+.refresh-icon {
+  background-position: 28% 0%;
+}
+
+.right-icon {
+  background-position: 54% 0%;
 }
 </style>
