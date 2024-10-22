@@ -143,7 +143,7 @@ export const getVisitorId = async () => {
 
 export const trackNewUserFtd = () => {
   console.log("PurchaseComplete");
-  fbq("track", "PurchaseComplete");
+  fbq("trackCustom", "PurchaseComplete");
   sessionStorage.removeItem("newUserFtd");
   document.removeEventListener("ftdSuccess", trackNewUserFtd);
   localStorage.removeItem("REG_REFERRAL_CODE");
