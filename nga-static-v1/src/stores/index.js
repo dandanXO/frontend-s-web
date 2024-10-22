@@ -106,7 +106,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data, 86400);
+            LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
@@ -135,7 +135,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data, 86400);
+            LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
@@ -162,36 +162,36 @@ export const userStore = defineStore("userStore", {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
-      api.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      cashier.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.TOKEN = token;
-        return req;
-      });
-      eventapi.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.TOKEN = token;
-        return req;
-      });
+      // api.interceptors.request.use(async (req) => {
+      //   var token;
+      //   if (isAndroid()) {
+      //     token = LocalStorage.getItem("TOKEN");
+      //   } else {
+      //     token = SessionStorage.getItem("TOKEN");
+      //   }
+      //   req.headers.token = token;
+      //   return req;
+      // });
+      // cashier.interceptors.request.use(async (req) => {
+      //   var token;
+      //   if (isAndroid()) {
+      //     token = LocalStorage.getItem("TOKEN");
+      //   } else {
+      //     token = SessionStorage.getItem("TOKEN");
+      //   }
+      //   req.headers.TOKEN = token;
+      //   return req;
+      // });
+      // eventapi.interceptors.request.use(async (req) => {
+      //   var token;
+      //   if (isAndroid()) {
+      //     token = LocalStorage.getItem("TOKEN");
+      //   } else {
+      //     token = SessionStorage.getItem("TOKEN");
+      //   }
+      //   req.headers.TOKEN = token;
+      //   return req;
+      // });
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -278,7 +278,7 @@ export const userStore = defineStore("userStore", {
     autoLogin(token) {
       this.token = token;
       if (isAndroid()) {
-        LocalStorage.set("TOKEN", token, 86400);
+        LocalStorage.set("TOKEN", token, 31536000);
       } else {
         SessionStorage.set("TOKEN", token);
       }
