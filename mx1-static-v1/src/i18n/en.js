@@ -189,8 +189,8 @@ export default {
     holderName_rules_02: "Introduzca 2 caracteres o más",
     bank_title: "Agregar Cuenta Bancaria",
     bank_selectionTitle: "Banco",
-    bank_select: "Seleccione Banco",
-    bank_selectError: "Seleccione Banco",
+    bank_select: "Seleccionar Banco",
+    bank_selectError: "Seleccionar Banco",
     bank_type: "Número de Cuenta",
     crypto_title: "Agregar Billetera Cripto",
     crypto_selectionTitle: "Cripto",
@@ -254,7 +254,7 @@ export default {
     pleaseLoginToOperate: "Por favor, inicia sesión para operar",
     pleaseFillInPersonalDetails: "Por favor, completa tus datos personales",
     failed: "Fallido",
-    updateSucceed: "Actualización Exitosa",
+    updateSucceed: "Actualizar con éxito",
     unbindSucceed: "Desvinculado con Éxito",
     withdrawalSubmitSucceed: "Retiro Enviado con Éxito"
   },
@@ -349,7 +349,7 @@ export default {
   bank: {
     virtualWallet: "Billetera Electrónica",
     virtualAccount: "Cuenta de Billetera Electrónica",
-    addBank: "Agregar Banco",
+    addBank: "Añadir Banco",
     addEWallet: "Agregar Billetera Electrónica",
     areYouSureUnbind: "¿Estás seguro de que deseas desvincular?",
     account: "Cuenta"
@@ -429,7 +429,7 @@ export default {
       inviteMoreFriends: "Cuantos más amigos invite, mayores serán los beneficios que obtenga. Cada miembro que se une al Club Skyace es a la vez un jugador y un agente.",
       weAdvocateBenefits: "Creemenos firmemente en otorgarles beneficios y bonificaciones a todos nuestros usuarios.",
       agencyPolicy: "Política de referidos",
-      theTableBelowShows: "La tabla a continuación muestra cómo se establecen los premios.",
+      theTableBelowShows: "En la siguiente tabla se muestra cómo se asignan las retribuciones.",
       point_01: "Usuarios activos: importe diario en apuestas Mx$400",
       point_02: "Su retribución se calcula en base al importe total apostado por los miembros referidos por Ud. La retribución obtenida puede ser retirada o utilizada para efectuar apuestas.",
       point_03: "Recomiende a tantos amigos como pueda para obtener un mayor porcentaje de reembolsos.",
