@@ -536,4 +536,40 @@ const rows3 = [
     }
   }
 }
+
+@media (max-width: 450px) {
+  :deep(.q-table th) {
+    font-size: 10px !important;
+  }
+  :deep(.q-table td) {
+    font-size: 10px !important;
+  }
+  :deep(.q-table tbody td) {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 410px) {
+  :deep(.q-table th) {
+    font-size: 9px !important;
+  }
+  :deep(.q-table td) {
+    font-size: 9px !important;
+  }
+  :deep(.q-table tbody td) {
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  :deep(.q-table th) {
+    font-size: 8px !important;
+  }
+  :deep(.q-table td) {
+    font-size: 8px !important;
+  }
+  :deep(.q-table tbody td) {
+    font-size: 8px !important;
+  }
+}
 </style>

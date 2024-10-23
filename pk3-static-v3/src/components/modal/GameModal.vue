@@ -101,7 +101,7 @@
 
 <script setup id="GameModal">
 import { Platform, useQuasar } from "quasar";
-import { defineExpose, ref, shallowRef } from "vue";
+import { defineExpose, ref, shallowRef, onUnmounted, watch  } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
@@ -121,6 +121,8 @@ const store = userStore();
 const { token } = storeToRefs(store);
 const bankCardList = ref([]);
 const selectedPayType = shallowRef("");
+const isOpenCalled = ref(false);
+
 const closeFullDepositDialog = () => {
   fullDepositDialog.value = false;
   store.getBalance();
@@ -189,6 +191,13 @@ const closeDialog = () => {
   visible.value = false;
   src.value = "";
   store.getBalance();
+  isOpenCalled.value = false;
+  router.replace({
+    query: {
+      ...route.query,
+      gameModal: undefined
+    }
+  });
   // AppFullscreen.exit()
   if (isAndroid()) {
     screen.orientation.lock("portrait");
@@ -212,6 +221,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
   platformCodeImg.value = platformCode;
+  isOpenCalled.value = true;
 
   //TESt
   localStorage.removeItem("isOpenFromAccount");
@@ -222,6 +232,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     App.addListener("backButton", (backEvent) => {
       onExitClick();
     });
+  } else {
+    window.addEventListener("popstate", handleBackButtonClick);
+    router.push({ query: { ...route.query, gameModal: "true" } });
   }
 
   const iFrame = document.getElementById("game-iframe");
@@ -295,6 +308,31 @@ const close = () => {
   logoShow.value = true;
   payMethods = [];
 };
+
+const handleBackButtonClick = async () => {
+  if (!visible.value) return;
+  onExitClick();
+};
+
+const cancelCloseDialog = () => {
+  isExitDialogOpen.value = false;
+  router.push({ query: { ...route.query, gameModal: "true" } });
+};
+
+onUnmounted(() => {
+  window.removeEventListener("popstate", handleBackButtonClick);
+});
+
+watch(
+  () => route.query,
+  (query) => {
+    if (query.gameModal && !isOpenCalled.value) {
+      const _query = { ...query };
+      delete _query.gameModal;
+      router.push({ query: _query });
+    }
+  }
+);
 
 defineExpose({
   open

@@ -51,6 +51,7 @@
     <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
     <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
+    <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
     <LongNewVip v-if="list.redirectUrl === 'lh1-vip'" :promo-code="list.promoCode" />
@@ -68,7 +69,7 @@
     <Europe2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot'" />
     <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu'" />
     <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024'" :promo-code="list.promoCode" />
-    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'lh1-blast-premier-treasure\n'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'lh1-blast-premier-treasure'" :promo-code="list.promoCode" />
     <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual'" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao'" />
@@ -146,6 +147,7 @@ import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
 import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
+import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
 import LongNewVip from "../components/hotpromo/longNewVip/LongNewVip.vue";
@@ -283,6 +285,7 @@ export default defineComponent({
     BlastPremier,
     Tpworld2024,
     Cba30Dream,
+    LiveDailyRebates,
     Dota2Pgl,
     NewVipRebate,
     LongNewVip,

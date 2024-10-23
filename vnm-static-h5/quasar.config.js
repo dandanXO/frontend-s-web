@@ -14,6 +14,8 @@ const { configure } = require("quasar/wrappers");
 
 const SitemapPlugin = require("sitemap-webpack-plugin").default;
 
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+
 const { resolve } = require("path");
 
 const paths = [
@@ -332,6 +334,7 @@ module.exports = configure(function (ctx) {
             }
           })
         );
+        cfg.plugins.push(new MomentLocalesPlugin())
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
           "@": resolve(__dirname, "./src")

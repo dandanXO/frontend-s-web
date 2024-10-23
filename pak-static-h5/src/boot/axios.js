@@ -165,6 +165,10 @@ export default boot(({ app, router }) => {
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
 
+      if (res.code === ResponseCode.ERROR_NO_PIXEL_CODE) {
+        return res;
+      }
+
       if (
         res.code === ResponseCode.ERROR_SYSTEM ||
         res.code === ResponseCode.TOO_OFTEN_REQUEST ||

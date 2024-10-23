@@ -125,7 +125,7 @@
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">
-                {{ convertToCommaAmount(currentVipLevelStats.dailyWithdrawalLimit / 5000) }}
+                {{ convertToCommaAmount(currentVipLevelStats.dailyWithdrawalLimit) }}
               </div>
             </div>
           </div>
@@ -408,62 +408,62 @@ const columns = [
 const rows = [
   {
     name: "VIP 1",
-    ugprade: 5000000,
+    ugprade: 1000,
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: 10000000,
+    ugprade: 2000,
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: 20000000,
+    ugprade: 4000,
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: 50000000,
+    ugprade: 10000,
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: 100000000,
+    ugprade: 20000,
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: 200000000,
+    ugprade: 40000,
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: 500000000,
+    ugprade: 100000,
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: 1000000000,
+    ugprade: 200000,
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: 2000000000,
+    ugprade: 400000,
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: 5000000000,
+    ugprade: 1000000,
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: 10000000000,
+    ugprade: 2000000,
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: 20000000000,
+    ugprade: 4000000,
     flow: "x10"
   }
 ];
@@ -608,7 +608,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(vipInfo.ugprade / 5000)}`,
+      progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(vipInfo.ugprade)}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
@@ -1291,6 +1291,12 @@ const swipeRight = () => {
 @media (max-width: 410px) {
   .vip-container {
     padding: 0 0.75rem;
+  }
+}
+
+@media (max-width: 450px) {
+  td, .q-table tbody td {
+    font-size: 11px;
   }
 }
 </style>
