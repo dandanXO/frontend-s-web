@@ -99,6 +99,7 @@ import { getPlatformsWc, createPlatformWc, updatePlatformWc } from "../../../api
 
 const { t } = useI18n();
 const platformWCForm = ref(null);
+const platformForm = ref(null);
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",

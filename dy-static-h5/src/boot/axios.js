@@ -7,7 +7,7 @@ import axios from "axios";
 import { getRndInteger } from "boot/utils";
 
 console.log(window.location.hostname);
-const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1 || window.location.hostname.indexOf("dy639.") > -1;
+const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
 
 const globalAndCNLinks = ["dongyingbet6", "dongyingbet6"];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));

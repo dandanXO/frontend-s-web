@@ -21,7 +21,4 @@ provide('reload', () => {
 .el-menu-item:hover {
   background: #001528 !important;
 }
-//.el-popper {
-//  left: 54px !important; // width of a el-menu-item, to prevent gap
-//}
 </style>

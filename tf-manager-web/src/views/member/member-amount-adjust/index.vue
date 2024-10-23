@@ -1536,10 +1536,9 @@ async function handleBalanceType(value) {
     const response = await getMemberBalanceByLoginNameSite(
       form.loginName,
       form.siteId,
-      value
+      form.currency
     )
     bal = response.data
-
     if (bal === null || bal === undefined) {
       uiControl.balance = null
     } else {
