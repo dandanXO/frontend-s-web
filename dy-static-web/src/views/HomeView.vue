@@ -1,21 +1,6 @@
 <template>
   <div class="home">
-    <el-carousel class="banner-slider" height="25vw" arrow="always">
-      <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
-        <a @click="goBannerPage(banner.redirectUrl)">
-          <div
-            v-if="banner && banner.desktopImageUrl"
-            class="promo-bg isDesktop"
-            :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
-          ></div>
-          <div
-            v-if="banner && banner.mobileImageUrl"
-            class="promo-bg isMobile"
-            :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"
-          ></div>
-        </a>
-      </el-carousel-item>
-    </el-carousel>
+    <HomeBanner :goBannerPage="goBannerPage" />
     <div class="index-container">
       <div class="index-top-btn-container">
         <div class="index-operator-btn-box">
@@ -428,24 +413,18 @@
 /* eslint-disable */
 import GameModal from "@/components/modal/GameModal.vue";
 import { ref, onMounted, watch } from "vue";
-import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
+import { loadHomePopup } from "@/api/index/promo";
 import Vue3autocounter from "vue3-autocounter";
 import { useRouter } from "vue-router";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
+import HomeBanner from "@/components/home/HomeBanner.vue";
 
 const store = userStore();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const gameMenu = ref(null);
 const router = useRouter();
-const banners = ref([
-  // {
-  //   src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
-  // },
-  // {
-  //   src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
-  // }
-]);
+
 const isImportantAnnouncementModal = ref(false);
 const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
@@ -471,13 +450,7 @@ const getWithExpiry = (key) => {
   }
   return item.value;
 };
-const loadBanners = () => {
-  loadPromoBanner("HOME").then((res) => {
-    if (res.code === 0) {
-      banners.value = res.data;
-    }
-  });
-};
+
 const isFirstView = ref(false);
 const isImpt = getWithExpiry("isImpt");
 const homePopupImg = ref("");
@@ -579,7 +552,6 @@ const goBannerPage = (redirectUrl) => {
 };
 
 onMounted(() => {
-  loadBanners();
   if (store.token && store.memberType === "TEST") {
     checkShowImgTop();
   }
@@ -743,46 +715,6 @@ watch(
         -webkit-transform: scale(1.03);
         transform: scale(1.03);
       }
-    }
-
-    .index-match-box-main {
-      width: 454px;
-      text-align: center;
-      height: 510px;
-      padding-top: 74px;
-      cursor: pointer;
-      background-repeat: no-repeat;
-      background-image: url(../assets/home/hot_event_bg_dota2.png);
-
-      .index-match-team-container {
-        width: 430px;
-        height: 100px;
-        margin: 10px auto 168px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-image: url(../assets/home/hot_event_bg_team.png);
-
-        .index-team-logo {
-          margin: 0 auto 35px;
-        }
-
-        .index-match-team-box {
-          width: 160px;
-          height: 92px;
-          padding-top: 27px;
-        }
-      }
-    }
-
-    .index-match-box-sub {
-      width: 408px;
-      text-align: center;
-      height: 457px;
-      padding-top: 67px;
-      cursor: pointer;
-      background-image: url("../assets/home/hot_event_bg_csgo.png");
-      background-repeat: no-repeat;
     }
 
     .index-match-title {

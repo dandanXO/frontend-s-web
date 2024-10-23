@@ -16,7 +16,10 @@
             </div>
           </div>
         </div>
-        <div class="promo-list-wrapper">
+        <div class="loading" v-if="isLoadingPromo">
+          <img class="loading-img" src="../assets/logo.png" />
+        </div>
+        <div class="promo-list-wrapper" v-else>
           <div
             class="promo-item"
             v-for="(promo, i) in filteredArray"
@@ -51,7 +54,6 @@
         </div>
       </div>
     </div>
-
     <div
       v-else
       class="selected-promo"
@@ -228,6 +230,7 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
+    const isLoadingPromo = ref(false);
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -328,9 +331,13 @@ export default defineComponent({
       }
     };
     const loadAll = async () => {
+      isLoadingPromo.value = true;
+
       const isLogin = !!store.hasToken();
       await loadTabs();
       loadPromo(isLogin).then((res) => {
+        isLoadingPromo.value = false;
+
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
 
@@ -354,7 +361,10 @@ export default defineComponent({
           }
         }
       }).catch((e) => {
+        isLoadingPromo.value = false;
         console.log("error", e);
+      }).finally(() => {
+        isLoadingPromo.value = false;
       });
     };
     onMounted(() => {
@@ -380,7 +390,8 @@ export default defineComponent({
       banner,
       imgURL,
       getPromoLabel,
-      isSpecialPromo
+      isSpecialPromo,
+      isLoadingPromo
     };
   }
 });
@@ -994,6 +1005,33 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+
+.loading {
+    height:25vw;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: 'PingFang SC';
+
+    .loading-img {
+        animation-name: fade-in-out;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        width: 100px;
+    }
+}
+
+@keyframes fade-in-out{
+  0%{
+    opacity: 1;
+  }
+   50%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
   }
 }
 </style>
