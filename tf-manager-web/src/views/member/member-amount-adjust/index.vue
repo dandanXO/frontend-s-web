@@ -1103,7 +1103,7 @@ const formRules = reactive({
   ],
   amount: [required(t('message.validateAmountRequired'))],
   deposit: [required(t('message.validateDepositAmountRequired'))],
-  rollover: computed(() => 
+  rollover: computed(() =>
     uiControl.dialogType === 'CREATE_ADD' ? [required(t('message.validateRolloverRequired'))] : []
   ), // Use computed to make it reactive
   cause: [required(t('message.validateCauseRequired'))],
@@ -1178,17 +1178,26 @@ async function loadCauseBySiteId() {
   if (request.siteId) {
     const { data: adjustType } = await getReasonsSimple(request.siteId)
     adjustTypeList.requestList = adjustType
+
+    if (form.siteId === request.siteId) {
+      adjustTypeList.formList = adjustType
+    }else if(form.siteId){
+      const { data: adjustType2 } = await getReasonsSimple(form.siteId)
+      adjustTypeList.formList = adjustType2
+    }
+
+    if (importForm.siteId === request.siteId) {
+      adjustTypeList.importFormList = adjustType
+    }else if(importForm.siteId){
+      const { data: adjustType3 } = await getReasonsSimple(importForm.siteId)
+      adjustTypeList.importFormList = adjustType3
+    }
+
   }
 
-  if (form.siteId) {
-    const { data: adjustType } = await getReasonsSimple(form.siteId)
-    adjustTypeList.formList = adjustType
-  }
 
-  if (importForm.siteId) {
-    const { data: adjustType } = await getReasonsSimple(importForm.siteId)
-    adjustTypeList.importFormList = adjustType
-  }
+
+
 }
 
 async function loadSiteConfig() {
@@ -1318,7 +1327,7 @@ function constructRollover() {
 
     json.gameTypes = excludeTypes;
   }
-  
+
   if (addAmountAdjustmentType.value === 'CALCULATE' && uiControl.dialogType === 'CREATE_ADD') {
     form.rollover = form.rollover ? calculateRollover() : 1
   } else {
@@ -1505,10 +1514,10 @@ function handleCauseChange(selectedValue) {
   const selectedItem = adjustTypeList.formList.find(
     item => item.reason === selectedValue
   )
-  if (selectedItem) {
-    adjustRollover.selectedItem = selectedItem.rollover
-    form.rollover = selectedItem.rollover
-  }
+  // if (selectedItem) {
+  //   adjustRollover.selectedItem = selectedItem.rollover
+  //   form.rollover = selectedItem.rollover
+  // }
 }
 
 function handleImportCauseChange(selectedValue) {
@@ -1542,7 +1551,7 @@ function calculateRollover(item) {
   if (!form.amount || !form.deposit) {
     return undefined
   }
-  const amount = +form.amount || 0; 
+  const amount = +form.amount || 0;
   const deposit = +form.deposit || 0;
   if (item) {
     const multi = +item || 1
@@ -1562,17 +1571,17 @@ function createAdd() {
     form.memberId = null;
 
     try {
-      const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
-      form.memberId = id;
-
-      if (isAffiliateUser.value === true) {
-        form.rollover = 0;
-        form.gameTypeRollover = null;
-      } else {
-        form.gameTypeRollover = constructRollover();
-      }
-
       if (valid) {
+        const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
+        form.memberId = id;
+
+        if (isAffiliateUser.value === true) {
+          form.rollover = 0;
+          form.gameTypeRollover = null;
+        } else {
+          form.gameTypeRollover = constructRollover();
+        }
+
         delete form.deposit;
         delete form.rollover;
         await createAddMemberAmountAdjust(form);
