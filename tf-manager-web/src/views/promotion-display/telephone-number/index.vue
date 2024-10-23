@@ -485,6 +485,7 @@ function create() {
     if (valid) {
       await createTelephone(form)
       uiControl.dialogVisible = false
+      request.telephone = form.telephone
       await loadTelephones()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
@@ -496,6 +497,7 @@ function edit() {
     if (valid) {
       await updateTelephone(form)
       uiControl.dialogVisible = false
+      request.telephone = form.telephone
       await loadTelephones()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
@@ -516,7 +518,7 @@ async function removeTelephone(telephone) {
     } else {
       await deleteTelephone(chooseTelephone.map(u => u.id))
     }
-    await loadTelephones()
+    // await loadTelephones()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
   })
 }
