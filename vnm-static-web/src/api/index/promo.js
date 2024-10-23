@@ -1,5 +1,6 @@
 import { server } from "@/utils/request";
 import { userStore } from "@/store";
+import cached from "@/utils/cache";
 
 export function loadPromo(siteType) {
   return server.REST.get("/opt-session/promo/page", { params: { siteType } });
@@ -231,12 +232,17 @@ export function getDailyRainListing(item) {
 
 // penny bank
 export function piggyBankGetLottery() {
-  return server.EVENT.post("/piggy-bank/getLottery");
+  return server.EVENT.post(`session/piggy-bank/getLotteryByPromoCode?promoCode=vnm-piggy-bank-sport`);
 }
 
-export function piggyBankClaim() {
-  return server.EVENT.put("/piggy-bank/claim");
+export function piggyBankClaimOther() {
+  return server.EVENT.put(`session/piggy-bank/claimByPromoCode?promoCode=vnm-piggy-bank-other`);
 }
+
+export function piggyBankClaimSport() {
+  return server.EVENT.put(`session/piggy-bank/claimByPromoCode?promoCode=vnm-piggy-bank-sport`);
+}
+
 export function getBonusPiggyCashback() {
   return server.EVENT.get("/piggy-bank/amount");
 }
@@ -300,4 +306,7 @@ export function getWinners(promoCode) {
 }
 export function getPrizeAmount(promoCode) {
   return server.EVENT.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`);
+}
+export function loadPromoTypes(siteType) {
+  return cached.get("PROMOTION_TYPES", () => server.REST.get(`/promo/type`));
 }

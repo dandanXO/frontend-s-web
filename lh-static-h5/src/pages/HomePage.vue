@@ -628,7 +628,8 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-black">
+    <q-card style="width: 100%; position: relative" class="bg-primary text-black">
+      <img v-close-popup class="station-notice-close-btn" src="../assets/images/home/close.png" />
       <q-card-section class="q-mb-md">
         <q-tabs
           v-model="activeKey"
@@ -686,6 +687,8 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  
 </template>
 
 <script>
@@ -699,6 +702,7 @@ import GameModal from "components/modal/GameModal";
 import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
+
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -1222,6 +1226,9 @@ export default defineComponent({
               }
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
+              }
+              if (espObj.code === "PMES") {
+                espObj.title = "DB电竞";
               }
               if (espObj.code === "IMES") {
                 espObj.title = "IM 电竞";
@@ -1787,6 +1794,11 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      if(sessionStorage.getItem('regSuccessGuideVisible')) {
+        store.regSuccessGuideVisible = true;
+        sessionStorage.removeItem('regSuccessGuideVisible');
+      }
+      
       if (store.token) {
         checkShowImgTop();
         setTimeout(() => {
@@ -2570,6 +2582,20 @@ export default defineComponent({
 
   .fade-in-image {
     animation: fadeIn 1.5s;
+  }
+}
+
+.station-notice-close-btn {
+  z-index: 999;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+
+  &:hover {
+    filter: brightness(0.9);
   }
 }
 

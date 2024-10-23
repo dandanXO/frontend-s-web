@@ -36,3 +36,7 @@ export const changeMemberReferrer = (siteId, memberId, loginName) => {
 export const batchUpdateFrozenMember = (members, siteId, remarks) => {
   return https(5 * 60 * 1000).request("/refer-friend/importFrozen", Method.POST, { siteId: siteId, memberFrozenList: JSON.stringify(members), remarks: remarks }, ContentType.form);
 };
+
+export const rejectRecord = (id, recordTime) => {
+  return https().request("/refer-friend-reward/reject?_method=PUT", Method.POST, { id: id, recordTime: recordTime }, ContentType.form);
+}

@@ -16,7 +16,13 @@
         class="promo-cat-tab"
         :class="extensionState ? 'extension-tab' : ''"
       >
-        <q-tab v-for="(tab, i) in currentTabItems" :key="i" :name="tab.name" :label="tab.label" no-caps />
+        <q-tab
+          v-for="(tab, i) in currentTabItems"
+          :key="i"
+          :name="tab.name"
+          :label="langVal === 'vi' ? tab.label_vi : tab.label"
+          no-caps
+        />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -32,7 +38,10 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label" v-if="promo.labelType !== 2">
@@ -80,61 +89,6 @@
                           <img :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                    </a>
-                  </div>
-
-                  <div class="promo-item" v-if="tab.name === 'all'">
-                    <a @click="showPromoDetails(promo)">
-                      <div>
-                        <div class="promo-label" v-if="promo.labelType !== 2">
-                          <div
-                            class="promo-ribbon"
-                            :class="{
-                              labelhot: promo.labelType === 1,
-                              labelrecommend: promo.labelType === 3 || promo.labelType === 5,
-                              labellimit: promo.labelType === 6,
-                              labelnew: promo.labelType === 0,
-                              labelother:
-                                promo.labelType !== 6 &&
-                                promo.labelType !== 1 &&
-                                promo.labelType !== 0 &&
-                                promo.labelType !== 3 &&
-                                promo.labelType !== 5
-                            }"
-                          >
-                            {{ getPromoLabel(promo.labelType) }}
-                          </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
-                        </div>
-                        <div class="promo-item-title">{{ promo.title }}</div>
-                        <div
-                          class="promo-item-deal"
-                          v-if="parsedParam(promo.param).sub"
-                          v-html="parsedParam(promo.param).sub"
-                        />
-                        <div>
-                          <q-btn
-                            :label="$t('lang.view_detail')"
-                            no-caps
-                            dense
-                            color="brightbtn"
-                            class="promo-item-btn"
-                          />
-                        </div>
-
-                        <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                      <!-- <div class="promo-img-wrapper"> -->
-                      <!-- <div class="promo-bg"> -->
-                      <!-- <img class="promo-content" src="../assets/images/promo/promo-item-bg.png" /> -->
-                      <!-- </div> -->
-                      <!-- </div> -->
                     </a>
                   </div>
                 </div>
@@ -209,12 +163,13 @@ import { ref, defineComponent, onActivated, reactive, watch, computed } from "vu
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { cached } from "boot/cache";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import HotPromotion from "components/HotPromotion";
 import { useI18n } from "vue-i18n";
 import { EDITION } from "src/constant/edition";
@@ -226,23 +181,16 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const { t } = useI18n();
 
+    const langVal = localStorage.getItem("languageLocale") || "vi";
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
-    const promoTypes = computed(() => [
-      { code: "ALL", img: "all", label: t("lang.type_all") },
-      { code: "ESPORTS", img: "esport", label: t("lang.type_esport") },
-      { code: "SPORTS", img: "sport", label: t("lang.type_sport") },
-      { code: "POKER", img: "poker", label: t("lang.type_poker") },
-      { name: "SLOT GAME", label: t("lang.type_slot") },
-      { name: "LIVE CASINO", label: t("lang.type_livecasino") },
-      { name: "FISH", label: t("lang.type_fish") }
-    ]);
+    const promoTypes = ref([{ code: "ALL", img: "all", label: t("lang.type_all") }]);
 
     const isFetchingPromo = ref(false);
     const promoTabActive = ref(promoTypes.value[0].value);
@@ -258,56 +206,58 @@ export default defineComponent({
     // const routeQuery  = computed(() => route.query || {});
 
     const tab = ref("all");
-    const tabItems = computed(() => [
+    const tabItems = ref([
       { name: "all", label: t("lang.type_all") },
       { name: "sport", label: t("lang.type_sport") },
       { name: "live casino", label: t("lang.type_livecasino") },
-      {name: "slot game", label: t("lang.type_slot") },
+      { name: "slot game", label: t("lang.type_slot") },
       // { name: "esport", label: t("lang.type_esport") },
       // {name: "fish", label: '捕鱼'},
       { name: "others", label: t("lang.type_others") }
     ]);
     const slotTabItems = computed(() => [
-      { name: "all", label: t("lang.type_all") },
-      { name: "slot welcome", label: t("lang.type_slot_welcome") },
-      { name: "slot daily", label: t("lang.type_slot_daily") },
-      { name: "slot other", label: t("lang.type_slot_other") },
-    ])
+      { name: "all", label: t("lang.type_all"), label_vi: t("lang.type_all") },
+      { name: "slot welcome", label: t("lang.type_slot_welcome"), label_vi: t("lang.type_slot_welcome") },
+      { name: "slot daily", label: t("lang.type_slot_daily"), label_vi: t("lang.type_slot_daily") },
+      { name: "slot other", label: t("lang.type_slot_other"), label_vi: t("lang.type_slot_other") }
+    ]);
     const currentTabItems = computed(() => {
-      switch(ui.edition) {
-        case EDITION.SLOT:
-          return slotTabItems.value
-        case EDITION.NORMAL:
-        default:
-          return tabItems.value
-      }
-    })
-
-    watch(() => route.query, () => {
-      if (route.query === null) {
-        isPromoDetail.value = false;
-      } else {
-        isPromoDetail.value = route.query.name;
-        ui.setScrollPosition("vertical", 0, 200);
-      }
+      return tabItems.value;
+      // switch (ui.edition) {
+      //   case EDITION.SLOT:
+      //     return slotTabItems.value;
+      //   case EDITION.NORMAL:
+      //   default:
+      //     return tabItems.value;
+      // }
     });
 
+    watch(
+      () => route.query,
+      () => {
+        if (route.query === null) {
+          isPromoDetail.value = false;
+        } else {
+          isPromoDetail.value = route.query.name;
+          ui.setScrollPosition("vertical", 0, 200);
+        }
+      }
+    );
+
     const loadBanner = () => {
-      api
-        .get("/opt-session/promo/banner?category=PROMO")
-        .then((response) => {
-          if (response.code === 0) {
-            banner.value = response.data[0];
-            // console.log(banner.value)
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: ret.message,
-            //   icon: "report_problem"
-            // });
-          }
-        });
+      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
+        if (response.code === 0) {
+          banner.value = response.data[0];
+          // console.log(banner.value)
+        } else {
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: ret.message,
+          //   icon: "report_problem"
+          // });
+        }
+      });
     };
     const showPromoDetails = (promo) => {
       // extension
@@ -325,26 +275,19 @@ export default defineComponent({
           SessionStorage.set("TOKEN", extensionToken.value);
         }
         store.token = extensionToken.value;
-
       } else {
-
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/account/vip?from=promo");
         } else {
-
-          if(isAndroid()){
+          if (isAndroid()) {
             // modalVisible.value= true;
-            var preUrl = 'https://' + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
+            var preUrl = "https://" + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
             // alert(preUrl);
-            console.log(preUrl)
+            console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(
-              preUrl,
-              "_blank",
-              "location=no,zoom=no,footer=no"
-            );
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no");
 
-            ref.addEventListener('loadstart', function(event) {
+            ref.addEventListener("loadstart", function (event) {
               var url = event.url;
               // alert("This" + url);
               if (url.indexOf("vnmapp:") > -1) {
@@ -352,11 +295,10 @@ export default defineComponent({
                 console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
                 // alert(message);
                 ref.close();
-                router.push(message)
+                router.push(message);
               }
             });
-
-          }else{
+          } else {
             if (route.query.fromAccount) {
               router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
             } else {
@@ -364,9 +306,7 @@ export default defineComponent({
             }
             isPromoDetail.value = true;
             selectedPromo.value = promo;
-
           }
-
         }
         // }
       }
@@ -375,69 +315,114 @@ export default defineComponent({
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function(promo) {
+        filteredArray.value = promoState.promoList.filter(function (promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
         filteredArray.value = promoState.promoList;
       }
     };
-
-    const loadAll = () => {
-      const platformApiUrl = "/opt-session/promo/page";
-      let siteType
-      switch(ui.edition) {
+    const loadTabs = async () => {
+      var params = "HOME";
+      switch (ui.edition) {
         case EDITION.SLOT:
-          siteType = "SLOT"
-          break
+          params = "SLOT";
+          break;
+        case EDITION.NORMAL:
+        default:
+          params = "HOME";
+      }
+
+      const key = "PROMOTION_TYPES";
+      cached
+        .get(key, () => api.get(`/promo/type?category=${params}`))
+        .then((res) => {
+          tabItems.value = res.map(({ value, name, iconUrl }) => ({
+            code: value,
+            name: value.toLowerCase(),
+            label: name ? JSON.parse(name).H5 : "",
+            label_vi: name ? JSON.parse(name).H5_vi : ""
+          }));
+
+          if (params === "SLOT") {
+            const allItem = tabItems.value.find((item) => item.code === "ALL");
+            const slotGameItem = tabItems.value.find((item) => item.code === "SLOT GAME");
+            const filteredArr = tabItems.value.filter((item) => item.code !== "ALL" && item.code !== "SLOT GAME");
+            const newArr = [];
+            if (allItem) newArr.push(allItem); // 放到第一位
+            if (slotGameItem) newArr.push(slotGameItem); // 放到第二位
+            newArr.push(...filteredArr); // 添加其余的项目
+
+            tabItems.value = newArr;
+          }
+
+          if (tabItems.value.length > 0) {
+            promoTabActive.value = tabItems.value[0].name;
+          } else {
+            console.warn("No promo types loaded, using default promo types.");
+          }
+        });
+    };
+
+    const loadAll = async () => {
+      await loadTabs();
+      const platformApiUrl = "/opt-session/promo/page";
+      let siteType;
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          siteType = "SLOT";
+          break;
       }
 
       isFetchingPromo.value = window.location.pathname === "/promoapp";
 
-      api.get(platformApiUrl, { params: { siteType } }).then((res) => {
-        if (res.code === 0) {
-          promoState.promoList = [];
-          var promoItems = res.data;
-          // promoState.promoList.push(...res.data);
+      api
+        .get(platformApiUrl, { params: { siteType } })
+        .then((res) => {
+          if (res.code === 0) {
+            promoState.promoList = [];
+            var promoItems = res.data;
+            // promoState.promoList.push(...res.data);
 
-          promoItems.forEach(element => {
-            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-            // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            // } else {
-            promoState.promoList.push(element);
+            promoItems.forEach((element) => {
+              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              // } else {
+              promoState.promoList.push(element);
 
-            if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
-              showPromoDetails(element);
-            }
+              if (
+                (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") &&
+                String(element.redirectUrl) === "lh1-invite"
+              ) {
+                showPromoDetails(element);
+              }
 
-            if (route.query.name && String(element.redirectUrl) === route.query.name) {
-              showPromoDetails(element);
-            }
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                showPromoDetails(element);
+              }
 
-            if ((route.query.name === "/vip")) {
-              router.push("/account/vip");
-            }
-            // }
-          });
+              if (route.query.name === "/vip") {
+                router.push("/account/vip");
+              }
+              // }
+            });
 
+            // console.log("route.query.name", route.query.name);
 
-          // console.log("route.query.name", route.query.name);
-
-          switchPromoType(promoState.active);
+            switchPromoType(promoState.active);
+            isFetchingPromo.value = false;
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
           isFetchingPromo.value = false;
-        }
-      }).catch((e) => {
-        console.log("error", e);
-        isFetchingPromo.value = false;
-      });
-
+        });
     };
 
     // extension
     const currentPath = ref(route.path);
     const extensionState = ref(false);
     const extensionToken = ref("");
-
 
     const checkExtension = () => {
       if (currentPath.value === "/promoapp") {
@@ -472,8 +457,8 @@ export default defineComponent({
     };
 
     onActivated(() => {
-      isPromoDetail.value= false;
-      selectedPromo.value= {};
+      isPromoDetail.value = false;
+      selectedPromo.value = {};
       // if promo name is present, do not show promo list on first load
       if (route.query.name) {
         isPromoDetail.value = true;
@@ -486,6 +471,7 @@ export default defineComponent({
 
     return {
       promoState,
+      langVal,
       promoTypes,
       promoTabActive,
       switchPromoType,
@@ -1052,7 +1038,7 @@ export default defineComponent({
 
 .promo-cat-tab {
   position: sticky;
-  top: 61px;
+  top: 42px;
   z-index: 3;
 
   &.extension-tab {

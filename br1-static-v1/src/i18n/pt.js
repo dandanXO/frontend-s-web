@@ -84,9 +84,9 @@ export default {
     phone: "Telefone",
     phone_placeholder: "Por favor, insira o número de telefone",
     phone_rules_01: "Por favor, insira o número de telefone",
-    phone_rules_02: "O número de telefone deve ter 11 dígitos",
+    phone_rules_02: "O número de telefone deve ter 8 dígitos",
     phone_rules_03: "O número de telefone não deve começar com '0'",
-    phone_rules_04: "Por favor insira o número de conta correto",
+    phone_rules_04: "Por favor insira o número de telefone válido",
     password: "Senha",
     password_placeholder: "Insira a Senha",
     password_rules_01: "Por favor, insira a senha",
@@ -251,7 +251,8 @@ export default {
     notAMember: "Não é um membro?",
     createAccount: "Criar uma conta",
     profit: "Lucro",
-    loss: "Perda"
+    loss: "Perda",
+    withdrawing: "Retirando..."
   },
   notify: {
     noRecord: "Nenhum Registro",
@@ -269,7 +270,8 @@ export default {
     serialNumberCopied: "Número de série copiado para a área de transferência.",
     fillInPersonalDetails: "Por favor, preencha seus dados pessoais",
     addSucceed: "Adição bem-sucedida",
-    areYouSureUnbind: "Tem certeza de que deseja desvincular?"
+    areYouSureUnbind: "Tem certeza de que deseja desvincular?",
+    withdrawSuceed: "Retirada Enviar com sucesso"
   },
   sideNav: {
     inviteToEarn: "Convidar para Ganhar",
@@ -434,7 +436,7 @@ export default {
       benefits_02: "Defendemos benefícios e bônus para todos.",
       agencyPolicy: "Política da Agência",
       tableRewardsAssigned: "A tabela abaixo mostra como as recompensas são atribuídas.",
-      point_01: "Usuários Ativos: valor de aposta diária 2.000",
+      point_01: "Usuários Ativos: valor de aposta diária 200",
       point_02:
         "Sua recompensa será calculada com base no valor total de aposta de seus membros. A recompensa obtida pode ser retirada ou usada para mais apostas.",
       point_03: "Indique o máximo de amigos que puder para obter uma porcentagem maior de reembolsos.",
@@ -857,6 +859,7 @@ export default {
     35008: "Você não tem esse privilégio",
     35009: "O privilégio entrará em vigor em breve",
     35010: "35010 Membro não pode receber este privilégio",
-    35011: "35011 Membro não pode receber este privilégio."
+    35011: "35011 Membro não pode receber este privilégio.",
+    37001: "O horário de coleta é fora do período do evento"
   }
 };

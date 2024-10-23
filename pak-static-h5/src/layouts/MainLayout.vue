@@ -17,11 +17,11 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
-        <router-link :to="prevPage || '/'" class="q-mt-sm">
+        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
           <img src="../assets/images/index/btn-back.png" width="30" />
           <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
           <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
-        </router-link>
+        </a>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
           <div class="title-container">
@@ -75,7 +75,8 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <component v-if="isGuessRoute" :is="Component" />
+        <KeepAlive v-else :max="8">
           <component :is="Component" />
         </KeepAlive>
       </router-view>
@@ -115,6 +116,11 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
+
+    const isGuessRoute = computed(() => {
+      if (route.path === "/login" || route.path === "register") return true;
+      return false;
+    });
     // ui.$onAction(({ name, args }) => {
     //   switch (name) {
     //     case "setScrollPosition":
@@ -306,6 +312,13 @@ export default defineComponent({
               prevPage.value = "/promo";
             }
           }
+        } else if (route.path === "/promotion") {
+          hasPage.value = true;
+          pageName.value = t("header.promotion");
+          if (route.fullPath.indexOf("pak-faq") > -1) {
+            pageName.value = "FAQ";
+          }
+          prevPage.value = "";
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");
@@ -544,6 +557,16 @@ export default defineComponent({
       }
     };
 
+    const goToPrevPage = (prePage) => {
+      if (prePage === "/") {
+        router.push("/");
+      } else if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/" + prePage);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
       checkFirstScreen();
@@ -566,7 +589,9 @@ export default defineComponent({
       hasDrawer,
       platformsList,
       changePlatform,
-      languageVal
+      languageVal,
+      goToPrevPage,
+      isGuessRoute
     };
   }
 });

@@ -903,7 +903,7 @@ function selectPrivilege(val) {
         Object.entries(gameTypeRollover).forEach(([key, value]) => {
           if (key === 'rollover') {
             uiControl.rollOverAmt = value; // Set rollover amount
-          } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes' && key !== 'excludeTypes') {
+          } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'excludePlatformGame' && key !== 'gameTypes' && key !== 'excludeTypes') {
             // Handle individual game types
             gameTypes.value.push({ key, value });
           } else if (key === 'gameTypes' && Array.isArray(value)) {

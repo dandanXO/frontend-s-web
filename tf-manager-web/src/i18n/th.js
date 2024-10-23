@@ -208,6 +208,7 @@ export default {
     gameMemberCountTotal: 'จำนวนสมาชิกเดิมพันทั้งหมด',
     gameBetCountTotal: 'จำนวนธุรกรรมการเดิมพันทั้งหมด',
     gameBetAmountTotal: 'จำนวนเงินเดิมพันทั้งหมด',
+    gamePayoutAmountTotal: 'ยอดจ่ายทั้งหมด',
     gameWinLossTotal: 'จำนวนเงินชนะ/แพ้ทั้งหมด',
   },
   gameType: {
@@ -1689,6 +1690,7 @@ export default {
     VIP: 'VIP',
     Game: 'เกม',
     'Game Tag': 'แท็กเกม',
+    'TFG Member Game Map': 'การผูกรหัสเกม TFG',
     'Financial Level': 'ระดับการเงิน',
     'Risk Level': 'ระดับความเสี่ยง',
     'IP Label': 'ฉลากไอพี',

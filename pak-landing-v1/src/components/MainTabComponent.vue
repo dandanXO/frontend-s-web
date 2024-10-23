@@ -4,7 +4,7 @@
     </CarouselComponent>
 
     <div class="btn-container q-pb-lg q-pt-xs">
-      <a href="https://www.youtube.com/@B9GamePakistan" target="_blank">
+      <a href="https://www.youtube.com/@B9GAMEpk" target="_blank">
         <img class="icons" alt="" src="~assets/imgs/yt_btn.png" />
       </a>
       <a
@@ -60,7 +60,7 @@
         <div class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2]?.media.data.attributes?.url"
+              v-if="galleryItems[i * 2]?.media.data?.attributes?.url"
               alt=""
               :src="`${BASE_STRAPI_URL}${
                 galleryItems[i * 2]?.media.data.attributes.url
@@ -79,7 +79,7 @@
         <div v-if="galleryItems[i * 2 + 1]" class="image-row col-6">
           <div class="image-container">
             <img
-              v-if="galleryItems[i * 2 + 1].media.data.attributes?.url"
+              v-if="galleryItems[i * 2 + 1].media.data?.attributes?.url"
               alt=""
               :src="`${BASE_STRAPI_URL}${
                 galleryItems[i * 2 + 1].media.data.attributes.url
@@ -96,11 +96,23 @@
         </div>
         <div v-else class="image-row col-6"></div>
 
-        <div class="description-row col-6">
+        <div
+          v-if="
+            galleryItems[i * 2]?.media.data?.attributes?.url &&
+            galleryItems[i * 2]
+          "
+          class="description-row col-6"
+        >
           <span>{{ galleryItems[i * 2]?.description }}</span>
         </div>
 
-        <div v-if="galleryItems[i * 2 + 1]" class="description-row col-6">
+        <div
+          v-if="
+            galleryItems[i * 2 + 1]?.media.data?.attributes?.url &&
+            galleryItems[i * 2 + 1]
+          "
+          class="description-row col-6"
+        >
           <span>{{ galleryItems[i * 2 + 1].description }}</span>
         </div>
       </template>

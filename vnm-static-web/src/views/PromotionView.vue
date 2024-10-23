@@ -2,16 +2,9 @@
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail" :class="{ slot: ui.edition === EDITION.SLOT }">
       <div class="promo-main-container">
-        <!-- <div class="rebates-container">
-          <img src="../assets/promo/rebate/coin.png" />
-          <div class="rebatebtn">{{$t('rebate.totalVNDP')}}</div>
-          <div class="input">{{ rebateAmt }}</div>
-          <div class="rebatebtn">{{$t('rebate.claimNow')}}</div>
-        </div> -->
         <div class="promo-type-wrapper">
           <div style="position: sticky; top: 0">
             <div class="type-list">
-              <!-- <img src="../assets/promo/menu-title.png" /> -->
               <div class="promo-title">
                 <div class="linebefore"></div>
                 {{ $t("promo.promo") }}
@@ -24,8 +17,10 @@
                 :key="p.code"
                 @click="switchPromoType(p.code)"
               >
-                <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <img v-if="p.iconUrl" :src="p.iconUrl" />
+                <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                <span v-else></span>
+                <span style="width: 100px" class="label">{{ languageVal === "en" ? p.label.en : p.label.vn }}</span>
               </div>
             </div>
           </div>
@@ -69,7 +64,6 @@
                     nopaddingtop: promo.labelType === 2
                   }"
                 >
-                  <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
                   <div class="front-title">{{ promo.title }}</div>
                   <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
                   <div class="front-btn">{{ $t("home.moreDetails") }}</div>
@@ -79,184 +73,79 @@
                   <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
                 </div>
               </div>
-              <!-- <div class="promo-info">
-                <span class="viewdetail">{{ promo.title }}</span>
-              </div> -->
             </a>
           </div>
         </div>
       </div>
     </div>
-    <div v-else class="selected-promo">
-      <div class="selected-promo-wrapper">
-        <div class="banner-container" v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl">
-          <div class="promo-bg isDesktop">
-            <img
-              :src="
-                imgURL + (selectedPromo.desktopBannerUrl ? selectedPromo.desktopBannerUrl : selectedPromo.desktopImgUrl)
-              "
-            />
-          </div>
-          <div
-            class="promo-bg isMobile"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-              ''
-            "
-          ></div>
-        </div>
-
-        <div
-          class="inner"
-          :class="{
-            isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24',
-            isEurocupLucky: selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
-          }"
-          :style="
-            selectedPromo?.desktopImgBackgroundUrl
-              ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
-          "
-        >
-          <!--          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>-->
-          <div class="hot-promo" v-if="selectedPromo.hasPromo">
-            <HotPromotion :list="selectedPromo" />
-          </div>
-
-          <div
-            class="promo-view-container"
-            :class="{
-              welcome: selectedPromo.promoType?.toLowerCase() === 'welcome',
-              sport: selectedPromo.promoType?.toLowerCase() === 'sport',
-              eSport: selectedPromo.promoType?.toLowerCase() === 'esport',
-              fish: selectedPromo.promoType?.toLowerCase() === 'fish',
-              liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
-            }"
-          >
-            <div v-html="selectedPromo.pageContent"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <PromoDetail v-else />
   </div>
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
+import { ref, defineComponent, onMounted, reactive, provide, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
-import { loadPromoBanner } from "@/api/index/promo";
-import { userStore } from "@/store";
-import { ElMessage, ElMessageBox } from "element-plus";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
-const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage)
-import HotPromotion from '@/components/HotPromotion'
 import { useLocalStorage } from "@vueuse/core";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+import { loadPromoTypes } from "@/api/index/promo.js";
+
+const PromoDetail = defineAsyncComponent(() => import('@/components/promo/PromoDetail.vue'));
+
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    PromoDetail
   },
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const ui = uiStore()
     const { t } = useI18n();
-    const store = userStore();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
       promoList: [],
     });
-    const promoTypes = computed(() => [
-      { code:"ALL", img: 'all', label: t('promo.all') },
-      { code: "SPORT", img: 'sport', label:  t('promo.sports')},
-      { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
-      { code: "SLOT GAME", img: 'slot', label: t('promo.slot')},
-      { code: "POKER", img: 'poker', label: t('promo.poker')},
-      { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
-      { code: "FISH", img: 'fish', label: t('promo.fish')},
-    ]);
-    const promoTypesSlot = computed(() => [
-    { code:"ALL", img: 'all', label: t('promo.all') },
-    { code: "SLOT WELCOME", img: 'slot-welcome', label:  t('promo.slotWelcome')},
-    { code: "SLOT DAILY", img: 'slot-daily', label: t('promo.slotDaily')},
-    { code: "SLOT OTHER", img: 'slot-other', label: t('promo.slotOther')},
+    const currentPromoType = ref([])
+    const promoTypesSlot = ref( [
+      { code:"ALL", img: 'all', label: {en: t('promo.all'), vn: t('promo.all')} },
+      { code: "SLOT WELCOME", img: 'sport', label: {en:  t('promo.slotWelcome'),vn:  t('promo.slotWelcome')} },
+      { code: "SLOT DAILY", img: 'live', label: {en: t('promo.slotDaily'), vn: t('promo.slotDaily')}},
+      { code: "SLOT OTHER", img: 'slot', label: {en: t('promo.slotOther'), vn: t('promo.slotOther')}},
     ])
-    const currentPromoTypes = computed(() => {
-      switch(ui.edition) {
-        case EDITION.SLOT:
-          return promoTypesSlot.value
-        case EDITION.NORMAL:
-        default:
-          return promoTypes.value
-      }
+    const currentPromoTypes = computed(() =>{
+      return  currentPromoType.value;
     })
-    const promoTabActive = ref(currentPromoTypes.value[0].code);
+    const promoTabActive = ref('ALL');
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
-      if(route.query && route.query?.name ){
+      if (route.query && route.query?.name) {
         return true;
       }
       return false;
     })
     const selectedPromo = ref({});
+    provide('selectedPromo', selectedPromo);
     const route = useRoute();
     const router = useRouter();
-    // watch(() => route.query, () => {
-    //   if (route.query === null) {
-    //    isPromoDetail.value = false
-    //   } else {
-    //     isPromoDetail.value = route.query.name
-    //   }
-    // });
-    const loadBanner = () => {
-      loadPromoBanner("PROMO").then((res) => {
-        if (res.code === 0) {
-          banner.value = res.data[0]
-        } else {
-          ElMessage.error(res.message)
-        }
-      })
-    }
     const showPromoDetails = (promo) => {
-      // if (!store.token) {
-      //     ElMessageBox.alert(t('bankError.loginbeforeAction'), t('common.systemError'), {
-      //         // if you want to disable its autofocus
-      //         // autofocus: false,sd
-      //         center: true,
-      //         confirmButtonText: t('common.confirm'),
-      //         showClose: false,
-      //         buttonSize: 'large'
-      //     }).then(() => {
-      //       // router.push('/login');
-      //         store.loginPageVisible = true
-      //     })
-      //     return
-      // } else {
       if (promo.redirectUrl.includes("page-vip")) {
         router.push("/vip");
       } else if (promo.redirectUrl.includes("lh1-invite")) {
         router.push("/privilege/invite");
       } else {
-        router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-        // if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
-        //   router.push({name: 'promotion', query: {name: route.query.name}})
-        // } else {
-        //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-        // }
-        // isPromoDetail.value = true;
+        router.push({ name: 'promotion', query: { name: promo.redirectUrl } })
         selectedPromo.value = promo
       }
-      // }
     }
+
+
 
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
@@ -267,14 +156,13 @@ export default defineComponent({
 
       promoTabActive.value = type;
       if (type !== "ALL") {
-        if(type ==='OTHERS'){
-          filteredArray.value = promoState.promoList.filter(function(promo) {
+        if (type === 'OTHERS') {
+          filteredArray.value = promoState.promoList.filter(function (promo) {
             const promoTypes = promo.promoType.toLowerCase().split(",");
             return promoTypes.includes("slot game") || promoTypes.includes("welcome") || promoTypes.includes("fish") || promoTypes.includes("poker");
           });
-          // console.log(filteredArray.value);
-        }else{
-          filteredArray.value = promoState.promoList.filter(function(promo) {
+        } else {
+          filteredArray.value = promoState.promoList.filter(function (promo) {
             return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
           });
         }
@@ -283,20 +171,49 @@ export default defineComponent({
         filteredArray.value = promoState.promoList
       }
     };
-    const loadAll = () => {
+    const loadAll = async () => {
       let siteType
-      switch(ui.edition) {
+      switch (ui.edition) {
         case EDITION.SLOT:
           siteType = "SLOT";
           break
       }
+
+
+      await loadPromoTypes().then((res) => {
+        currentPromoType.value = res.map((item) => {
+          return {
+            code: item.value,
+            img: 'all',
+            iconUrl: imgURL + item.iconUrl,
+            label: JSON.parse(item.name)
+          }
+        })
+      });
+      console.log(currentPromoType.value)
+
+      if(siteType==="SLOT"){
+        const allItem = currentPromoType.value.find(item => item.code === 'ALL');
+        const slotGameItem = currentPromoType.value.find(item => item.code === 'SLOT GAME');
+
+        const filteredArr = currentPromoType.value.filter(item => item.code !== 'ALL' && item.code !== 'SLOT GAME');
+
+        const newArr = [];
+        if (allItem) newArr.push(allItem);  // 放到第一位
+        if (slotGameItem) newArr.push(slotGameItem);  // 放到第二位
+        newArr.push(...filteredArr);  // 添加其余的项目
+
+        currentPromoType.value= newArr;
+      }
+
+
+
+
+
       loadPromo(siteType).then((res) => {
-        if(res.code === 0) {
+        if (res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            // } else {
             if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
               if (element.redirectUrl === 'lh1-invite') {
                 showPromoDetails(element)
@@ -336,31 +253,11 @@ export default defineComponent({
       }
     };
     onMounted(() => {
-      // loadBanner();
       loadAll();
     });
 
-    // watch(languageVal, (newValue, oldValue) => {
-    //   promoTypes.value = [
-    //     { code:"ALL", img: 'all', label: t('promo.all') },
-    //     { code: "SPORT", img: 'sport', label:  t('promo.sports')},
-    //     { code: "POKER", img: 'poker', label: t('promo.poker')},
-    //     { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
-    //     { code: "SLOT GAME", img: 'slot', label: t('promo.slot')},
-    //     { code: "FISH", img: 'fish', label: t('promo.fish')},
-    //     { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
-    //   ];
-    // });
-
-    // watch(() => route.query.name, () => {
-    //   if (!route.query.name) {
-    //     isPromoDetail.value = false
-    //   }
-    // });
-
     return {
       promoState,
-      promoTypes,
       promoTabActive,
       switchPromoType,
       filteredArray,
@@ -390,107 +287,36 @@ export default defineComponent({
     position: relative;
     padding-top: max(270px, 15vw);
     background-color: #f3f7fd;
+
     &.slot {
       background-image: url(@/assets/promo/bg-top-slot.png);
     }
-  }
-  .promo-view-container {
-    line-height: 30px;
-    ol {
-      padding: 0 15px;
-    }
-
-    img {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 10px auto;
-      &:nth-child(1) {
-        padding-top: 20px;
-      }
-    }
-    table {
-      margin: 10px auto;
-      min-width: 80%;
-      text-align: center;
-      tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
-        color: #ffffff;
-        border: 0;
-      }
-      border-collapse: collapse;
-      th,
-      td {
-        padding: 10px;
-      }
-      tbody {
-        display: table;
-        table-layout: fixed;
-        width: 100%;
-      }
-      th {
-        // background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
-        background: #e7f3ff;
-        p {
-          margin: 0;
-        }
-        &:first-child {
-          border-top-left-radius: 20px;
-        }
-        &:last-child {
-          border-top-right-radius: 20px;
-        }
-      }
-      td {
-        // background-color: #202228;
-        border: 1px solid #dcdce8;
-        color: $font-5;
-      }
-      tr {
-        &:last-child {
-          td:first-child {
-            border-radius: 20px 0 0 0;
-          }
-        }
-      }
-    }
-  }
-  a {
   }
 }
 </style>
 <style scoped lang="scss">
 .promo-container {
-  // padding-bottom: 80px;
-
-  // min-height: 70vh;
-  // color: #ffffff;
-  .banner-container {
-    // min-height: 500px;
-  }
   .all-promotions {
-    @keyframes fadein {
-      100% {
-        opacity: 1;
-      }
-    }
-
     .promo-bg {
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
+
       &.isDesktop {
         display: block;
+
         img {
           width: 100%;
         }
       }
+
       &.isMobile {
         display: none;
         // height: 220px;
         min-height: 60vw;
       }
     }
+
     .promo-main-container {
       width: 100%;
       // max-width: $maxwidth;
@@ -500,6 +326,7 @@ export default defineComponent({
       display: flex;
       gap: 30px;
       position: relative;
+
       .rebates-container {
         position: absolute;
         top: -80px;
@@ -508,10 +335,12 @@ export default defineComponent({
         width: 100%;
         height: 65px;
       }
+
       .promo-type-wrapper {
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
         border-radius: 20px;
+
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
         ::-webkit-scrollbar {
@@ -519,6 +348,7 @@ export default defineComponent({
           height: 0px;
           // display: none;
         }
+
         .type-list {
           display: flex;
           justify-content: flex-start;
@@ -527,10 +357,11 @@ export default defineComponent({
           overflow: auto;
           width: 280px;
           flex-direction: column;
-          gap: 35px;
+          gap: 20px;
           min-height: 818px;
           position: sticky;
           top: 100px;
+
           .promo-title {
             color: #4c88f8;
             font-size: 20px;
@@ -545,46 +376,47 @@ export default defineComponent({
               gap: 5px;
               flex-direction: column;
               align-items: flex-end;
+
               &:before {
                 content: "";
                 width: 13px;
                 height: 2px;
                 background: #4c88f8;
               }
+
               &:after {
                 content: "";
-                width: 55px;
+                width: 40px;
                 height: 2px;
                 background: #4c88f8;
               }
             }
+
             .lineafter {
               display: flex;
               justify-content: center;
               gap: 5px;
               flex-direction: column;
               align-items: flex-start;
+
               &:before {
                 content: "";
                 width: 13px;
                 background: #4c88f8;
                 height: 2px;
               }
+
               &:after {
                 content: "";
-                width: 55px;
+                width: 40px;
                 height: 2px;
                 background: #4c88f8;
               }
             }
           }
+
           .type-item {
             cursor: pointer;
-            // border-radius: 20px;
-            // background: #201f29;
-            // box-shadow: 0 0 10px -3px #000000;
-            // white-space: nowrap;
-            // margin: 0 10px;
             font-size: 14px;
             display: flex;
             justify-content: center;
@@ -593,6 +425,7 @@ export default defineComponent({
             padding: 12px 40px;
             position: relative;
             width: 100%;
+            // max-width: 120px;
             border-radius: 30px;
             box-shadow: 0px -1.6610169410705566px 6.085966110229492px 0px #a2bff4 inset;
 
@@ -603,27 +436,18 @@ export default defineComponent({
             }
 
             &:before {
-              // content: "";
-              // position: absolute;
-              // width: 100%;
-              // height: 100%;
-              // // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
-              // box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.15);
-              // transform: skewX(15deg);
-              // border-radius: 4px 15px;
             }
+
             img {
               max-height: 30px;
               filter: grayscale(0);
             }
+
             &.active,
             &:hover {
               background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
               box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
-              // background: #4b4e66;
-              // box-shadow: 0 0 5px #ffffff;
-              // background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#5243bd,#5243bd);
               .label {
                 color: #ffffff;
               }
@@ -631,6 +455,7 @@ export default defineComponent({
               &:before {
                 background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
               }
+
               img {
                 filter: grayscale(1) brightness(100);
               }
@@ -651,36 +476,29 @@ export default defineComponent({
           }
         }
       }
+
       .promo-list-wrapper {
         width: 90%;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
         gap: 20px;
+
         .promo-item {
           position: relative;
           overflow: hidden;
           cursor: pointer;
           background: url(../assets/promo/front-bg.png) no-repeat center center;
-          background-size: cover;
+          background-size: 100% 100%;
           box-shadow: 0px 4px 26px 0px #00000026;
+          border-radius: 13px;
+          cursor: pointer;
 
-          border-radius: 20px;
-          a {
-            display: block;
-          }
           &:hover {
-            .promo-info {
-              background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
-              background-blend-mode: normal, normal;
-              .viewdetail {
-                color: #fefefe;
-              }
+            .promo-content {
+              transform: scale(1.1);
             }
           }
-          img {
-          }
-          cursor: pointer;
 
           .promo-img-wrapper {
             position: relative;
@@ -689,7 +507,6 @@ export default defineComponent({
             justify-content: space-between;
             align-items: center;
             padding: 0 50px;
-            // border-radius: 10px 10px 0 0;
             position: relative;
 
             .promo-label {
@@ -699,11 +516,12 @@ export default defineComponent({
               display: flex;
               align-items: center;
               height: 42px;
+
               .label-type {
-                //background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
                 padding: 10px 30px 10px 50px;
                 color: #ffffff;
                 position: relative;
+
                 &:after {
                   content: "";
                   display: inline-block;
@@ -724,6 +542,7 @@ export default defineComponent({
 
                 &.labellimit {
                   background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
+
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
@@ -733,6 +552,7 @@ export default defineComponent({
 
                 &.labelnew {
                   background: linear-gradient(89.92deg, #eaa318 0.06%, #f0dba5 106.9%);
+
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
@@ -742,6 +562,7 @@ export default defineComponent({
 
                 &.labelrecommend {
                   background: linear-gradient(89.92deg, #6db73f 0.06%, #a5f0b6 106.9%);
+
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
@@ -751,6 +572,7 @@ export default defineComponent({
 
                 &.labelother {
                   background: linear-gradient(89.92deg, #4da9ff 0.06%, #a4ceff 106.9%);
+
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
@@ -766,6 +588,7 @@ export default defineComponent({
                 padding-left: 30px;
               }
             }
+
             .promo-type {
               position: absolute;
               left: 0;
@@ -773,6 +596,7 @@ export default defineComponent({
               background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
               padding: 10px 30px 10px 50px;
               color: #ffffff;
+
               &:after {
                 content: "";
                 border-left: 0 solid transparent;
@@ -784,6 +608,7 @@ export default defineComponent({
                 top: 0;
               }
             }
+
             .promo-details {
               font-family: "Roboto";
               margin: 20px 0;
@@ -797,26 +622,32 @@ export default defineComponent({
               &.nopaddingtop {
                 padding-top: 10px;
               }
+
               .front-date {
                 color: #606479;
                 font-size: 18px;
                 font-weight: 700;
               }
+
               .front-title {
                 color: #4c88f8;
                 font-size: 20px;
                 font-weight: 700;
+                font-family: "Be Vietnam Pro";
               }
+
               .front-sub {
                 color: #7a80a1;
                 font-size: 18px;
                 font-weight: 700;
+                font-family: "Be Vietnam Pro";
               }
+
               .front-btn {
                 color: #ffffff;
                 padding: 5px 30px;
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-
+                font-family: "Be Vietnam Pro";
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
                 box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
@@ -826,6 +657,7 @@ export default defineComponent({
                 border-radius: 30px;
               }
             }
+
             .promo-bg {
               transition: all 0.5s ease;
               background-size: cover;
@@ -834,21 +666,27 @@ export default defineComponent({
               justify-content: center;
               align-items: center;
               gap: 30px;
-              height: 250px;
+              height: 170px;
+
               .promo-content {
                 height: 100%;
+                transition: all 0.5s;
+
                 &.isDesktop {
                   display: block;
                 }
+
                 &.isMobile {
                   display: none;
                 }
               }
+
               .promo-img {
                 height: 200px;
               }
             }
           }
+
           .promo-info {
             // position: absolute;
             text-align: right;
@@ -860,6 +698,7 @@ export default defineComponent({
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             .viewdetail {
               color: #232323;
               padding: 20px 10px;
@@ -868,6 +707,7 @@ export default defineComponent({
               text-align: center;
               width: 100%;
             }
+
             .detail-arrow {
               margin-right: 20px;
               height: 100%;
@@ -877,175 +717,6 @@ export default defineComponent({
       }
     }
   }
-  .selected-promo {
-    width: 100%;
-    .selected-promo-wrapper {
-      .banner-container {
-        width: 100%;
-        .promo-bg {
-          background-size: 100%;
-          background-repeat: no-repeat;
-          background-position: center center;
-          &.isDesktop {
-            display: block;
-            img {
-              width: 100%;
-            }
-          }
-          &.isMobile {
-            display: none;
-            height: 220px;
-          }
-        }
-      }
-      .inner {
-        width: 100%;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        background-size: 100% 100%;
-        background-position: top center;
-        gap: 20px;
-        background-repeat: no-repeat;
-
-        &.isEurocup24 {
-          padding: 0px;
-        }
-        &.isEurocupLucky {
-          background: #e7f1fd;
-        }
-
-        .hot-promo {
-          // background: #201f29;
-          border-radius: 10px;
-        }
-        .promo-view-container {
-          margin: 0 auto;
-          max-width: 1050px;
-          width: 100%;
-          text-align: left;
-          padding: 10px 0;
-          color: $font-5;
-          font-size: 20px;
-          ol {
-            li {
-              margin: 20px 0;
-            }
-          }
-          // background: #201f29;
-          // background-repeat: no-repeat;
-          // background-position: 95% 90%;
-          // padding: 20px;
-          // border-radius: 10px;
-          overflow: auto;
-          // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
-          // }
-          .game-title {
-            color: #ffd800;
-            margin: 30px auto 50px;
-            text-align: center;
-          }
-        }
-      }
-    }
-  }
 }
 </style>
-<style scoped lang="scss">
-@media (max-width: 768px) {
-  .promo-container {
-    .all-promotions {
-      .banner-container {
-        .promo-bg {
-          &.isDesktop {
-            display: none;
-          }
-          &.isMobile {
-            display: block;
-          }
-        }
-      }
-    }
-  }
-}
-@media (max-width: 768px) {
-  .promo-container {
-    padding-bottom: 60px;
-    min-height: 100vh;
-    .all-promotions {
-      .web-only-box {
-        display: none;
-      }
-      .promo-main-container {
-        width: 95%;
-        .promo-type-wrapper {
-          .type-list {
-            justify-content: flex-start;
-            font-size: 14px;
-            .type-item {
-            }
-          }
-        }
-        .promo-list-wrapper {
-          margin-top: 20px;
-          grid-template-columns: 1fr;
-          .promo-item {
-            width: 100%;
-            .promo-info {
-              height: 40px;
-              padding-left: 40px;
-              line-height: 40px;
-              .viewdetail {
-                padding: 5px 10px;
-              }
-            }
-            .promo-img-wrapper {
-              .promo-bg {
-                .promo-content {
-                  &.isDesktop {
-                    display: none;
-                  }
-                  &.isMobile {
-                    display: block;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    .selected-promo {
-      overflow: hidden;
-      .selected-promo-wrapper {
-        .banner-container {
-          .promo-bg {
-            &.isDesktop {
-              display: none;
-            }
-            &.isMobile {
-              display: block;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>

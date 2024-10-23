@@ -522,3 +522,81 @@ export function claimCBAWeeklyBonus() {
   return server.EVENT.post("/session/cba/weekly/claimBonus");
 }
 
+export function getBelgradeInit(promoCode) {
+  return server.EVENT.get("/session/bb-dacha-belgrade/init", { promoCode });
+}
+export function claimBelgradeBonus(promoCode) {
+  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus", { promoCode });
+}
+
+export function getYallaCompassInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition-bet-deposit/init?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+export function claimYallaCompassBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+export function getElisaGiftInit() {
+  // return server.EVENT.get("/session/elisa-gift/init");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition-bet-deposit/init?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+export function claimElisaGiftBonus() {
+  // return server.EVENT.post("/session/elisa-gift/claimBonus");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=lh1-yalla-compass&v=${randNum}`);
+}
+
+export function getGlobalTreasureDetail(promoCode) {
+  return server.EVENT.get(`/session/treasure-key/init`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function openGlobalTreasure(promoCode, treasure) {
+  return server.EVENT.post(`/session/treasure-key/claimBonus`, { promoCode, treasure });
+}
+
+export function getGlobalCheckInRecord(promoCode) {
+  return server.EVENT.get(`/session/treasure-key/init-check-in`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getGlobalOpenRecord(promoCode, page) {
+  console.log(page);
+  return server.EVENT.get(`/session/treasure-key/treasure-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
+}
+
+export function getGlobalKeyRecord(promoCode, page) {
+  return server.EVENT.get(`/session/treasure-key/key-record`, {
+    params: {
+      promoCode: promoCode,
+      size: page.size,
+      current: page.current
+    }
+  });
+}
+
+export function getGameTypeBonusInit(promoCode) {
+  return server.EVENT.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimGameTypeBonus(promoCode) {
+  return server.EVENT.post("/session/game-type-bonus/claim", { promoCode });
+}

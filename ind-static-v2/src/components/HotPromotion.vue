@@ -1,20 +1,32 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
+      v-if="listParam.type === 'claimpromo'"
       :promo-id="list.id"
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
+
+    <HongBaoYuPromo
+      v-if="listParam.type === 'hongbaoyu'"
+      :promo-id="list.id"
+      :loading-claim="btnLoading"
+      @daily-slot="claimHongBao()"
+    />
+
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
+
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <AnniversaryCelebrationPromo
       v-if="!isCommonPromo && list.redirectUrl === 'anniversary-celebration' && store.token"
+      :params="list.param"
     />
-    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'indwin2-slot-ftd' && store.token" :params="list.param" />
+    <SlotFtdPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'indwin2-slot-ftd' && store.token"
+      :params="list.param"
+    />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -165,20 +177,20 @@
     <q-card class="win-rebate-model">
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
-          <span class="bonus-text">恭喜获得奖金</span>
+          <span class="bonus-text">Congratulations on winning the prize</span>
           <span class="claim-amt">{{ claimMsg }}</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="确定" color="primary" v-close-popup />
+        <q-btn flat label="Confirm" color="primary" v-close-popup no-caps />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, computed } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -227,18 +239,51 @@ export default defineComponent({
       }
     };
   },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
+    }
+  },
   methods: {
     handleSlot() {
+      const store = userStore();
       const bonusItem = this.list.promoCode;
-      const eventUrl = "/bonus/claim/" + bonusItem;
+      const eventUrl = "/session/daily-deposit/claim?promoCode=" + bonusItem;
       this.btnLoading = true;
       eventapi
-        .put(eventUrl)
+        .post(eventUrl)
         .then((res) => {
           this.btnLoading = false;
           if (res.code === 0) {
             var rebatePoint = res.data;
-            this.claimMsg = "₹" + rebatePoint;
+            this.claimMsg = store.currency.label + rebatePoint;
+            this.isClaimModal = true;
+          } else {
+            this.btnLoading = false;
+          }
+        })
+        .catch((error) => {
+          this.btnLoading = false;
+        });
+    },
+    claimHongBao() {
+      const store = userStore();
+      const bonusItem = this.list.promoCode;
+      const eventUrl = "/redPacketVip/claim?promoCode=" + bonusItem;
+      this.btnLoading = true;
+      eventapi
+        .get(eventUrl)
+        .then((res) => {
+          this.btnLoading = false;
+          if (res.code === 0) {
+            var rebatePoint = res.data.lastDigitAmount + res.data.vipAmount;
+
+            this.claimMsg = store.currency.label + rebatePoint;
             this.isClaimModal = true;
           } else {
             this.btnLoading = false;
@@ -568,8 +613,8 @@ export default defineComponent({
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 20px;
-      padding: 20px;
+      // gap: 20px;
+      // padding: 20px;
 
       .orange {
         color: #db7e42;
@@ -748,7 +793,8 @@ export default defineComponent({
     .claim-amt {
       font-size: 33px;
       color: #fff;
-      font-family: "Wave";
+      // font-family: "Wave";
+      margin: 12px 0;
       text-align: center;
     }
 
@@ -758,8 +804,8 @@ export default defineComponent({
       color: #ceab26;
       text-align: center;
       font-weight: 700;
-      font-family: "Jura";
-      white-space: nowrap;
+      // font-family: "Jura";
+      // white-space: nowrap;
     }
   }
 
@@ -769,7 +815,7 @@ export default defineComponent({
 
   .q-btn__content {
     color: #fff;
-    background-image: linear-gradient(to right, #de4545, #db7e42) !important;
+    background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
     width: 80px;
     border-radius: 5px;
     -moz-border-radius: 5px;

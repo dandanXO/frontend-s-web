@@ -155,7 +155,7 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
             }}
             USDT
           </span>
@@ -193,7 +193,7 @@
       </el-form>
     </div>
 
-    <WithdrawRemainingDialog v-model="isShowRemainingDialog" />
+    <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
 
     <!-- <el-dialog
       width="500"
