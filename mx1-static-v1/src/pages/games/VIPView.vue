@@ -1293,4 +1293,10 @@ const swipeRight = () => {
     padding: 0 0.75rem;
   }
 }
+
+@media (max-width: 450px) {
+  td, .q-table tbody td {
+    font-size: 11px;
+  }
+}
 </style>

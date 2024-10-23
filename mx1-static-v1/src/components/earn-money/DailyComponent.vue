@@ -90,13 +90,13 @@
           <div class="longer-group">
             <div
               class="info-title"
-              :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
+              :class="checkTeamAmountData(teamAmountData.agentLevel) === calculatingText ? 'f-wrap' : ''"
             >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-06.png" /></div>
               <div class="info-txt">{{ $t("earnMoney.daily.level") }}:</div>
               <div
                 class="info-amount"
-                :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'font-smaller' : ''"
+                :class="checkTeamAmountData(teamAmountData.agentLevel) === calculatingText ? 'font-smaller' : ''"
               >
                 {{ checkTeamAmountData(teamAmountData.agentLevel) }}
               </div>
@@ -106,13 +106,13 @@
           <div class="longer-group">
             <div
               class="info-title"
-              :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'f-wrap' : ''"
+              :class="checkTeamAmountData(teamAmountData.agentRate) === calculatingText ? 'f-wrap' : ''"
             >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
               <div class="info-txt">{{ $t("earnMoney.daily.rate") }}:</div>
               <div
                 class="info-amount"
-                :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'font-smaller' : ''"
+                :class="checkTeamAmountData(teamAmountData.agentRate) === calculatingText ? 'font-smaller' : ''"
               >
                 {{ checkTeamAmountData(teamAmountData.agentRate) }}
               </div>
@@ -139,7 +139,7 @@
           </div>
           <div
             class="info-amount"
-            :class="checkTeamAmountData(teamAmountData.myselfRebate) === 'Calculating' ? 'font-smaller' : ''"
+            :class="checkTeamAmountData(teamAmountData.myselfRebate) === calculatingText ? 'font-smaller' : ''"
           >
             <span>{{ store.currency.value }}&nbsp;</span>
             {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.myselfRebate), false) }}
@@ -166,7 +166,7 @@
           </div>
           <div
             class="info-amount"
-            :class="checkTeamAmountData(teamAmountData.teamRebate) === 'Calculating' ? 'font-smaller' : ''"
+            :class="checkTeamAmountData(teamAmountData.teamRebate) === calculatingText ? 'font-smaller' : ''"
           >
             <span>{{ store.currency.value }}&nbsp;</span>
             {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.teamRebate), false) }}
@@ -181,7 +181,7 @@
             <div class="info-txt">{{ $t("earnMoney.daily.totalRebate") }}:</div>
             <div
               class="info-amount"
-              :class="checkTeamAmountData(teamAmountData.totalRebate) === 'Calculating' ? 'font-smaller' : ''"
+              :class="checkTeamAmountData(teamAmountData.totalRebate) === calculatingText ? 'font-smaller' : ''"
             >
               <span>{{ store.currency.value }}&nbsp;</span>
               {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalRebate), false) }}
@@ -247,10 +247,12 @@ import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title
 import moment from "moment";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
+import { t } from "boot/lang";
 
 const store = userStore();
 const isLoading = reactive({ referredBetRebateRecord: true });
 const isNoInfo = ref(true);
+const calculatingText = t("earnMoney.daily.calculating")
 
 const myMemberList = ref([]);
 const getReferredBetRebateRecord = () => {
@@ -362,7 +364,7 @@ const getTeamAmountData = () => {
 };
 
 const checkTeamAmountData = (value) => {
-  return value === -1 ? "Calculating" : value;
+  return value === -1 ? calculatingText : value;
 };
 
 onMounted(() => {

@@ -446,3 +446,14 @@ export function getGlobalKeyRecord(promoCode, page) {
   });
 }
 
+export function getGameTypeBonusInit(promoCode) {
+  return eventapi.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimGameTypeBonus(promoCode) {
+  return eventapi.post(`/session/game-type-bonus/claim`, qs.stringify({ promoCode }));
+}

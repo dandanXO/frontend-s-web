@@ -752,6 +752,8 @@ const paymentTypeList = reactive({
   list: [],
 })
 
+const excludePlatformGame = ref("");
+
 const selectedVIPs = reactive({ vipChecked: [] })
 const selectedPayTypes = reactive({ payTypeChecked: [] })
 const selectedBonusDays = reactive({ bonusDaysChecked: [] })
@@ -1037,6 +1039,8 @@ async function showEdit(privilegeInfo) {
       Object.entries(gameTypeRollover).forEach(([key, value]) => {
         if (key === 'rollover') {
           uiControl.rollOverAmt = value; // Set rollover amount
+        } else if (key === 'excludePlatformGame') {
+          excludePlatformGame.value = value;
         } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes' && key !== 'excludePlatformGame' && key !== 'excludeTypes') {
           gameTypes.value.push({ key, value });
         } else if (key === 'gameTypes' && Array.isArray(value)) {
@@ -1334,6 +1338,10 @@ function constructRollover() {
     });
 
     json.gameTypes = excludeTypes;
+  }
+
+  if (excludePlatformGame.value) {
+    json.excludePlatformGame = excludePlatformGame.value;
   }
   //  else if (uiControl.selectedGameTypeRolloverType === 'EXCLUDE_TYPES' || uiControl.selectedGameTypeRolloverType === 'SPECIFY_TYPE') {
   //   const excludeTypes = []
