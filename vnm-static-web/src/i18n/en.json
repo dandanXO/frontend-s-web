@@ -310,6 +310,7 @@
     "beforeBindVerifyPhone": "Before binding the bank card, please verify your phone number.",
     "expectedAmount": "Expected amount",
     "depositAmountRange": "Deposit amount should be between",
+    "successUpgradeQuick": "Successfully upgraded to quick withdrawal!",
     "exchangeRateExample": "*Special Note: A withdrawal fee of {fee} USDT will be automatically charged by the third party!",
     "startEndDate": "Please enter the start and end date",
     "usdtAddress": "USDT address",

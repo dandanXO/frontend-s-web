@@ -96,7 +96,9 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax.toLocaleString()} ${store.currency.label}`
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${
+                    store.currency.label
+                  } - ${selectedWithdrawalMethod.withdrawMax.toLocaleString()} ${store.currency.label}`
                 }}
                 <br />
                 {{
@@ -201,9 +203,15 @@
             {{
               selectedWithdrawalMethod &&
               (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2) < 0)
+                (
+                  withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                  selectedWithdrawalMethod.withdrawFee
+                ).toFixed(2) < 0)
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                : (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                    selectedWithdrawalMethod.withdrawFee
+                  ).toFixed(2)
             }}
             {{ $t("withdraw.usdt") }}
           </span>
@@ -220,7 +228,7 @@
         </div>
 
         <div v-if="selectedWithdrawalMethod.withdrawFee" class="" style="color: #17cd27">
-          {{ $t("withdraw.exchangeRateExample", {fee: selectedWithdrawalMethod.withdrawFee}) }}
+          {{ $t("withdraw.exchangeRateExample", { fee: selectedWithdrawalMethod.withdrawFee }) }}
         </div>
 
         <!-- <div
@@ -510,12 +518,12 @@ export default defineComponent({
       }
     };
     const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
-    
+
     const handleUpgradeClick = () => {
       loadingBtn.value = true
       upgradeToAutoWithdrawal().then(async (res) => {
         if(res.code === 0) {
-          ElMessage.success("成功升级为快速提款!");
+          ElMessage.success(t("withdraw.successUpgradeQuick"));
 
           await store.getMemberInfo()
         } else {
