@@ -21,7 +21,6 @@
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
     <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
-    <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
     <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A'"></AsianCup2024>
     <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball'"></BasketballHot>
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
@@ -129,7 +128,6 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import EsportQuiz2 from "../components/hotpromo/esportquiz2/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
-import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
 import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
@@ -205,7 +203,6 @@ export default defineComponent({
     EsportQuiz2,
     LotteryPromo,
     PrivilegeInvite,
-    GiftPromo,
     AsianCup2024,
     BasketballHot,
     LPLSummer,
