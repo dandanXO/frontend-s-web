@@ -552,8 +552,7 @@ export default defineComponent({
           padding: 10px 0 20px;
           overflow: auto;
           width: 90%;
-          margin-bottom: 20px;
-          margin-top: 10px;
+          font-family: 'PingFang SC';
 
           .type-item {
             cursor: pointer;
@@ -616,10 +615,9 @@ export default defineComponent({
       .promo-list-wrapper {
         width: 90%;
         margin: 0 auto;
-        padding-bottom: 50px;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 15px;
+        grid-gap: 20px;
 
         .promo-item {
           position: relative;
@@ -629,7 +627,7 @@ export default defineComponent({
           box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
           border-radius: 16px;
           width: 285px;
-          height: 360px;
+          height: 310px;
 
           a {
             display: flex;
@@ -672,16 +670,17 @@ export default defineComponent({
 
           .promo-info {
             text-align: right;
-            padding: 16px;
+            padding: 8px 16px;
             left: 0;
             bottom: 0;
             width: 100%;
-            gap: 10px;
+            gap: 5px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             box-sizing: border-box;
             flex: 1;
+            font-family: 'PingFang SC';
 
             .time {
               font-size: 12px;
@@ -699,6 +698,7 @@ export default defineComponent({
               white-space: pre-wrap;
               word-wrap: break-word;
               font-weight: 600;
+              line-height: 2rem;
             }
 
             .sub-viewdetail {
@@ -726,6 +726,7 @@ export default defineComponent({
             justify-content: flex-end;
             width: 60px;
             height: 34px;
+            font-family: 'PingFang SC';
 
             > span {
               padding-right: 13px;

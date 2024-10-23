@@ -2394,6 +2394,7 @@ body {
       color: $light-grey;
 
       .top-bar-inner {
+        font-family: 'PingFang SC';
         max-width: $maxwidth;
         width: 100%;
         margin: 0 auto;
@@ -2414,6 +2415,7 @@ body {
         }
 
         .station-notice-container {
+          line-height: 1rem;
           flex: 3;
 
           .station-notice-box {
@@ -2451,7 +2453,7 @@ body {
 
   .top-nav {
     &-wrapper {
-      padding: 10px;
+      padding: 5px;
       background: $primary;
       position: relative;
       box-shadow: 0 0 10px 0 rgba(168, 168, 168, 1);
@@ -2495,8 +2497,12 @@ body {
           width: 998px;
           text-align: center;
 
+          .header-menu-item {
+            font-family: 'PingFang SC';
+          }
+
           a {
-            padding-top: 10px;
+            padding-top: 5px;
             display: flex;
             flex-direction: column;
             text-decoration: none;
@@ -2515,8 +2521,10 @@ body {
             }
 
             span:first-child {
-              color: #000000;
+              color: #575757;
               font-size: 1rem;
+              font-weight: 700;
+              line-height: 1.2rem;
             }
 
             span:last-child {
@@ -2525,7 +2533,7 @@ body {
               font-size: 0.75rem;
               display: flex;
               flex-direction: column;
-              gap: 8px;
+              gap: 2px;
 
               &:after {
                 content: "";
