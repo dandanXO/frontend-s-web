@@ -357,7 +357,7 @@ export default {
   order: {
     withdrawal: "Retiro",
     recharge: "Recarga",
-    orderNo: "No. de Pedido"
+    orderNo: "Nº de pedido"
   },
   interestProfit: {
     depositOverview: "Resumen del Depósito",
@@ -494,7 +494,8 @@ export default {
       totalRebate: "Abono total",
       teamDetailsYesterday: "Detalles del Equipo (Ayer)",
       teamMember: "Miembro del Equipo",
-      income: "Ingresos"
+      income: "Ingresos",
+      calculating: "Calculador",
     },
     earn: {
       inviteToEarn: "Invitar para Ganar",
