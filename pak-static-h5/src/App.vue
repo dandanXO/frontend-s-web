@@ -8,7 +8,7 @@ import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
+import { isAndroid, trackNewUserFtd } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -333,13 +333,20 @@ export default defineComponent({
         const referralCode =
           route.name === "referCode" && route.params.referralCode
             ? route.params.referralCode
-            : sessionStorage.getItem("REFERRAL_CODE");
+            : sessionStorage.getItem("REFERRAL_CODE")
+              ? sessionStorage.getItem("REFERRAL_CODE")
+              : localStorage.getItem("REG_REFERRAL_CODE");
         const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
         if (!_fbId) return;
         fbq("init", _fbId);
       }
       fbq("track", "PageView");
       store.isFbPixel = true;
+
+      const isNewUser = sessionStorage.getItem("newUserFtd");
+      if (isNewUser) {
+        document.addEventListener("ftdSuccess", trackNewUserFtd);
+      }
     };
 
     onMounted(async () => {
