@@ -1056,74 +1056,28 @@ export default defineComponent({
 
 @media (max-width: 768px) {
   .promo-container {
-    padding-bottom: 60px;
-    min-height: 100vh;
-
     .all-promotions {
-      .web-only-box {
-        display: none;
-      }
-
       .promo-main-container {
-        width: 95%;
-
         .promo-type-wrapper {
-          .type-list {
-            justify-content: flex-start;
-            font-size: 14px;
+          width: 100vw;
 
-            .type-item {
-            }
+          .type-list {
+            flex-wrap: wrap;
           }
         }
-
         .promo-list-wrapper {
-          margin-top: 20px;
-          grid-template-columns: 1fr;
+          width: calc(100vw - 80px);
+          margin: 0;
+          grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
 
           .promo-item {
-            width: 100%;
+            width: 210px;
+            height: 280px;
 
             .promo-info {
-              height: 40px;
-              padding-left: 40px;
-              line-height: 40px;
-
               .viewdetail {
-                padding: 5px 10px;
+                font-size: 20px;
               }
-            }
-
-            .promo-img-wrapper {
-              .promo-bg {
-                .promo-content {
-                  &.isDesktop {
-                    display: none;
-                  }
-
-                  &.isMobile {
-                    display: block;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .selected-promo {
-      overflow: hidden;
-
-      .selected-promo-wrapper {
-        .banner-container {
-          .promo-bg {
-            &.isDesktop {
-              display: none;
-            }
-
-            &.isMobile {
-              display: block;
             }
           }
         }
