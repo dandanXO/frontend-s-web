@@ -1,5 +1,5 @@
 <template>
-  <button @click="installTest" style="z-index: 10000000; position: absolute">test</button>
+  <button @click="installTest" style="z-index: 10000000; position: absolute">Install Pwa</button>
   <router-view />
 </template>
 
@@ -401,7 +401,6 @@ export default defineComponent({
         e.preventDefault();
         deferredPrompt.value = e;
       });
-
     });
 
     watch(
