@@ -460,6 +460,11 @@ export default defineComponent({
       // let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
       let trackingScriptUrl = "";
       switch (currentDomain) {
+        case "m.t136388.com":
+        case "www.t136388.com":
+        case "t136388.com":
+          trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281389648";
+          break;
         case "m.tslotf88.com":
         case "www.tslotf88.com":
         case "tslotf88.com":
