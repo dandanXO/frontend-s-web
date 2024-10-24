@@ -117,6 +117,7 @@ export default {
     financialLevel: '财务组别',
     todayWithdrawCount: '当天提款笔数',
     profit: '会员盈利',
+    risk: '风险等级'
   },
   outboxStatus: {
     0: '未回复',
@@ -601,6 +602,9 @@ export default {
     addLotteryResult: '新增彩票结果',
     addMember: '新增会员',
     addMemberAmountAdjust: '新增会员平账',
+    amountAdjustType: '平账类型',
+    addNormalAmountAdjust: '普通平账',
+    addCalculateAmountAdjust: '存送平账',
     addMemberPrivilegeBlacklist: '新增会员优惠黑名单',
     addMemberRebateRule: '新增会员特殊返水条例',
     addMenu: '新增菜单',
@@ -2705,6 +2709,7 @@ export default {
     VIP: 'VIP',
     Game: '游戏',
     'Game Tag': '游戏标签',
+    'TFG Member Game Map': 'TFG游戏码绑定',
     'Financial Level': '会员组别',
     'Risk Level': '风险等级',
     'Ip Label': 'IP 标签',

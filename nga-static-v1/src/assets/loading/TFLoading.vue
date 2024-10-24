@@ -102,11 +102,7 @@
   }
 }
 .loading {
-  .txt {
-    display: block;
-    font-size: 30px;
-    color: #ffffff;
-  }
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,6 +122,12 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+  }
+
+  .txt {
+    display: block;
+    font-size: 30px;
+    color: #ffffff;
   }
 
   li {

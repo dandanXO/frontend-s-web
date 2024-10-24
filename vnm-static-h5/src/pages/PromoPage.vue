@@ -38,7 +38,10 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label" v-if="promo.labelType !== 2">
@@ -86,61 +89,6 @@
                           <img :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                    </a>
-                  </div>
-
-                  <div class="promo-item" v-if="tab.name === 'all'">
-                    <a @click="showPromoDetails(promo)">
-                      <div>
-                        <div class="promo-label" v-if="promo.labelType !== 2">
-                          <div
-                            class="promo-ribbon"
-                            :class="{
-                              labelhot: promo.labelType === 1,
-                              labelrecommend: promo.labelType === 3 || promo.labelType === 5,
-                              labellimit: promo.labelType === 6,
-                              labelnew: promo.labelType === 0,
-                              labelother:
-                                promo.labelType !== 6 &&
-                                promo.labelType !== 1 &&
-                                promo.labelType !== 0 &&
-                                promo.labelType !== 3 &&
-                                promo.labelType !== 5
-                            }"
-                          >
-                            {{ getPromoLabel(promo.labelType) }}
-                          </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
-                        </div>
-                        <div class="promo-item-title">{{ promo.title }}</div>
-                        <div
-                          class="promo-item-deal"
-                          v-if="parsedParam(promo.param).sub"
-                          v-html="parsedParam(promo.param).sub"
-                        />
-                        <div>
-                          <q-btn
-                            :label="$t('lang.view_detail')"
-                            no-caps
-                            dense
-                            color="brightbtn"
-                            class="promo-item-btn"
-                          />
-                        </div>
-
-                        <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                      <!-- <div class="promo-img-wrapper"> -->
-                      <!-- <div class="promo-bg"> -->
-                      <!-- <img class="promo-content" src="../assets/images/promo/promo-item-bg.png" /> -->
-                      <!-- </div> -->
-                      <!-- </div> -->
                     </a>
                   </div>
                 </div>
@@ -274,13 +222,14 @@ export default defineComponent({
       { name: "slot other", label: t("lang.type_slot_other"), label_vi: t("lang.type_slot_other") }
     ]);
     const currentTabItems = computed(() => {
-      switch (ui.edition) {
-        case EDITION.SLOT:
-          return slotTabItems.value;
-        case EDITION.NORMAL:
-        default:
-          return tabItems.value;
-      }
+      return tabItems.value;
+      // switch (ui.edition) {
+      //   case EDITION.SLOT:
+      //     return slotTabItems.value;
+      //   case EDITION.NORMAL:
+      //   default:
+      //     return tabItems.value;
+      // }
     });
 
     watch(
@@ -389,10 +338,24 @@ export default defineComponent({
         .get(key, () => api.get(`/promo/type?category=${params}`))
         .then((res) => {
           tabItems.value = res.map(({ value, name, iconUrl }) => ({
+            code: value,
             name: value.toLowerCase(),
             label: name ? JSON.parse(name).H5 : "",
             label_vi: name ? JSON.parse(name).H5_vi : ""
           }));
+
+          if (params === "SLOT") {
+            const allItem = tabItems.value.find((item) => item.code === "ALL");
+            const slotGameItem = tabItems.value.find((item) => item.code === "SLOT GAME");
+            const filteredArr = tabItems.value.filter((item) => item.code !== "ALL" && item.code !== "SLOT GAME");
+            const newArr = [];
+            if (allItem) newArr.push(allItem); // 放到第一位
+            if (slotGameItem) newArr.push(slotGameItem); // 放到第二位
+            newArr.push(...filteredArr); // 添加其余的项目
+
+            tabItems.value = newArr;
+          }
+
           if (tabItems.value.length > 0) {
             promoTabActive.value = tabItems.value[0].name;
           } else {

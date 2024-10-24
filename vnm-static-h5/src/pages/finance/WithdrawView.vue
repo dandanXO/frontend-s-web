@@ -8,10 +8,14 @@
       </router-link>
       <div>
         <div class="account-item is-active">
-          <span>{{ $t("lang.transfer_withdraw") }}</span>
+          <span>{{ isAutoWithdrawal ? $t("lang.transfer_quickWithdraw") : $t("lang.transfer_withdraw") }}</span>
         </div>
       </div>
     </div>
+    <q-btn v-if="store.memberType === 'TEST' && !isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+        <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+        <span>{{ $t("lang.transfer_upgradeWithdraw") }}</span>
+    </q-btn>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -141,7 +145,9 @@
             clearable
           >
             <template v-slot:prepend>
-              <img src="../../assets/images/login/password-icon.png" width="24" />
+              <div style="width: 28px; display: flex; align-items: center">
+                <div class="password-icon" />
+              </div>
             </template>
             <template v-slot:append>
               <q-icon
@@ -555,7 +561,7 @@ export default defineComponent({
         return true;
       }
       const usdtPattern = /^([1-9][0-9]*)$/;
-      return usdtPattern.test(withdrawInfo.amount) || "金额应为正数";
+      return usdtPattern.test(withdrawInfo.amount) || t("lang.withdraw_amt_positive");
     };
 
     const chooseCard = () => {
@@ -587,6 +593,31 @@ export default defineComponent({
       if (url) {
         window.open(url);
       }
+    };
+    const isAutoWithdrawal = computed(() => store.withdrawType === "AUTO_WITHDRAW");
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: t("lang.withdraw_upgrade")
+      });
+      api
+        .get("/session/updateAutoWithdraw")
+        .then(async (res) => {
+          if (res.code === 0) {
+            notify({
+              type: "success",
+              message: t("lang.successUpgradeQuick")
+            });
+
+            await store.getMemberInfo();
+          } else {
+            notify({
+              type: "error",
+              message: res.message
+            });
+          }
+        })
+        .finally(() => $q.loading.hide());
     };
 
     return {
@@ -620,7 +651,9 @@ export default defineComponent({
       isNewUser,
       checkNewUser,
       isValidUSDTAmt,
-      isPwd: ref(true)
+      isPwd: ref(true),
+      isAutoWithdrawal,
+      handleUpgradeClick
     };
   }
 });
@@ -656,6 +689,7 @@ export default defineComponent({
   box-shadow: $shadow-bg;
   background: $white;
 }
+
 .withdrawalmethod {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -741,10 +775,21 @@ export default defineComponent({
     }
   }
 }
+
 .selected-tip {
   color: $warning;
 }
 
+.upgrade-btn {
+  padding: 1px 12px;
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  text-transform: none;
+  img {
+    height: 30px;
+  }
+}
 .quick-withdraw-btn {
   width: 100%;
 }

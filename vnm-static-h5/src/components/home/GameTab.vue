@@ -1,10 +1,17 @@
 <template>
   <div class="game-platform btn-pointer" @click="$emit('click')">
-    <img v-if="selected === code" :src="require(`../../assets/images/home/games/${imgMapping}-icon-active.png`)" />
+    <div class="game-tab-bg" :class="selected === code && 'active'">
+      <div class="game-tab-content">
+        <div :class="`${imgMapping}-icon`" />
+        <div class="label">{{ text }}</div>
+      </div>
+    </div>
+
+    <!-- <img v-if="selected === code" :src="require(`../../assets/images/home/games/${imgMapping}-icon-active.png`)" />
     <img v-else :src="require(`../../assets/images/home/games/${imgMapping}-icon.png`)" />
     <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="selected === code && 'active'">
       {{ text }}
-    </span>
+    </span> -->
   </div>
 </template>
 <script setup>

@@ -39,6 +39,7 @@
       :summary-method="getSummaries"
       show-summary
       :empty-text="t('fields.noData')"
+      :default-sort="{prop: 'successCount', order: 'descending'}"
       @sort-change="sort"
     >
       <el-table-column prop="referrerName" :label="t('fields.referrer')">
@@ -202,7 +203,6 @@ function redirectToReferPane(name) {
 
 const sort = (column) => {
   request.orderBy = column.prop;
-  console.log(column)
   if (column.order === "descending") {
     request.sortType = "DESC";
   } else {

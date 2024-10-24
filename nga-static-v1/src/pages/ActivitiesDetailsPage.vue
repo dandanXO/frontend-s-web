@@ -231,9 +231,7 @@ onActivated(() => {
     margin-top: 1rem;
     .days-box {
       background: #3b156e4d;
-      &.isReceived {
-        background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
-      }
+
       padding: 12px;
       display: flex;
       flex-direction: column;
@@ -241,7 +239,9 @@ onActivated(() => {
       justify-content: center;
       border-radius: 8px;
       position: relative;
-
+      &.isReceived {
+        background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+      }
       &__last {
         grid-column: span 3;
         flex-direction: row;
