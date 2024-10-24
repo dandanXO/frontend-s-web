@@ -5,9 +5,26 @@
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="special" style="padding: 0">
         <div class="scroll-container">
-          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/vip_card_1.png`)})`}"/>
-          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/vip_card_1.png`)})`}"/>
-          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/vip_card_1.png`)})`}"/>
+          <div v-for="(vip, vipIndex) in vipItems" :key="vipIndex" class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v${vipIndex}_card_bg.png`)})`}">
+            <div class="card_top">
+              <div class="info-container">
+                <img :src="require(`../../assets/vip/vip_text_${vip.vipLevel}.png`)"/>
+                <span>{{ `${vip.monthlySaving}${vip.oneMonthSaving}` }}</span>
+              </div>
+              <img src="~/assets/vip/vip_badge.png">
+            </div>
+            <div class="card_btm">
+              <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+              </div>
+              <div class="amt-info">
+                <span>{{ vip.saving }}</span>
+                <span>当前流水(元)：</span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v0_card_bg.png`)})`}"/>
+          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v0_card_bg.png`)})`}"/> -->
         </div>
         <!-- <q-carousel
           class="vip bg-transparent"
@@ -1839,5 +1856,86 @@ h2#swal2-title.swal2-title {
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 10px;
+  .card_top {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 300px;
+    padding: 0 10px;
+    > img{
+      width: 75px;
+      height: 60px;
+    }
+    @media (max-width: 400px) {
+      > img{
+        width: 50px;
+        height: 40px;
+      }
+    }
+    @media (max-width: 370px) {
+      > img{
+        width: 40px;
+        height: 32px;
+      }
+    }
+
+    .info-container {
+      display: flex;
+      flex-direction: column;
+      padding-right: 10px;
+      align-self: flex-end;
+      > img {
+        width: 50px;
+        margin-bottom: 6px;
+      }
+      @media (max-width: 400px) {
+        > img{
+          width: 32px;
+          margin-bottom: 4px;
+        }
+      }
+      @media (max-width: 370px) {
+        > img{
+          width: 24px;
+          margin-bottom: 3px;
+        }
+      }
+    }
+  }
+  .card_btm {
+    flex: 1;
+    width: 100%;
+    max-width: 300px;
+    padding: 0 10px;
+    .amt-info {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: #FFFFFF4D;
+      margin-top: 6px;
+      margin-bottom: 6px
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 75%;
+      background: #fff;
+      transition: width 0.5s;
+    }
+
+  }
 }
 </style>
