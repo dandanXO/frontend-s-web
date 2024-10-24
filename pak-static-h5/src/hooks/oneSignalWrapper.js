@@ -14,9 +14,10 @@ export const useOneSignalWrapper = () => {
     console.log(isOnAndroid.value);
     if (isOnAndroid.value) {
       initOnAndroid(appId);
-    } else {
-      initOnWeb(appId);
     }
+    // else {
+    //   initOnWeb(appId);
+    // }
   };
 
   const initOnAndroid = (appId) => {
