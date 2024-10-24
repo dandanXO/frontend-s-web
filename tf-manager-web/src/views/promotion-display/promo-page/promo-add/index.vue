@@ -1434,7 +1434,7 @@ async function loadPromoTypes() {
   //       { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
   //       { typeName: 'LIVE CASINO', value: 5, displayName: '真人棋牌' },
   //       { typeName: 'SLOT GAME', value: 6, displayName: '电游活动' },
-  //       { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
+  //       { typeName: 'VIP', value: 15, displayName: 'VIP 特权' },
   //       { typeName: 'LIMITED', value: 16, displayName: '限时热门' },
   //       { typeName: 'FTD', value: 9, displayName: '充提优惠' },
   //     ]
@@ -1508,6 +1508,10 @@ function disabledEndDate(time) {
 }
 
 function handleCheckedChangePromoType(val) {
+  if (val.at(-1) === 'ALL') {
+    selected.promoTypeChecked = promoTypes.value.map((item) => item.value)
+  }
+
   form.promoType = selected.promoTypeChecked.join(',')
 }
 
