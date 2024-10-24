@@ -1836,6 +1836,7 @@ const handleCancelClick = () => {
 }
 const handleCancelTypeClick = () => {
   selected.promoTypeChecked = [];
+  form.promoType = null
 }
 
 function showDialog(type) {
