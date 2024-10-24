@@ -580,6 +580,7 @@ export default {
     addBankToWithdrawPlatform: 'Add Bank To Withdraw Platform',
     addBanner: 'Add Banner',
     addBbDacha: 'Add BB Dacha',
+    addBlacklist: 'Add Blacklist',
     addRewardGroup: 'Add Reward Group',
     addCurrency: 'Add Currency',
     addCurrencyRate: 'Add Currency Rate',
@@ -979,6 +980,7 @@ export default {
     editBankCard: 'Edit Bank Card',
     editBanner: 'Edit Banner',
     editBelongType: 'Edit Belong Type',
+    editBlacklist: 'Edit Blacklist',
     editConfig: 'Edit Config',
     editCurrency: 'Edit Currency',
     editCurrencyRate: 'Edit Currency Rate',
@@ -2890,6 +2892,7 @@ export default {
     'Member Refer Analysis': 'Member Refer Analysis',
     'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
+    'Site Platform Blacklist': 'Site Platform Blacklist',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
