@@ -2615,6 +2615,8 @@ export default {
       'Must be composed of digits and alphabet',
     validateProductIdRequired: 'Product ID is required',
     validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
+    validateLoginNameNoSpecialCharacter:
+      'The login name can only contain underscores (_), numbers, and letters.',
   },
   menu: {
     undefined: '',

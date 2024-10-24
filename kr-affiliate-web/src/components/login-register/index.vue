@@ -664,11 +664,18 @@ export default defineComponent({
             trigger: 'blur',
           },
           {
+            required: true,
+            pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+            message: t('common.affiliateaccountcanonlycontainnumchar'),
+            trigger: 'blur',
+          },
+          {
             min: 6,
             max: 12,
             message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
+          
         ],
         password: [
           {

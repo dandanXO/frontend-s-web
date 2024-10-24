@@ -2564,6 +2564,7 @@ export default {
     required_only_digits_and_alphabet: '只许字母或数字',
     validateProductIdRequired: '产品ID必填',
     validateBetRebatePercentageRequired: '每日投注返水百分比必填',
+    validateLoginNameNoSpecialCharacter: '登录名只能包含下划线（_），数字和字母。',
   },
   menu: {
     undefined: '',

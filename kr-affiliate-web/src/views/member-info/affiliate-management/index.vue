@@ -1022,6 +1022,12 @@ const cFormRules = reactive({
   loginName: [
     required(t('message.requiredLoginName')),
     size(6, 12, t('message.length6To12')),
+    {
+      required: true,
+      pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+      message: t('common.affiliateaccountcanonlycontainnumchar'),
+      trigger: 'blur',
+    },
   ],
   password: [
     required(t('message.requiredPassword')),
