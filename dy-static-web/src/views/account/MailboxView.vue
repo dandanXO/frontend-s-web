@@ -153,7 +153,6 @@ import {
   deleteAllMail,
   getUnreadMailTotal
 } from "@/api/personal/mailbox";
-// import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { Calendar, Delete, MessageBox, ArrowDown, Check } from "@element-plus/icons-vue";
 import moment from "moment";
