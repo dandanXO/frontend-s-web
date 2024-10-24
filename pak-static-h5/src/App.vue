@@ -1,5 +1,4 @@
 <template>
-  <button @click="installTest" style="z-index: 10000000; position: absolute">Install Pwa</button>
   <router-view />
 </template>
 
@@ -304,20 +303,14 @@ export default defineComponent({
       }
     };
 
-    const deferredPrompt = ref(null);
-    const installTest = () => {
-      console.log(deferredPrompt.value);
-      if (deferredPrompt.value) {
-        deferredPrompt.value.prompt();
-        deferredPrompt.value.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === "accepted") {
-            console.log("User accepted the A2HS prompt");
-          } else {
-            console.log("User dismissed the A2HS prompt");
-          }
-          deferredPrompt.value = null;
-        });
-      }
+    const checkPwa = () => {
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        if (ui.deferredPrompt) return;
+        ui.deferredPrompt = e;
+        router.push("/download");
+        console.log("beforeinstallprompt");
+      });
     };
 
     const checkFBPixelInit = () => {
@@ -351,8 +344,8 @@ export default defineComponent({
           route.name === "referCode" && route.params.referralCode
             ? route.params.referralCode
             : sessionStorage.getItem("REFERRAL_CODE")
-              ? sessionStorage.getItem("REFERRAL_CODE")
-              : localStorage.getItem("REG_REFERRAL_CODE");
+            ? sessionStorage.getItem("REFERRAL_CODE")
+            : localStorage.getItem("REG_REFERRAL_CODE");
         const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
         if (!_fbId) return;
         fbq("init", _fbId);
@@ -397,18 +390,13 @@ export default defineComponent({
       setInterval(getOnlineStatApi, 60000);
       checkFBPixelInit();
 
-      window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault();
-        deferredPrompt.value = e;
-      });
+      checkPwa();
     });
 
     watch(
       () => ui.shouldFetchDownloadAppUrl,
       (value) => value && ui.getTopDownloadUrl()
     );
-
-    return { installTest };
   }
 });
 
