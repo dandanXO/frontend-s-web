@@ -40,19 +40,19 @@
               @click="setActiveItem(item.no)"
             >
               <img
-                v-if="item.treasure"
+                v-if="item.treasureLevel"
                 :src="
-                  require(`@/assets/images/promotion/hotpromo/blastpremier/treasure-level-${item.treasure.toLowerCase()}.png`)
+                  require(`@/assets/images/promotion/hotpromo/blastpremier/treasure-level-${item.treasureLevel.toLowerCase()}.png`)
                 "
               />
               <div v-else class="img-placeholder" />
               <div class="required-key">
                 <div class="container-description">
-                  <span>{{getTreasureDescription(item.treasure)}}</span>
+                  <span>{{getTreasureDescription(item.treasureLevel)}}</span>
                 </div>
                 <div class="key-container">
                   <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
-                  <span>x{{ item.keyRequired }}</span>
+                  <span>x{{ item.quantity }}</span>
                 </div>
               </div>
             </div>
@@ -156,11 +156,11 @@
           <table v-if="keyRecords && keyRecords.length > 0" class="table-rows">
             <tbody>
               <tr v-for="(key, i) in keyRecords" :key="i">
-                <td>{{ key.betTime }}</td>
+                <td>{{ key.createTime }}</td>
                 <td>
                   <div class="keysAmt">
                     <img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />
-                    {{ key.keysAcquired }}
+                    {{ key.quantity }}
                   </div>
                 </td>
               </tr>
@@ -189,9 +189,9 @@
           <table style="width: 100%" v-if="openRecords">
             <tbody>
               <tr v-for="(open, i) in openRecords" :key="i">
-                <td width="50%">{{ open.receiveTime }}</td>
-                <td width="25%">{{ open.keyUsed }}</td>
-                <td width="25%">{{ open.bonus }}</td>
+                <td width="50%">{{ open.createTime }}</td>
+                <td width="25%">{{ open.quantity }}</td>
+                <td width="25%">{{ open.amount }}</td>
               </tr>
             </tbody>
           </table>
@@ -219,12 +219,13 @@ import { ref, onMounted, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import {
-  getGlobalCheckInRecord,
-  openGlobalTreasure,
-  getGlobalKeyRecord,
-  getGlobalOpenRecord,
-  getGlobalTreasureDetail,
-  claimGlobalCheckInTreasure
+  getTreasureDetail,
+  getKeyCount,
+  getCheckInRecord,
+  openTreasure,
+  getKeyRecord,
+  getOpenRecord,
+  claimCheckInTreasure
 } from "@/api/index/promo";
 import { ElLoading } from "element-plus";
 import { useNotify } from "@/hooks/notify";
@@ -241,12 +242,12 @@ const items = ref([
   { no: 3, amt: 30 }
 ]);
 const activeItem = ref(3);
-const selectedTreasureLevel = ref("DRAGON");
+const selectedTreasureLevel = ref("Dragon");
 
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
-    selectedTreasureLevel.value = item.treasure;
+    selectedTreasureLevel.value = item.treasureLevelLevel;
     activeItem.value = item.no;
     reorderItems(item);
   }
@@ -282,7 +283,7 @@ const openBox = (item) => {
     background: "rgba(0, 0, 0, 0.7)"
   });
 
-  openGlobalTreasure(props.promoCode, item).then((res) => {
+  openTreasure(props.promoCode, item).then((res) => {
     if (res.code === 0) {
       // Open Dialog
       openModal("amt", res.data);
@@ -327,85 +328,55 @@ const dayList = ref([
 ]);
 
 const init = () => {
-  // getTreasureDetail(props.promoCode).then((res) => {
-  //   if (res.code === 0) {
-  //     res.data.forEach((element, i) => {
-  //       element.no = i + 1;
-  //     });
-  //     items.value = res.data;
-  //     setActiveItem(activeItem.value);
-  //   }
-  // });
-  // First Privilege
-  getGlobalTreasureDetail(props.promoCode).then((res) => {
+  getTreasureDetail(props.promoCode).then((res) => {
     if (res.code === 0) {
-      keyNumber.value = res.data.keyLeft;
-        res.data.treasures.forEach((element, i) => {
-          element.no = i + 1;
-        });
-        items.value = res.data.treasures
-        setActiveItem(activeItem.value);
+      res.data.forEach((element, i) => {
+        element.no = i + 1;
+      });
+      items.value = res.data;
+      setActiveItem(activeItem.value);
+    }
+  });
+  // First Privilege
+  getKeyCount(props.promoCode).then((res) => {
+    if (res.code === 0) {
+      keyNumber.value = res.data;
     }
   });
   //   Second Privilege
-  getGlobalCheckInRecord('lh1-blast-premier-check-in').then((res) => {
+  getCheckInRecord(props.promoCode).then((res) => {
     if (res.code === 0) {
       checkInDetails.value = res.data;
-      signNumber.value = checkInDetails.value.checkInDays;
-      const claimedDay = checkInDetails.value.claimedDay;
-      dayList.value.forEach((day) => {
-        if (claimedDay.includes(day.no)) {
-          day.claimed = true;
-          day.toClaim = false;
-        } else if (day.no <= signNumber.value) {
-          day.claimed = false;
-          day.toClaim = true;
-        } else {
-          day.claimed = false;
-          day.toClaim = false;
-        }
+      signNumber.value = checkInDetails.value.currentConsecutiveDay;
+      dayList.value = [];
+      checkInDetails.value.dayList.forEach((day) => {
+        const obj = {
+          no: day,
+          claimed: false,
+          toClaim: false
+        };
+        dayList.value.push(obj);
       });
-      // if (signNumber.value) {
-      //   dayList.value.forEach((day, index) => {
-      //     if (index < signNumber.value) {
-      //       day.claimed = true;
-      //       day.toClaim = false; 
-      //     } else if (index === signNumber.value) {
-      //       day.claimed = checkInDetails.value.hasClaimedToday;
-      //       day.toClaim = checkInDetails.value.canClaimToday;
-      //     }
-      //   });
-      // }
-      
-      // dayList.value = [];
-      // checkInDetails.value.dayList.forEach((day) => {
-      //   const obj = {
-      //     no: day,
-      //     claimed: false,
-      //     toClaim: false
-      //   };
-      //   dayList.value.push(obj);
-      // });
-      // populateDayList(checkInDetails.value);
+      populateDayList(checkInDetails.value);
     }
   });
 };
-// const populateDayList = (check) => {
-//   check.claimed.forEach((element) => {
-//     dayList.value.forEach((day) => {
-//       if (day.no === element) {
-//         day.claimed = true;
-//       }
-//     });
-//   });
-//   check.toClaim.forEach((element) => {
-//     dayList.value.forEach((day) => {
-//       if (day.no === element) {
-//         day.toClaim = true;
-//       }
-//     });
-//   });
-// };
+const populateDayList = (check) => {
+  check.claimed.forEach((element) => {
+    dayList.value.forEach((day) => {
+      if (day.no === element) {
+        day.claimed = true;
+      }
+    });
+  });
+  check.toClaim.forEach((element) => {
+    dayList.value.forEach((day) => {
+      if (day.no === element) {
+        day.toClaim = true;
+      }
+    });
+  });
+};
 const amountClaimed = ref(0);
 const isClaimModal = ref(false);
 // Dialogs
@@ -439,7 +410,7 @@ const openModal = (modal, item, itemIndex) => {
       text: "加载记录中",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    getGlobalKeyRecord(props.promoCode, search.value).then((res) => {
+    getKeyRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         keyRecords.value = res.data.records;
         isKeyRecordModal.value = true;
@@ -455,7 +426,7 @@ const openModal = (modal, item, itemIndex) => {
       text: "加载记录中",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    getGlobalOpenRecord(props.promoCode, search.value).then((res) => {
+    getOpenRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
@@ -475,13 +446,12 @@ const openModal = (modal, item, itemIndex) => {
       text: "开启中",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    claimGlobalCheckInTreasure(props.promoCode, item.no).then((res) => {
+    claimCheckInTreasure(props.promoCode, item.no).then((res) => {
       if (res.code === 0) {
         amountClaimed.value = res.data;
         isClaimModal.value = true;
         dayList.value[itemIndex].toClaim = false;
         dayList.value[itemIndex].claimed = true;
-        init();
       }
     });
     setTimeout(() => {
