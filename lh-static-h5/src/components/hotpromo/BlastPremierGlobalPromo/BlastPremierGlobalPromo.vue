@@ -175,11 +175,11 @@
           <div class="rec">
             <table v-if="keyRecords && keyRecords.length > 0" class="table-rows">
               <tr v-for="(key, i) in keyRecords" :key="i">
-                <td>{{ key.createTime }}</td>
+                <td>{{ key.betTime }}</td>
                 <td>
                   <div class="keysAmt">
                     <img src="../../../assets/images/promo/hotpromo/cs2/key.png" />
-                    {{ key.quantity }}
+                    {{ key.keysAcquired }}
                   </div>
                 </td>
               </tr>
@@ -219,9 +219,9 @@
           <div class="rec">
             <table style="text-align: center" v-if="openRecords && openRecords.length > 0" class="table-rows">
               <tr v-for="(open, i) in openRecords" :key="i">
-                <td width="34%">{{ open.createTime }}</td>
-                <td width="33%">{{ open.quantity }}</td>
-                <td width="33%">{{ open.amount }}</td>
+                <td width="34%">{{ open.receiveTime }}</td>
+                <td width="33%">{{ open.keyUsed }}</td>
+                <td width="33%">{{ open.bonus }}</td>
               </tr>
             </table>
             <div v-else style="display: flex; justify-content: center; align-items: center; height: 130px">
