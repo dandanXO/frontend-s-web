@@ -66,7 +66,7 @@ const banner = ref([]);
 
 const loadBanner = () => {
   api
-    .get("/promo/banner", {
+    .get("/opt-session/promo/banner", {
       params: {
         category: "POKER"
       }

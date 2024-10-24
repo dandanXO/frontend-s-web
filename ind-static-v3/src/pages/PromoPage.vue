@@ -274,7 +274,7 @@ export default defineComponent({
       //   }
       // })
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
@@ -327,7 +327,8 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const randNum = Math.floor(Math.random() * 1000) + 1;
+      const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
