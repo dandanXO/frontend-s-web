@@ -9,8 +9,12 @@
       <img :src="homePopupImg" class="alert-img" />
     </a>
   </el-dialog>
+
+  <div v-if="isFetchingBanners" class="banner-loading">
+    <img class="loading-img" src="@/assets/logo-1.png" />
+  </div>
   <el-carousel
-    v-if="banners?.length > 0"
+    v-else-if="banners?.length > 0"
     class="banner-slider"
     indicator-position="outside"
     :autoplay="true"
@@ -55,6 +59,7 @@ const banners = ref([]);
 const isDark = useDark();
 const store = userStore();
 const router = useRouter();
+const isFetchingBanners = ref(false);
 
 const allGames = ref(null);
 const goBannerPage = (redirectUrl) => {
@@ -73,7 +78,11 @@ const goBannerPage = (redirectUrl) => {
 };
 
 const loadBanners = () => {
+  isFetchingBanners.value = true;
+
   loadPromoBanner("HOME").then((res) => {
+    isFetchingBanners.value = false;
+
     if (res.code === 0) {
       banners.value = res.data;
 
@@ -92,6 +101,10 @@ const loadBanners = () => {
         type: "error",
         message: res.message
       });
+  }).catch(() => {
+    isFetchingBanners.value = false;
+  }).finally(() => {
+    isFetchingBanners.value = false;
   });
 };
 
@@ -230,6 +243,35 @@ watch(
 </script>
 
 <style scoped lang="scss">
+.banner-loading {
+  width: 100%;
+  height: 632px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(240, 248, 255, 0.8196078431) 0%, rgb(240 248 255 / 50%) 80%, rgb(240 248 255 / 0%) 100%);
+
+  .loading-img {
+      animation-name: fade-in-out;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      width: 100px;
+  }
+}
+
+@keyframes fade-in-out{
+  0%{
+    opacity: 1;
+  }
+   50%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+
 .banner-slider {
   width: 100%;
 
@@ -266,6 +308,7 @@ watch(
     padding-top: 70px;
     .banner-container {
       .banner-background {
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 80%, transparent 100%);
         // background-image: url(@/assets/images/home/banner/banner-background-dark.png);
       }
     }
