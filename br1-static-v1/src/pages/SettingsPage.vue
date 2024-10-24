@@ -105,7 +105,8 @@
               :key="i"
               :name="i"
               class="column no-wrap flex-center"
-              :img-src="imgURL + banner.mobileImageUrl"
+              :img-src="banner.mobileImageUrl"
+              @click="goToPage(banner)"
             ></q-carousel-slide>
           </q-carousel>
         </q-card-section>
@@ -136,10 +137,11 @@
 </template>
 
 <script setup>
-import { onActivated, ref } from "vue";
-import { userStore } from "src/stores";
-import { useRouter } from "vue-router";
+import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { onActivated, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { userStore } from "src/stores";
 import ProfileSummary from "../components/ProfileSummary.vue";
 
 const store = userStore();
@@ -148,8 +150,7 @@ const qs = require("qs");
 const $q = useQuasar();
 
 const slide = ref(0);
-// const imgURL = process.env.IMAGE_CDN + "/promo/";
-const imgURL = "";
+const imgURL = process.env.IMAGE_CDN + "/promo/";
 const btm_banners = ref([
   {
     mobileImageUrl: require("../assets/images/account/account-banner-2.png")
@@ -166,6 +167,27 @@ const openConfirmSignOutDialog = () => {
 onActivated(() => {
   store.getUnreadTotal();
 });
+
+onMounted(() => {
+  loadBanner();
+});
+
+const goToPage = (promo) => {
+  if (promo.redirectUrl && promo.redirectUrl !== "0") {
+    router.push(promo.redirectUrl);
+  }
+};
+
+const loadBanner = () => {
+  api.get("/opt-session/promo/banner?category=CENTERPROMO").then((response) => {
+    if (response.code === 0) {
+      response.data.forEach((item) => {
+        item.mobileImageUrl = imgURL + item.mobileImageUrl;
+      });
+      btm_banners.value = response.data;
+    }
+  });
+};
 
 const logout = () => {
   loadingLogout.value = true;
