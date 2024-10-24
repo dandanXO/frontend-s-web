@@ -175,32 +175,12 @@
         <!-- Main Swiper -> pass thumbs swiper instance -->
         <div class="secondSwiper" id="btm-second-swiper">
           <div id="id-slot-slide" class="slot-slides home-swiper-slide">
-            <!-- <div class="home-game-boards">
-              <h2 class="row items-center justify-between">
-                电子游戏
-
-                <div class="row items-center justify-center" v-if="!isSlotSlideBegin && !isSlotSlideEnd">
-                  <q-btn
-                    flat
-                    size="xs"
-                    @click="changeSlotSlide(1)"
-                    :disable="isSlotSlideBegin"
-                    style="padding: 4px 3px"
-                  >
-                  </q-btn>
-                  <q-btn flat :disable="isSlotSlideEnd" size="xs" @click="changeSlotSlide(2)" style="padding: 4px 3px">
-                  </q-btn>
-                </div>
-              </h2>
-              `slot?platform=${slt.code}`
-            </div> -->
             <div class="home-game-boards">
               <h2>电子游戏</h2>
-
               <div class="game-list-div">
                 <div v-for="(slt, i) in slot" :key="i" class="game-item-div">
-                  <div class="game-board" @click="playGame(slt.name, 'platformType', slt.code)">
-                    <div
+                  <router-link :to="`slot?platform=${slt.code}`" class="game-board">
+                    <!-- <div
                       class="game-bg"
                       :style="{
                         backgroundImage: (() => {
@@ -213,11 +193,19 @@
                           }
                         })()
                       }"
-                    ></div>
+                    ></div> -->
+
+                    <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                    <div class="game-platform-img">
+                      <img :src="require(`../assets/images/games/game-slot-pg.png`)" />
+                    </div>
 
                     <div class="game-title">
                       <h3>{{ slt.title }}</h3>
-                      <!-- <span>电竞赛事</span> -->
+                      <div class="game-title-logo">
+                        <img :src="require(`../assets/images/games/logo/plat_logo_pg.png`)" alt="" />
+                      </div>
+                      <q-btn class="game-btn" dense>立即进入</q-btn>
                     </div>
 
                     <div class="maintenance-box" v-if="slt.underMaintenance">
@@ -233,7 +221,7 @@
                         </p>
                       </template>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -241,7 +229,7 @@
 
           <div id="id-esport-slide" class="esport-slides home-swiper-slide">
             <div class="home-game-boards">
-              <h2>电竞赛事asd</h2>
+              <h2>电竞赛事qqq</h2>
 
               <div class="game-list-div">
                 <div v-for="(es, i) in esport" :key="i" class="game-item-div">
@@ -976,6 +964,7 @@ import { Thumbs, Controller } from "swiper";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import { useLocalStorage } from "@vueuse/core";
+import moment from "moment";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -1726,7 +1715,8 @@ export default defineComponent({
       slot_evens,
       isStickyGameType,
       slotSwiper,
-      slotSwiper2
+      slotSwiper2,
+      moment
     };
   }
 });
@@ -2293,15 +2283,19 @@ export default defineComponent({
   }
 
   .game-list-div {
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
+    display: grid;
     column-gap: 16px;
     row-gap: 10px;
-    justify-content: flex-start;
+    grid-template-columns: repeat(3, 1fr);
+    // justify-content: flex-start;
 
     .game-item-div {
-      width: calc((100% - 35px) / 3);
-      flex-wrap: nowrap;
+      // width: calc((100% - 35px) / 3);
+      // background-image: url("../assets/images/games/slot-game-pg.png");
+      // background-size: 100% 100%;
+      // background-size: cover;
 
       &.slot-item {
         width: 100%;
@@ -2311,18 +2305,86 @@ export default defineComponent({
         position: relative;
         // height: 170px;
 
+        .game-img {
+          img {
+            width: 100%;
+            display: block;
+          }
+        }
+
+        .game-platform-img {
+          img {
+            width: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+          }
+        }
+
         .game-title {
           position: absolute;
-          z-index: 2;
-          bottom: 0px;
-          left: 0px;
-          right: 0px;
-          width: 100%;
+          bottom: 8px;
+          // background:
+          backdrop-filter: blur(20px);
+          background: rgba(0, 0, 0, 0.2);
+          width: calc(100% - 16px);
+          border-radius: 8px;
+          left: 50%;
+          transform: translateX(-50%);
+          // height: 70px;
           display: flex;
           flex-direction: column;
+          justify-content: center;
           align-items: center;
-          justify-content: space-between;
+          padding: 8px 4px;
+          // background-image: url("../assets/images/games/game-box.png");
+
+          h3 {
+            font-size: 14px;
+            color: #fff;
+            // margin-top: 0px;
+            // margin-bottom: 7px;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+          }
+
+          .game-title-logo {
+            padding-top: 6px;
+            img {
+              height: 100%;
+              max-height: 18px;
+            }
+          }
+
+          .game-btn {
+            background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
+            border-radius: 6px;
+            color: #ffffff;
+            padding: 2px 4px;
+            line-height: 1;
+            width: calc(100% - 12px);
+            // max-width: 86px;
+            margin: 2px 6% 0px;
+            font-size: 12px;
+          }
         }
+
+        // .game-title {
+        //   position: absolute;
+        //   z-index: 2;
+        //   bottom: 0px;
+        //   left: 0px;
+        //   right: 0px;
+        //   width: 100%;
+        //   display: flex;
+        //   flex-direction: column;
+        //   align-items: center;
+        //   justify-content: space-between;
+        // }
 
         .maintenance-box {
           position: absolute;
@@ -2354,22 +2416,11 @@ export default defineComponent({
           }
         }
 
-        .game-bg {
-          background-size: contain;
-          aspect-ratio: 573/709;
-          background-repeat: no-repeat;
-        }
-
-        h3 {
-          line-height: 1rem;
-          font-size: 22px;
-          color: #fff;
-          margin-top: 0px;
-          margin-bottom: 7px;
-          text-align: center;
-          font-weight: 500;
-          letter-spacing: 1px;
-        }
+        // .game-bg {
+        //   background-size: contain;
+        //   aspect-ratio: 573/709;
+        //   background-repeat: no-repeat;
+        // }
 
         span {
           font-size: 12px;

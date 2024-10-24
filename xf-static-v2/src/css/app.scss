@@ -84,22 +84,22 @@ body.body--dark .q-header {
 body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100% - 108px);
 }
-.game-title {
-  font-family: "Wave";
-  font-size: 50px;
-  line-height: 60px;
-  color: #db7e42;
-  text-align: center;
-  background-color: linear-gradient(to right, #de4545, #db7e42);
-  background-image: linear-gradient(to right, #de4545, #db7e42);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #db7e42;
-  .menu-title {
-    color: #db7e42;
-    margin-bottom: 20px;
-    display: block;
-  }
-}
+// .game-title {
+//   // font-family: "Wave";
+//   font-size: 50px;
+//   line-height: 60px;
+//   color: #db7e42;
+//   text-align: center;
+//   background-color: linear-gradient(to right, #de4545, #db7e42);
+//   background-image: linear-gradient(to right, #de4545, #db7e42);
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: #db7e42;
+//   .menu-title {
+//     color: #db7e42;
+//     margin-bottom: 20px;
+//     display: block;
+//   }
+// }
 .page-title {
   min-height: 40px;
   // margin: 5px;
@@ -242,7 +242,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  // font-family: Wave;
   padding: 15px;
   display: flex;
   gap: 20px;
@@ -255,7 +255,7 @@ svg {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
+  // font-family: Wave;
   padding: 10px;
   display: flex;
   gap: 20px;

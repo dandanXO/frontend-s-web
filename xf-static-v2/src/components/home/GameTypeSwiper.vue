@@ -1,5 +1,5 @@
 <template>
-   <!-- :breakpoints="{
+  <!-- :breakpoints="{
       0: {
         slidesPerView: 4.5,
         spaceBetween: 8
@@ -13,6 +13,8 @@
         spaceBetween: 8
       }
     }" -->
+    <!-- :space-between="4" -->
+    <!-- :slidesPerView="5.5" -->
   <swiper
     :modules="[Thumbs, Controller]"
     slides-per-view="auto"
@@ -20,7 +22,7 @@
     :scrollbar="{ draggable: true }"
     :mousewheel="true"
     :space-between="4"
-    :slidesPerView="4.5"
+    :slidesPerView="5.5"
     watch-slides-progress
     class="first-swiper"
     centered-slides
@@ -35,19 +37,16 @@
       v-for="(tab, i) in list"
       :key="i"
     >
-      <div
-        class="home-select-slide"
-        :class="selectedTab == tab.name ? 'selected' : ''"
-      >
+      <div class="home-select-slide" :class="selectedTab == tab.name ? 'selected' : ''">
         <!-- <img :style="`margin-top:${tab.mb}px;`" :src="require('../../assets/images/index/' + tab.icon)" /> -->
-        <img :src="require(`../../assets/images/index/menu-icon-${tab.icon}.png`)" />
+        <img :src="require(`../../assets/images/index/menu-icon-${tab.icon}.png`)" v-if="selectedTab == tab.name" />
         <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
       </div>
     </swiper-slide>
   </swiper>
 
   <!-- <pre>tab---{{ list }}</pre> -->
-   <!-- <pre>selectedTab---{{selectedTab}}</pre> -->
+  <!-- <pre>selectedTab---{{ selectedTab }}</pre> -->
 </template>
 <script setup>
 // Import Swiper Vue.js components
@@ -98,7 +97,6 @@ watch(selectedTab, scrollSlide);
 :deep(.firstSwiper .swiper-wrapper) {
   // background: #fff;
   // background: salmon;
-
 }
 
 .first-swiper {
@@ -124,7 +122,9 @@ watch(selectedTab, scrollSlide);
   border-radius: 12px;
   display: flex;
   // flex-wrap: nowrap;
+  justify-content: center;
   gap: 6px;
+  // min-width:60px;
 
   img {
     // width: auto;
