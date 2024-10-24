@@ -356,20 +356,20 @@ const init = () => {
   getGlobalCheckInRecord('lh1-blast-premier-check-in').then((res) => {
     if (res.code === 0) {
       checkInDetails.value = res.data;
-      signNumber.value = checkInDetails.value.dailyCheckInClaimed;
-      if (signNumber.value) {
-        dayList.value.forEach((day, index) => {
-          if (index < signNumber.value) {
-            day.claimed = true;
-            day.toClaim = false; 
-          } else if (
-            index === signNumber.value
-          ) {
-            day.claimed = checkInDetails.value.hasClaimedToday;
-            day.toClaim = checkInDetails.value.canClaimToday;
-          }
-        });
-      }
+      signNumber.value = checkInDetails.value.checkInDays;
+      const claimedDay = checkInDetails.value.claimedDay;
+      dayList.value.forEach((day) => {
+        if (claimedDay.includes(day.no)) {
+          day.claimed = true;
+          day.toClaim = false;
+        } else if (day.no <= signNumber.value) {
+          day.claimed = false;
+          day.toClaim = true;
+        } else {
+          day.claimed = false;
+          day.toClaim = false;
+        }
+      });
       // dayList.value = [];
       // checkInDetails.value.dayList.forEach((day) => {
       //   if (day === dailyCheckInClaimed + 1) {
@@ -467,6 +467,7 @@ const openModal = (modal, item, itemIndex) => {
         isClaimModal.value = true;
         dayList.value[itemIndex].toClaim = false;
         dayList.value[itemIndex].claimed = true;
+        init()
       }
       $q.loading.hide();
     });

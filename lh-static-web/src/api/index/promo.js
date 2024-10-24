@@ -589,8 +589,8 @@ export function getGlobalKeyRecord(promoCode, page) {
   });
 }
 
-export function claimGlobalCheckInTreasure(promoCode) {
-  return server.EVENT.post(`/session/treasure-key/claimCheckIn`, { promoCode });
+export function claimGlobalCheckInTreasure(promoCode, day) {
+  return server.EVENT.post(`/session/treasure-key/claimCheckIn`, { promoCode, day });
 }
 
 export function getGameTypeBonusInit(promoCode) {
