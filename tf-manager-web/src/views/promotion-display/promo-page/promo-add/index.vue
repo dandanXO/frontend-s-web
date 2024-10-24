@@ -1508,6 +1508,10 @@ function disabledEndDate(time) {
 }
 
 function handleCheckedChangePromoType(val) {
+  if (val.at(-1) === 'ALL') {
+    selected.promoTypeChecked = promoTypes.value.map((item) => item.value)
+  }
+
   form.promoType = selected.promoTypeChecked.join(',')
 }
 
