@@ -70,6 +70,13 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.createBy"
+          style="width: 200px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.createBy')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -1010,6 +1017,7 @@ const request = reactive({
   loginName: null,
   operationType: null,
   cause: null,
+  createBy: null,
 })
 
 const form = reactive({
