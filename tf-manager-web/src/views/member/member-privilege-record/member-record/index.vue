@@ -108,6 +108,11 @@
         width="200"
       />
       <el-table-column
+        prop="vipName"
+        :label="t('fields.vipLevel')"
+        width="200"
+      />
+      <el-table-column
         prop="privilegeName"
         :label="t('fields.privilegeName')"
         width="300"
