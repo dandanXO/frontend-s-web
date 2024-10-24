@@ -142,6 +142,26 @@
         </div>
         <div class="inputs-wrap">
           <el-row :gutter="20" style="gap: 10px;">
+            <el-form-item :label="t('fields.downlineAffiliate') + ' :'">
+              <el-select
+                style="width: 100%;"
+                size="normal"
+                v-model="request.downlineAffiliate"
+                @focus="getAllAffiliateDownlines"
+                :clearable="true"
+              >
+                <el-option
+                  v-for="item in affiliate.list"
+                  :key="item.affiliateId"
+                  :label="item.loginName"
+                  :value="item.affiliateId"
+                />
+              </el-select>
+            </el-form-item>
+          </el-row>
+        </div>
+        <div class="inputs-wrap">
+          <el-row :gutter="20" style="gap: 10px;">
             <el-col :xl="7" :lg="7" :md="7" :sm="7">
               <el-form-item :label="t('fields.orderBy') + ' :'">
                 <el-select
@@ -349,18 +369,19 @@
                           {{ t('fields.memberInfo') }}
                         </el-dropdown-item>
                         <el-dropdown-item
+                          v-if="showOperation"
                           @click="transferRedirect(item.loginName)"
                         >
                           {{ t('menu.Transfer') }}
                         </el-dropdown-item>
-                        <el-dropdown-item @click="showEditTag(item)">
+                        <el-dropdown-item @click="showEditTag(item)" v-if="showOperation">
                           {{ t('fields.editTag') }}
                         </el-dropdown-item>
-                        <el-dropdown-item @click="showEditRemark(item)">
+                        <el-dropdown-item @click="showEditRemark(item)" v-if="showOperation">
                           {{ t('fields.remark') }}
                         </el-dropdown-item>
                         <el-dropdown-item
-                          v-if="parseInt(store.state.user.siteId) === 10"
+                          v-if="parseInt(store.state.user.siteId) === 10 && showOperation"
                           @click="showEditShareRatio(item)"
                         >
                           {{ t('fields.editShareRatio') }}
@@ -369,7 +390,7 @@
                           {{ t('fields.depositRecord') }}
                         </el-dropdown-item>
                         <el-dropdown-item
-                          @click="showGameRecord(item.loginName)"
+                          @click="showGameRecord(item.loginName, downlineAffiliate)"
                         >
                           {{ t('fields.betRecord') }}
                         </el-dropdown-item>
@@ -769,7 +790,7 @@
     </el-form>
 
     <div class="dialog-footer" style="margin-top:10px">
-      <el-button @click="uiControl.tagDialogVisible = false">
+      <el-button @click="uiControl.recycleDialogVisible = false">
         {{ $t('fields.cancel') }}
       </el-button>
       <el-button type="primary" @click="confirmRecycle()">
@@ -1022,6 +1043,7 @@ import {
   editMemberRatio,
   getAffiliateInfo,
   recycleMemberBalance,
+  getDownlineAffiliates,
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
@@ -1058,6 +1080,11 @@ const selected = reactive({
 const memberShareRatioList = reactive({
   list: [],
 })
+const affiliate = reactive({
+  list: []
+})
+const downlineAffiliate = ref(null);
+const showOperation = ref(true);
 
 const uiControl = reactive({
   infoDialogVisible: false,
@@ -1071,14 +1098,14 @@ const uiControl = reactive({
   editBtn: true,
   editType: 'One',
   orderBy: [
+    { display: 'registerTime', value: 'reg_time' },
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
-    { display: 'lastLoginTime', value: 'last_login_time' },
-    { display: 'registerTime', value: 'reg_time' },
+    // { display: 'lastLoginTime', value: 'last_login_time' },
   ],
   sortType: [
-    { display: 'DESC', value: 'DESC' },
     { display: 'ASC', value: 'ASC' },
+    { display: 'DESC', value: 'DESC' },
   ],
 })
 
@@ -1277,6 +1304,7 @@ const request = reactive({
   orderBy: uiControl.orderBy[0].value,
   sortType: uiControl.sortType[0].value,
   nickName: null,
+  downlineAffiliate: null
 })
 
 const memberRequest = reactive({
@@ -1395,6 +1423,7 @@ function resetQuery() {
   request.isBet = '-1'
   request.depositMinAmount = null
   request.depositMaxAmount = null
+  request.downlineAffiliate = null
   selected.tags = []
   checkAll.value = false
 }
@@ -1402,6 +1431,8 @@ function resetQuery() {
 async function loadAffiliateMembers() {
   selectedMemberList.id.length = 0
   selectedMemberList.loginName.length = 0
+  downlineAffiliate.value = null
+  showOperation.value = true
   // table.value.clearSelection()
   uiControl.editBtn = true
   page.loading = true
@@ -1445,7 +1476,14 @@ async function loadAffiliateMembers() {
       return obj.id
     })
     .join(',')
-  const { data: ret } = await loadMemberSummary(store.state.user.id, query)
+  
+  let userId = store.state.user.id;
+  if (request.downlineAffiliate !== null && request.downlineAffiliate.trim() !== '') {
+    downlineAffiliate.value = request.downlineAffiliate
+    userId = request.downlineAffiliate
+    showOperation.value = false
+  }
+  const { data: ret } = await loadMemberSummary(userId, query)
 
   page.pages = ret.pages
   page.records = ret.records
@@ -1489,7 +1527,11 @@ function formatTag(tags) {
 }
 
 async function loadAllTags() {
-  const { data: ret } = await getAffiliateTagList(store.state.user.id)
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
+  const { data: ret } = await getAffiliateTagList(userId)
   tagList.list = ret
   assignTaglist = JSON.parse(JSON.stringify(ret))
   tagList.list.push(unAssigned)
@@ -1506,8 +1548,12 @@ function transferRedirect(name) {
   router.push(`/affiliate/transfer?user=${name}`)
 }
 
-function showGameRecord(name) {
-  router.push(`/downline/game-record?user=${name}`)
+function showGameRecord(name, affiliate) {
+  if (affiliate) {
+    router.push(`/downline/game-record?user=${name}&affiliate=${affiliate}`)
+  } else {
+    router.push(`/downline/game-record?user=${name}`)
+  }
 }
 
 function showDepositRecord(member) {
@@ -1523,8 +1569,12 @@ function showDepositRecord(member) {
 
 async function loadDepositRecords() {
   memberDepositInfo.page.loading = true
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   const { data: ret } = await getMemberDepositRecords(
-    store.state.user.id,
+    userId,
     depositRequest
   )
   memberDepositInfo.page = ret
@@ -1545,8 +1595,12 @@ function showPrivilegeRecord(member) {
 
 async function loadPrivilegeRecords() {
   memberPrivilegeInfo.page.loading = true
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   const { data: ret } = await getMemberPrivilegeRecords(
-    store.state.user.id,
+    userId,
     privilegeRequest
   )
   memberPrivilegeInfo.page = ret
@@ -1574,8 +1628,12 @@ async function showMemberInfo(row) {
     memberInfo.remark = row.remark
   }
   dialog.loading = true
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   const { data: ret } = await loadMemberInfo(
-    store.state.user.id,
+    userId,
     memberRequest.memberId,
     memberRequest.recordTime.join(',')
   )
@@ -1609,6 +1667,10 @@ function showBatchEditTag() {
 }
 
 async function submitTag() {
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   tagRequest.tags = assignTaglist.filter(function(obj) {
     return tagRequest.tags.includes(obj.description)
   })
@@ -1616,12 +1678,12 @@ async function submitTag() {
     return obj.id
   })
   if (uiControl.editType === 'One') {
-    await assignTag(store.state.user.id, selectedMember.id, tagRequest.tags)
+    await assignTag(userId, selectedMember.id, tagRequest.tags)
     selectedMember.id = null
     selectedMember.loginName = null
   } else {
     await assignTag(
-      store.state.user.id,
+      userId,
       selectedMemberList.id.join(','),
       tagRequest.tags
     )
@@ -1681,8 +1743,12 @@ function showEditShareRatio(member) {
 }
 
 async function submitRemark() {
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   await assignRemark(
-    store.state.user.id,
+    userId,
     selectedMember.id,
     selectedMember.remark
   )
@@ -1736,6 +1802,11 @@ function getAffiliateRatio(code) {
     shareRatio.length === 0
     ? 0
     : shareRatio[0].value
+}
+
+async function getAllAffiliateDownlines() {
+  const { data: downlines } = await getDownlineAffiliates();
+  affiliate.list = downlines;
 }
 
 function openRecycle(member) {

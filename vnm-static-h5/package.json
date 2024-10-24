@@ -11,9 +11,12 @@
     "test": "echo \"No test specified\" && exit 0",
     "android": "quasar build -m capacitor -T android",
     "build:prod": "dotenv -e .prod.env quasar build",
+    "build:test": "quasar build --mode pwa dotenv -e .staging.env",
     "build:staging": "dotenv -e .staging.env quasar build",
     "build:dev": "dotenv -e .dev.env quasar build",
-    "dev": "quasar dev"
+    "dev": "quasar dev",
+    "pwa": "quasar dev -m pwa",
+    "buildPwa:dev": "dotenv -e .dev.env quasar build -m pwa"
   },
   "dependencies": {
     "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
@@ -49,13 +52,11 @@
     "qs": "^6.11.0",
     "quasar": "^2.14.3",
     "sitemap-webpack-plugin": "^1.1.1",
-    "sweetalert2": "^11.7.12",
     "swiper": "^9.3.2",
     "vue": "^3.4.18",
     "vue-i18n": "^9.9.0",
     "vue-marquee-text-component": "^2.0.1",
     "vue-qrcode-component": "^2.1.1",
-    "vue-remix-icons": "^1.1.1",
     "vue-router": "^4.0.0",
     "vue3-carousel": "^0.1.40"
   },
@@ -64,7 +65,7 @@
     "@babel/eslint-parser": "^7.13.14",
     "@babel/preset-env": "^7.23.6",
     "@capacitor/cli": "^5.0.0",
-    "@quasar/app-webpack": "3.13.4",
+    "@quasar/app-webpack": "3.13.3",
     "@quasar/quasar-app-extension-dotenv": "^1.1.0",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.2.1",
@@ -72,10 +73,12 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^9.0.0",
     "eslint-webpack-plugin": "^3.1.1",
+    "moment-locales-webpack-plugin": "^1.2.0",
     "prettier": "^2.5.1",
     "quasar-cli": "^0.17.26",
     "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^4.10.0",
+    "workbox-webpack-plugin": "^7.1.0"
   },
   "browserslist": [
     "last 10 Chrome versions",

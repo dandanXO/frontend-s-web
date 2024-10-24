@@ -8,7 +8,6 @@
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
 
-          <!-- <span class="join-span">加入雷火电竞第一天</span> -->
           <span v-if="appVersionNo">{{ $t("lang.version_no") }}: {{ appVersionNo }}</span>
         </div>
       </div>
@@ -20,14 +19,14 @@
 
     <div class="vipcard">
       <q-card-section class="top-section">
-        <!-- <div class="name">{{ header }}</div> -->
         <q-card-section class="acct-section">
           <div class="left-sect">
             <div class="label">
               <img src="../assets/images/account/account-wallet-icon.png" />
               <span>{{ $t("lang.central_wallet") }}</span>
               <div class="refresh-btn" @click="getBalance">
-                <img src="../assets/images/account/account-refresh-btn.png" />
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAoCAMAAAChHKjRAAAAOVBMVEUAAAD///////////////////////////////////////////////////////////////////////8KOjVvAAAAEnRSTlMAoCAQv0DPYN/vgDBwkFCvb3+yRuHQAAABGElEQVQ4y42UWZKEIBBEEShZtXvq/oedMUE0WCe/BF5UJgUoig4l1tK7+gfEoAKRVBMIVHDMbD9GDqBCQVuLqYO5ohqMLHNLWXozJs/qb7hCS6/zRHyYL0PvTsmtokKqHR4EWEpA75FWzV5QzKV5fHfbjZUNheDV7Z3aYXjjRnRFCPJHoxCmRoZKmFxoUsrc7EgW0TVchzqunQsHdCSkceJy83OIV9AJaGEXYbcj2SL4hkMcQjuM4rSZMq0qHM/0WGR6JUzjQtgWTa6KzYVQannphHSgZPf6Fg/DGPWf4nmPfftiCWVwYhXFuz9B/GiuGDgi12vDkDNVRz6FKil12xejK0r3++t1oeLsUgfKv0MPaKUIaKUn9i9rNhpnjIgaUQAAAABJRU5ErkJggg==" />
               </div>
             </div>
             <div class="amt">
@@ -45,33 +44,7 @@
 
             <div class="vip-link">{{ updatedVip() }}</div>
           </div>
-          <!-- <div class="vip-info-div">
-            <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
-              <div>晋级存款（元）</div>
-              <div>{{ formatNumber(store.currentDeposit) }}/{{ formatNumber(store.levelUpDeposit) }}</div>
-            </div>
 
-            <router-link to="/account/vip?from=account">
-              <div class="vip-right btn-pointer">
-                更多VIP特权
-                <img src="../assets/images/account/account-right-small.png" />
-              </div>
-            </router-link>
-          </div> -->
-
-          <!-- <div class="eshare-div">
-            <span v-if="store.evip">
-              专属网址:
-              <a class="share-link" :href="store.evip" target="_blank">
-                {{ store.evip }}
-              </a>
-              <img
-                class="copy-btn btn-pointer"
-                src="../assets/images/account/account-copy-icon.png"
-                @click="copyLink"
-              />
-            </span>
-          </div> -->
           <div class="list-reward-wapper" style="display: none">
             <div class="list-reward-received">
               <div class="list-item collected">
@@ -114,54 +87,6 @@
             </span>
           </div>
         </q-card-section>
-
-        <!-- <q-separator /> -->
-
-        <!-- <q-card class="bluecard vip-info-board" @click="goToVip"> -->
-        <!-- <div class="vipline q-mt-sm"> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel }}</span> -->
-        <!-- </div> -->
-        <!-- <div class="middle"> -->
-        <!-- <div class="row items-center justify-between"> -->
-        <!-- <div class="left">成长值</div> -->
-        <!-- <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div> -->
-        <!-- </div> -->
-
-        <!-- <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" /> -->
-        <!-- </div> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel + 1 }}</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-
-        <!-- <div class="vip-get-div row justify-between items-center q-mt-sm"> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>晋级礼包</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>生日礼金</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>每月活动</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>专属活动</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </q-card> -->
       </q-card-section>
     </div>
 
@@ -176,7 +101,7 @@
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-personal-icon.png" />
+            <div class="personal-icon" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_personal_info") }}
             </div>
@@ -185,7 +110,7 @@
 
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-bank-icon.png" />
+            <div class="bank-card-icon" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_bank") }}
             </div>
@@ -194,7 +119,7 @@
 
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-record-icon.png" />
+            <div class="transaction-icon" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_transaction") }}
             </div>
@@ -203,7 +128,7 @@
 
         <router-link to="/account/letters">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-notice-icon.png" />
+            <div class="mailbox-icon" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_mailbox") }}
             </div>
@@ -215,25 +140,16 @@
 
         <router-link to="/account/invite">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-share-icon.png" />
+            <div class="refer-icon" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_refer_friend") }}
             </div>
           </div>
         </router-link>
 
-        <!-- <router-link to="/account/letters">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/user-feedbakc-icon.png" />
-            <div class="acct-nav-label">
-              {{ $t("lang.mine_feedback") }}
-            </div>
-          </div>
-        </router-link> -->
-
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-changepwd-icon.png" />
+            <div class="change-password-icon" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_change_password") }}
             </div>
@@ -242,111 +158,32 @@
 
         <router-link to="/affiliate">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="affiliate-icon" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_apply_for_partnership") }}
             </div>
           </div>
         </router-link>
 
-        <!-- <router-link to="/promo?redirect=account"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-promo-icon.png" /> -->
-        <!-- <div class="acct-nav-label">优惠领取</div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
-
-        <!-- <router-link v-if="!store.isApp()" to="/account/download"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-download-icon.png" /> -->
-        <!-- <div class="acct-nav-label">下载中心</div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
-
-        <!-- <router-link to="/account/announcement"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-notice-icon.png" /> -->
-        <!-- <div class="acct-nav-label">消息提醒</div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
-
-        <!-- <router-link to="/account/assets"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-rich-icon.png" /> -->
-        <!-- <div class="acct-nav-label">财富中心</div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
-
         <router-link to="/about">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-storage-icon.png" />
+            <div class="about-icon" />
             <div class="acct-nav-label">{{ $t("lang.page_about") }}</div>
           </div>
         </router-link>
       </div>
     </q-item-section>
 
-    <!-- <q-card class="card-account-banner">
-      <q-card-section>
-        <q-carousel
-          class="account"
-          autoplay
-          navigation
-          v-model="slide"
-          swipeable
-          transition-next="slide-left"
-          transition-prev="slide-right"
-          animated
-          infinite
-          height="150px"
-        >
-          <template v-slot:navigation-icon="{ active, onClick }">
-            <q-btn
-              padding="3px"
-              v-if="active"
-              size="xs"
-              color="white"
-              @click="onClick"
-              style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-            />
-            <q-btn
-              padding="3px"
-              v-else
-              size="xs"
-              color="transparent"
-              @click="onClick"
-              style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-            />
-          </template>
-
-          <q-carousel-slide
-            v-for="(banner, i) in btm_banners"
-            :key="i"
-            :name="i"
-            class="column no-wrap flex-center"
-            :img-src="imgURL + banner.mobileImageUrl"
-            @click="gotoPromo(banner)"
-          ></q-carousel-slide>
-        </q-carousel>
-      </q-card-section>
-    </q-card> -->
-
     <a @click="isLogoutModal = true">
       <div class="acct-logout btn-pointer">
         <div class="acct-nav-label">{{ $t("lang.mine_logout") }}</div>
-        <img src="../assets/images/account/account-logout-icon.png" />
+        <div class="logout-icon" />
       </div>
     </a>
   </q-page>
 
-  <q-dialog
-    width="100%"
-    class="modal-common-div"
-    v-model="isLogoutModal"
-    show-cancel-button
-    :showCancelButton="false"
-    :showConfirmButton="false"
-  >
+  <q-dialog width="100%" class="modal-common-div" v-model="isLogoutModal" show-cancel-button :showCancelButton="false"
+    :showConfirmButton="false">
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
         <div class="titles">{{ $t("lang.logout_title") }}</div>
@@ -364,14 +201,8 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog
-    width="100%"
-    class="modal-common-div"
-    v-model="isRebateModalVisible"
-    show-cancel-button
-    :showCancelButton="false"
-    :showConfirmButton="false"
-  >
+  <q-dialog width="100%" class="modal-common-div" v-model="isRebateModalVisible" show-cancel-button
+    :showCancelButton="false" :showConfirmButton="false">
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
         <div class="titles">{{ $t("lang.menu_rebate") }}</div>
@@ -514,7 +345,7 @@ export default defineComponent({
             }
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     };
     const gotoPromo = (banner) => {
       const redirectU = "/promo?name=" + banner.redirectUrl;
@@ -752,7 +583,7 @@ export default defineComponent({
     color: $grey-color;
     margin-bottom: 8px;
 
-    > div {
+    >div {
       flex: 1;
     }
 
@@ -761,6 +592,13 @@ export default defineComponent({
       flex-wrap: nowrap;
       align-items: center;
       gap: 10px;
+
+      .refresh-btn {
+        width: 15px;
+        height: 16.66px;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAoCAMAAAChHKjRAAAAOVBMVEUAAAD///////////////////////////////////////////////////////////////////////8KOjVvAAAAEnRSTlMAoCAQv0DPYN/vgDBwkFCvb3+yRuHQAAABGElEQVQ4y42UWZKEIBBEEShZtXvq/oedMUE0WCe/BF5UJgUoig4l1tK7+gfEoAKRVBMIVHDMbD9GDqBCQVuLqYO5ohqMLHNLWXozJs/qb7hCS6/zRHyYL0PvTsmtokKqHR4EWEpA75FWzV5QzKV5fHfbjZUNheDV7Z3aYXjjRnRFCPJHoxCmRoZKmFxoUsrc7EgW0TVchzqunQsHdCSkceJy83OIV9AJaGEXYbcj2SL4hkMcQjuM4rSZMq0qHM/0WGR6JUzjQtgWTa6KzYVQannphHSgZPf6Fg/DGPWf4nmPfftiCWVwYhXFuz9B/GiuGDgi12vDkDNVRz6FKil12xejK0r3++t1oeLsUgfKv0MPaKUIaKUn9i9rNhpnjIgaUQAAAABJRU5ErkJggg==');
+        background-size: 100% 100%;
+      }
 
       .label {
         display: flex;
@@ -844,43 +682,6 @@ export default defineComponent({
           opacity: 0;
         }
       }
-
-      .vip-left {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 13px;
-        color: $grey-color;
-        font-size: 1.2rem;
-
-        .vip-level {
-          background-image: url("../assets/images/account/account-vip-tab.png");
-          width: 90px;
-          aspect-ratio: 168/45;
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-          text-align: center;
-          color: $white;
-          font-size: 1.2rem;
-          font-style: italic;
-          padding-left: 28px;
-          padding-right: 10px;
-        }
-      }
-
-      .vip-right {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 6px;
-
-        color: $grey-color;
-        font-size: 0.875rem;
-
-        img {
-          width: 7px;
-        }
-      }
     }
   }
 
@@ -891,7 +692,7 @@ export default defineComponent({
     font-size: 1rem;
     // font-weight: bold;
 
-    > span {
+    >span {
       display: flex;
       justify-content: flex-start;
       gap: 10px;
@@ -907,6 +708,7 @@ export default defineComponent({
       text-decoration: none;
     }
   }
+
   //.bluecard {
   //  width: 98%;
   //  margin: 0 0px !important;
@@ -1087,7 +889,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
 
   img {
     width: 25px;
@@ -1118,19 +920,24 @@ export default defineComponent({
 }
 
 .list-reward-wapper {
-  overflow: hidden; /* Hide horizontal scrollbar from the wrapper */
+  overflow: hidden;
+  /* Hide horizontal scrollbar from the wrapper */
   width: 100%;
 }
 
 .list-reward-received {
   display: flex;
   gap: 10px;
-  overflow-x: auto; /* Make the section scrollable horizontally */
-  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: auto;
+  /* Make the section scrollable horizontally */
+  overflow-y: hidden;
+  /* Hide vertical scrollbar */
   // padding-bottom: 16px; /* Add padding to ensure space for scrollbar */
 }
+
 .list-reward-received::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit (Chrome, Safari) */
+  display: none;
+  /* Hide scrollbar for WebKit (Chrome, Safari) */
 }
 
 .list-item {
@@ -1182,6 +989,7 @@ export default defineComponent({
     background: linear-gradient(180deg, #f8ffff 0%, #85e2ff 100%);
   }
 }
+
 .vip-link {
   background: linear-gradient(180deg, #32a9ff 0%, #3b5afe 100%);
   min-width: 60px;
@@ -1242,6 +1050,7 @@ export default defineComponent({
       gap: 4px;
     }
   }
+
   .acct-nav .acct-menu a .acct-nav-item img {
     height: 32px;
   }

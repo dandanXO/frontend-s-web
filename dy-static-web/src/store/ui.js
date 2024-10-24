@@ -26,6 +26,15 @@ export const uiStore = defineStore("ui-store", {
         },
         setTitle(title) {
             this.title = title;
-        }
+        },
+        notify(options) {
+            const id = `${Date.now()}-${Math.floor(Math.random() * 100)}`;
+            this.notificationQueue.push({
+              ...options,
+              id,
+              zIndex: this.notificationZIndex++,
+              duration: options.duration ?? 3000
+            });
+          },
     }
 });

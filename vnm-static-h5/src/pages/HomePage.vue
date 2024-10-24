@@ -575,18 +575,19 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
-    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
+  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal" persistent>
+    <q-card style="width: 85%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
-        <div class="close-alert" @click="setExpiryBanner()">
+        <!-- <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
-        </div>
-        <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
+        </div> -->
+        <SitePopout :closePopout="setExpiryBanner" />
+        <!-- <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
             <img :src="homePopupImg" class="alert-img" alt="popup" />
           </div>
-        </router-link>
+        </router-link> -->
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -663,6 +664,7 @@ import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import LangOptions from "components/LangOptions";
+import SitePopout from "components/modal/SitePopout.vue";
 import MarqueeText from "vue-marquee-text-component";
 import { App } from "@capacitor/app";
 
@@ -715,7 +717,8 @@ export default defineComponent({
     GameTab,
     GameList,
     SlotPromotion,
-    SlotGameList
+    SlotGameList,
+    SitePopout
   },
   setup() {
     const { t } = useI18n();
@@ -2660,7 +2663,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+    gap: 0.5rem;
     max-width: 58px;
 
     > div {

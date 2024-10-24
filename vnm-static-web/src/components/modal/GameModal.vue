@@ -123,13 +123,11 @@ import { ref, defineExpose } from "vue";
 import ComingSoon from "@/components/loading/ComingSoon";
 import TFLoading from "@/components/loading/TFLoading";
 import { transfer } from "@/api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-// import { Modal } from "ant-design-vue";
 
 const { t } = useI18n();
 const store = userStore();

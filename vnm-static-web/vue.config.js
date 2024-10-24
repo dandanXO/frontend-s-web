@@ -3,6 +3,8 @@ const defaultSettings = require("./src/settings.js");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const SitemapPlugin = require("sitemap-webpack-plugin").default;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const paths = [
   { path: "/", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
@@ -37,7 +39,7 @@ const paths = [
 ];
 
 module.exports = defineConfig({
-  lintOnSave: true,
+  lintOnSave: false,
   productionSourceMap: false,
   runtimeCompiler: true,
   devServer: {
@@ -60,12 +62,12 @@ module.exports = defineConfig({
       modules: [path.resolve(__dirname, "../.shared")]
     },
     optimization: {
-      splitChunks: {
+      splitChunks: process.env.NODE_ENV === "development" ? false : {
         chunks: "all"
       },
-      runtimeChunk: true,
-      minimize: true,
-      minimizer: [
+      runtimeChunk: process.env.NODE_ENV === "development" ? false : true,
+      minimize: process.env.NODE_ENV === "development" ? false : true,
+      minimizer: process.env.NODE_ENV === "development" ? [] : [
         new TerserPlugin({
           terserOptions: {
             compress: {
@@ -79,7 +81,9 @@ module.exports = defineConfig({
       new SitemapPlugin({
         base: process.env.VUE_APP_SERVER ? process.env.VUE_APP_SERVER : "https://www.tkeochuan88.com",
         paths
-      })
+      }),
+      // new BundleAnalyzerPlugin(),
+      new MomentLocalesPlugin(),
     ]
   },
   chainWebpack: (config) => {

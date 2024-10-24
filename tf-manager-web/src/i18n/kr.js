@@ -460,6 +460,23 @@ export default {
     main: 'MAIN',
     slot: 'SLOT',
   },
+  rewardStatus: {
+    PENDING: 'PENDING',
+    DISTRIBUTED: 'DISTRIBUTED',
+    REJECTED: 'REJECTED',
+  },
+  language: {
+    en: 'English',
+    zh: 'Chinese',
+    th: 'Thai',
+    kr: 'Korean',
+    vn: 'Vietnamese'
+  },
+  treasure: {
+    NORMAL: '일반 보물',
+    CS: 'CS 보물',
+    DRAGON: '드래곤 보물'
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -1345,6 +1362,9 @@ export default {
     roleList: '역할 목록',
     roleName: '역할 이름',
     rollover: '롤오버',
+    rollOverAmt: '롤오버 금액',
+    rolloverType: '롤오버 유형',
+    rollOverMulti: '롤오버 다중 금액',
     rolloverAmount: '롤오버 금액',
     rolloverRecord: '롤오버 기록',
     gameTypeRollover: '게임 유형 롤오버',
@@ -2453,6 +2473,7 @@ export default {
     VIP: 'VIP',
     Game: '게임',
     'Game Tag': '게임 태그',
+    'TFG Member Game Map': 'TFG 게임 코드 바인딩',
     'Financial Level': '금융 레벨',
     'Risk Level': '리스크 레벨',
     'Ip Label': 'IP 라벨',
@@ -2657,6 +2678,7 @@ export default {
     Mobile: '모바일',
     PC: 'PC',
     APPLY_WITHDRAW: '출금 신청',
+    APPLY_WITHDRAW_RISK: '철회 위험을 적용'
   },
   loginDevice: {
     WEB: '웹',
@@ -2688,6 +2710,13 @@ export default {
     friday: '금요일',
     saturday: '토요일',
     sunday: '일요일',
+  },
+  gameTypeRolloverSetting: {
+    anyTypes: '모든 게임 유형',
+    specifyTypes: '게임 유형 지정',
+    excludeTypes: '게임 유형 제외',
+    specifyTypesAmount: '게임 유형 수량 지정',
+    specifyGameType: '특정 게임 유형 및 수량',
   },
   domainType: {
     LANDING: '방문 페이지',
@@ -2782,6 +2811,7 @@ export default {
     12000: '시스템 권한 정보 이름이 이미 존재합니다',
     12001: '시스템 권한 정보 코드가 이미 존재합니다',
     12002: '권한 그룹을 삽입하십시오',
+    12009: "데이터 형식 오류입니다. 다시 한 번 확인해 주세요",
     12010: '통화 이름이 이미 존재합니다',
     12011: '이 사이트에 대해 이미 통화 환율이 설정되었습니다',
     12020: "현재 레코드의 상태가 '보내는 중'이 아닙니다",

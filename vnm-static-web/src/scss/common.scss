@@ -1,8 +1,7 @@
 @font-face {
   font-family: "FZHanZhenGuangBiaoS-GB";
   src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot");
-  src:
-    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
+  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff") format("woff"),
     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2") format("woff2"),
     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf") format("truetype");
@@ -51,6 +50,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;400;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   .roboto {
@@ -427,9 +434,7 @@ body {
   &:focus {
     color: #ffffff;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow:
-      0px -2px 4.58px 0px #b1d7ff inset,
-      0px -1px 3.664px 0px #5894ff inset;
+    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
     filter: brightness(0.9);
   }
   &:active {
@@ -470,9 +475,7 @@ body {
   align-items: center;
   border-radius: 2rem;
   background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-  box-shadow:
-    0px 2px 4.58px 0px #bbdcff inset,
-    0px -1px 3.664px 0px #a2bff4 inset;
+  box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
   cursor: pointer;
   transition: 0.3s all;
   line-height: 1;
@@ -497,17 +500,13 @@ body {
 
   &.btn-color-blue {
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow:
-      0px -2px 4.58px 0px #b1d7ff inset,
-      0px -1px 3.664px 0px #5894ff inset;
+    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
     color: $color-white;
   }
 
   &.btn-color-white {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow:
-      0px 2px 4.58px 0px #bbdcff inset,
-      0px -1px 3.664px 0px #a2bff4 inset;
+    box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
     color: $font-1;
   }
 }
@@ -531,16 +530,6 @@ button {
 /* Utility Class */
 .mx-auto.mx-auto {
   margin-inline: auto;
-}
-
-/* Overwrite */
-
-.swal2-confirm {
-  width: 200px;
-}
-
-.swal2-styled.swal2-confirm {
-  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
 }
 
 .cursor-pointer {

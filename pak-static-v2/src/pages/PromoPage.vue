@@ -1,6 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -14,18 +14,6 @@
       <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
   </div>
-
-  <!-- <q-tabs
-    scroll-target=".q-tab--active"
-    v-if="!isPromoDetail"
-    v-model="tab"
-    align="justify"
-    class="promo-cat-tab extension-tab"
-  >
-    <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
-  </q-tabs> -->
-
-  <!-- <pre>promoState.promoList{{ promoState.promoList }}</pre> -->
 
   <div class="promo-container">
     <div class="promo">
@@ -85,6 +73,8 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div class="loader" v-if="isFetchingPromo" />
+
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -199,7 +189,7 @@
 import {ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import {SessionStorage, useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 // import { loadPromo } from "src/api/index/promo.js";
@@ -210,6 +200,7 @@ import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+import { isAndroid } from "src/boot/utils";
 // import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
 export default defineComponent({
@@ -247,6 +238,17 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+
+    const isFetchingPromo = ref(false);
+    const extensionState = ref(false);
+    const extensionToken = ref("");
+
+    const checkExtension = () => {
+      if (route.path === "/promotion") {
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+    };
 
     // const tab = ref("all");
     // const tabItems = [
@@ -291,9 +293,9 @@ export default defineComponent({
       store.getUnreadTotal();
     });
 
-    // onMounted(() => {
-    //   loadAll();
-    // });
+    onMounted(() => {
+      checkExtension();
+    });
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -319,8 +321,12 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      router.push('/promo');
-      isPromoDetailPage.value = false
+      if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/promo");
+      }
+      isPromoDetailPage.value = false;
     }
 
     const loadBanner = () => {
@@ -351,33 +357,71 @@ export default defineComponent({
 
     const showPromoDetails = (promo) => {
       if (!store.token) {
-        // isDisplayLogin.value = true
-
         $q.notify({
           color: "negative",
           position: "top",
           message: t("notify.plsLoginToContinue"),
-          icon: "report_problem"
+          icon: "report_problem",
         });
-        router.push(`/login`)
+        router.push(`/login`);
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
-          router.push({path: '/account/vip'});
+          router.push({ path: "/account/vip" });
         } else {
-          if (promo.redirectUrl === 'pk2-redpacketrain') {
+          if (promo.redirectUrl === "pk2-redpacketrain") {
             isMoneyRainModal.value = true;
           } else {
-            if (route.query.fromAccount) {
-              router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+            if (extensionState.value) {
+              isPromoDetail.value = true;
+
+              selectedPromo.value = promo;
+              if (isAndroid()) {
+                LocalStorage.set("TOKEN", extensionToken.value, 86400);
+              } else {
+                SessionStorage.set("TOKEN", extensionToken.value);
+              }
+              store.token = extensionToken.value;
+            } else if (isAndroid()) {
+              const tgDomain = "https://" + store.evip;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              console.log(preUrl);
+              var ref = cordova.InAppBrowser.open(
+                preUrl,
+                "_blank",
+                "location=no,zoom=no,footer=no"
+              );
+
+              ref.addEventListener("loadstart", function (event) {
+                var url = event.url;
+                // alert("This" + url);
+                if (url.indexOf("xfapp:") > -1) {
+                  var message = url.split("xfapp:")[1];
+                  console.log(
+                    "Message received from InAppBrowser: ",
+                    decodeURIComponent(message)
+                  );
+                  // alert(message);
+                  ref.close();
+                  router.push(message);
+                }
+              });
             } else {
-              router.push({path: '/promo', query: {name: promo.redirectUrl}})
+              if (route.query.fromAccount) {
+                router.push({
+                  path: "/promo",
+                  query: { name: promo.redirectUrl, fromAccount: true },
+                });
+              } else {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              }
+              isPromoDetail.value = true;
+              selectedPromo.value = promo;
             }
-            isPromoDetail.value = true
-            selectedPromo.value = promo
           }
         }
       }
-    }
+    };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
@@ -392,6 +436,8 @@ export default defineComponent({
     const loadAll = () => {
       const platformApiUrl = "/opt-session/promo/page";
 
+      isFetchingPromo.value = window.location.pathname === "/promotion";
+
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
@@ -399,9 +445,9 @@ export default defineComponent({
           // promoState.promoList.push(...res.data);
 
           promoItems.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // } else {
               const displayElement = {
                 ...element,
                 displayDesktopBannerUrl: element.desktopBannerUrlDark ?? element.desktopBannerUrl,
@@ -416,12 +462,15 @@ export default defineComponent({
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(displayElement)
               }
-            }
+            // }
           });
 
           switchPromoType(promoState.active)
+
+          isFetchingPromo.value = false;
         }
       }).catch((e) => {
+        isFetchingPromo.value = false;
         console.log("error", e);
       });
 
@@ -607,12 +656,27 @@ export default defineComponent({
       parsedParamDate,
       MoneyRainModal,
       isMoneyRainModal,
+      isFetchingPromo,
+      extensionState
       // MediaSettingsComponent
     }
   },
 });
 </script>
 <style lang="scss" scoped>
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 150px;
+}
+
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;

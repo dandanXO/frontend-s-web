@@ -274,7 +274,7 @@ export default defineComponent({
       //   }
       // })
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
@@ -327,7 +327,8 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const randNum = Math.floor(Math.random() * 1000) + 1;
+      const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -336,15 +337,15 @@ export default defineComponent({
           // promoState.promoList.push(...res.data);
 
           promoItems.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // } else {
               promoState.promoList.push(element);
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element)
               }
-            }
+            // }
           });
 
           switchPromoType(promoState.active)

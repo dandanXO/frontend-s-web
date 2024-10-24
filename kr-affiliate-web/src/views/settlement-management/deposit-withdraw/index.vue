@@ -8,7 +8,6 @@
               <el-form-item :label="t('fields.type') + ' :'">
                 <el-select clearable v-model="request.type" size="small" :placeholder="t('fields.type')"
                   class="filter-item">
-                  <el-option :label="t('fields.all')" value="" />
                   <el-option :label="t('fields.deposit')" value="DEPOSIT" />
                   <el-option :label="t('fields.withdraw')" value="WITHDRAW" />
                 </el-select>
@@ -116,7 +115,7 @@ const request = reactive({
   current: 1,
   recordTime: [convertStartDate(new Date()), convertDate(new Date())],
   loginName: null,
-  type: '',
+  type: 'DEPOSIT',
 })
 
 function convertDate(date) {

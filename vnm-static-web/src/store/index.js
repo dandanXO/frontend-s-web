@@ -7,7 +7,6 @@ import { getCSAFromServer } from "@/api/index/site";
 import { ElMessage } from "element-plus";
 import vueI18n from "@/i18n";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-// import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
 
@@ -34,7 +33,8 @@ export const userStore = defineStore("userStore", {
       siteId: 8,
       unreadTotal: 0,
       visitorId: "",
-      isAffiliateA: false
+      isAffiliateA: false,
+      withdrawType: ""
     };
   },
   actions: {
@@ -64,23 +64,6 @@ export const userStore = defineStore("userStore", {
       this.getBalance();
       this.getMemberInfo();
     },
-    telephoneLogin(loginInfo) {
-      return mobileLogin(loginInfo)
-        .then((ret) => {
-          if (ret.code === 0) {
-            this.token = ret.data;
-            this.getBalance();
-            this.getMemberInfo();
-          } else {
-            ElMessage.error(ret.message);
-            // throw new Error(ret.message);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          // message.error(err.message);
-        });
-    },
     getUnreadMail() {
       getUnreadTotal().then((response) => {
         if (response.code === 0) {
@@ -105,6 +88,7 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
             this.registeredWithdrawPassword = ret.data.registeredWithdrawPassword;
+            this.withdrawType = ret.data.withdrawType;
           } else {
             ElMessage.error(ret.message);
           }

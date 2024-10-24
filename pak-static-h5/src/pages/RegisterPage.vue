@@ -228,6 +228,10 @@
         <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
         <div>Youtube</div>
       </div>
+      <div class="list-item" @click="openCharity()">
+        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
+        <div>Charity</div>
+      </div>
       <!--      <div class="list-item" @click="openTiktok()">-->
       <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
       <!--        <div>Tiktok</div>-->
@@ -252,7 +256,7 @@ import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { isAndroid } from "boot/utils";
+import { isAndroid, trackNewUserFtd } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -452,6 +456,9 @@ export default defineComponent({
                 //FB Tracking.
                 if (store.isFbPixel) {
                   fbq("track", "CompleteRegistration");
+                  document.addEventListener("ftdSuccess", trackNewUserFtd);
+                  sessionStorage.setItem("newUserFtd", regForm.loginName);
+                  localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
 
                 //ADJUST TRACKEVENT.
@@ -693,6 +700,11 @@ export default defineComponent({
     const openYoutube = () => {
       window.open(ui.youtubeUrl, "_blank");
     };
+
+    const openCharity = () => {
+      window.open(ui.charityUrl, "_blank");
+    };
+
     const moveCsIcon = (ev) => {
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -776,6 +788,7 @@ export default defineComponent({
       openWhatsApp,
       openTiktok,
       openYoutube,
+      openCharity,
       downloadApp
     };
   }
@@ -993,7 +1006,8 @@ function charType(num) {
   gap: 0px;
   width: 100%;
   margin: 10px auto;
-
+  align-items: flex-start;
+  text-align: center;
   .list-item {
     display: flex;
     justify-content: center;
@@ -1002,6 +1016,7 @@ function charType(num) {
     gap: 8px;
     color: #9f9f9f;
     font-size: 12px;
+    flex: 1;
   }
 
   .btn-icon {
@@ -1021,21 +1036,28 @@ function charType(num) {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    animation: smallbeat 2s infinite;
     animation-delay: 1s;
   }
   #whatapp-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    animation: smallbeat 2s infinite;
     animation-delay: 0.5s;
+  }
+  #charity-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 1.5s;
   }
   #download-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    animation: smallbeat 2s infinite;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
@@ -1064,7 +1086,7 @@ function charType(num) {
   height: 60px;
   background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
   background-size: contain;
-  animation: smallbeat 1.5s infinite;
+  animation: smallbeat 2s infinite;
 
   &:active {
     filter: brightness(0.85);

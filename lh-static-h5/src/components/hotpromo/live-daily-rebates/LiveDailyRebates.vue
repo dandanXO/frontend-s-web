@@ -1,0 +1,696 @@
+<template>
+  <div class="livepoker-rebate-wrapper">
+    <div class="livepoker-rebate-container">
+      <div class="tab-wrapper">
+        <div
+          class="tab"
+          :class="{ active: tabValue === 'lh1-live-daily-bonus' }"
+          @click="tabValue = 'lh1-live-daily-bonus'"
+        >
+          活动 1
+        </div>
+        <div
+          class="tab"
+          :class="{ active: tabValue === 'lh1-live-weekly-bonus' }"
+          @click="tabValue = 'lh1-live-weekly-bonus'"
+        >
+          活动 2
+        </div>
+      </div>
+
+      <template v-if="tabValue === 'lh1-live-daily-bonus'">
+        <div>
+          <div class="livepoker-rebate-section">
+            <div class="livepoker-rebate-section-left">
+              <div class="livepoker-rebate-section-title">
+                <div>
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                    style="width: 20px; height: 20px; margin-bottom: 0px"
+                  />
+                </div>
+                每日礼金
+              </div>
+              <div class="reward-info">
+                <div class="reward-info-icon">
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                    alt=""
+                    width="100%"
+                  />
+                </div>
+                <div class="reward-info-content">
+                  昨日累计有效投注：
+                  <span class="amount">{{ totalValidBet }}元</span>
+                </div>
+              </div>
+              <div class="reward-info">
+                <div class="reward-info-icon">
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                    alt=""
+                    width="100%"
+                  />
+                </div>
+                <div class="reward-info-content">
+                  今日可领取彩金：
+                  <span class="amount">{{ bonus }}元</span>
+                </div>
+              </div>
+            </div>
+            <div class="livepoker-rebate-section-right">
+              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+                <img
+                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
+                  alt=""
+                  width="100%"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="livepoker-rebate-game-info">
+            <div class="title"></div>
+            <div
+              class="little-title"
+              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
+            >
+              <div class="left">活动对象</div>
+              <div class="right">全体会员</div>
+            </div>
+            <div
+              class="little-title"
+              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
+            >
+              <div class="left">活动内容</div>
+              <div class="right">
+                活动期间，统计当日真人视讯场馆游戏总有效投注≥8,000 元或以上，次日 00:00 起，即可在本活动页面点击
+                [点击领取] 按钮领取彩金
+              </div>
+            </div>
+            <table class="livepoker-rebate-game-info-table">
+              <tbody>
+                <tr>
+                  <th>当日真人有效投注</th>
+                  <th>彩金上限</th>
+                  <th>流水倍数</th>
+                </tr>
+                <tr>
+                  <td>≥8,000</td>
+                  <td>8 元</td>
+                  <td :rowspan="7">12 倍流水</td>
+                </tr>
+                <tr>
+                  <td>≥30,000</td>
+                  <td>18 元</td>
+                </tr>
+                <tr>
+                  <td>≥60,000</td>
+                  <td>32 元</td>
+                </tr>
+                <tr>
+                  <td>≥300,000</td>
+                  <td>188 元</td>
+                </tr>
+                <tr>
+                  <td>≥600,000</td>
+                  <td>318 元</td>
+                </tr>
+                <tr>
+                  <td>≥3,000,000</td>
+                  <td>1,688 元</td>
+                </tr>
+                <tr>
+                  <td>≥6,000,000</td>
+                  <td>2,888 元</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="livepoker-rebate-game-bottom-rule">
+            <div class="title"></div>
+            <div class="content">
+              <div class="item">
+                <div class="item-num">1</div>
+                活动一：活动仅限真人视讯类游戏当日有效投注，彩金只需完成 12 倍流水即可出款
+              </div>
+              <div class="item">
+                <div class="item-num">2</div>
+                活动二：活动仅限真人视讯类游戏指定周期有效投注，彩金只需完成 8 倍流水即可出款
+              </div>
+              <div class="item">
+                <div class="item-num">3</div>
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
+                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+              </div>
+              <div class="item">
+                <div class="item-num">4</div>
+                同一手机号、姓名、邮箱地址、银行卡号、IP
+                地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+              </div>
+              <div class="item">
+                <div class="item-num">5</div>
+                为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template v-if="tabValue === 'lh1-live-weekly-bonus'">
+        <div>
+          <div class="livepoker-rebate-section">
+            <div class="livepoker-rebate-section-left">
+              <div class="livepoker-rebate-section-title">
+                <div>
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                    style="width: 20px; height: 20px; margin-bottom: 0px"
+                  />
+                </div>
+                每日礼金
+              </div>
+              <div class="reward-info">
+                <div class="reward-info-icon">
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                    alt=""
+                    width="100%"
+                  />
+                </div>
+                <div class="reward-info-content">
+                  上周期累计有效投注：
+                  <span class="amount">{{ totalValidBet }}元</span>
+                </div>
+              </div>
+              <div class="reward-info">
+                <div class="reward-info-icon">
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                    alt=""
+                    width="100%"
+                  />
+                </div>
+                <div class="reward-info-content">
+                  可领取周彩金：
+                  <span class="amount">{{ bonus }}元</span>
+                </div>
+              </div>
+            </div>
+            <div class="livepoker-rebate-section-right">
+              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+                <img
+                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
+                  alt=""
+                  width="100%"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="livepoker-rebate-game-info">
+            <div class="title"></div>
+            <div
+              class="little-title"
+              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
+            >
+              <div class="left">活动对象</div>
+              <div class="right">全体会员</div>
+            </div>
+            <div
+              class="little-title"
+              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
+            >
+              <div class="left">活动内容</div>
+              <div class="right">
+                每周五至隔周四，在真人视讯场馆投注，有效投注满足以下门槛，即可在下周期周五 23:59:59
+                点前在活动页领取周打码流水彩金
+              </div>
+            </div>
+            <table class="livepoker-rebate-game-info-table">
+              <tbody>
+                <tr>
+                  <th>指定周期真人有效投注</th>
+                  <th>周彩金</th>
+                  <th>流水倍数</th>
+                </tr>
+                <tr>
+                  <td>≥8,800,000 元</td>
+                  <td>138 元</td>
+                  <td :rowspan="4">8 倍流水</td>
+                </tr>
+                <tr>
+                  <td>≥12,000,000 元</td>
+                  <td>388 元</td>
+                </tr>
+                <tr>
+                  <td>≥28,000,000 元</td>
+                  <td>988 元</td>
+                </tr>
+                <tr>
+                  <td>≥60,000,000 元</td>
+                  <td>2,388 元</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="livepoker-rebate-game-bottom-rule">
+            <div class="title"></div>
+            <div class="content">
+              <div class="item">
+                <div class="item-num">1</div>
+                活动一：活动仅限真人视讯类游戏当日有效投注，彩金只需完成 12 倍流水即可出款
+              </div>
+              <div class="item">
+                <div class="item-num">2</div>
+                活动二：活动仅限真人视讯类游戏指定周期有效投注，彩金只需完成 8 倍流水即可出款
+              </div>
+              <div class="item">
+                <div class="item-num">3</div>
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
+                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+              </div>
+              <div class="item">
+                <div class="item-num">4</div>
+                同一手机号、姓名、邮箱地址、银行卡号、IP
+                地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+              </div>
+              <div class="item">
+                <div class="item-num">5</div>
+                为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, watch } from "vue";
+import { getGameTypeBonusInit, claimGameTypeBonus } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
+
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
+
+const notify = useNotify();
+const store = userStore();
+const $q = useQuasar();
+const router = useRouter();
+
+const totalValidBet = ref(0);
+const bonus = ref(0);
+
+const tabValue = ref("lh1-live-daily-bonus");
+
+const handleClaimBonus = () => {
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
+  }
+  claimGameTypeBonus(tabValue.value)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: `成功领取${res.data}元`
+        });
+        fetchData();
+      } else {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const fetchData = async () => {
+  try {
+    totalValidBet.value = 0;
+    bonus.value = 0;
+
+    const res = await getGameTypeBonusInit(tabValue.value);
+
+    totalValidBet.value = res.data.totalValidBet;
+    bonus.value = res.data.bonus;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+watch(
+  () => tabValue.value,
+  () => {
+    if (!store.token) {
+      return;
+    }
+    fetchData();
+  },
+  {
+    immediate: true
+  }
+);
+</script>
+
+<style scoped lang="scss">
+.livepoker-rebate-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.livepoker-rebate-container {
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.livepoker-rebate-section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 20px 12px 40px;
+  border-radius: 12px;
+  border: 1px solid #acd4f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background-size: 100% 100%;
+  align-items: center;
+  width: 100%;
+
+  .livepoker-rebate-section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .livepoker-rebate-section-right {
+    width: 180px;
+    margin-top: 20px;
+
+    .bonus-image {
+      width: 100%;
+      cursor: pointer;
+
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .livepoker-rebate-section-title {
+    color: #000000;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
+
+.livepoker-rebate-game {
+  width: 100%;
+  height: 302px;
+  border-radius: 12px;
+  // border: 1px solid #51acff;
+  background-color: #fff;
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.livepoker-rebate-game-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .livepoker-rebate-game-bottom-left-title {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+  }
+  .livepoker-rebate-game-bottom-left-btn {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff0000;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.livepoker-rebate-game-info {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 20px 12px 12px;
+  border: 1px solid #acd4f6;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .title {
+    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 240px;
+    height: 26px;
+    margin: 0 auto;
+  }
+  .little-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .left {
+      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 64px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 23.33px;
+      color: #ffffff;
+      margin-right: 16px;
+    }
+    .right {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 18px;
+      color: #000000;
+    }
+  }
+}
+
+.livepoker-rebate-game-info-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+  vertical-align: middle;
+  th {
+    height: 36px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #fff;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    &:first-child {
+      border-top-left-radius: 12px;
+    }
+    &:last-child {
+      border-top-right-radius: 12px;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        &:first-child {
+          // border-bottom-left-radius: 12px;
+        }
+      }
+    }
+    &:nth-child(2) {
+      td {
+        &:last-child {
+          // border-bottom-right-radius: 12px;
+        }
+      }
+    }
+  }
+  td {
+    background: transparent;
+    border: 1px solid #acd4f6;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #000000;
+  }
+}
+
+.livepoker-rebate-game-bottom-rule {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 20px 12px 12px;
+  border: 1px solid #acd4f6;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title {
+    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 240px;
+    height: 20px;
+    margin-bottom: 20px;
+  }
+  .content {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #000000;
+    padding: 8px;
+    .item {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+
+      .item-num {
+        color: #ffffff;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 50%;
+        height: 16px !important;
+        width: 16px !important;
+        min-width: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      }
+
+      .hint {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 22.4px;
+        color: #ff0000;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+}
+
+.reward-info {
+  border: 1px solid rgba(215, 235, 255, 1);
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.reward-info-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.reward-info-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: black;
+
+  .amount {
+    color: #00a1ff;
+    font-weight: 600;
+  }
+}
+
+.tab-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+
+  .tab {
+    width: 160px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60px;
+    background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+    color: #818181;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.active {
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      color: white;
+    }
+  }
+}
+</style>

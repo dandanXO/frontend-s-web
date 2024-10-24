@@ -1,5 +1,6 @@
 import { EDITION } from "@/constant/edition";
 import { defineStore } from "pinia";
+import { getAppDownloadUrlFromServer } from "@/api/index/site";
 
 export const uiStore = defineStore("ui-store", {
   state: () => {
@@ -7,6 +8,7 @@ export const uiStore = defineStore("ui-store", {
       title: "",
       footer: true,
       orientation: "landscape",
+      isFetchingDownloadUrl: false,
       downloadUrl: "",
       maintenanceStartTime: "",
       maintenanceEndTime: "",
@@ -29,6 +31,18 @@ export const uiStore = defineStore("ui-store", {
     },
     setTitle(title) {
       this.title = title;
+    },
+    getAppDownloadUrl() {
+      this.isFetchingDownloadUrl = true;
+      this.downloadUrl = getAppDownloadUrlFromServer().then((res) => {
+        this.isFetchingDownloadUrl = false;
+        return res.downloadPageUrl
+      }).catch((err) => {
+          console.log(err);
+          this.isFetchingDownloadUrl = false;
+        }).finally(() => {
+          this.isFetchingDownloadUrl = false;
+        });
     }
   }
 });

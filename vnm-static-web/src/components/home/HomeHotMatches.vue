@@ -1,42 +1,10 @@
 <template>
-  <div class="hot-matches-wrapper">
-    <!--    <div class="euro-countdown">-->
-    <!--      <div class="euro-countdown-fly-01">-->
-    <!--        <img src="../../assets/home/eurocup-countdown-fly-01.png" />-->
-    <!--      </div>-->
-    <!--      <div class="euro-countdown-fly-02">-->
-    <!--        <img src="../../assets/home/eurocup-countdown-fly-02.png" />-->
-    <!--      </div>-->
-    <!--      <div class="euro-countdown-fly-03">-->
-    <!--        <img src="../../assets/home/eurocup-countdown-fly-03.png" />-->
-    <!--      </div>-->
-    <!--      <div class="euro-countdown-fly-04">-->
-    <!--        <img src="../../assets/home/eurocup-countdown-fly-04.png" />-->
-    <!--      </div>-->
-    <!--      <div class="euro-countdown-fly-05">-->
-    <!--        <img src="../../assets/home/eurocup-countdown-fly-05.png" />-->
-    <!--      </div>-->
-    <!--      <div class="euro-countdown-fly-06">-->
-    <!--        <img src="../../assets/home/eurocup-countdown-fly-06.png" />-->
-    <!--      </div>-->
-    <!--      <div class="euro-countdown-content">-->
-    <!--        <img src="../../assets/home/eurocup-countdown-content.png" />-->
-    <!--      </div>-->
-
-    <!--      <div class="euro-countdown-txt">-->
-    <!--        {{ $t("home.euroCountdown01") }} {{ $t("home.euroCountdown01a") }}-->
-    <!--        <div class="euro-countdown-num">-->
-    <!--          <div class="num">-->
-    <!--            <span>{{ countDay01 }}</span>-->
-    <!--          </div>-->
-    <!--          <div class="num">-->
-    <!--            <span>{{ countDay02 }}</span>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--        {{ $t("home.euroCountdown02") }}-->
-    <!--      </div>-->
-    <!--    </div>-->
-
+  <div class="hot-matches-placeholder-wrapper" v-if="isFetchingHotMatches">
+    <div class="hot-matches-placeholder">
+      <img src="../../assets/images/home/icon-hot-matches.png" alt="hot matches" />
+      <h1>{{ $t('common.loading') }}...</h1></div>
+  </div>
+  <div v-else class="hot-matches-wrapper">
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -44,11 +12,6 @@
         </div>
         {{ $t("home.hotMatches") }}
       </div>
-      <!--      <div>-->
-      <!--        <router-link class="standard-button sm-btn btn-color-blue" to="/sports">-->
-      <!--          {{ $t("common.betnow") }}-->
-      <!--        </router-link>-->
-      <!--      </div>-->
     </div>
     <div class="hot-matches-container">
       <swiper
@@ -127,6 +90,7 @@ const hotMatches = ref([]);
 const hotMatchesImgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 const onSwiper = (swiper) => {};
 const modules = [Navigation, Pagination, Scrollbar, A11y];
+const isFetchingHotMatches = ref(false);
 
 const modalGame = ref(null);
 const openGame = (gameName, code, gameCode) => {
@@ -134,10 +98,18 @@ const openGame = (gameName, code, gameCode) => {
 };
 
 const loadHotMatches = () => {
+  isFetchingHotMatches.value = true;
+
   getHotMatches().then((res) => {
+    isFetchingHotMatches.value = false;
+
     if (res.code === 0) {
       hotMatches.value = res.data;
     }
+  }).catch(() => {
+    isFetchingHotMatches.value = false;
+  }).finally(() => {
+    isFetchingHotMatches.value = false;
   });
 };
 
@@ -195,6 +167,23 @@ onMounted(() => {
   loadHotMatches();
 });
 </script>
+
+<style lang="scss" scoped>
+.hot-matches-placeholder-wrapper {
+  width: 1350px;
+  height: 400px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .hot-matches-placeholder {
+    max-width: 1350px;
+    margin: 25px auto 0px;
+    text-align: center;
+  }
+}
+</style>
 
 <style lang="scss">
 @keyframes fly {
@@ -399,7 +388,6 @@ onMounted(() => {
     padding: 24px 24px;
     display: flex;
     justify-content: space-between;
-    width: 100%;
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
     position: relative;
     flex-wrap: wrap;

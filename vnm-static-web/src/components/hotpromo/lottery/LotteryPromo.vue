@@ -111,7 +111,6 @@ import { userStore } from "@/store";
 import { submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
-import emptyData from "@/components/emptyData.vue";
 
 const { t } = useI18n();
 const store = userStore();

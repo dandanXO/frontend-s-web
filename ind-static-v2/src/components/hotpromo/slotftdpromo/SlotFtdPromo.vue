@@ -6,9 +6,10 @@
     </div>
 
     <div class="text-warning" v-if="isFtdPromoEnded">
-      Sorry, account have already get bouns. Please join to our other activity .
+      {{ params.desc_warning }}
     </div>
   </div>
+
 </template>
 <script setup>
 import { computed, onMounted } from "vue";
@@ -32,7 +33,11 @@ const isFtdPromoEnded = computed(() => {
 
 const gotoDepositPage = () => {
   const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
-  router.push(redirectPage);
+  // if (window.location.pathname === "/promotion") {
+    // window.location.href = `xfapp:${redirectPage}`;
+  // } else {
+    router.push(redirectPage);
+  // }
 };
 
 const loadAppTabs = () => {

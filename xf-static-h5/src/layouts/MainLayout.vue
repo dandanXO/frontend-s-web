@@ -223,17 +223,13 @@ export default defineComponent({
             }
           }
         } else if (route.path === "/promotion") {
-          hasPage.value = true;
+          if (route.query.noheader) {
+            hasPage.value = false;
+          } else {
+            hasPage.value = true;
+          }
           pageName.value = "优惠详情";
           prevPage.value = "";
-          // if (route.query.name) {
-          //   if (route.query.fromAccount) {
-          //     prevPage.value = "account/promotion";
-          //   } else {
-          //     hasPage.value = true;
-          //     prevPage.value = "promo";
-          //   }
-          // }
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -299,6 +295,9 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "消息中心";
+          if (route.query.id) {
+            prevPage.value = "account/message";
+          }
         } else if (route.path === "/account/mail/inbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;

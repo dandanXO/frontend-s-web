@@ -19,6 +19,7 @@ import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useRouter } from "vue-router";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "App",
@@ -293,6 +294,12 @@ export default defineComponent({
       // console.log("Ok Online.");
       const fpPromise = FingerprintJS.load();
 
+      if (isAndroid()) {
+        const info = await App.getInfo();
+        var current_version = info.version;
+      } else {
+        var current_version = "";
+      }
       const fp = await fpPromise;
       const result = await fp.get();
       const excludes = { value: ["timezone", "timeZoneOffset"] };
@@ -311,7 +318,8 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: theSid,
-            siteCode: process.env.SITE
+            siteCode: process.env.SITE,
+            appVersion: current_version
           })
         );
       }

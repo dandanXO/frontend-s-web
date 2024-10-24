@@ -148,7 +148,12 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
+              <BlastPremierMarquee
+                v-if="
+                  selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
+                  selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure'
+                "
+              />
               <div
                 class="inner"
                 :class="{
@@ -208,7 +213,10 @@
                   }"
                 >
                   <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
-                    <NBAWaterBattle />
+                    <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
+                  </div>
+                  <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
+                    <YallaCompass :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
@@ -318,7 +326,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onActivated, reactive, watch, computed } from "vue";
+import { ref, defineComponent, onActivated, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -336,12 +344,15 @@ import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/Blast
 import { cached } from "src/boot/cache";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
+const YallaCompass = defineAsyncComponent(() => import("src/components/hotpromo/yalla-compass/YallaCompass.vue"));
+
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     BlastPremierMarquee,
-    NBAWaterBattle
+    NBAWaterBattle,
+    YallaCompass
   },
   setup() {
     const notify = useNotify();

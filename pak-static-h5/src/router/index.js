@@ -6,6 +6,8 @@ import { createRouter, createMemoryHistory, createWebHistory, createWebHashHisto
 import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
 import { Platform, useQuasar } from "quasar";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 
 /*
  * If not building with SSR mode, you can
@@ -48,6 +50,7 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/verification" ||
       to.path === "/deposit" ||
       to.path === "/withdraw" ||
+      to.path === "/promotion" ||
       to.path === "/language" ||
       to.path === "/maintenance"
     ) {
@@ -56,100 +59,23 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
-    if (Platform.is.capacitor && Platform.is.android) {
-      StatusBar.hide();
+    if (from.path === "/promotion") {
+      // alert(to.path);
+      window.location.href = "xfapp:" + to.fullPath;
     }
 
-    // FB tracking
-    console.log("Fb track.");
-    console.log(window.location.href);
-    const getPixelId = sessionStorage.getItem("FB_PIXEL_ID");
-    console.log(getPixelId);
-    if (getPixelId) {
-      fbq("init", getPixelId);
-      fbq("track", "PageView");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("5shl8hk3.cc") > -1) {
-      console.log("1");
-      fbq("init", "864258358743236");
-      fbq("track", "PageView");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("79hgkvfs.cc") > -1) {
-      console.log("2");
-      fbq("init", "1187424955646133");
-      fbq("track", "PageView");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("p5jm1g90.cc") > -1) {
-      console.log("3");
-      fbq("init", "530500759603360");
-      fbq("track", "PageView");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("zp6marm8.cc") > -1) {
-      console.log("4");
-      fbq("init", "404291659176444");
-      fbq("init", "733054452322766");
-      fbq("track", "PageView");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDE=") > -1) {
-      console.log("6");
-      fbq("init", "1072977007651137");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "1072977007651137");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDI=") > -1) {
-      console.log("7");
-      fbq("init", "1254087609071881");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "1254087609071881");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDM=") > -1) {
-      console.log("8");
-      fbq("init", "529778216442169");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "529778216442169");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDQ=") > -1) {
-      console.log("9");
-      fbq("init", "943006857638809");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "943006857638809");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDU=") > -1) {
-      console.log("10");
-      fbq("init", "555685270320864");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "555685270320864");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDY=") > -1) {
-      console.log("11");
-      fbq("init", "1042339097592319");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "1042339097592319");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDc=") > -1) {
-      console.log("12");
-      fbq("init", "484509444603628");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "484509444603628");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDg=") > -1) {
-      console.log("13");
-      fbq("init", "443298088242926");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "443298088242926");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMDk=") > -1) {
-      console.log("14");
-      fbq("init", "1008797584264347");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "1008797584264347");
-      user.isFbPixel = true;
-    } else if (window.location.href.indexOf("MDM2NjU1NDMwMTA=") > -1) {
-      console.log("15");
-      fbq("init", "1706878899881106");
-      fbq("track", "PageView");
-      sessionStorage.setItem("FB_PIXEL_ID", "1706878899881106");
-      user.isFbPixel = true;
+    if (to.path === "/promotion") {
+      // debugger;
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+      user.token = to.query.token;
+    }
+
+    if (Platform.is.capacitor && Platform.is.android) {
+      StatusBar.hide();
     }
 
     // if (to.name === "referCode") {
@@ -166,6 +92,7 @@ export default route(function (/* { store, ssrContext } */) {
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
+      localStorage.removeItem("REG_REFERRAL_CODE");
       next(`/register`);
     }
 

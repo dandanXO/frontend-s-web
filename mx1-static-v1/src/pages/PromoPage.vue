@@ -1,6 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -69,6 +69,9 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -91,6 +94,7 @@
                   }"
                 >
                   <div class="top-float" v-if="!selectedParam || (selectedParam && !selectedParam.hidefloat)">
+                    <div class="top-subtitle" v-if="selectedPromo.subtitle">{{ selectedPromo.subtitle }}</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div class="promo-content-inner" v-if="!selectedParam || (selectedParam && !selectedParam.hidetitle)">
@@ -105,7 +109,9 @@
                   <div
                     class="join-container"
                     v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
-                    :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
+                    :style="{
+                      bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
+                    }"
                   >
                     <div class="promo-date">
                       <div class="date-txt">{{ $t("promo.promotionEnds") }}</div>
@@ -137,10 +143,17 @@
     ref="allGames"
     :closeFullGameDialog="closeFullGameDialog"
   ></GameModal>
+
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
+    <div class="dialog-mid-text">
+      <q-spinner class="q-mx-sm" color="white" size="24px" :thickness="5" />
+      Loading...
+    </div>
+  </q-dialog>
 </template>
 
 <script lang="js">
-import { computed, defineComponent, onActivated, onBeforeUnmount, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onActivated, onBeforeUnmount, reactive, ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
@@ -151,6 +164,8 @@ import { userStore } from "@/stores/index";
 import { t } from "@/boot/lang";
 import { useUI } from "@/stores/ui";
 import { useQuasar } from "quasar";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -184,6 +199,19 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
 
+    const isFetchingPromo = ref(false);
+    const extensionState = ref(false);
+    const extensionToken = ref("");
+    const isOpenExtension = ref(false);
+
+    const checkExtension = () => {
+      if (route.path === "/promotion") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+    };
+
     const tab = ref("all");
     const tabItems = [
       { name: "all", label: "全部" }
@@ -216,7 +244,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if (route.query.name) {
+      if (route.query.name && !isAndroid()) {
         isPromoDetail.value = true;
       }
 
@@ -229,7 +257,7 @@ export default defineComponent({
     watch(
       () => route.query,
       () => {
-        if (route.query === null) {
+        if (route.query === null || isAndroid()) {
           isPromoDetail.value = false;
         } else {
           isPromoDetail.value = route.query.name;
@@ -259,12 +287,16 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      router.push("/promo");
+      if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/promo");
+      }
       isPromoDetailPage.value = false;
     };
 
     const isFtdPromoEnded = computed(() => {
-      if (selectedPromo.value && selectedPromo.value.promoCode === "id1-slot-ftd" && store.ftd === true) {
+      if (selectedPromo.value && selectedPromo.value.promoCode === "mx1-slot-ftd" && store.ftd === true) {
         return true;
       }
 
@@ -307,13 +339,65 @@ export default defineComponent({
         } else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
           router.push({ path: "/activities-details" });
         } else {
-          if (route.query.fromAccount) {
-            router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+          // if (route.query.fromAccount) {
+          //   router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+          // } else {
+          //   router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+          // }
+
+          if (extensionState.value) {
+            isPromoDetail.value = true;
+
+            selectedPromo.value = promo;
+            if (isAndroid()) {
+              LocalStorage.set("TOKEN", extensionToken.value, 86400);
+            } else {
+              SessionStorage.set("TOKEN", extensionToken.value);
+            }
+            store.token = extensionToken.value;
+          } else if (isAndroid()) {
+            // store.h5Url = "http://192.168.68.105:9090/";
+            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
+            // alert(preUrl);
+            console.log(preUrl);
+            // promoSrc.value= preUrl;
+            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
+            isOpenExtension.value = true;
+
+            ref.addEventListener("loadstart", function (event) {
+              var url = event.url;
+              // alert("This" + url);
+              if (url.indexOf("xfapp:") > -1) {
+                var message = url.split("xfapp:")[1];
+                console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                // alert(message);
+                ref.close();
+                router.push(message);
+              }
+            });
+
+            ref.addEventListener('loadstop', function() {
+              setTimeout(()=>{
+                ref.show();
+              },500)
+            });
+
+            ref.addEventListener("exit", function () {
+              isOpenExtension.value = false;
+            });
+
           } else {
-            router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+            if (route.query.fromAccount) {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+              } else {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              }
+              if(!isAndroid()){
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+                selectedPromoDate.value = '';
+              }
           }
-          isPromoDetail.value = true;
-          selectedPromo.value = promo;
         }
       }
     };
@@ -329,7 +413,10 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = "/opt-session/promo/page";
+      const randNum = Math.floor(Math.random() * 1000) + 1;
+      const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
+
+      isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api
         .get(platformApiUrl)
@@ -340,21 +427,24 @@ export default defineComponent({
             // promoState.promoList.push(...res.data);
 
             promoItems.forEach((element) => {
-              if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
                 // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              } else {
+              // } else {
                 promoState.promoList.push(element);
 
                 if (route.query.name && String(element.redirectUrl) === route.query.name) {
                   showPromoDetails(element);
                 }
-              }
+              // }
             });
 
             switchPromoType(promoState.active);
+
+            isFetchingPromo.value = false;
           }
         })
         .catch((e) => {
+          isFetchingPromo.value = false;
           console.log("error", e);
         });
     };
@@ -485,6 +575,10 @@ export default defineComponent({
       fullGameDialog.value = false;
     };
 
+    onMounted(() => {
+      checkExtension();
+    });
+
     return {
       promoState,
       promoTypes,
@@ -515,7 +609,10 @@ export default defineComponent({
       route,
       allGames,
       closeFullGameDialog,
-      isFtdPromoEnded
+      isFtdPromoEnded,
+      isFetchingPromo,
+      extensionState,
+      isOpenExtension
     };
   }
 });
@@ -1139,5 +1236,34 @@ export default defineComponent({
 
 .btn-disabled {
   filter: brightness(0.6);
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  // background: #3e1474;
+  background-size: contain;
+
+  .dialog-mid-text {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    top: 48%;
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>

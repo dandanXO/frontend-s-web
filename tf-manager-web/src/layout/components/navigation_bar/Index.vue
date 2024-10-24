@@ -36,6 +36,7 @@
           </div>
           <div class="text-2">
             <router-link
+              v-if="hasPermission(['sys:withdraw:simple:list']) || hasPermission(['sys:withdraw:apply'])"
               :to="{
                 path: `/withdraw/withdraw-process-simple/apply`,
                 force: true,
@@ -47,6 +48,23 @@
               >
                 {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}:
                 <span>{{ applyWithdrawCount }}</span>
+              </el-link>
+            </router-link>
+          </div>
+          <div class="text-2">
+            <router-link
+              v-if="hasPermission(['sys:withdraw:simple:list:risk'])"
+              :to="{
+                path: `/withdraw/withdraw-process-simple/apply-risk`,
+                force: true,
+              }"
+            >
+              <el-link
+                :disabled="!hasPermission(['sys:withdraw:simple:list:risk'])"
+                type="primary"
+              >
+                {{ $t('realtimeStatistics.APPLY_WITHDRAW_RISK') }}:
+                <span>{{ applyWithdrawRiskCount }}</span>
               </el-link>
             </router-link>
           </div>
@@ -199,6 +217,7 @@ export default {
     const selectedSite = ref(null);
     const selectedData = ref(null);
     const applyWithdrawCount = ref(0);
+    const applyWithdrawRiskCount = ref(0);
     const message = ref(null);
 
     async function loadMemberStatistics() {
@@ -218,6 +237,7 @@ export default {
 
     function updateApplyWithdrawCount() {
       applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0
+      applyWithdrawRiskCount.value = sessionStorage.getItem('WITHDRAW_RISK') || 0
       updateSiteTitle()
     }
 
@@ -401,6 +421,7 @@ export default {
       updateData,
       changeSite,
       applyWithdrawCount,
+      applyWithdrawRiskCount,
       updateApplyWithdrawCount,
       message,
     }

@@ -4,7 +4,6 @@ import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
-// import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
 

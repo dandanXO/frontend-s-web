@@ -5,7 +5,6 @@
         <!--        <img :src="require(`../../assets/images/account/${trans.icon}_record.png`)">-->
         {{ trans.name }}
         <div class="right">
-          <img src="../../assets/images/account/account-right-small.png" />
         </div>
       </router-link>
     </div>
@@ -16,7 +15,7 @@ import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
-const {t} = useI18n();
+const { t } = useI18n();
 const transitList = ref([]);
 
 const getLists = () => {
@@ -98,10 +97,10 @@ onMounted(() => {
       position: absolute;
       right: 20px;
 
-      img {
-        width: 10px;
-        height: auto;
-      }
+      width: 10px;
+      height: 18px;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAXBAMAAAAiiNiyAAAAIVBMVEUAAACjqbqlq7ykrLyjqryjqbuiqbqkq7uiqLujq7ukqrseWcveAAAACnRSTlMAgH9f75Cgj3BAfe3x3AAAAD9JREFUCNdjqFJgAAOvRRC6axVEgHEVVECKfAG2VQvA9JRVASCKedVSMNdqlQCEuxAPlwnK1YJwGaBchhAIFwAXshknQDlDagAAAABJRU5ErkJggg==');
+      background-size: 100% 100%;
     }
   }
 }

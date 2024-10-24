@@ -1,6 +1,6 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -14,18 +14,6 @@
       <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
   </div>
-
-  <!-- <q-tabs
-    scroll-target=".q-tab--active"
-    v-if="!isPromoDetail"
-    v-model="tab"
-    align="justify"
-    class="promo-cat-tab extension-tab"
-  >
-    <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
-  </q-tabs> -->
-
-  <!-- <pre>promoState.promoList{{ promoState.promoList }}</pre> -->
 
   <div class="promo-container">
     <div class="promo">
@@ -85,6 +73,11 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <!-- <div class="loader" v-if="isFetchingPromo" /> -->
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
+
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -193,6 +186,10 @@
     <MoneyRainModal />
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
+
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
+    <div class="dialog-mid-text">Loading...</div>
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -202,6 +199,8 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
@@ -226,6 +225,7 @@ export default defineComponent({
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
+
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
       promoList: []
@@ -247,6 +247,20 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+
+    const isOpenExtension = ref(false);
+
+    const isFetchingPromo = ref(false);
+    const extensionState = ref(false);
+    const extensionToken = ref("");
+
+    const checkExtension = () => {
+      if (route.path === "/promotion") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
+    };
 
     // const tab = ref("all");
     // const tabItems = [
@@ -281,7 +295,7 @@ export default defineComponent({
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
-      if (route.query.name) {
+      if (route.query.name && !isAndroid()) {
         isPromoDetail.value = true;
       }
 
@@ -291,19 +305,20 @@ export default defineComponent({
       store.getUnreadTotal();
     });
 
-    // onMounted(() => {
-    //   loadAll();
-    // });
+    onMounted(() => {
+      checkExtension();
+    });
 
     watch(
       () => route.query,
       () => {
-        if (route.query === null) {
+        if (route.query === null || isAndroid()) {
           isPromoDetail.value = false;
         } else {
           isPromoDetail.value = route.query.name;
           ui.setScrollPosition("vertical", 0, 200);
         }
+        if (currentPromoDetail.value) showPromoDetails(currentPromoDetail.value);
       }
     );
 
@@ -328,7 +343,11 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      router.push("/promo");
+      if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/promo");
+      }
       isPromoDetailPage.value = false;
     };
 
@@ -357,9 +376,8 @@ export default defineComponent({
     const isMoneyRainModal = ref(false);
 
     const showPromoDetails = (promo) => {
+      // debugger;
       if (!store.token) {
-        // isDisplayLogin.value = true
-
         $q.notify({
           color: "negative",
           position: "top",
@@ -374,13 +392,62 @@ export default defineComponent({
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
           } else {
-            if (route.query.fromAccount) {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+            if (extensionState.value) {
+              isPromoDetail.value = true;
+
+              selectedPromo.value = promo;
+              if (isAndroid()) {
+                LocalStorage.set("TOKEN", extensionToken.value, 86400);
+              } else {
+                SessionStorage.set("TOKEN", extensionToken.value);
+              }
+              store.token = extensionToken.value;
+            } else if (isAndroid()) {
+              // store.h5Url = "http://192.168.68.95:9090";
+              const tgDomain = "https://" + store.evip;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              // alert(preUrl);
+              console.log(preUrl);
+              // promoSrc.value= preUrl;
+              var ref = cordova.InAppBrowser.open(
+                preUrl,
+                "_blank",
+                "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes"
+              );
+              isOpenExtension.value = true;
+
+              ref.addEventListener("loadstop", function () {
+                setTimeout(() => {
+                  ref.show();
+                }, 500);
+              });
+
+              ref.addEventListener("loadstart", function (event) {
+                var url = event.url;
+                // alert("This" + url);
+                if (url.indexOf("xfapp:") > -1) {
+                  var message = url.split("xfapp:")[1];
+                  console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                  // alert(message);
+                  ref.close();
+                  router.push(message);
+                }
+              });
+
+              ref.addEventListener("exit", function () {
+                isOpenExtension.value = false;
+              });
             } else {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              if (route.query.fromAccount) {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+              } else {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              }
+              if (!isAndroid()) {
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+              }
             }
-            isPromoDetail.value = true;
-            selectedPromo.value = promo;
           }
         }
       }
@@ -394,10 +461,16 @@ export default defineComponent({
       } else {
         filteredArray.value = promoState.promoList;
       }
+
+      // remove to show faq as promo item at promo list
+      filteredArray.value = [...filteredArray.value].filter(({ promoCode }) => promoCode !== "pak-faq");
     };
 
     const loadAll = () => {
       const platformApiUrl = "/opt-session/promo/page";
+
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = true;
 
       api
         .get(platformApiUrl)
@@ -406,23 +479,27 @@ export default defineComponent({
             promoState.promoList = [];
             var promoItems = res.data;
             // promoState.promoList.push(...res.data);
+            promoState.promoList.push(...promoItems);
+            if (currentPromoDetail.value) showPromoDetails(currentPromoDetail.value);
+            // promoItems.forEach((element) => {
+            //   // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            //   // } else {
+            //   promoState.promoList.push(element);
 
-            promoItems.forEach((element) => {
-              if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-                // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              } else {
-                promoState.promoList.push(element);
-
-                if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                  showPromoDetails(element);
-                }
-              }
-            });
+            //   if (route.query.name && String(element.redirectUrl) === route.query.name) {
+            //     showPromoDetails(element);
+            //   }
+            //   // }
+            // });
 
             switchPromoType(promoState.active);
+
+            isFetchingPromo.value = false;
           }
         })
         .catch((e) => {
+          isFetchingPromo.value = false;
           console.log("error", e);
         });
     };
@@ -578,6 +655,13 @@ export default defineComponent({
     const parsedParamSub = computed(() => parsedParam.value.sub || "");
     const parsedParamDate = computed(() => parsedParam.value.date || "");
 
+    const currentPromoDetail = computed(() => {
+      if (!route.query.name || !promoState.promoList.length) return null;
+
+      const targetPromo = promoState.promoList.find((promo) => promo.redirectUrl === route.query.name);
+      return targetPromo || null;
+    });
+
     return {
       promoState,
       promoTypes,
@@ -611,13 +695,29 @@ export default defineComponent({
       parsedParamSub,
       parsedParamDate,
       MoneyRainModal,
-      isMoneyRainModal
+      isMoneyRainModal,
+      isFetchingPromo,
+      extensionState,
+      isOpenExtension
       // MediaSettingsComponent
     };
   }
 });
 </script>
 <style lang="scss" scoped>
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 150px;
+}
+
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;
@@ -823,11 +923,6 @@ export default defineComponent({
       }
 
       .promo-list-wrapper {
-        // margin-top: 30px;
-        // display: grid;
-        // margin-top: 20px;
-        // grid-template-columns: 1fr;
-
         display: flex;
         margin-top: 20px;
         flex-direction: column;
@@ -844,14 +939,8 @@ export default defineComponent({
           overflow: hidden;
           // padding-top: 40px;
           border-radius: 17px;
-          // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
           box-shadow: 0px 7.5px 20px 0px #1411321a;
           background: rgba(255, 255, 255, 0.1);
-
-          img {
-          }
-
-          cursor: pointer;
 
           .promo-img-wrapper {
             position: relative;
@@ -864,12 +953,6 @@ export default defineComponent({
               background-position: center center;
               background-size: 100% 100%;
               margin: 0;
-              // border-radius: 10px 10px 0 0;
-              // border-radius: 17px;
-
-              &:hover {
-                transform: scale(1.2);
-              }
 
               display: flex;
               // height: 160px;
@@ -877,10 +960,12 @@ export default defineComponent({
               align-items: flex-start;
               gap: 30px;
 
+              &:hover {
+                transform: scale(1.2);
+              }
+
               .promo-content {
                 width: 100%;
-                // width: unset;
-                // height: 100%;
 
                 &.isDesktop {
                   display: block;
@@ -898,17 +983,6 @@ export default defineComponent({
           }
 
           .promo-info {
-            // position: absolute;
-            // text-align: right;
-            // border-radius: 0 0 10px 10px;
-
-            // left: 0;
-            // bottom: 0;
-            // width: 100%;
-            // background-color: #272c3d;
-            // display: flex;
-            // justify-content: flex-end;
-            // align-items: center;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -917,7 +991,7 @@ export default defineComponent({
             .viewdetail {
               // background: #002a35;
               color: #ffffff;
-              font-size: 14px;
+
               // position: absolute;
               position: relative;
               width: 100%;
@@ -927,38 +1001,12 @@ export default defineComponent({
               overflow: hidden;
               line-height: 40px;
               padding: 0 100px 0 16px;
-              font-weight: 500;
+
               // background: linear-gradient(356.25deg, rgba(0, 0, 0, 0.6) -0.21%, rgba(0, 0, 0, 0.6) 93.65%);
               background: #2b2b2b;
               font-family: Poppins;
               font-size: 15.3px;
               font-weight: 700;
-
-              // &:before {
-              //   background: #043d4f;
-              //   content: "";
-              //   display: block;
-              //   height: 100%;
-              //   position: absolute;
-              //   right: 0;
-              //   top: 0;
-              //   width: 70px;
-              // }
-
-              // &:after {
-              //   border-left: 20px solid transparent;
-              //   border-right: 30px solid transparent;
-              //   border-top: 30px solid #043d4f;
-              //   clear: both;
-              //   content: "";
-              //   display: block;
-              //   height: 0;
-              //   position: absolute;
-              //   right: 50px;
-              //   top: 0;
-              //   transform: rotate(180deg);
-              //   width: 0;
-              // }
             }
 
             .detail-arrow {
@@ -976,16 +1024,6 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       .banner-container {
-        &:after {
-          content: "";
-          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 80px;
-          width: 100%;
-        }
-
         width: 100%;
 
         .promo-bg {
@@ -994,6 +1032,16 @@ export default defineComponent({
           background-position: center center;
           overflow: hidden;
           height: 220px;
+        }
+
+        &:after {
+          content: "";
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 80px;
+          width: 100%;
         }
       }
 
@@ -1051,7 +1099,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            // background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+
             background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
 
             &:first-child {
@@ -1077,7 +1125,6 @@ export default defineComponent({
         }
 
         .hot-promo {
-          // background: #272c3d;
           border-radius: 10px;
           // display: none;
         }
@@ -1089,24 +1136,6 @@ export default defineComponent({
           padding: 20px;
           border-radius: 10px;
           overflow: auto;
-          // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
-          // }
         }
       }
     }
@@ -1314,5 +1343,33 @@ export default defineComponent({
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(#000000b3, #000000b3);
+  background-size: contain;
+
+  .dialog-mid-text {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    top: 48%;
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>

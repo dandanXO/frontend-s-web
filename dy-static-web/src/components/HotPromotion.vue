@@ -21,7 +21,6 @@
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
     <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
-    <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
     <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A'"></AsianCup2024>
     <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball'"></BasketballHot>
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
@@ -81,6 +80,10 @@
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode"/>
     <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode"/>
+    <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
+    <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
+    <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
+    
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -125,7 +128,6 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import EsportQuiz2 from "../components/hotpromo/esportquiz2/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
-import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
 import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
@@ -159,6 +161,9 @@ import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMyt
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 import S14VotePromo from "@/components/hotpromo/s14-vote/S14VotePromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
+import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
+import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
+
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -169,6 +174,7 @@ import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
 import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
 import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
+import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -197,7 +203,6 @@ export default defineComponent({
     EsportQuiz2,
     LotteryPromo,
     PrivilegeInvite,
-    GiftPromo,
     AsianCup2024,
     BasketballHot,
     LPLSummer,
@@ -231,7 +236,10 @@ export default defineComponent({
     SubmitClaimPromo,
     S14VotePromo,
     Dota2Pgl,
-    IemMasterPromo
+    IemMasterPromo,
+    PullbackTide,
+    Cba30Dream,
+    ElisaGift
   },
   props: {
     list: {

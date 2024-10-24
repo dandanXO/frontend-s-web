@@ -175,7 +175,16 @@
       <el-table-column
         prop="totalPayout"
         :label="t('reportGame.gamePayoutAmountTotal')"
-      />
+      >
+        <template #default="{row}">
+          $ <span
+            v-formatter="{
+              data: row.totalPayout,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="totalWin"
         :label="t('reportGame.gameWinLossTotal')"
@@ -538,7 +547,7 @@ function getSummaries(param) {
         } else {
           sums[index] = 0
         }
-        if (index === 5 || index === 6) {
+        if (index === 5 || index === 6 || index === 7) {
           sums[index] =
             '$ ' +
             sums[index].toLocaleString('en-US', {

@@ -8,10 +8,14 @@
       </router-link>
       <div>
         <div class="account-item is-active">
-          <span>{{ $t("lang.transfer_withdraw") }}</span>
+          <span>{{ isAutoWithdrawal ? $t("lang.transfer_quickWithdraw") : $t("lang.transfer_withdraw") }}</span>
         </div>
       </div>
     </div>
+    <q-btn v-if="store.memberType === 'TEST' && !isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+        <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+        <span>{{ $t("lang.transfer_upgradeWithdraw") }}</span>
+    </q-btn>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -141,7 +145,9 @@
             clearable
           >
             <template v-slot:prepend>
-              <img src="../../assets/images/login/password-icon.png" width="24" />
+              <div style="width: 28px; display: flex; align-items: center">
+                <div class="password-icon" />
+              </div>
             </template>
             <template v-slot:append>
               <q-icon
@@ -191,20 +197,26 @@
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 2">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+              <span style="flex: 3" class="bg-neontb text-neontb">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27">
-              <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+              <span style="flex: 2; white-space: nowrap">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
+              <span style="flex: 3" class="bg-neontb text-neontb">
                 {{
                   selectedWithdrawalMethod &&
                   (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
+                    (
+                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                      selectedWithdrawalMethod.withdrawFee
+                    ).toFixed(2) < 0)
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                    : (
+                        withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                        selectedWithdrawalMethod.withdrawFee
+                      ).toFixed(2)
                 }}
                 USDT
               </span>
@@ -224,7 +236,9 @@
             </div>
           </div>
 
-          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("lang.withdraw_usdtspecialnote", {fee:selectedWithdrawalMethod.withdrawFee}) }}</div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            {{ $t("lang.withdraw_usdtspecialnote", { fee: selectedWithdrawalMethod.withdrawFee }) }}
+          </div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -547,7 +561,7 @@ export default defineComponent({
         return true;
       }
       const usdtPattern = /^([1-9][0-9]*)$/;
-      return usdtPattern.test(withdrawInfo.amount) || "金额应为正数";
+      return usdtPattern.test(withdrawInfo.amount) || t("lang.withdraw_amt_positive");
     };
 
     const chooseCard = () => {
@@ -579,6 +593,35 @@ export default defineComponent({
       if (url) {
         window.open(url);
       }
+    };
+    const isAutoWithdrawal = computed(() => store.withdrawType === "AUTO_WITHDRAW");
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: t("lang.withdraw_upgrade")
+      });
+      api
+        .get("/session/updateAutoWithdraw")
+        .then(async (res) => {
+          if (res.code === 0) {
+            $q.notify({
+                color: "positive",
+                position: "top",
+                message: t("lang.successUpgradeQuick"),
+                icon: "check_circle_outline"
+              });
+
+            await store.getMemberInfo();
+          } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: res.message,
+              icon: "report_problem"
+            });
+          }
+        })
+        .finally(() => $q.loading.hide());
     };
 
     return {
@@ -612,7 +655,9 @@ export default defineComponent({
       isNewUser,
       checkNewUser,
       isValidUSDTAmt,
-      isPwd: ref(true)
+      isPwd: ref(true),
+      isAutoWithdrawal,
+      handleUpgradeClick
     };
   }
 });
@@ -648,6 +693,7 @@ export default defineComponent({
   box-shadow: $shadow-bg;
   background: $white;
 }
+
 .withdrawalmethod {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -733,10 +779,21 @@ export default defineComponent({
     }
   }
 }
+
 .selected-tip {
   color: $warning;
 }
 
+.upgrade-btn {
+  padding: 1px 12px;
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  text-transform: none;
+  img {
+    height: 30px;
+  }
+}
 .quick-withdraw-btn {
   width: 100%;
 }

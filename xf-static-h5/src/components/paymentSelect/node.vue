@@ -52,9 +52,9 @@
 
 <script>
 import { defineComponent, reactive } from "vue";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -222,6 +222,8 @@ $node-color: #33bcd4;
       // background: rgba(255,255,255, .2);
       .node-text {
         .node-txt-img {
+          border-width: 2px;
+          border-style: solid;
           border-color: $node-color;
 
           // &:before {
@@ -350,11 +352,11 @@ $node-color: #33bcd4;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        //box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         width: 60px;
         height: 60px;
         margin-bottom: 5px;
-        border: 2px solid #ddd;
+        //border: 1px solid #ddd;
         border-radius: 3px;
 
         img {

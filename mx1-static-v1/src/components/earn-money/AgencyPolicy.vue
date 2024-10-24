@@ -107,25 +107,25 @@
           <tr>
             <td>{{ $t("earnMoney.about.faq_06_table_you") }}</td>
             <td>8(1.0%)</td>
-            <td>Rp972,000K</td>
+            <td>Mx$194,400</td>
             <td>49</td>
           </tr>
           <tr>
             <td>A</td>
             <td>8(1.0%)</td>
-            <td>Rp760,000K</td>
+            <td>Mx$152,000</td>
             <td>35</td>
           </tr>
           <tr>
             <td>B</td>
             <td>6(0.8%)</td>
-            <td>Rp210,000K</td>
+            <td>Mx$42,000</td>
             <td>13</td>
           </tr>
           <tr>
             <td>C</td>
             <td>1(0.3%)</td>
-            <td>Rp2,000K</td>
+            <td>Mx$400</td>
             <td>1</td>
           </tr>
         </tbody>
@@ -226,79 +226,79 @@ const columns2 = [
 const rows2 = [
   {
     level: "v13",
-    betAmount: `${store.currency.value}${convertToCommaAmount(160000000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(32000000)}`,
     teamMember: "377",
     rebate: "1.5"
   },
   {
     level: "v12",
-    betAmount: `${store.currency.value}${convertToCommaAmount(85000000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(17000000)}`,
     teamMember: "233",
     rebate: "1.4"
   },
   {
     level: "v11",
-    betAmount: `${store.currency.value}${convertToCommaAmount(50000000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(10000000)}`,
     teamMember: "144",
     rebate: "1.3"
   },
   {
     level: "v10",
-    betAmount: `${store.currency.value}${convertToCommaAmount(26000000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(5200000)}`,
     teamMember: "89",
     rebate: "1.2"
   },
   {
     level: "v9",
-    betAmount: `${store.currency.value}${convertToCommaAmount(14000000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(2800000)}`,
     teamMember: "55",
     rebate: "1.1"
   },
   {
     level: "v8",
-    betAmount: `${store.currency.value}${convertToCommaAmount(7500000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(1500000)}`,
     teamMember: "34",
     rebate: "1.0"
   },
   {
     level: "v7",
-    betAmount: `${store.currency.value}${convertToCommaAmount(4200000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(840000)}`,
     teamMember: "21",
     rebate: "0.9"
   },
   {
     level: "v6",
-    betAmount: `${store.currency.value}${convertToCommaAmount(2000000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(400000)}`,
     teamMember: "13",
     rebate: "0.8"
   },
   {
     level: "v5",
-    betAmount: `${store.currency.value}${convertToCommaAmount(1000000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(200000)}`,
     teamMember: "8",
     rebate: "0.7"
   },
   {
     level: "v4",
-    betAmount: `${store.currency.value}${convertToCommaAmount(350000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(70000)}`,
     teamMember: "5",
     rebate: "0.6"
   },
   {
     level: "v3",
-    betAmount: `${store.currency.value}${convertToCommaAmount(140000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(28000)}`,
     teamMember: "3",
     rebate: "0.5"
   },
   {
     level: "v2",
-    betAmount: `${store.currency.value}${convertToCommaAmount(5000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(1000)}`,
     teamMember: "2",
     rebate: "0.4"
   },
   {
     level: "v1",
-    betAmount: `${store.currency.value}${convertToCommaAmount(2000)}K`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(400)}`,
     teamMember: "1",
     rebate: "0.3"
   }
@@ -534,6 +534,42 @@ const rows3 = [
       border: 1px solid #fff;
       font-size: 16px;
     }
+  }
+}
+
+@media (max-width: 450px) {
+  :deep(.q-table th) {
+    font-size: 10px !important;
+  }
+  :deep(.q-table td) {
+    font-size: 10px !important;
+  }
+  :deep(.q-table tbody td) {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 410px) {
+  :deep(.q-table th) {
+    font-size: 9px !important;
+  }
+  :deep(.q-table td) {
+    font-size: 9px !important;
+  }
+  :deep(.q-table tbody td) {
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  :deep(.q-table th) {
+    font-size: 8px !important;
+  }
+  :deep(.q-table td) {
+    font-size: 8px !important;
+  }
+  :deep(.q-table tbody td) {
+    font-size: 8px !important;
   }
 }
 </style>

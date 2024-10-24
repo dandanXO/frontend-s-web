@@ -74,7 +74,6 @@ import { getLoggedInPlatformList, getPlatformGames, getPlatformListDisplay } fro
 import { slotPlatforms } from "@/shared/platformArray";
 import { useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
-import router from "@/router";
 
 const GAME_TYPE = "SLOT";
 
