@@ -13,8 +13,8 @@
         spaceBetween: 8
       }
     }" -->
-    <!-- :space-between="4" -->
-    <!-- :slidesPerView="5.5" -->
+  <!-- :space-between="4" -->
+  <!-- :slidesPerView="5.5" -->
   <swiper
     :modules="[Thumbs, Controller]"
     slides-per-view="auto"
@@ -22,7 +22,7 @@
     :scrollbar="{ draggable: true }"
     :mousewheel="true"
     :space-between="4"
-    :slidesPerView="5.5"
+    :slidesPerView="4.5"
     watch-slides-progress
     class="first-swiper"
     centered-slides
@@ -75,6 +75,9 @@ const swiperRef = ref(null);
 const handleClick = (tab) => {
   selectedTab.value = tab.name;
   emit("select-swiper", tab);
+
+  console.log("selectedTab.value:", selectedTab.value);
+  console.log("tab::", tab);
 };
 
 const scrollSlide = () => {
@@ -101,7 +104,7 @@ watch(selectedTab, scrollSlide);
 
 .first-swiper {
   // background: #fff;
-  background: #00bfd71a;
+  background: #183249;
   justify-content: flex-start;
   align-items: stretch;
   // backdrop-filter: blur(4px);

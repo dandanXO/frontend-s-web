@@ -79,33 +79,33 @@
       <router-view />
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <q-tabs v-model="tab" no-caps class="bg-primary text-white shadow-2" :breakpoint="0" align="justify">
-        <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          首页
-        </q-route-tab>
-        <q-route-tab to="/promo" name="promo">
-          <img class="inactive" src="../assets/images/index/menu/promo-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/promo-icon-hover.png" />
-          优惠
-        </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
-          <img class="inactive" src="../assets/images/index/menu/livechat-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png" />
-          客服
-        </q-route-tab>
-        <q-route-tab to="/affiliate" name="affiliate">
-          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png" />
-          加盟
-        </q-route-tab>
-        <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          我的
-        </q-route-tab>
-      </q-tabs>
+      <div class="bottom-nav">
+        <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
+          <q-route-tab to="/" name="home" exact>
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-home.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-home-hover.png" /></div>
+            首页
+          </q-route-tab>
+          <q-route-tab to="/promo" name="promo">
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-promo.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-promo-hover.png" /></div>
+            优惠
+          </q-route-tab>
+          <q-route-tab to="/account" name="account">
+            <div class="menu-icon account"><img src="../assets/images/index/menu/menu-account-hover.png" /></div>
+          </q-route-tab>
+          <q-route-tab to="/affiliate" name="affiliate">
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-affiliate.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-affiliate-hover.png" /></div>
+            加盟
+          </q-route-tab>
+          <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-livechat.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-livechat-hover.png" /></div>
+            客服
+          </q-route-tab>
+        </q-tabs>
+      </div>
     </q-footer>
   </q-layout>
 </template>
@@ -517,5 +517,14 @@ svg path {
   img {
     width: 100%;
   }
+}
+
+.bottom-nav {
+  font-size: 12px;
+  position: relative;
+  background-image: url("../assets/images/index/menu/menu-bg.png");
+  background-size: 100% 100%;
+  margin: 0 -6px;
+  background-color: transparent;
 }
 </style>

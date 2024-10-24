@@ -25,12 +25,14 @@
               v-model="loginForm.loginName"
               label="用户名"
               :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
-              color="white"
               label-color="brand"
               autocomplete="username"
+              clearable
+              rounded
+              standout
             >
               <template v-slot:prepend>
-                <q-icon style="padding-left: 6px" color="bright" name="person_outline" />
+                <q-icon color="bright" name="person_outline" size="24px" />
               </template>
             </q-input>
 
@@ -41,16 +43,17 @@
               label="用户密码"
               :type="isPwd ? 'password' : 'text'"
               :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
-              color="white"
               label-color="brand"
               autocomplete="current-password"
+              rounded
+              standout
             >
               <template v-slot:prepend>
-                <q-icon style="padding-left: 6px" color="bright" name="lock_open" />
+                <q-icon color="bright" name="lock_open" size="24px" />
               </template>
               <template v-slot:append>
                 <q-icon
-                  color="bright"
+                  color="grey"
                   :name="isPwd ? 'visibility_off' : 'visibility'"
                   class="cursor-pointer"
                   @click="isPwd = !isPwd"
@@ -68,14 +71,15 @@
                 (val) => (val && val.length > 0) || '请输入验证码',
                 (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
               ]"
-              color="white"
               label-color="brand"
+              rounded
+              standout
             >
               <template v-slot:append>
                 <img :src="verificationImg" @click="getCode" />
               </template>
               <template v-slot:prepend>
-                <q-icon style="padding-left: 6px" color="bright" name="security" />
+                <q-icon color="bright" name="security" size="24px" />
               </template>
             </q-input>
           </div>
@@ -87,14 +91,15 @@
               v-model="phoneLoginForm.phoneNumber"
               label="电话号码"
               :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]"
-              color="white"
               :readonly="phoneLoginForm.smsCodeId ? true : false"
               clearable
               label-color="brand"
               autocomplete="username"
+              rounded
+              standout
             >
               <template v-slot:prepend>
-                <q-icon color="bright" name="phone" />
+                <q-icon color="bright" name="phone" size="24px" />
               </template>
             </q-input>
             <q-input
@@ -106,8 +111,9 @@
               label="短信验证码"
               clearable
               :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
-              color="white"
               label-color="brand"
+              rounded
+              standout
             >
               <template v-slot:append>
                 <q-btn
@@ -119,7 +125,7 @@
                 />
               </template>
               <template v-slot:prepend>
-                <q-icon color="bright" name="security" />
+                <q-icon color="bright" name="security" size="24px" />
               </template>
             </q-input>
           </div>
@@ -147,16 +153,16 @@
           <q-btn
             @click.prevent="onSubmit"
             type="submit"
-            class="q-mt-lg"
+            class="q-mt-lg q-btn-blue"
             label="登录"
             width="100%"
-            color="brightbtn"
             style="width: 100%"
             rounded
+            size="lg"
           />
         </q-form>
 
-        <div class="q-pa-md text-center">
+        <div class="q-mt-lg q-pa-md text-center">
           忘记密码？
           <router-link class="forget-pwd-tip" to="/forgot-password">找回密码</router-link>
         </div>
@@ -521,9 +527,9 @@ export default defineComponent({
 
   .logo {
     margin: 0 auto;
-    padding: 75px 0 50px;
+    padding: 105px 0 50px;
     display: flex;
-    width: 90px;
+    width: 110px;
 
     img {
       width: 100%;
@@ -533,12 +539,12 @@ export default defineComponent({
   .q-tabs {
     background: rgba(113, 125, 146, 0.2);
     border-radius: 30px;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
   }
 
   .q-tab {
-    min-height: 40px;
+    min-height: 46px;
   }
 
   .q-tab__content {

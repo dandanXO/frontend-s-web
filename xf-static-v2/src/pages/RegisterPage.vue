@@ -1,23 +1,5 @@
 <template>
   <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
-    <!-- <q-input
-      ref="realNameRef"
-      hide-bottom-space
-      v-model="regForm.realName"
-      label="姓名"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入姓名',
-        (val) => (val && val.length >= 2) || '姓名至少两个字符',
-        isValidName
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="person_outline" />
-      </template>
-    </q-input> -->
-
     <q-input
       ref="loginNameRef"
       hide-bottom-space
@@ -30,10 +12,12 @@
         (val) => (val && /[a-zA-Z]/.test(val) && /[0-9]/.test(val)) || '用户名必须包含英文字母与数字',
         validLoginName
       ]"
-      color="white"
+      clearable
+      rounded
+      standout
     >
       <template v-slot:prepend>
-        <q-icon color="bright" name="person_outline" />
+        <q-icon color="bright" name="person_outline" size="24px" />
       </template>
     </q-input>
 
@@ -48,14 +32,15 @@
         (val) => (val && val.length > 0) || '请输入密码',
         (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
       ]"
-      color="white"
+      rounded
+      standout
     >
       <template v-slot:prepend>
-        <q-icon color="bright" name="lock_open" />
+        <q-icon color="bright" name="lock_open" size="24px" />
       </template>
       <template v-slot:append>
         <q-icon
-          color="bright"
+          color="grey"
           :name="isPwd ? 'visibility_off' : 'visibility'"
           class="cursor-pointer"
           @click="isPwd = !isPwd"
@@ -95,46 +80,21 @@
         (val) => val === regForm.password || '密码不一样',
         (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
       ]"
-      color="white"
+      rounded
+      standout
     >
       <template v-slot:prepend>
-        <q-icon color="bright" name="lock_open" />
+        <q-icon color="bright" name="lock_open" size="24px" />
       </template>
       <template v-slot:append>
         <q-icon
-          color="bright"
+          color="grey"
           :name="isCfmPwd ? 'visibility_off' : 'visibility'"
           class="cursor-pointer"
           @click="isCfmPwd = !isCfmPwd"
         />
       </template>
     </q-input>
-
-    <!-- <q-input
-      ref="telRef"
-      hide-bottom-space
-      v-model="regForm.telephone"
-      label="电话号码"
-      lazy-rules
-      maxlength="11"
-      clearable
-      :rules="[
-        (val) => (val && val.length > 7) || '请输入有效的电话号码',
-        isValidCnPhone
-      ]"
-      color="white"
-    >
-      <template v-slot:prepend>
-        <q-icon color="bright" name="smartphone" />
-      </template>
-      <template v-slot:append>
-        <q-btn
-          label="获取验证码"
-          color="brightbtn"
-          @click="openPhoneVeriDialog()"
-        />
-      </template>
-    </q-input> -->
 
     <q-input
       v-show="regForm.smsCodeId"
@@ -144,32 +104,16 @@
       v-model="regForm.smsCode"
       label="手机验证码"
       lazy-rules
-      color="white"
       maxlength="6"
       :rules="[(val) => (val && val.length > 3) || '请输入手机验证码']"
+      rounded
+      standout
     >
       <template v-slot:prepend>
-        <q-icon color="bright" name="shield" />
+        <q-icon color="bright" name="shield" size="24px" />
       </template>
     </q-input>
 
-    <!--    <q-input-->
-    <!--      ref="emailRef"-->
-    <!--      type="email"-->
-    <!--      hide-bottom-space-->
-    <!--      v-model="regForm.email"-->
-    <!--      label="电子邮件"-->
-    <!--      lazy-rules-->
-    <!--      :rules="[-->
-    <!--        (val) => (val && val.length > 0) || '请输入电子邮件',-->
-    <!--        isValidEmail-->
-    <!--      ]"-->
-    <!--      color="white"-->
-    <!--    >-->
-    <!--      <template v-slot:prepend>-->
-    <!--        <q-icon color="bright" name="mail_outline"/>-->
-    <!--      </template>-->
-    <!--    </q-input>-->
     <q-input
       ref="verificationRef"
       hide-bottom-space
@@ -178,17 +122,18 @@
       v-model="regForm.captchaCode"
       label="验证码"
       lazy-rules
-      color="white"
       :rules="[
         (val) => (val && val.length > 0) || '请输入验证码',
         (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
       ]"
+      rounded
+      standout
     >
       <template v-slot:append>
         <img :src="verificationImg" @click="getCode()" />
       </template>
       <template v-slot:prepend>
-        <q-icon color="bright" name="security" />
+        <q-icon color="bright" name="security" size="24px" />
       </template>
     </q-input>
 
@@ -199,9 +144,12 @@
       v-model="regForm.referrer"
       label="推荐码"
       hint="若不是合营下会员无需填写"
+      rounded
+      standout
     >
       <template v-slot:prepend>
-        <img src="../assets/images/login/login_name.png" width="20" />
+        <!-- <img src="../assets/images/login/login_name.png" width="20" /> -->
+        <q-icon color="bright" name="sports_kabaddi" size="24px" />
       </template>
     </q-input>
 
@@ -209,12 +157,13 @@
       <q-btn
         @click.prevent="onSubmit"
         type="submit"
-        class="q-mt-lg"
+        class="q-mt-lg q-btn-blue"
         label="注册"
         width="100%"
         color="brightbtn"
         style="width: 100%"
         rounded
+        size="lg"
       />
     </div>
   </q-form>

@@ -1,154 +1,176 @@
 <template>
   <div class="q-pa-md">
-    <div v-if="isH5" class="download-top-container">
-      <div class="download-top-box">
-        <q-icon name="close" @click="closeTopBox" />
-        <img class="headicon" src="../assets/images/index/head_logo.png" />
-        <div class="download-txt-container">
-          <span class="download-title text-bold">兴發 APP</span>
-          <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
-        </div>
-        <div class="buttons">
+    <div id="id-sticky-header">
+      <div v-if="isH5" class="download-top-container">
+        <div class="download-top-box">
+          <q-icon name="close" @click="closeTopBox" />
+          <img class="headicon" src="../assets/images/index/head_logo.png" />
+          <div class="download-txt-container">
+            <span class="download-title text-bold">兴發 APP</span>
+            <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
+          </div>
           <div class="buttons">
-            <!-- <q-btn
+            <div class="buttons">
+              <!-- <q-btn
             size="sm"
             href="/wap/login.html?way=reg"
             label="注册"
             color="dyblue"
           />
             href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
-            <q-btn
-              size="md"
-              :href="`${downloadUrl}`"
-              target="_blank"
-              label="立即下载"
-              color="brightbtn"
-              class="top-btn"
-            />
+              <q-btn
+                size="md"
+                :href="`${downloadUrl}`"
+                target="_blank"
+                label="立即下载"
+                color="brightbtn"
+                class="top-btn"
+              />
+            </div>
           </div>
+        </div>
+      </div>
+      <div v-if="isStickyGameType" class="home-header-section fixed-header">
+        <div class="q-pa-md">
+          <GameTypeSwiper
+            v-model="selectedTab"
+            scroll-to-center
+            :list="tabs"
+            @swiper="setSecondSwiper"
+            @select-swiper="setSelectedSwiper"
+          />
         </div>
       </div>
     </div>
 
-    <q-carousel
-      class="home"
-      autoplay
-      navigation
-      v-model="slide"
-      swipeable
-      transition-next="slide-left"
-      transition-prev="slide-right"
-      animated
-      infinite
-    >
-      <template v-slot:navigation-icon="{ active, onClick }">
-        <q-btn
-          padding="3px"
-          v-if="active"
-          size="xs"
-          color="white"
-          @click="onClick"
-          style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-        />
-        <q-btn
-          padding="3px"
-          v-else
-          size="xs"
-          color="transparent"
-          @click="onClick"
-          style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-        />
-      </template>
+    <div class="home-all-slider" v-scroll="onHomeScroll">
+      <q-carousel
+        class="home"
+        autoplay
+        navigation
+        v-model="slide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+      >
+        <template v-slot:navigation-icon="{ active, onClick }">
+          <q-btn
+            padding="3px"
+            v-if="active"
+            size="xs"
+            color="white"
+            @click="onClick"
+            style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+          />
+          <q-btn
+            padding="3px"
+            v-else
+            size="xs"
+            color="transparent"
+            @click="onClick"
+            style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+          />
+        </template>
 
-      <q-carousel-slide
-        v-for="(banner, i) in banners"
-        :key="i"
-        :name="i"
-        class="column no-wrap flex-center"
-        :img-src="imgURL + banner.mobileImageUrl"
-        @click="gotoPromo(banner)"
-      ></q-carousel-slide>
-    </q-carousel>
+        <q-carousel-slide
+          v-for="(banner, i) in banners"
+          :key="i"
+          :name="i"
+          class="column no-wrap flex-center"
+          :img-src="imgURL + banner.mobileImageUrl"
+          @click="gotoPromo(banner)"
+        ></q-carousel-slide>
+      </q-carousel>
 
-    <div class="midd">
-      <div class="station-notice-wrapper">
-        <div class="volume">
-          <img src="../assets/images/index/icon-sound-fill.svg" />
-        </div>
-        <marquee-text :repeat="5" :duration="announcementList.length * 120">
-          <div v-if="announcementList">
-            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
-            </span>
+      <div class="midd">
+        <div class="station-notice-wrapper">
+          <div class="volume">
+            <img src="../assets/images/index/icon-sound-fill.svg" />
           </div>
-        </marquee-text>
-      </div>
-      <!-- <div class="share" @click="router.push('/promo?id=35')">
+          <marquee-text :repeat="5" :duration="announcementList.length * 120">
+            <div v-if="announcementList">
+              <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                {{ a.content }}
+              </span>
+            </div>
+          </marquee-text>
+        </div>
+        <!-- <div class="share" @click="router.push('/promo?id=35')">
       <RiUserShared2Line />
     </div> -->
-    </div>
+      </div>
 
-    <div class="welcome-bar">
-      <div class="logo"><img src="../assets/logo.png" /></div>
-      <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}</div>
-      <div v-if="store.token">
-        <q-badge color="orange" text-color="black" :label="store.vip" />
+      <div class="welcome-bar">
+        <div class="logo"><img src="../assets/logo.png" /></div>
+        <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}</div>
+        <!-- <div v-if="store.token"> -->
+        <!-- <q-badge color="orange" text-color="black" :label="store.vip" /> -->
         <!--      <span class="q-ml-sm">￥{{ store.balance }}</span>-->
-      </div>
-      <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue">登录</q-btn>
-      <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange">注册</q-btn>
+        <!-- </div> -->
+        <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue">登录</q-btn>
+        <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange">注册</q-btn>
 
-      <router-link v-else to="/account" class="login">
-        <!--      <span class="log" style="white-space: nowrap">已登录</span>-->
-        <span class="user">
-          <q-icon name="person" style="color: #2dbfd4; font-size: 14px" />
-        </span>
-      </router-link>
-    </div>
+        <router-link v-if="store.token" to="/account" class="login">
+          <!--      <span class="log" style="white-space: nowrap">已登录</span>-->
+          <div class="user-status">
+            <q-avatar size="40px">
+              <img src="../assets/images/index/profile-img.png" />
+            </q-avatar>
 
-    <div class="details-bar">
-      <div class="message" @click="refreshBalance">
-        <template v-if="store.token">
-          {{ !isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中..." }}
-        </template>
-        <template v-else>
-          <span>登录/注册后查看</span>
-          早上好，您还未登录
-        </template>
-      </div>
-
-      <div class="menulist">
-        <router-link to="/finance/deposit?redirect=/" class="men">
-          <img src="../assets/images/index/icon-deposit.png" />
-          <div class="">存款</div>
-        </router-link>
-        <router-link to="/finance/withdraw?redirect=/" class="men">
-          <img src="../assets/images/index/icon-withdraw.png" />
-          <div class="">取款</div>
-        </router-link>
-        <router-link to="/account/transfer?redirect=/" class="men">
-          <img src="../assets/images/index/icon-transfer.png" />
-          <div class="">转账</div>
+            <div class="user-vip">{{ store.vip }}</div>
+          </div>
         </router-link>
       </div>
-    </div>
 
-    <!-- home header -->
-    <div class="home-header-section">
-      <GameTypeSwiper
-        v-if="!isStickyGameType"
-        scroll-to-center
-        :list="tabs"
-        v-model="selectedTab"
-        @swiper="setSecondSwiper"
-        @select-swiper="setSelectedSwiper"
-      />
-    </div>
+      <div class="details-bar">
+        <div class="message" @click="refreshBalance">
+          <template v-if="store.token">
+            <span>主钱包：</span>
+            <div class="money-font">{{ !isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中..." }}</div>
+          </template>
+          <template v-else>
+            <span>登录/注册后查看</span>
+            早上好，您还未登录
+          </template>
+        </div>
 
-    <div class="swiper-container">
-      <!-- Thumbs Swiper -> store swiper instance -->
-      <!-- It is also required to set watchSlidesProgress prop -->
-      <!-- <swiper
+        <div class="menulist">
+          <router-link to="/finance/deposit?redirect=/" class="men">
+            <img src="../assets/images/index/icon-deposit.png" />
+            <div class="">存款</div>
+          </router-link>
+          <router-link to="/finance/withdraw?redirect=/" class="men">
+            <img src="../assets/images/index/icon-withdraw.png" />
+            <div class="">取款</div>
+          </router-link>
+          <router-link to="/account/transfer?redirect=/" class="men">
+            <img src="../assets/images/index/icon-transfer.png" />
+            <div class="">转账</div>
+          </router-link>
+        </div>
+      </div>
+
+      <!-- home header -->
+      <div class="home-header-section">
+        <GameTypeSwiper
+          v-if="!isStickyGameType"
+          scroll-to-center
+          :list="tabs"
+          v-model="selectedTab"
+          @swiper="setSecondSwiper"
+          @select-swiper="setSelectedSwiper"
+        />
+      </div>
+
+      <!-- <pre>scrollPosition---{{ scrollPosition }}</pre> -->
+      <!-- <pre>isStickyGameType---{{ isStickyGameType }}</pre> -->
+
+      <div ref="swiperContainerRef" class="swiper-container">
+        <!-- Thumbs Swiper -> store swiper instance -->
+        <!-- It is also required to set watchSlidesProgress prop -->
+        <!-- <swiper
         :modules="[Thumbs, Controller]"
         slides-per-view="auto"
         :freeMode="true"
@@ -171,189 +193,109 @@
         </swiper-slide>
       </swiper> -->
 
-      <div class="index-platform-container">
-        <!-- Main Swiper -> pass thumbs swiper instance -->
-        <div class="secondSwiper" id="btm-second-swiper">
-          <div id="id-slot-slide" class="slot-slides home-swiper-slide">
-            <div class="home-game-boards">
-              <h2>电子游戏</h2>
-              <div class="game-list-div">
-                <div v-for="(slt, i) in slot" :key="i" class="game-item-div">
-                  <router-link :to="`slot?platform=${slt.code}`" class="game-board">
-                    <!-- <div
-                      class="game-bg"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/index/${slt.icon}/slide-${
-                              es.icon
-                            }-${es.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return '';
-                          }
-                        })()
-                      }"
-                    ></div> -->
-
-                    <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                    <div class="game-platform-img">
-                      <img :src="require(`../assets/images/games/game-slot-pg.png`)" />
-                    </div>
-
-                    <div class="game-title">
-                      <h3>{{ slt.title }}</h3>
-                      <div class="game-title-logo">
-                        <img :src="require(`../assets/images/games/logo/plat_logo_pg.png`)" alt="" />
+        <div class="index-platform-container">
+          <!-- Main Swiper -> pass thumbs swiper instance -->
+          <div class="secondSwiper" id="btm-second-swiper">
+            <div id="id-slot-slide" class="slot-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>电子游戏</h2>
+                <div class="game-list-div">
+                  <div v-for="(slt, i) in slot" :key="i" class="game-item-div">
+                    <router-link :to="`slot?platform=${slt.code}`" class="game-board">
+                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                      <div class="game-platform-img">
+                        <img
+                          :src="
+                            (() => {
+                              try {
+                                return require(`../assets/images/games/game-${slt.icon.toLowerCase()}-${slt.name.toLowerCase()}.png`);
+                              } catch (e) {
+                                return require(`../assets/images/games/game-img.png`);
+                              }
+                            })()
+                          "
+                          :alt="slt.name"
+                        />
                       </div>
-                      <q-btn class="game-btn" dense>立即进入</q-btn>
-                    </div>
 
-                    <div class="maintenance-box" v-if="slt.underMaintenance">
-                      <p>维护中</p>
-                      <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
-                        <div class="small-size q-mt-md">维护时间：</div>
-                        <p class="small-size">
-                          {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                        </p>
-                        <p class="small-size">-</p>
-                        <p class="small-size">
-                          {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                        </p>
-                      </template>
-                    </div>
-                  </router-link>
-                </div>
-              </div>
-            </div>
-          </div>
+                      <div class="game-title">
+                        <h3>{{ slt.title }}</h3>
+                        <div class="game-title-logo">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/logo/plat_logo_${slt.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="slt.name"
+                          />
+                        </div>
+                        <q-btn class="game-btn" dense>立即进入</q-btn>
+                      </div>
 
-          <div id="id-esport-slide" class="esport-slides home-swiper-slide">
-            <div class="home-game-boards">
-              <h2>电竞赛事qqq</h2>
-
-              <div class="game-list-div">
-                <div v-for="(es, i) in esport" :key="i" class="game-item-div">
-                  <div class="game-board" @click="playGame(es.name, 'platformType', es.code)">
-                    <div
-                      class="game-bg"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/index/${es.icon}/slide-${
-                              es.icon
-                            }-${es.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return '';
-                          }
-                        })()
-                      }"
-                    ></div>
-
-                    <div class="game-title">
-                      <h3>{{ es.title }}</h3>
-                      <!-- <span>电竞赛事</span> -->
-                    </div>
-
-                    <div class="maintenance-box" v-if="es.underMaintenance">
-                      <p>维护中</p>
-                      <template v-if="es.maintenanceStartTime && es.maintenanceEndTime">
-                        <div class="small-size q-mt-md">维护时间：</div>
-                        <p class="small-size">
-                          {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                        </p>
-                        <p class="small-size">-</p>
-                        <p class="small-size">
-                          {{ moment(es.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                        </p>
-                      </template>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="id-sport-slide" class="sport-slides home-swiper-slide">
-            <div class="home-game-boards">
-              <h2>体育赛事</h2>
-
-              <div class="game-list-div">
-                <div v-for="(sp, i) in sport" :key="i" class="game-item-div">
-                  <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)">
-                    <!--                      <img class="game-bg"-->
-                    <!--                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>-->
-                    <!--                      -->
-                    <div
-                      class="game-bg"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/index/${sp.icon}/slide-${
-                              sp.icon
-                            }-${sp.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return '';
-                          }
-                        })()
-                      }"
-                    ></div>
-
-                    <div class="game-title">
-                      <h3>{{ sp.title }}</h3>
-                      <span>体育赛事</span>
-                    </div>
-
-                    <div class="maintenance-box" v-if="sp.underMaintenance">
-                      <p>维护中</p>
-                      <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                        <div class="small-size q-mt-md">维护时间：</div>
-                        <p class="small-size">
-                          {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                        </p>
-                        <p class="small-size">-</p>
-                        <p class="small-size">
-                          {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                        </p>
-                      </template>
-                    </div>
+                      <div class="maintenance-box" v-if="slt.underMaintenance">
+                        <p>维护中</p>
+                        <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
+                          <div class="small-size q-mt-md">维护时间：</div>
+                          <p class="small-size">
+                            {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                          <p class="small-size">-</p>
+                          <p class="small-size">
+                            {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                        </template>
+                      </div>
+                    </router-link>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!--          <PlatformBlock-->
-            <!--              @click="playGame(sp.name, sp.code, sp.gameCode)"-->
-            <!--              dataType="sport"-->
-            <!--              :data="sp"-->
-            <!--          />-->
-          </div>
+            <div id="id-live-slide" class="live-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>真人娱乐</h2>
 
-          <div id="id-live-slide" class="live-slides home-swiper-slide">
-            <div class="home-game-boards">
-              <h2>真人娱乐</h2>
-
-              <div class="game-list-div">
-                <div v-for="(live, i) in livecasino" :key="i" class="game-item-div">
-                  <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
+                <div class="game-list-div">
+                  <div v-for="(live, i) in livecasino" :key="i" class="game-item-div">
                     <div class="game-board" @click="playGame(live.name, live.code, 'bblive_lobby_app')">
-                      <div
-                        class="game-bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/index/${live.icon}/slide-${
-                                live.icon
-                              }-${live.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return '';
-                            }
-                          })()
-                        }"
-                      ></div>
+                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                      <div class="game-platform-img">
+                        <img
+                          :src="
+                            (() => {
+                              try {
+                                return require(`../assets/images/games/game-${live.icon.toLowerCase()}-${live.name.toLowerCase()}.png`);
+                              } catch (e) {
+                                return require(`../assets/images/games/game-img.png`);
+                              }
+                            })()
+                          "
+                          :alt="live.name"
+                        />
+                      </div>
 
                       <div class="game-title">
-                        <h3>{{ live.name }}</h3>
-                        <span>真人娱乐</span>
+                        <h3>{{ live.title }}</h3>
+                        <div class="game-title-logo">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/logo/plat_logo_${live.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="live.name"
+                          />
+                        </div>
+                        <q-btn class="game-btn" dense>立即进入</q-btn>
                       </div>
 
                       <div class="maintenance-box" v-if="live.underMaintenance">
@@ -370,149 +312,340 @@
                         </template>
                       </div>
                     </div>
-                  </template>
-                  <template v-else-if="live.code === 'PMLIVE' && live.name === 'PMLIVE'">
-                    <div class="game-board" @click="playGame(live.name, live.code, live.gameCode)">
-                      <div
-                        class="game-bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/index/${live.icon}/slide-${
-                                live.icon
-                              }-${live.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return '';
-                            }
-                          })()
-                        }"
-                      ></div>
-
-                      <div class="game-title">
-                        <h3>DB</h3>
-                        <span>真人娱乐</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="live.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
-                  <template v-else-if="live.code === 'SEXY' && live.name === 'SEXY'">
-                    <div class="game-board" @click="playGame(live.name, live.code, live.gameCode)">
-                      <div
-                        class="game-bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/index/${live.icon}/slide-${
-                                live.icon
-                              }-${live.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return '';
-                            }
-                          })()
-                        }"
-                      ></div>
-
-                      <div class="game-title">
-                        <h3>SEXY</h3>
-                        <span>真人娱乐</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="live.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
-                  <template v-else>
-                    <div class="game-board" @click="playGame(live.name, live.code, live.gameCode)">
-                      <div
-                        class="game-bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/index/${live.icon}/slide-${
-                                live.icon
-                              }-${live.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return '';
-                            }
-                          })()
-                        }"
-                      ></div>
-
-                      <div class="game-title">
-                        <h3>{{ live.name }}</h3>
-                        <span>真人娱乐</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="live.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div id="id-poker-slide" class="poker-slides home-swiper-slide">
-            <div class="home-game-boards">
-              <h2>棋牌游戏</h2>
+            <div id="id-sport-slide" class="sport-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>体育赛事</h2>
 
-              <div class="game-list-div">
-                <div v-for="(poke, i) in poker" :key="i" class="game-item-div">
-                  <template v-if="poke.code === 'KY' && poke.name === 'KY'">
+                <div class="game-list-div">
+                  <div v-for="(sp, i) in sport" :key="i" class="game-item-div">
+                    <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)">
+                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                      <div class="game-platform-img">
+                        <img
+                          :src="
+                            (() => {
+                              try {
+                                return require(`../assets/images/games/game-${sp.icon.toLowerCase()}-${sp.name.toLowerCase()}.png`);
+                              } catch (e) {
+                                return require(`../assets/images/games/game-img.png`);
+                              }
+                            })()
+                          "
+                          :alt="sp.name"
+                        />
+                      </div>
+
+                      <div class="game-title">
+                        <h3>{{ sp.title }}</h3>
+                        <div class="game-title-logo">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/logo/plat_logo_${sp.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="sp.name"
+                          />
+                        </div>
+                        <q-btn class="game-btn" dense>立即进入</q-btn>
+                      </div>
+
+                      <div class="maintenance-box" v-if="sp.underMaintenance">
+                        <p>维护中</p>
+                        <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
+                          <div class="small-size q-mt-md">维护时间：</div>
+                          <p class="small-size">
+                            {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                          <p class="small-size">-</p>
+                          <p class="small-size">
+                            {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                        </template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="id-esport-slide" class="esport-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>电竞赛事</h2>
+                <div class="game-list-div">
+                  <div v-for="(es, i) in esport" :key="i" class="game-item-div">
+                    <div class="game-board" @click="playGame(es.name, 'platformType', es.code)">
+                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                      <div class="game-platform-img">
+                        <img
+                          :src="
+                            (() => {
+                              try {
+                                return require(`../assets/images/games/game-${es.icon.toLowerCase()}-${es.name.toLowerCase()}.png`);
+                              } catch (e) {
+                                return require(`../assets/images/games/game-img.png`);
+                              }
+                            })()
+                          "
+                          :alt="es.name"
+                        />
+                      </div>
+
+                      <div class="game-title">
+                        <h3>{{ es.title }}</h3>
+                        <div class="game-title-logo">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/logo/plat_logo_${es.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="es.name"
+                          />
+                        </div>
+                        <q-btn class="game-btn" dense>立即进入</q-btn>
+                      </div>
+
+                      <div class="maintenance-box" v-if="es.underMaintenance">
+                        <p>维护中</p>
+                        <template v-if="es.maintenanceStartTime && es.maintenanceEndTime">
+                          <div class="small-size q-mt-md">维护时间：</div>
+                          <p class="small-size">
+                            {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                          <p class="small-size">-</p>
+                          <p class="small-size">
+                            {{ moment(es.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                          </p>
+                        </template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="id-fish-slide" class="fish-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>捕鱼游戏</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(fish, i) in fishing" :key="i" class="game-item-div">
+                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
+                      <div class="game-board" @click="playGame(fish.name, fish.code, '7202')">
+                        <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                        <div class="game-platform-img">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/game-${fish.icon.toLowerCase()}-${fish.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="fish.name"
+                          />
+                        </div>
+
+                        <div class="game-title">
+                          <h3>{{ fish.title }}</h3>
+                          <div class="game-title-logo">
+                            <img
+                              :src="
+                                (() => {
+                                  try {
+                                    return require(`../assets/images/games/logo/plat_logo_${fish.name.toLowerCase()}.png`);
+                                  } catch (e) {
+                                    return require(`../assets/images/games/game-img.png`);
+                                  }
+                                })()
+                              "
+                              :alt="fish.name"
+                            />
+                          </div>
+                          <q-btn class="game-btn" dense>立即进入</q-btn>
+                        </div>
+
+                        <div class="maintenance-box" v-if="fish.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间：</div>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+                    <template v-else-if="fish.code === 'AGF' && fish.name === 'AGF'">
+                      <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
+                        <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                        <div class="game-platform-img">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/game-${fish.icon.toLowerCase()}-${fish.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="fish.name"
+                          />
+                        </div>
+
+                        <div class="game-title">
+                          <h3>{{ fish.title }}</h3>
+                          <div class="game-title-logo">
+                            <img
+                              :src="
+                                (() => {
+                                  try {
+                                    return require(`../assets/images/games/logo/plat_logo_${fish.name.toLowerCase()}.png`);
+                                  } catch (e) {
+                                    return require(`../assets/images/games/game-img.png`);
+                                  }
+                                })()
+                              "
+                              :alt="fish.name"
+                            />
+                          </div>
+                          <q-btn class="game-btn" dense>立即进入</q-btn>
+                        </div>
+
+                        <div class="maintenance-box" v-if="fish.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间：</div>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+
+                    <template v-else>
+                      <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
+                        <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                        <div class="game-platform-img">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/game-${fish.icon.toLowerCase()}-${fish.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="fish.name"
+                          />
+                        </div>
+
+                        <div class="game-title">
+                          <h3>{{ fish.title }}</h3>
+                          <div class="game-title-logo">
+                            <img
+                              :src="
+                                (() => {
+                                  try {
+                                    return require(`../assets/images/games/logo/plat_logo_${fish.name.toLowerCase()}.png`);
+                                  } catch (e) {
+                                    return require(`../assets/images/games/game-img.png`);
+                                  }
+                                })()
+                              "
+                              :alt="fish.name"
+                            />
+                          </div>
+                          <q-btn class="game-btn" dense>立即进入</q-btn>
+                        </div>
+
+                        <div class="maintenance-box" v-if="fish.underMaintenance">
+                          <p>维护中</p>
+                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                            <div class="small-size q-mt-md">维护时间：</div>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                            <p class="small-size">-</p>
+                            <p class="small-size">
+                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            </p>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="id-poker-slide" class="poker-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>棋牌游戏</h2>
+
+                <div class="game-list-div">
+                  <div v-for="(poke, i) in poker" :key="i" class="game-item-div">
                     <div class="game-board" @click="playGame(poke.name, poke.code, '')">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
+                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                      <div class="game-platform-img">
+                        <img
+                          :src="
+                            (() => {
                               try {
-                                return `url(${require(`../assets/index/${poke.icon}/slide-${
-                                  poke.icon
-                                }-${poke.name.toLowerCase()}.png`)})`;
+                                return require(`../assets/images/games/game-${poke.icon.toLowerCase()}-${poke.name.toLowerCase()}.png`);
                               } catch (e) {
-                                return '';
+                                return require(`../assets/images/games/game-img.png`);
                               }
                             })()
-                          }"
-                        ></div> -->
+                          "
+                          :alt="poke.name"
+                        />
+                      </div>
 
                       <div class="game-title">
                         <h3>{{ poke.title }}</h3>
-                        <span>棋牌游戏</span>
+                        <div class="game-title-logo">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/logo/plat_logo_${poke.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="poke.name"
+                          />
+                        </div>
+                        <q-btn class="game-btn" dense>立即进入</q-btn>
                       </div>
 
                       <div class="maintenance-box" v-if="poke.underMaintenance">
@@ -529,149 +662,51 @@
                         </template>
                       </div>
                     </div>
-                  </template>
-                  <template v-else>
-                    <div class="game-board" @click="playGame(poke.name, poke.code, poke.gameCode)">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
-                              try {
-                                return `url(${require(`../assets/index/${poke.icon}/slide-${
-                                  poke.icon
-                                }-${poke.name.toLowerCase()}.png`)})`;
-                              } catch (e) {
-                                return '';
-                              }
-                            })()
-                          }"
-                        ></div> -->
-
-                      <div class="game-title">
-                        <h3>{{ poke.title }}</h3>
-                        <span>棋牌游戏</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="poke.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
-            <div class="home-game-boards">
-              <h2>彩票游戏</h2>
+            <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>彩票游戏</h2>
 
-              <div class="game-list-div">
-                <div v-for="(lotter, i) in lottery" :key="i" class="game-item-div">
-                  <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
-                    <div class="game-board" @click="playGame(lotter.name, lotter.code, 'imlotto30000')">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
-                              try {
-                                return `url(${require(`../assets/index/${lotter.icon}/slide-${
-                                  lotter.icon
-                                }-${lotter.name.toLowerCase()}.png`)})`;
-                              } catch (e) {
-                                return '';
-                              }
-                            })()
-                          }"
-                        ></div> -->
-
-                      <div class="game-title">
-                        <h3>{{ lotter.title }}</h3>
-                        <span>彩票游戏</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="lotter.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
-                  <template v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'">
-                    <div class="game-board" @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
-                              try {
-                                return `url(${require(`../assets/index/${lotter.icon}/slide-${
-                                  lotter.icon
-                                }-${lotter.name.toLowerCase()}.png`)})`;
-                              } catch (e) {
-                                return '';
-                              }
-                            })()
-                          }"
-                        ></div> -->
-
-                      <div class="game-title">
-                        <h3>{{ lotter.title }}</h3>
-                        <span>彩票游戏</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="lotter.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
-                  <template v-else>
+                <div class="game-list-div">
+                  <div v-for="(lotter, i) in lottery" :key="i" class="game-item-div">
                     <div class="game-board" @click="playGame(lotter.name, lotter.code, lotter.gameCode)">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
+                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                      <div class="game-platform-img">
+                        <img
+                          :src="
+                            (() => {
                               try {
-                                return `url(${require(`../assets/index/${lotter.icon}/slide-${
-                                  lotter.icon
-                                }-${lotter.name.toLowerCase()}.png`)})`;
+                                return require(`../assets/images/games/game-${lotter.icon.toLowerCase()}-${lotter.name.toLowerCase()}.png`);
                               } catch (e) {
-                                return '';
+                                return require(`../assets/images/games/game-img.png`);
                               }
                             })()
-                          }"
-                        ></div> -->
+                          "
+                          :alt="lotter.name"
+                        />
+                      </div>
 
                       <div class="game-title">
                         <h3>{{ lotter.title }}</h3>
-                        <span>彩票游戏</span>
+                        <div class="game-title-logo">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/logo/plat_logo_${lotter.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="lotter.name"
+                          />
+                        </div>
+                        <q-btn class="game-btn" dense>立即进入</q-btn>
                       </div>
 
                       <div class="maintenance-box" v-if="lotter.underMaintenance">
@@ -688,167 +723,68 @@
                         </template>
                       </div>
                     </div>
-                  </template>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div id="id-fish-slide" class="fish-slides home-swiper-slide">
-            <div class="home-game-boards">
-              <h2>捕鱼游戏</h2>
+            <div id="id-casual-slide" class="casual-slides home-swiper-slide">
+              <div class="home-game-boards">
+                <h2>小游戏</h2>
 
-              <div class="game-list-div">
-                <div v-for="(fish, i) in fishing" :key="i" class="game-item-div">
-                  <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
-                    <div class="game-board" @click="playGame(fish.name, fish.code, '7202')">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
+                <div class="game-list-div">
+                  <div v-for="(cas, i) in casuals" :key="i" class="game-item-div">
+                    <div class="game-board" @click="playGame(cas.name, cas.code, cas.gameCode)">
+                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
+                      <div class="game-platform-img">
+                        <img
+                          :src="
+                            (() => {
                               try {
-                                return `url(${require(`../assets/index/${fish.icon}/slide-${
-                                  fish.icon
-                                }-${fish.name.toLowerCase()}.png`)})`;
+                                return require(`../assets/images/games/game-${cas.icon.toLowerCase()}-${cas.name.toLowerCase()}.png`);
                               } catch (e) {
-                                return '';
+                                return require(`../assets/images/games/game-img.png`);
                               }
                             })()
-                          }"
-                        ></div> -->
-
-                      <div class="game-title">
-                        <h3>{{ fish.title }}</h3>
-                        <span>捕鱼游戏</span>
+                          "
+                          :alt="cas.name"
+                        />
                       </div>
 
-                      <div class="maintenance-box" v-if="fish.underMaintenance">
+                      <div class="game-title">
+                        <h3 class="small-size">{{ cas.title }}</h3>
+                        <div class="game-title-logo">
+                          <img
+                            :src="
+                              (() => {
+                                try {
+                                  return require(`../assets/images/games/logo/plat_logo_${cas.name.toLowerCase()}.png`);
+                                } catch (e) {
+                                  return require(`../assets/images/games/game-img.png`);
+                                }
+                              })()
+                            "
+                            :alt="cas.name"
+                          />
+                        </div>
+                        <q-btn class="game-btn" dense>立即进入</q-btn>
+                      </div>
+
+                      <div class="maintenance-box" v-if="cas.underMaintenance">
                         <p>维护中</p>
-                        <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
+                        <template v-if="cas.maintenanceStartTime && cas.maintenanceEndTime">
                           <div class="small-size q-mt-md">维护时间：</div>
                           <p class="small-size">
-                            {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            {{ moment(cas.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
                           <p class="small-size">-</p>
                           <p class="small-size">
-                            {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
+                            {{ moment(cas.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
                         </template>
                       </div>
                     </div>
-                  </template>
-                  <template v-else-if="fish.code === 'AGF' && fish.name === 'AGF'">
-                    <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
-                              try {
-                                return `url(${require(`../assets/index/${fish.icon}/slide-${
-                                  fish.icon
-                                }-${fish.name.toLowerCase()}.png`)})`;
-                              } catch (e) {
-                                return '';
-                              }
-                            })()
-                          }"
-                        ></div> -->
-
-                      <div class="game-title">
-                        <h3>{{ fish.title }}</h3>
-                        <span>捕鱼游戏</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="fish.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
-
-                  <template v-else-if="fish.code === 'PMFISH' && fish.name === 'PMFISH'">
-                    <div class="game-board" @click="playGame(fish.name, fish.code, '')">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
-                              try {
-                                return `url(${require(`../assets/index/${fish.icon}/slide-${
-                                  fish.icon
-                                }-${fish.name.toLowerCase()}.png`)})`;
-                              } catch (e) {
-                                return '';
-                              }
-                            })()
-                          }"
-                        ></div> -->
-
-                      <div class="game-title">
-                        <h3>{{ fish.title }}</h3>
-                        <span>捕鱼游戏</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="fish.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
-                  <template v-else>
-                    <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
-                      <!-- <div
-                          class="game-bg"
-                          :style="{
-                            backgroundImage: (() => {
-                              try {
-                                return `url(${require(`../assets/index/${fish.icon}/slide-${
-                                  fish.icon
-                                }-${fish.name.toLowerCase()}.png`)})`;
-                              } catch (e) {
-                                return '';
-                              }
-                            })()
-                          }"
-                        ></div> -->
-
-                      <div class="game-title">
-                        <h3>{{ fish.title }}</h3>
-                        <span>捕鱼游戏</span>
-                      </div>
-
-                      <div class="maintenance-box" v-if="fish.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </template>
+                  </div>
                 </div>
               </div>
             </div>
@@ -992,7 +928,116 @@ export default defineComponent({
     const slotSwiper = ref(null);
     const slotSwiper2 = ref(null);
 
+    const isShowBackTop = ref(false);
+    const isShowDownload = ref(false);
     const isStickyGameType = ref(false);
+    const scrollPosition = ref(0);
+    const isZeroScrollPos = ref(true);
+    const scrollSlotRef = ref();
+    const scrollToTop = (el) => {
+      window.scrollTo(0, 0, "smooth");
+    };
+
+    const isScrolling = ref(false);
+    const swiperContainerRef = ref(null);
+    const scrollToSlide = (slide_id) => {
+      isScrolling.value = true;
+      var slideItem = document.getElementById(slide_id);
+      if (slideItem) {
+        const positionY = slideItem.offsetTop;
+        const topHeight = document.getElementById("id-sticky-header").offsetHeight;
+        const parentOffset = swiperContainerRef.value.offsetTop ?? 0;
+        let offset = isStickyGameType.value ? 0 : 60;
+        const y_axis = positionY + parentOffset - topHeight - offset;
+
+        window.scroll({
+          top: y_axis,
+          left: 0,
+          behavior: "smooth"
+        });
+        setTimeout(() => {
+          isScrolling.value = false;
+        }, 1500);
+      }
+    };
+    const onHomeScroll = (position) => {
+      if (route.path === "/") {
+        // console.log(position);
+        scrollPosition.value = position;
+        if (position === 0) {
+          isZeroScrollPos.value = true;
+        } else {
+          isZeroScrollPos.value = false;
+        }
+        // if (!store.hasToken()) {
+        if (position > 55) {
+          isShowDownload.value = false;
+        } else {
+          isShowDownload.value = true;
+        }
+        // }
+
+        if (position > 430) {
+          // console.log("3500000");
+          isStickyGameType.value = true;
+        } else {
+          isStickyGameType.value = false;
+        }
+
+        if (position > 450) {
+          isShowBackTop.value = true;
+        } else {
+          isShowBackTop.value = false;
+        }
+
+        const minScrollTop = swiperContainerRef.value.offsetTop;
+        if (!isScrolling.value && position > minScrollTop) {
+          const stickyHeight = document.getElementById("id-sticky-header").offsetHeight;
+
+          const slotSlide = document.getElementById("id-slot-slide");
+          const liveSlide = document.getElementById("id-live-slide");
+          const sportSlide = document.getElementById("id-sport-slide");
+          const esportSlide = document.getElementById("id-esport-slide");
+          const fishSlide = document.getElementById("id-fish-slide");
+          const pokerSlide = document.getElementById("id-poker-slide");
+          const lotterySlide = document.getElementById("id-lottery-slide");
+          const casualSlide = document.getElementById("id-casual-slide");
+
+          const slotTop = slotSlide.getBoundingClientRect().top;
+          const sportTop = sportSlide.getBoundingClientRect().top;
+          const esportTop = esportSlide.getBoundingClientRect().top;
+          const fishTop = fishSlide.getBoundingClientRect().top;
+          const pokerTop = pokerSlide.getBoundingClientRect().top;
+          const liveTop = liveSlide.getBoundingClientRect().top;
+          const lotteryTop = lotterySlide.getBoundingClientRect().top;
+          const casualTop = casualSlide.getBoundingClientRect().top;
+
+          // console.log(topHeight);
+          // console.log(positionTop6);
+          // console.log(positionTop6 - 40 <= topHeight);
+
+          if (casualTop <= stickyHeight) {
+            selectedTab.value = "casual";
+          } else if (lotteryTop <= stickyHeight) {
+            selectedTab.value = "lottery";
+          } else if (pokerTop <= stickyHeight) {
+            selectedTab.value = "poker";
+          } else if (fishTop <= stickyHeight) {
+            selectedTab.value = "fish";
+          } else if (esportTop <= stickyHeight) {
+            selectedTab.value = "esport";
+          } else if (sportTop <= stickyHeight) {
+            selectedTab.value = "sport";
+          } else if (liveTop <= stickyHeight) {
+            selectedTab.value = "live";
+          } else if (slotTop <= stickyHeight) {
+            selectedTab.value = "slot";
+          }
+
+          // console.log("selectedTab:::", selectedTab.value);
+        }
+      }
+    };
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -1007,64 +1052,96 @@ export default defineComponent({
       slotSwiper2.value = swiper;
     };
     const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name;
       // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "slot") {
-        slideIndex = 0;
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-slot-slide");
       }
 
       if (tab.name === "live") {
-        slideIndex = slot.value.length;
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-live-slide");
       }
       if (tab.name === "sport") {
-        slideIndex = livecasino.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-sport-slide");
       }
       if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-esport-slide");
       }
 
       if (tab.name === "fishing") {
-        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-fish-slide");
       }
       if (tab.name === "poker") {
-        slideIndex =
-          livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "lottery") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-poker-slide");
       }
       if (tab.name === "casual") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length +
-          lottery.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-casual-slide");
+      }
+      if (tab.name === "lottery") {
+        scrollToSlide("id-lottery-slide");
+        // window.scrollTo(0, 0);
       }
     };
+
+    // const setSelectedSwiper = (tab) => {
+    //   selectedTab.value = tab.name;
+    //   // console.log(tab.name);
+    //   var slideIndex = 0;
+    //   if (tab.name === "slot") {
+    //     slideIndex = 0;
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+
+    //   if (tab.name === "live") {
+    //     slideIndex = slot.value.length;
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+    //   if (tab.name === "sport") {
+    //     slideIndex = livecasino.value.length + slot.value.length;
+
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+    //   if (tab.name === "esport") {
+    //     slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
+
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+
+    //   if (tab.name === "fishing") {
+    //     slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
+
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+    //   if (tab.name === "poker") {
+    //     slideIndex =
+    //       livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
+
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+    //   if (tab.name === "lottery") {
+    //     slideIndex =
+    //       livecasino.value.length +
+    //       sport.value.length +
+    //       esport.value.length +
+    //       slot.value.length +
+    //       fishing.value.length +
+    //       poker.value.length;
+
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+    //   if (tab.name === "casual") {
+    //     slideIndex =
+    //       livecasino.value.length +
+    //       sport.value.length +
+    //       esport.value.length +
+    //       slot.value.length +
+    //       fishing.value.length +
+    //       poker.value.length +
+    //       lottery.value.length;
+
+    //     firstSwiper.value?.slideTo(slideIndex, 500);
+    //   }
+    // };
     const onSlideChange = (swiper) => {
       // console.log("Swiping hEre")
       // Get the active slide index
@@ -1454,6 +1531,7 @@ export default defineComponent({
               // console.log(slotObj);
               if (slotObj.code === "AG") {
                 slotObj.title = "XIN 电子";
+                slotObj.name = "xin";
                 let slotItem = {
                   id: slotObj.id,
                   code: slotObj.code,
@@ -1714,9 +1792,19 @@ export default defineComponent({
       slot_odds,
       slot_evens,
       isStickyGameType,
+      isShowBackTop,
+      isShowDownload,
       slotSwiper,
       slotSwiper2,
-      moment
+      moment,
+      onHomeScroll,
+      scrollPosition,
+      isZeroScrollPos,
+      scrollSlotRef,
+      scrollToTop,
+      isScrolling,
+      swiperContainerRef,
+      scrollToSlide
     };
   }
 });
@@ -1728,9 +1816,9 @@ export default defineComponent({
 }
 
 .secondSwiper {
-  height: calc(100vh - 380px);
+  // height: calc(100vh - 380px);
   padding-bottom: 0px;
-  padding-top: 25px;
+  // padding-top: 16px;
 }
 
 .longer-swiper {
@@ -2026,6 +2114,7 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   padding: 16px 0;
+  height: 75px;
 
   .message {
     flex: 1;
@@ -2036,6 +2125,13 @@ export default defineComponent({
     span {
       display: block;
       color: #a1a8cb;
+    }
+
+    .money-font {
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 600;
+      margin-top: 4px;
     }
   }
 
@@ -2273,6 +2369,7 @@ export default defineComponent({
 }
 
 .home-game-boards {
+  padding-top: 16px;
   h2 {
     //margin-top: 15px;
     //margin-bottom: 15px;
@@ -2314,10 +2411,11 @@ export default defineComponent({
 
         .game-platform-img {
           img {
-            width: 100%;
+            width: 120%;
             display: block;
             position: absolute;
-            top: 0;
+            top: -10%;
+            left: -10%;
           }
         }
 
@@ -2350,13 +2448,19 @@ export default defineComponent({
             line-height: 1;
             margin: 0;
             padding: 0;
+            white-space: nowrap;
+
+            &.small-size {
+              font-size: 70%;
+            }
           }
 
           .game-title-logo {
             padding-top: 6px;
             img {
               height: 100%;
-              max-height: 18px;
+              max-height: 16px;
+              // max-width:90px;
             }
           }
 
@@ -2368,7 +2472,7 @@ export default defineComponent({
             line-height: 1;
             width: calc(100% - 12px);
             // max-width: 86px;
-            margin: 2px 6% 0px;
+            margin: 2px 6px 0px;
             font-size: 12px;
           }
         }
@@ -2442,6 +2546,35 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+
+.home-header-section {
+  &.fixed-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+    left: 0;
+    z-index: 99;
+  }
+}
+
+.user-status {
+  display: flex;
+  align-items: center;
+
+  .user-vip {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    padding: 4px 12px 4px 20px;
+    background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+    box-shadow: 0px 0px 4px 0px #ffffff inset;
+    color: #ffffff;
+    border-radius: 16px;
+    font-size: 12px;
+    margin-left: -16px;
   }
 }
 </style>

@@ -4,7 +4,7 @@ html {
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
-  background: #1A2338;
+  background: #1a2338;
 }
 // app global css in SCSS form
 body {
@@ -14,7 +14,7 @@ body {
 #q-app {
   // background: #11131f;
   // background: #1a1c28;
-  background: #1A2338;
+  background: #1a2338;
 }
 .q-layout,
 .q-header,
@@ -174,30 +174,82 @@ svg {
     padding: 10px;
   }
 }
-.q-footer .q-tab {
-  padding: 5px 0 0px;
-  background: #212534;
-  color: #ffffff;
-  img {
-    width: 25px;
-    &.inactive {
-      display: block;
+.q-footer {
+  background-color: transparent;
+
+  .q-tab {
+    // padding: 5px 0 0px;
+    // background: #0F182E;
+    color: #7a899e;
+    opacity: 1 !important;
+
+    .menu-icon {
+      &.account {
+        display: block;
+        padding: 6px;
+        border-radius: 50%;
+        background: #0f182e;
+        box-shadow: 0px 4px 4px 2px #ffffff42;
+        margin-top: -10px;
+
+        img {
+          display: block;
+          width: 50px;
+          padding: 3px;
+          border-radius: 50%;
+        }
+      }
     }
-    &.hover {
-      display: none;
-    }
-  }
-  &__indicator {
-    display: none;
-  }
-  &--active {
-    color: #33bcd4;
-    img {
+
+    .menu-icon {
       &.inactive {
-        display: none;
+        display: block;
+
+        padding: 0 6px;
+        border-radius: 50%;
+        // background: #0f182e;
+        // box-shadow: 0px -3px 4.4px 0px #ffffff42;
+        // margin-top: -2px;
+        margin-top: 6px;
       }
       &.hover {
+        display: none;
+      }
+
+      img {
         display: block;
+        width: 40px;
+        padding: 6px;
+        border-radius: 50%;
+        // background: #213057;
+      }
+    }
+    &__indicator {
+      display: none;
+    }
+    &--active {
+      color: #33bcd4;
+      .menu-icon {
+        &.inactive {
+          display: none;
+        }
+        &.hover {
+          display: block;
+          padding: 6px;
+          border-radius: 50%;
+          background: #0f182e;
+          box-shadow: 0px -3px 4.4px 0px #ffffff42;
+          margin-top: -2px;
+        }
+
+        img {
+          display: block;
+          width: 40px;
+
+          padding: 6px;
+          border-radius: 50%;
+          background: #213057;
+        }
       }
     }
   }
@@ -282,4 +334,20 @@ svg {
 .q-field--readonly.q-field--float .q-field__native,
 .q-field--readonly.q-field--float .q-field__input {
   color: #bacef1;
+}
+
+.q-btn-blue {
+  background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+  box-shadow: 0px 1px 4px 0px #ffffff inset;
+
+  &:after {
+    content: "";
+    background: radial-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2), transparent);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 3px;
+    position: absolute;
+  }
 }
