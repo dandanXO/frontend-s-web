@@ -1,13 +1,15 @@
 <template>
   <div class="vip-container">
-    <q-tabs v-model="tab" active-color="white" indicator-color="transparent">
-      <q-tab name="special" label="VIP特权" />
-      <q-tab name="details" label="VIP详情" />
-    </q-tabs>
+    <RoundTab v-model:tab="tab" :items="tabItems"></RoundTab>
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="special" style="padding: 0">
-        <q-carousel
+        <div class="scroll-container">
+          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/vip_card_1.png`)})`}"/>
+          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/vip_card_1.png`)})`}"/>
+          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/vip_card_1.png`)})`}"/>
+        </div>
+        <!-- <q-carousel
           class="vip bg-transparent"
           animated
           v-model="slide"
@@ -52,20 +54,23 @@
               </div>
             </div>
           </q-carousel-slide>
-        </q-carousel>
+        </q-carousel> -->
 
         <div class="vip-benefits">
-          <div class="bft-title">VIP特权</div>
+          <div class="bft-title">
+            <img src="~/assets/vip/vip_priv_title.png">
+          </div>
           <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
             <template v-if="vipIndex === slide">
               <div class="bft-row">
                 <div class="bft-row-cnt">
                   <div class="left">
-                    <div class="icon">
-                      <img src="../../assets/vip/deposit.png" />
+                    <div class="icon-description">
+                      <img class="" src="../../assets/vip/promo_rewards_icon.png" />
+                      <span>晋级奖励</span>
                     </div>
-                    <div class="txt" style="margin-right: 20px">
-                      晋升奖励：{{ vip.cunsong }}
+                    <div class="txt">
+                      {{ vip.cunsong }}
                     </div>
                   </div>
                   <!-- <template v-if="vip.cunsong !== '无'">
@@ -97,10 +102,11 @@
                 <!--                </div>-->
                 <div class="bft-row-cnt">
                   <div class="left">
-                    <div class="icon">
-                      <img src="../../assets/vip/money.png" />
+                    <div class="icon-description">
+                      <img src="../../assets/vip/birthday_icon.png" />
+                      <span>生日礼金</span>
                     </div>
-                    <div class="txt">生日礼金: {{ vip.birthdayBonus }}</div>
+                    <div class="txt">{{ vip.birthdayBonus }}</div>
                   </div>
                   <template v-if="vip.birthdayBonus !== '无'">
                     <q-btn
@@ -114,7 +120,11 @@
                 </div>
                 <div class="bft-row-cnt">
                   <div class="left">
-                    <div class="txt">流水要求: {{ vip.drawTimes }}倍</div>
+                    <div class="icon-description">
+                      <img src="../../assets/vip/turnover_multiplier_icon.png" />
+                      <span>流水要求</span>
+                    </div>
+                    <div class="txt">{{ vip.drawTimes }}倍</div>
                   </div>
                 </div>
               </div>
@@ -125,7 +135,9 @@
         <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
           <template v-if="vipIndex === slide">
             <div class="vip-benefits">
-              <div class="bft-title">VIP优惠</div>
+              <div class="bft-title">
+                <img src="~/assets/vip/vip_disc_title.png">
+              </div>
               <div class="bft-promo-row">
                 <div class="bft-promo">
                   <div class="promo-percent">{{ vip.perEsport }}</div>
@@ -431,8 +443,11 @@
        </div>
      </div> -->
         <div class="terms-conditions">
-          <div class="title">规则与条款</div>
-          <ol style="padding-inline-start: 15px">
+          <div class="title">
+            <img src="~/assets/vip/vip_rules_title.png">
+          </div>
+          <div class="content">
+            <ol style="padding-inline-start: 15px">
             <li>晋升标准：用户充值达到相应级别即可晋升相应VIP等级。</li>
             <li>晋升顺序：VIP等级可以越级晋升，每天仅限晋升一级。</li>
             <li>
@@ -453,6 +468,8 @@
               凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。
             </li>
           </ol>
+          </div>
+
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -481,9 +498,13 @@ import { useRoute, useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import Swal from "sweetalert2";
+import RoundTab from "src/components/RoundTab.vue";
 
 export default defineComponent({
   name: "TransitRecordView",
+  components: {
+    RoundTab
+  },
   setup() {
     const $q = useQuasar();
     const tab = ref("special");
@@ -1125,6 +1146,17 @@ program at any time without prior notice.`
     const isClaimModal = ref(false);
     const claimMsg = ref("");
 
+    const tabItems = [
+      {
+        name: 'special',
+        label:'VIP特权'
+      },
+      {
+        name: 'details',
+        label:'VIP详情'
+      }
+    ]
+
     onMounted(() => {
       vipLevel.value = store.vip.replace("VIP", "");
       if (vipLevel.value >= 1) {
@@ -1195,6 +1227,7 @@ program at any time without prior notice.`
       loadingMClaim,
       loadingBClaim,
       tab,
+      tabItems,
       onVIPButtonClick,
       btnIsDisabled,
       startCountdown
@@ -1430,59 +1463,80 @@ program at any time without prior notice.`
   .vip-benefits {
     padding: 10px;
     font-size: 0.75rem;
-    background: #eaeef2;
+    background: #1A2338;
 
     .bft-title {
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       color: #3a3a3a;
       font-weight: bold;
       gap: 10px;
+      margin-bottom: 12px;
 
-      &:before {
-        content: "";
-        width: 10px;
-        height: 19px;
-        display: inline-block;
-        background-image: url(../../assets/vip/privilege.png);
-        background-position: center center;
-        background-size: 100%;
+      > img {
+        width: 180px;
       }
+
+      // &:before {
+      //   content: "";
+      //   width: 10px;
+      //   height: 19px;
+      //   display: inline-block;
+      //   background-image: url(../../assets/vip/privilege.png);
+      //   background-position: center center;
+      //   background-size: 100%;
+      // }
     }
 
     .bft-row {
-      padding: 10px;
+      // padding: 10px;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-direction: row;
+      // gap: 10px;
 
       .bft-row-cnt {
         background: #fff;
-        padding: 10px;
+        // padding: 10px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         color: #3a3a3a;
+        flex: 1;
+        background: url(../../assets/vip/vip_priv_item_bg.png) center center no-repeat;
+        background-size: contain;
+        width: 100%;
+        aspect-ratio: 9 / 10;
 
         .left {
           display: flex;
-          justify-content: flex-start;
+          // justify-content: space-between;
           align-items: center;
-          gap: 40px;
+          // gap: 40px;
+          flex-direction: column;
+          height: 100%;
+          // padding-bottom: 10px;
+          // width: 100%;
+          color: #fff;
 
-          .icon {
-            width: 40px;
-            min-width: 40px;
+          .icon-description {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex: 5;
+            justify-content: center;
 
             img {
-              flex: 1;
-              width: 100%;
+              width: 40px;
               display: block;
+              margin-bottom: 6px;
             }
           }
-
-          .text {
+          .txt {
+            flex: 3;
+            display: flex;
+            align-items: center;
           }
         }
 
@@ -1492,27 +1546,35 @@ program at any time without prior notice.`
     }
 
     .bft-promo-row {
-      display: flex;
+      display: grid;
       gap: 15px;
-      flex-wrap: wrap;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 10px;
 
       .bft-promo {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        width: calc(33.33% - 10px);
+        // width: calc(33.33% - 10px);
+        // background: linear-gradient(180deg, #384E79 0%, #212E4B 100%);
+        // border-radius: 6px;
+        background: url(../../assets/vip/vip_disc_item_bg.png) center center no-repeat;
+        background-size: contain;
+        padding: 4px;
+        aspect-ratio: 10 / 8;
 
         .promo-percent {
-          color: #ccb455;
+          color: #01BFD8;
           text-align: center;
-          font-weight: 700;
-          font-size: 25px;
+          font-weight: 600;
+          font-size: 24px;
         }
 
         .promo-title {
-          color: #3a3a3a;
-          font-size: 13px;
+          color: #FFFFFF99;
+          font-weight: 600;
+          font-size: 12px;
         }
       }
     }
@@ -1569,7 +1631,7 @@ program at any time without prior notice.`
   }
 
   .q-tab-panel {
-    padding: 8px;
+    padding: 16px;
   }
 
   table {
@@ -1580,28 +1642,90 @@ program at any time without prior notice.`
     width: 100%;
     margin-bottom: 10px;
 
+    // border-collapse: separate;      /* Prevents borders from collapsing */
+    // border-spacing: 0;              /* Removes spacing between cells */
+    // border-radius: 10px;            /* Rounds the table corners */
+
+    // /* Gradient border setup */
+    // border: 1px solid transparent;   /* Required for border-image to work */
+    // border-image-source: linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00BFD7 75.68%);
+    // border-image-slice: 1;           /* Ensure the entire border uses the gradient */
+
+
     thead {
-      background-color: #7197ff;
+      background-color: #445F95;
 
       th {
         color: #ffffff;
+        padding: 4px;
+        font-size: 12px;
+        max-width: 10px;
+        overflow-wrap: anywhere;
       }
     }
 
     tbody {
+      background: linear-gradient(180deg, #384E79 0%, #212E4B 100%);
       td {
-        border: 1px solid #bac8dc;
-        background: #fff;
+        border: 0.35px solid #3B5385;
+        // border-radius: 10px;
+        color: #FFFFFF99;
+        padding: 4px;
+        font-size: 12px;
+        // background: #fff;
       }
     }
+  }
+
+  th:first-of-type {
+  border-top-left-radius: 10px;
+  }
+  th:last-of-type {
+    border-top-right-radius: 10px;
+  }
+  tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+  }
+  tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
   }
 
   .terms-conditions {
     color: #fff;
     font-size: 0.8rem;
+    color: #FFFFFF99;
 
     .title {
-      color: #3865e8;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+      margin-top: 16px;
+      > img {
+        width: 180px;
+      }
+    }
+
+    .content {
+      background: url(../../assets/vip/vip_rules_bg.png) center center no-repeat;
+      background-size: contain;
+      aspect-ratio: 347 / 553;
+      padding: 16px;
+    }
+
+    li {
+      line-height: 24px;
+    }
+    @media (max-width: 390px) {
+      li {
+        line-height: 16px;
+      }
+
+    }
+
+    li:after {
+      content: "";
+      display: block;
+      margin: 16px 0;
     }
   }
 }
@@ -1609,35 +1733,7 @@ program at any time without prior notice.`
 <!-- Carousel CSS only -->
 <style lang="scss">
 .vip-container {
-  .q-tabs {
-    background: url(../../assets/vip/vipbg.png) no-repeat top right;
-    background-attachment: fixed;
-  }
-
-  .q-tabs--not-scrollable .q-tabs__content {
-    gap: 45px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .q-tabs__content--align-justify .q-tab {
-    flex: unset;
-  }
-
-  .q-tab {
-    min-height: 35px;
-
-    &__label {
-      font-size: 12px;
-      color: #ffffff;
-    }
-  }
-
-  .q-tab--active .q-tab__indicator {
-    width: 100%;
-    margin: 0 auto;
-    height: 10px;
-  }
+  font-family: PingFang SC;
 }
 
 .q-carousel {
@@ -1722,5 +1818,26 @@ h2#swal2-title.swal2-title {
     width: 600px;
     overflow-x: scroll;
   }
+}
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px;
+}
+
+.card {
+  flex: 0 0 80%;
+  margin-right: 20px;
+  height: 120px;
+  border-radius: 10px;
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 </style>
