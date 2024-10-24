@@ -445,6 +445,10 @@ export function getGlobalKeyRecord(promoCode, page) {
     }
   });
 }
+export function claimGlobalCheckInTreasure(promoCode) {
+  return eventapi.post(`/session/treasure-key/claimCheckIn`, qs.stringify({ promoCode }));
+}
+
 
 export function getGameTypeBonusInit(promoCode) {
   return eventapi.get("/session/game-type-bonus/init", {

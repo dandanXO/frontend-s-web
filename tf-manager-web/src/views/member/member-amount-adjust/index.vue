@@ -1118,9 +1118,9 @@ const formRules = reactive({
 })
 
 function validateField(field) {
-  if (formRef.value) {
+  /* if (formRef.value) {
     formRef.value.validateField(field);
-  }
+  } */
 }
 
 const importRules = reactive({
@@ -1737,7 +1737,10 @@ async function confirmImport() {
             if (k !== 'loginName') {
               item[k] = v
             }
-          })
+          });
+
+          item.gameTypeRollover= constructRollover();
+
         }
         data.push(item)
       })

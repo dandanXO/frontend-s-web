@@ -612,7 +612,6 @@ import {
   cancellationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
-// import { message } from "ant-design-vue";
 import {getPlatformList} from "@/api/platform/platform";
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"

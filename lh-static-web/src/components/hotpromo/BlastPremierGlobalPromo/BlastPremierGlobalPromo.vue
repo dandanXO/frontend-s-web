@@ -156,11 +156,11 @@
           <table v-if="keyRecords && keyRecords.length > 0" class="table-rows">
             <tbody>
               <tr v-for="(key, i) in keyRecords" :key="i">
-                <td>{{ key.createTime }}</td>
+                <td>{{ key.betTime }}</td>
                 <td>
                   <div class="keysAmt">
                     <img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />
-                    {{ key.quantity }}
+                    {{ key.keysAcquired }}
                   </div>
                 </td>
               </tr>
@@ -189,9 +189,9 @@
           <table style="width: 100%" v-if="openRecords">
             <tbody>
               <tr v-for="(open, i) in openRecords" :key="i">
-                <td width="50%">{{ open.createTime }}</td>
-                <td width="25%">{{ open.quantity }}</td>
-                <td width="25%">{{ open.amount }}</td>
+                <td width="50%">{{ open.receiveTime }}</td>
+                <td width="25%">{{ open.keyUsed }}</td>
+                <td width="25%">{{ open.bonus }}</td>
               </tr>
             </tbody>
           </table>
@@ -223,7 +223,8 @@ import {
   openGlobalTreasure,
   getGlobalKeyRecord,
   getGlobalOpenRecord,
-  getGlobalTreasureDetail
+  getGlobalTreasureDetail,
+  claimGlobalCheckInTreasure
 } from "@/api/index/promo";
 import { ElLoading } from "element-plus";
 import { useNotify } from "@/hooks/notify";
@@ -356,6 +357,9 @@ const init = () => {
           if (index < signNumber.value) {
             day.claimed = true;
             day.toClaim = false; 
+          } else if (index === signNumber.value) {
+            day.claimed = checkInDetails.value.hasClaimedToday;
+            day.toClaim = checkInDetails.value.canClaimToday;
           }
         });
       }
@@ -451,24 +455,24 @@ const openModal = (modal, item, itemIndex) => {
     isClaimModal.value = true;
     amountClaimed.value = item;
   }
-  // if (modal === "claim") {
-  //   const loading = ElLoading.service({
-  //     lock: true,
-  //     text: "开启中",
-  //     background: "rgba(0, 0, 0, 0.7)"
-  //   });
-  //   claimCheckInTreasure(props.promoCode, item.no).then((res) => {
-  //     if (res.code === 0) {
-  //       amountClaimed.value = res.data;
-  //       isClaimModal.value = true;
-  //       dayList.value[itemIndex].toClaim = false;
-  //       dayList.value[itemIndex].claimed = true;
-  //     }
-  //   });
-  //   setTimeout(() => {
-  //     loading.close();
-  //   }, 1000);
-  // }
+  if (modal === "claim") {
+    const loading = ElLoading.service({
+      lock: true,
+      text: "开启中",
+      background: "rgba(0, 0, 0, 0.7)"
+    });
+    claimGlobalCheckInTreasure(props.promoCode, item.no).then((res) => {
+      if (res.code === 0) {
+        amountClaimed.value = res.data;
+        isClaimModal.value = true;
+        dayList.value[itemIndex].toClaim = false;
+        dayList.value[itemIndex].claimed = true;
+      }
+    });
+    setTimeout(() => {
+      loading.close();
+    }, 1000);
+  }
 };
 
 // Reference
