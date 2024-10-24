@@ -14,10 +14,9 @@ export const useOneSignalWrapper = () => {
     console.log(isOnAndroid.value);
     if (isOnAndroid.value) {
       initOnAndroid(appId);
+    } else {
+      initOnWeb(appId);
     }
-    // else {
-    //   initOnWeb(appId);
-    // }
   };
 
   const initOnAndroid = (appId) => {
@@ -58,9 +57,9 @@ export const useOneSignalWrapper = () => {
     };
     oneSignalWeb.Notifications.addEventListener("click", myClickListener);
 
-    oneSignalWeb.Notifications.requestPermission().then((accepted) => {
-      console.log("User accepted web push notifications: " + accepted);
-    });
+    oneSignalWeb.Slidedown.promptPush()
+      .then(() => console.log("enable onesignal"))
+      .catch(() => console.log("disable onesignal"));
   };
 
   const populatePushNotificationData = (data) => {

@@ -1,6 +1,6 @@
 <template>
   <div class="download-page">
-    <a v-if="isPwaInstalled" :href="origin" target="_blank">
+    <a v-if="isPwaInstalled" style="width: 100%" :href="origin" target="_blank">
       <button class="button">Play</button>
     </a>
     <button v-else class="button" @click="handleInstallClick">Install</button>
