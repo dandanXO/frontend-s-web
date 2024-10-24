@@ -604,16 +604,20 @@ export default defineComponent({
         .get("/session/updateAutoWithdraw")
         .then(async (res) => {
           if (res.code === 0) {
-            notify({
-              type: "success",
-              message: t("lang.successUpgradeQuick")
-            });
+            $q.notify({
+                color: "positive",
+                position: "top",
+                message: t("lang.successUpgradeQuick"),
+                icon: "check_circle_outline"
+              });
 
             await store.getMemberInfo();
           } else {
-            notify({
-              type: "error",
-              message: res.message
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: res.message,
+              icon: "report_problem"
             });
           }
         })

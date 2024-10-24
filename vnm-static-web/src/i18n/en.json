@@ -778,7 +778,7 @@
     "1402": "OTP sending schedule error, please resend OTP",
     "1403": "OTP verification error",
     "1404": "Failed to send OTP code",
-    "1409": "The player does not meet the requirements for quick withdrawal",
+    "1409": "Please withdraw all your balance before clicking [Upgrade].",
     "10000": "Insufficient remaining balance error",
     "10001": "Withdrawal error",
     "10002": "Deposit error",

@@ -285,7 +285,7 @@
   },
   "withdraw": {
     "withdraw": "Rút tiền",
-    "upgradeWithdraw": "Nâng cấp rút tiền nhanh",
+    "upgradeWithdraw": "Nâng cấp tốc độ xử lý",
     "quickWithdraw": "Rút tiền nhanh",
     "bankcard": "Rút tiền thẻ ngân hàng",
     "addBankCard": "Thêm tài khoản",
@@ -777,7 +777,7 @@
     "1402": "Lỗi lịch gửi OTP, vui lòng gửi lại OTP",
     "1403": "Lỗi xác minh OTP",
     "1404": "Không thể gửi mã OTP",
-    "1409": "Người chơi không đáp ứng yêu cầu rút tiền nhanh",
+    "1409": "Vui lòng rút hết số tiền tài khoản trước khi nâng cấp",
     "10000": "Lỗi số dư còn lại không đủ",
     "10001": "Lỗi rút tiền",
     "10002": "Lỗi nạp tiền",
