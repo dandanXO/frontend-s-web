@@ -70,6 +70,13 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.createBy"
+          style="width: 200px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.createBy')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -263,12 +270,12 @@
           <el-col v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
             <el-form-item prop="rollover">
               <el-input-number
-                v-model="uiControl.rollOverAmt"
+                v-model="form.rollover"
                 style="width: 145px"
-                :min="0"
                 :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                 :controls="false"
                 @keypress="restrictInput($event)"
+                @input="validateField('rollover')"
               />
             </el-form-item>
           </el-col>
@@ -424,7 +431,7 @@
               :key="item.key"
               :label="item.value"
             >
-              {{ item.displayName }} <!-- Use the display name here for the label text -->
+              {{ item.displayName }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
@@ -508,17 +515,17 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.amount')" prop="amount">
+        <el-form-item v-if="addAmountAdjustmentType === 'CALCULATE'" :label="t('fields.deposit')" prop="deposit">
           <el-input
-            v-model="form.amount"
+            v-model="form.deposit"
             style="width: 350px"
             maxlength="11"
             @keypress="restrictDecimalInput($event)"
           />
         </el-form-item>
-        <el-form-item v-if="addAmountAdjustmentType === 'CALCULATE'" :label="t('fields.deposit')" prop="deposit">
+        <el-form-item :label="t('fields.amount')" prop="amount">
           <el-input
-            v-model="form.deposit"
+            v-model="form.amount"
             style="width: 350px"
             maxlength="11"
             @keypress="restrictDecimalInput($event)"
@@ -575,10 +582,10 @@
             </el-form-item>
           </el-col>
           <template v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'">
-            <el-col v-if="!isAffiliateUser" :span="12">
+            <el-col v-if="!isAffiliateUser" :span="7">
               <el-form-item prop="rollover">
                 <el-input-number
-                  v-model="uiControl.rollOverAmt"
+                  v-model="form.rollover"
                   style="width: 145px"
                   :min="0"
                   :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
@@ -587,15 +594,18 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="12" v-else>
+            <el-col :span="7" v-else>
               <el-form-item prop="rollover">
                 <el-input-number
-                  v-model="uiControl.rollOverAmt"
+                  v-model="form.rollover"
                   style="width: 145px"
                   :controls="false"
                   :disabled="isAffiliateUser"
                 />
               </el-form-item>
+            </el-col>
+            <el-col style="padding:8px 0;" :span="4" v-if="addAmountAdjustmentType === 'CALCULATE'">
+              {{ calculateRollover() }}
             </el-col>
           </template>
         </el-row>
@@ -659,6 +669,7 @@
                 >
                   {{ t('fields.delete') }}
                 </el-button>
+                <span style="padding: 8px; text-align: center;" v-if="item.key && item.value && addAmountAdjustmentType === 'CALCULATE'">{{ calculateRollover(item.value) }}</span>
               </div>
             </div>
           </el-form-item>
@@ -959,8 +970,7 @@ const uiControl = reactive({
     { key: 7, displayName: 'LOTTERY', value: 'lottery' },
     { key: 8, displayName: 'CASUAL', value: 'casual' },
   ],
-  selectedGameTypeRolloverType: null,
-  rollOverAmt: null,
+  selectedGameTypeRolloverType: 'MULTIPLE',
   isNewRollover: true,
   oldRollOver: {
     rollover: 0,
@@ -971,7 +981,7 @@ const uiControl = reactive({
 })
 
 const gameTypes = ref([])
-const selectedRolloverType = ref();
+const selectedRolloverType = ref('MULTIPLE');
 
 const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
@@ -1007,6 +1017,7 @@ const request = reactive({
   loginName: null,
   operationType: null,
   cause: null,
+  createBy: null,
 })
 
 const form = reactive({
@@ -1100,11 +1111,17 @@ const formRules = reactive({
   ],
   amount: [required(t('message.validateAmountRequired'))],
   deposit: [required(t('message.validateDepositAmountRequired'))],
-  rollover: computed(() => 
+  rollover: computed(() =>
     uiControl.dialogType === 'CREATE_ADD' ? [required(t('message.validateRolloverRequired'))] : []
   ), // Use computed to make it reactive
   cause: [required(t('message.validateCauseRequired'))],
 })
+
+function validateField(field) {
+  if (formRef.value) {
+    formRef.value.validateField(field);
+  }
+}
 
 const importRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
@@ -1169,17 +1186,26 @@ async function loadCauseBySiteId() {
   if (request.siteId) {
     const { data: adjustType } = await getReasonsSimple(request.siteId)
     adjustTypeList.requestList = adjustType
+
+    if (form.siteId === request.siteId) {
+      adjustTypeList.formList = adjustType
+    }else if(form.siteId){
+      const { data: adjustType2 } = await getReasonsSimple(form.siteId)
+      adjustTypeList.formList = adjustType2
+    }
+
+    if (importForm.siteId === request.siteId) {
+      adjustTypeList.importFormList = adjustType
+    }else if(importForm.siteId){
+      const { data: adjustType3 } = await getReasonsSimple(importForm.siteId)
+      adjustTypeList.importFormList = adjustType3
+    }
+
   }
 
-  if (form.siteId) {
-    const { data: adjustType } = await getReasonsSimple(form.siteId)
-    adjustTypeList.formList = adjustType
-  }
 
-  if (importForm.siteId) {
-    const { data: adjustType } = await getReasonsSimple(importForm.siteId)
-    adjustTypeList.importFormList = adjustType
-  }
+
+
 }
 
 async function loadSiteConfig() {
@@ -1194,10 +1220,10 @@ const handleSelect = item => {
   if (item) {
     if (item.ref === 'AFFILIATE' || uiControl.dialogType === 'CREATE_DEDUCT') {
       isAffiliateUser.value = true
-      uiControl.rollOverAmt = 0
+      form.rollover = 0
     }else{
-
       isAffiliateUser.value = false;
+      form.rollover = undefined
     }
     // Clear previous selections
     dynamicTags.value = []
@@ -1221,11 +1247,11 @@ const cachedGameTypes = ref([]);
 const cachedUIAmt = ref([]);
 const checkRolloverType = () => {
   if (selectedRolloverType.value === 'MULTIPLE') {
-    cachedUIAmt.value = uiControl.rollOverAmt
-    if (uiControl.rollOverAmt > 100) {
-      uiControl.rollOverAmt = 100
+    cachedUIAmt.value = form.rollover
+    if (form.rollover > 100) {
+      form.rollover = 100
     } else {
-      uiControl.rollOverAmt = null
+      form.rollover = undefined
     }
     cachedGameTypes.value = gameTypes.value.map(type => ({ ...type }));
     gameTypes.value.forEach(type => {
@@ -1239,7 +1265,7 @@ const checkRolloverType = () => {
       gameTypes.value = cachedGameTypes.value.map(type => ({ ...type }));
     }
     if (cachedUIAmt.value) {
-      uiControl.rollOverAmt = cachedUIAmt.value
+      form.rollover = cachedUIAmt.value
     }
   }
 }
@@ -1257,11 +1283,11 @@ function compareOldGameLists () {
 }
 function constructRollover() {
   // debugger;
-  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === uiControl.rollOverAmt &&
+  if (uiControl.isNewRollover === false && uiControl.oldRollOver.rollover === form.rollover &&
       (!uiControl.oldRollOver.gameLists.length || (uiControl.oldRollOver.gameLists.length && compareOldGameLists())) &&
       (!uiControl.oldRollOver.selectType || (uiControl.oldRollOver.selectType === uiControl.selectedGameTypeRolloverType))
   ) {
-    form.rollover = uiControl.rollOverAmt;
+    form.rollover = form.rollover;
     return JSON.stringify(uiControl.oldRollOver.gameTypeRollover);
   }
   const json = { newRollover: true };
@@ -1298,7 +1324,7 @@ function constructRollover() {
       json.rolloverType = 'TOTAL_AMOUNT_' + uiControl.selectedGameTypeRolloverType
       json.rollover = calculateRollover()
     } else {
-      json.rollover = uiControl.rollOverAmt
+      json.rollover = form.rollover
     }
     const excludeTypes = [];
     Object.values(gameTypes.value).forEach(item => {
@@ -1309,11 +1335,11 @@ function constructRollover() {
 
     json.gameTypes = excludeTypes;
   }
-  
+
   if (addAmountAdjustmentType.value === 'CALCULATE' && uiControl.dialogType === 'CREATE_ADD') {
-    form.rollover = uiControl.rollOverAmt ? calculateRollover() : 1
+    form.rollover = form.rollover ? calculateRollover() : 1
   } else {
-    form.rollover = uiControl.rollOverAmt ? uiControl.rollOverAmt : 1;
+    form.rollover = form.rollover ? form.rollover : 1;
   }
   return JSON.stringify(json)
 }
@@ -1459,8 +1485,9 @@ async function showDialog(type) {
       memberAmountAdjustForm.value.resetFields()
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
+      form.rollover = undefined
     }
-   uiControl.rollOverAmt= null;
+      form.rollover = undefined
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
@@ -1468,7 +1495,7 @@ async function showDialog(type) {
       adjustRollover.importedSelectedItem = null
       adjustRollover.selectedItem = null
     }
-    uiControl.rollOverAmt= 0;
+    form.rollover= 0;
     uiControl.balance = null
     uiControl.dialogTitle = t('fields.deductMemberAmountAdjust')
   }
@@ -1495,10 +1522,10 @@ function handleCauseChange(selectedValue) {
   const selectedItem = adjustTypeList.formList.find(
     item => item.reason === selectedValue
   )
-  if (selectedItem) {
-    adjustRollover.selectedItem = selectedItem.rollover
-    form.rollover = selectedItem.rollover
-  }
+  // if (selectedItem) {
+  //   adjustRollover.selectedItem = selectedItem.rollover
+  //   form.rollover = selectedItem.rollover
+  // }
 }
 
 function handleImportCauseChange(selectedValue) {
@@ -1528,12 +1555,20 @@ async function handleBalanceType(value) {
     }
   }
 }
-function calculateRollover() {
-  const amount = +form.amount || 0; 
+function calculateRollover(item) {
+  if (!form.amount || !form.deposit) {
+    return undefined
+  }
+  const amount = +form.amount || 0;
   const deposit = +form.deposit || 0;
-  const multi = uiControl.rollOverAmt || 1;
+  if (item) {
+    const multi = +item || 1
+    return ((amount + deposit) * multi) - deposit;
+  } else {
+    const multi = form.rollover || 1;
+    return ((amount + deposit) * multi) - deposit;
+  }
 
-  return ((amount + deposit) * multi) - deposit;
 }
 function createAdd() {
   const originalDeposit = form.deposit;
@@ -1544,18 +1579,19 @@ function createAdd() {
     form.memberId = null;
 
     try {
-      const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
-      form.memberId = id;
-
-      if (isAffiliateUser.value === true) {
-        form.rollover = 0;
-        form.gameTypeRollover = null;
-      } else {
-        form.gameTypeRollover = constructRollover();
-      }
-
       if (valid) {
+        const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
+        form.memberId = id;
+
+        if (isAffiliateUser.value === true) {
+          form.rollover = 0;
+          form.gameTypeRollover = null;
+        } else {
+          form.gameTypeRollover = constructRollover();
+        }
+
         delete form.deposit;
+        delete form.rollover;
         await createAddMemberAmountAdjust(form);
         uiControl.dialogVisible = false;
         await loadMemberAmountAdjust();

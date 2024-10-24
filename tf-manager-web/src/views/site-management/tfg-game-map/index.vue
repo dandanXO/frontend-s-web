@@ -178,6 +178,7 @@
             style="width: 350px"
             filterable
             @change="handleChangeSite"
+            :disabled="uiControl.dialogType === 'EDIT'"
           >
             <el-option
               v-for="item in sites.list"
@@ -188,7 +189,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input v-model="form.loginName" style="width: 350px"/>
+          <el-input v-model="form.loginName" style="width: 350px" :disabled="uiControl.dialogType === 'EDIT'"/>
         </el-form-item>
         <el-form-item :label="t('fields.gameCode')" prop="gameCode">
           <el-input v-model="form.gameCode" style="width: 350px"/>

@@ -69,6 +69,9 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -1247,5 +1250,17 @@ export default defineComponent({
     position: relative;
     top: 48%;
   }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>
