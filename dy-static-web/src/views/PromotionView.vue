@@ -84,7 +84,7 @@
             isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024',
             isYallaCompass: selectedPromo.promoCode === 'dy2-yalla-compass',
-            isBbdachaBelgrade: selectedPromo.promoCode === 'dy2-bbdacha-belgrade',
+            isBbdachaBelgrade: selectedPromo.promoCode === 'dy2-bbdacha-belgrade'
           }"
         >
           <div
@@ -138,7 +138,7 @@
             dyfootball: selectedPromo?.promoCode === 'dy2-football',
             dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl',
             isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
-            isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
+            isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -563,7 +563,7 @@ export default defineComponent({
           padding: 10px 0 20px;
           overflow: auto;
           width: 90%;
-          font-family: 'PingFang SC';
+          font-family: "PingFang SC";
 
           .type-item {
             cursor: pointer;
@@ -691,7 +691,6 @@ export default defineComponent({
             align-items: flex-start;
             box-sizing: border-box;
             flex: 1;
-            font-family: 'PingFang SC';
 
             .time {
               font-size: 12px;
@@ -708,7 +707,7 @@ export default defineComponent({
               width: 220px;
               white-space: pre-wrap;
               word-wrap: break-word;
-              font-weight: 600;
+              font-weight: bold;
               line-height: 2rem;
             }
 
@@ -737,7 +736,7 @@ export default defineComponent({
             justify-content: flex-end;
             width: 60px;
             height: 34px;
-            font-family: 'PingFang SC';
+            font-family: "PingFang SC";
 
             > span {
               padding-right: 13px;
@@ -775,7 +774,8 @@ export default defineComponent({
         max-width: 1920px;
         margin: 0 auto;
 
-        &.isYallaCompass, &.isBbdachaBelgrade {
+        &.isYallaCompass,
+        &.isBbdachaBelgrade {
           max-width: 100%;
           .promo-bg.isDesktop {
             height: 568px !important;
@@ -862,8 +862,9 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
 
-        &.isYallaCompass, &.isBbdachaBelgrade {
-          background: #E7F1FD;
+        &.isYallaCompass,
+        &.isBbdachaBelgrade {
+          background: #e7f1fd;
           width: 100%;
           max-width: 100%;
           margin: 0;
@@ -1009,28 +1010,28 @@ export default defineComponent({
 }
 
 .loading {
-    height:25vw;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family: 'PingFang SC';
+  height: 25vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "PingFang SC";
 
-    .loading-img {
-        animation-name: fade-in-out;
-        animation-duration: 1s;
-        animation-iteration-count: infinite;
-        width: 100px;
-    }
+  .loading-img {
+    animation-name: fade-in-out;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    width: 100px;
+  }
 }
 
-@keyframes fade-in-out{
-  0%{
+@keyframes fade-in-out {
+  0% {
     opacity: 1;
   }
-   50%{
+  50% {
     opacity: 0;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
@@ -1068,7 +1069,7 @@ export default defineComponent({
         .promo-list-wrapper {
           width: calc(100vw - 80px);
           margin: 0;
-          grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+          grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 
           .promo-item {
             width: 210px;
