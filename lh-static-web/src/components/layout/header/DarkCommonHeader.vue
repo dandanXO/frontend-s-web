@@ -2422,7 +2422,7 @@
         box-shadow: none;
         border-bottom: 1px solid #BE9457;
         .top-nav-inner {
-          padding: 10px 0 9px;
+          padding: 0px;
           max-width: 1400px;
           .navigations {
             .header-menu-item {

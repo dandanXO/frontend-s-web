@@ -1,5 +1,5 @@
 <template>
-    <div class="account-box account-contents">
+    <div class="account-box">
       <div class="menu-title-container">
         <div class="menu-title">个人中心</div>
       </div>
@@ -7,7 +7,7 @@
       <div class="personal-container">
         <el-form ref="updateFormRef" :model="updateFormDetails">
           <div class="personal-wrapper">
-            <div class="basic-info">
+            <div class="basic-info account-contents">
               <div class="basic-info-table">
                 <div class="tbl-row">
                   <div class="basic-info-cell main-title">基本资料</div>
@@ -195,12 +195,18 @@
                   编辑
                 </button>
               </div>
+              <div class="account-tip-text">
+                <div class="link">
+                  如果您需要修改个人资料，请您联系我们的
+                  <a @click="store.openLiveChat()">在线客服</a>
+                </div>
+              </div>
             </div>
             <!-- <div class="buttons">
               <el-button size="large" class="common-btn light" @click="updatePwdModal">修改密码</el-button>
             </div> -->
   
-            <div class="update-pwd-container">
+            <div class="update-pwd-container account-contents">
               <div class="tbl-row">
                 <div class="mb-20 basic-info-cell main-title">修改密码</div>
               </div>
@@ -257,12 +263,6 @@
                   </button>
                 </div>
               </el-form>
-            </div>
-          </div>
-          <div class="account-tip-text">
-            <div class="link">
-              如果您需要修改个人资料，请您联系我们的
-              <a @click="store.openLiveChat()">在线客服</a>
             </div>
           </div>
         </el-form>
@@ -1081,10 +1081,11 @@
       width: 100%;
     }
     .personal-wrapper {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       // justify-content: space-between;
       width: 100%;
-      gap: 50px;
+      gap: 14px;
   
       .update-pwd-container {
         :deep(.el-form-item__label) {
@@ -1107,8 +1108,10 @@
       }
       .basic-info {
         padding-bottom: 20px;
-        max-width: 500px;
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         // border-right: 1px solid #aaaaaa;
   
         .basic-info-table {

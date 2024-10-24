@@ -138,6 +138,7 @@ watch(
   background-size: 100%;
   background-position: bottom;
   background-repeat: no-repeat;
+  background-color: #e7f1fd;
 
   .icon-selected-img {
     position: absolute;

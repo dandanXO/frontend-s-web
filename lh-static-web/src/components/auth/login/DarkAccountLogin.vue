@@ -298,7 +298,7 @@ const initGeetest = (config) => {
   
   <style lang="scss">
   .dark {
-    .el-overlay {
+    .el-overlay:has(.acc-dialog) {
       background: url("@/assets/home/auth/login-page-bg-dark.png");
       background-size: 100% auto;
     }
