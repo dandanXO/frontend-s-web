@@ -445,9 +445,9 @@ export default defineComponent({
           // promoState.promoList.push(...res.data);
 
           promoItems.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // } else {
               const displayElement = {
                 ...element,
                 displayDesktopBannerUrl: element.desktopBannerUrlDark ?? element.desktopBannerUrl,
@@ -462,7 +462,7 @@ export default defineComponent({
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(displayElement)
               }
-            }
+            // }
           });
 
           switchPromoType(promoState.active)
