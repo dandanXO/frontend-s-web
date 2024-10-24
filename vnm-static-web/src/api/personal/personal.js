@@ -87,7 +87,11 @@ export function cancellationOfWithdrawalReceived(bci) {
 }
 
 export function withdrawEntrance() {
-  return server.REST.get("/session/withdraw/entrance");
+  return server.REST.get("/session/withdraw/entrance/status");
+}
+
+export function withdrawRemainingRollover() {
+  return server.REST.get("/session/member/remainingRolloverByType")
 }
 
 export const upgradeToAutoWithdrawal = () => {

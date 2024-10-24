@@ -330,7 +330,18 @@
     "lengthShouldBe": "The length should be",
     "smsCodeRequired": "Please enter the SMS verification code",
     "bankBranchAddress": "Bank branch address",
-    "settleWithdrawPwd": "Please settle withdraw password"
+    "settleWithdrawPwd": "Please settle withdraw password",
+    "dialog": {
+      "title": "To continue withdrawal, please complete the following conditions",
+      "helpText": "If you have any questions, please contact online customer service for verification~",
+      "complete": "Complete",
+      "enjoy": "turnover, and enjoy fast withdrawals",
+      "betRequirement": "Bet Requirement",
+      "turnoverProgress": "Turnover Progress",
+      "status": "Completion Status",
+      "goComplete": "Go Complete",
+      "back": "Back"
+    }
   },
   "referTerms": {
     "receiveReward": "RECEIVE UNLIMITED REWARDS",

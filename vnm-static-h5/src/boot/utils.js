@@ -105,6 +105,19 @@ export const getVisitorId = async () => {
   }
 };
 
+export const convertToCommaAmount = (amount, isForceDecimal) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+};
+function isNonNumericString(value) {
+  return typeof value === "string" && isNaN(value);
+}
+
 export const toGMT7 = (dateTime, format = "DD/MM/YYYY hh:mm A") => {
   return moment(dateTime).subtract(1, "hours").format(format);
 };
