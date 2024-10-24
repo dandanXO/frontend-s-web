@@ -158,6 +158,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 :deep(.el-carousel) {
   width: 90%;
+  max-width: 1400px;
 }
 
 :deep(.el-carousel__arrow--left),
