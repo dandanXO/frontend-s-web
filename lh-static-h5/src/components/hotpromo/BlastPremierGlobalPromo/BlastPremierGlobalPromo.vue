@@ -267,7 +267,8 @@ import {
   openGlobalTreasure,
   getGlobalKeyRecord,
   getGlobalOpenRecord,
-  getGlobalTreasureDetail
+  getGlobalTreasureDetail,
+  claimGlobalCheckInTreasure
 } from "../../../api/index/promo";
 // import { ElMessage, ElLoading } from "element-plus";
 import { useQuasar } from "quasar";
@@ -361,17 +362,24 @@ const init = () => {
           if (index < signNumber.value) {
             day.claimed = true;
             day.toClaim = false; 
+          } else if (
+            index === signNumber.value
+          ) {
+            day.claimed = checkInDetails.value.hasClaimedToday;
+            day.toClaim = checkInDetails.value.canClaimToday;
           }
         });
       }
       // dayList.value = [];
       // checkInDetails.value.dayList.forEach((day) => {
-      //   const obj = {
-      //     no: day,
-      //     claimed: false,
-      //     toClaim: false
-      //   };
-      //   dayList.value.push(obj);
+      //   if (day === dailyCheckInClaimed + 1) {
+      //     const obj = {
+      //       no: day,
+      //       claimed: checkInDetails.value.hasClaimedToday,
+      //       toClaim: checkInDetails.value.canClaimToday
+      //     };
+      //     dayList.value.push(obj);
+      //   }
       // });
       // populateDayList(checkInDetails.value);
     }
@@ -448,21 +456,21 @@ const openModal = (modal, item, itemIndex) => {
     isClaimModal.value = true;
     amountClaimed.value = item;
   }
-  // if (modal === "claim") {
-  //   $q.loading.show({
-  //     message: "开启中... 请稍等..."
-  //   });
-  //   $q.loading.hide();
-  //   claimCheckInTreasure(props.promoCode, item.no).then((res) => {
-  //     if (res.code === 0) {
-  //       amountClaimed.value = res.data;
-  //       isClaimModal.value = true;
-  //       dayList.value[itemIndex].toClaim = false;
-  //       dayList.value[itemIndex].claimed = true;
-  //     }
-  //     $q.loading.hide();
-  //   });
-  // }
+  if (modal === "claim") {
+    $q.loading.show({
+      message: "开启中... 请稍等..."
+    });
+    $q.loading.hide();
+    claimGlobalCheckInTreasure(props.promoCode, item.no).then((res) => {
+      if (res.code === 0) {
+        amountClaimed.value = res.data;
+        isClaimModal.value = true;
+        dayList.value[itemIndex].toClaim = false;
+        dayList.value[itemIndex].claimed = true;
+      }
+      $q.loading.hide();
+    });
+  }
 };
 
 // Reference
