@@ -26,7 +26,7 @@
           </thead>
           <tbody>
             <tr v-for="(record, index) in tableData" :key="index">
-              <td align="center">{{ getDisplayRemainingType(record.type) }}</td>
+              <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
               <td align="center">
                 {{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}
               </td>
@@ -52,6 +52,15 @@ const isShow = defineModel();
 const router = useRouter();
 
 const tableData = ref([]);
+
+const getDisplayRemainingTypes = (items) => {
+  const typess = items.split(",");
+  let typeStr = [];
+  typess.forEach((type) => {
+    typeStr.push(getDisplayRemainingType(type));
+  });
+  return typeStr.join("，");
+};
 
 const getDisplayRemainingType = (type) => {
   switch (type) {
