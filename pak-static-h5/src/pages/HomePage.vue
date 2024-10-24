@@ -1414,6 +1414,7 @@ import "swiper/css/effect-coverflow";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import { useOneSignalWrapper } from "src/hooks/oneSignalWrapper";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -3357,32 +3358,34 @@ const openLiveInNewTab = (url) => {
   window.open(absoluteUrl, "_blank");
 };
 
-const pushNotificationData = ref();
+const { initOneSignal, pushNotificationData } = useOneSignalWrapper();
 
-const populatePushNotificationData = (data) => {
-  pushNotificationData.value = data;
-};
+// const pushNotificationData = ref();
 
-const initOneSignal = () => {
-  OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
+// const populatePushNotificationData = (data) => {
+//   pushNotificationData.value = data;
+// };
 
-  let myClickListener = async function (event) {
-    console.log("CLICK PUSH");
-    let notificationData = event;
-    console.log(notificationData);
-    console.log(notificationData.notification.title);
-    console.log(notificationData.notification.body);
-    console.log(notificationData.notification.additionalData);
-    populatePushNotificationData(notificationData.notification);
-  };
-  OneSignal.Notifications.addEventListener("click", myClickListener);
+// const initOneSignal = () => {
+//   OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
 
-  // Prompts the user for notification permissions.
-  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
-  OneSignal.Notifications.requestPermission(true).then((accepted) => {
-    console.log("User accepted notifications: " + accepted);
-  });
-};
+//   let myClickListener = async function (event) {
+//     console.log("CLICK PUSH");
+//     let notificationData = event;
+//     console.log(notificationData);
+//     console.log(notificationData.notification.title);
+//     console.log(notificationData.notification.body);
+//     console.log(notificationData.notification.additionalData);
+//     populatePushNotificationData(notificationData.notification);
+//   };
+//   OneSignal.Notifications.addEventListener("click", myClickListener);
+
+//   // Prompts the user for notification permissions.
+//   //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+//   OneSignal.Notifications.requestPermission(true).then((accepted) => {
+//     console.log("User accepted notifications: " + accepted);
+//   });
+// };
 
 const loadCustomerAddress = () => {
   cached
@@ -3587,9 +3590,7 @@ onMounted(() => {
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
   afterMounted();
 
-  if (Platform.is.android && Platform.is.capacitor) {
-    initOneSignal();
-  }
+  initOneSignal("4165d739-dd64-4f8f-b0b1-e3b17e62e3f3");
 });
 
 watch(

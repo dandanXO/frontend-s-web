@@ -176,12 +176,13 @@ module.exports = configure(function (ctx) {
         $schema: "https://json.schemastore.org/web-manifest-combined.json",
         name: `B9.GAME`,
         short_name: `B9.GAME`,
-        description: `APP`,
+        description: `Pakistan real money games`,
         display: "standalone",
         orientation: "portrait",
-        background_color: "#ffffff",
-        theme_color: "#027be3",
+        background_color: "#131313",
+        theme_color: "#131313",
         start_url: "/",
+        related_applications: [{ platform: "webapp", url: "https://pak-h5.psna-staging.com/manifest.json" }],
         icons: [
           {
             src: "icons/icon-128x128.png",

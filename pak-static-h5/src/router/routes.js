@@ -342,6 +342,16 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/download",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/DownloadPage.vue")
+      }
+    ]
+  },
   // {
   //   path: "/account/changePwd",
   //   component: () => import("layouts/MainLayout.vue"),
