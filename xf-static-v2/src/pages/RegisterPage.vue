@@ -205,7 +205,7 @@
         width="100%"
         color="brightbtn"
         style="width: 100%"
-        size="lg"
+        size="md"
         rounded
       />
     </div>
