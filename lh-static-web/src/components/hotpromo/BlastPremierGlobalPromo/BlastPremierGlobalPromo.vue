@@ -247,7 +247,7 @@ const selectedTreasureLevel = ref("Dragon");
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
-    selectedTreasureLevel.value = item.treasureLevelLevel;
+    selectedTreasureLevel.value = item.treasureLevel;
     activeItem.value = item.no;
     reorderItems(item);
   }
