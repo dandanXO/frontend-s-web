@@ -48,7 +48,15 @@
         </div>
       </div>
       <div class="deposit-container" v-else>
-        <el-form class="deposit-form" ref="formRef" :model="form" :rules="rules" autocomplete="off" label-width="100px" label-suffix=":">
+        <el-form
+          class="deposit-form"
+          ref="formRef"
+          :model="form"
+          :rules="rules"
+          autocomplete="off"
+          label-width="100px"
+          label-suffix=":"
+        >
           <el-space>
             <el-form-item class="helptxt" label="金额" prop="localAmount">
               <el-input
@@ -65,8 +73,13 @@
             </el-form-item>
             <div class="account-tip">
               单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ isUSDT ? "USDT" : store.currency.label }}  -   {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
+              {{ isUSDT ? "USDT" : store.currency.label }} -
+              {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
+            </div>
+
+            <div class="btn-confirm">
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
             </div>
           </el-space>
 
@@ -151,9 +164,6 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div> -->
           </el-form-item>
-          <div class="txt-center">
-            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn btn-confirm">确定</el-button>
-          </div>
         </el-form>
       </div>
       <el-dialog width="500px" v-model="isDeposited" :maskClosable="false" :closable="false" title="已存款">
@@ -254,7 +264,7 @@ const checkAmount = reactive({
 
 const selectedPromo = computed(() => {
   return unselectedPrivileges.value.find((item) => item.id === selectedPrivilege.value);
-})
+});
 
 const calculatedMinDeposit = ref("");
 const rules = {
@@ -655,29 +665,11 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
-// .deposit {
-//   margin-bottom: 0;
-//   min-height: 70vh;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   & > div {
-//     height: 180px;
-//   }
-// }
+
 .account-content {
   .wload {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // position: absolute;
-    // left: 0;
-    // top: 0;
-    // bottom: 0;
-    // right: 0;
-    // margin: auto;
   }
   .loading {
     display: flex;
@@ -817,7 +809,7 @@ onMounted(() => {
 //   }
 // }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .inner-cont {
   height: 100%;
   display: flex;
@@ -874,8 +866,17 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  position: absolute;
-  top: 0;
-  right: 0;
+  padding-left: 20px;
+  margin-bottom: 10px;
+
+  .common-btn {
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
 }
 </style>

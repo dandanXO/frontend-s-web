@@ -60,7 +60,15 @@
         </div>
       </div>
       <div class="deposit-container" v-else>
-        <el-form class="deposit-form" ref="formRef" :model="form" :rules="rules" autocomplete="off" label-width="100px" label-suffix=":">
+        <el-form
+          class="deposit-form"
+          ref="formRef"
+          :model="form"
+          :rules="rules"
+          autocomplete="off"
+          label-width="100px"
+          label-suffix=":"
+        >
           <el-space>
             <el-form-item class="helptxt" label="金额" prop="localAmount">
               <el-input
@@ -80,6 +88,12 @@
               {{ isUSDT ? "USDT" : store.currency.label }} -
               {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
+            </div>
+
+            <div class="txt-center">
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn btn-confirm">
+                确定
+              </el-button>
             </div>
           </el-space>
 
@@ -121,7 +135,7 @@
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               clearable
-              style="max-width: 200px;"
+              style="max-width: 200px"
             >
               <el-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id" :label="p.name">
                 {{ p.name }}
@@ -141,10 +155,6 @@
             </span>
             <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPromo.rollover }}倍</span>
           </div>
-
-            <div class="txt-center">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn btn-confirm">确定</el-button>
-            </div>
 
           <!-- <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
@@ -349,7 +359,7 @@ const withdrawState = reactive({
 
 const selectedPromo = computed(() => {
   return unselectedPrivileges.value.find((item) => item.id === selectedPrivilege.value);
-})
+});
 
 const loadCards = () => {
   withdrawState.bankCardList = [];
@@ -873,6 +883,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .txt-center {
+  padding-left: 24px;
   text-align: center;
 }
 :deep(.ant-form-item-label > label) {
@@ -891,7 +902,7 @@ onMounted(() => {
 }
 
 .deposit-container :deep(.el-form-item) {
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 
 :deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector) {
@@ -914,9 +925,8 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  position: absolute;
-  top:0;
-  right: 0;
+  padding-left: 20px;
+  margin-bottom: 10px;
 }
 </style>
 
