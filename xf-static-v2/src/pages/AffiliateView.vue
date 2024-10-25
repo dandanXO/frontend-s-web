@@ -64,165 +64,172 @@
         </div>
         <div class="affiliate-sub">
           <div class="affiliate-main-title q-mt-xs">佣金如何计划</div>
-          <table>
-            <tbody>
-              <tr>
-                <th>代理</th>
-                <th>盈利</th>
-                <th>有效活跃会员</th>
-                <th>佣金比例</th>
-              </tr>
-              <tr>
-                <td>铜牌</td>
-                <td>＜10W</td>
-                <td>5</td>
-                <td>35%</td>
-              </tr>
-              <tr>
-                <td>银牌</td>
-                <td>10W-30W</td>
-                <td>10</td>
-                <td>40%</td>
-              </tr>
-              <tr>
-                <td>金牌</td>
-                <td>30W-60W</td>
-                <td>25</td>
-                <td>45%</td>
-              </tr>
-              <tr>
-                <td>钻石</td>
-                <td>60W-100W</td>
-                <td>50</td>
-                <td>50%</td>
-              </tr>
-              <tr>
-                <td>皇冠</td>
-                <td>＞100W</td>
-                <td>80</td>
-                <td>55%</td>
-              </tr>
-            </tbody>
-          </table>
+          <RowHeaderTable
+            :header-data="['代理', '盈利', '有效活跃会员', '佣金比例']"
+            :row-data="[
+              ['铜牌', '＜10W', '5', '35%'],
+              ['银牌', '10W-30W', '10', '40%'],
+              ['金牌', '30W-60W', '25', '45%'],
+              ['钻石', '60W-100W', '50', '50%'],
+              ['皇冠', '＞100W', '88', '55%']
+            ]"
+          />
           <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
         </div>
       </div>
       <div class="affiliate-subgroup agent-content-item">
         <div class="affiliate-sub">
-          <div class="affiliate-subtitle">计算公式</div>
+          <div class="affiliate-main-title q-mt-md">计算公式</div>
           <div class="agent-demo-bg">
-            <div>例子1： 存款1000元 提款0元 优惠申请100元</div>
-            <div class="agent-demo-btm">
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">平台输赢</div>
-                  <div class="txt-right">1100</div>
+            <div class="agent-demo-container">
+              <div>例子1： 存款1000元 提款0元 优惠申请100元</div>
+              <div class="agent-demo-btm">
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">平台输赢</div>
+                    <div class="txt-right">1100</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">扣除申请优惠</div>
+                    <div class="txt-right">-100</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">扣除存提手续费1%</div>
+                    <div class="txt-right">-10</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">平台服务费</div>
+                    <div class="txt-right">88</div>
+                  </div>
+                </div>
+              </div>
+              <div class="agent-demo-btm">
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">盈利</div>
+                    <div class="txt-right">902</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">乘以佣金比例</div>
+                    <div class="txt-right">*35%</div>
+                  </div>
                 </div>
               </div>
               <div class="agent-demo-table">
                 <div class="agent-demo-table-tr">
-                  <div class="txt-left">扣除申请优惠</div>
-                  <div class="txt-right">-100</div>
+                  <div class="txt-left">代理佣金</div>
+                  <div class="txt-right">315.7</div>
                 </div>
-              </div>
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">扣除存提手续费1%</div>
-                  <div class="txt-right">-10</div>
-                </div>
-              </div>
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">平台服务费</div>
-                  <div class="txt-right">88</div>
-                </div>
-              </div>
-            </div>
-            <div class="agent-demo-btm">
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">盈利</div>
-                  <div class="txt-right">902</div>
-                </div>
-              </div>
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">乘以佣金比例</div>
-                  <div class="txt-right">*35%</div>
-                </div>
-              </div>
-            </div>
-            <div class="agent-demo-table">
-              <div class="agent-demo-table-tr">
-                <div class="txt-left">代理佣金</div>
-                <div class="txt-right">315.7</div>
               </div>
             </div>
           </div>
-          <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1%</div>
+          <div class="agent-stress-tip q-mb-sm">备注：存提手续费=存款加上提款总额的1%</div>
         </div>
         <div class="affiliate-sub">
-          <div class="affiliate-subtitle">&nbsp;</div>
           <div class="agent-demo-bg">
-            <div>例子2：存款130000元 提款10000元 优惠申请2000元 余额500</div>
-            <div class="agent-demo-btm">
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">平台输赢</div>
-                  <div class="txt-right">122000</div>
+            <div class="agent-demo-container">
+              <div>例子2：存款130000元 提款10000元 优惠申请2000元 余额500</div>
+              <div class="agent-demo-btm">
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">平台输赢</div>
+                    <div class="txt-right">122000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">扣除申请优惠</div>
+                    <div class="txt-right">-2000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">扣除存提手续费1%</div>
+                    <div class="txt-right">-1400</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">平台服务费</div>
+                    <div class="txt-right">9760</div>
+                  </div>
+                </div>
+              </div>
+              <div class="agent-demo-btm">
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">盈利</div>
+                    <div class="txt-right">108840</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">乘以佣金比例</div>
+                    <div class="txt-right">*40%</div>
+                  </div>
                 </div>
               </div>
               <div class="agent-demo-table">
                 <div class="agent-demo-table-tr">
-                  <div class="txt-left">扣除申请优惠</div>
-                  <div class="txt-right">-2000</div>
+                  <div class="txt-left">代理佣金</div>
+                  <div class="txt-right">43536</div>
                 </div>
-              </div>
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">扣除存提手续费1%</div>
-                  <div class="txt-right">-1400</div>
-                </div>
-              </div>
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">平台服务费</div>
-                  <div class="txt-right">9760</div>
-                </div>
-              </div>
-            </div>
-            <div class="agent-demo-btm">
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">盈利</div>
-                  <div class="txt-right">108840</div>
-                </div>
-              </div>
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">乘以佣金比例</div>
-                  <div class="txt-right">*40%</div>
-                </div>
-              </div>
-            </div>
-            <div class="agent-demo-table">
-              <div class="agent-demo-table-tr">
-                <div class="txt-left">代理佣金</div>
-                <div class="txt-right">43536</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="agent-demo-btm" style="margin-top: 20px; padding-bottom: 40px">
-        <a
+      <div class="agent-reg-btn">
+        <img
+          src="../assets/images/affiliate/apply_agency_btn.png"
+          @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
+        />
+        <!-- <a
           :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
           class="agent-reg-btn"
         >
           立即申请代理
-        </a>
+        </a> -->
       </div>
-      <div class="agent-contact-bg">
+      <div class="contact-us-container">
+        <div class="customer-service">
+          <span class="affiliate-main-title">联系我们</span>
+          <img src="../assets/images/affiliate/customer_service_btn.png" />
+        </div>
+        <div class="contact-item">
+          <span class="label">合营部电邮</span>
+          <span class="info">affiliate@e8007.com</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">合营部skype</span>
+          <span class="info">
+            live:.cd.ff6111f0549375a8(
+            <a href=""><img class="skype_icon" src="../assets/images/affiliate/agent_skype.png" /></a>
+            点击图标以联系，联系时请提供用户名)
+          </span>
+        </div>
+        <div class="contact-item">
+          <span class="label">合营部letstalk</span>
+          <span class="info">t403523198</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">合营部Telegram</span>
+          <span class="info">LH18668</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">合营部QQ</span>
+          <span class="info">1903687863</span>
+        </div>
+      </div>
+      <!-- <div class="agent-contact-bg">
         <div id="contactDetail" class="agent-contact-main">
           <div class="agent-contact-logo">
             <div>
@@ -251,16 +258,9 @@
               <div class="agent-ways-way">合营Flygram</div>
               <div class="agent-ways-val">搜索ID：XF666888 (下载链接: https://www.flygram8.com)</div>
             </div>
-            <!-- <div class="agent-ways-box">
-						<div class="agent-ways-way">合营微信</div>
-						<div class="agent-ways-val">XF856COM</div>
-					</div> -->
           </div>
-          <!-- <div class="agent-contact-ewm">
-					<img src="/images/agent/wechat_qr_code.jpg"/>
-				</div> -->
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -269,8 +269,12 @@ import { defineComponent } from "vue";
 // import { useI18n } from "vue-i18n";
 import { userStore } from "../stores/index";
 import { Platform } from "quasar";
+import RowHeaderTable from "src/components/RowHeaderTable.vue";
 
 export default defineComponent({
+  components: {
+    RowHeaderTable
+  },
   setup() {
     // const { t } = useI18n();
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
@@ -361,8 +365,8 @@ export default defineComponent({
     }
     .affiliate-container {
       display: flex;
-      padding-left: 15%;
-      padding-right: 15%;
+      padding-left: 10%;
+      padding-right: 10%;
       > img {
         width: 60%;
         height: 60%;
@@ -447,6 +451,7 @@ export default defineComponent({
       flex-direction: column;
       .affiliate-sub {
         flex: 1;
+        width: 100%;
         .affiliate-subtitle {
           font-size: 14px;
           color: #ffffff;
@@ -459,7 +464,7 @@ export default defineComponent({
     .agent-content-item ul {
       margin-left: 16px;
       padding: 0;
-      line-height: 20px;
+      line-height: 22px;
     }
     .agent-content-item ul li {
       list-style: decimal;
@@ -489,10 +494,20 @@ export default defineComponent({
       margin-top: 21px;
     }
     .agent-demo-bg {
-      background-color: #151823;
-      padding: 10px 40px 24px 40px;
-      line-height: 40px;
+      background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
+      // padding: 10px 40px 24px 40px;
+      line-height: 32px;
       margin-top: 10px;
+
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background-image: linear-gradient(180deg, #384e79 0%, #212e4b 100%),
+        linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00bfd7 75.68%);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+    }
+    .agent-demo-container {
+      margin: 8px 16px;
     }
     .agent-demo-btm {
       border-bottom: 1px solid #242c3f;
@@ -515,19 +530,46 @@ export default defineComponent({
       text-align: right !important;
     }
     .agent-reg-btn {
-      width: 100%;
-      height: 98px;
-      background-color: #349ebc;
-      font-size: 26px;
-      color: #ffffff;
-      line-height: 98px;
-      letter-spacing: 3px;
-      margin: 0 auto;
-      text-align: center;
       cursor: pointer;
-      display: block;
-      text-decoration: none;
+      margin-top: 20px;
+      > img {
+        width: 100%;
+      }
     }
+
+    .contact-us-container {
+      margin-top: 16px;
+      .customer-service {
+        display: flex;
+        align-items: center;
+        > span {
+          margin: 0;
+        }
+        > img {
+          margin-left: 10px;
+          width: 100px;
+          height: 20px;
+        }
+      }
+      .contact-item {
+        display: flex;
+        flex-direction: column;
+        line-height: 22px;
+        margin-top: 14px;
+        .label {
+          color: #7a80a1;
+        }
+        .info {
+          color: #a4aabb;
+        }
+      }
+    }
+
+    .skype_icon {
+      width: 20px;
+      height: 20px;
+    }
+
     .agent-contact-bg {
       background-color: #0f121f;
       border-radius: 5px;
