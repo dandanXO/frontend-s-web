@@ -14,7 +14,11 @@
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png" alt="" width="100%" />
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                alt=""
+                width="100%"
+              />
             </div>
             <div class="reward-info-content">
               昨日累计存款金额：
@@ -23,7 +27,11 @@
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon4.png" alt="" width="100%" />
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon4.png"
+                alt=""
+                width="100%"
+              />
             </div>
             <div class="reward-info-content">
               昨日累计有效投注：
@@ -32,7 +40,11 @@
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png" alt="" width="100%" />
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                alt=""
+                width="100%"
+              />
             </div>
             <div class="reward-info-content">
               可领取彩金：
@@ -50,18 +62,17 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">
-            2024年10月27日至2024年11月10日
-          </div>
+          <div class="right">2024年10月27日至2024年11月10日</div>
         </div>
-        <div class="little-title" style="flex-direction: column; align-items: start;">
+        <div class="little-title" style="flex-direction: column; align-items: start">
           <div class="left">活动内容</div>
           <div class="right">
-            在梦幻联赛S24赛事期间当天累计有效投注≥1000元并存款≥200元在次日即可获得对应档位的奖金,最高可获888元
+            在梦幻联赛S24赛事期间当天累计有效投注≥1，000元并存款≥200元在次日即可获得对应档位的奖金,最高可获888元
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
-          <tr>
+          <tbody>
+            <tr>
               <th>当日存款</th>
               <th>当日累计有效投注</th>
               <th>投注奖金</th>
@@ -97,6 +108,7 @@
               <td>≥200,000</td>
               <td>888元</td>
             </tr>
+          </tbody>
         </table>
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
@@ -108,7 +120,7 @@
               />
               <span>示例</span>
             </div>
-            10月28日会员A在梦幻联赛S24赛事期间存款500元并且累计有效投注为20000元，10月29日即可在优惠页面点击【领取】获得投注奖金，根据规则会员可获得58元投注奖金，奖金仅需8倍水即可出款
+            10月28日会员A在梦幻联赛S24赛事期间存款500元并且累计有效投注为20,000元，10月29日即可在优惠页面点击【领取】获得投注奖金，根据规则会员可获得58元投注奖金，奖金仅需8倍水即可出款
           </div>
         </div>
       </div>
@@ -131,7 +143,8 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -139,7 +152,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
