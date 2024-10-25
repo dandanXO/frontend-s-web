@@ -5,21 +5,26 @@
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="special" style="padding: 0">
         <div class="scroll-container">
-          <div v-for="(vip, vipIndex) in vipItems" :key="vipIndex" class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v${vip.vipLevel - 1}_card_bg.png`)})`}">
+          <div
+            v-for="(vip, vipIndex) in vipItems"
+            :key="vipIndex"
+            class="card"
+            :style="{ backgroundImage: `url(${require(`../../assets/vip/v${vip.vipLevel - 1}_card_bg.png`)})` }"
+          >
             <div class="card_top">
               <div class="info-container">
-                <img :src="require(`../../assets/vip/vip_text_${vip.vipLevel - 1}.png`)"/>
+                <img :src="require(`../../assets/vip/vip_text_${vip.vipLevel - 1}.png`)" />
                 <span>{{ `${vip.monthlySaving}${vip.oneMonthSaving}` }}</span>
               </div>
-              <img :src="require(`../../assets/vip/vip_badge_${vip.vipLevel - 1}.png`)"/>
+              <img :src="require(`../../assets/vip/vip_badge_${vip.vipLevel - 1}.png`)" />
             </div>
             <div class="card_btm">
               <div class="progress-bar-container">
-                <div class="progress-bar"></div>
+                <div class="progress-bar" :style="{ width: progessPercentage(vip.upgrade) + '%' }"></div>
               </div>
               <div class="amt-info">
-                <span>{{ vip.saving }}</span>
-                <span>当前流水(元)：</span>
+                <span>累计存款大于{{ convertToCommaAmount(vip.upgrade) }}</span>
+                <span>当前流水(元)：{{ convertToCommaAmount(currentBetAmount) }}</span>
               </div>
             </div>
           </div>
@@ -27,7 +32,7 @@
 
         <div class="vip-benefits">
           <div class="bft-title">
-            <img src="~/assets/vip/vip_priv_title.png">
+            <img src="~/assets/vip/vip_priv_title.png" />
           </div>
           <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
             <template v-if="vipIndex === slide">
@@ -105,7 +110,7 @@
           <template v-if="vipIndex === slide">
             <div class="vip-benefits">
               <div class="bft-title">
-                <img src="~/assets/vip/vip_disc_title.png">
+                <img src="~/assets/vip/vip_disc_title.png" />
               </div>
               <div class="bft-promo-row">
                 <div class="bft-promo">
@@ -137,90 +142,89 @@
       <q-tab-panel name="details">
         <div class="table-wrapper">
           <table>
-          <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">升级要求</th>
-              <th class="dy-vip-th">晋升奖金(1倍)</th>
-              <th class="dy-vip-th">生日奖金(1倍)</th>
-              <!--            <th class="dy-vip-th">每月红包</th>-->
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>VIP1</td>
-              <td>5000</td>
-              <td>8元</td>
-              <td>0元</td>
-              <!--            <td>无</td>-->
-            </tr>
-            <tr>
-              <td>VIP2</td>
-              <td>20000</td>
-              <td>8元</td>
-              <td>0元</td>
-              <!--            <td>28元</td>-->
-            </tr>
-            <tr>
-              <td>VIP3</td>
-              <td>200000</td>
-              <td>38元</td>
-              <td>0元</td>
-              <!--            <td>88元</td>-->
-            </tr>
-            <tr>
-              <td>VIP4</td>
-              <td>500000</td>
-              <td>88元</td>
-              <td>0元</td>
-              <!--            <td>188元</td>-->
-            </tr>
-            <tr>
-              <td>VIP5</td>
-              <td>2000000</td>
-              <!--            <td>288≤一个月内累积存款</td>-->
-              <td>288元</td>
-              <td>188元</td>
-            </tr>
-            <tr>
-              <td>VIP6</td>
-              <td>5000000</td>
-              <td>588元</td>
-              <td>388元</td>
-              <!--            <td>888元</td>-->
-            </tr>
-            <tr>
-              <td>VIP7</td>
-              <td>8000000</td>
-              <!--            <td>188888≤一个月内累积存款</td>-->
-              <td>1888元</td>
-              <td>588元</td>
-            </tr>
-            <tr>
-              <td>VIP8</td>
-              <td>10000000</td>
-              <!--            <td>288888≤一个月内累积存款</td>-->
-              <td>2888元</td>
-              <td>888元</td>
-            </tr>
-            <tr>
-              <td>VIP9</td>
-              <td>20000000</td>
-              <!--            <td>588888≤一个月内累积存款</td>-->
-              <td>5888元</td>
-              <td>1288元</td>
-            </tr>
-            <tr>
-              <td>VIP10</td>
-              <td>30000000</td>
-              <!--            <td>888888≤一个月内累积存款</td>-->
-              <td>18888元</td>
-              <td>1588元</td>
-            </tr>
-          </tbody>
-        </table>
+            <thead>
+              <tr>
+                <th class="dy-vip-th">等级</th>
+                <th class="dy-vip-th">升级要求</th>
+                <th class="dy-vip-th">晋升奖金(1倍)</th>
+                <th class="dy-vip-th">生日奖金(1倍)</th>
+                <!--            <th class="dy-vip-th">每月红包</th>-->
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VIP1</td>
+                <td>5000</td>
+                <td>8元</td>
+                <td>0元</td>
+                <!--            <td>无</td>-->
+              </tr>
+              <tr>
+                <td>VIP2</td>
+                <td>20000</td>
+                <td>8元</td>
+                <td>0元</td>
+                <!--            <td>28元</td>-->
+              </tr>
+              <tr>
+                <td>VIP3</td>
+                <td>200000</td>
+                <td>38元</td>
+                <td>0元</td>
+                <!--            <td>88元</td>-->
+              </tr>
+              <tr>
+                <td>VIP4</td>
+                <td>500000</td>
+                <td>88元</td>
+                <td>0元</td>
+                <!--            <td>188元</td>-->
+              </tr>
+              <tr>
+                <td>VIP5</td>
+                <td>2000000</td>
+                <!--            <td>288≤一个月内累积存款</td>-->
+                <td>288元</td>
+                <td>188元</td>
+              </tr>
+              <tr>
+                <td>VIP6</td>
+                <td>5000000</td>
+                <td>588元</td>
+                <td>388元</td>
+                <!--            <td>888元</td>-->
+              </tr>
+              <tr>
+                <td>VIP7</td>
+                <td>8000000</td>
+                <!--            <td>188888≤一个月内累积存款</td>-->
+                <td>1888元</td>
+                <td>588元</td>
+              </tr>
+              <tr>
+                <td>VIP8</td>
+                <td>10000000</td>
+                <!--            <td>288888≤一个月内累积存款</td>-->
+                <td>2888元</td>
+                <td>888元</td>
+              </tr>
+              <tr>
+                <td>VIP9</td>
+                <td>20000000</td>
+                <!--            <td>588888≤一个月内累积存款</td>-->
+                <td>5888元</td>
+                <td>1288元</td>
+              </tr>
+              <tr>
+                <td>VIP10</td>
+                <td>30000000</td>
+                <!--            <td>888888≤一个月内累积存款</td>-->
+                <td>18888元</td>
+                <td>1588元</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
 
         <div class="table-wrapper">
           <table>
@@ -433,34 +437,27 @@
          </div>
        </div>
      </div> -->
+        <div class="terms-conditions-title">
+          <img src="~/assets/vip/vip_rules_title.png" />
+        </div>
         <div class="terms-conditions">
-          <div class="title">
-            <img src="~/assets/vip/vip_rules_title.png">
-          </div>
           <div class="content">
             <ol style="padding-inline-start: 15px">
-            <li>晋升标准：用户充值达到相应级别即可晋升相应VIP等级。</li>
-            <li>晋升顺序：VIP等级可以越级晋升，每天仅限晋升一级。</li>
-            <li>
-              晋级奖金：用户晋级后晋级奖金将自动派发到主账户中，每个级别的晋级奖金每位用户仅能获得一次。
-            </li>
-            <li>
-              生日奖金：用户在注册90天内过生日，今年将不能领取生日礼金，另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次。
-            </li>
-            <li>
-              奖金流水：晋级奖金、生日奖金领取后需要完成一倍流水后可提款，此活动不可以与其他活动共享。
-            </li>
-            <li>
-              每月首充：领取彩金需完成相应流水后可提款，有效投注额仅对已结算并产生输赢结果的投注额进行计算，
-              电竞盘：香港盘0.75以下，欧洲盘1.75以下；
-              香港盘＜0.75以下、欧洲盘＜1.75以下、马来盘＜0.75以下、印尼盘＜-1.3以下、美国盘＜-133以下，串关、走盘，注单取消，对冲等情况都不算有效流水。
-            </li>
-            <li>
-              凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。
-            </li>
-          </ol>
+              <li>晋升标准：用户充值达到相应级别即可晋升相应VIP等级。</li>
+              <li>晋升顺序：VIP等级可以越级晋升，每天仅限晋升一级。</li>
+              <li>晋级奖金：用户晋级后晋级奖金将自动派发到主账户中，每个级别的晋级奖金每位用户仅能获得一次。</li>
+              <li>
+                生日奖金：用户在注册90天内过生日，今年将不能领取生日礼金，另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次。
+              </li>
+              <li>奖金流水：晋级奖金、生日奖金领取后需要完成一倍流水后可提款，此活动不可以与其他活动共享。</li>
+              <li>
+                每月首充：领取彩金需完成相应流水后可提款，有效投注额仅对已结算并产生输赢结果的投注额进行计算，
+                电竞盘：香港盘0.75以下，欧洲盘1.75以下；
+                香港盘＜0.75以下、欧洲盘＜1.75以下、马来盘＜0.75以下、印尼盘＜-1.3以下、美国盘＜-133以下，串关、走盘，注单取消，对冲等情况都不算有效流水。
+              </li>
+              <li>凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。</li>
+            </ol>
           </div>
-
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -490,6 +487,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import Swal from "sweetalert2";
 import RoundTab from "src/components/RoundTab.vue";
+import { convertToCommaAmount } from "src/boot/utils.js";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -519,10 +517,7 @@ export default defineComponent({
       // Check if the button is already disabled
       if (localStorage.getItem("vipButtonDisabled") === "true") {
         const currentTime = new Date().getTime();
-        const expirationTime = parseInt(
-          localStorage.getItem("vipButtonExpirationTime"),
-          10
-        );
+        const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
 
         // Check if the expiration time has passed
         if (currentTime < expirationTime) {
@@ -572,10 +567,7 @@ export default defineComponent({
               const expirationTime = currentTime + 10000; // 10 secs in milliseconds
 
               localStorage.setItem("vipButtonDisabled", "true");
-              localStorage.setItem(
-                "vipButtonExpirationTime",
-                expirationTime.toString()
-              );
+              localStorage.setItem("vipButtonExpirationTime", expirationTime.toString());
               // Start the countdown
               startCountdown(expirationTime);
               Swal.fire({
@@ -612,10 +604,7 @@ export default defineComponent({
     // Check if the button should be initially disabled after a page refresh
     if (localStorage.getItem("vipButtonDisabled") === "true") {
       const currentTime = new Date().getTime();
-      const expirationTime = parseInt(
-        localStorage.getItem("vipButtonExpirationTime"),
-        10
-      );
+      const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
 
       // Check if the expiration time has passed
       if (currentTime < expirationTime) {
@@ -903,8 +892,7 @@ program at any time without prior notice.`
     const vipList = ref([
       {
         level: 1,
-        description:
-          "升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款",
+        description: "升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款",
         monthlyBonus: `无`,
         birthdayBonus: `无`,
         cunsong: `8元`,
@@ -1045,90 +1033,81 @@ program at any time without prior notice.`
     const vipItems = [
       {
         vipLevel: "1",
+        upgrade: 5000,
         monthly: "",
         birthday: "",
-        saving: "累计存款大于5000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥500元, 返现15%, 最高188元"
       },
       {
         vipLevel: "2",
-        upgrade: "70,000",
+        upgrade: 20000,
         monthly: "188",
         birthday: "",
-        saving: "累计存款大于20000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥500元, 返现15%, 最高258元"
       },
       {
         vipLevel: "3",
-        upgrade: "500,000",
+        upgrade: 200000,
         monthly: "688",
         birthday: "888",
-        saving: "累计存款大于200000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥500元,返现15%, 最高288元"
       },
       {
         vipLevel: "4",
-        upgrade: "2,000,000",
+        upgrade: 500000,
         monthly: "1,588",
         birthday: "2,888",
-        saving: "累计存款大于500000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥1000元,返现25%, 最高388元"
       },
       {
         vipLevel: "5",
-        upgrade: "7,000,000",
+        upgrade: 2000000,
         monthly: "2,888",
         birthday: "5,888",
-        saving: "累计存款大于2000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥1000元,返现25%, 最高588元"
       },
       {
         vipLevel: "6",
-        upgrade: "20,000,000",
+        upgrade: 5000000,
         monthly: "6,888",
         birthday: "8,888",
-        saving: "累计存款大于5000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥1000元,返现25%, 最高688元"
       },
       {
         vipLevel: "7",
-        upgrade: "60,000,000",
+        upgrade: 8000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "5累计存款大于8000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现35%, 最高888元"
       },
       {
         vipLevel: "8",
-        upgrade: "60,000,000",
+        upgrade: 10000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "累计存款大于10000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1288元"
       },
       {
         vipLevel: "9",
-        upgrade: "60,000,000",
+        upgrade: 20000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "累计存款大于20000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1888元"
       },
       {
         vipLevel: "10",
-        upgrade: "60,000,000",
+        upgrade: 30000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "累计存款大于30000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现40%, 最高2888元"
       }
@@ -1139,16 +1118,31 @@ program at any time without prior notice.`
 
     const tabItems = [
       {
-        name: 'special',
-        label:'VIP特权'
+        name: "special",
+        label: "VIP特权"
       },
       {
-        name: 'details',
-        label:'VIP详情'
+        name: "details",
+        label: "VIP详情"
       }
-    ]
+    ];
 
+    const progessPercentage = (upgradeAmt) => {
+      return (currentDepositAmount.value / upgradeAmt) * 100;
+    };
+
+    const currentBetAmount = ref(0);
+    const currentDepositAmount = ref(0);
+
+    const getVipDetails = () => {
+      const randNum = Math.floor(Math.random() * 1000) + 1;
+      eventapi.get(`/vip-bonus/get-detail?v=${randNum}`).then((res) => {
+        currentBetAmount.value = res.data.currentBetAmount;
+        currentDepositAmount.value = res.data.currentDepositAmount;
+      });
+    };
     onMounted(() => {
+      getVipDetails();
       vipLevel.value = store.vip.replace("VIP", "");
       if (vipLevel.value >= 1) {
         slide.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
@@ -1221,7 +1215,10 @@ program at any time without prior notice.`
       tabItems,
       onVIPButtonClick,
       btnIsDisabled,
-      startCountdown
+      startCountdown,
+      convertToCommaAmount,
+      progessPercentage,
+      currentBetAmount
     };
   }
 });
@@ -1335,7 +1332,7 @@ program at any time without prior notice.`
   .vip-benefits {
     padding: 10px;
     font-size: 0.75rem;
-    background: #1A2338;
+    background: #1a2338;
 
     .bft-title {
       display: flex;
@@ -1424,14 +1421,14 @@ program at any time without prior notice.`
         aspect-ratio: 10 / 8;
 
         .promo-percent {
-          color: #01BFD8;
+          color: #01bfd8;
           text-align: center;
           font-weight: 600;
           font-size: 24px;
         }
 
         .promo-title {
-          color: #FFFFFF99;
+          color: #ffffff99;
           font-weight: 600;
           font-size: 12px;
         }
@@ -1495,9 +1492,9 @@ program at any time without prior notice.`
 
   .table-wrapper {
     border-radius: 10px;
-    background: linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00BFD7 75.68%);
+    background: linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00bfd7 75.68%);
     padding: 1px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 
     table {
       text-align: center;
@@ -1511,7 +1508,7 @@ program at any time without prior notice.`
       border-radius: 10px;
 
       thead {
-        background-color: #445F95;
+        background-color: #445f95;
 
         th {
           color: #ffffff;
@@ -1524,11 +1521,11 @@ program at any time without prior notice.`
       }
 
       tbody {
-        background: linear-gradient(180deg, #384E79 0%, #212E4B 100%);
+        background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
         td {
           // border: 0.35px solid #3B5385;
           // border-radius: 10px;
-          color: #FFFFFF99;
+          color: #ffffff99;
           padding: 10px 4px;
           font-size: 12px;
           // background: #fff;
@@ -1536,7 +1533,8 @@ program at any time without prior notice.`
       }
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px;
     }
 
@@ -1554,36 +1552,34 @@ program at any time without prior notice.`
     }
   }
 
+  .terms-conditions-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+    margin-top: 20px;
+    > img {
+      width: 180px;
+    }
+  }
+
   .terms-conditions {
     color: #fff;
     font-size: 0.8rem;
-    color: #FFFFFF99;
+    color: #ffffff99;
 
-    .title {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-      margin-top: 16px;
-      > img {
-        width: 180px;
-      }
-    }
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-image: linear-gradient(180deg, #384e79 0%, #212e4b 100%),
+      linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00bfd7 75.68%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 
     .content {
-      background: url(../../assets/vip/vip_rules_bg.png) center center no-repeat;
-      background-size: contain;
-      aspect-ratio: 347 / 553;
       padding: 16px;
     }
 
     li {
       line-height: 24px;
-    }
-    @media (max-width: 390px) {
-      li {
-        line-height: 16px;
-      }
-
     }
 
     li:after {
@@ -1626,18 +1622,18 @@ program at any time without prior notice.`
     justify-content: space-between;
     max-width: 300px;
     padding: 0 10px;
-    > img{
+    > img {
       width: 75px;
       height: 60px;
     }
     @media (max-width: 400px) {
-      > img{
+      > img {
         width: 50px;
         height: 40px;
       }
     }
     @media (max-width: 370px) {
-      > img{
+      > img {
         width: 40px;
         height: 32px;
       }
@@ -1653,13 +1649,13 @@ program at any time without prior notice.`
         margin-bottom: 6px;
       }
       @media (max-width: 400px) {
-        > img{
+        > img {
           width: 32px;
           margin-bottom: 4px;
         }
       }
       @media (max-width: 370px) {
-        > img{
+        > img {
           width: 24px;
           margin-bottom: 3px;
         }
@@ -1681,9 +1677,9 @@ program at any time without prior notice.`
       height: 6px;
       border-radius: 15px;
       overflow: hidden;
-      background: #FFFFFF4D;
+      background: #ffffff4d;
       margin-top: 6px;
-      margin-bottom: 6px
+      margin-bottom: 6px;
     }
 
     .progress-bar {
@@ -1692,7 +1688,6 @@ program at any time without prior notice.`
       background: #fff;
       transition: width 0.5s;
     }
-
   }
 }
 </style>
