@@ -181,8 +181,8 @@ module.exports = configure(function (ctx) {
         orientation: "portrait",
         background_color: "#131313",
         theme_color: "#131313",
-        start_url: "/",
-        related_applications: [{ platform: "webapp", url: "https://pak-h5.psna-staging.com/manifest.json" }],
+        start_url: "/home",
+        scope: "/",
         icons: [
           {
             src: "icons/icon-128x128.png",
