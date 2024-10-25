@@ -630,7 +630,7 @@
   <q-dialog width="100%" v-model="isStationNotice">
     <q-card style="width: 100%; position: relative" class="bg-primary text-black">
       <img v-close-popup class="station-notice-close-btn" src="../assets/images/home/close.png" />
-      <q-card-section class="q-mb-md">
+      <q-card-section>
         <q-tabs
           v-model="activeKey"
           dense
