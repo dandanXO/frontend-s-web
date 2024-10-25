@@ -520,11 +520,12 @@ svg path {
 }
 
 .bottom-nav {
-  font-size: 12px;
+  font-size: 10px;
   position: relative;
   background-image: url("../assets/images/index/menu/menu-bg.png");
   background-size: 100% 100%;
   margin: 0 -6px;
   background-color: transparent;
+  padding-top: 4px;
 }
 </style>

@@ -5,7 +5,6 @@
       hide-bottom-space
       v-model="regForm.loginName"
       label="用户名"
-      lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入用户名',
         (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
@@ -14,7 +13,9 @@
       ]"
       clearable
       rounded
-      standout
+      outlined
+      color="white"
+      bg-color="inputstyle"
     >
       <template v-slot:prepend>
         <q-icon color="bright" name="person_outline" size="24px" />
@@ -26,14 +27,15 @@
       hide-bottom-space
       v-model="regForm.password"
       label="密码"
-      lazy-rules
       :type="isPwd ? 'password' : 'text'"
       :rules="[
         (val) => (val && val.length > 0) || '请输入密码',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+        (val) => (val.length > 5 && val.length <= 12) || ''
       ]"
       rounded
-      standout
+      outlined
+      color="white"
+      bg-color="inputstyle"
     >
       <template v-slot:prepend>
         <q-icon color="bright" name="lock_open" size="24px" />
@@ -47,25 +49,61 @@
         />
       </template>
     </q-input>
-    <div v-if="regForm.password" class="password-str-div">
-      <span
-        :class="{
-          'weak-pwd': pwdStrength == 'weak',
-          'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong'
-        }"
-      >
-        弱
-      </span>
-      <span
-        :class="{
-          'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong'
-        }"
-      >
-        好
-      </span>
-      <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
+
+    <div v-if="regForm.password">
+      <div class="password-str-div">
+        <span
+          :class="{
+            'weak-pwd': pwdStrength == 'weak',
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        ></span>
+        <span
+          :class="{
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        ></span>
+        <span :class="{ 'strong-pwd': pwdStrength == 'strong' }"></span>
+
+        <div class="text-pwd">
+          <div v-if="pwdStrength == 'weak'" class="weak-pwd">弱</div>
+          <div v-if="pwdStrength == 'normal'" class="normal-pwd">中</div>
+          <div v-if="pwdStrength == 'strong'" class="strong-pwd">强</div>
+        </div>
+      </div>
+
+      <!-- Password Requirements -->
+      <div class="pwd-requirements">
+        <div>密码必须符合以下要求：</div>
+        <div class="row wrap q-gutter-x-sm">
+          <div
+            class="text-req"
+            :class="{
+              correct: regForm.password.length > 5
+            }"
+          >
+            至少6个字符长度
+          </div>
+          <div
+            class="text-req"
+            :class="{
+              correct: pwdStrength == 'normal' || pwdStrength == 'strong'
+            }"
+          >
+            至少包含一个字母
+          </div>
+          <div
+            class="text-req"
+            :class="{
+              correct: pwdStrength == 'strong'
+            }"
+          >
+            至少包含一个数字
+          </div>
+        </div>
+      </div>
     </div>
 
     <q-input
@@ -74,14 +112,15 @@
       :type="isCfmPwd ? 'password' : 'text'"
       v-model="regForm.confirmPwd"
       label="确认密码"
-      lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入确认密码',
         (val) => val === regForm.password || '密码不一样',
         (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
       ]"
       rounded
-      standout
+      outlined
+      color="white"
+      bg-color="inputstyle"
     >
       <template v-slot:prepend>
         <q-icon color="bright" name="lock_open" size="24px" />
@@ -103,11 +142,12 @@
       type="text"
       v-model="regForm.smsCode"
       label="手机验证码"
-      lazy-rules
       maxlength="6"
       :rules="[(val) => (val && val.length > 3) || '请输入手机验证码']"
       rounded
-      standout
+      outlined
+      color="white"
+      bg-color="inputstyle"
     >
       <template v-slot:prepend>
         <q-icon color="bright" name="shield" size="24px" />
@@ -121,13 +161,14 @@
       type="text"
       v-model="regForm.captchaCode"
       label="验证码"
-      lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入验证码',
         (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
       ]"
       rounded
-      standout
+      outlined
+      color="white"
+      bg-color="inputstyle"
     >
       <template v-slot:append>
         <img :src="verificationImg" @click="getCode()" />
@@ -145,7 +186,9 @@
       label="推荐码"
       hint="若不是合营下会员无需填写"
       rounded
-      standout
+      outlined
+      color="white"
+      bg-color="inputstyle"
     >
       <template v-slot:prepend>
         <!-- <img src="../assets/images/login/login_name.png" width="20" /> -->
@@ -162,8 +205,8 @@
         width="100%"
         color="brightbtn"
         style="width: 100%"
-        rounded
         size="lg"
+        rounded
       />
     </div>
   </q-form>
@@ -568,33 +611,78 @@ function charType(num) {
   align-items: center;
   margin-top: 3px;
   margin-bottom: 5px;
-  justify-content: space-evenly;
-  gap: 5px;
-  height: 50px;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1;
 
   span {
-    padding: 8px 3px;
-    //border: 1px solid #fff;
-    border-radius: 5px;
-    background: #434343;
-    width: 33%;
+    width: 24px;
+    height: 8px;
+    background: #edeeef;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    &.weak-pwd {
+      background: var(--q-negative);
+    }
+
+    &.normal-pwd {
+      background: var(--q-warning);
+      color: var(--q-primary);
+    }
+
+    &.strong-pwd {
+      //background: linear-gradient(to right, #de4545, #db7e42) !important;
+      background: var(--q-positive);
+      font-weight: 600;
+    }
   }
 
-  span.weak-pwd {
-    background: var(--q-negative);
-  }
+  .text-pwd {
+    font-size: 16px;
 
-  span.normal-pwd {
-    background: var(--q-warning);
-    color: var(--q-primary);
+    .weak-pwd {
+      color: var(--q-negative);
+    }
+    .normal-pwd {
+      color: var(--q-warning);
+    }
+    .strong-pwd {
+      color: var(--q-positive);
+    }
   }
+}
 
-  span.strong-pwd {
-    //background: linear-gradient(to right, #de4545, #db7e42) !important;
-    background: var(--q-positive);
-    font-weight: 600;
+.pwd-requirements {
+  font-size: 12px;
+  line-height: 2;
+
+  .text-req {
+    padding-left: 20px;
+    position: relative;
+
+    &:before {
+      content: "";
+      background-image: url("../assets/images/login/icon-cross.png");
+      background-size: 100% 100%;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 0;
+      top: 4px;
+    }
+
+    &.correct {
+      &:before {
+        content: "";
+        background-image: url("../assets/images/login/icon-tick.png");
+        background-size: 100% 100%;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        left: 0;
+        top: 4px;
+      }
+    }
   }
 }
 

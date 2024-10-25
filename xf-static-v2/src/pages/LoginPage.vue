@@ -10,10 +10,12 @@
       <img @click="backHome" src="../assets/logo.png" />
     </div>
 
-    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">
+    <!-- <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">
       <q-tab name="login" label="登录" />
       <q-tab name="register" label="注册" />
-    </q-tabs>
+    </q-tabs> -->
+
+    <RoundTab v-model:tab="tab" :items="tabItems"></RoundTab>
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="login">
@@ -29,7 +31,9 @@
               autocomplete="username"
               clearable
               rounded
-              standout
+              outlined
+              color="white"
+              bg-color="inputstyle"
             >
               <template v-slot:prepend>
                 <q-icon color="bright" name="person_outline" size="24px" />
@@ -46,7 +50,9 @@
               label-color="brand"
               autocomplete="current-password"
               rounded
-              standout
+              outlined
+              color="white"
+              bg-color="inputstyle"
             >
               <template v-slot:prepend>
                 <q-icon color="bright" name="lock_open" size="24px" />
@@ -73,7 +79,9 @@
               ]"
               label-color="brand"
               rounded
-              standout
+              outlined
+              color="white"
+              bg-color="inputstyle"
             >
               <template v-slot:append>
                 <img :src="verificationImg" @click="getCode" />
@@ -96,7 +104,9 @@
               label-color="brand"
               autocomplete="username"
               rounded
-              standout
+              outlined
+              color="white"
+              bg-color="inputstyle"
             >
               <template v-slot:prepend>
                 <q-icon color="bright" name="phone" size="24px" />
@@ -113,7 +123,9 @@
               :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
               label-color="brand"
               rounded
-              standout
+              outlined
+              color="white"
+              bg-color="inputstyle"
             >
               <template v-slot:append>
                 <q-btn
@@ -122,6 +134,7 @@
                   label="发送验证码"
                   @click="toggleInnerCode"
                   style="white-space: nowrap"
+                  rounded
                 />
               </template>
               <template v-slot:prepend>
@@ -180,27 +193,33 @@
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
-    <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
-        <q-toolbar>
-          <q-toolbar-title>验证码</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
-        </q-toolbar>
+    <q-card class="bg-dialog q-pa-md">
+      <q-card-section class="row items-center">
+        <div class="text-h6 q-mb-md">验证码</div>
       </q-card-section>
-      <div class="q-px-lg q-pt-sm q-pb-lg">
-        <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" placeholder="验证码">
-            <template v-slot:append>
-              <img
-                :src="phoneVerificationImg"
-                title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode"
-              />
-            </template>
-          </q-input>
-        </q-card-section>
-        <q-btn @click="sendOtpSms" label="发送验证码" color="brightbtn" />
+
+      <q-card-section class="q-mb-md q-pa-md">
+        <q-input
+          v-model="innerCaptchaRef"
+          placeholder="验证码"
+          label-color="brand"
+          rounded
+          outlined
+          color="white"
+          bg-color="inputstyle"
+        >
+          <template v-slot:append>
+            <img
+              :src="phoneVerificationImg"
+              title="点击刷新验证码"
+              style="margin-top: 6px; cursor: pointer"
+              @click="getInnerCode"
+            />
+          </template>
+        </q-input>
+      </q-card-section>
+      <div class="row justify-end">
+        <q-btn @click="sendOtpSms" label="发送验证码" color="brightbtn" rounded />
       </div>
     </q-card>
   </q-dialog>
@@ -216,17 +235,30 @@ import RegisterPage from "../pages/RegisterPage.vue";
 import qs from "qs";
 import { RiArrowDropLeftLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
+import RoundTab from "src/components/RoundTab.vue";
 
 export default defineComponent({
   name: "LoginPage",
   components: {
     RegisterPage,
-    RiArrowDropLeftLine
+    RiArrowDropLeftLine,
+    RoundTab
   },
   setup() {
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
+
+    const tabItems = [
+      {
+        name: "login",
+        label: "登录"
+      },
+      {
+        name: "register",
+        label: "注册"
+      }
+    ];
     const verificationImg = ref("");
     const loginForm = reactive({
       loginName: "",
@@ -501,7 +533,8 @@ export default defineComponent({
       isValidCnPhone,
       telephoneRef,
       appVersionNo,
-      getVersionNo
+      getVersionNo,
+      tabItems
     };
   }
 });
@@ -537,14 +570,15 @@ export default defineComponent({
   }
 
   .q-tabs {
-    background: rgba(113, 125, 146, 0.2);
-    border-radius: 30px;
+    // background: rgba(113, 125, 146, 0.2);
+    // border-radius: 30px;
     width: 90%;
     margin: 0 auto;
-  }
-
-  .q-tab {
-    min-height: 46px;
+    .q-tab {
+      min-height: 46px;
+      padding: 0;
+      margin: 0;
+    }
   }
 
   .q-tab__content {
