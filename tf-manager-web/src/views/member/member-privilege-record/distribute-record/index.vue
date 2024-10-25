@@ -483,7 +483,7 @@ import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
 import { debounce } from "lodash";
 import { getMemberLoginNameList } from "../../../../api/system-message-template";
-import { getActivePrivilegeInfoBySiteIdWithoutRebate } from "@/api/privilege-info";
+import { getActivePrivilegeInfoBySiteId } from "@/api/privilege-info";
 
 const store = useStore();
 const { t } = useI18n();
@@ -1263,7 +1263,7 @@ onMounted(async() => {
 })
 
 async function loadPrivilegeInfos() {
-  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteIdWithoutRebate(selected.site);
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(selected.site);
   privilegeInfoList.list = privilegeInfo;
 }
 

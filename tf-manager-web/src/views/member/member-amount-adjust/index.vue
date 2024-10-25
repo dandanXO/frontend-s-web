@@ -1419,6 +1419,7 @@ function resetQuery() {
   request.loginName = null
   request.operationType = null
   request.cause = null
+  request.createBy = null
 }
 
 function checkQuery() {

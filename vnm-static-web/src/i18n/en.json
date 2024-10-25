@@ -334,6 +334,7 @@
     "dialog": {
       "title": "To continue withdrawal, please complete the following conditions",
       "helpText": "If you have any questions, please contact online customer service for verification~",
+      "helpText2": "If there is a delay in the platform's settlement transactions, please try again in 10 minutes!",
       "complete": "Complete",
       "enjoy": "turnover, and enjoy fast withdrawals",
       "betRequirement": "Bet Requirement",

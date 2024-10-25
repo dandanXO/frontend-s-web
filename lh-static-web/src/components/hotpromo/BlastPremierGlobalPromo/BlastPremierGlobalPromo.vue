@@ -48,7 +48,7 @@
               <div v-else class="img-placeholder" />
               <div class="required-key">
                 <div class="container-description">
-                  <span>{{getTreasureDescription(item.treasureLevel)}}</span>
+                  <span>{{ getTreasureDescription(item.treasureLevel) }}</span>
                 </div>
                 <div class="key-container">
                   <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
@@ -72,7 +72,7 @@
       </div>
       <div class="tips">
         <div class="tips-inner">
-          活动期间,连续投注BLAST Premier 秋季小组赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱。
+          活动期间,连续投注BLAST Premier 全球总决赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱
         </div>
       </div>
       <div class="title">
@@ -218,6 +218,7 @@
 import { ref, onMounted, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
+import { ResponseCode } from "@/api/response";
 import {
   getTreasureDetail,
   getKeyCount,
@@ -247,7 +248,7 @@ const selectedTreasureLevel = ref("Dragon");
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
-    selectedTreasureLevel.value = item.treasureLevelLevel;
+    selectedTreasureLevel.value = item.treasureLevel;
     activeItem.value = item.no;
     reorderItems(item);
   }
@@ -288,7 +289,15 @@ const openBox = (item) => {
       // Open Dialog
       openModal("amt", res.data);
       init();
-    } else {
+    } else if (
+      !(
+        res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+        res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+        res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+        res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+        res.code === ResponseCode.ERROR_SYSTEM
+      )
+    ) {
       notify({
         type: "error",
         message: res.message
@@ -301,12 +310,12 @@ const openBox = (item) => {
 };
 
 const getTreasureDescription = (treasureLevel) => {
-  if (treasureLevel === 'NORMAL') {
-    return '普通宝箱';
-  } else if (treasureLevel === 'CS') {
-    return 'CS宝箱';
-  } else if (treasureLevel === 'DRAGON'){
-    return '龙宝箱';
+  if (treasureLevel === "NORMAL") {
+    return "普通宝箱";
+  } else if (treasureLevel === "CS") {
+    return "CS宝箱";
+  } else if (treasureLevel === "DRAGON") {
+    return "龙宝箱";
   }
 };
 
