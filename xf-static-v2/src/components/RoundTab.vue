@@ -1,11 +1,17 @@
 <template>
-  <q-tabs :value="tab" indicator-color="transparent" @update:model-value="onTabChange">
+  <q-tabs
+    :value="tab"
+    indicator-color="transparent"
+    @update:model-value="onTabChange"
+    :style="`border-radius: ${borderRadius}px; background-color: ${backgroundColor}`"
+  >
     <q-tab
       v-for="item in items"
       :key="item.name"
       :class="{ active: tab === item.name }"
       :name="item.name"
       :label="item.label"
+      :style="`border-radius: ${borderRadius}px;`"
     />
   </q-tabs>
 </template>
@@ -14,8 +20,15 @@ const props = defineProps({
   tab: String,
   items: {
     type: Array,
-    required: true,
     default: () => []
+  },
+  borderRadius: {
+    type: Number,
+    default: 50
+  },
+  backgroundColor: {
+    type: String,
+    default: "#213057"
   }
 });
 
@@ -41,13 +54,9 @@ const onTabChange = (val) => {
     background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
     border-radius: 50px;
     color: #fff;
+    box-shadow: 0px 0px 4px 0px #ffffff inset;
   }
 }
-
-// .q-tab--active {
-//   background: linear-gradient(180deg, #00C7C0 0%, #0996C7 100%);
-//   border-radius: 50px;
-// }
 
 .q-tab--inactive {
   color: #ffffff99;

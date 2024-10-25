@@ -3,9 +3,16 @@
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
+      <RoundTab
+        v-model:tab="tab"
+        :items="tabItems"
+        :border-radius="10"
+        background-color="#00BFD71A;
+"
+      ></RoundTab>
+      <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
-      </q-tabs>
+      </q-tabs> -->
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
@@ -122,11 +129,13 @@ import {useLocalStorage} from "@vueuse/core";
 import { cached } from "src/boot/cache";
 
 import HotPromotion from 'components/HotPromotion'
+import RoundTab from "src/components/RoundTab.vue";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    RoundTab
   },
   setup() {
     const store = userStore();
@@ -381,6 +390,7 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   min-height: 100vh;
+  padding: 16px;
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -454,7 +464,6 @@ export default defineComponent({
 
     .promo-main-container {
       max-width: 1400px;
-      width: 95%;
       margin-left: auto;
       margin-right: auto;
 
@@ -531,6 +540,7 @@ export default defineComponent({
           margin-bottom: 20px;
           overflow: hidden;
           padding-top: 30px;
+          border-radius: 8px;
 
           .promo-img-wrapper {
             position: relative;
@@ -818,41 +828,12 @@ export default defineComponent({
 
 .promo {
   .q-tabs {
-    // background: rgba(113, 125, 146, 0.2);
-    background: #063c50;
-    width: 100%;
-    margin: 0 auto;
+    margin: 0;
   }
 
   .q-tab {
-    min-height: 40px;
+    padding: 0;
   }
-
-  .q-tab__content {
-    width: 100%;
-  }
-
-  .q-tab--active {
-    color: #fff;
-  }
-
-  .q-tab__label {
-    font-size: 13px;
-  }
-
-  .q-tab--active .q-tab__indicator {
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
-    background-size: 20px 10px;
-    width: 100%;
-    height: 10px;
-    // background: salmon !important;
-    filter: hue-rotate(311deg);
-  }
-
-  .q-tab__label {
-    z-index: 1;
-  }
-
   .q-tab-panels {
     background: none;
     // padding: 10px;
