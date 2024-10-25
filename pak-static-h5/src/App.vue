@@ -1,4 +1,7 @@
 <template>
+  <router-link to="/download" style="position: absolute; z-index: 10000000">
+    <q-btn color="primary">go to download page</q-btn>
+  </router-link>
   <router-view />
 </template>
 
@@ -17,6 +20,7 @@ import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { cached } from "boot/cache";
 import { useRoute, useRouter } from "vue-router";
+import { useOneSignalWrapper } from "./hooks/oneSignalWrapper";
 
 export default defineComponent({
   name: "App",
@@ -26,6 +30,7 @@ export default defineComponent({
     const ui = useUI();
     const router = useRouter();
     const route = useRoute();
+    const { initOneSignal } = useOneSignalWrapper();
 
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
@@ -308,7 +313,7 @@ export default defineComponent({
         e.preventDefault();
         if (ui.deferredPrompt) return;
         ui.deferredPrompt = e;
-        router.push("/download");
+        // router.push("/download");
         console.log("beforeinstallprompt");
       });
     };
@@ -391,6 +396,7 @@ export default defineComponent({
       checkFBPixelInit();
 
       checkPwa();
+      initOneSignal("4165d739-dd64-4f8f-b0b1-e3b17e62e3f3");
     });
 
     watch(

@@ -1,16 +1,17 @@
 import { useOneSignal } from "@onesignal/onesignal-vue3";
 import OneSignal from "onesignal-cordova-plugin";
 import { Platform } from "quasar";
+import { useUI } from "src/stores/ui";
 import { computed, ref } from "vue";
 
 export const useOneSignalWrapper = () => {
   const oneSignalWeb = useOneSignal();
-
-  const pushNotificationData = ref();
+  const ui = useUI();
 
   const isOnAndroid = computed(() => Platform.is.android && Platform.is.capacitor);
 
   const initOneSignal = (appId) => {
+    console.log("init onesignal");
     console.log(isOnAndroid.value);
     if (isOnAndroid.value) {
       initOnAndroid(appId);
@@ -42,8 +43,7 @@ export const useOneSignalWrapper = () => {
 
   const initOnWeb = async (appId) => {
     await oneSignalWeb.init({
-      appId,
-      allowLocalhostAsSecureOrigin: true
+      appId
     });
 
     let myClickListener = async function (event) {
@@ -57,17 +57,18 @@ export const useOneSignalWrapper = () => {
     };
     oneSignalWeb.Notifications.addEventListener("click", myClickListener);
 
+    // if (oneSignalWeb.User.PushSubscription.id) return;
+
     oneSignalWeb.Slidedown.promptPush()
       .then(() => console.log("enable onesignal"))
       .catch(() => console.log("disable onesignal"));
   };
 
   const populatePushNotificationData = (data) => {
-    pushNotificationData.value = data;
+    ui.notificationData = data;
   };
 
   return {
-    initOneSignal,
-    pushNotificationData
+    initOneSignal
   };
 };

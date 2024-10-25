@@ -129,10 +129,10 @@
       </div>
     </q-page-sticky>
 
-    <PushNotification
+    <!-- <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
-    />
+    /> -->
 
     <div class="notice-outer">
       <div class="midd">
@@ -3358,7 +3358,7 @@ const openLiveInNewTab = (url) => {
   window.open(absoluteUrl, "_blank");
 };
 
-const { initOneSignal, pushNotificationData } = useOneSignalWrapper();
+// const { initOneSignal, pushNotificationData } = useOneSignalWrapper();
 
 // const pushNotificationData = ref();
 
@@ -3590,7 +3590,7 @@ onMounted(() => {
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
   afterMounted();
 
-  initOneSignal("4165d739-dd64-4f8f-b0b1-e3b17e62e3f3");
+  // initOneSignal("4165d739-dd64-4f8f-b0b1-e3b17e62e3f3");
 });
 
 watch(
