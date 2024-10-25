@@ -165,7 +165,7 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
-            <q-checkbox style="margin-left:-5px;" v-model="isFtdPrivilegeEnable" v-if="store.ftd === false">
+            <q-checkbox style="margin-left:-5px;" v-model="isFtdPrivilegeEnable" v-if="store.ftd === false && depositType === 'flat'">
               Use Slot First Deposit Privilege
             </q-checkbox>
 
@@ -943,6 +943,7 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
 
         selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
@@ -971,6 +972,8 @@ watch(
   (val) => {
     if (val) {
       isFtdPrivilegeEnable.value = true;
+    }else{
+      isFtdPrivilegeEnable.value= false;
     }
   },
   { immediate: true }
@@ -981,6 +984,7 @@ onActivated(() => {
   checkNewUser();
   loadInfo();
   resetSelectedMethod();
+  loadAppTabs();
 });
 
 onMounted(() => {
