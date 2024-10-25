@@ -329,7 +329,18 @@
     "lengthShouldBe": "Chiều dài nên là",
     "smsCodeRequired": "Vui lòng nhập mã xác minh qua tin nhắn SMS",
     "bankBranchAddress": "Địa chỉ chi nhánh ngân hàng",
-    "settleWithdrawPwd": "Vui lòng thêm mật khẩu rút tiền"
+    "settleWithdrawPwd": "Vui lòng thêm mật khẩu rút tiền",
+    "dialog": {
+      "title": "Để tiếp tục rút tiền, vui lòng hoàn thành các điều kiện sau",
+      "helpText": "Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ với dịch vụ khách hàng trực tuyến để kiểm tra~",
+      "complete": "Hoàn thành",
+      "enjoy": "doanh thu, và tận hưởng việc rút tiền nhanh chóng",
+      "betRequirement": "Yêu cầu cược",
+      "turnoverProgress": "Tiến độ doanh thu",
+      "status": "Trạng thái hoàn thành",
+      "goComplete": "Đi hoàn thành",
+      "back": "Quay lại"
+    }
   },
   "referTerms": {
     "receiveReward": "NHẬN THƯỞNG KHÔNG GIỚI HẠN",

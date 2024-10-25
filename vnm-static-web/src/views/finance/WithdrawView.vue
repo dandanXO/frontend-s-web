@@ -86,7 +86,7 @@
           </div>
         </el-form-item> -->
 
-        <el-form-item class="helptxt" prop="amount" :label="$t('withdraw.amount')" name="amount">
+        <el-form-item class="helptxt" :class="{ 'has-helper-text': isAutoWithdrawal }" prop="amount" :label="$t('withdraw.amount')" name="amount">
           <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
               <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
@@ -244,6 +244,7 @@
         </div>
       </el-form>
     </div>
+    <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
   </div>
 </template>
 
@@ -255,10 +256,12 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
+import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialog.vue";
 
 export default defineComponent({
   name: "WithdrawView",
   components: {
+    WithdrawRemainingDialog
   },
   setup() {
     const { t } = useI18n();
@@ -272,6 +275,7 @@ export default defineComponent({
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
     const isLoaded = ref(false);
+    const isShowRemainingDialog = ref(false)
     const withdrawState = reactive({
       bankCardList: []
     });
@@ -483,7 +487,10 @@ export default defineComponent({
     const getWithdrawalMethods = () => {
       withdrawEntrance().then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data;
+          if(isAutoWithdrawal.value) {
+            isShowRemainingDialog.value = !response.data.withdrawStatus
+          }
+          withdrawalMethods.value = response.data.withdrawShowList;
           if (withdrawalMethods.value.length) {
             selectMethod(withdrawalMethods.value[0], withdrawalMethods.value[0].name);
           }
@@ -555,7 +562,8 @@ export default defineComponent({
       isLoaded,
       amounts,
       handleUpgradeClick,
-      isAutoWithdrawal
+      isAutoWithdrawal,
+      isShowRemainingDialog
     };
   }
 });
