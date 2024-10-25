@@ -1,14 +1,36 @@
 import { useOneSignal } from "@onesignal/onesignal-vue3";
 import OneSignal from "onesignal-cordova-plugin";
 import { Platform } from "quasar";
+import { userStore } from "src/stores";
 import { useUI } from "src/stores/ui";
 import { computed, ref } from "vue";
 
 export const useOneSignalWrapper = () => {
   const oneSignalWeb = useOneSignal();
   const ui = useUI();
+  const store = userStore();
 
   const isOnAndroid = computed(() => Platform.is.android && Platform.is.capacitor);
+  const currentOnesignalInstance = computed(() => (isOnAndroid.value ? OneSignal : oneSignalWeb));
+
+  const loginOneSignal = () => {
+    if (store.hasUpdatedOneSignal) return;
+
+    if (isOnAndroid.value) {
+      if (!OneSignal) return;
+    } else {
+      if (!currentOnesignalInstance.value.User.PushSubscription.optedIn) return;
+    }
+
+    currentOnesignalInstance.value.login(store.nickName);
+    currentOnesignalInstance.value.User.addTag("user_name", store.nickName);
+    currentOnesignalInstance.value.User.addTag("VIP", store.vip);
+    store.hasUpdatedOneSignal = true;
+  };
+
+  const logoutOneSignal = () => {
+    currentOnesignalInstance.value.logout();
+  };
 
   const initOneSignal = (appId) => {
     console.log("init onesignal");
@@ -69,6 +91,8 @@ export const useOneSignalWrapper = () => {
   };
 
   return {
-    initOneSignal
+    initOneSignal,
+    loginOneSignal,
+    logoutOneSignal
   };
 };
