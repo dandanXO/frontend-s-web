@@ -575,9 +575,9 @@ export default defineComponent({
   grid-template-columns: repeat(3, 1fr);
   text-align: center;
   grid-gap: 10px;
-  width: 540px;
+  width: 360px;
   .amt {
-    padding: 20px 50px;
+    padding: 15px 20px;
     color: #a4aabb;
     box-shadow: 0px 0px 8px 0px #a9c9ea inset;
     border-radius: 10px;
@@ -831,6 +831,9 @@ export default defineComponent({
   .withdraw-btn {
     // min-width: 300px;
     margin: 30px auto;
+    position: absolute;
+    right: 0;
+    top: 0;
 
     &.cancel {
       margin-right: 60px;
@@ -850,11 +853,21 @@ export default defineComponent({
     // }
   }
 }
-
+.helptxt .el-form-item__label {
+  margin-bottom: 0;
+}
 .withdraw-form {
   padding: 20px 0;
+  position: relative;
   :deep(.el-form-item) {
     flex-direction: column;
+    &.helptxt {
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
   }
   :deep(.el-form-item__content) {
     gap: 15px;

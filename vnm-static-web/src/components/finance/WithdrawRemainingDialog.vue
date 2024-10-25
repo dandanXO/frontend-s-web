@@ -11,13 +11,8 @@
     <div class="withdraw-remaining-dialog__header">
       <div class="withdraw-remaining-dialog__header-title">
         <img src="@/assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-        <span style="width: 40%">{{ $t("withdraw.dialog.title") }}</span>
+        <!-- <span style="width: 40%">{{ $t("withdraw.dialog.title") }}</span> -->
       </div>
-      <span class="withdraw-remaining-dialog__header-help-text">
-        {{ $t("withdraw.dialog.helpText") }}
-        <br />
-        {{ $t("withdraw.dialog.helpText2") }}
-      </span>
     </div>
     <img class="withdraw-remaining-dialog__pic" src="@/assets/images/finance/withdraw/withdraw-remaining-pic.png" />
     <div class="withdraw-remaining-dialog__body">
@@ -26,6 +21,11 @@
         <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
         {{ $t("withdraw.dialog.enjoy") }}
       </div>
+      <span class="withdraw-remaining-dialog__header-help-text">
+        {{ $t("withdraw.dialog.helpText") }}
+        <br />
+        {{ $t("withdraw.dialog.helpText2") }}
+      </span>
       <table class="withdraw-remaining-dialog__body-table">
         <thead>
           <tr>
@@ -56,7 +56,9 @@ import { withdrawRemainingRollover } from "@/api/personal/personal";
 import { convertToCommaAmount } from "@/utils/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n(); // i18n for translations
 const props = defineProps({
   modelValue: Boolean
 });
@@ -79,23 +81,23 @@ const getDisplayRemainingTypes = (items) => {
 const getDisplayRemainingType = (type) => {
   switch (type) {
     case "esport":
-      return "电竞";
+      return t("withdraw.types_esport");
     case "sport":
-      return "体育";
+      return t("withdraw.types_sport");
     case "live":
-      return "真人";
+      return t("withdraw.types_live");
     case "fish":
-      return "捕鱼";
+      return t("withdraw.types_fish");
     case "casual":
-      return "小游戏";
+      return t("withdraw.types_casual");
     case "lottery":
-      return "彩票";
+      return t("withdraw.types_lottery");
     case "poker":
-      return "棋牌";
+      return t("withdraw.types_poker");
     case "slot":
-      return "电子";
+      return t("withdraw.types_slot");
     case "all":
-      return "任意类型";
+      return t("withdraw.types_all");
   }
 };
 
@@ -155,7 +157,7 @@ onMounted(() => {
     .withdraw-remaining-dialog__header {
       background: url(@/assets/images/finance/withdraw/withdraw-remaining-bg.png) no-repeat;
       background-size: 100% 100%;
-      aspect-ratio: 530 / 92;
+      aspect-ratio: 530 / 60;
       padding: 24px 20px 0;
       box-sizing: border-box;
       // margin-bottom: 22px;
@@ -170,16 +172,11 @@ onMounted(() => {
         line-height: 22.4px;
         color: #424f72;
       }
-      .withdraw-remaining-dialog__header-help-text {
-        font-size: 14px;
-        line-height: 24px;
-        color: #7a8eb9;
-      }
     }
     .withdraw-remaining-dialog__pic {
       position: absolute;
       right: 58px;
-      top: -36px;
+      top: -58px;
       width: 147px;
     }
 
@@ -188,6 +185,13 @@ onMounted(() => {
       padding: 22px 20px 24px;
       box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
 
+      .withdraw-remaining-dialog__header-help-text {
+        font-size: 14px;
+        line-height: 24px;
+        color: #7a8eb9;
+        margin-bottom: 10px;
+        display: block;
+      }
       .withdraw-remaining-dialog__body-title {
         margin-bottom: 12px;
         font-size: 20px;

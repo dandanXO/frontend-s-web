@@ -342,7 +342,16 @@
       "status": "Completion Status",
       "goComplete": "Go Complete",
       "back": "Back"
-    }
+    },
+    "types_esport": "eSports",
+    "types_sport": "Sports",
+    "types_live": "Live Casino",
+    "types_poker": "Poker",
+    "types_slot": "Slots",
+    "types_lottery": "Lottery",
+    "types_fish": "Fishing",
+    "types_casual": "Hash Game",
+    "types_all": "Tất cả"
   },
   "referTerms": {
     "receiveReward": "RECEIVE UNLIMITED REWARDS",

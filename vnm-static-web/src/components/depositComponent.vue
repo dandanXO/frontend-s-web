@@ -823,6 +823,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .deposit-form {
+  position: relative;
   :deep(.el-input__wrapper),
   :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
@@ -977,5 +978,8 @@ onMounted(() => {
 
 .btn-confirm {
   margin-bottom: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>
