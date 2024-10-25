@@ -155,7 +155,10 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                : (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                    selectedWithdrawalMethod.withdrawFee
+                  ).toFixed(2)
             }}
             USDT
           </span>
@@ -679,11 +682,6 @@ export default defineComponent({
       }
 
       .promo-img {
-        //     width: 40px;
-        // padding: 8px 20px;
-        // background: #ffffff;
-        // border: 1px solid #ced4da;
-
         background-color: #f7f7f7;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         max-width: 1.5rem;
@@ -691,14 +689,10 @@ export default defineComponent({
         border: 2px solid #dddddd;
         padding: 5px 15px;
         border-radius: 3px;
+        box-sizing: content-box;
       }
       &.active {
-        // border-bottom: 4px solid #1bcef1;
-        // border: 1px solid #ffd800;
-        // color: #ffd800;
         img {
-          // border: 1px solid #4978ec;
-          // background: #bad2ff;
           border-color: #4873f1;
         }
       }
