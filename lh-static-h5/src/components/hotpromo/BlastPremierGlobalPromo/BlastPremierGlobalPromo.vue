@@ -33,19 +33,19 @@
               @click="setActiveItem(item.no)"
             > -->
             <div v-for="(item, i) in items" :key="i" class="item">
-              <span class="container-description">{{getTreasureDescription(item.treasure)}}</span>
+              <span class="container-description">{{getTreasureDescription(item.treasureLevel)}}</span>
               <img
-                v-if="item.treasure"
+                v-if="item.treasureLevel"
                 :src="
-                  require(`../../../assets/images/promo/hotpromo/blastpremier/treasure-level-${item.treasure.toLowerCase()}.png`)
+                  require(`../../../assets/images/promo/hotpromo/blastpremier/treasure-level-${item.treasureLevel.toLowerCase()}.png`)
                 "
               />
               <div v-else class="img-placeholder" />
               <div class="required-key">
                 <img src="../../../assets/images/promo/hotpromo/blastpremier/key.png" />
-                <span>x{{ item.keyRequired }}</span>
+                <span>x{{ item.quantity }}</span>
               </div>
-              <div class="use-Keys" @click="openBox(item.treasure)">开启</div>
+              <div class="use-Keys" @click="openBox(item.treasureLevel)">开启</div>
             </div>
           </div>
           <!-- <div class="tips-p" style="margin-top: 10px">
@@ -175,11 +175,11 @@
           <div class="rec">
             <table v-if="keyRecords && keyRecords.length > 0" class="table-rows">
               <tr v-for="(key, i) in keyRecords" :key="i">
-                <td>{{ key.betTime }}</td>
+                <td>{{ key.createTime }}</td>
                 <td>
                   <div class="keysAmt">
                     <img src="../../../assets/images/promo/hotpromo/cs2/key.png" />
-                    {{ key.keysAcquired }}
+                    {{ key.quantity }}
                   </div>
                 </td>
               </tr>
@@ -219,9 +219,9 @@
           <div class="rec">
             <table style="text-align: center" v-if="openRecords && openRecords.length > 0" class="table-rows">
               <tr v-for="(open, i) in openRecords" :key="i">
-                <td width="34%">{{ open.receiveTime }}</td>
-                <td width="33%">{{ open.keyUsed }}</td>
-                <td width="33%">{{ open.bonus }}</td>
+                <td width="34%">{{ open.createTime }}</td>
+                <td width="33%">{{ open.quantity }}</td>
+                <td width="33%">{{ open.amount }}</td>
               </tr>
             </table>
             <div v-else style="display: flex; justify-content: center; align-items: center; height: 130px">
@@ -263,12 +263,13 @@
 import { ref, onMounted, defineProps } from "vue";
 import { userStore } from "../../../stores/index";
 import {
-  getGlobalCheckInRecord,
-  openGlobalTreasure,
-  getGlobalKeyRecord,
-  getGlobalOpenRecord,
-  getGlobalTreasureDetail,
-  claimGlobalCheckInTreasure
+  getTreasureDetail,
+  getKeyCount,
+  getCheckInRecord,
+  openTreasure,
+  getKeyRecord,
+  getOpenRecord,
+  claimCheckInTreasure
 } from "../../../api/index/promo";
 // import { ElMessage, ElLoading } from "element-plus";
 import { useQuasar } from "quasar";
@@ -288,13 +289,14 @@ const selectedTreasureLevel = ref("Dragon");
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
-    selectedTreasureLevel.value = item.treasure;
+    selectedTreasureLevel.value = item.treasureLevelLevel;
     activeItem.value = item.no;
     reorderItems(item);
   }
 };
 
 const reorderItems = (activeItem) => {
+  console.log(activeItem.no);
   const index = items.value.findIndex((item) => item.no === activeItem.no);
 
   if (index !== -1) {
@@ -307,7 +309,7 @@ const openBox = (item) => {
   $q.loading.show({
     message: "开启中... 请稍等..."
   });
-  openGlobalTreasure(props.promoCode, item).then((res) => {
+  openTreasure(props.promoCode, item).then((res) => {
     if (res.code === 0) {
       // Open Dialog
       openModal("amt", res.data);
@@ -332,57 +334,53 @@ const dayList = ref([
   { no: 5, claimed: false, toClaim: false }
 ]);
 const init = () => {
-  // getTreasureDetail(props.promoCode).then((res) => {
-  //   if (res.code === 0) {
-  //     res.data.forEach((element, i) => {
-  //       element.no = i + 1;
-  //     });
-  //     items.value = res.data;
-  //     setActiveItem(activeItem.value);
-  //   }
-  // });
-  // First Privilege
-  getGlobalTreasureDetail(props.promoCode).then((res) => {
+  getTreasureDetail(props.promoCode).then((res) => {
     if (res.code === 0) {
-      keyNumber.value = res.data.keyLeft;
-        res.data.treasures.forEach((element, i) => {
-          element.no = i + 1;
-        });
-        items.value = res.data.treasures
-        setActiveItem(activeItem.value);
+      res.data.forEach((element, i) => {
+        element.no = i + 1;
+      });
+      items.value = res.data;
+      setActiveItem(activeItem.value);
+    }
+  });
+  // First Privilege
+  getKeyCount(props.promoCode).then((res) => {
+    if (res.code === 0) {
+      keyNumber.value = res.data;
     }
   });
   //   Second Privilege
-  getGlobalCheckInRecord('lh1-blast-premier-check-in').then((res) => {
+  getCheckInRecord(props.promoCode).then((res) => {
     if (res.code === 0) {
       checkInDetails.value = res.data;
-      signNumber.value = checkInDetails.value.checkInDays;
-      const claimedDay = checkInDetails.value.claimedDay;
-      dayList.value.forEach((day) => {
-        if (claimedDay.includes(day.no)) {
-          day.claimed = true;
-          day.toClaim = false;
-        } else if (day.no <= signNumber.value) {
-          day.claimed = false;
-          day.toClaim = true;
-        } else {
-          day.claimed = false;
-          day.toClaim = false;
-        }
+      signNumber.value = checkInDetails.value.currentConsecutiveDay;
+      dayList.value = [];
+      checkInDetails.value.dayList.forEach((day) => {
+        const obj = {
+          no: day,
+          claimed: false,
+          toClaim: false
+        };
+        dayList.value.push(obj);
       });
-      // dayList.value = [];
-      // checkInDetails.value.dayList.forEach((day) => {
-      //   if (day === dailyCheckInClaimed + 1) {
-      //     const obj = {
-      //       no: day,
-      //       claimed: checkInDetails.value.hasClaimedToday,
-      //       toClaim: checkInDetails.value.canClaimToday
-      //     };
-      //     dayList.value.push(obj);
-      //   }
-      // });
-      // populateDayList(checkInDetails.value);
+      populateDayList(checkInDetails.value);
     }
+  });
+};
+const populateDayList = (check) => {
+  check.claimed.forEach((element) => {
+    dayList.value.forEach((day) => {
+      if (day.no === element) {
+        day.claimed = true;
+      }
+    });
+  });
+  check.toClaim.forEach((element) => {
+    dayList.value.forEach((day) => {
+      if (day.no === element) {
+        day.toClaim = true;
+      }
+    });
   });
 };
 
@@ -428,7 +426,7 @@ const openModal = (modal, item, itemIndex) => {
     $q.loading.show({
       message: "加载记录中... 请稍等..."
     });
-    getGlobalKeyRecord(props.promoCode, search.value).then((res) => {
+    getKeyRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         keyRecords.value = res.data.records;
         isKeyRecordModal.value = true;
@@ -442,7 +440,7 @@ const openModal = (modal, item, itemIndex) => {
     $q.loading.show({
       message: "加载记录中... 请稍等..."
     });
-    getGlobalOpenRecord(props.promoCode, search.value).then((res) => {
+    getOpenRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
@@ -461,13 +459,12 @@ const openModal = (modal, item, itemIndex) => {
       message: "开启中... 请稍等..."
     });
     $q.loading.hide();
-    claimGlobalCheckInTreasure(props.promoCode, item.no).then((res) => {
+    claimCheckInTreasure(props.promoCode, item.no).then((res) => {
       if (res.code === 0) {
         amountClaimed.value = res.data;
         isClaimModal.value = true;
         dayList.value[itemIndex].toClaim = false;
         dayList.value[itemIndex].claimed = true;
-        init()
       }
       $q.loading.hide();
     });
