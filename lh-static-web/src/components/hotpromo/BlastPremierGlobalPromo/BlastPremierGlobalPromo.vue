@@ -288,12 +288,20 @@ const openBox = (item) => {
       // Open Dialog
       openModal("amt", res.data);
       init();
-    } else {
-      // notify({
-      //   type: "error",
-      //   message: res.message
-      // });
-    }
+    } else if (
+          !(
+            res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+            res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+            res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+            res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+            res.code === ResponseCode.ERROR_SYSTEM
+          )
+        ) {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
   });
   setTimeout(() => {
     loading.close();
