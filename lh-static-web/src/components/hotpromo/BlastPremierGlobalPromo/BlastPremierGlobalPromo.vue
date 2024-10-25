@@ -72,7 +72,7 @@
       </div>
       <div class="tips">
         <div class="tips-inner">
-          活动期间,连续投注BLAST Premier 秋季小组赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱。
+          活动期间,连续投注BLAST Premier 全球总决赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱
         </div>
       </div>
       <div class="title">
