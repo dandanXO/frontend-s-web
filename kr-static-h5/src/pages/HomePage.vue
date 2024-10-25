@@ -1400,7 +1400,7 @@ export default defineComponent({
       OneSignal.initialize("4ac990ad-4330-458a-94f6-ef9e1f28639e");
 
       let myClickListener = async function (event) {
-        console.log("CLICK PUSH");
+        // console.log("CLICK PUSH");
         let notificationData = event;
         console.log(notificationData);
         console.log(notificationData.notification.title);
@@ -1419,6 +1419,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("Home")
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
