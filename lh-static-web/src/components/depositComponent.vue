@@ -128,7 +128,7 @@
           </el-form-item>
 
           <div
-            class="btn-confirm rollover-info"
+            class="rollover-info"
             v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
           >
             <span v-if="selectedPromo.depositMin">
@@ -827,6 +827,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .deposit-form {
+  position: relative;
   :deep(.el-input__wrapper),
   :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
@@ -956,10 +957,13 @@ onMounted(() => {
 
 .rollover-info {
   color: #bd4646;
+  margin-left: 100px;
+  margin-bottom: 10px;
 }
 
 .btn-confirm {
-  margin-left: 100px;
-  margin-bottom: 10px;
+  position:absolute;
+  top:0;
+  right: 0;
 }
 </style>
