@@ -33,7 +33,7 @@ export default defineComponent({
     const onlineStatInterval = ref();
 
     const darkModeFromStorage = useLocalStorage("DARK_MODE", false);
-    if (darkModeFromStorage.value && store.hasToken()) {
+    if (darkModeFromStorage.value) {
       $q.dark.set(true);
     }
 

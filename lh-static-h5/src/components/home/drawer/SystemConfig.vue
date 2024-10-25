@@ -1,5 +1,5 @@
 <template>
-  <div class="system-config-wrapper" v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST' || isLocalHost">
+  <div class="system-config-wrapper">
     <h5 class="system-config-title">系统设置</h5>
     <div class="system-config-inner-wrapper">
       <span>夜间模式</span>
