@@ -114,6 +114,10 @@ onMounted(() => {
 }
 
 .hot-match-container {
+  :deep(.el-carousel__arrow) {
+    width: 45px;
+  }
+
   :deep(.el-carousel__arrow--left) {
     background: url("@/assets/home/hotmatch/arrow-left.png") no-repeat center center;
     background-size: contain;
@@ -125,10 +129,11 @@ onMounted(() => {
   }
 
   :deep(.el-carousel) {
-    width: 75%;
+    max-width: 1400px;
+    width: 100%;
     margin: auto;
     background: url("@/assets/home/hotmatch/hot-match-bg.png") no-repeat center center;
-      background-size: 100% 100%;
+    background-size: 100% 100%;
   }
 
   :deep(.el-carousel__container) {
@@ -215,7 +220,8 @@ onMounted(() => {
   aspect-ratio: 3387 / 144;
   justify-content: flex-start;
   align-items: center;
-  width: 74.5%;
+  width: 100%;
+  max-width: 1400px;
   margin: auto;
 
   .competition-item {
