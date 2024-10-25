@@ -455,7 +455,6 @@ export function claimGlobalCheckInTreasure(promoCode, day) {
   return eventapi.post(`/session/treasure-key/claimCheckIn`, qs.stringify({ promoCode, day }));
 }
 
-
 export function getGameTypeBonusInit(promoCode) {
   return eventapi.get("/session/game-type-bonus/init", {
     params: {
@@ -466,4 +465,17 @@ export function getGameTypeBonusInit(promoCode) {
 
 export function claimGameTypeBonus(promoCode) {
   return eventapi.post(`/session/game-type-bonus/claim`, qs.stringify({ promoCode }));
+}
+
+export function getCompetitionBetDepositInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-deposit/init?v=${randNum}`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBetDepositBonus(promoCode) {
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus`, qs.stringify({ promoCode }));
 }
