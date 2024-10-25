@@ -927,35 +927,29 @@ program at any time without prior notice.`
     };
     onMounted(() => {
       getVipDetails();
-
-      vipLevel.value = store.vip.replace("VIP", "");
-      if (vipLevel.value >= 1) {
-        scrollVipCardIndex.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
-        initVipCardScroll();
-      }
+      initVipCardScroll();
     });
 
     const initVipCardScroll = () => {
       vipLevel.value = store.vip.replace("VIP", "");
-      if (vipLevel.value >= 1) {
-        scrollVipCardIndex.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
-        setTimeout(() => {
-          const itemElements = scrollContainer.value.querySelectorAll(".card");
-          if (itemElements[scrollVipCardIndex.value]) {
-            itemElements[scrollVipCardIndex.value].scrollIntoView({
-              behavior: "smooth",
-              block: "nearest",
-              inline: "start"
-            });
-          }
+      scrollVipCardIndex.value = vipLevel.value >= 1 && vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
 
-          // reset observe
-          observer.disconnect();
-          itemElements.forEach((item) => {
-            observer.observe(item);
+      setTimeout(() => {
+        const itemElements = scrollContainer.value.querySelectorAll(".card");
+        if (itemElements[scrollVipCardIndex.value]) {
+          itemElements[scrollVipCardIndex.value].scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start"
           });
-        }, 100);
-      }
+        }
+
+        // reset observe
+        observer.disconnect();
+        itemElements.forEach((item) => {
+          observer.observe(item);
+        });
+      }, 100);
     };
 
     const claimRebate = (type, vipType) => {
