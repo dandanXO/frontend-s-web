@@ -114,17 +114,17 @@ const setWithExpiry = (key, value, interval) => {
     value: value,
     expiry: now.getTime() + interval
   };
-  sessionStorage.setItem(key, JSON.stringify(item));
+  localStorage.setItem(key, JSON.stringify(item));
 };
 
 const getWithExpiry = (key) => {
-  const itemStr = sessionStorage.getItem(key);
+  const itemStr = localStorage.getItem(key);
   if (!itemStr) return null;
 
   const item = JSON.parse(itemStr);
   const now = new Date();
   if (now.getTime() > item.expiry) {
-    sessionStorage.removeItem(key);
+    localStorage.removeItem(key);
     return null;
   }
   return item.value;

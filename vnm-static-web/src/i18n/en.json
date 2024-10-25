@@ -330,7 +330,19 @@
     "lengthShouldBe": "The length should be",
     "smsCodeRequired": "Please enter the SMS verification code",
     "bankBranchAddress": "Bank branch address",
-    "settleWithdrawPwd": "Please settle withdraw password"
+    "settleWithdrawPwd": "Please settle withdraw password",
+    "dialog": {
+      "title": "To continue withdrawal, please complete the following conditions",
+      "helpText": "If you have any questions, please contact online customer service for verification~",
+      "helpText2": "If there is a delay in the platform's settlement transactions, please try again in 10 minutes!",
+      "complete": "Complete",
+      "enjoy": "turnover, and enjoy fast withdrawals",
+      "betRequirement": "Bet Requirement",
+      "turnoverProgress": "Turnover Progress",
+      "status": "Completion Status",
+      "goComplete": "Go Complete",
+      "back": "Back"
+    }
   },
   "referTerms": {
     "receiveReward": "RECEIVE UNLIMITED REWARDS",
@@ -778,7 +790,7 @@
     "1402": "OTP sending schedule error, please resend OTP",
     "1403": "OTP verification error",
     "1404": "Failed to send OTP code",
-    "1409": "The player does not meet the requirements for quick withdrawal",
+    "1409": "Please withdraw all your balance before clicking [Upgrade].",
     "10000": "Insufficient remaining balance error",
     "10001": "Withdrawal error",
     "10002": "Deposit error",

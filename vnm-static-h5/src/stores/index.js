@@ -45,7 +45,8 @@ export const userStore = defineStore("userStore", {
       googleadid: "",
       aaid: "",
       hasUpdatedOneSignal: false,
-      isAffiliateA: false
+      isAffiliateA: false,
+      withdrawType: ""
     };
   },
   actions: {
@@ -205,6 +206,7 @@ export const userStore = defineStore("userStore", {
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
           this.emailVerified = response.data.emailVerified;
+          this.withdrawType = response.data.withdrawType;
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;

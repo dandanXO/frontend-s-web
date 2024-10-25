@@ -285,7 +285,7 @@
   },
   "withdraw": {
     "withdraw": "Rút tiền",
-    "upgradeWithdraw": "Nâng cấp rút tiền nhanh",
+    "upgradeWithdraw": "Nâng cấp tốc độ xử lý",
     "quickWithdraw": "Rút tiền nhanh",
     "bankcard": "Rút tiền thẻ ngân hàng",
     "addBankCard": "Thêm tài khoản",
@@ -329,7 +329,19 @@
     "lengthShouldBe": "Chiều dài nên là",
     "smsCodeRequired": "Vui lòng nhập mã xác minh qua tin nhắn SMS",
     "bankBranchAddress": "Địa chỉ chi nhánh ngân hàng",
-    "settleWithdrawPwd": "Vui lòng thêm mật khẩu rút tiền"
+    "settleWithdrawPwd": "Vui lòng thêm mật khẩu rút tiền",
+    "dialog": {
+      "title": "Để tiếp tục rút tiền, vui lòng hoàn thành các điều kiện sau",
+      "helpText": "Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ với dịch vụ khách hàng trực tuyến để kiểm tra~",
+      "helpText2": "Nếu có sự chậm trễ trong việc xử lý giao dịch trên nền tảng, vui lòng thử lại sau 10 phút!",
+      "complete": "Hoàn thành",
+      "enjoy": "doanh thu, và tận hưởng việc rút tiền nhanh chóng",
+      "betRequirement": "Yêu cầu cược",
+      "turnoverProgress": "Tiến độ doanh thu",
+      "status": "Trạng thái hoàn thành",
+      "goComplete": "Đi hoàn thành",
+      "back": "Quay lại"
+    }
   },
   "referTerms": {
     "receiveReward": "NHẬN THƯỞNG KHÔNG GIỚI HẠN",
@@ -777,7 +789,7 @@
     "1402": "Lỗi lịch gửi OTP, vui lòng gửi lại OTP",
     "1403": "Lỗi xác minh OTP",
     "1404": "Không thể gửi mã OTP",
-    "1409": "Người chơi không đáp ứng yêu cầu rút tiền nhanh",
+    "1409": "Vui lòng rút hết số tiền tài khoản trước khi nâng cấp",
     "10000": "Lỗi số dư còn lại không đủ",
     "10001": "Lỗi rút tiền",
     "10002": "Lỗi nạp tiền",

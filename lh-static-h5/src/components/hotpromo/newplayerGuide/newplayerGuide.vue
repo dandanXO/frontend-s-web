@@ -35,7 +35,9 @@
             <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
             <div class="subtitle">奖励说明</div>
           </div>
-          <p>注册后，绑定手机号码、银行账户或USDT地址，并完成任意一笔存款即可立即领取新手礼包。每绑定一项新的信息，均可获得额外奖励！</p>
+          <p>
+            注册后，绑定手机号码、银行账户或USDT地址，并完成任意一笔存款即可立即领取新手礼包。每绑定一项新的信息，均可获得额外奖励！
+          </p>
         </div>
         <div class="section2">
           <div style="display: flex">
@@ -205,7 +207,7 @@
           <li>
             <span class="step-number">1</span>
             <div class="content">
-              自注册日起算7天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+              自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
             </div>
           </li>
           <li>

@@ -687,8 +687,6 @@
       </q-card-section>
     </q-card>
   </q-dialog>
-
-  
 </template>
 
 <script>
@@ -702,7 +700,6 @@ import GameModal from "components/modal/GameModal";
 import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
-
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -1071,17 +1068,17 @@ export default defineComponent({
         id: homePopupId.value,
         frequency: homePopupFrequency.value
       };
-      sessionStorage.setItem(key, JSON.stringify(item));
+      localStorage.setItem(key, JSON.stringify(item));
     };
     const getWithExpiry = (key) => {
-      const itemStr = sessionStorage.getItem(key);
+      const itemStr = localStorage.getItem(key);
       if (!itemStr) {
         return null;
       }
       const item = JSON.parse(itemStr);
       const now = new Date();
       if (now.getTime() > item.expiry) {
-        sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
         return null;
       }
       return item.value;
@@ -1794,11 +1791,11 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      if(sessionStorage.getItem('regSuccessGuideVisible')) {
+      if (sessionStorage.getItem("regSuccessGuideVisible")) {
         store.regSuccessGuideVisible = true;
-        sessionStorage.removeItem('regSuccessGuideVisible');
+        sessionStorage.removeItem("regSuccessGuideVisible");
       }
-      
+
       if (store.token) {
         checkShowImgTop();
         setTimeout(() => {

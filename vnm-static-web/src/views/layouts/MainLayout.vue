@@ -37,7 +37,6 @@ export default defineComponent({
     CommonSidebar
   },
   mounted() {
-    //TODO:: Change LH One.
     this.loadTrackingScript();
   },
   methods: {
@@ -47,6 +46,11 @@ export default defineComponent({
       // Determine the tracking script URL based on the current domain
       let trackingScriptUrl = "";
       switch (currentDomain) {
+        case "m.t136388.com":
+        case "www.t136388.com":
+        case "t136388.com":
+          trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281389648";
+          break;
         case "m.tslotf88.com":
         case "www.tslotf88.com":
         case "tslotf88.com":

@@ -313,6 +313,7 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
 </template>
 
 <script lang="js">
@@ -324,10 +325,11 @@ import { useQuasar } from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
+import WithdrawRemainingDialog from "src/components/WithdrawRemainingDialog.vue";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: { AcctBal },
+  components: { AcctBal, WithdrawRemainingDialog },
   setup() {
     const store = userStore();
     const isNewUser = ref(false);
@@ -349,6 +351,7 @@ export default defineComponent({
       withdrawPassword: ""
     });
     const isLoaded = ref(false);
+    const isShowRemainingDialog = ref(false)
     const hasWithdrawCard = computed(() => {
       return isLoaded == true && withdrawState.bankCardList.length === 0;
     });
@@ -522,9 +525,12 @@ export default defineComponent({
         });
     };
     const getWithdrawalMethods = () => {
-      api.get("/session/withdraw/entrance").then((response) => {
+      api.get("/session/withdraw/entrance/status").then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data;
+          if(isAutoWithdrawal.value){
+            isShowRemainingDialog.value = !response.data.withdrawStatus
+          }
+          withdrawalMethods.value = response.data.withdrawShowList;
           //Remove this for real data
           // withdrawalMethods.value = [
           //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
@@ -604,16 +610,20 @@ export default defineComponent({
         .get("/session/updateAutoWithdraw")
         .then(async (res) => {
           if (res.code === 0) {
-            notify({
-              type: "success",
-              message: t("lang.successUpgradeQuick")
-            });
+            $q.notify({
+                color: "positive",
+                position: "top",
+                message: t("lang.successUpgradeQuick"),
+                icon: "check_circle_outline"
+              });
 
             await store.getMemberInfo();
           } else {
-            notify({
-              type: "error",
-              message: res.message
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: res.message,
+              icon: "report_problem"
             });
           }
         })
@@ -653,7 +663,8 @@ export default defineComponent({
       isValidUSDTAmt,
       isPwd: ref(true),
       isAutoWithdrawal,
-      handleUpgradeClick
+      handleUpgradeClick,
+      isShowRemainingDialog
     };
   }
 });

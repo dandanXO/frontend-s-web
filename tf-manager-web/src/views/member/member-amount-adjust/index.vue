@@ -70,6 +70,13 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.createBy"
+          style="width: 200px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.createBy')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -1010,6 +1017,7 @@ const request = reactive({
   loginName: null,
   operationType: null,
   cause: null,
+  createBy: null,
 })
 
 const form = reactive({
@@ -1110,9 +1118,9 @@ const formRules = reactive({
 })
 
 function validateField(field) {
-  if (formRef.value) {
+  /* if (formRef.value) {
     formRef.value.validateField(field);
-  }
+  } */
 }
 
 const importRules = reactive({
@@ -1411,6 +1419,7 @@ function resetQuery() {
   request.loginName = null
   request.operationType = null
   request.cause = null
+  request.createBy = null
 }
 
 function checkQuery() {
@@ -1729,7 +1738,10 @@ async function confirmImport() {
             if (k !== 'loginName') {
               item[k] = v
             }
-          })
+          });
+
+          item.gameTypeRollover= constructRollover();
+
         }
         data.push(item)
       })
