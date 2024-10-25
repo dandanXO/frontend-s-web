@@ -685,6 +685,9 @@ export default {
     memberPoint: '회원 포인트',
     affiliateTransferAmount: '송금 금액',
     redeem: '상환하다',
+    downlineTotalDeposit: '하부회원 총입금액',
+    downlineTotalWithdraw: '하부회원 총 출금액',
+    downlineTotalDepositWithdraw: '입출금차액',
   },
   google: {
     google_auth_menu: '구글 인증',

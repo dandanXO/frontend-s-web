@@ -686,6 +686,9 @@ export default {
     memberPoint: 'Member Point',
     affiliateTransferAmount: 'Affiliate Transfer Amount',
     redeem: 'Redeem',
+    downlineTotalDeposit: 'Downline Member Total Deposit',
+    downlineTotalWithdraw: 'Downline Member Total Withdraw',
+    downlineTotalDepositWithdraw: 'Downline Member Deposit Withdraw Difference',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
