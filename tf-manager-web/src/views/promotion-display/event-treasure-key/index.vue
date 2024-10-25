@@ -335,9 +335,9 @@ const form = reactive({
 
 const loginNameValidator = async (rule, value, callback) => {
   if (isDY(form.siteId)) {
-    form.privilegeCode = 'dy2-cs2-copenhagen-major-2024'
+    form.privilegeCode = 'dy2-blast-premier-treasure'
   } else {
-    form.privilegeCode = 'lh-cs2-copenhagen-major-2024'
+    form.privilegeCode = 'lh1-blast-premier-treasure'
   }
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
     const { data } = await getMemberKey(value, form.siteId, form.privilegeCode)
