@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="deposit-container" v-else>
-        <el-form ref="formRef" :model="form" :rules="rules" autocomplete="off" label-width="100px" label-suffix=":">
+        <el-form class="deposit-form" ref="formRef" :model="form" :rules="rules" autocomplete="off" label-width="100px" label-suffix=":">
           <el-space>
             <el-form-item class="helptxt" label="金额" prop="localAmount">
               <el-input
@@ -116,7 +116,7 @@
           </el-form-item>
 
           <div
-            class="btn-confirm rollover-info"
+            class="rollover-info"
             v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
           >
             <span v-if="selectedPromo.depositMin">
@@ -152,7 +152,7 @@
             </div> -->
           </el-form-item>
           <div class="txt-center">
-            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn btn-confirm">确定</el-button>
           </div>
         </el-form>
       </div>
@@ -703,6 +703,9 @@ onMounted(() => {
   .deposit-container {
     padding: 20px 30px;
     // background: #23263c;
+    .deposit-form {
+      position: relative;
+    }
     .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
       background: #23263c;
       border: #23263c;
@@ -866,10 +869,13 @@ onMounted(() => {
 
 .rollover-info {
   color: #bd4646;
+  margin-left: 100px;
+  margin-bottom: 10px;
 }
 
 .btn-confirm {
-  margin-left: 100px;
-  margin-bottom: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
