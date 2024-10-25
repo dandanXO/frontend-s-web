@@ -33,58 +33,58 @@ console.log(currentHost);
 // currentHost = "ka1-manager.wermop342ox.com";
 switch (currentHost) {
   case process.env.VUE_APP_IW2_HOST:
-    baseApi = process.env.VUE_APP_IW2_API;
-    baseWss = process.env.VUE_APP_IW2_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'iw2';
     break;
   case process.env.VUE_APP_IND_HOST:
-    baseApi = process.env.VUE_APP_IND_API;
-    baseWss = process.env.VUE_APP_IND_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'ind';
     break;
   case process.env.VUE_APP_LH_HOST:
-    baseApi = process.env.VUE_APP_LH_API;
-    baseWss = process.env.VUE_APP_LH_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'lh';
     break;
   case process.env.VUE_APP_TH_HOST:
-    baseApi = process.env.VUE_APP_TH_API;
-    baseWss = process.env.VUE_APP_TH_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'th';
     break;
   case process.env.VUE_APP_DY_HOST:
-    baseApi = process.env.VUE_APP_DY_API;
-    baseWss = process.env.VUE_APP_DY_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'dy';
     break;
   case process.env.VUE_APP_VNM_HOST:
-    baseApi = process.env.VUE_APP_VNM_API;
-    baseWss = process.env.VUE_APP_VNM_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'vnm';
     break;
   case process.env.VUE_APP_KAKA_HOST:
-    baseApi = process.env.VUE_APP_KAKA_API;
-    baseWss = process.env.VUE_APP_KAKA_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'ka1';
     break;
   case process.env.VUE_APP_KRW_HOST:
-    baseApi = process.env.VUE_APP_KRW_API;
-    baseWss = process.env.VUE_APP_KRW_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'krw';
     break;
   case process.env.VUE_APP_PAK_HOST:
-    baseApi = process.env.VUE_APP_PAK_API;
-    baseWss = process.env.VUE_APP_PAK_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'pak';
     break;
   case process.env.VUE_APP_NGA_HOST:
-    baseApi = process.env.VUE_APP_NGA_API;
-    baseWss = process.env.VUE_APP_NGA_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'nga';
     break;
   case process.env.VUE_APP_PH1_HOST:
-    baseApi = process.env.VUE_APP_PH1_API;
-    baseWss = process.env.VUE_APP_PH1_SOCKET;
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'ph1';
     break;
   case process.env.VUE_APP_BR1_HOST:
@@ -116,8 +116,8 @@ if (currentHost.indexOf(process.env.VUE_APP_KYQ_HOST) > -1) {
 
 if (currentHost.indexOf(process.env.VUE_APP_BFY3_HOST) > -1) {
   console.log("BFY3")
-  baseApi = process.env.VUE_APP_BFY3_API;
-  baseWss = process.env.VUE_APP_BFY3_SOCKET;
+  baseApi = process.env.VUE_APP_BASE_API;
+  baseWss = process.env.VUE_APP_SOCKET;
   imageCDNUrl = process.env.VUE_APP_BFY3_IMAGE;
   siteId = 'lh';
 }
