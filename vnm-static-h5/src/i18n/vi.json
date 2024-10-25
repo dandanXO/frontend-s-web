@@ -325,7 +325,7 @@
     "deposit_allowpopups": "Không thể mở trang nạp tiền. Vui lòng kiểm tra xem trình duyệt có chặn các trang bật lên hay không và thay đổi nó thành \"Cho phép cửa sổ bật lên\" trước khi tiếp tục thao tác nạp tiền.",
     "dialog_title": "Để tiếp tục rút tiền, vui lòng hoàn thành các điều kiện sau",
     "dialog_help_text": "Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ với dịch vụ khách hàng trực tuyến để kiểm tra~",
-    "dialog_help_text2": "Dữ liệu nền tảng chuyển khoản sẽ bị chậm 10 phút. Nếu giao dịch chưa được cập nhật, vui lòng thử lại sau!",
+    "dialog_help_text2": "Nếu có sự chậm trễ trong việc xử lý giao dịch trên nền tảng, vui lòng thử lại sau 10 phút!",
     "dialog_complete": "Hoàn thành",
     "dialog_enjoy": "doanh thu, và tận hưởng việc rút tiền nhanh chóng",
     "dialog_bet_requirement": "Yêu cầu cược",
