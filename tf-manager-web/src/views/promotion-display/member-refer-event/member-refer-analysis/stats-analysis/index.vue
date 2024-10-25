@@ -61,6 +61,7 @@
           $ <span v-formatter="{data: scope.row.referBonus, type: 'money'}" />
         </template>
       </el-table-column>
+      <el-table-column prop="firstDepositCount" :label="t('fields.ftdCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="successCount" :label="t('fields.successCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositCount" :label="t('fields.depositCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositBonus" :label="t('fields.depositBonus')" sortable :sort-orders="sortOrders">
@@ -180,7 +181,8 @@ function getSummaries(param) {
         if (
           index === 1 ||
           index === 3 ||
-          index === 4
+          index === 4 ||
+          index === 5
         ) {
           sums[index] = page.sums[prop]
         } else {

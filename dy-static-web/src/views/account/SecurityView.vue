@@ -24,7 +24,6 @@
 <script lang="js">
 import { defineComponent, reactive, onMounted } from "vue";
 import { loadMemberInfo } from "@/api/personal/personal";
-// import { message } from "ant-design-vue";
 export default defineComponent({
   name: "SecurityView",
   setup() {

@@ -141,11 +141,9 @@ import { ref, defineExpose } from "vue";
 import ComingSoon from "@/components/loading/ComingSoon";
 import TFLoading from "@/components/loading/TFLoading";
 import { transfer } from "@/api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessageBox, ElMessage } from "element-plus";
-// import { Modal } from "ant-design-vue";
 
 const store = userStore();
 const { token } = storeToRefs(store);

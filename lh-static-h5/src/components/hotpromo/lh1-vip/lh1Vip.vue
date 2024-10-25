@@ -331,7 +331,7 @@ const vipLevel3s = ref([
 ]);
 
 const vipLevel4s = ref([
-  // { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
+  { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP1", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP2", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP3", eSport: "0.48%", sport: "0.45%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "12,888" },

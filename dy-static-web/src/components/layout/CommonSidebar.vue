@@ -3,7 +3,7 @@
     <div class="customer-right-logo">
       <div class="hot-activity customer-div">
         <router-link to="/promotion">
-          <RiPaletteLine />
+          <div class="palette-icon" />
           <div style="margin-top: 15px">热门活动</div>
         </router-link>
       </div>
@@ -12,11 +12,12 @@
         @mouseover="customerHovered = true"
         @mouseleave="customerHovered = false"
       >
-        <RiCustomerServiceLine />
+      
+        <div class="cs-outlined-icon" />
         <div style="margin-top: 15px">客服中心</div>
         <div class="customer-right-content">
           <div class="customer-content">
-            <RiCustomerServiceFill />
+            <div class="cs-icon" />
             <span>24小时在线客服</span>
           </div>
 
@@ -32,26 +33,25 @@
                 </div>-->
           <div class="content-line"></div>
           <div class="customer-email">
-            <RiMailFill />
+            <div class="email-icon" />
             <span style="margin-left: 5px">cs@dy988.com</span>
           </div>
           <div class="content-line"></div>
           <div class="customer-num">
-            <RiPhoneFill />
+            <div class="phone-icon" />
             <span style="margin-left: 5px"><span class="customer_phone">852-81932110</span></span>
           </div>
         </div>
       </div>
       <div class="app-download customer-div">
         <a :href="downloadUrl" target="_blank">
-          <RiDownloadCloudLine />
+          <div class="app-download-icon" />
           <div class="remixicon-download-cloud-line"></div>
           <div style="margin-top: 15px">APP下载</div>
         </a>
       </div>
       <div class="back-top customer-div" @click="scrollToTop">
-        <RiRocketLine />
-        <div class="remixicon-rocket-line"></div>
+        <div class="back-top-icon" />
         <div style="margin-top: 15px">返回顶部</div>
       </div>
     </div>
@@ -59,28 +59,10 @@
 </template>
 <script>
 import { defineComponent, ref, onMounted } from "vue";
-import {
-  RiPaletteLine,
-  RiCustomerServiceLine,
-  RiCustomerServiceFill,
-  RiMailFill,
-  RiPhoneFill,
-  RiDownloadCloudLine,
-  RiRocketLine
-} from "vue-remix-icons";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 
 export default defineComponent({
-  components: {
-    RiPaletteLine,
-    RiCustomerServiceLine,
-    RiCustomerServiceFill,
-    RiMailFill,
-    RiPhoneFill,
-    RiDownloadCloudLine,
-    RiRocketLine
-  },
   setup() {
     const customerHovered = ref(false);
     const scrollToTop = () => {
@@ -266,4 +248,44 @@ export default defineComponent({
 .customer-right .customer-right-content svg {
   fill: #74a1f4;
 }
+
+.palette-icon, .cs-outlined-icon, .app-download-icon, .back-top-icon, .cs-icon, .phone-icon, .email-icon {
+  background: url("../../assets/home/sidebar-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  width: 22px;
+  height: 22px;
+  margin: 0 auto;
+}
+
+.palette-icon {
+  background-position: 0% 0%;
+}
+
+.cs-outlined-icon {
+  background-position: 17% 0%;
+}
+
+.app-download-icon {
+  background-position: 34% 0%;
+}
+
+.back-top-icon {
+  background-position: 51% 0%;
+}
+
+.cs-icon {
+  margin: 0;
+  background-position: 67% 0%;
+}
+
+.phone-icon {
+  margin: 0;
+  background-position: 100% 0%;
+}
+
+.email-icon {
+  margin: 0;
+  background-position: 84% 0%;
+}
+
 </style>
