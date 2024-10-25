@@ -87,6 +87,7 @@
         </el-form-item> -->
 
         <el-form-item class="helptxt" :class="{ 'has-helper-text': isAutoWithdrawal }" prop="amount" :label="$t('withdraw.amount')" name="amount">
+          <el-space>
           <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
               <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
@@ -109,6 +110,11 @@
               </span>
             </el-col>
           </el-row>
+          
+          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
+            {{ $t("common.confirm") }}
+          </el-button>
+        </el-space>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -238,9 +244,6 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
-            {{ $t("common.confirm") }}
-          </el-button>
         </div>
       </el-form>
     </div>
@@ -596,6 +599,7 @@ export default defineComponent({
   background: linear-gradient(98.09deg, #f0f7ff -1.13%, #e7f3ff 97.1%);
   border: 2px solid transparent;
   cursor: pointer;
+  margin-bottom: 15px;
 
   .bank-card-img {
     width: 40px;
@@ -831,10 +835,6 @@ export default defineComponent({
   .withdraw-btn {
     // min-width: 300px;
     margin: 30px auto;
-    position: absolute;
-    right: 0;
-    top: 0;
-
     &.cancel {
       margin-right: 60px;
     }
@@ -867,10 +867,13 @@ export default defineComponent({
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      max-width: 600px;
     }
   }
   :deep(.el-form-item__content) {
     gap: 15px;
+    
+    max-width: 680px;
   }
 
   :deep(.el-input__wrapper),

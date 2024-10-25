@@ -927,6 +927,19 @@ onMounted(() => {
 .btn-confirm {
   padding-left: 20px;
   margin-bottom: 10px;
+  width: 230px;
+  &.common-btn {
+    background-image: url(../assets/images/finance/deposit/btn-bg.png) !important;
+    background-size: 100% 100%;
+    &:hover {
+      opacity: 0.9;
+      background-size: 100% 100%;
+    }
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
 }
 </style>
 
