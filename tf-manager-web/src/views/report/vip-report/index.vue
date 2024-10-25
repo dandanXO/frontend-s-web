@@ -108,7 +108,9 @@
       </el-table-column>
       <el-table-column prop="platform" :label="t('fields.platform')" />
       <el-table-column prop="bet" :label="t('fields.bet')" />
+      <el-table-column prop="betCount" :label="t('fields.summaryTotalBet')" />
       <el-table-column prop="payout" :label="t('fields.payout')" />
+      <el-table-column prop="profit" :label="t('fields.profit')" />
       <el-table-column prop="ratio" :label="t('fields.return_ratio')" />
     </el-table>
     <el-pagination
@@ -124,7 +126,13 @@
         {{ $t('fields.betTotal') }} : {{ page.records.length > 0 ? totalBet.toFixed(2) : '--' }}
       </div>
       <div class="total-info">
+        {{ $t('fields.totalBetMemberCount') }} : {{ page.records.length > 0 ? totalBetCount : '--' }}
+      </div>
+      <div class="total-info">
         {{ $t('fields.payoutTotal') }} : {{ page.records.length > 0 ? totalPayout.toFixed(2) : '--' }}
+      </div>
+      <div class="total-info">
+        {{ $t('fields.profit') }} : {{ page.records.length > 0 ? totalProfit.toFixed(2) : '--' }}
       </div>
       <div class="total-info">
         {{ $t('fields.return_ratio_total') }} : {{ page.records.length > 0 ? totalRatio : '--' }}
@@ -170,6 +178,8 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const totalBet = ref(0)
 const totalPayout = ref(0)
+const totalBetCount = ref(0)
+const totalProfit = ref(0)
 
 const uiControl = reactive({
   messageVisible: false,
@@ -225,6 +235,8 @@ async function loadVipReport() {
   const query = {}
   totalBet.value = 0
   totalPayout.value = 0
+  totalBetCount.value = 0
+  totalProfit.value = 0
 
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
@@ -244,6 +256,8 @@ async function loadVipReport() {
   page.records = page.records.map(record => {
     totalBet.value += record.bet
     totalPayout.value += record.payout
+    totalBetCount.value += record.betCount
+    totalProfit.value += record.profit
 
     return {
       ...record,

@@ -1,7 +1,18 @@
 <template>
   <div class="card">
     <div class="menu-title-container">
-      <span class="menu-title">{{ $t("withdraw.withdraw") }}</span>
+      <span class="menu-title">{{ isAutoWithdrawal ? $t("withdraw.quickWithdraw") : $t("withdraw.withdraw") }}</span>
+      <el-button
+        v-if="store.memberType === 'TEST' && !isAutoWithdrawal"
+        :loading="loadingBtn"
+        :disable="loadingBtn"
+        size="large"
+        class="common-btn upgrade-btn"
+        @click="handleUpgradeClick"
+      >
+        <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
+        <span>{{ $t("withdraw.upgradeWithdraw") }}</span>
+      </el-button>
     </div>
 
     <!-- <div class="menu-title-container">
@@ -75,7 +86,7 @@
           </div>
         </el-form-item> -->
 
-        <el-form-item class="helptxt" prop="amount" :label="$t('withdraw.amount')" name="amount">
+        <el-form-item class="helptxt" :class="{ 'has-helper-text': isAutoWithdrawal }" prop="amount" :label="$t('withdraw.amount')" name="amount">
           <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
               <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
@@ -85,7 +96,9 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax.toLocaleString()} ${store.currency.label}`
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${
+                    store.currency.label
+                  } - ${selectedWithdrawalMethod.withdrawMax.toLocaleString()} ${store.currency.label}`
                 }}
                 <br />
                 {{
@@ -190,9 +203,15 @@
             {{
               selectedWithdrawalMethod &&
               (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2) < 0)
+                (
+                  withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                  selectedWithdrawalMethod.withdrawFee
+                ).toFixed(2) < 0)
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                : (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                    selectedWithdrawalMethod.withdrawFee
+                  ).toFixed(2)
             }}
             {{ $t("withdraw.usdt") }}
           </span>
@@ -209,7 +228,7 @@
         </div>
 
         <div v-if="selectedWithdrawalMethod.withdrawFee" class="" style="color: #17cd27">
-          {{ $t("withdraw.exchangeRateExample", {fee: selectedWithdrawalMethod.withdrawFee}) }}
+          {{ $t("withdraw.exchangeRateExample", { fee: selectedWithdrawalMethod.withdrawFee }) }}
         </div>
 
         <!-- <div
@@ -225,21 +244,24 @@
         </div>
       </el-form>
     </div>
+    <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
-import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal  } from "@/api/personal/personal";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
+import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialog.vue";
 
 export default defineComponent({
   name: "WithdrawView",
   components: {
+    WithdrawRemainingDialog
   },
   setup() {
     const { t } = useI18n();
@@ -253,6 +275,7 @@ export default defineComponent({
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
     const isLoaded = ref(false);
+    const isShowRemainingDialog = ref(false)
     const withdrawState = reactive({
       bankCardList: []
     });
@@ -464,7 +487,10 @@ export default defineComponent({
     const getWithdrawalMethods = () => {
       withdrawEntrance().then((response) => {
         if (response.code === 0) {
-          withdrawalMethods.value = response.data;
+          if(isAutoWithdrawal.value) {
+            isShowRemainingDialog.value = !response.data.withdrawStatus
+          }
+          withdrawalMethods.value = response.data.withdrawShowList;
           if (withdrawalMethods.value.length) {
             selectMethod(withdrawalMethods.value[0], withdrawalMethods.value[0].name);
           }
@@ -498,6 +524,20 @@ export default defineComponent({
         window.open(url);
       }
     };
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+
+    const handleUpgradeClick = () => {
+      loadingBtn.value = true
+      upgradeToAutoWithdrawal().then(async (res) => {
+        if(res.code === 0) {
+          ElMessage.success(t("withdraw.successUpgradeQuick"));
+
+          await store.getMemberInfo()
+        } else {
+          ElMessage.error(res.message);
+        }
+      }).finally(() => loadingBtn.value = false)
+    }
     return {
       formRef,
       withdrawInfo,
@@ -520,7 +560,10 @@ export default defineComponent({
       cardLabel,
       openEWalletTutorial,
       isLoaded,
-      amounts
+      amounts,
+      handleUpgradeClick,
+      isAutoWithdrawal,
+      isShowRemainingDialog
     };
   }
 });
@@ -968,6 +1011,21 @@ export default defineComponent({
   color: #ff7f10;
 }
 
+.upgrade-btn {
+  margin-left: 30px;
+  padding: 1px 7px;
+  height: 35px;
+  width: auto;
+  border-radius: 8px;
+  align-self: center;
+  img {
+    height: 20px;
+  }
+  span {
+    line-height: 20px;
+    text-transform: none;
+  }
+}
 .tip-text {
   margin-bottom: 10px;
   display: block;

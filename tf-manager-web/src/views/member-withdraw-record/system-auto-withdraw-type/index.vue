@@ -154,6 +154,23 @@
                     />
                   </el-select>
                 </template>
+                <template v-else-if="scope.row.variable && scope.row.variable.includes('risk')">
+                  <el-select
+                    v-model="scope.row.value"
+                    size="small"
+                    filterable
+                    multiple
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 200px;"
+                  >
+                    <el-option
+                      v-for="item in list.risks"
+                      :key="item.id"
+                      :label="item.levelName"
+                      :value="item.id"
+                    />
+                  </el-select>
+                </template>
                 <template v-else>
                   <el-input-number
                     v-model="scope.row.value"
@@ -598,6 +615,7 @@ import { hasPermission } from '../../../utils/util'
 import { isPak, isIndiaSite, isPh1, isBr1, isNga, isId1 } from '@/utils/site'
 import { getFinancialLevels } from "../../../api/financial-level";
 import { getVipList } from "../../../api/vip";
+import { selectList } from '../../../api/risk-level'
 
 const { t } = useI18n()
 const store = useStore()
@@ -636,6 +654,7 @@ const list = reactive({
   financials: [],
   reviewRuleRecord: [],
   vips: [],
+  risks: [],
 })
 const page = reactive({
   pages: 1,
@@ -674,6 +693,7 @@ const ruleType = reactive({
     { key: 10, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.max'), value: '#afterBalance<' },
     { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#afterBalance>' },
     { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
+    { key: 13, name: t('withdrawRuleType.risk'), value: "matches '.*,' + T(String).valueOf(#riskId) + ',.*'" },
   ],
 })
 
@@ -797,6 +817,27 @@ function createVariableValueString(originalData) {
   const result = data.map(item => {
     if (item.variable && item.value !== null) {
       item.variable = item.variable.trim()
+      if (item.variable === 'matches \'.*,\' + T(String).valueOf(#riskId) + \',.*\'') {
+        const riskNames = item.value.map(val => {
+          const riskItem = list.risks.find(risk => risk.id === val);
+          return riskItem ? riskItem.levelName : '';
+        });
+        item.value = riskNames.join(',');
+      }
+      if (item.variable === 'matches \'.*,\' + T(String).valueOf(#financialLevel) + \',.*\'') {
+        const financialNames = item.value.map(val => {
+          const financialItem = list.financials.find(financial => financial.level === val);
+          return financialItem ? financialItem.name : '';
+        });
+        item.value = financialNames.join(',');
+      }
+      if (item.variable === 'matches \'.*,\' + T(String).valueOf(#vipLevel) + \',.*\'') {
+        const vipNames = item.value.map(val => {
+          const vipItem = list.vips.find(vip => vip.level === val);
+          return vipItem ? vipItem.name : '';
+        });
+        item.value = vipNames.join(',');
+      }
       const variableName = ruleType.list.find(a => a.value === item.variable)?.name;
       item.variable = variableName ?? item.variable;
       return `${item.variable} : ${item.value}`;
@@ -875,6 +916,11 @@ async function loadWithdrawPlatform() {
 const loadVips = async () => {
   const { data: vip } = await getVipList({ siteId: request.siteId })
   list.vips = vip
+}
+
+const loadRiskLevels = async () => {
+  const { data: risk } = await selectList({ siteId: request.siteId })
+  list.risks = risk
 }
 
 function filterPayTypeByCurrency() {
@@ -1155,9 +1201,10 @@ onMounted(async() => {
   const { data: config } = await getConfigList("auto_withdraw_review_control", request.siteId);
   uiControl.showReviewRule = uiControl.isShowReviewRule = config.length > 0 && config[0].value !== 'CLOSE';
   if (uiControl.showReviewRule) {
-    await loadWithdrawReviewRule()
     await loadSearchConditionFinancial()
     await loadVips()
+    await loadRiskLevels()
+    await loadWithdrawReviewRule()
   }
 })
 </script>

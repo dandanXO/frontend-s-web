@@ -39,6 +39,7 @@
       :summary-method="getSummaries"
       show-summary
       :empty-text="t('fields.noData')"
+      :default-sort="{prop: 'successCount', order: 'descending'}"
       @sort-change="sort"
     >
       <el-table-column prop="referrerName" :label="t('fields.referrer')">
@@ -60,6 +61,7 @@
           $ <span v-formatter="{data: scope.row.referBonus, type: 'money'}" />
         </template>
       </el-table-column>
+      <el-table-column prop="firstDepositCount" :label="t('fields.ftdCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="successCount" :label="t('fields.successCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositCount" :label="t('fields.depositCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositBonus" :label="t('fields.depositBonus')" sortable :sort-orders="sortOrders">
@@ -179,7 +181,8 @@ function getSummaries(param) {
         if (
           index === 1 ||
           index === 3 ||
-          index === 4
+          index === 4 ||
+          index === 5
         ) {
           sums[index] = page.sums[prop]
         } else {
@@ -202,7 +205,6 @@ function redirectToReferPane(name) {
 
 const sort = (column) => {
   request.orderBy = column.prop;
-  console.log(column)
   if (column.order === "descending") {
     request.sortType = "DESC";
   } else {

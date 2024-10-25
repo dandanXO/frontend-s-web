@@ -118,6 +118,7 @@ export default {
     financialLevel: 'financial level',
     todayWithdrawCount: 'Today withdraw count',
     profit: 'member profit',
+    risk: 'risk level'
   },
   outboxStatus: {
     0: 'Not reply yet',
@@ -598,6 +599,9 @@ export default {
     addLotteryResult: 'Add Lottery Result',
     addMember: 'Add Member',
     addMemberAmountAdjust: 'Add Member Amount Adjust',
+    amountAdjustType: "Account Adjustment Type",
+    addNormalAmountAdjust: "Normal Account Adjustment",
+    addCalculateAmountAdjust: "Calculated Account Adjustment",
     addMemberPrivilegeBlacklist: 'Add Member Privilege Blacklist',
     addMemberRebateRule: 'Add Member Rebate Rule',
     addMenu: 'Add Menu',
@@ -2611,6 +2615,8 @@ export default {
       'Must be composed of digits and alphabet',
     validateProductIdRequired: 'Product ID is required',
     validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
+    validateLoginNameNoSpecialCharacter:
+      'The login name can only contain underscores (_), numbers, and letters.',
   },
   menu: {
     undefined: '',
@@ -2757,6 +2763,7 @@ export default {
     VIP: 'VIP',
     Game: 'Game',
     'Game Tag': 'Game Tag',
+    'TFG Member Game Map': 'TFG Game Map',
     'Financial Level': 'Financial Level',
     'Risk Level': 'Risk Level',
     'Ip Label': 'IP Label',

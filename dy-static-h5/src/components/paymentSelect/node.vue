@@ -211,9 +211,9 @@ $node-color: #4ab6fd;
     }
 
     &.active {
-      // background: rgba(255,255,255, .2);
-
       .node-txt-img {
+        border-width: 2px;
+        border-style: solid;
         border-color: #0089ed !important;
 
         &:before {
@@ -316,11 +316,11 @@ $node-color: #4ab6fd;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        //box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         width: 60px;
         height: 60px;
         margin-bottom: 5px;
-        border: 2px solid #c2c2c2;
+        //border: 1px solid #c2c2c2;
         border-radius: 4px;
 
         img {

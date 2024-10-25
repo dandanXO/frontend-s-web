@@ -269,7 +269,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ store.vip }} {{ $t("withdraw.dailyLimit") }}</div>
+                <div class="desc">{{ $t("withdraw.dailyLimit") }} {{ store.vip }}</div>
               </div>
               <div class="desc desc_white">
                 {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}

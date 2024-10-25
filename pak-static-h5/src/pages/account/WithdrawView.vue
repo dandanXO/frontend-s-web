@@ -337,6 +337,7 @@
           </q-btn>
         </div>
       </template>
+      <div v-if="selectedWithdrawalMethod.tips" class="q-mt-md q-mb-sm" v-html="selectedWithdrawalMethod.tips"></div>
 
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
@@ -979,6 +980,7 @@ const openWithdrawTutorialVideo = () => {
   text-decoration: underline;
 }
 .step-desc-div {
+  margin-bottom: 105px;
   color: #bacef1;
 
   p {

@@ -22,11 +22,11 @@
       <div class="account-content withdrawal">
         <div class="flex-box">
           <div class="step-item active">申请中</div>
-          <RiArrowRightSLine />
+          <div class="right-icon" />
           <div class="step-item">审核中</div>
-          <RiArrowRightSLine />
+          <div class="right-icon" />
           <div class="step-item">支付中</div>
-          <RiArrowRightSLine />
+          <div class="right-icon" />
           <div class="step-item">出款成功</div>
         </div>
         <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
@@ -155,7 +155,10 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                : (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                    selectedWithdrawalMethod.withdrawFee
+                  ).toFixed(2)
             }}
             USDT
           </span>
@@ -238,10 +241,8 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
-// import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
-import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialog.vue";
@@ -249,7 +250,6 @@ import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialo
 export default defineComponent({
   name: "WithdrawView",
   components: {
-    RiArrowRightSLine,
     WithdrawRemainingDialog
   },
   setup() {
@@ -682,11 +682,6 @@ export default defineComponent({
       }
 
       .promo-img {
-        //     width: 40px;
-        // padding: 8px 20px;
-        // background: #ffffff;
-        // border: 1px solid #ced4da;
-
         background-color: #f7f7f7;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         max-width: 1.5rem;
@@ -694,14 +689,10 @@ export default defineComponent({
         border: 2px solid #dddddd;
         padding: 5px 15px;
         border-radius: 3px;
+        box-sizing: content-box;
       }
       &.active {
-        // border-bottom: 4px solid #1bcef1;
-        // border: 1px solid #ffd800;
-        // color: #ffd800;
         img {
-          // border: 1px solid #4978ec;
-          // background: #bad2ff;
           border-color: #4873f1;
         }
       }
@@ -939,5 +930,17 @@ export default defineComponent({
       flex: 1;
     }
   }
+}
+
+.right-icon {
+  background: url("../../assets/images/account/charge-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  width: 20px;
+  height: 26px;
+  margin: auto 0;
+}
+
+.right-icon {
+  background-position: 100% 0%;
 }
 </style>

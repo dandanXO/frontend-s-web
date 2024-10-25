@@ -1,9 +1,6 @@
 <template>
   <div class="live-container">
-    <q-scroll-area
-      style="height: calc(100vh - 90px); padding-bottom: 10px"
-      :thumb-style="{ width: 0 }"
-    >
+    <q-scroll-area style="height: calc(100vh - 90px); padding-bottom: 10px" :thumb-style="{ width: 0 }">
       <q-intersection transition="scale">
         <!-- <div v-if="banner.mobileImageUrl" class="banner-container">
           <div
@@ -15,12 +12,7 @@
         </div> -->
 
         <div class="section-product">
-          <div
-            class="item-group"
-            data-aos="slide-down"
-            data-aos-easing="ease-out"
-            data-aos-duration="1000"
-          >
+          <div class="item-group" data-aos="slide-down" data-aos-easing="ease-out" data-aos-duration="1000">
             <div
               v-for="(p, index) in hotTrendingGames"
               :key="index"
@@ -33,11 +25,7 @@
                     <img :src="p.bg" alt="" />
                     <img
                       class="logo"
-                      :style="
-                        p.name === 'Evolution'
-                          ? 'max-height:15px; bottom: 12%;'
-                          : ''
-                      "
+                      :style="p.name === 'Evolution' ? 'max-height:15px; bottom: 12%;' : ''"
                       :src="p.logo"
                     />
                   </div>
@@ -47,7 +35,7 @@
           </div>
           <GameModal ref="casinoGame"></GameModal>
         </div>
-<!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
+        <!--        <img src="../../assets/images/games/liveCasino/live-bg.png" />-->
       </q-intersection>
     </q-scroll-area>
   </div>
@@ -68,7 +56,7 @@ function playGame(gameName, platformCode, gameCode, gameStatus) {
 
 // const loadBanner = () => {
 //   api
-//     .get("/promo/banner", {
+//     .get("/opt-session/promo/banner", {
 //       params: {
 //         category: "LIVE"
 //       }
@@ -95,7 +83,7 @@ const hotTrendingGames = [
     gameName: "AE Sexy",
     gameCode: "MX-LIVE-001",
     logo: require("../../assets/images/common/logo/ae_2.png"),
-    text: "วิดีโอไลฟ์แอ็กชันที่มีศักยภาพสูงสุดในเอเชียผลิตภัณฑ์เกมคุณภาพสูง และวิดีโอเกมที่หลากหลาย การเชื่อมต่อข้ามแพลตฟอร์มที่ง่ายดาย ทำให้คุณสนุกได้ทุกที่ทุกเวลา!",
+    text: "วิดีโอไลฟ์แอ็กชันที่มีศักยภาพสูงสุดในเอเชียผลิตภัณฑ์เกมคุณภาพสูง และวิดีโอเกมที่หลากหลาย การเชื่อมต่อข้ามแพลตฟอร์มที่ง่ายดาย ทำให้คุณสนุกได้ทุกที่ทุกเวลา!"
   },
   {
     code: "WM",
@@ -103,7 +91,7 @@ const hotTrendingGames = [
     gameName: "WM",
     status: "NORMAL",
     logo: require("../../assets/images/common/logo/WM.png"),
-    text: "AE Casino วิดีโอไลฟ์แอ็กชันที่มีศักยภาพมากที่สุดในเอเชีย เชื่อมต่อและใช้งานง่าย ข้ามแพลตฟอร์ม ฟรีดาวน์โหลด และสนุกได้ทุกที่ทุกเวลา!",
+    text: "AE Casino วิดีโอไลฟ์แอ็กชันที่มีศักยภาพมากที่สุดในเอเชีย เชื่อมต่อและใช้งานง่าย ข้ามแพลตฟอร์ม ฟรีดาวน์โหลด และสนุกได้ทุกที่ทุกเวลา!"
   },
   {
     code: "SA",
@@ -111,8 +99,8 @@ const hotTrendingGames = [
     gameName: "SA",
     status: "NORMAL",
     logo: require("../../assets/images/common/logo/SA.png"),
-    text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
-  },
+    text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ"
+  }
 ];
 onMounted(() => {});
 </script>

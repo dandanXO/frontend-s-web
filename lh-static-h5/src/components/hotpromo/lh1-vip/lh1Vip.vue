@@ -154,7 +154,7 @@
         <strong>六。会员日</strong>
         <ol class="terms non-style">
           <li>
-            会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至21号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
+            会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：
           </li>
         </ol>
       </p>
@@ -163,7 +163,7 @@
         <strong>七。会员充值加码10%</strong>
         <ol class="terms got-bullets">
           <li class="numbered">
-            VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金一倍流水）即可提款；
+            VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（彩金三倍流水）即可提款；
           </li>
           <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
         </ol>
@@ -228,7 +228,7 @@ const vipLevel2s = ref([
     birthdayGift: "-",
     holidayBonus: "-",
     dailyTurnoverGift: "0.1%",
-    weeklyDepositBonus: 8,
+    weeklyDepositBonus: 5,
     monthlyUpgradeBonus: 10
   },
   {
@@ -236,7 +236,7 @@ const vipLevel2s = ref([
     birthdayGift: "-",
     holidayBonus: "-",
     dailyTurnoverGift: "0.2%",
-    weeklyDepositBonus: 18,
+    weeklyDepositBonus: 8,
     monthlyUpgradeBonus: 28
   },
   {
@@ -244,7 +244,7 @@ const vipLevel2s = ref([
     birthdayGift: "-",
     holidayBonus: "-",
     dailyTurnoverGift: "0.3%",
-    weeklyDepositBonus: 28,
+    weeklyDepositBonus: 18,
     monthlyUpgradeBonus: 58
   },
   {
@@ -252,7 +252,7 @@ const vipLevel2s = ref([
     birthdayGift: 38,
     holidayBonus: "-",
     dailyTurnoverGift: "0.5%",
-    weeklyDepositBonus: 38,
+    weeklyDepositBonus: 28,
     monthlyUpgradeBonus: 88
   },
   {
@@ -260,7 +260,7 @@ const vipLevel2s = ref([
     birthdayGift: 58,
     holidayBonus: "-",
     dailyTurnoverGift: "0.6%",
-    weeklyDepositBonus: 58,
+    weeklyDepositBonus: 38,
     monthlyUpgradeBonus: 128
   },
   {
@@ -268,7 +268,7 @@ const vipLevel2s = ref([
     birthdayGift: 88,
     holidayBonus: "-",
     dailyTurnoverGift: "0.8%",
-    weeklyDepositBonus: 68,
+    weeklyDepositBonus: 58,
     monthlyUpgradeBonus: 188
   },
   {
@@ -276,7 +276,7 @@ const vipLevel2s = ref([
     birthdayGift: 188,
     holidayBonus: "-",
     dailyTurnoverGift: "1.0%",
-    weeklyDepositBonus: 128,
+    weeklyDepositBonus: 68,
     monthlyUpgradeBonus: 258
   },
   {
@@ -284,7 +284,7 @@ const vipLevel2s = ref([
     birthdayGift: 288,
     holidayBonus: 188,
     dailyTurnoverGift: "1.2%",
-    weeklyDepositBonus: 208,
+    weeklyDepositBonus: 128,
     monthlyUpgradeBonus: 388
   },
   {
@@ -292,7 +292,7 @@ const vipLevel2s = ref([
     birthdayGift: 388,
     holidayBonus: 288,
     dailyTurnoverGift: "1.3%",
-    weeklyDepositBonus: 388,
+    weeklyDepositBonus: 208,
     monthlyUpgradeBonus: 508
   },
   {
@@ -300,7 +300,7 @@ const vipLevel2s = ref([
     birthdayGift: 588,
     holidayBonus: 388,
     dailyTurnoverGift: "1.5%",
-    weeklyDepositBonus: 588,
+    weeklyDepositBonus: 388,
     monthlyUpgradeBonus: 888
   },
   {
@@ -308,7 +308,7 @@ const vipLevel2s = ref([
     birthdayGift: 888,
     holidayBonus: 888,
     dailyTurnoverGift: "1.8%",
-    weeklyDepositBonus: 888,
+    weeklyDepositBonus: 588,
     monthlyUpgradeBonus: 1288
   },
   {
@@ -316,7 +316,7 @@ const vipLevel2s = ref([
     birthdayGift: 1888,
     holidayBonus: 1888,
     dailyTurnoverGift: "2.0%",
-    weeklyDepositBonus: 1888,
+    weeklyDepositBonus: 888,
     monthlyUpgradeBonus: 2888
   }
 ]);
@@ -331,7 +331,7 @@ const vipLevel3s = ref([
 ]);
 
 const vipLevel4s = ref([
-  // { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
+  { vip: "VIP0", eSport: "0.45%", sport: "0.40%", real: "0.40%", card: "0.40%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP1", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP2", eSport: "0.45%", sport: "0.40%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "8,888" },
   { vip: "VIP3", eSport: "0.48%", sport: "0.45%", real: "0.45%", card: "0.45%", el: "0.60%", waterLimit: "12,888" },

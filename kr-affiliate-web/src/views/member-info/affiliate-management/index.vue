@@ -22,15 +22,30 @@
           <!--            />-->
           <!--          </el-form-item>-->
           <el-form-item :label="t('fields.loginName') + ' :'">
-            <el-input class="input-small" v-model="request.loginName" maxlength="50"
-              :placeholder="t('fields.loginName')" size="normal" />
+            <el-input
+              class="input-small"
+              v-model="request.loginName"
+              maxlength="50"
+              :placeholder="t('fields.loginName')"
+              size="normal"
+            />
           </el-form-item>
           <el-form-item>
             <div class="grp-btn">
-              <el-button icon="el-icon-search" type="primary" @click="search()" size="normal">
+              <el-button
+                icon="el-icon-search"
+                type="primary"
+                @click="search()"
+                size="normal"
+              >
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button size="normal" type="primary" plain @click="resetQuery()">
+              <el-button
+                size="normal"
+                type="primary"
+                plain
+                @click="resetQuery()"
+              >
                 {{ $t('fields.reset') }}
               </el-button>
             </div>
@@ -38,10 +53,21 @@
         </el-form>
       </div>
       <div class="btn-group">
-        <el-button v-if="parseInt(store.state.user.siteId) === 10
-          ? affiliateLevel === 'JUNIOR_AFFILIATE' ? false : true
-          : affiliateLevel === 'AFFILIATE' ? false : true" icon="el-icon-plus" size="normal" type="primary"
-          @click="showDialog('CREATE')">
+        <el-button
+          v-if="
+            parseInt(store.state.user.siteId) === 10
+              ? affiliateLevel === 'JUNIOR_AFFILIATE'
+                ? false
+                : true
+              : affiliateLevel === 'AFFILIATE'
+              ? false
+              : true
+          "
+          icon="el-icon-plus"
+          size="normal"
+          type="primary"
+          @click="showDialog('CREATE')"
+        >
           {{ $t('fields.add') }}
         </el-button>
       </div>
@@ -51,7 +77,7 @@
           {{ item.name }}
         </el-breadcrumb-item>
       </el-breadcrumb> -->
-<!-- 
+      <!-- 
       <table cellpadding="0" cellspacing="0" border class="custom-table">
         <thead>
           <tr>
@@ -145,7 +171,7 @@
         :data="page.records"
         v-loading="page.loading"
         row-key="id"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :empty-text="t('fields.noData')"
         highlight-current-row
         border
@@ -231,13 +257,25 @@
             <el-tag v-if="scope.row.affiliateStatus === 'APPLY'" size="normal">
               {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
-            <el-tag v-if="scope.row.affiliateStatus === 'NORMAL'" type="success" size="normal">
+            <el-tag
+              v-if="scope.row.affiliateStatus === 'NORMAL'"
+              type="success"
+              size="normal"
+            >
               {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
-            <el-tag v-if="scope.row.affiliateStatus === 'DISABLE'" type="danger" size="normal">
+            <el-tag
+              v-if="scope.row.affiliateStatus === 'DISABLE'"
+              type="danger"
+              size="normal"
+            >
               {{ t('affiliate.status.' + scope.row.affiliateStatus) }}
             </el-tag>
-            <el-tag v-if="scope.row.affiliateStatus === null" type="info" size="normal">
+            <el-tag
+              v-if="scope.row.affiliateStatus === null"
+              type="info"
+              size="normal"
+            >
               -
             </el-tag>
           </template>
@@ -249,12 +287,15 @@
           width="160"
         >
           <template #default="scope">
-              <span v-if="scope.row.regTime === null">-</span>
-              <span v-if="scope.row.regTime !== null" v-formatter="{
+            <span v-if="scope.row.regTime === null">-</span>
+            <span
+              v-if="scope.row.regTime !== null"
+              v-formatter="{
                 data: scope.row.regTime,
                 formatter: 'YYYY/MM/DD HH:mm:ss',
                 type: 'date',
-              }" />
+              }"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -264,9 +305,23 @@
           width="160"
         >
           <template #default="scope">
-            <span
-              v-formatter="{data: scope.row.affiliateBalance, type: 'money'}"
-            />
+            <div style="display:inline-block">
+              <span
+                v-formatter="{
+                  data: scope.row.affiliateBalance,
+                  type: 'money',
+                }"
+              />
+              <el-button
+                v-if="affInfo.recycleMoney"
+                :disabled="!scope.row.canEdit"
+                size="small"
+                style="float:right"
+                @click="showRecycle(scope.row)"
+              >
+                {{ t('fields.recycle') }}
+              </el-button>
+            </div>
           </template>
         </el-table-column>
         <el-table-column
@@ -277,7 +332,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.memberBalance, type: 'money'}"
+              v-formatter="{ data: scope.row.memberBalance, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -289,7 +344,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.affiliatePoint, type: 'money'}"
+              v-formatter="{ data: scope.row.affiliatePoint, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -301,7 +356,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.memberPoint, type: 'money'}"
+              v-formatter="{ data: scope.row.memberPoint, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -313,7 +368,10 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.affiliateTransferAmount, type: 'money'}"
+              v-formatter="{
+                data: scope.row.affiliateTransferAmount,
+                type: 'money',
+              }"
             />
           </template>
         </el-table-column>
@@ -325,7 +383,10 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.affiliateWithdrawAmount, type: 'money'}"
+              v-formatter="{
+                data: scope.row.affiliateWithdrawAmount,
+                type: 'money',
+              }"
             />
           </template>
         </el-table-column>
@@ -337,7 +398,12 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.affiliateTransferAmount - scope.row.affiliateWithdrawAmount, type: 'money'}"
+              v-formatter="{
+                data:
+                  scope.row.affiliateTransferAmount -
+                  scope.row.affiliateWithdrawAmount,
+                type: 'money',
+              }"
             />
           </template>
         </el-table-column>
@@ -349,7 +415,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.liveRolling, type: 'money'}"
+              v-formatter="{ data: scope.row.liveRolling, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -361,7 +427,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.slotRolling, type: 'money'}"
+              v-formatter="{ data: scope.row.slotRolling, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -373,7 +439,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.sportRolling, type: 'money'}"
+              v-formatter="{ data: scope.row.sportRolling, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -385,7 +451,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.miniGameRolling, type: 'money'}"
+              v-formatter="{ data: scope.row.miniGameRolling, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -397,7 +463,14 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.sportRolling + scope.row.slotRolling + scope.row.sportRolling + scope.row.miniGameRolling, type: 'money'}"
+              v-formatter="{
+                data:
+                  scope.row.sportRolling +
+                  scope.row.slotRolling +
+                  scope.row.sportRolling +
+                  scope.row.miniGameRolling,
+                type: 'money',
+              }"
             />
           </template>
         </el-table-column>
@@ -407,63 +480,160 @@
           align="center"
         >
           <template #default="scope">
-            <el-button icon="el-icon-edit" size="normal" type="success" :disabled="!scope.row.canEdit"
-                v-if="store.state.user.siteCode !== 'VNM'" @click="showEdit(scope.row)" />
+            <el-button
+              icon="el-icon-edit"
+              size="normal"
+              type="success"
+              :disabled="!scope.row.canEdit"
+              @click="showEdit(scope.row)"
+            />
           </template>
         </el-table-column>
       </el-table>
       <div v-if="page.records.length === 0">
         <emptyComp />
       </div>
-      <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
-        :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
+      <el-pagination
+        class="pagination"
+        @current-change="changePage"
+        layout="prev, pager, next"
+        :page-size="request.size"
+        :page-count="page.pages"
+        :current-page="request.current"
+      />
     </div>
 
-    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
-      <el-form v-if="uiControl.dialogType === 'CREATE'" ref="createForm" :model="cForm" :rules="cFormRules"
-        :inline="true" size="normal" label-width="150px">
+    <el-dialog
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="580px"
+    >
+      <el-form
+        v-if="uiControl.dialogType === 'CREATE'"
+        ref="createForm"
+        :model="cForm"
+        :rules="cFormRules"
+        :inline="true"
+        size="normal"
+        label-width="150px"
+      >
         <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select v-model="cForm.siteId" size="normal" :placeholder="t('fields.site')" class="filter-item"
-            style="width: 350px;" default-first-option :disabled="true">
+          <el-select
+            v-model="cForm.siteId"
+            size="normal"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            :disabled="true"
+          >
             <el-option :key="site.id" :label="site.siteCode" :value="site.id" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
-          <el-input v-model="cForm.affiliateCode" style="width: 350px;" maxlength="11" :disabled="true" />
+          <el-input
+            v-model="cForm.affiliateCode"
+            style="width: 350px;"
+            maxlength="11"
+            :disabled="true"
+          />
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')"
-          prop="affiliateLevel">
-          <el-select v-model="cForm.affiliateLevel" size="normal" :placeholder="t('fields.affiliateLevel')"
-            class="filter-item" style="width: 350px">
-            <el-option v-for="item in uiControl.affiliateLevel" :key="item.key"
-              :label="t(`affiliate.level.${item.value}`)" :value="item.value" />
+        <el-form-item
+          v-if="parseInt(store.state.user.siteId) === 10"
+          :label="t('fields.affiliateLevel')"
+          prop="affiliateLevel"
+        >
+          <el-select
+            v-model="cForm.affiliateLevel"
+            size="normal"
+            :placeholder="t('fields.affiliateLevel')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in uiControl.affiliateLevel"
+              :key="item.key"
+              :label="t(`affiliate.level.${item.value}`)"
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.affiliateCode')" prop="codePersonalAffiliate">
-          <el-input v-model="cForm.codePersonalAffiliate" style="width: 350px;" maxlength="6" @input="handleInput"/>
+        <el-form-item
+          :label="t('fields.affiliateCode')"
+          prop="codePersonalAffiliate"
+        >
+          <el-input
+            v-model="cForm.codePersonalAffiliate"
+            style="width: 350px;"
+            maxlength="6"
+            @input="handleInput"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input v-model="cForm.loginName" style="width: 350px;" maxlength="11" />
+          <el-input
+            v-model="cForm.loginName"
+            style="width: 350px;"
+            maxlength="11"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.password')" prop="password">
-          <el-input v-model="cForm.password" type="password" style="width: 350px;" maxlength="11" />
+          <el-input
+            v-model="cForm.password"
+            type="password"
+            style="width: 350px;"
+            maxlength="11"
+          />
         </el-form-item>
-        <el-form-item :label="t('fields.reenterPassword')" prop="reEnterPassword">
-          <el-input v-model="cForm.reEnterPassword" type="password" style="width: 350px;" maxlength="11" />
+        <el-form-item
+          :label="t('fields.reenterPassword')"
+          prop="reEnterPassword"
+        >
+          <el-input
+            v-model="cForm.reEnterPassword"
+            type="password"
+            style="width: 350px;"
+            maxlength="11"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.telephone')" prop="telephone">
-          <el-input v-model="cForm.telephone" style="width: 350px;" maxlength="20" />
+          <el-input
+            v-model="cForm.telephone"
+            style="width: 350px;"
+            maxlength="20"
+          />
         </el-form-item>
-        <el-form-item :label="t('fields.commission')" prop="commission" v-if="store.state.user.siteCode !== 'VNM'">
-          <el-input v-model="cForm.commission" style="width: 350px;" :maxlength="uiControl.commissionMax"
-            @keypress="restrictCommissionDecimalInput($event)" />
+        <el-form-item
+          :label="t('fields.commission')"
+          prop="commission"
+          v-if="store.state.user.siteCode !== 'VNM'"
+        >
+          <el-input
+            v-model="cForm.commission"
+            style="width: 350px;"
+            :maxlength="uiControl.commissionMax"
+            @keypress="restrictCommissionDecimalInput($event)"
+          />
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.shareRatio')" prop="shareRatio">
-          <div v-for="item in shareRatioList.list" :key="item.code"
-            style="width: 350px; display: flex; margin-bottom:5px;">
+        <el-form-item
+          v-if="parseInt(store.state.user.siteId) === 10"
+          :label="t('fields.shareRatio')"
+          prop="shareRatio"
+        >
+          <div
+            v-for="item in shareRatioList.list"
+            :key="item.code"
+            style="width: 350px; display: flex; margin-bottom:5px;"
+          >
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input v-model="item.value" style=" width:100px; margin-left: auto" />
-            <span style="color:red"> &emsp; (0% - {{ (getAffiliateRatio(item.code)*100).toFixed(2) }}%) </span>
+            <el-input
+              v-model="item.value"
+              style=" width:100px; margin-left: auto"
+            />
+            <span style="color:red">
+              &emsp; (0% -
+              {{ (getAffiliateRatio(item.code) * 100).toFixed(2) }}%)
+            </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -476,33 +646,80 @@
         </div>
       </el-form>
 
-      <el-form v-if="uiControl.dialogType === 'EDIT'" ref="editForm" :model="eForm" :rules="eFormRules" :inline="true"
-        size="normal" label-width="150px">
+      <el-form
+        v-if="uiControl.dialogType === 'EDIT'"
+        ref="editForm"
+        :model="eForm"
+        :rules="eFormRules"
+        :inline="true"
+        size="normal"
+        label-width="150px"
+      >
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input v-model="eForm.loginName" style="width: 350px" maxlength="50" :disabled="true" />
+          <el-input
+            v-model="eForm.loginName"
+            style="width: 350px"
+            maxlength="50"
+            :disabled="true"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
-          <el-input v-model="eForm.affiliateCode" style="width: 350px" maxlength="50" :disabled="true" />
+          <el-input
+            v-model="eForm.affiliateCode"
+            style="width: 350px"
+            maxlength="50"
+            :disabled="true"
+          />
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')"
-          prop="affiliateLevel">
-          <el-select v-model="eForm.affiliateLevel" size="normal" :placeholder="t('fields.affiliateLevel')"
-            class="filter-item" style="width: 350px">
-            <el-option v-for="item in uiControl.affiliateLevel" :key="item.key"
-              :label="t(`affiliate.level.${item.value}`)" :value="item.value" />
+        <el-form-item
+          v-if="parseInt(store.state.user.siteId) === 10"
+          :label="t('fields.affiliateLevel')"
+          prop="affiliateLevel"
+        >
+          <el-select
+            v-model="eForm.affiliateLevel"
+            size="normal"
+            :placeholder="t('fields.affiliateLevel')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in uiControl.affiliateLevel"
+              :key="item.key"
+              :label="t(`affiliate.level.${item.value}`)"
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.commissionRate')" prop="commission">
-          <el-input v-model="eForm.commission" style="width: 350px" :maxlength="uiControl.commissionMax"
-            @keypress="restrictCommissionDecimalInput($event)" />
+          <el-input
+            v-model="eForm.commission"
+            style="width: 350px"
+            :maxlength="uiControl.commissionMax"
+            @keypress="restrictCommissionDecimalInput($event)"
+          />
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10 && eForm.shareRatio !== null"
-          :label="t('fields.shareRatio')" prop="shareRatio">
-          <div v-for="item in eForm.shareRatio" :key="item.code"
-            style="width: 350px; display: flex; margin-bottom:5px;">
+        <el-form-item
+          v-if="
+            parseInt(store.state.user.siteId) === 10 &&
+              eForm.shareRatio !== null
+          "
+          :label="t('fields.shareRatio')"
+          prop="shareRatio"
+        >
+          <div
+            v-for="item in eForm.shareRatio"
+            :key="item.code"
+            style="width: 350px; display: flex; margin-bottom:5px;"
+          >
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input v-model="item.value" style=" width:100px; margin-left: auto" />
-            <span style="color:red"> &emsp; ( {{ (getDownlineRatio(item.code)*100).toFixed(2) }}% - {{ (getAffiliateRatio(item.code)*100).toFixed(2) }}%)
+            <el-input
+              v-model="item.value"
+              style=" width:100px; margin-left: auto"
+            />
+            <span style="color:red">
+              &emsp; ( {{ (getDownlineRatio(item.code) * 100).toFixed(2) }}% -
+              {{ (getAffiliateRatio(item.code) * 100).toFixed(2) }}%)
             </span>
           </div>
         </el-form-item>
@@ -515,6 +732,32 @@
           </el-button>
         </div>
       </el-form>
+    </el-dialog>
+    <el-dialog
+      :title="t('fields.recycle')"
+      v-model="uiControl.recycleDialogVisible"
+      append-to-body
+      modal-class="dialog400"
+    >
+      <el-form label-width="100px" @submit.prevent>
+        <el-form-item :label="t('fields.loginName')">
+          <b>
+            {{ recycleForm.memberName }}
+          </b>
+        </el-form-item>
+        <el-form-item :label="t('fields.amount')">
+          <el-input v-model="recycleForm.amount" />
+        </el-form-item>
+      </el-form>
+
+      <div class="dialog-footer" style="margin-top:10px">
+        <el-button @click="uiControl.recycleDialogVisible = false">
+          {{ $t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="confirmRecycle()">
+          {{ $t('fields.confirm') }}
+        </el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -529,13 +772,14 @@ import {
   editAffiliateCommission,
   getAffiliateInfo,
   getDownlineShareRatio,
+  recycleMemberBalance,
 } from '../../../api/affiliate'
 import { getSite } from '../../../api/site'
 import { required, size } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import emptyComp from '@/components/empty'
-import { getConfigListByGroup } from "../../../api/system-config";
+import { getConfigListByGroup } from '../../../api/system-config'
 
 const store = useStore()
 const { t } = useI18n()
@@ -555,6 +799,7 @@ const uiControl = reactive({
     { key: 5, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
     { key: 6, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
   ],
+  recycleDialogVisible: false,
 })
 const affiliateLevel = ref(null)
 const affiliateLevelKey = ref(null)
@@ -722,6 +967,12 @@ const eForm = reactive({
   affiliateLevel: null,
 })
 
+const recycleForm = reactive({
+  memberId: null,
+  memberName: null,
+  amount: 0,
+})
+
 // function convertDate(date) {
 //   return moment(date).format('YYYY-MM-DD')
 // }
@@ -758,7 +1009,7 @@ const validateCommission = (rule, value, callback) => {
 }
 
 const validateShareRatio = (rule, value, callback) => {
-  shareRatioList.list.forEach((item) => {
+  shareRatioList.list.forEach(item => {
     if (item.value === '' || item.value < 0 || item.value > 100) {
       callback(new Error(t('message.validateShareRatioFormat')))
     }
@@ -771,6 +1022,12 @@ const cFormRules = reactive({
   loginName: [
     required(t('message.requiredLoginName')),
     size(6, 12, t('message.length6To12')),
+    {
+      required: true,
+      pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+      message: t('common.affiliateaccountcanonlycontainnumchar'),
+      trigger: 'blur',
+    },
   ],
   password: [
     required(t('message.requiredPassword')),
@@ -788,18 +1045,18 @@ const cFormRules = reactive({
   ],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
   codePersonalAffiliate: [
-          {
-            min: 6,
-            max: 6,
-            message: t('message.required_6_digits_code'),
-            trigger: 'change',
-          },
-          {
-            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: t('message.required_only_digits_and_alphabet'),
-            trigger: 'blur',
-          },
-        ]
+    {
+      min: 6,
+      max: 6,
+      message: t('message.required_6_digits_code'),
+      trigger: 'change',
+    },
+    {
+      pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+      message: t('message.required_only_digits_and_alphabet'),
+      trigger: 'blur',
+    },
+  ],
 })
 
 const eFormRules = reactive({
@@ -902,18 +1159,35 @@ function showEdit(affiliate) {
       eForm.shareRatio = []
     }
     for (var item = 0; item < shareRatioList.list.length; item++) {
-      if (!eForm.shareRatio.some(child => child.code === shareRatioList.list[item].code)) {
-        eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
+      if (
+        !eForm.shareRatio.some(
+          child => child.code === shareRatioList.list[item].code
+        )
+      ) {
+        eForm.shareRatio.push({
+          code: shareRatioList.list[item].code,
+          value: 0,
+        })
       }
     }
     eForm.shareRatio = JSON.parse(JSON.stringify(affiliate.shareRatio))
     for (var index = 0; index < eForm.shareRatio.length; index++) {
-      eForm.shareRatio[index].value *= 100.00;
-      eForm.shareRatio[index].value = parseFloat(eForm.shareRatio[index].value).toFixed(2);
+      eForm.shareRatio[index].value *= 100.0
+      eForm.shareRatio[index].value = parseFloat(
+        eForm.shareRatio[index].value
+      ).toFixed(2)
     }
     const { data: downlineShareRatio } = await getDownlineShareRatio(eForm.id)
     downlineShareRatioList.list = downlineShareRatio
   })
+}
+
+function showRecycle(affiliate) {
+  uiControl.recycleDialogVisible = true
+  console.log(affiliate)
+  recycleForm.memberId = affiliate.id
+  recycleForm.memberName = affiliate.loginName
+  recycleForm.amount = 0
 }
 
 async function addAffiliate() {
@@ -921,7 +1195,9 @@ async function addAffiliate() {
     if (valid) {
       if (parseInt(cForm.siteId) === 10) {
         // join share ratio by comma
-        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + (item.value/100).toFixed(4)).join(',');
+        cForm.shareRatio = shareRatioList.list
+          .map(item => item.code + ':' + (item.value / 100).toFixed(4))
+          .join(',')
       }
       await regsterAffiliate(cForm)
       uiControl.dialogVisible = false
@@ -931,8 +1207,8 @@ async function addAffiliate() {
   })
 }
 
-const handleInput = (event) => {
-  cForm.codePersonalAffiliate = cForm.codePersonalAffiliate.toUpperCase();
+const handleInput = event => {
+  cForm.codePersonalAffiliate = cForm.codePersonalAffiliate.toUpperCase()
 }
 
 async function editAffiliate() {
@@ -943,7 +1219,9 @@ async function editAffiliate() {
       form.siteId = store.state.user.siteId
       if (parseInt(form.siteId) === 10) {
         // join share ratio by comma
-        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + (item.value/100).toFixed(4)).join(',');
+        form.shareRatio = eForm.shareRatio
+          .map(item => item.code + ':' + (item.value / 100).toFixed(4))
+          .join(',')
       }
       form.affiliateLevel = eForm.affiliateLevel
       await editAffiliateCommission(eForm.id, form)
@@ -990,13 +1268,30 @@ function breadcrumbSearch(id, name) {
 }
 
 function getAffiliateRatio(code) {
-  const shareRatio = affInfo.value.shareRatio.filter(item => item.code === code);
-  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+  const shareRatio = affInfo.value.shareRatio.filter(item => item.code === code)
+  return shareRatio === null ||
+    shareRatio === undefined ||
+    shareRatio.length === 0
+    ? 0
+    : shareRatio[0].value
 }
 
 function getDownlineRatio(code) {
-  const shareRatio = downlineShareRatioList.list.filter(item => item.code === code);
-  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+  const shareRatio = downlineShareRatioList.list.filter(
+    item => item.code === code
+  )
+  return shareRatio === null ||
+    shareRatio === undefined ||
+    shareRatio.length === 0
+    ? 0
+    : shareRatio[0].value
+}
+
+const confirmRecycle = async () => {
+  await recycleMemberBalance(recycleForm)
+  ElMessage({ message: t('message.recycleSuccess'), type: 'success' })
+  uiControl.recycleDialogVisible = false
+  loadDownlineAffiliates()
 }
 
 onMounted(async () => {
@@ -1007,15 +1302,17 @@ onMounted(async () => {
   await loadSite()
   await loadAffiliateInfo()
   await loadDownlineAffiliates()
-  getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
-    for (var item = 0; item < res.data.length; item++) {
-      shareRatioList.list.push({ code: res.data[item].code, value: 0 })
+  getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(
+    res => {
+      for (var item = 0; item < res.data.length; item++) {
+        shareRatioList.list.push({ code: res.data[item].code, value: 0 })
+      }
     }
-  });
-  affiliateLevelKey.value = uiControl.affiliateLevel.filter((level) => {
+  )
+  affiliateLevelKey.value = uiControl.affiliateLevel.filter(level => {
     return level.value === affiliateLevel.value
-  })[0].key;
-  uiControl.affiliateLevel = uiControl.affiliateLevel.filter((level) => {
+  })[0].key
+  uiControl.affiliateLevel = uiControl.affiliateLevel.filter(level => {
     return level.key >= affiliateLevelKey.value
   })
 })

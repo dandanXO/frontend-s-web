@@ -439,6 +439,16 @@
           min-width="110"
         />
         <el-table-column
+          prop="riskLevel"
+          :label="t('fields.riskLevel')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span :style="{color: scope.row.riskLevelColor}">{{ scope.row.riskLevel }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="280"
@@ -539,7 +549,7 @@
           prop="operate"
           :label="t('fields.operate')"
           align="center"
-          min-width="200"
+          min-width="215"
         >
           <template #default="scope">
             <span v-if="scope.row.operate === 'UPGRADE_TO_CHECK'">
@@ -557,6 +567,9 @@
             </span>
             <span v-else-if="scope.row.operate === 'DOWNGRADE_TO_WAIT_PAY'">
               WAIT_FPR_PAYMENT
+            </span>
+            <span v-else-if="scope.row.operate === 'DOWNGRADE_TO_PAY'">
+              DOWNGRADE_TO_PAYMENT_ON_GOING
             </span>
             <span v-else-if="scope.row.operate === 'AUTOPAY'">
               AUTOMATIC_PAYMENT
@@ -920,6 +933,24 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.riskLevel')" prop="riskId">
+          <el-select
+            v-model="request.riskId"
+            size="small"
+            :placeholder="t('fields.riskLevel')"
+            class="filter-item"
+            style="width: 250px;"
+            default-first-option
+            @focus="loadRisks"
+          >
+            <el-option
+              v-for="item in riskList.list"
+              :key="item.id"
+              :label="item.levelName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="resetQuery()">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="advancedSearch()">{{ t('fields.search') }}</el-button>
@@ -952,6 +983,7 @@ import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { getSiteListSimple, getSupportedCurrencyBySiteId } from "@/api/site";
+import { selectList } from "../../../api/risk-level";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage } from "element-plus";
@@ -982,6 +1014,9 @@ const siteList = reactive({
   list: [],
 })
 const currencyList = reactive({
+  list: [],
+})
+const riskList = reactive({
   list: [],
 })
 let timeZone = null;
@@ -1098,7 +1133,8 @@ const request = reactive({
   withdrawType: null,
   doris: false,
   withdrawReviewType: null,
-  currencyId: null
+  currencyId: null,
+  riskId: null
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {
@@ -1136,6 +1172,7 @@ function resetQuery() {
   request.loginName = null
   request.financialId = financialList.list[0].id
   request.currencyId = currencyList.list[0].id
+  request.riskId = riskList.list[0].id
   request.cardAccount = null
   request.bankName = bankList.list[0].id
   request.minWithdrawAmount = null
@@ -1215,6 +1252,19 @@ async function loadCurrencys() {
 
   if (!request.currencyId) {
     request.currencyId = currencyList.list[0].id
+  }
+}
+
+async function loadRisks() {
+  const { data: risk } = await selectList({ siteId: siteId.value })
+  riskList.list = risk
+  riskList.list.unshift({
+    id: 0,
+    levelName: 'ALL',
+  })
+
+  if (!request.riskId) {
+    request.riskId = riskList.list[0].id
   }
 }
 
