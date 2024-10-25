@@ -4,30 +4,31 @@
       <div class="withdraw-remaining-dialog__header">
         <div class="withdraw-remaining-dialog__header-title">
           <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-          <span>继续提款需完成以下条件</span>
+          <span style="width: 40%">{{ $t("lang.dialog_title") }}</span>
         </div>
         <span class="withdraw-remaining-dialog__header-help-text">
-          若有疑问，请联系在线客服核查~
+          {{ $t("lang.dialog_help_text") }}
           <br />
-          *若平台结算流水有延迟，请您10分钟后重试！
+          {{ $t("lang.dialog_help_text2") }}
         </span>
       </div>
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
+
       <div class="withdraw-remaining-dialog__body">
         <div class="withdraw-remaining-dialog__body-title">
-          完成
-          <span class="text-yellows">{{ convertToCommaAmount(totalRemaining) }}</span>
-          流水，立即享受快速提款
+          {{ $t("lang.dialog_complete") }}
+          <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
+          {{ $t("lang.dialog_enjoy") }}
         </div>
         <table class="withdraw-remaining-dialog__body-table">
           <thead>
             <tr>
-              <th align="center">投注要求</th>
+              <th align="center">{{ $t("lang.dialog_bet_requirement") }}</th>
               <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
-                流水进度
+                {{ $t("lang.dialog_turnover_progress") }}
                 <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
               </th>
-              <th align="center">完成状态</th>
+              <th align="center">{{ $t("lang.dialog_status") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -37,12 +38,13 @@
                 {{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}
               </td>
               <td align="center">
-                <router-link class="action-button" to="/home">去完成</router-link>
+                <router-link class="action-button" to="/home">{{ $t("lang.dialog_go_complete") }}</router-link>
               </td>
             </tr>
           </tbody>
         </table>
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+
+        <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("lang.dialog_back") }}</button>
       </div>
     </div>
   </q-dialog>
@@ -50,7 +52,7 @@
 <script setup>
 import { api } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
-import { computed, onMounted, ref, defineModel } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const isShow = defineModel();
@@ -138,7 +140,6 @@ onMounted(() => {
 .withdraw-remaining-dialog {
   background: transparent;
   box-shadow: none;
-  color: #fff;
 
   .withdraw-remaining-dialog-inner {
     --font-size-small: 14px;
@@ -167,6 +168,7 @@ onMounted(() => {
         font-size: var(--font-size);
         font-weight: 600;
         line-height: var(--line-height);
+        color: #424f72;
         img {
           width: 24px;
           overflow: auto;
@@ -175,6 +177,7 @@ onMounted(() => {
       .withdraw-remaining-dialog__header-help-text {
         font-size: var(--font-size-small);
         line-height: var(--line-height);
+        color: #7a8eb9;
       }
     }
     .withdraw-remaining-dialog__pic {
@@ -185,8 +188,11 @@ onMounted(() => {
     }
 
     .withdraw-remaining-dialog__body {
-      background-color: #213057;
+      background-color: #fff;
       padding: 16px 12px 18px;
+      box-shadow:
+        0px -8px 8px 0px #c3d4e6 inset,
+        0px 4px 0px 0px #a7c2dd;
 
       .withdraw-remaining-dialog__body-title {
         margin-bottom: 12px;
@@ -194,6 +200,7 @@ onMounted(() => {
         font-weight: 600;
         line-height: var(--line-height);
         text-align: center;
+        color: #424f72;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -206,13 +213,14 @@ onMounted(() => {
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
+        color: #424f72;
         margin-bottom: 12px;
 
         thead {
-          background-color: #00bfd71a;
+          background-color: #3981ff3b;
           th {
             padding: 10px 0;
-            color: #00bfd7;
+            color: #3981ff;
             &:first-child {
               border-top-left-radius: 4px;
             }
@@ -223,11 +231,11 @@ onMounted(() => {
         }
         tbody {
           tr:nth-child(even) {
-            background-color: #2b3d6a;
+            background-color: #f2f8fe;
           }
           tr:last-child {
             td {
-              border-bottom: 1px solid #446ca680;
+              border-bottom: 1px solid #bed9ff80;
 
               &:first-child {
                 border-bottom-left-radius: 4px;
@@ -237,29 +245,27 @@ onMounted(() => {
               }
             }
           }
-          tr:first-child {
-            td {
-              border-top: none;
-            }
-          }
           td {
             padding: 10px 0;
-            border-top: 1px solid #446ca680;
-            border-left: 1px solid #446ca680;
+            border-top: 1px solid #bed9ff80;
+            border-left: 1px solid #bed9ff80;
 
             &:last-child {
-              border-right: 1px solid #446ca680;
+              border-right: 1px solid #bed9ff80;
             }
 
             .action-button {
-              background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
+              background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%, #3981ff 100%);
               border-radius: 30px;
+              box-shadow:
+                0px -2px 4.58px 0px #93c7ff inset,
+                0px -1px 3.66px 0px #275ec1 inset;
               padding: 4px 13px;
               font-size: var(--font-size);
               font-weight: 400;
               line-height: var(--line-height);
               text-decoration: none;
-              color: inherit;
+              color: #fff;
               &:hover {
                 filter: brightness(1.2);
               }
@@ -272,14 +278,17 @@ onMounted(() => {
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
-      background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
+      box-shadow:
+        0px -2px 4.58px 0px #b1d7ff inset,
+        0px -1px 3.66px 0px #5894ff inset;
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       border-radius: 4px;
       padding: 10px 0;
       font-size: var(--font-size-large);
       font-weight: 600;
       line-height: var(--line-height);
       text-align: center;
-      color: inherit;
+      color: #fff;
 
       &:hover {
         filter: brightness(1.2);
@@ -289,11 +298,10 @@ onMounted(() => {
 
   .text-yellows {
     font-size: 22px;
-    color: #00bfd7;
+    color: #599cff;
   }
 
   .refresh-btn {
-    margin-bottom: 0px;
     cursor: pointer;
 
     &:hover {
