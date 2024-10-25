@@ -150,6 +150,7 @@ import { onMounted, ref, defineProps } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
+import { ResponseCode } from "@/api/response";
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
 
@@ -183,7 +184,15 @@ const handleClaimBonus = () => {
           message: `成功领取`
         });
         fetchData();
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         notify({
           type: "error",
           message: res.message
