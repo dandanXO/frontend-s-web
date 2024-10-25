@@ -461,3 +461,15 @@ export function getGameTypeBonusInit(promoCode) {
 export function claimGameTypeBonus(promoCode) {
   return eventapi.post(`/session/game-type-bonus/claim`, qs.stringify({ promoCode }));
 }
+
+export function getCompetitionBetDepositInit(promoCode) {
+  return eventapi.get("/session/competition-bet-deposit/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBetDepositBonus(promoCode) {
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus`, qs.stringify({ promoCode }));
+}
