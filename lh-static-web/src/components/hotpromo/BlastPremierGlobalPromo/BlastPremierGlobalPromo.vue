@@ -289,10 +289,10 @@ const openBox = (item) => {
       openModal("amt", res.data);
       init();
     } else {
-      notify({
-        type: "error",
-        message: res.message
-      });
+      // notify({
+      //   type: "error",
+      //   message: res.message
+      // });
     }
   });
   setTimeout(() => {
