@@ -43,7 +43,7 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ convertToCommaAmount(Number(vip.ugprade) / 1000) }}K
+                {{ convertToCommaAmount(Number(vip.ugprade) / 1000) }}
               </div>
 
               <div class="progress-bar-container">
@@ -86,7 +86,7 @@
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}K</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -105,7 +105,7 @@
               <span class="bold">{{ $t("vip.monthly") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}K</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -125,7 +125,7 @@
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">
-                {{ convertToCommaAmount(Number(currentVipLevelStats.dailyWithdrawalLimit) / 1000) }}K
+                {{ convertToCommaAmount(Number(currentVipLevelStats.dailyWithdrawalLimit) / 1000) }}
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ $t("vip.deposit") }} {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}K</span>
+                  <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -231,7 +231,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}K</span>
+                  <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -284,7 +284,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: right">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}K</span>
+                  <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -332,7 +332,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 {{ store.currency.value }}
-                <span class="amt-text">{{ col.value }}K</span>
+                <span class="amt-text">{{ col.value }}</span>
               </template>
               <template v-else>{{ col.value }}</template>
             </q-td>

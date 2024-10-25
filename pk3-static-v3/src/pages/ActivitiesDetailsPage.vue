@@ -1,7 +1,7 @@
 <template>
   <div class="activities-container">
     <div class="activity-banner">
-      <img src="@/assets/images/promotion/activities/deposit-promo-topbanner.png" />
+      <img src="@/assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
     </div>
     <div class="activities-content">
       {{ $t("promo_activitiesDetails.activitiesContent") }}

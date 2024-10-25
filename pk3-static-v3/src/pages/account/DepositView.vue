@@ -338,9 +338,9 @@ const handleDepositItemClick = (amount) => {
 };
 const getFtdCommaAmount = (amount) => {
   if (amount < 888000) {
-    return `${amount / 1000}K`;
+    return `${amount / 1000}`;
   } else {
-    return `888K`;
+    return `888`;
   }
 };
 
@@ -363,7 +363,7 @@ const goSelectedMethod = (item) => {
   selectedChanelExtra.value = [];
   // selectedItemChannel.value = item.children;
   // goSelectedChannel(item.children[0]);
-  goSelectedChannel(item)
+  goSelectedChannel(item);
 };
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
