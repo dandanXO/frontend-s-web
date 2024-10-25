@@ -77,6 +77,10 @@
               {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
+
+            <div class="btn-confirm">
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+            </div>
           </el-space>
 
           <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
@@ -138,10 +142,6 @@
               {{ getRollOverText(selectedPromo.gameTypeRollover) }}
             </span>
             <span v-else>流水倍数要求（本金+彩金）：{{ selectedPromo.rollover }}倍</span>
-          </div>
-
-          <div class="btn-confirm">
-            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
           </div>
 
           <el-form-item v-if="selectedPayType" class="tip">
@@ -730,7 +730,7 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 .account-content {
@@ -898,7 +898,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .inner-cont {
   height: 100%;
   display: flex;
@@ -962,8 +962,7 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  position:absolute;
-  top:0;
-  right: 0;
+  padding-left: 20px;
+  margin-bottom: 10px;
 }
 </style>
