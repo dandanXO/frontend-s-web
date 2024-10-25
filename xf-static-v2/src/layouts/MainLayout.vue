@@ -523,9 +523,16 @@ svg path {
   font-size: 10px;
   position: relative;
   background-image: url("../assets/images/index/menu/menu-bg.png");
-  background-size: 100% 100%;
+  background-size: auto 100%;
+  background-position: center center;
+  background-repeat: repeat-x;
   margin: 0 -6px;
   background-color: transparent;
   padding-top: 4px;
+
+  :deep(.q-tabs__content) {
+    // background: salmon;
+    padding-bottom: 4px;
+  }
 }
 </style>

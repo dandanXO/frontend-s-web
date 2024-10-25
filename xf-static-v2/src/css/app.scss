@@ -66,11 +66,11 @@ body {
   height: 100%;
 }
 body.body--dark {
-  background: #1A2338;
+  background: #1a2338;
 }
 body.body--dark .q-header {
   // background: url(../assets/images/common/bgheader.png) no-repeat top center;
-  background: #1A2338;
+  background: #1a2338;
   // border-radius: 0 0 20px 20px;
   background-size: cover;
 }
@@ -189,7 +189,7 @@ svg {
         padding: 6px;
         border-radius: 50%;
         background: #0f182e;
-        box-shadow: 0px 4px 4px 2px #ffffff42;
+        box-shadow: 0px -2px 4px 1px rgba(255, 255, 255, 0.1);
         margin-top: -10px;
 
         img {
@@ -247,7 +247,7 @@ svg {
         img {
           display: block;
           max-width: 40px;
-          width:100%;
+          width: 100%;
           padding: 6px;
           border-radius: 50%;
           background: #213057;
@@ -272,7 +272,7 @@ svg {
   background: #313542;
 }
 .text-neontb {
-  color: #13f129;
+  color: #11aa66;
 }
 .text-bright {
   color: #33bcd4;
@@ -297,6 +297,23 @@ svg {
     position: absolute;
   }
 }
+.bg-orangebtn {
+  background: linear-gradient(180deg, #ff9d34 0%, #c76700 100%);
+  box-shadow: 0px 1px 4px 0px #ffffff inset;
+  color: #ffffff;
+
+  &:after {
+    content: "";
+    background: radial-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2), transparent);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 3px;
+    position: absolute;
+  }
+}
+
 .bg-dialog {
   background: linear-gradient(0deg, #213057, #213057),
     linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
@@ -307,6 +324,11 @@ svg {
 }
 .bg-inputstyle {
   background: #ffffff1a;
+}
+.bg-recinputstyle {
+  background: #273354;
+  // box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+  // border: 1px solid #a9c9ea;
 }
 .menu-title {
   color: #db7e42;

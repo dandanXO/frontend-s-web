@@ -82,7 +82,7 @@
                 <div v-if="vipCardData.birthdayBonus === '无'" class="txt">{{ vipCardData.birthdayBonus }}</div>
                 <div v-else class="btn-container">
                   <q-btn
-                    color="brightbtn"
+                    color="orangebtn"
                     label="领取"
                     :disable="btnIsDisabled"
                     @click="onVIPButtonClick('birthday')"

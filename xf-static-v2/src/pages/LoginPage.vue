@@ -171,7 +171,7 @@
             width="100%"
             style="width: 100%"
             rounded
-            size="lg"
+            size="md"
           />
         </q-form>
 

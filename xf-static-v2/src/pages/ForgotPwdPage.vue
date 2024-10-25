@@ -1,21 +1,6 @@
 <template>
   <div class="forget-pass-section">
-    <!-- <q-tabs
-      v-model="tab"
-      dense
-      size="lg"
-      active-color="white"
-      indicator-color="bright"
-      align="justify"
-      @change="goToTab"
-    >
-      <q-tab name="phone" label="短信修改密码" />
-      <q-tab name="email" label="邮箱修改密码" />
-      <q-tab name="mail" label="邮箱找回账号" />
-    </q-tabs> -->
-
     <RoundTab v-model:tab="tab" :items="tabItems" @change="goToTab"></RoundTab>
-
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="phone">
         <div class="text-red" v-if="!isPhoneSent">方式：请输入您需找回登陆密码的用户名和验证手机号码</div>
@@ -91,7 +76,7 @@
                 @click.prevent="submitSendOtp('phone')"
                 label="提交"
                 width="100%"
-                size="lg"
+                size="md"
                 color="brightbtn"
                 style="width: 100%"
                 rounded
@@ -187,7 +172,7 @@
                 @click.prevent="onVerifyForgotPassword('phone')"
                 label="提交"
                 width="100%"
-                size="lg"
+                size="md"
                 color="brightbtn"
                 style="width: 100%"
                 rounded
@@ -269,7 +254,7 @@
                 @click.prevent="submitSendOtp('email')"
                 label="提交"
                 width="100%"
-                size="lg"
+                size="md"
                 color="brightbtn"
                 style="width: 100%"
                 rounded
@@ -365,7 +350,7 @@
                 @click.prevent="onVerifyForgotPassword('email')"
                 label="提交"
                 width="100%"
-                size="lg"
+                size="md"
                 color="brightbtn"
                 style="width: 100%"
                 rounded
@@ -422,7 +407,7 @@
             <q-btn
               @click.prevent="submitForgetPass"
               label="提交"
-              size="lg"
+              size="md"
               width="100%"
               color="brightbtn"
               style="width: 100%"

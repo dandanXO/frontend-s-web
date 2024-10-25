@@ -1,78 +1,153 @@
 <template>
-  <div class="q-pa-md" style="overflow: auto; margin: 8px 8px">
+  <div class="q-pa-md">
     <div class="node-wrapper">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+    <div v-if="isDisplay" class="inner-cont transfer-details" style="overflow: auto">
       <div class="submit-message">
         <div class="line">
           <span>银行名称：</span>
-          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('0')" class="common-btn">
-            {{ copybtntxt0 }}
-          </q-btn>
+          <q-input
+            hide-bottom-space
+            ref="subMsg0"
+            label-color="brand"
+            clearable
+            outlined
+            v-model="submitMessage[0]"
+            color="white"
+            bg-color="recinputstyle"
+          >
+            <template v-slot:append>
+              <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+                {{ copybtntxt0 }}
+              </q-btn>
+            </template>
+          </q-input>
         </div>
         <div class="line">
           <span>银行户名：</span>
-          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('1')" class="common-btn">
-            {{ copybtntxt1 }}
-          </q-btn>
+          <q-input
+            hide-bottom-space
+            ref="subMsg1"
+            label-color="brand"
+            clearable
+            outlined
+            v-model="submitMessage[1]"
+            color="white"
+            bg-color="recinputstyle"
+          >
+            <template v-slot:append>
+              <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+                {{ copybtntxt1 }}
+              </q-btn>
+            </template>
+          </q-input>
         </div>
         <div class="line">
           <span>银行卡号：</span>
-          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('2')" class="common-btn">
-            {{ copybtntxt2 }}
-          </q-btn>
+          <q-input
+            hide-bottom-space
+            ref="subMsg2"
+            label-color="brand"
+            clearable
+            outlined
+            v-model="submitMessage[2]"
+            color="white"
+            bg-color="recinputstyle"
+          >
+            <template v-slot:append>
+              <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+                {{ copybtntxt2 }}
+              </q-btn>
+            </template>
+          </q-input>
         </div>
         <div class="line">
           <span>支付行：</span>
-          <span class="info" ref="subMsg4">{{ submitMessage[4] }}</span>
-          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('4')" class="common-btn">
-            {{ copybtntxt4 }}
-          </q-btn>
+          <q-input
+            hide-bottom-space
+            ref="subMsg4"
+            label-color="brand"
+            clearable
+            outlined
+            v-model="submitMessage[4]"
+            color="white"
+            bg-color="recinputstyle"
+          >
+            <template v-slot:append>
+              <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('4')" class="common-btn">
+                {{ copybtntxt4 }}
+              </q-btn>
+            </template>
+          </q-input>
         </div>
         <div class="line">
           <span>存款金额：</span>
-          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('3')" class="common-btn">
-            {{ copybtntxt3 }}
-          </q-btn>
+          <q-input
+            hide-bottom-space
+            ref="subMsg3"
+            label-color="brand"
+            clearable
+            outlined
+            v-model="submitMessage[3]"
+            color="white"
+            bg-color="recinputstyle"
+          >
+            <template v-slot:append>
+              <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+                {{ copybtntxt3 }}
+              </q-btn>
+            </template>
+          </q-input>
         </div>
         <div class="line" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
           <span>备注：</span>
-          <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
-          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('5')" class="common-btn">
-            {{ copybtntxt5 }}
-          </q-btn>
+
+          <q-input
+            hide-bottom-space
+            ref="subMsg5"
+            label-color="brand"
+            clearable
+            outlined
+            v-model="submitMessage[5]"
+            color="white"
+            bg-color="recinputstyle"
+          >
+            <template v-slot:append>
+              <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('5')" class="common-btn">
+                {{ copybtntxt5 }}
+              </q-btn>
+            </template>
+          </q-input>
         </div>
       </div>
     </div>
-    <div class="deposit-container" v-else>
+    <div class="deposit-container q-mt-md" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
-        <div class="flex-c-center" v-if="amountList.length === 0">
-          <q-input
-            class="deposit-input"
-            hide-bottom-space
-            ref="depositAmtRef"
-            label="存款金额"
-            name="localAmount"
-            v-model="form.localAmount"
-            placeholder="输入金额"
-            color="white"
-            :rules="verifyDepositAmount"
-            padding="none"
-          >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
-                <template v-if="isUSDT">USDT</template>
-                <template v-else>{{ store.currency.value }}</template>
-              </span>
-            </template>
-          </q-input>
-          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
+        <div v-if="amountList.length === 0">
+          <div class="column q-gutter-y-sm">
+            <div class="">存款金额</div>
+            <q-input
+              hide-bottom-space
+              ref="depositAmtRef"
+              v-model="form.localAmount"
+              placeholder="请输入存款金额"
+              :rules="verifyDepositAmount"
+              label-color="brand"
+              clearable
+              outlined
+              color="white"
+              bg-color="recinputstyle"
+            >
+              <template v-slot:prepend>
+                <span style="font-size: 26px" class="text-bright">
+                  <template v-if="isUSDT">USDT</template>
+                  <template v-else>{{ store.currency.value }}</template>
+                </span>
+              </template>
+            </q-input>
+          </div>
         </div>
         <div class="flex-c-center" v-else>
           <q-select
@@ -80,23 +155,25 @@
             ref="depositAmtRef"
             label="选择金额"
             name="localAmount"
-            filled
             :options="amountList"
             v-model="form.localAmount"
-            color="bright"
             :rules="verifyDepositAmount"
             padding="none"
+            outlined
+            color="white"
+            bg-color="recinputstyle"
+            style="width: 100%"
           >
             <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
+              <span style="font-size: 26px" class="text-white">
                 {{ store.currency.value }}
               </span>
             </template>
           </q-select>
-          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
+          <!-- <q-btn color="brightbtn" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" /> -->
         </div>
 
-        <div class="q-mt-sm text-grey text-bold">
+        <div class="q-mt-sm text-grey">
           单笔存款：{{
             calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
@@ -109,16 +186,16 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate">
-          <div class="q-my-xs" style="display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1">实时汇率：</span>
-            <span style="flex: 3" class="q-pa-xs bg-neontb text-neontb">
+          <div class="q-mt-md text-grey">
+            实时汇率:
+            <span class="text-neontb">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
           </div>
-          <div class="q-my-xs" style="display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1">预计到帐：</span>
-            <span style="flex: 3" class="q-pa-xs bg-neontb text-neontb">
+          <div class="q-my-xs text-grey">
+            预计到帐:
+            <span class="text-neontb">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit
                   ? "0.00"
@@ -138,18 +215,21 @@
           @selected="selectedBank"
           @successful="isDeposited = true"
         ></BankComponent>
+
         <q-select
           ref="offerRef"
           class="q-mt-md"
           label="选择优惠"
-          filled
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
           v-if="hasPrivilege && !isUSDT"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
+          outlined
           color="white"
+          bg-color="recinputstyle"
+          style="width: 100%"
           @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
@@ -180,7 +260,7 @@
           <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
         </div>
 
-        <div class="q-mt-md" v-html="activeMethod.msg"></div>
+        <div class="q-mt-md text-grey" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <!-- <div class="q-mt-md">
           <q-btn
@@ -190,6 +270,17 @@
               label="确定存款"
           />
         </div> -->
+        <div class="q-mt-md">
+          <q-btn
+            :loading="btnLoading"
+            class="deposit-btn"
+            color="brightbtn"
+            @click="confirmDeposit"
+            label="确认"
+            size="md"
+            style="width: 100%"
+          />
+        </div>
       </q-form>
     </div>
   </div>
@@ -770,24 +861,19 @@ onMounted(() => {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  color: #000000;
+  gap: 24px;
 
   .line {
     display: flex;
     gap: 10px;
-    justify-content: space-between;
-    // width: calc(100% - 30px);
+    flex-direction: column;
     width: 100%;
-    align-items: center;
     font-size: 14px;
-    align-items: center;
-    background: #063c50;
-    padding: 15px 10px;
 
     span:first-child {
       // flex: 1;
-      color: #4fb2ff;
-      width: 80px;
+      color: #ffffff;
+      // width: 80px;
     }
 
     span.info {
@@ -804,16 +890,16 @@ onMounted(() => {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  .deposit-input {
-    width: 70%;
-  }
-  .deposit-btn {
-    width: 25%;
-    height: 56px;
-    font-size: 20px;
-    white-space: nowrap;
-    background-color: #33bcd4;
-  }
+  // .deposit-input {
+  //   width: 70%;
+  // }
+  // .deposit-btn {
+  //   width: 25%;
+  //   height: 56px;
+  //   font-size: 20px;
+  //   white-space: nowrap;
+  //   background-color: #33bcd4;
+  // }
 }
 .additional-tips {
   text-align: center;
@@ -824,12 +910,18 @@ onMounted(() => {
   font-size: 14px;
 }
 
-.q-select__dialog .q-field__control {
-  background: #4fb2ff !important;
-}
+// .q-select__dialog .q-field__control {
+//   background: #4fb2ff !important;
+// }
 
 .rollover-info {
   color: #bd4646;
   font-size: 12px;
+}
+
+.transfer-details {
+  background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  border-radius: 6px;
+  padding: 24px 16px;
 }
 </style>
