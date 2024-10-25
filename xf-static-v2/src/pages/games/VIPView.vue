@@ -5,13 +5,13 @@
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="special" style="padding: 0">
         <div class="scroll-container">
-          <div v-for="(vip, vipIndex) in vipItems" :key="vipIndex" class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v${vipIndex}_card_bg.png`)})`}">
+          <div v-for="(vip, vipIndex) in vipItems" :key="vipIndex" class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v${vip.vipLevel - 1}_card_bg.png`)})`}">
             <div class="card_top">
               <div class="info-container">
-                <img :src="require(`../../assets/vip/vip_text_${vip.vipLevel}.png`)"/>
+                <img :src="require(`../../assets/vip/vip_text_${vip.vipLevel - 1}.png`)"/>
                 <span>{{ `${vip.monthlySaving}${vip.oneMonthSaving}` }}</span>
               </div>
-              <img src="~/assets/vip/vip_badge.png">
+              <img :src="require(`../../assets/vip/vip_badge_${vip.vipLevel - 1}.png`)"/>
             </div>
             <div class="card_btm">
               <div class="progress-bar-container">
@@ -23,55 +23,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v0_card_bg.png`)})`}"/>
-          <div class="card" :style="{backgroundImage: `url(${require(`../../assets/vip/v0_card_bg.png`)})`}"/> -->
         </div>
-        <!-- <q-carousel
-          class="vip bg-transparent"
-          animated
-          v-model="slide"
-          arrows
-          swipeable
-          transition-prev="slide-right"
-          transition-next="slide-left"
-        >
-          <q-carousel-slide
-            v-for="(vip, vipIndex) in vipItems"
-            :key="vipIndex"
-            :name="vipIndex"
-          >
-            <div class="carousel__item">
-              <div class="vipitem">
-                <div class="viplevelcard">
-                  <div class="vip-badgelevel">
-                    <div class="vip-badge">
-                      <img
-                        :src="
-                          require(`../../assets/vip/vip_img_${vip.vipLevel}.png`)
-                        "
-                      />
-                    </div>
-                    <div class="vip-text">
-                      <img
-                        :src="
-                          require(`../../assets/vip/vip_text_${vip.vipLevel}.png`)
-                        "
-                      />
-                    </div>
-                  </div>
-                  <div class="vip-badgecontent">
-                    <span>
-                      {{ `>${vip.saving}` }}
-                    </span>
-                    <span>
-                      {{ `>${vip.monthlySaving}${vip.oneMonthSaving}` }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-carousel-slide>
-        </q-carousel> -->
 
         <div class="vip-benefits">
           <div class="bft-title">
@@ -183,7 +135,8 @@
       </q-tab-panel>
 
       <q-tab-panel name="details">
-        <table class="bouns_table">
+        <div class="table-wrapper">
+          <table>
           <thead>
             <tr>
               <th class="dy-vip-th">等级</th>
@@ -266,188 +219,209 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
-        <table class="privilege_table">
-          <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">每月优惠</th>
-              <th class="dy-vip-th">优惠流水要求</th>
-              <!--            <th class="dy-vip-th">平台限制</th>-->
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>VIP1</td>
-              <td>每月单笔≥500元,返现15%, 最高188元</td>
-              <td>无</td>
-              <!--            <td>无</td>-->
-            </tr>
-            <tr>
-              <td>VIP2</td>
-              <td>每月单笔≥500元,返现15%, 最高258元</td>
-              <td>15倍</td>
-              <!--            <td>电竞/体育</td>-->
-            </tr>
-            <tr>
-              <td>VIP3</td>
-              <td>每月单笔≥500元,返现15%, 最高288元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP4</td>
-              <td>每月单笔≥1000元,返现25%, 最高388元</td>
-              <td>15倍</td>
-              <!--            <td>电竞/体育</td>-->
-            </tr>
-            <tr>
-              <td>VIP5</td>
-              <td>每月单笔≥1000元,返现25%, 最高588元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP6</td>
-              <td>每月单笔≥1000元,返现25%, 最高688元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP7</td>
-              <td>每月单笔≥2000元,返现35%, 最高888元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP8</td>
-              <td>每月单笔≥2000元,返现35%, 最高1288元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP9</td>
-              <td>每月单笔≥2000元,返现35%, 最高1888元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP10</td>
-              <td>每月单笔≥2000元,返现40%, 最高2888元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-          </tbody>
-        </table>
 
-        <table class="percent_table">
-          <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">VIP0</th>
-              <th class="dy-vip-th">VIP1</th>
-              <th class="dy-vip-th">VIP2</th>
-              <th class="dy-vip-th">VIP3</th>
-              <th class="dy-vip-th">VIP4</th>
-              <th class="dy-vip-th">VIP5</th>
-              <th class="dy-vip-th">VIP6</th>
-              <th class="dy-vip-th">VIP7</th>
-              <th class="dy-vip-th">VIP8</th>
-              <th class="dy-vip-th">VIP9</th>
-              <th class="dy-vip-th">VIP10</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>体育返水</td>
-              <td>0.40%</td>
-              <td>0.40%</td>
-              <td>0.40%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.8%</td>
-              <td>1%</td>
-            </tr>
-            <tr>
-              <td>电竞返水</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.75%</td>
-              <td>0.80%</td>
-              <td>1%</td>
-            </tr>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th class="dy-vip-th">等级</th>
+                <th class="dy-vip-th">每月优惠</th>
+                <th class="dy-vip-th">优惠流水要求</th>
+                <!--            <th class="dy-vip-th">平台限制</th>-->
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VIP1</td>
+                <td>每月单笔≥500元,返现15%, 最高188元</td>
+                <td>无</td>
+                <!--            <td>无</td>-->
+              </tr>
+              <tr>
+                <td>VIP2</td>
+                <td>每月单笔≥500元,返现15%, 最高258元</td>
+                <td>15倍</td>
+                <!--            <td>电竞/体育</td>-->
+              </tr>
+              <tr>
+                <td>VIP3</td>
+                <td>每月单笔≥500元,返现15%, 最高288元</td>
+                <td>15倍</td>
+                <!--            <td>所有（彩票除外）</td>-->
+              </tr>
+              <tr>
+                <td>VIP4</td>
+                <td>每月单笔≥1000元,返现25%, 最高388元</td>
+                <td>15倍</td>
+                <!--            <td>电竞/体育</td>-->
+              </tr>
+              <tr>
+                <td>VIP5</td>
+                <td>每月单笔≥1000元,返现25%, 最高588元</td>
+                <td>15倍</td>
+                <!--            <td>所有（彩票除外）</td>-->
+              </tr>
+              <tr>
+                <td>VIP6</td>
+                <td>每月单笔≥1000元,返现25%, 最高688元</td>
+                <td>15倍</td>
+                <!--            <td>所有（彩票除外）</td>-->
+              </tr>
+              <tr>
+                <td>VIP7</td>
+                <td>每月单笔≥2000元,返现35%, 最高888元</td>
+                <td>15倍</td>
+                <!--            <td>所有（彩票除外）</td>-->
+              </tr>
+              <tr>
+                <td>VIP8</td>
+                <td>每月单笔≥2000元,返现35%, 最高1288元</td>
+                <td>15倍</td>
+                <!--            <td>所有（彩票除外）</td>-->
+              </tr>
+              <tr>
+                <td>VIP9</td>
+                <td>每月单笔≥2000元,返现35%, 最高1888元</td>
+                <td>15倍</td>
+                <!--            <td>所有（彩票除外）</td>-->
+              </tr>
+              <tr>
+                <td>VIP10</td>
+                <td>每月单笔≥2000元,返现40%, 最高2888元</td>
+                <td>15倍</td>
+                <!--            <td>所有（彩票除外）</td>-->
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-            <tr>
-              <td>真人返水</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.80%</td>
-              <td>0.90%</td>
-              <td>1%</td>
-            </tr>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th class="dy-vip-th">等级</th>
+                <th class="dy-vip-th">体育返水</th>
+                <th class="dy-vip-th">电竞返水</th>
+                <th class="dy-vip-th">真人返水</th>
+                <th class="dy-vip-th">棋牌返水</th>
+                <th class="dy-vip-th">电子返水</th>
+                <th class="dy-vip-th">返水上限</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VIP0</td>
+                <td>0.40%</td>
+                <td>0.45%</td>
+                <td>0.50%</td>
+                <td>0.40%</td>
+                <td>0.45%</td>
+                <td>8888元</td>
+              </tr>
+              <tr>
+                <td>VIP1</td>
+                <td>0.40%</td>
+                <td>0.45%</td>
+                <td>0.50%</td>
+                <td>0.45%</td>
+                <td>0.45%</td>
+                <td>12888元</td>
+              </tr>
 
-            <tr>
-              <td>棋牌返水</td>
-              <td>0.40%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.75%</td>
-              <td>0.80%</td>
-              <td>0.90%</td>
-              <td>1%</td>
-            </tr>
+              <tr>
+                <td>VIP2</td>
+                <td>0.40%</td>
+                <td>0.50%</td>
+                <td>0.50%</td>
+                <td>0.50%</td>
+                <td>0.50%</td>
+                <td>15888元</td>
+              </tr>
 
-            <tr>
-              <td>电子返水</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.80%</td>
-              <td>0.90%</td>
-              <td>1%</td>
-              <td>1.2%</td>
-            </tr>
+              <tr>
+                <td>VIP3</td>
+                <td>0.45%</td>
+                <td>0.50%</td>
+                <td>0.50%</td>
+                <td>0.50%</td>
+                <td>0.55%</td>
+                <td>16888元</td>
+              </tr>
 
-            <tr>
-              <td>返水上限</td>
-              <td>8888元</td>
-              <td>12888元</td>
-              <td>15888元</td>
-              <td>16888元</td>
-              <td>18888元</td>
-              <td>28888元</td>
-              <td>38888元</td>
-              <td>58888元</td>
-              <td>88888元</td>
-              <td>128888元</td>
-              <td>188888元</td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <td>VIP4</td>
+                <td>0.50%</td>
+                <td>0.55%</td>
+                <td>0.55%</td>
+                <td>0.60%</td>
+                <td>0.60%</td>
+                <td>18888元</td>
+              </tr>
+
+              <tr>
+                <td>VIP5</td>
+                <td>0.55%</td>
+                <td>0.60%</td>
+                <td>0.60%</td>
+                <td>0.65%</td>
+                <td>0.65%</td>
+                <td>28888元</td>
+              </tr>
+
+              <tr>
+                <td>VIP6</td>
+                <td>0.60%</td>
+                <td>0.65%</td>
+                <td>0.65%</td>
+                <td>0.70%</td>
+                <td>0.70%</td>
+                <td>38888元</td>
+              </tr>
+
+              <tr>
+                <td>VIP7</td>
+                <td>0.65%</td>
+                <td>0.70%</td>
+                <td>0.70%</td>
+                <td>0.75%</td>
+                <td>0.80%</td>
+                <td>58888元</td>
+              </tr>
+
+              <tr>
+                <td>VIP8</td>
+                <td>0.70%</td>
+                <td>0.75%</td>
+                <td>0.80%</td>
+                <td>0.80%</td>
+                <td>0.90%</td>
+                <td>88888元</td>
+              </tr>
+
+              <tr>
+                <td>VIP9</td>
+                <td>0.80%</td>
+                <td>0.80%</td>
+                <td>0.90%</td>
+                <td>0.90%</td>
+                <td>1%</td>
+                <td>128888元</td>
+              </tr>
+
+              <tr>
+                <td>VIP10</td>
+                <td>1%</td>
+                <td>1%</td>
+                <td>1%</td>
+                <td>1%</td>
+                <td>1.2%</td>
+                <td>188888元</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <!-- <div class="terms-conditions">
        <div class="terms">
@@ -511,7 +485,7 @@
 <script>
 import { ref, defineComponent, onMounted } from "vue";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import Swal from "sweetalert2";
@@ -1255,6 +1229,7 @@ program at any time without prior notice.`
 <style scoped lang="scss">
 .vip-container {
   min-height: 100%;
+  font-family: PingFang SC;
 
   .banner-container {
     background-size: cover;
@@ -1357,126 +1332,6 @@ program at any time without prior notice.`
     // }
   }
 
-  .inner-vip-mobile {
-    display: none;
-  }
-
-  .vipitem {
-    position: relative;
-    display: flex;
-    // background: url("../../assets/vip/vip_04.png") no-repeat top center;
-    background-size: contain;
-    width: 320px;
-    padding: 40px 0;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-
-    .viplevelcard {
-      // padding: 10px;
-      width: 70%;
-      height: 150px;
-      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center
-        center;
-      background-size: contain;
-      position: relative;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      padding: 35px 10px 10px 35px;
-
-      .vip-badgelevel {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .vip-badge {
-          flex: 1;
-          position: absolute;
-          // width: 2.66rem;
-          top: -10px;
-          left: -50px;
-
-          img {
-            width: 100%;
-          }
-        }
-
-        .vip-text {
-          flex: 2;
-
-          img {
-            width: 100%;
-            max-width: 73px;
-          }
-        }
-      }
-
-      .vip-badgecontent {
-        margin-top: 1px;
-        font-size: 11px;
-        color: #33bcd4;
-
-        span {
-          display: block;
-          line-height: 200%;
-        }
-
-        // position: absolute;
-        // right: 20px;
-        // bottom: 20px;
-      }
-    }
-
-    .vipcontents {
-      padding-top: 60px;
-      // background: #2b2b4b;
-      color: #ffffff;
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      // border-top: 2px solid #db7e42;
-      // border-bottom: 2px solid #db7e42;
-      .title {
-        font-size: 21px;
-        line-height: 36px;
-      }
-
-      .inner-vip {
-        background-color: #303450;
-        width: 100%;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-evenly;
-        font-size: 45px;
-        line-height: 53px;
-        font-family: "Arial";
-      }
-
-      .second-vip {
-        // background: #2b2b4b;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        font-size: 45px;
-        line-height: 53px;
-
-        div {
-          flex: 1;
-        }
-
-        .common-btn {
-          padding: 5px 10px;
-          font-size: 12px;
-          line-height: 20px;
-          margin: 0 30px 30px;
-        }
-      }
-    }
-  }
-
   .vip-benefits {
     padding: 10px;
     font-size: 0.75rem;
@@ -1494,16 +1349,6 @@ program at any time without prior notice.`
       > img {
         width: 180px;
       }
-
-      // &:before {
-      //   content: "";
-      //   width: 10px;
-      //   height: 19px;
-      //   display: inline-block;
-      //   background-image: url(../../assets/vip/privilege.png);
-      //   background-position: center center;
-      //   background-size: 100%;
-      // }
     }
 
     .bft-row {
@@ -1573,9 +1418,6 @@ program at any time without prior notice.`
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        // width: calc(33.33% - 10px);
-        // background: linear-gradient(180deg, #384E79 0%, #212E4B 100%);
-        // border-radius: 6px;
         background: url(../../assets/vip/vip_disc_item_bg.png) center center no-repeat;
         background-size: contain;
         padding: 4px;
@@ -1651,60 +1493,65 @@ program at any time without prior notice.`
     padding: 16px;
   }
 
-  table {
-    text-align: center;
-    font-size: 10px;
-    color: #000;
-    border-collapse: collapse;
-    width: 100%;
+  .table-wrapper {
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00BFD7 75.68%);
+    padding: 1px;
     margin-bottom: 10px;
 
-    // border-collapse: separate;      /* Prevents borders from collapsing */
-    // border-spacing: 0;              /* Removes spacing between cells */
-    // border-radius: 10px;            /* Rounds the table corners */
+    table {
+      text-align: center;
+      font-size: 10px;
+      color: #000;
+      width: 100%;
 
-    // /* Gradient border setup */
-    // border: 1px solid transparent;   /* Required for border-image to work */
-    // border-image-source: linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00BFD7 75.68%);
-    // border-image-slice: 1;           /* Ensure the entire border uses the gradient */
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border-radius: 10px;
 
+      thead {
+        background-color: #445F95;
 
-    thead {
-      background-color: #445F95;
+        th {
+          color: #ffffff;
+          padding: 12px 4px;
+          font-size: 12px;
+          max-width: 10px;
+          overflow-wrap: anywhere;
+          font-weight: 400;
+        }
+      }
 
-      th {
-        color: #ffffff;
-        padding: 4px;
-        font-size: 12px;
-        max-width: 10px;
-        overflow-wrap: anywhere;
+      tbody {
+        background: linear-gradient(180deg, #384E79 0%, #212E4B 100%);
+        td {
+          // border: 0.35px solid #3B5385;
+          // border-radius: 10px;
+          color: #FFFFFF99;
+          padding: 10px 4px;
+          font-size: 12px;
+          // background: #fff;
+        }
       }
     }
 
-    tbody {
-      background: linear-gradient(180deg, #384E79 0%, #212E4B 100%);
-      td {
-        border: 0.35px solid #3B5385;
-        // border-radius: 10px;
-        color: #FFFFFF99;
-        padding: 4px;
-        font-size: 12px;
-        // background: #fff;
-      }
+    th, td {
+      padding: 12px;
     }
-  }
 
-  th:first-of-type {
-  border-top-left-radius: 10px;
-  }
-  th:last-of-type {
-    border-top-right-radius: 10px;
-  }
-  tr:last-of-type td:first-of-type {
-    border-bottom-left-radius: 10px;
-  }
-  tr:last-of-type td:last-of-type {
-    border-bottom-right-radius: 10px;
+    th:first-of-type {
+      border-top-left-radius: 10px;
+    }
+    th:last-of-type {
+      border-top-right-radius: 10px;
+    }
+    tr:last-of-type td:first-of-type {
+      border-bottom-left-radius: 10px;
+    }
+    tr:last-of-type td:last-of-type {
+      border-bottom-right-radius: 10px;
+    }
   }
 
   .terms-conditions {
@@ -1744,96 +1591,6 @@ program at any time without prior notice.`
       display: block;
       margin: 16px 0;
     }
-  }
-}
-</style>
-<!-- Carousel CSS only -->
-<style lang="scss">
-.vip-container {
-  font-family: PingFang SC;
-}
-
-.q-carousel {
-  overflow: hidden;
-  margin: 0 auto;
-  text-align: center;
-
-  ol {
-    padding: 0;
-    margin: 0 auto;
-    width: 100%;
-    list-style-type: none;
-    display: flex;
-  }
-}
-
-.carousel__item {
-  background: url(../../assets/vip/vipbg.png) no-repeat top center;
-  background-size: cover;
-  font-size: 20px;
-}
-
-.q-carousel__slide {
-  padding: 0;
-  width: 100%;
-}
-
-button {
-  border: 0;
-}
-
-.q-carousel__arrow {
-  background: url(../../assets/vip/nextprev.png) no-repeat center center;
-  background-size: contain;
-  width: 30px;
-
-  .q-icon {
-    display: none;
-  }
-}
-
-.q-carousel__prev,
-.q-carousel__next {
-  position: absolute;
-  padding: 10px;
-
-  box-sizing: content-box;
-  background: url(../../assets/vip/nextprev.png) no-repeat center center;
-  background-size: contain;
-  top: 20%;
-
-  .carousel__icon {
-    display: none;
-  }
-}
-
-.carousel__prev {
-  top: 20%;
-  left: 0%;
-}
-
-.q-carousel__next-arrow--horizontal {
-  transform: rotate(180deg);
-  right: 10px;
-}
-
-h2#swal2-title.swal2-title {
-  font-size: 14px;
-}
-
-#swal2-html-container.swal2-html-container {
-  font-size: 14px;
-}
-
-.swal2-confirm.swal2-styled {
-  font-size: 14px;
-  background-color: #5b80e8;
-}
-
-@media (max-width: 450px) {
-  .percent_table {
-    width: 600px;
-    overflow-x: scroll;
   }
 }
 
