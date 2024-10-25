@@ -13,7 +13,11 @@
         <img src="@/assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
         <span>继续提款需完成以下条件</span>
       </div>
-      <span class="withdraw-remaining-dialog__header-help-text">若有疑问，请联系在线客服核查~</span>
+      <span class="withdraw-remaining-dialog__header-help-text">
+        若有疑问，请联系在线客服核查~
+        <br />
+        *转账平台数据会延迟10分钟，若流水没更新请您稍后重试！
+      </span>
     </div>
     <img class="withdraw-remaining-dialog__pic" src="@/assets/images/finance/withdraw/withdraw-remaining-pic.png" />
     <div class="withdraw-remaining-dialog__body">
@@ -21,13 +25,15 @@
         完成
         <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
         流水，立即享受快速提款
-        <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
       </div>
       <table class="withdraw-remaining-dialog__body-table">
         <thead>
           <tr>
             <th align="center">投注要求</th>
-            <th align="center">流水进度</th>
+            <th align="center">
+              流水进度
+              <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
+            </th>
             <th align="center">完成状态</th>
           </tr>
         </thead>
@@ -284,6 +290,7 @@ onMounted(() => {
   }
 
   .refresh-btn {
+    margin-bottom: 0px;
     cursor: pointer;
 
     &:hover {
