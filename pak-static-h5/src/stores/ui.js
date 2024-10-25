@@ -27,7 +27,8 @@ export const useUI = defineStore("ui-store", {
       maintenanceEndTime: "",
       isPageInitialized: false,
       firstScreenLoading: !!sessionStorage.getItem("FIRST_SCREEN_CACHE") || true,
-      deferredPrompt: null
+      deferredPrompt: null,
+      notificationData: null
     };
   },
   actions: {

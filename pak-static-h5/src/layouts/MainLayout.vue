@@ -83,6 +83,8 @@
     </q-page-container>
 
     <FooterSection />
+
+    <PushNotification :push-notification-data="ui.notificationData" />
   </q-layout>
 
   <div class="first-screen-loading" v-show="ui.firstScreenLoading" />
@@ -100,11 +102,13 @@ import { translateRecord } from "src/directives/translate";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import PushNotification from "src/components/modal/PushNotification.vue";
 
 export default defineComponent({
   name: "MainLayout",
   components: {
-    FooterSection
+    FooterSection,
+    PushNotification
   },
   setup() {
     const { t } = useI18n();
