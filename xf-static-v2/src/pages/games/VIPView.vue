@@ -79,17 +79,16 @@
                   <img src="../../assets/vip/birthday_icon.png" />
                   <span>生日礼金</span>
                 </div>
-                <div class="txt">{{ vipCardData.birthdayBonus }}</div>
+                <div v-if="vipCardData.birthdayBonus === '无'" class="txt">{{ vipCardData.birthdayBonus }}</div>
+                <div v-else class="btn-container">
+                  <q-btn
+                    color="brightbtn"
+                    label="领取"
+                    :disable="btnIsDisabled"
+                    @click="onVIPButtonClick('birthday')"
+                  />
+                </div>
               </div>
-              <template v-if="vipCardData.birthdayBonus !== '无'">
-                <!-- <q-btn
-                  class="btn"
-                  color="brightbtn"
-                  label="领取"
-                  :disable="btnIsDisabled"
-                  @click="onVIPButtonClick('birthday')"
-                /> -->
-              </template>
             </div>
             <div class="bft-row-cnt">
               <div class="left">
@@ -1184,7 +1183,7 @@ program at any time without prior notice.`
           flex-direction: column;
           height: 100%;
           // padding-bottom: 10px;
-          // width: 100%;
+          width: 100%;
           color: #fff;
 
           .icon-description {
@@ -1206,9 +1205,18 @@ program at any time without prior notice.`
             display: flex;
             align-items: center;
           }
-        }
+          .btn-container {
+            flex: 3;
+            padding: 0;
+            width: calc(100% - 40px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        .btn {
+            button {
+              width: 100%;
+            }
+          }
         }
       }
     }
