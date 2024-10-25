@@ -28,7 +28,7 @@
         <q-card-section class="acct-section">
           <div class="left-sect">
             <div class="label">
-              <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.png" />
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.png" style="display:none;" />
               <img v-else src="../assets/images/account/account-wallet-icon.png" />
               <span>中心钱包</span>
               <div class="refresh-btn" @click="getBalance">
@@ -47,7 +47,7 @@
             <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" />
           </div>
         </q-card-section>
-        <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385" />
+        <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385;    margin: 5px 0 15px 0;" />
         <q-card-section class="acct-btm-section">
           <div class="vip-level-detail">
             <div class="vip-link">{{ store.vip }}</div>
@@ -1565,6 +1565,22 @@ export default defineComponent({
     }
   }
 
+  .acct-section {
+    .left-sect {
+      .label {
+        color: #fff;
+        font-family: 'PingFang';
+      }
+
+      .amt {
+        margin-left: 0;
+        margin-top: 5px;
+        letter-spacing: 2px;
+        font-size: 1.5rem;
+      }
+    }
+  }
+
   .acct-logout {
     @include content-block-dark;
     background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
@@ -1580,6 +1596,8 @@ export default defineComponent({
 
   .vipcard {
     background: none;
+    border-radius: 4px;
+    overflow: hidden;
 
     .top-section {
       background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);

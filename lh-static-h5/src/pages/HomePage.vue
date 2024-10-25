@@ -2608,6 +2608,11 @@ export default defineComponent({
 }
 
 .body--dark {
+  .home-header {
+    background-color: #212B43;
+    padding: 4px 1rem;
+    width: 100%;
+  }
   .download-top-container {
     background: $background-dark-light;
     .download-top-box {
@@ -2644,6 +2649,7 @@ export default defineComponent({
   .home-game-section {
     .game-left-list {
       gap: 10px;
+      flex: 1.5;
     }
     .game-right-platform {
       .platform-block {

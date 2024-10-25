@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="hot-match-items">
-        <div class="hot-match-item" v-for="hotMatch in hotMatchesByType" :key="hotMatch.id">
+        <div :class="selectedCompetitionType" class="hot-match-item" v-for="hotMatch in hotMatchesByType" :key="hotMatch.id">
         <div class="hot-match-info">
             <div class="hot-match-name">
             {{ hotMatch.competitionName }}
@@ -118,6 +118,23 @@ onMounted(() => {
       aspect-ratio: 351 / 139;
       width: 100%;
       height: 150px;
+
+      &.ESport {
+        background: url("../assets/images/hotmatch/hotmatch-item-bg-dark-esport.png") no-repeat center center;
+        background-size: 100% 100%;
+      }
+
+      &.Basketball {
+        background: url("../assets/images/hotmatch/hotmatch-item-bg-dark-basketball.png") no-repeat center center;
+        background-size: 100% 100%;
+      }
+
+      &.Football {
+        background: url("../assets/images/hotmatch/hotmatch-item-bg-dark-soccer.png") no-repeat center center;
+        background-size: 100% 100%;
+      }
+
+      
 
       .hot-match-info {
         height: 100%;
