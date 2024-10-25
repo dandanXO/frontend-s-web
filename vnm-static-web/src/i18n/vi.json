@@ -333,7 +333,7 @@
     "dialog": {
       "title": "Để tiếp tục rút tiền, vui lòng hoàn thành các điều kiện sau",
       "helpText": "Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ với dịch vụ khách hàng trực tuyến để kiểm tra~",
-      "helpText2": "Dữ liệu nền tảng chuyển khoản sẽ bị chậm 10 phút. Nếu giao dịch chưa được cập nhật, vui lòng thử lại sau!",
+      "helpText2": "Nếu có sự chậm trễ trong việc xử lý giao dịch trên nền tảng, vui lòng thử lại sau 10 phút!",
       "complete": "Hoàn thành",
       "enjoy": "doanh thu, và tận hưởng việc rút tiền nhanh chóng",
       "betRequirement": "Yêu cầu cược",

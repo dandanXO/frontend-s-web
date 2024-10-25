@@ -9,7 +9,7 @@
         <span class="withdraw-remaining-dialog__header-help-text">
           若有疑问，请联系在线客服核查~
           <br />
-          *转账平台数据会延迟10分钟，若流水没更新请您稍后重试！
+          *若平台结算流水有延迟，请您10分钟后重试！
         </span>
       </div>
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
