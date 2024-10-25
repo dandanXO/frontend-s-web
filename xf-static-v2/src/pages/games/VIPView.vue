@@ -292,7 +292,7 @@ export default defineComponent({
     watch(tab, () => {
       nextTick(() => {
         if (tab.value === "special") {
-          observeVipCardScroll();
+          initVipCardScroll();
         }
       });
     });
@@ -931,29 +931,27 @@ program at any time without prior notice.`
       vipLevel.value = store.vip.replace("VIP", "");
       if (vipLevel.value >= 1) {
         scrollVipCardIndex.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
-
-        setTimeout(() => {
-          const itemElements = scrollContainer.value.querySelectorAll(".card");
-          if (itemElements[scrollVipCardIndex.value]) {
-            itemElements[scrollVipCardIndex.value].scrollIntoView({
-              behavior: "smooth",
-              block: "nearest",
-              inline: "start"
-            });
-          }
-
-          observeVipCardScroll();
-        }, 100);
+        initVipCardScroll();
       }
     });
 
-    const observeVipCardScroll = () => {
-      observer.disconnect();
+    const initVipCardScroll = () => {
+      setTimeout(() => {
+        const itemElements = scrollContainer.value.querySelectorAll(".card");
+        if (itemElements[scrollVipCardIndex.value]) {
+          itemElements[scrollVipCardIndex.value].scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start"
+          });
+        }
 
-      const itemElements = scrollContainer.value.querySelectorAll(".card");
-      itemElements.forEach((item) => {
-        observer.observe(item);
-      });
+        // reset observe
+        observer.disconnect();
+        itemElements.forEach((item) => {
+          observer.observe(item);
+        });
+      }, 100);
     };
 
     const claimRebate = (type, vipType) => {
