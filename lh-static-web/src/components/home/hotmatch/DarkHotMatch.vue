@@ -149,7 +149,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
     height: 100%;
 
     .hot-match-item {
