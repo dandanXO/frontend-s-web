@@ -1,49 +1,53 @@
 <template>
-<q-dialog v-model="isShow" class="withdraw-remaining-dialog" persistent>
-  <div class="withdraw-remaining-dialog-inner">
-    <div class="withdraw-remaining-dialog__header">
-      <div class="withdraw-remaining-dialog__header-title">
-        <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-        <span style="width: 40%">{{ $t('lang.dialog_title') }}</span>
+  <q-dialog v-model="isShow" class="withdraw-remaining-dialog" persistent>
+    <div class="withdraw-remaining-dialog-inner">
+      <div class="withdraw-remaining-dialog__header">
+        <div class="withdraw-remaining-dialog__header-title">
+          <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
+          <span style="width: 40%">{{ $t("lang.dialog_title") }}</span>
+        </div>
+        <span class="withdraw-remaining-dialog__header-help-text">
+          {{ $t("lang.dialog_help_text") }}
+          <br />
+          {{ $t("lang.dialog_help_text2") }}
+        </span>
       </div>
-      <span class="withdraw-remaining-dialog__header-help-text">
-        {{ $t('lang.dialog_help_text') }}
-      </span>
-    </div>
-    <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
+      <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
 
-    <div class="withdraw-remaining-dialog__body">
-      <div class="withdraw-remaining-dialog__body-title">
-        {{ $t('lang.dialog_complete') }}
-        <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
-        {{ $t('lang.dialog_enjoy') }}
-        <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
+      <div class="withdraw-remaining-dialog__body">
+        <div class="withdraw-remaining-dialog__body-title">
+          {{ $t("lang.dialog_complete") }}
+          <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
+          {{ $t("lang.dialog_enjoy") }}
+        </div>
+        <table class="withdraw-remaining-dialog__body-table">
+          <thead>
+            <tr>
+              <th align="center">{{ $t("lang.dialog_bet_requirement") }}</th>
+              <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
+                {{ $t("lang.dialog_turnover_progress") }}
+                <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
+              </th>
+              <th align="center">{{ $t("lang.dialog_status") }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(record, index) in tableData" :key="index">
+              <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
+              <td align="center">
+                {{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}
+              </td>
+              <td align="center">
+                <router-link class="action-button" to="/home">{{ $t("lang.dialog_go_complete") }}</router-link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("lang.dialog_back") }}</button>
       </div>
-      <table class="withdraw-remaining-dialog__body-table">
-        <thead>
-          <tr>
-            <th align="center">{{ $t('lang.dialog_bet_requirement') }}</th>
-            <th align="center">{{ $t('lang.dialog_turnover_progress') }}</th>
-            <th align="center">{{ $t('lang.dialog_status') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(record, index) in tableData" :key="index">
-            <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
-            <td align="center">
-              {{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}
-            </td>
-            <td align="center">
-              <router-link class="action-button" to="/home">{{ $t('lang.dialog_go_complete') }}</router-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t('lang.dialog_back') }}</button>
     </div>
-  </div>
-</q-dialog>
+  </q-dialog>
 </template>
 <script setup>
 import { api } from "src/boot/axios";
@@ -186,7 +190,9 @@ onMounted(() => {
     .withdraw-remaining-dialog__body {
       background-color: #fff;
       padding: 16px 12px 18px;
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
+      box-shadow:
+        0px -8px 8px 0px #c3d4e6 inset,
+        0px 4px 0px 0px #a7c2dd;
 
       .withdraw-remaining-dialog__body-title {
         margin-bottom: 12px;
@@ -251,7 +257,9 @@ onMounted(() => {
             .action-button {
               background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%, #3981ff 100%);
               border-radius: 30px;
-              box-shadow: 0px -2px 4.58px 0px #93c7ff inset, 0px -1px 3.66px 0px #275ec1 inset;
+              box-shadow:
+                0px -2px 4.58px 0px #93c7ff inset,
+                0px -1px 3.66px 0px #275ec1 inset;
               padding: 4px 13px;
               font-size: var(--font-size);
               font-weight: 400;
@@ -270,7 +278,9 @@ onMounted(() => {
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
-      box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
+      box-shadow:
+        0px -2px 4.58px 0px #b1d7ff inset,
+        0px -1px 3.66px 0px #5894ff inset;
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       border-radius: 4px;
       padding: 10px 0;

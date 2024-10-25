@@ -322,6 +322,7 @@
     "deposit_allowpopups": "Unable to open the recharge page. Please check whether the browser blocks pop-up pages and change it to \"Allow pop-ups\" before proceeding with the recharge operation.",
     "dialog_title": "To continue withdrawal, please complete the following conditions",
     "dialog_help_text": "If you have any questions, please contact online customer service for verification~",
+    "dialog_help_text2": "The transfer platform data will be delayed by 10 minutes. If the transaction record is not updated, please try again later!",
     "dialog_complete": "Complete",
     "dialog_enjoy": "turnover, and enjoy fast withdrawals",
     "dialog_bet_requirement": "Bet Requirement",

@@ -2,7 +2,7 @@
   <el-dialog
     :model-value="modelValue"
     align-center
-    width="530"
+    width="650"
     class="withdraw-remaining-dialog"
     :show-close="false"
     :close-on-press-escape="false"
@@ -11,24 +11,30 @@
     <div class="withdraw-remaining-dialog__header">
       <div class="withdraw-remaining-dialog__header-title">
         <img src="@/assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-        <span style="width: 40%">{{ $t('withdraw.dialog.title') }}</span>
+        <span style="width: 40%">{{ $t("withdraw.dialog.title") }}</span>
       </div>
-      <span class="withdraw-remaining-dialog__header-help-text">{{ $t('withdraw.dialog.helpText') }}</span>
+      <span class="withdraw-remaining-dialog__header-help-text">
+        {{ $t("withdraw.dialog.helpText") }}
+        <br />
+        {{ $t("withdraw.dialog.helpText2") }}
+      </span>
     </div>
     <img class="withdraw-remaining-dialog__pic" src="@/assets/images/finance/withdraw/withdraw-remaining-pic.png" />
     <div class="withdraw-remaining-dialog__body">
       <div class="withdraw-remaining-dialog__body-title">
-        {{ $t('withdraw.dialog.complete') }}
+        {{ $t("withdraw.dialog.complete") }}
         <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
-        {{ $t('withdraw.dialog.enjoy') }}
-        <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
+        {{ $t("withdraw.dialog.enjoy") }}
       </div>
       <table class="withdraw-remaining-dialog__body-table">
         <thead>
           <tr>
-            <th align="center">{{ $t('withdraw.dialog.betRequirement') }}</th>
-            <th align="center">{{ $t('withdraw.dialog.turnoverProgress') }}</th>
-            <th align="center">{{ $t('withdraw.dialog.status') }}</th>
+            <th align="center">{{ $t("withdraw.dialog.betRequirement") }}</th>
+            <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
+              {{ $t("withdraw.dialog.turnoverProgress") }}
+              <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
+            </th>
+            <th align="center">{{ $t("withdraw.dialog.status") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -36,12 +42,12 @@
             <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
             <td align="center">{{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}</td>
             <td align="center">
-              <router-link class="action-button" to="/home">{{ $t('withdraw.dialog.goComplete') }}</router-link>
+              <router-link class="action-button" to="/home">{{ $t("withdraw.dialog.goComplete") }}</router-link>
             </td>
           </tr>
         </tbody>
       </table>
-      <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t('withdraw.dialog.back') }}</button>
+      <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("withdraw.dialog.back") }}</button>
     </div>
   </el-dialog>
 </template>
@@ -173,7 +179,7 @@ onMounted(() => {
     .withdraw-remaining-dialog__pic {
       position: absolute;
       right: 58px;
-      top: -30px;
+      top: -36px;
       width: 147px;
     }
 
@@ -281,7 +287,7 @@ onMounted(() => {
   }
 
   .refresh-btn {
-    margin-bottom: 4px;
+    margin-bottom: 0px;
     cursor: pointer;
 
     &:hover {

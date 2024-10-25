@@ -334,6 +334,7 @@
     "dialog": {
       "title": "To continue withdrawal, please complete the following conditions",
       "helpText": "If you have any questions, please contact online customer service for verification~",
+      "helpText2": "The transfer platform data will be delayed by 10 minutes. If the transaction record is not updated, please try again later!",
       "complete": "Complete",
       "enjoy": "turnover, and enjoy fast withdrawals",
       "betRequirement": "Bet Requirement",
