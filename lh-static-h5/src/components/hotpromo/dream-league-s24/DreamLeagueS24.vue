@@ -67,7 +67,7 @@
         <div class="little-title" style="flex-direction: column; align-items: start">
           <div class="left">活动内容</div>
           <div class="right">
-            在梦幻联赛S24赛事期间当天累计有效投注≥1，000元并存款≥200元在次日即可获得对应档位的奖金,最高可获888元
+            在梦幻联赛S24赛事期间当天累计有效投注≥1,000元并存款≥200元在次日即可获得对应档位的奖金,最高可获888元
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
