@@ -245,8 +245,11 @@ $node-color: #4873f1;
 
     img {
       // max-width: 50px;
-      max-width: 73px;
+      // max-width: 73px;
+      // margin-bottom: 10px;
+      max-width: 50px;
       margin-bottom: 10px;
+      margin-top: 2px;
     }
   }
 }

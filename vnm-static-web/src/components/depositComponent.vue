@@ -69,7 +69,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <div class="account-tip">
+            <div class="account-tip" style="margin-top: -15px;">
               {{ $t("deposit.minAmt") }}: {{ calculatedMinDeposit ? calculatedMinDeposit.toLocaleString() : 0 }}
               {{ isUSDT ? "USDT" : store.currency.label }}
               <br />
@@ -91,6 +91,17 @@
           >
             <span style="color: #17cd27">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
           </el-form-item>
+          
+          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" :label="$t('deposit.estimatedRate')">
+            <span style="color: #17cd27">
+              {{
+                calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                  ? "0.00"
+                  : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+              }}
+              {{ store.currency.label }}
+            </span>
+          </el-form-item>
           <el-space v-show="selectedPayType && bankCardList.length">
             <el-form-item :label="$t('deposit.bank')" prop="bankId" name="bankId" value="bankName">
               <template #label></template>
@@ -102,7 +113,7 @@
                 @selected="selectedBank"
               ></BankComponent>
             </el-form-item>
-            <div class="account-tip">
+            <div class="account-tip" style="margin-top: -15px;">
               {{ $t("deposit.napas") }}
             </div>
             <div class="btn-confirm">
@@ -835,7 +846,8 @@ onMounted(() => {
   }
   :deep(.el-form-item) {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
+    align-items:center;
   }
   :deep(.el-form-item__label) {
     // font-family: Poppins;
