@@ -80,6 +80,9 @@
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual'" />
 
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'dy2-blast-premier-treasure'" :promo-code="list.promoCode" />
+    <DreamLeagueS24 v-if="list.redirectUrl === 'dy2-dreamleague-s24'" :promo-code="list.promoCode" />
+    
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
@@ -185,6 +188,11 @@ const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
+const BlastPremierGlobalPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/BlastPremierGlobalPromo/BlastPremierGlobalPromo.vue")
+);
+const DreamLeagueS24 = defineAsyncComponent(() => import("./hotpromo/dream-league-s24/DreamLeagueS24.vue"));
+
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
 const MeiZhouBeiPromoPage = defineAsyncComponent(() =>
   import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
@@ -223,6 +231,8 @@ export default defineComponent({
     LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
+    BlastPremierGlobalPromo,
+    DreamLeagueS24,
     fishHongbao,
     OlympicFund,
     Olympic24Match,
