@@ -370,3 +370,16 @@ export function claimElisaGiftBonus() {
   // const randNum = Math.floor(Math.random() * 1000) + 1;
   // return eventapi.post(`/session/elisa-gift/claimBonus?v=${randNum}`);
 }
+
+export function getCompetitionBetDepositInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-deposit/init?v=${randNum}`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBetDepositBonus(promoCode) {
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus`, qs.stringify({ promoCode }));
+}

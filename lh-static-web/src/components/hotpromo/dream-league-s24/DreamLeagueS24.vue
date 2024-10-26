@@ -45,7 +45,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年10月27日至2024年11月10日</div>
+          <div class="right">2024年10月28日至2024年11月10日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
