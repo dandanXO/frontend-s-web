@@ -111,7 +111,7 @@
             </el-col>
           </el-row>
           
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
+          <el-button style="margin-top: -30px;" :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
             {{ $t("common.confirm") }}
           </el-button>
         </el-space>
@@ -150,7 +150,7 @@
           class="helptxt"
           :label="$t('deposit.realTimeExchangeRate')"
         >
-          <span style="color: #17cd27">
+          <span style="color: #17cd27; margin-top: -5px;">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
           </span>
         </el-form-item>
@@ -205,7 +205,7 @@
           class="helptxt"
           :label="$t('withdraw.expectedAmount')"
         >
-          <span style="color: #17cd27">
+          <span style="color: #17cd27; margin-top: -5px;">
             {{
               selectedWithdrawalMethod &&
               (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
@@ -303,7 +303,7 @@ export default defineComponent({
       //   recommended: false
       // }
     ]);
-    const amounts = reactive([50, 100, 200, 500, 1000, 5000, 10000, 50000, 1000000]);
+    const amounts = reactive([50, 100, 200, 500, 1000, 5000, 10000, 20000, 50000, 1000000]);
     onMounted(() => {
       getWithdrawalMethods();
     });
@@ -575,8 +575,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .values {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   text-align: center;
+  margin-bottom: 15px;
+  margin-top: 25px;
   grid-gap: 10px;
   width: 360px;
   .amt {
@@ -834,7 +836,7 @@ export default defineComponent({
 
   .withdraw-btn {
     // min-width: 300px;
-    margin: 30px auto;
+    margin-left: 65px;
     &.cancel {
       margin-right: 60px;
     }
@@ -867,7 +869,7 @@ export default defineComponent({
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      max-width: 600px;
+      max-width: 630px;
     }
   }
   :deep(.el-form-item__content) {

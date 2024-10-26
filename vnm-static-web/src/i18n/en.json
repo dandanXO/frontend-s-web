@@ -397,6 +397,7 @@
     "copied": "Copied",
     "quickDeposit": "Quick Deposit",
     "realTimeExchangeRate": "Real Time Exchange Rate",
+    "estimatedRate": "Estimated Exchange Rate",
     "inputUSDT": "Input USDT",
     "chooseAmt": "Choose Amount",
     "note": "Please note:",
