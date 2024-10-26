@@ -46,6 +46,11 @@ body {
   font-weight: 500;
   line-height: 10px;
   margin-top: 10px;
+  width:100%;
+}
+
+.social-item > span img{
+  width: 100%;
 }
 
 .social-item > img {
