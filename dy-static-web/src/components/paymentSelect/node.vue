@@ -445,8 +445,9 @@ $node-color: #4873f1;
     position: relative;
     .promo {
       position: absolute;
+      left: 0;
       right: 0;
-      top: 0;
+      top: 58%;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
