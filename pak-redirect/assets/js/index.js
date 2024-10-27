@@ -30,7 +30,7 @@ let language = "zh";
 
 const setContendI18n = () => {
     try {
-        const lang = navigator.language.split("-")[0];
+        const lang = "en"
         if (contendI18nMap["network"][lang]) {
             language = lang;
         }
