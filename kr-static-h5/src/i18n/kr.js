@@ -957,7 +957,10 @@ export default {
     add_a_virtual_currency: "가상 화폐 추가",
     withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
     출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
-    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
+    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.
+
+    ※가상계좌 점검시간 안내
+    23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
     select_account_add_different_banks: "계좌 선택 (다른 은행 추가)",
     please_select_a_bank_account: "은행 계좌를 선택해 주세요.",
     account_name_with_desc: "계좌 이름 (입금 계좌 이름과 일치해야 함)",
