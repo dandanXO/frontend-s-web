@@ -118,7 +118,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-button class="rightBtn" @click="showDialog('SEC_QN')">
+      <el-button class="rightBtn" @click="showDialog('WITHDRAW_PASS')">
         {{ $t('fields.confirmWithdraw') }}
       </el-button>
     </el-form>
@@ -323,18 +323,19 @@ const checkAmt = (rule, value, callback) => {
 }
 
 function showDialog(type) {
-  if (type === 'SEC_QN') {
-    uiControl.dialogTitle = t('fields.answerSecurityQuestion')
-    formRef.value.validate(async valid => {
-      if (valid) {
-        securityForm.answerOne = null
-        securityForm.answerTwo = null
-        securityForm.answerThree = null
-        uiControl.dialogVisible = true
-        uiControl.dialogType = type
-      }
-    })
-  } else if (type === 'WITHDRAW_PASS') {
+  // if (type === 'SEC_QN') {
+  //   uiControl.dialogTitle = t('fields.answerSecurityQuestion')
+  //   formRef.value.validate(async valid => {
+  //     if (valid) {
+  //       securityForm.answerOne = null
+  //       securityForm.answerTwo = null
+  //       securityForm.answerThree = null
+  //       uiControl.dialogVisible = true
+  //       uiControl.dialogType = type
+  //     }
+  //   })
+  // } else 
+  if (type === 'WITHDRAW_PASS') {
     withdrawPwForm.withdrawPassword = null
     uiControl.dialogTitle = t('fields.withdrawPassword')
     uiControl.dialogVisible = true
@@ -558,15 +559,18 @@ async function checkWithdrawPw() {
 }
 
 onMounted(async () => {
-  await retrieveSecurityQuestion()
+  // await retrieveSecurityQuestion()
   await checkWithdrawPw()
-  if (!hasSecurityQn.value && !hasWithdrawPw.value) {
-    router.push('/personal?name=secAndPw')
-  } else if (!hasWithdrawPw.value) {
+  // if (!hasSecurityQn.value && !hasWithdrawPw.value) {
+  //   router.push('/personal?name=secAndPw')
+  // } else if (!hasWithdrawPw.value) {
+  //   router.push('/personal?name=withdrawpw')
+  // } else if (!hasSecurityQn.value) {
+  //   router.push('/personal?name=securityQn')
+  // }
+  if (!hasWithdrawPw.value) {
     router.push('/personal?name=withdrawpw')
-  } else if (!hasSecurityQn.value) {
-    router.push('/personal?name=securityQn')
-  }
+  } 
   await loadAffiliateBalance()
   getWithdrawalMethods()
 })
