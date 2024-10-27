@@ -689,6 +689,7 @@ export default {
     downlineTotalDeposit: 'Downline Member Total Deposit',
     downlineTotalWithdraw: 'Downline Member Total Withdraw',
     downlineTotalDepositWithdraw: 'Downline Member Deposit Withdraw Difference',
+    affiliateInTransfer: 'Affiliate',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

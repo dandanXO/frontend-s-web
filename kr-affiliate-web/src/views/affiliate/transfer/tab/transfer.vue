@@ -92,7 +92,7 @@ const isLoading = ref(false);
 const uiControl = reactive({
   memberType: [
     { key: 1, displayName: 'member', value: 'MEMBER' },
-    { key: 2, displayName: 'affiliate', value: 'AFFILIATE' },
+    { key: 2, displayName: 'affiliateInTransfer', value: 'AFFILIATE' },
   ]
 })
 const form = reactive({
