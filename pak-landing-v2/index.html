@@ -50,9 +50,13 @@
   const hostname= window.location.hostname;
   console.log(hostname);
 
+  const urlLists= ["https://03zzrq.com/", "https://abv6zj.com/", "https://c2c828.com/"];
+  const randNum = Math.floor(Math.random() * 3) + 1;
+  const finalUrl = urlLists[randNum - 1];
+
   //直接整个跳去主页。
   document.getElementById("pak-landing-v2").addEventListener("click", function () {
-    window.location.href = "https://sqxc05dl.cc/refer/MDMwMDAxMTIyMzM=";
+    window.location.href = finalUrl;
   });
 
 </script>
