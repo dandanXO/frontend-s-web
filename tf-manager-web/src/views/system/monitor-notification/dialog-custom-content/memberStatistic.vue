@@ -191,18 +191,16 @@ const submitForm = async () => {
   try {
     const monitorResponse = await submitMonitor(formData.value.monitorSetting);
     if (monitorResponse.code !== 0) {
-      throw new Error('监控设置提交失败');
+      throw new Error(`监控设置提交失败, code: ${monitorResponse.code}`);
     }
     const notificationResponse = await submitNotification(formData.value.notificationSetting);
     if (notificationResponse.code !== 0) {
-      throw new Error('通知设置提交失败');
+      throw new Error(`通知设置提交失败, code: ${notificationResponse.code}`);
     }
 
-    ElMessage.success('设置已成功提交!');
     emit('submitSuccess'); // 通知父元件
   } catch (error) {
-    ElMessage.error(error.message);
-  } finally {
+    console.error(error.message)
     emit('submitFailed'); // 通知父元件
   }
 };
