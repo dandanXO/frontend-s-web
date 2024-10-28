@@ -422,9 +422,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.q-page-container {
+  background-color: #090b18;
+}
 .promo-container {
-  min-height: 100vh;
-  // padding: 0 16px;
+  min-height: calc(100vh - 120px);
   .promo-view-container {
     ol {
       padding: 0 15px;
