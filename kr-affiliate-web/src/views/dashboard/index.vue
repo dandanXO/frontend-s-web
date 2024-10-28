@@ -725,6 +725,57 @@ const summary = reactive([
   },
 ])
 
+const shortcuts = [
+  {
+    text: '오늘',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      return [start, end]
+    },
+  },
+  {
+    text: '이번주',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: '이번달',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: '3개월검색',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(3, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+]
+
 async function resetSummary() {
   summary.splice(0)
 }
@@ -1167,14 +1218,18 @@ onMounted(async () => {
   justify-content: space-between;
 
   .dashboard-col {
-    padding: 20px 24px;
+    padding: 15px 20px;
     border-radius: 4px;
-    height: 108px;
+    height: auto;
 
     .number-span {
-      font-size: 26px;
+      font-size: 23px;
       font-weight: bold;
       margin-bottom: 10px;
+
+      @media (max-width: 768px) {
+        font-size: 1.3rem;
+      }
     }
 
     .title-span {
@@ -1196,7 +1251,7 @@ onMounted(async () => {
     }
   }
 
-  @media (max-width: 650px) {
+  @media (max-width: 768px) {
     flex-wrap: wrap;
 
     .dashboard-col {
@@ -1204,6 +1259,19 @@ onMounted(async () => {
       max-width: 48%;
       flex: 0 0 50%;
       height: auto;
+      padding: 15px 16px;
+    }
+  }
+
+  @media (max-width: 390px) {
+    flex-wrap: wrap;
+
+    .dashboard-col {
+      width: 100%;
+      max-width: 100%;
+      flex: 0 0 100%;
+      height: auto;
+      padding: 10px 15px;
     }
   }
 }
