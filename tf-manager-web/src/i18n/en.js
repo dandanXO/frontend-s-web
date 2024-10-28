@@ -2877,6 +2877,7 @@ export default {
     Pm: 'Private Message',
     'MQ Log': 'MQ Log',
     'System Config': 'System Config',
+    'Monitor And Notification': 'Monitor And Notification',
     'Promotion Coupon': 'Deposit Coupon',
     'Member Invite Limit': 'Member Invite Limit',
     'Member Point Record': 'Member Point Record',
@@ -3073,6 +3074,9 @@ export default {
     PLATINUM: 'PLATINUM',
     DIAMOND: 'DIAMOND',
     WANGZE: 'WANGZE',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: 'Online users'
   },
   error: {
     400: 'Bad Request',

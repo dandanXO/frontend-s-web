@@ -8,6 +8,7 @@ export const mutations = {
   },
 
   [UserMutationTypes.SET_LOGIN_USER](state, loginInfo) {
+    state.id = loginInfo.id
     state.name = loginInfo.loginName
     state.permissions = loginInfo.permissions
     state.userType = loginInfo.userType
@@ -23,5 +24,9 @@ export const mutations = {
   [UserMutationTypes.SET_SITE_ID](state, siteInfo) {
     state.siteId = siteInfo.id
     state.siteName = siteInfo.siteName
+  },
+
+  [UserMutationTypes.SET_NOTIFICATIONS](state, notificationArr) {
+    state.notifications = notificationArr
   },
 }

@@ -14,6 +14,12 @@ export class Socket {
   }
 
   async connection() {
+    // fixed: Each time the selectedSiteId is switched, a new connection is created by triggering the reload() function but do not close old connection.
+    if (this.webSocket && this.webSocket.readyState === 1 && new URL(this.webSocket.url).pathname === '/ws/notice') {
+      this.webSocket.close(); // trigger onclose event
+      console.log('Closed the existing WebSocket connection.');
+      return
+    }
     const wssSocket = globals.$baseWss;
     this.webSocket = new WebSocket(`${wssSocket}/ws/notice`);
     this.webSocket.onmessage = message => {
@@ -28,6 +34,12 @@ export class Socket {
       this.start();
       this.store.commit(SOCKET_ONOPEN, ev);
       this.webSocket.send(store.state.user.siteId ? store.state.user.siteId : 0);
+      this.webSocket.send(JSON.stringify({
+        type: "CACHE_SYSTEM_USER_ID",
+        content: {
+          systemUserId: store.state.user.id
+        }
+      }));
     };
     this.webSocket.onerror = ev => { this.reconnect(); this.store.commit(SOCKET_ONERROR, ev); };
     this.webSocket.onclose = ev => { this.reconnect(); this.store.commit(SOCKET_ONCLOSE, ev) };

@@ -38,3 +38,8 @@ export const updateRolePermission = async (role) => {
     menuIds: role.menuIds.join(",")
   }, ContentType.form);
 };
+
+export const getSimpleUsersByRoles = (roleIdArr) => {
+  const queryParams = roleIdArr.map(roleId => `roleIdArr=${roleId}`).join('&');
+  return https().request(`/authority/roles/get-simple-users?${queryParams}`, Method.GET);
+};
