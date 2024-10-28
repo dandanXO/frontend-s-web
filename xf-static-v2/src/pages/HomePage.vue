@@ -30,7 +30,7 @@
           </div>
         </div>
       </div>
-      <div v-if="isStickyGameType" class="home-header-section fixed-header">
+      <!-- <div v-if="isStickyGameType" class="home-header-section fixed-header">
         <div class="q-pa-md">
           <GameTypeSwiper
             v-model="selectedTab"
@@ -40,7 +40,7 @@
             @select-swiper="setSelectedSwiper"
           />
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="home-all-slider" v-scroll="onHomeScroll">
@@ -154,8 +154,9 @@
 
       <!-- home header -->
       <div class="home-header-section">
+        <!-- :style="{ visibility: isStickyGameType ? 'hidden' : 'visible' }" -->
+        <!-- scroll-to-center -->
         <GameTypeSwiper
-          :style="{ visibility: isStickyGameType ? 'hidden' : 'visible' }"
           scroll-to-center
           :list="tabs"
           v-model="selectedTab"
@@ -1030,10 +1031,6 @@ export default defineComponent({
           const lotteryTop = lotterySlide.getBoundingClientRect().top;
           const casualTop = casualSlide.getBoundingClientRect().top;
 
-          // console.log(topHeight);
-          // console.log(positionTop6);
-          // console.log(positionTop6 - 40 <= topHeight);
-
           if (casualTop <= stickyHeight) {
             selectedTab.value = "casual";
           } else if (lotteryTop <= stickyHeight) {
@@ -1051,8 +1048,6 @@ export default defineComponent({
           } else if (slotTop <= stickyHeight) {
             selectedTab.value = "slot";
           }
-
-          // console.log("selectedTab:::", selectedTab.value);
         }
       }
     };
@@ -2623,6 +2618,10 @@ export default defineComponent({
 }
 
 .home-header-section {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+
   &.fixed-header {
     position: fixed;
     top: 0;
