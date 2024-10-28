@@ -9,7 +9,43 @@
         </div>
 
         <el-card>
-          <div class="search">
+          <el-row class="dashboard-row" style="margin-top: 10px">
+            <el-col :span="6" class="dashboard-col">
+              <div class="number-span">
+                {{ dashboard.downlineAffiliateCount }}
+              </div>
+              <div class="title-span">
+                {{ $t('fields.total_downline_count') }}
+              </div>
+            </el-col>
+            <el-col :span="6" class="dashboard-col">
+              <div class="number-span">
+                {{ dashboard.directDownlineMemberCount }}
+              </div>
+              <div class="title-span">
+                {{ $t('fields.total_straight_count') }}
+              </div>
+            </el-col>
+            <el-col :span="6" class="dashboard-col">
+              <div class="number-span">
+                {{ dashboard.totalDownlineMemberCount }}
+              </div>
+              <div class="title-span">
+                {{ $t('fields.total_member_count') }}
+              </div>
+            </el-col>
+
+            <el-col :span="6" class="dashboard-col">
+              <div class="number-span">
+                {{ dashboard.totalBalance }}
+              </div>
+              <div class="title-span">
+                {{ $t('fields.total_remaining_amt') }}
+              </div>
+            </el-col>
+          </el-row>
+
+          <div class="search" style="margin-top: 10px;">
             <el-date-picker
               v-model="formData.recordTime"
               format="DD/MM/YYYY"
@@ -34,54 +70,8 @@
               {{ t('fields.search') }}
             </el-button>
           </div>
-          <el-row class="dashboard-row" style="margin-top: 20px">
-            <el-col :span="4" class="dashboard-col">
-              <div class="number-span">
-                {{ dashboard.downlineAffiliateCount }}
-              </div>
-              <div class="title-span">
-                {{ $t('fields.total_downline_count') }}
-              </div>
-            </el-col>
-            <el-col :span="4" class="dashboard-col">
-              <div class="number-span">
-                {{ dashboard.directDownlineMemberCount }}
-              </div>
-              <div class="title-span">
-                {{ $t('fields.total_straight_count') }}
-              </div>
-            </el-col>
-            <el-col :span="4" class="dashboard-col">
-              <div class="number-span">
-                {{ dashboard.totalDownlineMemberCount }}
-              </div>
-              <div class="title-span">
-                {{ $t('fields.total_member_count') }}
-              </div>
-            </el-col>
-            <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ dashboard.depositMemberCount }}</div>
-              <div class="title-span">
-                {{ $t('fields.total_deposit_count') }}
-              </div>
-            </el-col>
-            <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ dashboard.withdrawMemberCount }}</div>
-              <div class="title-span">
-                {{ $t('fields.total_withdraw_count') }}
-              </div>
-            </el-col>
-            <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ dashboard.betMemberCount }}</div>
-              <div class="title-span">{{ $t('fields.total_bet_count') }}</div>
-            </el-col>
-          </el-row>
 
           <el-row class="dashboard-listing">
-            <div class="listing-div">
-              <div class="title-span">{{ $t('fields.total_deposit_amt') }}</div>
-              <div class="item-span">{{ dashboard.depositAmount }}</div>
-            </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_withdraw_amt') }}
@@ -102,10 +92,11 @@
             </div>
             <div class="listing-div">
               <div class="title-span">
-                {{ $t('fields.total_remaining_amt') }}
+                {{ $t('fields.total_deposit_amt') }}
               </div>
-              <div class="item-span">{{ dashboard.totalBalance }}</div>
+              <div class="item-span">{{ dashboard.depositAmount }}</div>
             </div>
+
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_validbet_amt') }}
@@ -115,6 +106,23 @@
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_losewin_amt') }}</div>
               <div class="item-span">{{ dashboard.totalWin }}</div>
+            </div>
+
+            <div class="listing-div">
+              <div class="title-span">
+                {{ $t('fields.total_deposit_count') }}
+              </div>
+              <div class="item-span">{{ dashboard.withdrawMemberCount }}</div>
+            </div>
+            <div class="listing-div">
+              <div class="title-span">
+                {{ $t('fields.total_withdraw_count') }}
+              </div>
+              <div class="item-span">{{ dashboard.withdrawMemberCount }}</div>
+            </div>
+            <div class="listing-div">
+              <div class="title-span">{{ $t('fields.total_bet_count') }}</div>
+              <div class="item-span">{{ dashboard.betMemberCount }}</div>
             </div>
           </el-row>
         </el-card>
@@ -1160,12 +1168,43 @@ onMounted(async () => {
       background: #fddcfd;
     }
     &:nth-child(4) {
+      background: rgba(121, 177, 160, 0.73);
+    }
+  }
+}
+
+.dashboard-row2 {
+  gap: 6px;
+  display: flex;
+  flex-wrap: nowrap;
+  width: calc(100% - 30px);
+  justify-content: space-between;
+
+  .dashboard-col {
+    padding: 20px 24px;
+    border-radius: 4px;
+    height: 108px;
+
+    .number-span {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .title-span {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    &:nth-child(1) {
       background: #c4ffd7;
     }
-    &:nth-child(5) {
+
+    &:nth-child(2) {
       background: #fee6d0;
     }
-    &:nth-child(6) {
+
+    &:nth-child(3) {
       background: #d1f2ff;
     }
   }
