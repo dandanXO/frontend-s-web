@@ -4,57 +4,70 @@
       <q-spinner-gears size="50px" color="brightbtn" />
       <div class="label" style="color: #fff">加载中</div>
     </q-inner-loading>
-    <div v-if="!loading">
-      <q-infinite-scroll @load="onLoad" :offset="250">
-        <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" style="background: #212534; color: #bacef1">
-          <div class="table-data" v-for="(head, e) in headers" :key="e">
-            <div class="label">
-              {{ head.label }}
+    <div v-if="!loading" class="q-pa-md">
+      <q-infinite-scroll @load="onLoad" :offset="250" class="q-gutter-y-md">
+        <div v-for="(det, n) in truncatedList" :key="n" class="bg-darkbox" style="position: relative">
+          <!-- Table top amount start -->
+          <template v-for="header in headers" :key="header.key">
+            <div v-if="header.key === 'depositAmount'" class="amount-container">
+              <div class="amount-header-title">{{ header.label }}</div>
+              <div class="amount-desc">{{ det.depositAmount }}</div>
             </div>
-            <template v-for="obj in Object.keys(det)" :key="obj">
-              <div v-if="obj === head.key" class="desc">
-                <div v-if="obj === 'type'">
-                  {{ translateRecord(det[obj], "") }}
+          </template>
+          <!-- Table top amount end -->
+
+          <div class="table-data" v-for="(head, e) in headers" :key="e">
+            <template v-if="head.key !== 'depositAmount'">
+              <div class="label">{{ head.label }}:</div>
+              <template v-for="obj in Object.keys(det)" :key="obj">
+                <div v-if="obj === head.key" class="desc">
+                  <div v-if="obj === 'type'">
+                    {{ translateRecord(det[obj], "") }}
+                  </div>
+                  <div v-else-if="obj === 'betId'">
+                    <q-link @click="copyText(det[obj], '注单号')">
+                      <span style="color: #468cff">复制</span>
+                      {{ det[obj].slice(0, 1) }}...
+                      <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
+                        {{ det[obj] }}
+                      </q-tooltip>
+                    </q-link>
+                  </div>
+                  <div v-else-if="obj === 'status'">
+                    {{ checkRecord(det[obj]) }}
+                  </div>
+                  <div v-else-if="obj === 'betStatus'">
+                    {{ checkRecord(det[obj]) }}
+                  </div>
+                  <div v-else-if="obj === 'paymentType'">
+                    {{ checkRecord(det[obj]) }}
+                  </div>
+                  <div v-else-if="obj === 'gameType' || obj === 'platform'">
+                    {{ checkRecord(det[obj]) }}
+                  </div>
+                  <div
+                    v-else-if="
+                      obj === 'commitDate' ||
+                      obj === 'feedbackTime' ||
+                      obj === 'recordTime' ||
+                      obj === 'transferDate' ||
+                      (obj === 'betTime' && recordType === 'bethistory')
+                    "
+                  >
+                    {{ humanDatetime(det[obj]) }}
+                  </div>
+                  <div v-else-if="obj === 'platformCode' || obj === 'financeRemark' || obj === 'subType'">
+                    {{ checkRecord(det[obj]) }}
+                  </div>
+                  <div v-else-if="obj === 'serialNumber'" class="serialnum-row">
+                    {{ det[obj] }}
+                    <div @click="copyText(det.serialNumber)" class="btn-copyserialnum">复制</div>
+                  </div>
+                  <div v-else>
+                    {{ det[obj] }}
+                  </div>
                 </div>
-                <div v-else-if="obj === 'betId'">
-                  <q-link @click="copyText(det[obj], '注单号')">
-                    <span style="color: #468cff">复制</span>
-                    {{ det[obj].slice(0, 1) }}...
-                    <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
-                      {{ det[obj] }}
-                    </q-tooltip>
-                  </q-link>
-                </div>
-                <div v-else-if="obj === 'status'">
-                  {{ checkRecord(det[obj]) }}
-                </div>
-                <div v-else-if="obj === 'betStatus'">
-                  {{ checkRecord(det[obj]) }}
-                </div>
-                <div v-else-if="obj === 'paymentType'">
-                  {{ checkRecord(det[obj]) }}
-                </div>
-                <div v-else-if="obj === 'gameType' || obj === 'platform'">
-                  {{ checkRecord(det[obj]) }}
-                </div>
-                <div
-                  v-else-if="
-                    obj === 'commitDate' ||
-                    obj === 'feedbackTime' ||
-                    obj === 'recordTime' ||
-                    obj === 'transferDate' ||
-                    (obj === 'betTime' && recordType === 'bethistory')
-                  "
-                >
-                  {{ humanDatetime(det[obj]) }}
-                </div>
-                <div v-else-if="obj === 'platformCode' || obj === 'financeRemark' || obj === 'subType'">
-                  {{ checkRecord(det[obj]) }}
-                </div>
-                <div v-else>
-                  {{ det[obj] }}
-                </div>
-              </div>
+              </template>
             </template>
           </div>
           <div
@@ -64,8 +77,7 @@
             "
             class="buttons"
           >
-            <q-btn outline label="催单" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
-            <q-btn outline label="复制" @click="copyText(det.serialNumber)" size="sm" color="bright" />
+            <q-btn label="催单" @click="feedbackTrans(det)" color="orangebtn" class="btn-reminder" size="md" />
           </div>
 
           <div v-if="recordType === 'withdraw'" class="buttons">
@@ -90,7 +102,7 @@
               />
             </template>
           </div>
-        </q-card>
+        </div>
 
         <template v-slot:loading>
           <div v-if="comList.length > 0">
@@ -111,14 +123,12 @@
 
   <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 
-  <q-dialog v-model="reminderDialog" width="100%" no-backdrop-dismiss no-esc-dismis>
-    <q-card class="reminder-dialog-card bg-dark text-white" style="width: 100%; padding: 0px 0px 20px">
-      <q-card-section>
-        <q-toolbar>
-          <q-toolbar-title>催单</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
-        </q-toolbar>
-      </q-card-section>
+  <q-dialog v-model="reminderDialog" width="100%">
+    <q-card class="reminder-dialog-card bg-darkbox text-white" style="width: 100%">
+      <div class="row q-mb-md">
+        <div class="text-h6">催单</div>
+        <!-- <q-btn flat v-close-popup round dense icon="close" /> -->
+      </div>
       <q-card-section>
         <q-form
           ref="formRef"
@@ -129,22 +139,56 @@
           autocomplete="off"
           label-align="left"
           label-cols="5"
-          class="reminder-dialog-form"
+          class="reminder-dialog-form q-pt-md q-gutter-y-md"
         >
-          <q-input label="存款编码" filled v-model="reminderForm.orderNo" padding="none" readonly disable />
-          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
-          <q-input
-            type="textarea"
-            v-model="reminderForm.memberRemark"
-            label="备注"
-            filled
-            autogrow
-            color="white"
-            class="q-mt-md"
-            :rows="2"
-            :max-rows="5"
+          <div>
+            <div class="q-mb-sm">存款编码</div>
+            <q-input
+              placeholder="存款编码"
+              v-model="reminderForm.orderNo"
+              padding="none"
+              readonly
+              disable
+              outlined
+              color="white"
+              bg-color="recinputstyle"
+            />
+          </div>
+
+          <div>
+            <div class="q-mb-sm">
+              上传图片
+              <span style="color: #f53434">*</span>
+            </div>
+            <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+          </div>
+
+          <div>
+            <div class="q-mb-sm">
+              备注
+              <span style="color: #f53434">*</span>
+            </div>
+            <q-input
+              type="textarea"
+              v-model="reminderForm.memberRemark"
+              placeholder="备注"
+              autogrow
+              :rows="2"
+              :max-rows="5"
+              outlined
+              color="white"
+              bg-color="recinputstyle"
+            />
+          </div>
+
+          <q-btn
+            class="common-btn q-mt-md"
+            color="brightbtn"
+            size="md"
+            label="发送"
+            style="width: 100%"
+            @click="submitReminder"
           />
-          <q-btn class="common-btn q-mt-md" color="brightbtn" label="提交" @click="submitReminder" />
         </q-form>
       </q-card-section>
     </q-card>
@@ -470,19 +514,22 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .table-data {
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   justify-content: flex-start;
-  gap: 30px;
+  // gap: 20px;
   margin: 0 0 10px;
 
   .label {
     flex: 1;
+    color: #ffffff99;
   }
 
   .desc {
     flex: 3;
     word-break: break-all;
+    margin-left: auto;
+    text-align: right;
   }
 }
 
@@ -492,5 +539,41 @@ export default defineComponent({
 
 :deep(.q-card__section) {
   background: none;
+}
+
+.amount-container {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ffffff1a;
+  margin-bottom: 6px;
+}
+
+.amount-header-title {
+  color: #ffffff99;
+  font-size: 14px;
+}
+
+.amount-desc {
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+.btn-reminder {
+  position: absolute;
+  top: 20px;
+  right: 12px;
+}
+
+.serialnum-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  // flex-wrap: wrap;
+  // font-size: 12px;
+  // height: 21px;
+}
+
+.btn-copyserialnum {
+  margin-left: 4px;
+  color: #00bfd7;
 }
 </style>

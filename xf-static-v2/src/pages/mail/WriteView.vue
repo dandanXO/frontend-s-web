@@ -53,7 +53,7 @@
       </div>
       <div class="bg-dark">
         <div class="top">上传图片</div>
-        <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+        <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" class="q-mt-md" />
       </div>
 
       <div class="bg-dark">

@@ -2,7 +2,6 @@
   <q-file
     name="upload_img"
     v-model="file"
-    class="q-pt-md"
     label="上传图片"
     outlined
     color="white"
