@@ -49,7 +49,7 @@
           :placeholder="t('fields.transferAmount')"
         />
       </el-form-item>
-      <el-form-item :label="t('fields.rollover')" prop="rollover">
+      <el-form-item :label="t('fields.rollover')" prop="rollover" v-if="form.memberType !== 'AFFILIATE'">
         <el-input
           v-model="form.rollover"
           :placeholder="t('fields.rollover')"
@@ -137,6 +137,9 @@ async function submitTransfer() {
     if (valid) {
       form.siteId = store.state.user.siteId;
       form.type = 'DEPOSIT';
+      if (form.memberType === 'AFFILIATE') {
+        form.rollover = 0;
+      }
       await transferToMember(store.state.user.id, form);
       clearForm();
       loadAffiliateBalance();
