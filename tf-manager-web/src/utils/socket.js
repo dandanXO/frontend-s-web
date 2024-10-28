@@ -15,7 +15,7 @@ export class Socket {
 
   async connection() {
     // fixed: Each time the selectedSiteId is switched, a new connection is created by triggering the reload() function but do not close old connection.
-    if (this.webSocket && this.webSocket.readyState === 1) {
+    if (this.webSocket && this.webSocket.readyState === 1 && new URL(this.webSocket.url).pathname === '/ws/notice') {
       this.webSocket.close(); // trigger onclose event
       console.log('Closed the existing WebSocket connection.');
       return

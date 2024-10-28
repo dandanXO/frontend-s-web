@@ -8,6 +8,8 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
+      <notificationModule />
+
       <el-select
         v-if="hasRole(['ADMIN', 'MANAGER'])"
         class="right-menu-item"
@@ -128,6 +130,7 @@
 import BreadCrumb from '@/components/bread-crumb/Index.vue'
 import Hamburger from '@/components/hamburger/Index.vue'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
+import notificationModule from '@/layout/components/navigation_bar/notification-module/Index.vue'
 
 import { computed, reactive, toRefs, onMounted, ref, watch } from 'vue'
 import { useStore } from '@/store'
@@ -154,6 +157,7 @@ export default {
     BreadCrumb,
     Hamburger,
     ForgetPasswordModal,
+    notificationModule,
   },
   setup() {
     // eslint-disable-next-line
@@ -244,8 +248,8 @@ export default {
     let intervalId = null; // To store the interval ID and control blinking
     function updateSiteTitle() {
       originalSiteTitle = document.querySelector("title").innerText
-      
-      const existingCountRegex = /\(\d+\)$/; 
+
+      const existingCountRegex = /\(\d+\)$/;
       originalSiteTitle = originalSiteTitle.replace(existingCountRegex, "").trim();
 
       let blinkingTitle = originalSiteTitle + ` (${applyWithdrawCount.value})`;
@@ -264,7 +268,7 @@ export default {
         document.title = originalSiteTitle;
       }
     }
-    
+
     const reload = inject('reload')
     const changeSite = async () => {
       const getSelectedSite = sites.value.find(
@@ -382,7 +386,7 @@ export default {
       const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
       if (memberStatistics.length > 0) {
         const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
-        
+
         const siteId = String(useStore().state.user.siteId);
         const getStatisticBySiteId = parsedStatistics.find(e => String(e.siteId) === siteId);
 
