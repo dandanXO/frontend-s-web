@@ -46,46 +46,51 @@
           </span>
         </div>
         <table class="match-game-info-table">
-          <tr>
-            <th>当日存款</th>
-            <th>当日电子负盈利</th>
-            <th>救援金</th>
-            <th>流水倍数</th>
-          </tr>
-          <tr>
-            <td rowspan="8">≥100元</td>
-            <td>≥500</td>
-            <td>8元</td>
-            <td rowspan="8">8倍</td>
-          </tr>
-          <tr>
-            <td>≥1,500</td>
-            <td>18元</td>
-          </tr>
-          <tr>
-            <td>≥5,000</td>
-            <td>38元</td>
-          </tr>
-          <tr>
-            <td>≥10,000</td>
-            <td>88元</td>
-          </tr>
-          <tr>
-            <td>≥20,000</td>
-            <td>108元</td>
-          </tr>
-          <tr>
-            <td>≥50,000</td>
-            <td>288元</td>
-          </tr>
-          <tr>
-            <td>≥100,000</td>
-            <td>588元</td>
-          </tr>
-          <tr>
-            <td>≥500,000</td>
-            <td>888元</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>当日存款</th>
+              <th>当日电子负盈利</th>
+              <th>救援金</th>
+              <th>流水倍数</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td rowspan="8">≥100元</td>
+              <td>≥500</td>
+              <td>8元</td>
+              <td rowspan="8">8倍</td>
+            </tr>
+            <tr>
+              <td>≥1,500</td>
+              <td>18元</td>
+            </tr>
+            <tr>
+              <td>≥5,000</td>
+              <td>38元</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>88元</td>
+            </tr>
+            <tr>
+              <td>≥20,000</td>
+              <td>108元</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>288元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>588元</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>888元</td>
+            </tr>
+          </tbody>
         </table>
         <div class="content-sub-title">
           <span style="font-weight: bold">⮞ 范例</span>
