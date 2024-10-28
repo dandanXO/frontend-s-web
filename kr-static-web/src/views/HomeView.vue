@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <HomeBanner></HomeBanner>
+    <LoginHomeBanner></LoginHomeBanner>
+    <!-- <HomeBanner></HomeBanner> -->
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
       <!--      <HomeHotMatches></HomeHotMatches>-->
@@ -17,6 +18,7 @@
 import GameModal from "@/components/modal/GameModal.vue";
 import { ref } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
+import LoginHomeBanner from "@/components/home/LoginHomeBanner.vue";
 import HomeInfoListSection from "@/components/home/HomeInfoListSection.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";

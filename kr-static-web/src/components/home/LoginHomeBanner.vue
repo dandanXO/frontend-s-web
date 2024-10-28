@@ -1,13 +1,32 @@
 <template>
   <el-dialog
-    @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)"
     class="imptann-modal"
+    modal-class="custom-overlay"
     v-model="isImportantAnnoucementModal"
+    :show-close="false"
+    :close-on-click-modal="false"
     v-if="!isImpt"
   >
-    <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
-      <img :src="homePopupImg" class="alert-img" />
-    </a>
+    <div class="popup-wrapper">
+      <a
+        v-for="(item, index) in popupBanners"
+        :key="index"
+        class="popup-container"
+        :href="getLoginBannerHref(item)"
+        :target="getLoginBannerHref(item).includes('https://') ? '_blank' : '_self'"
+        v-show="!closedLoginBannerList.has(index)"
+      >
+        <img :src="imgURL + item.desktopImgUrl" class="alert-img" />
+        <div class="popup-footer">
+          <div>
+            <el-checkbox label="오늘 이창을 다시열지 않기" :value="index" style="background-color: transparent" @click="handleCheckLoginBanner(index)" />
+          </div>
+          <div class="btn-container">
+            <el-button type="info" size="small" @click="handleCloseLoginBanner($event, index)">닫기</el-button>
+          </div>
+        </div>
+      </a>
+    </div>
   </el-dialog>
 
   <el-carousel class="banner-slider" indicator-position="outside" :autoplay="true" :interval="5000">
@@ -21,15 +40,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
+import { ref, onMounted, watch } from "vue";
+import { loadPromoBanner, loadHomePopup, loadLoginHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
+import { userStore } from "@/store/index";
 
+const store = userStore();
 const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
+const popupBanners = ref([]);
 
 const goToUrl = (redirectUrl) => {
   if (!redirectUrl.trim()) return;
@@ -61,17 +83,6 @@ const loadBanners = () => {
   });
 };
 
-const setWithExpiry = (key, value, interval) => {
-  const now = new Date();
-  const item = {
-    value: value,
-    expiry: now.getTime() + interval,
-    id: homePopupId.value,
-    frequency: homePopupFrequency.value
-  };
-  localStorage.setItem(key, JSON.stringify(item));
-};
-
 const getWithExpiry = (key) => {
   const itemStr = localStorage.getItem(key);
   if (!itemStr) return null;
@@ -96,6 +107,31 @@ const homePopupFrequencyNum = ref(0);
 const homePopupContent = ref("");
 const homePopupType = ref("");
 const homePopupId = ref(0);
+
+const closedLoginBannerList = ref(new Set());
+const checkedLoginBannerList = ref(new Set());
+
+const handleCloseLoginBanner = (e, index) => {
+  e.preventDefault();
+  closedLoginBannerList.value.add(index);
+
+  if (checkedLoginBannerList.value.has(index)) {
+    if (sessionStorage.getItem("CLOSED_LOGIN_BANNER")) {
+      const result = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER"))).add(index);
+      sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify(Array.from(result)));
+    } else {
+      sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify([index]));
+    }
+  }
+}
+
+const handleCheckLoginBanner = (index) => {
+  if (checkedLoginBannerList.value.has(index)) {
+    checkedLoginBannerList.value.delete(index);
+  } else {
+    checkedLoginBannerList.value.add(index);
+  }
+}
 
 const checkShowImgTop = () => {
   const lastTime = localStorage.getItem("indexImgTop");
@@ -143,10 +179,41 @@ const checkShowImgTop = () => {
   }
 };
 
+const getLoginBannerHref = (data) => {
+  if (data["path"].includes("https://")) {
+    return data["path"];
+  }
+  return "/promotion?name=" + data["path"];
+}
+
+const fetchPopoutData = () => {
+  loadLoginHomePopup().then((res) => {
+    if (res.code === 0) {
+      popupBanners.value = res.data;
+      closedLoginBannerList.value = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER")) || []);
+    } else
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
+  });
+};
+
 onMounted(() => {
   loadBanners();
   checkShowImgTop();
 });
+
+watch(
+  () => store.token,
+  () => {
+    if (store.token) {
+      fetchPopoutData();
+      isImportantAnnoucementModal.value = true
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss">
@@ -174,11 +241,10 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss" scoped>
+<style lang="scss">
 .imptann-modal {
-  background: transparent;
-  max-width: 1300px;
-  width: max-content;
+  background: transparent !important;
+  width: 100% !important;
   height: auto;
   margin-top: 25% !important;
   transform: translate(0px, -50%);
@@ -193,5 +259,42 @@ onMounted(() => {
     width: 100%;
     border-radius: 12px;
   }
+}
+
+.popup-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  .popup-container {
+    position: relative;
+
+    .alert-img {
+      max-width: 640px;
+    }
+
+    .popup-footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      color: #FFFFFF99;
+
+      .btn-container {
+        position: absolute;
+        right: 20px;
+        color: #FFFFFF;
+      }
+
+      .el-checkbox__inner {
+        background-color: transparent;
+        border-color: #FFFFFF99;
+      }
+    }
+  }
+}
+
+.custom-overlay {
+  --el-overlay-color-lighter: rgba(0, 0, 0, 0);
 }
 </style>
