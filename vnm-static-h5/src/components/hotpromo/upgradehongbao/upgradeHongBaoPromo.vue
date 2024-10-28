@@ -59,16 +59,24 @@
     </tbody>
   </table>  -->
 
-  <q-dialog class="award-modal hongbaoyu-modal" width="100%" v-model="isClaimModal" no-backdrop-dismiss no-esc-dismiss>
+  <q-dialog
+    class="award-modal hongbaoyu-modal"
+    width="100%"
+    v-model="isClaimModal"
+    :no-backdrop-dismiss="promoId !== 567 ? true : false"
+    no-esc-dismiss
+  >
     <div class="modal-div">
       <div class="red-packet-opened">
-        <img v-if="promoId === 567" :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/popup.png`)" />
+        <img v-if="promoId === 567" :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/popup2.png`)" />
         <img v-else :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
         <div v-if="promoId !== 567" class="grats">{{ $t("lang.hong_congrats") }}</div>
         <div v-if="promoId !== 567" class="amount">{{ winAmount }}</div>
         <div v-else class="amount-halloween">{{ winAmount }}</div>
 
-        <div class="get-btn" @click="getPromotionPrize">{{ $t("lang.claim") }}</div>
+        <div class="get-btn" :class="promoId === 567 ? 'get-btn-halloween' : ''" @click="getPromotionPrize">
+          {{ $t("lang.claim") }}
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -259,6 +267,18 @@ onMounted(() => {
       cursor: pointer;
       width: 57%;
       margin: auto;
+
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
+
+      img {
+        &:active {
+          filter: brightness(0.85);
+          transform: translate(0px, 1px);
+        }
+      }
     }
 
     .current-content {
@@ -361,13 +381,10 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 15%;
+    margin-top: 29%;
     color: #000;
-    font-size: 35px;
+    font-size: 32px;
     font-weight: bold;
-  }
-
-  .bonus {
   }
 
   .get-btn {
@@ -380,6 +397,10 @@ onMounted(() => {
     position: absolute;
     z-index: 2;
     bottom: 20%;
+
+    &.get-btn-halloween {
+      display: none;
+    }
 
     &:hover {
       filter: brightness(0.9);
