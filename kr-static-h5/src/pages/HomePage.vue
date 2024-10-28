@@ -592,20 +592,51 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
-    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
-      <q-card-section>
-        <div class="close-alert" @click="setExpiryBanner()">
-          <q-icon size="24px" name="close"></q-icon>
-        </div>
-        <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
-          <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
-          <div class="promo-banner-img" v-else>
-            <img :src="homePopupImg" class="alert-img" />
-          </div>
-        </router-link>
-      </q-card-section>
-    </q-card>
+  <q-dialog v-if="!isPopoutDataLoading" width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal" persistent>
+    <q-carousel
+      v-model="slide1"
+      swipeable
+      animated
+      padding
+      class="bg-transparent text-white rounded-borders"
+      style="height: 100vh; max-height: unset"
+    >
+      <q-carousel-slide
+        :name="index"
+        class="column no-wrap flex-center"
+        style="padding: 0"
+        v-for="(item, index) in popupBaners"
+        :key="index"
+      >
+        <q-card class="my-card" style="width: 100%; height: 100%; margin: 0">
+          <q-card-section style="width: 100%; height: 100%">
+            <div class="image-container">
+              <router-link
+                style="width: 100% !important; height: 100vh"
+                :to="getLoginBannerHref(item)"
+                :target="getLoginBannerHref(item).includes('https://') ? '_blank' : '_self'"
+                v-show="!closedLoginBannerList.has(item.title)"
+              >
+                <img :src="imgURL + item.mobileImgUrl" style="width: 100vw; height: 100vh" />
+              </router-link>
+              <div class="popup-footer">
+                <div>&lt;1 /3&gt;</div>
+                <div>
+                  <q-checkbox class="popup-checkbox" label="오늘 이창을 다시열지 않기" :modelValue="checkedLoginBannerList.has(item.title)" @click="handleCheckLoginBanner(item)" />
+                </div>
+                <div class="btn-container">
+                  <q-btn
+                    style="background: #5d5d5d; color: white"
+                    label="닫기"
+                    @click="handleCloseLoginBanner($event, item)"
+                  />
+                </div>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-carousel-slide>
+    </q-carousel>
   </q-dialog>
 
   <q-dialog width="100%" class="modal-update-div" v-model="isPlatformComingSoon" show-cancel-button>
@@ -973,9 +1004,9 @@ export default defineComponent({
     const homePopupLink = ref("");
     const homePopupLinkOut = ref(false);
 
-    const setExpiryBanner = () => {
-      isImportantAnnoucementModal.value = false;
-    };
+    // const setExpiryBanner = () => {
+    //   isImportantAnnoucementModal.value = false;
+    // };
 
     const setWithExpiry = (key, value, interval) => {
       const now = new Date();
@@ -1048,7 +1079,7 @@ export default defineComponent({
                     homePopupFrequencyNum.value = 10000;
                     break;
                 }
-                isImportantAnnoucementModal.value = true;
+                // isImportantAnnoucementModal.value = true;
                 homePopupImg.value = imgURL + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
@@ -1419,7 +1450,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("Home")
+      console.log("Home");
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
@@ -1740,7 +1771,77 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
+    // after login popup
+
+    const popupBaners = ref([]);
+    const closedLoginBannerList = ref(new Set());
+    const checkedLoginBannerList = ref(new Set());
+    const slide1 = ref(0);
+    const isPopoutDataLoading = ref(false)
+
+    const getLoginBannerHref = (data) => {
+      if (data["path"].includes("https://")) {
+        return data["path"];
+      }
+      return "/promotion?name=" + data["path"];
+    };
+
+    const handleCloseLoginBanner = (e, item) => {
+      e.preventDefault();
+      closedLoginBannerList.value.add(item.title);
+
+      console.log(closedLoginBannerList.value);
+      // 有打勾的話 就存起來
+      if (checkedLoginBannerList.value.has(item.title)) {
+        if (sessionStorage.getItem("CLOSED_LOGIN_BANNER")) {
+          const result = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER"))).add(item.title);
+          sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify(Array.from(result)));
+        } else {
+          sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify([item.title]));
+        }
+      }
+    };
+
+    const handleCheckLoginBanner = (item) => {
+      if (checkedLoginBannerList.value.has(item.title)) {
+        checkedLoginBannerList.value.delete(item.title);
+      } else {
+        checkedLoginBannerList.value.add(item.title);
+      }
+    };
+
+    const fetchPopoutData = () => {
+      isPopoutDataLoading.value = true;
+      api.get("/member/site-popout-list").then((res) => {
+        if (res.code === 0) {
+          console.log(res.data);
+          popupBaners.value = res.data;
+          closedLoginBannerList.value = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER")) || []);
+        }
+      }).finally(() => {
+        isPopoutDataLoading.value = false;
+      });
+    };
+
+    watch(
+      () => store.token,
+      async () => {
+        if (store.token) {
+          await fetchPopoutData();
+          isImportantAnnoucementModal.value = true;
+        }
+      },
+      { immediate: true }
+    );
+
     return {
+      slide1,
+      isPopoutDataLoading,
+      closedLoginBannerList,
+      checkedLoginBannerList,
+      handleCloseLoginBanner,
+      handleCheckLoginBanner,
+      getLoginBannerHref,
       imageLoading,
       slide: ref(0),
       tab,
@@ -1806,7 +1907,7 @@ export default defineComponent({
       downloadUrl,
       getWithExpiry,
       setWithExpiry,
-      setExpiryBanner,
+      // setExpiryBanner,
       homePopupContent,
       homePopupType,
       homePopupId,
@@ -1882,7 +1983,8 @@ export default defineComponent({
       currentRocket,
       currentRocketIndex,
       rocketSlide: ref(0),
-      promoSlide: ref(0)
+      promoSlide: ref(0),
+      popupBaners
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -3341,6 +3443,31 @@ export default defineComponent({
 @media (max-width: 380px) {
   .menulist {
     display: none;
+  }
+}
+
+.image-container {
+  position: relative;
+}
+
+.popup-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff99;
+  padding: 16px;
+
+  
+}
+</style>
+
+<style>
+.popup-checkbox {
+  .q-checkbox__bg {
+    border-color: #ffffff99;
   }
 }
 </style>
