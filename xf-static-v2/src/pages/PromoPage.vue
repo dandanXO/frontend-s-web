@@ -1,16 +1,20 @@
 <template>
-  <q-card-section v-if="!isPromoDetail" class="page-title">优惠活动</q-card-section>
+  <q-header v-if="!isPromoDetail">
+    <q-card-section class="page-title">优惠活动</q-card-section>
+  </q-header>
 
   <div class="promo-container">
-    <div class="promo" :class="{ 'q-pt-md': !isPromoDetail }">
-      <RoundTab
-        v-if="!isPromoDetail"
-        v-model:tab="tab"
-        :items="tabItems"
-        :border-radius="10"
-        background-color="#00BFD71A;
-"
-      ></RoundTab>
+    <div class="promo">
+      <div class="tab-wrapper">
+        <RoundTab
+          v-if="!isPromoDetail"
+          v-model:tab="tab"
+          :items="tabItems"
+          :border-radius="10"
+          background-color="#183249;"
+        />
+      </div>
+
       <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs> -->
@@ -418,9 +422,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.q-page-container {
+  background-color: #090b18;
+}
 .promo-container {
-  min-height: 100vh;
-  padding: 0 16px;
+  min-height: calc(100vh - 120px);
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -474,7 +480,7 @@ export default defineComponent({
   background-color: #090b18;
 
   .all-promotions {
-    padding-bottom: 20px;
+    padding: 0 20px 20px 20px;
     @keyframes fadein {
       100% {
         opacity: 1;
@@ -557,7 +563,6 @@ export default defineComponent({
 
       .promo-list-wrapper {
         display: flex;
-        margin-top: 20px;
         flex-direction: column;
 
         .promo-item {
@@ -863,13 +868,22 @@ export default defineComponent({
 }
 
 .promo {
-  .q-tabs {
-    margin: 0;
+  .tab-wrapper {
+    padding: 20px 20px 16px 20px;
+    background-color: #090b18;
+    position: sticky;
+    top: 46px;
+    z-index: 4;
+    border-bottom: 2px solid #090b18;
+    .q-tabs {
+      margin: 0;
+    }
+
+    .q-tab {
+      padding: 0;
+    }
   }
 
-  .q-tab {
-    padding: 0;
-  }
   .q-tab-panels {
     background: none;
     // padding: 10px;

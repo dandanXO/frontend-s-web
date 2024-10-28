@@ -30,7 +30,7 @@
           </div>
         </div>
       </div>
-      <div v-if="isStickyGameType" class="home-header-section fixed-header">
+      <!-- <div v-if="isStickyGameType" class="home-header-section fixed-header">
         <div class="q-pa-md">
           <GameTypeSwiper
             v-model="selectedTab"
@@ -40,7 +40,7 @@
             @select-swiper="setSelectedSwiper"
           />
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="home-all-slider" v-scroll="onHomeScroll">
@@ -154,8 +154,9 @@
 
       <!-- home header -->
       <div class="home-header-section">
+        <!-- :style="{ visibility: isStickyGameType ? 'hidden' : 'visible' }" -->
+        <!-- scroll-to-center -->
         <GameTypeSwiper
-          v-if="!isStickyGameType"
           scroll-to-center
           :list="tabs"
           v-model="selectedTab"
@@ -834,7 +835,11 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-white">
+    <div style="width: 90%; min-height: 400px" class="bg-darkbox">
+      <AnnouncementView />
+    </div>
+
+    <!-- <q-card style="width: 100%" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
         <q-tabs
           v-model="activeKey"
@@ -874,7 +879,7 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card-section>
-    </q-card>
+    </q-card> -->
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnouncementModal" @update:model-value="setExpiryBanner()">
@@ -923,16 +928,15 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 import { translateRecord } from "src/directives/translate";
 
 import GameTypeSwiper from "components/home/GameTypeSwiper.vue";
+import AnnouncementView from "pages/account/AnnouncementView.vue";
 
 export default defineComponent({
   name: "IndexPage",
   components: {
-    // Swiper,
-    // SwiperSlide,
     GameModal,
     MarqueeText,
-    // PlatformBlock,
-    GameTypeSwiper
+    GameTypeSwiper,
+    AnnouncementView
   },
   setup() {
     const isFirstView = ref(false);
@@ -1027,10 +1031,6 @@ export default defineComponent({
           const lotteryTop = lotterySlide.getBoundingClientRect().top;
           const casualTop = casualSlide.getBoundingClientRect().top;
 
-          // console.log(topHeight);
-          // console.log(positionTop6);
-          // console.log(positionTop6 - 40 <= topHeight);
-
           if (casualTop <= stickyHeight) {
             selectedTab.value = "casual";
           } else if (lotteryTop <= stickyHeight) {
@@ -1048,8 +1048,6 @@ export default defineComponent({
           } else if (slotTop <= stickyHeight) {
             selectedTab.value = "slot";
           }
-
-          // console.log("selectedTab:::", selectedTab.value);
         }
       }
     };
@@ -1671,11 +1669,12 @@ export default defineComponent({
         // };
         // alert(info.version);
         var current_version = parseInt(info.version.replaceAll(".", ""));
-        var min_version = res.data.minVersion;
+
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+        var min_version = res.data.minVersion;
         // console.log(res);
         if (res.code === 0) {
           var version_info = res.data.version;
@@ -2245,6 +2244,7 @@ export default defineComponent({
 
   .q-tab-panel {
     padding: 0px;
+    background: transparent;
   }
 
   .q-tabs--vertical {
@@ -2618,6 +2618,10 @@ export default defineComponent({
 }
 
 .home-header-section {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+
   &.fixed-header {
     position: fixed;
     top: 0;

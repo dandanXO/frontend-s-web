@@ -155,4 +155,8 @@ export default defineComponent({
     }
   }
 }
+
+.q-tab-panels--dark {
+  background: none;
+}
 </style>
