@@ -1440,7 +1440,7 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      checkShowImgTop();
+      // checkShowImgTop();
       //TODO:: ADD IT BACK.
       // getAppDownloadUrl();
       // getUnreadTotal();
