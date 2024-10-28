@@ -4,13 +4,13 @@ import { userStore } from "@/store";
 export function loadPromo() {
   const store = userStore();
 
-  const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+  const platformApiUrl = "/opt-session/promo/page";
 
   return server.REST.get(platformApiUrl);
 }
 
 export function loadPromoBanner(category) {
-  return server.REST.get("/promo/banner", {
+  return server.REST.get("/opt-session/promo/banner", {
     params: {
       category: category
     }

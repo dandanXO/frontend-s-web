@@ -1,21 +1,6 @@
 <template>
   <div class="home">
-    <el-carousel class="banner-slider" height="25vw" arrow="always">
-      <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
-        <a @click="goBannerPage(banner.redirectUrl)">
-          <div
-            v-if="banner && banner.desktopImageUrl"
-            class="promo-bg isDesktop"
-            :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
-          ></div>
-          <div
-            v-if="banner && banner.mobileImageUrl"
-            class="promo-bg isMobile"
-            :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"
-          ></div>
-        </a>
-      </el-carousel-item>
-    </el-carousel>
+    <HomeBanner :goBannerPage="goBannerPage" />
     <div class="index-container">
       <div class="index-top-btn-container">
         <div class="index-operator-btn-box">
@@ -40,85 +25,6 @@
           </router-link>
         </div>
       </div>
-      <!--暂时没后端数据-->
-      <!-- <div class="index-title-container" style="margin-top: 50px;">
-          <div class="index-title-main">热门赛事</div>
-          <div class="index-title-sub">HOT EVENTS</div>
-      </div>
-      <div class="index-match-container">
-          <div class="index-match-box-sub index-match-CSGO index-match-box">
-              <div class="index-match-title">暂无赛事</div>
-              <div class="index-match-time"> - </div>
-              <div class="index-match-team-container">
-                  <div class="index-match-team-box">
-                      <div class="index-team-logo">
-                          <img class="match-home-logo" src="">
-                      </div>
-                      <div class="match-home-name">暂无</div>
-                  </div>
-                  <div class="txt-vs">
-                      VS
-                  </div>
-                  <div class="index-match-team-box">
-                      <div class="index-team-logo">
-                          <img class="match-away-logo" src="">
-                      </div>
-                      <div class="match-away-name">暂无</div>
-                  </div>
-              </div>
-              <a href="/games/esport.html" class="index-match-enter-btn">
-                  进入投注
-              </a>
-          </div>
-          <div class="index-match-box-main index-match-DOTA2 index-match-box">
-              <div class="index-match-title">暂无赛事</div>
-              <div class="index-match-time"> - </div>
-              <div class="index-match-team-container">
-                  <div class="index-match-team-box">
-                      <div class="index-team-logo">
-                          <img class="match-home-logo" src="">
-                      </div>
-                      <div class="match-home-name">暂无</div>
-                  </div>
-                  <div class="txt-vs" style="margin-top: 0;">
-                      VS
-                  </div>
-                  <div class="index-match-team-box">
-                      <div class="index-team-logo">
-                          <img class="match-away-logo" src="">
-                      </div>
-                      <div class="match-away-name">暂无</div>
-                  </div>
-              </div>
-              <a href="/games/esport.html" class="index-match-enter-btn">
-                  进入投注
-              </a>
-          </div>
-          <div class="index-match-box-sub index-match-LOL index-match-box" style="background-image: url('../assets/home/resources/dy//style/img/index/hot_event_bg_lol.png?cid=53606624d476e3a42d89db2aff7cba14');">
-              <div class="index-match-title">暂无赛事</div>
-              <div class="index-match-time"> - </div>
-              <div class="index-match-team-container">
-                  <div class="index-match-team-box">
-                      <div class="index-team-logo">
-                          <img class="match-home-logo" src="">
-                      </div>
-                      <div class="match-home-name">暂无</div>
-                  </div>
-                  <div class="txt-vs">
-                      VS
-                  </div>
-                  <div class="index-match-team-box">
-                      <div class="index-team-logo">
-                          <img class="match-away-logo" src="">
-                      </div>
-                      <div class="match-away-name">暂无</div>
-                  </div>
-              </div>
-              <a href="/games/esport.html" class="index-match-enter-btn">
-                  进入投注
-              </a>
-          </div>
-      </div> -->
       <div class="index-title-container">
         <div class="index-title-main">场馆投注</div>
         <div class="index-title-sub">VENUES BETTING</div>
@@ -147,15 +53,6 @@
                 <img src="../assets/home/IA.png" />
                 <div>小艾电竞</div>
               </div>
-
-              <!-- <div
-                class="game-platform"
-                @click="openGame('IM', 'onlyPlatform', 'IMES')"
-                style="margin-left: 14px"
-              >
-                <img src="../assets/home/dy.png" />
-                <div>IM电竞</div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -166,14 +63,6 @@
               <div class="platform-title-sub">SPORTS</div>
             </div>
             <div class="back">
-              <!-- <a
-                class="game-platform"
-                @click="openGame('东赢体育', 'DY', '')"
-                style="margin-top: 170px; margin-left: 30px;"
-              >
-                <img src="../assets/home/dy.png" />
-                <div>东赢体育</div>
-              </a> -->
               <div
                 class="game-platform"
                 @click="openGame('IM体育', 'IM', '')"
@@ -186,14 +75,6 @@
                 <img src="../assets/home/dy.png" />
                 <div>SABA体育</div>
               </div>
-              <!-- <div
-                class="game-platform"
-                @click="openGame('CR体育', 'CR', '')"
-                style="margin-left: 6px"
-              >
-                <img src="../assets/home/dy.png" />
-                <div>CR体育</div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -250,14 +131,6 @@
                 <img src="../assets/home/bbin.png" />
                 <div>BBIN彩票</div>
               </div>
-              <!-- <div
-                class="game-platform"
-                @click="openGame('SG-WIN彩票', 'SGWin', 'imlotto30000')"
-                style="margin-left: 22px"
-              >
-                <img src="../assets/home/sgwin.png" />
-                <div>SG-WIN彩票</div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -311,74 +184,6 @@
         <div class="title-czsj-zh">重置世界，颠覆未来</div>
         <div class="title-czsj-en">CHANGE THE WORLD</div>
       </div>
-      <!-- <div class="avg-fox">
-        <img
-          class="game-title"
-          src="../assets/home/hot_game.png"
-          alt="热门游戏"
-        />
-        <div class="game-item">
-          <div class="game-left">
-            <img src="../assets/home/game_left.png" alt="" />
-          </div>
-          <div class="game-content">
-            <router-link class="quick-plat" to="/eSports"
-              ><img src="../assets/home/index_quick_plat_esports.png" alt=""
-            /></router-link>
-            <router-link class="quick-plat" to="/sports"
-              ><img src="../assets/home/index_quick_plat_sport.png" alt=""
-            /></router-link>
-            <router-link class="quick-plat" to="/live-casino"
-              ><img src="../assets/home/index_quick_plat_live.png" alt=""
-            /></router-link>
-            <router-link class="quick-plat" to="/game"
-              ><img src="../assets/home/index_quick_plat_slot.png" alt=""
-            /></router-link>
-          </div>
-          <div class="game-right">
-            <img src="../assets/home/game_right.png" alt="" />
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="avg-list">
-        <img src="../assets/home/list_money.png" alt="" />
-        <img class="list-title" src="../assets/home/list_all.png" alt="" />
-      </div>
-      <div class="avg-earth">
-        <div
-          class="list-content"
-          style="justify-content: space-between; width: 1270px; margin: 0 auto"
-        >
-          <div onclick="fun_openGame('diaochan', 38)">
-            <img src="../assets/home/hot_game1.png" alt="" /><span
-              >进入游戏</span
-            >
-          </div>
-          <div onclick="fun_openGame('summon-conquer', 38)">
-            <img src="../assets/home/hot_game2.png" alt="" /><span
-              >进入游戏</span
-            >
-          </div>
-          <div onclick="fun_openGame('medusa2', 38)">
-            <img src="../assets/home/hot_game3.png" alt="" /><span
-              >进入游戏</span
-            >
-          </div>
-          <div onclick="fun_openGame('captains-bounty', 38)">
-            <img src="../assets/home/hot_game4.png" alt="" /><span
-              >进入游戏</span
-            >
-          </div>
-        </div>
-        <div class="avg-serve">
-          <img
-            class="serve-title"
-            src="../assets/home/server_title.png"
-            alt=""
-          />
-          <img class="serve-bg" src="../assets/home/server_bg.png" alt="" />
-        </div>
-      </div> -->
       <div class="avg-container">
         <div>
           <div class="avg-time-nv-box">
@@ -600,74 +405,6 @@
         <img :src="homePopupImg" class="alert-img" />
       </a>
     </el-dialog>
-
-    <!-- <el-dialog
-      @close="setWithExpiry('isImpt', true, 43200000)"
-      class="imptann-modal"
-      v-model="isImportantAnnouncementModal"
-    >
-
-      <img src="../assets/images/index/popup-web.jpg" class="alert-img" />
-
-    </el-dialog> -->
-    <!-- <el-dialog
-      class="imptann-modal"
-      v-model="isImportantAnnouncementModal"
-      align-center
-      title="重要公告"
-    >
-      <div class="modal-body">
-        <ul class="inoticeContentList">
-          <li class="inotice-title-li">
-            <span class="inotice-modal-content-title"
-              >邀请好友 双方有奖 三层奖金领不停</span
-            >
-            <div class="form-group inotice-mod">
-              好友首存赠送奖金，周存赠送奖金，投注赠送奖金！
-            </div>
-          </li>
-          <li class="inotice-title-li">
-            <span class="inotice-modal-content-title">NBA流水大作战</span>
-            <div class="form-group inotice-mod">
-              进球有奖，每日赠送1,588奖金
-            </div>
-          </li>
-          <li class="inotice-title-li">
-            <span class="inotice-modal-content-title">体育首单包赔</span>
-            <div class="form-group inotice-mod">体育赛事尽情投注，东赢买单</div>
-          </li>
-        </ul>
-        <div
-          class="form-group"
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 36px;
-            padding: 0;
-          "
-        >
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input inotice-nomorecheck"
-              id="inoticeNoMore"
-            />
-            <label
-              class="form-check-label inotice-check-label"
-              for="inoticeNoMore"
-              >不再提醒</label
-            >
-          </div>
-          <el-button class="knew" @click="isImportantAnnouncementModal = false"
-            >知道了
-          </el-button>
-          <el-button class="more" color="#434343"
-            ><a href="/promotion" target="_self">查看详情</a></el-button
-          >
-        </div>
-      </div>
-    </el-dialog> -->
   </div>
   <GameModal ref="gameMenu" />
 </template>
@@ -676,25 +413,18 @@
 /* eslint-disable */
 import GameModal from "@/components/modal/GameModal.vue";
 import { ref, onMounted, watch } from "vue";
-import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
-// import { numberCounter } from "vue3-number-counter";
+import { loadHomePopup } from "@/api/index/promo";
 import Vue3autocounter from "vue3-autocounter";
 import { useRouter } from "vue-router";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
+import HomeBanner from "@/components/home/HomeBanner.vue";
 
 const store = userStore();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const gameMenu = ref(null);
 const router = useRouter();
-const banners = ref([
-  // {
-  //   src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
-  // },
-  // {
-  //   src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
-  // }
-]);
+
 const isImportantAnnouncementModal = ref(false);
 const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
@@ -720,13 +450,7 @@ const getWithExpiry = (key) => {
   }
   return item.value;
 };
-const loadBanners = () => {
-  loadPromoBanner("HOME").then((res) => {
-    if (res.code === 0) {
-      banners.value = res.data;
-    }
-  });
-};
+
 const isFirstView = ref(false);
 const isImpt = getWithExpiry("isImpt");
 const homePopupImg = ref("");
@@ -828,7 +552,6 @@ const goBannerPage = (redirectUrl) => {
 };
 
 onMounted(() => {
-  loadBanners();
   if (store.token && store.memberType === "TEST") {
     checkShowImgTop();
   }
@@ -890,13 +613,14 @@ watch(
 
 .index-container {
   background: url(../assets/home/index_bg_dsj.png) center 1280px no-repeat;
+  font-family: 'PingFang SC';
 
   .index-top-btn-container {
     display: flex;
     max-width: calc($maxwidth + 40px);
     justify-content: space-between;
     align-items: flex-start;
-    margin: 30px auto;
+    margin: 20px auto;
 
     .index-operator-btn-box {
       display: flex;
@@ -912,9 +636,10 @@ watch(
         align-items: center;
         cursor: pointer;
         color: #e1d4d2;
-        padding-left: 26px;
+        padding-left: 60px;
         background-repeat: no-repeat;
         text-decoration: none;
+        font-family: 'PingFang SC';
 
         &.deposit {
           background-image: url(../assets/home/btn_bg_deposit.png);
@@ -945,7 +670,7 @@ watch(
         cursor: pointer;
         color: #e1d4d2;
         text-align: center;
-        padding-top: 10px;
+        padding-top: 8px;
         font-size: 14px;
         text-decoration: none;
 
@@ -990,46 +715,6 @@ watch(
         -webkit-transform: scale(1.03);
         transform: scale(1.03);
       }
-    }
-
-    .index-match-box-main {
-      width: 454px;
-      text-align: center;
-      height: 510px;
-      padding-top: 74px;
-      cursor: pointer;
-      background-repeat: no-repeat;
-      background-image: url(../assets/home/hot_event_bg_dota2.png);
-
-      .index-match-team-container {
-        width: 430px;
-        height: 100px;
-        margin: 10px auto 168px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-image: url(../assets/home/hot_event_bg_team.png);
-
-        .index-team-logo {
-          margin: 0 auto 35px;
-        }
-
-        .index-match-team-box {
-          width: 160px;
-          height: 92px;
-          padding-top: 27px;
-        }
-      }
-    }
-
-    .index-match-box-sub {
-      width: 408px;
-      text-align: center;
-      height: 457px;
-      padding-top: 67px;
-      cursor: pointer;
-      background-image: url("../assets/home/hot_event_bg_csgo.png");
-      background-repeat: no-repeat;
     }
 
     .index-match-title {
@@ -1082,14 +767,14 @@ watch(
     display: flex;
     justify-content: space-between;
     max-width: $maxwidth;
-    margin: 60px auto;
+    margin: 30px auto;
 
     .flipper {
       transition: 0.8s;
       transform-style: preserve-3d;
       position: relative;
       width: 228px;
-      height: 545px;
+      height: 500px;
       cursor: pointer;
 
       &.platform {
@@ -1362,7 +1047,7 @@ watch(
     text-align: center;
     color: #5e768c;
     max-width: $maxwidth;
-    margin: 94px auto 0;
+    margin: 45px auto 0;
 
     .avg-advantage {
       font-size: 30px;

@@ -483,7 +483,7 @@ import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
 import { debounce } from "lodash";
 import { getMemberLoginNameList } from "../../../../api/system-message-template";
-import { getActivePrivilegeInfoBySiteIdWithoutRebate } from "@/api/privilege-info";
+import { getActivePrivilegeInfoBySiteId } from "@/api/privilege-info";
 
 const store = useStore();
 const { t } = useI18n();
@@ -571,6 +571,7 @@ const uiControl = reactive({
 
 const gameTypes = ref([])
 const selectedRolloverType = ref();
+const excludePlatformGame = ref("");
 
 const importedPage = reactive({
   pages: 0,
@@ -746,6 +747,11 @@ function constructRollover() {
   if (uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE') {
     json.rollover = uiControl.rollOverAmt
   }
+
+  if (excludePlatformGame.value) {
+    json.excludePlatformGame = excludePlatformGame.value;
+  }
+
   form.rollover = uiControl.rollOverAmt ? uiControl.rollOverAmt : 1;
   return JSON.stringify(json)
 }
@@ -903,7 +909,9 @@ function selectPrivilege(val) {
         Object.entries(gameTypeRollover).forEach(([key, value]) => {
           if (key === 'rollover') {
             uiControl.rollOverAmt = value; // Set rollover amount
-          } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'gameTypes' && key !== 'excludeTypes') {
+          } else if (key === 'excludePlatformGame') {
+            excludePlatformGame.value = value;
+          } else if (key !== 'rolloverType' && key !== 'newRollover' && key !== 'excludePlatformGame' && key !== 'gameTypes' && key !== 'excludeTypes') {
             // Handle individual game types
             gameTypes.value.push({ key, value });
           } else if (key === 'gameTypes' && Array.isArray(value)) {
@@ -1255,7 +1263,7 @@ onMounted(async() => {
 })
 
 async function loadPrivilegeInfos() {
-  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteIdWithoutRebate(selected.site);
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(selected.site);
   privilegeInfoList.list = privilegeInfo;
 }
 

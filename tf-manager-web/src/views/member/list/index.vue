@@ -865,6 +865,12 @@ const formRules = reactive({
   loginName: [
     required(t('message.validateLoginNameRequired')),
     size(6, 12, t('message.validateLoginNameSize')),
+    {
+      required: true,
+      pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+      message: t('message.validateLoginNameNoSpecialCharacter'),
+      trigger: 'blur',
+    },
   ],
   password: [
     required(t('message.validatePasswordRequired')),

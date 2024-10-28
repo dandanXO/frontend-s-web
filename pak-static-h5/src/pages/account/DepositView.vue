@@ -98,9 +98,10 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
           <div class="lil-title flex-div" style="justify-content: space-between">
-            <q-checkbox v-if="isFromFtdPromo" v-model="isFtdPrivilegeEnable">
+            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN'">
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
+            <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
             <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
             <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
@@ -192,6 +193,7 @@
           v-model="selectedPrivilege"
           emit-value
           v-if="hasPrivilege && unselectedPrivileges.length > 0"
+          v-show="false"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
         >
@@ -433,7 +435,9 @@ const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
-const isFtdPrivilege = computed(() => isFtdPrivilegeEnable.value && extraPrivilegeId.value && ftd.value === "OPEN");
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === "OPEN" && isFtdPrivilegeEnable.value === true
+);
 
 const isFtdPrivilegePayType = computed(
   () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
@@ -755,7 +759,7 @@ async function confirmDeposit() {
             form.privilegeId = activeMethod.value.privilegeId;
           }
 
-          if (isFtdPrivilegePayType.value && extraPrivilegeId.value) {
+          if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
@@ -968,6 +972,7 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.ftdPrivilegeId;
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
 
         // selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
@@ -975,6 +980,10 @@ const loadAppTabs = () => {
       }
       if (data && data.hasOwnProperty("ftd")) {
         store.ftd = data.ftd;
+
+        if (store.ftd) {
+          isFtdPrivilegeEnable.value = true;
+        }
       }
     }
   });

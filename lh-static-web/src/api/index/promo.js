@@ -588,3 +588,31 @@ export function getGlobalKeyRecord(promoCode, page) {
     }
   });
 }
+
+export function claimGlobalCheckInTreasure(promoCode, day) {
+  return server.EVENT.post(`/session/treasure-key/claimCheckIn`, { promoCode, day });
+}
+
+export function getGameTypeBonusInit(promoCode) {
+  return server.EVENT.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimGameTypeBonus(promoCode) {
+  return server.EVENT.post("/session/game-type-bonus/claim", { promoCode });
+}
+
+export function getCompetitionBetDepositInit(promoCode) {
+  return server.EVENT.get("/session/competition-bet-deposit/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBetDepositBonus(promoCode) {
+  return server.EVENT.post("/session/competition-bet-deposit/claimBonus", { promoCode });
+}

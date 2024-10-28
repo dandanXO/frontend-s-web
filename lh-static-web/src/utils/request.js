@@ -78,7 +78,7 @@ const globalLinks = [
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const globalAndCNLinks = ["leihuo", "e693.cc", "e890.cc", "e561.cc", "e396.cc"];
+const globalAndCNLinks = ["leihuo", "lhgl", "e693.cc", "e890.cc", "e561.cc", "e396.cc"];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 const REPLACEMENT_DOMAIN = "random";
@@ -274,6 +274,7 @@ const onResponse = (response) => {
         res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
         res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
         res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+        res.code === ResponseCode.ERROR_PROMO_NOT_IN_RANGE ||
         res.code === ResponseCode.ERROR_SYSTEM
       ) {
         ui.notify({

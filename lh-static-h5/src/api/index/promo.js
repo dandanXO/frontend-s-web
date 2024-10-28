@@ -125,36 +125,41 @@ export function getStepRecords(current, currentStage) {
 
 // 意见反馈
 export function getTreasureDetail(promoCode) {
-  return eventapi.get(`/event-treasure/get-treasure-detail/${promoCode}`);
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/event-treasure/get-treasure-detail/${promoCode}?v=${randNum}`);
 }
 export function getKeyCount(promoCode) {
-  return eventapi.get(`/event-treasure/get-key`, {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/event-treasure/get-key?v=${randNum}`, {
     params: {
       promoCode
     }
   });
 }
 export function getOpenRecord(promoCode, page) {
-  console.log(page);
-  return eventapi.get(`/event-treasure/get-open-record/${promoCode}`, {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/event-treasure/get-open-record/${promoCode}?v=${randNum}`, {
     size: page.size,
     current: page.current
   });
 }
 
 export function getKeyRecord(promoCode, page) {
-  return eventapi.get(`/event-treasure/get-key-record/${promoCode}`, {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/event-treasure/get-key-record/${promoCode}?v=${randNum}`, {
     size: page.size,
     current: page.current
   });
 }
 
 export function openTreasure(promoCode, treasureLevel) {
-  return eventapi.post(`/event-treasure/open`, qs.stringify({ promoCode, treasureLevel }));
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/event-treasure/open?v=${randNum}`, qs.stringify({ promoCode, treasureLevel }));
 }
 
 export function getCheckInRecord(promoCode) {
-  return eventapi.get(`/event-check-in/get-record`, {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/event-check-in/get-record?v=${randNum}`, {
     params: {
       promoCode
     }
@@ -162,7 +167,8 @@ export function getCheckInRecord(promoCode) {
 }
 
 export function claimCheckInTreasure(promoCode, days) {
-  return eventapi.post(`/event-check-in/open`, qs.stringify({ promoCode, days }));
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/event-check-in/open?v=${randNum}`, qs.stringify({ promoCode, days }));
 }
 
 export function getLOLMsiMatchRecord() {
@@ -445,4 +451,31 @@ export function getGlobalKeyRecord(promoCode, page) {
     }
   });
 }
+export function claimGlobalCheckInTreasure(promoCode, day) {
+  return eventapi.post(`/session/treasure-key/claimCheckIn`, qs.stringify({ promoCode, day }));
+}
 
+export function getGameTypeBonusInit(promoCode) {
+  return eventapi.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimGameTypeBonus(promoCode) {
+  return eventapi.post(`/session/game-type-bonus/claim`, qs.stringify({ promoCode }));
+}
+
+export function getCompetitionBetDepositInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-deposit/init?v=${randNum}`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBetDepositBonus(promoCode) {
+  return eventapi.post(`/session/competition-bet-deposit/claimBonus`, qs.stringify({ promoCode }));
+}

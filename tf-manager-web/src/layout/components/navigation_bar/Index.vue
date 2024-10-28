@@ -36,7 +36,7 @@
           </div>
           <div class="text-2">
             <router-link
-              v-if="hasPermission(['sys:withdraw:simple:list'])"
+              v-if="hasPermission(['sys:withdraw:simple:list']) || hasPermission(['sys:withdraw:apply'])"
               :to="{
                 path: `/withdraw/withdraw-process-simple/apply`,
                 force: true,
