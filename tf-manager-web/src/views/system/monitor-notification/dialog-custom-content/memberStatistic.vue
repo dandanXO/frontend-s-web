@@ -94,7 +94,7 @@ import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
 
 const store = useStore();
-const emit = defineEmits(['submitSuccess']);
+const emit = defineEmits(['submitting', 'submitSuccess', 'submitFailed']);
 const props = defineProps({
   currentItem: {
     type: Object,
@@ -179,6 +179,8 @@ const rules = {
 };
 
 const submitForm = async () => {
+  emit('submitting'); // 通知父元件
+
   await formRef.value.validate();
   formData.value.notificationSetting.setting.systemRoleIdListToSendNotification = getRoleIdsByNames(selectedRoleNameArr.value, simpleRoleArrBySite.value)
   formData.value.notificationSetting.setting.systemUserIdListToExclude = getUserIdsByNames(excludedUserNameArr.value, simpleUserArrBySelectedRoles.value)
@@ -200,6 +202,8 @@ const submitForm = async () => {
     emit('submitSuccess'); // 通知父元件
   } catch (error) {
     ElMessage.error(error.message);
+  } finally {
+    emit('submitFailed'); // 通知父元件
   }
 };
 
