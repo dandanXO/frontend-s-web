@@ -341,7 +341,8 @@
       "turnoverProgress": "Turnover Progress",
       "status": "Completion Status",
       "goComplete": "Go Complete",
-      "back": "Back"
+      "back": "Back",
+      "refresh": "Refresh"
     },
     "types_esport": "eSports",
     "types_sport": "Sports",

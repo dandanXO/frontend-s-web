@@ -32,7 +32,7 @@
             <th align="center">投注要求</th>
             <th align="center">
               流水进度
-              <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
+              <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" /> -->
             </th>
             <th align="center">完成状态</th>
           </tr>
@@ -47,7 +47,11 @@
           </tr>
         </tbody>
       </table>
-      <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+      <!-- <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button> -->
+      <div class="withdraw-remaining-dialog__buttons">
+        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+      </div>
     </div>
   </el-dialog>
 </template>
@@ -154,7 +158,7 @@ onMounted(() => {
 
     .withdraw-remaining-dialog__header {
       background: url(@/assets/images/finance/withdraw/withdraw-remaining-bg.png) no-repeat;
-      background-size: 100%;
+      background-size: 100% 100%;
       aspect-ratio: 530 / 92;
       padding: 24px 20px 0;
       box-sizing: border-box;
@@ -193,12 +197,12 @@ onMounted(() => {
         font-size: 20px;
         font-weight: 600;
         line-height: 24px;
-        text-align: center;
+        text-align: left;
         color: #424f72;
         display: flex;
         gap: 5px;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
       }
       .withdraw-remaining-dialog__body-table {
         width: 100%;
@@ -266,6 +270,13 @@ onMounted(() => {
       }
     }
 
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
     .withdraw-remaining-dialog__action {
       width: 100%;
       box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
@@ -276,10 +287,19 @@ onMounted(() => {
       font-weight: 600;
       line-height: 25.2px;
       text-align: center;
+      background: url(@/assets/images/finance/withdraw/active-btn.png);
+      background-size: 100% 100%;
       color: #fff;
+      opacity: .9;
+      &:first-of-type {
+        background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
 
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }

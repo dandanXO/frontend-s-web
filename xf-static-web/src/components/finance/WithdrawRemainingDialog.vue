@@ -32,7 +32,7 @@
             <th align="center">投注要求</th>
             <th align="center">
               流水进度
-              <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
+              <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" /> -->
             </th>
             <th align="center">完成状态</th>
           </tr>
@@ -47,7 +47,11 @@
           </tr>
         </tbody>
       </table>
-      <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+      <!-- <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button> -->
+      <div class="withdraw-remaining-dialog__buttons">
+        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+      </div>
     </div>
   </el-dialog>
 </template>
@@ -191,11 +195,11 @@ onMounted(() => {
         font-size: 20px;
         font-weight: 600;
         line-height: 24px;
-        text-align: center;
+        text-align: left;
         display: flex;
         gap: 5px;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
       }
       .withdraw-remaining-dialog__body-table {
         width: 100%;
@@ -267,19 +271,38 @@ onMounted(() => {
       }
     }
 
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
       background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
+      background: url(@/assets/images/finance/withdraw/active-btn.png);
+      filter: hue-rotate(-30deg);
+      background-size: 100% 100%;
+      color: #fff;
       border-radius: 4px;
       padding: 10px 0;
       font-size: 18px;
       font-weight: 600;
       line-height: 25.2px;
       text-align: center;
+      cursor: pointer;
+      opacity: .9;
+      &:first-of-type {
+      background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
+      background-size: 100% 100%;
+      color: #7a80a1;
+      }
 
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }
