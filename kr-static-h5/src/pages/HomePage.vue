@@ -605,7 +605,7 @@
         v-for="(item, index) in popupBanners"
         :name="index"
         class="column no-wrap flex-center"
-        style="padding: 0; width: 100vw; height: 100vh;"
+        style="padding: 0; width: 100vw; height: 100vh;background-size: 100% 100%;"
         :img-src="imgURL + item.mobileImgUrl"
         :key="item.title"
         v-show="!closedLoginBannerList.has(item.title)"

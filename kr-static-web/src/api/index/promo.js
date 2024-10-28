@@ -290,5 +290,5 @@ export function getPrizeAmount(promoCode) {
 }
 
 export function loadLoginHomePopup() {
-  return server.EVENT.get("/member/site-popout-list");
+  return server.REST.get("/member/site-popout-list");
 }
