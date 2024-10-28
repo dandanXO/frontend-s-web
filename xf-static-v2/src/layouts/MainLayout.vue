@@ -47,18 +47,13 @@
     </q-header>
 
     <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
-      <div class="q-pa-md bg-brightbtn">游戏平台</div>
-      <div class="platforms q-pt-md">
-        <!--        <div class="text-bright q-px-sm q-pt-md">-->
-        <!--          -->
-        <!--        </div>-->
-      </div>
+      <div class="text-center q-pa-md">游戏平台</div>
       <q-scroll-area class="fit">
-        <div class="q-pa-sm platform-list">
+        <div class="q-pa-md platform-list">
           <q-btn
             @click="changePlatform(plat)"
             size="md"
-            color="brightbtn"
+            :color="isPlatformActive(plat.code) ? 'brightbtn' : ''"
             v-for="(plat, n) in platformsList"
             :key="n"
             :label="plat.icon"
@@ -134,12 +129,7 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
-    // ui.$onAction(({ name, args }) => {
-    //   switch (name) {
-    //     case "setScrollPosition":
-    //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-    //   }
-    // });
+
     const goToPrevPage = (prePage) => {
       if (prePage === "/") {
         router.push("/");
@@ -449,7 +439,11 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    console.log(platformsList.value);
+    // console.log(platformsList.value);
+
+    const isPlatformActive = (platformCode) => {
+      return route.query.platform === platformCode;
+    };
 
     onMounted(() => {
       checkRoute();
@@ -470,7 +464,8 @@ export default defineComponent({
       goToPrevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      isPlatformActive
     };
   }
 });
@@ -478,12 +473,14 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .q-drawer .platform-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px;
 
   .q-btn {
-    width: 40%;
+    width: 100%;
+    // width: 40%;
+    box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
   }
 }
 

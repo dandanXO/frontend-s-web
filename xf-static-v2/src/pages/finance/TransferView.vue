@@ -1,89 +1,80 @@
 <template>
   <div>
-    <AcctBal
-      :isTransfer="autoTransfer"
-      :platforms="platforms"
-      :updateAutoTransfer="updateAutoTransferState"
-    />
-    <div v-if="!autoTransfer" class="q-pa-md bg-dark q-mx-sm q-my-md">
-      <q-form ref="transferFormRef">
-        <div class="transferfromto q-mb-md">
-          <q-select
-            hide-bottom-space
-            rounded
-            outlined
-            dense
-            v-model="transferFrom"
-            option-value="id"
-            emit-value
-            color="white"
-            :options="transferFromOpt"
-            map-options
-            @update:model-value="updateTransferDropdown"
-          />
-          <div class="icon">
-            <img src="../../assets/images/finance/withdraw/arrow_right.png" />
+    <AcctBal :isTransfer="autoTransfer" :platforms="platforms" :updateAutoTransfer="updateAutoTransferState" />
+    <div class="q-px-md" v-if="!autoTransfer">
+      <div class="transfer-wrapper">
+        <q-form ref="transferFormRef">
+          <div class="transferfromto q-mb-md">
+            <q-select
+              hide-bottom-space
+              dense
+              v-model="transferFrom"
+              option-value="id"
+              emit-value
+              :options="transferFromOpt"
+              map-options
+              @update:model-value="updateTransferDropdown"
+              outlined
+              color="white"
+              bg-color="recinputstyle"
+            />
+            <div class="icon">
+              <img src="../../assets/images/finance/withdraw/arrow_right.png" />
+            </div>
+            <q-select
+              hide-bottom-space
+              dense
+              v-model="transferTo"
+              option-value="id"
+              emit-value
+              :options="transferToOpt"
+              map-options
+              @update:model-value="updateTransferDropdown"
+              outlined
+              color="white"
+              bg-color="recinputstyle"
+            />
           </div>
-          <q-select
+          <div class="transferamounts q-my-md">
+            <div class="val" v-for="(amt, i) in amounts" :key="i" @click="transferInfo.amount = amt">
+              {{ amt }}
+            </div>
+          </div>
+
+          <q-input
             hide-bottom-space
-            rounded
+            ref="amountRef"
+            v-model="transferInfo.amount"
+            label="金额"
+            clearable
+            :rules="[(val) => !!val || '请输入转账金额']"
+            @click="clearInput"
             outlined
-            dense
-            v-model="transferTo"
-            option-value="id"
-            emit-value
             color="white"
-            :options="transferToOpt"
-            map-options
-            @update:model-value="updateTransferDropdown"
-          />
-        </div>
-        <div class="transferamounts q-my-md">
-          <div
-            class="val"
-            v-for="(amt, i) in amounts"
-            :key="i"
-            @click="transferInfo.amount = amt"
+            bg-color="recinputstyle"
           >
-            {{ amt }}
-          </div>
-        </div>
+            <template v-slot:prepend>
+              <span style="font-size: 26px" class="text-bright">
+                {{ store.currency.value }}
+              </span>
+            </template>
+            <template v-slot:append>
+              <span style="font-size: 26px" class="text-bright">
+                <q-btn label="最大金额" @click="updateTransferAmt" color="brightbtn" />
+              </span>
+            </template>
+          </q-input>
 
-        <q-input
-          hide-bottom-space
-          ref="amountRef"
-          v-model="transferInfo.amount"
-          label="金额"
-          clearable
-          color="white"
-          :rules="[(val) => !!val || '请输入转账金额']"
-          @click="clearInput"
-        >
-          <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">
-              {{ store.currency.value }}
-            </span>
-          </template>
-          <template v-slot:append>
-            <span style="font-size: 26px" class="text-bright">
-              <q-btn
-                label="最大金额"
-                @click="updateTransferAmt"
-                color="brightbtn"
-              />
-            </span>
-          </template>
-        </q-input>
-
-        <q-btn
-          style="width: 100%"
-          class="q-mt-md fit"
-          color="brightbtn"
-          @click="submitTransfer"
-          label="立即转账"
-          :loading="isTransferring"
-        />
-      </q-form>
+          <q-btn
+            style="width: 100%"
+            class="q-mt-md fit"
+            color="brightbtn"
+            @click="submitTransfer"
+            label="立即转账"
+            :loading="isTransferring"
+          />
+        </q-form>
+      </div>
     </div>
   </div>
 </template>
@@ -327,24 +318,30 @@ onMounted(() => {
 
 <style lang="scss">
 .transferfromto {
-  .q-field--auto-height .q-field__native,
-  .q-field--auto-height .q-field__prefix,
-  .q-field--auto-height .q-field__suffix {
-    justify-content: center;
-  }
+  // .q-field--auto-height .q-field__native,
+  // .q-field--auto-height .q-field__prefix,
+  // .q-field--auto-height .q-field__suffix {
+  //   justify-content: center;
+  // }
 
-  .q-field--dark .q-field__control:before {
-    background: #505771;
-    border: 0px solid;
-  }
+  // .q-field--dark .q-field__control:before {
+  //   background: #505771;
+  //   border: 0px solid;
+  // }
 
-  .q-field__after,
-  .q-field__append {
-    padding: 0;
-  }
+  // .q-field__after,
+  // .q-field__append {
+  //   padding: 0;
+  // }
 }
 </style>
 <style lang="scss" scoped>
+.transfer-wrapper {
+  padding: 16px;
+  background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  border-radius: 6px;
+}
+
 .transferfromto {
   display: flex;
   justify-content: space-between;
@@ -359,9 +356,10 @@ onMounted(() => {
     flex: 1;
 
     img {
-      width: 50%;
+      width: 100%;
       margin: 0 auto;
       display: block;
+      max-width: 24px;
     }
   }
 }
@@ -370,17 +368,20 @@ onMounted(() => {
   display: flex;
   font-size: 20px;
   line-height: 20px;
-  color: #bacef1;
+  font-size: 10px;
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
+  gap: 12px;
 
   .val {
     cursor: pointer;
-    border: 1px solid #33bcd4;
+    border: 1px solid transparent;
     padding: 5px 8px;
     border-radius: 5px;
     text-align: center;
+    background: #273354;
+    width: 100%;
   }
 }
 </style>

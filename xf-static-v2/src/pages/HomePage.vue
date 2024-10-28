@@ -803,8 +803,23 @@
     show-cancel-button
     :showCancelButton="false"
     :showConfirmButton="false"
+    :persistent="isOutdatedApp"
   >
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <div class="update-container">
+      <div class="update-content">
+        <span>发现新版本，请立即更新。</span>
+        <span>若更新出现异常，请卸载后从下载 地址重新安装。</span>
+        <div class="q-mt-lg">
+          <span class="download-txt">下载地址:http://lh8888.app</span>
+          <span class="download-txt q-ml-sm">点击下载</span>
+        </div>
+      </div>
+      <div class="btn-group" :class="{ half: isOutdatedApp }">
+        <q-btn v-if="!isOutdatedApp" size="md" label="取消" color="blueborderbtn" @click="cancelUpdate" />
+        <q-btn size="md" label="立即下载" color="brightbtn" @click="openDownloadPage" />
+      </div>
+    </div>
+    <!-- <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
           <div class="titles backgroundColor">更新公告</div>
@@ -815,7 +830,7 @@
           <div class="confirmsbtns btncolor" @click="openDownloadPage">立即更新</div>
         </div>
       </div>
-    </q-card>
+    </q-card> -->
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
@@ -1645,6 +1660,7 @@ export default defineComponent({
 
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
+    const isOutdatedApp = ref(false);
     const getVersionNo = async () => {
       // console.log(Platform);
       // alert("Capacitor" + Platform.is.capacitor);
@@ -1655,6 +1671,7 @@ export default defineComponent({
         // };
         // alert(info.version);
         var current_version = parseInt(info.version.replaceAll(".", ""));
+        var min_version = res.data.minVersion;
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
@@ -1669,6 +1686,13 @@ export default defineComponent({
           // console.log(download_url.value);
           if (latest_ver_no > current_version) {
             isAppUpdateModal.value = true;
+          }
+
+          if (min_version) {
+            var min_ver_no = parseInt(min_version.replaceAll(".", ""));
+            if (min_ver_no > current_version) {
+              isOutdatedApp.value = true;
+            }
           }
         }
       }
@@ -1804,7 +1828,8 @@ export default defineComponent({
       scrollToTop,
       isScrolling,
       swiperContainerRef,
-      scrollToSlide
+      scrollToSlide,
+      isOutdatedApp
     };
   }
 });
@@ -1890,97 +1915,140 @@ export default defineComponent({
 }
 
 .modal-update-div {
-  .modalcontent {
-    background: #fff;
-    height: 232px;
-    box-sizing: border-box;
-
+  .update-container {
+    position: relative;
+    background: url("../assets/images/index/update-bg.png") no-repeat center center;
+    overflow: hidden;
+    width: 80%;
+    max-width: 360px;
+    min-width: 290px;
+    background-size: 100% 100%;
+    aspect-ratio: 4/5;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 0px 0px 16px;
-
-    .headers {
-      width: 100%;
-      box-sizing: border-box;
-      height: 37px;
-      line-height: 37px;
-      background: #1976d2;
-      color: #fff;
-      text-align: center;
-      font-size: 15px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .contents {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 12px;
-      text-align: center;
-
-      .contentfonts {
-        text-align: center;
-        color: #333;
+    padding: 0 24px 24px 24px;
+    align-items: center;
+    .update-content {
+      font-family: PingFang SC;
+      font-weight: 600;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: calc(50% + 24px);
+      > span {
         font-size: 16px;
-        margin: 37px 0 20.5px 0;
       }
-
-      .inputs {
-        width: 292px;
-        height: 36px;
-        border-radius: 4px 4px;
-        border: 1px solid #666;
-        box-sizing: border-box;
-        margin: 0 auto;
-        padding-left: 20px;
-
-        .van-field__control {
-          height: 100%;
-          width: 100%;
-        }
+      .download-txt {
+        color: #01bfd8;
+        font-size: 12px;
       }
     }
-
-    .btnsreas {
-      width: 100%;
-      box-sizing: border-box;
+    .btn-group {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      margin-top: 23.5px;
-
-      .cacnels {
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      > button {
         flex: 1;
-        background: #f7fcfd;
-        box-sizing: border-box;
-        color: #1976d2;
-        border: 1px solid #1976d2;
-        border-radius: 6px;
-        line-height: 40px;
-        height: 40px;
-        text-align: center;
-        letter-spacing: 1px;
-        font-size: 14px;
-        margin-right: 8px;
       }
-
-      .confirmsbtns {
-        flex: 1;
-        box-sizing: border-box;
-        border-radius: 6px;
-        line-height: 40px;
-        height: 40px;
-        text-align: center;
-        color: #fff;
-        background: #1976d2;
-        letter-spacing: 1px;
-        font-size: 14px;
+      &.half {
+        width: 50%;
       }
     }
   }
+  // .modalcontent {
+  //   background: #fff;
+  //   height: 232px;
+  //   box-sizing: border-box;
+
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: space-between;
+  //   align-items: flex-start;
+  //   padding: 0px 0px 16px;
+
+  //   .headers {
+  //     width: 100%;
+  //     box-sizing: border-box;
+  //     height: 37px;
+  //     line-height: 37px;
+  //     background: #1976d2;
+  //     color: #fff;
+  //     text-align: center;
+  //     font-size: 15px;
+  //     font-weight: bold;
+  //     letter-spacing: 1px;
+  //   }
+
+  //   .contents {
+  //     width: 100%;
+  //     box-sizing: border-box;
+  //     padding: 10px 12px;
+  //     text-align: center;
+
+  //     .contentfonts {
+  //       text-align: center;
+  //       color: #333;
+  //       font-size: 16px;
+  //       margin: 37px 0 20.5px 0;
+  //     }
+
+  //     .inputs {
+  //       width: 292px;
+  //       height: 36px;
+  //       border-radius: 4px 4px;
+  //       border: 1px solid #666;
+  //       box-sizing: border-box;
+  //       margin: 0 auto;
+  //       padding-left: 20px;
+
+  //       .van-field__control {
+  //         height: 100%;
+  //         width: 100%;
+  //       }
+  //     }
+  //   }
+
+  //   .btnsreas {
+  //     width: 100%;
+  //     box-sizing: border-box;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: space-between;
+  //     padding: 0 20px;
+  //     margin-top: 23.5px;
+
+  //     .cacnels {
+  //       flex: 1;
+  //       background: #f7fcfd;
+  //       box-sizing: border-box;
+  //       color: #1976d2;
+  //       border: 1px solid #1976d2;
+  //       border-radius: 6px;
+  //       line-height: 40px;
+  //       height: 40px;
+  //       text-align: center;
+  //       letter-spacing: 1px;
+  //       font-size: 14px;
+  //       margin-right: 8px;
+  //     }
+
+  //     .confirmsbtns {
+  //       flex: 1;
+  //       box-sizing: border-box;
+  //       border-radius: 6px;
+  //       line-height: 40px;
+  //       height: 40px;
+  //       text-align: center;
+  //       color: #fff;
+  //       background: #1976d2;
+  //       letter-spacing: 1px;
+  //       font-size: 14px;
+  //     }
+  //   }
+  // }
 }
 
 .download-top-container {
@@ -2567,7 +2635,7 @@ export default defineComponent({
   .user-vip {
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     padding: 4px 12px 4px 20px;
     background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
     box-shadow: 0px 0px 4px 0px #ffffff inset;

@@ -1,27 +1,26 @@
 <template>
-  <div class="table-record">
+  <div class="table-record q-pa-md">
     <div class="flex-div">
-      <span class="select-stage">选择平台：</span>
+      <!-- <span class="select-stage">选择平台：</span> -->
       <q-select
         allowClear
-        rounded
-        outlined
         dense
-        color="white"
-        style="width: 200px; margin: 10px auto 8px 8px"
+        style="width: 100%"
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
         @update:model-value="searchRecord"
-      ></q-select>
-      <div class="payout-total">
-        <div>总投注: {{ totalBetRecord.totalBet }}</div>
-        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
-      </div>
+        outlined
+        color="white"
+        bg-color="recinputstyle"
+      >
+        <template v-slot:prepend><span>选择平台:</span></template>
+      </q-select>
     </div>
     <div class="flex-div">
-      <span>开始：</span>
-      <q-input rounded outlined dense v-model="startDate">
+      <!-- <span>开始：</span> -->
+      <q-input dense v-model="startDate" outlined color="white" bg-color="recinputstyle">
+        <template v-slot:prepend><span>开始：</span></template>
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -34,8 +33,9 @@
           </q-icon>
         </template>
       </q-input>
-      <span>结束：</span>
-      <q-input rounded outlined dense v-model="endDate">
+      <!-- <span>结束：</span> -->
+      <q-input dense v-model="endDate" outlined color="white" bg-color="recinputstyle">
+        <template v-slot:prepend><span>结束：</span></template>
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -48,6 +48,11 @@
           </q-icon>
         </template>
       </q-input>
+    </div>
+
+    <div class="payout-total flex-div">
+      <div>总投注: {{ totalBetRecord.totalBet }}</div>
+      <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
     </div>
 
     <RecordComponent
@@ -232,6 +237,8 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
 
   span {
     font-size: 14px;

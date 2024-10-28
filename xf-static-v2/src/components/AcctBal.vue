@@ -1,128 +1,76 @@
 <template>
   <div class="acct-balances bg-dark q-ma-sm q-pa-sm">
     <div class="top-balance">
-      <div class="mainbal">
-        <div class="icon">
-          <img src="../assets/images/finance/withdraw/wallet.png" />
+      <div class="top-mainbal">
+        <div class="mainbal">
+          <div class="icon">
+            <img src="../assets/images/finance/icon-wallet.png" />
+          </div>
+          <div class="label">中心钱包</div>
         </div>
         <div class="wallet">
-          <div class="label">中心钱包</div>
-          <div class="balamt text-bright" @click="loadBalance">
-            <span v-if="!isLoadingBalance">
-              {{ store.currency.value }}{{ store.balance.toFixed(2) }}
-            </span>
+          <div class="balamt text-white" @click="loadBalance">
+            <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance.toFixed(2) }}</span>
             <span v-if="isLoadingBalance">加载中...</span>
           </div>
         </div>
       </div>
-      <div class="refreshItems">
-        <div
-          v-if="!isRefreshingBalance"
-          class="refreshAll"
-          @click="refreshBalance('all')"
-        >
-          <div class="icon">
-            <img src="../assets/images/finance/withdraw/refresh.png" />
-          </div>
-          <div class="label">一键刷新</div>
-        </div>
-        <div v-else>请稍等{{ seconds }}秒</div>
-        <div
-          v-if="!isTransferring"
-          class="transferAll"
-          @click="transferOutAll"
-        >
-          <div class="icon">
-            <img src="../assets/images/finance/withdraw/transfer_icon.png" />
-          </div>
-          <div class="label">一键转出</div>
-        </div>
-        <div v-else>转出中...</div>
+
+      <div class="refreshItems row q-gutter-x-md">
+        <q-btn color="brightbtn" @click="refreshBalance('all')" :disable="isRefreshingBalance">
+          <template v-if="!isRefreshingBalance">刷新余额</template>
+          <template v-else>请稍等{{ seconds }}秒</template>
+        </q-btn>
+        <q-btn @click="transferOutAll" color="orangebtn" :disable="isTransferring">
+          <template v-if="!isTransferring">一键转出</template>
+          <template v-else>转出中...</template>
+        </q-btn>
       </div>
     </div>
-    <div class="toggle-container text-brand q-pa-sm">
-      <div class="balance-transfer-note">
-        除了以下平台需要转账，其它游戏平台都无需转账即可游戏
-      </div>
+
+    <div class="toggle-container q-mt-md">
       <div class="balance-transfer-button">
+        自动平台转账:
         <q-toggle
           v-model="isTransferRef"
           class="wtf"
-          :label="`自动平台转账: ${isTransfer ? '已开启' : '已关闭'}`"
+          :label="` ${isTransfer ? '已开启' : '已关闭'}`"
           left-label
           @update:model-value="updateAutoTransfer($event)"
-          color="positive"
+          color="blue"
         ></q-toggle>
       </div>
-    </div>
-
-    <q-separator />
-    <div
-      class="transfer-plat-wrapper"
-      :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'"
-    >
-      <div class="transfer-plat-inner">
-        <div
-          class="transfer-plat-item"
-          v-for="p in props.platforms"
-          :key="p.id"
-          @click="refreshBalance(p.code)"
-        >
-          <div class="flex-box flex-justify-space transfer-balance-box">
-            <div class="platform-details">
-              <div class="name-wrapper">
-                <div class="plat-name">{{ p.name }}</div>
-              </div>
-              <div class="balance-wrapper">
-                <span class="text-bold" v-if="p.isLoading">加载中...</span>
-                <span class="text-bold" v-else-if="p.isTransferring">
-                  转出中...
-                </span>
-                <span v-else>
-                  {{ store.currency.value }}
-                  {{
-                    p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2)
-                  }}
-                </span>
+      <q-separator />
+      <div class="balance-transfer-note q-pt-sm">除了以下平台需要转账，其它游戏平台都无需转账即可游戏</div>
+      <div class="transfer-plat-wrapper" :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'">
+        <div class="transfer-plat-inner">
+          <div class="transfer-plat-item" v-for="p in props.platforms" :key="p.id" @click="refreshBalance(p.code)">
+            <div class="flex-box flex-justify-space transfer-balance-box">
+              <div class="platform-details">
+                <div class="name-wrapper">
+                  <div class="plat-name">{{ p.name }}</div>
+                </div>
+                <div class="balance-wrapper">
+                  <span class="text-bold" v-if="p.isLoading">加载中...</span>
+                  <span class="text-bold" v-else-if="p.isTransferring">转出中...</span>
+                  <span v-else>
+                    {{ store.currency.value }}
+                    {{ p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2) }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-
-          <!-- <div
-            class="flex-box flex-wrap transfer-action-box"
-          >
-            <q-form
-              ref="formRef"
-              :hideRequiredMark="true"
-              :model="transferInfo"
-              :rules="rules"
-              :label-col="{ span: 4 }"
-              type="vertical"
-            >
-               <q-input
-                  v-model:value="transferInfo.amount"
-                  placeholder="Amount"
-                />
-            </q-form>
-          </div> -->
         </div>
       </div>
-    </div>
-    <div
-      @click="showPlatform"
-      v-if="!isExpanded"
-      class="showall text-center text-brand q-pt-md"
-    >
-      显示所有场馆
-      <q-icon name="expand_more" />
-    </div>
-    <div
-      @click="showPlatform"
-      v-if="isExpanded"
-      class="showall text-center text-brand q-pt-md"
-    >
-      收起所有场馆
-      <q-icon name="expand_less" />
+      <div @click="showPlatform" v-if="!isExpanded" class="showall text-center text-brand q-pt-md">
+        显示所有场馆
+        <q-icon name="expand_more" />
+      </div>
+      <div @click="showPlatform" v-if="isExpanded" class="showall text-center text-brand q-pt-md">
+        收起所有场馆
+        <q-icon name="expand_less" />
+      </div>
     </div>
   </div>
 </template>
@@ -198,21 +146,16 @@ const transferOutAll = () => {
         platform: platform.code,
         amount: platform.amount
       };
-      api
-        .post(
-          "/session/balance/transfer/withdrawAll",
-          qs.stringify(transferInfo)
-        )
-        .then((response) => {
-          if (response.code === 0) {
-            setTimeout(() => {
-              loadBalance();
-              refreshBalance(platform.code);
-              platform.isTransferring = false;
-              isTransferring.value = false;
-            }, 1000);
-          }
-        });
+      api.post("/session/balance/transfer/withdrawAll", qs.stringify(transferInfo)).then((response) => {
+        if (response.code === 0) {
+          setTimeout(() => {
+            loadBalance();
+            refreshBalance(platform.code);
+            platform.isTransferring = false;
+            isTransferring.value = false;
+          }, 1000);
+        }
+      });
     } else {
       setTimeout(() => {
         platform.isTransferring = false;
@@ -299,57 +242,53 @@ onMounted(() => {
 <style scoped lang="scss">
 .acct-balances {
   .top-balance {
-    padding: 0 0 10px;
+    padding: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5px;
-    color: #bacef1;
+    background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+    border-radius: 6px;
+
+    .wallet {
+      padding-top: 6px;
+      font-size: 16px;
+    }
 
     .mainbal {
-      border-right: 1px solid #c8c7cc;
       display: flex;
-      justify-content: center;
       align-items: center;
-      flex: 1;
-      gap: 15px;
+      gap: 6px;
 
       .icon {
-        width: 25px;
+        width: 16px;
 
         img {
           width: 100%;
+          display: block;
         }
       }
 
-      .wallet {
-        .balamt {
-          font-size: 16px;
-          font-weight: bold;
-        }
+      .label {
+        color: rgba(255, 255, 255, 0.6);
+        padding: 0;
+        margin: 0;
+        line-height: 1;
       }
     }
 
     .refreshItems {
       flex: 1;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      justify-content: flex-end;
+      // align-items: center;
+      // flex-direction: column;
 
       .refreshAll {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-
-        .icon {
-          width: 23px;
-
-          img {
-            width: 100%;
-          }
-        }
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // gap: 15px;
       }
 
       .transferAll {
@@ -372,17 +311,24 @@ onMounted(() => {
   .toggle-container {
     display: flex;
     flex-direction: column;
-    padding: 0px 4px;
+    padding: 16px;
+    background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+    border-radius: 6px;
 
     .balance-transfer-note {
       width: 100%;
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .balance-transfer-button {
-      margin: 0 0 0 auto;
+      margin: -12px 0 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
 
       .q-toggle__inner--truthy {
-        color: #13ce66;
+        color: #00bfd7;
       }
       .q-toggle__inner {
         color: #ff4949;
@@ -417,7 +363,7 @@ onMounted(() => {
 
           .name-wrapper {
             word-break: break-all;
-            color: #bacef1;
+            // color: #bacef1;
 
             .plat-name {
               overflow: hidden;

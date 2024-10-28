@@ -3,7 +3,7 @@
     <MailDetail v-if="route.query.id && selectedMail" :mail="selectedMail" />
 
     <template v-else>
-      <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
+      <q-tabs align="justify" indicator-color="transparent" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" v-for="(item, index) in MAILBOX_TYPES">
           <div class="tab-flex">
             <!-- <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" /> -->
@@ -20,10 +20,10 @@
               class="action-buttons"
               v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
             >
-              <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
+              <q-btn v-if="truncatedListByType.length" color="brightbtn" size="md" @click="readMails(item.type)">
                 全部已读
               </q-btn>
-              <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
+              <q-btn v-if="truncatedListByType.length" color="darkbtn" size="md" @click="deleteMails(item.type)">
                 全部删除
               </q-btn>
               <q-toggle
@@ -31,13 +31,11 @@
                 v-model="allowSelectMultiple"
                 :label="'选择多个'"
                 left-label
+                color="blue"
+                class="q-ml-auto"
               />
-              <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="readMails(item.type)">
-                已读
-              </q-btn>
-              <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
-                删除
-              </q-btn>
+              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="readMails(item.type)">已读</q-btn>
+              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="deleteMails(item.type)">删除</q-btn>
             </div>
             <q-infinite-scroll @load="onLoad" :offset="150">
               <q-card
@@ -702,5 +700,25 @@ export default defineComponent({
 
 p {
   margin: 0px;
+}
+
+.q-tabs {
+  background-color: #213057;
+  background-attachment: fixed;
+  border-radius: 50px;
+  border: 1px solid #ffffff33;
+  min-height: 36px;
+  margin: 16px;
+  padding: 6px;
+}
+
+.q-tab {
+  min-height: 36px;
+  &.q-tab--active {
+    background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+    border-radius: 50px;
+    color: #fff;
+    box-shadow: 0px 0px 4px 0px #ffffff inset;
+  }
 }
 </style>
