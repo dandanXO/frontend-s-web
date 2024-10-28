@@ -1,14 +1,19 @@
 <template>
   <div class="hongbao-container">
     <div class="hongbao-prize">
-      <div class="decal"></div>
+      <div v-if="promoId !== 567" class="decal"></div>
       <!--      <div class="current-content">-->
       <!--        <div class="current">当前抽奖次数</div>-->
       <!--        <div class="count">1</div>-->
       <!--      </div>-->
 
       <div class="prize-redeem" @click="getPromotion">
-        <img src="../../../assets/images/promo/hotpromo/upgradehongbao/red-packet.png" width="200" />
+        <img
+          src="../../../assets/images/promo/hotpromo/upgradehongbao/claim-btn.png"
+          width="200"
+          v-if="promoId === 567"
+        />
+        <img v-else src="../../../assets/images/promo/hotpromo/upgradehongbao/red-packet.png" width="200" />
       </div>
 
       <!-- <div class="contents" v-if="!bonusOpened">
@@ -37,7 +42,7 @@
       </div>-->
     </div>
   </div>
-<!--
+  <!--
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tbody>
       <tr>
@@ -54,27 +59,23 @@
     </tbody>
   </table>  -->
 
-  <q-dialog
-    class="award-modal hongbaoyu-modal"
-    width="100%"
-    v-model="isClaimModal"
-    no-backdrop-dismiss
-    no-esc-dismiss
-  >
+  <q-dialog class="award-modal hongbaoyu-modal" width="100%" v-model="isClaimModal" no-backdrop-dismiss no-esc-dismiss>
     <div class="modal-div">
       <div class="red-packet-opened">
-        <img :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
-        <div class="grats">{{$t('lang.hong_congrats')}}</div>
-        <div class="amount">{{ winAmount }}</div>
+        <img v-if="promoId === 567" :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/popup.png`)" />
+        <img v-else :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
+        <div v-if="promoId !== 567" class="grats">{{ $t("lang.hong_congrats") }}</div>
+        <div v-if="promoId !== 567" class="amount">{{ winAmount }}</div>
+        <div v-else class="amount-halloween">{{ winAmount }}</div>
 
-        <div class="get-btn" @click="getPromotionPrize">{{$t('lang.claim')}}</div>
+        <div class="get-btn" @click="getPromotionPrize">{{ $t("lang.claim") }}</div>
       </div>
     </div>
   </q-dialog>
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref ,reactive} from "vue";
+import { defineProps, onMounted, ref, reactive } from "vue";
 import { eventapi } from "boot/axios";
 import { userStore } from "src/stores";
 
@@ -84,13 +85,13 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
-const props = defineProps(["promoCode", "params"]);
+const props = defineProps(["promoCode", "params", "promoId"]);
 const promoCode = ref(props.promoCode);
 
-const startTime= reactive({
+const startTime = reactive({
   time1: "16:00 ~ 17:00",
   time2: "18:00 ~ 19:00"
-})
+});
 
 const getPromotion = () => {
   loadingClaim.value = true;
@@ -105,7 +106,6 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
         store.getBalance();
-
       } else {
         $q.notify({
           color: "negative",
@@ -128,7 +128,6 @@ const getPromotionPrize = () => {
   store.getBalance();
   isClaimModal.value = false;
   bonusOpened.value = false;
-
 };
 
 const promotionListing = ref();
@@ -165,14 +164,13 @@ const getPromotionListing = () => {
 onMounted(() => {
   getPromotionListing();
 
-  const params= props.params ? JSON.parse(props.params) : "";
-  if(params && params.time1){
-    startTime.time1= params.time1;
+  const params = props.params ? JSON.parse(props.params) : "";
+  if (params && params.time1) {
+    startTime.time1 = params.time1;
   }
-  if(params && params.time2){
-    startTime.time2= params.time2;
+  if (params && params.time2) {
+    startTime.time2 = params.time2;
   }
-
 });
 </script>
 
@@ -357,6 +355,18 @@ onMounted(() => {
     font-weight: bold;
   }
 
+  .amount-halloween {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 15%;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+  }
+
   .bonus {
   }
 
@@ -367,8 +377,8 @@ onMounted(() => {
     font-size: 14px;
     padding: 5px 25px;
     cursor: pointer;
-    position:absolute;
-    z-index:2;
+    position: absolute;
+    z-index: 2;
     bottom: 20%;
 
     &:hover {
