@@ -834,7 +834,11 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-white">
+    <div style="width: 90%; min-height: 400px" class="bg-darkbox">
+      <AnnouncementView />
+    </div>
+
+    <!-- <q-card style="width: 100%" class="bg-primary text-white">
       <q-card-section class="q-mb-md">
         <q-tabs
           v-model="activeKey"
@@ -874,7 +878,7 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card-section>
-    </q-card>
+    </q-card> -->
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnouncementModal" @update:model-value="setExpiryBanner()">
@@ -923,16 +927,15 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 import { translateRecord } from "src/directives/translate";
 
 import GameTypeSwiper from "components/home/GameTypeSwiper.vue";
+import AnnouncementView from "pages/account/AnnouncementView.vue";
 
 export default defineComponent({
   name: "IndexPage",
   components: {
-    // Swiper,
-    // SwiperSlide,
     GameModal,
     MarqueeText,
-    // PlatformBlock,
-    GameTypeSwiper
+    GameTypeSwiper,
+    AnnouncementView
   },
   setup() {
     const isFirstView = ref(false);
@@ -2245,6 +2248,7 @@ export default defineComponent({
 
   .q-tab-panel {
     padding: 0px;
+    background: transparent;
   }
 
   .q-tabs--vertical {
