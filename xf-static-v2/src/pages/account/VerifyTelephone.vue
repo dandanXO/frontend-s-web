@@ -1,104 +1,100 @@
 <template>
   <div class="personal-account">
-    <div class="web">专属网址: {{ store.evip }}</div>
-    <q-form ref="profileFormRef">
-      <div class="flex items-center no-wrap">
-        <q-input
+    <div class="web">
+      <q-icon name="volume_up" size="sm" class="q-mr-sm" />
+      推荐链接:
+      <span>{{ referralLink }}</span>
+      <q-icon
+        @click="copyReferralLink"
+        name="content_copy"
+        rounded
+        unelevated
+        size="xs"
+        class="q-ml-auto"
+        color="bright"
+      />
+    </div>
+    <q-form ref="profileFormRef" class="bg-darkbox">
+      <div class="q-gutter-y-md">
+        <div>
+          <div class="input-label q-mb-sm">
+            手机号码
+            <span style="color: #f53434">*</span>
+          </div>
+          <q-input
             ref="phoneNumberRef"
-            standout
-            class="q-pb-xs"
             hide-bottom-space
             v-model="formDetails.phone"
             type="tel"
-            label="手机号码"
+            placeholder="请输入手机号码"
             lazy-rules
-            :rules="[
-                  (val) =>
-                    (val && val.length > 0) ||
-                    '请输入正确的电话号码',
-                  isValidPhone,
-                ]"
-            label-color="secondary"
-            color="secondary"
+            :rules="[(val) => (val && val.length > 0) || '请输入正确的电话号码', isValidPhone]"
             :readonly="showVerifyBtn ? false : true"
             style="width: 100%"
-        ></q-input>
-        <template v-if="showVerifyBtn">
-          <div class="q-ml-md">
-            <q-btn
+            outlined
+            color="white"
+            bg-color="recinputstyle"
+          >
+            <template v-slot:append v-if="showVerifyBtn">
+              <q-btn
                 size="md"
                 color="brightbtn"
                 label="发送验证码"
                 @click="openVerificationDialog()"
                 style="white-space: nowrap"
-            />
-          </div>
-        </template>
-      </div>
-
-      <q-input
-          standout
-          class="q-pb-xs"
-          hide-bottom-space
-          ref="phoneOtpRef"
-          v-model="formDetails.phoneOtpRef"
-          type="tel"
-          label="手机验证码"
-          lazy-rules
-          :rules="[
-          (val) => (val && val.length > 5 && val.length < 7) || '请输入验证码'
-        ]"
-          label-color="secondary"
-          color="secondary"
-          style="width: 100%"
-      ></q-input>
-
-      <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn
-            size="md"
-            color="brightbtn"
-            @click="submitUpdateSecurity()"
-            label="验证手机号"
-        />
-      </div>
-    </q-form>
-  </div>
-
-  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
-    <q-card width="100%">
-      <q-card-section
-          class="q-pa-md bg-brightbtn text-white"
-      >
-        <q-toolbar>
-          <q-toolbar-title>验证码</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close"/>
-        </q-toolbar>
-
-      </q-card-section>
-      <div class="q-px-lg q-pt-sm q-pb-lg">
-        <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" placeholder="验证码">
-            <template v-slot:append>
-              <img
-                  :src="verificationImg"
-                  title="点击刷新验证码"
-                  style="margin-top: 6px; cursor: pointer"
-                  @click="getCode"
               />
             </template>
           </q-input>
-        </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn"/>
+        </div>
+
+        <div>
+          <div class="input-label q-mb-sm">
+            验证码
+            <span style="color: #f53434">*</span>
+          </div>
+          <q-input
+            hide-bottom-space
+            ref="phoneOtpRef"
+            v-model="formDetails.phoneOtpRef"
+            type="tel"
+            label="手机验证码"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 5 && val.length < 7) || '请输入验证码']"
+            style="width: 100%"
+            outlined
+            color="white"
+            bg-color="recinputstyle"
+          ></q-input>
+        </div>
+      </div>
+    </q-form>
+
+    <div class="text-center q-mt-md" v-if="canEdit">
+      <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" label="验证手机号" style="width: 100%" />
+    </div>
+  </div>
+
+  <q-dialog v-model="showCaptchaDialog" width="100%">
+    <q-card width="100%" class="bg-darkbox">
+      <q-toolbar-title class="q-mb-md">验证码</q-toolbar-title>
+
+      <q-card-section>
+        <q-input v-model="innerCaptchaRef" placeholder="验证码" outlined color="white" bg-color="recinputstyle">
+          <template v-slot:append>
+            <img
+              :src="verificationImg"
+              title="点击刷新验证码"
+              style="margin-top: 6px; cursor: pointer"
+              @click="getCode"
+            />
+          </template>
+        </q-input>
+      </q-card-section>
+      <div class="row q-mt-md">
+        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn" rounded class="q-ml-auto" />
       </div>
     </q-card>
   </q-dialog>
-
-  <!-- <br />
-  phone: {{ formDetails.phone }}
-  <br />
-  code: {{ formDetails.phoneOtpRef }}
-  <br />
-  codeId: {{ phoneCodeId }} -->
 </template>
 
 <script lang="js">
@@ -109,6 +105,7 @@ import moment from "moment";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import {useClipboard} from '@vueuse/core';
 
 export default defineComponent({
   name: "PersonalView",
@@ -307,9 +304,35 @@ export default defineComponent({
           })
     }
 
+    //copy referral link
+    const referralLink = ref();
+    const getReferralLink = () => {
+      api
+      .get("/session/member/referralCode")
+      .then((response) => {
+        if(response.code === 0) {
+          referralLink.value = `https://${store.evip}/refer/${response.data}`;
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    const copyReferralLink = () => {
+      const { copy } = useClipboard();
+      copy(referralLink.value);
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "推荐链接已复制",
+        icon: "check_circle_outline"
+      });
+    };
+
     onMounted(() => {
       loadInfo();
       getCode();
+      getReferralLink();
     });
 
     return {
@@ -352,7 +375,10 @@ export default defineComponent({
       openVerificationDialog,
       onCaptchaSubmit,
       showVerifyBtn,
-      phoneCodeId
+      phoneCodeId,
+      referralLink,
+      getReferralLink,
+      copyReferralLink
     };
   }
 });
@@ -360,18 +386,6 @@ export default defineComponent({
 <style lang="scss">
 .personal-account {
   padding: 10px;
-
-  .web {
-    color: #33bcd4;
-    text-align: center;
-    padding: 0 0 10px;
-    font-weight: bold;
-    font-size: 17px;
-  }
-
-  input.q-placeholder {
-    //color: #333333 !important;
-  }
 }
 
 .q-toolbar {
