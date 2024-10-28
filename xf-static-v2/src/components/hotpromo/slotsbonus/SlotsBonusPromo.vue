@@ -4,19 +4,19 @@
       <div class="match-game">
         <div class="match-content-warp">
           <div class="daily-prize-title">
-            <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/gift-icon.png`)" />
+            <img style="width: 24px" :src="require(`../../../assets/promo/slots-bonus/gift-icon.png`)" />
             <span>每日彩金</span>
           </div>
           <div class="match-game-content">
             <div class="match-game-status">
-              <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
+              <img style="width: 20px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
               当日有效投注：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
           <div class="match-game-content">
             <div class="match-game-status">
-              <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/money-sack-icon.png`)" />
+              <img style="width: 20px" :src="require(`../../../assets/promo/slots-bonus/money-sack-icon.png`)" />
               可领彩金：
             </div>
             <div class="match-game-detail">{{ bonus }} 元</div>
@@ -204,7 +204,7 @@ const claimHongBao = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "PingFang";
+  font-family: "PingFang TC";
 }
 
 .match-container {
@@ -244,7 +244,7 @@ const claimHongBao = async () => {
       align-items: center;
       gap: 5px;
       font-weight: 600;
-      font-size: 20px;
+      font-size: 16px;
     }
 
     .hongbao-1 {
@@ -263,7 +263,7 @@ const claimHongBao = async () => {
     position: relative;
     display: grid;
     grid-template-columns: 2fr 1fr;
-    border: 1px solid rgba(215, 235, 255, 1);
+    border: 1px solid #00bfd733;
     border-radius: 12px;
     padding: 10px 15px;
     height: auto;
@@ -271,7 +271,7 @@ const claimHongBao = async () => {
   }
 
   .match-game-status {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
     display: flex;
     justify-content: flex-start;
@@ -282,12 +282,12 @@ const claimHongBao = async () => {
   }
 
   .match-game-detail {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #479af7;
+    color: #00bfd7;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     border-top-right-radius: 16px;
@@ -390,17 +390,18 @@ const claimHongBao = async () => {
       width: 95px;
       padding: 5px 15px;
       padding-left: 10px;
-      color: #000000;
+      color: #fff;
       text-align: center;
-      font-size: 13px;
-      font-weight: bold;
+      font-size: 12px;
+      font-weight: 700;
       min-width: 95px;
       max-height: 30px;
+      font-family: Inter;
     }
 
     .subtitle-2 {
       color: #ffffff;
-      font-size: 16px;
+      font-size: 12px;
     }
   }
 
@@ -445,12 +446,12 @@ const claimHongBao = async () => {
 
   th {
     height: 56px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 28px;
-    color: #000;
+    color: #fff;
     // background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+    background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%) !important;
 
     &:first-child {
       border-top-left-radius: 12px;
@@ -482,7 +483,7 @@ const claimHongBao = async () => {
   td {
     border: 1px solid #acd4f6;
     height: 56px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 28px;
     color: #ffffff;
@@ -491,7 +492,7 @@ const claimHongBao = async () => {
 }
 
 .content-sub-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 22.4px;
   color: #fcc939;
@@ -524,26 +525,26 @@ const claimHongBao = async () => {
   }
 
   .content {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 400;
     line-height: 28px;
     color: rgba(255, 255, 255, 0.6);
 
     .item {
       display: grid;
-      grid-template-columns: 50px 1fr;
+      grid-template-columns: 28px 1fr;
       font-family: "PingFang";
 
       .rounded-number {
         text-align: center;
         border-radius: 100px;
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         color: #fff;
-        background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+        background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
         margin-top: 3px;
       }
     }
@@ -660,7 +661,7 @@ const claimHongBao = async () => {
 
     th {
       height: 56px;
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 600;
       line-height: 28px;
       color: #fff;
@@ -679,7 +680,7 @@ const claimHongBao = async () => {
 
     tr {
       height: 56px;
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 600;
       line-height: 28px;
       color: #7a8eb9;

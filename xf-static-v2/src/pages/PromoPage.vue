@@ -1,9 +1,10 @@
 <template>
   <q-card-section v-if="!isPromoDetail" class="page-title">优惠活动</q-card-section>
 
-  <div class="promo-container" style="background: #090b19">
-    <div class="promo">
+  <div class="promo-container">
+    <div class="promo" :class="{ 'q-pt-md': !isPromoDetail }">
       <RoundTab
+        v-if="!isPromoDetail"
         v-model:tab="tab"
         :items="tabItems"
         :border-radius="10"
@@ -390,7 +391,7 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   min-height: 100vh;
-  padding: 16px;
+  padding: 0 16px;
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -441,6 +442,7 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   color: #ffffff;
+  background-color: #090b18;
 
   .all-promotions {
     padding-bottom: 20px;
@@ -640,6 +642,9 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       &.bg__xf-eurocup-hongbao {
         background-color: #090b18;
       }
@@ -718,7 +723,7 @@ export default defineComponent({
       .inner {
         max-width: 1400px;
         width: 90%;
-        margin: 20px auto;
+        margin: 20px 14px;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -768,12 +773,12 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
+          // background: #272c3d;
           border-radius: 10px;
         }
 
         .promo-view-container {
-          background: #272c3d;
+          // background: #272c3d;
           background-repeat: no-repeat;
           background-position: 95% 90%;
           padding: 20px;
