@@ -155,7 +155,7 @@
       <!-- home header -->
       <div class="home-header-section">
         <GameTypeSwiper
-          v-if="!isStickyGameType"
+          :style="{ visibility: isStickyGameType ? 'hidden' : 'visible' }"
           scroll-to-center
           :list="tabs"
           v-model="selectedTab"
