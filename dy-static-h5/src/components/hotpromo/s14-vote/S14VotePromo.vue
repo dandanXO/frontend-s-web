@@ -137,7 +137,8 @@
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
             <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
-            <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" />
+            <!-- <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" /> -->
+            <span style="color: white; text-shadow: none; font-size: 16px; margin-bottom: -5px">奖金</span>
           </div>
         </div>
 
@@ -183,7 +184,8 @@
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
             <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
-            <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" />
+            <!-- <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" /> -->
+            <span style="color: white; text-shadow: none; font-size: 16px; margin-bottom: -5px">奖金</span>
           </div>
         </div>
 
@@ -1239,6 +1241,7 @@ onMounted(() => {
       font-size: 15px;
       padding-right: 5px;
       width: 100%;
+      white-space: nowrap;
     }
     .flexcast {
       width: 85px;
