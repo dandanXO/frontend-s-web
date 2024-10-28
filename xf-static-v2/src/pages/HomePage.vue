@@ -1674,11 +1674,12 @@ export default defineComponent({
         // };
         // alert(info.version);
         var current_version = parseInt(info.version.replaceAll(".", ""));
-        var min_version = res.data.minVersion;
+
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+        var min_version = res.data.minVersion;
         // console.log(res);
         if (res.code === 0) {
           var version_info = res.data.version;
