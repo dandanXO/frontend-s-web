@@ -602,39 +602,29 @@
       style="height: 100vh; max-height: unset"
     >
       <q-carousel-slide
+        v-for="(item, index) in popupBanners"
         :name="index"
         class="column no-wrap flex-center"
-        style="padding: 0"
-        v-for="(item, index) in popupBaners"
-        :key="index"
+        style="padding: 0; width: 100vw; height: 100vh;"
+        :img-src="imgURL + item.mobileImgUrl"
+        :key="item.title"
+        v-show="!closedLoginBannerList.has(item.title)"
       >
-        <q-card class="my-card" style="width: 100%; height: 100%; margin: 0">
-          <q-card-section style="width: 100%; height: 100%">
-            <div class="image-container">
-              <router-link
-                style="width: 100% !important; height: 100vh"
-                :to="getLoginBannerHref(item)"
-                :target="getLoginBannerHref(item).includes('https://') ? '_blank' : '_self'"
-                v-show="!closedLoginBannerList.has(item.title)"
-              >
-                <img :src="imgURL + item.mobileImgUrl" style="width: 100vw; height: 100vh" />
-              </router-link>
-              <div class="popup-footer">
-                <div>&lt;1 /3&gt;</div>
-                <div>
-                  <q-checkbox class="popup-checkbox" label="오늘 이창을 다시열지 않기" :modelValue="checkedLoginBannerList.has(item.title)" @click="handleCheckLoginBanner(item)" />
-                </div>
-                <div class="btn-container">
-                  <q-btn
-                    style="background: #5d5d5d; color: white"
-                    label="닫기"
-                    @click="handleCloseLoginBanner($event, item)"
-                  />
-                </div>
-              </div>
+        <div style="width: 100%; height: 100%; position: relative">
+          <div class="popup-footer">
+            <div>&lt;{{ index + 1 }} /3&gt;</div>
+            <div>
+              <q-checkbox class="popup-checkbox" label="오늘 이창을 다시열지 않기" :modelValue="checkedLoginBannerList.has(item.title)" @click="handleCheckLoginBanner(item)" />
             </div>
-          </q-card-section>
-        </q-card>
+            <div class="btn-container">
+              <q-btn
+                style="background: #5d5d5d; color: white"
+                label="닫기"
+                @click="handleCloseLoginBanner($event, item)"
+              />
+            </div>
+          </div>
+        </div>
       </q-carousel-slide>
     </q-carousel>
   </q-dialog>
@@ -1773,7 +1763,7 @@ export default defineComponent({
 
     // after login popup
 
-    const popupBaners = ref([]);
+    const popupBanners = ref([]);
     const closedLoginBannerList = ref(new Set());
     const checkedLoginBannerList = ref(new Set());
     const slide1 = ref(0);
@@ -1790,7 +1780,6 @@ export default defineComponent({
       e.preventDefault();
       closedLoginBannerList.value.add(item.title);
 
-      console.log(closedLoginBannerList.value);
       // 有打勾的話 就存起來
       if (checkedLoginBannerList.value.has(item.title)) {
         if (sessionStorage.getItem("CLOSED_LOGIN_BANNER")) {
@@ -1815,7 +1804,7 @@ export default defineComponent({
       api.get("/member/site-popout-list").then((res) => {
         if (res.code === 0) {
           console.log(res.data);
-          popupBaners.value = res.data;
+          popupBanners.value = res.data;
           closedLoginBannerList.value = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER")) || []);
         }
       }).finally(() => {
@@ -1984,7 +1973,7 @@ export default defineComponent({
       currentRocketIndex,
       rocketSlide: ref(0),
       promoSlide: ref(0),
-      popupBaners
+      popupBanners
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -3458,9 +3447,7 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   color: #ffffff99;
-  padding: 16px;
-
-  
+  padding: 8px 16px;
 }
 </style>
 
