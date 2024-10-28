@@ -466,7 +466,7 @@
             <th>年度保级彩金</th>
             <th>生日彩金</th>
             <!--            <th>节日礼金</th>-->
-            <th>每日返水红包</th>
+            <th>每日额外返水红包</th>
             <th>会员日每月15号</th>
             <th>会员充值加码10%</th>
           </tr>
@@ -798,12 +798,12 @@
         <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款</li>
       </ol>
 
-      <h2>五. 每日返水红包</h2>
+      <h2>五. 每日额外返水红包</h2>
       <ol class="terms">
         <li>
-          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
+          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
           <br />
-          例：VIP12会员当日的返水金额为1000元，则按照VIP12每日返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
+          例：VIP12会员当日的返水金额为1000元，则按照VIP12每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
         </li>
       </ol>
 
@@ -1206,7 +1206,7 @@ const categories = ref([
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
   { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
-  { key: "redPacket", image: "rebate", displayName: "每日返水红包" },
+  { key: "redPacket", image: "rebate", displayName: "每日额外返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
   { key: "birthday", image: "birthday", displayName: "生日礼金" }
@@ -1443,7 +1443,7 @@ $border-settings: 1px solid #e5e7eb;
     min-height: 600px;
   }
   .current-vip-status {
-    max-width: 1200px;
+    max-width: 1300px;
     border: 2px solid #799df8;
     margin: 50px auto;
     background: #212b4ae0;
@@ -1551,7 +1551,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .month-birthday-bonus {
     border: 2px solid #799df8;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 50px auto 0;
     background: #212b4ae0;
     border-radius: 30px;
@@ -1559,7 +1559,7 @@ $border-settings: 1px solid #e5e7eb;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 20px;
-    gap: 60px;
+    gap: 30px;
     .left {
       flex: 3;
       position: relative;
@@ -2066,7 +2066,7 @@ $border-settings: 1px solid #e5e7eb;
     border-radius: 10px;
     overflow: auto;
     width: 95%;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0px auto 20px;
     table {
       table-layout: fixed;
@@ -2091,7 +2091,7 @@ $border-settings: 1px solid #e5e7eb;
     }
   }
   .terms-conditions {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     width: 80%;
     position: relative;
