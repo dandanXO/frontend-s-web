@@ -25,7 +25,7 @@
               <th align="center">投注要求</th>
               <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
                 流水进度
-                <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
+                <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" /> -->
               </th>
               <th align="center">完成状态</th>
             </tr>
@@ -42,7 +42,10 @@
             </tr>
           </tbody>
         </table>
+      <div class="withdraw-remaining-dialog__buttons">
         <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+      </div>
       </div>
     </div>
   </q-dialog>
@@ -195,11 +198,11 @@ onMounted(() => {
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
-        text-align: center;
+        text-align: left;
         color: #424f72;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 5px;
       }
       .withdraw-remaining-dialog__body-table {
@@ -268,6 +271,13 @@ onMounted(() => {
         }
       }
     }
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
 
     .withdraw-remaining-dialog__action {
       width: 100%;
@@ -280,10 +290,19 @@ onMounted(() => {
       font-weight: 600;
       line-height: var(--line-height);
       text-align: center;
+      text-align: center;
+      background: url(../assets/images/finance/withdraw/active-btn.png);
+      background-size: 100% 100%;
       color: #fff;
-
+      opacity: .9;
+      &:first-of-type {
+        background: url(../assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }
