@@ -70,6 +70,7 @@ export default defineComponent({
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
+      csclient.set("bottom", "81px");
       csclient.set("openanimation", false);
 
       csclient.set("notification-type", {
