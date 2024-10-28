@@ -25,7 +25,7 @@
       <div class="red-packet-opened">
         <img
           v-if="promoId === 567"
-          :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/popup.png`)"
+          :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/popup2.png`)"
         />
         <img v-else :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
@@ -333,9 +333,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 80px;
+    margin-top: 142px;
     color: #000;
-    font-size: 50px;
+    font-size: 36px;
     font-weight: bold;
   }
 
