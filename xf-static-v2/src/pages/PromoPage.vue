@@ -30,35 +30,39 @@
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
+                      <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
+                      </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div v-if="promo.label" class="trapezium">
+                        {{ promo.label }}
+                      </div>
                     </a>
                   </div>
 
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
+                      <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
+                      </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div v-if="promo.label" class="trapezium">
+                        {{ promo.label }}
+                      </div>
                     </a>
                   </div>
                 </div>
@@ -294,6 +298,26 @@ export default defineComponent({
           }
       }
     }
+
+    const getPromoLabel = (labelType) => {
+      switch (labelType) {
+        case 0:
+          return "NEW 最新";
+        case 1:
+          return "HOT 热门";
+        case 3:
+          return "RECOMMEND 推荐";
+        case 4:
+          return "DAILY 日常";
+        case 5:
+          return "NEWBIE 新人";
+        case 6:
+          return "TIME 限时";
+        default:
+          return "";
+      }
+    };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
@@ -303,6 +327,10 @@ export default defineComponent({
       } else {
         filteredArray.value = promoState.promoList
       }
+      filteredArray.value = filteredArray.value.map(item => ({
+        ...item,
+        label: getPromoLabel(item.labelType)
+    }));
     };
 
     const logoShow = ref(true);
@@ -383,7 +411,8 @@ export default defineComponent({
       promoSrc,
       closeDialog,
       logoShow,
-      loadGame
+      loadGame,
+      getPromoLabel
     }
   },
 });
@@ -541,7 +570,7 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 30px;
+          padding-top: 10px;
           border-radius: 8px;
 
           .promo-img-wrapper {
@@ -567,6 +596,9 @@ export default defineComponent({
               .promo-content {
                 width: 100%;
                 height: auto;
+                border-radius: 8px;
+                padding: 1px;
+                background: linear-gradient(180deg, #a98f7c 0%, rgba(169, 143, 124, 0) 100%);
 
                 &.isDesktop {
                   display: block;
@@ -818,17 +850,16 @@ export default defineComponent({
   z-index: 3;
 }
 
-.pad-label.label-new {
-  background: url(../assets/promo/yh_label_new.png) no-repeat;
-  // background-size: 100%;
-  background-size: 78px 45px;
+.trapezium {
+  position: absolute;
+  top: 10px;
+  left: 0;
   font-size: 12px;
   color: #ffffff;
-  padding: 12px 7px;
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  width: 100%;
+  padding: 2px 20px 2px 8px;
+  background-color: #1475e1;
+  clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+  border-top-left-radius: 8px;
 }
 
 .promo {
