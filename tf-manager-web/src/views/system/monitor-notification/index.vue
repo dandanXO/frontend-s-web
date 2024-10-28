@@ -109,10 +109,12 @@ const handleSubmitSuccess = async () => {
   await loadAllSetting()
   dialogVisible.value = false;
   isSubmitting.value = false;
+  ElMessage.success('设置提交成功');
 }
 
 const handleSubmitFailed = () => {
   isSubmitting.value = false;
+  ElMessage.error('设置提交失败');
 }
 
 const openDialog = (title, mode) => {
