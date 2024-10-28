@@ -213,6 +213,17 @@ export default defineComponent({
                 });
                 regForm.loginName = "";
                 regForm.password = "";
+                // Redirection to the returned URL
+                // api
+                //   .get("/REDIRECTION_API")
+                //   .then((res) => {
+                //     const newUrl = res.data;
+                //     window.location.href = newUrl;
+                //   })
+                //   .catch((error) => {
+                //     console.error("Error fetching the redirection URL:", error);
+                //   });
+
                 sessionStorage.removeItem("REFERRAL_CODE");
               } else {
                 $q.notify({
@@ -221,17 +232,6 @@ export default defineComponent({
                   message: res.message,
                   icon: "report_problem"
                 });
-
-                // Redirection to the returned URL
-                api
-                  .get("/REDIRECTION_API")
-                  .then((res) => {
-                    const newUrl = res.data;
-                    window.location.href = newUrl;
-                  })
-                  .catch((error) => {
-                    console.error("Error fetching the redirection URL:", error);
-                  });
               }
               $q.loading.hide();
               isLoading.value = false;
