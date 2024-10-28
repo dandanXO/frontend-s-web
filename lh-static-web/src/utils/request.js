@@ -270,12 +270,13 @@ const onResponse = (response) => {
         return;
       }
       if (
-        res.code === ResponseCode.ERROR_USER_TOO_FAST ||
-        res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
-        res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
-        res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
-        res.code === ResponseCode.ERROR_PROMO_NOT_IN_RANGE ||
-        res.code === ResponseCode.ERROR_SYSTEM
+        (res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_IN_RANGE ||
+          res.code === ResponseCode.ERROR_SYSTEM) &&
+        window.location.href.indexOf("?name=lh1-daily-checkin") === -1
       ) {
         ui.notify({
           type: "error",
