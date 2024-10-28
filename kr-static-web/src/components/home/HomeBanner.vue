@@ -145,7 +145,7 @@ const checkShowImgTop = () => {
 
 onMounted(() => {
   loadBanners();
-  checkShowImgTop();
+  // checkShowImgTop();
 });
 </script>
 
