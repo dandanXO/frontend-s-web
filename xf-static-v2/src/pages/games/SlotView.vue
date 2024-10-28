@@ -1,68 +1,60 @@
 <template>
   <q-page>
     <div class="loading-div" v-if="isLoading">
-      <q-spinner-hourglass
-          color="deep-orange"
-          size="8em"
-      />
+      <q-spinner-hourglass color="deep-orange" size="8em" />
     </div>
     <div class="pageitem">
       <div class="topbar">
-        <div class="bookmarks q-pa-sm">
-          <!-- <q-btn rounded
-            v-for="cate in categoryList"
-            :color="cate.id === selectedCatId ? 'brightbtn' : 'darkbtn'"
-            :class="{ active: cate.id === selectedCatId }"
-            :key="cate"
-            @click="switchCategory(cate)"
-          >
-            <!- <img :src="require('../../assets/logo/' + p.code + '.png')"> ->
-            {{ cate.label }}
-          </q-btn> -->
-        </div>
-        <div class="search">
+        <div class="bookmarks q-pa-sm"></div>
+        <div class="search q-pa-md">
           <q-form @submit="searchList">
-            <q-input color="white" bg-color="brand" filled class="q-ma-md" standout v-model="gamePage.searchKey"
-                     label="请输入关键字">
+            <q-input
+              standout
+              v-model="gamePage.searchKey"
+              label="请输入关键字"
+              outlined
+              color="white"
+              bg-color="recinputstyle"
+            >
               <template v-slot:prepend>
-                <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer"/>
+                <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer" />
               </template>
               <template v-slot:append>
-                <q-btn type="submit" @click="searchList" label="搜索" color="brightbtn"/>
+                <q-btn type="submit" @click="searchList" label="搜索" color="brightbtn" />
               </template>
             </q-input>
           </q-form>
         </div>
       </div>
-      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px);" v-if="!isLoading">
-        <div class="grid" style="padding-bottom: 20px;">
+      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px)" v-if="!isLoading">
+        <div class="grid" style="padding-bottom: 20px">
           <div
-              v-for="(game, index) in gamePage.gameList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              @click="openGame(game.name, game.code, selectedCat.status)"
-              style="height: 140px;"
+            v-for="(game, index) in gamePage.gameList"
+            :key="index"
+            :data-id="index"
+            v-intersection="onIntersection"
+            @click="openGame(game.name, game.code, selectedCat.status)"
           >
-
             <transition name="in-view">
               <q-list class="q-col-gutter-none">
                 <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="cover"
-                    height="100px"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style=" border-radius: 10px; overflow: hidden"
-                    :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
+                  loading="lazy"
+                  :src="game.icon"
+                  :placeholder-src="game.default"
+                  fit="cover"
+                  spinner-color="white"
+                  position="50% 20%"
+                  style="border-top-left-radius: 10px; border-top-right-radius: 10px; overflow: hidden"
+                  :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
                 >
                   <template v-slot:loading>
-                    <img :src="game.default" style="width: 100%; height: 100px; border-radius: 15px; overflow:hidden;">
+                    <img
+                      :src="game.default"
+                      style="width: 100%; height: 100px; border-radius: 15px; overflow: hidden"
+                    />
                   </template>
                 </q-img>
-                <div class="slot-name"> {{ game.name }}</div>
+                <div class="slot-name">{{ game.name }}</div>
               </q-list>
             </transition>
             <!-- <q-img
@@ -78,11 +70,10 @@
               </template>
             </q-img> -->
             <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
-
           </div>
         </div>
-        <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
-        <q-scroll-observer @scroll="scrolling"/>
+        <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+        <q-scroll-observer @scroll="scrolling" />
       </q-scroll-area>
     </div>
     <GameModal ref="slotsGame"></GameModal>
@@ -380,7 +371,7 @@ export default defineComponent({
       grid-template-columns: repeat(3, 1fr);
 
       .q-btn {
-        font-size: .7rem;
+        font-size: 0.7rem;
       }
 
       .plat-item {
@@ -418,8 +409,8 @@ export default defineComponent({
         padding: 10px;
         text-align: center;
         background: #2b2b4b;
-        border-radius: 10px;
-        box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
+        // border-radius: 0px;
+        // box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
 
         &:hover {
           // transform: scale(1.01274) translate(0px, -4px);
@@ -440,23 +431,24 @@ export default defineComponent({
     }
 
     .inner-img {
-      border-radius: 20px;
-      overflow: hidden;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      // overflow: hidden;
       position: relative;
     }
 
     .slot-name {
-      // background: linear-gradient(0deg, #1f2035cf 20%, transparent);
-      // position: absolute;
-      // bottom: 0;
-      // left: 0;
-      // right: 0;
-      // padding: 10px;
-      text-align: center;
+      text-align: left;
       word-break: break-all;
+      font-size: 12px;
+      background-color: #273354;
+      padding: 6px 12px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      height: 48px;
+      overflow: hidden;
     }
   }
-
 }
 
 .loading-div {

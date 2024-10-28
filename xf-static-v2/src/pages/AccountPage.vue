@@ -577,6 +577,10 @@ export default defineComponent({
         padding: 10px;
         position: relative;
 
+        .acct-nav-label {
+          font-size: 14px;
+        }
+
         .unread {
           position: absolute;
           border-radius: 50%;
