@@ -1,57 +1,61 @@
 <template>
-  <el-row style="margin: 0 0 40px 10px">
-    <el-col>
-      <el-dropdown trigger="click" @visible-change="handleDropdownVisibilityChange">
-        <span class="el-dropdown-link">
-          <el-button>
-            开通配置
-          </el-button>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <template v-if="currentConfigurableTypeArr.length === 0">
-              <el-dropdown-item disabled>无可开通配置</el-dropdown-item>
-            </template>
-            <template v-else>
-              <el-dropdown-item
-                v-for="item in currentConfigurableTypeArr"
-                :key="item"
-                @click="openDialog(item, 'create')"
-              >
-                {{ item }}
-              </el-dropdown-item>
-            </template>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </el-col>
-  </el-row>
-  <el-row :gutter="20">
-    <el-col
-      :span="8"
-      v-for="(settings, title) in titleMatchSettings"
-      :key="title"
-    >
-      <el-card shadow="hover">
-        <div class="card-content">
-          <div class="card-title">{{ $t(`monitorTitle.${title}`) }}</div>
-          <el-button @click="openDialog(title, 'update')" class="card-button">查看详情</el-button>
+  <div :class="{'submitting-overlay': isSubmitting}">
+    <el-row style="margin: 0 0 40px 10px">
+      <el-col>
+        <el-dropdown trigger="click" @visible-change="handleDropdownVisibilityChange">
+          <span class="el-dropdown-link">
+            <el-button>
+              开通配置
+            </el-button>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <template v-if="currentConfigurableTypeArr.length === 0">
+                <el-dropdown-item disabled>无可开通配置</el-dropdown-item>
+              </template>
+              <template v-else>
+                <el-dropdown-item
+                  v-for="item in currentConfigurableTypeArr"
+                  :key="item"
+                  @click="openDialog(item, 'create')"
+                >
+                  {{ item }}
+                </el-dropdown-item>
+              </template>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col
+        :span="8"
+        v-for="(settings, title) in titleMatchSettings"
+        :key="title"
+      >
+        <el-card shadow="hover">
+          <div class="card-content">
+            <div class="card-title">{{ $t(`monitorTitle.${title}`) }}</div>
+            <el-button @click="openDialog(title, 'update')" class="card-button">查看详情</el-button>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <div id="setting-dialog-wrapper">
+      <el-dialog v-model="dialogVisible" title="详细信息" width="60%">
+        <div class="dialog-content-wrapper">
+          <component
+            :is="currentComponent"
+            :key="componentKey"
+            :currentItem="currentItem"
+            :mode="currentMode"
+            @submitting="handleSubmitting"
+            @submitSuccess="handleSubmitSuccess"
+            @submitFailed="handleSubmitFailed"
+          />
         </div>
-      </el-card>
-    </el-col>
-  </el-row>
-  <div id="setting-dialog-wrapper">
-    <el-dialog v-model="dialogVisible" title="详细信息" width="60%">
-      <div class="dialog-content-wrapper">
-        <component
-          :is="currentComponent"
-          :key="componentKey"
-          :currentItem="currentItem"
-          :mode="currentMode"
-          @submitSuccess="handleSubmitSuccess"
-        />
-      </div>
-    </el-dialog>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -85,6 +89,7 @@ const titleMatchSettings = computed(() => {
 });
 
 const dialogVisible = ref(false);
+const isSubmitting = ref(false);
 
 // 当前dialog展开的监控/通知配置
 const currentItem = ref({
@@ -95,10 +100,19 @@ const currentItem = ref({
 // 当前dialog展开的模式
 const currentMode = ref('')
 
+const handleSubmitting = () => {
+  isSubmitting.value = true;
+}
+
 const handleSubmitSuccess = async () => {
   await loadAllConfigurableTypeName()
   await loadAllSetting()
   dialogVisible.value = false;
+  isSubmitting.value = false;
+}
+
+const handleSubmitFailed = () => {
+  isSubmitting.value = false;
 }
 
 const openDialog = (title, mode) => {
@@ -226,4 +240,9 @@ onMounted(async () => {
   margin: 0 20px;
 }
 
+.submitting-overlay {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+}
 </style>
