@@ -188,6 +188,9 @@ const openLession = (card) => {
 <style lang="scss">
 .deposit-rebates-container {
   padding-top: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 
   &.isEuro {
     .cards-tabs {
@@ -244,9 +247,7 @@ const openLession = (card) => {
       }
     }
   }
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+
   .cards-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -422,8 +423,6 @@ const openLession = (card) => {
         text-align: center;
         color: #f1d4ff;
       }
-    }
-    tr {
     }
   }
   ol.happy-rules {

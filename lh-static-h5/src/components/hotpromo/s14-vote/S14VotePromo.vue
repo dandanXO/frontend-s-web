@@ -686,8 +686,6 @@ onMounted(() => {
       color: #102628;
       // background-color: #00EAFE !important;
       background: linear-gradient(180deg, rgba(0, 117, 255, 0.45) 0%, #66acff 100%) !important;
-
-      // border: 2px solid #00EAFE;
       font-weight: bold;
       border: none;
     }
@@ -768,10 +766,6 @@ onMounted(() => {
   }
 
   .vote-records {
-    // display: grid;
-    // padding: 20px;
-    // grid-template-columns: 1fr;
-    // gap: 10px;
     padding: 0 10px;
     margin-top: 20px;
     min-height: 220px;
@@ -886,11 +880,12 @@ onMounted(() => {
   }
 
   thead {
+    background: linear-gradient(180deg, #00e9fe 0%, #0a8aff 100%);
+    color: #102628;
+
     th {
       background: linear-gradient(180deg, #00e9fe 0%, #0a8aff 100%);
     }
-    background: linear-gradient(180deg, #00e9fe 0%, #0a8aff 100%);
-    color: #102628;
   }
   td {
     background: unset;
@@ -1110,45 +1105,6 @@ onMounted(() => {
   }
 }
 
-// .pattern-wrapper:before,
-// .pattern-wrapper:after,
-// .pattern-wrapper-bottom:before,
-// .pattern-wrapper-bottom:after {
-//     background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
-//     background-repeat: no-repeat;
-//     background-position: center center;
-//     background-size: 14px 14px;
-//     content: "";
-//     width: 14px;
-//     height: 14px;
-//     display: inline-block;
-//     position: absolute;
-// }
-
-// .pattern-wrapper:before {
-//     transform: rotateZ(0deg);
-//     top: 0;
-//     left: 0;
-// }
-
-// .pattern-wrapper:after {
-//     transform: rotateZ(90deg);
-//     top: 0;
-//     right: 0;
-// }
-
-// .pattern-wrapper-bottom:before {
-//     transform: rotateZ(270deg);
-//     bottom: 0;
-//     left: 0;
-// }
-
-// .pattern-wrapper-bottom:after {
-//     transform: rotateZ(180deg);
-//     bottom: 0;
-//     right: 0;
-// }
-
 .point {
   font-size: 12px;
   color: #00eafe;
@@ -1156,15 +1112,6 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-/* .teams-wrapper .point:before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    display: inline-block;
-    transform: rotateZ(45deg);
-    margin-right: 10px;
-    background-color: #ffffff;
-} */
 .teams-wrapper .right-count {
   text-align: right;
   color: #ffffff;
@@ -1271,44 +1218,6 @@ onMounted(() => {
     }
   }
 }
-// .teams-wrapper .teams-list .teams-item:before,
-// .teams-wrapper .teams-list .teams-item:after,
-// .teams-wrapper .teams-list .teams-item .teams-item-bottom-pattern:before,
-// .teams-wrapper .teams-list .teams-item .teams-item-bottom-pattern:after {
-//     background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
-//     background-repeat: no-repeat;
-//     background-position: center center;
-//     background-size: 12px 12px;
-//     content: "";
-//     width: 12px;
-//     height: 12px;
-//     display: inline-block;
-//     position: absolute;
-// }
-
-// .teams-wrapper .teams-list .teams-item:before {
-//     transform: rotateZ(0deg);
-//     top: 0;
-//     left: 0;
-// }
-
-// .teams-wrapper .teams-list .teams-item:after {
-//     transform: rotateZ(90deg);
-//     top: 0;
-//     right: 0;
-// }
-
-// .teams-wrapper .teams-list .teams-item .teams-item-bottom-pattern:before {
-//     transform: rotateZ(270deg);
-//     bottom: 0;
-//     left: 0;
-// }
-
-// .teams-wrapper .teams-list .teams-item .teams-item-bottom-pattern:after {
-//     transform: rotateZ(180deg);
-//     bottom: 0;
-//     right: 0;
-// }
 
 .teams-wrapper .teams-list .teams-item {
   cursor: pointer;
