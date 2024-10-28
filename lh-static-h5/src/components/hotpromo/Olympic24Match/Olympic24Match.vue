@@ -534,9 +534,6 @@ onMounted(() => {
   margin-top: 20px;
   margin-bottom: 20px;
   .olympic24-match-game-status {
-    &-ended {
-      filter: grayscale(1);
-    }
     width: 120px;
     height: 24px;
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
@@ -557,6 +554,10 @@ onMounted(() => {
     background-image: url("../../../assets/promo/lh-olympic-match/date-header.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
+
+    &-ended {
+      filter: grayscale(1);
+    }
   }
 }
 

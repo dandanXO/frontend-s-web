@@ -13,7 +13,11 @@
         <div class="longka-btn longka-take-btn waves-effect" @click="getNewTigerCard">领取龙卡</div>
       </div>
       <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">
-        <p>剩余领取次数：<span style="color: #498FFF">{{ cardInfo.cardDetail.leftCount }}</span> 次</p>
+        <p>
+          剩余领取次数：
+          <span style="color: #498fff">{{ cardInfo.cardDetail.leftCount }}</span>
+          次
+        </p>
       </div>
 
       <div class="content">
@@ -484,28 +488,28 @@ const columns = [
 <style lang="scss">
 .tigercard-container {
   .q-table {
-    &__empty-text p {
-      color: #7A8EB9;
-    }
-
     max-width: 650px;
     margin: 0 auto;
 
     background: white;
     border-radius: 10px;
     border: 0;
-    color: #7A8EB9;
+    color: #7a8eb9;
+
+    &__empty-text p {
+      color: #7a8eb9;
+    }
 
     th {
       text-align: center;
       line-height: 32px;
-      color: #424F72;
+      color: #424f72;
       font-weight: bold;
-      background: #E7F3FF !important;
+      background: #e7f3ff !important;
       border: 1px solid #ecedf0;
 
       &.q-table__cell {
-        color: #7A8EB9;
+        color: #7a8eb9;
         border-bottom: 1px solid #ecedf0;
         background-color: white;
 
@@ -519,7 +523,7 @@ const columns = [
       border: 1px solid #ecedf0 !important;
 
       &.q-table__cell {
-        color: #7A8EB9;
+        color: #7a8eb9;
         text-align: center;
         border: 0;
       }
@@ -527,14 +531,14 @@ const columns = [
   }
 
   .q-table__bottom {
-    color: #7A8EB9;
+    color: #7a8eb9;
 
     .q-field__native {
-      color: #7A8EB9;
+      color: #7a8eb9;
     }
 
     .q-field__append {
-      color: #7A8EB9;
+      color: #7a8eb9;
     }
   }
 
@@ -547,7 +551,7 @@ const columns = [
     }
 
     .q-pager li {
-      color: #7A8EB9;
+      color: #7a8eb9;
       min-width: unset;
 
       &.btn-quicknext {
@@ -558,18 +562,17 @@ const columns = [
 
       &.is-active,
       &:hover {
+        color: #7a8eb9;
         &:after {
           content: "/";
           display: inline-block;
           margin-left: 8px;
         }
-
-        color: #7A8EB9;
       }
     }
 
     button:hover {
-      color: #7A8EB9;
+      color: #7a8eb9;
     }
   }
 }
@@ -754,7 +757,7 @@ body {
 }
 
 .longka-btn.combo-btn {
-  background: linear-gradient(180deg, #FFE373 0%, #FF9239 100%);
+  background: linear-gradient(180deg, #ffe373 0%, #ff9239 100%);
 }
 
 .longka-take-btn {
@@ -831,7 +834,7 @@ body {
 .longka-ranking-table {
   background-color: #fff;
   margin: 0 auto;
-  color: #7A8EB9;
+  color: #7a8eb9;
   text-align: center;
   width: 50%;
   -webkit-border-radius: 8px;
@@ -843,13 +846,13 @@ body {
 
 .longka-ranking-table thead {
   line-height: 32px;
-  background: #E7F3FF;
-  color: #424F72;
+  background: #e7f3ff;
+  color: #424f72;
   font-weight: bold;
 }
 
 .longka-ranking-table thead td {
-  background-color: #E7F3FF !important;
+  background-color: #e7f3ff !important;
 }
 
 .longka-ranking-table tr {

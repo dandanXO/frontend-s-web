@@ -995,14 +995,13 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
 
+    flex: 1;
     img {
       width: 50px;
       height: 50px;
       aspect-ratio: 1/1;
       border-radius: 50%;
     }
-
-    flex: 1;
   }
 
   .pro-details {
@@ -1231,52 +1230,6 @@ export default defineComponent({
       }
     }
   }
-
-  //.bluecard {
-  //  width: 98%;
-  //  margin: 0 0px !important;
-  //  background: url(../assets/images/common/bgheader.png) no-repeat top right;
-  //  padding: 20px 15px;
-  //  background-size: 100% 100%;
-  //  display: flex;
-  //  flex-direction: column;
-  //  gap: 15px;
-  //
-  //  .vipline {
-  //    display: flex;
-  //    justify-content: space-between;
-  //    align-items: flex-start;
-  //    gap: 5px;
-  //
-  //    .middle {
-  //      color: #fff;
-  //      flex: 6;
-  //    }
-  //
-  //    .circle {
-  //      border: 1px solid #ffffff;
-  //      border-radius: 50%;
-  //      width: 40px;
-  //      height: 40px;
-  //      display: flex;
-  //      justify-content: center;
-  //      align-items: center;
-  //      color: #ffffff;
-  //      background: linear-gradient(180deg, #aad6ff, #0075e1);
-  //
-  //      .bigV {
-  //        font-weight: 700;
-  //        font-size: 25px;
-  //        line-height: 13px;
-  //      }
-  //
-  //      .small {
-  //        font-size: 13px;
-  //        line-height: 13px;
-  //      }
-  //    }
-  //  }
-  //}
 }
 
 .acct-nav {
@@ -1842,7 +1795,5 @@ export default defineComponent({
 }
 .cropper-background {
   background: aliceblue;
-}
-.profile-dialog.update {
 }
 </style>
