@@ -179,9 +179,9 @@ const rules = {
 };
 
 const submitForm = async () => {
-  emit('submitting'); // 通知父元件
-
   await formRef.value.validate();
+
+  emit('submitting'); // 通知父元件
   formData.value.notificationSetting.setting.systemRoleIdListToSendNotification = getRoleIdsByNames(selectedRoleNameArr.value, simpleRoleArrBySite.value)
   formData.value.notificationSetting.setting.systemUserIdListToExclude = getUserIdsByNames(excludedUserNameArr.value, simpleUserArrBySelectedRoles.value)
 
