@@ -181,8 +181,8 @@ module.exports = configure(function (ctx) {
         orientation: "portrait",
         background_color: "#131313",
         theme_color: "#131313",
-        start_url: "/home",
-        scope: "/",
+        start_url: "/download",
+        scope: "./",
         icons: [
           {
             src: "icons/icon-128x128.png",
@@ -208,6 +208,23 @@ module.exports = configure(function (ctx) {
             src: "icons/icon-512x512.png",
             sizes: "512x512",
             type: "image/png"
+          }
+        ],
+        screenshots: [
+          {
+            src: "screenshot/screenshot1.jpg",
+            type: "image/jpg",
+            sizes: "499x1024"
+          },
+          {
+            src: "screenshot/screenshot2.jpg",
+            type: "image/jpg",
+            sizes: "499x1024"
+          },
+          {
+            src: "screenshot/screenshot3.jpg",
+            type: "image/jpg",
+            sizes: "499x1024"
           }
         ]
       }
