@@ -1285,6 +1285,7 @@ onMounted(() => {
       align-items: center;
       img {
         width: 100%;
+        margin: 0;
       }
     }
   }
