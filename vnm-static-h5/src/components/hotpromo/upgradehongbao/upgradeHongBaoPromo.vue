@@ -381,9 +381,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 29%;
+    margin-top: 28%;
     color: #000;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
   }
 
