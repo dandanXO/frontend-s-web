@@ -12,7 +12,7 @@
           <el-row class="dashboard-row" style="margin-top: 10px">
             <el-col :span="6" class="dashboard-col">
               <div class="number-span">
-                {{ dashboard.downlineAffiliateCount }}
+                {{ formatCommaAmt(dashboard.downlineAffiliateCount) }}
               </div>
               <div class="title-span">
                 {{ $t('fields.total_downline_count') }}
@@ -20,7 +20,7 @@
             </el-col>
             <el-col :span="6" class="dashboard-col">
               <div class="number-span">
-                {{ dashboard.directDownlineMemberCount }}
+                {{ formatCommaAmt(dashboard.directDownlineMemberCount) }}
               </div>
               <div class="title-span">
                 {{ $t('fields.total_straight_count') }}
@@ -28,7 +28,7 @@
             </el-col>
             <el-col :span="6" class="dashboard-col">
               <div class="number-span">
-                {{ dashboard.totalDownlineMemberCount }}
+                {{ formatCommaAmt(dashboard.totalDownlineMemberCount) }}
               </div>
               <div class="title-span">
                 {{ $t('fields.total_member_count') }}
@@ -37,7 +37,7 @@
 
             <el-col :span="6" class="dashboard-col">
               <div class="number-span">
-                {{ dashboard.totalBalance }}
+                {{ formatCommaAmt(dashboard.totalBalance) }}
               </div>
               <div class="title-span">
                 {{ $t('fields.total_remaining_amt') }}
@@ -76,53 +76,73 @@
               <div class="title-span">
                 {{ $t('fields.total_withdraw_amt') }}
               </div>
-              <div class="item-span">{{ dashboard.withdrawAmount }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.withdrawAmount) }}
+              </div>
             </div>
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_sum_amt') }}</div>
               <div class="item-span">
-                {{ dashboard.depositAmount - dashboard.withdrawAmount }}
+                {{
+                  formatCommaAmt(
+                    dashboard.depositAmount - dashboard.withdrawAmount
+                  )
+                }}
               </div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_privilege_amt') }}
               </div>
-              <div class="item-span">{{ dashboard.bonusPoint }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.bonusPoint) }}
+              </div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_deposit_amt') }}
               </div>
-              <div class="item-span">{{ dashboard.depositAmount }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.depositAmount) }}
+              </div>
             </div>
 
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_validbet_amt') }}
               </div>
-              <div class="item-span">{{ dashboard.validBet }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.validBet) }}
+              </div>
             </div>
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_losewin_amt') }}</div>
-              <div class="item-span">{{ dashboard.totalWin }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.totalWin) }}
+              </div>
             </div>
 
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_deposit_count') }}
               </div>
-              <div class="item-span">{{ dashboard.withdrawMemberCount }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.withdrawMemberCount) }}
+              </div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_withdraw_count') }}
               </div>
-              <div class="item-span">{{ dashboard.withdrawMemberCount }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.withdrawMemberCount) }}
+              </div>
             </div>
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_bet_count') }}</div>
-              <div class="item-span">{{ dashboard.betMemberCount }}</div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.betMemberCount) }}
+              </div>
             </div>
           </el-row>
         </el-card>
@@ -709,6 +729,10 @@ async function resetSummary() {
   summary.splice(0)
 }
 
+function formatCommaAmt(number) {
+  return number.toLocaleString()
+}
+
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -1171,41 +1195,15 @@ onMounted(async () => {
       background: rgba(121, 177, 160, 0.73);
     }
   }
-}
 
-.dashboard-row2 {
-  gap: 6px;
-  display: flex;
-  flex-wrap: nowrap;
-  width: calc(100% - 30px);
-  justify-content: space-between;
+  @media (max-width: 650px) {
+    flex-wrap: wrap;
 
-  .dashboard-col {
-    padding: 20px 24px;
-    border-radius: 4px;
-    height: 108px;
-
-    .number-span {
-      font-size: 26px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .title-span {
-      margin-bottom: 8px;
-      font-size: 18px;
-    }
-
-    &:nth-child(1) {
-      background: #c4ffd7;
-    }
-
-    &:nth-child(2) {
-      background: #fee6d0;
-    }
-
-    &:nth-child(3) {
-      background: #d1f2ff;
+    .dashboard-col {
+      width: 48%;
+      max-width: 48%;
+      flex: 0 0 50%;
+      height: auto;
     }
   }
 }
