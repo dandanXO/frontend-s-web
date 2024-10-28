@@ -292,6 +292,12 @@ svg {
   border: 2px solid #00bfd7;
 }
 
+.bg-blueborderbtn {
+  background-color: transparent;
+  color: #01bfd8 !important;
+  border: 1px solid #01bfd8;
+}
+
 .bg-brightbtn {
   background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
   box-shadow: 0px 1px 4px 0px #ffffff inset;
