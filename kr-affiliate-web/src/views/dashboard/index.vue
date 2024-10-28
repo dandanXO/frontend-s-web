@@ -9,60 +9,70 @@
         </div>
 
         <el-card>
-          <el-form>
-            <el-form-item :label="t('fields.recordTime') + ' :'">
-              <el-date-picker
-                v-model="formData.recordTime"
-                format="DD/MM/YYYY"
-                value-format="YYYY-MM-DD"
-                type="daterange"
-                range-separator=":"
-                :start-placeholder="t('fields.startDate')"
-                :end-placeholder="t('fields.endDate')"
-                style="width: 300px; margin-left: 10px"
-                :shortcuts="shortcuts"
-                :disabled-date="disabledDate"
-                :editable="false"
-                :clearable="false"
-              />
-            </el-form-item>
-          </el-form>
-
-          <el-row class="dashboard-row">
+          <div class="search">
+            <el-date-picker
+              v-model="formData.recordTime"
+              format="DD/MM/YYYY"
+              value-format="YYYY-MM-DD"
+              type="daterange"
+              range-separator=":"
+              :start-placeholder="t('fields.startDate')"
+              :end-placeholder="t('fields.endDate')"
+              style="width: 300px; margin-left: 10px"
+              :shortcuts="shortcuts"
+              :disabled-date="disabledDate"
+              :editable="false"
+              :clearable="false"
+            />
+            <el-button
+              style="margin-left: 20px"
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="loadDashboardData()"
+            >
+              {{ t('fields.search') }}
+            </el-button>
+          </div>
+          <el-row class="dashboard-row" style="margin-top: 20px">
             <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ totalCount.downLineTotal }}</div>
+              <div class="number-span">
+                {{ dashboard.downlineAffiliateCount }}
+              </div>
               <div class="title-span">
                 {{ $t('fields.total_downline_count') }}
               </div>
             </el-col>
             <el-col :span="4" class="dashboard-col">
               <div class="number-span">
-                {{ totalCount.affiliateMemberTotal }}
+                {{ dashboard.directDownlineMemberCount }}
               </div>
               <div class="title-span">
                 {{ $t('fields.total_straight_count') }}
               </div>
             </el-col>
             <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ totalCount.memberTotal }}</div>
+              <div class="number-span">
+                {{ dashboard.totalDownlineMemberCount }}
+              </div>
               <div class="title-span">
                 {{ $t('fields.total_member_count') }}
               </div>
             </el-col>
             <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ totalCount.depositTotal }}</div>
+              <div class="number-span">{{ dashboard.depositMemberCount }}</div>
               <div class="title-span">
                 {{ $t('fields.total_deposit_count') }}
               </div>
             </el-col>
             <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ totalCount.withdrawTotal }}</div>
+              <div class="number-span">{{ dashboard.withdrawMemberCount }}</div>
               <div class="title-span">
                 {{ $t('fields.total_withdraw_count') }}
               </div>
             </el-col>
             <el-col :span="4" class="dashboard-col">
-              <div class="number-span">{{ totalCount.betTotal }}</div>
+              <div class="number-span">{{ dashboard.betMemberCount }}</div>
               <div class="title-span">{{ $t('fields.total_bet_count') }}</div>
             </el-col>
           </el-row>
@@ -70,46 +80,48 @@
           <el-row class="dashboard-listing">
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_deposit_amt') }}</div>
-              <div class="item-span">{{ amountTotal.depositAmt }}</div>
+              <div class="item-span">{{ dashboard.depositAmount }}</div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_withdraw_amt') }}
               </div>
-              <div class="item-span">{{ amountTotal.withdrawAmt }}</div>
+              <div class="item-span">{{ dashboard.withdrawAmount }}</div>
             </div>
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_sum_amt') }}</div>
-              <div class="item-span">{{ amountTotal.earningTotal }}</div>
+              <div class="item-span">
+                {{ dashboard.depositAmount - dashboard.withdrawAmount }}
+              </div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_privilege_amt') }}
               </div>
-              <div class="item-span">{{ amountTotal.prizeTotal }}</div>
+              <div class="item-span">{{ dashboard.bonusPoint }}</div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_remaining_amt') }}
               </div>
-              <div class="item-span">{{ amountTotal.remainingTotal }}</div>
+              <div class="item-span">{{ dashboard.totalBalance }}</div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_validbet_amt') }}
               </div>
-              <div class="item-span">{{ amountTotal.validBetTotal }}</div>
+              <div class="item-span">{{ dashboard.validBet }}</div>
             </div>
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_losewin_amt') }}</div>
-              <div class="item-span">{{ amountTotal.winLossTotal }}</div>
+              <div class="item-span">{{ dashboard.totalWin }}</div>
             </div>
           </el-row>
         </el-card>
       </el-col>
     </el-row>
 
-    <el-row v-if="affInfo.displayAmount">
+    <!-- <el-row v-if="affInfo.displayAmount">
       <el-col v-loading="uiControl.profitLoading">
         <div class="clearfix">
           <span class="role-span htitle">
@@ -575,7 +587,7 @@
           </span>
         </el-card>
       </el-col>
-    </el-row>
+    </el-row> -->
     <!--    <el-card style="margin-top: 20px;">-->
     <!--      <el-row>-->
     <!--        <el-col>-->
@@ -601,6 +613,7 @@ import { useI18n } from 'vue-i18n'
 import AnnouncementComponent from '../../views/personal/announcement/index.vue'
 import { useRouter } from 'vue-router'
 import { getAffiliateInfo } from '../../api/affiliate'
+import { getAffiliateDashboardData } from '../../api/affiliate-report'
 
 const store = useStore()
 const router = useRouter()
@@ -622,56 +635,50 @@ const defaultStartDate = convertDate(new Date())
 const defaultEndDate = convertDate(new Date())
 const formData = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
-  size: 20,
-  current: 1,
 })
 
-const totalCount = reactive({
-  downLineTotal: 0,
-  affiliateMemberTotal: 0,
-  memberTotal: 0,
-  depositTotal: 0,
-  withdrawTotal: 0,
-  betTotal: 0,
+const dashboard = reactive({
+  downlineAffiliateCount: 0,
+  directDownlineMemberCount: 0,
+  totalDownlineMemberCount: 0,
+  depositMemberCount: 0,
+  withdrawMemberCount: 0,
+  betMemberCount: 0,
+  depositAmount: 0,
+  withdrawAmount: 0,
+  bonusPoint: 0,
+  totalBalance: 0,
+  validBet: 0,
+  totalWin: 0,
 })
 
-const amountTotal = reactive({
-  depositAmt: 0,
-  withdrawAmt: 0,
-  earningTotal: 0,
-  prizeTotal: 0,
-  remainingTotal: 0,
-  validBetTotal: 0,
-  winLossTotal: 0,
-})
+// const totalCommission = reactive({
+//   commissionRate: 0,
+//   lastMonthTotal: 0,
+//   monthBeforeLastTotal: 0,
+// })
 
-const totalCommission = reactive({
-  commissionRate: 0,
-  lastMonthTotal: 0,
-  monthBeforeLastTotal: 0,
-})
+// const memberSummary = reactive([
+//   {
+//     time: 'thisMonth',
+//     profit: 0,
+//     netProfit: 0,
+//     bonus: 0,
+//     commission: 0,
+//     platformFee: 0,
+//     paymentFee: 0,
+//     rebate: 0,
+//   },
+// ])
 
-const memberSummary = reactive([
-  {
-    time: 'thisMonth',
-    profit: 0,
-    netProfit: 0,
-    bonus: 0,
-    commission: 0,
-    platformFee: 0,
-    paymentFee: 0,
-    rebate: 0,
-  },
-])
-
-const commissionSummary = reactive([
-  {
-    time: 'thisMonth',
-    estimatedCommission: 0,
-    secondLevelCommission: 0,
-    thirdLevelCommission: 0,
-  },
-])
+// const commissionSummary = reactive([
+//   {
+//     time: 'thisMonth',
+//     estimatedCommission: 0,
+//     secondLevelCommission: 0,
+//     thirdLevelCommission: 0,
+//   },
+// ])
 
 const summary = reactive([
   {
@@ -698,182 +705,194 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
 
-async function loadTotalSummary() {
-  const { data: ret } = await totalCommissionSummary(
-    store.state.user.id,
-    store.state.user.siteId
-  )
-  Object.keys({ ...ret }).forEach(field => {
-    if (ret[field] || ret[field] === 0) {
-      totalCommission[field] = ret[field]
-    }
-  })
-}
+// async function loadTotalSummary() {
+//   const { data: ret } = await totalCommissionSummary(
+//     store.state.user.id,
+//     store.state.user.siteId
+//   )
+//   Object.keys({ ...ret }).forEach(field => {
+//     if (ret[field] || ret[field] === 0) {
+//       totalCommission[field] = ret[field]
+//     }
+//   })
+// }
 
-async function loadMemberSummary() {
-  uiControl.profitLoading = true
-  memberSummary.splice(0)
-  loadTotalSummary()
+// async function loadMemberSummary() {
+//   uiControl.profitLoading = true
+//   memberSummary.splice(0)
+//   loadTotalSummary()
 
-  const query = checkQuery('thisMonth')
-  const { data: ret } = await memberCommissionSummary(
-    store.state.user.id,
-    query
-  )
-  const { data: subRet } = await lastMemberCommissionSummary(
-    store.state.user.id,
-    store.state.user.siteId
-  )
+//   const query = checkQuery('thisMonth')
+//   const { data: ret } = await memberCommissionSummary(
+//     store.state.user.id,
+//     query
+//   )
+//   const { data: subRet } = await lastMemberCommissionSummary(
+//     store.state.user.id,
+//     store.state.user.siteId
+//   )
 
-  const summaryField = {}
-  const subSummaryField = {}
-  Object.keys({ ...ret }).forEach(field => {
-    if (ret[field] || ret[field] === 0) {
-      summaryField[field] = ret[field]
-    }
-  })
-  Object.keys({ ...subRet }).forEach(field => {
-    if (subRet[field] || subRet[field] === 0) {
-      subSummaryField[field] = subRet[field]
-    }
-  })
-  summaryField.time = 'thisMonth'
-  subSummaryField.time = 'lastMonth'
-  memberSummary.push(summaryField)
-  memberSummary.push(subSummaryField)
-  uiControl.profitLoading = false
-}
+//   const summaryField = {}
+//   const subSummaryField = {}
+//   Object.keys({ ...ret }).forEach(field => {
+//     if (ret[field] || ret[field] === 0) {
+//       summaryField[field] = ret[field]
+//     }
+//   })
+//   Object.keys({ ...subRet }).forEach(field => {
+//     if (subRet[field] || subRet[field] === 0) {
+//       subSummaryField[field] = subRet[field]
+//     }
+//   })
+//   summaryField.time = 'thisMonth'
+//   subSummaryField.time = 'lastMonth'
+//   memberSummary.push(summaryField)
+//   memberSummary.push(subSummaryField)
+//   uiControl.profitLoading = false
+// }
 
-async function loadCommissionSummary() {
-  uiControl.commissionLoading = true
-  commissionSummary.splice(0)
+// async function loadCommissionSummary() {
+//   uiControl.commissionLoading = true
+//   commissionSummary.splice(0)
 
-  const query = checkQuery('thisMonth')
-  const { data: ret } = await getMonthCommission(store.state.user.id, query)
-  const { data: subRet } = await getLastMonthCommission(
-    store.state.user.id,
-    store.state.user.siteId
-  )
+//   const query = checkQuery('thisMonth')
+//   const { data: ret } = await getMonthCommission(store.state.user.id, query)
+//   const { data: subRet } = await getLastMonthCommission(
+//     store.state.user.id,
+//     store.state.user.siteId
+//   )
 
-  const summaryField = {}
-  const subSummaryField = {}
-  Object.keys({ ...ret }).forEach(field => {
-    if (ret[field] || ret[field] === 0) {
-      summaryField[field] = ret[field]
-    }
-  })
-  Object.keys({ ...subRet }).forEach(field => {
-    if (subRet[field] || subRet[field] === 0) {
-      subSummaryField[field] = subRet[field]
-    }
-  })
-  summaryField.time = 'thisMonth'
-  subSummaryField.time = 'lastMonth'
-  commissionSummary.push(summaryField)
-  commissionSummary.push(subSummaryField)
-  uiControl.commissionLoading = false
-}
+//   const summaryField = {}
+//   const subSummaryField = {}
+//   Object.keys({ ...ret }).forEach(field => {
+//     if (ret[field] || ret[field] === 0) {
+//       summaryField[field] = ret[field]
+//     }
+//   })
+//   Object.keys({ ...subRet }).forEach(field => {
+//     if (subRet[field] || subRet[field] === 0) {
+//       subSummaryField[field] = subRet[field]
+//     }
+//   })
+//   summaryField.time = 'thisMonth'
+//   subSummaryField.time = 'lastMonth'
+//   commissionSummary.push(summaryField)
+//   commissionSummary.push(subSummaryField)
+//   uiControl.commissionLoading = false
+// }
 
-async function loadOpsSummary() {
-  uiControl.opsLoading = true
-  let query = {}
-  let subQuery = {}
-  if (request.queryDate === 'today') {
-    query = checkQuery('today')
-    subQuery = checkQuery('yesterday')
-  } else {
-    query = checkQuery('thisMonth')
-    subQuery = checkQuery('lastMonth')
-  }
-  const { data: ret } = await dashboardSummary(store.state.user.id, query)
-  const { data: subRet } = await dashboardSummary(store.state.user.id, subQuery)
-  await resetSummary()
-  const summaryField = {}
-  const subSummaryField = {}
-  Object.keys({ ...ret }).forEach(field => {
-    if (ret[field] || ret[field] === 0) {
-      summaryField[field] = ret[field]
-    }
-  })
-  Object.keys({ ...subRet }).forEach(field => {
-    if (subRet[field] || subRet[field] === 0) {
-      subSummaryField[field] = subRet[field]
-    }
-  })
-  if (request.queryDate === 'today') {
-    summaryField.time = 'today'
-    subSummaryField.time = 'yesterday'
-  } else {
-    summaryField.time = 'thisMonth'
-    subSummaryField.time = 'lastMonth'
-  }
-  summary.push(summaryField)
-  summary.push(subSummaryField)
-  uiControl.opsLoading = false
-}
+// async function loadOpsSummary() {
+//   uiControl.opsLoading = true
+//   let query = {}
+//   let subQuery = {}
+//   if (request.queryDate === 'today') {
+//     query = checkQuery('today')
+//     subQuery = checkQuery('yesterday')
+//   } else {
+//     query = checkQuery('thisMonth')
+//     subQuery = checkQuery('lastMonth')
+//   }
+//   const { data: ret } = await dashboardSummary(store.state.user.id, query)
+//   const { data: subRet } = await dashboardSummary(store.state.user.id, subQuery)
+//   await resetSummary()
+//   const summaryField = {}
+//   const subSummaryField = {}
+//   Object.keys({ ...ret }).forEach(field => {
+//     if (ret[field] || ret[field] === 0) {
+//       summaryField[field] = ret[field]
+//     }
+//   })
+//   Object.keys({ ...subRet }).forEach(field => {
+//     if (subRet[field] || subRet[field] === 0) {
+//       subSummaryField[field] = subRet[field]
+//     }
+//   })
+//   if (request.queryDate === 'today') {
+//     summaryField.time = 'today'
+//     subSummaryField.time = 'yesterday'
+//   } else {
+//     summaryField.time = 'thisMonth'
+//     subSummaryField.time = 'lastMonth'
+//   }
+//   summary.push(summaryField)
+//   summary.push(subSummaryField)
+//   uiControl.opsLoading = false
+// }
 
-function checkQuery(dateType) {
-  const query = {}
-  query.siteId = store.state.user.siteId
-  const end = new Date()
-  const start = new Date()
-  if (dateType === 'today') {
-    query.recordTime = [convertDate(start), convertDate(end)].join(',')
-  } else if (dateType === 'yesterday') {
-    start.setTime(
-      moment(start)
-        .subtract(1, 'days')
-        .format('x')
-    )
-    end.setTime(
-      moment(end)
-        .subtract(1, 'days')
-        .format('x')
-    )
-    query.recordTime = [convertDate(start), convertDate(end)].join(',')
-  } else if (dateType === 'thisMonth') {
-    if (moment().date() < 16) {
-      start.setTime(
-        moment()
-          .startOf('month')
-          .format('x')
-      )
-      end.setTime(moment().set('date', 15))
-    } else {
-      start.setTime(moment().set('date', 16))
-      end.setTime(moment())
-    }
-    query.recordTime = [convertDate(start), convertDate(end)].join(',')
-  } else if (dateType === 'lastMonth') {
-    start.setTime(
-      moment(start)
-        .subtract(1, 'months')
-        .startOf('month')
-        .format('x')
-    )
-    end.setTime(
-      moment(end)
-        .subtract(1, 'months')
-        .endOf('month')
-        .format('x')
-    )
-    query.recordTime = [convertDate(start), convertDate(end)].join(',')
-  }
-  return query
-}
+// function checkQuery(dateType) {
+//   const query = {}
+//   query.siteId = store.state.user.siteId
+//   const end = new Date()
+//   const start = new Date()
+//   if (dateType === 'today') {
+//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
+//   } else if (dateType === 'yesterday') {
+//     start.setTime(
+//       moment(start)
+//         .subtract(1, 'days')
+//         .format('x')
+//     )
+//     end.setTime(
+//       moment(end)
+//         .subtract(1, 'days')
+//         .format('x')
+//     )
+//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
+//   } else if (dateType === 'thisMonth') {
+//     if (moment().date() < 16) {
+//       start.setTime(
+//         moment()
+//           .startOf('month')
+//           .format('x')
+//       )
+//       end.setTime(moment().set('date', 15))
+//     } else {
+//       start.setTime(moment().set('date', 16))
+//       end.setTime(moment())
+//     }
+//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
+//   } else if (dateType === 'lastMonth') {
+//     start.setTime(
+//       moment(start)
+//         .subtract(1, 'months')
+//         .startOf('month')
+//         .format('x')
+//     )
+//     end.setTime(
+//       moment(end)
+//         .subtract(1, 'months')
+//         .endOf('month')
+//         .format('x')
+//     )
+//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
+//   }
+//   return query
+// }
 
 const affInfo = reactive({
   displayAmount: false,
 })
 
+async function loadDashboardData() {
+  let query = {}
+  query.recordTime = formData.recordTime.join(',')
+  const { data: ret } = await getAffiliateDashboardData(query)
+  Object.keys({ ...ret }).forEach(field => {
+    if (ret[field] || ret[field] === 0) {
+      dashboard[field] = ret[field]
+    }
+  })
+}
+
 onMounted(async () => {
-  if (store.state.user.siteCode === 'IND') {
-    router.push('/report/daily-detail')
-  }
-  affiliateLevel.value = store.state.user.affiliateLevel
-  loadMemberSummary()
-  loadCommissionSummary()
-  loadOpsSummary()
+  // if (store.state.user.siteCode === 'IND') {
+  //   router.push('/report/daily-detail')
+  // }
+  // affiliateLevel.value = store.state.user.affiliateLevel
+  // loadMemberSummary()
+  // loadCommissionSummary()
+  // loadOpsSummary()
+  loadDashboardData()
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]
