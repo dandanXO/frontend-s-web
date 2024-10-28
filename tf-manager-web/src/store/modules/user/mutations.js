@@ -25,4 +25,8 @@ export const mutations = {
     state.siteId = siteInfo.id
     state.siteName = siteInfo.siteName
   },
+
+  [UserMutationTypes.SET_NOTIFICATIONS](state, notificationArr) {
+    state.notifications = notificationArr
+  },
 }
