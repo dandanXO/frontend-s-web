@@ -88,7 +88,7 @@
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen'" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin'" />
-    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" :promo-code="list.promoCode" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-cycle-loss-refund'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />

@@ -131,7 +131,8 @@
           ②彩金不可购买免费旋转机会，不可投注捕鱼游戏；
         </li>
         <li>
-          同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+          同一手机号、姓名、邮箱地址、银行卡号、IP
+          地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
         </li>
         <li>为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。</li>
       </ol>
@@ -146,7 +147,7 @@ import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
-
+import { ResponseCode } from "@/api/response";
 const notify = useNotify();
 
 const store = userStore();
@@ -156,9 +157,9 @@ const bonus = ref(0);
 function thousandDigitNoDecimal(value, options) {
   const defaultOptions = {
     minimumFractionDigits: 0
-  }
-  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) }
-  return Number(value).toLocaleString('en-US', optionsWithDefaults)
+  };
+  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) };
+  return Number(value).toLocaleString("en-US", optionsWithDefaults);
 }
 
 const handleClaimBonus = () => {
@@ -184,7 +185,15 @@ const handleClaimBonus = () => {
           message: `成功领取${res.data}元`
         });
         fetchData();
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         // notify({
         //   type: "error",
         //   message: res.message
@@ -226,7 +235,6 @@ onMounted(() => {
 .challenge-comeback-container {
   max-width: 1200px;
   margin: 0 auto;
-  font-family: PingFang TC;
   color: #000;
   > :not(:last-child) {
     margin-bottom: 40px;
