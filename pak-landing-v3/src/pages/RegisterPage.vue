@@ -101,6 +101,10 @@
         {{ $t("btn.confirm") }}
       </q-btn>
     </div>
+
+    <div class="bottom-img">
+      <img src="../assets/images/index/register-img.png"/>
+    </div>
   </div>
 </template>
 
@@ -515,7 +519,12 @@ export default defineComponent({
 
 .bottom-img {
   text-align: center;
-  margin-top: 28px;
+  width: 90%;
+  margin: 30px auto;
+
+  img{
+    width: 100%;
+  }
 }
 
 .cs-icon-wrapper {

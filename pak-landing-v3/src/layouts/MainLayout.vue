@@ -10,7 +10,7 @@
     </q-page-container>
   </q-layout>
 
-  <div class="first-screen-loading" v-show="ui.firstScreenLoading" />
+<!--  <div class="first-screen-loading" v-show="ui.firstScreenLoading" />-->
 </template>
 
 <script>
