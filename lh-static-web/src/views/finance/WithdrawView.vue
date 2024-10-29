@@ -664,10 +664,10 @@ export default defineComponent({
       align-items: center;
       position: relative;
       padding: 10px;
-
+      gap: 10px;
       .promo-label {
         position: absolute;
-        bottom: -13px;
+        bottom: 30%;
         left: 50%;
         transform: translate(-50%);
         width: 50px;
