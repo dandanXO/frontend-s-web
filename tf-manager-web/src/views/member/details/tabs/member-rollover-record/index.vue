@@ -17,6 +17,12 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.id"
+          size="small"
+          placeholder="ID"
+          style="width: 200px; margin-left: 5px;"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -56,6 +62,12 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
       >
+        <el-table-column
+          prop="id"
+          :label="t('fields.id')"
+          align="center"
+          min-width="180"
+        />
         <el-table-column
           prop="depositSerialNumber"
           :label="t('fields.depositSerialNo')"
@@ -277,6 +289,7 @@ const page = reactive({
 
 const request = reactive({
   size: 30,
+  id: null,
   current: 1,
   siteId: null,
   memberId: null,
@@ -296,6 +309,7 @@ const formRules = reactive({
 
 function resetQuery() {
   request.recordStatus = ['ONGOING', 'COMPLETED', 'VOID', 'CANCEL'];
+  request.id = null;
 }
 
 function checkQuery() {

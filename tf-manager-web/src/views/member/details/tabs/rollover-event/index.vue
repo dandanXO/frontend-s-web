@@ -163,7 +163,7 @@ const props = defineProps({
 })
 
 const startDate = new Date()
-startDate.setDate(startDate.getDate() - 2)
+startDate.setDate(startDate.getDate())
 const defaultStartDate = convertStartDate(startDate);
 const defaultEndDate = convertDate(startDate);
 
