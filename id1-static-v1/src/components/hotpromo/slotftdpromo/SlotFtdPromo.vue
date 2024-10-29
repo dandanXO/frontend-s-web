@@ -15,6 +15,7 @@
 import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "@/stores";
+import { api } from "boot/axios";
 
 const router = useRouter();
 const store = userStore();
@@ -34,7 +35,7 @@ const loadAppTabs = () => {
 };
 
 onMounted(() => {
-  loadAppTabs
+  loadAppTabs();
 });
 
 const isFtdPromoEnded = computed(() => {
