@@ -3364,7 +3364,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
+  OneSignal.initialize("4bc2b9bc-e236-40ff-a631-fd88774c6147");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
