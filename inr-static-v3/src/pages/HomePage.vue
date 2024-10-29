@@ -3415,7 +3415,6 @@ const checkHbPromo = () => {
       return res;
     })
     .then((data) => {
-      // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
       hbPromo.value = data.data;
     });
 };
