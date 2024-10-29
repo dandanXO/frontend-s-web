@@ -592,41 +592,38 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog v-if="!isPopoutDataLoading" width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal" persistent>
-    <q-carousel
-      v-model="slide1"
+  <q-dialog v-if="!isPopoutDataLoading && showDialog  " width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal" persistent>
+    <div
       swipeable
       animated
       padding
       class="bg-transparent text-white rounded-borders"
-      style="height: 100vh; max-height: unset"
+      style="height: 100dvh; max-height: unset"
     >
-      <q-carousel-slide
-        v-for="(item, index) in popupBanners"
-        :name="index"
+      <div
         class="column no-wrap flex-center"
-        style="padding: 0; width: 100vw; height: 100vh;background-size: 100% 100%;"
-        :img-src="imgURL + item.mobileImgUrl"
-        :key="item.title"
-        v-show="!closedLoginBannerList.has(item.title)"
+        style="padding: 0; width: 100vw; height: 100dvh;background-size: 100% 100%;"
       >
+        <div style="width: calc(100%-1px) height: 100%; display: flex; justify-content: center; align-items: center;">
+          <img style="height: 100%; width: 100%; object-fit: contain;" :key="popupBanners[0].mobileImgUrl" :src="imgURL + popupBanners[0].mobileImgUrl">
+        </div>
         <div style="width: 100%; height: 100%; position: relative">
           <div class="popup-footer">
-            <div>&lt;{{ index + 1 }} /3&gt;</div>
+            <div>&lt;{{ Math.abs(popupBanners.length-popupBannersLength)+1 }} /{{popupBannersLength}}&gt;</div>
             <div>
-              <q-checkbox class="popup-checkbox" label="오늘 이창을 다시열지 않기" :modelValue="checkedLoginBannerList.has(item.title)" @click="handleCheckLoginBanner(item)" />
+              <q-checkbox class="popup-checkbox" label="오늘 이창을 다시열지 않기" v-model="checkedBox" @click="handleCheckLoginBanner(popupBanners[0].title)" />
             </div>
             <div class="btn-container">
               <q-btn
                 style="background: #5d5d5d; color: white"
                 label="닫기"
-                @click="handleCloseLoginBanner($event, item)"
+                @click="handleCloseLoginBanner($event, popupBanners[0].title)"
               />
             </div>
           </div>
         </div>
-      </q-carousel-slide>
-    </q-carousel>
+      </div>
+    </div>
   </q-dialog>
 
   <q-dialog width="100%" class="modal-update-div" v-model="isPlatformComingSoon" show-cancel-button>
@@ -930,6 +927,11 @@ export default defineComponent({
     const slot = ref([]);
     const fishing = ref([]);
     const casuals = ref([]);
+    const showDialog = ref(true)
+
+    if(sessionStorage.getItem('disableShowLoginThreeStep') === 'true'){
+      showDialog.value = false
+    }
 
     const ui = useUI();
     const scrollPageRef = ref(null);
@@ -1649,6 +1651,8 @@ export default defineComponent({
       () => {
         if (store.token) {
           isLogined.value = true;
+        }else{
+          showDialog.value = false
         }
       }
     );
@@ -1764,9 +1768,10 @@ export default defineComponent({
     // after login popup
 
     const popupBanners = ref([]);
+    const popupBannersLength = ref(0)
     const closedLoginBannerList = ref(new Set());
     const checkedLoginBannerList = ref(new Set());
-    const slide1 = ref(0);
+    
     const isPopoutDataLoading = ref(false)
 
     const getLoginBannerHref = (data) => {
@@ -1776,10 +1781,16 @@ export default defineComponent({
       return "/promotion?name=" + data["path"];
     };
 
+    const checkedBox = ref(false)
+
     const handleCloseLoginBanner = (e, item) => {
       e.preventDefault();
-      closedLoginBannerList.value.add(item.title);
-
+      // closedLoginBannerList.value.add(item.title);
+      if(!checkedLoginBannerList.value.has(item)){
+        return
+      }
+      popupBanners.value.shift()
+      checkedBox.value = false
       // 有打勾的話 就存起來
       if (checkedLoginBannerList.value.has(item.title)) {
         if (sessionStorage.getItem("CLOSED_LOGIN_BANNER")) {
@@ -1789,13 +1800,17 @@ export default defineComponent({
           sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify([item.title]));
         }
       }
+      if(popupBanners.value.length<=0){
+        isImportantAnnoucementModal.value = false
+        sessionStorage.setItem('disableShowLoginThreeStep',true)
+      }
     };
 
     const handleCheckLoginBanner = (item) => {
-      if (checkedLoginBannerList.value.has(item.title)) {
-        checkedLoginBannerList.value.delete(item.title);
+      if (checkedLoginBannerList.value.has(item)) {
+        checkedLoginBannerList.value.delete(item);
       } else {
-        checkedLoginBannerList.value.add(item.title);
+        checkedLoginBannerList.value.add(item);
       }
     };
 
@@ -1805,6 +1820,7 @@ export default defineComponent({
         if (res.code === 0) {
           console.log(res.data);
           popupBanners.value = res.data;
+          popupBannersLength.value =  popupBanners.value.length.toString()
           closedLoginBannerList.value = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER")) || []);
         }
       }).finally(() => {
@@ -1824,7 +1840,9 @@ export default defineComponent({
     );
 
     return {
-      slide1,
+      popupBannersLength,
+      showDialog,
+      checkedBox,
       isPopoutDataLoading,
       closedLoginBannerList,
       checkedLoginBannerList,
@@ -3441,7 +3459,7 @@ export default defineComponent({
 
 .popup-footer {
   position: absolute;
-  bottom: 0;
+  bottom:0;
   width: 100%;
   display: flex;
   justify-content: space-between;

@@ -5,27 +5,27 @@
     v-model="isImportantAnnoucementModal"
     :show-close="false"
     :close-on-click-modal="false"
-    v-if="!isImpt"
+    v-if="showDialog"
   >
     <div class="popup-wrapper">
-      <a
-        v-for="(item, index) in popupBanners"
-        :key="index"
-        class="popup-container"
-        :href="getLoginBannerHref(item)"
-        :target="getLoginBannerHref(item).includes('https://') ? '_blank' : '_self'"
-        v-show="!closedLoginBannerList.has(index)"
-      >
-        <img :src="imgURL + item.desktopImgUrl" class="alert-img" />
-        <div class="popup-footer">
-          <div>
-            <el-checkbox label="오늘 이창을 다시열지 않기" :value="index" style="background-color: transparent" @click="handleCheckLoginBanner(index)" />
+      <template v-if="popupBanners[0]">
+        <a
+          class="popup-container"
+          :href="getLoginBannerHref(popupBanners[0])"
+          :target="getLoginBannerHref(popupBanners[0]).includes('https://') ? '_blank' : '_self'"
+          
+        >
+          <img :key="popupBanners[0].mobileImgUrl" :src="imgURL + popupBanners[0].desktopImgUrl" class="alert-img" />
+          <div class="popup-footer">
+            <div>
+              <el-checkbox label="오늘 이창을 다시열지 않기" v-model="checkedBox" style="background-color: transparent" @click="handleCheckLoginBanner(popupBanners[0].title)" />
+            </div>
+            <div class="btn-container">
+              <el-button type="info" size="small" @click="handleCloseLoginBanner($event, popupBanners[0].title)">닫기</el-button>
+            </div>
           </div>
-          <div class="btn-container">
-            <el-button type="info" size="small" @click="handleCloseLoginBanner($event, index)">닫기</el-button>
-          </div>
-        </div>
-      </a>
+        </a>
+      </template>
     </div>
   </el-dialog>
 
@@ -52,6 +52,12 @@ const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 const popupBanners = ref([]);
+const checkedBox = ref(false)
+const showDialog = ref(true)
+
+if(sessionStorage.getItem('disableShowLoginThreeStep') === 'true'){
+  showDialog.value = false
+}
 
 const goToUrl = (redirectUrl) => {
   if (!redirectUrl.trim()) return;
@@ -113,8 +119,16 @@ const checkedLoginBannerList = ref(new Set());
 
 const handleCloseLoginBanner = (e, index) => {
   e.preventDefault();
-  closedLoginBannerList.value.add(index);
-
+  
+  if(!checkedLoginBannerList.value.has(index)){
+    
+    return
+    
+  }
+  // closedLoginBannerList.value.add(index);
+  
+  popupBanners.value.shift()
+  checkedBox.value = false
   if (checkedLoginBannerList.value.has(index)) {
     if (sessionStorage.getItem("CLOSED_LOGIN_BANNER")) {
       const result = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER"))).add(index);
@@ -122,6 +136,10 @@ const handleCloseLoginBanner = (e, index) => {
     } else {
       sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify([index]));
     }
+  }
+  if(popupBanners.value.length<=0){
+    isImportantAnnoucementModal.value = false
+    sessionStorage.setItem('disableShowLoginThreeStep',true)
   }
 }
 
@@ -207,9 +225,12 @@ onMounted(() => {
 watch(
   () => store.token,
   () => {
+    
     if (store.token) {
       fetchPopoutData();
       isImportantAnnoucementModal.value = true
+    }else{
+      showDialog.value = false
     }
   },
   { immediate: true }
@@ -262,8 +283,14 @@ watch(
 }
 
 .popup-wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  position: absolute;
+  
+  left: 50%;
+  transform: translate(-50%, 0%);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .popup-container {
     position: relative;
@@ -295,6 +322,6 @@ watch(
 }
 
 .custom-overlay {
-  --el-overlay-color-lighter: rgba(0, 0, 0, 0);
+  --el-overlay-color-lighter: rgba(0, 0, 0, 0.3);
 }
 </style>
