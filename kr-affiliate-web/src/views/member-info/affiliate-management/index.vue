@@ -94,7 +94,7 @@
           {{ item.name }}
         </el-breadcrumb-item>
       </el-breadcrumb> -->
-      <!-- 
+      <!--
       <table cellpadding="0" cellspacing="0" border class="custom-table">
         <thead>
           <tr>
@@ -1375,7 +1375,7 @@ onMounted(async () => {
     return level.value === affiliateLevel.value
   })[0].key
   uiControl.affiliateLevel = uiControl.affiliateLevel.filter(level => {
-    return level.key >= affiliateLevelKey.value
+    return level.key > affiliateLevelKey.value
   })
 })
 </script>
