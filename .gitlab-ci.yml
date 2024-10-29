@@ -801,6 +801,15 @@ deploy-pak-landing-v2:
 
 #===============================================================================================
 
+
+deploy-pak-download-pwa:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pak-download-pwa
+
+#===============================================================================================
+
+
 build-pak-landing-v1-strapi:
   extends: .build-projects
   variables:
