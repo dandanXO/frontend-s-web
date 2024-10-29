@@ -105,14 +105,18 @@
             "
           ></div>
         </div>
-        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' || selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure'" />
+        <BlastPremierMarquee
+          v-if="
+            selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
+            selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure'
+          "
+        />
         <div
           class="inner"
           :style="{
             backgroundColor:
               (selectedPromo?.promoCode === 'lh1worldcup' ||
                 selectedPromo?.promoCode === 'lh1worldcupdota2' ||
-                selectedPromo?.promoCode === 'lh1-challenge-comeback' ||
                 selectedPromo?.promoCode === 'lh-official-gift' ||
                 selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
                 selectedPromo?.promoCode === 'lh-nba24-match' ||
