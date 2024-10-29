@@ -26,7 +26,7 @@
               <th align="center">{{ $t("lang.dialog_bet_requirement") }}</th>
               <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
                 {{ $t("lang.dialog_turnover_progress") }}
-                <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
+                <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" /> -->
               </th>
               <th align="center">{{ $t("lang.dialog_status") }}</th>
             </tr>
@@ -44,7 +44,10 @@
           </tbody>
         </table>
 
+        <div class="withdraw-remaining-dialog__buttons">
         <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("lang.dialog_back") }}</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">{{ $t("lang.dialog_refresh") }}</button>
+      </div>
       </div>
     </div>
   </q-dialog>
@@ -201,11 +204,10 @@ onMounted(() => {
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
-        text-align: center;
-        color: #424f72;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        color: #424f72;  
+          gap: 5px;
+    text-align: left;
+    display: inline-block;
         gap: 5px;
       }
       .withdraw-remaining-dialog__body-table {
@@ -276,7 +278,13 @@ onMounted(() => {
         }
       }
     }
-
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
@@ -290,10 +298,19 @@ onMounted(() => {
       font-weight: 600;
       line-height: var(--line-height);
       text-align: center;
+      background: url(@/assets/images/finance/withdraw/active-btn.png);
+      background-size: 100% 100%;
       color: #fff;
+      opacity: .9;
+      &:first-of-type {
+        background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
 
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }

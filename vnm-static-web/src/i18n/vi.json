@@ -340,7 +340,8 @@
       "turnoverProgress": "Tiến độ",
       "status": "Trạng thái",
       "goComplete": "Tiếp tục",
-      "back": "Quay lại"
+      "back": "Quay lại",
+      "refresh": "Cập nhật"
     },
     "types_esport": "eSport",
     "types_sport": "Thể thao",

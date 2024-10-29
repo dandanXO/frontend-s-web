@@ -210,18 +210,27 @@
             landingPageLink: "https://am837.cc",
             agent1ID: "vip118",
             agent2ID: "vip518"
+          },
+          "01735.me": {
+            group1Title: "服力群",
+            group1Number: "673169074",
+            group2Title: "福利群",
+            group2Number: "651399615",
+            landingPageLink: "https://am837.cc",
+            agent1ID: "vip118",
+            agent2ID: "vip518"
           }
         };
 
         // Default content if no hostname matches
         const defaultInfo = {
-          group1Title: "164 富力",
-          group1Number: "925319859",
-          group2Title: "服力群",
-          group2Number: "673169074",
-          landingPageLink: "https://am837.cc/", // You can set a default link or leave it empty
-          agent1ID: "vip885",
-          agent2ID: "vip856"
+          group1Title: "服力群",
+          group1Number: "673169074",
+          group2Title: "福利群",
+          group2Number: "651399615",
+          landingPageLink: "https://am837.cc",
+          agent1ID: "vip118",
+          agent2ID: "vip518"
         };
 
         const selectedInfo = contactInfo[hostname] || defaultInfo;
@@ -302,7 +311,7 @@
       } else if (hostname.indexOf("82952.co") > -1) {
         LA.init({ id: "KbWxptjK0pD6nqtW", ck: "KbWxptjK0pD6nqtW" });
       } else if (hostname.indexOf("01735.me") > -1) {
-        LA.init({id:"KbzBj4ZOZgF4b32w",ck:"KbzBj4ZOZgF4b32w"});
+        LA.init({ id: "KbzBj4ZOZgF4b32w", ck: "KbzBj4ZOZgF4b32w" });
       } else {
         LA.init({ id: "KSr3RkhpE2hIViNC", ck: "KSr3RkhpE2hIViNC" });
       }

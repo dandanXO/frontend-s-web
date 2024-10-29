@@ -1,15 +1,20 @@
 <template>
-  <q-card-section v-if="!isPromoDetail" class="page-title">优惠活动</q-card-section>
+  <q-header v-if="!isPromoDetail">
+    <q-card-section class="page-title">优惠活动</q-card-section>
+  </q-header>
 
-  <div class="promo-container" style="background: #090b19">
+  <div class="promo-container">
     <div class="promo">
-      <RoundTab
-        v-model:tab="tab"
-        :items="tabItems"
-        :border-radius="10"
-        background-color="#00BFD71A;
-"
-      ></RoundTab>
+      <div class="tab-wrapper">
+        <RoundTab
+          v-if="!isPromoDetail"
+          v-model:tab="tab"
+          :items="tabItems"
+          :border-radius="10"
+          background-color="#183249;"
+        />
+      </div>
+
       <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs> -->
@@ -29,35 +34,39 @@
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
+                      <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
+                      </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div v-if="promo.label" class="trapezium">
+                        {{ promo.label }}
+                      </div>
                     </a>
                   </div>
 
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
-                      <div class="pad-title">
+                      <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
+                      </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                      <div class="pad-label label-new">最新活动</div>
+                      <div v-if="promo.label" class="trapezium">
+                        {{ promo.label }}
+                      </div>
                     </a>
                   </div>
                 </div>
@@ -293,6 +302,26 @@ export default defineComponent({
           }
       }
     }
+
+    const getPromoLabel = (labelType) => {
+      switch (labelType) {
+        case 0:
+          return "NEW 最新";
+        case 1:
+          return "HOT 热门";
+        case 3:
+          return "RECOMMEND 推荐";
+        case 4:
+          return "DAILY 日常";
+        case 5:
+          return "NEWBIE 新人";
+        case 6:
+          return "TIME 限时";
+        default:
+          return "";
+      }
+    };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
@@ -302,6 +331,10 @@ export default defineComponent({
       } else {
         filteredArray.value = promoState.promoList
       }
+      filteredArray.value = filteredArray.value.map(item => ({
+        ...item,
+        label: getPromoLabel(item.labelType)
+    }));
     };
 
     const logoShow = ref(true);
@@ -382,15 +415,18 @@ export default defineComponent({
       promoSrc,
       closeDialog,
       logoShow,
-      loadGame
+      loadGame,
+      getPromoLabel
     }
   },
 });
 </script>
 <style lang="scss">
+.q-page-container {
+  background-color: #090b18;
+}
 .promo-container {
-  min-height: 100vh;
-  padding: 16px;
+  min-height: calc(100vh - 120px);
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -441,9 +477,10 @@ export default defineComponent({
 <style lang="scss">
 .promo-container {
   color: #ffffff;
+  background-color: #090b18;
 
   .all-promotions {
-    padding-bottom: 20px;
+    padding: 0 20px 20px 20px;
     @keyframes fadein {
       100% {
         opacity: 1;
@@ -526,7 +563,6 @@ export default defineComponent({
 
       .promo-list-wrapper {
         display: flex;
-        margin-top: 20px;
         flex-direction: column;
 
         .promo-item {
@@ -539,7 +575,7 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 30px;
+          padding-top: 10px;
           border-radius: 8px;
 
           .promo-img-wrapper {
@@ -565,6 +601,9 @@ export default defineComponent({
               .promo-content {
                 width: 100%;
                 height: auto;
+                border-radius: 8px;
+                padding: 1px;
+                background: linear-gradient(180deg, #a98f7c 0%, rgba(169, 143, 124, 0) 100%);
 
                 &.isDesktop {
                   display: block;
@@ -640,6 +679,9 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       &.bg__xf-eurocup-hongbao {
         background-color: #090b18;
       }
@@ -718,7 +760,7 @@ export default defineComponent({
       .inner {
         max-width: 1400px;
         width: 90%;
-        margin: 20px auto;
+        margin: 20px 14px;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -768,12 +810,12 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
+          // background: #272c3d;
           border-radius: 10px;
         }
 
         .promo-view-container {
-          background: #272c3d;
+          // background: #272c3d;
           background-repeat: no-repeat;
           background-position: 95% 90%;
           padding: 20px;
@@ -813,27 +855,35 @@ export default defineComponent({
   z-index: 3;
 }
 
-.pad-label.label-new {
-  background: url(../assets/promo/yh_label_new.png) no-repeat;
-  // background-size: 100%;
-  background-size: 78px 45px;
+.trapezium {
+  position: absolute;
+  top: 10px;
+  left: 0;
   font-size: 12px;
   color: #ffffff;
-  padding: 12px 7px;
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  width: 100%;
+  padding: 2px 20px 2px 8px;
+  background-color: #1475e1;
+  clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+  border-top-left-radius: 8px;
 }
 
 .promo {
-  .q-tabs {
-    margin: 0;
+  .tab-wrapper {
+    padding: 20px 20px 16px 20px;
+    background-color: #090b18;
+    position: sticky;
+    top: 46px;
+    z-index: 4;
+    border-bottom: 2px solid #090b18;
+    .q-tabs {
+      margin: 0;
+    }
+
+    .q-tab {
+      padding: 0;
+    }
   }
 
-  .q-tab {
-    padding: 0;
-  }
   .q-tab-panels {
     background: none;
     // padding: 10px;

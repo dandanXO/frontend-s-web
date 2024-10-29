@@ -13,7 +13,7 @@
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank'" />
 
     <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" />
-    <upgradeHongBaoPromo v-if="listParam.type === 'redpacket'" :promo-code="list.promoCode" />
+    <upgradeHongBaoPromo v-if="listParam.type === 'redpacket'" :promo-id="list.id" :promo-code="list.promoCode" />
 
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" />
     <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" />

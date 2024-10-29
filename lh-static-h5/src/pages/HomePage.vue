@@ -2354,10 +2354,6 @@ export default defineComponent({
     align-items: center;
     gap: 0px;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-color: transparent transparent;
@@ -2390,6 +2386,10 @@ export default defineComponent({
       }
     }
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     > div {
       width: 100%;
     }
@@ -2413,10 +2413,6 @@ export default defineComponent({
     justify-content: flex-start;
     align-items: center;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-color: transparent transparent;
@@ -2428,6 +2424,10 @@ export default defineComponent({
       justify-content: flex-start;
       align-items: center;
       margin-bottom: 8px;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
     }
 
     > div {

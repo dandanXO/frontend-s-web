@@ -137,7 +137,8 @@
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
             <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
-            <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" />
+            <!-- <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" /> -->
+            <span style="color: white; text-shadow: none; font-size: 16px; margin-bottom: -5px">奖金</span>
           </div>
         </div>
 
@@ -183,7 +184,8 @@
           <div id="prizePool" class="center-number">
             {{ convertToCommaAmount(votesData.award) }}
             <!-- <img style="max-height: 74px;" src="../s14-vote/images/2k.png"> -->
-            <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" />
+            <!-- <img style="max-height: 20px; margin-top: 10px" src="../s14-vote/images/reward.png" /> -->
+            <span style="color: white; text-shadow: none; font-size: 16px; margin-bottom: -5px">奖金</span>
           </div>
         </div>
 
@@ -460,6 +462,14 @@ const votesData = ref({
 // Tabs data
 const tabs = [
   {
+    label: "冠亚赛",
+    period: 3,
+    date: "冠亚赛阶段活动投票时间：10.29~11.02日22:00 截止",
+    tabtitle: "BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠",
+    tabdetail:
+      "活动期间，统计决赛冠军队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍获得冠军后即可瓜分奖金池彩金；"
+  },
+  {
     label: "瑞士轮",
     period: 1,
     date: "瑞士轮阶段活动投票时间：10.03~10.14日02:00 截止",
@@ -474,14 +484,6 @@ const tabs = [
     tabtitle: "BO5淘汰赛参与队伍：8支队伍中选2支队伍进入冠亚决赛",
     tabdetail:
       "活动期间，统计两支晋级决赛队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍晋级后即可瓜分奖金池彩金；"
-  },
-  {
-    label: "冠亚赛",
-    period: 3,
-    date: "冠亚赛阶段活动投票时间：11.02~11.02",
-    tabtitle: "BO5冠亚赛参与队伍：2支队伍中选1支队伍得冠",
-    tabdetail:
-      "活动期间，统计决赛冠军队伍票数瓜分奖金池，根据对应档位条件获取票数后投给任意队伍，若投票的队伍获得冠军后即可瓜分奖金池彩金；"
   }
 ];
 // const castVote = ({ teamId, teamName, teamNameLocal }) => {
@@ -1239,6 +1241,7 @@ onMounted(() => {
       font-size: 15px;
       padding-right: 5px;
       width: 100%;
+      white-space: nowrap;
     }
     .flexcast {
       width: 85px;
@@ -1282,6 +1285,7 @@ onMounted(() => {
       align-items: center;
       img {
         width: 100%;
+        margin: 0;
       }
     }
   }

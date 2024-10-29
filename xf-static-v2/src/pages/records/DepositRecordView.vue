@@ -85,7 +85,7 @@ export default defineComponent({
     const tableHeaders = [
       {
         key: "depositAmount",
-        label: "金额"
+        label: "存款金额(元)"
       },
       {
         key: "paymentType",
@@ -133,8 +133,8 @@ export default defineComponent({
     color: #fff;
   }
 
-  .q-btn {
-    font-size: 11px !important;
-  }
+  // .q-btn {
+  //   font-size: 11px !important;
+  // }
 }
 </style>

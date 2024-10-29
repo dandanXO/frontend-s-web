@@ -1,59 +1,65 @@
 <template>
-  <div class="personal-account">
+  <div class="personal-account q-pa-md">
     <div class="web">
+      <q-icon name="volume_up" size="sm" class="q-mr-sm" />
       推荐链接:
       <span>{{ referralLink }}</span>
-      <q-btn @click="copyReferralLink" color="brightbtn" label="复制" size="sm" />
+      <q-icon
+        @click="copyReferralLink"
+        name="content_copy"
+        rounded
+        unelevated
+        size="xs"
+        class="q-ml-auto"
+        color="bright"
+      />
     </div>
-
-    <q-form ref="profileFormRef">
+    <q-form ref="profileFormRef" class="q-gutter-y-sm">
       <q-input
-        standout
-        class="q-pb-xs"
         hide-bottom-space
-        filled
         v-model="formDetail.nickName"
         label="账号"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || '请输入账号']"
         label-color="secondary"
-        :readonly="personalState.memberInfo.nickName ? true : false"
+        readonly
+        filled
+        color="white"
+        bg-color="recinputstyle"
       />
       <q-input
-        standout
         ref="realNameRef"
         class="q-pb-xs"
         hide-bottom-space
-        filled
         v-model="formDetail.realName"
         label="姓名"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
-        label-color="secondary"
-        color="secondary"
         :readonly="personalState.memberInfo.realName ? true : false"
+        filled
+        color="white"
+        bg-color="recinputstyle"
       />
       <q-input
         ref="birthdayRef"
-        standout
         label="生日"
-        filled
-        label-color="secondary"
-        color="secondary"
         lazy-rules
-        class="q-pb-xs"
         hide-bottom-space
         v-model="formDetail.birthday"
         readonly
         mask="date"
         :rules="[(val) => (val && val.length > 0) || '请输入生日']"
+        filled
+        color="white"
+        bg-color="recinputstyle"
       >
         <template v-slot:append>
           <q-icon
             :class="personalState.memberInfo.birthday ? 'disabled' : ''"
             name="event"
-            color="white"
+            color="bright"
             class="cursor-pointer"
+            size="sm"
           >
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
@@ -68,8 +74,6 @@
 
       <div class="flex items-center no-wrap">
         <q-input
-          standout
-          filled
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.phone"
@@ -77,53 +81,52 @@
           label="电话"
           lazy-rules
           :rules="[(_) => isValidPhone()]"
-          label-color="secondary"
-          color="secondary"
           readonly
+          filled
+          color="white"
+          bg-color="recinputstyle"
           style="width: 100%"
-        ></q-input>
-        <template v-if="isEditPhone">
-          <div class="q-ml-md">
+        >
+          <template v-slot:append v-if="isEditPhone">
             <q-btn
-              size="sm"
+              size="md"
               color="brightbtn"
               label="验证"
               @click="goToPage('/account/verifyTelephone')"
               style="white-space: nowrap"
             />
-          </div>
-        </template>
+          </template>
+        </q-input>
       </div>
 
       <div class="flex items-center no-wrap">
         <q-input
-          standout
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.email"
           label="邮箱"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-          label-color="secondary"
-          color="secondary"
           readonly
+          filled
+          color="white"
+          bg-color="recinputstyle"
           style="width: 100%"
-        />
-        <template v-if="isEditEmail">
-          <div class="q-ml-md">
+        >
+          <template v-slot:append v-if="isEditEmail">
             <q-btn
-              size="sm"
+              size="md"
               color="brightbtn"
               label="验证"
               @click="goToPage('/account/verifyEmail')"
               style="white-space: nowrap"
             />
-          </div>
-        </template>
+          </template>
+        </q-input>
       </div>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
+        <q-btn size="md" color="brightbtn" style="width: 100%" @click="updateState" label="保存信息" />
       </div>
     </q-form>
   </div>
@@ -516,29 +519,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .personal-account {
-  padding: 10px;
-
-  .web {
-    color: #33bcd4;
-    text-align: center;
-    padding: 0 0 10px;
-    font-weight: bold;
-    display: flex;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    align-items: center;
-    justify-content: center;
-
-    span {
-      display: inline-flex;
-      background: #2c444f;
-      padding: 5px 10px;
-      font-weight: 300;
-      color: #ffffff;
-      margin: 0 5px;
-      border-radius: 4px;
-    }
-  }
+  // padding: 10px;
 }
 
 .disabled {

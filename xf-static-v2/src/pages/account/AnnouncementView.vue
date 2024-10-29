@@ -1,41 +1,22 @@
 <template>
   <div class="announcement-section">
-    <q-tabs
-        active-color="dark"
-        indicator-color="bright"
-        align="justify"
-        v-model="activeKey"
-    >
-      <q-tab
-          v-for="(tab, i) in tabItems"
-          :key="i"
-          :name="tab.id"
-          :label="tab.name"
-      />
+    <q-tabs indicator-color="transparent" align="justify" v-model="activeKey">
+      <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.id" :label="tab.name" />
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" animated>
       <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.id">
-        <q-list class="rounded-borders">
-          <span v-for="ann in announcementsList" :key="ann">
+        <q-list>
+          <span v-for="ann in announcementsList" :key="ann" class="q-gutter-y-md">
             <div v-if="ann.typeId === tab.id">
-              <q-expansion-item
-                  class="expansion-bg"
-                  expand-separator
-                  :label="ann.title"
-              >
-                <q-card>
-                  <q-card-section>
-                    {{ ann.content }}
-                  </q-card-section>
-                </q-card>
+              <q-expansion-item class="expansion-bg" expand-separator :label="ann.title">
+                <!-- <q-card> -->
+                <!-- <q-card-section> -->
+                {{ ann.content }}
+                <!-- </q-card-section> -->
+                <!-- </q-card> -->
               </q-expansion-item>
-              <div
-                  class="text-center q-pa-md text-brand"
-                  v-if="ann.content.length === 0"
-              >
-                暂时无通知
-              </div>
+              <div class="text-center q-pa-md text-brand" v-if="ann.content.length === 0">暂时无通知</div>
             </div>
           </span>
         </q-list>
@@ -89,54 +70,33 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .announcement-section {
   .q-tabs {
-    background: rgba(113, 125, 146, 0.2);
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .q-tabs__content {
-    //background: #fff;
+    background-color: #213057;
+    background-attachment: fixed;
+    border-radius: 50px;
+    border: 1px solid #ffffff33;
+    min-height: 36px;
+    margin: 16px;
   }
 
   .q-tab {
-    min-height: 40px;
+    min-height: 36px;
+    &.q-tab--active {
+      background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+      border-radius: 50px;
+      color: #fff;
+      box-shadow: 0px 0px 4px 0px #ffffff inset;
+    }
   }
 
-  .q-tab--active {
-    color: #3e5cc0 !important;;
+  .q-tab--inactive {
+    color: #ffffff99;
   }
 
-  .q-tab__content {
-    width: 100%;
-  }
-
-  .q-tab--active .q-tab__indicator {
-    height: 100%;
-  }
-
-  .q-tab__label {
-    z-index: 1;
-  }
-
-  .q-tab-panels {
-    background: none;
-    padding: 10px;
-  }
-
-  .q-item {
-    // background: #fff;
-    background: #063c50;
-  }
-
-  .q-tab--active .q-tab__indicator {
-    background: url("../../assets/images/promotion/tab_bg.png") no-repeat center
-    center;
-    background-size: 20px 10px;
-    width: 100%;
-    height: 10px;
+  .q-tabs__content--align-justify .q-tab {
+    margin: 6px;
   }
 
   .notice_txt {
@@ -150,16 +110,27 @@ export default defineComponent({
     }
   }
 
-  .q-expansion-item--expanded {
+  :deep(.q-item) {
+    background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+    border-radius: 8px;
+  }
+
+  :deep(.q-expansion-item--expanded) {
     .q-item {
-      background: #063c50;
+      // background: #063c50;
     }
   }
 
-  .q-expansion-item__content {
-    background: var(--q-dark);
-
+  :deep(.q-expansion-item__content) {
+    background: #394870;
     padding: 10px 10px 15px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    color: #ffffff99;
+  }
+
+  .q-tab-panel {
+    padding-top: 0;
   }
 
   .download-item {
@@ -183,5 +154,9 @@ export default defineComponent({
       display: block;
     }
   }
+}
+
+.q-tab-panels--dark {
+  background: none;
 }
 </style>
