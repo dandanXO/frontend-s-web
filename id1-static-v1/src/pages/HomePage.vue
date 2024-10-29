@@ -2133,8 +2133,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          // console.log("End");
+          // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
           isHotGameLoading.value = false;
         });
@@ -2531,8 +2531,8 @@ const getPlatList = () => {
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
       isPlatLoading.value = false;
-      console.log("After");
-      console.log(sport.value);
+      // console.log("After");
+      // console.log(sport.value);
       loadHotGameList();
     })
     .catch((err) => {});
