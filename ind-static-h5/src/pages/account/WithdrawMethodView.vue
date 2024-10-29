@@ -331,7 +331,7 @@
               <div class="remain-wager-wrapper" @click="refreshRemainWager">
                 <q-spinner v-if="isRefreshRemainWager" />
                 <span v-else>
-                  {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                  {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, true) }}
                 </span>
                 <img
                   class="refresh-btn-img"
