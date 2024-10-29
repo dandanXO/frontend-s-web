@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.main-container {
+  max-width: 500px;
+  background-color: #0E1311;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 48px;
+  min-height: calc(100% - 48px);
+}
+
+.content_img {
+  width: 100%;
+}
+
+.social-container {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.social-item {
+  width: calc(20% - 32px);
+  flex: 1;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-item > span {
+  color: #9F9F9F;
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 10px;
+  margin-top: 10px;
+  width:100%;
+}
+
+.social-item > span img{
+  width: 100%;
+}
+
+.social-item > img {
+  width: 100%;
+  animation: smallbeat 2s infinite;
+  cursor: pointer;
+}
+
+.social-item > img:hover,
+.social-item > img:active {
+  filter: brightness(1.1);
+}
+
+.social-item:nth-child(2) img{
+  animation: smallbeat 2s infinite;
+  animation-delay: 0.5s;
+}
+
+.social-item:nth-child(3) img{
+  animation: smallbeat 2s infinite;
+  animation-delay: 1.0s;
+}
+
+.social-item:nth-child(4) img{
+  animation: smallbeat 2s infinite;
+  animation-delay: 1.5s;
+}
+
+.social-item:nth-child(5) img{
+  animation: smallbeat 2s infinite;
+}
+
+.rect_btn {
+  width: 80%;
+  cursor: pointer;
+}
+
+.rect_btn:active,
+.rect_btn:hover {
+  filter: brightness(1.1);
+}
+
+.call-to-action-pointer {
+  width: 32px;
+  position: relative;
+  top: 65px;
+  right: -18%;
+  animation: smallbeat 1s infinite;
+  z-index: 2;
+}
+
+.mt-12 {
+  margin-top: 12px;
+}
+.mt-24 {
+  margin-top: 24px;
+}
+.mt-32 {
+  margin-top: 32px;
+}
+.mt-40 {
+  margin-top: 40px;
+}
+
+@keyframes smallbeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
