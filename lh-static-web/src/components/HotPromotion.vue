@@ -91,7 +91,7 @@
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen'" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin'" />
-    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" />
+    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
