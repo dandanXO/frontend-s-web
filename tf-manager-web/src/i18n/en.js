@@ -2107,6 +2107,7 @@ export default {
     startHour: 'Start Hour',
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
+    showLogo: 'Show Logo'
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

@@ -1822,6 +1822,7 @@ export default {
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
+    showLogo: 'hiển thị biểu tượng'
   },
   message: {
     startenddatemore3months:

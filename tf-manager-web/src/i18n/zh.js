@@ -2106,6 +2106,7 @@ export default {
     startHour: '开始小时',
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
+    showLogo: '显示图标'
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
