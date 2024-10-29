@@ -165,6 +165,14 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
+            <q-checkbox
+              style="margin-left: -5px"
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === false && depositType === 'flat'"
+            >
+              Use Slot First Deposit Privilege
+            </q-checkbox>
+
             <div class="lil-title">
               Amount ({{ convertToCommaAmount(selectedItem.depositMin) }} -
               {{ convertToCommaAmount(selectedItem.depositMax) }} RS)
@@ -283,8 +291,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick } from "vue";
-import Node from "../../components/paymentSelect/node.vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, watch, nextTick } from "vue";
+
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
@@ -327,6 +335,7 @@ const checkNewUser = () => {
   }
 };
 
+const isFtdPrivilegeEnable = ref(false);
 const isSelectedMethod = ref(false);
 const paymentMethodsItems = ref();
 const isDeposited = ref(false);
@@ -436,7 +445,10 @@ const isPrivilege = ref(false);
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === false && isFtdPrivilegeEnable.value === true
+);
 
 const goSelectedMethod = (item) => {
   activeMethod.value = item;
@@ -716,7 +728,12 @@ async function confirmDeposit() {
             form.privilegeId = selectedItemPrivilegeId.value;
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value && depositType.value === "flat") {
+          if (
+            isFtdPrivilege.value &&
+            extraPrivilegeId.value &&
+            depositType.value === "flat" &&
+            isFtdPrivilegeEnable.value
+          ) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
@@ -961,6 +978,17 @@ const convertToTwoDecimalAmount = (amount) => {
   }
 };
 
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    } else {
+      isFtdPrivilegeEnable.value = false;
+    }
+  },
+  { immediate: true }
+);
 onActivated(() => {
   initPay();
   checkNewUser();
@@ -1108,7 +1136,7 @@ onMounted(() => {
     width: 100%;
 
     .deposit-enter-amt {
-      margin: 20px auto 0 auto;
+      margin: 15px auto 0 auto;
 
       .deposit-input {
         background-color: rgba(21, 0, 37, 0.5);
