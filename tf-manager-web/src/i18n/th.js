@@ -1245,6 +1245,7 @@ export default {
     configValue: 'Config Value',
     configDescribes: 'Config Describes',
     batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
+    showLogo: 'แสดงไอคอน'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
