@@ -1756,6 +1756,7 @@ export default {
     'User Action Log': 'บันทึกการดำเนินการของผู้ใช้',
     'MQ Log': 'บันทึก MQ',
     'System Config': 'การกำหนดค่าระบบ',
+    'Monitor And Notification': 'การตรวจสอบและการแจ้งเตือน',
     'Promotion Coupon': 'คูปอง',
     'Affiliate Change Log': 'บันทึกการเปลี่ยนแปลงผู้ปกครองของ Affiliate',
     'Media Display Settings': 'การตั้งค่าการแสดงสื่อ',
@@ -1833,6 +1834,9 @@ export default {
     DOWNLOAD: 'หน้าดาวน์โหลด',
     AFFILIATE: 'การแสดง',
     HOME: 'หน้าแรก',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์'
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

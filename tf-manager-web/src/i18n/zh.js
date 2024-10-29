@@ -2824,6 +2824,7 @@ export default {
     Pm: '会员私信',
     'MQ Log': 'MQ日志',
     'System Config': '系统设置',
+    'Monitor And Notification': '监控/通知',
     'Promotion Coupon': '存款券',
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
@@ -3018,6 +3019,9 @@ export default {
     PLATINUM: '铂金',
     DIAMOND: '钻石',
     WANGZE: '王者',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: '在线人数'
   },
   error: {
     400: '请求无效',
