@@ -902,7 +902,7 @@ export default {
   },
   affiliate: {
     level: {
-      JUNIOR_AFFILIATE: '플레이어',
+      JUNIOR_AFFILIATE: '하부매장',
       SUB_AFFILIATE: '매장',
       AFFILIATE: '부본사',
       SUPER_AFFILIATE: '본사',
