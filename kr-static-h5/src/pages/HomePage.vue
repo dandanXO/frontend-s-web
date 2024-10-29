@@ -604,8 +604,8 @@
         class="column no-wrap flex-center"
         style="padding: 0; width: 100vw; height: 100dvh;background-size: 100% 100%;"
       >
-        <div style="width: calc(100%-1px) height: 100%; display: flex; justify-content: center; align-items: center;">
-          <img style="height: 100%; width: 100%; object-fit: contain;" :key="popupBanners[0].mobileImgUrl" :src="imgURL + popupBanners[0].mobileImgUrl">
+        <div style="width: calc(100% - 1px); height: 100%; display: flex; justify-content: center; align-items: center;">
+          <img style="max-width:550px;height: 100vh; width: 100vw;" :key="popupBanners[0].mobileImgUrl" :src="imgURL + popupBanners[0].mobileImgUrl">
         </div>
         <div style="width: 100%; height: 100%; position: relative">
           <div class="popup-footer">
@@ -929,7 +929,7 @@ export default defineComponent({
     const casuals = ref([]);
     const showDialog = ref(true)
 
-    if(sessionStorage.getItem('disableShowLoginThreeStep') === 'true'){
+    if(localStorage.getItem('disableShowLoginThreeStep') === 'true'){
       showDialog.value = false
     }
 
@@ -1771,7 +1771,7 @@ export default defineComponent({
     const popupBannersLength = ref(0)
     const closedLoginBannerList = ref(new Set());
     const checkedLoginBannerList = ref(new Set());
-    
+
     const isPopoutDataLoading = ref(false)
 
     const getLoginBannerHref = (data) => {
@@ -1802,7 +1802,7 @@ export default defineComponent({
       }
       if(popupBanners.value.length<=0){
         isImportantAnnoucementModal.value = false
-        sessionStorage.setItem('disableShowLoginThreeStep',true)
+        localStorage.setItem('disableShowLoginThreeStep',true)
       }
     };
 

@@ -13,7 +13,7 @@
           class="popup-container"
           :href="getLoginBannerHref(popupBanners[0])"
           :target="getLoginBannerHref(popupBanners[0]).includes('https://') ? '_blank' : '_self'"
-          
+
         >
           <img :key="popupBanners[0].mobileImgUrl" :src="imgURL + popupBanners[0].desktopImgUrl" class="alert-img" />
           <div class="popup-footer">
@@ -55,7 +55,7 @@ const popupBanners = ref([]);
 const checkedBox = ref(false)
 const showDialog = ref(true)
 
-if(sessionStorage.getItem('disableShowLoginThreeStep') === 'true'){
+if(localStorage.getItem('disableShowLoginThreeStep') === 'true'){
   showDialog.value = false
 }
 
@@ -119,14 +119,14 @@ const checkedLoginBannerList = ref(new Set());
 
 const handleCloseLoginBanner = (e, index) => {
   e.preventDefault();
-  
+
   if(!checkedLoginBannerList.value.has(index)){
-    
+
     return
-    
+
   }
   // closedLoginBannerList.value.add(index);
-  
+
   popupBanners.value.shift()
   checkedBox.value = false
   if (checkedLoginBannerList.value.has(index)) {
@@ -139,7 +139,7 @@ const handleCloseLoginBanner = (e, index) => {
   }
   if(popupBanners.value.length<=0){
     isImportantAnnoucementModal.value = false
-    sessionStorage.setItem('disableShowLoginThreeStep',true)
+    localStorage.setItem('disableShowLoginThreeStep',true)
   }
 }
 
@@ -225,7 +225,7 @@ onMounted(() => {
 watch(
   () => store.token,
   () => {
-    
+
     if (store.token) {
       fetchPopoutData();
       isImportantAnnoucementModal.value = true
@@ -284,7 +284,7 @@ watch(
 
 .popup-wrapper {
   position: absolute;
-  
+
   left: 50%;
   transform: translate(-50%, 0%);
   height: 100%;
