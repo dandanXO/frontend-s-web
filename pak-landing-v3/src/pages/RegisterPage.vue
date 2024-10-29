@@ -201,7 +201,7 @@ export default defineComponent({
           }
 
           api
-            .post("/member/indRegister", qs.stringify(regForm))
+            .post("/member/quickRegistration", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
               if (res.code === 0) {
@@ -213,16 +213,11 @@ export default defineComponent({
                 });
                 regForm.loginName = "";
                 regForm.password = "";
-                // Redirection to the returned URL
-                // api
-                //   .get("/REDIRECTION_API")
-                //   .then((res) => {
-                //     const newUrl = res.data;
-                //     window.location.href = newUrl;
-                //   })
-                //   .catch((error) => {
-                //     console.error("Error fetching the redirection URL:", error);
-                //   });
+                const newUrlWithToken = res.data.homeDomain + "/home?token=" + res.data.token ;
+
+                setTimeout(() => {
+                  window.location.href = newUrlWithToken;
+                }, 1000);
 
                 sessionStorage.removeItem("REFERRAL_CODE");
               } else {
