@@ -790,7 +790,7 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 18px;
+  // margin-bottom: 18px;
 }
 // .deposit {
 //   margin-bottom: 0;
@@ -836,8 +836,15 @@ onMounted(() => {
     // padding: 30px;
   }
   .deposit-container {
+    .el-space{ 
+      margin-bottom: 8px;
+    }
+    // background: #23263c;
     .deposit-form {
       position: relative;
+      .el-form-item { 
+        margin-bottom: 0px;
+      }
     }
     padding: 20px 30px;
     // background: #23263c;
@@ -926,7 +933,7 @@ onMounted(() => {
 
 .btn-confirm {
   padding-left: 20px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   width: 230px;
   &.common-btn {
     background-image: url(../assets/images/finance/deposit/btn-bg.png) !important;

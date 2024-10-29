@@ -223,7 +223,7 @@ $node-color: #4873f1;
         content: "";
         position: absolute;
         bottom: 38px;
-        right: 23px;
+        right: 12px;
         background-color: #4873f1;
         height: 15px;
         width: 15px;
@@ -338,7 +338,7 @@ $node-color: #4873f1;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 6rem;
+      min-width: 5.5rem;
       .payment-method-wrapper {
         display: none;
       }
