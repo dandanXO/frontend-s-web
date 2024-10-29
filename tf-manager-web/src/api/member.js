@@ -501,3 +501,7 @@ export const walletBalance = (id, siteId) => {
 export const freezeMemberBatchUpdate = (memberFreeze) => {
   return https(5 * 60 * 1000).request("/member/freezeMemberBatchUpdate", Method.POST, { memberFreeze: JSON.stringify(memberFreeze) }, ContentType.form);
 }
+
+export const getRolloverEvents = (id, query) => {
+  return https().request(`/member/${id}/rollover-events`, Method.GET, query, ContentType.form)
+}

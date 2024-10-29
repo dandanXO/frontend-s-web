@@ -353,6 +353,11 @@ export default {
       VOID: '作废',
       CANCEL: '手动取消',
     },
+    rolloverEventType: {
+      UPDATE: 'Update Rollover',
+      CREATE: 'Create Rollover',
+      BALANCE_CHECK: 'Balance Check',
+    },
   },
   rebateLevel: {
     LEVEL_0: '等级 0',
@@ -1226,6 +1231,7 @@ export default {
     memberReport: '会员报表',
     memberType: '会员类型',
     memberWithdrawLog: '会员提款日志',
+    memberRolloverEvent: '流水日志',
     menuGame: '菜单游戏序列',
     menuIcon: '菜单图标',
     menuTitle: '菜单标题',
