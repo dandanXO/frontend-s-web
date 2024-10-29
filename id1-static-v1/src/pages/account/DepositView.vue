@@ -114,11 +114,7 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
-            <q-checkbox
-              style="margin-left: -5px"
-              v-model="isFtdPrivilegeEnable"
-              v-if="store.ftd === false "
-            >
+            <q-checkbox style="margin-left: -5px" v-model="isFtdPrivilegeEnable" v-if="store.ftd === false">
               Use Slot First Deposit Privilege
             </q-checkbox>
 
@@ -375,7 +371,7 @@ const goSelectedMethod = (item) => {
   selectedChanelExtra.value = [];
   // selectedItemChannel.value = item.children;
   // goSelectedChannel(item.children[0]);
-  goSelectedChannel(item)
+  goSelectedChannel(item);
 };
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
@@ -551,11 +547,7 @@ async function confirmDeposit() {
             }
           }
 
-          if (
-            isFtdPrivilege.value &&
-            extraPrivilegeId.value &&
-            isFtdPrivilegeEnable.value
-          ) {
+          if (isFtdPrivilege.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
@@ -764,7 +756,9 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
-        extraPrivilegeId.value = data.deposit.privilegeId
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
+
+        selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }

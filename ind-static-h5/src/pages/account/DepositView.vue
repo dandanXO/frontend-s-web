@@ -955,7 +955,7 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
-        extraPrivilegeId.value = data.deposit.privilegeId;
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
 
         selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
