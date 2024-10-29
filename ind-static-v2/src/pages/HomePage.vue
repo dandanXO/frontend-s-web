@@ -170,15 +170,6 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <!--            <template v-if="isHotGameLoading">-->
-            <!--              <div class="skeleton-lists">-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--                <q-skeleton class="slot-skeleton" />-->
-            <!--              </div>-->
-            <!--            </template>-->
-
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -188,11 +179,6 @@
               :modules="gameModules"
               class="platform-game-container"
             >
-              <!-- Add Evolution in Hot Game -->
-              <!--              <template v-for="(item, index) in livecasino" :key="index">-->
-              <!--               -->
-              <!--              </template>-->
-
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
@@ -220,6 +206,10 @@
                         ></div>
                       </div>
 
+                      <div v-if="item.showLogo === 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
                     </div>
                   </swiper-slide>
@@ -245,6 +235,10 @@
                         ></div>
                       </div>
 
+                      <div v-if="item.showLogo === 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
                       <div class="platform-game-title">
                         {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                       </div>
@@ -257,26 +251,6 @@
 
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view">
-              <!--              <template v-for="(item, index) in livecasino" :key="index">-->
-              <!--                <div-->
-              <!--                  class="platform-game-item btn-effect"-->
-              <!--                  v-if="item.name === 'Evo' || item.name === 'WCPT'"-->
-              <!--                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"-->
-              <!--                >-->
-              <!--                  <div class="platform-game-img">-->
-              <!--                    <div-->
-              <!--                      class="game&#45;&#45;bg"-->
-              <!--                      :style="{-->
-              <!--                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`-->
-              <!--                      }"-->
-              <!--                    ></div>-->
-              <!--                  </div>-->
-              <!--                  <div class="platform-game-title">-->
-              <!--                    {{ truncateText(item.alias ? item.alias : item.name, 22) }}-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </template>-->
-
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <div
@@ -301,6 +275,11 @@
                         }"
                       ></div>
                     </div>
+
+                    <div v-if="item.showLogo === 1" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </template>
@@ -324,6 +303,11 @@
                         }"
                       ></div>
                     </div>
+
+                    <div v-if="item.showLogo === 1" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
                     <div class="platform-game-title">
                       {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                     </div>
@@ -1828,29 +1812,32 @@ const subGameCode = ref("");
 
 const hotGameList = ref([
   {
-    id: 19398,
+    id: 196,
     name: "Aviator",
     code: "aviator",
     status: "OPEN",
     icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
-    sequence: 900,
+    sequence: 1,
     siteName: null,
     platformId: 93,
-    platformName: null,
+    platformName: "Spribe",
     platformCode: "Spribe",
-    gameType: "CASUAL",
+    gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "Spribe"
   },
   {
     code: "WCEvo",
+    platform: "WCEvo",
     type: "platform",
-    id: 123,
     name: "Evo",
+    showLogo: 0,
+    id: 123,
     status: "OPEN",
     walletType: "SEAMLESS",
     gameType: "LIVE",
@@ -1862,106 +1849,95 @@ const hotGameList = ref([
     sequence: 0
   },
   {
-    id: 22214,
+    id: 198,
     name: "Aero",
     code: "aero",
     status: "OPEN",
-    icon: "5/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png",
-    sequence: 700,
+    icon: "11/TurboGames/aero.jpg",
+    sequence: 3,
     siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
+    platformId: 151,
+    platformName: "TurboGames",
+    platformCode: "TurboGames",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "Turbo"
+    showLogo: 0,
+    platform: "TurboGames"
   },
   {
-    id: 22215,
+    id: 199,
     name: "Crash X",
     code: "crash",
     status: "OPEN",
-    icon: "5/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg",
-    sequence: 800,
+    icon: "11/TurboGames/crash.jpg",
+    sequence: 4,
     siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
+    platformId: 151,
+    platformName: "TurboGames",
+    platformCode: "TurboGames",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "Turbo"
+    showLogo: 0,
+    platform: "TurboGames"
   },
   {
-    code: "WCPT",
-    type: "platform",
-    id: 103,
-    name: "WCPT",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "PlayTech",
-    sequence: 901
-  },
-  {
-    id: 18956,
+    id: 200,
     name: "Teen Patti",
     code: "72",
     status: "OPEN",
     icon: "5/JILI/097df233-0329-427c-a596-9af968062624.png",
-    sequence: 1000,
+    sequence: 5,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
-    gameLabel: "HOT,NEW",
+    gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 18957,
+    id: 201,
     name: "Teen Patti Joker",
     code: "159",
     status: "OPEN",
     icon: "5/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png",
-    sequence: 1000,
+    sequence: 6,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
-    gameLabel: "LISTHOT",
+    gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 18959,
+    id: 202,
     name: "Ludo Quick",
     code: "163",
     status: "OPEN",
     icon: "5/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png",
-    sequence: 1000,
+    sequence: 7,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -1969,18 +1945,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 18960,
+    id: 203,
     name: "Andar Bahar",
     code: "79",
     status: "OPEN",
     icon: "5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
-    sequence: 1000,
+    sequence: 8,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -1988,18 +1965,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 18961,
+    id: 204,
     name: "TeenPatti 20-20",
     code: "161",
     status: "OPEN",
     icon: "5/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png",
-    sequence: 1000,
+    sequence: 9,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -2007,18 +1985,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 18962,
+    id: 205,
     name: "Dragon & Tiger",
     code: "123",
     status: "OPEN",
     icon: "5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png",
-    sequence: 1000,
+    sequence: 10,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "SLOT",
     device: null,
@@ -2026,18 +2005,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 18963,
+    id: 206,
     name: "7up7down",
     code: "124",
     status: "OPEN",
     icon: "5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png",
-    sequence: 1000,
+    sequence: 11,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "SLOT",
     device: null,
@@ -2045,18 +2025,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 18964,
+    id: 207,
     name: "Baccarat",
     code: "152",
     status: "OPEN",
     icon: "5/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png",
-    sequence: 1000,
+    sequence: 12,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -2064,6 +2045,7 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   }
 ]);
@@ -2142,8 +2124,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
-          console.log(hotGameList.value);
+          // console.log("End");
+          // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
           // isHotGameLoading.value= false;
         });
