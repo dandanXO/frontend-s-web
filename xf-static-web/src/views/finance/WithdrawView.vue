@@ -664,6 +664,7 @@ export default defineComponent({
       align-items: center;
       flex-direction: column;
       cursor: pointer;
+      margin-right: 15px;
 
       .promo-label {
         position: absolute;
