@@ -114,6 +114,14 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
+            <q-checkbox
+              style="margin-left: -5px"
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === false "
+            >
+              Use Slot First Deposit Privilege
+            </q-checkbox>
+
             <div class="lil-title">
               {{ $t("deposit.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
@@ -258,7 +266,7 @@ import { userStore } from "@/stores/index";
 import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import { openURL, Platform, useQuasar } from "quasar";
-import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef } from "vue";
+import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { t } from "@/boot/lang";
 import KYCUserForm from "components/KYCUserForm.vue";
@@ -270,6 +278,7 @@ const store = userStore();
 const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
+const isFtdPrivilegeEnable = ref(false);
 const isSelectedMethod = ref(false);
 const paymentMethodsItems = ref();
 const isDeposited = ref(false);
@@ -355,7 +364,10 @@ const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === false && isFtdPrivilegeEnable.value === true
+);
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   activeMethod.value = item;
@@ -539,7 +551,11 @@ async function confirmDeposit() {
             }
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          if (
+            isFtdPrivilege.value &&
+            extraPrivilegeId.value &&
+            isFtdPrivilegeEnable.value
+          ) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
@@ -748,6 +764,7 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
+        extraPrivilegeId.value = data.deposit.privilegeId
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
@@ -775,6 +792,18 @@ const scrollToInput = () => {
     });
   }
 };
+
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    } else {
+      isFtdPrivilegeEnable.value = false;
+    }
+  },
+  { immediate: true }
+);
 
 onActivated(() => {
   initPay();

@@ -22,7 +22,20 @@ const store = userStore();
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
-onMounted(() => {});
+const loadAppTabs = () => {
+  api.get("/opt-session/getAppTabs").then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+      if (data && data.hasOwnProperty("ftd")) {
+        store.ftd = data.ftd;
+      }
+    }
+  });
+};
+
+onMounted(() => {
+  loadAppTabs
+});
 
 const isFtdPromoEnded = computed(() => {
   if (store.ftd === true) {
