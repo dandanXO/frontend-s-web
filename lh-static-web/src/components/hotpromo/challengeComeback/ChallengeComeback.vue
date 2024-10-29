@@ -1,5 +1,36 @@
 <template>
   <div class="challenge-comeback-container">
+    <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section-left">
+        <div class="livepoker-rebate-section-title">
+          <div><img src="../../../assets/promo/lh1-blast-premier/section-title-img.png" /></div>
+          每日礼金
+        </div>
+        <div class="reward-info">
+          <div class="reward-info-icon">
+            <img src="../../../assets/promo/lh1-blast-premier/reward-icon1.png" alt="" width="100%" />
+          </div>
+          <div class="reward-info-content">
+            每周期负盈利：
+            <span class="amount">{{ thousandDigitNoDecimal(loss) }}元</span>
+          </div>
+        </div>
+        <div class="reward-info">
+          <div class="reward-info-icon">
+            <img src="../../../assets/promo/lh1-blast-premier/reward-icon2.png" alt="" width="100%" />
+          </div>
+          <div class="reward-info-content">
+            可领彩金：
+            <span class="amount">{{ thousandDigitNoDecimal(bonus) }}元</span>
+          </div>
+        </div>
+      </div>
+      <div class="livepoker-rebate-section-right">
+        <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+        </div>
+      </div>
+    </div>
     <div class="challenge-comeback-block detail-block">
       <div class="challenge-comeback-block-title">活动详情</div>
 
@@ -89,7 +120,8 @@
       <div class="challenge-comeback-block-title">活动详情</div>
       <ol class="rules-content">
         <li>
-          活动周期为10天/周期，第一周期为1日-10日、第二周期为11日-20日、第三周期为21日-月底、达标后从1日、11日、21日开始连续5天前往活动页领取红包，每日红包领取时间为0点至23:59分，每日红包有效期24小时内，逾期未领取视为自动放弃，逾期不补，彩金仅需 8 倍流水即可提款。
+          活动周期为10天/周期，第一周期为1日-10日、第二周期为11日-20日、第三周期为21日-月底、达标后从1日、11日、21日开始连续5天前往活动页领取红包，每日红包领取时间为0点至23:59分，每日红包有效期24小时内，逾期未领取视为自动放弃，逾期不补，彩金仅需
+          8 倍流水即可提款。
         </li>
         <li>
           活动说明：
@@ -106,7 +138,90 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { getCycleLossRefundInit, claimCycleLossRefund } from "@/api/index/promo";
+import { onMounted, ref, defineProps } from "vue";
+import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
+
+const notify = useNotify();
+
+const store = userStore();
+const loss = ref(0);
+const bonus = ref(0);
+
+function thousandDigitNoDecimal(value, options) {
+  const defaultOptions = {
+    minimumFractionDigits: 0
+  }
+  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) }
+  return Number(value).toLocaleString('en-US', optionsWithDefaults)
+}
+
+const handleClaimBonus = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+
+  claimCycleLossRefund(props.promoCode)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: `成功领取${res.data}元`
+        });
+        fetchData();
+      } else {
+        // notify({
+        //   type: "error",
+        //   message: res.message
+        // });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      notify({
+        type: "error",
+        message: err.message
+      });
+    });
+};
+
+const fetchData = async () => {
+  try {
+    const res = await getCycleLossRefundInit(props.promoCode);
+
+    loss.value = res.data.loss;
+    bonus.value = res.data.bonus;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
+  fetchData();
+});
+</script>
 <style lang="scss" scoped>
 .challenge-comeback-container {
   max-width: 1200px;
@@ -243,6 +358,90 @@
         border-bottom: none;
       }
     }
+  }
+}
+
+.livepoker-rebate-section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  border: 1px solid #acd4f6;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  background: url("../../../assets/promo/lh1-blast-premier/section-bg.png");
+  background-size: 100% 100%;
+
+  .livepoker-rebate-section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .livepoker-rebate-section-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 254px;
+
+    .bonus-image {
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        transform: translate(0px, 1px);
+        opacity: 0.9;
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .livepoker-rebate-section-title {
+    color: #000000;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
+
+.reward-info {
+  border: 1px solid rgba(215, 235, 255, 1);
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.reward-info-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.reward-info-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  color: black;
+  gap: 24px;
+
+  .amount {
+    color: #00a1ff;
+    font-weight: 600;
   }
 }
 </style>

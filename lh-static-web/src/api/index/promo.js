@@ -616,3 +616,15 @@ export function getCompetitionBetDepositInit(promoCode) {
 export function claimCompetitionBetDepositBonus(promoCode) {
   return server.EVENT.post("/session/competition-bet-deposit/claimBonus", { promoCode });
 }
+
+export function getCycleLossRefundInit(promoCode) {
+  return server.EVENT.get("/session/cycle-loss-refund/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCycleLossRefund(promoCode) {
+  return server.EVENT.post("/session/cycle-loss-refund/claim", { promoCode });
+}
