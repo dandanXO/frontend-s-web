@@ -348,6 +348,11 @@ export default {
       VOID: 'Void',
       CANCEL: 'Cancel',
     },
+    rolloverEventType: {
+      UPDATE: 'Update Rollover',
+      CREATE: 'Create Rollover',
+      BALANCE_CHECK: 'Balance Check',
+    },
   },
   rebateLevel: {
     LEVEL_0: 'Level 0',
@@ -1226,6 +1231,7 @@ export default {
     memberReport: 'Member Report',
     memberType: 'Member Type',
     memberWithdrawLog: 'Member Withdraw Log',
+    memberRolloverEvent: 'Rollover Event Log',
     menuGame: 'Menu Game Sequence',
     menuIcon: 'Menu Icon',
     menuTitle: 'Menu Title',
