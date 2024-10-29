@@ -1,5 +1,25 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div class="withdrawal-summary" v-if="selectedMethodItem">
+      <div class="balance">
+        <span class="amount">{{ convertToCommaAmount(store.balance, true) }}</span>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          {{
+            selectedMethodItem.withdrawableBalance >= 0
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, true)
+              : "0.00"
+          }}
+        </span>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
+      </div>
+    </div>
+
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <template v-if="isLoadingWithdrawalMethod">
       <div class="withdraw-methods-currency">
@@ -1083,6 +1103,7 @@ const refreshRemainWager = () => {
   .withdrawal-summary {
     padding: 1rem;
     margin-top: 0;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-around;
