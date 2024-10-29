@@ -68,6 +68,7 @@
           label="提款金额"
           name="amount"
         >
+        <el-space>
           <el-row :gutter="10" style="align-items: center">
             <el-col :span="12">
               <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
@@ -86,6 +87,16 @@
               </span>
             </el-col>
           </el-row>
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
+            确定
+          </el-button>
+        </el-space>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -187,15 +198,6 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button
-            :loading="loadingBtn"
-            :disable="loadingBtn"
-            size="large"
-            class="common-btn withdraw-btn"
-            @click="submitWithraw"
-          >
-            确定
-          </el-button>
         </div>
       </el-form>
     </div>
@@ -748,7 +750,7 @@ export default defineComponent({
 
   .withdraw-btn {
     // min-width: 300px;
-    margin: 30px auto;
+    // margin: 30px auto;
 
     &.cancel {
       margin-right: 60px;

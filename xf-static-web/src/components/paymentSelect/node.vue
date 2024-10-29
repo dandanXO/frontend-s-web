@@ -320,7 +320,7 @@ $node-color: #45fefa;
     }
   }
   .node-content {
-    gap: 0 20px;
+    gap: 0 10px;
     padding: 0px 0 0;
     .payment-method-item {
       text-align: center;
@@ -342,7 +342,7 @@ $node-color: #45fefa;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 6rem;
+      min-width: 4rem;
       .payment-method-wrapper {
         display: none;
       }

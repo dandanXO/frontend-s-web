@@ -665,7 +665,7 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 
 .account-content {
@@ -694,9 +694,15 @@ onMounted(() => {
   }
   .deposit-container {
     padding: 20px 30px;
+    .el-space{ 
+      margin-bottom: 8px;
+    }
     // background: #23263c;
     .deposit-form {
       position: relative;
+      .el-form-item { 
+        margin-bottom: 0px;
+      }
     }
     .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
       background: #23263c;
@@ -867,7 +873,7 @@ onMounted(() => {
 
 .btn-confirm {
   padding-left: 20px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   .common-btn {
     background-image: url(../assets/images/finance/deposit/btn-bg.png) !important;
     background-size: 100% 100%;
