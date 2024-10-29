@@ -74,6 +74,15 @@
           <el-row class="dashboard-listing">
             <div class="listing-div">
               <div class="title-span">
+                {{ $t('fields.total_deposit_amt') }}
+              </div>
+              <div class="item-span">
+                {{ formatCommaAmt(dashboard.depositAmount) }}
+              </div>
+            </div>
+
+            <div class="listing-div">
+              <div class="title-span">
                 {{ $t('fields.total_withdraw_amt') }}
               </div>
               <div class="item-span">
@@ -96,14 +105,6 @@
               </div>
               <div class="item-span">
                 {{ formatCommaAmt(dashboard.bonusPoint) }}
-              </div>
-            </div>
-            <div class="listing-div">
-              <div class="title-span">
-                {{ $t('fields.total_deposit_amt') }}
-              </div>
-              <div class="item-span">
-                {{ formatCommaAmt(dashboard.depositAmount) }}
               </div>
             </div>
 
