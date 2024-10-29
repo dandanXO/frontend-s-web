@@ -11,9 +11,6 @@
       <template v-if="popupBanners[0]">
         <a
           class="popup-container"
-          :href="getLoginBannerHref(popupBanners[0])"
-          :target="getLoginBannerHref(popupBanners[0]).includes('https://') ? '_blank' : '_self'"
-
         >
           <img :key="popupBanners[0].mobileImgUrl" :src="imgURL + popupBanners[0].desktopImgUrl" class="alert-img" />
           <div class="popup-footer">
@@ -41,7 +38,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { loadPromoBanner, loadHomePopup, loadLoginHomePopup } from "@/api/index/promo";
+import { loadPromoBanner, loadLoginHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
@@ -89,30 +86,30 @@ const loadBanners = () => {
   });
 };
 
-const getWithExpiry = (key) => {
-  const itemStr = localStorage.getItem(key);
-  if (!itemStr) return null;
+// const getWithExpiry = (key) => {
+//   const itemStr = localStorage.getItem(key);
+//   if (!itemStr) return null;
+//
+//   const item = JSON.parse(itemStr);
+//   const now = new Date();
+//   if (now.getTime() > item.expiry) {
+//     localStorage.removeItem(key);
+//     return null;
+//   }
+//   return item.value;
+// };
 
-  const item = JSON.parse(itemStr);
-  const now = new Date();
-  if (now.getTime() > item.expiry) {
-    localStorage.removeItem(key);
-    return null;
-  }
-  return item.value;
-};
+// const isImpt = getWithExpiry("isImpt");
 
-const isImpt = getWithExpiry("isImpt");
-
-const isFirstView = ref(false);
-const homePopupImg = ref("");
-const homePopupPath = ref("");
+// const isFirstView = ref(false);
+// const homePopupImg = ref("");
+// const homePopupPath = ref("");
 const isImportantAnnoucementModal = ref(false);
-const homePopupFrequency = ref(0);
-const homePopupFrequencyNum = ref(0);
-const homePopupContent = ref("");
-const homePopupType = ref("");
-const homePopupId = ref(0);
+// const homePopupFrequency = ref(0);
+// const homePopupFrequencyNum = ref(0);
+// const homePopupContent = ref("");
+// const homePopupType = ref("");
+// const homePopupId = ref(0);
 
 const closedLoginBannerList = ref(new Set());
 const checkedLoginBannerList = ref(new Set());
@@ -151,64 +148,70 @@ const handleCheckLoginBanner = (index) => {
   }
 }
 
-const checkShowImgTop = () => {
-  const lastTime = localStorage.getItem("indexImgTop");
-  if (lastTime) {
-    const diff = new Date().getTime() - Number(lastTime);
-    if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
-  } else {
-    loadHomePopup("")
-      .then((res) => {
-        const { code, data } = res;
-        if (code === 0) {
-          if (isImpt === null) {
-            switch (data["frequency"]) {
-              case "EVERYTIME":
-                homePopupFrequencyNum.value = 0;
-                break;
-              case "EVERYDAY":
-                homePopupFrequencyNum.value = 86400000; // 24hrs
-                break;
-              case "SESSION":
-                homePopupFrequencyNum.value = 7866432000; // 3months
-                break;
-              default:
-                homePopupFrequencyNum.value = 10000;
-                break;
-            }
-            isImportantAnnoucementModal.value = true;
-            if (data["path"].includes("https://")) {
-              homePopupPath.value = data["path"];
-            } else {
-              homePopupPath.value = "/promotion?name=" + data["path"];
-            }
-            homePopupImg.value = imgURL + data["desktopImgUrl"];
-            homePopupContent.value = data["content"];
-            homePopupType.value = data["type"];
-            homePopupId.value = data["id"];
-            homePopupFrequency.value = data["frequency"];
-            isFirstView.value = true;
-          } else {
-            isImportantAnnoucementModal.value = false;
-          }
-        }
-      })
-      .catch(() => {});
-  }
-};
+// const checkShowImgTop = () => {
+//   const lastTime = localStorage.getItem("indexImgTop");
+//   if (lastTime) {
+//     const diff = new Date().getTime() - Number(lastTime);
+//     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
+//   } else {
+//     loadHomePopup("")
+//       .then((res) => {
+//         const { code, data } = res;
+//         if (code === 0) {
+//           if (isImpt === null) {
+//             switch (data["frequency"]) {
+//               case "EVERYTIME":
+//                 homePopupFrequencyNum.value = 0;
+//                 break;
+//               case "EVERYDAY":
+//                 homePopupFrequencyNum.value = 86400000; // 24hrs
+//                 break;
+//               case "SESSION":
+//                 homePopupFrequencyNum.value = 7866432000; // 3months
+//                 break;
+//               default:
+//                 homePopupFrequencyNum.value = 10000;
+//                 break;
+//             }
+//             isImportantAnnoucementModal.value = true;
+//             if (data["path"].includes("https://")) {
+//               homePopupPath.value = data["path"];
+//             } else {
+//               homePopupPath.value = "/promotion?name=" + data["path"];
+//             }
+//             homePopupImg.value = imgURL + data["desktopImgUrl"];
+//             homePopupContent.value = data["content"];
+//             homePopupType.value = data["type"];
+//             homePopupId.value = data["id"];
+//             homePopupFrequency.value = data["frequency"];
+//             isFirstView.value = true;
+//           } else {
+//             isImportantAnnoucementModal.value = false;
+//           }
+//         }
+//       })
+//       .catch(() => {});
+//   }
+// };
 
-const getLoginBannerHref = (data) => {
-  if (data["path"].includes("https://")) {
-    return data["path"];
-  }
-  return "/promotion?name=" + data["path"];
-}
+// const getLoginBannerHref = (data) => {
+//   if (data["path"].includes("https://")) {
+//     return data["path"];
+//   }
+//   return "/promotion?name=" + data["path"];
+// }
 
 const fetchPopoutData = () => {
   loadLoginHomePopup().then((res) => {
     if (res.code === 0) {
       popupBanners.value = res.data;
       closedLoginBannerList.value = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER")) || []);
+
+      if(localStorage.getItem('disableShowLoginThreeStep') === 'true'){
+        showDialog.value = false
+      }else{
+        showDialog.value = true
+      }
     } else
       ElMessage.error({
         type: "error",
@@ -219,13 +222,12 @@ const fetchPopoutData = () => {
 
 onMounted(() => {
   loadBanners();
-  checkShowImgTop();
+  // checkShowImgTop();
 });
 
 watch(
   () => store.token,
   () => {
-
     if (store.token) {
       fetchPopoutData();
       isImportantAnnoucementModal.value = true
