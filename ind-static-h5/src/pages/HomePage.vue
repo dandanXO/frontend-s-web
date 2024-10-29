@@ -201,6 +201,10 @@
                         ></div>
                       </div>
 
+                      <div v-if="item.showLogo === 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
                     </div>
                   </swiper-slide>
@@ -226,6 +230,10 @@
                             })()
                           }"
                         ></div>
+                      </div>
+
+                      <div v-if="item.showLogo === 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
                       </div>
 
                       <div class="platform-game-title">
@@ -266,6 +274,11 @@
                         }"
                       ></div>
                     </div>
+
+                    <div v-if="item.showLogo === 1" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </template>
@@ -291,6 +304,11 @@
                         }"
                       ></div>
                     </div>
+
+                    <div v-if="item.showLogo === 1" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
                     <div class="platform-game-title">
                       {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                     </div>
@@ -1779,29 +1797,32 @@ const openHotGame = (hotGameList) => {
 
 const hotGameList = ref([
   {
-    id: 9568,
+    id: 180,
     name: "Aviator",
     code: "aviator",
     status: "OPEN",
     icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
-    sequence: 900,
+    sequence: 1,
     siteName: null,
     platformId: 93,
-    platformName: null,
+    platformName: "Spribe",
     platformCode: "Spribe",
-    gameType: "CASUAL",
+    gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 1,
     platform: "Spribe"
   },
   {
     code: "WCEvo",
+    platform: "WCEvo",
     type: "platform",
-    id: 123,
     name: "Evo",
+    showLogo: 1,
+    id: 123,
     status: "OPEN",
     walletType: "SEAMLESS",
     gameType: "LIVE",
@@ -1814,9 +1835,11 @@ const hotGameList = ref([
   },
   {
     code: "WCPT",
+    platform: "WCPT",
     type: "platform",
-    id: 103,
     name: "WCPT",
+    showLogo: 1,
+    id: 103,
     status: "OPEN",
     walletType: "SEAMLESS",
     gameType: "LIVE",
@@ -1825,94 +1848,98 @@ const hotGameList = ref([
     maintenanceStartTime: null,
     maintenanceEndTime: null,
     alias: "PlayTech",
-    sequence: 901
+    sequence: 902
   },
   {
-    id: 14326,
+    id: 186,
     name: "Aero",
     code: "aero",
     status: "OPEN",
-    icon: "5/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png",
-    sequence: 700,
+    icon: "11/TurboGames/aero.jpg",
+    sequence: 4,
     siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
+    platformId: 151,
+    platformName: "TurboGames",
+    platformCode: "TurboGames",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "Turbo"
+    showLogo: 0,
+    platform: "TurboGames"
   },
   {
-    id: 14327,
+    id: 187,
     name: "Crash X",
     code: "crash",
     status: "OPEN",
-    icon: "5/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg",
-    sequence: 800,
+    icon: "11/TurboGames/crash.jpg",
+    sequence: 5,
     siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
+    platformId: 151,
+    platformName: "TurboGames",
+    platformCode: "TurboGames",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "Turbo"
+    showLogo: 0,
+    platform: "TurboGames"
   },
   {
-    id: 8996,
+    id: 188,
     name: "Teen Patti",
     code: "72",
     status: "OPEN",
     icon: "5/JILI/097df233-0329-427c-a596-9af968062624.png",
-    sequence: 1000,
+    sequence: 6,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
-    gameLabel: "HOT,NEW",
+    gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 8997,
+    id: 189,
     name: "Teen Patti Joker",
     code: "159",
     status: "OPEN",
     icon: "5/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png",
-    sequence: 1000,
+    sequence: 7,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
-    gameLabel: "LISTHOT",
+    gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 8999,
+    id: 190,
     name: "Ludo Quick",
     code: "163",
     status: "OPEN",
     icon: "5/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png",
-    sequence: 1000,
+    sequence: 8,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -1920,18 +1947,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 9000,
+    id: 191,
     name: "Andar Bahar",
     code: "79",
     status: "OPEN",
     icon: "5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
-    sequence: 1000,
+    sequence: 9,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -1939,18 +1967,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 9001,
+    id: 192,
     name: "TeenPatti 20-20",
     code: "161",
     status: "OPEN",
     icon: "5/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png",
-    sequence: 1000,
+    sequence: 10,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -1958,18 +1987,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 9002,
+    id: 193,
     name: "Dragon & Tiger",
     code: "123",
     status: "OPEN",
     icon: "5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png",
-    sequence: 1000,
+    sequence: 11,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "SLOT",
     device: null,
@@ -1977,18 +2007,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 9003,
+    id: 194,
     name: "7up7down",
     code: "124",
     status: "OPEN",
     icon: "5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png",
-    sequence: 1000,
+    sequence: 12,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "SLOT",
     device: null,
@@ -1996,18 +2027,19 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   },
   {
-    id: 9004,
+    id: 195,
     name: "Baccarat",
     code: "152",
     status: "OPEN",
     icon: "5/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png",
-    sequence: 1000,
+    sequence: 13,
     siteName: null,
     platformId: 8,
-    platformName: null,
+    platformName: "JiliGames",
     platformCode: "JILI",
     gameType: "POKER",
     device: null,
@@ -2015,6 +2047,7 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "JILI"
   }
 ]);
@@ -2462,8 +2495,9 @@ const getPlatList = () => {
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
       isPlatLoading.value = false;
-      console.log("After");
-      // console.log(JSON.stringify(livecasino.value));
+      // console.log("After");
+      // console.log(JSON.stri
+      // ngify(livecasino.value));
       loadHotGameList();
     })
     .catch((err) => {});
