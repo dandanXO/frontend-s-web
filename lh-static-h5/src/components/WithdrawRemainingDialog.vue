@@ -4,7 +4,7 @@
       <div class="withdraw-remaining-dialog__header">
         <div class="withdraw-remaining-dialog__header-title">
           <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-          <span>继续提款需完成以下条件</span>
+          <span>请完成以下条件</span>
         </div>
         <span class="withdraw-remaining-dialog__header-help-text">
           若有疑问，请联系在线客服核查~
@@ -15,7 +15,7 @@
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
       <div class="withdraw-remaining-dialog__body">
         <div class="withdraw-remaining-dialog__body-title">
-          完成
+          再完成
           <span class="text-yellows">{{ convertToCommaAmount(totalRemaining) }}</span>
           流水，立即享受快速提款
         </div>
@@ -42,11 +42,11 @@
             </tr>
           </tbody>
         </table>
-        
-      <div class="withdraw-remaining-dialog__buttons">
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
-        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
-      </div>
+
+        <div class="withdraw-remaining-dialog__buttons">
+          <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+        </div>
         <!-- <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button> -->
       </div>
     </div>
@@ -204,7 +204,7 @@ onMounted(() => {
         color: #424f72;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         gap: 5px;
       }
       .withdraw-remaining-dialog__body-table {
@@ -296,7 +296,7 @@ onMounted(() => {
       background: url(../assets/images/finance/withdraw/active-btn.png);
       background-size: 100% 100%;
       color: #fff;
-      opacity: .9;
+      opacity: 0.9;
       &:first-of-type {
         background: url(../assets/images/finance/withdraw/nonactive-btn.png);
         background-size: 100% 100%;
