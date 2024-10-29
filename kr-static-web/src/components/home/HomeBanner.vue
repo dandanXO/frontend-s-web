@@ -174,7 +174,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .imptann-modal {
   background: transparent;
   max-width: 1300px;
