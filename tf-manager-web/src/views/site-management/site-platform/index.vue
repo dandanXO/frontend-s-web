@@ -212,7 +212,7 @@
           :placeholder="t('fields.alias')"
         />
       </el-form-item>
-      <el-form-item :label="t('fields.label')" prop="gameLabel">
+      <el-form-item :label="t('fields.label')" prop="platformLabel">
         <el-select
           v-model="selected.platformLabels"
           :placeholder="t('fields.pleaseChoose')"
@@ -221,7 +221,7 @@
           @change="handleChangeLabel()"
         >
           <el-option
-            v-for="item in uiControl.gameLabelList"
+            v-for="item in uiControl.platformLabelList"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
@@ -279,7 +279,7 @@ const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'MAINTENANCE',
-  gameLabelList: [
+  platformLabelList: [
     { key: 1, displayName: 'NEW', value: 'NEW' },
     { key: 2, displayName: 'HOT', value: 'HOT' },
     { key: 3, displayName: 'RECOMMEND', value: 'RECOMMEND' },
@@ -308,7 +308,7 @@ const form = reactive({
   underMaintenance: null,
   maintenanceTime: [],
   alias: null,
-  gameLabel: null,
+  platformLabel: null,
   showLogo: null
 })
 
