@@ -78,6 +78,7 @@ export default defineComponent({
         if (isNew) {
           visible.value = false;
         }
+        isEnded.value = true;
       });
     };
 
@@ -85,6 +86,7 @@ export default defineComponent({
       const {val, isStartDate} = data
       isStartDate ? startDate.value = val : endDate.value = val
       tableData.value = [];
+      current.value = 1;
       isEnded.value = false;
       recordRef.value.clearTable();
       loadDepositTable(true);
