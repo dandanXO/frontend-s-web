@@ -434,7 +434,7 @@ async function showEdit(row) {
   if (row.alias !== null) {
     form.alias = row.alias;
   }
-  if (row.platformLabel !== null) {
+  if (row.platformLabel !== null && row.platformLabel !== "") {
     const arr = row.platformLabel.split(",")
     arr.forEach(element => {
       selected.platformLabels.push(element);
