@@ -1,5 +1,5 @@
 <template>
-  <RecordSearch class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -18,12 +18,12 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
 import {api} from "boot/axios";
 import {cached} from "boot/cache";
-import RecordSearch from "src/components/RecordSearch.vue";
+import RecordDateFilter from "src/components/RecordDateFilter.vue";
 
 export default defineComponent({
   components: {
     RecordComponent,
-    RecordSearch
+    RecordDateFilter
   },
   setup() {
     const visible = ref(true);
