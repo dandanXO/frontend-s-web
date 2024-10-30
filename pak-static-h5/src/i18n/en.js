@@ -490,8 +490,8 @@ export default {
     bank: "BANK",
     noRecord: "No record",
     noMoreRecord: "No more record",
-    bytoday: "By Today",
-    byyesterday: "By Yesterday",
+    bytoday: "Today",
+    byyesterday: "Yesterday",
     all: "All",
     turnover_requi: "TurnOver Requirement"
   },
