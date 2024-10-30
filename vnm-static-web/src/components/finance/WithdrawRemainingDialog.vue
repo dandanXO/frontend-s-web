@@ -49,7 +49,9 @@
       </table>
       <div class="withdraw-remaining-dialog__buttons">
         <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("withdraw.dialog.back") }}</button>
-        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">{{ $t("withdraw.dialog.refresh") }}</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">
+          {{ $t("withdraw.dialog.refresh") }}
+        </button>
       </div>
       <!-- <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("withdraw.dialog.back") }}</button> -->
     </div>
@@ -100,6 +102,8 @@ const getDisplayRemainingType = (type) => {
       return t("withdraw.types_poker");
     case "slot":
       return t("withdraw.types_slot");
+    case "cockfight":
+      return t("account.cockfight");
     case "all":
       return t("withdraw.types_all");
   }
@@ -291,7 +295,7 @@ onMounted(() => {
       background: url(@/assets/images/finance/withdraw/active-btn.png);
       background-size: 100% 100%;
       color: #fff;
-      opacity: .9;
+      opacity: 0.9;
       &:first-of-type {
         background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
         background-size: 100% 100%;
