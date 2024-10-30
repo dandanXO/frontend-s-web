@@ -39,7 +39,7 @@
           :class="{ active: item.code === selectedWithdraw[0].code }"
         >
           <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
-          <div>{{ item.code }}</div>
+          <div>{{ item.nodeName }}</div>
           <div class="item-hot-ribbon" v-if="item.hot">
             <img src="@/assets/images/account/ribbon-hot.png" />
           </div>
@@ -434,11 +434,21 @@ const getWithdrawalMethods = () => {
         return 0;
       });
 
-      paymentMethodsItems.value = Object.values(groupedMethods).sort((a, b) => {
-        if (a.payType < b.payType) return 1;
-        if (a.payType > b.payType) return -1;
-        return 0;
-      });
+      paymentMethodsItems.value = Object.values(groupedMethods)
+        .sort((a, b) => {
+          if (a.payType < b.payType) return 1;
+          if (a.payType > b.payType) return -1;
+          return 0;
+        })
+        .reduce((sortedItems, item) => {
+          // Place 'BANK' in the second position
+          if (item.code === "BANK") {
+            sortedItems.splice(1, 0, item);
+          } else {
+            sortedItems.push(item);
+          }
+          return sortedItems;
+        }, []);
 
       selectWithdrawCurrency(paymentMethodsItems.value[0]);
     }
