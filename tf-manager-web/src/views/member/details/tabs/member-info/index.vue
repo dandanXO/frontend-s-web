@@ -478,7 +478,7 @@
           label-align="left"
           label-class-name="member-label"
           class-name="member-context"
-          v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10"
+          v-show="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10"
         >
           <template #label>
             <div>
