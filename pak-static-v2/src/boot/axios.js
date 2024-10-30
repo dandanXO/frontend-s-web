@@ -5,8 +5,9 @@ import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import i18n from "../i18n/index";
 import axios from "axios";
-import { getRndInteger } from "boot/utils";
+import { getRndInteger, isAndroid } from "boot/utils";
 import { errorMessages } from "./error-messages";
+import { userStore } from "src/stores";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -38,17 +39,21 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 export default boot(({ app, router }) => {
-  const onRequest = (config) => {
-    if (store.token) {
-      api.defaults.headers["token"] = store.token;
-      cashier.defaults.headers["token"] = store.token;
-      eventapi.defaults.headers["token"] = store.token;
-    }
-    // config.headers["Authorization"] = process.env.SITE;
+  app.use(createPinia());
+  const store = userStore();
 
-    if (config.data) {
-      config.data = config.data;
+  const onRequest = (config) => {
+    let token;
+    if (isAndroid()) {
+      token = LocalStorage.getItem("TOKEN");
+    } else {
+      token = SessionStorage.getItem("TOKEN");
     }
+
+    if (token || store.token) {
+      config.headers.token = token || store.token;
+    }
+
     return config;
   };
 
@@ -112,6 +117,10 @@ export default boot(({ app, router }) => {
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
 
+      if (res.code === ResponseCode.ERROR_NO_PIXEL_CODE) {
+        return res;
+      }
+
       if (
         res.code === ResponseCode.ERROR_SYSTEM ||
         res.code === ResponseCode.TOO_OFTEN_REQUEST ||
@@ -132,36 +141,52 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
         SessionStorage.remove("TOKEN");
         LocalStorage.remove("TOKEN");
-        router.push("/login");
-        location.reload();
+        if (window.location.pathname === "/promotion") {
+          document.location.href = "xfapp:/login";
+        } else {
+          router.push("/login");
+          location.reload();
+        }
         return;
       } else {
         if (
           res.code === ResponseCode.ERROR_NAME_EXIST ||
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
-          res.code === ResponseCode.ERROR_TOKEN_EXPIRED
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+          res.code === ResponseCode.ERROR_TOKEN_INVALID
         ) {
-          if (attemptTimes > 10) {
-            SessionStorage.remove("TOKEN");
-            LocalStorage.remove("TOKEN");
-            router.push("/login");
-            location.reload();
-            return;
-          }
-          return refreshTokenAndRetry(response);
-        }
-        if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          return Dialog.create({
-            class: "login-card",
-            title: "Please Login",
-            message: "Please log in to operate",
-            cancel: { color: "negative", label: "Cancel" },
-            ok: { color: "brightbtn", label: "Login" },
-            padding: "20px"
-          }).onOk(() => {
-            router.push("/login");
+          SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
+
+          Notify.create({
+            type: "negative",
+            timeout: 1000,
+            position: "top",
+            // message: res.message || "错误"
+            message: i18n.global.t("notify.plsLoginToContinue")
           });
+
+          if (window.location.pathname === "/promotion") {
+            document.location.href = "xfapp:/login";
+          } else {
+            store.$reset();
+            router.push("/login");
+          }
+
+          return;
         }
+        // if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
+        //   return Dialog.create({
+        //     class: "login-card",
+        //     title: "Please Login",
+        //     message: "Please log in to operate",
+        //     cancel: { color: "negative", label: "Cancel" },
+        //     ok: { color: "brightbtn", label: "Login" },
+        //     padding: "20px"
+        //   }).onOk(() => {
+        //     router.push("/login");
+        //   });
+        // }
         if (
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
           res.code === ResponseCode.ERROR_NAME_EXIST ||
@@ -169,7 +194,7 @@ export default boot(({ app, router }) => {
         ) {
           SessionStorage.remove("TOKEN");
           LocalStorage.remove("TOKEN");
-          window.location.href = "/";
+          window.location.href = "/login";
         }
         if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
           SessionStorage.remove("TOKEN");
@@ -192,7 +217,6 @@ export default boot(({ app, router }) => {
     }
   };
 
-  app.use(createPinia());
   api.defaults.headers["Authorization"] = process.env.SITE;
   cashier.defaults.headers["Authorization"] = process.env.SITE;
   eventapi.defaults.headers["Authorization"] = process.env.SITE;

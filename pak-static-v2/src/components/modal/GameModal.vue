@@ -117,7 +117,7 @@ import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
+import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated, watch } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -415,6 +415,13 @@ const close = () => {
   logoShow.value = true;
   payMethods = [];
 };
+
+watch(
+  () => route.path,
+  (val) => {
+    if (val !== "/home") closeDialog();
+  }
+);
 
 defineExpose({
   open
