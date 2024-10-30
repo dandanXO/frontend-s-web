@@ -181,7 +181,7 @@
               </div>
               <div class="mid-wrapper">
                 <q-input
-                  :type="currentCardType === 'Bank' ? 'number' : 'text'"
+                  :type="currentCardType === 'BANK' ? 'number' : 'text'"
                   filled
                   dense
                   clearable
@@ -766,6 +766,7 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+  currentCardType.value = item.payType;
 };
 
 const onAddNewAccount = () => {
@@ -805,7 +806,7 @@ const isValidCardAddress = () => {
 
 const currBankList = ref([]);
 const filteredBankList = ref([]);
-const currentCardType = ref("Bank");
+const currentCardType = ref("");
 const bankList = [];
 const cryptoList = [];
 const ewalletList = [];
