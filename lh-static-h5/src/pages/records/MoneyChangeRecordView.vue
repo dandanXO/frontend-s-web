@@ -42,7 +42,6 @@ export default defineComponent({
     const recordRef = ref();
 
     const loadNewData = () => {
-      console.log('hit', maxPage.value + '-' + current.value)
       if (maxPage.value > current.value) {
         current.value++;
       } else {
@@ -73,8 +72,6 @@ export default defineComponent({
         }),
         {expired_value: 30}
       ).then((res) => {
-        console.log(res);
-
         // Check if records array is empty and stop processing if true
         if (res.records.length === 0) {
           console.log("No records found. Ending function execution.");
