@@ -161,7 +161,7 @@
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
 
-                <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
+                <div class="amt-input-append" v-if="isPrivilege && form.localAmount && paytypeWithPrivilege.includes(selectedChannel.payType)">
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
