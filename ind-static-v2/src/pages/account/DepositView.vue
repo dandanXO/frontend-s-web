@@ -168,7 +168,7 @@
             <q-checkbox
               style="margin-left: -5px"
               v-model="isFtdPrivilegeEnable"
-              v-if="store.ftd === false && depositType === 'flat'"
+              v-if="store.ftd === false && depositType === 'flat' && !selectedItemPrivilege"
             >
               Use Slot First Deposit Privilege
             </q-checkbox>
@@ -257,7 +257,7 @@
         <div class="q-mt-sm">
           Wager requirement (to withdrawal): 1 time of your deposit amount & 20 times of your privilege amount.
         </div>
-        <div class="q-mt-sm">Eg. Deposit 100 Rs, require 2,100 Rs wager</div>
+        <div class="q-mt-sm" v-if="!selectedItemPrivilege">Eg. Deposit 100 Rs, require 2,100 Rs wager</div>
       </div>
     </template>
   </div>
