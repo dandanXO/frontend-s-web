@@ -466,7 +466,7 @@
             <el-button
               v-if="scope.row.status === 'STEP_1'"
               size="mini"
-              type="primary"
+              type="success"
               @click="toApply(scope.row)"
             >
               {{ t('fields.toApplying') }}
@@ -474,7 +474,7 @@
             <el-button
               v-if="scope.row.status === 'STEP_3'"
               size="mini"
-              type="primary"
+              type="warning"
               @click="toBeforePaid(scope.row)"
             >
               {{ t('fields.toBeforePaid') }}
@@ -489,7 +489,7 @@
             <el-button
               v-if="scope.row.status === 'SUCCESS' && hasPermission(['sys:withdraw:affiliateFail'])"
               size="mini"
-              type="primary"
+              type="danger"
               @click="toFail(scope.row)"
             >
               {{ t('fields.fail') }}
