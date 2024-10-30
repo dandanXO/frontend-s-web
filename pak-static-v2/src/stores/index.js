@@ -7,6 +7,7 @@ import { useUI } from "stores/ui";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
+const ftdEvent = new Event("ftdSuccess");
 
 export const userStore = defineStore("userStore", {
   state: () => {
@@ -45,7 +46,11 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       visitorId: "",
-      h5Url: "https://0vsadwuz3sh.com/"
+      h5Url: "https://0vsadwuz3sh.com/",
+      isFbPixel: false,
+      paytypeWithPrivilege: "",
+      extraPrivilegeId: "",
+      ftd: "CLOSE"
     };
   },
   actions: {
@@ -111,6 +116,7 @@ export const userStore = defineStore("userStore", {
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
+          this.token = ret.data;
         } else {
           Notify.create({
             color: "negative",
@@ -163,36 +169,6 @@ export const userStore = defineStore("userStore", {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
-      api.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      cashier.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      eventapi.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
       this.token = isAndroid() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
@@ -253,7 +229,14 @@ export const userStore = defineStore("userStore", {
             }
           })
           .then((res) => {
+            console.log(res);
             if (res.code === 0) {
+              if (this.isFbPixel && this.balance === 0 && res.data !== 0) {
+                const isNewUser = sessionStorage.getItem("newUserFtd");
+                if (isNewUser && isNewUser === this.nickName) {
+                  document.dispatchEvent(ftdEvent);
+                }
+              }
               this.balance = res.data;
             } else {
               this.balance = 0;

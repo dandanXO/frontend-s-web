@@ -111,7 +111,7 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
-  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
 };
 
 function isNonNumericString(value) {
@@ -139,4 +139,12 @@ export const getVisitorId = async () => {
   localStorage.setItem("VISITOR_ID", sidParam);
   return sidParam;
   // }
+};
+
+export const trackNewUserFtd = () => {
+  console.log("PurchaseComplete");
+  fbq("trackCustom", "PurchaseComplete");
+  sessionStorage.removeItem("newUserFtd");
+  document.removeEventListener("ftdSuccess", trackNewUserFtd);
+  localStorage.removeItem("REG_REFERRAL_CODE");
 };
