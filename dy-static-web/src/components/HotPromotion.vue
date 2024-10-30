@@ -78,6 +78,7 @@
     <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode"/>
@@ -167,6 +168,7 @@ import S14VotePromo from "@/components/hotpromo/s14-vote/S14VotePromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
 import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
+import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
 
 
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -245,7 +247,8 @@ export default defineComponent({
     IemMasterPromo,
     PullbackTide,
     Cba30Dream,
-    ElisaGift
+    ElisaGift,
+    ChallengeComebackPromo
   },
   props: {
     list: {
