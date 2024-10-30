@@ -1,5 +1,25 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div class="withdrawal-summary" v-if="selectedMethodItem">
+      <div class="balance">
+        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          {{
+            selectedMethodItem.withdrawableBalance >= 0
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+              : "0.00"
+          }}
+        </span>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
+      </div>
+    </div>
+
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <template v-if="isLoadingWithdrawalMethod">
       <div class="withdraw-methods-currency">
@@ -161,7 +181,7 @@
               </div>
               <div class="mid-wrapper">
                 <q-input
-                  :type="currentCardType === 'Bank' ? 'number' : 'text'"
+                  :type="currentCardType === 'BANK' || currentCardType === 'EWALLET' ? 'number' : 'text'"
                   filled
                   dense
                   clearable
@@ -283,7 +303,7 @@
                 <div class="remain-wager-wrapper" @click="refreshRemainWager">
                   <q-spinner v-if="isRefreshRemainWager" />
                   <span v-else>
-                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, true) }}
                   </span>
                   <img
                     class="refresh-btn-img"
@@ -746,6 +766,7 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+  currentCardType.value = item.payType;
 };
 
 const onAddNewAccount = () => {
@@ -785,7 +806,7 @@ const isValidCardAddress = () => {
 
 const currBankList = ref([]);
 const filteredBankList = ref([]);
-const currentCardType = ref("Bank");
+const currentCardType = ref("");
 const bankList = [];
 const cryptoList = [];
 const ewalletList = [];
@@ -1083,6 +1104,7 @@ const refreshRemainWager = () => {
   .withdrawal-summary {
     padding: 1rem;
     margin-top: 0;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-around;

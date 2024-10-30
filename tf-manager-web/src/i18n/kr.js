@@ -1860,6 +1860,7 @@ export default {
     updateWithdrawPassword: '출금 비밀번호 업데이트',
     self: '(본인)',
     batchFrozenMember: '회원 일괄 동결',
+    showLogo: '아이콘 표시'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2571,6 +2572,7 @@ export default {
     'KRW Stats Report': '한국 사이트 데이터 보고서',
     'MQ Log': 'MQ 로그',
     'System Config': '시스템 설정',
+    'Monitor And Notification': '모니터링 및 알림',
     'Promotion Coupon': '쿠폰',
     'Member Invite Limit': '회원 초대 제한',
     'Member Point Record': '회원 포인트 기록',
@@ -2739,6 +2741,9 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '이익률-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: '이익률-POKER',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: '온라인 사용자'
   },
   error: {
     400: '잘못된 요청',

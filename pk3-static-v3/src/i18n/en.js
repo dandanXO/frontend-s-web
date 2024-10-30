@@ -72,7 +72,7 @@ export default {
     phone: "Phone Number",
     phone_placeholder: "Enter your phone number",
     phone_rules_01: "Enter phone number",
-    phone_rules_02: "Phone number must be between 8 to 12 digits",
+    phone_rules_02: "Phone number must be 11 digits",
     phone_rules_03: "Phone number must start with '03'",
     phone_rules_04: "Please insert the valid phone number",
     prependNumber: "+92",
@@ -314,7 +314,7 @@ export default {
     depositMethod: "Deposit Method",
     paymentChannels: "Payment Channels",
     wagerRequirement: "Wager Requirement (for withdrawal): 10 times your deposit amount",
-    wagerExample: "e.g., Deposit Rp1,000, requires Rp10,000 wagered on slot games",
+    wagerExample: "e.g., Deposit Rs1,000, requires Rs10,000 wagered on slot games",
     deposited: "Submitted",
     youWillBeRedirect: "You will be redirected to your bank page to complete the deposit.",
     afterDepositSuccessfully: "After a successful deposit, it will be reflected here.",
@@ -420,239 +420,109 @@ export default {
       teamManagement: "Team management",
       teamBetting: "Team betting",
       profitAndLoss: "User profit and loss",
-      about: "Tentang",
-      history: "Riwayat",
-      daily: "Harian",
-      earn: "Raup"
+      about: "About",
+      history: "History",
+      daily: "Daily",
+      earn: "Earn"
     },
     about: {
-      invitetoEarn: "Undang untuk Meraup",
-      simplyShare: "Cukup bagikan kode QR eksklusif Anda",
+      invitetoEarn: "Invite to Earn",
+      simplyShare: "Simply share your exclusive QR code",
       inviteMoreFriends:
-        "Undang lebih banyak teman dan Anda akan meraup lebih banyak. Tiap anggota yang gabung Skyace Club menjadi pemain sekaligus agen.",
-      weAdvocateBenefits: "Kami dukung keuntungan dan bonus bagi setiap orang.",
-      agencyPolicy: "Kebijakan Keagenan",
-      theTableBelowShows: "Tabel di bawah menampilkan bagaimana hadiah ditetapkan.",
-      point_01: "Pengguna aktif: jumlah taruhan harian Rp2,000K",
+        "Invite more friends and you will earn more. Every member who joins Skyace Club is both a player and an agent.",
+      weAdvocateBenefits: "We advocate benefits and bonuses for everyone.",
+      agencyPolicy: "Agency Policy",
+      theTableBelowShows: "The table below shows how the rewards are assigned.",
+      point_01: "Active users: daily bet amount 2000",
       point_02:
-        "Hadiah Anda akan dihitung berdasarkan jumlah total taruhan anggota Anda. Hadiah yang diperoleh bisa ditarik atau digunakan untuk taruhan selanjutnya.",
-      point_03: "Ajukan sebanyak mungkin teman yang Anda bisa untuk mendapatkan persentase rabat lebih besar.",
-      point_04: "Raup pendapatan seumur hidup di pemain yang Anda ajukan.",
-      faq: "TJU",
-      faq_01: "1. Bagaimana cara meraup komisi?",
+        "Your reward will be calculated based on the total bet amount of your members. The reward gained can either be withdrawn or used for further betting.",
+      point_03: "Refer as many friends as you can to gain bigger percentage of rebates.",
+      point_04: "Earn lifetime revenue on your referred players.",
+      faq: "FAQ",
+      faq_01: "1.  How to earn commissions?",
       faq_01_01:
-        "Anda bisa meraup hingga 1.5% dari taruhan harian pemain yang Anda ajukan. Makin tinggi level Anda, makin besar persentase komisi yang bisa Anda raup.",
+        "You can earn up to 1.5% of the daily wagers of players you refer. The higher your level, the higher the commission percentage you can earn.",
       faq_01_02:
-        "Jika afiliasi Anda atau afiliasi Anda menjadi agen dan mereka berada di level lebih rendah dari atasan langsung mereka, maka Anda bisa terima hingga 1.2% dari jumlah rabat taruhan afiliasi tersebut. Nilai komisi tergantung pada selisih level antara Anda dan afiliasi Anda, makin besar selisih levelnya, makin banyak komisi yang Anda terima.",
-      faq_02: "2. Bagaimana cara mengundang teman Anda?",
-      faq_02_01: "Bagikan game ini lewat media sosial atau bagikan tautan referal ke teman Anda.",
+        "If your affiliate or your affiliate becomes an agent and they are at a lower level than their immediate superior, then you can receive up to 1.2% of the affiliate's wagering rebate amount. The commission rate depends on the level difference between you and your affiliate, the greater the level difference, the more commission you receive.",
+      faq_02: "2. How to invite your friends?",
+      faq_02_01: "Share the game via social media or share the referral link to your friends.",
       faq_02_02:
-        "Teman harus mengklik tautan promosi Anda, mengunduh Aplikasinya, menginstal game, dan mendaftar untuk mulai bertaruh agar mendapat komisi.",
-      faq_02_03: "Pendaftaran harus dilakukan lewat tautan referal.",
-      faq_03: "3. Apa tujuan dari level?",
-      faq_03_01: "Kami telah membagi 13 level berdasarkan jumlah pengguna rekomendasi dan kinerja taruhan.",
+        "Friends must click on your promotion link, download the App, install the game and register to start betting to get commission.",
+      faq_02_03: "Registration must be completed through a referral link.",
+      faq_03: "3. What's the purpose of level?",
+      faq_03_01: "We have divided 13 levels based on the number of recommended users and betting performance.",
       faq_03_02:
-        "Kondisi upgrade mengharuskan jumlah taruhan dan ukuran tim memenuhi persyaratan di waktu bersamaan. Makin tinggi level Anda, makin besar persentase komisi yang akan Anda terima dari jumlah taruhan anggota.",
+        "Upgrade conditions require that the bet amount and team size meet the requirements at the same time. The higher your level, the higher the commission percentage you will receive from members' bet amounts.",
       faq_03_03:
-        "Selisih level: Saat atasan langsung dikurangi level anggota langsung terkait adalah ≥ 1, ada selisih level, jika tidak, tak ada selisih level.",
-      faq_03_04: "Makin tinggi level Anda, makin besar persentase komisi yang Anda peroleh dari taruhan selisih level.",
-      faq_04: "4. Bagaimana cara meng-upgrade level Anda?",
-      faq_04_01:
-        "Makin banyak anggota yang Anda bawa ke game dan makin banyak mereka bertaruh, makin tinggi tingkatan yang bisa Anda peroleh.",
+        "Level difference: When the immediate superior minus the corresponding direct member level is ≥ 1, there is a level difference, otherwise there is no level difference.",
+      faq_03_04: "The higher your level, the higher the commission percentage you get from level difference bets.",
+      faq_04: "4. How to upgrade your level?",
+      faq_04_01: "The more members you bring to the game and the more they bet, the higher the tiers you can get.",
       faq_04_02:
-        "Jika Anda memiliki kemampuan promosi saluran yang luar biasa, hubungi pusat layanan pelanggan untuk verifikasi.",
-      faq_05: "5. Bagaimana cara mengubah teman Anda menjadi anggota?",
+        "If you have extraordinary channel promotion capabilities, please contact our customer service center for verification.",
+      faq_05: "5. How to turn your friends into members?",
       faq_05_01:
-        "Masuk ke 55Ace, bagikan tautan rekomendasi Anda kepada teman-teman di halaman rekomendasi, pandu mereka untuk mendaftar dari tautan tersebut, dan mereka bisa menjadi anggota langsung Anda.",
+        "Log in to 55Ace, share your recommendation link with your friends on the recommendation page, guide them to register from the link, and they can become your direct members.",
       faq_05_02:
-        "Dorong anggota Anda untuk mengajak teman mereka untuk bermain game, dan teman yang mereka ajak akan menjadi anggota tidak langsung Anda.",
+        "Encourage your members to invite their friends to play games, and the friends they invite will become your indirect members.",
       faq_05_03:
-        "Saat teman dari anggota langsung Anda menjadi anggota tidak langsung Anda, mereka masih bisa menumbuhkan keanggotaan mereka dengan cara ini. Semua sub-anggota mereka akan dianggap sebagai sub-anggota tidak langsung Anda.",
-      faq_06: "6. Bagaimana cara mendapatkan komisi dari anggota Anda?",
+        "When friends of your direct members become your indirect members, they can still grow their membership this way. All their sub-members will be considered as your indirect sub-members.",
+      faq_06: "6. How to get commission from your members?",
       faq_06_01:
-        "Harus ada selisih level antara Anda dan semua anggota level bawah Anda, jika tidak, tidak akan menghasilkan komisi selisih level.",
-      faq_06_02: "Proporsi komisi ditentukan oleh selisih antara level Anda dan level anggota bawahan Anda.",
-      faq_06_example: "Contoh",
-      faq_06_table_name: "Nama",
+        "There must be a level difference between you and all your lower-level members, otherwise no level difference commission will be generated.",
+      faq_06_02:
+        "The proportion of commission is determined by the difference between your level and the level of your subordinate members.",
+      faq_06_example: "Example",
+      faq_06_table_name: "Name",
       faq_06_table_level: "Level",
-      faq_06_table_betting: "Taruhan",
-      faq_06_table_members: "Anggota",
+      faq_06_table_betting: "Betting",
+      faq_06_table_members: "Members",
       faq_06_table_you: "You",
-      faq_06_dot_01: "Anda tidak bisa mendapatkan rabat taruhan A.",
-      faq_06_dot_02: "Anda bisa mendapatkan komisi 0.2% dari jumlah taruhan B",
-      faq_06_dot_03: "Anda bisa mendapatkan komisi 0.7% dari jumlah taruhan C",
-      table_col_levelDifference: "Selisih Level",
-      table_col_rebate: "Rabat (%)",
+      faq_06_dot_01: "You can't get A's betting rebate.",
+      faq_06_dot_02: "You can get 0.2% commission on B's bet amount",
+      faq_06_dot_03: "You can get 0.7% commission on C's bet amount",
+      table_col_levelDifference: "Level Difference",
+      table_col_rebate: "Rebate (%)",
       table_col_level: "Level",
-      table_col_betAmount: "Jumlah Taruhan ",
-      table_col_activeMember: "Anggota Aktif",
-      table_col_rate: "Nilai %"
+      table_col_betAmount: "Bet Amount ",
+      table_col_activeMember: "Active Member",
+      table_col_rate: "Rate %"
     },
     history: {
-      totalRebates: "Total rabat",
-      month: "Bulan",
-      week: "Pekan",
-      date: "Tanggal",
-      rebateAmount: "Jumlah Rebate"
+      totalRebates: "Total Rebates",
+      month: "Month",
+      week: "Week",
+      date: "Date",
+      rebateAmount: "Rebate Amount"
     },
     daily: {
-      myTeamYesterday: "Tim Saya (Kemarin)",
-      member: "Anggota",
-      betAmount: "Jumlah Taruhan",
-      rate: "Nilai",
-      yesterdayReportTotal: "Laporan Kemarin (Total)",
+      myTeamYesterday: "My Team (Yesterday)",
+      member: "Member",
+      betAmount: "Bet Amount",
+      rate: "Rate",
+      yesterdayReportTotal: "Yesterday Report (Total)",
       level: "Level",
-      myselfBettingAmount: "Jumlah taruhan diri saya",
-      myselfRebate: "Rabat diri saya",
-      teamBettingamount: "Jumlah taruhan tim",
-      teamRebate: "Rabat tim",
-      totalRebate: "Total rabat",
-      teamDetailsYesterday: "Detail tim (Kemarin)",
-      teamMember: "Anggota Tim",
-      income: "Penghasilan"
+      myselfBettingAmount: "Myself betting amount",
+      myselfRebate: "Myself rebate",
+      teamBettingamount: "Team betting amount",
+      teamRebate: "Team rebate",
+      totalRebate: "Total rebate",
+      teamDetailsYesterday: "Team details (Yesterday)",
+      teamMember: "Team Member",
+      income: "Income"
     },
     earn: {
-      inviteToEarn: "Undang untuk Meraup",
-      point_01_title: "Bagikan tautan referal atau kode QR Anda di bawah",
-      point_01_desc: "Cukup salin atau buat tangkapan layar dan kirim ke teman Anda",
-      point_02_title: "Dorong teman Anda mulai bermain",
-      point_02_desc: "Anda bisa periksa teman yang Anda ajukan yang mendaftar dengan kode Anda.",
-      point_03_title: "Mulai meraup komisi harian",
+      inviteToEarn: "Invite to Earn",
+      point_01_title: "Share your referral link or QR code below",
+      point_01_desc: "Just copy or screenshot and send it to your friends",
+      point_02_title: "Get your friends to start playing",
+      point_02_desc: "You can check your referred friends who registered with your code.",
+      point_03_title: "Start earning daily commissions",
       point_03_desc:
-        "Anda akan mendapat hadiah, terlepas merea menang atau kalah. Makin banyak teman Anda ajukan ke Skyace Club, makin besar hadiah harian Anda. Mulai meraup komisi harian",
-      myReferralLink: "Tautan Referal Saya",
-      save: "SIMPAN",
-      copiedtoClipboard: "disalin ke papan klip"
-    },
-    reward: {
-      myTotalIncome: "My Total Income",
-      myTotalNumberOfInvites: "My Total Number Of Invites",
-      invite: "Invitation Bonus",
-      topUp: "Deposit Bonus",
-      bet: "Bet Bonus",
-      eligibleRefer: "Eligible Refer",
-      inviteFriendsViaLink: "Invite friends via link",
-      howToGetInvitationBonus: "How to get invitation bonus",
-      inviteList_01: "Invite friends via invitation link",
-      inviteList_02: "Register via link",
-      inviteList_03: "Complete deposit after registration",
-      copyLink: "Copy Link",
-      friendCount: "Friend Count",
-      inviteBonus: "Invite Bonus",
-      totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
-      player: "Player",
-      money: "Money",
-      eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
-      betting_tips:
-        "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
-      deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
-      shareTitle: "B9GAME Share and Earn",
-      shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
-    },
-    teamManagement: {
-      searchField: {
-        downLine: {
-          all: "All Down Lines",
-          direct: "Direct Down Lines"
-        },
-        username: {
-          placeholder: "User name"
-        },
-        searchButton: "SEARCH"
-      },
-      table: {
-        id: "ID",
-        downlineMember: "Downline Member",
-        todayRegCount: "Today Register Count",
-        ytdRegCount: "Yesterday Register Count",
-        downlineDepositMember: "Downline Deposit Member",
-        vip: "VIP",
-        uplineLoginName: "Upline Username",
-        type: "Types",
-        username: "Username",
-        emark: "Emarks",
-        upLine: "Upline Agent",
-        registrationDate: "Registration Date",
-        balance: "Balance",
-        lastLogin: "Last Login Time",
-        lastDeposit: "Last Deposit Time",
-        action: "Action"
-      }
-    },
-    teamBetting: {
-      searchField: {
-        date: {
-          today: "Today",
-          yesterday: "Yesterday"
-        },
-        gameType: {
-          label: "Game Type",
-          options: {
-            slot: "Slot",
-            live: "Live Casino",
-            sport: "Sports",
-            fish: "Fish",
-            poker: "Poker"
-          }
-        },
-        searchButton: "Search"
-      },
-      table: {
-        vendor: "Vendor",
-        gameType: "Game Type",
-        betAmount: "Bet Amount",
-        winning: "Winning",
-        validBet: "Valid Bet",
-        balance: "Win/Loss",
-        rounds: "Rounds",
-        player: "Player",
-        platform: "Platform",
-        players: "Players",
-        bet: "Bet",
-        payout: "Payout"
-      }
-    },
-    profitAndLoss: {
-      searchField: {
-        date: {
-          today: "Today",
-          yesterday: "Yesterday",
-          "7day": "7-Days"
-        },
-        username: {
-          placeholder: "User name"
-        },
-        searchButton: "Search"
-      },
-      table: {
-        username: "Username",
-        deposit: "Deposit",
-        withdraw: "Withdraw",
-        bonus: "Bonus",
-        validBet: "Valid Bet",
-        balance: "Win/Loss",
-        rebate: "Player Rebate",
-        referral: "Referral",
-        profitAndLoss: "Profit And Loss",
-        ftdamount: "FTD Amount",
-        ftdcount: "FTD Count",
-        depositcount: "Deposit Count",
-        depositFee: "Deposit Fee",
-        bet: "Bet",
-        payout: "Payout"
-      },
-      sums: {
-        bet: "Bet",
-        betamount: "Bet Amount",
-        depositcount: "Deposit Count",
-        validBet: "Valid Bet",
-        bonus: "Bonus",
-        payout: "Payout",
-        deposit: "Deposit",
-        withdraw: "Withdraw",
-        firstdepositcount: "First Deposit Count"
-      }
+        "You will be rewarded, regardless if they win or lose. The more friends you refer to Skyace Club, the bigger your daily reward. Start earning daily commissions",
+      myReferralLink: "My Referral Link",
+      save: "SAVE",
+      copiedtoClipboard: "copied to clipboard"
     }
   },
   records: {
@@ -667,33 +537,33 @@ export default {
     unsettled: "Belum Diselesaikan",
     jackpot: "Jackpot",
     bonus: "Bonus",
-    amount: "Jumlah",
-    applying: "Sedang Diproses",
-    failed: "Gagal",
+    amount: "Amount",
+    applying: "Processing",
+    failed: "Failed",
     Success: "Sukses",
-    underReview: "Sedang Diproses",
-    toBePaid: "Akan Dibayar",
-    paymentOnGoing: "Pembayaran Sedang Berjalan",
-    automaticPayment: "Pembayaran Otomatis",
-    suspend: "Ditangguhkan",
-    pending: "Tertunda",
-    success: "Berhasil",
-    supplementSuccess: "Lengkapi Berhasil",
-    closed: "Ditutup",
+    underReview: "Processing",
+    toBePaid: "To be paid",
+    paymentOnGoing: "Payment on going",
+    automaticPayment: "Automatic Payment",
+    suspend: "Suspend",
+    pending: "Pending",
+    success: "Success",
+    supplementSuccess: "Supplement Success",
+    closed: "Closed",
     orderNo: "NO. Order",
     bank: "BANK",
-    noRecord: "Tak ada Catatan",
+    noRecord: "No Record",
     noMoreRecord: "Tidak temukan catatan apa pun",
     bytoday: "Hari Ini",
     byyesterday: "Kemarin",
     all: "Semua",
     turnover_requi: "TurnOver Requirement",
-    noMember: "Tidak Ada Anggota",
-    noMessage: "Tidak Ada Pesan",
+    noMember: "No Member",
+    noMessage: "No Message",
     level: "Level",
-    turnover: "Perputaran",
-    serialNumber: "Nomor seri",
-    vipUpgradeBonus: "Hadiah Upgrade VIP"
+    turnover: "Turnover",
+    serialNumber: "Serial Number",
+    vipUpgradeBonus: "VIP Upgrade Bonus"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -719,7 +589,7 @@ export default {
     live: "LIVE",
     slot: "SLOT",
     vip: "VIP",
-    promotionEnds: "Promosi Berakhir"
+    promotionEnds: "Promotion Ended"
   },
   hotPromo: {
     aviatorWheel: {

@@ -4,7 +4,7 @@
       <div class="withdraw-remaining-dialog__header">
         <div class="withdraw-remaining-dialog__header-title">
           <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-          <span>继续提款需完成以下条件</span>
+          <span>请完成以下条件</span>
         </div>
         <span class="withdraw-remaining-dialog__header-help-text">
           若有疑问，请联系在线客服核查~
@@ -15,7 +15,7 @@
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
       <div class="withdraw-remaining-dialog__body">
         <div class="withdraw-remaining-dialog__body-title">
-          完成
+          再完成
           <span class="text-yellows">{{ convertToCommaAmount(totalRemaining) }}</span>
           流水，立即享受快速提款
         </div>
@@ -25,7 +25,7 @@
               <th align="center">投注要求</th>
               <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
                 流水进度
-                <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
+                <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" /> -->
               </th>
               <th align="center">完成状态</th>
             </tr>
@@ -42,7 +42,10 @@
             </tr>
           </tbody>
         </table>
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <div class="withdraw-remaining-dialog__buttons">
+          <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -193,7 +196,7 @@ onMounted(() => {
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
-        text-align: center;
+        text-align: left;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -268,21 +271,39 @@ onMounted(() => {
         }
       }
     }
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
 
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
       background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
+      background: url(../assets/images/finance/withdraw/active-btn.png);
+      filter: hue-rotate(-30deg);
+      background-size: 100% 100%;
       border-radius: 4px;
       padding: 10px 0;
       font-size: var(--font-size-large);
       font-weight: 600;
       line-height: var(--line-height);
       text-align: center;
-      color: inherit;
+      cursor: pointer;
+      opacity: 0.9;
+      color: #ffffff;
+      &:first-of-type {
+        background: url(../assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
 
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }

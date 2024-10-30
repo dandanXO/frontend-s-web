@@ -720,7 +720,8 @@ export default {
     live: "LIVE",
     slot: "SLOT",
     vip: "VIP",
-    promotionEnds: "Promosi Berakhir"
+    promotionEnds: "Promosi Berakhir",
+    promotion: "Promosi"
   },
   hotPromo: {
     aviatorWheel: {

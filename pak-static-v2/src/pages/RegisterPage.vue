@@ -249,7 +249,7 @@ import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { isAndroid } from "boot/utils";
+import { isAndroid, trackNewUserFtd } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -445,6 +445,14 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
+
+                // FB Tracking.
+                if (store.isFbPixel) {
+                  fbq("track", "CompleteRegistration");
+                  document.addEventListener("ftdSuccess", trackNewUserFtd);
+                  sessionStorage.setItem("newUserFtd", regForm.loginName);
+                  localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
+                }
 
                 //ADJUST TRACKEVENT.
                 // debugger;

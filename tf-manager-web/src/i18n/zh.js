@@ -353,6 +353,11 @@ export default {
       VOID: '作废',
       CANCEL: '手动取消',
     },
+    rolloverEventType: {
+      UPDATE: 'Update Rollover',
+      CREATE: 'Create Rollover',
+      BALANCE_CHECK: 'Balance Check',
+    },
   },
   rebateLevel: {
     LEVEL_0: '等级 0',
@@ -1226,6 +1231,7 @@ export default {
     memberReport: '会员报表',
     memberType: '会员类型',
     memberWithdrawLog: '会员提款日志',
+    memberRolloverEvent: '流水日志',
     menuGame: '菜单游戏序列',
     menuIcon: '菜单图标',
     menuTitle: '菜单标题',
@@ -2100,6 +2106,7 @@ export default {
     startHour: '开始小时',
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
+    showLogo: '显示图标'
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2824,6 +2831,7 @@ export default {
     Pm: '会员私信',
     'MQ Log': 'MQ日志',
     'System Config': '系统设置',
+    'Monitor And Notification': '监控/通知',
     'Promotion Coupon': '存款券',
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
@@ -3018,6 +3026,9 @@ export default {
     PLATINUM: '铂金',
     DIAMOND: '钻石',
     WANGZE: '王者',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: '在线人数'
   },
   error: {
     400: '请求无效',

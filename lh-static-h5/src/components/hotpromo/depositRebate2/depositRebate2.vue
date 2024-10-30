@@ -181,7 +181,7 @@ const depositCards = ref([
     code: "zfb",
     title: "支付宝转卡",
     content: `充值即送<em class="light-bg">0.5%</em>彩金 支付宝可以满足您不同需求和使用场景，速度快，够安全。用户每日任何时间在雷火使用“支付宝”方式成功存款≥500元，即可享受存款金额的<em class="light-bg">0.5%</em>加码彩金，单日优惠最高上限88元。`
-  },
+  }
 ]);
 
 const goDeposit = () => {
@@ -200,60 +200,6 @@ const openLession = (card) => {
 .deposit-rebates-container {
   padding-top: 20px;
 
-  // &.isEuro {
-  //   .cards-tabs {
-  //     .tab {
-  //       background: #0e0f40;
-  //       &.active {
-  //         background: linear-gradient(180deg, #2e9bff 0%, #1300ed 100%);
-  //       }
-  //     }
-  //   }
-  //   .cards {
-  //     .deposit-card {
-  //       // border: 3px solid #95ecff;
-  //       .deposit-content {
-  //         &__details {
-  //           color: #422879;
-
-  //           em{
-  //             font-style: normal;
-  //             color: #ff0000;
-
-  //             //&.light-bg {
-  //             //  color: #b30505;
-  //             //}
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   .happy-table {
-  //     thead {
-  //       th {
-  //         background: #0047ff !important;
-  //         color: #cff6ff !important;
-  //       }
-  //     }
-  //     tbody {
-  //       tr {
-  //         &:nth-child(even) {
-  //           background: #c9dcff33;
-
-  //           border: 1px solid #c0bcb74d;
-  //         }
-  //       }
-  //       td {
-  //         color: #cff6ff;
-  //       }
-  //     }
-  //   }
-  //   ol.happy-rules {
-  //     li {
-  //       color: #cff6ff;
-  //     }
-  //   }
-  // }
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -354,7 +300,7 @@ const openLession = (card) => {
         gap: 10px;
         justify-content: space-between;
         height: 100%;
-        // padding-top: 30px;
+
         &__title {
           font-family: Microsoft YaHei UI;
 
@@ -414,16 +360,17 @@ const openLession = (card) => {
         text-align: center;
         color: #ef94fe;
 
+        font-family: Microsoft YaHei UI;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 17.92px;
+
         p {
           background: linear-gradient(180deg, #7b2cec 0%, #1dcef3 100%);
           -webkit-background-clip: text;
           color: transparent;
           margin: 0;
         }
-        font-family: Microsoft YaHei UI;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 17.92px;
       }
     }
     tbody {

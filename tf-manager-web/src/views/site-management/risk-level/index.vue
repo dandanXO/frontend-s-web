@@ -87,6 +87,7 @@
               :empty-text="t('fields.noData')"
     >
       <el-table-column type="selection" width="55" />
+      <el-table-column prop="id" :label="t('fields.id')" width="50" />
       <el-table-column prop="level" :label="t('fields.level')" width="150" />
       <el-table-column prop="levelColor" :label="t('fields.color')" width="150">
         <template #default="scope">

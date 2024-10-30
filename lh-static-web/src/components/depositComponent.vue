@@ -77,6 +77,10 @@
               {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
+
+            <div class="btn-confirm">
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+            </div>
           </el-space>
 
           <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
@@ -128,7 +132,7 @@
           </el-form-item>
 
           <div
-            class="btn-confirm rollover-info"
+            class="rollover-info"
             v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
           >
             <span v-if="selectedPromo.depositMin">
@@ -138,10 +142,6 @@
               {{ getRollOverText(selectedPromo.gameTypeRollover) }}
             </span>
             <span v-else>流水倍数要求（本金+彩金）：{{ selectedPromo.rollover }}倍</span>
-          </div>
-
-          <div class="btn-confirm">
-            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
           </div>
 
           <el-form-item v-if="selectedPayType" class="tip">
@@ -730,7 +730,7 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 18px;
+  // margin-bottom: 10px;
 }
 
 .account-content {
@@ -773,6 +773,9 @@ onMounted(() => {
 
   .deposit-container {
     padding: 20px 30px;
+    .el-space {
+      margin-bottom: 8px;
+    }
     // background: #23263c;
     .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
       background: #23263c;
@@ -827,6 +830,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .deposit-form {
+  position: relative;
   :deep(.el-input__wrapper),
   :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
@@ -875,7 +879,7 @@ onMounted(() => {
   line-height: 30px;
 }
 .deposit-container :deep(.el-form-item) {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 </style>
 <style scoped lang="scss">
@@ -897,7 +901,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .inner-cont {
   height: 100%;
   display: flex;
@@ -956,10 +960,24 @@ onMounted(() => {
 
 .rollover-info {
   color: #bd4646;
+  margin-left: 100px;
+  margin-bottom: 10px;
 }
 
 .btn-confirm {
-  margin-left: 100px;
-  margin-bottom: 10px;
+  padding-left: 20px;
+  // margin-bottom: 10px;
+  .el-button {
+    background-image: url(../assets/images/finance/deposit/btn-bg.png) !important;
+    background-size: 100% 100%;
+    &:hover {
+      opacity: 0.9;
+      background-size: 100% 100%;
+    }
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
 }
 </style>

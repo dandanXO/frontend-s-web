@@ -49,7 +49,7 @@
           :placeholder="t('fields.transferAmount')"
         />
       </el-form-item>
-      <el-form-item :label="t('fields.rollover')" prop="rollover">
+      <el-form-item :label="t('fields.rollover')" prop="rollover" v-if="form.memberType !== 'AFFILIATE'">
         <el-input
           v-model="form.rollover"
           :placeholder="t('fields.rollover')"
@@ -92,7 +92,7 @@ const isLoading = ref(false);
 const uiControl = reactive({
   memberType: [
     { key: 1, displayName: 'member', value: 'MEMBER' },
-    { key: 2, displayName: 'affiliate', value: 'AFFILIATE' },
+    { key: 2, displayName: 'affiliateInTransfer', value: 'AFFILIATE' },
   ]
 })
 const form = reactive({
@@ -137,6 +137,9 @@ async function submitTransfer() {
     if (valid) {
       form.siteId = store.state.user.siteId;
       form.type = 'DEPOSIT';
+      if (form.memberType === 'AFFILIATE') {
+        form.rollover = 0;
+      }
       await transferToMember(store.state.user.id, form);
       clearForm();
       loadAffiliateBalance();

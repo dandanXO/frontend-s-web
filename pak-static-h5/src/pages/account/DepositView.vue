@@ -980,6 +980,10 @@ const loadAppTabs = () => {
       }
       if (data && data.hasOwnProperty("ftd")) {
         store.ftd = data.ftd;
+
+        if (store.ftd) {
+          isFtdPrivilegeEnable.value = true;
+        }
       }
     }
   });

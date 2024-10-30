@@ -4,29 +4,29 @@
       <div class="withdraw-remaining-dialog__header">
         <div class="withdraw-remaining-dialog__header-title">
           <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-          <span style="width: 40%">{{ $t("lang.dialog_title") }}</span>
+          <!-- <span style="width: 40%">{{ $t("lang.dialog_title") }}</span> -->
         </div>
-        <span class="withdraw-remaining-dialog__header-help-text">
-          {{ $t("lang.dialog_help_text") }}
-          <br />
-          {{ $t("lang.dialog_help_text2") }}
-        </span>
       </div>
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
 
       <div class="withdraw-remaining-dialog__body">
         <div class="withdraw-remaining-dialog__body-title">
           {{ $t("lang.dialog_complete") }}
-          <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
+          <span class="text-blue">{{ convertToCommaAmount(totalRemaining) }}</span>
           {{ $t("lang.dialog_enjoy") }}
         </div>
+        <span class="withdraw-remaining-dialog__header-help-text">
+          {{ $t("lang.dialog_help_text") }}
+          <br />
+          {{ $t("lang.dialog_help_text2") }}
+        </span>
         <table class="withdraw-remaining-dialog__body-table">
           <thead>
             <tr>
               <th align="center">{{ $t("lang.dialog_bet_requirement") }}</th>
               <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
                 {{ $t("lang.dialog_turnover_progress") }}
-                <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
+                <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" /> -->
               </th>
               <th align="center">{{ $t("lang.dialog_status") }}</th>
             </tr>
@@ -44,7 +44,12 @@
           </tbody>
         </table>
 
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("lang.dialog_back") }}</button>
+        <div class="withdraw-remaining-dialog__buttons">
+          <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("lang.dialog_back") }}</button>
+          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">
+            {{ $t("lang.dialog_refresh") }}
+          </button>
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -54,6 +59,8 @@ import { api } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n(); // i18n for translations
 
 const isShow = defineModel();
 
@@ -73,23 +80,25 @@ const getDisplayRemainingTypes = (items) => {
 const getDisplayRemainingType = (type) => {
   switch (type) {
     case "esport":
-      return "电竞";
+      return t("lang.types_esport");
     case "sport":
-      return "体育";
+      return t("lang.types_sport");
     case "live":
-      return "真人";
+      return t("lang.types_live");
     case "fish":
-      return "捕鱼";
+      return t("lang.types_fish");
     case "casual":
-      return "小游戏";
+      return t("lang.types_casual");
     case "lottery":
-      return "彩票";
+      return t("lang.types_lottery");
     case "poker":
-      return "棋牌";
+      return t("lang.types_poker");
     case "slot":
-      return "电子";
+      return t("lang.types_slot");
+    case "cockfight":
+      return t("lang.cockfight");
     case "all":
-      return "任意类型";
+      return t("lang.types_all");
   }
 };
 
@@ -174,11 +183,6 @@ onMounted(() => {
           overflow: auto;
         }
       }
-      .withdraw-remaining-dialog__header-help-text {
-        font-size: var(--font-size-small);
-        line-height: var(--line-height);
-        color: #7a8eb9;
-      }
     }
     .withdraw-remaining-dialog__pic {
       position: absolute;
@@ -194,16 +198,20 @@ onMounted(() => {
         0px -8px 8px 0px #c3d4e6 inset,
         0px 4px 0px 0px #a7c2dd;
 
+      .withdraw-remaining-dialog__header-help-text {
+        font-size: var(--font-size-small);
+        line-height: var(--line-height);
+        color: #7a8eb9;
+      }
       .withdraw-remaining-dialog__body-title {
         margin-bottom: 12px;
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
-        text-align: center;
         color: #424f72;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        gap: 5px;
+        text-align: left;
+        display: inline-block;
         gap: 5px;
       }
       .withdraw-remaining-dialog__body-table {
@@ -274,7 +282,13 @@ onMounted(() => {
         }
       }
     }
-
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
@@ -288,15 +302,24 @@ onMounted(() => {
       font-weight: 600;
       line-height: var(--line-height);
       text-align: center;
+      background: url(@/assets/images/finance/withdraw/active-btn.png);
+      background-size: 100% 100%;
       color: #fff;
+      opacity: 0.9;
+      &:first-of-type {
+        background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
 
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }
 
-  .text-yellows {
+  .text-blue {
     font-size: 22px;
     color: #599cff;
   }

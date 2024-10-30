@@ -604,3 +604,27 @@ export function getGameTypeBonusInit(promoCode) {
 export function claimGameTypeBonus(promoCode) {
   return server.EVENT.post("/session/game-type-bonus/claim", { promoCode });
 }
+
+export function getCompetitionBetDepositInit(promoCode) {
+  return server.EVENT.get("/session/competition-bet-deposit/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBetDepositBonus(promoCode) {
+  return server.EVENT.post("/session/competition-bet-deposit/claimBonus", { promoCode });
+}
+
+export function getCycleLossRefundInit(promoCode) {
+  return server.EVENT.get("/session/cycle-loss-refund/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCycleLossRefund(promoCode) {
+  return server.EVENT.post("/session/cycle-loss-refund/claim", { promoCode });
+}

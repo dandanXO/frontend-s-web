@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="livepoker-rebate-section">
@@ -55,7 +55,9 @@
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">在Elisa大师赛赛事期间当天累计有效投注≥1000元并存款≥200元在次日即可获得对应档位的奖金，最高可获888元~</div>
+          <div class="right">
+            在Elisa大师赛赛事期间当天累计有效投注≥1000元并存款≥200元在次日即可获得对应档位的奖金，最高可获888元~
+          </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tbody>
@@ -126,7 +128,8 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -134,7 +137,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -154,7 +158,7 @@ import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
-
+import { ResponseCode } from "@/api/response";
 const notify = useNotify();
 
 const store = userStore();
@@ -176,7 +180,7 @@ const formatNumber = (value, type) => {
   } else {
     return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-}
+};
 const handleClaimBonus = () => {
   if (isClaiming.value) return;
   isClaiming.value = true;
@@ -200,19 +204,19 @@ const handleClaimBonus = () => {
         notify.redPacket("成功领取", res.data);
         fetchData();
       } else if (
-          !(
-            res.code === ResponseCode.ERROR_USER_TOO_FAST ||
-            res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
-            res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
-            res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
-            res.code === ResponseCode.ERROR_SYSTEM
-          )
-        ) {
-          notify({
-            type: "error",
-            message: res.message
-          });
-        }
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
     })
     .catch((err) => {
       console.log(err);

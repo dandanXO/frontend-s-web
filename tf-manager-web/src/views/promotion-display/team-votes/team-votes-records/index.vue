@@ -79,7 +79,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px; margin-left: 5px;"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -227,15 +226,6 @@ const defaultEndDate = convertDate(new Date())
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss')
-}
-
-function disabledDate(time) {
-  return (
-    time.getTime() <=
-      moment(new Date())
-        .subtract(1, 'weeks')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
 }
 
 function resetQuery() {

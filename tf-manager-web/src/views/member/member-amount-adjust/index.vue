@@ -689,6 +689,7 @@
             {{ t('fields.cancel') }}
           </el-button>
           <el-button
+            :loading="isBtnLoading"
             v-if="uiControl.dialogType === 'CREATE_ADD'"
             type="primary"
             @click="createAdd"
@@ -696,6 +697,7 @@
             {{ t('fields.confirm') }}
           </el-button>
           <el-button
+            :loading="isBtnLoading"
             v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
             type="primary"
             @click="createDeduct"
@@ -897,6 +899,7 @@ const addAmountAdjustmentType = ref('NORMAL');
 // const calculate = reactive({
 //   deposit: 0,
 // })
+const isBtnLoading = ref(false)
 const siteList = reactive({
   list: [],
 })
@@ -1576,6 +1579,7 @@ function createAdd() {
   const originalRollover = form.rollover;
 
   memberAmountAdjustForm.value.validate(async valid => {
+    isBtnLoading.value = true;
     form.id = null;
     form.memberId = null;
 
@@ -1601,31 +1605,41 @@ function createAdd() {
     } catch (error) {
       form.deposit = originalDeposit;
       form.rollover = originalRollover;
-      console.log(error)
+      console.log(error);
+    } finally {
+      isBtnLoading.value = false;
     }
   });
 }
 function createDeduct() {
   memberAmountAdjustForm.value.validate(async valid => {
-    form.id = null
-    form.memberId = null
-    const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
-    form.memberId = id
-    if (isAffiliateUser.value===true) {
-      form.rollover = 0
-      form.gameTypeRollover = null
-    } else {
-      form.gameTypeRollover = constructRollover()
-    }
-    if (valid) {
-      await createDeductMemberAmountAdjust(form)
-      uiControl.dialogVisible = false
-      await loadMemberAmountAdjust()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
-    }
-  })
-}
+    isBtnLoading.value = true;
+    try {
+      form.id = null;
+      form.memberId = null;
+      const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
+      form.memberId = id;
 
+      if (isAffiliateUser.value === true) {
+        form.rollover = 0;
+        form.gameTypeRollover = null;
+      } else {
+        form.gameTypeRollover = constructRollover();
+      }
+
+      if (valid) {
+        await createDeductMemberAmountAdjust(form);
+        uiControl.dialogVisible = false;
+        await loadMemberAmountAdjust();
+        ElMessage({ message: t('message.addSuccess'), type: 'success' });
+      }
+    } catch (error) {
+      console.error('Error during createDeduct:', error);
+    } finally {
+      isBtnLoading.value = false;
+    }
+  });
+}
 async function downloadTemplate() {
   const exportAmountAdjust = [EXPORT_AMOUNT_ADJUST_LIST_HEADER]
   const maxLengthAdmountAdjust = []

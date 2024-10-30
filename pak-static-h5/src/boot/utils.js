@@ -148,3 +148,11 @@ export const trackNewUserFtd = () => {
   document.removeEventListener("ftdSuccess", trackNewUserFtd);
   localStorage.removeItem("REG_REFERRAL_CODE");
 };
+
+export const isInPwa = () => {
+  if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
+    return true;
+  } else {
+    return false;
+  }
+};

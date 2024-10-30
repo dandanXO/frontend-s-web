@@ -122,8 +122,20 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
+          <label class="label" style="width: 130px; display: inline-block;">{{ $t('lang.deposit_realtimeexchangerates') }}</label>
           <span class="text-positive">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            {{ store.currency.value }}
+          </span>
+        </div>
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="预计到账">
+          <label class="label" style="width: 130px; display: inline-block;">{{ $t('lang.deposit_estimatedarrival') }}</label>
+          <span class="text-positive">
+            {{
+              calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                ? "0.00"
+                : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+            }}
             {{ store.currency.value }}
           </span>
         </div>

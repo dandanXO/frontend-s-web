@@ -39,16 +39,21 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { getConfigList } from '../../../api/config'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
-import SidebarSearchInput from "./SidebarSearchInput.vue";
+import SidebarSearchInput from './SidebarSearchInput.vue'
 import variables from '@/styles/_variables.scss'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
-import { getMemberWithdrawRecordApplySimple, getMemberWithdrawRecordBeforePaid, getMemberWithdrawRecordPay } from '../../../api/member-withdraw-record'
+import {
+  getMemberWithdrawRecordApplySimple,
+  getMemberWithdrawRecordBeforePaid,
+  getMemberWithdrawRecordPay,
+} from '../../../api/member-withdraw-record'
 import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
-import { getNewRegisterMemberLists } from "../../../api/member";
-import { isKorea } from "@/utils/site"
+import { getNewRegisterMemberLists } from '../../../api/member'
+import { isKorea } from '@/utils/site'
+import { getDepositRecord } from '../../../api/member-deposit-record'
 
 export default defineComponent({
   components: {
@@ -88,7 +93,9 @@ export default defineComponent({
     })
 
     function convertStartDate(date) {
-      return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+      return moment(date)
+        .startOf('day')
+        .format('YYYY-MM-DD HH:mm:ss')
     }
 
     function convertEndDate(date) {
@@ -201,30 +208,74 @@ export default defineComponent({
       }
     }
 
-    onMounted(async() => {
-      if (!hasPermission(["sys:withdraw:apply"]) && (hasPermission(["sys:withdraw:simple:list"]) && hasPermission(["sys:withdraw:simple:list:risk"]))) {
-        await checkOutstandingAutoWithdraw();
+    const checkDeposit = async () => {
+      const siteId = store.state.user.siteId
+      if (isKorea(siteId)) {
+        const query = {
+          size: 20,
+          current: 1,
+          status: 'PENDING',
+          siteId: 10,
+          sort: 1,
+          depositDate: [],
+        }
+        const koreaTimezone = 'Asia/Seoul'
+        const startDate = moment
+          .tz(koreaTimezone)
+          .subtract(1, 'days')
+          .startOf('day')
+        const endDate = moment.tz(koreaTimezone).endOf('day')
+
+        query.depositDate[0] = startDate.format('YYYY-MM-DD HH:mm:ss')
+        query.depositDate[1] = endDate.format('YYYY-MM-DD HH:mm:ss')
+        query.depositDate = query.depositDate.join(',')
+
+        const { data: ret } = await getDepositRecord(query)
+
+        if (ret.code !== 0) {
+          if (notificationAudioRef.value) notificationAudioRef.value.play()
+        }
       }
-      if (hasPermission(["sys:withdraw:apply"]) && (hasPermission(["sys:withdraw:simple:list"]) && hasPermission(["sys:withdraw:simple:list:risk"]))) {
-        await checkOutstandingWithdraw();
+    }
+
+    onMounted(async () => {
+      if (
+        !hasPermission(['sys:withdraw:apply']) &&
+        hasPermission(['sys:withdraw:simple:list']) &&
+        hasPermission(['sys:withdraw:simple:list:risk'])
+      ) {
+        await checkOutstandingAutoWithdraw()
       }
-      if (hasPermission(["sys:withdraw:before-paid"])) {
-        await checkOutstandingBeforePaid();
+      if (
+        hasPermission(['sys:withdraw:apply']) &&
+        hasPermission(['sys:withdraw:simple:list']) &&
+        hasPermission(['sys:withdraw:simple:list:risk'])
+      ) {
+        await checkOutstandingWithdraw()
       }
-      if (hasPermission(["sys:withdraw:pay"])) {
-        await checkOutstandingPayment();
+      if (hasPermission(['sys:withdraw:before-paid'])) {
+        await checkOutstandingBeforePaid()
       }
-      if (hasPermission(["sys:feedback:list"])) {
-        await checkOutstandingFinancialFeedback();
+      if (hasPermission(['sys:withdraw:pay'])) {
+        await checkOutstandingPayment()
       }
-      if (hasPermission(["sys:member:list"])) {
-        await checkGetNewRegisterMember();
-        setInterval(async() => {
-          await checkGetNewRegisterMember();
+      if (hasPermission(['sys:feedback:list'])) {
+        await checkOutstandingFinancialFeedback()
+      }
+      if (hasPermission(['sys:member:list'])) {
+        await checkGetNewRegisterMember()
+        setInterval(async () => {
+          await checkGetNewRegisterMember()
         }, 180000)
       }
-      isMounted.value = true;
-    });
+      if (hasPermission(['sys:deposit:check'])) {
+        await checkDeposit()
+        setInterval(async () => {
+          await checkDeposit()
+        }, 180000)
+      }
+      isMounted.value = true
+    })
 
     // within variables only have those used in the component, what hpn to the other
     return {
@@ -238,7 +289,7 @@ export default defineComponent({
       hasNewUser,
       isKorea
     }
-  }
+  },
 })
 </script>
 
