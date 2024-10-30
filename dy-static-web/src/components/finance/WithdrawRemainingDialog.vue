@@ -81,6 +81,7 @@ const getDisplayRemainingTypes = (items) => {
 };
 
 const getDisplayRemainingType = (type) => {
+  console.log(type)
   switch (type) {
     case "esport":
       return "电竞";
