@@ -29,9 +29,9 @@
             <!--          <img src="../../assets/images/earn-money/pot-item-01.png" />-->
             <div class="amount-div">
               <span class="currency" data-text="Rs">Rs</span>
-              <span class="amount" data-text="8,888.00">8,888.00</span>
+              <span class="amount" :data-text="displayClaimableAmount">{{ displayClaimableAmount }}</span>
             </div>
-            <button class="claim-btn"></button>
+            <button class="claim-btn" :class="{ disabled: claimableAmount === 0 }" @click="handleClaimClick"></button>
           </div>
         </div>
       </div>
@@ -269,12 +269,13 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const $q = useQuasar();
 const store = userStore();
@@ -306,8 +307,11 @@ const memberDetail = ref([]);
 const activeSetting = ref([]);
 const latestInvitees = ref([]);
 const inviteesRecords = ref([]);
+const claimableAmount = ref(0);
 let currentIndex = 0;
 let intervalId = null;
+
+const displayClaimableAmount = computed(() => convertToCommaAmount(claimableAmount.value));
 
 const getOneTimeBonusSetting = () => {
   api
@@ -493,9 +497,26 @@ const handleShareToEmail = (url) => {
   window.open(emailShareUrl, "_self");
 };
 
-// const profileImagePath = computed(() => {
-//   return require(`../../assets/images/account/${randomProfileImg.value}.png`);
-// });
+const getClaimableAmount = () => {
+  api.get("/session/refer-rebate/pending-amount").then((res) => {
+    if (res.code === 0) {
+      claimableAmount.value = res.data;
+    }
+  });
+};
+
+const handleClaimClick = () => {
+  api.post("/session/refer-rebate/claim-amount").then((res) => {
+    if (res.code === 0) {
+      $q.notify({
+        message: "Success",
+        color: "positive",
+        position: "top",
+        timeout: 2000
+      });
+    }
+  });
+};
 
 const modalSocialShare = ref(false);
 
@@ -505,6 +526,7 @@ onMounted(() => {
   getLatestInvitees();
   startAutoScroll();
   checkIsShowDetail();
+  getClaimableAmount();
 
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
@@ -643,11 +665,7 @@ watch(activeSetting, checkIsShowDetail);
           font-weight: bold;
           line-height: 20.61px;
           color: #ff3e27;
-          text-shadow:
-            -1px 1px 0 #fff,
-            1px 1px 0 #fff,
-            1px -1px 0 #fff,
-            -1px -1px 0 #fff;
+          text-shadow: -1px 1px 0 #fff, 1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
 
           &::before {
             content: attr(data-text);
@@ -669,6 +687,11 @@ watch(activeSetting, checkIsShowDetail);
 
         &:hover {
           filter: brightness(1.2);
+        }
+
+        &.disabled {
+          filter: grayscale(1);
+          pointer-events: none;
         }
       }
     }
