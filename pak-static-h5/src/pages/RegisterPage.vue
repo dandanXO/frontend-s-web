@@ -256,7 +256,7 @@ import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { isAndroid, trackNewUserFtd } from "boot/utils";
+import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -457,7 +457,11 @@ export default defineComponent({
                 if (store.isFbPixel) {
                   fbq("track", "CompleteRegistration");
                   document.addEventListener("ftdSuccess", trackNewUserFtd);
-                  sessionStorage.setItem("newUserFtd", regForm.loginName);
+                  if (isInPwa()) {
+                    localStorage.setItem("newUserFtd", regForm.loginName);
+                  } else {
+                    sessionStorage.setItem("newUserFtd", regForm.loginName);
+                  }
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
 

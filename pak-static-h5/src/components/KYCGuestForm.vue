@@ -86,7 +86,7 @@ import { useRouter } from "vue-router";
 
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 
 const emits = defineEmits(["test"]);
 
@@ -153,7 +153,7 @@ const updateNewGuestState = () => {
           icon: "check_circle_outline"
         });
 
-        if (isAndroid()) {
+        if (isAndroid() || isInPwa()) {
           LocalStorage.set("TOKEN", r.data, 86400);
         } else {
           SessionStorage.set("TOKEN", r.data);
