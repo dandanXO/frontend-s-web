@@ -91,7 +91,17 @@ const getDisplayRemainingType = (type) => {
       return "棋牌";
     case "slot":
       return "电子";
+    case "vSport":
+      return "虚拟运动";
+    case "miniGame":
+      return "小游戏";
+    case "cockfight":
+      return "斗鸡";
+    case "numberGame":
+      return "数字游戏";
     case "all":
+      return "任意类型";
+    default:
       return "任意类型";
   }
 };

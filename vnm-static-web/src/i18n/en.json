@@ -352,7 +352,11 @@
     "types_lottery": "Lottery",
     "types_fish": "Fishing",
     "types_casual": "Hash Game",
-    "types_all": "Tất cả"
+    "types_all": "All",
+    "types_vsport": "Virtual Sports",
+    "types_minigame": "Hash Game",
+    "types_cockfight": "Cockfight",
+    "types_numbergame": "Number Game"
   },
   "referTerms": {
     "receiveReward": "RECEIVE UNLIMITED REWARDS",
