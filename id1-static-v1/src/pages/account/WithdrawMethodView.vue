@@ -2,7 +2,7 @@
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="withdrawal-summary" v-if="selectedMethodItem">
       <div class="balance">
-        <span class="amount">{{ convertToCommaAmount(store.balance, true) }}</span>
+        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
@@ -12,7 +12,7 @@
         <span class="amount">
           {{
             selectedMethodItem.withdrawableBalance >= 0
-              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, true)
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
               : "0.00"
           }}
         </span>
@@ -181,7 +181,7 @@
               </div>
               <div class="mid-wrapper">
                 <q-input
-                  :type="currentCardType === 'Bank' ? 'number' : 'text'"
+                  :type="currentCardType === 'BANK' || currentCardType === 'EWALLET' ? 'number' : 'text'"
                   filled
                   dense
                   clearable
@@ -766,6 +766,7 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+  currentCardType.value = item.payType;
 };
 
 const onAddNewAccount = () => {
@@ -805,7 +806,7 @@ const isValidCardAddress = () => {
 
 const currBankList = ref([]);
 const filteredBankList = ref([]);
-const currentCardType = ref("Bank");
+const currentCardType = ref("");
 const bankList = [];
 const cryptoList = [];
 const ewalletList = [];
