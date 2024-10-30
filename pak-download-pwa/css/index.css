@@ -1149,6 +1149,70 @@ main {
   color: #028760;
 }
 
+.loading {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  justify-content: center;
+  left: 0;
+  line-height: 20px;
+  margin: 0 auto;
+  max-height: 100%;
+  max-width: 70%;
+  min-height: 100px;
+  padding: 16px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.2s;
+  white-space: pre-wrap;
+  width: 100px;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading.loading--show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loading .loading__text {
+  min-height: 0;
+  min-width: 100px;
+  padding: 8px 12px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.loading .loading__icon {
+  animation: loading-rotate 2s linear infinite;
+  display: flex;
+  height: 30px;
+  margin-bottom: 8px;
+  width: 30px;
+}
+
+.loading .loading__icon svg {
+  color: #fff;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.loading .loading__icon svg circle {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  animation: loading-circular 1s ease-in-out infinite;
+}
+
 @keyframes loading-rotate {
   0% {
     transform: rotate(0);

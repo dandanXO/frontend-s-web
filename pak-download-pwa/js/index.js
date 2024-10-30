@@ -1,9 +1,10 @@
-import { INSTALLATION_STATUS_KEY, PWA_DATA_KEY, PWA_INSTALL_KEY } from "./const.js";
+import { INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
 const INSTALL_COUNTDOWN = 10;
 let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
+let deferredPrompt;
 
 const header = document.getElementById("header");
 const container = document.getElementById("container");
@@ -11,26 +12,14 @@ const countdown = document.getElementById("countdown");
 const installBtn = document.getElementById("install-btn");
 const iconLoading = document.getElementById("iconLoading");
 const installationProgress = document.getElementById("installProgress");
-
-if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
-  redirectToGame();
-}
-
-const installationStatus = localStorage.getItem(INSTALLATION_STATUS_KEY);
-if (installationStatus === "INSTALLING") {
-  // installationCountdown();
-  // handleInstallationProgress();
-} else if (installationStatus) {
-  container.setAttribute("data-type", installationStatus);
-}
+const loading = document.getElementById("loading");
 
 const qrcodeCanvas = document.getElementById("qrcode");
 const qrcode = new QRCode(qrcodeCanvas, window.location.href);
 qrcode.makeCode(window.location.href);
 
-let deferredPrompt;
-
 installBtn.addEventListener("click", async () => {
+  if (loading.classList.contains("loading--show")) return;
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       if (!deferredPrompt) {
@@ -39,7 +28,6 @@ installBtn.addEventListener("click", async () => {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
           const redirectInfo = getRedirectInfo();
-          localStorage.setItem(PWA_INSTALL_KEY, "1");
           localStorage.setItem(PWA_DATA_KEY, JSON.stringify(redirectInfo));
           localStorage.setItem(INSTALLATION_STATUS_KEY, "INSTALLING");
           container.setAttribute("data-type", "INSTALLING");
@@ -94,4 +82,24 @@ window.addEventListener("scroll", () => {
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
+});
+
+window.addEventListener("load", () => {
+  if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
+    redirectToGame();
+  }
+
+  const installationStatus = localStorage.getItem(INSTALLATION_STATUS_KEY);
+  if (installationStatus === "INSTALLING") {
+  } else if (installationStatus) {
+    container.setAttribute("data-type", installationStatus);
+  }
+
+  setTimeout(() => {
+    if (deferredPrompt && installationStatus === "PLAY") {
+      localStorage.removeItem(INSTALLATION_STATUS_KEY);
+      container.setAttribute("data-type", "INSTALL");
+    }
+    loading.classList.remove("loading--show");
+  }, 3000);
 });
