@@ -48,11 +48,7 @@
             <div class="q-my-sm">
               <div class="input-title">{{ accountTypeStr }}</div>
               <q-input
-                :type="
-                  currentCardType === 'Bank' || (selectedBankMethod && selectedBankMethod.code === 'GCASH')
-                    ? 'number'
-                    : 'text'
-                "
+                :type="currentCardType === 'Bank' || currentCardType === 'EWallet' ? 'number' : 'text'"
                 standout
                 ref="refBankCardNum"
                 class="q-pb-xs dialog-input"
