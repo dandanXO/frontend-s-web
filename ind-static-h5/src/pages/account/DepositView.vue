@@ -254,8 +254,10 @@
       </div>
 
       <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege || isFtdPrivilege">
-        <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-        <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
+        <div class="q-mt-sm">
+          Wager requirement (to withdrawal): 1 time of your deposit amount & 20 times of your privilege amount.
+        </div>
+        <div class="q-mt-sm">Eg. Deposit 100 Rs, require 2,100 Rs wager</div>
       </div>
     </template>
   </div>
