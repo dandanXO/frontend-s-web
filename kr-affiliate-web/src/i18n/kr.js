@@ -453,7 +453,7 @@ export default {
     total_sum_amt: '충환차',
     total_privilege_amt: '총포인트머니',
     total_remaining_amt: '총보유머니',
-    total_validbet_amt: '총유효베팅그액',
+    total_validbet_amt: '총유효베팅금액',
     total_losewin_amt: '총손익',
 
     password: '비밀번호',
