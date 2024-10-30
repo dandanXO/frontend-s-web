@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
 import { useRoute } from "vue-router";
 import { userStore } from ".";
+import { isInPwa } from "src/boot/utils";
 
 export const useUI = defineStore("ui-store", {
   state: () => {
@@ -61,6 +62,7 @@ export const useUI = defineStore("ui-store", {
     hideDownload() {
       const store = userStore();
       const hasReferralCode = !!sessionStorage.getItem("REFERRAL_CODE");
+      if (isInPwa()) return true;
       if (!store.token && hasReferralCode) return true;
       return false;
     }
