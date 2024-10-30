@@ -2,7 +2,7 @@
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="withdrawal-summary" v-if="selectedMethodItem">
       <div class="balance">
-        <span class="amount">{{ convertToCommaAmount(store.balance, true) }}</span>
+        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
@@ -12,7 +12,7 @@
         <span class="amount">
           {{
             selectedMethodItem.withdrawableBalance >= 0
-              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, true)
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
               : "0.00"
           }}
         </span>
