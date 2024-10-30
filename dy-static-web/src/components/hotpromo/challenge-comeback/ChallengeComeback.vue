@@ -179,25 +179,12 @@ const handleClaimBonus = () => {
 
   claimCycleLossRefund(props.promoCode)
     .then((res) => {
-      if (res.code === 0) {
+      if (res && res.code === 0) {
         notify({
           type: "success",
           message: `成功领取${res.data}元`
         });
         fetchData();
-      } else if (
-        !(
-          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
-          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
-          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
-          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
-          res.code === ResponseCode.ERROR_SYSTEM
-        )
-      ) {
-        // notify({
-        //   type: "error",
-        //   message: res.message
-        // });
       }
     })
     .catch((err) => {
