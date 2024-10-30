@@ -23,6 +23,23 @@
           style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.referrer')"
         />
+        <el-input
+          v-model="request.referrerCode"
+          size="small"
+          style="width: 200px; margin-left: 5px"
+          :placeholder="t('fields.referrerCode')"
+        />
+        <el-date-picker
+          v-model="request.recordTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="date"
+          :placeholder="t('fields.recordTime')"
+          style="margin-left: 5px; width: 200px"
+          :editable="false"
+          :clearable="false"
+        />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRecords()">
           {{ t('fields.search') }}
         </el-button>
@@ -44,6 +61,12 @@
           <template #default="scope">
             <span v-if="scope.row.loginName === null">-</span>
             <span v-if="scope.row.loginName !== null">{{ scope.row.loginName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="referrerCode" :label="t('fields.referrerCode')" min-width="150">
+          <template #default="scope">
+            <span v-if="scope.row.referrerCode === null">-</span>
+            <span v-if="scope.row.referrerCode !== null">{{ scope.row.referrerCode }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="activeMembers" :label="t('fields.dailyActiveMemberCount')" min-width="100" />
@@ -108,7 +131,7 @@
           v-loading="detailPage.loading"
           :empty-text="t('fields.noData')"
         >
-          <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120" />
+          <el-table-column prop="loginName" :label="t('fields.referredName')" align="center" min-width="120" />
           <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="100">
             <template #default="scope">
               {{ t('gameType.' + scope.row.gameType) }}
@@ -144,6 +167,17 @@
           <span style="margin-left: 10px">$ </span>
           <span>{{ totalRebateAmount.toFixed(2) }}</span>
         </div>
+        <div class="table-footer">
+          <el-button v-if="!detailPage.hasClaimed && totalRebateAmount == 0" type="warning" disabled style="margin-left: 10px">
+            <span >{{ $t('fields.ineligible') }}</span>
+          </el-button>
+          <el-button v-else-if="!detailPage.hasClaimed && totalRebateAmount > 0" type="primary" @click="distribute" style="margin-left: 10px">
+            <span >{{ $t('fields.distribute') }}</span>
+          </el-button>
+          <el-button v-else type="success" disabled style="margin-left: 10px">
+            <span >{{ $t('fields.distributed') }}</span>
+          </el-button>
+        </div>
       </div>
     </el-dialog>
   </div>
@@ -152,17 +186,24 @@
 <script setup>
 
 import { onMounted, reactive, ref, computed } from "vue";
-import { getReferFriendEligibility, getReferFriendEligibilityDetails } from "@/api/refer-friend-eligibility";
+import { getReferFriendEligibility, getReferFriendEligibilityDetails, checkHasClaimed, distributeReferFriendEligibility } from "@/api/refer-friend-eligibility";
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from "@/api/site";
 import { useStore } from '@/store'
 import { TENANT } from '@/store/modules/user/action-types'
+import moment from "moment";
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const totalRebateAmount = ref(0);
+const selectedRecord = reactive({
+  referrerId: null,
+  siteId: null,
+  recordTime: null
+});
 
 const uiControl = reactive({
   dialogVisible: false
@@ -177,23 +218,33 @@ const page = reactive({
 const detailPage = reactive({
   pages: 0,
   records: [],
-  loading: false
+  loading: false,
+  hasClaimed: true
 });
 
 const siteList = reactive({
   list: []
 });
 
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD');
+}
+const defaultDate = convertDate(new Date());
+
 const request = reactive({
   size: 30,
   current: 1,
   siteId: null,
-  referrerName: null
+  referrerName: null,
+  referrerCode: null,
+  recordTime: defaultDate
 });
 
 function resetQuery() {
   request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.referrerName = null;
+  request.referrerCode = null;
+  request.recordTime = defaultDate
 }
 
 function checkQuery() {
@@ -243,7 +294,25 @@ async function showDetails(record) {
   detailPage.records.forEach(record => {
     totalRebateAmount.value = totalRebateAmount.value + record.rebateAmount
   })
+  const { data: claimed } = await checkHasClaimed(query);
+  detailPage.hasClaimed = claimed
+  selectedRecord.referrerId = record.referrerId
+  selectedRecord.siteId = query.siteId
+  selectedRecord.recordTime = record.recordTime;
   detailPage.loading = false;
+}
+
+async function distribute() {
+  const query = {};
+  Object.entries(selectedRecord).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  query.amount = totalRebateAmount.value
+  await distributeReferFriendEligibility(query);
+  uiControl.dialogVisible = false
+  ElMessage({ message: t('message.distributeSuccess'), type: 'success' })
 }
 
 onMounted(async() => {
@@ -296,8 +365,9 @@ onMounted(async() => {
 .table-footer {
   margin-top: 15px;
   margin-right: 20px;
-  float: right;
   font-size: small;
   font-weight: bold;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
