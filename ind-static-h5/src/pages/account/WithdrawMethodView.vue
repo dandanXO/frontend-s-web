@@ -3,7 +3,11 @@
     <template v-if="isSelectedMethod">
       <div class="withdrawal-summary">
         <div class="balance">
-          <span class="amount">{{ convertToCommaAmount(store.balance, true) }}</span>
+          <span class="amount">
+            {{
+              withdrawType === "flat" ? convertToCommaAmount(inrBalance, true) : convertToCommaAmount(usdtBalance, true)
+            }}
+          </span>
           <div class="title">Cash Balance</div>
         </div>
 
@@ -459,6 +463,16 @@ const props = defineProps(["type"]);
 
 const withdrawType = ref(props.type ? props.type : "flat");
 const imgURL = process.env.IMAGE_CDN;
+
+const usdtBalance = computed(() => {
+  const realWallet = store.multipleBalance.find((wallet) => wallet.currency === "USDT");
+  return realWallet ? realWallet.balance : 0;
+});
+
+const inrBalance = computed(() => {
+  const realWallet = store.multipleBalance.find((wallet) => wallet.currency === "INR");
+  return realWallet ? realWallet.balance : 0;
+});
 
 const isMounted = ref(false);
 
