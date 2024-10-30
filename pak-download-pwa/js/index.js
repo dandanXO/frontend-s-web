@@ -23,7 +23,7 @@ installBtn.addEventListener("click", async () => {
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       if (!deferredPrompt) {
-        window.open("https://b9game0.com/register");
+        window.open("https://b9game0.com/register", "_blank");
       } else {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
@@ -39,7 +39,7 @@ installBtn.addEventListener("click", async () => {
       }
       break;
     case "PLAY":
-      redirectToGame();
+      window.open("/pwa-index.html", "_blank");
       break;
   }
 });
