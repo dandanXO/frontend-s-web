@@ -514,6 +514,7 @@ const handleClaimClick = () => {
         position: "top",
         timeout: 2000
       });
+      getClaimableAmount();
     }
   });
 };
