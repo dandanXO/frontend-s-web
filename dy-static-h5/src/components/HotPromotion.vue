@@ -78,6 +78,7 @@
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24'" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24'" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual'" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
     <BlastPremierGlobalPromo v-if="list.redirectUrl === 'dy2-blast-premier-treasure'" :promo-code="list.promoCode" />
@@ -184,6 +185,7 @@ const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba
 const LPLSummer24 = defineAsyncComponent(() => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
 const DragonBoat = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
 const EurocupManual = defineAsyncComponent(() => import("./hotpromo/EurocupManual/EurocupManual.vue"));
+const ChallengeComebackPromo =  defineAsyncComponent(() => import("../components/hotpromo/challenge-comeback/ChallengeComeback.vue"));
 const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
@@ -287,7 +289,8 @@ export default defineComponent({
     IemMasterPromo,
     PullbackTide,
     Cba30Dream,
-    ElisaGift
+    ElisaGift,
+    ChallengeComebackPromo
   },
   props: {
     list: {
