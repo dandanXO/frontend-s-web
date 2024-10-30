@@ -88,6 +88,16 @@
       >
         {{ t('fields.toPaymentOnGoing') }}
       </el-button>
+      <el-button
+        ref="suspendBtnRef"
+        size="mini"
+        type="danger"
+        :disabled="uiControl.toPendingBtn"
+        @click="toPending()"
+        @keydown.enter.prevent
+      >
+        {{ t('fields.toSuspend') }}
+      </el-button>
     </div>
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
@@ -278,12 +288,15 @@
         <el-table-column
           :label="t('fields.operate')"
           align="center"
-          min-width="180"
+          min-width="300"
           fixed="right"
         >
           <template #default="scope">
             <el-button size="mini" type="primary" @click="toPay(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toPaymentOnGoing') }}
+            </el-button>
+            <el-button ref="suspendBtnsRef" size="mini" type="danger" @click="toPending(scope.row)" @keydown.enter.prevent>
+              {{ t('fields.toSuspend') }}
             </el-button>
           </template>
         </el-table-column>
@@ -446,6 +459,7 @@ import { getSiteListSimple } from '../../../../api/site'
 import {
   getMemberWithdrawRecordBeforePaid,
   fromBeforePaidToPay,
+  fromApplyToPending,
 } from '../../../../api/member-withdraw-record'
 import { ElMessage } from 'element-plus'
 import { hasPermission } from '../../../../utils/util'
@@ -454,6 +468,8 @@ import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 const store = useStore();
 const { t } = useI18n();
+const suspendBtnRef = ref();
+const suspendBtnsRef = ref();
 const searchForm = ref(null)
 const vipList = reactive({
   list: [],
@@ -475,6 +491,7 @@ const uiControl = reactive({
   dialogTitle: '',
   dialogType: 'SEARCH',
   toPayBtn: true,
+  toPendingBtn: true,
 })
 const siteList = reactive({
   list: [],
@@ -528,8 +545,10 @@ function handleSelectionChange(val) {
   chooseRecord = val
   if (chooseRecord.length === 0) {
     uiControl.toPayBtn = true
+    uiControl.toPendingBtn = true
   } else {
     uiControl.toPayBtn = false
+    uiControl.toPendingBtn = false
   }
 }
 
@@ -627,6 +646,18 @@ async function toPay(memberWithdrawRecord) {
   uiControl.toPayBtn = true
   page.loading = false
   ElMessage({ message: t('message.updateToPaySuccess'), type: 'success' })
+}
+
+async function toPending(memberWithdrawRecord) {
+  if (memberWithdrawRecord) {
+    await fromApplyToPending([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
+  } else {
+    await fromApplyToPending(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
+  }
+  await loadRecord()
+  ElMessage({ message: t('message.updateToSuspendSuccess'), type: 'success' })
+  suspendBtnRef.value.blur();
+  suspendBtnsRef.value.blur();
 }
 
 async function showDialog(type) {
