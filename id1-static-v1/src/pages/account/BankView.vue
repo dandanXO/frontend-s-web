@@ -422,7 +422,7 @@ onActivated(() => {
     }
 
     .card-label {
-      font-size: 16px;
+      font-size: 12px;
     }
 
     img {
