@@ -91,7 +91,7 @@
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen'" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin'" />
-    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" />
+    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-cycle-loss-refund'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
@@ -147,7 +147,7 @@ import BbdachaCsgo2 from "../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue"
 import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
 import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
-import DreamLeagueS24 from '../components/hotpromo/dream-league-s24/DreamLeagueS24.vue'
+import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS24.vue";
 import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";

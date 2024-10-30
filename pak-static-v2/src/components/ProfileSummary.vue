@@ -109,6 +109,11 @@
         Instagram
       </a>
 
+      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=pak-faq">
+        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
+        Faq
+      </router-link>
+
       <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp

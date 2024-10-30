@@ -1,5 +1,25 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div class="withdrawal-summary" v-if="selectedMethodItem">
+      <div class="balance">
+        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          {{
+            selectedMethodItem.withdrawableBalance >= 0
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+              : "0.00"
+          }}
+        </span>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
+      </div>
+    </div>
+
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <template v-if="isLoadingWithdrawalMethod">
       <div class="withdraw-methods-currency">
@@ -19,7 +39,7 @@
           :class="{ active: item.code === selectedWithdraw[0].code }"
         >
           <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
-          <div>{{ item.code }}</div>
+          <div>{{ item.nodeName }}</div>
           <div class="item-hot-ribbon" v-if="item.hot">
             <img src="@/assets/images/account/ribbon-hot.png" />
           </div>
@@ -161,7 +181,7 @@
               </div>
               <div class="mid-wrapper">
                 <q-input
-                  :type="currentCardType === 'Bank' ? 'number' : 'text'"
+                  :type="currentCardType === 'BANK' || currentCardType === 'EWALLET' ? 'number' : 'text'"
                   filled
                   dense
                   clearable
@@ -283,7 +303,7 @@
                 <div class="remain-wager-wrapper" @click="refreshRemainWager">
                   <q-spinner v-if="isRefreshRemainWager" />
                   <span v-else>
-                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, true) }}
                   </span>
                   <img
                     class="refresh-btn-img"
@@ -414,11 +434,21 @@ const getWithdrawalMethods = () => {
         return 0;
       });
 
-      paymentMethodsItems.value = Object.values(groupedMethods).sort((a, b) => {
-        if (a.payType < b.payType) return 1;
-        if (a.payType > b.payType) return -1;
-        return 0;
-      });
+      paymentMethodsItems.value = Object.values(groupedMethods)
+        .sort((a, b) => {
+          if (a.payType < b.payType) return 1;
+          if (a.payType > b.payType) return -1;
+          return 0;
+        })
+        .reduce((sortedItems, item) => {
+          // Place 'BANK' in the second position
+          if (item.code === "BANK") {
+            sortedItems.splice(1, 0, item);
+          } else {
+            sortedItems.push(item);
+          }
+          return sortedItems;
+        }, []);
 
       selectWithdrawCurrency(paymentMethodsItems.value[0]);
     }
@@ -746,6 +776,7 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+  currentCardType.value = item.payType;
 };
 
 const onAddNewAccount = () => {
@@ -785,7 +816,7 @@ const isValidCardAddress = () => {
 
 const currBankList = ref([]);
 const filteredBankList = ref([]);
-const currentCardType = ref("Bank");
+const currentCardType = ref("");
 const bankList = [];
 const cryptoList = [];
 const ewalletList = [];
@@ -1083,6 +1114,7 @@ const refreshRemainWager = () => {
   .withdrawal-summary {
     padding: 1rem;
     margin-top: 0;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-around;

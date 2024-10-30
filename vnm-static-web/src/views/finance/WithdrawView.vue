@@ -303,7 +303,7 @@ export default defineComponent({
       //   recommended: false
       // }
     ]);
-    const amounts = reactive([50, 100, 200, 500, 1000, 5000, 10000, 20000, 50000, 1000000]);
+    const amounts = reactive([50, 100, 200, 500, 1000, 5000, 10000, 20000, 50000, 100000]);
     onMounted(() => {
       getWithdrawalMethods();
     });

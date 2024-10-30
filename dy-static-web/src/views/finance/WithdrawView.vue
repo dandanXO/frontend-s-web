@@ -669,7 +669,7 @@ export default defineComponent({
       align-items: center;
       flex-direction: column;
       cursor: pointer;
-      margin-right:10px;
+      margin-right:15px;
 
       .promo-label {
         position: absolute;
@@ -686,10 +686,10 @@ export default defineComponent({
 
       .promo-img {
         background-color: #f7f7f7;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        // box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         max-width: 3rem;
         margin-bottom: 4px;
-        border: 2px solid #dddddd;
+        border: 2px solid transparent;
         padding: 15px;
         border-radius: 3px;
         box-sizing: content-box;

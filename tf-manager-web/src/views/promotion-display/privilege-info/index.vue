@@ -477,6 +477,7 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
     >
+      <el-table-column prop="id" :label="t('fields.id')" width="100" />
       <el-table-column prop="name" :label="t('fields.name')" width="200" />
       <el-table-column prop="alias" :label="t('fields.alias')" width="200" />
       <el-table-column

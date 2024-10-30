@@ -367,6 +367,7 @@ $node-color: #4873f1;
         justify-content: center;
         width: 4.8rem;
         height: 3rem;
+        margin-bottom: 10px;
 
         img {
           // max-width: 2.3rem;
@@ -452,8 +453,8 @@ $node-color: #4873f1;
       background-position: top center;
       left: 0;
       right: 0;
-      top: 90%;
-      z-index: 4;
+      top: 48%;
+      z-inde: 4;
       img {
         padding: 0;
         border: 0;

@@ -45,9 +45,11 @@
         </table>
 
         <div class="withdraw-remaining-dialog__buttons">
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("lang.dialog_back") }}</button>
-        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">{{ $t("lang.dialog_refresh") }}</button>
-      </div>
+          <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("lang.dialog_back") }}</button>
+          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">
+            {{ $t("lang.dialog_refresh") }}
+          </button>
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -93,6 +95,8 @@ const getDisplayRemainingType = (type) => {
       return t("lang.types_poker");
     case "slot":
       return t("lang.types_slot");
+    case "cockfight":
+      return t("lang.cockfight");
     case "all":
       return t("lang.types_all");
   }
@@ -194,7 +198,7 @@ onMounted(() => {
         0px -8px 8px 0px #c3d4e6 inset,
         0px 4px 0px 0px #a7c2dd;
 
-        .withdraw-remaining-dialog__header-help-text {
+      .withdraw-remaining-dialog__header-help-text {
         font-size: var(--font-size-small);
         line-height: var(--line-height);
         color: #7a8eb9;
@@ -204,10 +208,10 @@ onMounted(() => {
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
-        color: #424f72;  
-          gap: 5px;
-    text-align: left;
-    display: inline-block;
+        color: #424f72;
+        gap: 5px;
+        text-align: left;
+        display: inline-block;
         gap: 5px;
       }
       .withdraw-remaining-dialog__body-table {
@@ -301,7 +305,7 @@ onMounted(() => {
       background: url(@/assets/images/finance/withdraw/active-btn.png);
       background-size: 100% 100%;
       color: #fff;
-      opacity: .9;
+      opacity: 0.9;
       &:first-of-type {
         background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
         background-size: 100% 100%;
