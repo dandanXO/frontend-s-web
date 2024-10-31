@@ -57,7 +57,7 @@ const telegramLink = () => {
   } else if (siteId === '8' || siteId === 8) {
     return '@dailitf88'
   } else if (siteId === '10' || siteId === 10) {
-    return '@Diahelp7'
+    return '@dia88help'
   } else {
     return 'leihuo123'
   }
