@@ -214,7 +214,7 @@ const spinWheel = () => {
         }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-        spin(4, () => {
+        spin(2, () => {
           showPrizePopup.value = true;
           prizePopupBonusAmt.value = res.data.bonusAmount;
           remainingDraws.value = 0;
