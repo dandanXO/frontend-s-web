@@ -3194,6 +3194,7 @@ export default {
     14011: 'Affiliate already exist',
     14012: 'Can only edit affiliate to lower level',
     14013: 'Affiliate has downline, cannot set to lower level',
+    14014: 'The phone number is incorrect / The phone number is not in the correct format',
     14100: 'The affiliate does not have this downline member',
     14101: 'This affiliate does not have permission to perform this action',
     14110: 'Platform and Site with same name already exist',

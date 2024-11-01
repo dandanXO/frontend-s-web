@@ -105,6 +105,7 @@
             <span v-for="(item, index) in scope.row.progress" @click="getRolloverDetails(scope.row)" :key="index" :style="{color: getProgressColor(item)}" style="text-decoration: underline; cursor: pointer;">
               {{ item.type }}: {{ item.progress }} / {{ item.total }}  <br>
             </span>
+            <span v-if="scope.row.platformGames">{{ scope.row.platformGames }}</span>
           </template>
         </el-table-column>
         <el-table-column
