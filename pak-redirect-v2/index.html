@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CountDown</title>
+    <script src="assets/js/crypto-js.min.js"></script>
+</head>
+<body>
+
+<h1 id="countdown">Redirect in ：5 seconds</h1>
+
+<script>
+    let countdownTime = 5;
+
+    const encryptedUrl = "U2FsdGVkX18wf6flDR28GKkf6OFCxydWUzcsLvSxdcqus6anCm3lGfNJ41zRR+lX";
+    const secretKey = "Aa123456";  //
+
+    const countdown = setInterval(() => {
+        document.getElementById('countdown').innerText = `Redirect in ：${countdownTime} seconds;`
+        countdownTime--;
+
+        if (countdownTime < 0) {
+            clearInterval(countdown);
+
+            function decryptUrl(encryptedUrl, secretKey) {
+                const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
+                return bytes.toString(CryptoJS.enc.Utf8);
+            }
+
+            const decryptedUrl = decryptUrl(encryptedUrl, secretKey);
+            if (decryptedUrl) {
+                window.location.href = decryptedUrl;
+            } else {
+                document.body.innerHTML = "<h1>Invalid URL</h1>";
+            }
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
