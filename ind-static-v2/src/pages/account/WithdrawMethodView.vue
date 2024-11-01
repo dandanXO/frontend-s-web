@@ -5,7 +5,9 @@
         <div class="balance">
           <span class="amount">
             {{
-              withdrawType === "flat" ? convertToCommaAmount(inrBalance, true) : convertToCommaAmount(usdtBalance, true)
+              withdrawType === "flat"
+                ? convertToCommaAmount(inrBalance, false)
+                : convertToCommaAmount(usdtBalance, false)
             }}
           </span>
           <div class="title">Cash Balance</div>
@@ -17,7 +19,7 @@
           <span class="amount">
             {{
               selectedMethodItem.withdrawableBalance >= 0
-                ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, true)
+                ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
                 : "0.00"
             }}
           </span>
@@ -1026,6 +1028,7 @@ onMounted(() => {
 });
 
 onActivated(() => {
+  resetSelectedMethod();
   getWithdrawalMethods();
   checkNewUser();
 });
