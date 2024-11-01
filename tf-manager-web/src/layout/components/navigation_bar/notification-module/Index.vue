@@ -112,19 +112,19 @@ function formatTimestamp(timestamp) {
           <el-row>
             <el-col :span="2" class="notification-content-left">
               <el-icon :size="25" title="不再显示">
-                <CircleCloseFilled @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
+                <CircleCloseFilled v-if="notification.id" @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
               </el-icon>
             </el-col>
             <el-col :span="20" class="notification-content-middle">
               <div class="notification-content-right-header">
-                {{ $t(`monitorTitle.${notification.title}`) }}
+                {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}
               </div>
               <div class="notification-content-right-body">
-                {{ notification.content }}
+                {{ $te(`fields.${notification.content}`) ? $t(`fields.${notification.content}`) : notification.content }}
               </div>
               <el-row :justify=" 'space-between' " class="notification-content-right-footer">
                 <el-col :span="12">
-                  {{ getSiteNameBySiteId(notification.siteId) }}
+                  {{ notification.siteId ? getSiteNameBySiteId(notification.siteId) : '' }}
                 </el-col>
                 <el-col :span="12" class="notification-content-right-footer-right">
                   {{ formatTimestamp(notification.createTime) }}
