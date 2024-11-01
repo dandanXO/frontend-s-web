@@ -130,7 +130,8 @@
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
               selectedPromo.promoCode === 'dy2-midautumn-spinwheel' ||
               selectedPromo.promoCode === 'dy2-s14-vote' ||
-              selectedPromo.promoCode === 'dy2-elisa-gift',
+              selectedPromo.promoCode === 'dy2-elisa-gift' ||
+              selectedPromo.promoCode === 'dy2-blast-premier-treasure',
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',

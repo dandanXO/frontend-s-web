@@ -86,8 +86,7 @@
               :name="i"
               @click="gotoFloatPromo(promo)"
               :img-src="`${imgURL}/promo/${promo.icon}`"
-            >
-            </q-carousel-slide>
+            ></q-carousel-slide>
           </q-carousel>
         </div>
       </div>
@@ -182,6 +181,10 @@
                         ></div>
                       </div>
 
+                      <div v-if="item.showLogo === 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
                       <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                     </div>
                   </swiper-slide>
@@ -207,6 +210,10 @@
                             })()
                           }"
                         ></div>
+                      </div>
+
+                      <div v-if="item.showLogo === 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
                       </div>
 
                       <div class="platform-game-title">
@@ -247,6 +254,11 @@
                         }"
                       ></div>
                     </div>
+
+                    <div v-if="item.showLogo === 1" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </template>
@@ -272,6 +284,11 @@
                         }"
                       ></div>
                     </div>
+
+                    <div v-if="item.showLogo === 1" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
                     <div class="platform-game-title">
                       {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                     </div>
@@ -1621,145 +1638,32 @@ const openHotGame = (hotGameList) => {
 
 const hotGameList = ref([
   {
-    id: 116,
-    name: "Super Ace",
-    code: "49",
+    id: 297,
+    name: "Aviator",
+    code: "aviator",
     status: "OPEN",
-    icon: "5/JILI/49.png",
+    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
     sequence: 1,
     siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
+    platformId: 93,
+    platformName: "Spribe",
+    platformCode: "Spribe",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "JILI"
+    showLogo: 1,
+    platform: "Spribe"
   },
   {
-    id: 117,
-    name: "Golden Empire",
-    code: "103",
-    status: "OPEN",
-    icon: "5/JILI/103.png",
-    sequence: 3,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 157,
-    name: "Fortune Gems 2",
-    code: "223",
-    status: "OPEN",
-    icon: "16/JILI/7a390a37-8613-47c5-93af-fda8491bd021.png",
-    sequence: 4,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 118,
-    name: "Fortune Gems",
-    code: "109",
-    status: "OPEN",
-    icon: "5/JILI/109.png",
-    sequence: 5,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 119,
-    name: "Chinese New Year 2",
-    code: "22041",
-    status: "OPEN",
-    icon: "16/FC/22041.png",
-    sequence: 10,
-    siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 120,
-    name: "Sweet Bonanza 1000",
-    code: "vs20fruitswx",
-    status: "OPEN",
-    icon: "14/PP/vs20fruitswx.png",
-    sequence: 11,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "PP"
-  },
-  {
-    id: 121,
-    name: "Lucky Fortunes",
-    code: "22040",
-    status: "OPEN",
-    icon: "16/FC/22040.png",
-    sequence: 12,
-    siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 122,
+    id: 243,
     name: "Gates of Olympus 1000",
     code: "vs20olympx",
     status: "OPEN",
     icon: "14/PP/vs20olympx.png",
-    sequence: 13,
+    sequence: 4,
     siteName: null,
     platformId: 22,
     platformName: "PP",
@@ -1770,15 +1674,16 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "PP"
   },
   {
-    id: 123,
-    name: "Sweet Bonanza",
-    code: "vs20fruitsw",
+    id: 245,
+    name: "Gerbang Olympus ",
+    code: "vs20olympgate",
     status: "OPEN",
-    icon: "14/PP/vs20fruitsw.png",
-    sequence: 14,
+    icon: "14/PP/vs20olympgate.png",
+    sequence: 5,
     siteName: null,
     platformId: 22,
     platformName: "PP",
@@ -1789,34 +1694,16 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "PP"
   },
   {
-    id: 124,
-    name: "Sugar Rush 1000",
-    code: "vs20sugarrushx",
-    status: "OPEN",
-    icon: "14/PP/vs20sugarrushx.png",
-    sequence: 17,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "PP"
-  },
-  {
-    id: 125,
+    id: 244,
     name: "Starlight Princess 1000",
     code: "vs20starlightx",
     status: "OPEN",
     icon: "14/PP/vs20starlightx.png",
-    sequence: 20,
+    sequence: 6,
     siteName: null,
     platformId: 22,
     platformName: "PP",
@@ -1827,178 +1714,348 @@ const hotGameList = ref([
     updateBy: null,
     updateTime: null,
     type: "game",
+    showLogo: 0,
     platform: "PP"
   },
   {
-    id: 126,
-    name: "Chinese New Year",
+    id: 246,
+    name: "Mahjong Ways",
+    code: "65",
+    status: "OPEN",
+    icon: "13/PG/65.png",
+    sequence: 7,
+    siteName: null,
+    platformId: 21,
+    platformName: "PG",
+    platformCode: "PG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "PG"
+  },
+  {
+    id: 247,
+    name: "Mahjong Ways 2",
+    code: "74",
+    status: "OPEN",
+    icon: "13/PG/74.png",
+    sequence: 8,
+    siteName: null,
+    platformId: 21,
+    platformName: "PG",
+    platformCode: "PG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "PG"
+  },
+  {
+    id: 248,
+    name: "Wild Bounty Showdown",
+    code: "135",
+    status: "OPEN",
+    icon: "16/WCPG/ad7a1e25-7cc3-4e8f-b304-efbf6a06cead.png",
+    sequence: 9,
+    siteName: null,
+    platformId: 21,
+    platformName: "PG",
+    platformCode: "PG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "PG"
+  },
+  {
+    id: 249,
+    name: "Sizzling Hot",
+    code: "ww3a8wsu4de7c",
+    status: "OPEN",
+    icon: "11/JOKER/ww3a8wsu4de7c.png",
+    sequence: 10,
+    siteName: null,
+    platformId: 51,
+    platformName: "JOKER",
+    platformCode: "JOKER",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JOKER"
+  },
+  {
+    id: 250,
+    name: "Hot Fruits",
+    code: "soojfuqnaxycn",
+    status: "OPEN",
+    icon: "11/JOKER/soojfuqnaxycn.png",
+    sequence: 11,
+    siteName: null,
+    platformId: 51,
+    platformName: "JOKER",
+    platformCode: "JOKER",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JOKER"
+  },
+  {
+    id: 251,
+    name: "Dragon Power Flame",
+    code: "3yfmucpss64mk",
+    status: "OPEN",
+    icon: "11/JOKER/3yfmucpss64mk.png",
+    sequence: 12,
+    siteName: null,
+    platformId: 51,
+    platformName: "JOKER",
+    platformCode: "JOKER",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JOKER"
+  },
+  {
+    id: 252,
+    name: "TAHUN BARU CINA 2",
+    code: "22041",
+    status: "OPEN",
+    icon: "16/FC/22041.png",
+    sequence: 13,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FC"
+  },
+  {
+    id: 253,
+    name: "KEKAYAAN BESAR",
+    code: "22040",
+    status: "OPEN",
+    icon: "16/FC/22040.png",
+    sequence: 14,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FC"
+  },
+  {
+    id: 254,
+    name: "TAHUN BARU IMLEK",
     code: "22020",
     status: "OPEN",
     icon: "16/FC/22020.png",
+    sequence: 15,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FC"
+  },
+  {
+    id: 255,
+    name: "Money Coming",
+    code: "51",
+    status: "OPEN",
+    icon: "5/JILI/51.png",
+    sequence: 16,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 256,
+    name: "Dinosaur Tycoon",
+    code: "42",
+    status: "OPEN",
+    icon: "5/JILI/42.png",
+    sequence: 17,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 257,
+    name: "Fortune Gems 2",
+    code: "223",
+    status: "OPEN",
+    icon: "5/JILI/223.png",
+    sequence: 18,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 272,
+    name: "MAHJONG WAYS 3+",
+    code: "KYS-H5-99996",
+    status: "OPEN",
+    icon: "11/FiveG/KYS-H5-99996.png",
+    sequence: 19,
+    siteName: null,
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FiveG"
+  },
+  {
+    id: 273,
+    name: "MAHJONG WAYS 3",
+    code: "KYS-H5-99997",
+    status: "OPEN",
+    icon: "11/FiveG/KYS-H5-99997.png",
+    sequence: 20,
+    siteName: null,
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FiveG"
+  },
+  {
+    id: 274,
+    name: "HAMMER OF VULCAN",
+    code: "KYS-H5-99981",
+    status: "OPEN",
+    icon: "11/FiveG/KYS-H5-99981.png",
     sequence: 21,
     siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "FC"
+    showLogo: 0,
+    platform: "FiveG"
   },
   {
-    id: 127,
-    name: "Night Market",
-    code: "22018",
+    id: 275,
+    name: "SUPREME ACE",
+    code: "KYS-H5-99989",
     status: "OPEN",
-    icon: "16/FC/22018.png",
+    icon: "11/FiveG/KYS-H5-99989.png",
     sequence: 22,
     siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "FC"
+    showLogo: 0,
+    platform: "FiveG"
   },
   {
-    id: 129,
-    name: "FRUITY BONANZA",
-    code: "14085",
+    id: 276,
+    name: "Candy Gala",
+    code: "KYS-H5-99988",
     status: "OPEN",
-    icon: "13/JDB/14085.png",
-    sequence: 24,
+    icon: "11/FiveG/KYS-H5-99988.png",
+    sequence: 23,
     siteName: null,
-    platformId: 31,
-    platformName: "JDB",
-    platformCode: "JDB",
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
     gameType: "SLOT",
     device: null,
     gameLabel: "HOT",
     updateBy: null,
     updateTime: null,
     type: "game",
-    platform: "JDB"
-  },
-  {
-    id: 130,
-    name: "Coin Volcano",
-    code: "WCBNG_185",
-    status: "OPEN",
-    icon: "5/WCBNG/185.png",
-    sequence: 27,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 131,
-    name: "3 Hot Chillies",
-    code: "WCBNG_197",
-    status: "OPEN",
-    icon: "5/WCBNG/197.png",
-    sequence: 29,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 132,
-    name: "OPEN SESAME MEGA",
-    code: "14086",
-    status: "OPEN",
-    icon: "13/JDB/14086.png",
-    sequence: 32,
-    siteName: null,
-    platformId: 31,
-    platformName: "JDB",
-    platformCode: "JDB",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JDB"
-  },
-  {
-    id: 133,
-    name: "777 Coins",
-    code: "WCBNG_194",
-    status: "OPEN",
-    icon: "5/WCBNG/194.png",
-    sequence: 33,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 134,
-    name: "Aztec Fire 2",
-    code: "WCBNG_207",
-    status: "OPEN",
-    icon: "5/WCBNG/207.png",
-    sequence: 36,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 135,
-    name: "Money Tree",
-    code: "208",
-    status: "OPEN",
-    icon: "16/CQ9/208.png",
-    sequence: 39,
-    siteName: null,
-    platformId: 33,
-    platformName: "CQ9",
-    platformCode: "CQ9",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "CQ9"
+    showLogo: 0,
+    platform: "FiveG"
   }
 ]);
 
@@ -2076,7 +2133,9 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
+          // console.log("End");
+          // console.log(JSON.stringify(hotGameList.value));
+          // console.log(livecasino.value);
           isHotGameLoading.value = false;
         });
     });
@@ -2287,8 +2346,8 @@ const loadJDBFishGameList = () => {
     .then((res) => {
       fishGameJDBList.value = res;
 
-      console.log("JSD");
-      console.log(JSON.stringify(fishGameJDBList.value));
+      // console.log("JSD");
+      // console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 
@@ -2472,8 +2531,8 @@ const getPlatList = () => {
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
       isPlatLoading.value = false;
-      console.log("After");
-      console.log(sport.value);
+      // console.log("After");
+      // console.log(sport.value);
       loadHotGameList();
     })
     .catch((err) => {});

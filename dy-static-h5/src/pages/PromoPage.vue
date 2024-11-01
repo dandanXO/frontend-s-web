@@ -108,7 +108,8 @@
                   dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
                   cs2:
                     selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
-                    selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+                    selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
+                    selectedPromo.promoCode === 'dy2-blast-premier-treasure',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
                   dyftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'dy2-intel-esl',
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',

@@ -82,6 +82,15 @@ export const updateAlias = (id, alias) => {
   )
 }
 
+export const updateAliasLogo = (form) => {
+  return https().request(
+    `/sitePlatform/updateAliasLabelLogo?_method=PUT`,
+    Method.POST,
+    form,
+    ContentType.form
+  )
+}
+
 export const getSimpleSitePlatforms = query => {
   return https().request(
     '/sitePlatform/simpleList',

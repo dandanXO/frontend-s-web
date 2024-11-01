@@ -348,6 +348,11 @@ export default {
       VOID: 'Void',
       CANCEL: 'Cancel',
     },
+    rolloverEventType: {
+      UPDATE: 'Update Rollover',
+      CREATE: 'Create Rollover',
+      BALANCE_CHECK: 'Balance Check',
+    },
   },
   rebateLevel: {
     LEVEL_0: 'Level 0',
@@ -1226,6 +1231,7 @@ export default {
     memberReport: 'Member Report',
     memberType: 'Member Type',
     memberWithdrawLog: 'Member Withdraw Log',
+    memberRolloverEvent: 'Rollover Event Log',
     menuGame: 'Menu Game Sequence',
     menuIcon: 'Menu Icon',
     menuTitle: 'Menu Title',
@@ -1492,6 +1498,7 @@ export default {
     roleName: 'Role Name',
     rollover: 'Rollover',
     rollOverAmt: 'Rollover Amount',
+    rolloverDetails: 'Rollover Details',
     rolloverType: 'Rollover Type',
     rollOverMulti: 'Rollover Multi Amount',
     rolloverAmount: 'Rollover Amount',
@@ -1637,6 +1644,7 @@ export default {
     thisMonth: 'This Month',
     thisWeek: 'This Week',
     ticketSetting: 'Ticket Setting',
+    ticketNo: 'Ticket No.',
     tips: 'Tips',
     title: 'Title',
     toApplying: 'To Applying',
@@ -2101,6 +2109,7 @@ export default {
     startHour: 'Start Hour',
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
+    showLogo: 'Show Logo'
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2877,6 +2886,7 @@ export default {
     Pm: 'Private Message',
     'MQ Log': 'MQ Log',
     'System Config': 'System Config',
+    'Monitor And Notification': 'Monitor And Notification',
     'Promotion Coupon': 'Deposit Coupon',
     'Member Invite Limit': 'Member Invite Limit',
     'Member Point Record': 'Member Point Record',
@@ -3072,6 +3082,9 @@ export default {
     PLATINUM: 'PLATINUM',
     DIAMOND: 'DIAMOND',
     WANGZE: 'WANGZE',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: 'Online users'
   },
   error: {
     400: 'Bad Request',

@@ -174,6 +174,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column type="selection" v-if="!hasRole(['SUB_TENANT'])" />
+      <el-table-column prop="id" :label="t('fields.id')" width="50" />
       <el-table-column prop="name" :label="t('fields.name')" width="150" />
       <el-table-column prop="level" :label="t('fields.level')" width="100" />
       <el-table-column prop="levelColor" :label="t('fields.color')" width="150">

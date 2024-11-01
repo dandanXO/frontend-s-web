@@ -36,7 +36,18 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/downline/member',
+    redirect: '/dashboard',
+  },
+  {
+    path: '/dashboard',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('../views/dashboard/index.vue'),
+        name: 'Dashboard',
+      },
+    ],
   },
   {
     path: '/downline',
@@ -107,7 +118,7 @@ export const constantRoutes = [
         name: 'LiveBetHistory',
         meta: {
           title: 'game-record-live',
-          gameType: 'live'
+          gameType: 'live',
         },
       },
       {
@@ -116,7 +127,7 @@ export const constantRoutes = [
         name: 'SlotBetHistory',
         meta: {
           title: 'game-record-slot',
-          gameType: 'slot'
+          gameType: 'slot',
         },
       },
       {
@@ -125,7 +136,7 @@ export const constantRoutes = [
         name: 'SportBetHistory',
         meta: {
           title: 'game-record-sport',
-          gameType: 'sport'
+          gameType: 'sport',
         },
       },
       {
@@ -134,10 +145,10 @@ export const constantRoutes = [
         name: 'MiniGameBetHistory',
         meta: {
           title: 'game-record-minigame',
-          gameType: 'fish'
+          gameType: 'fish',
         },
       },
-    ]
+    ],
   },
   {
     path: '/settlement-management',
@@ -145,7 +156,10 @@ export const constantRoutes = [
     children: [
       {
         path: 'monthly-step-by-step-settlement',
-        component: () => import('../views/settlement-management/MonthlyStepByStepSettlement.vue'),
+        component: () =>
+          import(
+            '../views/settlement-management/MonthlyStepByStepSettlement.vue'
+          ),
         name: 'MonthlyStepByStep',
         meta: {
           title: 'monthly-step-by-step-settlement',
@@ -153,7 +167,8 @@ export const constantRoutes = [
       },
       {
         path: 'statistics-by-member',
-        component: () => import('../views/settlement-management/StatisticsByMember.vue'),
+        component: () =>
+          import('../views/settlement-management/StatisticsByMember.vue'),
         name: 'StatisticsByMember',
         meta: {
           title: 'statistics-by-member',
@@ -161,7 +176,10 @@ export const constantRoutes = [
       },
       {
         path: 'settlement-by-casino-slot-vendor',
-        component: () => import('../views/settlement-management/SettlementByCasinoSlotVendor.vue'),
+        component: () =>
+          import(
+            '../views/settlement-management/SettlementByCasinoSlotVendor.vue'
+          ),
         name: 'SettlementByCasinoSlotVendor',
         meta: {
           title: 'settlement-by-casino-slot-vendor',
@@ -169,7 +187,8 @@ export const constantRoutes = [
       },
       {
         path: 'commission-history-list',
-        component: () => import('../views/settlement-management/CommissionHistoryList.vue'),
+        component: () =>
+          import('../views/settlement-management/CommissionHistoryList.vue'),
         name: 'CommissionHistoryList',
         meta: {
           title: 'commission-history-list',
@@ -177,7 +196,10 @@ export const constantRoutes = [
       },
       {
         path: 'member-point-record-list',
-        component: () => import('../views/settlement-management/member-point-record/index.vue'),
+        component: () =>
+          import(
+            '../views/settlement-management/member-point-record/index.vue'
+          ),
         name: 'MemberPointRecord',
         meta: {
           title: 'member-point-record-list',
@@ -185,7 +207,8 @@ export const constantRoutes = [
       },
       {
         path: 'deposit-withdraw-management',
-        component: () => import('../views/settlement-management/deposit-withdraw/index.vue'),
+        component: () =>
+          import('../views/settlement-management/deposit-withdraw/index.vue'),
         name: 'DepositWithdrawManagement',
         meta: {
           title: 'deposit-withdraw-management',

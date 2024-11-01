@@ -27,7 +27,7 @@
     "moment-locales-webpack-plugin": "^1.2.0",
     "pinia": "^2.0.30",
     "swiper": "^11.0.4",
-    "vue": "3.3.13",
+    "vue": "^3.4.19",
     "vue-qrcode-component": "^2.1.1",
     "vue-qrious": "^3.1.0",
     "vue-router": "4.3.0",

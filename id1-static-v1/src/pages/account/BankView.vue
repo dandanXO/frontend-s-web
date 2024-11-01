@@ -5,10 +5,10 @@
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("bank.addBank") }}</div>
       </div>
-      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
+      <div class="bank-card-add" @click="onAddUSDTClick()">
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("bank.addEWallet") }}</div>
-      </div> -->
+      </div>
     </div>
 
     <!-- unbind dialog -->
@@ -422,7 +422,7 @@ onActivated(() => {
     }
 
     .card-label {
-      font-size: 16px;
+      font-size: 12px;
     }
 
     img {

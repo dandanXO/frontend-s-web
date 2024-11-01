@@ -337,6 +337,20 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.showLogo')" prop="showLogo">
+          <el-select
+            v-model="form.showLogo"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+          >
+          <el-option
+              v-for="item in uiControl.showLogo"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.device')" prop="device">
           <el-radio-group v-model="form.device">
             <el-radio
@@ -743,6 +757,10 @@ const uiControl = reactive({
   importDialogVisible: false,
   imageSelectionVisible: false,
   messageVisible: false,
+  showLogo: [
+    { key: 0, displayName: "FALSE", value: 0 },
+    { key: 1, displayName: "TRUE", value: 1 },
+  ]
 })
 const page = reactive({
   pages: 0,
@@ -795,6 +813,7 @@ const form = reactive({
   gameLabel: null,
   device: 'WEB',
   sequence: null,
+  showLogo: null
 })
 
 const imageForm = reactive({

@@ -46,6 +46,10 @@ export const actions = {
     commit(UserMutationTypes.SET_TOKEN, token)
   },
 
+  [UserActionTypes.ACTION_REFRESH_NOTIFICATIONS]({ commit }, notificationArr) {
+    commit(UserMutationTypes.SET_NOTIFICATIONS, notificationArr)
+  },
+
   async [UserActionTypes.ACTION_GET_USER_INFO](
     { commit }
   ) {

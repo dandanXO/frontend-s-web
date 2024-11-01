@@ -87,6 +87,7 @@
         </el-form-item> -->
 
         <el-form-item class="helptxt" :class="{ 'has-helper-text': isAutoWithdrawal }" prop="amount" :label="$t('withdraw.amount')" name="amount">
+          <el-space>
           <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
               <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
@@ -109,6 +110,11 @@
               </span>
             </el-col>
           </el-row>
+          
+          <el-button style="margin-top: -30px;" :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
+            {{ $t("common.confirm") }}
+          </el-button>
+        </el-space>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -144,7 +150,7 @@
           class="helptxt"
           :label="$t('deposit.realTimeExchangeRate')"
         >
-          <span style="color: #17cd27">
+          <span style="color: #17cd27; margin-top: -5px;">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
           </span>
         </el-form-item>
@@ -199,7 +205,7 @@
           class="helptxt"
           :label="$t('withdraw.expectedAmount')"
         >
-          <span style="color: #17cd27">
+          <span style="color: #17cd27; margin-top: -5px;">
             {{
               selectedWithdrawalMethod &&
               (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
@@ -238,9 +244,6 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithdraw">
-            {{ $t("common.confirm") }}
-          </el-button>
         </div>
       </el-form>
     </div>
@@ -300,7 +303,7 @@ export default defineComponent({
       //   recommended: false
       // }
     ]);
-    const amounts = reactive([50, 100, 200, 500, 1000, 5000, 10000, 50000, 1000000]);
+    const amounts = reactive([50, 100, 200, 500, 1000, 5000, 10000, 20000, 50000, 100000]);
     onMounted(() => {
       getWithdrawalMethods();
     });
@@ -572,12 +575,14 @@ export default defineComponent({
 <style scoped lang="scss">
 .values {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   text-align: center;
+  margin-bottom: 15px;
+  margin-top: 25px;
   grid-gap: 10px;
-  width: 540px;
+  width: 360px;
   .amt {
-    padding: 20px 50px;
+    padding: 15px 20px;
     color: #a4aabb;
     box-shadow: 0px 0px 8px 0px #a9c9ea inset;
     border-radius: 10px;
@@ -596,6 +601,7 @@ export default defineComponent({
   background: linear-gradient(98.09deg, #f0f7ff -1.13%, #e7f3ff 97.1%);
   border: 2px solid transparent;
   cursor: pointer;
+  margin-bottom: 15px;
 
   .bank-card-img {
     width: 40px;
@@ -830,8 +836,7 @@ export default defineComponent({
 
   .withdraw-btn {
     // min-width: 300px;
-    margin: 30px auto;
-
+    margin-left: 65px;
     &.cancel {
       margin-right: 60px;
     }
@@ -850,14 +855,27 @@ export default defineComponent({
     // }
   }
 }
-
+.helptxt .el-form-item__label {
+  margin-bottom: 0;
+}
 .withdraw-form {
   padding: 20px 0;
+  position: relative;
   :deep(.el-form-item) {
     flex-direction: column;
+    &.helptxt {
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      max-width: 630px;
+    }
   }
   :deep(.el-form-item__content) {
     gap: 15px;
+    
+    max-width: 680px;
   }
 
   :deep(.el-input__wrapper),

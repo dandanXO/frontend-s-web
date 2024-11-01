@@ -184,6 +184,7 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
     >
+      <el-table-column prop="id" :label="t('fields.id')" width="50" />
       <el-table-column prop="name" :label="t('fields.name')" width="100" />
       <el-table-column prop="level" :label="t('fields.level')" width="100" />
       <el-table-column prop="levelUpCredit" :label="t('fields.levelUpCredit')" width="160" />

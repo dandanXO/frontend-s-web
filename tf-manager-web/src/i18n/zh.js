@@ -353,6 +353,11 @@ export default {
       VOID: '作废',
       CANCEL: '手动取消',
     },
+    rolloverEventType: {
+      UPDATE: 'Update Rollover',
+      CREATE: 'Create Rollover',
+      BALANCE_CHECK: 'Balance Check',
+    },
   },
   rebateLevel: {
     LEVEL_0: '等级 0',
@@ -1226,6 +1231,7 @@ export default {
     memberReport: '会员报表',
     memberType: '会员类型',
     memberWithdrawLog: '会员提款日志',
+    memberRolloverEvent: '流水日志',
     menuGame: '菜单游戏序列',
     menuIcon: '菜单图标',
     menuTitle: '菜单标题',
@@ -1495,6 +1501,7 @@ export default {
     rollOverMulti: '流水倍数',
     rolloverType: '流水类型',
     rolloverAmount: '所需流水金额',
+    rolloverDetails: '流水详细描述',
     rolloverRecord: '流水记录',
     gameTypeRollover: '游戏类型流水',
     recommend: '推荐',
@@ -1637,6 +1644,7 @@ export default {
     thisMonth: '本月',
     thisWeek: '本周',
     ticketSetting: '票数设置',
+    ticketNo: '票数号',
     tips: '提示',
     title: '标题',
     toApplying: '至申请中',
@@ -1648,7 +1656,7 @@ export default {
     toPaymentOnGoing: '至支付中',
     topic: '消息主题',
     toreview: '正在复查',
-    toSuspend: '至中止',
+    toSuspend: '至暂不处理',
     total: '总计',
     totalActiveMembers: '总活跃会员数',
     totalActualRate: '总利息金额',
@@ -2100,6 +2108,7 @@ export default {
     startHour: '开始小时',
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
+    showLogo: '显示图标'
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2642,7 +2651,7 @@ export default {
     'Ewallt Affiliate Payment on going': '电子钱包支付中',
     'Alipay Affiliate Payment on going': '支付宝支付中',
     'Affiliate Automatic Payment': '自动支付',
-    'Affiliate Suspend': '中止',
+    'Affiliate Suspend': '暂不处理',
     'Under review': '审核中',
     'To be paid': '待支付',
     'Payment on going': '支付中',
@@ -2824,6 +2833,7 @@ export default {
     Pm: '会员私信',
     'MQ Log': 'MQ日志',
     'System Config': '系统设置',
+    'Monitor And Notification': '监控/通知',
     'Promotion Coupon': '存款券',
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
@@ -3018,6 +3028,9 @@ export default {
     PLATINUM: '铂金',
     DIAMOND: '钻石',
     WANGZE: '王者',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: '在线人数'
   },
   error: {
     400: '请求无效',

@@ -1,11 +1,42 @@
 <template>
   <div class="challenge-comeback-container">
+    <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section-left">
+        <div class="livepoker-rebate-section-title">
+          <div><img src="../../../assets/promo/lh1-blast-premier/section-title-img.png" /></div>
+          每日礼金
+        </div>
+        <div class="reward-info">
+          <div class="reward-info-icon">
+            <img src="../../../assets/promo/lh1-blast-premier/reward-icon1.png" alt="" width="100%" />
+          </div>
+          <div class="reward-info-content">
+            每周期负盈利：
+            <span class="amount">{{ thousandDigitNoDecimal(loss) }}元</span>
+          </div>
+        </div>
+        <div class="reward-info">
+          <div class="reward-info-icon">
+            <img src="../../../assets/promo/lh1-blast-premier/reward-icon2.png" alt="" width="100%" />
+          </div>
+          <div class="reward-info-content">
+            可领彩金：
+            <span class="amount">{{ thousandDigitNoDecimal(bonus) }}元</span>
+          </div>
+        </div>
+      </div>
+      <div class="livepoker-rebate-section-right">
+        <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+        </div>
+      </div>
+    </div>
     <div class="challenge-comeback-block detail-block">
       <div class="challenge-comeback-block-title">活动详情</div>
 
       <div class="detail-block-event-content">
         <div class="detail-block-event-content-title">活动内容</div>
-        <span>活动期间，每周期负盈利≥500即可在固定活动时间范围内领取对应档位彩金</span>
+        <span>活动期间，每周期负盈利≥500 即可在固定活动时间范围内领取对应档位彩金</span>
       </div>
 
       <div class="table-wrapper">
@@ -22,7 +53,7 @@
           <tbody>
             <tr>
               <td>≥500</td>
-              <td rowspan="6" style="border-bottom: none">每月1～31号</td>
+              <td rowspan="6" style="border-bottom: none">每月 1～31 号</td>
               <td>3</td>
               <td>15</td>
               <td rowspan="6" style="border-bottom: none">8倍/不限游戏</td>
@@ -67,18 +98,18 @@
           <tbody>
             <tr>
               <td>第一期</td>
-              <td>1号～10号</td>
-              <td>当月11～15号,每日15:00:00</td>
+              <td>1 号～10 号</td>
+              <td>当月 11～15 号，每日 15:00:00</td>
             </tr>
             <tr>
               <td>第二期</td>
-              <td>11号～20号</td>
-              <td>当月21～25号,每日15:00:00</td>
+              <td>11 号～20 号</td>
+              <td>当月 21～25 号，每日 15:00:00</td>
             </tr>
             <tr>
               <td>第三期</td>
-              <td>21号～31号</td>
-              <td>次月01～05号,每日15:00:00</td>
+              <td>21 号～31 号</td>
+              <td>次月 01～05 号，每日 15:00:00</td>
             </tr>
           </tbody>
         </table>
@@ -89,29 +120,121 @@
       <div class="challenge-comeback-block-title">活动详情</div>
       <ol class="rules-content">
         <li>
-          活动周期为10天/周期，第一周期为1日-10日、第二周期为11日-20日、第三周期为21日-月底、达标后从1日、11日、21日开始连续5天派发至彩金钱包，有效期72小时，彩金仅需8倍流水即可提款，逾期未领取视为放弃。
+          活动周期为10天/周期，第一周期为1日-10日、第二周期为11日-20日、第三周期为21日-月底、达标后从1日、11日、21日开始连续5天前往活动页领取红包，每日红包领取时间为0点至23:59分，每日红包有效期24小时内，逾期未领取视为自动放弃，逾期不补，彩金仅需
+          8 倍流水即可提款。
         </li>
         <li>
-          说明：
+          活动说明：
           <br />
-          ①周期输赢：周期内已结算并产生输赢结果所有注单的总输赢、任何提前结算或取消的注单不计算。
+          ①周期输赢：只统计周期内投注的已结算并产生输赢结果所有注单的总输赢、任何提前结算或取消的注单不计算。
           <br />
           ②彩金不可购买免费旋转机会，不可投注捕鱼游戏；
         </li>
         <li>
-          同一手机号、姓名、邮箱地址、银行卡号、IP地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+          同一手机号、姓名、邮箱地址、银行卡号、IP
+          地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
         </li>
         <li>为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。</li>
       </ol>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { getCycleLossRefundInit, claimCycleLossRefund } from "@/api/index/promo";
+import { onMounted, ref, defineProps } from "vue";
+import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
+import { ResponseCode } from "@/api/response";
+const notify = useNotify();
+
+const store = userStore();
+const loss = ref(0);
+const bonus = ref(0);
+
+function thousandDigitNoDecimal(value, options) {
+  const defaultOptions = {
+    minimumFractionDigits: 0
+  };
+  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) };
+  return Number(value).toLocaleString("en-US", optionsWithDefaults);
+}
+
+const handleClaimBonus = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+
+  claimCycleLossRefund(props.promoCode)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: `成功领取${res.data}元`
+        });
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        // notify({
+        //   type: "error",
+        //   message: res.message
+        // });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      notify({
+        type: "error",
+        message: err.message
+      });
+    });
+};
+
+const fetchData = async () => {
+  try {
+    const res = await getCycleLossRefundInit(props.promoCode);
+
+    loss.value = res.data.loss;
+    bonus.value = res.data.bonus;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
+  fetchData();
+});
+</script>
 <style lang="scss" scoped>
 .challenge-comeback-container {
   max-width: 1200px;
   margin: 0 auto;
-  font-family: PingFang TC;
   color: #000;
   > :not(:last-child) {
     margin-bottom: 40px;
@@ -243,6 +366,90 @@
         border-bottom: none;
       }
     }
+  }
+}
+
+.livepoker-rebate-section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  border: 1px solid #acd4f6;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  background: url("../../../assets/promo/lh1-blast-premier/section-bg.png");
+  background-size: 100% 100%;
+
+  .livepoker-rebate-section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .livepoker-rebate-section-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 254px;
+
+    .bonus-image {
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        transform: translate(0px, 1px);
+        opacity: 0.9;
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .livepoker-rebate-section-title {
+    color: #000000;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
+
+.reward-info {
+  border: 1px solid rgba(215, 235, 255, 1);
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.reward-info-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.reward-info-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  color: black;
+  gap: 24px;
+
+  .amount {
+    color: #00a1ff;
+    font-weight: 600;
   }
 }
 </style>

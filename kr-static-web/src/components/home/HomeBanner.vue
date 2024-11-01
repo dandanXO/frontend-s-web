@@ -97,55 +97,55 @@ const homePopupContent = ref("");
 const homePopupType = ref("");
 const homePopupId = ref(0);
 
-const checkShowImgTop = () => {
-  const lastTime = localStorage.getItem("indexImgTop");
-  if (lastTime) {
-    const diff = new Date().getTime() - Number(lastTime);
-    if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
-  } else {
-    loadHomePopup("")
-      .then((res) => {
-        const { code, data } = res;
-        if (code === 0) {
-          if (isImpt === null) {
-            switch (data["frequency"]) {
-              case "EVERYTIME":
-                homePopupFrequencyNum.value = 0;
-                break;
-              case "EVERYDAY":
-                homePopupFrequencyNum.value = 86400000; // 24hrs
-                break;
-              case "SESSION":
-                homePopupFrequencyNum.value = 7866432000; // 3months
-                break;
-              default:
-                homePopupFrequencyNum.value = 10000;
-                break;
-            }
-            isImportantAnnoucementModal.value = true;
-            if (data["path"].includes("https://")) {
-              homePopupPath.value = data["path"];
-            } else {
-              homePopupPath.value = "/promotion?name=" + data["path"];
-            }
-            homePopupImg.value = imgURL + data["desktopImgUrl"];
-            homePopupContent.value = data["content"];
-            homePopupType.value = data["type"];
-            homePopupId.value = data["id"];
-            homePopupFrequency.value = data["frequency"];
-            isFirstView.value = true;
-          } else {
-            isImportantAnnoucementModal.value = false;
-          }
-        }
-      })
-      .catch(() => {});
-  }
-};
+// const checkShowImgTop = () => {
+//   const lastTime = localStorage.getItem("indexImgTop");
+//   if (lastTime) {
+//     const diff = new Date().getTime() - Number(lastTime);
+//     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
+//   } else {
+//     loadHomePopup("")
+//       .then((res) => {
+//         const { code, data } = res;
+//         if (code === 0) {
+//           if (isImpt === null) {
+//             switch (data["frequency"]) {
+//               case "EVERYTIME":
+//                 homePopupFrequencyNum.value = 0;
+//                 break;
+//               case "EVERYDAY":
+//                 homePopupFrequencyNum.value = 86400000; // 24hrs
+//                 break;
+//               case "SESSION":
+//                 homePopupFrequencyNum.value = 7866432000; // 3months
+//                 break;
+//               default:
+//                 homePopupFrequencyNum.value = 10000;
+//                 break;
+//             }
+//             isImportantAnnoucementModal.value = true;
+//             if (data["path"].includes("https://")) {
+//               homePopupPath.value = data["path"];
+//             } else {
+//               homePopupPath.value = "/promotion?name=" + data["path"];
+//             }
+//             homePopupImg.value = imgURL + data["desktopImgUrl"];
+//             homePopupContent.value = data["content"];
+//             homePopupType.value = data["type"];
+//             homePopupId.value = data["id"];
+//             homePopupFrequency.value = data["frequency"];
+//             isFirstView.value = true;
+//           } else {
+//             isImportantAnnoucementModal.value = false;
+//           }
+//         }
+//       })
+//       .catch(() => {});
+//   }
+// };
 
 onMounted(() => {
   loadBanners();
-  checkShowImgTop();
+  // checkShowImgTop();
 });
 </script>
 
@@ -174,7 +174,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .imptann-modal {
   background: transparent;
   max-width: 1300px;

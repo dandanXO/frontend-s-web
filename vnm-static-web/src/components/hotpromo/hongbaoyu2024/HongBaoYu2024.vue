@@ -1,62 +1,18 @@
 <template>
   <div class="hongbao-container">
     <div class="hongbao-prize">
-      <div class="decal"></div>
-      <!--      <div class="current-content">-->
-      <!--        <div class="current">当前抽奖次数</div>-->
-      <!--        <div class="count">1</div>-->
-      <!--      </div>-->
+      <div v-if="promoId !== 567" class="decal"></div>
 
       <div class="prize-redeem" @click="getPromotion">
-        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet.png" width="350" />
+        <img
+          src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/claim-btn.png"
+          width="350"
+          v-if="promoId === 567"
+        />
+        <img v-else src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet.png" width="350" />
       </div>
-
-      <!-- <div class="contents" v-if="!bonusOpened">
-          <el-button class="promo-common-btn" size="large" :loading="loadingClaim" @click="getPromotion">
-            打开红包
-          </el-button>
-        </div> -->
-
-      <!-- <div class="buttons">
-        <div class="common-btn" @click="getPromotion">抽奖</div>
-        <div class="common-btn blue">十连抽</div>
-      </div> -->
     </div>
-    <!-- <div class="activity-boxes">
-      <div class="activity-box">
-        <div class="activity-title">中奖名单</div>
-        <div class="activity-content-container">
-          <table class="content-table">
-            <tr class="winner" v-for="(item, index) in visibleItems" :key="index">
-              <td>{{ item.date }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.amount }}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div> -->
   </div>
-
-  <!-- <div class="promo-container-hongbao">
-    <div class="promo-view-container">
-      <table border="0" width="600" cellpadding="0" cellspacing="0">
-        <tbody>
-          <tr>
-            <th>红包雨发放时间</th>
-            <th>每日次数</th>
-          </tr>
-          <tr>
-            <td>{{ startTime.time1 }}</td>
-            <td rowspan="2">每日2次</td>
-          </tr>
-          <tr>
-            <td>{{ startTime.time2 }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div> -->
 
   <el-dialog
     class="award-modal hongbaoyu-modal"
@@ -66,20 +22,19 @@
     align-center
   >
     <div class="modal-div">
-      <!-- <span class="img-item">
-        <div class="inner-contents">
-          <div class="amount">{{ winAmount }}</div>
-          <div class="bonus">奖金</div>
-        </div>
-      </span> -->
-
       <div class="red-packet-opened">
-        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
+        <img
+          v-if="promoId === 567"
+          :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/popup2.png`)"
+        />
+        <img v-else :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
-        <div class="grats">{{ $t('promo.congrats') }}</div>
-        <div class="amount">{{ winAmount }}</div>
+        <div v-if="promoId !== 567" class="grats">{{ $t("promo.congrats") }}</div>
 
-        <div class="get-btn" @click="getPromotionPrize">{{ $t('promo.claim') }}</div>
+        <div v-if="promoId !== 567" class="amount">{{ winAmount }}</div>
+        <div v-else class="amount-halloween">{{ winAmount }}</div>
+
+        <div class="get-btn" @click="getPromotionPrize">{{ $t("promo.claim") }}</div>
       </div>
     </div>
   </el-dialog>
@@ -91,13 +46,13 @@ import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
 
-const props = defineProps(["promoCode", "params"]);
+const props = defineProps(["promoCode", "params", "promoId"]);
 const promoCode = ref(props.promoCode);
 
-const startTime= reactive({
+const startTime = reactive({
   time1: "17:00 ~ 18:00",
   time2: "19:00 ~ 20:00"
-})
+});
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
@@ -174,12 +129,12 @@ const getPromotionListing = () => {
 onMounted(() => {
   getPromotionListing();
 
-  const params= props.params ? JSON.parse(props.params) : "";
-  if(params?.time1){
-    startTime.time1= params.time1;
+  const params = props.params ? JSON.parse(props.params) : "";
+  if (params?.time1) {
+    startTime.time1 = params.time1;
   }
-  if(params?.time2){
-    startTime.time2= params.time2;
+  if (params?.time2) {
+    startTime.time2 = params.time2;
   }
 });
 </script>
@@ -265,9 +220,9 @@ onMounted(() => {
   }
 
   .hongbao-prize {
-    // background: url(../../../assets/images/promotion/hotpromo/upgrade-hongbao/hongbao-bg.png) no-repeat center center;
-    // padding: 20px;
-    // border-radius: 20px;
+    .claim-btn-bg {
+      width: 350px;
+    }
 
     .prize-redeem {
       cursor: pointer;
@@ -369,6 +324,18 @@ onMounted(() => {
     margin-top: 250px;
     color: #f23b1d;
     font-size: 50px;
+    font-weight: bold;
+  }
+
+  .amount-halloween {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 142px;
+    color: #000;
+    font-size: 36px;
     font-weight: bold;
   }
 
