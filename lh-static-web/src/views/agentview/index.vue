@@ -1,10 +1,10 @@
 <template>
-    <DarkAgentView v-if="isDark" />
-    <AgentView v-else />
+  <DarkAgentView v-if="isDark" />
+  <AgentView v-else />
 </template>
 <script setup>
 import { useDark } from "@vueuse/core";
-import AgentView from "./AgentView.vue";
+import AgentView from "../AgentView.vue";
 import DarkAgentView from "./DarkAgentView.vue";
 
 const isDark = useDark();
