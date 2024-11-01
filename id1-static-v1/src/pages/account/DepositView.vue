@@ -161,7 +161,10 @@
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
 
-                <div class="amt-input-append" v-if="isPrivilege && form.localAmount && paytypeWithPrivilege.includes(selectedChannel.payType)">
+                <div
+                  class="amt-input-append"
+                  v-if="isPrivilege && form.localAmount && paytypeWithPrivilege.includes(selectedChannel.payType)"
+                >
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
@@ -762,7 +765,7 @@ const loadAppTabs = () => {
         store.extraPrivilegeId = data.deposit.privilegeId;
         extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
 
-        selectedItemPrivilegeId.value = store.extraPrivilegeId;
+        // selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
