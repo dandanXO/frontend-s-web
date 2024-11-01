@@ -20,3 +20,7 @@ export const hasOngoingRecords = (rollover) => {
 export const cancelAllRollover = (rollover) => {
   return https().request("/rolloverRecord/cancelAll?_method=PUT", Method.POST, rollover, ContentType.form);
 }
+
+export const getRolloverBets = (siteId, memberId, rolloverId) => {
+  return https().request(`/member/${memberId}/rollover-bet`, Method.GET, { siteId: siteId, rolloverId: rolloverId }, ContentType.form)
+}

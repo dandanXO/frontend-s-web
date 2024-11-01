@@ -33,7 +33,7 @@
               @click="setActiveItem(item.no)"
             > -->
             <div v-for="(item, i) in items" :key="i" class="item">
-              <span class="container-description">{{getTreasureDescription(item.treasureLevel)}}</span>
+              <span class="container-description">{{ getTreasureDescription(item.treasureLevel) }}</span>
               <img
                 v-if="item.treasureLevel"
                 :src="
@@ -59,11 +59,11 @@
     </div>
     <div class="section second">
       <div class="title">
-        <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-2-spring.png" />
+        <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" />
       </div>
       <div class="tips">
         <div class="tips-inner">
-          连续投注 BLAST Premier 赛事达到≥1000元则视为签到成功，根据对应联系签到天数开启宝箱
+          活动期间,连续投注BLAST Premier 全球总决赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱
         </div>
       </div>
       <div class="title">
@@ -104,7 +104,12 @@
         </div>
         <div v-else class="middle-row">
           <div class="sign-container">
-            <div v-for="(day, i) in dayList.slice(0, dayList.length - 2)" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
+            <div
+              v-for="(day, i) in dayList.slice(0, dayList.length - 2)"
+              :key="i"
+              class="item"
+              :class="{ isDotted: !day.claimed && !day.toClaim }"
+            >
               <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-${i + 1}.png`)" />
               <div class="sign-day">累计签到 {{ day.no }} 天</div>
               <div class="btn claimed" v-if="day.claimed">已开启</div>
@@ -113,7 +118,12 @@
             </div>
           </div>
           <div class="sign-container col-2">
-            <div v-for="(day, i) in dayList.slice(-2)" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
+            <div
+              v-for="(day, i) in dayList.slice(-2)"
+              :key="i"
+              class="item"
+              :class="{ isDotted: !day.claimed && !day.toClaim }"
+            >
               <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-${i + 4}.png`)" />
               <div class="sign-day">累计签到 {{ day.no }} 天</div>
               <div class="btn claimed" v-if="day.claimed">已开启</div>
@@ -128,25 +138,28 @@
       <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-3-spring.png" /></div>
       <div class="content">
         <p>
-          1. 活动期间,每日投注BLAST Premier 全球总决赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限
+          1. 活动期间,每日投注BLAST Premier
+          全球总决赛达到100元有效投注即可在次日12：00点左右自动获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；
         </p>
         <p>
-          2. 活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿
+          2.
+          活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则视为放弃，不予补偿；
+        </p>
+        <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款；</p>
+        <p>
+          4. 活动期间,参与BLAST Premier
+          全球总决赛有效投注≥1,000元在次日12:00点左右获得签到天数,达到指定签到天数则可开启签到宝箱,每个宝箱每位用户仅可开启一次；
         </p>
         <p>
-          3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款
+          5.
+          活动期间,若用户连续签到中断,则重新开始计算,已开启过的宝箱无法二次开启,签到彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款；
         </p>
+        <p>6. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；</p>
         <p>
-          4. 活动期间,参与BLAST Premier 全球总决赛有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个宝箱每位用户仅可开启一次
+          7.
+          任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；
         </p>
-        <p>
-          5. 活动期间,若用户连续签到中断,则重新开始计算,已开启过的宝箱无法二次开启,签到彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款；
-        </p>
-        <p>6. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利</p>
-        <p>
-          7. 任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单
-        </p>
-        <p>8. 为避免文字理解差异,本站保留本活动最终解释权</p>
+        <p>8. 为避免文字理解差异,本站保留本活动最终解释权。</p>
       </div>
     </div>
 
@@ -385,12 +398,12 @@ const populateDayList = (check) => {
 };
 
 const getTreasureDescription = (treasureLevel) => {
-  if (treasureLevel === 'NORMAL') {
-    return '普通宝箱';
-  } else if (treasureLevel === 'CS') {
-    return 'CS宝箱';
-  } else if (treasureLevel === 'DRAGON'){
-    return '龙宝箱';
+  if (treasureLevel === "NORMAL") {
+    return "普通宝箱";
+  } else if (treasureLevel === "CS") {
+    return "CS宝箱";
+  } else if (treasureLevel === "DRAGON") {
+    return "龙宝箱";
   }
 };
 
@@ -499,36 +512,6 @@ onMounted(() => {
     color: #fffd66;
     margin: 0 auto;
     text-align: center;
-    // color: #00d6d6;
-    // font-weight: 700;
-    // font-family: Microsoft Yahei UI;
-    // position: relative;
-
-    // &::before,
-    // &::after {
-    //   content: "";
-    //   display: block;
-    //   position: absolute;
-    //   left: 0;
-    //   right: 0;
-    //   background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 50%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
-    //     center center;
-    //   height: 1px;
-    // }
-
-    // &::before {
-    //   top: 0;
-    // }
-
-    // & ::after {
-    //   bottom: 0;
-    // }
-
-    .tips-inner {
-      // background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 20%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
-      //   center center;
-      // padding: 6px 30px;
-    }
   }
   .second .content {
     display: flex;
@@ -787,7 +770,7 @@ onMounted(() => {
           // background-size: contain;
           width: 85%;
           margin: 0 auto;
-          background-color: #5B5B21;
+          background-color: #5b5b21;
           border-radius: 4px;
 
           &.claimed,
@@ -799,7 +782,7 @@ onMounted(() => {
             cursor: pointer;
             // background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
             // background-size: contain;
-            background-color: #FFFD66;
+            background-color: #fffd66;
           }
         }
       }
@@ -873,15 +856,9 @@ onMounted(() => {
   font-size: 16px;
   padding-top: 30px;
   &.keyRec {
+    color: #7f4c00;
+
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 98%;
       margin: 0 auto;
       height: 140px;
@@ -891,8 +868,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
+
     table {
       width: 100%;
       .keysAmt {
@@ -916,18 +902,12 @@ onMounted(() => {
   &.openRec {
     justify-content: flex-start;
     padding: 25px 0;
+    color: #7f4c00;
+    gap: 5px;
     .table-title {
       font-weight: 700;
     }
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 90%;
       margin: 0 auto;
       height: 140px;
@@ -937,9 +917,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
-    gap: 5px;
+
     .flex {
       display: flex;
       justify-content: space-between;

@@ -191,7 +191,7 @@ $node-color: #4873f1;
   // grid-gap: 20px;
   // margin-top: 10px;
   display: flex;
-  column-gap: 20px;
+  column-gap: 10px;
   // margin-top: 20px;
   flex-wrap: wrap;
   // padding-bottom: 20px;
@@ -320,7 +320,7 @@ $node-color: #4873f1;
     // gap: 15px;
     .payment-method-item {
       text-align: center;
-      padding: 10px 10px 10px;
+      padding: 10px 5px;
       cursor: pointer;
       // background: #2b2b4b;
       // box-shadow: 6px 6px #161b23;
@@ -332,6 +332,7 @@ $node-color: #4873f1;
         // border-radius: 6px;
         border: solid 2px #468cff;
         box-shadow: unset;
+        background-color: #f7f8fb;
         // box-shadow: none;
         // filter: drop-shadow(0px 0px 3px #ffffff);
       }
@@ -339,12 +340,11 @@ $node-color: #4873f1;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 6rem;
-      background-color: #f7f8fb;
+      min-width: 4rem;
       border-radius: 15px;
-      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      // box-shadow: 0px 0px 8px 0px #a9c9ea inset;
       margin-bottom: 22px;
-      border: 2px solid;
+      // border: 2px solid;
       .payment-method-wrapper {
         display: none;
       }
@@ -367,6 +367,7 @@ $node-color: #4873f1;
         justify-content: center;
         width: 4.8rem;
         height: 3rem;
+        margin-bottom: 10px;
 
         img {
           // max-width: 2.3rem;
@@ -452,8 +453,8 @@ $node-color: #4873f1;
       background-position: top center;
       left: 0;
       right: 0;
-      top: 90%;
-      z-index: 4;
+      top: 48%;
+      z-inde: 4;
       img {
         padding: 0;
         border: 0;
@@ -529,11 +530,11 @@ $node-color: #4873f1;
     .node-content {
       .payment-method-item {
         box-shadow: none;
-        background-color: $background-content-block-lighter-dark;
         border: 2px solid transparent;
 
         &.active {
           border: 2px solid #a98f7c;
+          background-color: $background-content-block-lighter-dark;
 
           &:before {
             background-image: url("../../assets/svg/checkmark-dark.svg");

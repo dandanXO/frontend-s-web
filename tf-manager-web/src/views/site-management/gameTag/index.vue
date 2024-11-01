@@ -200,6 +200,20 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.showLogo')" prop="showLogo">
+          <el-select
+            v-model="form.showLogo"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in uiControl.showLogo"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
           <el-input-number
             type="number"
@@ -331,6 +345,10 @@ const uiControl = reactive({
   imageSelectionVisible: false,
   messageVisible: false,
   gameNameVisible: false,
+  showLogo: [
+    { key: 0, displayName: "FALSE", value: 0 },
+    { key: 1, displayName: "TRUE", value: 1 },
+  ]
 })
 
 const page = reactive({
@@ -362,6 +380,7 @@ const form = reactive({
   gameLabel: null,
   sequence: null,
   gameId: null,
+  showLogo: null
 })
 
 const formRules = reactive({

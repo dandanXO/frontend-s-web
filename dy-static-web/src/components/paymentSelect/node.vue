@@ -223,7 +223,7 @@ $node-color: #4873f1;
         content: "";
         position: absolute;
         bottom: 38px;
-        right: 23px;
+        right: 12px;
         background-color: #4873f1;
         height: 15px;
         width: 15px;
@@ -338,7 +338,7 @@ $node-color: #4873f1;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 6rem;
+      min-width: 5.5rem;
       .payment-method-wrapper {
         display: none;
       }
@@ -355,15 +355,15 @@ $node-color: #4873f1;
       }
 
       .node-txt-img {
-        background-color: #f7f7f7;
+        // background-color: #f7f7f7;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        // box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         width: 4rem;
         height: 4rem;
         margin-bottom: 5px;
-        border: 2px solid #dddddd;
+        border: 2px solid transparent;
         // padding: 5px 15px;
         border-radius: 3px;
 
@@ -445,8 +445,9 @@ $node-color: #4873f1;
     position: relative;
     .promo {
       position: absolute;
+      left: 0;
       right: 0;
-      top: 0;
+      top: 58%;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;

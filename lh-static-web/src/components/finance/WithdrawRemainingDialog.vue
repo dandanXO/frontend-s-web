@@ -11,7 +11,7 @@
     <div class="withdraw-remaining-dialog__header">
       <div class="withdraw-remaining-dialog__header-title">
         <img src="@/assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-        <span>继续提款需完成以下条件</span>
+        <span>请完成以下条件</span>
       </div>
       <span class="withdraw-remaining-dialog__header-help-text">
         若有疑问，请联系在线客服核查~
@@ -22,7 +22,7 @@
     <img class="withdraw-remaining-dialog__pic" src="@/assets/images/finance/withdraw/withdraw-remaining-pic.png" />
     <div class="withdraw-remaining-dialog__body">
       <div class="withdraw-remaining-dialog__body-title">
-        完成
+        再完成
         <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
         流水，立即享受快速提款
       </div>
@@ -32,7 +32,7 @@
             <th align="center">投注要求</th>
             <th align="center">
               流水进度
-              <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
+              <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" /> -->
             </th>
             <th align="center">完成状态</th>
           </tr>
@@ -47,7 +47,10 @@
           </tr>
         </tbody>
       </table>
-      <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+      <div class="withdraw-remaining-dialog__buttons">
+        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+      </div>
     </div>
   </el-dialog>
 </template>
@@ -94,7 +97,17 @@ const getDisplayRemainingType = (type) => {
       return "棋牌";
     case "slot":
       return "电子";
+    case "vSport":
+      return "虚拟运动";
+    case "miniGame":
+      return "小游戏";
+    case "cockfight":
+      return "斗鸡";
+    case "numberGame":
+      return "数字游戏";
     case "all":
+      return "任意类型";
+    default:
       return "任意类型";
   }
 };
@@ -262,21 +275,37 @@ onMounted(() => {
         }
       }
     }
-
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
     .withdraw-remaining-dialog__action {
       width: 100%;
       box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       border-radius: 4px;
       padding: 10px 0;
       font-size: 18px;
       font-weight: 600;
       line-height: 25.2px;
       text-align: center;
+      cursor: pointer;
+      background: url(@/assets/images/finance/withdraw/active-btn.png);
+      background-size: 100% 100%;
       color: #fff;
+      opacity: 0.9;
+      &:first-of-type {
+        background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
 
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }

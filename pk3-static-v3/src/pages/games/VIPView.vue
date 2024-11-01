@@ -43,7 +43,7 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ convertToCommaAmount(Number(vip.ugprade) / 1000) }}K
+                {{ convertToCommaAmount(Number(vip.ugprade)) }}
               </div>
 
               <div class="progress-bar-container">
@@ -86,7 +86,7 @@
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}K</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -105,7 +105,7 @@
               <span class="bold">{{ $t("vip.monthly") }}</span>
             </div>
             <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}K</div>
+              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
             </div>
           </div>
           <div class="unlock-status">
@@ -125,7 +125,7 @@
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">
-                {{ convertToCommaAmount(Number(currentVipLevelStats.dailyWithdrawalLimit) / 1000) }}K
+                {{ convertToCommaAmount(Number(currentVipLevelStats.dailyWithdrawalLimit)) }}
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ $t("vip.deposit") }} {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}K</span>
+                  <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -231,7 +231,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}K</span>
+                  <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -284,7 +284,7 @@
               <template v-if="colIndex === 1">
                 <div style="text-align: right">
                   {{ store.currency.value }}
-                  <span class="amt-text">{{ col.value }}K</span>
+                  <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
               <template v-else>{{ col.value }}</template>
@@ -332,7 +332,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 {{ store.currency.value }}
-                <span class="amt-text">{{ col.value }}K</span>
+                <span class="amt-text">{{ col.value }}</span>
               </template>
               <template v-else>{{ col.value }}</template>
             </q-td>
@@ -408,62 +408,62 @@ const columns = [
 const rows = [
   {
     name: "VIP 1",
-    ugprade: "5000000",
+    ugprade: "5000",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "10000000",
+    ugprade: "10000",
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "20000000",
+    ugprade: "20000",
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "50000000",
+    ugprade: "50000",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "100000000",
+    ugprade: "100000",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "200000000",
+    ugprade: "200000",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "500000000",
+    ugprade: "500000",
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "1000000000",
+    ugprade: "1000000",
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "2000000000",
+    ugprade: "2000000",
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "5000000000",
+    ugprade: "5000000",
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "10000000000",
+    ugprade: "10000000",
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "20000000000",
+    ugprade: "20000000",
     flow: "x10"
   }
 ];

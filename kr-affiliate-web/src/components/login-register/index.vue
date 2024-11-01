@@ -675,7 +675,6 @@ export default defineComponent({
             message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
-          
         ],
         password: [
           {
@@ -1175,7 +1174,7 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      window.open('https://t.me/Diahelp7', '_blank').focus()
+      window.open('https://t.me/dia88help', '_blank').focus()
     }
 
     const handleInput = event => {

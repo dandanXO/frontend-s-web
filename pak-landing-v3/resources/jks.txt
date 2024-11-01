@@ -1,0 +1,4 @@
+包名：com.ind.indwin77
+密码：w123456
+别名：ind_app
+(However we not using it now)

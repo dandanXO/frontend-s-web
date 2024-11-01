@@ -257,7 +257,8 @@ export default {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
-    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again."
+    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
+    useFtdPrivilege: "Use Slot First Deposit Privilege"
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -351,7 +352,10 @@ export default {
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
-      multiple_acc_hint: "Note: It is prohibited for the same person to use multiple accounts to maliciously obtain commissions. Violators will have their accounts frozen.",
+      multiple_acc_hint: `Notice:
+    It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
+    Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
+    `,
       shareTitle: "97PKR Share and Earn",
       shareText:
         "97PKR Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"

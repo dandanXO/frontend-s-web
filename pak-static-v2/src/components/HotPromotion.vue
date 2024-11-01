@@ -6,11 +6,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'pk2-spin-wheel' && !isCommonPromo && store.token" />
     <SignIn7DaysPromo v-if="list.redirectUrl === 'pk2-signin-bonus' && !isCommonPromo && store.token" />
@@ -20,156 +16,14 @@
     <RedPacketRainPromo v-if="list.redirectUrl === 'pk2-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'pk2-interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pk2-new-players' && !isCommonPromo && store.token" :list="list" />
-    <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
-      <div class="tabs">
-        <q-card-section>
-          <q-tabs v-model="activeKey" dense color="black" indicator-color="black" align="justify" narrow-indicator>
-            <q-tab name="1" label="选择幸运号码" />
-            <q-tab name="2" label="记录" />
-            <!--            <q-tab-->
-            <!--              name="3"-->
-            <!--              label="获奖名单-->
-            <!--"-->
-            <!--            />-->
-          </q-tabs>
-
-          <q-separator />
-
-          <q-tab-panels v-model="activeKey" animated>
-            <q-tab-panel name="1">
-              <div class="tab1">
-                <!--                <img src="../assets/images/promotion/hotpromo/22/icon.png"/>-->
-                <div class="contents">
-                  <q-form class="q-gutter-md">
-                    <div class="q-mb-md">
-                      {{ selectedHotPromo.contents.tab1 }}
-                    </div>
-                    <q-input
-                      v-model="lucky_number"
-                      filled
-                      bg-color="white"
-                      label-color="black"
-                      color="black"
-                      :input-style="{ color: 'black' }"
-                      type="number"
-                      :rules="[(val) => (val && val.length === 3) || '号码长度应为3']"
-                      label="幸运号码"
-                    />
-                    <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="发送" />
-                  </q-form>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="2">
-              <q-form>
-                <q-input filled v-model="formState.dateTime" label="选择日期" readonly color="white">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="formState.dateTime" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="关闭" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                  <template v-slot:after>
-                    <q-toggle
-                      style="font-size: 12px"
-                      v-model="formState.onlyMe"
-                      color="red"
-                      label="我自己"
-                      left-label
-                      size="xs"
-                      val="xs"
-                    />
-                  </template>
-                </q-input>
-                <q-btn
-                  @click="filterLuckyNumber()"
-                  :loading="loading"
-                  class="full-width q-mt-md"
-                  color="brand"
-                  label="搜索"
-                />
-              </q-form>
-              <q-table
-                title="幸运号码记录"
-                no-data-label="没有数据"
-                loading-label="加载中..."
-                rows-per-page-label=" "
-                :loading="loading"
-                class="q-mt-md"
-                :columns="filterColumn"
-                :rows="dataSource"
-              ></q-table>
-            </q-tab-panel>
-
-            <!--            <q-tab-panel name="3">-->
-            <!--              <q-form>-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  v-model="formState.resultTime"-->
-            <!--                  label="选择日期"-->
-            <!--                  readonly-->
-            <!--                  color="white"-->
-            <!--                >-->
-            <!--                  <template v-slot:append>-->
-            <!--                    <q-icon name="event" class="cursor-pointer">-->
-            <!--                      <q-popup-proxy-->
-            <!--                        cover-->
-            <!--                        transition-show="scale"-->
-            <!--                        transition-hide="scale"-->
-            <!--                      >-->
-            <!--                        <q-date-->
-            <!--                          v-model="formState.resultTime"-->
-            <!--                          mask="YYYY-MM-DD"-->
-            <!--                        >-->
-            <!--                          <div class="row items-center justify-end">-->
-            <!--                            <q-btn-->
-            <!--                              v-close-popup-->
-            <!--                              label="关闭"-->
-            <!--                              color="white"-->
-            <!--                              flat-->
-            <!--                            />-->
-            <!--                          </div>-->
-            <!--                        </q-date>-->
-            <!--                      </q-popup-proxy>-->
-            <!--                    </q-icon>-->
-            <!--                  </template>-->
-            <!--                </q-input>-->
-            <!--                <q-btn-->
-            <!--                  @click="filterWinnerLists()"-->
-            <!--                  :loading="loading"-->
-            <!--                  class="full-width q-mt-md"-->
-            <!--                  color="brand"-->
-            <!--                  label="搜索"-->
-            <!--                />-->
-            <!--              </q-form>-->
-
-            <!--              <q-table-->
-            <!--                class="q-mt-md"-->
-            <!--                no-data-label="没有数据"-->
-            <!--                loading-label="加载中..."-->
-            <!--                rows-per-page-label=" "-->
-            <!--                :loading="loading"-->
-            <!--                :columns="winnerColumn"-->
-            <!--                :rows="winnerDataSource"-->
-            <!--              />-->
-            <!--            </q-tab-panel>-->
-          </q-tab-panels>
-        </q-card-section>
-      </div>
-    </div>
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pk2-slot-ftd' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
-          <span class="bonus-text">恭喜获得奖金</span>
+          <span class="bonus-text">Congratulation!</span>
           <span class="claim-amt">{{ claimMsg }}</span>
         </div>
       </q-card-section>
@@ -189,17 +43,14 @@ import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
-import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
 import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo";
 import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPlayerWheelPromo.vue";
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
+import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -207,17 +58,14 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    TigerCardPromo,
-    GoldenEggPromo,
     HongBaoYuPromo,
-    WelcomeTaskPromo,
-    InviteFriendPromo,
     BonusSpinWheelPromo,
     SignIn7DaysPromo,
     NewPlayerSpinWheelPromo,
     RedPacketRainPromo,
     InterestProfitPromo,
-    NewPlayersPromo
+    NewPlayersPromo,
+    SlotFtdPromo
   },
   props: {
     list: {
@@ -268,18 +116,14 @@ export default defineComponent({
       }
     });
     if (
-      this.list.redirectUrl === "tigercard" ||
-      this.list.redirectUrl === "goldenegg" ||
       this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "invitefriend" ||
-      this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "pk2-spin-wheel" ||
       this.list.redirectUrl === "pk2-signin-bonus" ||
       this.list.redirectUrl === "pk2-newplayer-welcome-spin" ||
       this.list.redirectUrl === "pk2-redpacketrain" ||
       this.list.redirectUrl === "pk2-interest-profit" ||
       this.list.redirectUrl === "pk2-new-players" ||
+      this.list.redirectUrl === "pk2-slot-ftd" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
@@ -343,37 +187,6 @@ export default defineComponent({
     ]);
     const dataSource = ref([]);
     const winnerDataSource = ref([]);
-
-    const winnerColumn = [
-      {
-        name: "number",
-        label: "号码",
-        field: "number",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "name",
-        label: "名字",
-        field: "loginName",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "status",
-        label: "状态",
-        field: "winStatus",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "date",
-        label: "日期",
-        field: "date",
-        align: "left",
-        sortable: true
-      }
-    ];
 
     const filterWinnerLists = () => {
       var resultTime = formState.value.resultTime;
@@ -541,7 +354,6 @@ export default defineComponent({
       formState,
       dataSource,
       winnerDataSource,
-      winnerColumn,
       filterColumn,
       loading,
       btnLoading,
@@ -647,9 +459,6 @@ export default defineComponent({
       }
     }
 
-    .ant-tabs-nav-container {
-    }
-
     .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
     .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
       background: #2b2b4b;
@@ -690,6 +499,10 @@ export default defineComponent({
         padding: 20px;
 
         .contents {
+          flex: 1;
+          color: #ffffff;
+          text-align: center;
+
           form {
             margin-top: 20px;
 
@@ -702,10 +515,6 @@ export default defineComponent({
               display: inline-block;
             }
           }
-
-          flex: 1;
-          color: #ffffff;
-          text-align: center;
         }
       }
 

@@ -455,36 +455,6 @@ onMounted(() => {
     color: #fffd66;
     margin: 0 auto;
     text-align: center;
-    // color: #00d6d6;
-    // font-weight: 700;
-    // font-family: Microsoft Yahei UI;
-    // position: relative;
-
-    // &::before,
-    // &::after {
-    //   content: "";
-    //   display: block;
-    //   position: absolute;
-    //   left: 0;
-    //   right: 0;
-    //   background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 50%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
-    //     center center;
-    //   height: 1px;
-    // }
-
-    // &::before {
-    //   top: 0;
-    // }
-
-    // & ::after {
-    //   bottom: 0;
-    // }
-
-    .tips-inner {
-      // background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 20%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
-      //   center center;
-      // padding: 6px 30px;
-    }
   }
   .second .content {
     display: flex;
@@ -800,15 +770,8 @@ onMounted(() => {
   font-size: 16px;
   padding-top: 30px;
   &.keyRec {
+    color: #7f4c00;
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 98%;
       margin: 0 auto;
       height: 140px;
@@ -818,8 +781,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
+
     table {
       width: 100%;
       .keysAmt {
@@ -843,18 +815,13 @@ onMounted(() => {
   &.openRec {
     justify-content: flex-start;
     padding: 25px 0;
+    color: #7f4c00;
+    gap: 5px;
+
     .table-title {
       font-weight: 700;
     }
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 90%;
       margin: 0 auto;
       height: 140px;
@@ -864,9 +831,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
-    gap: 5px;
+
     .flex {
       display: flex;
       justify-content: space-between;
