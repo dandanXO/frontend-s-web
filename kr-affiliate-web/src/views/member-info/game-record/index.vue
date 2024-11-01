@@ -33,6 +33,12 @@
                 :value="item.value" />
             </el-select>
           </el-col>
+          <el-col :xl="3" :lg="6" :md="12">
+            <el-select v-model="request.affiliateName" size="normal" :placeholder="t('fields.affiliate')" class="filter-item"
+              style="width: 100%" @focus="loadAffiliateList" filterable clearable>
+              <el-option v-for="item in downlineAffiliateList" :key="item.loginName" :label="item.loginName" :value="item.loginName" />
+            </el-select>
+          </el-col>
           <el-col :xl="3" :lg="8" :md="12">
             <div class="btn-grp">
               <el-button icon="el-icon-search" type="primary" @click="loadBetRecords()" size="normal">
@@ -237,6 +243,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import emptyComp from "@/components/empty"
 import Loading from '@/components/loading/Loading.vue';
+import { getDownlineAffiliates } from '../../../api/affiliate';
 
 const store = useStore();
 const { t } = useI18n();
@@ -259,6 +266,8 @@ const details = reactive({
   betStatus: null,
   settleTime: null
 })
+
+let downlineAffiliateList = [];
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -356,7 +365,8 @@ const request = reactive({
   loginName: null,
   platform: null,
   gameType: [],
-  status: ["SETTLED", "CANCEL"]
+  status: ["SETTLED", "CANCEL"],
+  affiliateName: null,
 });
 
 const page = reactive({
@@ -387,6 +397,7 @@ function resetQuery() {
   request.platform = null;
   request.gameType = null;
   request.status = ["SETTLED", "CANCEL"];
+  request.affiliateName = null;
   populateGameType();
 }
 
@@ -398,6 +409,11 @@ async function loadPlatform() {
   } else {
     list.platform = ret;
   }
+}
+
+async function loadAffiliateList() {
+  const { data: ret} = await getDownlineAffiliates();
+  downlineAffiliateList = ret;
 }
 
 function populateGameType() {
@@ -497,6 +513,7 @@ onMounted(() => {
   loadPlatform();
   loadBetRecords();
   populateGameType();
+  loadAffiliateList();
 });
 </script>
 
