@@ -93,7 +93,7 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
       localStorage.removeItem("REG_REFERRAL_CODE");
-      next(`/register`);
+      next(`/`);
     }
 
     if (to.name === "RegisterPage") {

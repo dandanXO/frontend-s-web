@@ -7,7 +7,12 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
   },
-
+  {
+    path: "/refer/:referralCode",
+    name: "referCode",
+    component: () => {}
+    // component: () => {},
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
