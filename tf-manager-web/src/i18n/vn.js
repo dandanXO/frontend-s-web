@@ -2810,6 +2810,7 @@ export default {
     14011: 'Đối tác đã tồn tại',
     14012: 'Chỉ có thể tạo ra liên kết cấp thấp hơn',
     14013: 'Không thể đặt cấp thấp hơn vì có đối tác hạng dưới',
+    14014: 'Số điện thoại không chính xác / Số điện thoại không đúng định dạng',
     14100: 'Không có thành viên hạ lớp nào dưới đây',
     14101: 'Không có quyền thực hiện tác vụ này đối với liên kết này',
     14110: 'Cùng tên nền tảng và trang web đã tồn tại',
