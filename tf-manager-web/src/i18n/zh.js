@@ -2111,6 +2111,7 @@ export default {
     oldBetAmount: '老站流水金额',
     showLogo: '显示图标',
     adjustTarget: '平账目标',
+    ignoreSettlement: '忽略结算',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
