@@ -24,13 +24,13 @@
     <div class="hongbao-btn">
       <div class="head-pattern-img head-pattern-img__01"><img src="img/head-pattern-01.png" alt="" /></div>
       <div class="head-pattern-img head-pattern-img__02"><img src="img/head-pattern-02.png" alt="" /></div>
-      <a href="https://www.lh63798.com/" target="_self" class="pointer-btn">
+      <a href="https://www.lh63798.com/" id="link-url" target="_self" class="pointer-btn">
         <img src="img/btn-register.png" alt="claim-btn" />
       </a>
     </div>
 
     <div class="content-desc">
-      <img src="img/content-desc.png" alt="" />
+      <img src="img/board2.png" alt="" />
     </div>
 
     <div class="content-cat">
@@ -62,9 +62,9 @@
 
       <div class="content-item">
         <div class="item-icon"><img src="img/icon-prize.png" /></div>
-        <div class="item-txt">彩金QQ群:822752460</div>
+        <div class="item-txt">彩金QQ群:<span id="group1-number">822752460</span></div>
         <div class="item-btns">
-          <a href="#" class="btn-brown-light" onclick="copyText('822752460')">复制</a>
+          <a href="#" class="btn-brown-light" id="click1-number" data-id="822752460" onclick="copyText2(this)">复制</a>
         </div>
       </div>
 
@@ -317,26 +317,56 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function (e) {
-    checkPlatform();
-  });
+
+
+  function updateContactInfoByHostname() {
+    const hostname = window.location.host.replace("www.", "");
+    const contactInfo = {
+      "m935.vip": {
+        group1Number: "612811785",
+        landingPageLink: "https://am35.cc/",
+        linkUrl : "https://www.lh30509.com"
+      }
+    }
+
+    const defaultInfo = {
+      group1Number: "822752460",
+      landingPageLink: "https://am35.cc/", // You can set a default link or leave it empty
+      linkUrl : "https://www.lh63798.com/"
+    };
+
+    const selectedInfo = contactInfo[hostname] || defaultInfo;
+    console.log("ENd Info");
+    console.log(selectedInfo);
+
+    // document.getElementById("group1-title").textContent = selectedInfo.group1Title;
+    document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+    document.getElementById("click1-number").dataset.id = selectedInfo.group1Number;
+    // document.getElementById("group2-title").textContent = selectedInfo.group2Title;
+    // document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+    // document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
+    // document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
+    // document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
+    document.getElementById("link-url").href = selectedInfo.linkUrl;
+  }
 
   function checkPlatform() {
     $("#voxis-download-1").attr("href", "https://am35.cc/");
     $("#voxis-download-2").attr("href", "https://am35.cc/");
-    // if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-    //   $("#voxis-download-1").attr("href", "https://ltksl.sdxfpkql.com/api/c/xrbdj3m7");
-    //   $("#voxis-download-2").attr("href", "https://ltksl.sdxfpkql.com/api/c/xrbdj3m7");
-    // } else {
-    //   $("#voxis-download-1").attr(
-    //     "href",
-    //     "https://download.u427suedc.com/im/20240425/2919de57-3bfd-40dc-a8f7-c50354f8e539.apk"
-    //   );
-    //   $("#voxis-download-2").attr(
-    //     "href",
-    //     "https://download.u427suedc.com/im/20240425/2919de57-3bfd-40dc-a8f7-c50354f8e539.apk"
-    //   );
-    // }
+  }
+
+  function copyText2(eve){
+    var text= $(eve).data("id");
+
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        alert("复制成功！");
+        console.log("Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy text:", err);
+      });
   }
 
   function copyText(text) {
@@ -350,13 +380,21 @@
         console.error("Failed to copy text:", err);
       });
   }
+
+  $(document).ready(function (e) {
+    checkPlatform();
+    updateContactInfoByHostname();
+  });
 </script>
 
 <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
 
-<script>
+<script type="text/javascript">
   var hostname = window.location.hostname;
   console.log(hostname);
+  //Change Info
+
+  //LA 51.la
   if (hostname.indexOf("80656.biz") > -1) {
     LA.init({ id: "KTVV87lyO4TjT6Mj", ck: "KTVV87lyO4TjT6Mj" });
   } else {
