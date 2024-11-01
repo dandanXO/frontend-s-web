@@ -106,7 +106,7 @@
             backgroundColor:
               selectedPromo?.promoCode === 'lh1worldcup' ||
               selectedPromo?.promoCode === 'lh1worldcupdota2' ||
-              selectedPromo?.promoCode === 'lh1-challenge-comeback' ||
+              selectedPromo?.promoCode === 'lh1-cycle-loss-refund' ||
               selectedPromo?.promoCode === 'lh-official-gift' ||
               selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||

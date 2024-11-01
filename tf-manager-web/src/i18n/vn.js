@@ -1822,6 +1822,7 @@ export default {
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
+    showLogo: 'hiển thị biểu tượng'
   },
   message: {
     startenddatemore3months:
@@ -2552,6 +2553,7 @@ export default {
     'KRW Stats Report': 'Báo cáo Thống kê KRW của Trang web',
     'MQ Log': 'Nhật ký MQ',
     'System Config': 'Cấu hình hệ thống',
+    'Monitor And Notification': 'Giám sát và Thông báo',
     'Promotion Coupon': 'phiếu mua hàng',
     'Member Invite Limit': 'Giới hạn mời thành viên',
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
@@ -2697,6 +2699,9 @@ export default {
     DOWNLOAD: 'Trang tải xuống',
     AFFILIATE: 'Liên kết',
     HOME: 'Trang chủ',
+  },
+  monitorTitle: {
+    MEMBER_STATISTICS: 'Người dùng trực tuyến'
   },
   error: {
     400: 'Yêu cầu không hợp lệ',

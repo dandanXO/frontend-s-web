@@ -61,6 +61,8 @@
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24'" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual'" />
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'dy2-blast-premier-treasure'" :promo-code="list.promoCode" />
+    <DreamLeagueS24 v-if="list.redirectUrl === 'dy2-dreamleague-s24'" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
@@ -76,6 +78,7 @@
     <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode"/>
@@ -150,6 +153,8 @@ import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vu
 import NewplayerGuide from "../components/hotpromo/newplayerguide/NewPlayerGuide.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
+import BlastPremierGlobalPromo from "../components/hotpromo/BlastPremierGlobalPromo/BlastPremierGlobalPromo.vue";
+import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS24.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
@@ -163,6 +168,7 @@ import S14VotePromo from "@/components/hotpromo/s14-vote/S14VotePromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
 import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
+import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
 
 
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -184,6 +190,8 @@ export default defineComponent({
     LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
+    BlastPremierGlobalPromo,
+    DreamLeagueS24,
     fishHongbao,
     Olympic24Match,
     OlympicFund,
@@ -239,7 +247,8 @@ export default defineComponent({
     IemMasterPromo,
     PullbackTide,
     Cba30Dream,
-    ElisaGift
+    ElisaGift,
+    ChallengeComebackPromo
   },
   props: {
     list: {

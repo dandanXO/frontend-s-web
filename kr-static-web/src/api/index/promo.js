@@ -288,3 +288,7 @@ export function getWinners(promoCode) {
 export function getPrizeAmount(promoCode) {
   return server.EVENT.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`);
 }
+
+export function loadLoginHomePopup() {
+  return server.REST.get("/member/site-popout-list");
+}

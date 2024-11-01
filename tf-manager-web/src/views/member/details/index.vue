@@ -36,6 +36,12 @@
     >
       <MemberRolloverRecord :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
+    <el-tab-pane
+      :label="t('fields.memberRolloverEvent')"
+      name="member-rollover-event"
+    >
+      <MemberRolloverEventTab :mbr-id="id" :time-zone="timeZone" />
+    </el-tab-pane>
     <el-tab-pane :label="t('fields.riskControl')" name="risk-info">
       <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
@@ -86,6 +92,7 @@ import MemberReferFriendTab from './tabs/member-refer-friend/index.vue'
 import MemberRolloverRecord from './tabs/member-rollover-record/index.vue'
 import DailyReportTab from './tabs/daily-report/index.vue'
 import MemberPlatformTab from './tabs/member-platform/index.vue'
+import MemberRolloverEventTab from './tabs/rollover-event/index.vue'
 import { useI18n } from 'vue-i18n'
 import { getSiteTimeZoneById } from '@/api/site'
 
@@ -107,6 +114,7 @@ export default defineComponent({
     DailyReportTab,
     MemberPlatformTab,
     MemberBetRecordByPlatformTab,
+    MemberRolloverEventTab,
   },
   async setup() {
     const { t } = useI18n()

@@ -88,7 +88,7 @@
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen'" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin'" />
-    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-cycle-loss-refund'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
@@ -99,6 +99,7 @@
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
     <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
+    <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
@@ -229,6 +230,7 @@ const BbdachaCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/b
 const EslProCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue"));
 const BlastPremier = defineAsyncComponent(() => import("../components/hotpromo/blast-premier/BlastPremier.vue"));
 const Tpworld2024 = defineAsyncComponent(() => import("./hotpromo/tpworld-2024/Tpworld-2024.vue"));
+const DreamLeagueS24 = defineAsyncComponent(() => import("./hotpromo/dream-league-s24/DreamLeagueS24.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const Dota2Pgl = defineAsyncComponent(() => import("../components/hotpromo/dota2-pgl/Dota2Pgl.vue"));
@@ -313,6 +315,7 @@ export default defineComponent({
     EslProCsgo2,
     BlastPremier,
     Tpworld2024,
+    DreamLeagueS24,
     Cba30Dream,
     LiveDailyRebates,
     Dota2Pgl,

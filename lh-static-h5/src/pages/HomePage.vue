@@ -627,36 +627,39 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%; position: relative" class="bg-primary text-black">
-      <img v-close-popup class="station-notice-close-btn" src="../assets/images/home/close.png" />
-      <q-card-section>
+  <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
+    <q-card
+      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px"
+      class="bg-[#0000001A] text-black"
+    >
+      <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
         <q-tabs
           v-model="activeKey"
           dense
-          class="text-white"
-          active-color="white"
-          indicator-color="white"
           align="justify"
+          active-class="tab-active"
+          content-class="tabs-wrapper"
+          indicator-color="transparent"
         >
           <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
         </q-tabs>
 
-        <!-- <q-separator /> -->
+        <q-separator />
 
         <q-tab-panels v-model="activeKey" animated>
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="max-height: 65vh">
+            <q-list style="min-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
                 <span v-if="ann.typeId === tab.id">
                   <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
+                    style="max-height: 65vh; overflow: auto; color: #6c6c6e"
+                    expand-icon-class="text-grey-5"
                     group="somegroup"
-                    icon="volume_up"
+                    icon="notifications_none"
                     :label="ann.title"
                   >
                     <q-card>
-                      <q-card-section style="background: transparent">
+                      <q-card-section style="color: #9f9f9f">
                         {{ ann.content }}
                       </q-card-section>
                     </q-card>
@@ -2196,106 +2199,62 @@ export default defineComponent({
   }
 }
 
-.modal-update-div {
-  .modalcontent {
-    background: $white;
-    height: 232px;
-    border-radius: 10px;
-    box-sizing: border-box;
+.q-tab--active .q-tab__indicator {
+  background: #ffffff;
+  top: 0;
+}
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 0px 0px 16px;
+.q-tab-panel {
+  .tabitems {
+    display: grid;
 
-    .headers {
-      width: calc(100% - 16px);
-      border-radius: 10px 10px 0px 0px;
-      box-sizing: border-box;
-      height: 55px;
-      line-height: 55px;
-      background: $white;
-      color: $primary;
-      text-align: center;
-      font-size: 1.2rem;
-      border-bottom: 2px solid #ecedf0;
-      font-weight: bold;
-      letter-spacing: 1px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    img {
+      width: 100%;
+      display: block;
     }
 
-    .contents {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 20px 12px 15px;
-      text-align: center;
-      color: $font-2;
-      font-size: 1.2rem;
-
-      .contentfonts {
-        text-align: center;
-        color: #333;
-        font-size: 16px;
-        margin: 37px 0 20.5px 0;
-      }
-
-      .inputs {
-        width: 292px;
-        height: 36px;
-        border-radius: 4px 4px;
-        border: 1px solid #666;
-        box-sizing: border-box;
-        margin: 0 auto;
-        padding-left: 20px;
-
-        .van-field__control {
-          height: 100%;
-          width: 100%;
-        }
-      }
+    &.quarter {
+      grid-template-columns: repeat(4, 1fr);
+      padding-top: 30px;
     }
 
-    .btnsreas {
-      width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1rem;
-      margin-top: 20px;
-      gap: 15px;
+    &.middle {
+      gap: 10px;
+    }
 
-      .cacnels {
-        flex: 1;
-        box-sizing: border-box;
-        text-align: center;
-        letter-spacing: 1px;
-        max-width: 190px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 8px;
-      }
+    &.five {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
 
-      .confirmsbtns {
-        flex: 1;
-        box-sizing: border-box;
-        text-align: center;
-        max-width: 190px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        letter-spacing: 1px;
+      > div:first-child {
+        grid-column-end: 3;
+        grid-column-start: 1;
       }
     }
   }
 }
 
-.q-card__section {
-  background: rgba(0, 0, 0, 0.1);
+:deep(.tabs-wrapper) {
+  background: #ececec;
+  border-radius: 6px !important;
+  padding: 8px;
+  color: #737373;
+}
+
+.tab-active {
+  background: linear-gradient(180deg, #52acff 0%, #3559da 100%);
+  color: white;
+  border-radius: 6px;
+}
+
+.station-notice-dialog {
+  :deep(.q-card) {
+    width: 80%;
+  }
+  :deep(.q-tabs__content) {
+    background: #ececec;
+    padding: 5px 8px;
+  }
 }
 
 .close-alert {
@@ -2354,10 +2313,6 @@ export default defineComponent({
     align-items: center;
     gap: 0px;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-color: transparent transparent;
@@ -2390,6 +2345,10 @@ export default defineComponent({
       }
     }
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     > div {
       width: 100%;
     }
@@ -2413,10 +2372,6 @@ export default defineComponent({
     justify-content: flex-start;
     align-items: center;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-color: transparent transparent;
@@ -2428,6 +2383,10 @@ export default defineComponent({
       justify-content: flex-start;
       align-items: center;
       margin-bottom: 8px;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
     }
 
     > div {

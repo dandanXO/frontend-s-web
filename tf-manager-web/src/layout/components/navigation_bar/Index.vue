@@ -8,6 +8,8 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
+      <notificationModule />
+
       <el-select
         v-if="hasRole(['ADMIN', 'MANAGER'])"
         class="right-menu-item"
@@ -128,6 +130,7 @@
 import BreadCrumb from '@/components/bread-crumb/Index.vue'
 import Hamburger from '@/components/hamburger/Index.vue'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
+import notificationModule from '@/layout/components/navigation_bar/notification-module/Index.vue'
 
 import { computed, reactive, toRefs, onMounted, ref, watch } from 'vue'
 import { useStore } from '@/store'
@@ -140,13 +143,14 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
 import { hasPermission, hasRole } from "@/utils/util";
-import { showAlert } from '../../../api/member'
+// import { showAlert } from '../../../api/member'
 // import { getSiteListSimple } from '@/api/site'
 /* eslint-disable */
 import { updateDefaultSite, loadAuthMenu } from '../../../api/user'
 import { ElMessage } from 'element-plus'
 import { inject } from 'vue-demi'
 import { getSiteTitle } from '../../../utils/site'
+import { WebSocketActionTypes } from "@/store/modules/socket/action-types";
 
 export default {
   methods: { hasPermission, hasRole },
@@ -154,6 +158,7 @@ export default {
     BreadCrumb,
     Hamburger,
     ForgetPasswordModal,
+    notificationModule,
   },
   setup() {
     // eslint-disable-next-line
@@ -244,8 +249,8 @@ export default {
     let intervalId = null; // To store the interval ID and control blinking
     function updateSiteTitle() {
       originalSiteTitle = document.querySelector("title").innerText
-      
-      const existingCountRegex = /\(\d+\)$/; 
+
+      const existingCountRegex = /\(\d+\)$/;
       originalSiteTitle = originalSiteTitle.replace(existingCountRegex, "").trim();
 
       let blinkingTitle = originalSiteTitle + ` (${applyWithdrawCount.value})`;
@@ -264,7 +269,7 @@ export default {
         document.title = originalSiteTitle;
       }
     }
-    
+
     const reload = inject('reload')
     const changeSite = async () => {
       const getSelectedSite = sites.value.find(
@@ -323,13 +328,13 @@ export default {
       }
     }
 
-    async function showAlertMessage() {
-      const response = await showAlert()
-      const { data: alert } = response;
-      if (alert) {
-        message.value = t('fields.' + alert)
-      }
-    }
+    // async function showAlertMessage() {
+    //   const response = await showAlert()
+    //   const { data: alert } = response;
+    //   if (alert) {
+    //     message.value = t('fields.' + alert)
+    //   }
+    // }
 
     onMounted(async () => {
       // 根据情况赋值sites
@@ -356,9 +361,9 @@ export default {
       } else if (hasRole(["ADMIN", "MANAGER"])) {
         loadMemberStatistics();
       }
-      if (hasPermission(['sys:member:alert'])) {
-        showAlertMessage()
-      }
+      // if (hasPermission(['sys:member:alert'])) {
+      //   showAlertMessage()
+      // }
     })
 
     watch(statisticsList, () => {
@@ -367,6 +372,21 @@ export default {
       }
       updateData();
     });
+
+    watch(() => store.state.socket.event, () => {
+      const memberAlertEventArr = store.state.socket.event.filter(e => e.event === 'MEMBER_ALERT');
+      if (memberAlertEventArr.length > 0) {
+        const alert = memberAlertEventArr[0].memberAlertMsg
+
+        if (alert) {
+          message.value = t('fields.' + alert)
+        } else {
+          message.value = null
+        }
+      } else {
+        message.value = null
+      }
+    }, { deep: true });
 
     // watch(() => useStore().state.socket.event, () => {
     //   const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
@@ -382,7 +402,7 @@ export default {
       const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
       if (memberStatistics.length > 0) {
         const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
-        
+
         const siteId = String(useStore().state.user.siteId);
         const getStatisticBySiteId = parsedStatistics.find(e => String(e.siteId) === siteId);
 

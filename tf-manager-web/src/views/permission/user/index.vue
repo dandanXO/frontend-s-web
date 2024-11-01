@@ -456,7 +456,7 @@ import {
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimpleOri } from '../../../api/site'
+import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -810,7 +810,7 @@ function submit() {
 }
 
 async function loadSites() {
-  const response = await getSiteListSimpleOri()
+  const response = await getSiteListSimple()
   // if (store.state.user.userType === "ADMIN") {
   // response = await getSiteListSimpleOri()
   // } else {
@@ -915,14 +915,14 @@ watch(
 onMounted(async () => {
   await loadSites()
   await loadDefaultSites()
-  if (store.state.user.userType !== "ADMIN") {
-    request.siteId = store.state.user.siteId
-  }
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false
     uiControl.rolesSelect = false
-    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName)
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
     request.siteId = site.value.id
   }
   await loadRoles()

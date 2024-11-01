@@ -371,7 +371,10 @@ export default {
     settleWithdrawPwd: "Please settle withdraw password",
     note: `Withdrawals cannot be processed to accounts in other names than your own.
       The minimum withdrawal amount is 50,000 won and can only be in 10,000 won units.
-      We sincerely congratulate you on your money exchange and hope that you will always have good days.`
+      We sincerely congratulate you on your money exchange and hope that you will always have good days.
+      
+      ※Virtual account maintenance time information
+      Please refer to the use from 23:30 to 00:30.`
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",

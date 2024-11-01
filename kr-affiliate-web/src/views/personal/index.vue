@@ -484,8 +484,8 @@
       append-to-body
     >
       <el-steps :active="passwordStep" align-center>
-        <el-step :title="t('forgetPassword.verifyAuth')" />
-        <el-step :title="t('forgetPassword.verifyQues')" />
+        <!-- <el-step :title="t('forgetPassword.verifyAuth')" /> -->
+        <!-- <el-step :title="t('forgetPassword.verifyQues')" /> -->
         <el-step :title="t('forgetPassword.resetPassword')" />
       </el-steps>
       <div class="auth-container" v-if="passwordStep === 1">
@@ -1054,7 +1054,7 @@ async function goToGoogleAuthenticator() {
 }
 
 function showForgetPassword() {
-  passwordStep.value = 1
+  passwordStep.value = 3
   googleAuthForm.code = ''
   quesAuthForm.answer = ''
   quesAuthForm.questionNumber = ''

@@ -7,4 +7,5 @@ export const UserMutationTypes = {
   SET_ROLES: 'SET_ROLES',
   SET_EMAIL: 'SET_EMAIL',
   SET_SITE_ID: 'SET_SITE_ID',
+  SET_NOTIFICATIONS: 'SET_NOTIFICATIONS'
 }

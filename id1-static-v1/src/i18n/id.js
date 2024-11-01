@@ -314,8 +314,8 @@ export default {
     incorrectPrivilege: "Promosi deposit yang Anda kirimkan tidak benar. Silakan coba kirim deposit lagi.",
     depositMethod: "Metode Deposit",
     paymentChannels: "Saluran Pembayaran",
-    wagerRequirement: "Persyaratan taruhan (untuk penarikan): 10 kali jumlah deposit Anda",
-    wagerExample: "Mis. Deposit Rp1.000, memerlukan Rp10.000 taruhan di permainan slot",
+    wagerRequirement: "Persyaratan taruhan (untuk penarikan): 1 kali jumlah deposit Anda & 20 kali jumlah bonus Anda.",
+    wagerExample: "Mis. Deposit Rp1,000, memerlukan Rp21,000 taruhan",
     deposited: "Terkirim",
     youWillBeRedirect: "Anda akan diarahkan ke halaman bank Anda untuk menyelesaikan deposit.",
     afterDepositSuccessfully: "Setelah deposit berhasil, itu akan tercermin di sini.",
@@ -720,7 +720,8 @@ export default {
     live: "LIVE",
     slot: "SLOT",
     vip: "VIP",
-    promotionEnds: "Promosi Berakhir"
+    promotionEnds: "Promosi Berakhir",
+    promotion: "Promosi"
   },
   hotPromo: {
     aviatorWheel: {

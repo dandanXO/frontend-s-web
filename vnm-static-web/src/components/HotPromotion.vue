@@ -6,8 +6,12 @@
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
     <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone'" :promo-code="list.promoCode" />
     <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" />
-    <HongBaoYu2024 v-if="listParam.type === 'redpacket' && store.token" :promo-code="list.promoCode"
-      :params="list.param" />
+    <HongBaoYu2024
+      v-if="listParam.type === 'redpacket' && store.token"
+      :promo-id="list.id"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -69,8 +73,7 @@ export default defineComponent({
       loadingClaim: false,
       memberId: null,
       amount: "$0",
-      hotPromoList: [
-      ],
+      hotPromoList: [],
       selectedHotPromo: {
         id: "",
         bg: "",
@@ -389,7 +392,7 @@ export default defineComponent({
       gap: 60px;
       text-align: left;
 
-      .ant-form-item-label>label {
+      .ant-form-item-label > label {
         color: #eeeeee;
       }
     }
@@ -426,10 +429,11 @@ export default defineComponent({
       }
     }
 
-    .ant-tabs-nav-container {}
+    .ant-tabs-nav-container {
+    }
 
-    .ant-tabs .ant-tabs-top-content>.ant-tabs-tabpane,
-    .ant-tabs .ant-tabs-bottom-content>.ant-tabs-tabpane {
+    .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,
+    .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
       background: #201f29;
     }
 
@@ -446,7 +450,7 @@ export default defineComponent({
       background-color: transparent;
     }
 
-    .ant-table-thead>tr>th,
+    .ant-table-thead > tr > th,
     .ant-table-placeholder {
       color: #ffffff;
       background-color: #201f29;
@@ -510,7 +514,7 @@ export default defineComponent({
           margin: 0;
         }
 
-        .ant-form-item-label>label {
+        .ant-form-item-label > label {
           color: #ffffff;
         }
 

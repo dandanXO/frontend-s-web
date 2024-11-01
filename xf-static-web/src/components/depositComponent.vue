@@ -60,7 +60,15 @@
         </div>
       </div>
       <div class="deposit-container" v-else>
-        <el-form ref="formRef" :model="form" :rules="rules" autocomplete="off" label-width="100px" label-suffix=":">
+        <el-form
+          class="deposit-form"
+          ref="formRef"
+          :model="form"
+          :rules="rules"
+          autocomplete="off"
+          label-width="100px"
+          label-suffix=":"
+        >
           <el-space>
             <el-form-item class="helptxt" label="金额" prop="localAmount">
               <el-input
@@ -80,6 +88,12 @@
               {{ isUSDT ? "USDT" : store.currency.label }} -
               {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
+            </div>
+
+            <div class="txt-center">
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn btn-confirm">
+                确定
+              </el-button>
             </div>
           </el-space>
 
@@ -121,6 +135,7 @@
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               clearable
+              style="max-width: 200px"
             >
               <el-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id" :label="p.name">
                 {{ p.name }}
@@ -129,7 +144,7 @@
           </el-form-item>
 
           <div
-            class="btn-confirm rollover-info"
+            class="rollover-info"
             v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
           >
             <span v-if="selectedPromo.depositMin">
@@ -140,12 +155,6 @@
             </span>
             <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPromo.rollover }}倍</span>
           </div>
-
-          <el-form-item label="">
-            <div class="txt-center">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
-            </div>
-          </el-form-item>
 
           <!-- <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
@@ -350,7 +359,7 @@ const withdrawState = reactive({
 
 const selectedPromo = computed(() => {
   return unselectedPrivileges.value.find((item) => item.id === selectedPrivilege.value);
-})
+});
 
 const loadCards = () => {
   withdrawState.bankCardList = [];
@@ -781,7 +790,7 @@ onMounted(() => {
 .account-tip {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 18px;
+  // margin-bottom: 18px;
 }
 // .deposit {
 //   margin-bottom: 0;
@@ -827,6 +836,16 @@ onMounted(() => {
     // padding: 30px;
   }
   .deposit-container {
+    .el-space{ 
+      margin-bottom: 8px;
+    }
+    // background: #23263c;
+    .deposit-form {
+      position: relative;
+      .el-form-item { 
+        margin-bottom: 0px;
+      }
+    }
     padding: 20px 30px;
     // background: #23263c;
     .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
@@ -871,6 +890,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .txt-center {
+  padding-left: 24px;
   text-align: center;
 }
 :deep(.ant-form-item-label > label) {
@@ -889,7 +909,7 @@ onMounted(() => {
 }
 
 .deposit-container :deep(.el-form-item) {
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 
 :deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector) {
@@ -907,11 +927,26 @@ onMounted(() => {
 
 .rollover-info {
   color: #bd4646;
+  margin-left: 100px;
+  margin-bottom: 10px;
 }
 
 .btn-confirm {
-  margin-left: 100px;
-  margin-bottom: 10px;
+  padding-left: 20px;
+  // margin-bottom: 10px;
+  width: 230px;
+  &.common-btn {
+    background-image: url(../assets/images/finance/deposit/btn-bg.png) !important;
+    background-size: 100% 100%;
+    &:hover {
+      opacity: 0.9;
+      background-size: 100% 100%;
+    }
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
 }
 </style>
 

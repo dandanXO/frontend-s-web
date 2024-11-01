@@ -168,6 +168,14 @@ onMounted(() => {
 
     .mth {
       padding: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #4c4c6c;
+      height: 90px;
+      margin-bottom: -20px;
+      padding-bottom: 18px;
 
       &.check-in {
         cursor: pointer;
@@ -195,14 +203,6 @@ onMounted(() => {
         }
       }
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: #4c4c6c;
-      height: 90px;
-      margin-bottom: -20px;
-      padding-bottom: 18px;
       .day {
         font-size: 14px;
         font-weight: 700;

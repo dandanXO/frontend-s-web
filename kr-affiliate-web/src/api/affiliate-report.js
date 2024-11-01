@@ -54,3 +54,12 @@ export const getMemberPointRecordList = query => {
     ContentType.form
   )
 }
+
+export const getAffiliateDashboardData = query => {
+  return https().request(
+    '/affiliate-report/dashboard-data',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}

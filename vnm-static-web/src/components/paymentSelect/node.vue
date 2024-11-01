@@ -245,8 +245,11 @@ $node-color: #4873f1;
 
     img {
       // max-width: 50px;
-      max-width: 73px;
+      // max-width: 73px;
+      // margin-bottom: 10px;
+      max-width: 50px;
       margin-bottom: 10px;
+      margin-top: 2px;
     }
   }
 }
@@ -329,7 +332,7 @@ $node-color: #4873f1;
     // gap: 15px;
     .payment-method-item {
       text-align: center;
-      padding: 10px 20px 15px;
+      padding: 5px;
       cursor: pointer;
       // background: #2b2b4b;
       // box-shadow: 6px 6px #161b23;

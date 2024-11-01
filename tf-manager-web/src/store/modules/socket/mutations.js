@@ -1,4 +1,4 @@
-import { SOCKET_ONCLOSE, SOCKET_ONERROR, SOCKET_ONMESSAGE, SOCKET_ONOPEN } from "./mutation-types";
+import { SOCKET_ONCLOSE, SOCKET_ONERROR, SOCKET_ONMESSAGE, SOCKET_ONOPEN, SOCKET_REMOVE_EVENT } from "./mutation-types";
 
 export const mutations = {
   [SOCKET_ONOPEN](state, event) {
@@ -36,5 +36,9 @@ export const mutations = {
     if (!added) {
       state.event.push(message);
     }
+  },
+  [SOCKET_REMOVE_EVENT](state, messageToRemove) {
+    // 移除已经处理完毕的message
+    state.event = state.event.filter(e => e.event !== messageToRemove.event);
   },
 };

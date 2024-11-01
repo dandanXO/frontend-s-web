@@ -114,6 +114,14 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
+            <q-checkbox
+              style="margin-left: -5px"
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === false && !isPrivilege"
+            >
+              Use Slot First Deposit Privilege
+            </q-checkbox>
+
             <div class="lil-title">
               {{ $t("deposit.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
@@ -153,7 +161,7 @@
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
 
-                <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
+                <div class="amt-input-append" v-if="isPrivilege && form.localAmount && paytypeWithPrivilege.includes(selectedChannel.payType)">
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
@@ -220,7 +228,7 @@
         v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
-        <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
+        <div class="q-mt-sm" v-if="!isPrivilege">{{ $t("deposit.wagerExample") }}</div>
       </div>
     </template>
   </div>
@@ -258,7 +266,7 @@ import { userStore } from "@/stores/index";
 import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import { openURL, Platform, useQuasar } from "quasar";
-import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef } from "vue";
+import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { t } from "@/boot/lang";
 import KYCUserForm from "components/KYCUserForm.vue";
@@ -270,6 +278,7 @@ const store = userStore();
 const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
+const isFtdPrivilegeEnable = ref(false);
 const isSelectedMethod = ref(false);
 const paymentMethodsItems = ref();
 const isDeposited = ref(false);
@@ -355,7 +364,10 @@ const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === false && isFtdPrivilegeEnable.value === true
+);
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   activeMethod.value = item;
@@ -363,7 +375,7 @@ const goSelectedMethod = (item) => {
   selectedChanelExtra.value = [];
   // selectedItemChannel.value = item.children;
   // goSelectedChannel(item.children[0]);
-  goSelectedChannel(item)
+  goSelectedChannel(item);
 };
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
@@ -539,7 +551,7 @@ async function confirmDeposit() {
             }
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          if (isFtdPrivilege.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
@@ -748,6 +760,9 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
+
+        selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
@@ -776,10 +791,23 @@ const scrollToInput = () => {
   }
 };
 
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    } else {
+      isFtdPrivilegeEnable.value = false;
+    }
+  },
+  { immediate: true }
+);
+
 onActivated(() => {
   initPay();
   loadInfo();
   resetSelectedMethod();
+  loadAppTabs();
 });
 
 onMounted(() => {
