@@ -390,3 +390,16 @@ export function getCompetitionBetDepositInit(promoCode) {
 export function claimCompetitionBetDepositBonus(promoCode) {
   return eventapi.post(`/session/competition-bet-deposit/claimBonus`, qs.stringify({ promoCode }));
 }
+
+export function getCycleLossRefundInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/cycle-loss-refund/init?v=${randNum}`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCycleLossRefund(promoCode) {
+  return eventapi.post(`/session/cycle-loss-refund/claim`, qs.stringify({ promoCode }));
+}

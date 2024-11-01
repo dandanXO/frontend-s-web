@@ -76,28 +76,35 @@ const getDisplayRemainingTypes = (items) => {
   });
   return typeStr.join("，");
 };
-
 const getDisplayRemainingType = (type) => {
   switch (type) {
-    case "esport":
-      return t("lang.types_esport");
-    case "sport":
-      return t("lang.types_sport");
+    case "slot":
+      return t("lang.types_slot");
     case "live":
       return t("lang.types_live");
     case "fish":
       return t("lang.types_fish");
-    case "casual":
-      return t("lang.types_casual");
-    case "lottery":
-      return t("lang.types_lottery");
+    case "sport":
+      return t("lang.types_sport");
+    case "esport":
+      return t("lang.types_esport");
+    case "vsport":
+      return t("lang.types_vsport");
     case "poker":
       return t("lang.types_poker");
-    case "slot":
-      return t("lang.types_slot");
+    case "lottery":
+      return t("lang.types_lottery");
+    case "casual":
+      return t("lang.types_casual");
+    case "minigame":
+      return t("lang.types_minigame");
     case "cockfight":
-      return t("lang.cockfight");
+      return t("lang.types_cockfight");
+    case "numbergame":
+      return t("lang.types_numbergame");
     case "all":
+      return t("lang.types_all");
+    default:
       return t("lang.types_all");
   }
 };

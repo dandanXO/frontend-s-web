@@ -212,6 +212,36 @@
           :placeholder="t('fields.alias')"
         />
       </el-form-item>
+      <el-form-item :label="t('fields.label')" prop="platformLabel">
+        <el-select
+          v-model="selected.platformLabels"
+          :placeholder="t('fields.pleaseChoose')"
+          style="width: 350px"
+          multiple
+          @change="handleChangeLabel()"
+        >
+          <el-option
+            v-for="item in uiControl.platformLabelList"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="t('fields.showLogo')" prop="showLogo">
+        <el-select
+          v-model="form.showLogo"
+          :placeholder="t('fields.pleaseChoose')"
+          style="width: 350px"
+        >
+          <el-option
+            v-for="item in uiControl.showLogo"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
         <el-button v-if="uiControl.dialogType === 'MAINTENANCE'" type="primary" @click="maintenance">{{ t('fields.confirm') }}</el-button>
@@ -227,7 +257,7 @@ import {
   getSitePlatformList,
   updateStatus,
   updateMaintenance,
-  updateAlias
+  updateAliasLogo
 } from '../../../api/site-platform'
 import { getSiteListSimple } from '../../../api/site'
 import { getPlatformNames } from '../../../api/platform'
@@ -243,11 +273,23 @@ const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const formRef = ref(null);
+const selected = reactive({ platformLabels: [] });
 
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
-  dialogType: 'MAINTENANCE'
+  dialogType: 'MAINTENANCE',
+  platformLabelList: [
+    { key: 1, displayName: 'NEW', value: 'NEW' },
+    { key: 2, displayName: 'HOT', value: 'HOT' },
+    { key: 3, displayName: 'RECOMMEND', value: 'RECOMMEND' },
+    { key: 4, displayName: 'LIST', value: 'LIST' },
+    { key: 5, displayName: 'JACKPOT', value: 'JACKPOT' },
+  ],
+  showLogo: [
+    { key: 0, displayName: "FALSE", value: 0 },
+    { key: 1, displayName: "TRUE", value: 1 },
+  ]
 })
 const page = reactive({
   pages: 0,
@@ -265,7 +307,9 @@ const form = reactive({
   id: null,
   underMaintenance: null,
   maintenanceTime: [],
-  alias: null
+  alias: null,
+  platformLabel: null,
+  showLogo: null
 })
 
 const sites = reactive({
@@ -314,6 +358,10 @@ function changePage(page) {
   loadSitePlatform()
 }
 
+function handleChangeLabel() {
+  form.platformLabel = selected.platformLabels.join(",");
+}
+
 async function updateState(id, status) {
   await updateStatus(id, status);
   await loadSitePlatform();
@@ -322,7 +370,8 @@ async function updateState(id, status) {
 async function updatePlatformAlias() {
   formRef.value.validate(async (valid) => {
     if (valid) {
-      await updateAlias(form.id, form.alias);
+      await updateAliasLogo(form);
+      // note here
       uiControl.dialogVisible = false;
       await loadSitePlatform();
       ElMessage({ message: t('message.updateSuccess'), type: 'success' })
@@ -377,7 +426,23 @@ async function maintenance() {
 
 async function showEdit(row) {
   form.id = row.id;
+  form.alias = null;
+  selected.platformLabels = []
+  form.showLogo = null
+
   showDialog('ALIAS');
+  if (row.alias !== null) {
+    form.alias = row.alias;
+  }
+  if (row.platformLabel !== null && row.platformLabel !== "") {
+    const arr = row.platformLabel.split(",")
+    arr.forEach(element => {
+      selected.platformLabels.push(element);
+    })
+  }
+  if (row.showLogo !== null) {
+    form.showLogo = row.showLogo
+  }
 }
 
 onMounted(async() => {

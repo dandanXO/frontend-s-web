@@ -144,7 +144,11 @@ export const getVisitorId = async () => {
 export const trackNewUserFtd = () => {
   console.log("PurchaseComplete");
   fbq("trackCustom", "PurchaseComplete");
-  sessionStorage.removeItem("newUserFtd");
+  if (isInPwa()) {
+    localStorage.removeItem("newUserFtd");
+  } else {
+    sessionStorage.removeItem("newUserFtd");
+  }
   document.removeEventListener("ftdSuccess", trackNewUserFtd);
   localStorage.removeItem("REG_REFERRAL_CODE");
 };
