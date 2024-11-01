@@ -2109,7 +2109,8 @@ export default {
     startHour: 'Start Hour',
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
-    showLogo: 'Show Logo'
+    showLogo: 'Show Logo',
+    adjustTarget: 'Adjust Target',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2626,6 +2627,7 @@ export default {
     validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
     validateLoginNameNoSpecialCharacter:
       'The login name can only contain underscores (_), numbers, and letters.',
+    validateAdjustColumnRequired: 'Adjust Column is required',
   },
   menu: {
     undefined: '',
