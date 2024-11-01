@@ -562,7 +562,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      v-if="!isCnySite(request.siteId) || (isCnySite(request.siteId) && LOGIN_USER_TYPE !== TENANT.value)"
+      v-if="!isCnySite(request.siteId) || (isCnySite(request.siteId) && LOGIN_USER_TYPE === ADMIN.value)"
       :total="page.total"
       :page-sizes="[20, 50, 100, 150]"
       layout="total,sizes,prev, pager, next"
@@ -610,11 +610,12 @@ import { getReasonsSimple } from '../../../api/site-adjustment-reason'
 import { findIdByLoginName } from '../../../api/member'
 import { getAffiliateBalanceByWalletOrCommission } from '../../../api/affiliate'
 import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
+import { ADMIN, TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { isCnySite } from '../../../utils/site'
 
 const { t } = useI18n()
 const store = useStore()

@@ -834,7 +834,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      v-if="!isCnySite(request.siteId) || (isCnySite(request.siteId) && LOGIN_USER_TYPE !== TENANT.value)"
+      v-if="!isCnySite(request.siteId) || (isCnySite(request.siteId) && LOGIN_USER_TYPE === ADMIN.value)"
       :total="page.total"
       :page-sizes="[20, 50, 100, 150]"
       layout="total,sizes,prev, pager, next"
