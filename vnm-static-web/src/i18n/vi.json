@@ -351,7 +351,11 @@
     "types_lottery": "Xổ số",
     "types_fish": "Bắn Cá",
     "types_casual": "Hash Game",
-    "types_all": "Tất cả"
+    "types_all": "Tất cả",
+    "types_vsport": "Thể thao ảo",
+    "types_minigame": "Hash Game",
+    "types_cockfight": "Đá Gà",
+    "types_numbergame": "Trò chơi số"
   },
   "referTerms": {
     "receiveReward": "NHẬN THƯỞNG KHÔNG GIỚI HẠN",

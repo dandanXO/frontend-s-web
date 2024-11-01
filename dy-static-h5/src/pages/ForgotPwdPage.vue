@@ -263,18 +263,18 @@
             </div>
           </q-form>
 
-          <div v-if="isEmailSent" class="text-blue q-px-md">OTP信息已发送到您的注册邮箱, 请输入OTP和新密码。</div>
+          <div v-if="isEmailSent" class="text-blue q-px-md">验证码已发送到您的注册邮箱，请输入验证码和新密码完成密码修改。</div>
           <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders form-after-submit">
             <q-input
               ref="codeRef2"
               filled
               hide-bottom-space
               v-model="verificationForm.code"
-              label="OTP码"
+              label="验证码"
               lazy-rules
               clearable
               :rules="[
-                (val) => (val && val.length > 0) || '请输入OTP码',
+                (val) => (val && val.length > 0) || '请输入验证码',
                 (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
               ]"
             >

@@ -143,13 +143,14 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
 import { hasPermission, hasRole } from "@/utils/util";
-import { showAlert } from '../../../api/member'
+// import { showAlert } from '../../../api/member'
 // import { getSiteListSimple } from '@/api/site'
 /* eslint-disable */
 import { updateDefaultSite, loadAuthMenu } from '../../../api/user'
 import { ElMessage } from 'element-plus'
 import { inject } from 'vue-demi'
 import { getSiteTitle } from '../../../utils/site'
+import { WebSocketActionTypes } from "@/store/modules/socket/action-types";
 
 export default {
   methods: { hasPermission, hasRole },
@@ -327,13 +328,13 @@ export default {
       }
     }
 
-    async function showAlertMessage() {
-      const response = await showAlert()
-      const { data: alert } = response;
-      if (alert) {
-        message.value = t('fields.' + alert)
-      }
-    }
+    // async function showAlertMessage() {
+    //   const response = await showAlert()
+    //   const { data: alert } = response;
+    //   if (alert) {
+    //     message.value = t('fields.' + alert)
+    //   }
+    // }
 
     onMounted(async () => {
       // 根据情况赋值sites
@@ -360,9 +361,9 @@ export default {
       } else if (hasRole(["ADMIN", "MANAGER"])) {
         loadMemberStatistics();
       }
-      if (hasPermission(['sys:member:alert'])) {
-        showAlertMessage()
-      }
+      // if (hasPermission(['sys:member:alert'])) {
+      //   showAlertMessage()
+      // }
     })
 
     watch(statisticsList, () => {
@@ -371,6 +372,21 @@ export default {
       }
       updateData();
     });
+
+    watch(() => store.state.socket.event, () => {
+      const memberAlertEventArr = store.state.socket.event.filter(e => e.event === 'MEMBER_ALERT');
+      if (memberAlertEventArr.length > 0) {
+        const alert = memberAlertEventArr[0].memberAlertMsg
+
+        if (alert) {
+          message.value = t('fields.' + alert)
+        } else {
+          message.value = null
+        }
+      } else {
+        message.value = null
+      }
+    }, { deep: true });
 
     // watch(() => useStore().state.socket.event, () => {
     //   const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');

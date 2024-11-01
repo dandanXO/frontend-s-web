@@ -35,9 +35,12 @@ export class Socket {
       this.store.commit(SOCKET_ONOPEN, ev);
       this.webSocket.send(store.state.user.siteId ? store.state.user.siteId : 0);
       this.webSocket.send(JSON.stringify({
-        type: "CACHE_SYSTEM_USER_ID",
+        type: "CACHE_SYSTEM_USER_INFO",
         content: {
-          systemUserId: store.state.user.id
+          systemUserId: store.state.user.id,
+          systemUserPermissions: store.state.user.permissions,
+          systemUserType: store.state.user.userType,
+          systemUserSiteId: store.state.user.siteId,
         }
       }));
     };

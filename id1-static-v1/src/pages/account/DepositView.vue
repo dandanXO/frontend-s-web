@@ -114,7 +114,11 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
-            <q-checkbox style="margin-left: -5px" v-model="isFtdPrivilegeEnable" v-if="store.ftd === false">
+            <q-checkbox
+              style="margin-left: -5px"
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === false && !isPrivilege"
+            >
               Use Slot First Deposit Privilege
             </q-checkbox>
 
@@ -157,7 +161,7 @@
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
 
-                <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
+                <div class="amt-input-append" v-if="isPrivilege && form.localAmount && paytypeWithPrivilege.includes(selectedChannel.payType)">
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
@@ -224,7 +228,7 @@
         v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
-        <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
+        <div class="q-mt-sm" v-if="!isPrivilege">{{ $t("deposit.wagerExample") }}</div>
       </div>
     </template>
   </div>
@@ -803,6 +807,7 @@ onActivated(() => {
   initPay();
   loadInfo();
   resetSelectedMethod();
+  loadAppTabs();
 });
 
 onMounted(() => {
