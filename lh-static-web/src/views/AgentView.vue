@@ -236,6 +236,7 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-qq.png">
                 </div>
+                <div>合营QQ</div>
                 <span ref="contact1">1903687863</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
@@ -246,6 +247,7 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-skype.png">
                 </div>
+                <div>合营Skype</div>
                 <span ref="contact2">live:.cid.1a1ab9b6b5b0721f</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
@@ -256,6 +258,7 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-telegram.png">
                 </div>
+                <div>Telegram</div>
                 <span ref="contact3">@LH18668</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
@@ -266,6 +269,7 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-bubble.png">
                 </div>
+                <div>泡泡</div>
                 <span ref="contact4">LH1008666</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('4')">{{ copybtntxt4 }}</button>
@@ -817,6 +821,7 @@ export default defineComponent({
       width: 250px;
       height: 210px;
       border-radius: 8px;
+      font-size: 18px;
     }
     .contact-icon {
       background: url(../assets/images/affiliate/icon-bg.png)no-repeat center center;
