@@ -2849,6 +2849,7 @@ export default {
     'Member Refer Analysis': '邀请返佣分析',
     'TF Gaming Config': 'TF Gaming 设置',
     'LH Old Data': '雷火老站数据',
+    'Affiliate Point Record': '代理积分记录',
   },
   google: {
     google_auth_menu: '谷歌验证',

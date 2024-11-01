@@ -2902,6 +2902,7 @@ export default {
     'Member Refer Analysis': 'Member Refer Analysis',
     'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
+    'Affiliate Point Record': 'Affiliate Point Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
