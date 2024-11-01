@@ -2111,6 +2111,7 @@ export default {
     oldBetAmount: 'Old Site Bet Amount',
     showLogo: 'Show Logo',
     adjustTarget: 'Adjust Target',
+    ignoreSettlement: 'Ignore Settlement',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

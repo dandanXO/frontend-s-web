@@ -1862,6 +1862,7 @@ export default {
     batchFrozenMember: '회원 일괄 동결',
     showLogo: '아이콘 표시',
     adjustTarget: '목표 조정',
+    ignoreSettlement: '결제를 무시하다',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
