@@ -569,10 +569,9 @@
           label-align="left"
           label-class-name="member-label"
           class-name="member-context"
-          v-if="isKorea(memberDetail.siteId)"
         >
           <template #label>
-            <div>
+            <div v-if="(isKorea(memberDetail.siteId))">
               <svg-icon
                 icon-class="money"
                 style="height: 16px;width: 16px;"
@@ -580,17 +579,23 @@
               {{ t('fields.ignoreSettlement') + ' (16th)' }}
             </div>
           </template>
-          <el-switch
-            :disabled="!isKorea(memberDetail.siteId)"
-            v-model="memberDetail.ignoreSettlement"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
-            @change="
-              changeIgnoreSettlement(memberDetail.id, memberDetail.ignoreSettlement)
-            "
-          />
+          <template #default>
+            <div v-if="(isKorea(memberDetail.siteId))">
+              <el-switch
+                :disabled="!isKorea(memberDetail.siteId)"
+                v-model="memberDetail.ignoreSettlement"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+                @change="
+                  changeIgnoreSettlement(memberDetail.id, memberDetail.ignoreSettlement)
+                "
+              />
+            </div>
+
+          </template>
+
         </el-descriptions-item>
-        <el-descriptions-item />
+
       </el-descriptions>
     </el-card>
 
