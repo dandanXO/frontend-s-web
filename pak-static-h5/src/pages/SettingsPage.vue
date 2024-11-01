@@ -26,12 +26,12 @@
           </div>
           <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
         </router-link>
-        <router-link to="/interest-profit">
+        <!-- <router-link to="/interest-profit">
           <div class="acct-nav-item">
             <img src="../assets/images/account/interest-svg.svg" />
           </div>
           <div class="acct-nav-label">{{ $t("settings.interestProfit") }}</div>
-        </router-link>
+        </router-link> -->
       </div>
     </div>
 
@@ -259,7 +259,7 @@ const logout = () => {
     margin: -20px auto 0px;
 
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-gap: 30px;
     gap: 10px;
