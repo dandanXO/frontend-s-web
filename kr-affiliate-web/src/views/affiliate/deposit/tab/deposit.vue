@@ -317,6 +317,21 @@ const loadCards = () => {
     .catch((error) => {
       console.log(error.message);
     });
+  if (withdrawState.bankCardList.length === 0) {
+    ElMessageBox.alert(t('message.bindBankCard'), t('fields.systemAlert'), {
+      showClose: false,
+      showCancelButton: false,
+      confirmButtonText: t('fields.confirm'),
+      draggable: false,
+      buttonSize: 'small',
+      closeOnClickModal: false,
+      center: true,
+    })
+      .then(() => {
+        router.push('/affiliate/bank-card')
+      })
+      .catch(() => {})
+  }
 };
 
 function initPay() {
