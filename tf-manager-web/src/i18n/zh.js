@@ -2109,7 +2109,8 @@ export default {
     startHour: '开始小时',
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
-    showLogo: '显示图标'
+    showLogo: '显示图标',
+    adjustTarget: '平账目标',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2575,6 +2576,7 @@ export default {
     validateProductIdRequired: '产品ID必填',
     validateBetRebatePercentageRequired: '每日投注返水百分比必填',
     validateLoginNameNoSpecialCharacter: '登录名只能包含下划线（_），数字和字母。',
+    validateAdjustColumnRequired: '平账目标必填',
   },
   menu: {
     undefined: '',
@@ -2850,6 +2852,7 @@ export default {
     'Member Refer Analysis': '邀请返佣分析',
     'TF Gaming Config': 'TF Gaming 设置',
     'LH Old Data': '雷火老站数据',
+    'Affiliate Point Record': '代理积分记录',
   },
   google: {
     google_auth_menu: '谷歌验证',

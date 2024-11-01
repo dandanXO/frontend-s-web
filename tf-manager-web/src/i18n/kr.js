@@ -1861,7 +1861,8 @@ export default {
     updateWithdrawPassword: '출금 비밀번호 업데이트',
     self: '(본인)',
     batchFrozenMember: '회원 일괄 동결',
-    showLogo: '아이콘 표시'
+    showLogo: '아이콘 표시',
+    adjustTarget: '목표 조정',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2343,6 +2344,7 @@ export default {
     affiliateReactivated: '활성화 성공',
     required_6_digits_code: '6자리 숫자로 구성',
     required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
+    validateAdjustColumnRequired: '잔액 목표가 필요합니다.',
   },
   menu: {
     undefined: '',
@@ -2582,6 +2584,7 @@ export default {
     'Vip Report': 'VIP 보고서',
     'System Value Rules': '설정 규칙',
     'Sites Config': '사이트 설정',
+    'Affiliate Point Record': '제휴 포인트 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',
