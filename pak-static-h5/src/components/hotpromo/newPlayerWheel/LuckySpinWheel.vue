@@ -34,7 +34,7 @@
       <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">Rs58</div>
+      <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
@@ -62,7 +62,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [58, 999999, 188, 888, 999998, 388, 488, 588];
+const SPIN_WHEEL_PRIZES = [28, 999999, 188, 888, 999998, 388, 488, 588];
 
 // spin wheel element refs
 const spinBoardRef = ref();
