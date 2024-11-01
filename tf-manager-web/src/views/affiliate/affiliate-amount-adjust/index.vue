@@ -70,6 +70,13 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.reimburseAmount"
+          style="width: 100px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.amountGreaterThan')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -555,6 +562,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="!isCnySite(request.siteId) || (isCnySite(request.siteId) && LOGIN_USER_TYPE !== TENANT.value)"
       :total="page.total"
       :page-sizes="[20, 50, 100, 150]"
       layout="total,sizes,prev, pager, next"
@@ -688,6 +696,7 @@ const request = reactive({
   loginName: null,
   operationType: null,
   cause: null,
+  reimburseAmount: null
 })
 
 const form = reactive({
@@ -803,6 +812,7 @@ function resetQuery() {
   request.loginName = null
   request.operationType = null
   request.cause = null
+  request.reimburseAmount = null
 }
 
 function checkQuery() {
@@ -829,6 +839,9 @@ function checkQuery() {
       )
       query.createTime = query.createTime.join(',')
     }
+  }
+  if (request.reimburseAmount !== null) {
+    query.reimburseAmount = request.reimburseAmount
   }
 
   return query

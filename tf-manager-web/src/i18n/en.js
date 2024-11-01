@@ -675,6 +675,7 @@ export default {
     afterEdit: 'After Edit',
     afterVipLevel: 'After VIP Level',
     amount: 'Amount',
+    amountGreaterThan: 'Amount Greater Than',
     amountLimitPerRain: 'Amount Limit Per Rain',
     adjust: 'Amount Adjust',
     alias: 'Alias',

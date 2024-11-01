@@ -364,6 +364,7 @@ export default {
     afterBalance: 'หลังจากยอดคงเหลือ',
     afterEdit: 'หลังแก้ไข',
     amount: 'จำนวน',
+    amountGreaterThan: 'จำนวนเงินที่มากกว่า',
     adjust: 'ปรับจำนวนเงิน',
     alias: 'นามแฝง',
     allvip: 'วีไอพีทั้งหมด',

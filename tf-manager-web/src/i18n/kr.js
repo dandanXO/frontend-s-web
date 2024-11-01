@@ -592,6 +592,7 @@ export default {
     afterBalance: '이후 잔액',
     afterEdit: '편집 후',
     amount: '금액',
+    amountGreaterThan: '보다 큰 금액',
     amountLimitPerRain: '비별 금액 제한',
     adjust: '금액 조정',
     alias: '별명',
