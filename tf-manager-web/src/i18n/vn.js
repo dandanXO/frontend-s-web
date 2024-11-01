@@ -577,6 +577,7 @@ export default {
     afterBalance: 'Sau số dư',
     afterEdit: 'Sau khi chỉnh sửa',
     amount: 'Số tiền',
+    amountGreaterThan: 'số tiền lớn hơn',
     amountLimitPerRain: 'Giới hạn số tiền mỗi lần mưa',
     adjust: 'Điều chỉnh',
     alias: 'Biệt danh',

@@ -688,6 +688,7 @@ export default {
     allmembers: '全部会员',
     allmembertype: '全部会员状态',
     amount: '金额',
+    amountGreaterThan: '金额大于',
     amountLimitPerRain: '每场红包雨金额限制',
     adjust: '调整',
     announcement: '公告',
