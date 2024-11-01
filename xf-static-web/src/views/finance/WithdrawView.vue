@@ -120,9 +120,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！
-            </div>
+<!--            <div v-if="isALIPAY" class="selected-tip">-->
+<!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
+<!--            </div>-->
           </el-col>
         </el-row>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
