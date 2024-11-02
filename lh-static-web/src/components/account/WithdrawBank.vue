@@ -136,6 +136,7 @@
                 v-model="bankCardInfo.bankId"
                 :placeholder="'选择' + chooseCard()"
                 style="width: 100%"
+                @change="checkAliType"
               >
                 <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
                   <el-row style="align-items: center" v-if="b.bankIcon" :gutter="10">
@@ -188,9 +189,9 @@
               style="width: 100%; min-height: 30px; font-size: 12px"
               :class="`blue-bg ${loginCountdown !== 0 ? 'disabled' : ''}`"
             />
-            <el-button 
-            :disabled="loginCountdown !== 0"  
-            class="common-btn" @click="openCaptchaForm()">{{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}</el-button>
+            <el-button :disabled="loginCountdown !== 0" class="common-btn" @click="openCaptchaForm()">
+              {{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}
+            </el-button>
           </el-space>
         </el-form-item>
 
@@ -886,20 +887,24 @@ export default defineComponent({
       }
     };
 
+    const checkAliType = (itemId) => {
+      isALIPAY.value= false;
+      // console.log(itemId)
+      banksList.value.forEach((bank) => {
+        if (bank.id === itemId) {
+          if (bank.code === "alipay") {
+            isALIPAY.value = true;
+          }
+        }
+      });
+    }
+
     const chooseCard = () => {
-      isALIPAY.value = false;
       if (isUSDT.value) {
         return "虚拟币";
       } else if (isEWALLET.value) {
         return "电子钱包";
       } else {
-        banksList.value.forEach((bank) => {
-          if (bank.id === bankCardInfo.bankId) {
-            if (bank.code === "alipay") {
-              isALIPAY.value = true;
-            }
-          }
-        });
         return "银行";
       }
     };
@@ -987,6 +992,7 @@ export default defineComponent({
       withdrawState,
       checkBankCards,
       chooseCard,
+      checkAliType,
       numAddress,
       checkType,
       isSZPAY,
