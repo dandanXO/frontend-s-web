@@ -41,53 +41,55 @@
           <button class="share-btn" @click="shareInvite">立刻分享</button>
           <div class="rebate-table-wrapper">
             <table border="0">
-              <tr>
-                <td>推荐新用户首存金额</td>
-                <td>邀请人彩金</td>
-                <td>被邀请人彩金</td>
-                <td>流水要求</td>
-              </tr>
-              <tr>
-                <td>≥100</td>
-                <td>18元</td>
-                <td>18元</td>
-                <td rowspan="6">
-                  3倍/
-                  <br />
-                  不限制场馆
-                </td>
-              </tr>
-              <tr>
-                <td>≥1,000</td>
-                <td>58元</td>
-                <td>58元</td>
-              </tr>
-              <tr>
-                <td>≥5,000</td>
-                <td>108元</td>
-                <td>108元</td>
-              </tr>
-              <tr>
-                <td>≥10,000</td>
-                <td>288元</td>
-                <td>288元</td>
-              </tr>
-              <tr>
-                <td>≥30,000</td>
-                <td>888元</td>
-                <td>888元</td>
-              </tr>
-              <tr>
-                <td>≥50,000</td>
-                <td>1,088元</td>
-                <td>1,088元</td>
-              </tr>
-              <tr>
-                <td>≥100,000</td>
-                <td>1,888元</td>
-                <td>1,888元</td>
-                <td></td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>推荐新用户首存金额</td>
+                  <td>邀请人彩金</td>
+                  <td>被邀请人彩金</td>
+                  <td>流水要求</td>
+                </tr>
+                <tr>
+                  <td>≥100</td>
+                  <td>18元</td>
+                  <td>18元</td>
+                  <td rowspan="6">
+                    3倍/
+                    <br />
+                    不限制场馆
+                  </td>
+                </tr>
+                <tr>
+                  <td>≥1,000</td>
+                  <td>58元</td>
+                  <td>58元</td>
+                </tr>
+                <tr>
+                  <td>≥5,000</td>
+                  <td>108元</td>
+                  <td>108元</td>
+                </tr>
+                <tr>
+                  <td>≥10,000</td>
+                  <td>288元</td>
+                  <td>288元</td>
+                </tr>
+                <tr>
+                  <td>≥30,000</td>
+                  <td>888元</td>
+                  <td>888元</td>
+                </tr>
+                <tr>
+                  <td>≥50,000</td>
+                  <td>1,088元</td>
+                  <td>1,088元</td>
+                </tr>
+                <tr>
+                  <td>≥100,000</td>
+                  <td>1,888元</td>
+                  <td>1,888元</td>
+                  <td></td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <!-- <div class="rebate-table">
@@ -120,9 +122,7 @@
             <div class="rebate-list"></div>
           </div> -->
 
-          <p class="example-text">
-            例：会员A邀请一位好友首存1,000元，会员A可获得58元，被邀请人可获得58元；
-          </p>
+          <p class="example-text">例：会员A邀请一位好友首存1,000元，会员A可获得58元，被邀请人可获得58元；</p>
         </div>
         <div class="tab-section">
           <img
@@ -134,14 +134,27 @@
 
           <div class="rules">
             <ol>
-              <li>每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，双方都可获得彩金， 邀请人能最高可获得1,888元；</li>
+              <li>
+                每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，双方都可获得彩金，
+                邀请人能最高可获得1,888元；
+              </li>
               <li>本活动仅计算被推荐人首次单笔充值金额,非累计及第二笔以上充值金额计算；</li>
-              <li>您每邀请一位新会员，被邀请人的第一笔首存金额达到对应档位即可在次日24小时内活动对应档位彩金，彩金3倍流水即可提款；</li>
+              <li>
+                您每邀请一位新会员，被邀请人的第一笔首存金额达到对应档位即可在次日24小时内活动对应档位彩金，彩金3倍流水即可提款；
+              </li>
               <li>邀请人等级不得低于vip1。</li>
               <li>被推荐人注册后,无限制首次充值时间,完成首笔充值达到门槛,即可参与</li>
-              <li>普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金</li>
-              <li>任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投 注额内。</li>
-              <li>邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一 个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。</li>
+              <li>
+                普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金
+              </li>
+              <li>
+                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
+                注额内。
+              </li>
+              <li>
+                邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
+                个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+              </li>
               <li>为避免文字理解差异，雷火电竞保留此活动最终解释权。</li>
             </ol>
           </div>
@@ -324,17 +337,14 @@
           </div>
         </div>
       </div>
-
-
     </div>
-
 
     <el-dialog
       v-model="isCheckRecordModalVisible"
       title=""
       width="100%"
       align-center
-      style="max-width: 800px; filter: hue-rotate(530deg);"
+      style="max-width: 800px; filter: hue-rotate(530deg)"
       @close="toggleCheckRecordModal(false)"
     >
       <div class="record-modal-container">
@@ -404,7 +414,6 @@
       </div>
     </el-dialog>
   </div>
-
 </template>
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
@@ -414,12 +423,12 @@ import { useRoute, useRouter } from "vue-router";
 
 import { getRecommendPrivilegeRecord, getRebateInfo } from "@/api/privilegeInvite/privilegeInvite";
 import { userStore } from "@/store/index";
-import { useNotify } from "@/hooks/notify"
+import { useNotify } from "@/hooks/notify";
 
 export default defineComponent({
   components: {},
   setup() {
-    const notify = useNotify()
+    const notify = useNotify();
     const route = useRoute();
     const store = userStore();
     const activeKey = ref(1);
@@ -469,7 +478,7 @@ export default defineComponent({
       tableRecords.value = [];
       getRecommendPrivilegeRecord(params).then((data) => {
         tableRecords.value = data.data;
-        if(!tableRecords.value || tableRecords.value.length ===0){
+        if (!tableRecords.value || tableRecords.value.length === 0) {
           notify.error("推广纪录为空。");
         }
       });
