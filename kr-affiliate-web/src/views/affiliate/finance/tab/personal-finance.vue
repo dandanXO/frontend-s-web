@@ -100,14 +100,14 @@
           {{ data.totalWinLoss }}
         </div>
       </div>
-      <div class="grid-item">
+      <!-- <div class="grid-item">
         <div class="grid-item-label">
           <span>{{ t('fields.paymentFee') }}</span>
         </div>
         <div class="grid-item-value">
           {{ data.paymentFeeAmount }}
         </div>
-      </div>
+      </div> -->
       <div class="grid-item">
         <div class="grid-item-label">
           <span>{{ t('fields.netProfit') }}</span>
