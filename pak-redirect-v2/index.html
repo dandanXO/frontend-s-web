@@ -11,6 +11,13 @@
 <h1 id="countdown">Redirect in ：5 seconds</h1>
 
 <script>
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Get the 'id' parameter value
+    const item1 = urlParams.get('refer');
+    const item2 = urlParams.get('r');
+    // console.log(item1)
+
     let countdownTime = 5;
 
     const encryptedUrl = "U2FsdGVkX18wf6flDR28GKkf6OFCxydWUzcsLvSxdcqus6anCm3lGfNJ41zRR+lX";
@@ -29,8 +36,15 @@
             }
 
             const decryptedUrl = decryptUrl(encryptedUrl, secretKey);
+            let afterStr= "";
+            if(item1){
+                afterStr += `/refer/${item1}`
+            }else if(item2){
+                afterStr += `/refer/${item2}`
+            }
+
             if (decryptedUrl) {
-                window.location.href = decryptedUrl;
+                window.location.href = decryptedUrl + afterStr;
             } else {
                 document.body.innerHTML = "<h1>Invalid URL</h1>";
             }
