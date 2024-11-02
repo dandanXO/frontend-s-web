@@ -32,6 +32,24 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          :label="t('fields.operate')"
+          align="center"
+          min-width="240"
+          v-if="hasPermission(['sys:affiliate:bank-card:unbind'])"
+        >
+          <template #default="scope">
+            <el-button
+              icon="el-icon-close"
+              size="mini"
+              type="danger"
+              v-show="hasPermission(['sys:affiliate:bank-card:unbind'])"
+              @click="confirmUnbind(scope.row)"
+            >
+              {{ t('fields.unbind') }}
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -120,10 +138,12 @@
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue';
 import moment from 'moment';
-import { getMemberBank, getMemberBankLog } from '../../../../../api/affiliate';
+import { getMemberBank, getMemberBankLog, deleteBankCard } from '../../../../../api/affiliate';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { hasPermission } from '@/utils/util'
+import { ElMessageBox } from 'element-plus';
 
 const { t } = useI18n();
 const props = defineProps({
@@ -234,6 +254,30 @@ function changeMemberBankLogPage(page) {
     memberBankLogRequest.current = page;
     loadMemberBankLog();
   }
+}
+
+const confirmUnbind = (card) => {
+  ElMessageBox.confirm(
+    t('message.confirmUnbind') + ' (' + card.bankName + ')',
+    '',
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: 'warning'
+    })
+    .then(() => {
+      // Remove card API
+      deleteBankCard(card).then((res) => {
+        if (res.code === 0) {
+          loadMemberBank();
+        }
+      }).catch((e) => {
+        console.log("error", e);
+      });
+    })
+    .catch(() => {
+      // catch error
+    })
 }
 
 onMounted(() => {
