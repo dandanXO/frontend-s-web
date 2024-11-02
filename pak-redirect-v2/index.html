@@ -8,7 +8,7 @@
 </head>
 <body id="pak-redirect-v2">
 
-<h1 id="countdown">Redirect in ：5 seconds</h1>
+<h1 id="countdown">Redirect in ：5 seconds;</h1>
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -38,9 +38,9 @@
             const decryptedUrl = decryptUrl(encryptedUrl, secretKey);
             let afterStr= "";
             if(item1){
-                afterStr += `/refer/${item1}`
+                afterStr += `refer/${item1}`
             }else if(item2){
-                afterStr += `/refer/${item2}`
+                afterStr += `refer/${item2}`
             }
 
             if (decryptedUrl) {
