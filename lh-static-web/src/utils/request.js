@@ -77,7 +77,6 @@ const globalLinks = [
   "lh926.cc",
   "lh017.cc",
   "lh070.cc",
-  "lh096.cc",
   "lh167.cc",
   "lh181.cc",
   "lh350.cc",
@@ -98,7 +97,7 @@ const globalLinks = [
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const globalAndCNLinks = ["leihuo", "lhgl", "e693.cc", "e890.cc", "e561.cc", "e396.cc", "lh713.vip", "65130.vip", "lh560.cc", "lh878.cc", "lh202.cc", "lh274.cc", "lh160.cc"];
+const globalAndCNLinks = ["leihuo", "lhgl", "e693.cc", "e890.cc", "e561.cc", "e396.cc", "lh713.vip", "65130.vip", "lh560.cc", "lh878.cc", "lh202.cc", "lh274.cc", "lh160.cc", "lh096.cc"];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 const REPLACEMENT_DOMAIN = "random";
