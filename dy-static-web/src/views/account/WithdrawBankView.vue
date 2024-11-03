@@ -4,8 +4,7 @@
       <span class="account-title">添加银行卡</span>
     </div>
     <div class="account-content">
-      <div class="account-tip-text wbot">
-      </div>
+      <div class="account-tip-text wbot"></div>
       <div class="flex-box flex-wrap bank-card-list">
         <div
           class="bank-card-item"
@@ -26,7 +25,7 @@
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
             <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-             <div class="unlink-icon" />
+            <div class="unlink-icon" />
           </div>
 
           <div class="flex-box cards">
@@ -134,6 +133,7 @@
                 v-model="bankCardInfo.bankId"
                 :placeholder="'选择' + chooseCard()"
                 style="width: 100%"
+                @change="checkAliType"
               >
                 <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
                   <el-row style="align-items: center" v-if="b.bankIcon" :gutter="10">
@@ -175,7 +175,9 @@
               :value="personalState.memberInfo.telephone"
               :class="`blue-bg ${loginCountdown !== 0 ? 'disabled' : ''}`"
             />
-            <el-button :disabled="loginCountdown !== 0" class="common-btn" @click="openCaptchaForm()">{{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}</el-button>
+            <el-button :disabled="loginCountdown !== 0" class="common-btn" @click="openCaptchaForm()">
+              {{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}
+            </el-button>
           </el-space>
         </el-form-item>
 
@@ -822,23 +824,27 @@ export default defineComponent({
       }
     }
 
-    const chooseCard = () => {
-      isALIPAY.value = false;
-      if (isUSDT.value) {
-        return '虚拟币'
-      } else if (isEWALLET.value) {
-        return '电子钱包'
-      } else {
-        banksList.value.forEach(bank => {
-            if (bank.id === bankCardInfo.bankId) {
-              if(bank.code === 'alipay'){
-                isALIPAY.value = true;
-              }
-            }
-          });
-        return '银行'
-      }
+    const checkAliType = (itemId) => {
+      isALIPAY.value= false;
+      // console.log(itemId)
+      banksList.value.forEach((bank) => {
+        if (bank.id === itemId) {
+          if (bank.code === "alipay") {
+            isALIPAY.value = true;
+          }
+        }
+      });
     }
+
+    const chooseCard = () => {
+      if (isUSDT.value) {
+        return "虚拟币";
+      } else if (isEWALLET.value) {
+        return "电子钱包";
+      } else {
+        return "银行";
+      }
+    };
 
     const numAddress = () => {
       if (isUSDT.value) {
@@ -923,6 +929,7 @@ export default defineComponent({
       withdrawState,
       checkBankCards,
       chooseCard,
+      checkAliType,
       numAddress,
       isSZPAY,
       loginCountdown,
@@ -1249,7 +1256,8 @@ export default defineComponent({
   }
 }
 
-.link-icon, .unlink-icon {
+.link-icon,
+.unlink-icon {
   background: url("../../assets/images/finance/bank-card-icons.png") no-repeat center center;
   background-size: auto 100%;
   width: 22px;
