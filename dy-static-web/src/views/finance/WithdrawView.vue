@@ -46,7 +46,7 @@
             v-for="(method, i) in withdrawalMethods"
             :key="i"
             class="txt-center withdraw-type-item"
-            @click="selectMethod(method, i)"
+            @click="i === activeItem ? '' : selectMethod(method, i)"
             :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">
@@ -151,6 +151,7 @@
             v-model="withdrawInfo.cardId"
             :placeholder="`选择${cardLabel()}`"
             style="width: 300px"
+            :loading="isBankCardsLoading"
           >
             <el-option
               v-for="b in withdrawState.bankCardList"
@@ -371,7 +372,11 @@ export default defineComponent({
       }
     })
 
+    const isBankCardsLoading = ref(false);
     const checkBankCards = () => {
+      if (!isBankCardsLoading) {
+        return;
+      }
 
       if(isUSDT.value){
         ElMessageBox.alert(
@@ -431,6 +436,7 @@ export default defineComponent({
 
     }
     const loadCards = () => {
+        isBankCardsLoading.value = true;
         withdrawState.bankCardList = []
         loadBankCards().then((response) => {
           if (response.code === 0) {
@@ -453,7 +459,9 @@ export default defineComponent({
         }).catch((error) => {
           console.log(error.message);
           // message.error(error.message, 4)
-           })
+        }).finally(() => {
+        isBankCardsLoading.value = false;
+        })
     }
 
     async function verifyWithdrawAmount(r, v) {
