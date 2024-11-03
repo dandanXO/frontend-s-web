@@ -23,7 +23,7 @@
 
             <div class="card-name">
               <div class="card-bank-name">{{ bc.bankName === "USDTTRC" ? "USDTTRC20" : bc.bankName }}</div>
-              <div class="card-bank-type">{{ checkType(bc.bankType) }}</div>
+              <div class="card-bank-type">{{ checkType(bc.bankType, bc.bankCode) }}</div>
             </div>
           </div>
 
@@ -44,7 +44,7 @@
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
           <RiLink />
-          <span class="lock-card-txt">添加银行卡 / 电子钱包 / 虚拟币</span>
+          <span class="lock-card-txt">添加银行卡 / 支付宝 / 电子钱包 / 虚拟币</span>
         </div>
       </div>
     </div>
@@ -136,7 +136,6 @@
                 v-model="bankCardInfo.bankId"
                 :placeholder="'选择' + chooseCard()"
                 style="width: 100%"
-                @change="checkAliType"
               >
                 <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
                   <el-row style="align-items: center" v-if="b.bankIcon" :gutter="10">
@@ -295,22 +294,17 @@ export default defineComponent({
     let validateBankLength = async (r, v) => {
       var min = 6;
       var max = 12;
-      if (selectedBankType.value === "Bank") {
-        var selectedBankCode = null;
-        banksList.value.forEach((bank) => {
-          if (bank.id === bankCardInfo.bankId) {
-            selectedBankCode = bank.code;
-          }
-        });
-        if (selectedBankCode === "alipay") {
-          min = 11;
-          max = 20;
-        } else {
-          if (!/^\d+$/.test(v)) {
-            return Promise.reject("请输入数字");
-          }
-          min = 16;
-          max = 19;
+      if (selectedBankType.value === "alipay") {
+        min = 11;
+        max = 20;
+        if (!/^\d+$/.test(v)) {
+          return Promise.reject("请输入数字");
+        }
+      } else if (selectedBankType.value === "Bank") {
+        min = 16;
+        max = 19;
+        if (!/^\d+$/.test(v)) {
+          return Promise.reject("请输入数字");
         }
       } else if (selectedBankType.value === "Crypto") {
         min = 34;
@@ -360,8 +354,11 @@ export default defineComponent({
         return Promise.resolve();
       }
     };
-    const checkType = (type) => {
+    const checkType = (type, code) => {
       if (type === "BANK") {
+        if (code === "alipay") {
+          return "支付宝";
+        }
         return "银行卡";
       } else if (type === "CRYPTO") {
         return "数字货币";
@@ -425,11 +422,9 @@ export default defineComponent({
     ]);
     const bankTypes = [
       { value: "Bank", text: "银行卡" },
+      { value: "alipay", text: "支付宝" },
       { value: "Crypto", text: "数字货币" },
-      {
-        value: "e-Wallet",
-        text: "电子钱包"
-      }
+      { value: "e-Wallet", text: "电子钱包" }
     ];
     const personalState = reactive({
       memberInfo: {},
@@ -629,13 +624,24 @@ export default defineComponent({
         if (selectedBankType.value === "Bank") {
           isUSDT.value = false;
           isEWALLET.value = false;
-          if (element.bankType === "BANK") {
+          isALIPAY.value = false;
+          console.log(element)
+          if (element.bankType === "BANK" && element.code !== 'alipay') {
+            banksList.value.push(element);
+          }
+        }
+        if (selectedBankType.value === "alipay") {
+          isUSDT.value = false;
+          isEWALLET.value = false;
+          isALIPAY.value = true;
+          if (element.bankType === "BANK" && element.code === 'alipay') {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "Crypto") {
           isUSDT.value = true;
           isEWALLET.value = false;
+          isALIPAY.value = false;
           if (element.bankType === "CRYPTO") {
             banksList.value.push(element);
           }
@@ -643,6 +649,7 @@ export default defineComponent({
         if (selectedBankType.value === "e-Wallet") {
           isEWALLET.value = true;
           isUSDT.value = false;
+          isALIPAY.value = false;
           if (element.bankType === "EWALLET") {
             banksList.value.push(element);
           }
@@ -888,7 +895,7 @@ export default defineComponent({
     };
 
     const checkAliType = (itemId) => {
-      isALIPAY.value= false;
+      isALIPAY.value = false;
       // console.log(itemId)
       banksList.value.forEach((bank) => {
         if (bank.id === itemId) {
@@ -904,6 +911,8 @@ export default defineComponent({
         return "虚拟币";
       } else if (isEWALLET.value) {
         return "电子钱包";
+      } else if (isALIPAY.value) {
+        return "支付宝"
       } else {
         return "银行";
       }
@@ -916,6 +925,8 @@ export default defineComponent({
         return "电子钱包";
       } else if (isEWALLET.value && isSZPAY.value) {
         return "数字人民币使用的手机号";
+      } else if (isALIPAY.value) {
+        return "支付宝账号";
       } else {
         return "银行卡号";
       }
