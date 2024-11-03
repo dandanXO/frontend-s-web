@@ -500,6 +500,8 @@ export default defineComponent({
         return '钱包地址'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝'
       } else {
         return '银行卡'
       }
@@ -510,6 +512,8 @@ export default defineComponent({
         return '虚拟钱包'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝卡'
       } else {
         return '银行卡片'
       }
