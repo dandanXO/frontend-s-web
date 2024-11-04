@@ -194,42 +194,38 @@
     <el-dialog
       :title="qrDialogControl.dialogTitle"
       v-model="qrDialogControl.dialogVisible"
-      width="450px"
+      width="400px"
     >
       <p style="text-align: center;">{{ qrDialogControl.dialogContent }}</p>
 
-      <div
-        style="display: flex; justify-content: space-between; margin-left: 25px; margin-right: 25px;"
-      >
-        <div class="qrcode-container">
-          <QrcodeVue
-            :value="qrDialogControl.dialogQRLink1"
-            size="160"
-            id="qrcode"
-          />
-          <div class="icon-container">
-            <img
-              :src="qrDialogControl.dialogQRIcon1"
-              alt="Icon"
-              class="center-icon"
-            >
+      <div class="qrcode-wrapper">
+        <div style="display: flex; flex-direction: column; align-items: center; width: fit-content; gap: 10px;">
+          <div class="qrcode-container">
+            <QrcodeVue
+              :value="qrDialogControl.dialogQRLink1"
+              size="160"
+              id="qrcode"
+            />
+            <div class="icon-container">
+              <img
+                :src="qrDialogControl.dialogQRIcon1"
+                alt="Icon"
+                class="center-icon"
+              >
+            </div>
           </div>
-        </div>
-        <div>
-          <QrcodeVue :value="qrDialogControl.dialogQRLink2" size="160" />
-        </div>
-      </div>
-
-      <div
-        style="display: flex; justify-content: space-between; margin-left: 25px; margin-right: 25px; margin-top: 20px;"
-      >
-        <div>
-          <button @click="download">
+          <button @click="download" style="width: fit-content;">
             {{ $t('referralLink.affiliateDownloadQRtoLocal') }}
           </button>
         </div>
-        <div style="float: left;">
-          {{ $t('referralLink.affiliateScanMe') }}
+
+        <div style="display: flex; flex-direction: column; align-items: center; width: fit-content; gap: 10px;">
+          <div>
+            <QrcodeVue :value="qrDialogControl.dialogQRLink2" size="160" />
+          </div>
+          <div style="float: left;">
+            {{ $t('referralLink.affiliateScanMe') }}
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -495,6 +491,17 @@ onMounted(() => {
   margin-left: auto;
 }
 
+.qrcode-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
 /* Styles for the container and QR code */
 .qrcode-container {
   position: relative;

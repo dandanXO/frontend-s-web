@@ -1,6 +1,5 @@
 <template>
   <Swiper
-    v-if="!isMobileView"
     id="login-swiper"
     :key="swiperKey"
     :slides-per-view="1"
