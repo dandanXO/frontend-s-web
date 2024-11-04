@@ -29,6 +29,20 @@ export default defineComponent({
 
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
+    const allowedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
+
+    function shouldRedirect(domain) {
+      return allowedDomains.includes(domain);
+    }
+
+    function handleRedirect() {
+      const currentDomain = window.location.hostname;
+      const redirectKey = `redirected-${currentDomain}`;
+
+      if (shouldRedirect(currentDomain)) {
+        router.replace('/redirect');
+      }
+    }
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
@@ -350,6 +364,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      handleRedirect();
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
@@ -384,6 +399,16 @@ export default defineComponent({
     watch(
       () => ui.shouldFetchDownloadAppUrl,
       (value) => value && ui.getTopDownloadUrl()
+    );
+    watch(
+      () => window.location.hostname,
+      () => {
+        const currentDomain = window.location.hostname;
+        const redirectKey = `redirected-${currentDomain}`;
+        if (!sessionStorage.getItem(redirectKey)) {
+          handleRedirect();
+        }
+      }
     );
   }
 });

@@ -1,7 +1,7 @@
 <template>
     <div class="redirect-page" v-if="!redirected">
         <h1>Redirecting Soon...</h1>
-        <h1 id="countdown">Waiting time : 5 seconds;</h1>
+        <h1 id="countdown">Waiting time : {{ countdown }} seconds;</h1>
         <p class="redirect-info">Please wait while we take you to your destination.</p>
     </div>
   </template>
@@ -9,6 +9,7 @@
   <script setup>
   import { ref, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
+  import { SessionStorage } from "quasar";
   
   const countdown = ref(5);
   const router = useRouter();
@@ -18,14 +19,14 @@
     const currentDomain = window.location.hostname;
     const redirectKey = `redirected-${currentDomain}`;
   
-    if (sessionStorage.getItem(redirectKey)) {
+    if (SessionStorage.getItem(redirectKey)) {
       redirected.value = true; 
       router.replace('/');
     } else {
-      sessionStorage.setItem(redirectKey, 'true');
+      SessionStorage.setItem(redirectKey, 'true');
       const timer = setInterval(() => {
         countdown.value--;
-        if (countdown.value <= 0) {
+        if (countdown.value === 0) {
           clearInterval(timer);
           router.replace('/'); 
         }
