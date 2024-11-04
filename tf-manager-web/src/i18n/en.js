@@ -1220,6 +1220,7 @@ export default {
     memberInviteLimit: 'Member Invite Limit',
     memberList: 'Member List',
     memberMessage: 'Member Message',
+    membersDailyTotalDeposit: 'Member Current Day Total Deposit',
     membersMonthlyTotalDeposit: 'Member Current Month Total Deposit',
     memberName: 'Member Name',
     memberPlatformAction: 'Action（Manual Register/Delete）',

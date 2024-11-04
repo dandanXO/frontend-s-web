@@ -44,6 +44,14 @@
           {{ t('fields.search') }}
         </el-button>
         <el-button size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:refer-friend-eligibility:export']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
@@ -71,6 +79,11 @@
         </el-table-column>
         <el-table-column prop="activeMembers" :label="t('fields.dailyActiveMemberCount')" min-width="100" />
         <el-table-column prop="totalActiveMembers" :label="t('fields.totalActiveMembers')" min-width="100" />
+        <el-table-column prop="membersDailyTotalDeposit" :label="t('fields.membersDailyTotalDeposit')" min-width="100">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.membersDailyTotalDeposit,type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="membersMonthlyTotalDeposit" :label="t('fields.membersMonthlyTotalDeposit')" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.membersMonthlyTotalDeposit,type: 'money'}" />
@@ -121,7 +134,7 @@
       :title="t('fields.viewDetails')"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="780px"
+      width="980px"
     >
       <div style="padding-bottom: 15px;">
         <el-table
@@ -135,6 +148,11 @@
           <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="100">
             <template #default="scope">
               {{ t('gameType.' + scope.row.gameType) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" min-width="100">
+            <template #default="scope">
+              $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
             </template>
           </el-table-column>
           <el-table-column prop="validBet" :label="t('fields.validBet')" align="center" min-width="100">
@@ -180,13 +198,30 @@
         </div>
       </div>
     </el-dialog>
+
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 
 import { onMounted, reactive, ref, computed } from "vue";
-import { getReferFriendEligibility, getReferFriendEligibilityDetails, checkHasClaimed, distributeReferFriendEligibility } from "@/api/refer-friend-eligibility";
+import { getReferFriendEligibility, getReferFriendEligibilityDetails, checkHasClaimed, distributeReferFriendEligibility, getExport } from "@/api/refer-friend-eligibility";
 import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from "@/api/site";
 import { useStore } from '@/store'
@@ -206,7 +241,8 @@ const selectedRecord = reactive({
 });
 
 const uiControl = reactive({
-  dialogVisible: false
+  dialogVisible: false,
+  messageVisible: false
 });
 
 const page = reactive({
@@ -313,6 +349,16 @@ async function distribute() {
   await distributeReferFriendEligibility(query);
   uiControl.dialogVisible = false
   ElMessage({ message: t('message.distributeSuccess'), type: 'success' })
+}
+
+async function requestExportExcel() {
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 onMounted(async() => {

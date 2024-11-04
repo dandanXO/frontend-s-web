@@ -1219,6 +1219,7 @@ export default {
     memberInfo: '会员信息',
     memberList: '会员列表',
     memberMessage: '发件箱',
+    membersDailyTotalDeposit: '会员当日总存款',
     membersMonthlyTotalDeposit: '会员当月总存款',
     memberName: '会员名',
     memberPlatformAction: '操作（手动注册/删除）',

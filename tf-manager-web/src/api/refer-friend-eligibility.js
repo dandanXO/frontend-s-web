@@ -16,3 +16,7 @@ export const checkHasClaimed = (query) => {
 export const distributeReferFriendEligibility = (query) => {
   return https().request("/refer-friend-eligibility/distribute", Method.POST, query, ContentType.form);
 }
+
+export const getExport = (query) => {
+  return https().request("/refer-friend-eligibility/export", Method.GET, query, ContentType.form);
+};
