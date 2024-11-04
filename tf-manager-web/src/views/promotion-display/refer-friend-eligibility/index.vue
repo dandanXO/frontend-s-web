@@ -205,15 +205,13 @@
           <span>{{ t('fields.totalRebateAmount') }}</span>
           <span style="margin-left: 10px">$ </span>
           <span>{{ totalRebateAmount.toFixed(2) }}</span>
-        </div>
-        <div class="table-footer">
-          <el-button v-if="!detailPage.hasClaimed && totalRebateAmount == 0" type="warning" disabled style="margin-left: 10px">
+          <el-button v-if="!detailPage.hasClaimed && totalRebateAmount == 0" size="mini" type="warning" disabled style="margin-left: 10px">
             <span >{{ $t('fields.ineligible') }}</span>
           </el-button>
-          <el-button v-else-if="!detailPage.hasClaimed && totalRebateAmount > 0" type="primary" @click="distribute" style="margin-left: 10px">
+          <el-button v-else-if="!detailPage.hasClaimed && totalRebateAmount > 0" size="mini" type="primary" @click="distribute" style="margin-left: 10px">
             <span >{{ $t('fields.distributeRebate') }}</span>
           </el-button>
-          <el-button v-else type="success" disabled style="margin-left: 10px">
+          <el-button v-else size="mini" type="success" disabled style="margin-left: 10px">
             <span >{{ $t('fields.distributed') }}</span>
           </el-button>
         </div>
@@ -436,6 +434,7 @@ onMounted(async() => {
 .table-footer {
   margin-top: 15px;
   margin-right: 20px;
+  align-items: center;
   font-size: small;
   font-weight: bold;
   display: flex;
