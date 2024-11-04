@@ -815,6 +815,20 @@ build-image-pak-landing-v3:
 
 #===============================================================================================
 
+build-pak-landing-v4:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-landing-v4
+
+build-image-pak-landing-v4:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-landing-v4
+  needs:
+    - build-pak-landing-v4
+
+#===============================================================================================
+
 
 deploy-pak-download-pwa:
   extends: .s3-deploy
