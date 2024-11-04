@@ -4,7 +4,7 @@
 
 <script>
 import { defineComponent, onMounted, ref, nextTick, watch } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { Platform, SessionStorage, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
@@ -36,13 +36,16 @@ export default defineComponent({
     }
 
     function handleRedirect() {
-      const currentDomain = window.location.hostname;
-      const redirectKey = `redirected-${currentDomain}`;
+      if (!store.isApp()) {
+        const currentDomain = window.location.hostname;
 
-      if (shouldRedirect(currentDomain)) {
-        router.replace('/redirect');
+        if (shouldRedirect(currentDomain)) {
+          SessionStorage.setItem("REDIRECT_PATH", window.location.pathname);
+          router.replace("/redirect");
+        }
       }
     }
+
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
@@ -348,8 +351,8 @@ export default defineComponent({
           route.name === "referCode" && route.params.referralCode
             ? route.params.referralCode
             : sessionStorage.getItem("REFERRAL_CODE")
-            ? sessionStorage.getItem("REFERRAL_CODE")
-            : localStorage.getItem("REG_REFERRAL_CODE");
+              ? sessionStorage.getItem("REFERRAL_CODE")
+              : localStorage.getItem("REG_REFERRAL_CODE");
         const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
         if (!_fbId) return;
         fbq("init", _fbId);
