@@ -160,6 +160,22 @@ export default defineComponent({
       }
     };
 
+    const getAffiliateByDomain = () => {
+      var host = window.location.host;
+      var siteCode = process.env.SITE;
+      // host = "www.lh56917.com";
+      if (store.isNotAppPromo()) {
+        api.get(`/app/getAffiliateCode?siteCode=${siteCode}&domain=${host}`).then((res) => {
+          console.log(res);
+          if (res.code === 0 && res.data !== "") {
+            // alert(res.data)
+            var agentCode = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", agentCode);
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkServerStatus();
       checkSID();
@@ -168,6 +184,8 @@ export default defineComponent({
       if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock("portrait");
       }
+
+      getAffiliateByDomain();
       checkSessStorageItem();
 
       setTimeout(getOnlineStatApi, 2000);

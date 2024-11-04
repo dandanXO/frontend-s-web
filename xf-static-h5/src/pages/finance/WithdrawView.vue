@@ -155,7 +155,10 @@
                 {{
                   selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                    : (
+                        withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                        selectedWithdrawalMethod.withdrawFee
+                      ).toFixed(2)
                 }}
                 USDT
               </span>
@@ -216,9 +219,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！
-            </div>
+            <!--            <div v-if="isALIPAY" class="selected-tip">-->
+            <!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
+            <!--            </div>-->
           </div>
         </q-form>
       </div>
@@ -497,6 +500,8 @@ export default defineComponent({
         return '钱包地址'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝'
       } else {
         return '银行卡'
       }
@@ -507,6 +512,8 @@ export default defineComponent({
         return '虚拟钱包'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝卡'
       } else {
         return '银行卡片'
       }

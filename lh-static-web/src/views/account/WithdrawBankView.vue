@@ -855,6 +855,8 @@ export default defineComponent({
         return '钱包地址'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      }  else if (isALIPAY.value) {
+        return '支付宝账号'
       } else {
         return '银行卡号'
       }

@@ -959,7 +959,7 @@ const loadAppTabs = () => {
         store.extraPrivilegeId = data.deposit.privilegeId;
         extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
 
-        selectedItemPrivilegeId.value = store.extraPrivilegeId;
+        // selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
