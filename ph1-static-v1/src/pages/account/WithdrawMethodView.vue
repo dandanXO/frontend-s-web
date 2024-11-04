@@ -3,7 +3,7 @@
     <div v-if="isSelectedMethod" class="withdrawal-summary">
       <div class="balance">
         <span class="amount">
-          {{ store.balance >= 0 ? convertToCommaAmount(store.balance, false) : "0.00" }}
+          {{ store.balance > 0 ? convertToCommaAmount(store.balance, false) : "0.00" }}
         </span>
         <div class="title">Cash Balance</div>
       </div>
@@ -13,7 +13,7 @@
       <div class="withdrawable">
         <span class="amount">
           {{
-            selectedMethodItem.withdrawableBalance >= 0
+            selectedMethodItem.withdrawableBalance > 0
               ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
               : "0.00"
           }}
