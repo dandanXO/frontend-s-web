@@ -52,6 +52,17 @@
           <span>{{ Math.floor(affInfo.point) }}</span>
         </div>
       </div>
+      <div class="route-wrapper">
+        <div :class="`route-container show-menu ${route.path.substring(route.path.lastIndexOf('/'))==='/announcement' ? 'active' : ''}`">
+          <RouterLink to="/personal/announcement" class="route">
+            <div class="route-content">
+              <span class="route-label">
+                {{ t('fields.systemAnnouncement') }}
+              </span>
+            </div>
+          </RouterLink>
+        </div>
+      </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
           <a
@@ -525,7 +536,7 @@ const getNavigationData = () => {
           title: t('fields.systemAnnouncement'),
           label: 'systemAnnouncement',
           active: false,
-          isMainNav: true,
+          isMainNav: false,
           icon: 'speaker',
         },
         {
