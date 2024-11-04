@@ -1630,6 +1630,12 @@ export default defineComponent({
       // }, { immediate: true });
     });
 
+    watch(() => registerDialogVisible.value, () => {
+      if (registerDialogVisible.value) {
+        getAffiliateCode();
+      }
+    });
+
     const getReferalCode = () => {
       const referCode = sessionStorage.getItem("REFERRAL_CODE");
       // console.log("got Code");
