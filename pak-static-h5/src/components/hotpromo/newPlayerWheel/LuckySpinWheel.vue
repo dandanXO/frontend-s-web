@@ -58,7 +58,7 @@ const $q = useQuasar();
 const router = useRouter();
 
 // spin wheel constants
-const TOTAL_ITEMS = 8;
+const TOTAL_ITEMS = 6;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
@@ -214,7 +214,7 @@ const spinWheel = () => {
         }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-        spin(2, () => {
+        spin(3, () => {
           showPrizePopup.value = true;
           prizePopupBonusAmt.value = res.data.bonusAmount;
           remainingDraws.value = 0;
@@ -330,16 +330,17 @@ onMounted(() => {
   height: 100%;
 }
 .wheel-top-btn {
-  width: 137px;
-  height: 123px;
+  width: 155px;
+  height: 115px;
   position: absolute;
-  top: 24px;
-  left: 129px;
+  top: 21px;
+  left: 50%;
   right: 0;
-  z-index: 25;
+  z-index: 24;
+  transform: translateX(-50%);
   img {
-    width: 137px;
-    height: 123px;
+    width: 155px;
+    height: 115px;
   }
 }
 .draw-btn {
