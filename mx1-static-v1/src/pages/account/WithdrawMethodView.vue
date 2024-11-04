@@ -1,5 +1,30 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div class="withdrawal-summary q-mb-md">
+      <div class="balance">
+        <span class="amount">
+          <!-- {{
+            withdrawType === "flat" ? convertToCommaAmount(inrBalance, false) : convertToCommaAmount(usdtBalance, false)
+          }} -->
+          {{store.balance}}
+        </span>
+        <div class="title">Cash Balance</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          {{
+            withdrawableBalance >= 0
+              ? convertToCommaAmount(withdrawableBalance, false)
+              : "0.00"
+          }}
+        </span>
+        <div class="title">Withdrawable</div>
+      </div>
+    </div>
+
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <template v-if="isLoadingWithdrawalMethod">
       <div class="withdraw-methods-currency">
@@ -265,7 +290,7 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
-              <div class="desc desc_white">{{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}</div>
+              <div class="desc desc_white">{{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawAmount) }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
@@ -283,7 +308,7 @@
                 <div class="remain-wager-wrapper" @click="refreshRemainWager">
                   <q-spinner v-if="isRefreshRemainWager" />
                   <span v-else>
-                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, 2) }}
                   </span>
                   <img
                     class="refresh-btn-img"
@@ -728,6 +753,7 @@ const resetSelectedMethod = () => {
 
 const isBankType = ref();
 
+const withdrawableBalance = ref();
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
   // selectedWithdraw.value.forEach((method) => (method.active = false));
@@ -740,6 +766,7 @@ const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
   // debugger;
   selectedMethodItem.value = item;
+  withdrawableBalance.value = item.withdrawableBalance;
   filteredBankList.value = item.bankList;
   isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;
