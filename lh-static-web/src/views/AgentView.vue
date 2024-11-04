@@ -12,29 +12,50 @@
         </a>
       </div>
 
-      <div class="affiliate-program">
+      <div class="affiliate-program-first">
         <!-- <img src="@/assets/images/affiliate/rules-dark.png" /> -->
-
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">电竞佣金方案</div>
+            <div class="affiliate-subtitle">佣金方案</div>
             <div class="affiliate-inner">
-              <div class="affiliate-terms">分红条款</div>
+              <div class="affiliate-terms">代理佣金结算规则</div>
               <ul>
-                <li>月充值金额≥200元为活跃玩家,当月需要至少五个活跃会员才能结算佣金。</li>
-                <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕.</li>
-                <li>佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
+                <li>结算时间：每月 1 号 00:00 至每月最后一日 23:59:59；结算时间：每月 51 号至 10 号结算。</li>
+                <li>佣金派发：所有佣金由系统直接发放到代理账户，无需流水，绑定银行卡后即可提款。</li>
+                <li>每月至少有五个活跃会员才能结算佣金，单个会员当月充值≥200 元为一个活跃会员</li>
                 <li>
-                  代理佣金计算方式：
+                  代理推广每月至少需要新注册活跃会员达到 3 名，如无法达到将视为零推广雷火平台，代理部有权减少或扣除部分佣金，如果三个月累计新注册活跃会员未达到十位将会停用代理账户，需代理联系网站重新开启。
                   <br />
-                  <span class="highlight">[（投注输赢额-优惠100%）-（存款+提款）*1.6%-平台费*8%]*佣金比例</span>
-                </li>
-                <li>
-                  代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。
                 </li>
               </ul>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="affiliate-program">
+        <!-- <img src="@/assets/images/affiliate/rules-dark.png" /> -->
+
+        <div class="affiliate-subgroup agent-content-item">
+          <!-- <div class="affiliate-sub">
+            <div class="affiliate-subtitle">电竞佣金方案</div>
+            <div class="affiliate-inner">
+              <div class="affiliate-terms">分红条款</div>
+              <ul>
+                <li>月充值金额≥200 元为活跃玩家，当月需要至少五个活跃会员才能结算佣金。</li>
+                <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕。</li>
+                <li>佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
+                <li>
+                  代理佣金计算方式：
+                  <br />
+                  <span class="highlight">[（投注输赢额 - 优惠 100%）-（存款 + 提款）*1.6%-平台费*8%]*佣金比例</span>
+                </li>
+                <li>
+                  代理推广每月至少需要新注册活跃会员达到 3 名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。
+                </li>
+              </ul>
+            </div>
+          </div> -->
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">佣金如何计划</div>
             <div class="affiliate-inner">
@@ -81,15 +102,64 @@
             </div>
             <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
           </div>
+          <div class="affiliate-sub">
+            <div class="affiliate-subtitle">佣金如何计划</div>
+            <div class="affiliate-inner" >
+              <div style="display: flex; justify-content: space-between;">
+                <div>平台输赢</div> 
+                <div style="color: rgba(255, 250, 134, 1);">10,000</div>
+              </div>
+            </div>
+            <div>
+              <div class="affiliate-inner" style="border-bottom-right-radius:0px; border-bottom-left-radius:0px;">
+                <div style="display: flex; justify-content: space-between;">
+                  <div>平台费</div> 
+                  <div style="color: rgba(255, 250, 134, 1);">-800</div>
+                </div>
+              </div>
+              <div class="affiliate-inner-2" style="border-top-left-radius:0px;border-top-right-radius:0px;">
+                平台费=游戏总输赢 x8%
+              </div>
+            </div>
+            <div>
+              <div class="affiliate-inner" style="border-bottom-right-radius:0px; border-bottom-left-radius:0px;">
+                <div style="display: flex; justify-content: space-between;">
+                  <div>红利</div> 
+                  <div style="color: rgba(255, 250, 134, 1);">-200</div>
+                </div>
+              </div>
+              <div class="affiliate-inner-2" style="border-top-left-radius:0px;border-top-right-radius:0px;">
+                返水，红利，存提手续费后台可见明细
+              </div>
+            </div>
+            <div class="affiliate-inner">
+              <div style="display: flex; justify-content: space-between;">
+                <div>净利润</div> 
+                <div style="color: rgba(255, 250, 134, 1);">9,000</div>
+              </div>
+            </div>
+            <div class="affiliate-inner">
+              <div style="display: flex; justify-content: space-between;">
+                <div>佣金比例</div> 
+                <div style="color: rgba(255, 250, 134, 1);">x35%</div>
+              </div>
+            </div>
+            <div class="affiliate-inner" style="margin-bottom: 28px;">
+              <div style="display: flex; justify-content: space-between;">
+                <div>代理佣金</div> 
+                <div style="color: rgba(255, 250, 134, 1);">3,150</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- <img src="@/assets/images/affiliate/calc-dark.png" /> -->
-        <div class="affiliate-subgroup agent-content-item">
+        <!-- <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">计算公式</div>
+            <div class="affiliate-subtitle">计算公式？!!</div>
             <div class="agent-demo">
               <div class="agent-demo-bg">
-                <div class="agent-demo-example-title">例子1</div>
+                <div class="agent-demo-example-title">例子 1</div>
                 <div class="agent-demo-example-text">
                   <div class="agent-demo-example-boxes">
                     <div class="agent-demo-example-box" v-for="eg in egAmts">
@@ -117,7 +187,7 @@
                   </div>
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除存提手续费1.6%</div>
+                      <div class="txt-left">扣除存提手续费 1.6%</div>
                       <div class="txt-right">-16</div>
                     </div>
                   </div>
@@ -149,7 +219,7 @@
               </div>
 
               <div class="agent-demo-bg">
-                <div class="agent-demo-example-title">例子2</div>
+                <div class="agent-demo-example-title">例子 2</div>
                 <div class="agent-demo-example-text">
                   <div class="agent-demo-example-boxes">
                     <div class="agent-demo-example-box" v-for="eg in eg2Amts">
@@ -177,7 +247,7 @@
                   </div>
                   <div class="agent-demo-table">
                     <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除存提手续费1.6%</div>
+                      <div class="txt-left">扣除存提手续费 1.6%</div>
                       <div class="txt-right">-2240</div>
                     </div>
                   </div>
@@ -210,9 +280,9 @@
                 </div>
               </div>
             </div>
-            <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1.6%</div>
+            <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的 1.6%</div>
           </div>
-        </div>
+        </div> -->
 
         <div>
           <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')" class="agent-reg-btn">立即申请代理</a>
@@ -236,7 +306,7 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-qq.png">
                 </div>
-                <div>合营QQ</div>
+                <div>合营 QQ</div>
                 <span ref="contact1">1903687863</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
@@ -247,7 +317,7 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-skype.png">
                 </div>
-                <div>合营Skype</div>
+                <div>合营 Skype</div>
                 <span ref="contact2">live:.cid.1a1ab9b6b5b0721f</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
@@ -298,45 +368,45 @@ export default defineComponent({
     const egAmts = ref([
       {
         key: '存款',
-        amt: '1000元'
+        amt: '1000 元'
       },
       {
         key: '提款',
-        amt: '0元'
+        amt: '0 元'
       },
       {
         key: '总投注',
-        amt: '1100元'
+        amt: '1100 元'
       },
       {
         key: '总派彩',
-        amt: '00元'
+        amt: '00 元'
       },
       {
         key: '优惠派彩',
-        amt: '100元'
+        amt: '100 元'
       },
     ])
     const eg2Amts = ref([
       {
         key: '存款',
-        amt: '130000元'
+        amt: '130000 元'
       },
       {
         key: '提款',
-        amt: '10000元'
+        amt: '10000 元'
       },
       {
         key: '总投注',
-        amt: '140000元'
+        amt: '140000 元'
       },
       {
         key: '总派彩',
-        amt: '18000元'
+        amt: '18000 元'
       },
       {
         key: '优惠派彩',
-        amt: '2000元'
+        amt: '2000 元'
       },
     ])
 
@@ -530,8 +600,7 @@ export default defineComponent({
         }
       }
     }
-
-    .affiliate-program {
+    .affiliate-program-first {
       font-family: 'PingFang SC';
       color: #686c6f;
       text-align: left;
@@ -547,6 +616,7 @@ export default defineComponent({
         text-align: center;
       }
       .affiliate-subgroup {
+        margin-bottom: -32px;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
@@ -570,7 +640,7 @@ export default defineComponent({
           .affiliate-inner {
             background: #4D8DE1;
             border-radius: 8px;
-            padding: 15px 30px;
+            padding: 10px 20px;
           }
           .affiliate-terms {
             display: flex;
@@ -784,6 +854,269 @@ export default defineComponent({
         width: 100%;
       }
     }
+    .affiliate-program {
+      font-family: 'PingFang SC';
+      color: #686c6f;
+      text-align: left;
+      max-width: $maxwidth;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      .affiliate-main-title {
+        font-size: 36px;
+        color: #2e84f5;
+        text-align: center;
+      }
+      .affiliate-subgroup {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 50px;
+        .affiliate-sub {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          flex: 1;
+          background: url('../assets/images/affiliate/main-bg.png')no-repeat center center;
+          background-size: cover;
+          border-radius: 15px;
+          padding: 20px 40px;
+          box-shadow: 0px 0px 10px 0px #0000001a;
+          color: #424f72;
+          .affiliate-subtitle {
+            font-size: 30px;
+            font-weight: 700;
+            color: #ffffff;
+          }
+          .affiliate-inner {
+            background: #4D8DE1;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #ffffff;
+          }
+          .affiliate-inner-2 {
+            display: flex;
+            justify-content: center;
+            background: #4D8DE1;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #fff;
+            background: rgba(53, 120, 208, 1);
+          }
+          .affiliate-terms {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 15px;
+            &:before {
+              background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+              content: "";
+              width: 6px;
+              height: 24px;
+              display: inline-block;
+              margin-right: 10px;
+            }
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+
+          }
+          .highlight {
+            // color: #2e84f5;
+          }
+        }
+      }
+      .agent-content-item ul {
+        font-family: PingFang SC;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        text-align: left;
+        margin: 0;
+        padding-left: 20px;
+      }
+      .agent-content-item ul li {
+        color: #ffffff;
+        margin: 0;
+        &:not(:last-child) {
+          // margin-bottom: 41px;
+        }
+      }
+      .agent-content-item table {
+        width: 100%;
+        margin-top: 10px;
+        border-spacing: 0;
+        font-size: 18px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .agent-content-item table td,
+      .agent-content-item table th {
+        width: 25%;
+        text-align: center;
+        color: #dde8f7;
+        border: 1px solid #4d8de1;
+        background: linear-gradient(180deg, #4DA3FF -42.2%, #76B1FF 105.96%);
+
+      }
+      .agent-content-item table td {
+        height: 60px;
+        background: #3578d0;
+        color: #dde8f7;
+        border: 1px solid #4d8de1;
+      }
+      .agent-content-item table th {
+        height: 56px;
+      }
+      .agent-stress-tip {
+        font-family: PingFang SC;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 28px;
+        color: #3578D0;
+      }
+      .agent-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        justify-items: center;
+      }
+      .agent-demo-bg {
+        width: 100%;
+      }
+      .agent-demo-example-title {
+        text-align: center;
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 33.6px;
+      }
+      .agent-demo-example-text {
+        background: linear-gradient(180deg, #4DA3FF -42.2%, #76B1FF 105.96%);
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 700;
+        .agent-demo-example-boxes {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+          padding: 20px;
+          width: 75%;
+          margin: 10px auto;
+          flex-wrap: wrap;
+          .agent-demo-example-box {
+            background: #4D8DE1;
+            padding: 8px;
+            display: flex;
+            border-radius: 8px;
+            gap: 10px;
+            .agent-demo-example-box-key {
+              color: #ffffff;
+              white-space: nowrap;
+              font-size: 14.88px;
+              font-weight: 400;
+              line-height: 20.84px;
+            }
+            .agent-demo-example-box-amt {
+              color: #FFFA86;
+              white-space: nowrap;
+              font-size: 14.88px;
+              font-weight: 400;
+              line-height: 20.84px;
+            }
+          }
+        }
+      }
+      .agent-demo-btm {
+        // border-bottom: 1px solid #00000033;
+      }
+      .agent-demo-table {
+        display: table;
+        width: 100%;
+        background: #4D8DE1;
+        margin: 20px auto;
+        border-radius: 8px;
+      }
+      .agent-demo-table-tr {
+        display: table-row;
+      }
+      .agent-demo-table-tr div {
+        display: table-cell;
+        width: 50%;
+        padding: 10px 20px;
+        font-weight: 500;
+        font-size: 18px;
+      }
+      .txt-left {
+        color: #ffffff;
+        text-align: left !important;
+      }
+      .txt-right {
+        text-align: right !important;
+        color: #FFFA86;
+      }
+      .agent-reg-btn {
+        width: 413px;
+        margin: 0px auto;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        background: rgba(57, 152, 255, 1);
+        border-radius: 4px;
+        box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+        box-shadow: 0px -1px 4px 0px #5894ff inset;
+      }
+      .agent-contact-bg {
+        background-color: #f8f8f8;
+        box-shadow: 0px 5px 4px 0px rgba(12, 3, 7, 0.1);
+        border-radius: 5px;
+      }
+      .agent-contact-main {
+        width: 944px;
+        height: 400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .agent-contact-logo {
+        width: 150px;
+        text-align: center;
+        font-size: 24px;
+        color: #518bf7;
+      }
+      .agent-contact-ways {
+        width: 515px;
+      }
+      .agent-ways-box {
+        margin-top: 25px;
+      }
+      .agent-ways-way {
+        font-size: 16px;
+        color: #518bf7;
+      }
+      .agent-ways-val {
+        font-size: 16px;
+        color: #506180;
+        a {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      .agent-contact-ewm {
+        width: 150px;
+      }
+      .agent-contact-ewm img {
+        width: 100%;
+      }
+    }
   }
   .contact-list {
     padding: 20px 40px; 
@@ -914,6 +1247,52 @@ export default defineComponent({
           }
         }
       }
+      .affiliate-program-first {
+        .agent-stress-tip {
+          color: #B7C1FF;
+        }
+        .affiliate-subgroup {
+          .affiliate-sub {
+            background: url('../assets/images/affiliate/main-bg-dark.png')no-repeat center center;
+            background-size: 100% 100%;
+            .affiliate-inner {
+              background: #17223E;
+            }
+          }
+        }
+        .agent-content-item table th, 
+        .agent-content-item table td {
+          border-color: #17223E;
+        }
+        .agent-content-item table th {
+          background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+        }
+        .agent-content-item table td {
+          background: #374569;
+        }
+        
+        .agent-demo-example-text {
+          background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+            .agent-demo-example-boxes {
+              .agent-demo-example-box{
+                background: #17223E;
+                .agent-demo-example-box-amt {
+                  color: #B7C0FF;
+                }
+              }
+          }
+        }
+        .agent-demo-table {
+          background: #17223E;
+          .txt-right {
+            color: #B7C0FF;
+          }
+        }
+        .agent-reg-btn {
+          background: url(../assets/images/affiliate/agent-btn-dark.png);
+          background-size: 100% 100%;
+        }
+      } 
       .affiliate-program {
         .agent-stress-tip {
           color: #B7C1FF;
