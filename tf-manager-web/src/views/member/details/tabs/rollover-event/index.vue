@@ -17,21 +17,6 @@
           :editable="false"
           :clearable="false"
         />
-        <el-select
-          multiple
-          v-model="request.eventType"
-          size="small"
-          :placeholder="t('fields.type')"
-          class="filter-item"
-          style="width: 400px; margin-left: 5px;"
-        >
-          <el-option
-            v-for="item in uiControl.eventType"
-            :key="item.value"
-            :label="t('rollover.rolloverEventType.' + item.displayName)"
-            :value="item.value"
-          />
-        </el-select>
         <el-button
           style="margin-left: 10px"
           icon="el-icon-search"
