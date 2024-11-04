@@ -62,6 +62,15 @@
       <div class="deposit-methods-container col-three">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
+            <!-- <q-badge
+              v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
+              color="orange"
+              floating
+              rounded
+            >
+              +{{ convertToCommaAmount(amount * 0.05) }}
+            </q-badge>
+            <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge> -->
             <q-badge
               v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
               color="orange"
@@ -70,7 +79,9 @@
             >
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
-            <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge>
+            <q-badge v-if="isFtdPrivilegeEnable" color="orange" floating rounded>
+              +{{ getFtdCommaAmount(amount) }}
+            </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
             </div>
@@ -153,12 +164,11 @@
               </template>
 
               <template v-slot:append>
-                <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
+                <div class="amt-input-append" v-if="isFtdPrivilegeEnable && form.localAmount">
                   {{ $t("deposit.extra") }}:
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
-
-                <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
+                <div class="amt-input-append" v-else-if="isPrivilege && form.localAmount">
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
