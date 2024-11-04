@@ -102,9 +102,10 @@
         </el-table-column>
         <el-table-column :label="t('fields.description')" align="center" min-width="150">
           <template #default="scope">
-            <span v-for="(item, index) in scope.row.progress" :key="index" :style="{color: getProgressColor(item)}">
+            <span v-for="(item, index) in scope.row.progress" @click="getRolloverDetails(scope.row)" :key="index" :style="{color: getProgressColor(item)}" style="text-decoration: underline; cursor: pointer;">
               {{ item.type }}: {{ item.progress }} / {{ item.total }}  <br>
             </span>
+            <span v-if="scope.row.platformGames">{{ scope.row.platformGames }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -219,7 +220,7 @@
       </div>
     </el-card>
 
-    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="680px">
+    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body :width="uiControl.dialogType === 'ROLLOVER_DETAILS' ? '780px' : '680px'">
       <el-form v-if="uiControl.dialogType === 'CANCEL' || uiControl.dialogType === 'CANCEL ALL'" ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="120px">
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input type="textarea" v-model="form.remark" :rows="6" style="width: 450px;" maxlength="500" show-word-limit />
@@ -230,6 +231,29 @@
           <el-button v-else type="primary" @click="cancelAllRecord">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
+      <div class="rollover-details" v-if="uiControl.dialogType === 'ROLLOVER_DETAILS'">
+        <!-- <el-row>
+          <el-col :span="12">{{ t('fields.rolloverAmount') }}</el-col>
+          <el-col :span="12">{{ rolloverDetails.rolloverAmt || 0 }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">{{ t('fields.rolloverAmount') }}</el-col>
+          <el-col :span="12">{{ rolloverDetails.rolloverAmt || 0 }}%</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">{{ t('fields.rolloverAmount') }}</el-col>
+          <el-col :span="12">{{ rolloverDetails.rolloverAmt || 0 }}</el-col>
+        </el-row> -->
+        <el-table :data="parsedData" style="width: 100%">
+          <el-table-column prop="platform" :label="t('fields.platform')" width="120" />
+          <el-table-column prop="transactionId" :label="t('fields.transactionId')" width="250" />
+          <el-table-column prop="ticketNo" :label="t('fields.ticketNo')" width="250" />
+          <!-- <el-table-column prop="bet" :label="t('fields.bet')" width="80" />
+          <el-table-column prop="payout" :label="t('fields.payout')" width="80" /> -->
+          <!-- <el-table-column prop="rollover" :label="t('fields.rollover')" width="80" /> -->
+          <el-table-column prop="rolloverAmount" :label="t('fields.rollOverAmt')" width="80" />
+        </el-table>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -243,6 +267,7 @@ import {
   cancelRollover,
   getMemberRolloverRecords,
   getTotal, hasOngoingRecords,
+  getRolloverBets
 } from '../../../../../api/member-rollover-records'
 import { required } from '../../../../../utils/validate';
 import { ElMessage } from 'element-plus';
@@ -307,6 +332,26 @@ const formRules = reactive({
   remark: [required(t('message.validateRemarkRequired'))]
 });
 
+const parsedData = ref([]);
+
+const getRolloverDetails = async (item) => {
+  const res = await getRolloverBets(item.siteId, item.memberId, item.id);
+  // Parsing each content entry to get JSON object
+  parsedData.value = res.data.map(item => {
+    const contentParts = item.content.split("|");
+    const content = JSON.parse(contentParts[0]);
+    const parseAmt = contentParts.length > 1 ? parseFloat(contentParts[1]) : null;
+    return {
+      ...content,
+      createTime: item.createTime,
+      rolloverAmount: parseAmt
+    };
+  });
+
+  uiControl.dialogTitle = t('fields.rolloverDetails');
+  uiControl.dialogType = 'ROLLOVER_DETAILS';
+  uiControl.dialogVisible = true;
+};
 function resetQuery() {
   request.recordStatus = ['ONGOING', 'COMPLETED', 'VOID', 'CANCEL'];
   request.id = null;
@@ -453,5 +498,10 @@ onMounted(() => {
   margin-right: 20px;
   float: right;
   font-size: small;
+}
+.rollover-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 </style>

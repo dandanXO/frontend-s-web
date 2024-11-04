@@ -48,7 +48,7 @@
   </div>
 </template>
 <script setup>
-import { computed, onActivated, ref } from "vue";
+import { computed, onActivated, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import MaintenanceBox from "./MaintenanceBox.vue";
 
@@ -267,6 +267,29 @@ const handlePlayGame = (platform, game) => {
 onActivated(() => {
   rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
 });
+
+
+watch(
+  () => route.hash,
+  (newHash) => {
+    const tabMap = {
+      "#Slot": "slot",
+      "#Live": "live",
+      "#Fish": "fish",
+      "#Poker": "poker",
+      "#Sport": "sport"
+    };
+
+    const tabName = tabMap[newHash];
+    if (tabName) {
+      setTimeout(() => {
+        selectTab(tabName);
+      }, 500);
+    }
+  },
+  { immediate: true }
+);
+
 </script>
 <style lang="scss" scoped>
 .game-list-wrapper {

@@ -561,6 +561,50 @@ a:hover {
   display: none;
 }
 
+.deposit-table{
+  width: 100%;
+  text-align:center;
+  border-collapse: collapse;
+}
+
+.deposit-table td{
+  border: 1px solid #FFE1D0;
+  color: #FFF5C0;
+
+  font-weight: bold;
+  height: 45px;
+}
+
+.deposit-table thead tr:first-child{
+  border-radius: 20px;
+}
+
+.deposit-table tbody td{
+  background: #1E1B1C95;
+  font-size: 1.6rem;
+}
+
+.deposit-table thead{
+  background: #533C1ACC;
+}
+
+.deposit-table thead td{
+  background: linear-gradient(180deg, #FFFFFF 0%, #FF9458 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.btm-text{
+  width: 100%;
+  text-align:center;
+  color:#fff;
+  font-size:1.15rem;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
 @media screen and (max-width: 600px) {
   .show-desktop {
     display: none;
@@ -579,12 +623,21 @@ a:hover {
   .qq-section {
     flex-direction: column;
   }
+
+  .smaller-table thead td{
+    font-size: 1.3rem;
+  }
+  .smaller-table tbody td{
+    font-size: 1.3rem;
+  }
 }
 
 @media screen and (max-width: 430px) {
   .top-image-board {
     background-position: center center;
   }
+
+
 
   .top-board {
     gap: 8px;

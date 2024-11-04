@@ -592,6 +592,7 @@ export default {
     afterBalance: '이후 잔액',
     afterEdit: '편집 후',
     amount: '금액',
+    amountGreaterThan: '보다 큰 금액',
     amountLimitPerRain: '비별 금액 제한',
     adjust: '금액 조정',
     alias: '별명',
@@ -1860,7 +1861,9 @@ export default {
     updateWithdrawPassword: '출금 비밀번호 업데이트',
     self: '(본인)',
     batchFrozenMember: '회원 일괄 동결',
-    showLogo: '아이콘 표시'
+    showLogo: '아이콘 표시',
+    adjustTarget: '목표 조정',
+    ignoreSettlement: '결제를 무시하다',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2342,6 +2345,7 @@ export default {
     affiliateReactivated: '활성화 성공',
     required_6_digits_code: '6자리 숫자로 구성',
     required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
+    validateAdjustColumnRequired: '잔액 목표가 필요합니다.',
   },
   menu: {
     undefined: '',
@@ -2581,6 +2585,7 @@ export default {
     'Vip Report': 'VIP 보고서',
     'System Value Rules': '설정 규칙',
     'Sites Config': '사이트 설정',
+    'Affiliate Point Record': '제휴 포인트 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -2852,6 +2857,7 @@ export default {
     14011: '제휴가 이미 존재합니다',
     14012: '낮은 레벨의 제휴만 생성 가능',
     14013: '제휴사에는 다운라인이 있으므로 더 낮은 수준으로 설정할 수 없습니다.',
+    14014: '전화번호가 정확하지 않습니다 / 전화번호가 형식에 맞지 않습니다.',
     14100: '제휴에이 다운 라인 회원이 없습니다',
     14101: '이 제휴는이 작업을 수행할 수있는 권한이 없습니다',
     14110: '동일한 이름의 플랫폼 및 사이트가 이미 존재합니다',

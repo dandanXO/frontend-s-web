@@ -111,7 +111,12 @@
       <el-table-column prop="betCount" :label="t('fields.summaryTotalBet')" />
       <el-table-column prop="payout" :label="t('fields.payout')" />
       <el-table-column prop="profit" :label="t('fields.profit')" />
-      <el-table-column prop="ratio" :label="t('fields.return_ratio')" />
+      <el-table-column prop="ratio" :label="t('fields.return_ratio')">
+        <template #default="scope">
+          <span v-if="scope.row.ratio === null">0 %</span>
+          <span v-if="scope.row.ratio !== null">{{ scope.row.ratio.toFixed(2) }} %</span>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"
@@ -135,7 +140,7 @@
         {{ $t('fields.profit') }} : {{ page.records.length > 0 ? totalProfit.toFixed(2) : '--' }}
       </div>
       <div class="total-info">
-        {{ $t('fields.return_ratio_total') }} : {{ page.records.length > 0 ? totalRatio : '--' }}
+        {{ $t('fields.return_ratio_total') }} : {{ page.records.length > 0 ? totalRatio.toFixed(2) + "%" : '--' }}
       </div>
     </div>
     <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
@@ -218,7 +223,7 @@ const totalRatio = computed(() => {
   if (page.loading) {
     return 0
   } else {
-    return (Math.floor((totalPayout.value / totalBet.value) * 100) / 100).toFixed(2)
+    return (totalPayout.value / totalBet.value).toFixed(5) * 100
   }
 })
 
@@ -261,7 +266,7 @@ async function loadVipReport() {
 
     return {
       ...record,
-      ratio: (Math.floor((record.payout / record.bet) * 100) / 100).toFixed(2)
+      ratio: (record.payout / record.bet).toFixed(5) * 100
     };
   });
 
