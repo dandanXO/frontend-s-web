@@ -1842,7 +1842,10 @@ export default defineComponent({
           }
         })
         .finally(() => {
-          isPopoutDataLoading.value = false;
+          if(popupBanners.value.length > 0){
+            isPopoutDataLoading.value = false;
+          }
+
         });
     };
 
@@ -3118,7 +3121,7 @@ export default defineComponent({
     transform: rotate(5deg);
   }
   50% {
-    transform: rotate(0eg);
+    transform: rotate(0deg);
   }
   75% {
     transform: rotate(-5deg);
@@ -3434,11 +3437,6 @@ export default defineComponent({
       width: 100%;
       max-width: 30%;
 
-      .team-details__home {
-      }
-
-      .team-details__away {
-      }
 
       .team-icon {
         // border-radius: 50%;

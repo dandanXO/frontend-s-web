@@ -565,8 +565,37 @@
             {{ t('fields.updatePassword') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item />
-        <el-descriptions-item />
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div v-if="(isKorea(memberDetail.siteId))">
+              <svg-icon
+                icon-class="money"
+                style="height: 16px;width: 16px;"
+              />
+              {{ t('fields.ignoreSettlement') + ' (16th)' }}
+            </div>
+          </template>
+          <template #default>
+            <div v-if="(isKorea(memberDetail.siteId))">
+              <el-switch
+                :disabled="!isKorea(memberDetail.siteId)"
+                v-model="memberDetail.ignoreSettlement"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+                @change="
+                  changeIgnoreSettlement(memberDetail.id, memberDetail.ignoreSettlement)
+                "
+              />
+            </div>
+
+          </template>
+
+        </el-descriptions-item>
+
       </el-descriptions>
     </el-card>
 
@@ -1555,6 +1584,7 @@ import {
   getDownlineShareRatio,
   reactivateAffiliate,
   updateAffiliateWithdrawPassword,
+  updateIgnoreSettlement
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1714,7 +1744,8 @@ const memberDetail = reactive({
   site: '',
   siteId: 0,
   risk: '',
-  riskColor: ''
+  riskColor: '',
+  ignoreSettlement: '',
 })
 
 const affiliateDetails = reactive({
@@ -1946,6 +1977,10 @@ async function loadReferralLink() {
 async function loadMemberStatus() {
   const { data: status } = await getMemberStatus(props.affId, memberDetail.siteId)
   memberDetail.status = status
+}
+
+async function changeIgnoreSettlement(id, state) {
+  await updateIgnoreSettlement(id, state)
 }
 
 function showDialog(type) {

@@ -77,6 +77,13 @@
           maxlength="50"
           :placeholder="t('fields.createBy')"
         />
+        <el-input
+          v-model.number="request.reimburseAmount"
+          style="width: 100px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.amountGreaterThan')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -827,6 +834,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="!isCnySite(request.siteId) || (isCnySite(request.siteId) && LOGIN_USER_TYPE === ADMIN.value)"
       :total="page.total"
       :page-sizes="[20, 50, 100, 150]"
       layout="total,sizes,prev, pager, next"
@@ -882,12 +890,13 @@ import {
   getMemberBalanceByLoginNameSite,
 } from '../../../api/member'
 import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
+import { ADMIN, TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { getConfigList } from '../../../api/config'
+import { isCnySite } from "../../../utils/site";
 
 const { t } = useI18n()
 const store = useStore()
@@ -1021,6 +1030,7 @@ const request = reactive({
   operationType: null,
   cause: null,
   createBy: null,
+  reimburseAmount: null
 })
 
 const form = reactive({
@@ -1423,6 +1433,7 @@ function resetQuery() {
   request.operationType = null
   request.cause = null
   request.createBy = null
+  request.reimburseAmount = null
 }
 
 function checkQuery() {
@@ -1448,6 +1459,9 @@ function checkQuery() {
         'end'
       )
       query.createTime = query.createTime.join(',')
+    }
+    if (request.reimburseAmount !== null) {
+      query.reimburseAmount = request.reimburseAmount
     }
   }
 

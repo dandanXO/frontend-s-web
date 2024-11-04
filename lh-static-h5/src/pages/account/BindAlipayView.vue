@@ -99,14 +99,14 @@
             v-for="(bank, bankIndex) in bankList"
             :key="`${bank}-${bankIndex}`"
             :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
-            @click="onTypeToggleBtnClick(bankIndex)"
+            @click="onTypeToggleBtnClick(bank, bankIndex)"
           >
-            <img :src="imgURL + bank.bankIcon" alt="" />
+            <!-- <img :src="imgURL + bank.bankIcon" alt="" /> -->
             <div>{{ bank.name }}</div>
           </q-btn>
         </div>
 
-        <q-label>
+        <!-- <q-label>
           协议
           <em>*</em>
         </q-label>
@@ -121,7 +121,7 @@
           >
             <div>{{ category }}</div>
           </q-btn>
-        </div>
+        </div> -->
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
         <q-label>
@@ -188,8 +188,9 @@ import { useNotify } from "src/hooks/notify";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
-const onTypeToggleBtnClick = (index) => {
+const onTypeToggleBtnClick = (bank, index) => {
   selectedTypeToggleIndex.value = index;
+  bankCardInfo.bankId = bank.id
 };
 
 const categoryToggleList = ref(["ALIPAY"]);
@@ -330,8 +331,8 @@ const loadBankCards = () => {
           if (res.code === 0) {
             for (let i = 0, l = res.data.length; i < l; i++) {
               const data = res.data[i];
-              const { bankCode } = data;
-              if (bankCode === 78) bankList.value.push(data);
+              const { code } = data;
+              if (code === 'alipay') bankList.value.push(data);
             }
           }
         })
@@ -343,7 +344,6 @@ const loadBankCards = () => {
 };
 
 const submitBankCard = () => {
-  bankCardRef.value.validate();
   cardNumberRef.value.validate();
 
   if (!phoneVerificationRef.value) {
@@ -355,7 +355,7 @@ const submitBankCard = () => {
     phoneVerificationRef.value.validate();
   }
 
-  if (!(bankCardRef.value.hasError || cardNumberRef.value.hasError || phoneVerificationRef.value.hasError)) {
+  if (!(cardNumberRef.value.hasError || phoneVerificationRef.value.hasError)) {
     api
       .post("/session/bankCard", qs.stringify(bankCardInfo))
       .then((response) => {

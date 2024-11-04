@@ -688,6 +688,7 @@ export default {
     allmembers: '全部会员',
     allmembertype: '全部会员状态',
     amount: '金额',
+    amountGreaterThan: '金额大于',
     amountLimitPerRain: '每场红包雨金额限制',
     adjust: '调整',
     announcement: '公告',
@@ -2108,7 +2109,9 @@ export default {
     startHour: '开始小时',
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
-    showLogo: '显示图标'
+    showLogo: '显示图标',
+    adjustTarget: '平账目标',
+    ignoreSettlement: '忽略结算',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2574,6 +2577,7 @@ export default {
     validateProductIdRequired: '产品ID必填',
     validateBetRebatePercentageRequired: '每日投注返水百分比必填',
     validateLoginNameNoSpecialCharacter: '登录名只能包含下划线（_），数字和字母。',
+    validateAdjustColumnRequired: '平账目标必填',
   },
   menu: {
     undefined: '',
@@ -2849,6 +2853,7 @@ export default {
     'Member Refer Analysis': '邀请返佣分析',
     'TF Gaming Config': 'TF Gaming 设置',
     'LH Old Data': '雷火老站数据',
+    'Affiliate Point Record': '代理积分记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3140,6 +3145,7 @@ export default {
     14011: '代理代码已存在',
     14012: '只能编辑比上级低的代理等级',
     14013: '此代理已有下线，不能编辑更低的代理等级',
+    14014: '电话号码不正确 / 电话号码不规范',
     14100: '代理并无此下级会员',
     14101: '代理无权结算此佣金',
     14110: '平台已存在于此站点',
