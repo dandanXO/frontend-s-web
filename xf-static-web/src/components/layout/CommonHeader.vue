@@ -410,9 +410,14 @@
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item  label="推荐码" prop="codeAffiliate" >
+            <el-form-item label="推荐码" prop="codeAffiliate" v-if="!hasReferrer">
               <el-space>
-                <el-input :disabled="hasAffiliate" class="half" v-model="regForm.codeAffiliate" placeholder="输入推荐码" />
+                <el-input
+                  :disabled="hasAffiliate"
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="输入推荐码"
+                />
                 <!-- <el-input
                   v-else
                   class="half"
@@ -1070,6 +1075,7 @@ export default defineComponent({
     const mobileLoginRef = ref([])
     const captchaRef = ref([])
     const hasAffiliate = ref(false);
+    const hasReferrer= ref(false);
     const regCountdown = ref(registerSendOtpDisabledTimeoutLeft)
     const loginCountdown = ref(0)
 
@@ -1373,13 +1379,9 @@ export default defineComponent({
 
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-      const REFERRAL_CODE = sessionStorage.getItem("REFERRAL_CODE")
-      if (affCode || REFERRAL_CODE) {
+      if (affCode) {
         hasAffiliate.value = true
-        regForm.codeAffiliate = affCode ||REFERRAL_CODE;
-        // if (!store.token) {
-        //   registerDialogVisible.value = true;
-        // }
+        regForm.codeAffiliate = affCode;
       }
     }
 
@@ -1667,11 +1669,9 @@ export default defineComponent({
 
     const getReferalCode = () => {
       const referCode = sessionStorage.getItem("REFERRAL_CODE");
-      // console.log("got Code");
-      // console.log(referCode);
       if (referCode && route.query && route.query.refer) {
         registerDialogVisible.value = true;
-        hasAffiliate.value = true
+        hasReferrer.value = true
         regForm.referrer = referCode;
       }
     }
@@ -2260,6 +2260,7 @@ export default defineComponent({
       typeActive: '1',
       getAffiliateCode,
       hasAffiliate,
+      hasReferrer,
       countdownTimer,
       regCountdown,
       loginCountdown,

@@ -192,19 +192,20 @@
       </template>
     </q-input>
 
-    <q-input
-      :disable="hasAffiliate"
-      ref="affiliateCodeRef"
-      hide-bottom-space
-      v-model="regForm.referrer"
-      label="推荐码"
-      hint="若不是合营下会员无需填写"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/images/login/login_name.png" width="20" />
-      </template>
-    </q-input>
-
+    <template v-if="!hasReferrer">
+      <q-input
+        :disable="hasAffiliate"
+        ref="affiliateCodeRef"
+        hide-bottom-space
+        v-model="regForm.codeAffiliate"
+        label="推荐码"
+        hint="若不是合营下会员无需填写"
+      >
+        <template v-slot:prepend>
+          <img src="../assets/images/login/login_name.png" width="20" />
+        </template>
+      </q-input>
+    </template>
     <div class="row justify-between items-center">
       <q-btn
         @click.prevent="onSubmit"
@@ -327,19 +328,19 @@ export default defineComponent({
     };
 
     const hasAffiliate = ref(false);
+    const hasReferrer = ref(false);
 
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-      const REFERRAL_CODE = sessionStorage.getItem("REFERRAL_CODE")
-      if (affCode || REFERRAL_CODE) {
-        hasAffiliate.value = true
-        regForm.codeAffiliate = affCode ||REFERRAL_CODE;
+      if (affCode) {
+        hasAffiliate.value = true;
+        regForm.codeAffiliate = affCode;
       }
     };
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
-        hasAffiliate.value = true;
+        hasReferrer.value = true;
         regForm.referrer = refCode;
       }
     };
@@ -571,6 +572,7 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
+      hasReferrer,
       validLoginName
     };
   }
