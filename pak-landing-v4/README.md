@@ -106,7 +106,6 @@ npx cap run android -l --host=192.168.10.22 --port=9090
 - Add Bank Card Page:: src/pages/account/BankView.vue
 
 
-
 ### Setup CloudWise Plugin.
 
 1. Get the PDF file & .jar Zip File from Colleague.
