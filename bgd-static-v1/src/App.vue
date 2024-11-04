@@ -129,30 +129,6 @@ export default defineComponent({
     //   }
     // };
 
-    const trackH5Affiliate = () => {
-      const omitSites = ["bw3.genoortisy.com"];
-
-      var affiliateCode = "";
-      if (omitSites.includes(window.location.host)) {
-        affiliateCode = "4F09FA";
-      } else {
-        // affiliateCode = "3B1BFB";
-        affiliateCode = "";
-      }
-
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-      //   if (res.code === 0) {
-      //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-      //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-      //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-      //     affAppToken.value = res.data.adjust_app_token;
-      //     // initAdjustEventTrack();
-      //     // alert(affAppToken.value);
-      //   }
-      // });
-    };
-
     const onDeviceReady = () => {
       // Get the file system
       window.resolveLocalFileSystemURL(
@@ -370,8 +346,6 @@ export default defineComponent({
           },
           false
         );
-      } else {
-        trackH5Affiliate();
       }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
