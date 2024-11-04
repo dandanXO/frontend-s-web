@@ -193,7 +193,7 @@
     </q-input>
 
     <q-input
-      v-if="!hasAffiliate"
+      :disable="hasAffiliate"
       ref="affiliateCodeRef"
       hide-bottom-space
       v-model="regForm.referrer"
@@ -330,9 +330,10 @@ export default defineComponent({
 
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-      if (affCode) {
-        hasAffiliate.value = true;
-        regForm.codeAffiliate = affCode;
+      const REFERRAL_CODE = sessionStorage.getItem("REFERRAL_CODE")
+      if (affCode || REFERRAL_CODE) {
+        hasAffiliate.value = true
+        regForm.codeAffiliate = affCode ||REFERRAL_CODE;
       }
     };
     const getReferralCode = () => {

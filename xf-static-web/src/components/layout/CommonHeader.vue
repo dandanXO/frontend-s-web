@@ -410,9 +410,9 @@
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item label="推荐码" prop="codeAffiliate" v-if="!hasAffiliate">
+            <el-form-item  label="推荐码" prop="codeAffiliate" >
               <el-space>
-                <el-input class="half" v-model="regForm.codeAffiliate" placeholder="输入推荐码" />
+                <el-input :disabled="hasAffiliate" class="half" v-model="regForm.codeAffiliate" placeholder="输入推荐码" />
                 <!-- <el-input
                   v-else
                   class="half"
@@ -1373,9 +1373,10 @@ export default defineComponent({
 
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-      if (affCode) {
+      const REFERRAL_CODE = sessionStorage.getItem("REFERRAL_CODE")
+      if (affCode || REFERRAL_CODE) {
         hasAffiliate.value = true
-        regForm.codeAffiliate = affCode;
+        regForm.codeAffiliate = affCode ||REFERRAL_CODE;
         // if (!store.token) {
         //   registerDialogVisible.value = true;
         // }
