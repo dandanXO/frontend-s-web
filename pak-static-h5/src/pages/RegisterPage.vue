@@ -10,18 +10,20 @@
   <!--    </div>-->
   <!--  </q-page-sticky>-->
 
-  <div class="register-container">
+  <div class="register-container" :class="isRestrictedDomain ? 'w-domain': ''">
     <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
     </div> -->
-
-    <div class="register-form-logo-img">
+    <div class="is-domain top-img">
+      <img src="../assets/images/index/register-topimg.png"/>
+    </div>
+    <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
 
-    <div class="auth-tab-wrapper">
+    <div class="no-domain auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
@@ -194,6 +196,7 @@
         </div>
       --></q-form>
     </div>
+    <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
     <div class="bottom-btn">
       <q-btn
@@ -207,15 +210,17 @@
         {{ $t("btn.confirm") }}
       </q-btn>
     </div>
+    <div class="is-domain has-acct">Already have an account? <router-link to="/login" class="login">Login</router-link></div>
 
-    <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
+
+    <div class="no-domain mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
         {{ $t("form.register_agree_01") }}
         <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
       </q-checkbox>
     </div>
 
-    <div class="btn-lists">
+    <div class="no-domain btn-lists">
       <div class="list-item" @click="openWhatsApp()">
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
         <div>WhatsApp</div>
@@ -237,15 +242,31 @@
       <!--        <div>Tiktok</div>-->
       <!--      </div>-->
     </div>
-
-    <div class="bottom-img">
+    <div class="is-domain social-container">
+      <div class="share">Share</div>
+      <div class="social-items">
+        <a href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l" id="Whatsapp" class="social-item" target="_blank">
+          <img src="../assets/images/auth/social_wa.png">
+        </a>
+        <a href="app.apk" id="Download" class="social-item" target="_blank">
+          <img src="../assets/images/auth/social_dl.png">
+        </a>
+        <a href="https://www.tiktok.com/@b9.game01" id="Tiktok" class="social-item" target="_blank">
+          <img src="../assets/images/auth/social_tt.png">
+        </a>
+        <a href="https://pak-landing.b9game0.com/" id="Instagram" class="social-item" target="_blank">
+          <img src="../assets/images/auth/social_charity.png">
+        </a>
+      </div>
+  </div>
+    <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -746,7 +767,17 @@ export default defineComponent({
         }
       }
     );
-
+    const restrictedDomains = [
+      'pkmagr98.cc',
+      'cbrfobx1.cc',
+      'xsu5qyks.cc',
+      '5vh518iw.cc',
+      '9o48ca3p.cc',
+    ];
+    const isRestrictedDomain = computed(() => {
+      const currentDomain = window.location.hostname;
+      return restrictedDomains.includes(currentDomain);
+    });
     return {
       header: "Register Account",
       regForm,
@@ -793,7 +824,8 @@ export default defineComponent({
       openTiktok,
       openYoutube,
       openCharity,
-      downloadApp
+      downloadApp,
+      isRestrictedDomain
     };
   }
 });
@@ -859,6 +891,91 @@ function charType(num) {
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  .is-domain {
+    display: none;
+  }
+  .no-domain {
+    display: unset;
+    &.btn-lists {
+      display: flex;
+    }
+  }
+  &.w-domain {
+    background: url("../assets/images/auth/trianglebg.png");
+    background-size: 100% 100%;
+    .no-domain {
+      display: none;
+    }
+    .is-domain {
+      display: block;
+      &.top-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        img {
+          margin-right: -20px;
+        }
+      }
+    }
+    .has-acct {
+      width: 90%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+      margin: 10px auto;
+      color: #9F9F9F;
+      a {
+        color: #83E977;
+      }
+    }
+    .forget-pwd {
+      color: #9F9F9F;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 0 20px 20px;
+    }
+.social-container {
+  margin: 20px auto;
+  width: 95%;
+  position: sticky;
+  top: calc(100vh - 70px); 
+  left: 0;
+  right: 0;
+  .share {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    color:#FFFFFF33;
+    &:before,
+    &:after {
+      content: "";
+      width: 100%;
+      flex: 1;
+      height: 1px;
+      background-color: #FFFFFF33;
+    }
+  }
+  .social-items {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+    align-items: center;
+    .social-item {
+      border: 1px solid #FFFFFF33;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+    }
+  }
+}
+  }
 }
 
 .back-left {
