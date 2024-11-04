@@ -34,17 +34,7 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
-  // const allowedDomains = [
-  //   'pkmagr98.cc',
-  //   'cbrfobx1.cc',
-  //   'xsu5qyks.cc',
-  //   '5vh518iw.cc',
-  //   '9o48ca3p.cc'
-  // ];
-
-  // function shouldRedirect(domain) {
-  //   return allowedDomains.includes(domain);
-  // }
+  const allowedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
 
   Router.beforeEach((to, from, next) => {
     const user = userStore();
@@ -53,12 +43,10 @@ export default route(function (/* { store, ssrContext } */) {
 
     const currentDomain = window.location.hostname;
 
-    // if (allowedDomains.includes(currentDomain)) {
-    //   // Redirect to the redirect page
-    //   next('/redirect');
-    // } else {
-    //   next(); // Proceed normally for other domains
-    // }
+    if (allowedDomains.includes(currentDomain)) {
+      // Redirect to the redirect page
+      next("/redirect");
+    }
 
     if (user.token && from && from.href) {
       user.getBalance();
