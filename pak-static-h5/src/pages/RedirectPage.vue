@@ -1,8 +1,8 @@
 <template>
   <div class="redirect-page" v-if="!redirected">
-    <h1>Redirecting Soon...</h1>
+    <!--    <h1>Redirecting Soon...</h1>-->
     <h1 id="countdown">Waiting time : {{ countdown }} seconds;</h1>
-    <p class="redirect-info">Please wait while we take you to your destination.</p>
+    <!--    <p class="redirect-info">Please wait while we take you to your destination.</p>-->
   </div>
 </template>
 
@@ -18,7 +18,10 @@ const redirected = ref(false);
 onMounted(() => {
   const currentDomain = window.location.hostname;
   const redirectKey = `redirected-${currentDomain}`;
-  const redirectPath = SessionStorage.getItem("REDIRECT_PATH");
+  let redirectPath = SessionStorage.getItem("REDIRECT_PATH");
+  if (!redirectPath || redirectPath === "/redirect") {
+    redirectPath = "/";
+  }
 
   if (SessionStorage.getItem(redirectKey)) {
     redirected.value = true;
