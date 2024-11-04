@@ -899,6 +899,7 @@ onActivated(() => {
   // checkNewUser();
   loadInfo();
   resetSelectedMethod();
+  loadAppTabs();
 });
 
 onMounted(() => {
