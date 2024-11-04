@@ -439,6 +439,15 @@
                 </el-tooltip> -->
               </el-space>
             </el-form-item>
+            <el-form-item label="推荐码" prop="codeAffiliate" v-else>
+              <el-space>
+                <el-input class="half" v-model="regForm.codeAffiliate" placeholder="输入推荐码" disabled />
+                <el-icon>
+                  <InfoFilled style="font-size: 10px; line-height: 20px" />
+                </el-icon>
+                <div class="link">若不是合营下会员无需填写</div>
+              </el-space>
+            </el-form-item>
           </el-form>
           <el-button color="#3bafda" @click="resetRegForm(registerRef)">重新填写</el-button>
           <el-button @click="submitRegisterForm(registerRef)" color="#3bafda">确认注册</el-button>
@@ -1645,6 +1654,12 @@ export default defineComponent({
     onBeforeUnmount(() => {
       clearInterval(headTimer);
       headTimer = null;
+    });
+
+    watch(() => registerDialogVisible.value, () => {
+      if (registerDialogVisible.value) {
+        getAffiliateCode();
+      }
     });
 
     watch(() => store.loginPageVisible, () => {
