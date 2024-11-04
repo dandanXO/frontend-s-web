@@ -238,6 +238,11 @@
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
       </div>
     </template>
+
+    <!-- <pre>form.privilegeId--{{ form.privilegeId }}</pre>
+     <pre> isFtdPrivilegePayType--{{isFtdPrivilegePayType}}</pre>
+  <pre>extraPrivilegeId--{{extraPrivilegeId}}</pre>
+  <pre>isFtdPrivilegeEnable--{{isFtdPrivilegeEnable}}</pre> -->
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
@@ -554,11 +559,11 @@ async function confirmDeposit() {
             }
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
-            form.privilegeId = extraPrivilegeId.value;
-          }
+          // if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          //   form.privilegeId = extraPrivilegeId.value;
+          // }
 
-          if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
+          if (extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
