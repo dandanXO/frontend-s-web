@@ -1,5 +1,26 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div v-if="isSelectedMethod" class="withdrawal-summary">
+      <div class="balance">
+        <span class="amount">
+          {{ store.balance >= 0 ? convertToCommaAmount(store.balance, false) : "0.00" }}
+        </span>
+        <div class="title">Cash Balance</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          {{
+            selectedMethodItem.withdrawableBalance >= 0
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+              : "0.00"
+          }}
+        </span>
+        <div class="title">Withdrawable</div>
+      </div>
+    </div>
     <div class="method-title q-mb-sm">Withdraw Currency</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div>
@@ -1098,6 +1119,7 @@ const loadInfo = () => {
   .withdrawal-summary {
     padding: 1rem;
     margin-top: 0;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-around;
