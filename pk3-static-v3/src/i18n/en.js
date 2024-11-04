@@ -326,7 +326,8 @@ export default {
     amount: "Amount",
     depositAmountMustInBetween: "Deposit Amount Must Be Between",
     extra: "Extra",
-    understood: "Understood"
+    understood: "Understood",
+    useFtdPrivilege: "Use Slot First Deposit Privilege"
   },
   withdraw: {
     withdrawCurrency: "Withdrawal Currency",
