@@ -941,7 +941,7 @@ const refreshRemainWager = () => {
       border-radius: 8px;
       color: #ffffffb2;
       background-color: #263349;
-      font-size: 12px;
+      font-size: 10px;
       position: relative;
 
       &.active {
