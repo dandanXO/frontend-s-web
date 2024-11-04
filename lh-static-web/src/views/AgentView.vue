@@ -7,9 +7,9 @@
       <div class="buttons">
         <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
         <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
-        <a class="outline" :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
-          联系我们
-        </a>
+        <!--        <a class="outline" :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">-->
+        <!--          联系我们-->
+        <!--        </a>-->
       </div>
 
       <div class="affiliate-program-first">
@@ -24,7 +24,8 @@
                 <li>佣金派发：所有佣金由系统直接发放到代理账户，无需流水，绑定银行卡后即可提款。</li>
                 <li>每月至少有五个活跃会员才能结算佣金，单个会员当月充值≥200 元为一个活跃会员</li>
                 <li>
-                  代理推广每月至少需要新注册活跃会员达到 3 名，如无法达到将视为零推广雷火平台，代理部有权减少或扣除部分佣金，如果三个月累计新注册活跃会员未达到十位将会停用代理账户，需代理联系网站重新开启。
+                  代理推广每月至少需要新注册活跃会员达到 3
+                  名，如无法达到将视为零推广雷火平台，代理部有权减少或扣除部分佣金，如果三个月累计新注册活跃会员未达到十位将会停用代理账户，需代理联系网站重新开启。
                   <br />
                 </li>
               </ul>
@@ -104,50 +105,50 @@
           </div>
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">佣金如何计划</div>
-            <div class="affiliate-inner" >
-              <div style="display: flex; justify-content: space-between;">
-                <div>平台输赢</div> 
-                <div style="color: rgba(255, 250, 134, 1);">10,000</div>
+            <div class="affiliate-inner">
+              <div style="display: flex; justify-content: space-between">
+                <div>平台输赢</div>
+                <div style="color: rgba(255, 250, 134, 1)">10,000</div>
               </div>
             </div>
             <div>
-              <div class="affiliate-inner" style="border-bottom-right-radius:0px; border-bottom-left-radius:0px;">
-                <div style="display: flex; justify-content: space-between;">
-                  <div>平台费</div> 
-                  <div style="color: rgba(255, 250, 134, 1);">-800</div>
+              <div class="affiliate-inner" style="border-bottom-right-radius: 0px; border-bottom-left-radius: 0px">
+                <div style="display: flex; justify-content: space-between">
+                  <div>平台费</div>
+                  <div style="color: rgba(255, 250, 134, 1)">-800</div>
                 </div>
               </div>
-              <div class="affiliate-inner-2" style="border-top-left-radius:0px;border-top-right-radius:0px;">
+              <div class="affiliate-inner-2" style="border-top-left-radius: 0px; border-top-right-radius: 0px">
                 平台费=游戏总输赢 x8%
               </div>
             </div>
             <div>
-              <div class="affiliate-inner" style="border-bottom-right-radius:0px; border-bottom-left-radius:0px;">
-                <div style="display: flex; justify-content: space-between;">
-                  <div>红利</div> 
-                  <div style="color: rgba(255, 250, 134, 1);">-200</div>
+              <div class="affiliate-inner" style="border-bottom-right-radius: 0px; border-bottom-left-radius: 0px">
+                <div style="display: flex; justify-content: space-between">
+                  <div>红利</div>
+                  <div style="color: rgba(255, 250, 134, 1)">-200</div>
                 </div>
               </div>
-              <div class="affiliate-inner-2" style="border-top-left-radius:0px;border-top-right-radius:0px;">
+              <div class="affiliate-inner-2" style="border-top-left-radius: 0px; border-top-right-radius: 0px">
                 返水，红利，存提手续费后台可见明细
               </div>
             </div>
             <div class="affiliate-inner">
-              <div style="display: flex; justify-content: space-between;">
-                <div>净利润</div> 
-                <div style="color: rgba(255, 250, 134, 1);">9,000</div>
+              <div style="display: flex; justify-content: space-between">
+                <div>净利润</div>
+                <div style="color: rgba(255, 250, 134, 1)">9,000</div>
               </div>
             </div>
             <div class="affiliate-inner">
-              <div style="display: flex; justify-content: space-between;">
-                <div>佣金比例</div> 
-                <div style="color: rgba(255, 250, 134, 1);">x35%</div>
+              <div style="display: flex; justify-content: space-between">
+                <div>佣金比例</div>
+                <div style="color: rgba(255, 250, 134, 1)">x35%</div>
               </div>
             </div>
-            <div class="affiliate-inner" style="margin-bottom: 28px;">
-              <div style="display: flex; justify-content: space-between;">
-                <div>代理佣金</div> 
-                <div style="color: rgba(255, 250, 134, 1);">3,150</div>
+            <div class="affiliate-inner" style="margin-bottom: 28px">
+              <div style="display: flex; justify-content: space-between">
+                <div>代理佣金</div>
+                <div style="color: rgba(255, 250, 134, 1)">3,150</div>
               </div>
             </div>
           </div>
@@ -291,12 +292,12 @@
           <div class="affiliate-subtitle">专属客服服务</div>
           <div class="contact-bg">
             <div class="contact-left">
-              <img src="../assets/images/affiliate/agent-contact.png">
+              <img src="../assets/images/affiliate/agent-contact.png" />
             </div>
             <div class="contact-right">
               <div class="contact-box mail-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-mail.png">
+                  <img src="../assets/images/affiliate/icon-mail.png" />
                 </div>
                 <div>合营部电邮</div>
                 <span ref="contact0">mailto:affiliate@e8007.com</span>
@@ -304,7 +305,7 @@
               </div>
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-qq.png">
+                  <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
                 <div>合营 QQ</div>
                 <span ref="contact1">1903687863</span>
@@ -315,7 +316,7 @@
               </div>
               <div class="contact-box skype-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-skype.png">
+                  <img src="../assets/images/affiliate/icon-skype.png" />
                 </div>
                 <div>合营 Skype</div>
                 <span ref="contact2">live:.cid.1a1ab9b6b5b0721f</span>
@@ -326,7 +327,7 @@
               </div>
               <div class="contact-box telegram-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-telegram.png">
+                  <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div>Telegram</div>
                 <span ref="contact3">@LH18668</span>
@@ -337,7 +338,7 @@
               </div>
               <div class="contact-box bubble-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-bubble.png">
+                  <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
                 <div>泡泡</div>
                 <span ref="contact4">LH1008666</span>
@@ -367,48 +368,48 @@ export default defineComponent({
     const isDark = useDark();
     const egAmts = ref([
       {
-        key: '存款',
-        amt: '1000 元'
+        key: "存款",
+        amt: "1000 元"
       },
       {
-        key: '提款',
-        amt: '0 元'
+        key: "提款",
+        amt: "0 元"
       },
       {
-        key: '总投注',
-        amt: '1100 元'
+        key: "总投注",
+        amt: "1100 元"
       },
       {
-        key: '总派彩',
-        amt: '00 元'
+        key: "总派彩",
+        amt: "00 元"
       },
       {
-        key: '优惠派彩',
-        amt: '100 元'
-      },
-    ])
+        key: "优惠派彩",
+        amt: "100 元"
+      }
+    ]);
     const eg2Amts = ref([
       {
-        key: '存款',
-        amt: '130000 元'
+        key: "存款",
+        amt: "130000 元"
       },
       {
-        key: '提款',
-        amt: '10000 元'
+        key: "提款",
+        amt: "10000 元"
       },
       {
-        key: '总投注',
-        amt: '140000 元'
+        key: "总投注",
+        amt: "140000 元"
       },
       {
-        key: '总派彩',
-        amt: '18000 元'
+        key: "总派彩",
+        amt: "18000 元"
       },
       {
-        key: '优惠派彩',
-        amt: '2000 元'
-      },
-    ])
+        key: "优惠派彩",
+        amt: "2000 元"
+      }
+    ]);
 
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
@@ -520,7 +521,7 @@ export default defineComponent({
   background-color: #f3f7fd;
 
   .affiliate {
-    font-family: 'PingFang SC';
+    font-family: "PingFang SC";
     background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
     background-position: top center;
     background-size: 100%;
@@ -562,7 +563,7 @@ export default defineComponent({
         color: #fff;
         font-size: 16px;
         cursor: pointer;
-        width: 100%;
+        width: 180px;
         padding: 0px 50px;
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         border-radius: 50px;
@@ -601,7 +602,7 @@ export default defineComponent({
       }
     }
     .affiliate-program-first {
-      font-family: 'PingFang SC';
+      font-family: "PingFang SC";
       color: #686c6f;
       text-align: left;
       max-width: $maxwidth;
@@ -626,7 +627,7 @@ export default defineComponent({
           flex-direction: column;
           gap: 10px;
           flex: 1;
-          background: url('../assets/images/affiliate/main-bg.png')no-repeat center center;
+          background: url("../assets/images/affiliate/main-bg.png") no-repeat center center;
           background-size: cover;
           border-radius: 15px;
           padding: 20px 40px;
@@ -638,7 +639,7 @@ export default defineComponent({
             color: #ffffff;
           }
           .affiliate-inner {
-            background: #4D8DE1;
+            background: #4d8de1;
             border-radius: 8px;
             padding: 10px 20px;
           }
@@ -648,7 +649,7 @@ export default defineComponent({
             align-items: center;
             margin-bottom: 15px;
             &:before {
-              background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+              background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
               content: "";
               width: 6px;
               height: 24px;
@@ -658,7 +659,6 @@ export default defineComponent({
             color: #ffffff;
             font-size: 20px;
             font-weight: 700;
-
           }
           .highlight {
             // color: #2e84f5;
@@ -695,8 +695,7 @@ export default defineComponent({
         text-align: center;
         color: #dde8f7;
         border: 1px solid #4d8de1;
-        background: linear-gradient(180deg, #4DA3FF -42.2%, #76B1FF 105.96%);
-
+        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
       }
       .agent-content-item table td {
         height: 60px;
@@ -712,7 +711,7 @@ export default defineComponent({
         font-size: 18px;
         font-weight: 600;
         line-height: 28px;
-        color: #3578D0;
+        color: #3578d0;
       }
       .agent-demo {
         display: grid;
@@ -731,7 +730,7 @@ export default defineComponent({
         line-height: 33.6px;
       }
       .agent-demo-example-text {
-        background: linear-gradient(180deg, #4DA3FF -42.2%, #76B1FF 105.96%);
+        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
         border-radius: 8px;
         font-size: 18px;
         font-weight: 700;
@@ -745,7 +744,7 @@ export default defineComponent({
           margin: 10px auto;
           flex-wrap: wrap;
           .agent-demo-example-box {
-            background: #4D8DE1;
+            background: #4d8de1;
             padding: 8px;
             display: flex;
             border-radius: 8px;
@@ -758,7 +757,7 @@ export default defineComponent({
               line-height: 20.84px;
             }
             .agent-demo-example-box-amt {
-              color: #FFFA86;
+              color: #fffa86;
               white-space: nowrap;
               font-size: 14.88px;
               font-weight: 400;
@@ -773,7 +772,7 @@ export default defineComponent({
       .agent-demo-table {
         display: table;
         width: 100%;
-        background: #4D8DE1;
+        background: #4d8de1;
         margin: 20px auto;
         border-radius: 8px;
       }
@@ -793,7 +792,7 @@ export default defineComponent({
       }
       .txt-right {
         text-align: right !important;
-        color: #FFFA86;
+        color: #fffa86;
       }
       .agent-reg-btn {
         width: 413px;
@@ -855,7 +854,7 @@ export default defineComponent({
       }
     }
     .affiliate-program {
-      font-family: 'PingFang SC';
+      font-family: "PingFang SC";
       color: #686c6f;
       text-align: left;
       max-width: $maxwidth;
@@ -879,7 +878,7 @@ export default defineComponent({
           flex-direction: column;
           gap: 10px;
           flex: 1;
-          background: url('../assets/images/affiliate/main-bg.png')no-repeat center center;
+          background: url("../assets/images/affiliate/main-bg.png") no-repeat center center;
           background-size: cover;
           border-radius: 15px;
           padding: 20px 40px;
@@ -891,7 +890,7 @@ export default defineComponent({
             color: #ffffff;
           }
           .affiliate-inner {
-            background: #4D8DE1;
+            background: #4d8de1;
             border-radius: 8px;
             padding: 10px 20px;
             color: #ffffff;
@@ -899,7 +898,7 @@ export default defineComponent({
           .affiliate-inner-2 {
             display: flex;
             justify-content: center;
-            background: #4D8DE1;
+            background: #4d8de1;
             border-radius: 8px;
             padding: 10px 20px;
             color: #fff;
@@ -911,7 +910,7 @@ export default defineComponent({
             align-items: center;
             margin-bottom: 15px;
             &:before {
-              background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+              background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
               content: "";
               width: 6px;
               height: 24px;
@@ -921,7 +920,6 @@ export default defineComponent({
             color: #ffffff;
             font-size: 20px;
             font-weight: 700;
-
           }
           .highlight {
             // color: #2e84f5;
@@ -958,8 +956,7 @@ export default defineComponent({
         text-align: center;
         color: #dde8f7;
         border: 1px solid #4d8de1;
-        background: linear-gradient(180deg, #4DA3FF -42.2%, #76B1FF 105.96%);
-
+        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
       }
       .agent-content-item table td {
         height: 60px;
@@ -975,7 +972,7 @@ export default defineComponent({
         font-size: 18px;
         font-weight: 600;
         line-height: 28px;
-        color: #3578D0;
+        color: #3578d0;
       }
       .agent-demo {
         display: grid;
@@ -994,7 +991,7 @@ export default defineComponent({
         line-height: 33.6px;
       }
       .agent-demo-example-text {
-        background: linear-gradient(180deg, #4DA3FF -42.2%, #76B1FF 105.96%);
+        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
         border-radius: 8px;
         font-size: 18px;
         font-weight: 700;
@@ -1008,7 +1005,7 @@ export default defineComponent({
           margin: 10px auto;
           flex-wrap: wrap;
           .agent-demo-example-box {
-            background: #4D8DE1;
+            background: #4d8de1;
             padding: 8px;
             display: flex;
             border-radius: 8px;
@@ -1021,7 +1018,7 @@ export default defineComponent({
               line-height: 20.84px;
             }
             .agent-demo-example-box-amt {
-              color: #FFFA86;
+              color: #fffa86;
               white-space: nowrap;
               font-size: 14.88px;
               font-weight: 400;
@@ -1036,7 +1033,7 @@ export default defineComponent({
       .agent-demo-table {
         display: table;
         width: 100%;
-        background: #4D8DE1;
+        background: #4d8de1;
         margin: 20px auto;
         border-radius: 8px;
       }
@@ -1056,7 +1053,7 @@ export default defineComponent({
       }
       .txt-right {
         text-align: right !important;
-        color: #FFFA86;
+        color: #fffa86;
       }
       .agent-reg-btn {
         width: 413px;
@@ -1119,21 +1116,20 @@ export default defineComponent({
     }
   }
   .contact-list {
-    padding: 20px 40px; 
+    padding: 20px 40px;
     background: url("@/assets/images/affiliate/main-bg.png");
-    background-size: 100% 100%; 
+    background-size: 100% 100%;
     position: relative;
     .affiliate-subtitle {
       font-size: 30px;
       font-weight: 700;
-      color: #ffffff;  
+      color: #ffffff;
     }
   }
   .contact-bg {
     display: flex;
     position: relative;
     .contact-left {
-
     }
     .contact-right {
       display: flex;
@@ -1146,7 +1142,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       gap: 5px;
-      background: #59A2FF;
+      background: #59a2ff;
       padding: 20px;
       justify-content: center;
       align-items: center;
@@ -1157,16 +1153,15 @@ export default defineComponent({
       font-size: 18px;
     }
     .contact-icon {
-      background: url(../assets/images/affiliate/icon-bg.png)no-repeat center center;
+      background: url(../assets/images/affiliate/icon-bg.png) no-repeat center center;
       width: 64px;
       height: 64px;
-      padding: 10px; 
+      padding: 10px;
       background-size: cover;
       border-radius: 50%;
       img {
         width: 100%;
       }
-
     }
     .contact-buttons {
       display: flex;
@@ -1200,10 +1195,10 @@ export default defineComponent({
 
 .dark {
   .wrapper {
-    background-color: #17223E;
+    background-color: #17223e;
     .affiliate {
       background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top;
-      background-color: #17223E;
+      background-color: #17223e;
       background-position: top center;
       background-size: 100%;
       margin: 0 auto;
@@ -1213,14 +1208,14 @@ export default defineComponent({
       justify-content: flex-start;
       align-items: center;
       gap: 50px;
-      
+
       .buttons {
         display: flex;
         gap: 10px;
         justify-content: center;
         align-items: center;
         width: 800px;
-        font-family: 'PingFang SC';
+        font-family: "PingFang SC";
 
         a {
           text-decoration: none;
@@ -1240,7 +1235,7 @@ export default defineComponent({
           &:hover {
             filter: brightness(0.9);
           }
-  
+
           &.outline {
             background: url("../assets/images/affiliate/standard-button-outline.svg") no-repeat center top;
             background-size: 100% 100%;
@@ -1249,124 +1244,124 @@ export default defineComponent({
       }
       .affiliate-program-first {
         .agent-stress-tip {
-          color: #B7C1FF;
+          color: #b7c1ff;
         }
         .affiliate-subgroup {
           .affiliate-sub {
-            background: url('../assets/images/affiliate/main-bg-dark.png')no-repeat center center;
+            background: url("../assets/images/affiliate/main-bg-dark.png") no-repeat center center;
             background-size: 100% 100%;
             .affiliate-inner {
-              background: #17223E;
+              background: #17223e;
             }
           }
         }
-        .agent-content-item table th, 
+        .agent-content-item table th,
         .agent-content-item table td {
-          border-color: #17223E;
+          border-color: #17223e;
         }
         .agent-content-item table th {
-          background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
         }
         .agent-content-item table td {
           background: #374569;
         }
-        
+
         .agent-demo-example-text {
-          background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
-            .agent-demo-example-boxes {
-              .agent-demo-example-box{
-                background: #17223E;
-                .agent-demo-example-box-amt {
-                  color: #B7C0FF;
-                }
+          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
+          .agent-demo-example-boxes {
+            .agent-demo-example-box {
+              background: #17223e;
+              .agent-demo-example-box-amt {
+                color: #b7c0ff;
               }
+            }
           }
         }
         .agent-demo-table {
-          background: #17223E;
+          background: #17223e;
           .txt-right {
-            color: #B7C0FF;
+            color: #b7c0ff;
           }
         }
         .agent-reg-btn {
           background: url(../assets/images/affiliate/agent-btn-dark.png);
           background-size: 100% 100%;
         }
-      } 
+      }
       .affiliate-program {
         .agent-stress-tip {
-          color: #B7C1FF;
+          color: #b7c1ff;
         }
         .affiliate-subgroup {
           .affiliate-sub {
-            background: url('../assets/images/affiliate/main-bg-dark.png')no-repeat center center;
+            background: url("../assets/images/affiliate/main-bg-dark.png") no-repeat center center;
             background-size: 100% 100%;
             .affiliate-inner {
-              background: #17223E;
+              background: #17223e;
             }
           }
         }
-        .agent-content-item table th, 
+        .agent-content-item table th,
         .agent-content-item table td {
-          border-color: #17223E;
+          border-color: #17223e;
         }
         .agent-content-item table th {
-          background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
         }
         .agent-content-item table td {
           background: #374569;
         }
-        
+
         .agent-demo-example-text {
-          background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
-            .agent-demo-example-boxes {
-              .agent-demo-example-box{
-                background: #17223E;
-                .agent-demo-example-box-amt {
-                  color: #B7C0FF;
-                }
+          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
+          .agent-demo-example-boxes {
+            .agent-demo-example-box {
+              background: #17223e;
+              .agent-demo-example-box-amt {
+                color: #b7c0ff;
               }
+            }
           }
         }
         .agent-demo-table {
-          background: #17223E;
+          background: #17223e;
           .txt-right {
-            color: #B7C0FF;
+            color: #b7c0ff;
           }
         }
         .agent-reg-btn {
           background: url(../assets/images/affiliate/agent-btn-dark.png);
           background-size: 100% 100%;
         }
-      } 
+      }
       .contact-list {
-        padding: 20px 40px; 
+        padding: 20px 40px;
         background: url("@/assets/images/affiliate/main-bg-dark.png");
-        background-size: 100% 100%; 
+        background-size: 100% 100%;
         position: relative;
         .affiliate-subtitle {
           font-size: 30px;
           font-weight: 700;
-          color: #ffffff;  
+          color: #ffffff;
         }
       }
       .contact-bg {
         .contact-box {
-          background: linear-gradient(180deg, #3E5384 0%, #3558AB 100%);
+          background: linear-gradient(180deg, #3e5384 0%, #3558ab 100%);
         }
         .download-btn {
-          background: #4798E4;
+          background: #4798e4;
         }
       }
     }
   }
 }
 // .dark {
-  
+
 //   .wrapper {
 //     font-size: 15px;
 //     background-color: #17223E;
-  
+
 //     .affiliate {
 //       background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
 //       background-color: #17223E;
@@ -1383,7 +1378,7 @@ export default defineComponent({
 //       .affiliate-title, .affiliate-desc, .buttons {
 //         margin-left: 25%;
 //       }
-  
+
 //       .affiliate-desc {
 //         display: flex;
 //         gap: 10px;
@@ -1414,7 +1409,7 @@ export default defineComponent({
 //           &:hover {
 //             filter: brightness(0.9);
 //           }
-  
+
 //           &.outline {
 //             background: url("../assets/images/affiliate/standard-button-outline.svg") no-repeat center top;
 //             background-size: 100% 100%;
@@ -1445,7 +1440,7 @@ export default defineComponent({
 //           }
 //         }
 //       }
-  
+
 //       .affiliate-program {
 //         color: #686c6f;
 //         text-align: left;
@@ -1697,6 +1692,6 @@ export default defineComponent({
 //         align-items: center;
 //     }
 //   }
-  
+
 // }
 </style>
