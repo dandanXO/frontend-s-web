@@ -127,14 +127,6 @@ const defaultTime = [
 ];
 
 const { t } = useI18n()
-const uiControl = reactive({
-  messageVisible: false,
-  eventType: [
-    { value: 'CREATE', displayName: 'CREATE' },
-    { value: 'UPDATE', displayName: 'UPDATE' },
-    { value: 'BALANCE_CHECK', displayName: 'BALANCE_CHECK' },
-  ],
-})
 
 const props = defineProps({
   mbrId: {
