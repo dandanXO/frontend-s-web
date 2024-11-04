@@ -156,31 +156,31 @@
               <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
             </div>
           </div>
-          </div>
-          <!-- <div
+        </div>
+        <!-- <div
             class="claim-btn"
             :class="{ disabled: isLoading['all'] || !isDataLoaded }"
             @click="handleClick('all', vipLevel)"
           >
             {{ isLoading["all"] ? "领取中" : "一键领取" }}
           </div> -->
-          <div class="amount" v-show="isDataLoaded && vipLevel !== 0">
-            <div class="text">
-                保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
-              </div>
-              <div class="progressBarContainer">
-                <div class="progressBarOuterBar">
-                  <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
-                </div>
-                <div class="progressBarDescriptionRetain">
-                  {{
-                     currentRetainAmount+ '/' + retainAmountRequired
-                  }}
-                </div>
-              </div>
+        <div class="amount" v-show="isDataLoaded && vipLevel !== 0">
+          <div class="text">
+            保级剩余天数：
+            <span class="required-amount">{{ balanceRetainDay }}</span>
+            天
+          </div>
+          <div class="progressBarContainer">
+            <div class="progressBarOuterBar">
+              <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
+            </div>
+            <div class="progressBarDescriptionRetain">
+              {{ currentRetainAmount + "/" + retainAmountRequired }}
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
     <div class="tips">
       等级晋升后开启90天保级期，保级期内完成有效投注要求则保级成功，未完成则降一级。
@@ -364,8 +364,8 @@
       <div class="right">
         <div class="vip-boxes">
           <template v-for="category in categories" :key="category.key">
-              <template v-for="(item, index) in vipItems" :key="index">
-                <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
+            <template v-for="(item, index) in vipItems" :key="index">
+              <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
                 <template
                   v-if="
                     store.token && isFirstTime && vipLevel !== 0
@@ -1190,7 +1190,7 @@ const runVipAPI = (res) => {
     // balanceRetainAmount.value = +res.data.retainAmountRequired - +res.data.currentRetainAmount
     currentRetainDay.value = res.data.currentRetainDay;
     retainDayRequired.value = res.data.retainDayRequired;
-    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay;
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     isDataLoaded.value = true;
     getVipLevelProgress(vipLevel.value, "bet");
@@ -1388,6 +1388,17 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
+  position: relative;
+  background-image: url("../assets/vip/vip-bg.jpg");
+  background-color: #f3f7fd;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #8d8d8d;
+  min-height: 100vh;
+  padding: 0 0 80px;
+
   .loading-icon {
     width: 25px;
     height: 25px;
@@ -1414,16 +1425,6 @@ $border-settings: 1px solid #e5e7eb;
       transform: rotate(360deg);
     }
   }
-  position: relative;
-  background-image: url("../assets/vip/vip-bg.jpg");
-  background-color: #f3f7fd;
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-  background-attachment: fixed;
-  color: #8d8d8d;
-  min-height: 100vh;
-  padding: 0 0 80px;
 
   .header-section {
     margin: 0 auto;
@@ -1517,15 +1518,15 @@ $border-settings: 1px solid #e5e7eb;
           justify-content: center;
           &Retain {
             display: flex;
-          color: #fff;
-          font-size: 17.987px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-          width: 100%;
-          text-align: center;
-          margin: -30px auto;
-          justify-content: center;
+            color: #fff;
+            font-size: 17.987px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            width: 100%;
+            text-align: center;
+            margin: -30px auto;
+            justify-content: center;
           }
         }
       }
@@ -2106,6 +2107,9 @@ $border-settings: 1px solid #e5e7eb;
       background: linear-gradient(180deg, #ffffff 18.57%, #b3d7f0 85%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      font-size: 48px;
       &:before {
         content: "";
         background: url(../assets/vip/decal.png);
@@ -2123,9 +2127,6 @@ $border-settings: 1px solid #e5e7eb;
         background-size: cover;
         transform: rotateY(180deg);
       }
-      background-clip: text;
-      text-align: center;
-      font-size: 48px;
     }
     h2 {
       color: #ffffff;
