@@ -8,3 +8,11 @@ export const getMemberPointRecordList = (query) => {
 export const addMemberPointRecord = (form) => {
   return https().request('/member-point', Method.POST, form, ContentType.form);
 };
+
+export const getAffiliatePointRecordList = (query) => {
+  return https().request("/member-point/affiliate", Method.GET, query, ContentType.form);
+};
+
+export const addAffiliatePointRecord = (form) => {
+  return https().request('/member-point/affiliate', Method.POST, form, ContentType.form);
+};

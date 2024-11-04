@@ -675,6 +675,7 @@ export default {
     afterEdit: 'After Edit',
     afterVipLevel: 'After VIP Level',
     amount: 'Amount',
+    amountGreaterThan: 'Amount Greater Than',
     amountLimitPerRain: 'Amount Limit Per Rain',
     adjust: 'Amount Adjust',
     alias: 'Alias',
@@ -2109,7 +2110,9 @@ export default {
     startHour: 'Start Hour',
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
-    showLogo: 'Show Logo'
+    showLogo: 'Show Logo',
+    adjustTarget: 'Adjust Target',
+    ignoreSettlement: 'Ignore Settlement',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2626,6 +2629,7 @@ export default {
     validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
     validateLoginNameNoSpecialCharacter:
       'The login name can only contain underscores (_), numbers, and letters.',
+    validateAdjustColumnRequired: 'Adjust Column is required',
   },
   menu: {
     undefined: '',
@@ -2902,6 +2906,7 @@ export default {
     'Member Refer Analysis': 'Member Refer Analysis',
     'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
+    'Affiliate Point Record': 'Affiliate Point Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3194,6 +3199,7 @@ export default {
     14011: 'Affiliate already exist',
     14012: 'Can only edit affiliate to lower level',
     14013: 'Affiliate has downline, cannot set to lower level',
+    14014: 'The phone number is incorrect / The phone number is not in the correct format',
     14100: 'The affiliate does not have this downline member',
     14101: 'This affiliate does not have permission to perform this action',
     14110: 'Platform and Site with same name already exist',
