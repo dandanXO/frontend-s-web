@@ -1265,6 +1265,8 @@ export default {
     mode: 'Mode',
     moneyChange: 'Money Change',
     month: 'Month',
+    monthlyDepositAmount: 'Monthly Deposit Amount',
+    monthlyDepositCount: 'Monthly Deposit Count',
     mqLogProcessWithTitle: 'MQ Title (SummaryDoris)',
     mqLogProcessTopic: 'Topic',
     mqLogProcessTimestamp: 'System Timestamp',

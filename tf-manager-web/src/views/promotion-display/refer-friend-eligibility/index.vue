@@ -29,6 +29,12 @@
           style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.referrerCode')"
         />
+        <el-input
+          v-model="request.referredName"
+          size="small"
+          style="width: 200px; margin-left: 5px"
+          :placeholder="t('fields.referredName')"
+        />
         <el-date-picker
           v-model="request.recordTime"
           format="DD/MM/YYYY"
@@ -145,6 +151,15 @@
           :empty-text="t('fields.noData')"
         >
           <el-table-column prop="loginName" :label="t('fields.referredName')" align="center" min-width="120" />
+          <el-table-column prop="regTime" :label="t('fields.regTime')" align="center" min-width="150">
+            <template #default="scope">
+              <span v-if="scope.row.regTime === null">-</span>
+              <span
+                v-if="scope.row.regTime !== null"
+                v-formatter="{data: scope.row.regTime, timeZone: timeZone, type: 'date'}"
+              />
+            </template>
+          </el-table-column>
           <el-table-column prop="gameType" :label="t('fields.gameType')" align="center" min-width="100">
             <template #default="scope">
               {{ t('gameType.' + scope.row.gameType) }}
@@ -155,6 +170,12 @@
               $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
             </template>
           </el-table-column>
+          <el-table-column prop="monthlyDepositAmount" :label="t('fields.monthlyDepositAmount')" align="center" min-width="100">
+            <template #default="scope">
+              $ <span v-formatter="{data: scope.row.monthlyDepositAmount,type: 'money'}" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="monthlyDepositCount" :label="t('fields.monthlyDepositCount')" align="center" min-width="100" />
           <el-table-column prop="validBet" :label="t('fields.validBet')" align="center" min-width="100">
             <template #default="scope">
               $ <span v-formatter="{data: scope.row.validBet,type: 'money'}" />
@@ -190,7 +211,7 @@
             <span >{{ $t('fields.ineligible') }}</span>
           </el-button>
           <el-button v-else-if="!detailPage.hasClaimed && totalRebateAmount > 0" type="primary" @click="distribute" style="margin-left: 10px">
-            <span >{{ $t('fields.distribute') }}</span>
+            <span >{{ $t('fields.distributeRebate') }}</span>
           </el-button>
           <el-button v-else type="success" disabled style="margin-left: 10px">
             <span >{{ $t('fields.distributed') }}</span>
@@ -239,6 +260,7 @@ const selectedRecord = reactive({
   siteId: null,
   recordTime: null
 });
+let timeZone = null;
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -273,6 +295,7 @@ const request = reactive({
   siteId: null,
   referrerName: null,
   referrerCode: null,
+  referredName: null,
   recordTime: defaultDate
 });
 
@@ -280,6 +303,7 @@ function resetQuery() {
   request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.referrerName = null;
   request.referrerCode = null;
+  request.referredName = null;
   request.recordTime = defaultDate
 }
 
@@ -291,6 +315,7 @@ function checkQuery() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   return query
 }
 
@@ -348,7 +373,7 @@ async function distribute() {
   query.amount = totalRebateAmount.value
   await distributeReferFriendEligibility(query);
   uiControl.dialogVisible = false
-  ElMessage({ message: t('message.distributeSuccess'), type: 'success' })
+  ElMessage({ message: t('message.success'), type: 'success' })
 }
 
 async function requestExportExcel() {
