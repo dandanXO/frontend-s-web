@@ -312,7 +312,7 @@ export default defineComponent({
         codeId: updateSecurityVerified.codeId
       }))
           .then(res => {
-            getCode();
+
             let message = res.message || '发送邮箱验证码成功',
                 type = 'success'
 
@@ -323,16 +323,20 @@ export default defineComponent({
               showVerificationTokenInput.value = true
               countdownOtp();
               emailCodeId.value = res.data.codeId;
-            } else
+            } else{
               type = 'error';
-            getCode();
+              getCode();
+            }
 
-            if (message)
+            if (message){
               notify({message, type});
-            getCode();
+            }
+
 
             // console.log('onCaptchaSubmit', res)
-          })
+          }).catch((err) => {
+            getCode()
+      })
     }
 
     return {

@@ -58,7 +58,7 @@
       <div class="q-px-lg q-pt-sm q-pb-lg">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
-            <template v-slot:append >
+            <template v-slot:append>
               <img
                 v-show="showImagecode"
                 :src="verificationImg"
@@ -305,7 +305,6 @@ export default defineComponent({
         codeId: updateSecurityVerified.codeId
       }))
           .then(res => {
-            getCode();
             let message = res.message || '发送手机验证码成功',
                 type = 'success'
 
@@ -328,7 +327,9 @@ export default defineComponent({
             }
 
             // console.log('onCaptchaSubmit', res)
-          })
+          }).catch((err) => {
+        getCode()
+      })
     }
 
     onMounted(() => {
