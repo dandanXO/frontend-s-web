@@ -508,6 +508,7 @@ export default {
     addBankToWithdrawPlatform: '출금 플랫폼에 은행 추가',
     addBanner: '배너 추가',
     addBbDacha: 'BB Dacha 추가',
+    addBlacklist: '블랙리스트 추가',
     addRewardGroup: '보상 그룹 추가',
     addCurrency: '통화 추가',
     addCurrencyRate: '환율 추가',
@@ -890,6 +891,7 @@ export default {
     editBankCard: '은행 카드 편집',
     editBanner: '배너 편집',
     editBelongType: '소속 유형 편집',
+    editBlacklist: '블랙리스트 수정',
     editConfig: '구성 편집',
     editCurrency: '통화 편집',
     editCurrencyRate: '통화 환율 편집',
@@ -2587,6 +2589,7 @@ export default {
     'Sites Config': '사이트 설정',
     'Affiliate Point Record': '제휴 포인트 기록',
     'Member Ratio Edit Record': '리베이트 비율 변경 기록',
+    'Site Platform Blacklist': '사이트 플랫폼 블랙리스트',
   },
   google: {
     google_auth_menu: 'Google 인증자',
