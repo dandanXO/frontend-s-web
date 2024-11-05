@@ -12,11 +12,17 @@ import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 
 const countdown = ref(5);
+const allowedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "localhost"];
+
 const router = useRouter();
 const redirected = ref(false);
 
 onMounted(() => {
   const currentDomain = window.location.hostname;
+  if (allowedDomains.includes(currentDomain)) {
+    countdown.value = 3;
+  }
+
   const redirectKey = `redirected-${currentDomain}`;
   let redirectPath = SessionStorage.getItem("REDIRECT_PATH");
   if (!redirectPath || redirectPath === "/redirect") {
