@@ -2586,6 +2586,7 @@ export default {
     'System Value Rules': '설정 규칙',
     'Sites Config': '사이트 설정',
     'Affiliate Point Record': '제휴 포인트 기록',
+    'Member Ratio Edit Record': '리베이트 비율 변경 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',
