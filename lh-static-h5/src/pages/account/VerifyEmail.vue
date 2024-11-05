@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
+    <div class="web">专属网址：{{ personalState.memberInfo.evip }}</div>
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -61,6 +61,9 @@
               <img
                 :src="verificationImg"
                 title="点击刷新验证码"
+                v-show="showImagecode"
+                @load="imgOnLoad"
+                @error="imgOnError"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getCode"
               />
@@ -121,6 +124,7 @@ export default defineComponent({
     };
 
     const canEdit = ref(false);
+    const showImagecode = ref(true)
 
     const personalState = reactive({
       memberInfo: {}
@@ -129,7 +133,7 @@ export default defineComponent({
 
     onMounted(() => {
       loadInfo();
-      getCode();
+      // getCode();
     });
 
     const emailCodeId = ref("");
@@ -154,7 +158,12 @@ export default defineComponent({
           });
     };
     //update security
-
+    const imgOnLoad = (event)=>{
+      showImagecode.value = true
+    }
+    const imgOnError = ()=>{
+      showImagecode.value = false
+    }
     const isEmailSending = ref(false);
     const updateSecurityModalVisible = ref(false);
     const updateSecurityFormRef = ref();
@@ -184,7 +193,7 @@ export default defineComponent({
         if (ret.code === 0) {
           notify({
             type: "success",
-            message: "OTP验证码已发送至您的邮箱",
+            message: "OTP 验证码已发送至您的邮箱",
           });
           canEdit.value = true;
           verificationDetails.memberInfo.codeId = ret.data.codeId;
@@ -327,6 +336,9 @@ export default defineComponent({
     }
 
     return {
+      showImagecode,
+      imgOnLoad,
+      imgOnError,
       router,
       searchForm,
       personalState,

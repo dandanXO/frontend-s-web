@@ -58,9 +58,12 @@
       <div class="q-px-lg q-pt-sm q-pb-lg">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
-            <template v-slot:append>
+            <template v-slot:append >
               <img
+                v-show="showImagecode"
                 :src="verificationImg"
+                @load="imgOnLoad"
+                @error="imgOnError"
                 title="点击刷新验证码"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getCode"
@@ -134,7 +137,7 @@ export default defineComponent({
     };
 
     const canEdit = ref(false);
-
+    const showImagecode = ref(true)
 
     const phoneCodeId = ref("")
 
@@ -243,7 +246,12 @@ export default defineComponent({
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
 
-
+    const imgOnLoad = (event)=>{
+      showImagecode.value = true
+    }
+    const imgOnError = ()=>{
+      showImagecode.value = false
+    }
     const isValidName = () => {
       const namePattern =
           /^([\u4e00-\u9fa5]*)$/;
@@ -325,10 +333,13 @@ export default defineComponent({
 
     onMounted(() => {
       loadInfo();
-      getCode();
+      // getCode();
     });
 
     return {
+      showImagecode,
+      imgOnLoad,
+      imgOnError,
       gotoNewplayerPromo,
       gotoNewplayerPromoDialog,
       router,
