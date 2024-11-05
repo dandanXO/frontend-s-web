@@ -58,7 +58,12 @@
         <div :class="`route-container show-menu ${route.path.substring(route.path.lastIndexOf('/'))==='/announcement' ? 'active' : ''}`">
           <RouterLink to="/personal/announcement" class="route">
             <div class="route-content">
-              <span class="route-label">
+              <el-badge :value="affInfo.unreadCount" v-show="affInfo.unreadCount != 0">
+                <span class="route-label" style="margin-right: 5px">
+                  {{ t('fields.systemAnnouncement') }}
+                </span>
+              </el-badge>
+              <span class="route-label" v-show="affInfo.unreadCount == 0">
                 {{ t('fields.systemAnnouncement') }}
               </span>
             </div>
@@ -166,6 +171,7 @@ import {
 } from '@/api/affiliate'
 import { ElMessage } from 'element-plus'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
+import { getUnreadAnnouncementCount } from '@/api/affiliate-announcement'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -191,6 +197,7 @@ const affInfo = reactive({
   shareRatio: [],
   balance: 0,
   point: 0,
+  unreadCount: 0,
 })
 
 const handleLanguage = () => {
@@ -599,7 +606,13 @@ onMounted(async () => {
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]
   })
+  getUnreadAnnouncement()
 })
+
+const getUnreadAnnouncement = async() => {
+  const { data: count } = await getUnreadAnnouncementCount(store.state.user.id)
+  affInfo.unreadCount = count;
+}
 
 watch(languageVal, newVal => {
   getNavigationData()
