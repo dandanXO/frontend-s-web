@@ -10,14 +10,14 @@
   <!--    </div>-->
   <!--  </q-page-sticky>-->
 
-  <div class="register-container" :class="isRestrictedDomain ? 'w-domain': ''">
+  <div class="register-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
     </div> -->
     <div class="is-domain top-img">
-      <img src="../assets/images/index/register-topimg.png"/>
+      <img src="../assets/images/index/register-topimg.png" />
     </div>
     <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
@@ -210,8 +210,10 @@
         {{ $t("btn.confirm") }}
       </q-btn>
     </div>
-    <div class="is-domain has-acct">Already have an account? <router-link to="/login" class="login">Login</router-link></div>
-
+    <div class="is-domain has-acct">
+      Already have an account?
+      <router-link to="/login" class="login">Login</router-link>
+    </div>
 
     <div class="no-domain mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
@@ -245,20 +247,25 @@
     <div class="is-domain social-container">
       <div class="share">Share</div>
       <div class="social-items">
-        <a href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l" id="Whatsapp" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_wa.png">
+        <a
+          href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
+          id="Whatsapp"
+          class="social-item"
+          target="_blank"
+        >
+          <img src="../assets/images/auth/social_wa.png" />
         </a>
         <a href="app.apk" id="Download" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_dl.png">
+          <img src="../assets/images/auth/social_dl.png" />
         </a>
         <a href="https://www.tiktok.com/@b9.game01" id="Tiktok" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_tt.png">
+          <img src="../assets/images/auth/social_tt.png" />
         </a>
         <a href="https://pak-landing.b9game0.com/" id="Instagram" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_charity.png">
+          <img src="../assets/images/auth/social_charity.png" />
         </a>
       </div>
-  </div>
+    </div>
     <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div>
@@ -767,13 +774,7 @@ export default defineComponent({
         }
       }
     );
-    const restrictedDomains = [
-      'pkmagr98.cc',
-      'cbrfobx1.cc',
-      'xsu5qyks.cc',
-      '5vh518iw.cc',
-      '9o48ca3p.cc',
-    ];
+    const restrictedDomains = ["localhost", "pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
     const isRestrictedDomain = computed(() => {
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);
@@ -903,6 +904,7 @@ function charType(num) {
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
     background-size: 100% 100%;
+    padding-top: 48px;
     .no-domain {
       display: none;
     }
@@ -925,56 +927,56 @@ function charType(num) {
       align-items: center;
       gap: 5px;
       margin: 10px auto;
-      color: #9F9F9F;
+      color: #9f9f9f;
       a {
-        color: #83E977;
+        color: #83e977;
       }
     }
     .forget-pwd {
-      color: #9F9F9F;
+      color: #9f9f9f;
       display: flex;
       justify-content: flex-end;
       align-items: center;
       margin: 0 20px 20px;
     }
-.social-container {
-  margin: 20px auto;
-  width: 95%;
-  position: sticky;
-  top: calc(100vh - 70px); 
-  left: 0;
-  right: 0;
-  .share {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    gap: 10px;
-    color:#FFFFFF33;
-    &:before,
-    &:after {
-      content: "";
-      width: 100%;
-      flex: 1;
-      height: 1px;
-      background-color: #FFFFFF33;
+    .social-container {
+      margin: 20px auto;
+      width: 95%;
+      position: sticky;
+      top: calc(100vh - 70px);
+      left: 0;
+      right: 0;
+      .share {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        gap: 10px;
+        color: #ffffff33;
+        &:before,
+        &:after {
+          content: "";
+          width: 100%;
+          flex: 1;
+          height: 1px;
+          background-color: #ffffff33;
+        }
+      }
+      .social-items {
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+        margin: 0 auto;
+        align-items: center;
+        .social-item {
+          border: 1px solid #ffffff33;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 8px;
+        }
+      }
     }
-  }
-  .social-items {
-    display: flex;
-    justify-content: space-between;
-    width: 95%;
-    margin: 0 auto;
-    align-items: center;
-    .social-item {
-      border: 1px solid #FFFFFF33;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 8px;
-    }
-  }
-}
   }
 }
 
