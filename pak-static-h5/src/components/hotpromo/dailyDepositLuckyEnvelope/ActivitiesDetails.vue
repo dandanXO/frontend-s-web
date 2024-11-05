@@ -137,6 +137,17 @@ const isLoading = ref(false);
 const claimBonus = () => {
   eventapi.put('/bonus/claim/pak-daily-deposit-lucky-envelope').then((res) => {
     const { code, data } = res;
+
+    if(code === 0) {
+      Dialog.create({
+        class: "login-card",
+        title: "Claimed Bonus Amount",
+        message: data,
+        ok: { color: "brightbtn", label: "Okay" },
+        padding: "20px",
+        persistent: true
+      });
+    }
   });
 }
 
