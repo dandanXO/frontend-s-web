@@ -1,5 +1,8 @@
 <template>
-  <div class="common-promo">
+  <div v-if="promoId === 581">
+    <ActivitiesDetails />
+  </div>
+  <div class="common-promo" v-else>
     <!-- <img :src="require(`../../assets/images/promotion/hotpromo/common/icon.png`)" /> -->
     <div class="contents">
       <!--      存款成功后，每日充值奖金将自动创建到会员的主钱包中。-->
@@ -10,11 +13,15 @@
       <div v-if="promoId === 27" class="extra-img">
         <!-- <img src="../../assets/images/promotion/hotpromo/common/extra.png" /> -->
       </div>
+      <div v-if="promoId === 581" class="extra-img">
+        <ActivitiesDetails />
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { defineComponent, onMounted } from "vue";
+import ActivitiesDetails from "./dailyDepositLuckyEnvelope/ActivitiesDetails.vue";
 
 export default defineComponent({
   props: {
@@ -26,6 +33,9 @@ export default defineComponent({
       type: Number,
       default: null
     }
+  },
+  components: {
+    ActivitiesDetails,
   },
   emits: ["daily-slot"],
   setup() {

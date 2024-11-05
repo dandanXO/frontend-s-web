@@ -110,13 +110,15 @@ export const userStore = defineStore("userStore", {
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
       if ("standalone" in window.navigator && window.navigator.standalone) {
-        regDevice = "IOS";
+        //Temp Fix with H5 sin.
+        regDevice = "H5";
       } else {
         regDevice = Platform.is.mobile ? "H5" : "WEB";
         if (Platform.is.capacitor && Platform.is.android) {
           regDevice = "ANDROID";
         }
       }
+
       loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
@@ -127,7 +129,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
-          window.captchaObj.reset()
+          window.captchaObj.reset();
           useUI().notify({
             type: "error",
             message: ret.message

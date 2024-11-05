@@ -22,3 +22,11 @@ export const deleteAffAnnouncement = (memberId, annoucementId) => {
     Method.GET
   )
 }
+
+export const getUnreadAnnouncementCount = (memberId, query) => {
+  return https().request(
+    `/affiliateAnnouncement/unread-count/${memberId}`,
+    Method.GET,
+    query
+  )
+}

@@ -6,7 +6,7 @@
         <el-input v-model="formData.monitorSetting.title" />
       </el-form-item>
       <el-form-item label="通知生成人数阈值" prop="monitorSetting.setting.notificationGenerationUserNumberThreshold">
-        <el-input-number :min="0" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberThreshold" />
+        <el-input-number :min="1" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberThreshold" />
       </el-form-item>
       <el-form-item label="状态" prop="monitorSetting.status">
         <el-switch
@@ -155,7 +155,7 @@ const rules = {
     setting: {
       notificationGenerationUserNumberThreshold: [
         { required: true, message: '请填写通知生成人数阈值', trigger: 'blur' },
-        { type: 'number', min: 20, message: '最小值为20', trigger: 'blur' }
+        { type: 'number', min: 1, message: '最小值为1', trigger: 'blur' }
       ]
     },
     status: [
