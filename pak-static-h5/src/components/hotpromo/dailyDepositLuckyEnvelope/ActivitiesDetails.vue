@@ -29,7 +29,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            {{ rules[bonusSeq] ? rules[bonusSeq].deposit : 0 }}
+            {{ rules[bonusSeq] ? rules[bonusSeq].minDeposit : 0 }}
             <br />
             RS
           </div>
@@ -83,12 +83,12 @@
           />
         </div>
         <div>
-          <div class="box-title">Max {{ rule.bonus }}rs</div>
+          <div class="box-title">Max {{ rule.bonusAmount }}rs</div>
           <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
             <img :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/tick.png`)" />
             Received
           </div>
-          <div class="box-subtitle" v-else>Deposit {{ rule.deposit }}rs</div>
+          <div class="box-subtitle" v-else>Deposit {{ rule.minDeposit }}rs</div>
         </div>
       </div>
     </div>
@@ -121,43 +121,44 @@ const isReceivedToday = ref(false);
 const rules = ref([
   {
     bet: 10000,
-    bonus: "388",
-    deposit: 2000
+    minDeposit: 2000,
+    bonusAmount: "388"
   },
   {
     bet: 10000,
-    bonus: "588",
-    deposit: 2000
+    minDeposit: 2000,
+    bonusAmount: "588"
   },
   {
     bet: 10000,
-    bonus: "888",
-    deposit: 2000
+    minDeposit: 2000,
+    bonusAmount: "888"
   },
   {
     bet: 10000,
-    bonus: "1288",
-    deposit: 2000
+    minDeposit: 2000,
+    bonusAmount: "1288"
   },
   {
     bet: 10000,
-    bonus: "1688",
-    deposit: 2000
+    minDeposit: 2000,
+    bonusAmount: "1688"
   },
   {
     bet: 10000,
-    bonus: "2088",
-    deposit: 2000
+    minDeposit: 2000,
+    bonusAmount: "2088"
   },
   {
     bet: 10000,
-    bonus: "2888",
-    deposit: 2000
+    minDeposit: 2000,
+    bonusAmount: "2888"
   }
 ]);
 
 const totalDeposit = ref(0);
 const totalValidBet = ref(0);
+const betTimes = ref(0);
 
 const progressDepositLabel = computed(() => {
   const percent = (progressDeposit.value * 100).toFixed(2);
@@ -199,9 +200,14 @@ onMounted(() => {
       bonusSeq.value = data.todayCheckIn;
       totalDeposit.value = data.totalDeposit;
       totalValidBet.value = data.totalValidBet;
+      betTimes.value = data.betTimes;
+      rules.value = data.rules;
 
-      progressDeposit.value = totalDeposit.value / 2000;
-      progressDailyWager.value = totalValidBet.value / 10000;
+      // progressDeposit.value = totalDeposit.value / 2000;
+      progressDeposit.value = totalDeposit.value / rules[bonusSeq].minDeposit;
+
+      // progressDailyWager.value = totalValidBet.value / 10000;
+      progressDailyWager.value = totalValidBet.value / (rules[bonusSeq].minDeposit * betTimes.value);
     }
   });
 });
