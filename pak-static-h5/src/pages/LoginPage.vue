@@ -175,21 +175,21 @@
     <div class="is-domain social-container">
       <div class="share">Share</div>
       <div class="social-items">
-        <a
-          href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
-          id="Whatsapp"
-          class="social-item"
-          target="_blank"
-        >
+        <a @click="openWhatsApp()" id="Whatsapp" class="social-item">
           <img src="../assets/images/auth/social_wa.png" />
         </a>
-        <a href="app.apk" id="Download" class="social-item" target="_blank">
+
+        <a v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()" id="Download" class="social-item">
           <img src="../assets/images/auth/social_dl.png" />
         </a>
-        <a href="https://www.tiktok.com/@b9.game01" id="Tiktok" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_tt.png" />
+        <a @click="openYoutube()" id="Youtube" class="social-item">
+          <img src="../assets/images/auth/youtube-icc.png" />
         </a>
-        <a href="https://pak-landing.b9game0.com/" id="Instagram" class="social-item" target="_blank">
+        <a @click="openTiktok()" id="TikTok" class="social-item" target="_blank">
+          <img src="../assets/images/auth/tiktok.png" />
+        </a>
+
+        <a @click="openCharity()" id="Instagram" class="social-item" target="_blank">
           <img src="../assets/images/auth/social_charity.png" />
         </a>
       </div>
@@ -656,7 +656,9 @@ export default defineComponent({
         });
     };
 
-    const restrictedDomains = ["localhost", "pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
+    //Put this when u need to test on localhost.
+    // "localhost",
+    const restrictedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
     const isRestrictedDomain = computed(() => {
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);
@@ -857,6 +859,7 @@ export default defineComponent({
           justify-content: center;
           align-items: center;
           border-radius: 8px;
+          animation: smallbeat 2s infinite;
         }
       }
     }

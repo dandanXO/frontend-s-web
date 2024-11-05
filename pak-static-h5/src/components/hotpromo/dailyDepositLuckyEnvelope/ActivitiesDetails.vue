@@ -210,9 +210,15 @@ onMounted(() => {
         bonusSeq.value = 0;
       }
       progressDeposit.value = totalDeposit.value / rules.value[bonusSeq.value].minDeposit;
+      if (progressDeposit.value > 1) {
+        progressDeposit.value = 1;
+      }
 
       // progressDailyWager.value = totalValidBet.value / 10000;
       progressDailyWager.value = totalValidBet.value / (rules.value[bonusSeq.value].minDeposit * betTimes.value);
+      if (progressDailyWager.value > 1) {
+        progressDailyWager.value = 1;
+      }
     }
   });
 });
