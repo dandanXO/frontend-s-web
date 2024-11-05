@@ -358,7 +358,7 @@ const getRolloverDetails = async (item) => {
   // Parsing each content entry to get JSON object
   betsPage.records = res.data.map(item => {
     const contentParts = item.content.split("|");
-    const content = JSON.parse("{\"bet\":500.0,\"ticketNo\":\"CEXAE53335138E2416637MGPYHQAID674_20241104042429\",\"payout\":1065.0,\"rollover\":500.0,\"platform\":\"TFGaming\",\"transactionId\":\"CEXAE53335138E2416637MGPYHQAID674_20241104042429\"}");
+    const content = JSON.parse(contentParts[0]);
     const parseAmt = contentParts.length > 1 ? parseFloat(contentParts[1]) : null;
     return {
       ...content,
