@@ -1,5 +1,26 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div v-if="isSelectedMethod" class="withdrawal-summary">
+      <div class="balance">
+        <span class="amount">
+          {{ store.balance > 0 ? convertToCommaAmount(store.balance, false) : "0.00" }}
+        </span>
+        <div class="title">Cash Balance</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          {{
+            selectedMethodItem.withdrawableBalance > 0
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+              : "0.00"
+          }}
+        </span>
+        <div class="title">Withdrawable</div>
+      </div>
+    </div>
     <div class="method-title q-mb-sm">Withdraw Currency</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div>
@@ -276,7 +297,10 @@
           <div class="fund-container q-mt-sm q-mb-md">
             <div>
               <span class="fund-title">Available:</span>
-              {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+              <q-spinner v-if="isRefreshRemainWager" />
+              <span v-else>
+                {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+              </span>
             </div>
           </div>
 
@@ -305,7 +329,19 @@
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
-                {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}
+                <!-- {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }} -->
+
+                <div class="remain-wager-wrapper" @click="refreshRemainWager">
+                  <q-spinner v-if="isRefreshRemainWager" />
+                  <span v-else>
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, true) }}
+                  </span>
+                  <img
+                    class="refresh-btn-img"
+                    :class="{ rotate: isRefreshRemainWager }"
+                    src="../../assets/images/account/refresh-icon.svg"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -362,6 +398,7 @@ const $q = useQuasar();
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
+const isRefreshRemainWager = ref(false);
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -773,6 +810,27 @@ const onAddNewAccount = () => {
   isAddNewAccount.value = true;
 };
 
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  api
+    .get("/session/withdraw/withdrawableBalance/refresh")
+    .then((res) => {
+      selectedMethodItem.value = {
+        ...selectedMethodItem.value,
+        ...res.data
+      };
+
+      isRefreshRemainWager.value = false;
+    })
+    .catch(() => {
+      isRefreshRemainWager.value = false;
+    })
+    .finally(() => {
+      isRefreshRemainWager.value = false;
+    });
+};
+
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
@@ -1098,6 +1156,7 @@ const loadInfo = () => {
   .withdrawal-summary {
     padding: 1rem;
     margin-top: 0;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -1296,6 +1355,22 @@ const loadInfo = () => {
           font-weight: 400;
           &_white {
             color: #ffffff;
+          }
+        }
+
+        .remain-wager-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          cursor: pointer;
+
+          .refresh-btn-img {
+            width: 20px;
+            height: 20px;
+
+            &.rotate {
+              animation: rotateTwice 1s infinite linear;
+            }
           }
         }
       }

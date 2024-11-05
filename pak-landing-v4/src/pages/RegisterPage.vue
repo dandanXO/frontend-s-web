@@ -6,8 +6,8 @@
       </q-tabs>
     </div> -->
     <div class="top-img">
-      <img src="../assets/images/index/register-topimg.png"/>
-    </div> 
+      <img src="../assets/images/index/register-topimg.png" />
+    </div>
     <div class="register-form-wrapper">
       <q-form class="rounded-borders">
         <InputRowGrid>
@@ -100,27 +100,32 @@
         :loading="isLoading"
         @click="onSubmit"
       >
-        {{ $t("btn.confirm") }}
+        {{ $t("btn.register") }}
       </q-btn>
     </div>
 
     <div class="social-container">
       <div class="share">Share</div>
       <div class="social-items">
-        <a href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l" id="Whatsapp" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_wa.png">
+        <a
+          href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
+          id="Whatsapp"
+          class="social-item"
+          target="_blank"
+        >
+          <img src="../assets/images/auth/social_wa.png" />
         </a>
         <a href="app.apk" id="Download" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_dl.png">
+          <img src="../assets/images/auth/social_dl.png" />
         </a>
         <a href="https://www.tiktok.com/@b9.game01" id="Tiktok" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_tt.png">
+          <img src="../assets/images/auth/social_tt.png" />
         </a>
         <a href="https://pak-landing.b9game0.com/" id="Instagram" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_charity.png">
+          <img src="../assets/images/auth/social_charity.png" />
         </a>
       </div>
-  </div>
+    </div>
     <!-- <div class="bottom-img">
       <img src="../assets/images/index/register-img.png"/>
     </div> -->
@@ -236,7 +241,7 @@ export default defineComponent({
                 });
                 regForm.loginName = "";
                 regForm.password = "";
-                const newUrlWithToken = res.data.homeDomain + "/home?token=" + res.data.token ;
+                const newUrlWithToken = res.data.homeDomain + "/home?token=" + res.data.token;
 
                 setTimeout(() => {
                   window.location.href = newUrlWithToken;
@@ -287,7 +292,7 @@ export default defineComponent({
   margin: 20px auto;
   width: 95%;
   position: sticky;
-  top: calc(100vh - 70px); 
+  top: calc(100vh - 70px);
   left: 0;
   right: 0;
   .share {
@@ -295,14 +300,14 @@ export default defineComponent({
     align-items: center;
     padding: 10px;
     gap: 10px;
-    color:#FFFFFF33;
+    color: #ffffff33;
     &:before,
     &:after {
       content: "";
       width: 100%;
       flex: 1;
       height: 1px;
-      background-color: #FFFFFF33;
+      background-color: #ffffff33;
     }
   }
   .social-items {
@@ -312,7 +317,7 @@ export default defineComponent({
     margin: 0 auto;
     align-items: center;
     .social-item {
-      border: 1px solid #FFFFFF33;
+      border: 1px solid #ffffff33;
       padding: 10px;
       display: flex;
       justify-content: center;
@@ -374,7 +379,8 @@ export default defineComponent({
   align-items: center;
   overflow: hidden;
   img {
-    margin-right: -20px;
+    width: 360px;
+    max-width: 90%;
   }
 }
 
@@ -588,7 +594,7 @@ export default defineComponent({
   width: 90%;
   margin: 30px auto;
 
-  img{
+  img {
     width: 100%;
   }
 }

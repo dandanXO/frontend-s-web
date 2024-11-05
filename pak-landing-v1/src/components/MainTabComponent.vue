@@ -18,7 +18,7 @@
           style="animation-delay: 0.5s"
         />
       </a>
-      <a href="https://www.tiktok.com/@b9game2" target="_blank">
+      <a href="https://www.tiktok.com/@b9.game01" target="_blank">
         <img
           class="icons"
           alt=""
