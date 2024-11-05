@@ -45,10 +45,12 @@
         </div>
         <div
           class="balance-item"
-          style="margin-top: 10px; cursor: pointer"
-          @click="redeemDialogVisible = true"
+          style="margin-top: 10px"
         >
           <span>{{ t('statsHeader.myPoint') }}</span>
+          <span>
+            <button @click="redeemDialogVisible = true"> {{ t('fields.redeemConvert') }}</button>
+          </span>
           <span>{{ Math.floor(affInfo.point) }}</span>
         </div>
       </div>
