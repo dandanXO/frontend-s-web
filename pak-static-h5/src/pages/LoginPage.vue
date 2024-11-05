@@ -798,6 +798,7 @@ export default defineComponent({
         align-items: center;
         overflow: hidden;
         img {
+          width: 85%;
           margin-right: -20px;
         }
       }
