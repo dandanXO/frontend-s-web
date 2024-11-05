@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <div>
+        <div style="display: flex;gap: 10px; flex-wrap: wrap;">
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -12,22 +12,22 @@
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
-            style="width: 300px; margin-left: 10px"
+            style="width: 300px;"
             :shortcuts="shortcuts"
             :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
           />
           <el-button
-            style="margin-left: 20px"
             icon="el-icon-search"
             size="mini"
             type="success"
             @click="loadRecord()"
+            style="margin: 0;"
           >
             {{ t('fields.search') }}
           </el-button>
-          <el-button size="mini" @click="resetQuery()">
+          <el-button size="mini" @click="resetQuery()" style="margin: 0;">
             {{ t('fields.reset') }}
           </el-button>
         </div>
@@ -180,6 +180,101 @@ const data = reactive({
   depositAmount: 0,
   affiliateTransferAmount: 0,
 })
+
+const shortcuts = [
+  {
+    text: t('fields.today'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.yesterday'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'days')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'days')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'weeks')
+          .startOf('isoWeek')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'weeks')
+          .endOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'months')
+          .endOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+]
 
 function disabledDate(time) {
   return time.getTime() > new Date().getTime()

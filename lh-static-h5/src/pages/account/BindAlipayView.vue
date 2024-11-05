@@ -29,7 +29,14 @@
       </div>
 
       <q-card-actions style="margin: 0 auto" align="center" class="bg-white text-teal">
-        <q-btn style="width: 100%" class="common-md-btn" flat :disable="otpCountdownCount > 0" :label="otpCountdownCount <= 0 ? `发送验证码` : `已发送（倒数${otpCountdownCount}秒)`" @click="onCaptchaSubmit()" />
+        <q-btn
+          style="width: 100%"
+          class="common-md-btn"
+          flat
+          :disable="otpCountdownCount > 0"
+          :label="otpCountdownCount <= 0 ? `发送验证码` : `已发送（倒数${otpCountdownCount}秒)`"
+          @click="onCaptchaSubmit()"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -183,14 +190,14 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
 const onTypeToggleBtnClick = (bank, index) => {
   selectedTypeToggleIndex.value = index;
-  bankCardInfo.bankId = bank.id
+  bankCardInfo.bankId = bank.id;
 };
 
 const categoryToggleList = ref(["ALIPAY"]);
@@ -205,7 +212,7 @@ const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 
 const bankCardRef = ref();
 const cardNumberRef = ref();
@@ -315,13 +322,13 @@ const loadBankCards = () => {
     if (!store.realName) {
       notify({
         type: "error",
-        message: "请输入您的真实姓名",
+        message: "请输入您的真实姓名"
       });
       router.push("/account/personal");
     } else if (!store.phone) {
       notify({
         type: "error",
-        message: "请输入您的电话号码",
+        message: "请输入您的电话号码"
       });
       router.push("/account/verifyTelephone");
     } else {
@@ -331,8 +338,11 @@ const loadBankCards = () => {
           if (res.code === 0) {
             for (let i = 0, l = res.data.length; i < l; i++) {
               const data = res.data[i];
-              const { code } = data;
-              if (code === 'alipay') bankList.value.push(data);
+              const { code, id } = data;
+              if (code === "alipay") {
+                bankList.value.push(data);
+                bankCardInfo.bankId = id;
+              }
             }
           }
         })
@@ -349,7 +359,7 @@ const submitBankCard = () => {
   if (!phoneVerificationRef.value) {
     notify({
       type: "error",
-      message: "请点击获取验证码，并输入您的注册手机验证",
+      message: "请点击获取验证码，并输入您的注册手机验证"
     });
   } else {
     phoneVerificationRef.value.validate();
@@ -362,8 +372,9 @@ const submitBankCard = () => {
         if (response.code === 0) {
           notify({
             type: "success",
-            message: "已添加银行卡",
+            message: "已添加银行卡"
           });
+          router.push("/account/withdraw");
         }
       })
       .catch((error) => {

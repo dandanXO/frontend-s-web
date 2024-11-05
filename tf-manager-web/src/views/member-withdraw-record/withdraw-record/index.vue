@@ -1172,7 +1172,9 @@ function resetQuery() {
   request.loginName = null
   request.financialId = financialList.list[0].id
   request.currencyId = currencyList.list[0].id
-  request.riskId = riskList.list[0].id
+  if (riskList.list.length > 0) {
+    request.riskId = riskList.list[0].id
+  }
   request.cardAccount = null
   request.bankName = bankList.list[0].id
   request.minWithdrawAmount = null

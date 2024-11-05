@@ -164,6 +164,7 @@ export default {
     content_rules_02: "Content length is 500 words or less"
   },
   btn: {
+    register: "Register",
     confirm: "Confirm",
     submit: "Submit",
     addNewAccount: "Add New Account",

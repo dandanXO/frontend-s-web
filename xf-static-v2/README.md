@@ -1,6 +1,6 @@
 # XF App (xf-static-h5)
 
-- 兴發 H5+APP
+- 兴發2 H5+APP
 - Node Js >= 16.17.0
 - Quasar.dev + Vue 3.0
 

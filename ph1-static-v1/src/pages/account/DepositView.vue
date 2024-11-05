@@ -119,6 +119,13 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
+            <q-checkbox
+              style="margin-left: -5px"
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === false && !isPrivilege"
+            >
+              Use Slot First Deposit Privilege
+            </q-checkbox>
             <div class="lil-title">
               Amount ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
@@ -277,7 +284,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick } from "vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick, watch } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -335,6 +342,9 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+
+const isFtdPrivilegeEnable = ref(false);
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -423,7 +433,9 @@ const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === false && isFtdPrivilegeEnable.value === true
+);
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -569,7 +581,7 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
-  if(btnLoading.value) return
+  if (btnLoading.value) return;
   btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
@@ -620,7 +632,7 @@ async function confirmDeposit() {
             }
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          if (isFtdPrivilege.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
@@ -841,6 +853,7 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
@@ -869,11 +882,24 @@ const scrollToInput = () => {
   }
 };
 
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    } else {
+      isFtdPrivilegeEnable.value = false;
+    }
+  },
+  { immediate: true }
+);
+
 onActivated(() => {
   initPay();
   // checkNewUser();
   loadInfo();
   resetSelectedMethod();
+  loadAppTabs();
 });
 
 onMounted(() => {
@@ -1219,7 +1245,7 @@ onMounted(() => {
 
 .slot-ftd-section {
   width: 100%;
-  margin: 10px auto 0px;
+  margin: 24px auto 0px;
 
   img {
     width: 100%;
