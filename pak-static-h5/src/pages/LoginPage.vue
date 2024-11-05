@@ -141,7 +141,7 @@
 
     <div class="bottom-btn">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
-        {{ $t("btn.confirm") }}
+        {{ isRestrictedDomain ? $t("btn.login") : $t("btn.confirm") }}
       </q-btn>
     </div>
     <div class="is-domain has-acct">
