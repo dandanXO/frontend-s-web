@@ -46,6 +46,7 @@
         @sort-change="sort"
         v-loading="page.loading"
         :empty-text="t('fields.noData')"
+        :row-style="rowClass"
       >
         <el-table-column
           prop="eventType"
@@ -252,6 +253,16 @@ async function loadMemberMoneyChange(frombutton) {
   page.records = ret.records
   page.pagingState = ret.pagingState
   page.loading = false
+}
+
+function rowClass(row, index) {
+  if (row.row.eventType === 'CREATE') {
+    return { color: "green" }
+  } else if (row.row.eventType === 'UPDATE') {
+    return { color: "blue" }
+  } else if (row.row.eventType === 'BALANCE_CHECK') {
+    return { color: "red" }
+  }
 }
 
 onMounted(() => {
