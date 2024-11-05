@@ -36,7 +36,7 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
- 
+
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
@@ -109,14 +109,16 @@ export default route(function (/* { store, ssrContext } */) {
       } else {
         if (user.nickName === "") {
           user.getMemberInfo().then(() => {
-            if (from.path === "/login" && to.path === "/home") {
-              gtag.event("login", {
-                custom_user_id: user.id
-              });
-            } else if (from.path === "/register" && to.path === "/home") {
-              gtag.event("register", {
-                custom_user_id: user.id
-              });
+            if (window.location.hostname !== "localhost") {
+              if (from.path === "/login" && to.path === "/home") {
+                gtag.event("login", {
+                  custom_user_id: user.id
+                });
+              } else if (from.path === "/register" && to.path === "/home") {
+                gtag.event("register", {
+                  custom_user_id: user.id
+                });
+              }
             }
 
             next({ ...to, replace: true });
