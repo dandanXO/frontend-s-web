@@ -916,6 +916,7 @@ function charType(num) {
         align-items: center;
         overflow: hidden;
         img {
+          width: 85%;
           margin-right: -20px;
         }
       }
