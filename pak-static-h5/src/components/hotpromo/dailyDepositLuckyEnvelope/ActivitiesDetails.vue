@@ -17,7 +17,7 @@
         />
         Current Sign-in:
       </div>
-      <div class="noOfDays">Day {{ bonusSeq + 1 }}</div>
+      <div class="noOfDays">Day {{ currentDay }}</div>
     </div>
     <div class="activities-stats-container">
       <div class="stats-info">
@@ -44,7 +44,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            {{ rules[bonusSeq] ? rules[bonusSeq].bet : 0 }}
+            {{ rules[bonusSeq] ? rules[bonusSeq].minDeposit * betTimes : 0 }}
             <br />
             RS
           </div>
@@ -116,6 +116,7 @@ const $q = useQuasar();
 const progressDeposit = ref(0);
 const progressDailyWager = ref(0);
 
+const currentDay = ref(0);
 const bonusSeq = ref(0);
 const isReceivedToday = ref(false);
 const rules = ref([
@@ -197,17 +198,21 @@ onMounted(() => {
     const { code, data } = res;
 
     if (code === 0) {
-      bonusSeq.value = data.todayCheckIn;
+      currentDay.value = data.todayCheckIn;
       totalDeposit.value = data.totalDeposit;
       totalValidBet.value = data.totalValidBet;
       betTimes.value = data.betTimes;
       rules.value = data.rules;
 
       // progressDeposit.value = totalDeposit.value / 2000;
-      progressDeposit.value = totalDeposit.value / rules[bonusSeq].minDeposit;
+      bonusSeq.value = currentDay.value - 1;
+      if (bonusSeq.value < 0) {
+        bonusSeq.value = 0;
+      }
+      progressDeposit.value = totalDeposit.value / rules.value[bonusSeq.value].minDeposit;
 
       // progressDailyWager.value = totalValidBet.value / 10000;
-      progressDailyWager.value = totalValidBet.value / (rules[bonusSeq].minDeposit * betTimes.value);
+      progressDailyWager.value = totalValidBet.value / (rules.value[bonusSeq.value].minDeposit * betTimes.value);
     }
   });
 });
