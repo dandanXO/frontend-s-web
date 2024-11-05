@@ -656,7 +656,7 @@ export default defineComponent({
         });
     };
 
-    const restrictedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
+    const restrictedDomains = ["localhost", "pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
     const isRestrictedDomain = computed(() => {
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);
@@ -798,8 +798,8 @@ export default defineComponent({
         align-items: center;
         overflow: hidden;
         img {
-          width: 85%;
-          margin-right: -20px;
+          width: calc(100% - 32px);
+          margin-left: -5px;
         }
       }
     }
