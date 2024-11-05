@@ -80,11 +80,12 @@ import { ref, computed, onMounted, onActivated } from "vue";
 import { eventapi } from "boot/axios";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "src/stores";
-import { Dialog } from "quasar";
+import { Dialog, useQuasar } from "quasar";
 
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
+const $q = useQuasar();
 
 const progressDeposit = ref(0);
 const progressDailyWager = ref(0);
@@ -137,6 +138,15 @@ const isLoading = ref(false);
 const claimBonus = () => {
   eventapi.put('/bonus/claim/pak-daily-deposit-lucky-envelope').then((res) => {
     const { code, data } = res;
+
+    if(code === 0) {
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: `Claimed bonus amount: ${data}`,
+        icon: "check_circle_outline"
+      });
+    }
   });
 }
 
