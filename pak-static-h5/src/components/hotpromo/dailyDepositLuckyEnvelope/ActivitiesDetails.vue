@@ -200,14 +200,14 @@ onMounted(() => {
       bonusSeq.value = data.todayCheckIn;
       totalDeposit.value = data.totalDeposit;
       totalValidBet.value = data.totalValidBet;
-      // betTimes.value = data.betTimes;
-      // rules.value = data.rules;
+      betTimes.value = data.betTimes;
+      rules.value = data.rules;
 
-      progressDeposit.value = totalDeposit.value / 2000;
-      // progressDeposit.value = totalDeposit.value / rules[bonusSeq].minDeposit
+      // progressDeposit.value = totalDeposit.value / 2000;
+      progressDeposit.value = totalDeposit.value / rules[bonusSeq].minDeposit;
 
-      progressDailyWager.value = totalValidBet.value / 10000;
-      // progressDailyWager.value = totalValidBet.value / (rules[bonusSeq].minDeposit * betTimes.value)
+      // progressDailyWager.value = totalValidBet.value / 10000;
+      progressDailyWager.value = totalValidBet.value / (rules[bonusSeq].minDeposit * betTimes.value);
     }
   });
 });
@@ -336,9 +336,14 @@ onActivated(() => {
             z-index: 2;
             font-size: 12px;
             color: #ffffff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
+            text-shadow:
+              1px 1px 2px rgba(0, 0, 0, 0.7),
+              -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7),
+              -1px 1px 2px rgba(0, 0, 0, 0.7),
+              1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7),
+              1px -1px 2px rgba(255, 255, 255, 0.7),
               -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
