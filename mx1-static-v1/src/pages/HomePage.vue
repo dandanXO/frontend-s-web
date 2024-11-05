@@ -2021,7 +2021,7 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-        .get("/sitePlatformAndGamesByLabel", {
+        .get("/platformGamesByLabelV1", {
           params: {
             gameLabel: "HOT",
             device: regDevice
