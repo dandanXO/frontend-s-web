@@ -369,12 +369,7 @@ onActivated(() => {
     margin-top: 1rem;
     .days-box {
       background: linear-gradient(356.25deg, rgba(0, 67, 11, 0.3) -0.21%, rgba(2, 116, 2, 0.3) 93.65%);
-      &.isReceived {
-        background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
-        .box-img {
-          background: unset;
-        }
-      }
+
       padding: 6px 12px;
       display: flex;
       flex-direction: column;
@@ -382,6 +377,13 @@ onActivated(() => {
       justify-content: center;
       border-radius: 8px;
       position: relative;
+
+      &.isReceived {
+        background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+        .box-img {
+          background: unset;
+        }
+      }
 
       &__last {
         grid-column: span 3;
