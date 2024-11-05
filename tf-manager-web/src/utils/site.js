@@ -37,7 +37,7 @@ export const isInd2 = (siteId) => {
 }
 
 export const isPak = (siteId) => {
-  return parseInt(siteId) === PAK_SITE_ID || parseInt(siteId) === PAK2_SITE_ID;
+  return parseInt(siteId) === PAK_SITE_ID || parseInt(siteId) === PAK2_SITE_ID || parseInt(siteId) === BGD_SITE_ID;
 }
 
 export const isXF = (siteId) => {

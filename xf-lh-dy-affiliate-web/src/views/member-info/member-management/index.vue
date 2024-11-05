@@ -237,7 +237,7 @@
           </el-button>
         </div>
       </el-form>
-      <div style="width: 98%; margin: 10px auto">
+      <div style="width: 98%; margin: 10px auto; overflow: auto;">
         <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
           <thead>
             <tr>

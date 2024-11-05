@@ -10,8 +10,6 @@
     </template>
 
     <template v-else>
-      <!-- <pre>paymentMethodsItems--{{paymentMethodsItems}}</pre> -->
-
       <div class="deposit-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
           <div class="content-item" @click="goSelectedMethod(item)" :class="{ active: selectedItem === item }">
@@ -25,11 +23,6 @@
           </div>
         </template>
       </div>
-
-      <!-- <pre>isFtdPrivilegeEnable--{{ isFtdPrivilegeEnable }}</pre>
-      <pre>isFtdPrivilege--{{ isFtdPrivilege }}</pre>
-      <pre>extraPrivilegeId--{{ extraPrivilegeId }}</pre>
-      <pre>ftd--{{ ftd }}</pre> -->
 
       <div class="method-title q-mb-sm q-mt-md">{{ $t("deposit.paymentChannels") }}</div>
       <div class="deposit-methods-container">
@@ -414,8 +407,14 @@ function initPay() {
     $q.loading.hide();
     isLoadingInitPay.value = false;
     if (res.code === 0) {
-      paymentMethodsItems.value = res.data.payments;
-      goSelectedMethod(res.data.payments[0]);
+      // paymentMethodsItems.value = res.data.payments;
+      // goSelectedMethod(res.data.payments[0]);
+
+      const methodsWithChildren = res.data.payments.filter((method) => method.children && method.children.length > 0);
+      if (methodsWithChildren.length > 0) {
+        paymentMethodsItems.value = methodsWithChildren;
+        goSelectedMethod(methodsWithChildren[0]);
+      }
     }
     if (
       !(
@@ -1233,8 +1232,10 @@ onMounted(() => {
       img {
         display: block;
         width: 100%;
-        max-width: max-content;
+        // max-width: max-content;
+        max-width: 50px;
         border-radius: 6px;
+        margin: auto;
       }
     }
     .item-title {

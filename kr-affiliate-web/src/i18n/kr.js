@@ -4,6 +4,7 @@ export default {
     myPoint: '내 포인트',
     memberMoney: '회원 머니',
     memberPoint: '회원 포인트',
+    myCommission: '커미션 잔액',
     eggs: '보유알',
     memberInquiry: '고객문의',
     depositApplication: '충전신청(대기)',
@@ -705,6 +706,7 @@ export default {
     downlineTotalWithdraw: '하부회원 총 출금액',
     downlineTotalDepositWithdraw: '입출금차액',
     affiliateInTransfer: '총판',
+    redeemConvert: '전환',
   },
   google: {
     google_auth_menu: '구글 인증',

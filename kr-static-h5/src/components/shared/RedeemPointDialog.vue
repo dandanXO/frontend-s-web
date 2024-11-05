@@ -14,10 +14,10 @@
         <div class="title">{{ $t("lang.redeem_point_pending_list") }}</div>
         <DataTable :loading="isLoading" :tableColumns="tableColumns" :dataState="tableData">
           <template #body-cell-recordTime="props">
-            <q-td class="text-center">x{{ props?.props?.row.recordTime }}</q-td>
+            <q-td class="text-center">x{{ props.row.recordTime }}</q-td>
           </template>
           <template #body-cell-rollover="props">
-            <q-td class="text-center">x{{ props?.props?.row.rollover }}</q-td>
+            <q-td class="text-center">x{{ props.row.rollover }}</q-td>
           </template>
           <template #body-cell-operation="props">
             <q-td>
@@ -25,7 +25,7 @@
                 <q-btn
                   style="min-width: 60px; width: 60px; height: 30px"
                   class="primary-button blue-square"
-                  @click="redeemPoint(props?.props?.row.privilegeId)"
+                  @click="redeemPoint(props.row.privilegeId)"
                 >
                   {{ $t("lang.btn_redeem") }}
                 </q-btn>
@@ -42,7 +42,7 @@
                       v-if="col.name === 'operation'"
                       style="min-width: 60px; width: 60px; height: 30px"
                       class="primary-button blue-square q-my-sm"
-                      @click="redeemPoint(props?.props?.row.privilegeId)"
+                      @click="redeemPoint(props.row.privilegeId)"
                     >
                       {{ $t("lang.btn_redeem") }}
                     </q-btn>

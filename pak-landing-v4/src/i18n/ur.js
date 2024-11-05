@@ -163,6 +163,7 @@ export default {
     content_rules_02: "مواد کی لمبائی 500 الفاظ یا اس سے کم ہونی چاہئے"
   },
   btn: {
+    register: "رجسٹر",
     confirm: "تصدیق کریں",
     submit: "جمع کرائیں",
     addNewAccount: "نیا اکاؤنٹ شامل کریں",
