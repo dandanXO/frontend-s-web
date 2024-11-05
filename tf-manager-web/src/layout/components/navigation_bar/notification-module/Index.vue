@@ -133,12 +133,18 @@ function formatTimestamp(timestamp) {
 
 <style scoped lang="scss">
 #notification-dialog-wrapper {
+  :deep(.el-dialog){
+    border-radius: 10px;
+  }
   :deep(.el-dialog__header) {
     border-bottom: 2px solid rgb(177.3, 179.4, 183.6);
     padding: 0 10px;
   }
   :deep(.el-dialog__body) {
     padding: 10px 5px;
+  }
+  :deep(.el-dialog__title){
+    font-weight: bold;
   }
 }
 
