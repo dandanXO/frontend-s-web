@@ -774,7 +774,7 @@ export default defineComponent({
         }
       }
     );
-    const restrictedDomains = ["localhost", "pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
+    const restrictedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
     const isRestrictedDomain = computed(() => {
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);
