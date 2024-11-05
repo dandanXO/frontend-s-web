@@ -19,7 +19,7 @@
                   :key="item"
                   @click="openDialog(item, 'create')"
                 >
-                  {{ item }}
+                  {{ $t(`monitorTitle.${item}`) }}
                 </el-dropdown-item>
               </template>
             </el-dropdown-menu>
