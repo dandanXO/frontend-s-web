@@ -93,7 +93,10 @@
           type="primary"
           @click="
             handleLinkSelection(
-              linkDiaglogControl.dialogRegenerateLinkType,
+              {
+                domain: linkDiaglogControl.dialogLongLink,
+                way: linkDiaglogControl.dialogWay
+              },
               linkDiaglogControl.dialogRegenerateUrlType
             )
           "
@@ -258,6 +261,8 @@ function handleLinkSelection(item, urlType) {
   linkDiaglogControl.dialogVisible = true
   linkDiaglogControl.dialogRegenerateLinkType = request.linkType
   linkDiaglogControl.dialogRegenerateUrlType = urlType
+  linkDiaglogControl.dialogLongLink = item.domain
+  linkDiaglogControl.dialogWay = item.way
 
   navigator.clipboard.writeText(shortUrl)
 }
