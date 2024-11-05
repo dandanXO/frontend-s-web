@@ -111,11 +111,11 @@ export default route(function (/* { store, ssrContext } */) {
           user.getMemberInfo().then(() => {
             if (from.path === "/login" && to.path === "/home") {
               gtag.event("login", {
-                user_id: user.id
+                custom_user_id: user.id
               });
             } else if (from.path === "/register" && to.path === "/home") {
               gtag.event("register", {
-                user_id: user.id
+                custom_user_id: user.id
               });
             }
 
