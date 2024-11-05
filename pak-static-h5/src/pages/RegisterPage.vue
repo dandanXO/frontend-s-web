@@ -10,18 +10,20 @@
   <!--    </div>-->
   <!--  </q-page-sticky>-->
 
-  <div class="register-container">
+  <div class="register-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
     </div> -->
-
-    <div class="register-form-logo-img">
+    <div class="is-domain top-img">
+      <img src="../assets/images/index/register-topimg.png" />
+    </div>
+    <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
 
-    <div class="auth-tab-wrapper">
+    <div class="no-domain auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
@@ -194,6 +196,7 @@
         </div>
       --></q-form>
     </div>
+    <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
     <div class="bottom-btn">
       <q-btn
@@ -204,18 +207,22 @@
         :loading="isLoading"
         @click="onSubmit"
       >
-        {{ $t("btn.confirm") }}
+        {{ isRestrictedDomain ? $t("btn.register") : $t("btn.confirm") }}
       </q-btn>
     </div>
+    <div class="is-domain has-acct">
+      Already have an account?
+      <router-link to="/login" class="login">Login</router-link>
+    </div>
 
-    <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
+    <div class="no-domain mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
         {{ $t("form.register_agree_01") }}
         <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
       </q-checkbox>
     </div>
 
-    <div class="btn-lists">
+    <div class="no-domain btn-lists">
       <div class="list-item" @click="openWhatsApp()">
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
         <div>WhatsApp</div>
@@ -237,15 +244,36 @@
       <!--        <div>Tiktok</div>-->
       <!--      </div>-->
     </div>
+    <div class="is-domain social-container">
+      <div class="share">Share</div>
+      <div class="social-items">
+        <a @click="openWhatsApp()" id="Whatsapp" class="social-item">
+          <img src="../assets/images/auth/social_wa.png" />
+        </a>
 
-    <div class="bottom-img">
+        <a v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()" id="Download" class="social-item">
+          <img src="../assets/images/auth/social_dl.png" />
+        </a>
+        <a @click="openYoutube()" id="Youtube" class="social-item">
+          <img src="../assets/images/auth/youtube-icc.png" />
+        </a>
+        <a @click="openTiktok()" id="TikTok" class="social-item" target="_blank">
+          <img src="../assets/images/auth/tiktok.png" />
+        </a>
+
+        <a @click="openCharity()" id="Instagram" class="social-item" target="_blank">
+          <img src="../assets/images/auth/social_charity.png" />
+        </a>
+      </div>
+    </div>
+    <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -747,6 +775,13 @@ export default defineComponent({
       }
     );
 
+    //Put this when u need to test on localhost.
+    // "localhost",
+    const restrictedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
+    const isRestrictedDomain = computed(() => {
+      const currentDomain = window.location.hostname;
+      return restrictedDomains.includes(currentDomain);
+    });
     return {
       header: "Register Account",
       regForm,
@@ -793,7 +828,8 @@ export default defineComponent({
       openTiktok,
       openYoutube,
       openCharity,
-      downloadApp
+      downloadApp,
+      isRestrictedDomain
     };
   }
 });
@@ -859,6 +895,94 @@ function charType(num) {
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  .is-domain {
+    display: none;
+  }
+  .no-domain {
+    display: unset;
+    &.btn-lists {
+      display: flex;
+    }
+  }
+  &.w-domain {
+    background: url("../assets/images/auth/trianglebg.png");
+    background-size: 100% 100%;
+    padding-top: 48px;
+    .no-domain {
+      display: none;
+    }
+    .is-domain {
+      display: block;
+      &.top-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        img {
+          width: calc(100% - 32px);
+          margin-left: -5px;
+        }
+      }
+    }
+    .has-acct {
+      width: 90%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+      margin: 10px auto;
+      color: #9f9f9f;
+      a {
+        color: #83e977;
+      }
+    }
+    .forget-pwd {
+      color: #9f9f9f;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 0 20px 20px;
+    }
+    .social-container {
+      margin: 20px auto;
+      width: 95%;
+      position: sticky;
+      top: calc(100vh - 70px);
+      left: 0;
+      right: 0;
+      .share {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        gap: 10px;
+        color: #ffffff33;
+        &:before,
+        &:after {
+          content: "";
+          width: 100%;
+          flex: 1;
+          height: 1px;
+          background-color: #ffffff33;
+        }
+      }
+      .social-items {
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+        margin: 0 auto;
+        align-items: center;
+        .social-item {
+          border: 1px solid #ffffff33;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 8px;
+          animation: smallbeat 2s infinite;
+        }
+      }
+    }
+  }
 }
 
 .back-left {

@@ -188,7 +188,9 @@
               :value="personalState.memberInfo.telephone"
               :class="`blue-bg ${loginCountdown !== 0 ? 'disabled' : ''}`"
             />
-            <el-button :disabled="loginCountdown !== 0" class="common-btn" @click="openCaptchaForm()">{{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}</el-button>
+            <el-button :disabled="loginCountdown !== 0" class="common-btn" @click="openCaptchaForm()">
+              {{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}
+            </el-button>
           </el-space>
         </el-form-item>
 
@@ -972,6 +974,10 @@ body {
   .bankModal {
     .el-dialog__body {
       padding: 20px;
+    }
+
+    .el-row {
+      width: 100%;
     }
   }
 }

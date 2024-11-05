@@ -26,6 +26,10 @@
         <div class="stat-value green">{{ Math.floor(records.memberPoint) }}</div>
       </div>
 
+      <div class="stats">
+        <div class="stat-label">{{ t('statsHeader.myCommission') }}</div>
+        <div class="stat-value green">{{ Math.floor(records.myCommission) }}</div>
+      </div>
 
       <!-- <div class="stats">
         <div class="stat-label">보드머니</div>
@@ -242,6 +246,7 @@ const records = ref({
   miniGameBetAmount: 0,
   miniGameProfit: 0,
   miniGameRollingAmount: 0,
+  myCommission: 0,
 })
 
 const loadReport = () => {
