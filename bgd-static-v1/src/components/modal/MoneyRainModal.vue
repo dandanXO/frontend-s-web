@@ -192,7 +192,7 @@
                     <tr>
                       <td>{{ item.name }}</td>
                       <td style="font-size: 70%">{{ item.date }}</td>
-                      <td style="font-size: 80%">Rs {{ item.amount }}</td>
+                      <td style="font-size: 80%">{{ store.currency.label }} {{ item.amount }}</td>
                     </tr>
                   </template>
                 </tbody>
@@ -209,7 +209,7 @@
     <div class="congrats-container">
       <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div>
-      <div class="congrats-highlight">Rs {{ prizeAmount }}</div>
+      <div class="congrats-highlight">{{ store.currency.label }} {{ prizeAmount }}</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="showPrizePopup = false">

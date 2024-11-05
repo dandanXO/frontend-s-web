@@ -136,7 +136,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          {{ store.currency.label }}
           <span>{{ convertToCommaAmount(sumsData.downlineBetAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.betamount") }}</div>
@@ -144,7 +144,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          {{ store.currency.label }}
           <span>{{ convertToCommaAmount(sumsData.downlineDepositAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>
@@ -159,7 +159,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          {{ store.currency.label }}
           <span>{{ convertToCommaAmount(sumsData.downlinePayoutAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.payout") }}</div>
@@ -175,7 +175,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          {{ store.currency.label }}
           <span>{{ convertToCommaAmount(sumsData.downlineWithdrawAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.withdraw") }}</div>
@@ -198,8 +198,10 @@ import { useI18n } from "vue-i18n";
 import { convertToCommaAmount, updateDate } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
 
 const { t } = useI18n();
+const store = userStore();
 
 const selectedDownLine = ref("today");
 const tableData = ref([]);

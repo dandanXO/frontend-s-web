@@ -20,7 +20,8 @@
     <div class="earn-money-pots">
       <div class="pot-item">
         <div class="item-amount">
-          RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
+          {{ store.currency.label }}
+          {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-img"><img src="../../assets/images/earn-money/pot-item-01.png" /></div>
@@ -36,7 +37,7 @@
       <!-- <div class="details-item" v-if="isShowOnetime"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          {{ store.currency.label }}
           <span>{{ getRewardAmount("ONE_TIME") }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.invite") }}</div>
@@ -46,7 +47,7 @@
       <!-- <div class="details-item" v-if="isShowDeposit"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          {{ store.currency.label }}
           <span>{{ getRewardAmount("DEPOSIT") }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
@@ -56,7 +57,7 @@
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
       <div class="details-item details-item">
         <div class="item-amount">
-          Rs
+          {{ store.currency.label }}
           <span>{{ getRewardAmount("BET") }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.bet") }}</div>

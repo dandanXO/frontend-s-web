@@ -221,7 +221,9 @@
   <!--  </div>-->
 
   <div class="btn-go" @click="submitWithdraw">Go</div>
-  <div class="bottom-tnc">3%+6Rs of the withdrawal amount would be deducted as bank commission</div>
+  <div class="bottom-tnc">
+    3%+6{{ store.currency.label }} of the withdrawal amount would be deducted as bank commission
+  </div>
 </template>
 
 <script setup>

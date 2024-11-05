@@ -34,7 +34,7 @@
       <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">Rs58</div>
+      <div class="congrats-highlight">{{ store.currency.label }}58</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
@@ -52,10 +52,12 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { userStore } from "src/stores";
 
 const { t } = useI18n();
 const $q = useQuasar();
 const router = useRouter();
+const store = userStore();
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;

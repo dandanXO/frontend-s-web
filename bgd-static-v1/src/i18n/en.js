@@ -354,7 +354,7 @@ export default {
     `,
       shareTitle: "B9GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "B9GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
     },
     teamManagement: {
       searchField: {
