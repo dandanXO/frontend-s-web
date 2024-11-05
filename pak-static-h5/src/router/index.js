@@ -8,6 +8,7 @@ import { StatusBar } from "@capacitor/status-bar";
 import { Platform, useQuasar } from "quasar";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
+import { useGtag } from "vue-gtag-next";
 
 /*
  * If not building with SSR mode, you can
@@ -19,6 +20,7 @@ import { SessionStorage } from "quasar";
  */
 
 export default route(function (/* { store, ssrContext } */) {
+  const gtag = useGtag();
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
@@ -105,7 +107,19 @@ export default route(function (/* { store, ssrContext } */) {
         next({ path: "/home" });
       } else {
         if (user.nickName === "") {
-          user.getMemberInfo().then(() => next({ ...to, replace: true }));
+          user.getMemberInfo().then(() => {
+            if (from.path === "/login" && to.path === "/home") {
+              gtag.event("login", {
+                user_id: user.id
+              });
+            } else if (from.path === "/register" && to.path === "/home") {
+              gtag.event("register", {
+                user_id: user.id
+              });
+            }
+
+            next({ ...to, replace: true });
+          });
         } else {
           next();
         }
