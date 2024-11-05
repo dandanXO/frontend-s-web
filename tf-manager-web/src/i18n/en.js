@@ -2906,6 +2906,7 @@ export default {
     'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
     'Affiliate Point Record': 'Affiliate Point Record',
+    'Member Ratio Edit Record': 'Share Ratio Edit Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

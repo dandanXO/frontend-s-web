@@ -138,11 +138,10 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import {
   getShortcuts,
-  convertDateToStart,
-  convertDateToEnd,
 } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { hasPermission } from '../../../utils/util'
+import moment from 'moment'
 
 const { t } = useI18n()
 const store = useStore()
@@ -150,14 +149,18 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
-const defaultStartDate = convertDateToStart(startDate)
-const defaultEndDate = convertDateToEnd(new Date())
+const defaultStartDate = convertDate(startDate)
+const defaultEndDate = convertDate(new Date())
 let timeZone = null
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ]
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD')
+}
 
 const page = reactive({
   pages: 0,
@@ -179,10 +182,7 @@ const shortcuts = getShortcuts(t)
 
 function resetQuery() {
   request.loginName = null
-  request.updateTime = [
-    convertDateToStart(new Date()),
-    convertDateToEnd(new Date()),
-  ]
+  request.updateTime = [defaultStartDate, defaultEndDate]
   request.siteId = siteList.list[0].id
   loadEditRecord()
 }
@@ -206,8 +206,8 @@ async function loadEditRecord() {
   if (request.updateTime !== null) {
     if (request.updateTime.length === 2) {
       query.updateTime = JSON.parse(JSON.stringify(request.updateTime))
-      query.updateTime[0] = formatInputTimeZone(query.updateTime[0], timeZone)
-      query.updateTime[1] = formatInputTimeZone(query.updateTime[1], timeZone)
+      query.updateTime[0] = formatInputTimeZone(query.updateTime[0], timeZone, 'start')
+      query.updateTime[1] = formatInputTimeZone(query.updateTime[1], timeZone, 'end')
       query.updateTime = query.updateTime.join(',')
     }
   }

@@ -2853,6 +2853,7 @@ export default {
     'TF Gaming Config': 'TF Gaming 设置',
     'LH Old Data': '雷火老站数据',
     'Affiliate Point Record': '代理积分记录',
+    'Member Ratio Edit Record': '返水比例更改记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
