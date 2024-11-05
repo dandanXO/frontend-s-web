@@ -112,7 +112,7 @@
         Whatsapp
       </a>
 
-      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=pak-faq">
+      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=bgd-faq">
         <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
         Faq
       </router-link>

@@ -3415,7 +3415,7 @@ const checkHbPromo = () => {
       return res;
     })
     .then((data) => {
-      // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
+      // isHbShow.value = data.data.some((item) => item.code === "bgd-redpacketrain");
       hbPromo.value = data.data;
     });
 };
@@ -3528,7 +3528,7 @@ const processedContent = (content) => {
 const mediaCode = ref("");
 
 const gotoFloatPromo = (val) => {
-  if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
+  if (val.type === "PROMO" && val.code === "bgd-redpacketrain") {
     isMoneyRainModal.value = true;
   }
 

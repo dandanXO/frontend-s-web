@@ -351,9 +351,9 @@
           <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
         </p>
         <p>1.Bind your wallet/bank card using the correct format.</p>
-        <p>2.Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
+        <p>2.Daily wallet limit: BDT 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
         <p>
-          3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for
+          3.Daily bank card limit: BDT 500,000. Do not exceed this limit. You can add multiple bank cards for
           withdrawals.
         </p>
         <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
