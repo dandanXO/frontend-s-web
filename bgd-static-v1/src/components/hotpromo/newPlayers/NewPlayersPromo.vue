@@ -13,7 +13,7 @@
         <div>{{ $t("hotPromo.aviatorWheel.congratulations") }}</div>
       </div>
 
-      <div class="prize-amount">Rs {{ prizePopupBonusAmt }}</div>
+      <div class="prize-amount">{{ store.currency.label }} {{ prizePopupBonusAmt }}</div>
 
       <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">{{ $t("btn.confirm") }}</q-btn>
     </div>
@@ -24,11 +24,13 @@
 import { ref } from "vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
 
 const $q = useQuasar();
 const props = defineProps(["list"]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref();
+const store = userStore();
 
 const collectclaim = (promoCode) => {
   eventapi

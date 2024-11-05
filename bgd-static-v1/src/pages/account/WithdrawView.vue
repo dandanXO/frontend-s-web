@@ -182,7 +182,7 @@
             <template #fields>
               <InputField
                 :label="`${$t('form.withdrawalAmount')} (${convertToCommaAmount(selectedWithdrawalMethod.withdrawMin)} -
-          ${convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)} RS)`"
+          ${convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)} ${store.currency.label})`"
               >
                 <template #input>
                   <q-input
@@ -216,7 +216,9 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
-              <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
+              <div class="desc">
+                {{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}
+              </div>
             </div>
 
             <div class="info">
@@ -230,7 +232,9 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
-              <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</div>
+              <div class="desc">
+                {{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}
+              </div>
             </div>
           </div>
 

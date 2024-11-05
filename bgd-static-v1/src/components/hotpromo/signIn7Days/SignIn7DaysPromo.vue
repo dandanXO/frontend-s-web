@@ -56,7 +56,7 @@
         <img src="./../../../assets/images/promotion/hotpromo/signin-7days/prize-gold.png" width="150" />
       </div>
 
-      <div class="prize-amount">Rs {{ bonusAmount }}</div>
+      <div class="prize-amount">{{ store.currency.label }} {{ bonusAmount }}</div>
 
       <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">
         {{ $t("btn.confirm") }}
@@ -70,8 +70,10 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import { defineProps } from "vue";
+import { userStore } from "src/stores";
 
 const $q = useQuasar();
+const store = userStore();
 
 const showPrizePopup = ref(false);
 

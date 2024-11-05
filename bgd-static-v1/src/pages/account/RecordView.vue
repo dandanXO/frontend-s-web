@@ -72,8 +72,18 @@
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
-          RS
-          <span :class="`${['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus) ? (e.payout <= 0 ? 'loss-amt' : 'win-amt') : 'bet-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
+          {{ store.currency.label }}
+          <span
+            :class="`${
+              ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus)
+                ? e.payout <= 0
+                  ? 'loss-amt'
+                  : 'win-amt'
+                : 'bet-amt'
+            }`"
+          >
+            {{ convertToCommaAmount(e.payout, true) }}
+          </span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">

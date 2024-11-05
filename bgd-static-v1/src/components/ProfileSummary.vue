@@ -122,12 +122,12 @@
         TikTok
       </a>
 
-      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
+      <!-- <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
         <div class="item-icon">
           <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
         </div>
         {{ $t("sideNav.language") }}
-      </div>
+      </div> -->
 
       <a
         class="side-menu-item side-menu-item__download"

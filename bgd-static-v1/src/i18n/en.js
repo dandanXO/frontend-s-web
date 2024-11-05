@@ -63,8 +63,8 @@ export default {
     phone: "Phone",
     phone_placeholder: "Please enter your mobile number",
     phone_rules_01: "Please insert Phone number",
-    phone_rules_02: "The phone number must have 11 digits",
-    phone_rules_03: "The phone number must start with '03'",
+    phone_rules_02: "The phone number must be 10 - 11 digits",
+    phone_rules_03: "The phone number must start with '01'",
     password: "Password",
     password_placeholder: "Please enter password",
     password_rules_01: "Please insert password",
@@ -354,7 +354,7 @@ export default {
     `,
       shareTitle: "B9GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "B9GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
     },
     teamManagement: {
       searchField: {

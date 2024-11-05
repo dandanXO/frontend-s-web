@@ -245,7 +245,7 @@ const logout = () => {
       font-size: 20px;
 
       &:before {
-        content: "RS";
+        content: "৳";
         font-size: 14px;
         margin-right: 4px;
       }
