@@ -43,8 +43,8 @@
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                    (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
-                    (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                    (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_01'),
+                    (val) => val.startsWith('01') || $t('form.phone_rules_03')
                   ]"
                   color="green"
                   outlined
@@ -53,7 +53,7 @@
                 >
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
-                    <div class="prepend-number">+92</div>
+                    <div class="prepend-number">+880</div>
                   </template>
                 </q-input>
               </template>
