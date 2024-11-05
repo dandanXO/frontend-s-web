@@ -128,521 +128,98 @@
                 {{ $t('fields.total_deposit_count') }}
               </div>
               <div class="item-span">
-                {{ formatCommaAmt(dashboard.withdrawMemberCount) }}
+                <el-link
+                  type="primary"
+                  style="font-size:medium"
+                  @click="openDialog('DEPOSIT')"
+                >
+                  {{ formatCommaAmt(dashboard.depositMemberCount) }}
+                </el-link>
               </div>
             </div>
             <div class="listing-div">
               <div class="title-span">
                 {{ $t('fields.total_withdraw_count') }}
               </div>
-              <div class="item-span">
+              <el-link
+                type="primary"
+                style="font-size:medium"
+                @click="openDialog('WITHDRAW')"
+              >
                 {{ formatCommaAmt(dashboard.withdrawMemberCount) }}
-              </div>
+              </el-link>
             </div>
             <div class="listing-div">
               <div class="title-span">{{ $t('fields.total_bet_count') }}</div>
               <div class="item-span">
-                {{ formatCommaAmt(dashboard.betMemberCount) }}
+                <el-link
+                  type="primary"
+                  style="font-size:medium"
+                  @click="openDialog('BET')"
+                >
+                  {{ formatCommaAmt(dashboard.betMemberCount) }}
+                </el-link>
               </div>
             </div>
           </el-row>
         </el-card>
-      </el-col>
-    </el-row>
-
-    <!-- <el-row v-if="affInfo.displayAmount">
-      <el-col v-loading="uiControl.profitLoading">
-        <div class="clearfix">
-          <span class="role-span htitle">
-            {{ $t('fields.monthlyMemberCommission') }}
-          </span>
-        </div>
-        <el-row :gutter="20" class="profit-summary">
-          <el-card class="box-card">
-            <div class="total">
-              <el-row>
-                <el-col :lg="19" class="total-title">
-                  {{ t('fields.commissionRate') }}
-                </el-col>
-                <el-col :lg="5" class="total-text">
-                  {{ (totalCommission.commissionRate * 100).toFixed(0) }} %
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :lg="19" class="total-title">
-                  {{ t('fields.lastMonthTotal') }}
-                </el-col>
-                <el-col :lg="5" class="total-text">
-                  <span
-                    v-formatter="{
-                      data: totalCommission.lastMonthTotal,
-                      type: 'money',
-                    }"
-                  />
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :lg="19" class="total-title">
-                  {{ t('fields.monthBeforeLastTotal') }}
-                </el-col>
-                <el-col :lg="5" class="total-text">
-                  <span
-                    v-formatter="{
-                      data: totalCommission.monthBeforeLastTotal,
-                      type: 'money',
-                    }"
-                  />
-                </el-col>
-              </el-row>
+        <el-dialog
+          :title="uiControl.dialogTitle"
+          v-model="uiControl.dialogVisible"
+          modal-class="dialog900"
+          width="90%"
+        >
+          <div class="scrollable-container" v-loading="uiControl.dialogLoading">
+            <div>
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th scope="col">{{ t('fields.affiliate') }}</th>
+                    <th scope="col">{{ t('fields.member') }}</th>
+                    <th scope="col">{{ uiControl.dialogThirdCol }}</th>
+                    <th scope="col">{{ uiControl.dialogLastCol }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="uiControl.dialogRecords.length === 0">
+                    <td colspan="4">
+                      <!-- Display your empty component or message here -->
+                      <emptyComp />
+                    </td>
+                  </tr>
+                  <tr
+                    v-for="(record, index) in uiControl.dialogRecords"
+                    :key="index"
+                  >
+                    <td>{{ record.affiliate }}</td>
+                    <td>
+                      {{ record.member }}
+                    </td>
+                    <td>
+                      {{ uiControl.dialogType === 'DEPOSIT' ? record.deposit : uiControl.dialogType === 'WITHDRAW' ? record.withdraw : record.bet}}
+                    </td>
+                    <td>
+                      {{ uiControl.dialogType === 'DEPOSIT' ? record.depositCount : uiControl.dialogType === 'WITHDRAW' ? record.withdrawCount : record.betCount}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </el-card>
-          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/profit.svg" />
-                </el-icon>
-                <span class="sub-title-span">{{ $t('fields.profit') }}</span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span v-formatter="{ data: item.profit, type: 'money' }" />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/netprofit.svg" />
-                </el-icon>
-                <span class="sub-title-span">{{ $t('fields.netProfit') }}</span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span v-formatter="{ data: item.netProfit, type: 'money' }" />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/bonus.svg" />
-                </el-icon>
-                <span class="sub-title-span">{{ $t('fields.bonus') }}</span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span v-formatter="{ data: item.bonus, type: 'money' }" />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/money.svg" />
-                </el-icon>
-                <span class="sub-title-span">
-                  {{ $t('fields.estimatedMemberCommission') }}
-                </span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span v-formatter="{ data: item.commission, type: 'money' }" />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/money.svg" />
-                </el-icon>
-                <span class="sub-title-span">
-                  {{ $t('fields.platformFee') }}
-                </span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span v-formatter="{ data: item.platformFee, type: 'money' }" />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/payment.svg" />
-                </el-icon>
-                <span class="sub-title-span">
-                  {{ $t('fields.paymentFee') }}
-                </span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span v-formatter="{ data: item.paymentFee, type: 'money' }" />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/rebate.svg" />
-                </el-icon>
-                <span class="sub-title-span">{{ $t('fields.rebate') }}</span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span v-formatter="{ data: item.rebate, type: 'money' }" />
-              </el-col>
-            </el-row>
-          </el-card>
-        </el-row>
+          </div>
+        </el-dialog>
       </el-col>
     </el-row>
-
-    <el-row
-      style="margin-top: 20px;"
-      v-loading="uiControl.commissionLoading"
-      v-if="affInfo.displayAmount"
-    >
-      <el-col>
-        <div class="clearfix">
-          <span class="role-span htitle">
-            {{ $t('fields.monthlyAffiliateCommission') }}
-          </span>
-        </div>
-        <el-row class="commission-summary">
-          <el-card class="box-card">
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/money.svg" />
-                </el-icon>
-                <span class="sub-title-span">
-                  {{ $t('fields.estimatedAffiliateCommission') }}
-                </span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in commissionSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span
-                  v-formatter="{
-                    data: item.estimatedCommission,
-                    type: 'money',
-                  }"
-                />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card
-            v-if="
-              affiliateLevel === 'MASTER_AFFILIATE' ||
-                affiliateLevel === 'SUPER_AFFILIATE'
-            "
-            class="box-card"
-          >
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/money.svg" />
-                </el-icon>
-                <span
-                  v-if="affiliateLevel === 'MASTER_AFFILIATE'"
-                  class="sub-title-span"
-                >
-                  {{ $t('fields.secondLevelAffiliateCommission') }}
-                </span>
-                <span
-                  v-else-if="affiliateLevel === 'SUPER_AFFILIATE'"
-                  class="sub-title-span"
-                >
-                  {{ $t('fields.thirdLevelAffiliateCommission') }}
-                </span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in commissionSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span
-                  v-formatter="{
-                    data: item.secondLevelCommission,
-                    type: 'money',
-                  }"
-                />
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card
-            v-if="affiliateLevel === 'MASTER_AFFILIATE'"
-            class="box-card"
-          >
-            <template #header>
-              <div class="clearfix">
-                <el-icon>
-                  <img src="../../assets/images/home/money.svg" />
-                </el-icon>
-                <span class="sub-title-span">
-                  {{ $t('fields.thirdLevelAffiliateCommission') }}
-                </span>
-              </div>
-            </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in commissionSummary"
-              :key="item.id"
-            >
-              <el-col :lg="16" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :lg="8" class="total-text">
-                <span
-                  v-formatter="{
-                    data: item.thirdLevelCommission,
-                    type: 'money',
-                  }"
-                />
-              </el-col>
-            </el-row>
-          </el-card>
-        </el-row>
-      </el-col>
-    </el-row>
-
-    <el-row
-      style="width: 100%; margin-top: 20px;"
-      v-loading="uiControl.opsLoading"
-    >
-      <el-col>
-        <div class="clearfix" style="margin-bottom: 5px;">
-          <span class="role-span htitle">
-            {{ $t('fields.operationalData') }}
-          </span>
-        </div>
-        <el-card>
-          <el-row class="radiorow">
-            <el-radio-group
-              v-model="request.queryDate"
-              size="normal"
-              @change="loadOpsSummary"
-            >
-              <el-radio-button label="today">
-                {{ t('fields.today') }}
-              </el-radio-button>
-              <el-radio-button label="thisMonth">
-                {{ t('fields.thisMonth') }}
-              </el-radio-button>
-            </el-radio-group>
-          </el-row>
-          <span
-            style="overflow: auto; width: 100%; display: block; margin: 10px auto;"
-          >
-            <el-row class="ops-row-header">
-              <el-col :span="4" class="total-title" />
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.newUsers') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.betMembers') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.firstDepositUsers') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.depositUsers') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.transferUsers') }}
-              </el-col>
-            </el-row>
-            <el-row
-              :class="'ops-row-data-' + index"
-              v-for="(item, index) in summary"
-              :key="item.id"
-              style="margin-bottom: 20px;"
-            >
-              <el-col :span="4" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :span="4" align="center">
-                {{ item.registerMemberCount }}
-              </el-col>
-              <el-col :span="4" align="center">
-                {{ item.betMemberCount }}
-              </el-col>
-              <el-col :span="4" align="center">
-                {{ item.ftdMemberCount }}
-              </el-col>
-              <el-col :span="4" align="center">
-                {{ item.depositMemberCount }}
-              </el-col>
-              <el-col :span="4" align="center">
-                {{ item.affiliateTransferMemberCount }}
-              </el-col>
-            </el-row>
-            <el-divider />
-            <el-row class="ops-row-header">
-              <el-col :span="4" class="total-title" />
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.profit') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.bet') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.amountOfFirstDeposit') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.depositAmount') }}
-              </el-col>
-              <el-col :span="4" align="center" class="total-title">
-                {{ t('fields.transferAmount') }}
-              </el-col>
-            </el-row>
-            <el-row
-              :class="'ops-row-data-' + index"
-              v-for="(item, index) in summary"
-              :key="item.id"
-              style="margin-bottom: 20px;"
-            >
-              <el-col :span="4" class="total-title">
-                {{ t('fields.' + item.time) }}
-              </el-col>
-              <el-col :span="4" align="center">
-                <span v-formatter="{ data: item.profit, type: 'money' }" />
-              </el-col>
-              <el-col :span="4" align="center">
-                <span v-formatter="{ data: item.bet, type: 'money' }" />
-              </el-col>
-              <el-col :span="4" align="center">
-                <span v-formatter="{ data: item.ftdAmount, type: 'money' }" />
-              </el-col>
-              <el-col :span="4" align="center">
-                <span
-                  v-formatter="{ data: item.depositAmount, type: 'money' }"
-                />
-              </el-col>
-              <el-col :span="4" align="center">
-                <span
-                  v-formatter="{
-                    data: item.affiliateTransferAmount,
-                    type: 'money',
-                  }"
-                />
-              </el-col>
-            </el-row>
-          </span>
-        </el-card>
-      </el-col>
-    </el-row> -->
-    <!--    <el-card style="margin-top: 20px;">-->
-    <!--      <el-row>-->
-    <!--        <el-col>-->
-    <!--          <AnnouncementComponent />-->
-    <!--        </el-col>-->
-    <!--      </el-row>-->
-    <!--    </el-card>-->
   </div>
 </template>
 <script setup>
 import { useStore } from '@/store'
 import { onMounted, reactive, ref } from '@vue/runtime-core'
 import moment from 'moment'
-import {
-  dashboardSummary,
-  getMonthCommission,
-  getLastMonthCommission,
-  totalCommissionSummary,
-  memberCommissionSummary,
-  lastMemberCommissionSummary,
-} from '../../api/affiliate-summary'
 import { useI18n } from 'vue-i18n'
-import AnnouncementComponent from '../../views/personal/announcement/index.vue'
 import { useRouter } from 'vue-router'
 import { getAffiliateInfo } from '../../api/affiliate'
-import { getAffiliateDashboardData } from '../../api/affiliate-report'
+import { getAffiliateDashboardData, getDashboardDataDetail } from '../../api/affiliate-report'
+import emptyComp from '@/components/empty'
 
 const store = useStore()
 const router = useRouter()
@@ -652,14 +229,14 @@ const uiControl = reactive({
   profitLoading: false,
   commissionLoading: false,
   opsLoading: false,
+  dialogVisible: false,
+  dialogTitle: '',
+  dialogLoading: false,
+  dialogThirdCol: '',
+  dialogLastCol: '',
+  dialogRecords: [],
 })
-const affiliateLevel = ref(null)
 
-const request = reactive({
-  queryDate: 'today',
-})
-
-const startDate = new Date()
 const defaultStartDate = convertDate(new Date())
 const defaultEndDate = convertDate(new Date())
 const formData = reactive({
@@ -680,34 +257,6 @@ const dashboard = reactive({
   validBet: 0,
   totalWin: 0,
 })
-
-// const totalCommission = reactive({
-//   commissionRate: 0,
-//   lastMonthTotal: 0,
-//   monthBeforeLastTotal: 0,
-// })
-
-// const memberSummary = reactive([
-//   {
-//     time: 'thisMonth',
-//     profit: 0,
-//     netProfit: 0,
-//     bonus: 0,
-//     commission: 0,
-//     platformFee: 0,
-//     paymentFee: 0,
-//     rebate: 0,
-//   },
-// ])
-
-// const commissionSummary = reactive([
-//   {
-//     time: 'thisMonth',
-//     estimatedCommission: 0,
-//     secondLevelCommission: 0,
-//     thirdLevelCommission: 0,
-//   },
-// ])
 
 const summary = reactive([
   {
@@ -777,10 +326,6 @@ const shortcuts = [
   },
 ]
 
-async function resetSummary() {
-  summary.splice(0)
-}
-
 function formatCommaAmt(number) {
   return number.toLocaleString()
 }
@@ -788,170 +333,6 @@ function formatCommaAmt(number) {
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
-
-// async function loadTotalSummary() {
-//   const { data: ret } = await totalCommissionSummary(
-//     store.state.user.id,
-//     store.state.user.siteId
-//   )
-//   Object.keys({ ...ret }).forEach(field => {
-//     if (ret[field] || ret[field] === 0) {
-//       totalCommission[field] = ret[field]
-//     }
-//   })
-// }
-
-// async function loadMemberSummary() {
-//   uiControl.profitLoading = true
-//   memberSummary.splice(0)
-//   loadTotalSummary()
-
-//   const query = checkQuery('thisMonth')
-//   const { data: ret } = await memberCommissionSummary(
-//     store.state.user.id,
-//     query
-//   )
-//   const { data: subRet } = await lastMemberCommissionSummary(
-//     store.state.user.id,
-//     store.state.user.siteId
-//   )
-
-//   const summaryField = {}
-//   const subSummaryField = {}
-//   Object.keys({ ...ret }).forEach(field => {
-//     if (ret[field] || ret[field] === 0) {
-//       summaryField[field] = ret[field]
-//     }
-//   })
-//   Object.keys({ ...subRet }).forEach(field => {
-//     if (subRet[field] || subRet[field] === 0) {
-//       subSummaryField[field] = subRet[field]
-//     }
-//   })
-//   summaryField.time = 'thisMonth'
-//   subSummaryField.time = 'lastMonth'
-//   memberSummary.push(summaryField)
-//   memberSummary.push(subSummaryField)
-//   uiControl.profitLoading = false
-// }
-
-// async function loadCommissionSummary() {
-//   uiControl.commissionLoading = true
-//   commissionSummary.splice(0)
-
-//   const query = checkQuery('thisMonth')
-//   const { data: ret } = await getMonthCommission(store.state.user.id, query)
-//   const { data: subRet } = await getLastMonthCommission(
-//     store.state.user.id,
-//     store.state.user.siteId
-//   )
-
-//   const summaryField = {}
-//   const subSummaryField = {}
-//   Object.keys({ ...ret }).forEach(field => {
-//     if (ret[field] || ret[field] === 0) {
-//       summaryField[field] = ret[field]
-//     }
-//   })
-//   Object.keys({ ...subRet }).forEach(field => {
-//     if (subRet[field] || subRet[field] === 0) {
-//       subSummaryField[field] = subRet[field]
-//     }
-//   })
-//   summaryField.time = 'thisMonth'
-//   subSummaryField.time = 'lastMonth'
-//   commissionSummary.push(summaryField)
-//   commissionSummary.push(subSummaryField)
-//   uiControl.commissionLoading = false
-// }
-
-// async function loadOpsSummary() {
-//   uiControl.opsLoading = true
-//   let query = {}
-//   let subQuery = {}
-//   if (request.queryDate === 'today') {
-//     query = checkQuery('today')
-//     subQuery = checkQuery('yesterday')
-//   } else {
-//     query = checkQuery('thisMonth')
-//     subQuery = checkQuery('lastMonth')
-//   }
-//   const { data: ret } = await dashboardSummary(store.state.user.id, query)
-//   const { data: subRet } = await dashboardSummary(store.state.user.id, subQuery)
-//   await resetSummary()
-//   const summaryField = {}
-//   const subSummaryField = {}
-//   Object.keys({ ...ret }).forEach(field => {
-//     if (ret[field] || ret[field] === 0) {
-//       summaryField[field] = ret[field]
-//     }
-//   })
-//   Object.keys({ ...subRet }).forEach(field => {
-//     if (subRet[field] || subRet[field] === 0) {
-//       subSummaryField[field] = subRet[field]
-//     }
-//   })
-//   if (request.queryDate === 'today') {
-//     summaryField.time = 'today'
-//     subSummaryField.time = 'yesterday'
-//   } else {
-//     summaryField.time = 'thisMonth'
-//     subSummaryField.time = 'lastMonth'
-//   }
-//   summary.push(summaryField)
-//   summary.push(subSummaryField)
-//   uiControl.opsLoading = false
-// }
-
-// function checkQuery(dateType) {
-//   const query = {}
-//   query.siteId = store.state.user.siteId
-//   const end = new Date()
-//   const start = new Date()
-//   if (dateType === 'today') {
-//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
-//   } else if (dateType === 'yesterday') {
-//     start.setTime(
-//       moment(start)
-//         .subtract(1, 'days')
-//         .format('x')
-//     )
-//     end.setTime(
-//       moment(end)
-//         .subtract(1, 'days')
-//         .format('x')
-//     )
-//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
-//   } else if (dateType === 'thisMonth') {
-//     if (moment().date() < 16) {
-//       start.setTime(
-//         moment()
-//           .startOf('month')
-//           .format('x')
-//       )
-//       end.setTime(moment().set('date', 15))
-//     } else {
-//       start.setTime(moment().set('date', 16))
-//       end.setTime(moment())
-//     }
-//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
-//   } else if (dateType === 'lastMonth') {
-//     start.setTime(
-//       moment(start)
-//         .subtract(1, 'months')
-//         .startOf('month')
-//         .format('x')
-//     )
-//     end.setTime(
-//       moment(end)
-//         .subtract(1, 'months')
-//         .endOf('month')
-//         .format('x')
-//     )
-//     query.recordTime = [convertDate(start), convertDate(end)].join(',')
-//   }
-//   return query
-// }
 
 const affInfo = reactive({
   displayAmount: false,
@@ -966,16 +347,33 @@ async function loadDashboardData() {
       dashboard[field] = ret[field]
     }
   })
+  const { data: ret2 } = await getDashboardDataDetail(query)
+  uiControl.dialogRecords = ret2
+}
+
+async function openDialog(type) {
+  console.log(uiControl.dialogRecords)
+  console.log(uiControl.dialogRecords.length)
+  uiControl.dialogVisible = true
+  uiControl.dialogType = type
+  uiControl.dialogLoading = true
+  if (type === 'DEPOSIT') {
+    uiControl.dialogTitle = t('fields.deposit')
+    uiControl.dialogThirdCol = t('fields.depositAmount')
+    uiControl.dialogLastCol = t('fields.depositCount')
+  } else if (type === 'WITHDRAW') {
+    uiControl.dialogTitle = t('fields.withdrawal')
+    uiControl.dialogThirdCol = t('fields.withdrawAmount')
+    uiControl.dialogLastCol = t('fields.withdrawCount')
+  } else {
+    uiControl.dialogTitle = t('fields.bet')
+    uiControl.dialogThirdCol = t('fields.betAmount')
+    uiControl.dialogLastCol = t('fields.numberOfbets')
+  }
+  uiControl.dialogLoading = false
 }
 
 onMounted(async () => {
-  // if (store.state.user.siteCode === 'IND') {
-  //   router.push('/report/daily-detail')
-  // }
-  // affiliateLevel.value = store.state.user.affiliateLevel
-  // loadMemberSummary()
-  // loadCommissionSummary()
-  // loadOpsSummary()
   loadDashboardData()
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {
@@ -1209,6 +607,11 @@ onMounted(async () => {
   .role-span {
     font-size: 18px;
   }
+}
+
+.scrollable-container {
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .dashboard-row {
