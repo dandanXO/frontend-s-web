@@ -1,6 +1,8 @@
 <template>
   <div class="activities-container">
-    <div class="activities-title"><img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/title-activities.png" /></div>
+    <div class="activities-title">
+      <img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/title-activities.png" />
+    </div>
     <div class="activities-content">
       The more consecutive days of deposit requirements you complete, the more extra bonus you will get
     </div>
@@ -9,10 +11,13 @@
     </div>
     <div class="current-signin">
       <div class="current">
-      <img class="calendar-icon" src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/daycal.png">
-      Current Sign-in:
+        <img
+          class="calendar-icon"
+          src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/daycal.png"
+        />
+        Current Sign-in:
       </div>
-      <div class="noOfDays">Day {{ bonusSeq + 1 }} </div>
+      <div class="noOfDays">Day {{ bonusSeq + 1 }}</div>
     </div>
     <div class="activities-stats-container">
       <div class="stats-info">
@@ -24,7 +29,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            {{ rules[bonusSeq]? rules[bonusSeq].deposit : 0 }}
+            {{ rules[bonusSeq] ? rules[bonusSeq].deposit : 0 }}
             <br />
             RS
           </div>
@@ -47,29 +52,50 @@
       </div>
     </div>
     <div class="activities-days-container">
-      <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="[i + 1 === 7 ? 'days-box__last' : 'days-box',
-      {'isReceived': (i===bonusSeq && isReceivedToday) || i < bonusSeq}]">
+      <div
+        class="days-box"
+        v-for="(rule, i) in rules"
+        :key="rule"
+        :class="[
+          i + 1 === 7 ? 'days-box__last' : 'days-box',
+          { isReceived: (i === bonusSeq && isReceivedToday) || i < bonusSeq }
+        ]"
+      >
         <div class="box-ribbon">Day {{ i + 1 }}</div>
         <div class="box-cal">
-          <img v-if="i === bonusSeq && !isReceivedToday" src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/cal-active.png">
-          <img v-if="i > bonusSeq && !isReceivedToday" src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/cal.png">
+          <img
+            v-if="i === bonusSeq && !isReceivedToday"
+            src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/cal-active.png"
+          />
+          <img
+            v-if="i > bonusSeq && !isReceivedToday"
+            src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/cal.png"
+          />
         </div>
         <div class="box-img">
-          <img v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq" :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/day-received.png`)" />
-          <img v-else :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/day-0${i + 1}.png`)" >
+          <img
+            v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq"
+            :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/day-received.png`)"
+          />
+          <img
+            v-else
+            :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/day-0${i + 1}.png`)"
+          />
         </div>
         <div>
-          <div class="box-title">Max {{rule.bonus}}rs</div>
-          <div class="box-subtitle" v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq">
-            <img :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/tick.png`)" /> Received
+          <div class="box-title">Max {{ rule.bonus }}rs</div>
+          <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
+            <img :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/tick.png`)" />
+            Received
           </div>
-          <div class="box-subtitle" v-else>
-            Deposit {{ rule.deposit }}rs
-          </div>
-        </div></div>
+          <div class="box-subtitle" v-else>Deposit {{ rule.deposit }}rs</div>
+        </div>
+      </div>
     </div>
     <div class="activities-notice">
-      <div class="notice-img"><img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/alert-img.png" /></div>
+      <div class="notice-img">
+        <img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/alert-img.png" />
+      </div>
       <div>Notice : This promotion is not counted towards CASINO and SPORTS wager!</div>
     </div>
   </div>
@@ -93,53 +119,68 @@ const progressDailyWager = ref(0);
 const bonusSeq = ref(0);
 const isReceivedToday = ref(false);
 const rules = ref([
-            {
-                "bet": 10000,
-                "bonus": "388",
-                "deposit": 2000
-            },
-            {
-                "bet": 10000,
-                "bonus": "588",
-                "deposit": 2000
-            },
-            {
-                "bet": 10000,
-                "bonus": "888",
-                "deposit": 2000
-            },
-            {
-                "bet": 10000,
-                "bonus": "1288",
-                "deposit": 2000
-            },
-            {
-                "bet": 10000,
-                "bonus": "1688",
-                "deposit": 2000
-            },
-            {
-                "bet": 10000,
-                "bonus": "2088",
-                "deposit": 2000
-            },
-            {
-                "bet": 10000,
-                "bonus": "2888",
-                "deposit": 2000
-            }
-        ]);
+  {
+    bet: 10000,
+    bonus: "388",
+    deposit: 2000
+  },
+  {
+    bet: 10000,
+    bonus: "588",
+    deposit: 2000
+  },
+  {
+    bet: 10000,
+    bonus: "888",
+    deposit: 2000
+  },
+  {
+    bet: 10000,
+    bonus: "1288",
+    deposit: 2000
+  },
+  {
+    bet: 10000,
+    bonus: "1688",
+    deposit: 2000
+  },
+  {
+    bet: 10000,
+    bonus: "2088",
+    deposit: 2000
+  },
+  {
+    bet: 10000,
+    bonus: "2888",
+    deposit: 2000
+  }
+]);
 
-const progressDepositLabel = computed(() => (progressDeposit.value * 100).toFixed(2) + "%");
-const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).toFixed(2) + "%");
+const totalDeposit = ref(0);
+const totalValidBet = ref(0);
+
+const progressDepositLabel = computed(() => {
+  const percent = (progressDeposit.value * 100).toFixed(2);
+  if (percent >= 100) {
+    return "100%";
+  }
+  return percent + "%";
+});
+const progressDailyWagerLabel = computed(() => {
+  const percent = (progressDailyWager.value * 100).toFixed(2);
+  if (percent >= 100) {
+    return "100%";
+  }
+  return percent + "%";
+});
 
 const isLoading = ref(false);
 
 const claimBonus = () => {
-  eventapi.put('/bonus/claim/pak-daily-deposit-lucky-envelope').then((res) => {
+  eventapi.put("/bonus/claim/pak-daily-deposit-lucky-envelope").then((res) => {
     const { code, data } = res;
 
-    if(code === 0) {
+    if (code === 0) {
       $q.notify({
         type: "positive",
         position: "top",
@@ -148,18 +189,21 @@ const claimBonus = () => {
       });
     }
   });
-}
+};
 
 onMounted(() => {
-  eventapi.get('/session/dailyDepositLuckyEnvelope/init').then((res) => {
+  eventapi.get("/session/dailyDepositLuckyEnvelope/init").then((res) => {
     const { code, data } = res;
 
-    if(code === 0) {
+    if (code === 0) {
       bonusSeq.value = data.todayCheckIn;
-      progressDeposit.value = data.totalDeposit;
-      progressDailyWager.value = data.totalValidBet;
+      totalDeposit.value = data.totalDeposit;
+      totalValidBet.value = data.totalValidBet;
+
+      progressDeposit.value = totalDeposit.value / 2000;
+      progressDailyWager.value = totalValidBet.value / 10000;
     }
-  })
+  });
 });
 
 onActivated(() => {
@@ -250,7 +294,7 @@ onActivated(() => {
     }
   }
   .activities-stats-container {
-    background: linear-gradient(356.25deg, #00430B -0.21%, #027402 93.65%);
+    background: linear-gradient(356.25deg, #00430b -0.21%, #027402 93.65%);
     padding: 1rem;
     border-radius: 8px;
     display: grid;
@@ -286,10 +330,15 @@ onActivated(() => {
             z-index: 2;
             font-size: 12px;
             color: #ffffff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
-            1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
-            -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
-            -1px 1px 2px rgba(255, 255, 255, 0.7);
+            text-shadow:
+              1px 1px 2px rgba(0, 0, 0, 0.7),
+              -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7),
+              -1px 1px 2px rgba(0, 0, 0, 0.7),
+              1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7),
+              1px -1px 2px rgba(255, 255, 255, 0.7),
+              -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
         .info-linear-amt {
@@ -309,12 +358,10 @@ onActivated(() => {
     margin-top: 1rem;
     .days-box {
       background: linear-gradient(356.25deg, rgba(0, 67, 11, 0.3) -0.21%, rgba(2, 116, 2, 0.3) 93.65%);
-      ;
       &.isReceived {
-        background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
-        ;
+        background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
         .box-img {
-          background:unset;
+          background: unset;
         }
       }
       padding: 6px 12px;
@@ -361,7 +408,8 @@ onActivated(() => {
         // height: 50px;
         display: flex;
         align-items: center;
-        background: url(../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/blink.png)no-repeat center center;
+        background: url(../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/blink.png) no-repeat center
+          center;
         background-size: contain;
         padding: 15px;
         img {
@@ -427,8 +475,8 @@ onActivated(() => {
     color: #98a6b4;
     margin-top: 6px;
   }
-  .activity-banner{
-    img{
+  .activity-banner {
+    img {
       width: 100%;
     }
   }
