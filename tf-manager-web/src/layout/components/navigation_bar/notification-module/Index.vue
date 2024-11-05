@@ -4,7 +4,7 @@ import SvgIcon from "@/components/SvgIcon/index.vue";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import { WebSocketActionTypes } from "@/store/modules/socket/action-types";
-import { CircleCloseFilled, Right } from '@element-plus/icons-vue';
+import { CircleCloseFilled } from '@element-plus/icons-vue';
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 
@@ -109,34 +109,22 @@ function formatTimestamp(timestamp) {
     >
       <div class="notification-body">
         <div v-for="notification in storeNotifications" :key="notification.id" class="notification-content">
-          <el-row>
-            <el-col :span="2" class="notification-content-left">
-              <el-icon :size="25" title="不再显示">
-                <CircleCloseFilled v-if="notification.id" @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
-              </el-icon>
-            </el-col>
-            <el-col :span="20" class="notification-content-middle">
-              <div class="notification-content-right-header">
-                {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}
-              </div>
-              <div class="notification-content-right-body">
-                {{ $te(`fields.${notification.content}`) ? $t(`fields.${notification.content}`) : notification.content }}
-              </div>
-              <el-row :justify=" 'space-between' " class="notification-content-right-footer">
-                <el-col :span="12">
-                  {{ notification.siteId ? getSiteNameBySiteId(notification.siteId) : '' }}
-                </el-col>
-                <el-col :span="12" class="notification-content-right-footer-right">
-                  {{ formatTimestamp(notification.createTime) }}
-                </el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="2" class="notification-content-left">
-              <el-icon :size="25" title="跳转页面">
-                <Right v-if="notification.redirectionPath" @click="closeDialogAndRedirectTo(notification.redirectionPath)" style="cursor: pointer;" />
-              </el-icon>
-            </el-col>
-          </el-row>
+          <div class="notification-item">
+            <el-icon :size="25" title="不再显示" class="notification-item-close">
+              <CircleCloseFilled v-if="notification.id" @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
+            </el-icon>
+
+            <div class="notification-item-header">
+              <div class="notification-item-title">{{ notification.siteId ? `[${getSiteNameBySiteId(notification.siteId)}]` : '' }}] {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}</div>
+              <div class="notification-item-datetime">{{ formatTimestamp(notification.createTime) }}</div>
+            </div>
+            <div class="notification-item-body">
+              <div class="notification-item-content">{{ $te(`fields.${notification.content}`) ? $t(`fields.${notification.content}`) : notification.content }}</div>
+            </div>
+            <button title="跳转页面" v-if="notification.redirectionPath" @click="closeDialogAndRedirectTo(notification.redirectionPath)" class="notification-item-redirection">
+              {{ $t('fields.redirect') }}
+            </button>
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -195,4 +183,42 @@ function formatTimestamp(timestamp) {
   text-align: end;
 }
 
+.notification-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+
+  .notification-item-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+  .notification-item-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .notification-item-redirection {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .notification-item-title {
+    font-weight: bold;
+  }
+
+  .notification-item-title, .notification-item-content, .notification-item-datetime {
+    line-height: 1rem;
+  }
+
+  .notification-item-datetime {
+    padding-right: 15px;
+    font-size: smaller;
+  }
+}
 </style>
