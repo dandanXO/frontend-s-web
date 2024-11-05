@@ -298,6 +298,9 @@
 
 <script setup>
 import { convertToCommaAmount } from "src/boot/utils";
+import { userStore } from "src/stores";
+
+const store = userStore();
 
 const columns4 = [
   {
@@ -366,86 +369,86 @@ const columns2 = [
     field: "level",
     align: "center"
   },
-  { name: "betAmount", label: "Bet Amount (₹)", field: "betAmount", align: "center" },
+  { name: "betAmount", label: `Bet Amount (${store.currency.value})`, field: "betAmount", align: "center" },
   { name: "teamMember", label: "Active Member", field: "teamMember", align: "center" },
   { name: "rebate", label: "Rate %", field: "rebate", align: "center" }
 ];
 const rows2 = [
   {
     level: "v13",
-    betAmount: `₹${convertToCommaAmount(160000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(160000000)}`,
     teamMember: "377",
     rebate: "1.5"
   },
   {
     level: "v12",
-    betAmount: `₹${convertToCommaAmount(85000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(85000000)}`,
     teamMember: "233",
     rebate: "1.4"
   },
   {
     level: "v11",
-    betAmount: `₹${convertToCommaAmount(50000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(50000000)}`,
     teamMember: "144",
     rebate: "1.3"
   },
   {
     level: "v10",
-    betAmount: `₹${convertToCommaAmount(26000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(26000000)}`,
     teamMember: "89",
     rebate: "1.2"
   },
   {
     level: "v9",
-    betAmount: `₹${convertToCommaAmount(14000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(14000000)}`,
     teamMember: "55",
     rebate: "1.1"
   },
   {
     level: "v8",
-    betAmount: `₹${convertToCommaAmount(7500000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(7500000)}`,
     teamMember: "34",
     rebate: "1.0"
   },
   {
     level: "v7",
-    betAmount: `₹${convertToCommaAmount(4200000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(4200000)}`,
     teamMember: "21",
     rebate: "0.9"
   },
   {
     level: "v6",
-    betAmount: `₹${convertToCommaAmount(2000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(2000000)}`,
     teamMember: "13",
     rebate: "0.8"
   },
   {
     level: "v5",
-    betAmount: `₹${convertToCommaAmount(1000000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(1000000)}`,
     teamMember: "8",
     rebate: "0.7"
   },
   {
     level: "v4",
-    betAmount: `₹${convertToCommaAmount(350000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(350000)}`,
     teamMember: "5",
     rebate: "0.6"
   },
   {
     level: "v3",
-    betAmount: `₹${convertToCommaAmount(140000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(140000)}`,
     teamMember: "3",
     rebate: "0.5"
   },
   {
     level: "v2",
-    betAmount: `₹${convertToCommaAmount(5000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(5000)}`,
     teamMember: "2",
     rebate: "0.4"
   },
   {
     level: "v1",
-    betAmount: `₹${convertToCommaAmount(2000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(2000)}`,
     teamMember: "1",
     rebate: "0.3"
   }
@@ -520,7 +523,7 @@ const rows3 = [
     gap: 15px;
     margin: 0 0 25px 0;
     letter-spacing: 0.5px;
-    background: #FFFFFF0D;
+    background: #ffffff0d;
     position: relative;
     width: 100%;
     border-radius: 10px;
@@ -608,7 +611,7 @@ const rows3 = [
   }
   .table-container {
     :deep(thead) {
-      background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+      background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
     }
 
     :deep(tbody) {

@@ -523,9 +523,9 @@ const getFtdCommaAmount = (amount) => {
   const currencyRate = isUSDT.value ? activeMethod.value : 1;
   const bonusAmount = amount * 0.5 * currencyRate;
   if (bonusAmount < 999) {
-    return bonusAmount.toFixed(0) + "Pkr";
+    return bonusAmount.toFixed(0) + "Bdt";
   } else {
-    return "999Pkr";
+    return "999Bdt";
   }
 };
 
@@ -804,7 +804,7 @@ async function pDepo(deposit) {
         //FB Tracking.
         if (store.isFbPixel) {
           fbq("track", "Purchase", {
-            currency: "PKR",
+            currency: "BDT",
             value: obj.localAmount
           });
         }

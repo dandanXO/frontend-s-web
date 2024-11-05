@@ -8,15 +8,15 @@
     />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
 
-    <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
-    <SignIn7DaysPromo v-if="list.redirectUrl === 'pak-signin-bonus' && !isCommonPromo && store.token" />
+    <BonusSpinWheelPromo v-if="list.redirectUrl === 'bgd-spin-wheel' && !isCommonPromo && store.token" />
+    <SignIn7DaysPromo v-if="list.redirectUrl === 'bgd-signin-bonus' && !isCommonPromo && store.token" />
     <NewPlayerSpinWheelPromo
-      v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'bgd-newplayer-welcome-spin' && !isCommonPromo && store.token"
     />
-    <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
+    <RedPacketRainPromo v-if="list.redirectUrl === 'bgd-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
-    <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
-    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-slot-ftd' && store.token" :params="list.param" />
+    <NewPlayersPromo v-if="list.redirectUrl === 'bgd-new-players' && !isCommonPromo && store.token" :list="list" />
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'bgd-slot-ftd' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -98,7 +98,7 @@ export default defineComponent({
           this.btnLoading = false;
           if (res.code === 0) {
             var rebatePoint = res.data;
-            this.claimMsg = "₹" + rebatePoint;
+            this.claimMsg = store.currency.value + rebatePoint;
             this.isClaimModal = true;
           } else {
             this.btnLoading = false;
@@ -117,13 +117,13 @@ export default defineComponent({
     });
     if (
       this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "pak-spin-wheel" ||
-      this.list.redirectUrl === "pak-signin-bonus" ||
-      this.list.redirectUrl === "pak-newplayer-welcome-spin" ||
-      this.list.redirectUrl === "pak-redpacketrain" ||
+      this.list.redirectUrl === "bgd-spin-wheel" ||
+      this.list.redirectUrl === "bgd-signin-bonus" ||
+      this.list.redirectUrl === "bgd-newplayer-welcome-spin" ||
+      this.list.redirectUrl === "bgd-redpacketrain" ||
       this.list.redirectUrl === "interest-profit" ||
-      this.list.redirectUrl === "pak-new-players" ||
-      this.list.redirectUrl === "pak-slot-ftd" ||
+      this.list.redirectUrl === "bgd-new-players" ||
+      this.list.redirectUrl === "bgd-slot-ftd" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
