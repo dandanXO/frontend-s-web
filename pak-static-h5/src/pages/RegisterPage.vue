@@ -207,7 +207,7 @@
         :loading="isLoading"
         @click="onSubmit"
       >
-        {{ $t("btn.confirm") }}
+        {{ isRestrictedDomain ? $t("btn.register") : $t("btn.confirm") }}
       </q-btn>
     </div>
     <div class="is-domain has-acct">
