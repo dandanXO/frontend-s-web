@@ -7,6 +7,7 @@ import { WebSocketActionTypes } from "@/store/modules/socket/action-types";
 import { CircleCloseFilled } from '@element-plus/icons-vue';
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
 
 const store = useStore()
 const socket = getCurrentInstance().appContext.config.globalProperties.$socket;
@@ -27,6 +28,7 @@ const isNotificationDialogVisible = ref(false);
 const toggleNotificationDialog = () => {
   isNotificationDialogVisible.value = !isNotificationDialogVisible.value;
 };
+const { t } = useI18n()
 
 const handleReceivedWsEvent = (event) => {
   switch (event.event) {
@@ -41,7 +43,7 @@ const handleReceivedWsEvent = (event) => {
         store.dispatch(UserActionTypes.ACTION_REFRESH_NOTIFICATIONS, updatedNotificationRecords);
         store.dispatch(WebSocketActionTypes.REMOVE_SOCKET_EVENTS, event);
         ElMessage({
-          message: 'success',
+          message: t('transfer.status.success'),
           type: 'success',
         })
       }
@@ -137,11 +139,21 @@ function formatTimestamp(timestamp) {
     border-radius: 10px;
   }
   :deep(.el-dialog__header) {
+    border-radius: 10px 10px 0px 0px;
     border-bottom: 2px solid rgb(177.3, 179.4, 183.6);
-    padding: 0 10px;
+    padding: 0 16px;
+    background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+  }
+  :deep(.el-dialog__headerbtn){
+    top: 12px;
+    right: 12px;
+  }
+  :deep(.el-dialog__close){
+    font-size: 1.4rem;
+    font-weight: bold;
   }
   :deep(.el-dialog__body) {
-    padding: 10px 5px;
+    padding: 12px 10px;
   }
   :deep(.el-dialog__title){
     font-weight: bold;
@@ -154,7 +166,7 @@ function formatTimestamp(timestamp) {
 }
 
 .notification-content {
-  margin: 0 5px 10px 5px;
+  margin: 5px 5px 8px 5px;
 }
 
 .notification-content-left {
@@ -194,13 +206,24 @@ function formatTimestamp(timestamp) {
   flex-direction: column;
   gap: 10px;
   position: relative;
+  background: rgba(222,222,222,0.6);
   border: 1px solid #d3d3d3;
-  padding: 10px;
+  padding: 14px 18px 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
 
   .notification-item-close {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 4px;
+    right: 4px;
+
+    &:hover{
+      opacity: 0.9;
+    }
+    &:active{
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
   }
 
   .notification-item-header {
@@ -216,6 +239,7 @@ function formatTimestamp(timestamp) {
 
   .notification-item-title {
     font-weight: bold;
+    font-size: 1.2rem;
   }
 
   .notification-item-title, .notification-item-content, .notification-item-datetime {
@@ -223,7 +247,7 @@ function formatTimestamp(timestamp) {
   }
 
   .notification-item-datetime {
-    padding-right: 15px;
+    padding-right: 24px;
     font-size: smaller;
   }
 }
