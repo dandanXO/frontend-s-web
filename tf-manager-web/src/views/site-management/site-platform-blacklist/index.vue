@@ -109,7 +109,7 @@
       :close-on-press-escape="false"
     >
       <el-form
-        ref="gameForm"
+        ref="blacklistForm"
         :model="form"
         :rules="formRules"
         :inline="true"
@@ -152,7 +152,8 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input v-model="form.loginName" style="width: 350px" />
+          <el-input v-model="form.loginName" style="width: 290px" :disabled="form.allMember" :placeholder="t('fields.loginName')" />
+          <el-checkbox v-model="form.allMember" label="ALL" style="width: 50px; margin-left: 10px" @change="handleSelectAllMember" />
         </el-form-item>
         <el-form-item :label="t('fields.status')" prop="status">
           <el-select
@@ -275,7 +276,7 @@ const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
-const gameForm = ref(null)
+const blacklistForm = ref(null)
 
 let chooseGame = []
 
@@ -327,6 +328,8 @@ const form = reactive({
   loginName: null,
   platform: null,
   status: null,
+  allMember: false,
+  tempLoginName: null,
 })
 
 const formRules = reactive({
@@ -370,9 +373,12 @@ function changePage(page) {
 }
 
 function showDialog(type) {
+  form.allMember = false
+  form.tempLoginName = null
+
   if (type === 'CREATE') {
-    if (gameForm.value) {
-      gameForm.value.resetFields()
+    if (blacklistForm.value) {
+      blacklistForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.addBlacklist')
     form.id = null
@@ -388,9 +394,13 @@ function showEdit(blacklist) {
 
   nextTick(() => {
     for (const key in blacklist) {
+      console.log(key)
       if (Object.keys(form).find(k => k === key)) {
+        form[key] = blacklist[key]
       }
-      form[key] = blacklist[key]
+      if (key === "loginName" && form[key] === "ALL") {
+        form.allMember = true;
+      }
     }
   })
 }
@@ -431,7 +441,7 @@ async function loadSitePlatformBlacklist() {
 }
 
 function create() {
-  gameForm.value.validate(async valid => {
+  blacklistForm.value.validate(async valid => {
     if (valid) {
       await createSitePlatformBlacklist(form)
       uiControl.dialogVisible = false
@@ -442,7 +452,7 @@ function create() {
 }
 
 function edit() {
-  gameForm.value.validate(async valid => {
+  blacklistForm.value.validate(async valid => {
     if (valid) {
       await updateSitePlatformBlacklist(form)
       uiControl.dialogVisible = false
@@ -475,8 +485,16 @@ async function submit() {
   memberForm.siteId = form.siteId;
   memberForm.loginName = form.loginName;
 
-  const { data: ret } = await preCheckForCreate(memberForm)
-  if (ret.loginName === form.loginName) {
+  if (form.allMember !== true) {
+    const { data: ret } = await preCheckForCreate(memberForm)
+    if (ret.loginName === form.loginName) {
+      if (uiControl.dialogType === 'CREATE') {
+        create()
+      } else if (uiControl.dialogType === 'EDIT') {
+        edit()
+      }
+    }
+  } else {
     if (uiControl.dialogType === 'CREATE') {
       create()
     } else if (uiControl.dialogType === 'EDIT') {
@@ -487,6 +505,16 @@ async function submit() {
 
 function handleChangeSite(value) {
   form.siteId = value
+}
+
+function handleSelectAllMember() {
+  if (form.allMember === true) {
+    form.tempLoginName = form.loginName;
+    form.loginName = "ALL";
+  } else {
+    form.loginName = form.tempLoginName;
+    form.tempLoginName = null;
+  }
 }
 
 async function requestExportExcel() {
