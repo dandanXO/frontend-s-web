@@ -3,7 +3,7 @@
     <div class="menu-title-container">
       <span class="menu-title">{{ isAutoWithdrawal ? $t("withdraw.quickWithdraw") : $t("withdraw.withdraw") }}</span>
       <el-button
-        v-if="store.memberType === 'TEST' && !isAutoWithdrawal"
+        v-if="!isAutoWithdrawal"
         :loading="loadingBtn"
         :disable="loadingBtn"
         size="large"
