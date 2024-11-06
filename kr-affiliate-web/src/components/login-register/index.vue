@@ -115,6 +115,17 @@
                       autocomplete="off"
                     />
                   </el-form-item>
+                  <el-form-item prop="realNameKr">
+                    <el-input
+                      ref="realNameRef"
+                      v-model="regForm.realName"
+                      :placeholder="$t('fields.realName')"
+                      name="realName"
+                      type="text"
+                      tabindex="1"
+                      autocomplete="off"
+                    />
+                  </el-form-item>
                   <el-tooltip
                     v-model="capsTooltip"
                     content="Caps lock is On"

@@ -639,6 +639,12 @@
             maxlength="11"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.realName')" prop="realName">
+          <el-input
+            v-model="cForm.realName"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.password')" prop="password">
           <el-input
             v-model="cForm.password"
