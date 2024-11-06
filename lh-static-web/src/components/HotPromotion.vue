@@ -100,6 +100,7 @@
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
+    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -209,6 +210,7 @@ import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue"
 import BbDachaBelgrade from "@/components/hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import PokerWinningPromo from "@/components/hotpromo/poker-winning/PokerWinningPromo.vue";
+import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -300,7 +302,8 @@ export default defineComponent({
     IemMasterPromo,
     BbDachaBelgrade,
     ElisaGift,
-    PokerWinningPromo
+    PokerWinningPromo,
+    SlotLossBonusPromo
   },
   props: {
     list: {
