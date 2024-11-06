@@ -22,6 +22,9 @@
     <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
+    <div class="close-btn-img" @click="router.replace('/')">
+      <img src="../assets/images/index/close-btn.png" />
+    </div>
 
     <div class="no-domain auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
@@ -198,16 +201,22 @@
     </div>
     <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
-    <div class="bottom-btn">
+    <div v-if="!isRestrictedDomain" class="bottom-btn">
       <q-btn
+        class="btn-primary btn-primary__full"
         no-caps
         unelevated
-        class="btn-primary btn-primary__full"
         :disabled="!isAgreeReg"
         :loading="isLoading"
         @click="onSubmit"
       >
-        {{ isRestrictedDomain ? $t("btn.register") : $t("btn.confirm") }}
+        {{ $t("btn.confirm") }}
+      </q-btn>
+    </div>
+
+    <div v-else class="bottom-btn">
+      <q-btn no-caps unelevated :disabled="!isAgreeReg" :loading="isLoading" @click="onSubmit">
+        {{ $t("btn.register") }}
       </q-btn>
     </div>
     <div class="is-domain has-acct">
@@ -223,30 +232,30 @@
     </div>
 
     <div class="no-domain btn-lists">
+      <div class="list-item" @click="openCharity()">
+        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
+        <div>Charity</div>
+      </div>
       <div class="list-item" @click="openWhatsApp()">
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
         <div>WhatsApp</div>
-      </div>
-      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>{{ $t("btn.downloadApp") }}</div>
       </div>
       <div class="list-item" @click="openYoutube()">
         <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
         <div>Youtube</div>
       </div>
-      <div class="list-item" @click="openCharity()">
-        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-        <div>Charity</div>
+      <div class="list-item" @click="openTiktok()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
+        <div>Tiktok</div>
       </div>
-      <!--      <div class="list-item" @click="openTiktok()">-->
-      <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
-      <!--        <div>Tiktok</div>-->
-      <!--      </div>-->
+      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
+        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
+        <div>{{ $t("btn.downloadApp") }}</div>
+      </div>
     </div>
     <div class="is-domain social-container">
       <div class="share">Share</div>
-      <div class="social-items">
+      <!-- <div class="social-items">
         <a @click="openWhatsApp()" id="Whatsapp" class="social-item">
           <img src="../assets/images/auth/social_wa.png" />
         </a>
@@ -264,6 +273,28 @@
         <a @click="openCharity()" id="Instagram" class="social-item" target="_blank">
           <img src="../assets/images/auth/social_charity.png" />
         </a>
+      </div> -->
+      <div class="btn-lists">
+        <div class="list-item" @click="openWhatsApp()">
+          <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
+          <div>WhatsApp</div>
+        </div>
+        <div class="list-item" @click="openCharity()">
+          <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
+          <div>Charity</div>
+        </div>
+        <div class="list-item" @click="openYoutube()">
+          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+          <div>Youtube</div>
+        </div>
+        <div class="list-item" @click="openTiktok()">
+          <img class="btn-icon" id="charity-icon" src="../assets/images/auth/icon-tiktok.png" />
+          <div>TikTok</div>
+        </div>
+        <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
+          <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
+          <div>{{ $t("btn.downloadApp") }}</div>
+        </div>
       </div>
     </div>
     <div class="no-domain bottom-img">
@@ -829,7 +860,8 @@ export default defineComponent({
       openYoutube,
       openCharity,
       downloadApp,
-      isRestrictedDomain
+      isRestrictedDomain,
+      router
     };
   }
 });
@@ -907,7 +939,7 @@ function charType(num) {
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
     background-size: 100% 100%;
-    padding-top: 48px;
+    padding-top: 14px;
     .no-domain {
       display: none;
     }
@@ -921,6 +953,25 @@ function charType(num) {
         img {
           width: calc(100% - 32px);
           margin-left: -5px;
+        }
+      }
+    }
+
+    .bottom-btn {
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background-image: linear-gradient(#131313, #131313), linear-gradient(180deg, #33b085 0%, #68bd5c 100%);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      margin: 3px 20px 8px;
+      padding: 0;
+
+      .q-btn {
+        width: 100%;
+        :deep(.q-btn__content) {
+          background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+          -webkit-background-clip: text;
+          color: transparent;
         }
       }
     }
@@ -944,7 +995,7 @@ function charType(num) {
       margin: 0 20px 20px;
     }
     .social-container {
-      margin: 20px auto;
+      margin: 10px auto;
       width: 95%;
       position: sticky;
       top: calc(100vh - 70px);
@@ -981,6 +1032,9 @@ function charType(num) {
           animation: smallbeat 2s infinite;
         }
       }
+      .btn-lists {
+        margin: 0;
+      }
     }
   }
 }
@@ -1001,6 +1055,15 @@ function charType(num) {
     width: 100%;
     max-width: 140px;
     margin-bottom: 10px;
+  }
+}
+
+.close-btn-img {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  img {
+    width: 20px;
   }
 }
 
@@ -1143,13 +1206,13 @@ function charType(num) {
     flex-direction: column;
     gap: 8px;
     color: #9f9f9f;
-    font-size: 12px;
+    font-size: 11px;
     flex: 1;
   }
 
   .btn-icon {
-    width: 70px;
-    height: 70px;
+    width: 42px;
+    height: 42px;
 
     &:active {
       filter: brightness(0.85);
@@ -1161,29 +1224,21 @@ function charType(num) {
     height: 70px;
   }
   #tiktok-icon {
-    width: 50px;
-    height: 50px;
     margin-top: 10px;
     animation: smallbeat 2s infinite;
     animation-delay: 1s;
   }
   #whatapp-icon {
-    width: 50px;
-    height: 50px;
     margin-top: 10px;
     animation: smallbeat 2s infinite;
     animation-delay: 0.5s;
   }
   #charity-icon {
-    width: 50px;
-    height: 50px;
     margin-top: 10px;
     animation: smallbeat 2s infinite;
     animation-delay: 1.5s;
   }
   #download-icon {
-    width: 50px;
-    height: 50px;
     margin-top: 10px;
     animation: smallbeat 2s infinite;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
