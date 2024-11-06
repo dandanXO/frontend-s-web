@@ -114,6 +114,7 @@
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
+    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -248,6 +249,7 @@ const IemMasterPromo = defineAsyncComponent(() => import("./hotpromo/iem-master/
 const BbDachaBelgrade = defineAsyncComponent(() => import("./hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue"));
 const ElisaGift = defineAsyncComponent(() => import("./hotpromo/elisa-gift/ElisaGift.vue"));
 const PokerWinningPromo = defineAsyncComponent(() => import("./hotpromo/poker-winning/PokerWinningPromo.vue"));
+const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -330,7 +332,8 @@ export default defineComponent({
     IemMasterPromo,
     BbDachaBelgrade,
     ElisaGift,
-    PokerWinningPromo
+    PokerWinningPromo,
+    SlotLossBonusPromo
   },
   props: {
     list: {
