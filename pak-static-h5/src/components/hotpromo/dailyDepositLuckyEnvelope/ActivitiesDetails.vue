@@ -6,7 +6,7 @@
     <div class="activities-content">
       The more consecutive days of deposit requirements you complete, the more extra bonus you will get
     </div>
-    <div class="activities-btn" @click="claimBonus">
+    <div class="activities-btn" @click="claimBonus" :class="hasClaimed && 'disabled'">
       <img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/deposit-btn-1.png" />
     </div>
     <div class="current-signin">
@@ -58,7 +58,7 @@
         :key="rule"
         :class="[
           i + 1 === 7 ? 'days-box__last' : 'days-box',
-          { isReceived: (i === bonusSeq && isReceivedToday) || i < bonusSeq }
+          { isReceived: (i === bonusSeq && hasClaimed) || i < bonusSeq }
         ]"
       >
         <div class="box-ribbon">Day {{ i + 1 }}</div>
@@ -84,7 +84,7 @@
         </div>
         <div>
           <div class="box-title">Max {{ rule.bonusAmount }}rs</div>
-          <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
+          <div class="box-subtitle" v-if="(i === bonusSeq && hasClaimed) || i < bonusSeq">
             <img :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/tick.png`)" />
             Received
           </div>
@@ -116,6 +116,7 @@ const $q = useQuasar();
 const progressDeposit = ref(0);
 const progressDailyWager = ref(0);
 
+const hasClaimed = ref(false);
 const currentDay = ref(0);
 const bonusSeq = ref(0);
 const isReceivedToday = ref(false);
@@ -189,11 +190,14 @@ const claimBonus = () => {
         message: `Claimed bonus amount: ${data}`,
         icon: "check_circle_outline"
       });
+
+      // initDailyDeposit();
+      hasClaimed.value = true;
     }
   });
 };
 
-onMounted(() => {
+const initDailyDeposit = () => {
   eventapi.get("/session/dailyDepositLuckyEnvelope/init").then((res) => {
     const { code, data } = res;
 
@@ -202,6 +206,7 @@ onMounted(() => {
       totalDeposit.value = data.totalDeposit;
       totalValidBet.value = data.totalValidBet;
       betTimes.value = data.betTimes;
+      hasClaimed.value = data.hasClaimed;
       rules.value = data.rules;
 
       // progressDeposit.value = totalDeposit.value / 2000;
@@ -221,6 +226,10 @@ onMounted(() => {
       }
     }
   });
+};
+
+onMounted(() => {
+  initDailyDeposit();
 });
 
 onActivated(() => {
@@ -286,6 +295,11 @@ onActivated(() => {
       transform: translateY(2px);
     }
 
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
     img {
       display: block;
       width: 100%;
@@ -347,14 +361,9 @@ onActivated(() => {
             z-index: 2;
             font-size: 12px;
             color: #ffffff;
-            text-shadow:
-              1px 1px 2px rgba(0, 0, 0, 0.7),
-              -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7),
-              -1px 1px 2px rgba(0, 0, 0, 0.7),
-              1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7),
-              1px -1px 2px rgba(255, 255, 255, 0.7),
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
               -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
@@ -431,6 +440,7 @@ onActivated(() => {
           center;
         background-size: contain;
         padding: 15px;
+        min-height: 80px;
         img {
           display: block;
         }
