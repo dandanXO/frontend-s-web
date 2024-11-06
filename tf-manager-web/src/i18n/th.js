@@ -1838,7 +1838,8 @@ export default {
     HOME: 'หน้าแรก',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์'
+    MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์',
+    DEPOSIT_FLUCTUATION: 'ความผันผวนของเงินฝาก',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

@@ -2702,7 +2702,8 @@ export default {
     HOME: 'Trang chủ',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'Người dùng trực tuyến'
+    MEMBER_STATISTICS: 'Người dùng trực tuyến',
+    DEPOSIT_FLUCTUATION: 'Biến động tiền gửi',
   },
   error: {
     400: 'Yêu cầu không hợp lệ',

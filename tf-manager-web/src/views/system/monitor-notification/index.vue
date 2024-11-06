@@ -65,6 +65,7 @@ import { getAllConfigurable, getAllSettingBySiteId } from "@/api/monitor-notific
 import { useStore } from "@/store";
 import { ElMessage } from "element-plus";
 import MemberStatisticComponent from './dialog-custom-content/memberStatistic.vue';
+import DepositFluctuationComponent from './dialog-custom-content/depositFluctuation.vue';
 
 const store = useStore();
 const allConfigurableTypeName = ref([]);
@@ -148,6 +149,7 @@ const openDialog = (title, mode) => {
 
 const componentMapping = {
   MEMBER_STATISTICS: MemberStatisticComponent,
+  DEPOSIT_FLUCTUATION: DepositFluctuationComponent,
 };
 
 async function loadAllConfigurableTypeName() {
