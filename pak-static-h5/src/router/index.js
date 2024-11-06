@@ -24,8 +24,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -79,6 +79,11 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (Platform.is.capacitor && Platform.is.android) {
       StatusBar.hide();
+    }
+
+    if (window.location.href.indexOf("f9qdwgww.cc") > -1) {
+      ttq.load("CSLMK0RC77U84I7KJA5G");
+      ttq.page();
     }
 
     // if (to.name === "referCode") {
