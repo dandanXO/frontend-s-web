@@ -23,7 +23,7 @@
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
     <div class="close-btn-img" @click="router.replace('/')">
-      <img src="../assets/images/index/close-btn.png" />
+      <img src="../assets/images/index/close-btn-white.png" />
     </div>
 
     <div class="no-domain auth-tab-wrapper">
@@ -201,7 +201,7 @@
     </div>
     <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
-    <div v-if="!isRestrictedDomain" class="bottom-btn">
+    <div class="no-domain bottom-btn">
       <q-btn
         class="btn-primary btn-primary__full"
         no-caps
@@ -214,15 +214,31 @@
       </q-btn>
     </div>
 
-    <div v-else class="bottom-btn">
-      <q-btn no-caps unelevated :disabled="!isAgreeReg" :loading="isLoading" @click="onSubmit">
+    <div class="is-domain bottom-btn-primary">
+      <q-btn
+        class="btn-primary btn-primary__full"
+        no-caps
+        unelevated
+        :disabled="!isAgreeReg"
+        :loading="isLoading"
+        @click="onSubmit"
+      >
         {{ $t("btn.register") }}
       </q-btn>
     </div>
-    <div class="is-domain has-acct">
+
+    <div class="is-domain bottom-btn">
+      <!-- <router-link to="/login"> -->
+      <q-btn unelevated @click="router.replace('/login')">
+        {{ $t("btn.login") }}
+      </q-btn>
+      <!-- </router-link> -->
+    </div>
+
+    <!-- <div class="is-domain has-acct">
       Already have an account?
       <router-link to="/login" class="login">Login</router-link>
-    </div>
+    </div> -->
 
     <div class="no-domain mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
@@ -958,7 +974,7 @@ function charType(num) {
     }
 
     .bottom-btn {
-      border: 1px solid transparent;
+      border: 2px solid transparent;
       border-radius: 4px;
       background-image: linear-gradient(#131313, #131313), linear-gradient(180deg, #33b085 0%, #68bd5c 100%);
       background-origin: border-box;
@@ -967,14 +983,29 @@ function charType(num) {
       padding: 0;
 
       .q-btn {
+        height: 44px;
         width: 100%;
         :deep(.q-btn__content) {
           background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
           -webkit-background-clip: text;
           color: transparent;
+          font-weight: bolder;
+          font-size: 16px;
         }
       }
     }
+    .bottom-btn-primary {
+      border: none;
+      padding: 3px 20px 8px;
+      .btn-primary {
+        background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+      }
+      :deep(.q-btn__content) {
+        font-weight: bolder;
+        font-size: 16px;
+      }
+    }
+
     .has-acct {
       width: 90%;
       display: flex;
@@ -1059,9 +1090,10 @@ function charType(num) {
 }
 
 .close-btn-img {
+  cursor: pointer;
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 20px;
+  right: 20px;
   img {
     width: 20px;
   }

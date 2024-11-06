@@ -23,7 +23,7 @@
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
     <div class="close-btn-img" @click="router.replace('/')">
-      <img src="../assets/images/index/close-btn.png" />
+      <img src="../assets/images/index/close-btn-white.png" />
     </div>
 
     <div class="no-domain auth-tab-wrapper">
@@ -142,15 +142,30 @@
     </div>
     <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
-    <div class="bottom-btn">
+    <div class="no-domain bottom-btn-primary">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
-        {{ isRestrictedDomain ? $t("btn.login") : $t("btn.confirm") }}
+        {{ $t("btn.confirm") }}
       </q-btn>
     </div>
-    <div class="is-domain has-acct">
+
+    <div class="is-domain bottom-btn-primary">
+      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
+        {{ $t("btn.login") }}
+      </q-btn>
+    </div>
+
+    <div class="is-domain bottom-btn">
+      <!-- <router-link to="/register"> -->
+      <q-btn unelevated @click="router.replace('/register')">
+        {{ $t("btn.register") }}
+      </q-btn>
+      <!-- </router-link> -->
+    </div>
+
+    <!-- <div class="is-domain has-acct">
       Don't have an account?
       <router-link to="/register" class="login">Register</router-link>
-    </div>
+    </div> -->
 
     <div class="no-domain btn-lists">
       <div class="list-item" @click="openCharity()">
@@ -913,8 +928,8 @@ export default defineComponent({
 
 .close-btn-img {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 20px;
+  right: 20px;
   img {
     width: 20px;
   }
@@ -1025,8 +1040,36 @@ export default defineComponent({
 }
 
 .bottom-btn {
-  // margin-top: 20px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-image: linear-gradient(#131313, #131313), linear-gradient(180deg, #33b085 0%, #68bd5c 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  margin: 3px 20px 8px;
+  padding: 0;
+
+  .q-btn {
+    height: 44px;
+    width: 100%;
+    :deep(.q-btn__content) {
+      background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: bolder;
+      font-size: 16px;
+    }
+  }
+}
+.bottom-btn-primary {
+  border: none;
   padding: 3px 20px 8px;
+  .btn-primary {
+    background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+  }
+  :deep(.q-btn__content) {
+    font-weight: bolder;
+    font-size: 16px;
+  }
 }
 
 .bottom-img {
