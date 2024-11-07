@@ -3100,7 +3100,10 @@ export default {
     WANGZE: 'WANGZE',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'Online users'
+    MEMBER_STATISTICS: 'Online users',
+    DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
+    WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
+    BONUS_FLUCTUATION: 'Bonus fluctuation',
   },
   error: {
     400: 'Bad Request',

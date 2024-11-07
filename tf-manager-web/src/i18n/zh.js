@@ -3046,7 +3046,10 @@ export default {
     WANGZE: '王者',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: '在线人数'
+    MEMBER_STATISTICS: '在线人数',
+    DEPOSIT_FLUCTUATION: '存款波动',
+    WITHDRAW_FLUCTUATION: '提款波动',
+    BONUS_FLUCTUATION: '优惠波动',
   },
   error: {
     400: '请求无效',

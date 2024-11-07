@@ -5,11 +5,8 @@
       <el-form-item v-if="false" label="标题">
         <el-input v-model="formData.monitorSetting.title" />
       </el-form-item>
-      <el-form-item label="通知生成人数上限阈值" prop="monitorSetting.setting.notificationGenerationUserNumberUpperThreshold">
-        <el-input-number :min="2" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberUpperThreshold" />
-      </el-form-item>
-      <el-form-item label="通知生成人数下限阈值" prop="monitorSetting.setting.notificationGenerationUserNumberLowerThreshold">
-        <el-input-number :min="1" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberLowerThreshold" />
+      <el-form-item label="提款浮动通知阀值(%)" prop="monitorSetting.setting.withdrawChangeAlertThreshold">
+        <el-input-number :min="0" :step="0.1" v-model="formData.monitorSetting.setting.withdrawChangeAlertThreshold" />
       </el-form-item>
       <el-form-item label="状态" prop="monitorSetting.status">
         <el-switch
@@ -21,24 +18,13 @@
       </el-form-item>
 
       <h2>通知设置</h2>
-      <el-form-item label="通知内文(当高于上限)" prop="notificationSetting.upperContent">
+      <el-form-item label="通知内文" prop="notificationSetting.content">
         <el-input
           type="textarea"
-          v-model="formData.notificationSetting.upperContent"
+          v-model="formData.notificationSetting.content"
           rows="4"
           placeholder="请输入通知内容"
         />
-      </el-form-item>
-      <el-form-item label="通知内文(当低于下限)" prop="notificationSetting.lowerContent">
-        <el-input
-          type="textarea"
-          v-model="formData.notificationSetting.lowerContent"
-          rows="4"
-          placeholder="请输入通知内容"
-        />
-      </el-form-item>
-      <el-form-item label="发送频率(分钟)" prop="notificationSetting.setting.backgroundNoticeIntervalMinutes">
-        <el-input-number :min="0" v-model="formData.notificationSetting.setting.backgroundNoticeIntervalMinutes" />
       </el-form-item>
       <el-form-item label="指定角色">
         <el-select
@@ -123,23 +109,19 @@ const formData = ref(props.mode === 'create' ? initializeFormData() : assignForm
 function initializeFormData() {
   return {
     monitorSetting: {
-      title: 'MEMBER_STATISTICS',
+      title: 'WITHDRAW_FLUCTUATION',
       siteId: store.state.user.siteId,
       setting: {
-        notificationGenerationUserNumberUpperThreshold: 100,
-        notificationGenerationUserNumberLowerThreshold: 20
+        withdrawChangeAlertThreshold: 20.0,
       },
       status: 1,
     },
     notificationSetting: {
-      title: 'MEMBER_STATISTICS',
+      title: 'WITHDRAW_FLUCTUATION',
       siteId: store.state.user.siteId,
-      upperContent: '',
-      lowerContent: '',
       setting: {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
-        backgroundNoticeIntervalMinutes: 30,
       },
       status: 1,
       tgSetting: null,
@@ -151,15 +133,9 @@ function initializeFormData() {
 }
 
 function assignFormData() {
-  const cloneNotificationSetting = cloneDeep(props.currentItem.notificationSetting);
-  const contentJson = JSON.parse(cloneNotificationSetting.content);
-  cloneNotificationSetting.upperContent = contentJson.upper;
-  cloneNotificationSetting.lowerContent = contentJson.lower;
-  delete cloneNotificationSetting.content;
-
   return {
     monitorSetting: cloneDeep(props.currentItem.monitorSetting),
-    notificationSetting: cloneNotificationSetting,
+    notificationSetting: cloneDeep(props.currentItem.notificationSetting),
   }
 }
 
@@ -174,13 +150,9 @@ const excludedUserNameArr = ref([]);
 const rules = {
   monitorSetting: {
     setting: {
-      notificationGenerationUserNumberUpperThreshold: [
-        { required: true, message: '请填写通知生成人数上限阈值', trigger: 'blur' },
-        { type: 'number', min: 2, message: '最小值为2', trigger: 'blur' }
-      ],
-      notificationGenerationUserNumberLowerThreshold: [
-        { required: true, message: '请填写通知生成人数下限阈值', trigger: 'blur' },
-        { type: 'number', min: 1, message: '最小值为1', trigger: 'blur' }
+      withdrawChangeAlertThreshold: [
+        { required: true, message: '请填写提款浮动通知阀值(%)', trigger: 'blur' },
+        { type: 'number', min: 0, message: '最小值为0', trigger: 'blur' }
       ],
     },
     status: [
@@ -188,28 +160,19 @@ const rules = {
     ]
   },
   notificationSetting: {
-    upperContent: [
-      { required: true, message: '请填写上限通知内容', trigger: 'blur' }
-    ],
-    lowerContent: [
-      { required: true, message: '请填写下限通知内容', trigger: 'blur' }
-    ],
     status: [
       { required: true, message: '请选择状态', trigger: 'change' }
     ],
-    setting: {
-      backgroundNoticeIntervalMinutes: [
-        { required: true, message: '请填写发送频率(分钟)', trigger: 'blur' },
-        { type: 'number', min: 30, message: '最小值为30', trigger: 'blur' }
-      ]
-    }
+    content: [
+      { required: true, message: '请填写通知内文', trigger: 'blur' },
+    ],
   }
 };
 
 const submitForm = async () => {
   const valid = await formRef.value.validate();
-  const upperLowerValid = validateUpperLowerThreshold();
-  if (!valid || !upperLowerValid) {
+
+  if (!valid) {
     return;
   }
 
@@ -218,16 +181,12 @@ const submitForm = async () => {
   const cloneNotificationToSubmit = cloneDeep(formData.value.notificationSetting);
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = getRoleIdsByNames(selectedRoleNameArr.value, simpleRoleArrBySite.value)
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = getUserIdsByNames(excludedUserNameArr.value, simpleUserArrBySelectedRoles.value)
-  cloneNotificationToSubmit.content = JSON.stringify({
-    upper: formData.value.notificationSetting.upperContent,
-    lower: formData.value.notificationSetting.lowerContent,
-  })
-  delete cloneNotificationToSubmit.upperContent;
-  delete cloneNotificationToSubmit.lowerContent;
 
   const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
   const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;
 
+  console.log(formData.value.monitorSetting)
+  console.log(formData.value.notificationSetting)
   try {
     const monitorResponse = await submitMonitorFn(formData.value.monitorSetting);
     if (monitorResponse.code !== 0) {
@@ -243,18 +202,6 @@ const submitForm = async () => {
     console.error(error.message)
     emit('submitFailed'); // 通知父元件
   }
-};
-
-const validateUpperLowerThreshold = () => {
-  const upperThreshold = formData.value.monitorSetting.setting.notificationGenerationUserNumberUpperThreshold;
-  const lowerThreshold = formData.value.monitorSetting.setting.notificationGenerationUserNumberLowerThreshold;
-
-  if (upperThreshold <= lowerThreshold) {
-    ElMessage.error('上限阈值必须高于下限阈值');
-    return false;
-  }
-
-  return true;
 };
 
 const handleRoleSelectorVisibleChange = (isVisible) => {
