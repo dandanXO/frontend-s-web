@@ -2751,6 +2751,7 @@ export default {
     MEMBER_STATISTICS: '온라인 사용자',
     DEPOSIT_FLUCTUATION: '예금 변동',
     WITHDRAW_FLUCTUATION: '출금 변동',
+    BONUS_FLUCTUATION: '보너스 변동',
   },
   error: {
     400: '잘못된 요청',

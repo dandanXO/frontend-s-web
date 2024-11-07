@@ -3097,6 +3097,7 @@ export default {
     MEMBER_STATISTICS: 'Online users',
     DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
     WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
+    BONUS_FLUCTUATION: 'Bonus fluctuation',
   },
   error: {
     400: 'Bad Request',

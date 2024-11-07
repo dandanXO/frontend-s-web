@@ -1841,6 +1841,7 @@ export default {
     MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์',
     DEPOSIT_FLUCTUATION: 'ความผันผวนของเงินฝาก',
     WITHDRAW_FLUCTUATION: 'การเปลี่ยนแปลงการถอนเงิน',
+    BONUS_FLUCTUATION: 'การเปลี่ยนแปลงโบนัส',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

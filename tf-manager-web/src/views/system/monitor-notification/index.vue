@@ -67,6 +67,7 @@ import { ElMessage } from "element-plus";
 import MemberStatisticComponent from './dialog-custom-content/memberStatistic.vue';
 import DepositFluctuationComponent from './dialog-custom-content/depositFluctuation.vue';
 import WithdrawFluctuationComponent from './dialog-custom-content/withdrawFluctuation.vue';
+import BonusFluctuationComponent from './dialog-custom-content/bonusFluctuation.vue';
 
 const store = useStore();
 const allConfigurableTypeName = ref([]);
@@ -152,6 +153,7 @@ const componentMapping = {
   MEMBER_STATISTICS: MemberStatisticComponent,
   DEPOSIT_FLUCTUATION: DepositFluctuationComponent,
   WITHDRAW_FLUCTUATION: WithdrawFluctuationComponent,
+  BONUS_FLUCTUATION: BonusFluctuationComponent,
 };
 
 async function loadAllConfigurableTypeName() {

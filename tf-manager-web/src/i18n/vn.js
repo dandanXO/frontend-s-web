@@ -2705,6 +2705,7 @@ export default {
     MEMBER_STATISTICS: 'Người dùng trực tuyến',
     DEPOSIT_FLUCTUATION: 'Biến động tiền gửi',
     WITHDRAW_FLUCTUATION: 'Biến động rút tiền',
+    BONUS_FLUCTUATION: 'Biến động tiền thưởng',
   },
   error: {
     400: 'Yêu cầu không hợp lệ',
