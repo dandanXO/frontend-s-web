@@ -1840,6 +1840,7 @@ export default {
   monitorTitle: {
     MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์',
     DEPOSIT_FLUCTUATION: 'ความผันผวนของเงินฝาก',
+    WITHDRAW_FLUCTUATION: 'การเปลี่ยนแปลงการถอนเงิน',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

@@ -3096,6 +3096,7 @@ export default {
   monitorTitle: {
     MEMBER_STATISTICS: 'Online users',
     DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
+    WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
   },
   error: {
     400: 'Bad Request',

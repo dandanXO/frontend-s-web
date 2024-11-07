@@ -2704,6 +2704,7 @@ export default {
   monitorTitle: {
     MEMBER_STATISTICS: 'Người dùng trực tuyến',
     DEPOSIT_FLUCTUATION: 'Biến động tiền gửi',
+    WITHDRAW_FLUCTUATION: 'Biến động rút tiền',
   },
   error: {
     400: 'Yêu cầu không hợp lệ',
