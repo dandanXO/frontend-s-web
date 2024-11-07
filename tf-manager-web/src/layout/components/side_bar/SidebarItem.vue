@@ -49,6 +49,9 @@
         />
       </template>
     </el-sub-menu>
+    <audio ref="notificationAudioRef">
+      <source src="@/assets/tones/chime.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </template>
 
@@ -90,6 +93,7 @@ export default defineComponent({
     SidebarItemLink
   },
   setup(props) {
+    const notificationAudioRef = ref();
     // eslint-disable-next-line
     const {t} = useI18n();
     const startDate = new Date();
@@ -262,6 +266,7 @@ export default defineComponent({
           }
         } else if (menu.withdraw === menuItem || menu.autoWithdraw === menuItem) {
           if (sessionStorage.getItem('WITHDRAW') && parseInt(sessionStorage.getItem('WITHDRAW')) !== 0) {
+            if (notificationAudioRef.value && store.state.user.siteId === 10) notificationAudioRef.value.play()
             hasTips.value = true;
           } else {
             hasTips.value = false;
@@ -313,7 +318,8 @@ export default defineComponent({
       theOnlyOneChild,
       allChildrenHidden,
       resolvePath,
-      hasTips
+      hasTips,
+      notificationAudioRef
     };
   }
 });
