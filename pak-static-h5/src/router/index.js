@@ -84,6 +84,7 @@ export default route(function (/* { store, ssrContext } */) {
     if (window.location.href.indexOf("f9qdwgww.cc") > -1) {
       ttq.load("CSLMK0RC77U84I7KJA5G");
       ttq.page();
+      user.isTkPixel = true;
     }
 
     // if (to.name === "referCode") {
