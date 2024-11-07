@@ -244,7 +244,7 @@
                   <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
                   <span>示例</span>
                 </div>
-                会员A在电竞场馆投注完美世界Major 2024,当日产生负盈利为6000元,次日即可获得救援金38元。
+                会员A在电竞场馆投注完美世界Major 2024,当日产生负盈利为6,000元,次日即可获得救援金38元。
               </div>
             </div>
           </div>
@@ -289,12 +289,13 @@
 
 <script setup>
 import { getCompetitionLossInit, claimCompetitionLoss, getCompetitionYesterday, claimCompetitionBonus } from "@/api/index/promo";
-import { onMounted, ref, defineProps } from "vue";
+import { onMounted, ref, defineProps, toRefs } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
-const props = defineProps(["promoCode"]);
-const promoCode = ref(props.promoCode);
+
+const props = defineProps(["promoParam"]);
+const { promoParam } = toRefs(props);
 
 const notify = useNotify();
 
@@ -322,7 +323,7 @@ const handleClaimBonus1 = () => {
     return;
   }
 
-  claimCompetitionBonus(props.promoCode)
+  claimCompetitionBonus(promoParam.value.betPromoCode)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -361,7 +362,7 @@ const handleClaimBonus2 = () => {
     return;
   }
 
-  claimCompetitionLoss(props.promoCode)
+  claimCompetitionLoss(promoParam.value.lossPromoCode)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -387,8 +388,8 @@ const handleClaimBonus2 = () => {
 
 const fetchData = async () => {
   try {
-    const res1 = await getCompetitionYesterday(props.promoCode);
-    const res2 = await getCompetitionLossInit(props.promoCode);
+    const res1 = await getCompetitionYesterday(promoParam.value.betPromoCode);
+    const res2 = await getCompetitionLossInit(promoParam.value.lossPromoCode);
 
     totalLoss.value = res2.data?.totalLoss || 0;
     bonus2.value = res2.data?.bonus || 0;

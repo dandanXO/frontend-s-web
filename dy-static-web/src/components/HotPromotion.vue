@@ -86,7 +86,7 @@
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
-    <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-code="list.promoCode" />
+    <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
 
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img

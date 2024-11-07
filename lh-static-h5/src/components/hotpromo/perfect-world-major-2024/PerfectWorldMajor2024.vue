@@ -294,7 +294,7 @@
                   <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
                   <span>示例</span>
                 </div>
-                会员A在电竞场馆投注完美世界Major 2024,当日产生负盈利为6000元,次日即可获得救援金38元。
+                会员A在电竞场馆投注完美世界Major 2024,当日产生负盈利为6,000元,次日即可获得救援金38元。
               </div>
             </div>
           </div>
@@ -338,15 +338,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, toRefs } from "vue";
 import { getCompetitionLossInit, claimCompetitionLoss, getCompetitionYesterday, claimCompetitionBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
-const props = defineProps(["promoCode"]);
-const promoCode = ref(props.promoCode);
+const props = defineProps(["promoParam"]);
+const { promoParam } = toRefs(props);
 
 const notify = useNotify();
 const store = userStore();
@@ -385,7 +385,7 @@ const handleClaimBonus1 = () => {
     });
     return;
   }
-  claimCompetitionBonus(props.promoCode)
+  claimCompetitionBonus(promoParam.value.betPromoCode)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -429,7 +429,7 @@ const handleClaimBonus2 = () => {
     });
     return;
   }
-  claimCompetitionLoss(props.promoCode)
+  claimCompetitionLoss(promoParam.value.lossPromoCode)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -451,8 +451,8 @@ const handleClaimBonus2 = () => {
 
 const fetchData = async () => {
   try {
-    const res1 = await getCompetitionYesterday(props.promoCode);
-    const res2 = await getCompetitionLossInit(props.promoCode);
+    const res1 = await getCompetitionYesterday(promoParam.value.betPromoCode);
+    const res2 = await getCompetitionLossInit(promoParam.value.lossPromoCode);
 
     totalValidBet.value = res1.data?.totalValidBet || 0;
     bonus1.value = res1.data?.bonus || 0;
