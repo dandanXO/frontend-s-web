@@ -289,7 +289,8 @@ const loadPlatformLists = () => {
 
       data.forEach((item) => {
         const option = {
-          label: getGameName(item.name),
+          // label: getGameName(item.name),
+          label: item.alias,
           value: item.code
         };
         platformsList.value.push(option);
@@ -307,7 +308,7 @@ const tableHeaders = [
     label: "游戏时间"
   },
   {
-    key: "platform",
+    key: "alias",
     label: "游戏平台"
   },
   {
@@ -323,7 +324,7 @@ const tableHeaders = [
     label: "游戏类型"
   },
   {
-    key: "status",
+    key: "betStatus",
     label: "投注状态"
   }
 ];
