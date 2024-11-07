@@ -32,6 +32,7 @@
         :span="8"
         v-for="(settings, title) in titleMatchSettings"
         :key="title"
+        style="margin-bottom: 20px"
       >
         <el-card shadow="hover">
           <div class="card-content">
