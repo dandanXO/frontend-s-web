@@ -257,7 +257,7 @@
         <div>WhatsApp</div>
       </div>
       <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+        <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
         <div>Youtube</div>
       </div>
       <div class="list-item" @click="openTiktok()">
@@ -300,11 +300,11 @@
           <div>Charity</div>
         </div>
         <div class="list-item" @click="openYoutube()">
-          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+          <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
           <div>Youtube</div>
         </div>
         <div class="list-item" @click="openTiktok()">
-          <img class="btn-icon" id="charity-icon" src="../assets/images/auth/icon-tiktok.png" />
+          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
           <div>TikTok</div>
         </div>
         <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
@@ -1255,24 +1255,29 @@ function charType(num) {
     width: 70px;
     height: 70px;
   }
-  #tiktok-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1s;
-  }
   #whatapp-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
-    animation-delay: 0.5s;
   }
   #charity-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
-    animation-delay: 1.5s;
+    animation-delay: 0.4s;
+  }
+  #youtube-icon {
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 0.8s;
+  }
+  #tiktok-icon {
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 1.2s;
   }
   #download-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
+    animation-delay: 1.6s;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }

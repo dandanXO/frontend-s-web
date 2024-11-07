@@ -176,7 +176,7 @@
         <div>WhatsApp</div>
       </div>
       <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+        <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
         <div>Youtube</div>
       </div>
       <div class="list-item" @click="openTiktok()">
@@ -220,7 +220,7 @@
           <div>WhatsApp</div>
         </div>
         <div class="list-item" @click="openYoutube()">
-          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+          <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
           <div>Youtube</div>
         </div>
         <div class="list-item" @click="openTiktok()">
@@ -969,25 +969,29 @@ export default defineComponent({
     width: 70px;
     height: 70px;
   }
-  #tiktok-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1s;
-  }
   #whatapp-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
-    animation-delay: 0.5s;
-  }
-  #download-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
   #charity-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
-    animation-delay: 1.5s;
+    animation-delay: 0.4s;
+  }
+  #youtube-icon {
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 0.8s;
+  }
+  #tiktok-icon {
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 1.2s;
+  }
+  #download-icon {
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 1.6s;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
@@ -1112,8 +1116,8 @@ export default defineComponent({
     transform: scale(1);
   }
   14% {
-    -webkit-transform: scale(1.15);
-    transform: scale(1.15);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
   }
 
   28% {
@@ -1121,8 +1125,8 @@ export default defineComponent({
     transform: scale(1);
   }
   42% {
-    -webkit-transform: scale(1.15);
-    transform: scale(1.15);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
   }
   70% {
     -webkit-transform: scale(1);
