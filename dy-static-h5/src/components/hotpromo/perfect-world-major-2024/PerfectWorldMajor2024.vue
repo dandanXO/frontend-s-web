@@ -13,7 +13,7 @@
               <div class="livepoker-rebate-section-title">
                 <div>
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                    src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-title-img.png"
                     style="width: 20px; height: 20px; margin-bottom: 0px"
                   />
                 </div>
@@ -22,7 +22,7 @@
               <div class="reward-info">
                 <div class="reward-info-icon">
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                    src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon1.png"
                     alt=""
                     width="100%"
                   />
@@ -35,7 +35,7 @@
               <div class="reward-info">
                 <div class="reward-info-icon">
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                    src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon2.png"
                     alt=""
                     width="100%"
                   />
@@ -49,7 +49,7 @@
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus1" :class="{ disabled: bonus1 <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
+                  src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/new-claim-btn2.png"
                   alt=""
                   width="100%"
                 />
@@ -119,13 +119,13 @@
               <div class="livepoker-rebate-game-bottom-left-title">
                 <div class="livepoker-rebate-game-bottom-left-btn">
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
+                    src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/game-bottom-left-btn.png"
                     alt=""
                     style="width: 10px"
                   />
                   <span>示例</span>
                 </div>
-                用户 A 在09月25日投注完美世界Major 2024有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288元
+                用户 A 在09月25日投注完美世界Major 2024有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288元
               </div>
             </div>
           </div>
@@ -158,7 +158,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞保留此活动最终解释权；
+                为避免文字理解差异，东赢电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -172,7 +172,7 @@
               <div class="livepoker-rebate-section-title">
                 <div>
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                    src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-title-img.png"
                     style="width: 20px; height: 20px; margin-bottom: 0px"
                   />
                 </div>
@@ -181,7 +181,7 @@
               <div class="reward-info">
                 <div class="reward-info-icon">
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                    src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon1.png"
                     alt=""
                     width="100%"
                   />
@@ -194,7 +194,7 @@
               <div class="reward-info">
                 <div class="reward-info-icon">
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                    src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon2.png"
                     alt=""
                     width="100%"
                   />
@@ -208,7 +208,7 @@
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabled: bonus2 <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
+                  src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/new-claim-btn2.png"
                   alt=""
                   width="100%"
                 />
@@ -327,7 +327,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞保留此活动最终解释权；
+                为避免文字理解差异，东赢电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -495,7 +495,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-bg.png");
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
@@ -587,7 +587,7 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-title.png");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 240px;
@@ -600,7 +600,7 @@ onMounted(() => {
     align-items: center;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 64px;
@@ -684,7 +684,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;

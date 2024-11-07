@@ -47,7 +47,7 @@
             </div>
             <div class="little-title">
               <div class="left">活动内容</div>
-              <div class="right">活动期间，当日完美世界Major 2024有效投注≥1,500 元即可获得 最高1588元的奖励金</div>
+              <div class="right">活动期间，当日完美世界Major 2024有效投注≥1,500 元即可获得 最高1,588元的奖励金</div>
             </div>
             <table class="livepoker-rebate-game-info-table">
               <tbody>
@@ -189,7 +189,7 @@
             <div class="little-title">
               <div class="left">优惠详情</div>
               <div class="right">
-                会员在本站电竞场馆中，北京时间当日负盈利达到1000元及以上，次日即可领取救援金，最高可达1,288元！
+                会员在本站电竞场馆中，北京时间当日负盈利达到1,000元及以上，次日即可领取救援金，最高可达1,288元！
               </div>
             </div>
             <table class="livepoker-rebate-game-info-table">
