@@ -175,6 +175,7 @@
                 <thead>
                   <tr>
                     <th scope="col">{{ t('fields.affiliate') }}</th>
+                    <th scope="col">{{ t('fields.affiliateLevel') }}</th>
                     <th scope="col">{{ t('fields.member') }}</th>
                     <th scope="col">{{ uiControl.dialogThirdCol }}</th>
                     <th scope="col">{{ uiControl.dialogLastCol }}</th>
@@ -184,7 +185,7 @@
                 </thead>
                 <tbody v-if="uiControl.dialogType === 'DEPOSIT'">
                   <tr v-if="recordsDetail.depositRecords.length === 0">
-                    <td colspan="6">
+                    <td colspan="7">
                       <!-- Display your empty component or message here -->
                       <emptyComp />
                     </td>
@@ -194,6 +195,9 @@
                     :key="index"
                   >
                     <td>{{ record.affiliate }}</td>
+                    <td>
+                      {{ record.affiliateLevel !== '-' ? t(`affiliate.level.${record.affiliateLevel}`) : '-' }}
+                    </td>
                     <td>
                       {{ record.member }}
                     </td>
