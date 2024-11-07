@@ -4,6 +4,7 @@ export default {
     myPoint: 'My Point',
     memberMoney: 'Member Money',
     memberPoint: 'Member Point',
+    myCommission: 'Commission Balance',
     eggs: 'Eggs',
     memberInquiry: 'Member Inquiry',
     depositApplication: 'Deposit Application',
@@ -704,6 +705,9 @@ export default {
     downlineTotalWithdraw: 'Downline Member Total Withdraw',
     downlineTotalDepositWithdraw: 'Downline Member Deposit Withdraw Difference',
     affiliateInTransfer: 'Affiliate',
+    redeemConvert: 'Redeem',
+    dashboardMemberBalance: 'Member Balance',
+    totalWithdrawalAmount: 'Withdraw Amount',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

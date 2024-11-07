@@ -3,25 +3,22 @@
     <div class="withdrawal-summary q-mb-md">
       <div class="balance">
         <span class="amount">
-          <!-- {{
-            withdrawType === "flat" ? convertToCommaAmount(inrBalance, false) : convertToCommaAmount(usdtBalance, false)
-          }} -->
-          {{store.balance}}
+          <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
+          <template v-else>{{ store.balance }}</template>
         </span>
-        <div class="title">Cash Balance</div>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
       <div class="separator"></div>
 
       <div class="withdrawable">
         <span class="amount">
-          {{
-            withdrawableBalance >= 0
-              ? convertToCommaAmount(withdrawableBalance, false)
-              : "0.00"
-          }}
+          <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
+          <template v-else>
+            {{ withdrawableBalance >= 0 ? convertToCommaAmount(withdrawableBalance, false) : "0.00" }}
+          </template>
         </span>
-        <div class="title">Withdrawable</div>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
       </div>
     </div>
 
@@ -290,7 +287,9 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
-              <div class="desc desc_white">{{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawAmount) }}</div>
+              <div class="desc desc_white">
+                {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawAmount) }}
+              </div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
@@ -1139,6 +1138,7 @@ const refreshRemainWager = () => {
     .title {
       color: rgba(255, 255, 255, 0.5);
       font-weight: 700;
+      font-size: 14px;
     }
 
     span {

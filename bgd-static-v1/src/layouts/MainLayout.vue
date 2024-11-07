@@ -315,7 +315,7 @@ export default defineComponent({
         } else if (route.path === "/promotion") {
           hasPage.value = true;
           pageName.value = t("header.promotion");
-          if (route.fullPath.indexOf("pak-faq") > -1) {
+          if (route.fullPath.indexOf("bgd-faq") > -1) {
             pageName.value = "FAQ";
           }
           prevPage.value = "";

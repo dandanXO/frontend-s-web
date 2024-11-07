@@ -165,6 +165,8 @@ export default {
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
       AFFILIATE_DEPOSIT: 'Transfer from Balance',
       AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
+      MAIN_WALLET: 'Main Wallet Adjustment',
+      COMMISSION_WALLET: 'Commission Wallet Adjustment',
     },
   },
   status: {
@@ -585,6 +587,7 @@ export default {
     addBankToWithdrawPlatform: 'Add Bank To Withdraw Platform',
     addBanner: 'Add Banner',
     addBbDacha: 'Add BB Dacha',
+    addBlacklist: 'Add Blacklist',
     addRewardGroup: 'Add Reward Group',
     addCurrency: 'Add Currency',
     addCurrencyRate: 'Add Currency Rate',
@@ -985,6 +988,7 @@ export default {
     editBankCard: 'Edit Bank Card',
     editBanner: 'Edit Banner',
     editBelongType: 'Edit Belong Type',
+    editBlacklist: 'Edit Blacklist',
     editConfig: 'Edit Config',
     editCurrency: 'Edit Currency',
     editCurrencyRate: 'Edit Currency Rate',
@@ -2912,6 +2916,8 @@ export default {
     'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
     'Affiliate Point Record': 'Affiliate Point Record',
+    'Member Ratio Edit Record': 'Share Ratio Edit Record',
+    'Site Platform Blacklist': 'Site Platform Blacklist',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

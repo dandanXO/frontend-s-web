@@ -164,6 +164,8 @@ export default {
       AFFILIATE_SETTLEMENT: '代理结算',
       AFFILIATE_DEPOSIT: '额度代存',
       AFFILIATE_COMMISSION: '佣金代存',
+      MAIN_WALLET: '主钱包平账',
+      COMMISSION_WALLET: '佣金钱包平账',
     },
   },
   status: {
@@ -588,6 +590,7 @@ export default {
     addBankToWithdrawPlatform: '新增银行至提款平台',
     addBanner: '新增广告',
     addBbDacha: '新增BB别墅杯赛事',
+    addBlacklist: '新增黑名单',
     addRewardGroup: '新增奖金组',
     addCurrency: '新增货币',
     addCurrencyRate: '新增汇率',
@@ -986,6 +989,7 @@ export default {
     editBankCard: '编辑银行卡',
     editBanner: '编辑广告',
     editBelongType: '编辑网页类型',
+    editBlacklist: '编辑黑名单',
     editCheck: '更改',
     editConfig: '编辑设置',
     editCurrency: '编辑货币',
@@ -2859,6 +2863,8 @@ export default {
     'TF Gaming Config': 'TF Gaming 设置',
     'LH Old Data': '雷火老站数据',
     'Affiliate Point Record': '代理积分记录',
+    'Member Ratio Edit Record': '返水比例更改记录',
+    'Site Platform Blacklist': '站点平台黑名单',
   },
   google: {
     google_auth_menu: '谷歌验证',

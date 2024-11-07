@@ -111,7 +111,7 @@
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
-                  <template v-if="selectedPromo.promoCode === 'pak-red-packet-rain'">
+                  <template v-if="selectedPromo.promoCode === 'bgd-red-packet-rain'">
                     <div>asdasd</div>
                   </template>
                   <template v-else><HotPromotion :list="selectedPromo" /></template> -->
@@ -389,7 +389,7 @@ export default defineComponent({
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/account/vip" });
         } else {
-          if (promo.redirectUrl === "pak-redpacketrain") {
+          if (promo.redirectUrl === "bgd-redpacketrain") {
             isMoneyRainModal.value = true;
           } else {
             if (extensionState.value) {
@@ -463,7 +463,7 @@ export default defineComponent({
       }
 
       // remove to show faq as promo item at promo list
-      filteredArray.value = [...filteredArray.value].filter(({ promoCode }) => promoCode !== "pak-faq");
+      filteredArray.value = [...filteredArray.value].filter(({ promoCode }) => promoCode !== "bgd-faq");
     };
 
     const loadAll = () => {

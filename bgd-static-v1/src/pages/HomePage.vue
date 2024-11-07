@@ -3364,7 +3364,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
+  OneSignal.initialize("c294e748-0d9d-4d35-bf21-ed4854f6114b");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -3415,7 +3415,7 @@ const checkHbPromo = () => {
       return res;
     })
     .then((data) => {
-      // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
+      // isHbShow.value = data.data.some((item) => item.code === "bgd-redpacketrain");
       hbPromo.value = data.data;
     });
 };
@@ -3528,7 +3528,7 @@ const processedContent = (content) => {
 const mediaCode = ref("");
 
 const gotoFloatPromo = (val) => {
-  if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
+  if (val.type === "PROMO" && val.code === "bgd-redpacketrain") {
     isMoneyRainModal.value = true;
   }
 

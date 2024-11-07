@@ -24,8 +24,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -36,7 +36,7 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
- 
+
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
@@ -81,6 +81,11 @@ export default route(function (/* { store, ssrContext } */) {
       StatusBar.hide();
     }
 
+    if (window.location.href.indexOf("f9qdwgww.cc") > -1) {
+      ttq.load("CSLMK0RC77U84I7KJA5G");
+      ttq.page();
+    }
+
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     //   next(`/register`);
@@ -109,14 +114,16 @@ export default route(function (/* { store, ssrContext } */) {
       } else {
         if (user.nickName === "") {
           user.getMemberInfo().then(() => {
-            if (from.path === "/login" && to.path === "/home") {
-              gtag.event("login", {
-                user_id: user.id
-              });
-            } else if (from.path === "/register" && to.path === "/home") {
-              gtag.event("register", {
-                user_id: user.id
-              });
+            if (window.location.hostname !== "localhost") {
+              if (from.path === "/login" && to.path === "/home") {
+                gtag.event("login", {
+                  custom_user_id: user.id
+                });
+              } else if (from.path === "/register" && to.path === "/home") {
+                gtag.event("register", {
+                  custom_user_id: user.id
+                });
+              }
             }
 
             next({ ...to, replace: true });

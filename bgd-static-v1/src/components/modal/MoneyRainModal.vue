@@ -15,9 +15,9 @@
     <div class="rain-money-tabs-container">
       <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
       <div class="rain-money-header">
-        <span class="orange">666,666PKR&nbsp;</span>
+        <span class="orange">666,666BDT&nbsp;</span>
         <span class="green">every time maximum surplus</span>
-        <span class="orange">&nbsp;66,666PKR</span>
+        <span class="orange">&nbsp;66,666BDT</span>
       </div>
 
       <div class="rain-money-tabs">
@@ -80,13 +80,13 @@
           </div> -->
           <div class="footer-title q-mt-sm">Terms and Conditions:</div>
           <div class="footer-content">
-            Each round of cash rain freely distributes 666,666 PKR.
+            Each round of cash rain freely distributes 666,666 BDT.
             <br />
-            Maximum cashback amount per round: 66,666 PKR.
+            Maximum cashback amount per round: 66,666 BDT.
             <br />
             Each round freely distributes cashback.
             <br />
-            Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for
+            Maintain a historical deposit of ≥300 BDT and complete daily bets of ≥100+ BDT to claim your reward for
             free.
             <br />
             The received money can be directly used for playing games or withdrawing.
@@ -292,7 +292,7 @@ const stopAutoScroll = () => {
 const getListing = () => {
   if (store.hasToken()) {
     eventapi
-      .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
+      .get("/redPacketVip/list?promoCode=bgd-red-envelope-rain")
       .then((res) => {
         if (res.code === 0) {
           // listingData.value = res.data;
@@ -323,7 +323,7 @@ const nextRainTime = reactive({
 
 const getNextRainTime = () => {
   eventapi
-    .get("/redPacketVip/nextRainTime?promoCode=pak-red-envelope-rain")
+    .get("/redPacketVip/nextRainTime?promoCode=bgd-red-envelope-rain")
     .then((res) => {
       if (res.code === 0) {
         nextRainTime.nowIsRain = res.data.nowIsRain;
@@ -364,7 +364,7 @@ const loadingClaim = ref(false);
 const onClaimBonus = () => {
   loadingClaim.value = true;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=pak-red-envelope-rain`)
+    .get(`/redPacketVip/claim?promoCode=bgd-red-envelope-rain`)
     .then((res) => {
       if (res.code === 0) {
         loadingClaim.value = false;

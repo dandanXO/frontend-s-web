@@ -493,6 +493,7 @@ export default {
     addBankToWithdrawPlatform: 'Thêm ngân hàng vào nền tảng rút tiền',
     addBanner: 'Thêm banner',
     addBbDacha: 'Thêm BB Dacha',
+    addBlacklist: 'Thêm danh sách đen',
     addRewardGroup: 'Thêm nhóm thưởng',
     addCurrency: 'Thêm đơn vị tiền tệ',
     addCurrencyRate: 'Thêm tỷ giá tiền tệ',
@@ -875,6 +876,7 @@ export default {
     editBankCard: 'Chỉnh sửa thẻ ngân hàng',
     editBanner: 'Chỉnh sửa biểu ngữ',
     editBelongType: 'Chỉnh sửa loại thuộc về',
+    editBlacklist: 'Chỉnh sửa danh sách đen',
     editConfig: 'Chỉnh sửa cấu hình',
     editCurrency: 'Chỉnh sửa tiền tệ',
     editCurrencyRate: 'Chỉnh sửa tỷ giá hối đoái',
@@ -2563,6 +2565,7 @@ export default {
     'System Value Rules': 'Quy tắc giá trị hệ thống',
     'Sites Config': 'Cấu hình trang web',
     'Mooncake Fest Spin Record': '中秋节转盘2024',
+    'Site Platform Blacklist': 'Danh sách đen nền tảng trang web',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
