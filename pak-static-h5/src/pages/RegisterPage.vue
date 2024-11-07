@@ -22,8 +22,8 @@
     <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
-    <div class="close-btn-img" @click="router.replace('/')">
-      <img src="../assets/images/index/close-btn-white.png" />
+    <div class="back-btn-img" @click="router.replace('/')">
+      <img src="../assets/images/index/btn-back.png" />
     </div>
 
     <div class="no-domain auth-tab-wrapper">
@@ -257,7 +257,7 @@
         <div>WhatsApp</div>
       </div>
       <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+        <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
         <div>Youtube</div>
       </div>
       <div class="list-item" @click="openTiktok()">
@@ -300,11 +300,11 @@
           <div>Charity</div>
         </div>
         <div class="list-item" @click="openYoutube()">
-          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+          <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
           <div>Youtube</div>
         </div>
         <div class="list-item" @click="openTiktok()">
-          <img class="btn-icon" id="charity-icon" src="../assets/images/auth/icon-tiktok.png" />
+          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
           <div>TikTok</div>
         </div>
         <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
@@ -955,7 +955,7 @@ function charType(num) {
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
     background-size: 100% 100%;
-    padding-top: 14px;
+    padding-top: 0;
     .no-domain {
       display: none;
     }
@@ -1089,13 +1089,13 @@ function charType(num) {
   }
 }
 
-.close-btn-img {
+.back-btn-img {
   cursor: pointer;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 14px;
+  right: 14px;
   img {
-    width: 20px;
+    width: 2.25rem;
   }
 }
 
@@ -1255,24 +1255,29 @@ function charType(num) {
     width: 70px;
     height: 70px;
   }
-  #tiktok-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1s;
-  }
   #whatapp-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
-    animation-delay: 0.5s;
   }
   #charity-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
-    animation-delay: 1.5s;
+    animation-delay: 0.4s;
+  }
+  #youtube-icon {
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 0.8s;
+  }
+  #tiktok-icon {
+    margin-top: 10px;
+    animation: smallbeat 2s infinite;
+    animation-delay: 1.2s;
   }
   #download-icon {
     margin-top: 10px;
     animation: smallbeat 2s infinite;
+    animation-delay: 1.6s;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
