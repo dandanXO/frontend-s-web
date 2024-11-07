@@ -418,7 +418,7 @@
                     <el-option
                       v-for="p in platformsList"
                       :key="p.code"
-                      :label="getPlatform(p.code)"
+                      :label="p.alias"
                       :value="p.code"
                     ></el-option>
                   </el-select>
@@ -513,9 +513,9 @@
                     {{ getGameType(scope.row.gameType) }}
                   </div>
                 </template>
-                <template v-if="tbl.dataIndex === 'status'" #default="scope">
+                <template v-if="tbl.dataIndex === 'betStatus'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getBetStatus(scope.row.status) }}
+                    {{ getBetStatus(scope.row.betStatus) }}
                   </div>
                 </template>
               </el-table-column>
@@ -912,7 +912,7 @@ const tableColumns = {
     },
     {
       title: "游戏平台",
-      dataIndex: "platform"
+      dataIndex: "alias"
     },
     {
       title: "投注",
@@ -928,7 +928,7 @@ const tableColumns = {
     },
     {
       title: "投注状态",
-      dataIndex: "status"
+      dataIndex: "betStatus"
     }
   ],
   betRecord: [
