@@ -1,5 +1,27 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div class="withdrawal-summary q-mb-md">
+      <div class="balance">
+        <span class="amount">
+          <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
+          <template v-else>{{ store.balance }}</template>
+        </span>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
+          <template v-else>
+            {{ withdrawableBalance >= 0 ? convertToCommaAmount(withdrawableBalance, false) : "0" }}
+          </template>
+        </span>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
+      </div>
+    </div>
+
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <template v-if="isLoadingWithdrawalMethod">
       <div class="withdraw-methods-currency">
@@ -283,7 +305,7 @@
                 <div class="remain-wager-wrapper" @click="refreshRemainWager">
                   <q-spinner v-if="isRefreshRemainWager" />
                   <span v-else>
-                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, 2) }}
                   </span>
                   <img
                     class="refresh-btn-img"
@@ -728,6 +750,7 @@ const resetSelectedMethod = () => {
 
 const isBankType = ref();
 
+const withdrawableBalance = ref();
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
   // selectedWithdraw.value.forEach((method) => (method.active = false));
@@ -740,6 +763,7 @@ const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
   // debugger;
   selectedMethodItem.value = item;
+  withdrawableBalance.value = item.withdrawableBalance;
   filteredBankList.value = item.bankList;
   isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;
