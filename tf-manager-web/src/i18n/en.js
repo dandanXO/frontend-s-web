@@ -165,6 +165,8 @@ export default {
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
       AFFILIATE_DEPOSIT: 'Transfer from Balance',
       AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
+      MAIN_WALLET: 'Main Wallet Adjustment',
+      COMMISSION_WALLET: 'Commission Wallet Adjustment',
     },
   },
   status: {
