@@ -18,6 +18,10 @@ export function loadHomePromoBanner() {
   return server.REST.get("/member/ads-popout");
 }
 
+export function loadAffiliateByDomain(host, siteCode) {
+  return server.REST.get(`/app/getAffiliateCode?siteCode=${siteCode}&domain=${host}`);
+}
+
 export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }

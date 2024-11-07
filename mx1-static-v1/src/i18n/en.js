@@ -326,7 +326,8 @@ export default {
     amount: "Importe",
     depositAmountMustInBetween: "El Monto del Depósito Debe Estar Entre",
     extra: "Extra",
-    understood: "Entendido"
+    understood: "Entendido",
+    useFtdPrivilege: "Usar Privilegio de Primer Depósito en Slots"
   },
   withdraw: {
     withdrawCurrency: "Moneda de Retiro",

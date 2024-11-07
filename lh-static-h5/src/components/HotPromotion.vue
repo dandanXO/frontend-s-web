@@ -101,6 +101,7 @@
     <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
+    <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
@@ -114,6 +115,7 @@
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
+    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -232,6 +234,7 @@ const BlastPremier = defineAsyncComponent(() => import("../components/hotpromo/b
 const Tpworld2024 = defineAsyncComponent(() => import("./hotpromo/tpworld-2024/Tpworld-2024.vue"));
 const DreamLeagueS24 = defineAsyncComponent(() => import("./hotpromo/dream-league-s24/DreamLeagueS24.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
+const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const Dota2Pgl = defineAsyncComponent(() => import("../components/hotpromo/dota2-pgl/Dota2Pgl.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
@@ -248,6 +251,7 @@ const IemMasterPromo = defineAsyncComponent(() => import("./hotpromo/iem-master/
 const BbDachaBelgrade = defineAsyncComponent(() => import("./hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue"));
 const ElisaGift = defineAsyncComponent(() => import("./hotpromo/elisa-gift/ElisaGift.vue"));
 const PokerWinningPromo = defineAsyncComponent(() => import("./hotpromo/poker-winning/PokerWinningPromo.vue"));
+const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -317,6 +321,7 @@ export default defineComponent({
     Tpworld2024,
     DreamLeagueS24,
     Cba30Dream,
+    PerfectWorldMajor2024,
     LiveDailyRebates,
     Dota2Pgl,
     NewVipRebate,
@@ -330,7 +335,8 @@ export default defineComponent({
     IemMasterPromo,
     BbDachaBelgrade,
     ElisaGift,
-    PokerWinningPromo
+    PokerWinningPromo,
+    SlotLossBonusPromo
   },
   props: {
     list: {

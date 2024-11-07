@@ -8,6 +8,7 @@ import { StatusBar } from "@capacitor/status-bar";
 import { Platform, useQuasar } from "quasar";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
+import { useGtag } from "vue-gtag-next";
 
 /*
  * If not building with SSR mode, you can
@@ -19,11 +20,12 @@ import { SessionStorage } from "quasar";
  */
 
 export default route(function (/* { store, ssrContext } */) {
+  const gtag = useGtag();
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -34,6 +36,7 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
+
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
@@ -78,6 +81,11 @@ export default route(function (/* { store, ssrContext } */) {
       StatusBar.hide();
     }
 
+    if (window.location.href.indexOf("f9qdwgww.cc") > -1) {
+      ttq.load("CSLMK0RC77U84I7KJA5G");
+      ttq.page();
+    }
+
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     //   next(`/register`);
@@ -105,7 +113,21 @@ export default route(function (/* { store, ssrContext } */) {
         next({ path: "/home" });
       } else {
         if (user.nickName === "") {
-          user.getMemberInfo().then(() => next({ ...to, replace: true }));
+          user.getMemberInfo().then(() => {
+            if (window.location.hostname !== "localhost") {
+              if (from.path === "/login" && to.path === "/home") {
+                gtag.event("login", {
+                  custom_user_id: user.id
+                });
+              } else if (from.path === "/register" && to.path === "/home") {
+                gtag.event("register", {
+                  custom_user_id: user.id
+                });
+              }
+            }
+
+            next({ ...to, replace: true });
+          });
         } else {
           next();
         }

@@ -111,70 +111,72 @@
           </el-col>
         </el-row>
       </div>
-      <table cellpadding="0" cellspacing="0" border="0" class="custom-table" style="width: 98%; margin: 15px auto;">
-        <thead>
-          <tr>
-            <th scope="col">{{ t('fields.loginName') }}</th>
-            <th scope="col">{{ t('fields.betTime') }}</th>
-            <th scope="col">{{ t('fields.settleTime') }}</th>
-            <th scope="col">{{ t('fields.platform') }}</th>
-            <th scope="col">{{ t('fields.gameName') }}</th>
-            <th scope="col">{{ t('fields.transactionId') }}</th>
-            <th scope="col">{{ t('fields.bet') }}</th>
-            <th scope="col">{{ t('fields.payout') }}</th>
-            <th scope="col">{{ t('fields.companyProfit') }}</th>
-            <th scope="col">{{ t('fields.status') }}</th>
-            <th scope="col">{{ t('fields.operate') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in page.records" :key="item.id">
-            <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
-            <td :data-label="t('fields.betTime')">
-              <span v-if="item.betTime === null">-</span>
-              <span v-if="item.betTime !== null">{{ item.betTime }}</span>
-            </td>
-            <td :data-label="t('fields.settleTime')">
-              <span v-if="item.settleTime === null || item.betStatus === 'UNSETTLED'">-</span>
-              <span v-if="item.settleTime !== null && item.betStatus !== 'UNSETTLED'">{{ item.settleTime }}</span>
-            </td>
-            <td :data-label="t('fields.platform')">
-              <span v-if="item.platform === null">-</span>
-              <span v-if="item.platform !== null">{{ item.platform }}</span>
-            </td>
-            <td :data-label="t('fields.gameName')">
-              <span v-if="item.gameName === null">-</span>
-              <span v-if="item.gameName !== null">{{ item.gameName }}</span>
-            </td>
-            <td :data-label="t('fields.transactionId')">
-              <span v-if="item.transactionId === null">-</span>
-              <span v-if="item.transactionId !== null">{{ item.transactionId }}</span>
-            </td>
-            <td :data-label="t('fields.bet')">$ {{ item.bet }}</td>
-            <td :data-label="t('fields.payout')">$ {{ item.payout }}</td>
-            <td :data-label="t('fields.companyProfit')">$ {{ item.companyProfit }}</td>
-            <td :data-label="t('fields.status')">
-              <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">{{
-                t('betStatus.' + item.betStatus)
-              }}
-              </el-tag>
-              <el-tag v-else-if="item.betStatus === 'CANCEL'" type="danger" size="normal">
-                {{ t('betStatus.' + item.betStatus) }}
-              </el-tag>
-              <el-tag v-else-if="item.betStatus === 'UNSETTLED'" type="warning" size="normal">
-                {{ t('betStatus.' + item.betStatus) }}
-              </el-tag>
-              <el-tag v-else type="info" size="normal">-</el-tag>
-            </td>
-            <td :data-label="t('fields.operate')">
-              <el-link type="primary" :underline="false" @click="viewDetails(item)">{{
-                t('fields.viewDetails')
-              }}
-              </el-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="width: 98%; margin: 10px auto; overflow: auto;">
+        <table cellpadding="0" cellspacing="0" border="0" class="custom-table" style="width: 98%; margin: 15px auto;">
+          <thead>
+            <tr>
+              <th scope="col">{{ t('fields.loginName') }}</th>
+              <th scope="col">{{ t('fields.betTime') }}</th>
+              <th scope="col">{{ t('fields.settleTime') }}</th>
+              <th scope="col">{{ t('fields.platform') }}</th>
+              <th scope="col">{{ t('fields.gameName') }}</th>
+              <th scope="col">{{ t('fields.transactionId') }}</th>
+              <th scope="col">{{ t('fields.bet') }}</th>
+              <th scope="col">{{ t('fields.payout') }}</th>
+              <th scope="col">{{ t('fields.companyProfit') }}</th>
+              <th scope="col">{{ t('fields.status') }}</th>
+              <th scope="col">{{ t('fields.operate') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in page.records" :key="item.id">
+              <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
+              <td :data-label="t('fields.betTime')">
+                <span v-if="item.betTime === null">-</span>
+                <span v-if="item.betTime !== null">{{ item.betTime }}</span>
+              </td>
+              <td :data-label="t('fields.settleTime')">
+                <span v-if="item.settleTime === null || item.betStatus === 'UNSETTLED'">-</span>
+                <span v-if="item.settleTime !== null && item.betStatus !== 'UNSETTLED'">{{ item.settleTime }}</span>
+              </td>
+              <td :data-label="t('fields.platform')">
+                <span v-if="item.platform === null">-</span>
+                <span v-if="item.platform !== null">{{ item.platform }}</span>
+              </td>
+              <td :data-label="t('fields.gameName')">
+                <span v-if="item.gameName === null">-</span>
+                <span v-if="item.gameName !== null">{{ item.gameName }}</span>
+              </td>
+              <td :data-label="t('fields.transactionId')">
+                <span v-if="item.transactionId === null">-</span>
+                <span v-if="item.transactionId !== null">{{ item.transactionId }}</span>
+              </td>
+              <td :data-label="t('fields.bet')">$ {{ item.bet }}</td>
+              <td :data-label="t('fields.payout')">$ {{ item.payout }}</td>
+              <td :data-label="t('fields.companyProfit')">$ {{ item.companyProfit }}</td>
+              <td :data-label="t('fields.status')">
+                <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">{{
+                  t('betStatus.' + item.betStatus)
+                }}
+                </el-tag>
+                <el-tag v-else-if="item.betStatus === 'CANCEL'" type="danger" size="normal">
+                  {{ t('betStatus.' + item.betStatus) }}
+                </el-tag>
+                <el-tag v-else-if="item.betStatus === 'UNSETTLED'" type="warning" size="normal">
+                  {{ t('betStatus.' + item.betStatus) }}
+                </el-tag>
+                <el-tag v-else type="info" size="normal">-</el-tag>
+              </td>
+              <td :data-label="t('fields.operate')">
+                <el-link type="primary" :underline="false" @click="viewDetails(item)">{{
+                  t('fields.viewDetails')
+                }}
+                </el-link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div v-if="page.records.length === 0">
         <emptyComp />
       </div>
