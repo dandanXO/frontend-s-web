@@ -22,8 +22,8 @@
     <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
-    <div class="close-btn-img" @click="router.replace('/')">
-      <img src="../assets/images/index/close-btn-white.png" />
+    <div class="back-btn-img" @click="router.replace('/')">
+      <img src="../assets/images/index/btn-back.png" />
     </div>
 
     <div class="no-domain auth-tab-wrapper">
@@ -955,7 +955,7 @@ function charType(num) {
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
     background-size: 100% 100%;
-    padding-top: 14px;
+    padding-top: 0;
     .no-domain {
       display: none;
     }
@@ -1089,13 +1089,13 @@ function charType(num) {
   }
 }
 
-.close-btn-img {
+.back-btn-img {
   cursor: pointer;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 14px;
+  right: 14px;
   img {
-    width: 20px;
+    width: 2.25rem;
   }
 }
 
