@@ -707,6 +707,8 @@ export default {
     downlineTotalDepositWithdraw: '입출금차액',
     affiliateInTransfer: '총판',
     redeemConvert: '전환',
+    dashboardMemberBalance: '회원잔액',
+    totalWithdrawalAmount: '총 출금액',
   },
   google: {
     google_auth_menu: '구글 인증',

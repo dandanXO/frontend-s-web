@@ -164,6 +164,8 @@ export default {
       AFFILIATE_SETTLEMENT: '代理结算',
       AFFILIATE_DEPOSIT: '额度代存',
       AFFILIATE_COMMISSION: '佣金代存',
+      MAIN_WALLET: '主钱包平账',
+      COMMISSION_WALLET: '佣金钱包平账',
     },
   },
   status: {
