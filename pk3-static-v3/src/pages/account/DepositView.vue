@@ -355,6 +355,7 @@ const getFtdCommaAmount = (amount) => {
 const selectedItem = ref();
 const selectedItemPrivilegeId = ref();
 const extraPrivilegeId = ref();
+const ftdPrivilegeId = ref();
 const selectedItemChannel = ref();
 const selectedItemAmount = ref();
 const selectedChannel = ref();
@@ -518,7 +519,7 @@ async function confirmDeposit() {
           $q.notify({
             color: "negative",
             position: "top",
-            message: d.message,
+            message: `Suggested amount: ${d.data.suggestion}`,
             icon: "report_problem"
           });
 
@@ -553,12 +554,16 @@ async function confirmDeposit() {
             }
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          if (isFtdPrivilege.value && ftdPrivilegeId.value) {
+            form.privilegeId = ftdPrivilegeId.value;
+          }
+
+          if (isPrivilege.value && !isFtdPrivilege.value && extraPrivilegeId.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
-          if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
-            form.privilegeId = extraPrivilegeId.value;
+          if (isFtdPrivilegePayType.value && ftdPrivilegeId.value && isFtdPrivilegeEnable.value) {
+            form.privilegeId = ftdPrivilegeId.value;
           }
 
           const copy = { ...form };
@@ -765,12 +770,13 @@ const loadAppTabs = () => {
       const { data } = res;
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
-        store.extraPrivilegeId = data.deposit.privilegeId;
-
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
 
-        store.extraPrivilegeId = data.deposit.ftdPrivilegeId;
-        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
+        store.ftdPrivilegeId = data.deposit.ftdPrivilegeId;
+        ftdPrivilegeId.value = data.deposit.ftdPrivilegeId;
+
+        store.extraPrivilegeId = data.deposit.privilegeId;
+        extraPrivilegeId.value = data.deposit.privilegeId;
       }
       if (data && data.hasOwnProperty("ftd")) {
         store.ftd = data.ftd;
