@@ -807,6 +807,18 @@ async function pDepo(deposit) {
           });
         }
 
+        if (store.isTkPixel) {
+          ttq.track(
+            "Purchase",
+            {
+              currency: "PKR",
+              value: obj.localAmount,
+              content_type: "product"
+            },
+            { event_id: Date.now() }
+          );
+        }
+
         // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
         // if (!isFirstDepo) {
         //   console.log("First Depo");

@@ -529,8 +529,14 @@ export default defineComponent({
                 });
 
                 //FB Tracking.
-                if (store.isFbPixel) {
-                  fbq("track", "CompleteRegistration");
+                if (store.isFbPixel || store.isTkPixel) {
+                  if (store.isFbPixel) {
+                    fbq("track", "CompleteRegistration");
+                  }
+                  if (store.isTkPixel) {
+                    ttq.track("CompleteRegistration", { content_type: "product" }, { event_id: Date.now() });
+                  }
+
                   document.addEventListener("ftdSuccess", trackNewUserFtd);
                   if (isInPwa()) {
                     localStorage.setItem("newUserFtd", regForm.loginName);

@@ -141,9 +141,15 @@ export const getVisitorId = async () => {
   // }
 };
 
-export const trackNewUserFtd = () => {
+export const trackNewUserFtd = (e) => {
+  const { detail: triggeredPixels } = e;
+  if (triggeredPixels.includes("fb")) {
+    fbq("trackCustom", "PurchaseComplete");
+  }
+  if (triggeredPixels.includes("tk")) {
+    ttq.track("PurchaseComplete", { content_type: "product" }, { event_id: Date.now() });
+  }
   console.log("PurchaseComplete");
-  fbq("trackCustom", "PurchaseComplete");
   if (isInPwa()) {
     localStorage.removeItem("newUserFtd");
   } else {
