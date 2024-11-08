@@ -78,7 +78,7 @@ const props = defineProps({
 const formData = ref(props.mode === 'create' ? initializeFormData() : assignFormData());
 
 function initializeFormData() {
-  const data = {
+  return {
     monitorSetting: {
       title: 'BONUS_FLUCTUATION',
       siteId: store.state.user.siteId,
@@ -102,17 +102,13 @@ function initializeFormData() {
       redirectionPath: '',
     }
   };
-  console.log("data", data)
-  return data;
 }
 
 function assignFormData() {
-  const data = {
+  return {
     monitorSetting: cloneDeep(props.currentItem.monitorSetting),
     notificationSetting: cloneDeep(props.currentItem.notificationSetting),
   }
-  console.log("data", data)
-  return data;
 }
 
 const formRef = ref(null);

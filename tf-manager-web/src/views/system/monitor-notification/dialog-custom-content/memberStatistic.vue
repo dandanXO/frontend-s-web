@@ -45,6 +45,7 @@
         :siteId="store.state.user.siteId"
         :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
         :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
+        :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
       />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
@@ -110,6 +111,7 @@ function initializeFormData() {
       setting: {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
+        telegramUserIdToSendNotification: [],
         backgroundNoticeIntervalMinutes: 30,
       },
       status: 1,
@@ -183,7 +185,7 @@ const submitForm = async () => {
   const cloneNotificationToSubmit = cloneDeep(formData.value.notificationSetting);
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
-  cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserIdToSendNotification();
+  cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
 
   cloneNotificationToSubmit.content = JSON.stringify({
     upper: formData.value.notificationSetting.upperContent,
