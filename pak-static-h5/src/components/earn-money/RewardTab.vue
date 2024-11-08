@@ -25,13 +25,16 @@
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-img with-btn">
           <div class="flex-item">
-            <div class="title" data-text="Commission not claimed:">Commission not claimed:</div>
-            <!--          <img src="../../assets/images/earn-money/pot-item-01.png" />-->
-            <div class="amount-div">
-              <span class="currency" data-text="Rs">Rs</span>
-              <span class="amount" :data-text="displayClaimableAmount">{{ displayClaimableAmount }}</span>
-            </div>
-            <button class="claim-btn" :class="{ disabled: claimableAmount === 0 }" @click="handleClaimClick"></button>
+            <q-spinner v-if="claimLoading" color="white" size="3em" :thickness="3" style="margin-right: 60px;"></q-spinner>
+            <template v-else>
+              <div class="title" data-text="Commission not claimed:">Commission not claimed:</div>
+              <!--          <img src="../../assets/images/earn-money/pot-item-01.png" />-->
+              <div class="amount-div">
+                <span class="currency" data-text="Rs">Rs</span>
+                <span class="amount" :data-text="displayClaimableAmount">{{ displayClaimableAmount }}</span>
+              </div>
+              <button class="claim-btn" :class="{ disabled: claimableAmount === 0 }" @click="handleClaimClick"></button>
+            </template>
           </div>
         </div>
       </div>
@@ -505,18 +508,28 @@ const getClaimableAmount = () => {
   });
 };
 
+const claimLoading = ref(false);
+
 const handleClaimClick = () => {
-  api.post("/session/refer-rebate/claim-amount").then((res) => {
-    if (res.code === 0) {
-      $q.notify({
-        message: "Success",
-        color: "positive",
-        position: "top",
-        timeout: 2000
-      });
+  claimLoading.value = true;
+  api
+    .post("/session/refer-rebate/claim-amount")
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          message: "Success",
+          color: "positive",
+          position: "top",
+          timeout: 2000
+        });
+        claimLoading.value = false;
+        getClaimableAmount();
+      }
+    })
+    .finally(() => {
+      claimLoading.value = false;
       getClaimableAmount();
-    }
-  });
+    });
 };
 
 const modalSocialShare = ref(false);
