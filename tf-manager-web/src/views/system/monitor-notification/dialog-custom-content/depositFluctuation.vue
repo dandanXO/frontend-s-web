@@ -31,6 +31,7 @@
         :siteId="store.state.user.siteId"
         :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
         :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
+        :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
       />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
@@ -92,6 +93,7 @@ function initializeFormData() {
       setting: {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
+        telegramUserIdToSendNotification: [],
       },
       status: 1,
       tgSetting: null,
@@ -145,6 +147,7 @@ const submitForm = async () => {
   const cloneNotificationToSubmit = cloneDeep(formData.value.notificationSetting);
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
+  cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
 
   const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
   const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;
