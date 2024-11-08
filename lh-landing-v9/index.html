@@ -37,15 +37,15 @@
               合营代理人才的加入，高达55%返佣比例，同创泼天富贵！</span
             >
             <div class="contact-us-container">
-              <div class="contact-us-btn">
+              <div class="contact-us-btn" onclick="scrollToRegister()">
                 <img class="btn-logo" src="imgs/contact-dl.png" />
                 <span>成为代理</span>
               </div>
-              <div class="contact-us-btn">
+              <div class="contact-us-btn" onclick="openLinkInNewWindow('https:\/\/paopaoim.com/index.html')">
                 <img class="btn-logo" src="imgs/contact-9yyl.png" />
                 <span>9yyl</span>
               </div>
-              <div class="contact-us-btn">
+              <div class="contact-us-btn" onclick="openLinkInNewWindow(`https:\/\/t.me/kk98870`)">
                 <img class="btn-logo" src="imgs/contact-tg.png" />
                 <span>@kk98870</span>
               </div>
@@ -119,7 +119,7 @@
             <div class="example-card">
               <div class="example-img-container">
                 <img class="example-img" src="imgs/example-1.png" />
-                <div class="example-open-img-btn">查看大图</div>
+                <!-- <div class="example-open-img-btn">查看大图</div> -->
               </div>
 
               <span class="example-description">
@@ -129,14 +129,14 @@
                 <hr class="divider" />
                 <div class="example-card-btm">
                   <span class="extend-txt">加入代理时长</span>
-                  <span>1个月</span>
+                  <span class="extend-mth">1个月</span>
                 </div>
               </div>
             </div>
             <div class="example-card">
               <div class="example-img-container">
                 <img class="example-img" src="imgs/example-2.png" />
-                <div class="example-open-img-btn">查看大图</div>
+                <!-- <div class="example-open-img-btn">查看大图</div> -->
               </div>
 
               <span class="example-description">
@@ -145,13 +145,13 @@
               <hr class="divider" />
               <div class="example-card-btm">
                 <span class="extend-txt">加入代理时长</span>
-                <span>3个月</span>
+                <span class="extend-mth">3个月</span>
               </div>
             </div>
             <div class="example-card">
               <div class="example-img-container">
                 <img class="example-img" src="imgs/example-3.png" />
-                <div class="example-open-img-btn">查看大图</div>
+                <!-- <div class="example-open-img-btn">查看大图</div> -->
               </div>
               <span class="example-description">
                 做好代理的本质就是努力，不断开发新会员，一个大客户直接起飞，佣金97,446元!
@@ -159,13 +159,14 @@
               <hr class="divider" />
               <div class="example-card-btm">
                 <span class="extend-txt">加入代理时长</span>
-                <span>7个月</span>
+                <span class="extend-mth">7个月</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div
+        id="btmContainer"
         class="btm-container"
         style="background-image: url('imgs/btm-img-bg.png')"
       >
@@ -222,4 +223,11 @@
   function openLinkInNewWindow(url) {
     window.open(url, "_blank");
   }
+
+  function scrollToRegister() {
+      document.getElementById('btmContainer').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
 </script>

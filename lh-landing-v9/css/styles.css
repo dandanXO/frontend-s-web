@@ -58,11 +58,15 @@ html {
   align-items: center;
   color: white;
   background-color: #86c8f3;
-  border: 2px solid #72c9f7;
+  /* border: 2px solid #72c9f7; */
   border-radius: 5000px;
   padding: 10px 45px;
   min-width: 100px;
   cursor: pointer;
+}
+.contact-us-btn:active,
+.contact-us-btn:hover {
+  background-color: #1860ff;
 }
 
 .btn-logo {
@@ -226,6 +230,7 @@ html {
 
 .example-container {
   margin-top: 40px;
+  margin-bottom: 60px;
   display: flex;
   justify-content: center;
 }
@@ -233,7 +238,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
   width: 80%;
 }
 
@@ -241,6 +246,9 @@ html {
   color: #1d293e;
   font-size: 36px;
   font-weight: 700;
+}
+.example-txt-container > p {
+  margin-bottom: 40px;
 }
 
 .example-card-div {
@@ -297,11 +305,15 @@ html {
   display: flex;
   justify-content: space-between;
   font-weight: 600;
-  color: #4a80f7;
 }
 
 .extend-txt {
   color: #666666;
+}
+
+.extend-mth {
+  cursor: pointer;
+  color: #4a80f7;
 }
 
 .btm-container {
