@@ -615,6 +615,7 @@ import {getPlatformList, getLoggedInPlatformList} from "@/api/platform/platform"
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
+import { useRoute } from 'vue-router';
 
 
 const copy = (text) => {
@@ -1094,8 +1095,13 @@ export default defineComponent({
       searchRecord();
     };
 
+    const route = useRoute();
+
     onMounted(() => {
       getTime();
+      if (route.query.type === 'withdraw') {
+        recordActive.value = 'withdraw';
+      }
     });
     const platformsList = ref([])
     const getPlatList = () => {

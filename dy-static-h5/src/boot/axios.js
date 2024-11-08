@@ -208,6 +208,9 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
+      if (res.code === ResponseCode.ERROR_WITHDRAW_AMOUNT) {
+        return res;
+      }
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return res;
       }
