@@ -380,10 +380,10 @@ const handleDepositItemClick = (amount) => {
 };
 
 const getFtdCommaAmount = (amount) => {
-  if (amount < 888) {
+  if (amount < 88) {
     return amount;
   } else {
-    return 888;
+    return 88;
   }
 };
 
