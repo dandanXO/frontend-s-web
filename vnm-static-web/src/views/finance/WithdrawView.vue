@@ -1036,6 +1036,11 @@ export default defineComponent({
   width: auto;
   border-radius: 8px;
   align-self: center;
+    font-family: "SF Pro";
+    letter-spacing: normal;
+    width: unset;
+    min-width: unset;
+    padding-right: 10px;
   img {
     height: 20px;
   }
