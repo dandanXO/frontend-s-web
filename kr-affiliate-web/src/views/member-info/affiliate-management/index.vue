@@ -639,6 +639,12 @@
             maxlength="11"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.realName')" prop="realName">
+          <el-input
+            v-model="cForm.realName"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.password')" prop="password">
           <el-input
             v-model="cForm.password"
@@ -685,12 +691,12 @@
           <div
             v-for="item in shareRatioList.list"
             :key="item.code"
-            style="width: 350px; display: flex; margin-bottom:5px;"
+            style="width: 370px; display: flex; margin-bottom:5px;"
           >
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto"
+              style=" width:80px; margin-left: auto"
             />
             <span style="color:red">
               &emsp; (0% -
@@ -772,12 +778,12 @@
           <div
             v-for="item in eForm.shareRatio"
             :key="item.code"
-            style="width: 350px; display: flex; margin-bottom:5px;"
+            style="width: 370px; display: flex; margin-bottom:5px;"
           >
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto"
+              style=" width:80px; margin-left: auto"
             />
             <span style="color:red">
               &emsp; ( {{ (getDownlineRatio(item.code) * 100).toFixed(2) }}% -
@@ -1232,7 +1238,7 @@ function showEdit(affiliate) {
         })
       }
     }
-    eForm.shareRatio = JSON.parse(JSON.stringify(affiliate.shareRatio))
+    eForm.shareRatio = JSON.parse(JSON.stringify(eForm.shareRatio))
     for (var index = 0; index < eForm.shareRatio.length; index++) {
       eForm.shareRatio[index].value *= 100.0
       eForm.shareRatio[index].value = parseFloat(

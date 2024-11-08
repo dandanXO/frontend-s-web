@@ -628,3 +628,23 @@ export function getCycleLossRefundInit(promoCode) {
 export function claimCycleLossRefund(promoCode) {
   return server.EVENT.post("/session/cycle-loss-refund/claim", { promoCode });
 }
+
+export function getCompetitionLossInit(promoCode) {
+  return server.EVENT.get("/session/competition-loss/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionLoss(promoCode) {
+  return server.EVENT.post("/session/competition-loss/claim", { promoCode });
+}
+
+export function getWeeklySlotLossBonusInit() {
+  return server.EVENT.get("/session/weeklySlotLossBonus/init")
+}
+
+export function claimWeeklySlotLossBonusInit() {
+  return server.EVENT.put("/bonus/claim/lh1-weekly-slot-loss-bonus")
+}

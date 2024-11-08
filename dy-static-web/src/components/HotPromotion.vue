@@ -86,7 +86,8 @@
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
-    
+    <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
+
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -169,6 +170,7 @@ import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue"
 import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
+import PerfectWorldMajor2024 from "@/components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 
 
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -248,7 +250,8 @@ export default defineComponent({
     PullbackTide,
     Cba30Dream,
     ElisaGift,
-    ChallengeComebackPromo
+    ChallengeComebackPromo,
+    PerfectWorldMajor2024
   },
   props: {
     list: {

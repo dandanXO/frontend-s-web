@@ -24,8 +24,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -79,6 +79,26 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (Platform.is.capacitor && Platform.is.android) {
       StatusBar.hide();
+    }
+
+    const getTkPixelId = sessionStorage.getItem("TK_PIXEL_ID");
+    if (getTkPixelId) {
+      ttq.load(getTkPixelId);
+      ttq.page();
+      user.isTkPixel = true;
+    } else if (window.location.href.indexOf("f9qdwgww.cc") > -1) {
+      ttq.load("CSLMK0RC77U84I7KJA5G");
+      ttq.page();
+      user.isTkPixel = true;
+    } else if (
+      window.location.href.indexOf("fbiyucw0.cc") > -1 &&
+      window.location.href.indexOf("MDM1NjU2NzcwMDI=") > -1
+    ) {
+      console.log("2");
+      ttq.load("CSLMK0RC77U84I7KJA5G");
+      ttq.page();
+      user.isTkPixel = true;
+      sessionStorage.setItem("TK_PIXEL_ID", "CSLMK0RC77U84I7KJA5G");
     }
 
     // if (to.name === "referCode") {

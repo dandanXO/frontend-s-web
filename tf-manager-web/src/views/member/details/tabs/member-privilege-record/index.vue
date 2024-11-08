@@ -87,6 +87,9 @@
           </template>
         </el-table-column>
       </el-table>
+      <div style="text-align: right;margin-top:10px;">
+        <span>{{ t('fields.totalPrivilegeAmount') }}: {{ page.totalPrivilegeAmount }} </span>
+      </div>
       <el-pagination
         :total="page.total"
         :page-sizes="[20, 50, 100, 150]"
@@ -157,7 +160,8 @@ const page = reactive({
   pages: 0,
   records: [],
   total: 0,
-  loading: false
+  loading: false,
+  totalPrivilegeAmount: 0
 });
 
 const sort = (column) => {
@@ -197,6 +201,9 @@ async function loadMemberPrivilegeRecord() {
   page.records = patchRecord(ret.records);
   page.total = ret.total;
   page.loading = false;
+
+  // Calculate the total amount
+  page.totalPrivilegeAmount = page.records.reduce((sum, record) => sum + (record.amount || 0), 0);
 }
 
 function patchRecord(records) {

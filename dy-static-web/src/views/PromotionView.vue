@@ -84,7 +84,8 @@
             isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024',
             isYallaCompass: selectedPromo.promoCode === 'dy2-yalla-compass',
-            isBbdachaBelgrade: selectedPromo.promoCode === 'dy2-bbdacha-belgrade'
+            isBbdachaBelgrade: selectedPromo.promoCode === 'dy2-bbdacha-belgrade',
+            isValorantChampionTour2024: selectedPromo.promoCode === 'dy2-valorant-champion-tour-2024'
           }"
         >
           <div
@@ -139,7 +140,8 @@
             dyfootball: selectedPromo?.promoCode === 'dy2-football',
             dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl',
             isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
-            isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade'
+            isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
+            isValorantChampionTour2024: selectedPromo.promoCode === 'dy2-valorant-champion-tour-2024'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -171,6 +173,9 @@
             </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
               <BbdachaBelgrade />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-champion-tour-2024'">
+              <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
             </div>
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
             <div
@@ -205,7 +210,7 @@ import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattl
 
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const BbdachaBelgrade = defineAsyncComponent(() => import("@/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
-
+const ValorantChampionTour2024 = defineAsyncComponent(() => import("@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -214,7 +219,8 @@ export default defineComponent({
     BlastPremierMarquee,
     NBAWaterBattle,
     YallaCompass,
-    BbdachaBelgrade
+    BbdachaBelgrade,
+    ValorantChampionTour2024
   },
   setup() {
     const store = userStore();
@@ -776,7 +782,8 @@ export default defineComponent({
         margin: 0 auto;
 
         &.isYallaCompass,
-        &.isBbdachaBelgrade {
+        &.isBbdachaBelgrade,
+        &.isValorantChampionTour2024 {
           max-width: 100%;
           .promo-bg.isDesktop {
             height: 568px !important;
@@ -864,7 +871,8 @@ export default defineComponent({
         gap: 20px;
 
         &.isYallaCompass,
-        &.isBbdachaBelgrade {
+        &.isBbdachaBelgrade,
+        &.isValorantChampionTour2024 {
           background: #e7f1fd;
           width: 100%;
           max-width: 100%;
