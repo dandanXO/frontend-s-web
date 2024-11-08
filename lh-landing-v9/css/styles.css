@@ -154,6 +154,7 @@ html {
   height: 300px;
   gap: 20px;
   transition: 0.4s all;
+  cursor: pointer;
 }
 
 .mid-card:nth-child(1):hover {
@@ -178,7 +179,7 @@ html {
 
 .mid-card:hover > .card-desc {
   position: relative;
-  opacity: 1;
+  display: block;
 }
 
 .mid-card:hover .card-btn {
@@ -193,8 +194,7 @@ html {
 
 .mid-card > .card-desc {
   color: #ffffff;
-  display: block;
-  opacity: 0;
+  display: none;
   position: absolute;
 }
 
@@ -241,7 +241,7 @@ html {
 .example-card-div {
   width: 80%;
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -271,7 +271,7 @@ html {
     max-width: 200px;
   }
   .mid-card-container {
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -286,7 +286,7 @@ html {
 
 @media (max-width: 768px) {
   .contact-us-container {
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 1fr);
   }
   .contact-us-btn {
     padding: 6px 12px;
@@ -311,7 +311,7 @@ html {
 
 @media (max-width: 670px) {
   .mid-card-container {
-    grid-template-columns: repeat(1, auto);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
