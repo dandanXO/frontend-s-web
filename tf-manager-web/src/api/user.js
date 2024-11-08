@@ -49,7 +49,7 @@ export const createUser = (user) => {
 
 export const updateUser = async (user) => {
   await https().request(`/authority/user/${user.id}?_method=PUT`, Method.POST,
-    { roles: user.roles.join(","), userType: user.userType, siteId: user.siteId, queryRestriction: user.queryRestriction, queryNumber: user.queryNumber, vcallId: user.vcallId },
+    { roles: user.roles.join(","), userType: user.userType, siteId: user.siteId, siteIdArray: user.siteIdArray ? user.siteIdArray.join(',') : null, queryRestriction: user.queryRestriction, queryNumber: user.queryNumber, vcallId: user.vcallId },
     ContentType.form);
 };
 

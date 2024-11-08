@@ -165,6 +165,8 @@ export default {
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
       AFFILIATE_DEPOSIT: 'Transfer from Balance',
       AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
+      MAIN_WALLET: 'Main Wallet Adjustment',
+      COMMISSION_WALLET: 'Commission Wallet Adjustment',
     },
   },
   status: {
@@ -3108,7 +3110,10 @@ export default {
     WANGZE: 'WANGZE',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'Online users'
+    MEMBER_STATISTICS: 'Online users',
+    DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
+    WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
+    BONUS_FLUCTUATION: 'Bonus fluctuation',
   },
   error: {
     400: 'Bad Request',

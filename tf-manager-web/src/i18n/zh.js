@@ -164,6 +164,8 @@ export default {
       AFFILIATE_SETTLEMENT: '代理结算',
       AFFILIATE_DEPOSIT: '额度代存',
       AFFILIATE_COMMISSION: '佣金代存',
+      MAIN_WALLET: '主钱包平账',
+      COMMISSION_WALLET: '佣金钱包平账',
     },
   },
   status: {
@@ -3055,7 +3057,10 @@ export default {
     WANGZE: '王者',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: '在线人数'
+    MEMBER_STATISTICS: '在线人数',
+    DEPOSIT_FLUCTUATION: '存款波动',
+    WITHDRAW_FLUCTUATION: '提款波动',
+    BONUS_FLUCTUATION: '优惠波动',
   },
   error: {
     400: '请求无效',

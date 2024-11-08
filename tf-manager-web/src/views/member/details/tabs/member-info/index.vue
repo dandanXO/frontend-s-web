@@ -478,7 +478,7 @@
           label-align="left"
           label-class-name="member-label"
           class-name="member-context"
-          v-show="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10"
+          v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10"
         >
           <template #label>
             <div>
@@ -489,6 +489,7 @@
           <el-button
             type="info"
             size="mini"
+            style="float: left;"
             v-permission="['sys:member:update:shareRatio']"
             @click="showDialog('UPDATE_SHARE_RATIO')"
           >

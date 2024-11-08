@@ -590,6 +590,10 @@ const submitWithdraw = async () => {
             fbq("track", "apply-withdrawal");
           }
 
+          if (store.isTkPixel) {
+            ttq.track("apply-withdrawal", { content_type: "product" }, { event_id: Date.now() });
+          }
+
           withdrawInfo.amount = "";
           // withdrawInfo.withdrawPassword = "";
           if (amountRef.value) {

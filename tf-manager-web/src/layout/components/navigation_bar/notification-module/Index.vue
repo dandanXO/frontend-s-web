@@ -117,7 +117,7 @@ function formatTimestamp(timestamp) {
             </el-icon>
 
             <div class="notification-item-header">
-              <div class="notification-item-title">{{ notification.siteId ? `[${getSiteNameBySiteId(notification.siteId)}]` : '' }}] {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}</div>
+              <div class="notification-item-title">{{ notification.siteId ? `[${getSiteNameBySiteId(notification.siteId)}]` : '' }} {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}</div>
               <div class="notification-item-datetime">{{ formatTimestamp(notification.createTime) }}</div>
             </div>
             <div class="notification-item-body">

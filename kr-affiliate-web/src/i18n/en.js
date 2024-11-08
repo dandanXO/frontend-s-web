@@ -706,6 +706,8 @@ export default {
     downlineTotalDepositWithdraw: 'Downline Member Deposit Withdraw Difference',
     affiliateInTransfer: 'Affiliate',
     redeemConvert: 'Redeem',
+    dashboardMemberBalance: 'Member Balance',
+    totalWithdrawalAmount: 'Withdraw Amount',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
