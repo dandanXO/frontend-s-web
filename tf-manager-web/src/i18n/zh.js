@@ -320,7 +320,8 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
-    UCL: '欧洲冠军联赛'
+    UCL: '欧洲冠军联赛',
+    HOTELCASINO: '酒店真人',
   },
   homeBannerType: {
     HOME: '首页',
@@ -3009,6 +3010,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: '有效投注佣金-体育',
     AGENT_SHARE_BET_RATIO_CASUAL: '有效投注佣金-小游戏',
     AGENT_SHARE_BET_RATIO_POKER: '有效投注佣金-棋牌',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: '有效投注佣金-酒店真人',
     AGENT_SHARE_PROFIT_RATIO_FISH: '净盈利佣金-捕鱼',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '净盈利佣金-老虎机',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '净盈利佣金-电竞',
@@ -3016,6 +3018,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '净盈利佣金-小游戏',
     AGENT_SHARE_PROFIT_RATIO_POKER: '净盈利佣金-棋牌',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: '净盈利佣金-酒店真人',
   },
   gameTypeRolloverSetting: {
     anyTypes: '所有游戏类型',

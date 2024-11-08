@@ -315,7 +315,8 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
-    UCL: 'UEFA CHAMPIONS LEAGUE'
+    UCL: 'UEFA CHAMPIONS LEAGUE',
+    HOTELCASINO: 'HOTELCASINO',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -3062,6 +3063,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: 'Bet Ratio-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: 'Bet Ratio-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: 'Bet Ratio-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
@@ -3069,6 +3071,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: 'Profit Ratio-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: 'Profit Ratio-HOTELCASINO',
   },
   gameTypeRolloverSetting: {
     anyTypes: 'All Game Types',

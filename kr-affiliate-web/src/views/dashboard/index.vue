@@ -217,7 +217,7 @@
                 </tbody>
                 <tbody v-if="uiControl.dialogType === 'WITHDRAW'">
                   <tr v-if="recordsDetail.withdrawalRecords.length === 0">
-                    <td colspan="4">
+                    <td colspan="5">
                       <!-- Display your empty component or message here -->
                       <emptyComp />
                     </td>
@@ -227,6 +227,9 @@
                     :key="index"
                   >
                     <td>{{ record.affiliate }}</td>
+                    <td>
+                      {{ record.affiliateLevel !== '-' ? t(`affiliate.level.${record.affiliateLevel}`) : '-' }}
+                    </td>
                     <td>
                       {{ record.member }}
                     </td>
@@ -240,7 +243,7 @@
                 </tbody>
                 <tbody v-if="uiControl.dialogType === 'BET'">
                   <tr v-if="recordsDetail.betRecords.length === 0">
-                    <td colspan="4">
+                    <td colspan="5">
                       <!-- Display your empty component or message here -->
                       <emptyComp />
                     </td>
@@ -250,6 +253,9 @@
                     :key="index"
                   >
                     <td>{{ record.affiliate }}</td>
+                    <td>
+                      {{ record.affiliateLevel !== '-' ? t(`affiliate.level.${record.affiliateLevel}`) : '-' }}
+                    </td>
                     <td>
                       {{ record.member }}
                     </td>

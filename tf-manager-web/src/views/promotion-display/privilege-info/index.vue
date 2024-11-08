@@ -665,6 +665,7 @@ const uiControl = reactive({
     { key: 6, displayName: 'POKER', value: 'poker' },
     { key: 7, displayName: 'LOTTERY', value: 'lottery' },
     { key: 8, displayName: 'CASUAL', value: 'casual' },
+    { key: 9, displayName: 'HOTELCASINO', value: 'hotelcasino' },
   ],
   gameTypeRolloverTypes: [
     { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ALL_TYPES' },
