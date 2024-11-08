@@ -334,7 +334,8 @@ export default {
     wagerExample: "Exemplo: Depósito de R$1.000, requer R$10.000 em apostas em jogos de slot",
     deposited: "Depositado",
     youWillBeRedirect: "Você será redirecionado para a página do seu banco para completar o depósito.",
-    afterDepositSuccessfully: "Após o depósito ser concluído com sucesso, será refletido aqui."
+    afterDepositSuccessfully: "Após o depósito ser concluído com sucesso, será refletido aqui.",
+    useFtdPrivilege: "Aproveite o Benefício de Primeiro Depósito em Slots"
   },
   withdraw: {
     cashBalance: "Saldo em Dinheiro",
@@ -349,7 +350,8 @@ export default {
     withdrawCurrency: "Moeda de Retirada",
     paymentChannels: "Canais de Pagamento",
     channelUnderMaintenance: "Este canal está em manutenção",
-    accountNumber: "Número da Conta"
+    accountNumber: "Número da Conta",
+    available: "Disponível",
   },
   bank: {
     virtualWallet: "eWallet",
