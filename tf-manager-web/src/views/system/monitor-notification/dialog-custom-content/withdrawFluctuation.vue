@@ -6,7 +6,7 @@
         <el-input v-model="formData.monitorSetting.title" />
       </el-form-item>
       <el-form-item label="提款浮动通知阀值(%)" prop="monitorSetting.setting.withdrawChangeAlertThreshold">
-        <el-input-number :min="0" :step="0.1" v-model="formData.monitorSetting.setting.withdrawChangeAlertThreshold" />
+        <el-input-number :min="0.1" :step="0.1" v-model="formData.monitorSetting.setting.withdrawChangeAlertThreshold" />
       </el-form-item>
       <el-form-item label="状态" prop="monitorSetting.status">
         <el-switch
@@ -152,7 +152,7 @@ const rules = {
     setting: {
       withdrawChangeAlertThreshold: [
         { required: true, message: '请填写提款浮动通知阀值(%)', trigger: 'blur' },
-        { type: 'number', min: 0, message: '最小值为0', trigger: 'blur' }
+        { type: 'number', min: 0.1, message: '最小值为0.1', trigger: 'blur' }
       ],
     },
     status: [
