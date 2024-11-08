@@ -1641,6 +1641,7 @@ export default {
     teamBackgroundImage: '团队背景图片',
     teamBackgroundImageDark: '团队暗色背景图片',
     telephone: '电话号码',
+    telegramUsername: 'Telegram用户名',
     thirtyDaysdw: '30天存-提',
     thirdParty: '第三方',
     thirdPartyName: '第三方名称',
@@ -2500,6 +2501,7 @@ export default {
     validateTeamTwoRequired: '团队二必填',
     validateTeamTwoIconRequired: '团队二图标必须上传',
     validateTelephoneRequired: '电话号码必填',
+    validateTelegramUsernameRequired: 'Telegram用户名必填',
     validateThirdSerialNumberRequired: '第三方流水号必填',
     validateThreeDigitsNumbeRequired: '三位数字必填',
     validateTimeTypeRequired: '时间类型必填',
@@ -2863,6 +2865,7 @@ export default {
     'Affiliate Point Record': '代理积分记录',
     'Member Ratio Edit Record': '返水比例更改记录',
     'Site Platform Blacklist': '站点平台黑名单',
+    'Telegram User': 'Telegram用户管理',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3029,6 +3032,14 @@ export default {
     UNSENT: '未发送',
     SENDING: '发送中',
     SENT: '已发送',
+  },
+  telegram: {
+    userStatus: {
+      PENDING_CONNECT: '待连接',
+      PENDING_VERIFY: '待验证',
+      ACTIVE: '已连接',
+      STOPPED: '已停用',
+    }
   },
   pmRedirectType: {
     NONE: '无跳转',
