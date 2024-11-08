@@ -2549,6 +2549,7 @@ export default {
     validateTeamTwoRequired: 'Team Two is required',
     validateTeamTwoIconRequired: 'Team Two Icon is required',
     validateTelephoneRequired: 'Telephone is required',
+    validateTelegramUsernameRequired: 'Telegram Username is required',
     validateThirdSerialNumberRequired: 'Third Serial Number is required',
     validateThreeDigitsNumbeRequired: '3 digits number is required',
     validateTitleRequired: 'Title is required',
@@ -2918,6 +2919,7 @@ export default {
     'Affiliate Point Record': 'Affiliate Point Record',
     'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
+    'Telegram User': 'Telegram User',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3085,6 +3087,14 @@ export default {
     UNSENT: 'Unsent',
     SENDING: 'Sending',
     SENT: 'Sent',
+  },
+  telegram: {
+    userStatus: {
+      PENDING_CONNECT: 'Pending Connect',
+      PENDING_VERIFY: 'Pending Verification',
+      ACTIVE: 'Active',
+      STOPPED: 'Stopped',
+    }
   },
   pmRedirectType: {
     NONE: 'No Redirect',
