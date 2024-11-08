@@ -1,5 +1,27 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
+    <div class="withdrawal-summary q-mb-md">
+      <div class="balance">
+        <span class="amount">
+          <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
+          <template v-else>{{ store.balance }}</template>
+        </span>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="withdrawable">
+        <span class="amount">
+          <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
+          <template v-else>
+            {{ withdrawableBalance >= 0 ? convertToCommaAmount(withdrawableBalance, false) : "0" }}
+          </template>
+        </span>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
+      </div>
+    </div>
+
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div><q-skeleton style="height: 96px" /></div>
@@ -356,8 +378,11 @@
 
           <div class="fund-container q-mt-sm q-mb-md">
             <div>
-              <span class="fund-title">Disponível:</span>
-              {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+              <span class="fund-title">{{ $t("withdraw.available") }}:</span>
+              <q-spinner v-if="isRefreshRemainWager" />
+              <span v-else>
+                {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+              </span>
             </div>
           </div>
 
@@ -385,8 +410,17 @@
                 <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
               <div class="desc desc_white">
-                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
-                {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}
+                <div class="remain-wager-wrapper" @click="refreshRemainWager">
+                  <q-spinner v-if="isRefreshRemainWager" />
+                  <span v-else>
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, 2) }}
+                  </span>
+                  <img
+                    class="refresh-btn-img"
+                    :class="{ rotate: isRefreshRemainWager }"
+                    src="../../assets/images/account/refresh-icon.svg"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -851,6 +885,7 @@ const resetSelectedMethod = () => {
 
 const isBankType = ref("BANK");
 
+const withdrawableBalance = ref();
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
   // selectedWithdraw.value.forEach((method) => (method.active = false));
@@ -863,6 +898,7 @@ const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
   // debugger;
   selectedMethodItem.value = item;
+  withdrawableBalance.value = item.withdrawableBalance;
   filteredBankList.value = item.bankList;
   isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;
@@ -1103,6 +1139,30 @@ const typeOptions = [
     value: "evp"
   }
 ];
+
+// remain wager refresh
+const isRefreshRemainWager = ref(false);
+
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  api
+    .get("/session/withdraw/withdrawableBalance/refresh")
+    .then((res) => {
+      selectedMethodItem.value = {
+        ...selectedMethodItem.value,
+        ...res.data
+      };
+
+      isRefreshRemainWager.value = false;
+    })
+    .catch(() => {
+      isRefreshRemainWager.value = false;
+    })
+    .finally(() => {
+      isRefreshRemainWager.value = false;
+    });
+};
 </script>
 
 <style scoped lang="scss">
@@ -1467,7 +1527,32 @@ const typeOptions = [
             color: #ffffff;
           }
         }
+
+        .remain-wager-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          cursor: pointer;
+
+          .refresh-btn-img {
+            width: 20px;
+            height: 20px;
+
+            &.rotate {
+              animation: rotateTwice 1s infinite linear;
+            }
+          }
+        }
       }
+    }
+  }
+
+  @keyframes rotateTwice {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 
