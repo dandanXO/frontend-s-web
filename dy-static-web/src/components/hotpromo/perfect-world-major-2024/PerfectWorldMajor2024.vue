@@ -325,17 +325,12 @@ const handleClaimBonus1 = () => {
 
   claimCompetitionBonus(promoParam.value.betPromoCode)
     .then((res) => {
-      if (res.code === 0) {
+      if (res?.code === 0) {
         notify({
           type: "success",
           message: `成功领取${res.data}元`
         });
         fetchData();
-      } else {
-        // notify({
-        //   type: "error",
-        //   message: res.message
-        // });
       }
     })
     .catch((err) => {
