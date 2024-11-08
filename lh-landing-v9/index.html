@@ -172,30 +172,33 @@
         <div class="btm-content">
           <div>
             <span class="btm-title-txt">就现在！开启财富之路！</span>
-            <p class="btm-txt">两大平台代理福利、扶持政策一致，还有更多扶持活动、代理专属会员福利等，请联系我
-              们telegram，若链接无法打开，也请联系我们获取最新链接！</p>
-              <div class="register-container">
-                <div class="register-card">
-                  <img class="register-icon" src="imgs/lh-register-icon.png" />
-                  <div class="register-txt-container">
-                    <span>点击注册</span>
-                    <span class="register-txt-name">雷火体育</span>
-                  </div>
-                </div>
-                <div class="register-card">
-                  <img class="register-icon" src="imgs/dy-register-icon.png" />
-                  <div class="register-txt-container">
-                    <span>点击注册</span>
-                    <span class="register-txt-name">东赢体育</span>
-                  </div>
-                </div>
+            <p class="btm-txt">
+              两大平台代理福利、扶持政策一致，还有更多扶持活动、代理专属会员福利等，请联系我
+              们telegram，若链接无法打开，也请联系我们获取最新链接！
+            </p>
+            <div class="register-container">
+              <div class="register-card"
+              onclick="openLinkInNewWindow(`https:\/\/lh880.cc`)">
+              <img class="register-icon" src="imgs/lh-register-icon.png" />
+              <div class="register-txt-container">
+                <span>点击注册</span>
+                <span class="register-txt-name">雷火体育</span>
               </div>
-          </div>
-          <div class="btm-grid-right">
-            <img class="w-100 btm-phone-img" src="imgs/btm-phone-img.png" />
+            </div>
+            <div class="register-card" onclick="openLinkInNewWindow(`https:\/\/dy76765.com`)">
+              <img class="register-icon" src="imgs/dy-register-icon.png" />
+              <div class="register-txt-container">
+                <span>点击注册</span>
+                <span class="register-txt-name">东赢体育</span>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="btm-grid-right">
+          <img class="w-100 btm-phone-img" src="imgs/btm-phone-img.png" />
+        </div>
       </div>
+    </div>
     <div class="footer">
       <span>Copyright © 2024 All rights reserved.</span>
     </div>
@@ -215,4 +218,8 @@
       navBarContainer.classList.remove("scrolled");
     }
   });
+
+  function openLinkInNewWindow(url) {
+    window.open(url, "_blank");
+  }
 </script>
