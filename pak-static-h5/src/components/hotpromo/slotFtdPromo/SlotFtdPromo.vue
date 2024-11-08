@@ -68,7 +68,6 @@ onMounted(() => {
   gap: 10px;
   border-radius: 5px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  color: #000;
 
   &.is-disabled {
     pointer-events: none;
@@ -83,7 +82,7 @@ onMounted(() => {
   }
 
   span {
-    color: #fff;
+    color: #000;
     font-size: 20px;
     font-weight: 700;
   }
