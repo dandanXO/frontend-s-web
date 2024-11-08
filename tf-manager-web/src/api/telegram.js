@@ -5,6 +5,10 @@ export const getUsers = (query) => {
   return https().request("/telegram/list-user", Method.GET, query, ContentType.form);
 };
 
+export const getSimpleUsers = (siteId) => {
+  return https().request("/telegram/simple", Method.GET, { siteId: siteId }, ContentType.form);
+};
+
 export const addUser = (user) => {
   return https().request("/telegram/add-user", Method.POST, user, ContentType.form);
 };

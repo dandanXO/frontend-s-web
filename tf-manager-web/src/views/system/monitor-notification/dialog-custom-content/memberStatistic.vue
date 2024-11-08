@@ -183,6 +183,8 @@ const submitForm = async () => {
   const cloneNotificationToSubmit = cloneDeep(formData.value.notificationSetting);
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
+  cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserIdToSendNotification();
+
   cloneNotificationToSubmit.content = JSON.stringify({
     upper: formData.value.notificationSetting.upperContent,
     lower: formData.value.notificationSetting.lowerContent,
