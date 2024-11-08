@@ -1,0 +1,278 @@
+body {
+  margin: 0;
+  overflow-y: hidden;
+}
+
+body,
+html {
+  overflow-x: hidden;
+}
+
+.main-container {
+}
+.top-container {
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.top-content {
+  padding: 90px 50px 0px 50px;
+  max-width: 1140px;
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 60% 30%;
+  justify-content: space-between;
+}
+.top-content > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.top-grid-right {
+  align-items: center;
+}
+
+.top-img {
+  width: 100%;
+}
+
+.top-title-txt {
+  color: white;
+  margin-top: 40px;
+}
+
+.contact-us-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 40px 0;
+}
+
+.contact-us-btn {
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: #86c8f3;
+  border: 2px solid #72c9f7;
+  border-radius: 5000px;
+  padding: 10px 45px;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+.btn-logo {
+  width: 25px;
+  margin-right: 10px;
+}
+
+.nav-bar-container {
+  width: calc(100% - 100px);
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 2;
+  background-color: transparent;
+  transition: all 0.5s ease 0s;
+  padding: 20px 50px;
+}
+
+.nav-bar-container.scrolled {
+  background-color: #72c9f7;
+  animation: fadeInDown 800ms;
+  opacity: 0.98;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.07);
+  padding: 15px 50px;
+}
+.nav-bar {
+  height: 50px;
+  max-width: 1140px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lh-logo {
+  height: 50px;
+}
+
+.nav-links > span {
+  cursor: pointer;
+  color: white;
+  padding-left: 24px;
+}
+
+.mid-logo-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mid-logo-container > img {
+  width: 45%;
+}
+
+.mid-container {
+  height: 100%;
+}
+.mid-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mid-content-txt {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+.mid-content-txt > span {
+  line-height: 36px;
+  font-weight: 600;
+  font-size: 26px;
+  margin: 40px 0;
+}
+
+.mid-card-container {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.mid-card {
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 300px;
+  gap: 20px;
+}
+
+.mid-card > span {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.example-container {
+  margin-top: 40px;
+}
+.example-txt-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.example-txt-container > span {
+  color: #1d293e;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.example-card-div {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 20px;
+}
+
+.example-card {
+  background-color: #ebedfb;
+  padding: 20px;
+  border-radius: 12px;
+}
+.example-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.example-description {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+.w-100 {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .top-phone-img {
+    max-width: 200px;
+  }
+  .mid-card-container {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@media (max-width: 850px) {
+  .top-content {
+    max-width: calc(100% - 100px);
+  }
+  .top-phone-img {
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-us-container {
+    grid-template-columns: repeat(2, auto);
+  }
+  .contact-us-btn {
+    padding: 6px 12px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+  .nav-links > span {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-content {
+    grid-template-columns: unset;
+  }
+  .top-phone-img {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 670px) {
+  .mid-card-container {
+    grid-template-columns: repeat(1, auto);
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer {
+  background-color: #1e283c;
+  color: #a4acbd;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
