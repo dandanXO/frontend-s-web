@@ -113,7 +113,7 @@ html {
   justify-content: center;
 }
 .mid-logo-container > img {
-  width: 45%;
+  width: 35%;
 }
 
 .mid-container {
@@ -134,6 +134,7 @@ html {
   font-weight: 600;
   font-size: 26px;
   margin: 40px 0;
+  text-align: center;
 }
 
 .mid-card-container {
@@ -275,7 +276,6 @@ html {
 }
 .example-img {
   width: 100%;
-  max-height: 414px;
   display: block;
   margin: 0 auto 20px;
 }
