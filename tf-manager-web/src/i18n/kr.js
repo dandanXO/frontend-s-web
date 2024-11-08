@@ -284,6 +284,7 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: '닭싸움',
     MSI: 'MSI',
+    HOTELCASINO: '호텔 카지노',
   },
   homeBannerType: {
     HOME: '홈',
