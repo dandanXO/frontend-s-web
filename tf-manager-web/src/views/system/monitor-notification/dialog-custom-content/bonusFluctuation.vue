@@ -31,6 +31,7 @@
         :siteId="store.state.user.siteId"
         :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
         :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
+        :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
       />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
@@ -77,7 +78,7 @@ const props = defineProps({
 const formData = ref(props.mode === 'create' ? initializeFormData() : assignFormData());
 
 function initializeFormData() {
-  return {
+  const data = {
     monitorSetting: {
       title: 'BONUS_FLUCTUATION',
       siteId: store.state.user.siteId,
@@ -92,6 +93,7 @@ function initializeFormData() {
       setting: {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
+        telegramUserIdToSendNotification: [],
       },
       status: 1,
       tgSetting: null,
@@ -100,13 +102,17 @@ function initializeFormData() {
       redirectionPath: '',
     }
   };
+  console.log("data", data)
+  return data;
 }
 
 function assignFormData() {
-  return {
+  const data = {
     monitorSetting: cloneDeep(props.currentItem.monitorSetting),
     notificationSetting: cloneDeep(props.currentItem.notificationSetting),
   }
+  console.log("data", data)
+  return data;
 }
 
 const formRef = ref(null);
@@ -145,6 +151,7 @@ const submitForm = async () => {
   const cloneNotificationToSubmit = cloneDeep(formData.value.notificationSetting);
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
+  cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
 
   const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
   const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;

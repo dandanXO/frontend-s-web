@@ -37,12 +37,30 @@
         />
       </el-select>
     </el-form-item>
+    <el-form-item label="Telegram用户">
+      <el-select
+        v-model="telegramUserIdArr"
+        size="small"
+        class="filter-item"
+        style="width: 350px"
+        multiple
+        filterable
+      >
+        <el-option
+          v-for="item in simpleTelegramUsers"
+          :key="item.id"
+          :label="item.alias"
+          :value="item.id"
+        />
+      </el-select>
+    </el-form-item>
   </div>
 </template>
 
 <script setup>
 import { ref, defineProps, onMounted, defineExpose } from 'vue';
 import { getSimpleRoles, getSimpleUsersByRoles } from "@/api/roles";
+import { getSimpleUsers } from "@/api/telegram";
 import { ElMessage } from "element-plus";
 
 const props = defineProps({
@@ -58,19 +76,26 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  telegramUserIdToSendNotification: {
+    type: Array,
+    required: true,
+  },
 });
 
 const selectedRoleNameArr = ref([]);
 const excludedUserNameArr = ref([]);
+const telegramUserIdArr = ref([]);
 
 const simpleRoleArrBySite = ref([]);
 const simpleUserArrBySelectedRoles = ref([]);
+const simpleTelegramUsers = ref([]);
 
 onMounted(async () => {
   await loadSimpleRoleBySite();
 
   selectedRoleNameArr.value = getRoleNamesByIds(props.systemRoleIdListToSendNotification, simpleRoleArrBySite.value)
   await loadExcludedUserBySelectedRoles();
+  await loadSimpleTelegramUsersBySite();
 });
 
 function getRoleNamesByIds(roleIds, simpleRoleList) {
@@ -105,6 +130,15 @@ async function loadExcludedUserBySelectedRoles() {
 
   simpleUserArrBySelectedRoles.value = res.data;
   excludedUserNameArr.value = getUserNamesByIds(props.systemUserIdListToExclude, simpleUserArrBySelectedRoles.value)
+}
+
+async function loadSimpleTelegramUsersBySite() {
+  telegramUserIdArr.value = props.telegramUserIdToSendNotification;
+  const res = await getSimpleUsers(props.siteId);
+  if (res.code !== 0) {
+    return;
+  }
+  simpleTelegramUsers.value = res.data;
 }
 
 const getUserNamesByIds = (userIds, simpleUsers) => {
@@ -143,10 +177,15 @@ const fetchSystemUserIdListToExclude = () => {
   return getUserIdsByNames(excludedUserNameArr.value, simpleUserArrBySelectedRoles.value)
 }
 
+const fetchTelegramUserId = () => {
+  return telegramUserIdArr.value;
+}
+
 // 向父元件暴露方法
 defineExpose({
   fetchSystemRoleIdListToSendNotification,
   fetchSystemUserIdListToExclude,
+  fetchTelegramUserId,
 });
 
 </script>
