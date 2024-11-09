@@ -790,6 +790,26 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result;
 
+        //FB Tracking.
+        if (store.isFbPixel) {
+          fbq("track", "Purchase", {
+            currency: "PKR",
+            value: obj.localAmount
+          });
+        }
+
+        if (store.isTkPixel) {
+          ttq.track(
+            "Purchase",
+            {
+              currency: "PKR",
+              value: obj.localAmount,
+              content_type: "product"
+            },
+            { event_id: Date.now() }
+          );
+        }
+
         // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
         // if (!isFirstDepo) {
         //   console.log("First Depo");
