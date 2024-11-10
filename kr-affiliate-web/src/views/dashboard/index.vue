@@ -133,7 +133,7 @@
                   style="font-size:medium"
                   @click="openDialog('DEPOSIT')"
                 >
-                  {{ formatCommaAmt(dashboard.depositMemberCount) }}
+                  {{ formatCommaAmt(recordsDetail.depositRecords.length) }}
                 </el-link>
               </div>
             </div>
@@ -146,7 +146,7 @@
                 style="font-size:medium"
                 @click="openDialog('WITHDRAW')"
               >
-                {{ formatCommaAmt(dashboard.withdrawMemberCount) }}
+                {{ formatCommaAmt(recordsDetail.withdrawalRecords.length) }}
               </el-link>
             </div>
             <div class="listing-div">
@@ -157,7 +157,7 @@
                   style="font-size:medium"
                   @click="openDialog('BET')"
                 >
-                  {{ formatCommaAmt(dashboard.betMemberCount) }}
+                  {{ formatCommaAmt(recordsDetail.betRecords.length) }}
                 </el-link>
               </div>
             </div>
@@ -175,31 +175,95 @@
                 <thead>
                   <tr>
                     <th scope="col">{{ t('fields.affiliate') }}</th>
+                    <th scope="col">{{ t('fields.affiliateLevel') }}</th>
                     <th scope="col">{{ t('fields.member') }}</th>
                     <th scope="col">{{ uiControl.dialogThirdCol }}</th>
                     <th scope="col">{{ uiControl.dialogLastCol }}</th>
+                    <th scope="col" v-if="uiControl.dialogType === 'DEPOSIT'">{{ t('fields.dashboardMemberBalance') }}</th>
+                    <th scope="col" v-if="uiControl.dialogType === 'DEPOSIT'">{{ t('fields.totalWithdrawalAmount') }}</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr v-if="uiControl.dialogRecords.length === 0">
-                    <td colspan="4">
+                <tbody v-if="uiControl.dialogType === 'DEPOSIT'">
+                  <tr v-if="recordsDetail.depositRecords.length === 0">
+                    <td colspan="7">
                       <!-- Display your empty component or message here -->
                       <emptyComp />
                     </td>
                   </tr>
                   <tr
-                    v-for="(record, index) in uiControl.dialogRecords"
+                    v-for="(record, index) in recordsDetail.depositRecords"
                     :key="index"
                   >
                     <td>{{ record.affiliate }}</td>
                     <td>
+                      {{ record.affiliateLevel !== '-' ? t(`affiliate.level.${record.affiliateLevel}`) : '-' }}
+                    </td>
+                    <td>
                       {{ record.member }}
                     </td>
                     <td>
-                      {{ uiControl.dialogType === 'DEPOSIT' ? record.deposit : uiControl.dialogType === 'WITHDRAW' ? record.withdraw : record.bet}}
+                      {{ formatCommaAmt(record.deposit) }}
                     </td>
                     <td>
-                      {{ uiControl.dialogType === 'DEPOSIT' ? record.depositCount : uiControl.dialogType === 'WITHDRAW' ? record.withdrawCount : record.betCount}}
+                      {{ formatCommaAmt(record.depositCount) }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.balance) }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.withdraw) }}
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-if="uiControl.dialogType === 'WITHDRAW'">
+                  <tr v-if="recordsDetail.withdrawalRecords.length === 0">
+                    <td colspan="5">
+                      <!-- Display your empty component or message here -->
+                      <emptyComp />
+                    </td>
+                  </tr>
+                  <tr
+                    v-for="(record, index) in recordsDetail.withdrawalRecords"
+                    :key="index"
+                  >
+                    <td>{{ record.affiliate }}</td>
+                    <td>
+                      {{ record.affiliateLevel !== '-' ? t(`affiliate.level.${record.affiliateLevel}`) : '-' }}
+                    </td>
+                    <td>
+                      {{ record.member }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.withdraw) }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.withdrawCount) }}
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-if="uiControl.dialogType === 'BET'">
+                  <tr v-if="recordsDetail.betRecords.length === 0">
+                    <td colspan="5">
+                      <!-- Display your empty component or message here -->
+                      <emptyComp />
+                    </td>
+                  </tr>
+                  <tr
+                    v-for="(record, index) in recordsDetail.betRecords"
+                    :key="index"
+                  >
+                    <td>{{ record.affiliate }}</td>
+                    <td>
+                      {{ record.affiliateLevel !== '-' ? t(`affiliate.level.${record.affiliateLevel}`) : '-' }}
+                    </td>
+                    <td>
+                      {{ record.member }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.bet) }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.betCount) }}
                     </td>
                   </tr>
                 </tbody>
@@ -234,7 +298,6 @@ const uiControl = reactive({
   dialogLoading: false,
   dialogThirdCol: '',
   dialogLastCol: '',
-  dialogRecords: [],
 })
 
 const defaultStartDate = convertDate(new Date())
@@ -256,6 +319,12 @@ const dashboard = reactive({
   totalBalance: 0,
   validBet: 0,
   totalWin: 0,
+})
+
+const recordsDetail = reactive({
+  depositRecords: [],
+  withdrawalRecords: [],
+  betRecords: [], 
 })
 
 const summary = reactive([
@@ -348,12 +417,12 @@ async function loadDashboardData() {
     }
   })
   const { data: ret2 } = await getDashboardDataDetail(query)
-  uiControl.dialogRecords = ret2
+  recordsDetail.depositRecords = ret2.filter(rec => rec.depositCount > 0);
+  recordsDetail.withdrawalRecords = ret2.filter(rec => rec.withdrawCount > 0);
+  recordsDetail.betRecords = ret2.filter(rec => rec.betCount > 0);
 }
 
 async function openDialog(type) {
-  console.log(uiControl.dialogRecords)
-  console.log(uiControl.dialogRecords.length)
   uiControl.dialogVisible = true
   uiControl.dialogType = type
   uiControl.dialogLoading = true

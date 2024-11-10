@@ -164,6 +164,8 @@ export default {
       AFFILIATE_SETTLEMENT: '代理结算',
       AFFILIATE_DEPOSIT: '额度代存',
       AFFILIATE_COMMISSION: '佣金代存',
+      MAIN_WALLET: '主钱包平账',
+      COMMISSION_WALLET: '佣金钱包平账',
     },
   },
   status: {
@@ -318,7 +320,8 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
-    UCL: '欧洲冠军联赛'
+    UCL: '欧洲冠军联赛',
+    HOTELCASINO: '酒店真人',
   },
   homeBannerType: {
     HOME: '首页',
@@ -1641,6 +1644,7 @@ export default {
     teamBackgroundImage: '团队背景图片',
     teamBackgroundImageDark: '团队暗色背景图片',
     telephone: '电话号码',
+    telegramUsername: 'Telegram用户名',
     thirtyDaysdw: '30天存-提',
     thirdParty: '第三方',
     thirdPartyName: '第三方名称',
@@ -2500,6 +2504,7 @@ export default {
     validateTeamTwoRequired: '团队二必填',
     validateTeamTwoIconRequired: '团队二图标必须上传',
     validateTelephoneRequired: '电话号码必填',
+    validateTelegramUsernameRequired: 'Telegram用户名必填',
     validateThirdSerialNumberRequired: '第三方流水号必填',
     validateThreeDigitsNumbeRequired: '三位数字必填',
     validateTimeTypeRequired: '时间类型必填',
@@ -2863,6 +2868,7 @@ export default {
     'Affiliate Point Record': '代理积分记录',
     'Member Ratio Edit Record': '返水比例更改记录',
     'Site Platform Blacklist': '站点平台黑名单',
+    'Telegram User': 'Telegram用户管理',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3004,6 +3010,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: '有效投注佣金-体育',
     AGENT_SHARE_BET_RATIO_CASUAL: '有效投注佣金-小游戏',
     AGENT_SHARE_BET_RATIO_POKER: '有效投注佣金-棋牌',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: '有效投注佣金-酒店真人',
     AGENT_SHARE_PROFIT_RATIO_FISH: '净盈利佣金-捕鱼',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '净盈利佣金-老虎机',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '净盈利佣金-电竞',
@@ -3011,6 +3018,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '净盈利佣金-小游戏',
     AGENT_SHARE_PROFIT_RATIO_POKER: '净盈利佣金-棋牌',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: '净盈利佣金-酒店真人',
   },
   gameTypeRolloverSetting: {
     anyTypes: '所有游戏类型',
@@ -3030,6 +3038,14 @@ export default {
     SENDING: '发送中',
     SENT: '已发送',
   },
+  telegram: {
+    userStatus: {
+      PENDING_CONNECT: '待连接',
+      PENDING_VERIFY: '待验证',
+      ACTIVE: '已连接',
+      STOPPED: '已停用',
+    }
+  },
   pmRedirectType: {
     NONE: '无跳转',
     INNER: '站内跳转',
@@ -3044,7 +3060,10 @@ export default {
     WANGZE: '王者',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: '在线人数'
+    MEMBER_STATISTICS: '在线人数',
+    DEPOSIT_FLUCTUATION: '存款波动',
+    WITHDRAW_FLUCTUATION: '提款波动',
+    BONUS_FLUCTUATION: '优惠波动',
   },
   error: {
     400: '请求无效',

@@ -178,6 +178,7 @@ export default {
     POKER: 'POKER',
     LOTTERY: 'LOTTERY',
     MINIGAME: 'MINIGAME',
+    HOTELCASINO: 'HOTELCASINO',
   },
   result: {
     WIN: 'WIN',
@@ -706,6 +707,8 @@ export default {
     downlineTotalDepositWithdraw: 'Downline Member Deposit Withdraw Difference',
     affiliateInTransfer: 'Affiliate',
     redeemConvert: 'Redeem',
+    dashboardMemberBalance: 'Member Balance',
+    totalWithdrawalAmount: 'Withdraw Amount',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -935,6 +938,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: 'Bet Ratio-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: 'Bet Ratio-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: 'Bet Ratio-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
@@ -942,6 +946,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: 'Profit Ratio-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: 'Profit Ratio-HOTELCASINO',
   },
   sendMessageType: {
     NOTIFICATION: 'Notification',

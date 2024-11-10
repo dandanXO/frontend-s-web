@@ -165,6 +165,8 @@ export default {
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
       AFFILIATE_DEPOSIT: 'Transfer from Balance',
       AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
+      MAIN_WALLET: 'Main Wallet Adjustment',
+      COMMISSION_WALLET: 'Commission Wallet Adjustment',
     },
   },
   status: {
@@ -313,7 +315,8 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
-    UCL: 'UEFA CHAMPIONS LEAGUE'
+    UCL: 'UEFA CHAMPIONS LEAGUE',
+    HOTELCASINO: 'HOTELCASINO',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -2547,6 +2550,7 @@ export default {
     validateTeamTwoRequired: 'Team Two is required',
     validateTeamTwoIconRequired: 'Team Two Icon is required',
     validateTelephoneRequired: 'Telephone is required',
+    validateTelegramUsernameRequired: 'Telegram Username is required',
     validateThirdSerialNumberRequired: 'Third Serial Number is required',
     validateThreeDigitsNumbeRequired: '3 digits number is required',
     validateTitleRequired: 'Title is required',
@@ -2916,6 +2920,7 @@ export default {
     'Affiliate Point Record': 'Affiliate Point Record',
     'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
+    'Telegram User': 'Telegram User',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3058,6 +3063,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: 'Bet Ratio-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: 'Bet Ratio-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: 'Bet Ratio-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
@@ -3065,6 +3071,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: 'Profit Ratio-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: 'Profit Ratio-HOTELCASINO',
   },
   gameTypeRolloverSetting: {
     anyTypes: 'All Game Types',
@@ -3084,6 +3091,14 @@ export default {
     SENDING: 'Sending',
     SENT: 'Sent',
   },
+  telegram: {
+    userStatus: {
+      PENDING_CONNECT: 'Pending Connect',
+      PENDING_VERIFY: 'Pending Verification',
+      ACTIVE: 'Active',
+      STOPPED: 'Stopped',
+    }
+  },
   pmRedirectType: {
     NONE: 'No Redirect',
     INNER: 'Inner Site Redirect',
@@ -3098,7 +3113,10 @@ export default {
     WANGZE: 'WANGZE',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'Online users'
+    MEMBER_STATISTICS: 'Online users',
+    DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
+    WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
+    BONUS_FLUCTUATION: 'Bonus fluctuation',
   },
   error: {
     400: 'Bad Request',

@@ -180,6 +180,7 @@ export default {
     POKER: '포커',
     LOTTERY: '복권',
     MINIGAME: '미니게임',
+    HOTELCASINO: '호텔 카지노',
   },
   result: {
     WIN: '승',
@@ -707,6 +708,8 @@ export default {
     downlineTotalDepositWithdraw: '입출금차액',
     affiliateInTransfer: '총판',
     redeemConvert: '전환',
+    dashboardMemberBalance: '회원잔액',
+    totalWithdrawalAmount: '총 출금액',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -928,6 +931,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: '배팅비율-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: '배팅비율-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: '배팅비율-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: '배팅비율-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: '이익률-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '이익률-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
@@ -935,6 +939,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '이익률-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: '이익률-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: '이익률-HOTELCASINO',
   },
   sendMessageType: {
     NOTIFICATION: '통지',
