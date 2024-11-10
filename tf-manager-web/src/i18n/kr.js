@@ -284,6 +284,7 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: '닭싸움',
     MSI: 'MSI',
+    HOTELCASINO: '호텔 카지노',
   },
   homeBannerType: {
     HOME: '홈',
@@ -2743,6 +2744,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: '배팅비율-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: '배팅비율-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: '배팅비율-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: '배팅비율-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: '이익률-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '이익률-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
@@ -2750,9 +2752,13 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '이익률-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: '이익률-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: '이익률-HOTELCASINO',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: '온라인 사용자'
+    MEMBER_STATISTICS: '온라인 사용자',
+    DEPOSIT_FLUCTUATION: '예금 변동',
+    WITHDRAW_FLUCTUATION: '출금 변동',
+    BONUS_FLUCTUATION: '보너스 변동',
   },
   error: {
     400: '잘못된 요청',

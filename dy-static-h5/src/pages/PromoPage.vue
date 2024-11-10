@@ -122,7 +122,8 @@
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
                   midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
                   isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
-                  isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade'
+                  isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
+                  isValorantChampionTour2024: selectedPromo?.promoCode === 'dy2-valorant-champion-tour-2024'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -156,6 +157,9 @@
                   </div>
                   <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
                     <BbdachaBelgrade :promoCode="selectedPromo.promoCode" />
+                  </div>
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-champion-tour-2024'">
+                    <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
                   </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
@@ -315,6 +319,7 @@ import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBat
 
 const YallaCompass = defineAsyncComponent(() => import("src/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const BbdachaBelgrade = defineAsyncComponent(() => import("src/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
+const ValorantChampionTour2024 = defineAsyncComponent(() => import("src/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -323,7 +328,8 @@ export default defineComponent({
     BlastPremierMarquee,
     NBAWaterBattle,
     YallaCompass,
-    BbdachaBelgrade
+    BbdachaBelgrade,
+    ValorantChampionTour2024
   },
   setup() {
     const store = userStore();
@@ -949,7 +955,8 @@ export default defineComponent({
         font-size: 12px;
 
         &.isYallaCompass,
-        &.isBbdachaBelgrade {
+        &.isBbdachaBelgrade,
+        &.isValorantChampionTour2024 {
           gap: 0;
           margin: 0;
           width: 100%;

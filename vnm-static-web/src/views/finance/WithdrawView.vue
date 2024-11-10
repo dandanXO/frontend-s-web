@@ -3,7 +3,7 @@
     <div class="menu-title-container">
       <span class="menu-title">{{ isAutoWithdrawal ? $t("withdraw.quickWithdraw") : $t("withdraw.withdraw") }}</span>
       <el-button
-        v-if="store.memberType === 'TEST' && !isAutoWithdrawal"
+        v-if="!isAutoWithdrawal"
         :loading="loadingBtn"
         :disable="loadingBtn"
         size="large"
@@ -1036,6 +1036,11 @@ export default defineComponent({
   width: auto;
   border-radius: 8px;
   align-self: center;
+    font-family: "SF Pro";
+    letter-spacing: normal;
+    width: unset;
+    min-width: unset;
+    padding-right: 10px;
   img {
     height: 20px;
   }
