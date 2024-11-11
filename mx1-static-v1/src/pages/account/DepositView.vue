@@ -225,24 +225,19 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
+      <!-- <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
-      </div>
+      </div> -->
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilegeEnable"
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
       </div>
     </template>
-
-    <!-- <pre>form.privilegeId--{{ form.privilegeId }}</pre>
-     <pre> isFtdPrivilegePayType--{{isFtdPrivilegePayType}}</pre>
-  <pre>extraPrivilegeId--{{extraPrivilegeId}}</pre>
-  <pre>isFtdPrivilegeEnable--{{isFtdPrivilegeEnable}}</pre> -->
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
