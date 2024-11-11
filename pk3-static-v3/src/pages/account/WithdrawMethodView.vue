@@ -4,7 +4,7 @@
       <div class="balance">
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
-          <template v-else>{{ store.balance }}</template>
+          <template v-else>{{ convertToCommaAmount(store.balance, 2) }}</template>
         </span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
@@ -15,7 +15,7 @@
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
           <template v-else>
-            {{ withdrawableBalance >= 0 ? convertToCommaAmount(withdrawableBalance, false) : "0" }}
+            {{ convertToCommaAmount(withdrawableBalance, 2)  }}
           </template>
         </span>
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
@@ -750,12 +750,15 @@ const resetSelectedMethod = () => {
 
 const isBankType = ref();
 
-const withdrawableBalance = ref();
+// const withdrawableBalance = ref();
+const withdrawableBalance = computed(() => {
+  return selectedMethodItem.value?.withdrawableBalance ?? 0;
+});
+
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
   // selectedWithdraw.value.forEach((method) => (method.active = false));
   // item.active = true;
-
   selectedWithdraw.value.forEach((method) => {
     method.active = false;
   });
@@ -763,7 +766,7 @@ const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
   // debugger;
   selectedMethodItem.value = item;
-  withdrawableBalance.value = item.withdrawableBalance;
+  // withdrawableBalance.value = item.withdrawableBalance;
   filteredBankList.value = item.bankList;
   isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;

@@ -24,8 +24,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -132,11 +132,11 @@ export default route(function (/* { store, ssrContext } */) {
             if (window.location.hostname !== "localhost") {
               if (from.path === "/login" && to.path === "/home") {
                 gtag.event("login", {
-                  custom_user_id: user.id
+                  custom_user_id: user.nickName
                 });
               } else if (from.path === "/register" && to.path === "/home") {
                 gtag.event("register", {
-                  custom_user_id: user.id
+                  custom_user_id: user.nickName
                 });
               }
             }

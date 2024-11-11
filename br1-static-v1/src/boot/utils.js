@@ -105,20 +105,20 @@ export const convertToGMT7 = (dateTime) => {
   return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD");
 };
 
-export const convertToCommaAmount = (amount, isForceDecimal = false) => {
-  if (amount === null || isNaN(amount)) {
-    return "0.00";
+export const convertToCommaAmount = (amount, isForceDecimal) => {
+  if (amount === null) {
+    return 0;
   }
-  const parsedAmount = parseFloat(amount);
-  let formattedAmount = parsedAmount.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
 
-  if (isForceDecimal) {
-    return formattedAmount;
-  }
-  return formattedAmount.replace(/\.00$/, "");
+  const truncatedAmount = isForceDecimal ? amount : Math.trunc(amount);
+
+  return Number(truncatedAmount).toLocaleString("en-US", {
+    minimumFractionDigits: isForceDecimal ? 2 : 0,
+    maximumFractionDigits: isForceDecimal ? 2 : 0
+  });
 };
 
 export const displayPlatform = (platform) => {
