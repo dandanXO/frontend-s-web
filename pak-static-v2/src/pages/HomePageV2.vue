@@ -2642,6 +2642,11 @@ onActivated(() => {
   if (route.query.login === "true") {
     isMoneyRainModal.value = true;
   }
+
+  if (route.query.token) {
+    store.autoLogin(route.query.token);
+    checkSpinWheel();
+  }
 });
 
 onMounted(() => {

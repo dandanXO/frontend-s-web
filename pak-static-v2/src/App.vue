@@ -4,11 +4,11 @@
 
 <script>
 import { defineComponent, onMounted, ref, nextTick, watch } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { Platform, SessionStorage, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -29,6 +29,23 @@ export default defineComponent({
 
     const $q = useQuasar(); // calling here; equivalent to when component
     // $q.dark.set(true);
+    const allowedDomains = [];
+
+    function shouldRedirect(domain) {
+      return allowedDomains.includes(domain);
+    }
+
+    function handleRedirect() {
+      if (!store.isApp()) {
+        const currentDomain = window.location.hostname;
+
+        if (shouldRedirect(currentDomain)) {
+          SessionStorage.setItem("REDIRECT_PATH", window.location.pathname);
+          router.replace("/redirect");
+        }
+      }
+    }
+
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
@@ -319,13 +336,14 @@ export default defineComponent({
       fbq("track", "PageView");
       store.isFbPixel = true;
 
-      const isNewUser = sessionStorage.getItem("newUserFtd");
+      const isNewUser = isInPwa() ? localStorage.getItem("newUserFtd") : sessionStorage.getItem("newUserFtd");
       if (isNewUser) {
         document.addEventListener("ftdSuccess", trackNewUserFtd);
       }
     };
 
     onMounted(async () => {
+      handleRedirect();
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
@@ -359,6 +377,16 @@ export default defineComponent({
     watch(
       () => ui.shouldFetchDownloadAppUrl,
       (value) => value && ui.getTopDownloadUrl()
+    );
+    watch(
+      () => window.location.hostname,
+      () => {
+        const currentDomain = window.location.hostname;
+        const redirectKey = `redirected-${currentDomain}`;
+        if (!sessionStorage.getItem(redirectKey)) {
+          handleRedirect();
+        }
+      }
     );
   }
 });
