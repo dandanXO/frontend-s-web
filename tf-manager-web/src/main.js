@@ -163,6 +163,7 @@ if (!title) {
   title = document.createElement('title');
   document.head.appendChild(title);
 }
+
 if (siteId === 'dy') {
   link.href = '/dy-favicon.ico';
   title.innerText = '东赢后台';
@@ -172,7 +173,7 @@ if (siteId === 'dy') {
 } else if (siteId === 'th') {
   link.href = '/th-favicon.ico';
   title.innerText = 'Jolly88';
-} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1' || siteId === 'br1' || siteId === 'mx1' || siteId === 'pk3') {
+} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1' || siteId === 'br1' || siteId === 'mx1' || siteId === 'pk3' || siteId === 'id1') {
   link.href = '/ind-favicon.ico';
   title.innerText = '55Ace';
 } else if (siteId === 'lh') {
