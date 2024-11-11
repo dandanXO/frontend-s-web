@@ -23,7 +23,20 @@
           RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
-        <div class="item-img"><img src="../../assets/images/earn-money/pot-item-01.png" /></div>
+        <div class="item-img with-btn">
+          <div class="flex-item">
+            <q-spinner v-if="claimLoading" color="white" size="3em" :thickness="3" style="margin-right: 60px;"></q-spinner>
+            <template v-else>
+              <div class="title" data-text="Commission not claimed:">Commission not claimed:</div>
+              <!--          <img src="../../assets/images/earn-money/pot-item-01.png" />-->
+              <div class="amount-div">
+                <span class="currency" data-text="Rs">Rs</span>
+                <span class="amount" :data-text="displayClaimableAmount">{{ displayClaimableAmount }}</span>
+              </div>
+              <button class="claim-btn" :class="{ disabled: claimableAmount === 0 }" @click="handleClaimClick"></button>
+            </template>
+          </div>
+        </div>
       </div>
       <div class="pot-item pot-item__2">
         <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
@@ -261,12 +274,13 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const $q = useQuasar();
 const store = userStore();
@@ -298,8 +312,11 @@ const memberDetail = ref([]);
 const activeSetting = ref([]);
 const latestInvitees = ref([]);
 const inviteesRecords = ref([]);
+const claimableAmount = ref(0);
 let currentIndex = 0;
 let intervalId = null;
+
+const displayClaimableAmount = computed(() => convertToCommaAmount(claimableAmount.value));
 
 const getOneTimeBonusSetting = () => {
   api
@@ -485,9 +502,41 @@ const handleShareToEmail = (url) => {
   window.open(emailShareUrl, "_self");
 };
 
+const getClaimableAmount = () => {
+  api.get("/session/refer-rebate/pending-amount").then((res) => {
+    if (res.code === 0) {
+      claimableAmount.value = res.data;
+    }
+  });
+};
+
+const claimLoading = ref(false);
+
 // const profileImagePath = computed(() => {
 //   return require(`../../assets/images/account/${randomProfileImg.value}.png`);
 // });
+
+const handleClaimClick = () => {
+  claimLoading.value = true;
+  api
+    .post("/session/refer-rebate/claim-amount")
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          message: "Success",
+          color: "positive",
+          position: "top",
+          timeout: 2000
+        });
+        claimLoading.value = false;
+        getClaimableAmount();
+      }
+    })
+    .finally(() => {
+      claimLoading.value = false;
+      getClaimableAmount();
+    });
+};
 
 const modalSocialShare = ref(false);
 
@@ -497,6 +546,7 @@ onMounted(() => {
   getLatestInvitees();
   startAutoScroll();
   checkIsShowDetail();
+  getClaimableAmount();
 
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
@@ -562,6 +612,103 @@ watch(activeSetting, checkIsShowDetail);
           display: block;
           width: 100%;
           max-width: 160px;
+        }
+
+        .flex-item {
+          display: flex;
+          gap: 3px;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+
+        .amount-div {
+          display: flex;
+          align-content: center;
+          align-items: center;
+          gap: 8px;
+        }
+
+        &.with-btn {
+          right: 4px;
+          top: 50%;
+          padding-right: 4px;
+        }
+
+        .title {
+          font-style: italic;
+          text-transform: uppercase;
+          position: relative;
+          font-size: 14px;
+          font-weight: bold;
+          line-height: 20.61px;
+          color: #fff;
+          //text-shadow:
+          //  -1px 1px 0 #fff,
+          //  1px 1px 0 #fff,
+          //  1px -1px 0 #fff,
+          //  -1px -1px 0 #fff;
+
+          //&::before {
+          //  content: attr(data-text);
+          //  position: absolute;
+          //  inset: 0;
+          //  z-index: -1;
+          //  -webkit-text-stroke: 1px #fff;
+          //}
+        }
+
+        .amount {
+          position: relative;
+          background: linear-gradient(180deg, #fffee1 24.43%, #ffe69d 76.41%);
+          background-clip: text;
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 20px;
+          color: transparent;
+
+          &::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            -webkit-text-stroke: 2px #ff3e27;
+          }
+        }
+
+        .currency {
+          position: relative;
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 20.61px;
+          color: #ff3e27;
+          text-shadow: -1px 1px 0 #fff, 1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
+
+          &::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            -webkit-text-stroke: 1px #fff;
+          }
+        }
+      }
+
+      .claim-btn {
+        background: url(../../assets/images/earn-money/get-it-now-btn.png) no-repeat;
+        background-size: contain;
+        border: none;
+        aspect-ratio: 113 / 30;
+        width: 125px;
+        min-height: 32px;
+
+        &:hover {
+          filter: brightness(1.2);
+        }
+
+        &.disabled {
+          filter: grayscale(1);
+          pointer-events: none;
         }
       }
     }
