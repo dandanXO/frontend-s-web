@@ -1150,10 +1150,10 @@ export default defineComponent({
 
     const route = useRoute();
     onMounted(() => {
-      getTime();
       if (route.query.type === 'withdraw') {
         recordActive.value = 'withdraw';
       }
+      getTime();
     });
     const platformsList = ref([]);
     const getPlatList = (v) => {

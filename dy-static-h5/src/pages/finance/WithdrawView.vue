@@ -241,7 +241,7 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="isShowWithdrawErrorBlock" persistent no-backdrop-dismiss no-esc-dismiss>
-      <q-card style="width: 100%; padding: 10px; flex-direction: column" class="text-black">
+      <q-card style="width: 100%; max-width: 290px; padding: 15px; flex-direction: column" class="text-black">
         <q-card-section class="q-mb-md">
           <!-- <div class="text-h6 text-center">请先完成上比提款</div> -->
           您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
@@ -249,10 +249,10 @@
 
         <div class="flex flex-center">
           <div>
-            <q-btn @click="isShowWithdrawErrorBlock = false;" class="q-mr-md" label="取消" />
+            <q-btn style="width: 100px;" @click="isShowWithdrawErrorBlock = false;" class="q-mr-md" label="取消" />
           </div>
           <router-link to="/account/records/withdraw">
-            <q-btn color="dyblue" label="前往确认" />
+            <q-btn style="width: 100px;" color="dyblue" label="前往确认" />
           </router-link>
         </div>
       </q-card>

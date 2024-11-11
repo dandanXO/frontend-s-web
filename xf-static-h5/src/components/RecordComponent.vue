@@ -488,6 +488,9 @@ export default defineComponent({
 
 .buttons {
   text-align: right;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 :deep(.q-card__section) {
