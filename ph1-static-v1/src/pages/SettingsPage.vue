@@ -151,7 +151,7 @@ const $q = useQuasar();
 
 const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
-// const imgURL = "";
+
 const btm_banners = ref([
   {
     mobileImageUrl: require("../assets/images/account/account-banner-2.jpg")
