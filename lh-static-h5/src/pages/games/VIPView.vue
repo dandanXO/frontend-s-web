@@ -1247,8 +1247,8 @@ const runVipAPI = (res) => {
 //TODO: 节日礼金去掉了
 const categories = [
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
-  { key: "monthly", image: "monthly", displayName: "会员日红包" },
-  { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
+  { key: "monthly", image: "monthly", displayName: "每月15号红包" },
+  { key: "coupon", image: "coupon", displayName: "充值赠送20%奖金" },
   { key: "redPacket", image: "rebate", displayName: "每日额外返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
