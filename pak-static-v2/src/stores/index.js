@@ -4,6 +4,7 @@ import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
 import { isAndroid, isInPwa } from "boot/utils";
 import { useUI } from "stores/ui";
+import OneSignal from "onesignal-cordova-plugin";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -54,7 +55,8 @@ export const userStore = defineStore("userStore", {
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
       ftd: "CLOSE",
-      isTkPixel: false
+      isTkPixel: false,
+      hasUpdatedOneSignal: false,
     };
   },
   actions: {
@@ -211,6 +213,13 @@ export const userStore = defineStore("userStore", {
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.guest = guest;
 
+          if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
+            OneSignal.login(this.nickName);
+            OneSignal.User.addTag("user_name", this.nickName);
+            OneSignal.User.addTag("VIP", this.vip);
+            this.hasUpdatedOneSignal = true;
+          }
+
           if (evip) {
             var exclusive = JSON.parse(evip);
             this.evip = exclusive.wap;
@@ -274,6 +283,12 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
+
+        this.hasUpdatedOneSignal = false;
+
+        if (isAndroid() && OneSignal !== undefined) {
+          OneSignal.logout();
+        }
 
         location.href = "/";
       });
