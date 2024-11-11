@@ -527,6 +527,9 @@ function checkQuery() {
 
 async function loadRecord() {
   page.loading = true
+  page.records = []
+  page.total = 0
+  page.pages = 0
   const query = checkQuery()
   const { data: ret } = await queryDailySummary(query)
   const { data: ret1 } = await queryDailySummaryTotal(query)
