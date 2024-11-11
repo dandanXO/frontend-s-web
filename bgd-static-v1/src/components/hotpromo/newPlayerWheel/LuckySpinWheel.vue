@@ -33,8 +33,8 @@
     <div class="congrats-container">
       <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
-      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">{{ store.currency.label }}58</div>
+      <div class="congrats-title">You get a coupon，Recharge {{ store.currency.label }}300 Get</div>
+      <div class="congrats-highlight">{{ store.currency.label }}28</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
@@ -52,19 +52,17 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { userStore } from "src/stores";
 
 const { t } = useI18n();
 const $q = useQuasar();
 const router = useRouter();
-const store = userStore();
 
 // spin wheel constants
-const TOTAL_ITEMS = 8;
+const TOTAL_ITEMS = 6;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [58, 999999, 188, 888, 999998, 388, 488, 588];
+const SPIN_WHEEL_PRIZES = [28, 999999, 188, 888, 999998, 388, 488, 588];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -216,7 +214,7 @@ const spinWheel = () => {
         }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-        spin(4, () => {
+        spin(3, () => {
           showPrizePopup.value = true;
           prizePopupBonusAmt.value = res.data.bonusAmount;
           remainingDraws.value = 0;
@@ -332,16 +330,17 @@ onMounted(() => {
   height: 100%;
 }
 .wheel-top-btn {
-  width: 137px;
-  height: 123px;
+  width: 155px;
+  height: 115px;
   position: absolute;
-  top: 24px;
-  left: 129px;
+  top: 21px;
+  left: 50%;
   right: 0;
-  z-index: 25;
+  z-index: 24;
+  transform: translateX(-50%);
   img {
-    width: 137px;
-    height: 123px;
+    width: 155px;
+    height: 115px;
   }
 }
 .draw-btn {
