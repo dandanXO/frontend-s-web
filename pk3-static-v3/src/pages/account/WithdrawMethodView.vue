@@ -750,7 +750,11 @@ const resetSelectedMethod = () => {
 
 const isBankType = ref();
 
-const withdrawableBalance = ref();
+// const withdrawableBalance = ref();
+const withdrawableBalance = computed(() => {
+  return selectedMethodItem.value?.withdrawableBalance ?? 0;
+});
+
 const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
   // selectedWithdraw.value.forEach((method) => (method.active = false));
@@ -762,7 +766,7 @@ const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
   // debugger;
   selectedMethodItem.value = item;
-  withdrawableBalance.value = item.withdrawableBalance;
+  // withdrawableBalance.value = item.withdrawableBalance;
   filteredBankList.value = item.bankList;
   isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;
