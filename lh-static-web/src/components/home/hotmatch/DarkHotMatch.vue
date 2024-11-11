@@ -2,7 +2,7 @@
   <div
   class="hot-match-container"
   >
-  <img src="@/assets/home/hotmatch/hot-match-title.png" style="display: flex; margin: auto; width: 65%" />
+  <img src="@/assets/home/hotmatch/hot-match-title.png" style="display: flex; margin: auto; width: 60%" />
     <img v-if="isFetchingHotMatches" class="hot-match-loading" src="@/assets/home/hotmatch/loading.gif" />
     <div class="competition-items" >
       <div
@@ -137,7 +137,7 @@ onMounted(() => {
   }
 
   :deep(.el-carousel__container) {
-    height: 220px;
+    height: 200px;
     width: 100%;
   }
 
@@ -149,24 +149,24 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 15px;
     height: 100%;
 
     .hot-match-item {
       background: url("@/assets/home/hotmatch/hot-match-item-bg.png") no-repeat center center;
       background-size: 100% 100%;
-      aspect-ratio: 638 / 310;
+      aspect-ratio: 638 / 290;
 
       .hot-match-info {
         height: 100%;
-        padding: 20px 10px;
+        padding: 15px 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         gap: 5px;
         width: 300px;
-        height: 149px;
+        height: 135px;
 
         .hot-match-name,
         .hot-match-time {
@@ -221,8 +221,9 @@ onMounted(() => {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1385px;
   margin: auto;
+  margin-top: -35px;
 
   .competition-item {
     display: flex;

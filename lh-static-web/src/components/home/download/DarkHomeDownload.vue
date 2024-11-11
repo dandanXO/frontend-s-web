@@ -1,9 +1,9 @@
 <template>
     <div class="download-section">
-      <img style="display:flex;margin:auto;width:65%;" src="../../../assets//home/download/app-download-title-dark.png" />
+      <img style="display:flex;margin:auto;width:60%;" src="../../../assets//home/download/app-download-title-dark.png" />
       <div class="app-download-wrapper">
         <div class="dl-frame">
-            <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="qr-code" />
+            <VueQRCodeComponent :size="80" :text="ui.downloadUrl" class="qr-code" />
             <span class="dl-text">免费下载地址</span>
         </div>
       </div>
@@ -32,12 +32,13 @@
         aspect-ratio: 2776 / 1634;
         position: relative;
         margin: 0 auto;
-        max-width: 80%;
+        max-width: 60%;
+        margin-top: -30px;
 
         .dl-frame {
             position: absolute;
-            bottom: 9%;
-            right: 18.5%;
+            bottom: 9.7%;
+            right: 18.8%;
             transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;

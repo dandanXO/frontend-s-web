@@ -43,8 +43,6 @@
   }
   
   .home-mid-section {
-    padding-top: 20px;
-    padding-bottom: 2.5rem;
   }
   </style>
   

@@ -4,7 +4,7 @@
       <!-- <HomeTitleV2 title="优质服务" subtitle="EXCELLENT SERVICE"/> -->
       <div class="service-container">
         <div  data-aos="fade-down">
-          <img style="display:flex;margin:auto;width:85%;" src="../../../assets//home/service/excellent-service-title-dark.png" />
+          <img style="display:flex;margin:auto;width:65%;" src="../../../assets//home/service/excellent-service-title-dark.png" />
           <div class="top-container">
             <div class="counter">
               <div class="circle">
@@ -176,6 +176,7 @@
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
+    margin-top: -50px;
 
     .service-container {
       margin: 0;
@@ -183,7 +184,7 @@
       .top-container {
         display: flex;
         justify-content: space-between;
-        padding: 0 5rem;
+        padding: 0 6rem;
         margin: 0;
 
         .counter {
@@ -225,7 +226,7 @@
                 line-height: normal;
                 letter-spacing: 0.14144rem;
                 color: #fff;
-                line-height: 72.66px;
+                line-height: 50px;
                 letter-spacing: 0.04em;
 
                 // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -286,7 +287,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 4rem;
+            padding: 2rem 4rem;
             gap: 10px;
 
             .left-container {
@@ -321,7 +322,7 @@
               .desc {
                 color: #fff;
                 font-family: PingFang SC;
-                font-size: 18px;
+                font-size: 17px;
                 font-weight: 400;
                 line-height: 28px;
                 letter-spacing: 0.03em;
@@ -370,13 +371,12 @@
         }
 
         .bot-container {
-          padding: 30px 0;
           .item-wrapper {
             // @include content-block-dark;
             background: url("../../../assets/home/service/bg.png") no-repeat center center;
             background-size: 100% 100%;
             width: 325px;
-            height: 530px;
+            height: 480px;
           }
         }
       }

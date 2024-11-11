@@ -177,14 +177,10 @@
   }
   
   .top-bar-wrapper {
-    padding: 5px;
     color: #696d70;
     border-radius: 2.1875rem;
-    // background: #fff;
-    // box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 30px;
   
     .top-bar-inner {
     //   max-width: $maxwidth;
