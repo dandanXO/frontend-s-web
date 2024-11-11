@@ -8,7 +8,7 @@
             <!-- Since svg icons do not carry any attributes by default -->
             <!-- You need to provide attributes directly -->
             <div>
-              <RiVolumeUpFill style="fill: #2db9e2; width: 20px !important" @click="openPopup(announcementList)" />
+              <div class="announcment-icon" @click="openPopup(announcementList)" />
             </div>
             <div class="station-notice" v-if="announcementList.length > 0">
               <Vue3Marquee
@@ -29,7 +29,7 @@
             <template v-if="store.token">
               <div class="mailbox-notify" @click="checkMailboxUnread">
                 <router-link to="/center/mailbox">
-                  <RiMailFill style="fill: #2db9e2; width: 20px" />
+                  <div class="mail-icon" />
                   <div v-if="store.unreadTotal > 0" class="notify-red"></div>
                 </router-link>
               </div>
@@ -55,23 +55,23 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item command="a">
-                  <RiAccountCircleLine style="width: 20px; fill: #a8b5c3" />
+                  <div class="personal-info-icon" />
                   个人信息
                 </el-dropdown-item>
                 <el-dropdown-item command="b">
-                  <RiMoneyCnyCircleLine style="width: 20px; fill: #a8b5c3" />
+                  <div class="deposit-icon" />
                   充值中心
                 </el-dropdown-item>
                 <el-dropdown-item command="c">
-                  <RiExchangeDollarLine style="width: 20px; fill: #a8b5c3" />
+                  <div class="transfer-icon" />
                   快速转账
                 </el-dropdown-item>
                 <el-dropdown-item command="d">
-                  <RiCouponLine style="width: 20px; fill: #a8b5c3" />
+                  <div class="promotion-icon" />
                   优惠领取
                 </el-dropdown-item>
                 <el-dropdown-item divided command="e">
-                  <RiLogoutBoxLine style="width: 20px; fill: #a8b5c3" />
+                  <div class="logout-icon" />
                   退出登录
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -106,7 +106,7 @@
         <div class="navigations">
           <div class="header-menu-item" v-for="nav in navigations" :key="nav.name">
             <a v-if="nav.code === 'Agent'" :class="{ icon: nav.hasicon }" :href="nav.path" target="_blank">
-              <RiVipDiamondLine />
+              <div class="nav-affiliate-icon" />
               <span>{{ nav.name }}</span>
             </a>
             <router-link
@@ -118,10 +118,10 @@
             >
               <template v-if="nav.hasicon">
                 <span>
-                  <RiCoupon2Line v-if="nav.code === 'Promotion'" />
-                  <RiStarLine v-if="nav.code === 'Sponsor'" />
-                  <RiSmartphoneLine v-if="nav.code === 'App'" />
-                  <RiVipCrownLine v-if="nav.code === 'VIP'" />
+                  <div class="nav-promotion-icon" v-if="nav.code === 'Promotion'" />
+                  <div class="nav-sponsor-icon" v-if="nav.code === 'Sponsor'" />
+                  <div class="nav-app-icon" v-if="nav.code === 'App'" />
+                  <div class="nav-vip-icon" v-if="nav.code === 'VIP'" />
                 </span>
                 <span>{{ nav.name }}</span>
               </template>
@@ -793,21 +793,6 @@ import { getVerificationCode, register, findAccount } from "@/api/index/login";
 import { sendSms, getAnnouncement } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
 import { Vue3Marquee } from "vue3-marquee";
-import {
-  RiVolumeUpFill,
-  RiAccountCircleLine,
-  RiMoneyCnyCircleLine,
-  RiExchangeDollarLine,
-  RiBankCardLine,
-  RiCouponLine,
-  RiLogoutBoxLine,
-  RiCoupon2Line,
-  RiVipDiamondLine,
-  RiStarLine,
-  RiVipCrownLine,
-  RiSmartphoneLine,
-  RiMailFill
-} from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
@@ -820,7 +805,6 @@ import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
 import { useElementSize } from "@vueuse/core";
 import { ArrowDown, Refresh, ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
-import { ElMessageBox } from "element-plus";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 // import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -848,24 +832,11 @@ export default defineComponent({
     FishingMenu,
     PromotionMenu,
     AppMenu,
-    RiVolumeUpFill,
     ArrowDown,
     ArrowRight,
     ArrowLeft,
     Refresh,
-    RiAccountCircleLine,
-    RiMoneyCnyCircleLine,
-    RiExchangeDollarLine,
-    RiBankCardLine,
-    RiCouponLine,
-    RiLogoutBoxLine,
-    GameModal,
-    RiCoupon2Line,
-    RiVipDiamondLine,
-    RiStarLine,
-    RiVipCrownLine,
-    RiSmartphoneLine,
-    RiMailFill
+    GameModal
   },
   data: () => ({
     // carousel settings
@@ -1659,6 +1630,12 @@ export default defineComponent({
       // }, { immediate: true });
     });
 
+    watch(() => registerDialogVisible.value, () => {
+      if (registerDialogVisible.value) {
+        getAffiliateCode();
+      }
+    });
+
     const getReferalCode = () => {
       const referCode = sessionStorage.getItem("REFERRAL_CODE");
       // console.log("got Code");
@@ -2423,6 +2400,7 @@ body {
       color: $light-grey;
 
       .top-bar-inner {
+        font-family: 'PingFang SC';
         max-width: $maxwidth;
         width: 100%;
         margin: 0 auto;
@@ -2443,6 +2421,7 @@ body {
         }
 
         .station-notice-container {
+          line-height: 1rem;
           flex: 3;
 
           .station-notice-box {
@@ -2480,7 +2459,7 @@ body {
 
   .top-nav {
     &-wrapper {
-      padding: 10px;
+      padding: 5px;
       background: $primary;
       position: relative;
       box-shadow: 0 0 10px 0 rgba(168, 168, 168, 1);
@@ -2524,8 +2503,12 @@ body {
           width: 998px;
           text-align: center;
 
+          .header-menu-item {
+            font-family: 'PingFang SC';
+          }
+
           a {
-            padding-top: 10px;
+            padding-top: 5px;
             display: flex;
             flex-direction: column;
             text-decoration: none;
@@ -2544,8 +2527,10 @@ body {
             }
 
             span:first-child {
-              color: #000000;
+              color: #575757;
               font-size: 1rem;
+              font-weight: 700;
+              line-height: 1.2rem;
             }
 
             span:last-child {
@@ -2554,7 +2539,7 @@ body {
               font-size: 0.75rem;
               display: flex;
               flex-direction: column;
-              gap: 8px;
+              gap: 2px;
 
               &:after {
                 content: "";
@@ -2849,6 +2834,72 @@ body {
     background: #21ba45;
     font-weight: 600;
   }
+}
+
+.announcment-icon {
+  background: url("../../assets/home/home-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  background-position: 91% 0%;
+  width: 20px;
+  height: 20px;
+}
+
+.mail-icon {
+  background: url("../../assets/home/home-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  background-position: 100% 0%;
+  width: 20px;
+  height: 20px;
+}
+
+.personal-info-icon, .deposit-icon, .transfer-icon, .promotion-icon, .logout-icon {
+  background: url("../../assets/home/home-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  width: 20px;
+  height: 20px;
+}
+
+.personal-info-icon {
+  background-position: 0% 0%;
+}
+
+.deposit-icon {
+  background-position: 9% 0%;
+}
+
+.transfer-icon {
+  background-position: 18.5% 0%;
+}
+
+.promotion-icon {
+  background-position: 27.5% 0%;
+}
+
+.logout-icon {
+  background-position: 37% 0%;
+}
+
+.nav-promotion-icon, .nav-sponsor-icon, .nav-app-icon, .nav-vip-icon, .nav-affiliate-icon {
+  background: url("../../assets/home/home-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  width: 25px;
+  height: 20px;
+}
+
+.nav-promotion-icon {
+  background-position: 44.5% 0%;
+}
+.nav-sponsor-icon {
+  background-position: 63.5% 0%;
+}
+.nav-app-icon {
+  background-position: 73% 0%;
+}
+.nav-vip-icon {
+  background-position: 82.5% 0%;
+}
+.nav-affiliate-icon {
+  background-position: 54% 0%;
 }
 </style>
 

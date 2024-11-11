@@ -39,7 +39,9 @@
             </div>
           </div>
           <div class="useKeys" @click="openBox(selectedTreasureLevel)">开启</div>
-          <div class="tips-p" style="margin-top:10px;">注：系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙</div>
+          <div class="tips-p" style="margin-top: 10px">
+            注：系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙
+          </div>
         </div>
       </div>
     </div>
@@ -73,14 +75,25 @@
     </div>
     <div class="section third">
       <div class="content">
-        <p>1.活动期间，每日投注CS2Major 2024赛事达到100元有效投注即可获得1个开箱钥匙，开箱钥匙与开箱次数每日不设上限；</p>
-        <p>2.活动期间，开箱钥匙可积攒使用，获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱，超出活动时间未开启宝箱则不予补偿;</p>
+        <p>
+          1.活动期间，每日投注CS2Major 2024赛事达到100元有效投注即可获得1个开箱钥匙，开箱钥匙与开箱次数每日不设上限；
+        </p>
+        <p>
+          2.活动期间，开箱钥匙可积攒使用，获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱，超出活动时间未开启宝箱则不予补偿;
+        </p>
         <p>3.开启宝箱后获得彩金由系统自动实时派发至会员主钱包内，彩金3倍流水即可出款；</p>
-        <p>4.活动期间，参与CS2Major 2024赛事有效投注≥1,000元则视为签到成功，达到指定签到天数则可开启签到宝箱，每个宝箱每位用户仅可开启一次;</p>
+        <p>
+          4.活动期间，参与CS2Major
+          2024赛事有效投注≥1,000元则视为签到成功，达到指定签到天数则可开启签到宝箱，每个宝箱每位用户仅可开启一次;
+        </p>
         <p>5.活动期间，若用户连续签到中断，则重新开始计算，已开启过的宝箱无法二次开启；</p>
-        <p>6.任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内</p>
+        <p>
+          6.任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内
+        </p>
         <p>7.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利</p>
-        <p>8.任何会员或团体以不正常的方式进行套取活动优惠，平台方保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且会员会被列入黑名单;</p>
+        <p>
+          8.任何会员或团体以不正常的方式进行套取活动优惠，平台方保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且会员会被列入黑名单;
+        </p>
         <p>9.为避免文字理解差异，本站保留本活动最终解释权;</p>
       </div>
     </div>
@@ -401,9 +414,9 @@ const openModal = (modal, item, itemIndex) => {
 
 // Reference
 onMounted(() => {
-      if (!store.token) {
-        return;
-      }
+  if (!store.token) {
+    return;
+  }
   init();
 });
 </script>
@@ -412,13 +425,15 @@ onMounted(() => {
   text-align: center;
   .title {
     margin: 20px auto;
-    // img {
-    //   width: 200% !important;
-    //   transform: translate(-25%, 0%);
-    // }
   }
   .tips {
-    background: linear-gradient(90deg, rgba(72, 188, 241, 0) 4.96%, rgba(72, 188, 241, 0.2) 48.61%, rgba(72, 188, 241, 0) 94.97%) no-repeat center center;
+    background: linear-gradient(
+        90deg,
+        rgba(72, 188, 241, 0) 4.96%,
+        rgba(72, 188, 241, 0.2) 48.61%,
+        rgba(72, 188, 241, 0) 94.97%
+      )
+      no-repeat center center;
     padding: 20px 30px;
     margin: 0 auto;
     text-align: center;
@@ -484,13 +499,13 @@ onMounted(() => {
         width: 70%;
         font-weight: bold;
         margin: 10px auto;
-        border: 2px solid #0067E0;
-        background: #0067E01A;
-        color: #0067E0;
+        border: 2px solid #0067e0;
+        background: #0067e01a;
+        color: #0067e0;
       }
       .useKeys {
         background: url(../../../assets/images/promo/hotpromo/cs2/btnbg.png) no-repeat center center;
-        color: #0154A6;
+        color: #0154a6;
         padding: 15px 15px;
         background-size: contain;
         margin: 0 auto;
@@ -504,14 +519,16 @@ onMounted(() => {
         justify-content: space-between;
         flex-wrap: wrap;
         .item {
+          position: relative;
+
           img {
             width: 100%;
           }
-          position: relative;
+
           .signday {
-            background: #0067E01A;
-            border: 2px solid #0067E0;
-            color: #0067E0;
+            background: #0067e01a;
+            border: 2px solid #0067e0;
+            color: #0067e0;
             font-weight: bold;
             border-radius: 10px;
             display: inline-block;
@@ -519,11 +536,7 @@ onMounted(() => {
             font-family: "Microsoft YaHei UI";
             font-size: 1.8em;
           }
-          // &.isDotted {
-          //     &:after {
-          //         border: 1px dotted #f38100;
-          //     }
-          // }
+
           &:first-child {
             &:after {
               display: none;
@@ -615,15 +628,9 @@ onMounted(() => {
   font-size: 16px;
   padding-top: 30px;
   &.keyRec {
+    color: #7f4c00;
+
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 98%;
       margin: 0 auto;
       height: 140px;
@@ -633,8 +640,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
+
     table {
       width: 100%;
       .keysAmt {
@@ -658,18 +674,13 @@ onMounted(() => {
   &.openRec {
     justify-content: flex-start;
     padding: 25px 0;
+    color: #7f4c00;
+    gap: 5px;
+
     .table-title {
       font-weight: 700;
     }
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 90%;
       margin: 0 auto;
       height: 140px;
@@ -679,9 +690,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
-    gap: 5px;
+
     .flex {
       display: flex;
       justify-content: space-between;

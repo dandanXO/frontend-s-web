@@ -1,14 +1,14 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
+      v-if="isCommonPromo && store.hasToken() && listParam.type === 'claimpromo'"
       :promo-id="list.id"
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
 
     <!-- external promos -->
-    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'id1-slot-ftd' && store.token" :params="list.param" />
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pk3-slot-ftd' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -67,6 +67,16 @@ export default defineComponent({
       }
     };
   },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
+    }
+  },
   methods: {
     handleSlot() {
       const bonusItem = this.list.promoCode;
@@ -95,7 +105,7 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (this.list.redirectUrl === "id1-slot-ftd" || this.list.id === 40) {
+    if (this.list.redirectUrl === "pk3-slot-ftd" || this.list.id === 40) {
       this.isCommonPromo = false;
     } else {
       this.isCommonPromo = true;

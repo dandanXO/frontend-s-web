@@ -337,6 +337,7 @@
           </q-btn>
         </div>
       </template>
+      <div v-if="selectedWithdrawalMethod.tips" class="q-mt-md q-mb-sm" v-html="selectedWithdrawalMethod.tips"></div>
 
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
@@ -587,6 +588,10 @@ const submitWithdraw = async () => {
           // FB tracking :: apply-withdrawal
           if (store.isAffiliateA) {
             fbq("track", "apply-withdrawal");
+          }
+
+          if (store.isTkPixel) {
+            ttq.track("apply-withdrawal", { content_type: "product" }, { event_id: Date.now() });
           }
 
           withdrawInfo.amount = "";

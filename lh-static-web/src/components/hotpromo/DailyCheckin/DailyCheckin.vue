@@ -172,7 +172,7 @@
         </div>
         <div class="progressBar-area">
           <div class="progress-container">
-            <div class="progress-bar" :style="{ width: countPercent + '%' }"></div>
+            <div class="progress-bar" :style="{ width: countPercent + '%' }">{{ currentActivePoints }} / 100</div>
           </div>
         </div>
         <div class="number-area">
@@ -201,31 +201,29 @@
           />
           <div class="text" style="margin-left: -20px">
             <ul>
+              <li>雷火电竞会员存款达到相应要求即可领取签到礼金和对应活跃积分，签到金仅需8倍流水即可提款；</li>
               <li>
-                所有雷火电竞会员存款达到相应 VIP
-                等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 + 奖金）*相应流水倍数即可提款。
+                签到礼金和活跃积分每周期只可领取一次，活动期间,若用户签到中断,则重新开始计算,已开启过的宝箱无法再次开启,签到彩金由系统自动实时派发至会员主钱包内；
               </li>
-              <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
               <li>
-                此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP
-                地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+                根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
               </li>
-              <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
               <li>
-                所有雷火电竞会员存款达到相应 VIP
-                等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 + 奖金）*相应流水倍数即可提款。
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+                地址视为同一账户，若有违规者，将不享受此红利；
               </li>
+              <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <el-dialog v-model="showSuccessDialog" width="600" style="background: transparent">
+  <el-dialog v-model="showSuccessDialog" width="550" style="background: transparent">
     <template #header="{ close, titleId, titleClass }">
       <div class="dialog-header">
         <img
-          style="width: 210px; height: 56px"
+          style="width: 190px; height: 50px"
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/success-1.png')"
         />
         <img
@@ -233,36 +231,36 @@
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/success-2.png')"
         />
         <img
-          style="width: 150px; height: 150px"
+          style="width: 130px; height: 130px"
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/success-3.png')"
         />
         <img
           @click="showSuccessDialog = false"
-          style="width: 232px; height: 82px"
+          style="width: 200px; height: auto; cursor: pointer"
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/success-4.png')"
         />
       </div>
     </template>
     <template #default v-if="false"></template>
   </el-dialog>
-  <el-dialog v-model="showErrorDialog" width="600" style="background: transparent">
+  <el-dialog v-model="showErrorDialog" width="550" style="background: transparent">
     <template #header="{ close, titleId, titleClass }">
       <div class="dialog-header">
         <img
-          style="width: 210px; height: 56px"
+          style="width: 190px; height: auto"
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/failure-1.png')"
         />
         <img
-          style="width: 240px; height: 42px"
+          style="width: 240px; height: auto"
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/failure-2.png')"
         />
         <img
-          style="width: 150px; height: 150px"
+          style="width: 130px; height: 130px; padding: 10px"
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/failure-3.png')"
         />
         <img
           @click="showErrorDialog = false"
-          style="width: 232px; height: 82px"
+          style="width: 190px; height: auto; cursor: pointer"
           :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/failure-4.png')"
         />
       </div>
@@ -321,7 +319,14 @@ const countPercent = computed(() => {
       times++;
     }
   });
-  return times * 25;
+  if (times <= 0) {
+    return (currentActivePoints.value / 5) * 4;
+  } else if (times >= 4) {
+    return 100;
+  } else if (times >= 3) {
+    return (currentActivePoints.value / 5) * 4.5;
+  }
+  return ((times * 25) / 5) * 4;
 });
 // 是 "YES", 就是“已完成” + 打勾，
 // 是 "NO" 则是 "去充值“和 打 X
@@ -517,8 +522,10 @@ onMounted(async () => {
       padding-top: 90px;
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
-      width: 100%;
+      justify-content: space-evenly;
+      width: 1300px;
+      padding-left: 84px;
+      padding-right: 84px;
 
       img {
         cursor: pointer;
@@ -560,10 +567,17 @@ onMounted(async () => {
       margin-top: 25px;
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
-      width: 100%;
+      justify-content: space-evenly;
+      width: 1300px;
+      padding-left: 84px;
+      padding-right: 84px;
       font-size: 40px;
       color: #fff;
+
+      > div {
+        width: 190px;
+        text-align: center;
+      }
     }
   }
 }
@@ -655,10 +669,11 @@ onMounted(async () => {
   }
 }
 .dialog-header {
-  width: 600px;
-  height: 460px;
+  width: 550px;
+  height: 420px;
   background: transparent;
   background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/bg-4.png");
+  background-size: contain;
   display: flex;
   flex-direction: column;
   justify-content: center;

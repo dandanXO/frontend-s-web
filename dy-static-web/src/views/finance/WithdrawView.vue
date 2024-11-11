@@ -22,11 +22,11 @@
       <div class="account-content withdrawal">
         <div class="flex-box">
           <div class="step-item active">申请中</div>
-          <RiArrowRightSLine />
+          <div class="right-icon" />
           <div class="step-item">审核中</div>
-          <RiArrowRightSLine />
+          <div class="right-icon" />
           <div class="step-item">支付中</div>
-          <RiArrowRightSLine />
+          <div class="right-icon" />
           <div class="step-item">出款成功</div>
         </div>
         <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
@@ -46,7 +46,7 @@
             v-for="(method, i) in withdrawalMethods"
             :key="i"
             class="txt-center withdraw-type-item"
-            @click="selectMethod(method, i)"
+            @click="i === activeItem ? '' : selectMethod(method, i)"
             :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">
@@ -68,24 +68,36 @@
           label="提款金额"
           name="amount"
         >
-          <el-row :gutter="10" style="align-items: center">
-            <el-col :span="12">
-              <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
-                <template #append>{{ store.currency.label }}</template>
-              </el-input>
-            </el-col>
-            <el-col :span="12">
-              <span v-if="selectedWithdrawalMethod">
-                {{
-                  `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
-                }}
-                <br />
-                {{
-                  `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
-                }}
-              </span>
-            </el-col>
-          </el-row>
+          <el-space>
+            <el-row :gutter="10" style="align-items: center">
+              <el-col :span="12">
+                <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
+                  <template #append>{{ store.currency.label }}</template>
+                </el-input>
+              </el-col>
+              <el-col :span="12">
+                <span v-if="selectedWithdrawalMethod">
+                  {{
+                    `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                  }}
+                  <br />
+                  {{
+                    `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                  }}
+                </span>
+              </el-col>
+            </el-row>
+
+            <el-button
+              :loading="loadingBtn"
+              :disable="loadingBtn"
+              size="large"
+              class="common-btn withdraw-btn"
+              @click="submitWithraw"
+            >
+              确定
+            </el-button>
+          </el-space>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -112,9 +124,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
-            </div>
+            <!--            <div v-if="isALIPAY" class="selected-tip">-->
+            <!--              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！-->
+            <!--            </div>-->
           </el-col>
         </el-row>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
@@ -139,6 +151,7 @@
             v-model="withdrawInfo.cardId"
             :placeholder="`选择${cardLabel()}`"
             style="width: 300px"
+            :loading="isBankCardsLoading"
           >
             <el-option
               v-for="b in withdrawState.bankCardList"
@@ -155,7 +168,10 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                : (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                    selectedWithdrawalMethod.withdrawFee
+                  ).toFixed(2)
             }}
             USDT
           </span>
@@ -179,17 +195,7 @@
           v-html="selectedWithdrawalMethod.tips"
         ></div> -->
 
-        <div class="flex-box flex-justify-center">
-          <el-button
-            :loading="loadingBtn"
-            :disable="loadingBtn"
-            size="large"
-            class="common-btn withdraw-btn"
-            @click="submitWithraw"
-          >
-            确定
-          </el-button>
-        </div>
+        <div class="flex-box flex-justify-center"></div>
       </el-form>
     </div>
 
@@ -238,10 +244,8 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
-// import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
-import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialog.vue";
@@ -249,7 +253,6 @@ import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialo
 export default defineComponent({
   name: "WithdrawView",
   components: {
-    RiArrowRightSLine,
     WithdrawRemainingDialog
   },
   setup() {
@@ -369,7 +372,11 @@ export default defineComponent({
       }
     })
 
+    const isBankCardsLoading = ref(false);
     const checkBankCards = () => {
+      if (!isBankCardsLoading) {
+        return;
+      }
 
       if(isUSDT.value){
         ElMessageBox.alert(
@@ -429,6 +436,7 @@ export default defineComponent({
 
     }
     const loadCards = () => {
+        isBankCardsLoading.value = true;
         withdrawState.bankCardList = []
         loadBankCards().then((response) => {
           if (response.code === 0) {
@@ -451,7 +459,9 @@ export default defineComponent({
         }).catch((error) => {
           console.log(error.message);
           // message.error(error.message, 4)
-           })
+        }).finally(() => {
+        isBankCardsLoading.value = false;
+        })
     }
 
     async function verifyWithdrawAmount(r, v) {
@@ -666,7 +676,7 @@ export default defineComponent({
       align-items: center;
       flex-direction: column;
       cursor: pointer;
-      margin-right: 5px;
+      margin-right: 15px;
 
       .promo-label {
         position: absolute;
@@ -682,26 +692,17 @@ export default defineComponent({
       }
 
       .promo-img {
-        //     width: 40px;
-        // padding: 8px 20px;
-        // background: #ffffff;
-        // border: 1px solid #ced4da;
-
         background-color: #f7f7f7;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        max-width: 1.5rem;
+        // box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        max-width: 3rem;
         margin-bottom: 4px;
-        border: 2px solid #dddddd;
-        padding: 5px 15px;
+        border: 2px solid transparent;
+        padding: 15px;
         border-radius: 3px;
+        box-sizing: content-box;
       }
       &.active {
-        // border-bottom: 4px solid #1bcef1;
-        // border: 1px solid #ffd800;
-        // color: #ffd800;
         img {
-          // border: 1px solid #4978ec;
-          // background: #bad2ff;
           border-color: #4873f1;
         }
       }
@@ -734,7 +735,7 @@ export default defineComponent({
   }
   .withdraw-btn {
     // min-width: 300px;
-    margin: 30px auto;
+    // margin: 30px auto;
     &.cancel {
       margin-right: 60px;
     }
@@ -939,5 +940,17 @@ export default defineComponent({
       flex: 1;
     }
   }
+}
+
+.right-icon {
+  background: url("../../assets/images/account/charge-icons.png") no-repeat center center;
+  background-size: auto 100%;
+  width: 20px;
+  height: 26px;
+  margin: auto 0;
+}
+
+.right-icon {
+  background-position: 100% 0%;
 }
 </style>

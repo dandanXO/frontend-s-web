@@ -69,6 +69,9 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div v-if="isFetchingPromo" class="spinner-container">
+              <q-spinner color="yellow" size="70px" :thickness="5" />
+            </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
@@ -110,21 +113,31 @@
                       bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
                     }"
                   >
-                    <div class="promo-date">
-                      <div class="date-txt">{{ $t("promo.promotionEnds") }}</div>
-                      <div class="date-timer">
-                        <img src="../assets/images/promotion/timer-icon.svg" alt="" />
-                        <q-icon name="all_inclusive" size="22px"></q-icon>
+                    <template v-if="selectedPromoDate">
+                      <div class="promo-date">
+                        <div class="date-txt">{{ $t("promo.promotion") }}</div>
+                        <div class="date-timer">
+                          {{ selectedPromoDate }}
+                        </div>
                       </div>
-                    </div>
-                    <q-btn
-                      class="btn-join-now"
-                      :class="isFtdPromoEnded ? 'btn-disabled' : ''"
-                      :disable="isFtdPromoEnded"
-                      no-caps
-                      :label="$t('btn.joinNow')"
-                      @click="goToJoinNow()"
-                    />
+                    </template>
+                    <template v-else>
+                      <div class="promo-date">
+                        <div class="date-txt">Promotion Ends</div>
+                        <div class="date-timer">
+                          <img src="../assets/images/promotion/timer-icon.svg" alt="" />
+                          <q-icon name="all_inclusive" size="22px"></q-icon>
+                        </div>
+                      </div>
+                      <q-btn
+                        class="btn-join-now"
+                        :class="isFtdPromoEnded ? 'btn-disabled' : ''"
+                        :disable="isFtdPromoEnded"
+                        no-caps
+                        label="Join Now"
+                        @click="goToJoinNow()"
+                      />
+                    </template>
                   </div>
                 </div>
               </div>
@@ -187,6 +200,7 @@ export default defineComponent({
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
+    const selectedPromoDate = ref();
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
@@ -323,7 +337,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: t('notify.plsLoginToContinue'),
+          message: t("notify.plsLoginToContinue"),
           icon: "report_problem"
         });
         router.push(`/login`);
@@ -355,7 +369,11 @@ export default defineComponent({
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
+            var ref = cordova.InAppBrowser.open(
+              preUrl,
+              "_blank",
+              "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes"
+            );
             isOpenExtension.value = true;
 
             ref.addEventListener("loadstart", function (event) {
@@ -370,27 +388,34 @@ export default defineComponent({
               }
             });
 
-            ref.addEventListener('loadstop', function() {
-              setTimeout(()=>{
+            ref.addEventListener("loadstop", function () {
+              setTimeout(() => {
                 ref.show();
-              },500)
+              }, 500);
             });
 
             ref.addEventListener("exit", function () {
               isOpenExtension.value = false;
             });
-
           } else {
             if (route.query.fromAccount) {
-                router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
-              } else {
-                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
-              }
-              if(!isAndroid()){
-                isPromoDetail.value = true;
-                selectedPromo.value = promo;
-                selectedPromoDate.value = '';
-              }
+              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+            } else {
+              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+            }
+            if (!isAndroid()) {
+              isPromoDetail.value = true;
+              selectedPromo.value = promo;
+              selectedPromoDate.value = "";
+            }
+          }
+
+          if (selectedPromo.value.param) {
+            let promoDate = JSON.parse(selectedPromo.value.param).promoDate;
+
+            if (promoDate) {
+              selectedPromoDate.value = promoDate;
+            }
           }
         }
       }
@@ -422,13 +447,13 @@ export default defineComponent({
 
             promoItems.forEach((element) => {
               // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-                // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
               // } else {
-                promoState.promoList.push(element);
+              promoState.promoList.push(element);
 
-                if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                  showPromoDetails(element);
-                }
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                showPromoDetails(element);
+              }
               // }
             });
 
@@ -582,6 +607,7 @@ export default defineComponent({
       isPromoDetail,
       showPromoDetails,
       selectedPromo,
+      selectedPromoDate,
       banner,
       imgURL,
       store,
@@ -1247,5 +1273,17 @@ export default defineComponent({
     position: relative;
     top: 48%;
   }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 </style>

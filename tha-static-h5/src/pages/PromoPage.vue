@@ -155,7 +155,7 @@ export default defineComponent({
     });
     const loadBanner = () => {
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((res) => {
           const ret = res.data
           if (ret.code === 0) {
@@ -180,9 +180,8 @@ export default defineComponent({
       }
     };
     const loadAll = () => {
-      const platformApiUrl = store.hasToken()
-        ? "/session/loggedInPromoPages"
-        : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page"
+
       api.get(platformApiUrl).then((ret) => {
         const res = ret.data
         if (res.code === 0) {

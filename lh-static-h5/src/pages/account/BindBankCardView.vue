@@ -197,7 +197,8 @@
               @click="openPhoneVeriDialog()"
               type="submit"
               class="common-sm-btn bottom-btn get-otp-btn"
-              :disable="otpCountdownCount > 0" :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
+              :disable="otpCountdownCount > 0"
+              :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
               color="brightbtn"
               rounded
             />
@@ -279,7 +280,11 @@ const bankCardInfo = reactive({
 
 const validateBankLength = (val) => {
   if (!/^\d+$/.test(val)) return "请输入数字";
-  return (val.length > 15 && val.length < 20) || "长度应为16到19个字符";
+  if (bankCardInfo.bankId === 78) {
+    return (val.length > 10 && val.length < 20) || "长度应为11到120个字符";
+  } else {
+    return (val.length > 15 && val.length < 20) || "长度应为16到19个字符";
+  }
 };
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
@@ -393,8 +398,8 @@ const loadBankCards = () => {
             for (let i = 0, l = res.data.length; i < l; i++) {
               const data = res.data[i];
               const { bankType, bankCode } = data;
-              // is bank & not alipay (78)
-              if (bankType === "BANK" && bankCode !== 78) bankList.value.push(data);
+              // is bank
+              if (bankType === "BANK") bankList.value.push(data);
             }
           }
         })
@@ -467,6 +472,7 @@ watch(
     const selectedBank = bankList.value.find((bank) => bank.id === newVal);
     if (selectedBank) {
       bankCardInfo.currencyId = selectedBank.currencyIds;
+      bankCardInfo.cardNumber = "";
     }
   }
 );

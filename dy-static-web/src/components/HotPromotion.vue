@@ -21,7 +21,6 @@
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
     <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
-    <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
     <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A'"></AsianCup2024>
     <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball'"></BasketballHot>
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
@@ -62,6 +61,8 @@
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24'" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual'" />
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'dy2-blast-premier-treasure'" :promo-code="list.promoCode" />
+    <DreamLeagueS24 v-if="list.redirectUrl === 'dy2-dreamleague-s24'" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
@@ -77,6 +78,7 @@
     <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode"/>
@@ -84,7 +86,8 @@
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
-    
+    <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
+
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -129,7 +132,6 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import EsportQuiz2 from "../components/hotpromo/esportquiz2/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
-import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
 import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
@@ -152,6 +154,8 @@ import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vu
 import NewplayerGuide from "../components/hotpromo/newplayerguide/NewPlayerGuide.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
+import BlastPremierGlobalPromo from "../components/hotpromo/BlastPremierGlobalPromo/BlastPremierGlobalPromo.vue";
+import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS24.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
@@ -165,6 +169,8 @@ import S14VotePromo from "@/components/hotpromo/s14-vote/S14VotePromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
 import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
+import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
+import PerfectWorldMajor2024 from "@/components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 
 
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -186,6 +192,8 @@ export default defineComponent({
     LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
+    BlastPremierGlobalPromo,
+    DreamLeagueS24,
     fishHongbao,
     Olympic24Match,
     OlympicFund,
@@ -205,7 +213,6 @@ export default defineComponent({
     EsportQuiz2,
     LotteryPromo,
     PrivilegeInvite,
-    GiftPromo,
     AsianCup2024,
     BasketballHot,
     LPLSummer,
@@ -242,7 +249,9 @@ export default defineComponent({
     IemMasterPromo,
     PullbackTide,
     Cba30Dream,
-    ElisaGift
+    ElisaGift,
+    ChallengeComebackPromo,
+    PerfectWorldMajor2024
   },
   props: {
     list: {

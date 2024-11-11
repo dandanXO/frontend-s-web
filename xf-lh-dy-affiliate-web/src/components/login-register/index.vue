@@ -2108,7 +2108,7 @@ a {
 
     .el-button {
       margin-top: 10px !important;
-      margin-bottom: -10px;
+      // margin-bottom: -10px;
     }
 
     .el-dialog__header {

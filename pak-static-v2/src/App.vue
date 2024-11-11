@@ -4,11 +4,11 @@
 
 <script>
 import { defineComponent, onMounted, ref, nextTick, watch } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { Platform, SessionStorage, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -16,7 +16,7 @@ import { useUI } from "src/stores/ui";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { cached } from "boot/cache";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -25,9 +25,27 @@ export default defineComponent({
     const store = userStore();
     const ui = useUI();
     const router = useRouter();
+    const route = useRoute();
 
     const $q = useQuasar(); // calling here; equivalent to when component
     // $q.dark.set(true);
+    const allowedDomains = [];
+
+    function shouldRedirect(domain) {
+      return allowedDomains.includes(domain);
+    }
+
+    function handleRedirect() {
+      if (!store.isApp()) {
+        const currentDomain = window.location.hostname;
+
+        if (shouldRedirect(currentDomain)) {
+          SessionStorage.setItem("REDIRECT_PATH", window.location.pathname);
+          router.replace("/redirect");
+        }
+      }
+    }
+
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
@@ -260,6 +278,7 @@ export default defineComponent({
           ui.tiktokUrl = data.tiktok;
           ui.whatsappUrl = data.whatsapp;
           ui.youtubeUrl = data.youtube;
+          ui.footerIcon = data.footer_icon;
         });
     };
 
@@ -277,7 +296,54 @@ export default defineComponent({
       });
     };
 
+    const checkFBPixelInit = () => {
+      const windowLocation = window.location.hostname;
+      const pixelDataStr = sessionStorage.getItem("FB_PIXEL_CODE");
+      const isNoPixel = sessionStorage.getItem("NO_FB_PIXEL_CODE");
+      if (isNoPixel) {
+        return;
+      } else if (pixelDataStr) {
+        registerFbPixel(JSON.parse(pixelDataStr));
+      } else {
+        api.get(`/member/fb-request?url=${windowLocation}`).then((res) => {
+          if (res.code === 0) {
+            registerFbPixel(res.data);
+            sessionStorage.setItem("FB_PIXEL_CODE", JSON.stringify(res.data));
+          } else {
+            sessionStorage.setItem("NO_FB_PIXEL_CODE", "1");
+          }
+        });
+      }
+    };
+
+    const registerFbPixel = (res) => {
+      const { fbId, token } = res;
+      if (fbId !== "1") {
+        const fbIdList = fbId.split("|");
+        fbIdList.forEach((_fbId) => fbq("init", _fbId));
+      } else {
+        const tokenObj = JSON.parse(token);
+        const referralCode =
+          route.name === "referCode" && route.params.referralCode
+            ? route.params.referralCode
+            : sessionStorage.getItem("REFERRAL_CODE")
+            ? sessionStorage.getItem("REFERRAL_CODE")
+            : localStorage.getItem("REG_REFERRAL_CODE");
+        const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
+        if (!_fbId) return;
+        fbq("init", _fbId);
+      }
+      fbq("track", "PageView");
+      store.isFbPixel = true;
+
+      const isNewUser = isInPwa() ? localStorage.getItem("newUserFtd") : sessionStorage.getItem("newUserFtd");
+      if (isNewUser) {
+        document.addEventListener("ftdSuccess", trackNewUserFtd);
+      }
+    };
+
     onMounted(async () => {
+      handleRedirect();
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
@@ -305,11 +371,22 @@ export default defineComponent({
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
+      checkFBPixelInit();
     });
 
     watch(
       () => ui.shouldFetchDownloadAppUrl,
       (value) => value && ui.getTopDownloadUrl()
+    );
+    watch(
+      () => window.location.hostname,
+      () => {
+        const currentDomain = window.location.hostname;
+        const redirectKey = `redirected-${currentDomain}`;
+        if (!sessionStorage.getItem(redirectKey)) {
+          handleRedirect();
+        }
+      }
     );
   }
 });

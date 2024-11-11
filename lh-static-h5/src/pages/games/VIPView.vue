@@ -318,14 +318,14 @@
       <table border="1" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
-            <th>VIP等级</th>
+            <th>VIP<br>等级</th>
             <!-- <th>会员等级</th> -->
             <th>首次保级彩金</th>
             <th>年度保级彩金</th>
-            <th>生日彩金</th>
+            <th>生日<br>彩金</th>
             <!--            <th>节日礼金</th>-->
-            <th>每日返水红包</th>
-            <th>会员日每月15号</th>
+            <th>每日额外返水红包</th>
+            <th>会员日每月<br>15号</th>
             <th>会员充值加码10%</th>
           </tr>
         </thead>
@@ -338,7 +338,7 @@
             <td>-</td>
             <!--            <td>-</td>-->
             <td>0.1%</td>
-            <td>8</td>
+            <td>5</td>
             <td>10</td>
           </tr>
           <tr>
@@ -349,7 +349,7 @@
             <td>-</td>
             <!--            <td>-</td>-->
             <td>0.2%</td>
-            <td>18</td>
+            <td>8</td>
             <td>28</td>
           </tr>
           <tr>
@@ -360,7 +360,7 @@
             <td>-</td>
             <!--            <td>-</td>-->
             <td>0.3%</td>
-            <td>28</td>
+            <td>18</td>
             <td>58</td>
           </tr>
           <tr>
@@ -371,7 +371,7 @@
             <td>38</td>
             <!--            <td>-</td>-->
             <td>0.5%</td>
-            <td>38</td>
+            <td>28</td>
             <td>88</td>
           </tr>
           <tr>
@@ -382,7 +382,7 @@
             <td>58</td>
             <!--            <td>-</td>-->
             <td>0.6%</td>
-            <td>58</td>
+            <td>38</td>
             <td>128</td>
           </tr>
           <tr>
@@ -393,7 +393,7 @@
             <td>88</td>
             <!--            <td>-</td>-->
             <td>0.8%</td>
-            <td>68</td>
+            <td>58</td>
             <td>188</td>
           </tr>
           <tr>
@@ -404,7 +404,7 @@
             <td>188</td>
             <!--            <td>-</td>-->
             <td>1.0%</td>
-            <td>128</td>
+            <td>68</td>
             <td>258</td>
           </tr>
           <tr>
@@ -415,7 +415,7 @@
             <td>288</td>
             <!--            <td>188</td>-->
             <td>1.2%</td>
-            <td>208</td>
+            <td>128</td>
             <td>388</td>
           </tr>
           <tr>
@@ -426,7 +426,7 @@
             <td>388</td>
             <!--            <td>288</td>-->
             <td>1.3%</td>
-            <td>388</td>
+            <td>208</td>
             <td>508</td>
           </tr>
           <tr>
@@ -437,7 +437,7 @@
             <td>588</td>
             <!--            <td>388</td>-->
             <td>1.5%</td>
-            <td>588</td>
+            <td>388</td>
             <td>888</td>
           </tr>
           <tr>
@@ -448,7 +448,7 @@
             <td>888</td>
             <!--            <td>888</td>-->
             <td>1.8%</td>
-            <td>888</td>
+            <td>588</td>
             <td>1,288</td>
           </tr>
           <tr>
@@ -459,7 +459,7 @@
             <td>1,888</td>
             <!--            <td>1,888</td>-->
             <td>2.0%</td>
-            <td>1,888</td>
+            <td>888</td>
             <td>2,888</td>
           </tr>
         </tbody>
@@ -480,16 +480,16 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr>
+          <tr>
             <td>VIP0</td>
             <td>0.45%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.60%</td>
-            <td>0.15%</td>
+            <!-- <td>0.15%</td> -->
             <td>8,888</td>
-          </tr> -->
+          </tr>
           <tr>
             <td>VIP1</td>
             <td>0.45%</td>
@@ -657,26 +657,26 @@
         <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款</li>
       </ol>
 
-      <h2>五. 每日返水红包</h2>
+      <h2>五. 每日额外返水红包</h2>
       <ol class="terms">
         <li>
-          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
+          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
           <br />
-          例：VIP12会员当日的返水金额为1000元，则按照VIP12每日返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
+          例：VIP12会员当日的返水金额为1000元，则按照VIP12每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
         </li>
       </ol>
 
       <h2>六. 会员日</h2>
       <ol class="terms">
         <li>
-          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至21号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
+          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：
         </li>
       </ol>
 
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金一倍流水）即可提款；
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（彩金三倍流水）即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -1249,7 +1249,7 @@ const categories = [
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
   { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
-  { key: "redPacket", image: "rebate", displayName: "每日返水红包" },
+  { key: "redPacket", image: "rebate", displayName: "每日额外返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
   { key: "birthday", image: "birthday", displayName: "生日礼金" }
@@ -1661,7 +1661,7 @@ $border-settings: 1px solid #e5e7eb;
           justify-content: flex-start;
           align-items: center;
           flex-direction: column;
-          font-size: 10px;
+          font-size: 8px;
           min-height: 112px;
           .vip-inner {
             border: 1px solid #799df8;

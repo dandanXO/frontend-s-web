@@ -59,10 +59,10 @@
           <img v-else class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加电子钱包</span>
         </div>
-        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
-        </div> -->
+        </div>
       </div>
 
       <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">

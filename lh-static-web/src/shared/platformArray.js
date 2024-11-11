@@ -230,6 +230,14 @@ export const slotPlatforms = [
     caption: "",
     gameCode: ""
   },
+  {
+    code: "PP",
+    cnname: "PP电子",
+    image: "pp",
+    message: "",
+    caption: "",
+    gameCode: ""
+  },
   // {
   //   code: "EVO",
   //   cnname: "EVO电子",
@@ -239,6 +247,15 @@ export const slotPlatforms = [
   //   caption: "",
   //   gameCode: ""
   // }
+  {
+    code: "MGP",
+    name: "MGP",
+    cnname: "MG电子",
+    image: "mg",
+    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
+    caption: "",
+    gameCode: ""
+  },
   {
     code: "AG",
     name: "XIN",

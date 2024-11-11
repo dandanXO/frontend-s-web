@@ -16,7 +16,10 @@
             </div>
           </div>
         </div>
-        <div class="promo-list-wrapper">
+        <div class="loading" v-if="isLoadingPromo">
+          <img class="loading-img" src="../assets/logo.png" />
+        </div>
+        <div class="promo-list-wrapper" v-else>
           <div
             class="promo-item"
             v-for="(promo, i) in filteredArray"
@@ -51,7 +54,6 @@
         </div>
       </div>
     </div>
-
     <div
       v-else
       class="selected-promo"
@@ -83,6 +85,7 @@
             isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024',
             isYallaCompass: selectedPromo.promoCode === 'dy2-yalla-compass',
             isBbdachaBelgrade: selectedPromo.promoCode === 'dy2-bbdacha-belgrade',
+            isValorantChampionTour2024: selectedPromo.promoCode === 'dy2-valorant-champion-tour-2024'
           }"
         >
           <div
@@ -128,7 +131,8 @@
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
               selectedPromo.promoCode === 'dy2-midautumn-spinwheel' ||
               selectedPromo.promoCode === 'dy2-s14-vote' ||
-              selectedPromo.promoCode === 'dy2-elisa-gift',
+              selectedPromo.promoCode === 'dy2-elisa-gift' ||
+              selectedPromo.promoCode === 'dy2-blast-premier-treasure',
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
@@ -137,6 +141,7 @@
             dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl',
             isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
             isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
+            isValorantChampionTour2024: selectedPromo.promoCode === 'dy2-valorant-champion-tour-2024'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -168,6 +173,9 @@
             </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
               <BbdachaBelgrade />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-champion-tour-2024'">
+              <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
             </div>
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
             <div
@@ -202,7 +210,7 @@ import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattl
 
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const BbdachaBelgrade = defineAsyncComponent(() => import("@/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
-
+const ValorantChampionTour2024 = defineAsyncComponent(() => import("@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -211,7 +219,8 @@ export default defineComponent({
     BlastPremierMarquee,
     NBAWaterBattle,
     YallaCompass,
-    BbdachaBelgrade
+    BbdachaBelgrade,
+    ValorantChampionTour2024
   },
   setup() {
     const store = userStore();
@@ -228,6 +237,7 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
+    const isLoadingPromo = ref(false);
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -328,9 +338,13 @@ export default defineComponent({
       }
     };
     const loadAll = async () => {
+      isLoadingPromo.value = true;
+
       const isLogin = !!store.hasToken();
       await loadTabs();
       loadPromo(isLogin).then((res) => {
+        isLoadingPromo.value = false;
+
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
 
@@ -354,7 +368,10 @@ export default defineComponent({
           }
         }
       }).catch((e) => {
+        isLoadingPromo.value = false;
         console.log("error", e);
+      }).finally(() => {
+        isLoadingPromo.value = false;
       });
     };
     onMounted(() => {
@@ -380,7 +397,8 @@ export default defineComponent({
       banner,
       imgURL,
       getPromoLabel,
-      isSpecialPromo
+      isSpecialPromo,
+      isLoadingPromo
     };
   }
 });
@@ -552,8 +570,7 @@ export default defineComponent({
           padding: 10px 0 20px;
           overflow: auto;
           width: 90%;
-          margin-bottom: 20px;
-          margin-top: 10px;
+          font-family: "PingFang SC";
 
           .type-item {
             cursor: pointer;
@@ -616,10 +633,9 @@ export default defineComponent({
       .promo-list-wrapper {
         width: 90%;
         margin: 0 auto;
-        padding-bottom: 50px;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 15px;
+        grid-gap: 20px;
 
         .promo-item {
           position: relative;
@@ -629,7 +645,7 @@ export default defineComponent({
           box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
           border-radius: 16px;
           width: 285px;
-          height: 360px;
+          height: 310px;
 
           a {
             display: flex;
@@ -672,11 +688,11 @@ export default defineComponent({
 
           .promo-info {
             text-align: right;
-            padding: 16px;
+            padding: 8px 16px;
             left: 0;
             bottom: 0;
             width: 100%;
-            gap: 10px;
+            gap: 5px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -698,7 +714,8 @@ export default defineComponent({
               width: 220px;
               white-space: pre-wrap;
               word-wrap: break-word;
-              font-weight: 600;
+              font-weight: bold;
+              line-height: 2rem;
             }
 
             .sub-viewdetail {
@@ -726,6 +743,7 @@ export default defineComponent({
             justify-content: flex-end;
             width: 60px;
             height: 34px;
+            font-family: "PingFang SC";
 
             > span {
               padding-right: 13px;
@@ -763,7 +781,9 @@ export default defineComponent({
         max-width: 1920px;
         margin: 0 auto;
 
-        &.isYallaCompass, &.isBbdachaBelgrade {
+        &.isYallaCompass,
+        &.isBbdachaBelgrade,
+        &.isValorantChampionTour2024 {
           max-width: 100%;
           .promo-bg.isDesktop {
             height: 568px !important;
@@ -850,8 +870,10 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
 
-        &.isYallaCompass, &.isBbdachaBelgrade {
-          background: #E7F1FD;
+        &.isYallaCompass,
+        &.isBbdachaBelgrade,
+        &.isValorantChampionTour2024 {
+          background: #e7f1fd;
           width: 100%;
           max-width: 100%;
           margin: 0;
@@ -995,6 +1017,33 @@ export default defineComponent({
     }
   }
 }
+
+.loading {
+  height: 25vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "PingFang SC";
+
+  .loading-img {
+    animation-name: fade-in-out;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    width: 100px;
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>
 <style scoped lang="scss">
 @media (max-width: 768px) {
@@ -1017,74 +1066,28 @@ export default defineComponent({
 
 @media (max-width: 768px) {
   .promo-container {
-    padding-bottom: 60px;
-    min-height: 100vh;
-
     .all-promotions {
-      .web-only-box {
-        display: none;
-      }
-
       .promo-main-container {
-        width: 95%;
-
         .promo-type-wrapper {
-          .type-list {
-            justify-content: flex-start;
-            font-size: 14px;
+          width: 100vw;
 
-            .type-item {
-            }
+          .type-list {
+            flex-wrap: wrap;
           }
         }
-
         .promo-list-wrapper {
-          margin-top: 20px;
-          grid-template-columns: 1fr;
+          width: calc(100vw - 80px);
+          margin: 0;
+          grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 
           .promo-item {
-            width: 100%;
+            width: 210px;
+            height: 280px;
 
             .promo-info {
-              height: 40px;
-              padding-left: 40px;
-              line-height: 40px;
-
               .viewdetail {
-                padding: 5px 10px;
+                font-size: 20px;
               }
-            }
-
-            .promo-img-wrapper {
-              .promo-bg {
-                .promo-content {
-                  &.isDesktop {
-                    display: none;
-                  }
-
-                  &.isMobile {
-                    display: block;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .selected-promo {
-      overflow: hidden;
-
-      .selected-promo-wrapper {
-        .banner-container {
-          .promo-bg {
-            &.isDesktop {
-              display: none;
-            }
-
-            &.isMobile {
-              display: block;
             }
           }
         }

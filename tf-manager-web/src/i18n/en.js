@@ -165,6 +165,8 @@ export default {
       AFFILIATE_SETTLEMENT: 'Affiliate Settlement',
       AFFILIATE_DEPOSIT: 'Transfer from Balance',
       AFFILIATE_COMMISSION: 'Transfer from Commission Balance',
+      MAIN_WALLET: 'Main Wallet Adjustment',
+      COMMISSION_WALLET: 'Commission Wallet Adjustment',
     },
   },
   status: {
@@ -313,7 +315,8 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
-    UCL: 'UEFA CHAMPIONS LEAGUE'
+    UCL: 'UEFA CHAMPIONS LEAGUE',
+    HOTELCASINO: 'HOTELCASINO',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -347,6 +350,11 @@ export default {
       COMPLETED: 'Completed',
       VOID: 'Void',
       CANCEL: 'Cancel',
+    },
+    rolloverEventType: {
+      UPDATE: 'Update Rollover',
+      CREATE: 'Create Rollover',
+      BALANCE_CHECK: 'Balance Check',
     },
   },
   rebateLevel: {
@@ -671,6 +679,7 @@ export default {
     afterEdit: 'After Edit',
     afterVipLevel: 'After VIP Level',
     amount: 'Amount',
+    amountGreaterThan: 'Amount Greater Than',
     amountLimitPerRain: 'Amount Limit Per Rain',
     adjust: 'Amount Adjust',
     alias: 'Alias',
@@ -1217,6 +1226,7 @@ export default {
     memberInviteLimit: 'Member Invite Limit',
     memberList: 'Member List',
     memberMessage: 'Member Message',
+    membersDailyTotalDeposit: 'Member Current Day Total Deposit',
     membersMonthlyTotalDeposit: 'Member Current Month Total Deposit',
     memberName: 'Member Name',
     memberPlatformAction: 'Action（Manual Register/Delete）',
@@ -1228,6 +1238,7 @@ export default {
     memberReport: 'Member Report',
     memberType: 'Member Type',
     memberWithdrawLog: 'Member Withdraw Log',
+    memberRolloverEvent: 'Rollover Event Log',
     menuGame: 'Menu Game Sequence',
     menuIcon: 'Menu Icon',
     menuTitle: 'Menu Title',
@@ -1259,6 +1270,8 @@ export default {
     mode: 'Mode',
     moneyChange: 'Money Change',
     month: 'Month',
+    monthlyDepositAmount: 'Monthly Deposit Amount',
+    monthlyDepositCount: 'Monthly Deposit Count',
     mqLogProcessWithTitle: 'MQ Title (SummaryDoris)',
     mqLogProcessTopic: 'Topic',
     mqLogProcessTimestamp: 'System Timestamp',
@@ -1440,7 +1453,9 @@ export default {
     redeemPoints: 'Redeem Points',
     redirect: 'Redirect',
     reenterPassword: 'Re-Enter Password',
+    referredName: 'Referred Name',
     referrer: 'Referrer',
+    referrerCode: 'Referrer Code',
     referrerList: 'Referrer List',
     referFriendRebateDetails: 'Refer Friend Rebate Details',
     referFriendRebateRecords: 'Refer Friend Rebate Records',
@@ -1494,6 +1509,7 @@ export default {
     roleName: 'Role Name',
     rollover: 'Rollover',
     rollOverAmt: 'Rollover Amount',
+    rolloverDetails: 'Rollover Details',
     rolloverType: 'Rollover Type',
     rollOverMulti: 'Rollover Multi Amount',
     rolloverAmount: 'Rollover Amount',
@@ -1639,6 +1655,7 @@ export default {
     thisMonth: 'This Month',
     thisWeek: 'This Week',
     ticketSetting: 'Ticket Setting',
+    ticketNo: 'Ticket No.',
     tips: 'Tips',
     title: 'Title',
     toApplying: 'To Applying',
@@ -2103,6 +2120,9 @@ export default {
     startHour: 'Start Hour',
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
+    showLogo: 'Show Logo',
+    adjustTarget: 'Adjust Target',
+    ignoreSettlement: 'Ignore Settlement',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2530,6 +2550,7 @@ export default {
     validateTeamTwoRequired: 'Team Two is required',
     validateTeamTwoIconRequired: 'Team Two Icon is required',
     validateTelephoneRequired: 'Telephone is required',
+    validateTelegramUsernameRequired: 'Telegram Username is required',
     validateThirdSerialNumberRequired: 'Third Serial Number is required',
     validateThreeDigitsNumbeRequired: '3 digits number is required',
     validateTitleRequired: 'Title is required',
@@ -2617,6 +2638,9 @@ export default {
       'Must be composed of digits and alphabet',
     validateProductIdRequired: 'Product ID is required',
     validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
+    validateLoginNameNoSpecialCharacter:
+      'The login name can only contain underscores (_), numbers, and letters.',
+    validateAdjustColumnRequired: 'Adjust Column is required',
   },
   menu: {
     undefined: '',
@@ -2893,7 +2917,10 @@ export default {
     'Member Refer Analysis': 'Member Refer Analysis',
     'TF Gaming Config': 'TF Gaming Config',
     'LH Old Data': 'LH Old Data',
+    'Affiliate Point Record': 'Affiliate Point Record',
+    'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
+    'Telegram User': 'Telegram User',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3036,6 +3063,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: 'Bet Ratio-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: 'Bet Ratio-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: 'Bet Ratio-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
@@ -3043,6 +3071,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: 'Profit Ratio-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: 'Profit Ratio-HOTELCASINO',
   },
   gameTypeRolloverSetting: {
     anyTypes: 'All Game Types',
@@ -3062,6 +3091,14 @@ export default {
     SENDING: 'Sending',
     SENT: 'Sent',
   },
+  telegram: {
+    userStatus: {
+      PENDING_CONNECT: 'Pending Connect',
+      PENDING_VERIFY: 'Pending Verification',
+      ACTIVE: 'Active',
+      STOPPED: 'Stopped',
+    }
+  },
   pmRedirectType: {
     NONE: 'No Redirect',
     INNER: 'Inner Site Redirect',
@@ -3076,7 +3113,10 @@ export default {
     WANGZE: 'WANGZE',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'Online users'
+    MEMBER_STATISTICS: 'Online users',
+    DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
+    WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
+    BONUS_FLUCTUATION: 'Bonus fluctuation',
   },
   error: {
     400: 'Bad Request',
@@ -3186,6 +3226,7 @@ export default {
     14011: 'Affiliate already exist',
     14012: 'Can only edit affiliate to lower level',
     14013: 'Affiliate has downline, cannot set to lower level',
+    14014: 'The phone number is incorrect / The phone number is not in the correct format',
     14100: 'The affiliate does not have this downline member',
     14101: 'This affiliate does not have permission to perform this action',
     14110: 'Platform and Site with same name already exist',

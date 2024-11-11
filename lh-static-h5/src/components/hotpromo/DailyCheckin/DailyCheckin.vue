@@ -21,7 +21,10 @@
           @click="handleClickSectionOneItem(item)"
         >
           <div class="numbers">
-            <div class="bonus-number">{{ item.bonus }}<span class="rmb">¥</span></div>
+            <div class="bonus-number">
+              {{ item.bonus }}
+              <span class="rmb">¥</span>
+            </div>
             <div class="active-point" v-if="item.activePoint > 0">+{{ item.activePoint }}活跃</div>
           </div>
           <div class="status-img">
@@ -214,22 +217,18 @@
               <img style="width: 104px; height: 28px" :src="require('./images/rule-content.png')" />
               <div class="text" style="margin-left: -20px; overflow: scroll; height: 250px">
                 <ul>
+                  <li>雷火电竞会员存款达到相应要求即可领取签到礼金和对应活跃积分，签到金仅需8倍流水即可提款；</li>
                   <li>
-                    所有雷火电竞会员存款达到相应 VIP
-                    等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 +
-                    奖金）*相应流水倍数即可提款。
+                    签到礼金和活跃积分每周期只可领取一次，活动期间,若用户签到中断,则重新开始计算,已开启过的宝箱无法再次开启,签到彩金由系统自动实时派发至会员主钱包内；
                   </li>
-                  <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
                   <li>
-                    此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP
-                    地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+                    根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
                   </li>
-                  <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
                   <li>
-                    所有雷火电竞会员存款达到相应 VIP
-                    等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 +
-                    奖金）*相应流水倍数即可提款。
+                    此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+                    地址视为同一账户，若有违规者，将不享受此红利；
                   </li>
+                  <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
                 </ul>
               </div>
             </div>
@@ -294,19 +293,26 @@ const countiuneSign = computed(() => {
 //   //   }
 //   // });
 //   // return times * 25;
-  
+
 //   return currentActivePoints.value
 // });
 
 const countPercent = computed(() => {
   let times = 0;
   sectionOneBoxItems.value.forEach((item) => {
-    console.log(currentActivePoints.value)
-    if ((currentActivePoints.value >= +item.requiredActivePoint)) {
-      times++
+    console.log(currentActivePoints.value);
+    if (currentActivePoints.value >= +item.requiredActivePoint) {
+      times++;
     }
   });
-  return times * 25;
+  if (times <= 0) {
+    return (currentActivePoints.value / 5) * 2.5;
+  } else if (times >= 4) {
+    return 100;
+  } else if (times >= 3) {
+    return (currentActivePoints.value / 5) * 4.5;
+  }
+  return ((times * 25) / 5) * 4;
 });
 
 const handleClickSectionOneItem = async (item) => {
@@ -368,7 +374,8 @@ const fetchData = async () => {
       currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
       totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
       if (totalRecheckInChances.value !== 0) {
-        totalRecheckMinusWeekChances.value = res.data.reCheckInState.totalRecheckInChances - res.data.reCheckInState.thisWeekUsedChances;
+        totalRecheckMinusWeekChances.value =
+          res.data.reCheckInState.totalRecheckInChances - res.data.reCheckInState.thisWeekUsedChances;
       }
       reCheckinMinDeposit.value = res.data.reCheckInState.minDeposit;
       recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
@@ -442,7 +449,7 @@ onMounted(async () => {
         top: 30%;
         text-align: center;
         .bonus-number {
-          background: linear-gradient(180deg, #FFFFFF 22.73%, #FFEF81 79.55%);
+          background: linear-gradient(180deg, #ffffff 22.73%, #ffef81 79.55%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -456,9 +463,8 @@ onMounted(async () => {
           }
         }
         .active-point {
-          font-size:7px;
+          font-size: 7px;
         }
-
       }
 
       @media (max-width: 375px) {
@@ -476,42 +482,7 @@ onMounted(async () => {
         height: 76px;
       }
     }
-    // .item0 {
-    //   background-image: url("./images/card-1-other.png");
-    // }
-    // .item0-finish {
-    //   background-image: url("./images/card-1-finish.png");
-    // }
-    // .item1 {
-    //   background-image: url("./images/card-1-other.png");
-    // }
-    // .item1-finish {
-    //   background-image: url("./images/card-1-finish.png");
-    // }
-    // .item2 {
-    //   background-image: url("./images/card-1-other.png");
-    // }
-    // .item2-finish {
-    //   background-image: url("./images/card-1-finish.png");
-    // }
-    // .item3 {
-    //   background-image: url("./images/card-1-other.png");
-    // }
-    // .item3-finish {
-    //   background-image: url("./images/card-1-finish.png");
-    // }
-    // .item4 {
-    //   background-image: url("./images/card-2-other.png");
-    // }
-    // .item4-finish {
-    //   background-image: url("./images/card-2-finish.png");
-    // }
-    // .item5 {
-    //   background-image: url("./images/card-3-other.png");
-    // }
-    // .item5-finish {
-    //   background-image: url("./images/card-3-finish.png");
-    // }
+
     .item6 {
       background-image: url("./images/card-big-other.png");
       .numbers {
@@ -533,12 +504,12 @@ onMounted(async () => {
     .status-img {
       position: absolute;
       bottom: 0px;
+      cursor: pointer;
       img {
         width: 50px;
         height: 18px;
         border-radius: 0px !important;
       }
-      cursor: pointer;
     }
     .status-text {
       position: absolute;
@@ -563,23 +534,49 @@ onMounted(async () => {
     flex-direction: column;
     .box-area {
       padding-top: 8.5%;
-      display: grid;
+      display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
       width: 85%;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 25px;
+      //grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
 
       @media (max-width: 400px) {
-        gap: 15px;
+        gap: 6px;
+      }
+
+      > div {
+        max-width: 60px;
       }
 
       .box {
         width: 100%;
+        max-width: 55px;
+        text-align: center;
+        margin: auto;
         height: auto;
       }
     }
+
+    .number-area {
+      margin: 4px auto;
+      display: flex;
+      //grid-template-columns: repeat(4, 1fr);
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+      text-align: center;
+      width: 85%;
+      gap: 10px;
+      font-size: 14px;
+      color: #fff;
+
+      > div {
+        width: 55px;
+      }
+    }
+
     .progressBar-area {
       width: 90%;
       padding-left: 20px;
@@ -603,19 +600,6 @@ onMounted(async () => {
         border-radius: 5px;
       }
     }
-    .number-area {
-      margin: 4px auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      width: 85%;
-      gap: 25px;
-      font-size: 14px;
-      color: #fff;
-    }
 
     @media (min-width: 500px) {
       min-height: 220px;
@@ -629,6 +613,11 @@ onMounted(async () => {
   flex-direction: column;
   .first {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+
     .title {
       background-image: url("./images/title1.png");
       background-repeat: no-repeat;
@@ -698,13 +687,13 @@ onMounted(async () => {
         }
       }
     }
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
   }
 }
 .secend-rule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   .title {
     font-size: 20px;
     width: 100%;
@@ -720,10 +709,6 @@ onMounted(async () => {
     margin-top: 8px;
     margin-bottom: 12px;
   }
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 .dialog-header {
   width: 315px;

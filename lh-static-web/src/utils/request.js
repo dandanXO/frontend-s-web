@@ -74,11 +74,30 @@ const globalLinks = [
   "lh059.cc",
   "lh865.cc",
   "lh911.cc",
-  "lh926.cc"
+  "lh926.cc",
+  "lh017.cc",
+  "lh070.cc",
+  "lh167.cc",
+  "lh181.cc",
+  "lh350.cc",
+  "lh389.cc",
+  "lh531.cc",
+  "lh579.cc",
+  "lh638.cc",
+  "lh650.cc",
+  "lh717.cc",
+  "lh736.cc",
+  "lh798.cc",
+  "lh819.cc",
+  "lh868.cc",
+  "lh899.cc",
+  "lh939.cc",
+  "lh971.cc",
+  "lh178.cc"
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const globalAndCNLinks = ["leihuo", "e693.cc", "e890.cc", "e561.cc", "e396.cc"];
+const globalAndCNLinks = ["leihuo", "lhgl", "e693.cc", "e890.cc", "e561.cc", "e396.cc", "lh713.vip", "65130.vip", "lh560.cc", "lh878.cc", "lh202.cc", "lh274.cc", "lh160.cc", "lh096.cc", "lh513.cc"];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 const REPLACEMENT_DOMAIN = "random";
@@ -270,10 +289,13 @@ const onResponse = (response) => {
         return;
       }
       if (
-        res.code === ResponseCode.ERROR_USER_TOO_FAST ||
-        res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
-        res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
-        res.code === ResponseCode.ERROR_PROMO_CLAIMED
+        (res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_IN_RANGE ||
+          res.code === ResponseCode.ERROR_SYSTEM) &&
+        window.location.href.indexOf("?name=lh1-daily-checkin") === -1
       ) {
         ui.notify({
           type: "error",

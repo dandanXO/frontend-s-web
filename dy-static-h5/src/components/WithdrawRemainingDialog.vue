@@ -4,29 +4,35 @@
       <div class="withdraw-remaining-dialog__header">
         <div class="withdraw-remaining-dialog__header-title">
           <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-          <span>继续提款需达成以下条件</span>
+          <span>请完成以下条件</span>
         </div>
-        <span class="withdraw-remaining-dialog__header-help-text">若有疑问，请联系在线客服核查~</span>
+        <span class="withdraw-remaining-dialog__header-help-text">
+          若有疑问，请联系在线客服核查~
+          <br />
+          *若平台结算流水有延迟，请您10分钟后重试！
+        </span>
       </div>
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
       <div class="withdraw-remaining-dialog__body">
         <div class="withdraw-remaining-dialog__body-title">
-          完成
+          再完成
           <span class="text-yellows">{{ convertToCommaAmount(totalRemaining) }}</span>
           流水，立即享受快速提款
-          <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" />
         </div>
         <table class="withdraw-remaining-dialog__body-table">
           <thead>
             <tr>
               <th align="center">投注要求</th>
-              <th align="center">流水进度</th>
+              <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
+                流水进度
+                <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" /> -->
+              </th>
               <th align="center">完成状态</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(record, index) in tableData" :key="index">
-              <td align="center">{{ getDisplayRemainingType(record.type) }}</td>
+              <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
               <td align="center">
                 {{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}
               </td>
@@ -36,7 +42,10 @@
             </tr>
           </tbody>
         </table>
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <div class="withdraw-remaining-dialog__buttons">
+          <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -52,6 +61,16 @@ const isShow = defineModel();
 const router = useRouter();
 
 const tableData = ref([]);
+
+const getDisplayRemainingTypes = (items) => {
+  const typess = items.split(",");
+  let typeStr = [];
+  typess.forEach((type) => {
+    typeStr.push(getDisplayRemainingType(type));
+  });
+  return typeStr.join("，");
+};
+
 
 const getDisplayRemainingType = (type) => {
   switch (type) {
@@ -71,7 +90,17 @@ const getDisplayRemainingType = (type) => {
       return "棋牌";
     case "slot":
       return "电子";
+    case "vSport":
+      return "虚拟运动";
+    case "miniGame":
+      return "小游戏";
+    case "cockfight":
+      return "斗鸡";
+    case "numberGame":
+      return "数字游戏";
     case "all":
+      return "任意类型";
+    default:
       return "任意类型";
   }
 };
@@ -180,7 +209,7 @@ onMounted(() => {
         font-size: var(--font-size-large);
         font-weight: 600;
         line-height: var(--line-height);
-        text-align: center;
+        text-align: left;
         color: #424f72;
         display: flex;
         align-items: center;
@@ -253,6 +282,13 @@ onMounted(() => {
         }
       }
     }
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
 
     .withdraw-remaining-dialog__action {
       width: 100%;
@@ -265,16 +301,26 @@ onMounted(() => {
       font-weight: 600;
       line-height: var(--line-height);
       text-align: center;
+      text-align: center;
+      background: url(../assets/images/finance/withdraw/active-btn.png);
+      background-size: 100% 100%;
       color: #fff;
-
+      opacity: 0.9;
+      &:first-of-type {
+        background: url(../assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }
 
   .text-yellows {
-    color: #a2a213ff;
+    font-size: 22px;
+    color: #599cff;
   }
 
   .refresh-btn {

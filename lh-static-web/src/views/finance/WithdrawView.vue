@@ -68,24 +68,35 @@
           label="提款金额"
           name="amount"
         >
-          <el-row :gutter="10" style="align-items: center">
-            <el-col :span="12">
-              <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
-                <template #append>{{ store.currency.label }}</template>
-              </el-input>
-            </el-col>
-            <el-col :span="12">
-              <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
-                {{
-                  `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
-                }}
-                <br />
-                {{
-                  `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
-                }}
-              </span>
-            </el-col>
-          </el-row>
+          <el-space>
+            <el-row :gutter="10" style="align-items: center">
+              <el-col :span="12">
+                <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
+                  <template #append>{{ store.currency.label }}</template>
+                </el-input>
+              </el-col>
+              <el-col :span="12">
+                <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
+                  {{
+                    `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                  }}
+                  <br />
+                  {{
+                    `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                  }}
+                </span>
+              </el-col>
+            </el-row>
+            <el-button
+              :loading="loadingBtn"
+              :disable="loadingBtn"
+              size="large"
+              class="common-btn withdraw-btn"
+              @click="submitWithraw"
+            >
+              确定
+            </el-button>
+          </el-space>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -114,9 +125,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
-            </div>
+            <!--            <div v-if="isALIPAY" class="selected-tip">-->
+            <!--              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！-->
+            <!--            </div>-->
           </el-col>
         </el-row>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
@@ -162,7 +173,10 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                : (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                    selectedWithdrawalMethod.withdrawFee
+                  ).toFixed(2)
             }}
             USDT
           </span>
@@ -186,17 +200,7 @@
           v-html="selectedWithdrawalMethod.tips"
         ></div> -->
 
-        <div class="flex-box flex-justify-center">
-          <el-button
-            :loading="loadingBtn"
-            :disable="loadingBtn"
-            size="large"
-            class="common-btn withdraw-btn"
-            @click="submitWithraw"
-          >
-            确定
-          </el-button>
-        </div>
+        <div class="flex-box flex-justify-center"></div>
       </el-form>
     </div>
     <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
@@ -662,10 +666,10 @@ export default defineComponent({
       align-items: center;
       position: relative;
       padding: 10px;
-
+      gap: 10px;
       .promo-label {
         position: absolute;
-        bottom: -13px;
+        bottom: 30%;
         left: 50%;
         transform: translate(-50%);
         width: 50px;
@@ -748,7 +752,7 @@ export default defineComponent({
 
   .withdraw-btn {
     // min-width: 300px;
-    margin: 30px auto;
+    // margin: 30px auto;
 
     &.cancel {
       margin-right: 60px;

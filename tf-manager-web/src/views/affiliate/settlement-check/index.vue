@@ -81,6 +81,22 @@
         size="small"
         label-width="150px"
       >
+        <el-form-item :label="t('fields.adjustTarget')" prop="adjustColumn">
+          <el-select
+            v-model="form.adjustColumn"
+            size="small"
+            :placeholder="t('fields.adjustTarget')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in uiControl.adjustColumn"
+              :key="item.key"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.adjustType')" prop="adjustType">
           <el-select
             v-model="form.adjustType"
@@ -481,6 +497,10 @@ const uiControl = reactive({
   status: [
     { key: 1, displayName: 'CHECKING', value: 'CHECKING' },
     { key: 2, displayName: 'CLEARED', value: 'CLEARED' },
+  ],
+  adjustColumn: [
+    { key: 1, displayName: t('fields.finalSum'), value: "FINAL" },
+    { key: 2, displayName: t('fields.netProfit'), value: "COMM" }
   ]
 })
 const defaultQueryMonth = convertDate(moment(new Date()));
@@ -514,6 +534,7 @@ const form = reactive({
   adjustType: null,
   adjustAmount: null,
   adjustReason: null,
+  adjustColumn: null,
 })
 
 function restrictDecimalInput(event) {
@@ -533,6 +554,7 @@ function restrictDecimalInput(event) {
 }
 
 const formRules = reactive({
+  adjustColumn: [required(t('message.validateAdjustColumnRequired'))],
   adjustType: [required(t('message.validateAdjustTypeRequired'))],
   adjustAmount: [required(t('message.validateAdjustAmountRequired'))],
   adjustReason: [required(t('message.validateAdjustReasonRequired'))],
@@ -607,11 +629,12 @@ async function loadSettlement() {
   page.loading = false
 }
 
-function showEdit(adjust) {
+function showEdit(adjust, type) {
   if (adjustForm.value) {
     adjustForm.value.resetFields()
   }
   form.id = adjust.id
+  form.adjustColumn = type
   uiControl.dialogTitle = t('fields.adjust')
   uiControl.dialogVisible = true
 }

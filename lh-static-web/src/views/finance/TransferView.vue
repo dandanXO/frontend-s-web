@@ -4,7 +4,7 @@
       电竞用户首存55%红利
       <br />
       新用户首存可获688元！
-      <router-link to="/center/deposit">
+      <router-link to="/promotion?name=lh1-newplayer-guide">
         <el-button size="small" class="blue-btn join-btn outline">立即参与</el-button>
       </router-link>
     </div>
@@ -747,7 +747,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   }
 
   .balance-plat-item {
-    background: linear-gradient(90deg, #344468 0%, #1A2338 100%);
+    background: linear-gradient(90deg, #344468 0%, #1a2338 100%);
     border: 1px solid rgba(120, 171, 219, 1);
 
     .right-box {
@@ -760,7 +760,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   }
 
   .blue-btn {
-    background: url('../../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    background: url("../../assets/images/home/standard-button-bg.svg") no-repeat center center;
     background-size: auto;
     box-shadow: none;
     border-radius: 8px;
@@ -768,8 +768,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
     height: 36px;
     padding: 6px 26px;
 
-    &.outline{
-      background: url('../../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    &.outline {
+      background: url("../../assets/images/home/standard-button-bg.svg") no-repeat center center;
       background-size: auto;
       box-shadow: none;
       border-radius: 8px;

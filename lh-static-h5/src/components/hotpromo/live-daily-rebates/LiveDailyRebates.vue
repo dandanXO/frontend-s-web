@@ -7,14 +7,14 @@
           :class="{ active: tabValue === 'lh1-live-daily-bonus' }"
           @click="tabValue = 'lh1-live-daily-bonus'"
         >
-          活动 1
+          日投返利
         </div>
         <div
           class="tab"
           :class="{ active: tabValue === 'lh1-live-weekly-bonus' }"
           @click="tabValue = 'lh1-live-weekly-bonus'"
         >
-          活动 2
+          周投返利
         </div>
       </div>
 
@@ -61,7 +61,7 @@
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
+                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
                   alt=""
                   width="100%"
                 />
@@ -83,7 +83,7 @@
             >
               <div class="left">活动内容</div>
               <div class="right">
-                活动期间，统计当日真人视讯场馆游戏总有效投注≥8,000 元或以上，次日 00:00 起，即可在本活动页面点击
+                活动期间，统计当日真人视讯场馆游戏总有效投注≥8,000 元或以上，次日 01:00 起，即可在本活动页面点击
                 [点击领取] 按钮领取彩金
               </div>
             </div>
@@ -140,16 +140,19 @@
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
-                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+                活动期间，符合条件的会员在次日01:00点起前往本活动页面点击【点击领取】按钮即可获得彩金，彩金只保留在当天23:59点前领取，逾期不补。
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                同一手机号、姓名、邮箱地址、银行卡号、IP
-                地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
+                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单或局数不计。
               </div>
               <div class="item">
                 <div class="item-num">5</div>
+                同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与。任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+              </div>
+              <div class="item">
+                <div class="item-num">6</div>
                 为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
               </div>
             </div>
@@ -200,7 +203,7 @@
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
+                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
                   alt=""
                   width="100%"
                 />
@@ -267,16 +270,19 @@
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
-                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单注单或局数不计。
+                活动期间，符合条件的会员在次日01:00点起前往本活动页面点击【点击领取】按钮即可获得彩金，彩金只保留在当天23:59点前领取，逾期不补。
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                同一手机号、姓名、邮箱地址、银行卡号、IP
-                地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+                真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
+                24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单或局数不计。
               </div>
               <div class="item">
                 <div class="item-num">5</div>
+                同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与。任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+              </div>
+              <div class="item">
+                <div class="item-num">6</div>
                 为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
               </div>
             </div>

@@ -30,6 +30,23 @@
               size="normal"
             />
           </el-form-item>
+          <el-form-item :label="t('fields.recordTime') + ' :'">
+            <el-date-picker
+              v-model="request.recordTime"
+              format="DD/MM/YYYY"
+              value-format="YYYY-MM-DD"
+              size="normal"
+              class="input-small"
+              type="daterange"
+              range-separator=":"
+              :start-placeholder="t('fields.startDate')"
+              :end-placeholder="t('fields.endDate')"
+              :shortcuts="shortcuts"
+              :disabled-date="disabledDate"
+              :editable="false"
+              :clearable="false"
+            />
+          </el-form-item>
           <el-form-item>
             <div class="grp-btn">
               <el-button
@@ -77,7 +94,7 @@
           {{ item.name }}
         </el-breadcrumb-item>
       </el-breadcrumb> -->
-      <!-- 
+      <!--
       <table cellpadding="0" cellspacing="0" border class="custom-table">
         <thead>
           <tr>
@@ -245,6 +262,51 @@
             <span v-if="scope.row.downlineAffiliate !== null">
               {{ scope.row.downlineAffiliate }}
             </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="totalDeposit"
+          :label="t('fields.downlineTotalDeposit')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{
+                data: scope.row.totalDeposit,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="totalWithdraw"
+          :label="t('fields.downlineTotalWithdraw')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{
+                data: scope.row.totalWithdraw,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="totalDepositWithdraw"
+          :label="t('fields.downlineTotalDepositWithdraw')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{
+                data: scope.row.totalDeposit - scope.row.totalWithdraw,
+                type: 'money',
+              }"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -577,6 +639,12 @@
             maxlength="11"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.realName')" prop="realName">
+          <el-input
+            v-model="cForm.realName"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.password')" prop="password">
           <el-input
             v-model="cForm.password"
@@ -623,12 +691,12 @@
           <div
             v-for="item in shareRatioList.list"
             :key="item.code"
-            style="width: 350px; display: flex; margin-bottom:5px;"
+            style="width: 370px; display: flex; margin-bottom:5px;"
           >
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto"
+              style=" width:80px; margin-left: auto"
             />
             <span style="color:red">
               &emsp; (0% -
@@ -710,12 +778,12 @@
           <div
             v-for="item in eForm.shareRatio"
             :key="item.code"
-            style="width: 350px; display: flex; margin-bottom:5px;"
+            style="width: 370px; display: flex; margin-bottom:5px;"
           >
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto"
+              style=" width:80px; margin-left: auto"
             />
             <span style="color:red">
               &emsp; ( {{ (getDownlineRatio(item.code) * 100).toFixed(2) }}% -
@@ -765,7 +833,7 @@
 <script setup>
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import { useStore } from '@/store'
-// import moment from 'moment'
+import moment from 'moment'
 import {
   getAffiliateDownline,
   regsterAffiliate,
@@ -806,15 +874,6 @@ const affiliateLevelKey = ref(null)
 
 const site = ref(null)
 const affInfo = ref(null)
-// const startDate = new Date()
-// const defaultStartDate = convertDate(
-//   startDate.setTime(
-//     moment(startDate)
-//       .startOf('month')
-//       .format('x')
-//   )
-// )
-// const defaultEndDate = convertDate(new Date())
 const checkId = ref(null)
 const breadcrumbNameList = ref([])
 const shareRatioList = reactive({
@@ -823,119 +882,126 @@ const shareRatioList = reactive({
 const downlineShareRatioList = reactive({
   list: [],
 })
-// const shortcuts = [
-//   {
-//     text: t('fields.today'),
-//     value: () => {
-//       const end = new Date()
-//       const start = new Date()
-//       return [start, end]
-//     },
-//   },
-//   {
-//     text: t('fields.yesterday'),
-//     value: () => {
-//       const end = new Date()
-//       const start = new Date()
-//       start.setTime(
-//         moment(start)
-//           .subtract(1, 'days')
-//           .format('x')
-//       )
-//       end.setTime(
-//         moment(end)
-//           .subtract(1, 'days')
-//           .format('x')
-//       )
-//       return [start, end]
-//     },
-//   },
-//   {
-//     text: t('fields.thisWeek'),
-//     value: () => {
-//       const end = new Date()
-//       const start = new Date()
-//       start.setTime(
-//         moment(start)
-//           .startOf('isoWeek')
-//           .format('x')
-//       )
-//       return [start, end]
-//     },
-//   },
-//   {
-//     text: t('fields.lastWeek'),
-//     value: () => {
-//       const end = new Date()
-//       const start = new Date()
-//       start.setTime(
-//         moment(start)
-//           .subtract(1, 'weeks')
-//           .startOf('isoWeek')
-//           .format('x')
-//       )
-//       end.setTime(
-//         moment(end)
-//           .subtract(1, 'weeks')
-//           .endOf('isoWeek')
-//           .format('x')
-//       )
-//       return [start, end]
-//     },
-//   },
-//   {
-//     text: t('fields.thisMonth'),
-//     value: () => {
-//       const end = new Date()
-//       const start = new Date()
-//       start.setTime(
-//         moment(start)
-//           .startOf('month')
-//           .format('x')
-//       )
-//       return [start, end]
-//     },
-//   },
-//   {
-//     text: t('fields.lastMonth'),
-//     value: () => {
-//       const end = new Date()
-//       const start = new Date()
-//       start.setTime(
-//         moment(start)
-//           .subtract(1, 'months')
-//           .startOf('month')
-//           .format('x')
-//       )
-//       end.setTime(
-//         moment(end)
-//           .subtract(1, 'months')
-//           .endOf('month')
-//           .format('x')
-//       )
-//       return [start, end]
-//     },
-//   },
-//   {
-//     text: t('fields.thisThreeMonths'),
-//     value: () => {
-//       const end = new Date()
-//       const start = new Date()
-//       start.setTime(
-//         moment()
-//           .subtract(2, 'months')
-//           .startOf('month')
-//           .valueOf()
-//       )
-//       return [start, end]
-//     },
-//   },
-// ]
+function convertStartDate(date) {
+  return moment(date)
+    .startOf('day')
+    .format('YYYY-MM-DD')
+}
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD')
+}
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+]
+const shortcuts = [
+  {
+    text: t('fields.today'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('day')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.yesterday'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'days')
+          .startOf('day')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'days')
+          .endOf('day')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'weeks')
+          .startOf('isoWeek')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'weeks')
+          .endOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'months')
+          .endOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+]
 
 const request = reactive({
   loginName: null,
   size: 20,
   current: 1,
+  recordTime: [convertStartDate(new Date()), convertDate(new Date())],
 })
 
 const page = reactive({
@@ -1022,6 +1088,12 @@ const cFormRules = reactive({
   loginName: [
     required(t('message.requiredLoginName')),
     size(6, 12, t('message.length6To12')),
+    {
+      required: true,
+      pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+      message: t('common.affiliateaccountcanonlycontainnumchar'),
+      trigger: 'blur',
+    },
   ],
   password: [
     required(t('message.requiredPassword')),
@@ -1086,6 +1158,7 @@ function restrictCommissionDecimalInput(event) {
 
 function resetQuery() {
   request.loginName = null
+  request.recordTime = [convertStartDate(new Date()), convertDate(new Date())]
 }
 
 async function loadDownlineAffiliates() {
@@ -1104,6 +1177,7 @@ async function loadDownlineAffiliates() {
   //     query.regTime = request.regTime.join(',')
   //   }
   // }
+  query.recordTime = query.recordTime.join(',')
   query.siteId = site.value.id
   query.memberTypes = 'AFFILIATE'
   const { data: ret } = await getAffiliateDownline(checkId.value, query)
@@ -1164,7 +1238,7 @@ function showEdit(affiliate) {
         })
       }
     }
-    eForm.shareRatio = JSON.parse(JSON.stringify(affiliate.shareRatio))
+    eForm.shareRatio = JSON.parse(JSON.stringify(eForm.shareRatio))
     for (var index = 0; index < eForm.shareRatio.length; index++) {
       eForm.shareRatio[index].value *= 100.0
       eForm.shareRatio[index].value = parseFloat(
@@ -1307,7 +1381,7 @@ onMounted(async () => {
     return level.value === affiliateLevel.value
   })[0].key
   uiControl.affiliateLevel = uiControl.affiliateLevel.filter(level => {
-    return level.key >= affiliateLevelKey.value
+    return level.key > affiliateLevelKey.value
   })
 })
 </script>

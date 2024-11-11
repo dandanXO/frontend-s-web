@@ -2,44 +2,63 @@
   <div class="btn-container">
     <div class="go-deposit-btn" :class="isFtdPromoEnded ? 'is-disabled' : ''" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
-      <span>{{ $t("btn.joinNow") }}</span>
+      <span>JOIN NOW</span>
     </div>
 
     <div class="text-warning" v-if="isFtdPromoEnded">
-      {{ $t("promo_ph1SlotFtd.sorryDesc") }}
+      {{ params.desc_warning }}
     </div>
   </div>
 </template>
-
 <script setup>
 import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { userStore } from "@/stores";
+import { userStore } from "src/stores";
+import { api } from "boot/axios";
 
 const router = useRouter();
+
 const store = userStore();
 
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
-onMounted(() => {});
-
 const isFtdPromoEnded = computed(() => {
   if (store.ftd === true) {
     return true;
   }
-
   return false;
 });
+
 const gotoDepositPage = () => {
   const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
+  // if (window.location.pathname === "/promotion") {
+  //   window.location.href = `xfapp:${redirectPage}`;
+  // } else {
   router.push(redirectPage);
+  // }
 };
+
+const loadAppTabs = () => {
+  api.get("/opt-session/getAppTabs").then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+      if (data && data.hasOwnProperty("ftd")) {
+        store.ftd = data.ftd;
+      }
+    }
+  });
+};
+
+onMounted(() => {
+  loadAppTabs();
+});
 </script>
 <style lang="scss">
 .btn-container {
   width: 100%;
   margin: 8px auto 10px;
+  position: relative;
 }
 .text-warning {
   padding: 8px 0px;
@@ -62,7 +81,7 @@ const gotoDepositPage = () => {
   }
 
   img {
-    width: 28px;
+    width: 28px !important;
     margin: 0px;
     display: inline-block;
     height: auto;
@@ -72,7 +91,6 @@ const gotoDepositPage = () => {
     color: #fff;
     font-size: 20px;
     font-weight: 700;
-    text-transform: uppercase;
   }
 
   &:active {

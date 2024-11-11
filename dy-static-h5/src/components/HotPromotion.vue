@@ -78,8 +78,12 @@
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24'" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24'" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual'" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <BlastPremierGlobalPromo v-if="list.redirectUrl === 'dy2-blast-premier-treasure'" :promo-code="list.promoCode" />
+    <DreamLeagueS24 v-if="list.redirectUrl === 'dy2-dreamleague-s24'" :promo-code="list.promoCode" />
+
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
@@ -103,6 +107,7 @@
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
+    <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -181,10 +186,16 @@ const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba
 const LPLSummer24 = defineAsyncComponent(() => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
 const DragonBoat = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
 const EurocupManual = defineAsyncComponent(() => import("./hotpromo/EurocupManual/EurocupManual.vue"));
+const ChallengeComebackPromo =  defineAsyncComponent(() => import("../components/hotpromo/challenge-comeback/ChallengeComeback.vue"));
 const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
+const BlastPremierGlobalPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/BlastPremierGlobalPromo/BlastPremierGlobalPromo.vue")
+);
+const DreamLeagueS24 = defineAsyncComponent(() => import("./hotpromo/dream-league-s24/DreamLeagueS24.vue"));
+
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
 const MeiZhouBeiPromoPage = defineAsyncComponent(() =>
   import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
@@ -214,6 +225,7 @@ const IemMasterPromo = defineAsyncComponent(()=>import("./hotpromo/iem-master/Ie
 const PullbackTide = defineAsyncComponent(()=>import("./hotpromo/pullback-tide/PullbackTide.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
 const ElisaGift = defineAsyncComponent(()=>import("./hotpromo/elisa-gift/ElisaGift.vue"));
+const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -223,6 +235,8 @@ export default defineComponent({
     LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
+    BlastPremierGlobalPromo,
+    DreamLeagueS24,
     fishHongbao,
     OlympicFund,
     Olympic24Match,
@@ -277,7 +291,9 @@ export default defineComponent({
     IemMasterPromo,
     PullbackTide,
     Cba30Dream,
-    ElisaGift
+    ElisaGift,
+    ChallengeComebackPromo,
+    PerfectWorldMajor2024
   },
   props: {
     list: {

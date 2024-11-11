@@ -111,7 +111,7 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
-  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
 };
 
 function isNonNumericString(value) {
@@ -139,4 +139,30 @@ export const getVisitorId = async () => {
   localStorage.setItem("VISITOR_ID", sidParam);
   return sidParam;
   // }
+};
+
+export const trackNewUserFtd = (e) => {
+  const { detail: triggeredPixels } = e;
+  if (triggeredPixels.includes("fb")) {
+    fbq("trackCustom", "PurchaseComplete");
+  }
+  if (triggeredPixels.includes("tk")) {
+    ttq.track("PurchaseComplete", { content_type: "product" }, { event_id: Date.now() });
+  }
+  console.log("PurchaseComplete");
+  if (isInPwa()) {
+    localStorage.removeItem("newUserFtd");
+  } else {
+    sessionStorage.removeItem("newUserFtd");
+  }
+  document.removeEventListener("ftdSuccess", trackNewUserFtd);
+  localStorage.removeItem("REG_REFERRAL_CODE");
+};
+
+export const isInPwa = () => {
+  if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
+    return true;
+  } else {
+    return false;
+  }
 };

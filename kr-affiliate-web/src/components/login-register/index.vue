@@ -115,6 +115,17 @@
                       autocomplete="off"
                     />
                   </el-form-item>
+                  <el-form-item prop="realNameKr">
+                    <el-input
+                      ref="realNameRef"
+                      v-model="regForm.realName"
+                      :placeholder="$t('fields.realName')"
+                      name="realName"
+                      type="text"
+                      tabindex="1"
+                      autocomplete="off"
+                    />
+                  </el-form-item>
                   <el-tooltip
                     v-model="capsTooltip"
                     content="Caps lock is On"
@@ -664,6 +675,12 @@ export default defineComponent({
             trigger: 'blur',
           },
           {
+            required: true,
+            pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+            message: t('common.affiliateaccountcanonlycontainnumchar'),
+            trigger: 'blur',
+          },
+          {
             min: 6,
             max: 12,
             message: t('message.required_6_to_12'),
@@ -1168,7 +1185,7 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      window.open('https://t.me/Diahelp7', '_blank').focus()
+      window.open('https://t.me/dia88help', '_blank').focus()
     }
 
     const handleInput = event => {

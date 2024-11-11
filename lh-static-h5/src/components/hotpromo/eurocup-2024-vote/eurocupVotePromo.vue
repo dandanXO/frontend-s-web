@@ -1,7 +1,13 @@
 <template>
   <div>
-    <q-dialog v-model="isCastVoteModalVisible" :title="castVoteFormData.teamNameLocal" width="100%" align-center
-              style="max-width: 800px" @close="toggleCastVoteModal(false)">
+    <q-dialog
+      v-model="isCastVoteModalVisible"
+      :title="castVoteFormData.teamNameLocal"
+      width="100%"
+      align-center
+      style="max-width: 800px"
+      @close="toggleCastVoteModal(false)"
+    >
       <q-card style="width: 100%">
         <!-- <el-form :rules="castVoteFormValidationRules" ref="castVoteFormRef" style="padding: 20px;"
             :model="castVoteFormData">
@@ -27,14 +33,25 @@
             </div>
           </div>
           <div class="vote-form-content">
-            <span><span class="text-red">*&nbsp;</span>投票数量:</span>
+            <span>
+              <span class="text-red">*&nbsp;</span>
+              投票数量:
+            </span>
 
-            <q-input class="vote-input" standout bg-color="white" hide-bottom-space type="number" ref="voteRef"
-                     v-model="castVoteFormData.votes" :rules="castVoteValidationRules" label-color="" />
+            <q-input
+              class="vote-input"
+              standout
+              bg-color="white"
+              hide-bottom-space
+              type="number"
+              ref="voteRef"
+              v-model="castVoteFormData.votes"
+              :rules="castVoteValidationRules"
+              label-color=""
+            />
 
             <button type="submit" class="vote-btn" @click.prevent="submit">提交</button>
           </div>
-
         </q-form>
       </q-card>
     </q-dialog>
@@ -45,38 +62,55 @@
         {{ store.currency.value }} {{ convertToCommaAmount(votesData.award) }}
       </div>
     </div>
-<!--    <div class="winner-bar">-->
-<!--      <div class="winner-bar__bg">-->
-<!--        <div class="winner-bar__inner">-->
-<!--          <div class="winner-bar__text">-->
-<!--            恭喜玩家SAFA赢得21314元-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--    <div class="winner-bar">-->
+    <!--      <div class="winner-bar__bg">-->
+    <!--        <div class="winner-bar__inner">-->
+    <!--          <div class="winner-bar__text">-->
+    <!--            恭喜玩家SAFA赢得21314元-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
     <div class="point">点击您喜欢的战队LOGO进行竞猜，票数越高，竞猜成功之后，彩金越高哦！</div>
 
     <div class="countries-wrapper pattern-wrapper">
       <div class="pattern-wrapper-bottom"></div>
-      <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div>
+      <div class="right-count">
+        我的投票次数:
+        <span id="myVotes">{{ votesData.myVotes }} 次</span>
+        <span
+          class="vote-record-btn"
+          @click="isVoteRecordModalVisible = true"
+          v-if="votesData?.votesRecord?.data?.length"
+        >
+          【投票记录】
+        </span>
+      </div>
       <div class="country-list" id="countrylist">
         <div id="btn_1" class="country-item" v-for="votesListItem in votesData.votesList" :key="votesListItem.id">
           <div class="country-item-bottom-pattern"></div>
           <div class="c-flagname">
-            <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl">
-            </div>
+            <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl" /></div>
             <div class="c-name">{{ votesListItem.teamNameLocal }}</div>
           </div>
           <div class="c-price">{{ votesListItem.totalVotes }} 票</div>
-          <div class="c-button" @click="castVote({
-                        teamId: votesListItem.id,
-                        teamName: votesListItem.teamNameEn,
-                        teamNameLocal: votesListItem.teamNameLocal
-                    })">投票</div>
+          <div
+            class="c-button"
+            @click="
+              castVote({
+                teamId: votesListItem.id,
+                teamName: votesListItem.teamNameEn,
+                teamNameLocal: votesListItem.teamNameLocal
+              })
+            "
+          >
+            投票
+          </div>
         </div>
       </div>
 
-      <div class="c-note">举例：欧洲杯赛得出冠军后，则按票数瓜分累积奖池，例如会员A在活动期间，为西班牙总投票数为138票，若西班牙世界赛取得冠军后，则按票数瓜分奖池内奖金，以1,000,000元奖金和冠军队伍总票数5120票为例（100,0000÷5120=195元/票，会员A为西班牙总投票数为138票，138X195=26953元奖金）
+      <div class="c-note">
+        举例：欧洲杯赛得出冠军后，则按票数瓜分累积奖池，例如会员A在活动期间，为西班牙总投票数为138票，若西班牙世界赛取得冠军后，则按票数瓜分奖池内奖金，以1,000,000元奖金和冠军队伍总票数5120票为例（100,0000÷5120=195元/票，会员A为西班牙总投票数为138票，138X195=26953元奖金）
       </div>
     </div>
     <!-- <div class="table-details pattern-wrapper">
@@ -107,61 +141,56 @@
     </div> -->
 
     <div class="promo-content">
-
       <div class="promo-title">
-        <img src="../eurocup-2024-vote/images/title-detail.png"/>
+        <img src="../eurocup-2024-vote/images/title-detail.png" />
       </div>
 
       <div class="content-info">
         <div class="content-info-item">活动时间：2024年06月13号00:00至07月14号23:59:59</div>
-        <div class="content-info-item" >
-          活动内容：会员每日累计存款金额达到指定额度或以上，即可参与一次投票。
-        </div>
+        <div class="content-info-item">活动内容：会员每日累计存款金额达到指定额度或以上，即可参与一次投票。</div>
 
         <table class="content-table" width="100%;" cellpadding="0" cellspacing="0" border="0">
           <thead>
-          <tr>
-            <th>获取条件</th>
-            <th>获取投票次数</th>
-          </tr>
+            <tr>
+              <th>获取条件</th>
+              <th>获取投票次数</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>当日有登录记录</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>存款≥200</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>存款≥500</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>存款≥1,000</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>存款≥3,000</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>存款≥5,000</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td>存款≥8,000</td>
-            <td>10</td>
-          </tr>
+            <tr>
+              <td>当日有登录记录</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>存款≥200</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>存款≥500</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>存款≥1,000</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>存款≥3,000</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>存款≥5,000</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>存款≥8,000</td>
+              <td>10</td>
+            </tr>
           </tbody>
         </table>
-
-
       </div>
 
       <div class="promo-title">
-        <img src="../eurocup-2024-vote/images/title-rules.png"/>
+        <img src="../eurocup-2024-vote/images/title-rules.png" />
       </div>
 
       <div class="promo-rules-div">
@@ -173,18 +202,23 @@
 
         <p>4.奖金派发时间以欧洲杯得出冠军队伍后，奖金将在24小时内派发到游戏主账户，并且站内信通知奖金公告；</p>
 
-        <p>5.每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；</p>
+        <p>
+          5.每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；
+        </p>
 
         <p>6.雷火电竞有权延长、缩短、终止，或者修改此活动，最终解释权归雷火电竞所有；</p>
       </div>
 
       <q-dialog v-model="isVoteRecordModalVisible">
         <div class="cast-vote-container">
-          <div class=title>投票历史</div>
+          <div class="title">投票历史</div>
           <div class="vote-records">
             <div class="vote-record-item" v-for="(voteRecord, index) in paginatedVoteRecords" :key="index">
-              <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-              <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
+              <div class="vote-record-flag-wrapper">
+                <img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />
+                {{ voteRecord.teamNameLocal }}
+              </div>
+              <div>{{ moment(voteRecord.voteTime, "M/D/YY, h:mm A").format("YYYY年M月D日HH:mm") }}</div>
             </div>
           </div>
           <div class="pagination-wrapper">
@@ -195,8 +229,7 @@
               direction-links
               boundary-numbers
               :max-pages="6"
-
-        @input="votesRecordChangePage"
+              @input="votesRecordChangePage"
             />
           </div>
         </div>
@@ -208,27 +241,24 @@
 import { onMounted, ref, defineComponent, reactive, computed } from "vue";
 import { poolPrizeVoteInit, poolPrizeCastVote } from "../../../api/promotion/poolPrizeVote";
 import { useQuasar } from "quasar";
-import { convertToCommaAmount } from "boot/utils"
+import { convertToCommaAmount } from "boot/utils";
 import { userStore } from "src/stores";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "EurocupVotePromo",
-  components: {
-  },
+  components: {},
   setup() {
     const notify = useNotify();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const store = userStore();
     var qs = require("qs");
     const allowedVoteRangeRule = (val) => {
-      return /^(\b([1-9]|10)\b)$/.test(val) || '投票数量只能输入1-10之内的数字'
-    }
-    const castVoteValidationRules = [
-      allowedVoteRangeRule
-    ]
+      return /^(\b([1-9]|10)\b)$/.test(val) || "投票数量只能输入1-10之内的数字";
+    };
+    const castVoteValidationRules = [allowedVoteRangeRule];
     const $q = useQuasar();
     const voteRef = ref(null);
     const castVoteFormRef = ref();
@@ -237,10 +267,10 @@ export default defineComponent({
     const isVoteRecordModalVisible = ref(false);
     const castVoteFormData = reactive({
       teamId: undefined,
-      teamName: '',
+      teamName: "",
       teamNameLocal: "",
-      votes: '1'
-    })
+      votes: "1"
+    });
     const votesData = ref({
       award: 0,
       myVotes: 0,
@@ -249,24 +279,24 @@ export default defineComponent({
         data: [],
         pageSize: 6,
         current: 1
-      },
+      }
     });
     const castVote = ({ teamId, teamName, teamNameLocal }) => {
-      toggleCastVoteModal(true)
-      castVoteFormData.teamId = teamId
-      castVoteFormData.teamName = teamName
-      castVoteFormData.teamNameLocal = teamNameLocal
-    }
+      toggleCastVoteModal(true);
+      castVoteFormData.teamId = teamId;
+      castVoteFormData.teamName = teamName;
+      castVoteFormData.teamNameLocal = teamNameLocal;
+    };
     const toggleCastVoteModal = (status) => {
       if (status === true) {
         castVoteFormData.teamId = undefined;
-        castVoteFormData.teamName = '';
-        castVoteFormData.teamNameLocal = ""
-        castVoteFormData.votes = '1';
+        castVoteFormData.teamName = "";
+        castVoteFormData.teamNameLocal = "";
+        castVoteFormData.votes = "1";
       }
 
       isCastVoteModalVisible.value = status;
-    }
+    };
     const submit = async () => {
       voteRef.value.validate();
 
@@ -277,7 +307,7 @@ export default defineComponent({
       if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
         notify({
           type: "error",
-          message: "投票次数不足",
+          message: "投票次数不足"
         });
         return;
       }
@@ -286,27 +316,26 @@ export default defineComponent({
       const params = {
         teamId: castVoteFormData.teamId,
         votes: Number(castVoteFormData.votes)
-      }
+      };
       const res = await poolPrizeCastVote(qs.stringify(params));
 
       if (res.code === 0) {
         notify({
           type: "success",
-          message: "投票成功",
+          message: "投票成功"
         });
-        isCastVoteModalVisible.value= false;
+        isCastVoteModalVisible.value = false;
         // loadVoteTeam();
-        if(votesData.value.myVotes > 0){
+        if (votesData.value.myVotes > 0) {
           votesData.value.myVotes--;
         }
-        setTimeout(()=>{
+        setTimeout(() => {
           loadVoteTeam();
-        },2000)
-
+        }, 2000);
       }
 
       isSubmitting.value = false;
-    }
+    };
     const votesRecordChangePage = (page) => {
       const totalPages = Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
 
@@ -321,37 +350,44 @@ export default defineComponent({
 
     const paginatedVoteRecords = computed(() => {
       const votesRecord = votesData.value.votesRecord;
-      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize);
-    })
-
+      return votesRecord.data.slice(
+        (votesRecord.current - 1) * votesRecord.pageSize,
+        votesRecord.current * votesRecord.pageSize
+      );
+    });
 
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
-        if(res.code===0){
+        if (res.code === 0) {
           const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
-            const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
-            return extendedVoteRecords
-        });
+            const { countryImgUrl, teamNameLocal } = res.data.votesList.find(
+              ({ id }) => voteRecordItem.teamVotesId === id
+            );
+            const extendedVoteRecords = Array(voteRecordItem.votes).fill({
+              ...voteRecordItem,
+              countryImgUrl,
+              teamNameLocal
+            });
+            return extendedVoteRecords;
+          });
 
           votesData.value = {
             ...res.data,
             votesRecord: {
               ...votesData.value.votesRecord,
-              data: votesRecord,
+              data: votesRecord
             }
-          }
+          };
         }
       });
-    }
-
+    };
 
     onMounted(() => {
       if (!store.token) {
         return;
       }
       loadVoteTeam();
-    })
+    });
 
     return {
       votesData,
@@ -370,13 +406,9 @@ export default defineComponent({
       paginatedVoteRecords,
       votesRecordChangePage,
       moment
-    }
+    };
   }
 });
-
-
-
-
 </script>
 
 <style lang="scss">
@@ -385,7 +417,8 @@ export default defineComponent({
     gap: 5px;
   }
 
-  .q-pagination__middle > .q-btn, .q-pagination__content > .q-btn {
+  .q-pagination__middle > .q-btn,
+  .q-pagination__content > .q-btn {
     border: 2px solid #fff;
     width: 32px;
     height: 32px;
@@ -398,8 +431,8 @@ export default defineComponent({
 
     &.bg-primary {
       color: #102628;
-      background-color: #00EAFE !important;
-      border: 2px solid #00EAFE;
+      background-color: #00eafe !important;
+      border: 2px solid #00eafe;
       font-weight: bold;
       border: none;
     }
@@ -408,13 +441,13 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
 .cast-vote-container {
-  background-color: #00192B;
+  background-color: #00192b;
   padding: 10px 20px;
 
   .title {
     font-size: 20px;
     text-align: center;
-    color: #00E9FE;
+    color: #00e9fe;
   }
 
   .vote-records {
@@ -424,8 +457,8 @@ export default defineComponent({
     gap: 10px;
 
     .vote-record-item {
-      background-color: #0A243E;
-      border: 2px solid #00EAFE4D;
+      background-color: #0a243e;
+      border: 2px solid #00eafe4d;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -463,66 +496,65 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: 'Arial';
+  font-family: "Arial";
   padding: 10px;
 }
 
-.promo-title{
+.promo-title {
   text-align: center;
-  width:100%;
+  width: 100%;
 
-  img{
+  img {
     width: 750px;
   }
 }
 
-.content-info-item{
+.content-info-item {
   color: #fff;
   margin-bottom: 10px;
 }
 
-.content-info{
+.content-info {
   font-size: 16px;
   margin: 10px auto;
 }
 
-.promo-rules-div{
+.promo-rules-div {
   margin: 10px auto;
   background-image: url("../eurocup-2024-vote/images/rule-board.png");
   padding: 40px 20px;
   background-size: 100% 100%;
 
-  p{
+  p {
     color: #fff;
     font-size: 16px;
     margin-bottom: 14px;
   }
 }
-.promo-container .selected-promo .selected-promo-wrapper .inner .content-table{
+.promo-container .selected-promo .selected-promo-wrapper .inner .content-table {
   color: #fff;
   border-collapse: collapse;
   margin: 20px auto 50px;
   font-size: 18px;
 
-  th, td {
+  th,
+  td {
     border: 1px solid #fff;
     padding: 12px 10px;
     text-align: center;
   }
 
-  thead{
+  thead {
+    background: linear-gradient(180deg, #00e9fe 0%, #0a8aff 100%);
+    color: #102628;
     th {
-
-      background: linear-gradient(180deg, #00E9FE 0%, #0A8AFF 100%);
+      background: linear-gradient(180deg, #00e9fe 0%, #0a8aff 100%);
     }
-    background: linear-gradient(180deg, #00E9FE 0%, #0A8AFF 100%);
-    color:#102628;
   }
   td {
     background: unset;
   }
 }
-
 
 .center-numbers .center-title {
   padding-top: 10px;
@@ -543,7 +575,16 @@ export default defineComponent({
 }
 
 .winner-bar {
-  background: conic-gradient(from 0deg at 50% 50%, #FFFFFF 0deg, #C7D0D4 76.84deg, #4F5F68 89.71deg, #2C3443 180deg, #4F6468 268.86deg, #C7CFD4 282.59deg, #FFFFFF 360deg);
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    #ffffff 0deg,
+    #c7d0d4 76.84deg,
+    #4f5f68 89.71deg,
+    #2c3443 180deg,
+    #4f6468 268.86deg,
+    #c7cfd4 282.59deg,
+    #ffffff 360deg
+  );
   padding: 3px;
   border-radius: 15px;
   width: 80%;
@@ -553,7 +594,7 @@ export default defineComponent({
   &__bg {
     border-radius: 15px;
     padding: 3px;
-    background: linear-gradient(90deg, #0C8AFF 0%, #00F5E6 50%, #0C8AFF 100%);
+    background: linear-gradient(90deg, #0c8aff 0%, #00f5e6 50%, #0c8aff 100%);
   }
   &__inner {
     background: #070030;
@@ -563,7 +604,7 @@ export default defineComponent({
     border-radius: 15px;
   }
   &__text {
-    background: linear-gradient(180deg, #03C3FF 0%, #B8EEFF 50%, #03C3FF 100%);
+    background: linear-gradient(180deg, #03c3ff 0%, #b8eeff 50%, #03c3ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -571,14 +612,12 @@ export default defineComponent({
     font-size: 17px;
     font-weight: 600;
     line-height: 20.6px;
-
   }
-
 }
 .countries-wrapper {
-  background: #00192B33;
+  background: #00192b33;
   border-radius: 4px;
-  border: 1px solid #00EAFE;
+  border: 1px solid #00eafe;
   margin: 10px;
   font-size: 16px;
   font-weight: bold;
@@ -586,67 +625,19 @@ export default defineComponent({
   position: relative;
 }
 
-// .pattern-wrapper:before,
-// .pattern-wrapper:after,
-// .pattern-wrapper-bottom:before,
-// .pattern-wrapper-bottom:after {
-//     background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
-//     background-repeat: no-repeat;
-//     background-position: center center;
-//     background-size: 14px 14px;
-//     content: "";
-//     width: 14px;
-//     height: 14px;
-//     display: inline-block;
-//     position: absolute;
-// }
-
-// .pattern-wrapper:before {
-//     transform: rotateZ(0deg);
-//     top: 0;
-//     left: 0;
-// }
-
-// .pattern-wrapper:after {
-//     transform: rotateZ(90deg);
-//     top: 0;
-//     right: 0;
-// }
-
-// .pattern-wrapper-bottom:before {
-//     transform: rotateZ(270deg);
-//     bottom: 0;
-//     left: 0;
-// }
-
-// .pattern-wrapper-bottom:after {
-//     transform: rotateZ(180deg);
-//     bottom: 0;
-//     right: 0;
-// }
-
 .point {
   font-size: 12px;
-  color: #00EAFE;
+  color: #00eafe;
   width: 95%;
   margin: 0 auto;
 }
 
-/* .countries-wrapper .point:before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    display: inline-block;
-    transform: rotateZ(45deg);
-    margin-right: 10px;
-    background-color: #ffffff;
-} */
 .countries-wrapper .right-count {
   text-align: right;
   color: #ffffff;
   font-weight: normal;
   span {
-    color: #00E9FE;
+    color: #00e9fe;
   }
 }
 
@@ -656,45 +647,6 @@ export default defineComponent({
   padding: 10px 0;
   grid-template-columns: repeat(4, 1fr);
 }
-
-// .countries-wrapper .country-list .country-item:before,
-// .countries-wrapper .country-list .country-item:after,
-// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:before,
-// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:after {
-//     background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
-//     background-repeat: no-repeat;
-//     background-position: center center;
-//     background-size: 12px 12px;
-//     content: "";
-//     width: 12px;
-//     height: 12px;
-//     display: inline-block;
-//     position: absolute;
-// }
-
-// .countries-wrapper .country-list .country-item:before {
-//     transform: rotateZ(0deg);
-//     top: 0;
-//     left: 0;
-// }
-
-// .countries-wrapper .country-list .country-item:after {
-//     transform: rotateZ(90deg);
-//     top: 0;
-//     right: 0;
-// }
-
-// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:before {
-//     transform: rotateZ(270deg);
-//     bottom: 0;
-//     left: 0;
-// }
-
-// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:after {
-//     transform: rotateZ(180deg);
-//     bottom: 0;
-//     right: 0;
-// }
 
 .countries-wrapper .country-list .country-item {
   cursor: pointer;
@@ -708,11 +660,11 @@ export default defineComponent({
 }
 
 .countries-wrapper .country-list .country-item:hover .c-button {
-  background: #00E0FF4A;
+  background: #00e0ff4a;
 }
 
 .countries-wrapper .country-list .country-item .c-flagname {
-  background: #00F0FF0D;
+  background: #00f0ff0d;
   padding: 10px 15px;
   border-radius: 6px;
   display: flex;
@@ -720,7 +672,6 @@ export default defineComponent({
   align-items: center;
   flex-direction: column;
   width: 100%;
-
 }
 
 .countries-wrapper .country-list .country-item .c-flag {
@@ -767,7 +718,7 @@ export default defineComponent({
     position: relative;
     top: 3.5px;
     margin-right: 2px;
-    background: url("../eurocup-2024-vote/images/point-icon.png")no-repeat center center;
+    background: url("../eurocup-2024-vote/images/point-icon.png") no-repeat center center;
     background-size: contain;
     width: 8px;
     height: 8px;
@@ -775,7 +726,7 @@ export default defineComponent({
 }
 
 .countries-wrapper .country-list .country-item .c-button {
-  border: 1px solid #00E0FF;
+  border: 1px solid #00e0ff;
   padding: 2px 10px;
   border-radius: 20px;
   display: block;
@@ -783,39 +734,35 @@ export default defineComponent({
   width: 100%;
   text-align: center;
   border-radius: 4px;
-  background: #00E0FF1A;
+  background: #00e0ff1a;
   color: #ffffff;
   font-size: 10px;
   line-height: 16px;
 }
 
-
-
 .countries-wrapper .c-note {
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;
-  text-align: left;color: #58AEDE;
-
-
+  text-align: left;
+  color: #58aede;
 }
 
 .table-details {
-  border: 1px solid #00EAFE;
+  border: 1px solid #00eafe;
   max-width: 1298px;
   margin: 10px;
   font-size: 16px;
   font-weight: bold;
   padding: 5px;
   position: relative;
-  .table-title{
+  .table-title {
     font-size: 14px;
     font-weight: 500;
     line-height: 17.6px;
-    color: #00EAFE;
+    color: #00eafe;
     text-align: center;
     margin: 5px auto;
-
   }
 }
 .promo-content {
@@ -827,7 +774,7 @@ export default defineComponent({
 }
 .promo-container .selected-promo .selected-promo-wrapper .inner .table-details table thead {
   border-bottom: 1px solid #ffffff;
-  background: #00EAFE;
+  background: #00eafe;
 }
 .promo-container .selected-promo .selected-promo-wrapper .inner .table-details table thead td {
   text-align: center;
@@ -886,7 +833,7 @@ export default defineComponent({
       color: #000;
       text-shadow: 0 1px 0 #fff;
       filter: alpha(opacity=20);
-      opacity: .2;
+      opacity: 0.2;
     }
   }
 
@@ -905,7 +852,7 @@ export default defineComponent({
     border-radius: 8px;
     font-size: 16px;
     color: #fff;
-    line-height: .7rem;
+    line-height: 0.7rem;
     text-align: center;
     cursor: pointer;
     width: fit-content;
@@ -915,7 +862,6 @@ export default defineComponent({
     background-image: linear-gradient(90deg, #2b5b6c 0%, #2b5b6c 100%), linear-gradient(#2b5b6c, #2b5b6c);
   }
 }
-
 
 .custom-modal-header h5 {
   display: inline-block;

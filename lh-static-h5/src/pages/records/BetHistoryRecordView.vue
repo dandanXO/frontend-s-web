@@ -46,36 +46,9 @@
         <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
       </div>
     </div>
-    <div class="flex-div">
-      <span>开始：</span>
-      <q-input rounded outlined dense v-model="startDate">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-      <span>结束：</span>
-      <q-input rounded outlined dense v-model="endDate">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-    </div>
+
+    <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="searchRecord" />
+
     <!--    <div class="select-btn">-->
     <!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
     <!--    </div>-->
@@ -101,6 +74,7 @@ import moment from "moment";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
+import RecordDateFilter from "src/components/RecordDateFilter.vue";
 
 const store = userStore();
 
@@ -136,8 +110,14 @@ const getLabelClass = (i) => {
 const visible = ref(true);
 const tableData = ref([]);
 
-const searchRecord = () => {
+const searchRecord = (data) => {
+  const { val, isStartDate } = data;
+  if (isStartDate !== undefined && val !== undefined) {
+    isStartDate ? (startDate = val) : (endDate = val);
+  }
+
   tableData.value = [];
+  current.value = 1;
   isEnded.value = false;
   recordRef.value.clearTable();
   loadDepositTable(true);
@@ -213,6 +193,9 @@ const loadDepositTable = (isNew) => {
       totalBetRecord.totalBet = res.data.sums.totalBet;
       totalBetRecord.totalPayout = res.data.sums.totalPayout;
       tableData.value.push(...res.data.records);
+    })
+    .catch(() => {
+      isEnded.value = true;
     })
     .finally(() => {
       if (isNew) {
@@ -306,7 +289,8 @@ const loadPlatformLists = () => {
 
       data.forEach((item) => {
         const option = {
-          label: getGameName(item.name),
+          // label: getGameName(item.name),
+          label: item.alias,
           value: item.code
         };
         platformsList.value.push(option);
@@ -324,7 +308,7 @@ const tableHeaders = [
     label: "游戏时间"
   },
   {
-    key: "platform",
+    key: "alias",
     label: "游戏平台"
   },
   {
@@ -340,7 +324,7 @@ const tableHeaders = [
     label: "游戏类型"
   },
   {
-    key: "status",
+    key: "betStatus",
     label: "投注状态"
   }
 ];

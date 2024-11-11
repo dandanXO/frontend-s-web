@@ -162,6 +162,13 @@
               maxlength="20"
             />
           </el-form-item>
+          <el-form-item :label="t('fields.referrerCode')" prop="referrerCode">
+            <el-input
+              v-model="request.referrerCode"
+              style="width: 300px;"
+              maxlength="20"
+            />
+          </el-form-item>
           <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
             <el-input
               v-model="request.affiliateCode"
@@ -810,6 +817,7 @@ const request = reactive({
   name2: null,
   email: null,
   telephone: null,
+  referrerCode: null,
   affiliateCode: null,
   lastLoginIp: null,
   regIp: null,
@@ -869,6 +877,12 @@ const formRules = reactive({
   loginName: [
     required(t('message.validateLoginNameRequired')),
     size(6, 12, t('message.validateLoginNameSize')),
+    {
+      required: true,
+      pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+      message: t('message.validateLoginNameNoSpecialCharacter'),
+      trigger: 'blur',
+    },
   ],
   password: [
     required(t('message.validatePasswordRequired')),

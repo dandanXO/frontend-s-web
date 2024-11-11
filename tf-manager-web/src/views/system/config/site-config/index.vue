@@ -454,9 +454,14 @@
       @submit.prevent
     >
       <el-form-item :label="t('fields.configGroup')" prop="configGroup">
-        <el-input
+        <el-autocomplete
           v-model="form.configGroup"
+          :fetch-suggestions="fetchSuggestion"
+          :trigger-on-focus="false"
+          class="inline-input"
           :placeholder="t('fields.configGroup')"
+          style="outline: none; border: none"
+          @select="handleSelect"
           :disabled="dialogMode === 'OVERRIDE_DEFAULT'"
         />
       </el-form-item>
@@ -618,6 +623,22 @@ const formRules = reactive({
   value: [required(t('message.validateConfigValueRequired'))],
   rulesId: [required(t('message.validateConfigTypeRequired'))],
 })
+
+const fetchSuggestion = (queryString, cb) => {
+  const results = configs.customGroup.filter(item => item.group.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+    .map(item => ({
+      value: item.group,
+      id: item.group
+    }))
+  // call callback function to return suggestions
+  cb(results)
+}
+
+const handleSelect = item => {
+  if (item) {
+    form.configGroup = item.value;
+  }
+}
 
 watch(
   () => configs.value,
@@ -904,8 +925,7 @@ async function loadConfigs() {
   removeJsonEditorElement()
 }
 
-function showEdit(customConfig) {
-  showDialog('EDIT')
+function loadConfig(customConfig) {
   nextTick(() => {
     for (const key in customConfig) {
       if (Object.keys(form).find(k => k === key)) {
@@ -923,8 +943,7 @@ function showEdit(customConfig) {
         const selectedValue = form.value.split(",")
         const selectedOption = selectedValue.map(value => {
           return checkBoxSelections.find(select => select.value === value)
-        }
-        );
+        });
         const mergedLabels = selectedOption.map(rule => rule.label);
         checkedSelection.value = mergedLabels;
         const checkedCount = checkedSelection.value.length
@@ -937,15 +956,14 @@ function showEdit(customConfig) {
   })
 }
 
+function showEdit(customConfig) {
+  showDialog('EDIT')
+  loadConfig(customConfig)
+}
+
 function showOverrideDefaultConfig(customConfig) {
   showDialog('OVERRIDE_DEFAULT')
-  nextTick(() => {
-    for (const key in customConfig) {
-      if (Object.keys(form).find(k => k === key)) {
-        form[key] = customConfig[key]
-      }
-    }
-  })
+  loadConfig(customConfig)
 }
 
 async function updateConfigs() {
@@ -1067,8 +1085,6 @@ function moveUp(item, groupConfig) {
     groupConfig.items[index - 1] = temp
     groupConfig.items[index - 1].code = temp.code
     groupConfig.items[index - 1].orderIndex = index - 1
-
-    console.log(groupConfig.items)
   }
 }
 

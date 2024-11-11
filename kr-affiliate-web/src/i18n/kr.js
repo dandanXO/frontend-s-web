@@ -4,6 +4,7 @@ export default {
     myPoint: '내 포인트',
     memberMoney: '회원 머니',
     memberPoint: '회원 포인트',
+    myCommission: '커미션 잔액',
     eggs: '보유알',
     memberInquiry: '고객문의',
     depositApplication: '충전신청(대기)',
@@ -48,9 +49,9 @@ export default {
 
     // Bet Management Start
     BetManagement: '베팅관리',
-    LiveBetHistory : '라이브 베팅 기록',
-    SlotBetHistory : '슬롯 베팅 기록',
-    SportBetHistory : '스포츠 베팅 기록',
+    LiveBetHistory: '라이브 베팅 기록',
+    SlotBetHistory: '슬롯 베팅 기록',
+    SportBetHistory: '스포츠 베팅 기록',
     MiniGameBetHistory: '미니게임 베팅 기록',
     // Bet Management End
 
@@ -179,6 +180,7 @@ export default {
     POKER: '포커',
     LOTTERY: '복권',
     MINIGAME: '미니게임',
+    HOTELCASINO: '호텔 카지노',
   },
   result: {
     WIN: '승',
@@ -440,6 +442,22 @@ export default {
     actions: '작업',
     operate: '작업',
     operationalData: '운영 데이터',
+    dashboard_title: '실시간 현황',
+    total_downline_count: '총하부총판수',
+    total_straight_count: '내회원수',
+    total_member_count: '총하부회원수',
+    total_deposit_count: '총입금회원수',
+    total_withdraw_count: '총출금회원수',
+    total_bet_count: '총베팅회원수',
+
+    total_deposit_amt: '총입금금액',
+    total_withdraw_amt: '총출금금액',
+    total_sum_amt: '충환차',
+    total_privilege_amt: '총포인트머니',
+    total_remaining_amt: '총보유머니',
+    total_validbet_amt: '총유효베팅금액',
+    total_losewin_amt: '총손익',
+
     password: '비밀번호',
     paymentFee: '입출금 수수료',
     paymentMethod: '결제 방법',
@@ -685,6 +703,13 @@ export default {
     memberPoint: '회원 포인트',
     affiliateTransferAmount: '송금 금액',
     redeem: '상환하다',
+    downlineTotalDeposit: '하부회원 총입금액',
+    downlineTotalWithdraw: '하부회원 총 출금액',
+    downlineTotalDepositWithdraw: '입출금차액',
+    affiliateInTransfer: '총판',
+    redeemConvert: '전환',
+    dashboardMemberBalance: '회원잔액',
+    totalWithdrawalAmount: '총 출금액',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -882,7 +907,7 @@ export default {
   },
   affiliate: {
     level: {
-      JUNIOR_AFFILIATE: '플레이어',
+      JUNIOR_AFFILIATE: '하부매장',
       SUB_AFFILIATE: '매장',
       AFFILIATE: '부본사',
       SUPER_AFFILIATE: '본사',
@@ -906,6 +931,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: '배팅비율-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: '배팅비율-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: '배팅비율-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: '배팅비율-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: '이익률-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '이익률-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
@@ -913,6 +939,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '이익률-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: '이익률-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: '이익률-HOTELCASINO',
   },
   sendMessageType: {
     NOTIFICATION: '통지',

@@ -108,6 +108,11 @@
         width="200"
       />
       <el-table-column
+        prop="vipName"
+        :label="t('fields.vipLevel')"
+        width="200"
+      />
+      <el-table-column
         prop="privilegeName"
         :label="t('fields.privilegeName')"
         width="300"
@@ -348,7 +353,7 @@ import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '@/utils/util'
 import { required } from '@/utils/validate'
 import { ElMessage } from 'element-plus'
-import { getActivePrivilegeInfoBySiteIdWithoutRebate, getPrivilegeExcelMappingWithoutRebate } from '@/api/privilege-info'
+import { getActivePrivilegeInfoBySiteId, getPrivilegeExcelMapping } from '@/api/privilege-info'
 import { createBatchPrivilege, distributePrivilege } from '@/api/member-privilege'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 
@@ -603,7 +608,7 @@ function distributePromo() {
 }
 
 async function loadPrivilegeInfos() {
-  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteIdWithoutRebate(form.siteId);
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(form.siteId);
   privilegeInfoList.list = privilegeInfo;
 }
 
@@ -629,10 +634,10 @@ async function downloadTemplate() {
   let privilegeMapping = {};
 
   if (site.value && site.value.id) {
-    const { data: ret } = await getPrivilegeExcelMappingWithoutRebate(site.value.id);
+    const { data: ret } = await getPrivilegeExcelMapping(site.value.id);
     privilegeMapping = ret;
   } else {
-    const { data: ret } = await getPrivilegeExcelMappingWithoutRebate();
+    const { data: ret } = await getPrivilegeExcelMapping();
     privilegeMapping = ret;
   }
   const exportMapping = [EXPORT_MAPPING_PRIVI_HEADER];

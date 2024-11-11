@@ -22,3 +22,7 @@ export function getRedEnvelopeFromServer() {
 export function getFloatingItems() {
   return server.REST.get("/redirect");
 }
+
+export function submitMemberStats(stats) {
+  return server.REST.post("/memberStatistics/submit", stats);
+}

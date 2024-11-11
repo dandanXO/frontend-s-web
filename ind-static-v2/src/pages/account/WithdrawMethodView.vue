@@ -1,6 +1,32 @@
 <template>
   <div class="withdrawal-modal-view">
     <template v-if="isSelectedMethod">
+      <div class="withdrawal-summary">
+        <div class="balance">
+          <span class="amount">
+            {{
+              withdrawType === "flat"
+                ? convertToCommaAmount(inrBalance, false)
+                : convertToCommaAmount(usdtBalance, false)
+            }}
+          </span>
+          <div class="title">Cash Balance</div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="withdrawable">
+          <span class="amount">
+            {{
+              selectedMethodItem.withdrawableBalance >= 0
+                ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+                : "0.00"
+            }}
+          </span>
+          <div class="title">Withdrawable</div>
+        </div>
+      </div>
+
       <div class="method-options" v-if="withdrawType === 'flat'">
         <div class="method-title">Payment Method</div>
         <div class="options-picker" @click="resetSelectedMethod()">
@@ -308,10 +334,16 @@
               <div class="desc">Remain Wagers</div>
             </div>
             <div class="desc desc_white">
-              <div class="remain-wager-wrapper" @click="refreshRemainWager" >
+              <div class="remain-wager-wrapper" @click="refreshRemainWager">
                 <q-spinner v-if="isRefreshRemainWager" />
-                <span v-else>{{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}</span>
-                <img class="refresh-btn-img" :class="{rotate: isRefreshRemainWager}" src="../../assets/images/account/refresh-icon.svg"/>
+                <span v-else>
+                  {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, 2) }}
+                </span>
+                <img
+                  class="refresh-btn-img"
+                  :class="{ rotate: isRefreshRemainWager }"
+                  src="../../assets/images/account/refresh-icon.svg"
+                />
               </div>
             </div>
           </div>
@@ -462,6 +494,16 @@ const withdrawWayText = computed(() => {
   return returnText;
 });
 
+const usdtBalance = computed(() => {
+  const realWallet = store.multipleBalance.find((wallet) => wallet.currency === "USDT");
+  return realWallet ? realWallet.balance : 0;
+});
+
+const inrBalance = computed(() => {
+  const realWallet = store.multipleBalance.find((wallet) => wallet.currency === "INR");
+  return realWallet ? realWallet.balance : 0;
+});
+
 const methodType = ref("USDT");
 const methodOptions = ref(["USDT"]);
 const currencyType = ref("");
@@ -501,19 +543,23 @@ const refreshRemainWager = () => {
     currencyStr = "?currency=INR";
   }
 
-  api.get(`/session/withdraw/withdrawableBalance/refresh${currencyStr}`).then((res) => {
-    selectedMethodItem.value = {
-      ...selectedMethodItem.value,
-      ...res.data,
-    }
+  api
+    .get(`/session/withdraw/withdrawableBalance/refresh${currencyStr}`)
+    .then((res) => {
+      selectedMethodItem.value = {
+        ...selectedMethodItem.value,
+        ...res.data
+      };
 
-    isRefreshRemainWager.value = false;
-  }).catch(() => {
-    isRefreshRemainWager.value = false;
-  }).finally(() => {
-    isRefreshRemainWager.value = false;
-  })
-}
+      isRefreshRemainWager.value = false;
+    })
+    .catch(() => {
+      isRefreshRemainWager.value = false;
+    })
+    .finally(() => {
+      isRefreshRemainWager.value = false;
+    });
+};
 
 const getWithdrawalMethods = () => {
   isLoadingInitPay.value = true;
@@ -982,6 +1028,7 @@ onMounted(() => {
 });
 
 onActivated(() => {
+  resetSelectedMethod();
   getWithdrawalMethods();
   checkNewUser();
 });
@@ -1258,6 +1305,7 @@ const convertToTwoDecimalAmount = (amount) => {
   .withdrawal-summary {
     padding: 1rem;
     margin-top: 0;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-around;

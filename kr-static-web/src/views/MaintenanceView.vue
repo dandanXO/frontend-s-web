@@ -5,7 +5,7 @@
         <img src="../assets/logo.svg" />
       </div>
       <div class="maintenance-title" v-html="$t('maintenance.title')"></div>
-<!--      <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>-->
+      <!--      <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>-->
       <div class="maintenance-desc">
         {{ $t("maintenance.maintenance_from") }} {{ ui.maintenanceStartTime }}
         <br />
@@ -23,7 +23,7 @@
         >
           {{ $t("maintenance.customerService") }}
         </a>
-        <a href="https://t.me/cityy88" class="email" target="_blank">Telegram: @cityy88</a>
+        <a href="https://t.me/dia88help" class="email" target="_blank">Telegram: @dia88help</a>
       </div>
     </div>
     <div class="maintenance-img">
@@ -39,7 +39,7 @@ import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 import { uiStore } from "@/store/ui";
 
-const ui= uiStore()
+const ui = uiStore();
 const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
 </script>

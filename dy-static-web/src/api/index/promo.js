@@ -420,7 +420,6 @@ export function getPrizeMoney(promoCode) {
   return server.EVENT.put(`/bonus/claim/${promoCode}`);
 }
 
-
 export function getCBAInit() {
   return server.EVENT.get("/session/cba/daily/init");
 }
@@ -437,6 +436,10 @@ export function claimCBAWeeklyBonus() {
   return server.EVENT.post("/session/cba/weekly/claimBonus");
 }
 
+export function loadAffiliateByDomain(host, siteCode) {
+  return server.REST.get(`/app/getAffiliateCode?siteCode=${siteCode}&domain=${host}`);
+}
+
 export function getYallaCompassInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.get(`/session/competition-bet-deposit/init?promoCode=dy2-yalla-compass&v=${randNum}`);
@@ -447,10 +450,10 @@ export function claimYallaCompassBonus() {
 }
 
 export function getBelgradeInit(promoCode) {
-  return server.EVENT.get("/session/bb-dacha-belgrade/init", {promoCode});
+  return server.EVENT.get("/session/bb-dacha-belgrade/init", { promoCode });
 }
 export function claimBelgradeBonus(promoCode) {
-  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus", {promoCode});
+  return server.EVENT.post("/session/bb-dacha-belgrade/claimBonus", { promoCode });
 }
 export function getElisaGiftInit() {
   // return server.EVENT.get("/session/elisa-gift/init");
@@ -461,4 +464,40 @@ export function claimElisaGiftBonus() {
   // return server.EVENT.post("/session/elisa-gift/claimBonus");
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.post(`/session/competition-bet-deposit/claimBonus?promoCode=dy2-yalla-compass&v=${randNum}`);
+}
+
+export function getCompetitionBetDepositInit(promoCode) {
+  return server.EVENT.get("/session/competition-bet-deposit/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionBetDepositBonus(promoCode) {
+  return server.EVENT.post("/session/competition-bet-deposit/claimBonus", { promoCode });
+}
+
+export function getCycleLossRefundInit(promoCode) {
+  return server.EVENT.get("/session/cycle-loss-refund/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCycleLossRefund(promoCode) {
+  return server.EVENT.post("/session/cycle-loss-refund/claim", { promoCode });
+}
+
+export function getCompetitionLossInit(promoCode) {
+  return server.EVENT.get("/session/competition-loss/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionLoss(promoCode) {
+  return server.EVENT.post("/session/competition-loss/claim", { promoCode });
 }

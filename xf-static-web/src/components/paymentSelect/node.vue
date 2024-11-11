@@ -320,7 +320,7 @@ $node-color: #45fefa;
     }
   }
   .node-content {
-    gap: 0 20px;
+    gap: 0 10px;
     padding: 0px 0 0;
     .payment-method-item {
       text-align: center;
@@ -342,7 +342,7 @@ $node-color: #45fefa;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 6rem;
+      min-width: 4rem;
       .payment-method-wrapper {
         display: none;
       }
@@ -359,16 +359,16 @@ $node-color: #45fefa;
       }
 
       .node-txt-img {
-        background-color: #2a313e;
+        // background-color: #2a313e;
         // background-color: #f7f7f7;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+        // box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         width: 4rem;
         height: 4rem;
         margin-bottom: 5px;
-        border: 2px solid #dddddd;
+        border: 2px solid transparent;
         // padding: 5px 15px;
         border-radius: 3px;
 
@@ -450,8 +450,9 @@ $node-color: #45fefa;
     position: relative;
     .promo {
       position: absolute;
+      left: 0;
       right: 0;
-      top: 0;
+      top: 58%;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;

@@ -549,7 +549,7 @@
           prop="operate"
           :label="t('fields.operate')"
           align="center"
-          min-width="200"
+          min-width="215"
         >
           <template #default="scope">
             <span v-if="scope.row.operate === 'UPGRADE_TO_CHECK'">
@@ -567,6 +567,9 @@
             </span>
             <span v-else-if="scope.row.operate === 'DOWNGRADE_TO_WAIT_PAY'">
               WAIT_FPR_PAYMENT
+            </span>
+            <span v-else-if="scope.row.operate === 'DOWNGRADE_TO_PAY'">
+              DOWNGRADE_TO_PAYMENT_ON_GOING
             </span>
             <span v-else-if="scope.row.operate === 'AUTOPAY'">
               AUTOMATIC_PAYMENT
@@ -1169,7 +1172,9 @@ function resetQuery() {
   request.loginName = null
   request.financialId = financialList.list[0].id
   request.currencyId = currencyList.list[0].id
-  request.riskId = riskList.list[0].id
+  if (riskList.list.length > 0) {
+    request.riskId = riskList.list[0].id
+  }
   request.cardAccount = null
   request.bankName = bankList.list[0].id
   request.minWithdrawAmount = null

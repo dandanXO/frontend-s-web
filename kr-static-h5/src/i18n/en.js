@@ -971,7 +971,10 @@ Please note the maintenance time from 23:30 to 00:30.`,
     withdraw_reminder_caption: "Please read this before making a withdrawal.",
     withdraw_reminder_text: `Withdrawals cannot be processed to accounts in names other than your own.
 The minimum withdrawal amount is KRW 50,000 and must be in units of KRW 10,000.
-We sincerely congratulate you on your exchange and wish you only the best days ahead.`,
+We sincerely congratulate you on your exchange and wish you only the best days ahead.
+
+※Virtual account maintenance time information
+      Please refer to the use from 23:30 to 00:30.`,
     select_account_add_different_banks: "Select account (add different banks)",
     please_select_a_bank_account: "Please select a bank account",
     account_name_with_desc: "Account name (name matches the account used for deposit)",

@@ -77,6 +77,13 @@ export default route(function (/* { store, ssrContext } */) {
       StatusBar.hide();
     }
 
+    const getTkPixelId = sessionStorage.getItem("TK_PIXEL_ID");
+    if (getTkPixelId) {
+      ttq.load(getTkPixelId);
+      ttq.page();
+      user.isTkPixel = true;
+    }
+
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     //   next(`/register`);
@@ -91,6 +98,7 @@ export default route(function (/* { store, ssrContext } */) {
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
+      localStorage.removeItem("REG_REFERRAL_CODE");
       next(`/register`);
     }
 

@@ -493,6 +493,7 @@ export default {
     addBankToWithdrawPlatform: 'Thêm ngân hàng vào nền tảng rút tiền',
     addBanner: 'Thêm banner',
     addBbDacha: 'Thêm BB Dacha',
+    addBlacklist: 'Thêm danh sách đen',
     addRewardGroup: 'Thêm nhóm thưởng',
     addCurrency: 'Thêm đơn vị tiền tệ',
     addCurrencyRate: 'Thêm tỷ giá tiền tệ',
@@ -577,6 +578,7 @@ export default {
     afterBalance: 'Sau số dư',
     afterEdit: 'Sau khi chỉnh sửa',
     amount: 'Số tiền',
+    amountGreaterThan: 'số tiền lớn hơn',
     amountLimitPerRain: 'Giới hạn số tiền mỗi lần mưa',
     adjust: 'Điều chỉnh',
     alias: 'Biệt danh',
@@ -874,6 +876,7 @@ export default {
     editBankCard: 'Chỉnh sửa thẻ ngân hàng',
     editBanner: 'Chỉnh sửa biểu ngữ',
     editBelongType: 'Chỉnh sửa loại thuộc về',
+    editBlacklist: 'Chỉnh sửa danh sách đen',
     editConfig: 'Chỉnh sửa cấu hình',
     editCurrency: 'Chỉnh sửa tiền tệ',
     editCurrencyRate: 'Chỉnh sửa tỷ giá hối đoái',
@@ -1822,6 +1825,7 @@ export default {
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
+    showLogo: 'hiển thị biểu tượng'
   },
   message: {
     startenddatemore3months:
@@ -2561,6 +2565,7 @@ export default {
     'System Value Rules': 'Quy tắc giá trị hệ thống',
     'Sites Config': 'Cấu hình trang web',
     'Mooncake Fest Spin Record': '中秋节转盘2024',
+    'Site Platform Blacklist': 'Danh sách đen nền tảng trang web',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
@@ -2700,7 +2705,10 @@ export default {
     HOME: 'Trang chủ',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'Người dùng trực tuyến'
+    MEMBER_STATISTICS: 'Người dùng trực tuyến',
+    DEPOSIT_FLUCTUATION: 'Biến động tiền gửi',
+    WITHDRAW_FLUCTUATION: 'Biến động rút tiền',
+    BONUS_FLUCTUATION: 'Biến động tiền thưởng',
   },
   error: {
     400: 'Yêu cầu không hợp lệ',
@@ -2809,6 +2817,7 @@ export default {
     14011: 'Đối tác đã tồn tại',
     14012: 'Chỉ có thể tạo ra liên kết cấp thấp hơn',
     14013: 'Không thể đặt cấp thấp hơn vì có đối tác hạng dưới',
+    14014: 'Số điện thoại không chính xác / Số điện thoại không đúng định dạng',
     14100: 'Không có thành viên hạ lớp nào dưới đây',
     14101: 'Không có quyền thực hiện tác vụ này đối với liên kết này',
     14110: 'Cùng tên nền tảng và trang web đã tồn tại',

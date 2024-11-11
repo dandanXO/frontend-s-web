@@ -109,6 +109,11 @@
         Instagram
       </a>
 
+      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=pak-faq">
+        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
+        Faq
+      </router-link>
+
       <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
@@ -292,7 +297,7 @@ import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount, isAndroid } from "src/boot/utils";
+import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -483,7 +488,7 @@ onMounted(() => {
   ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";
-  if (isAndroid()) {
+  if (isAndroid() || isInPwa()) {
     isSideDownload.value = false;
   } else {
     isSideDownload.value = true;

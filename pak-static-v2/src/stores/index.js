@@ -2,16 +2,20 @@ import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import { useUI } from "stores/ui";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
 
+const createFtdEvent = (triggeredPixels) => {
+  return new CustomEvent("ftdSuccess", { detail: triggeredPixels });
+};
+
 export const userStore = defineStore("userStore", {
   state: () => {
     const getStoreToken = () => {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         return LocalStorage.getItem("TOKEN", "");
       } else {
         return SessionStorage.getItem("TOKEN") || "";
@@ -45,12 +49,17 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       visitorId: "",
-      h5Url: "https://0vsadwuz3sh.com/"
+      h5Url: "https://0vsadwuz3sh.com/",
+      isFbPixel: false,
+      paytypeWithPrivilege: "",
+      extraPrivilegeId: "",
+      ftd: "CLOSE",
+      isTkPixel: false
     };
   },
   actions: {
     hasToken() {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
@@ -106,11 +115,12 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/pakLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
+          this.token = ret.data;
         } else {
           Notify.create({
             color: "negative",
@@ -135,7 +145,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -163,37 +173,7 @@ export const userStore = defineStore("userStore", {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
-      api.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      cashier.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      eventapi.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
-        req.headers.token = token;
-        return req;
-      });
-      this.token = isAndroid() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
+      this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -253,7 +233,17 @@ export const userStore = defineStore("userStore", {
             }
           })
           .then((res) => {
+            console.log(res);
             if (res.code === 0) {
+              if ((this.isFbPixel || this.isTkPixel) && this.balance === 0 && res.data !== 0) {
+                const triggeredPixels = [];
+                if (this.isFbPixel) triggeredPixels.push("fb");
+                if (this.isTkPixel) triggeredPixels.push("tk");
+                const isNewUser = sessionStorage.getItem("newUserFtd");
+                if (isNewUser && isNewUser === this.nickName) {
+                  document.dispatchEvent(createFtdEvent(triggeredPixels));
+                }
+              }
               this.balance = res.data;
             } else {
               this.balance = 0;
@@ -272,7 +262,7 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       const ui = useUI();
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         LocalStorage.set("TOKEN", token, 86400);
         ui.showLoggedIn();
       } else {

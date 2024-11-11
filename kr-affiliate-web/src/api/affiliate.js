@@ -5,6 +5,10 @@ export const getAffiliateDownline = (id, query) => {
   return https().request(`/affiliate/${id}/kr-downline`, Method.GET, query, ContentType.form);
 };
 
+export const getAffiliateDownlineSums = (id, query) => {
+  return https().request(`/affiliate/${id}/kr-downline-total`, Method.GET, query, ContentType.form);
+};
+
 export const regsterAffiliate = (affiliate) => {
   return https().request("/affiliate", Method.POST, affiliate, ContentType.form);
 };
@@ -143,4 +147,8 @@ export const redeemPoint = () => {
 
 export const getDownlineAffiliates = () => {
   return https().request('/downline/getAllDownlines', Method.GET);
+};
+
+export const getDownlineMembers = (id) => {
+  return https().request(`/downline/${id}/getDownlineMembers`, Method.GET);
 };

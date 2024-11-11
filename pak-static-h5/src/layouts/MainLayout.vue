@@ -271,11 +271,11 @@ export default defineComponent({
           else prevPage.value = "/";
         } else if (route.path === "/login") {
           prevPage.value = "/home";
-          hasPage.value = true;
+          // hasPage.value = true;
           pageName.value = "";
         } else if (route.path === "/register") {
           prevPage.value = "/home";
-          hasPage.value = true;
+          // hasPage.value = true;
           pageName.value = "";
         } else if (route.path === "/verification") {
           prevPage.value = "/register";

@@ -300,6 +300,7 @@ export default {
     addBankToWithdrawPlatform: 'เพิ่มธนาคารเพื่อถอนแพลตฟอร์ม',
     addBanner: 'เพิ่มแบนเนอร์',
     addRewardGroup: 'เพิ่มกลุ่มรางวัล',
+    addBlacklist: 'เพิ่มแบนเนอร์',
     addCurrency: 'เพิ่มสกุลเงิน',
     addCurrencyRate: 'เพิ่มอัตราแลกเปลี่ยน',
     addDepositSetting: 'เพิ่มการตั้งค่าการฝากเงิน',
@@ -364,6 +365,7 @@ export default {
     afterBalance: 'หลังจากยอดคงเหลือ',
     afterEdit: 'หลังแก้ไข',
     amount: 'จำนวน',
+    amountGreaterThan: 'จำนวนเงินที่มากกว่า',
     adjust: 'ปรับจำนวนเงิน',
     alias: 'นามแฝง',
     allvip: 'วีไอพีทั้งหมด',
@@ -584,6 +586,7 @@ export default {
     editBankCard: 'แก้ไขเลขที่บัญชีธนาคาร',
     editBanner: 'แก้ไขแบนเนอร์',
     editBelongType: 'แก้ไขประเภทหน้า',
+    editBlacklist: 'แก้ไขบัญชีดำ',
     editCurrency: 'แก้ไขสกุลเงิน',
     editCurrencyRate: 'แก้ไขอัตราแลกเปลี่ยน',
     editDepositSetting: 'แก้ไขการตั้งค่าการฝากเงิน',
@@ -1245,6 +1248,7 @@ export default {
     configValue: 'Config Value',
     configDescribes: 'Config Describes',
     batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
+    showLogo: 'แสดงไอคอน'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
@@ -1763,6 +1767,7 @@ export default {
     'Vip Report': 'รายงานวีไอพี',
     'System Value Rules': 'กฎการตั้งค่า',
     'Sites Config': 'การตั้งค่าเว็บไซต์',
+    'Site Platform Blacklist': 'บัญชีดำแพลตฟอร์มเว็บไซต์',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
@@ -1836,7 +1841,10 @@ export default {
     HOME: 'หน้าแรก',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์'
+    MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์',
+    DEPOSIT_FLUCTUATION: 'ความผันผวนของเงินฝาก',
+    WITHDRAW_FLUCTUATION: 'การเปลี่ยนแปลงการถอนเงิน',
+    BONUS_FLUCTUATION: 'การเปลี่ยนแปลงโบนัส',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',
@@ -1935,6 +1943,7 @@ export default {
     14007: 'สถานะการลงทะเบียนพันธมิตรยังอยู่ระหว่างการพิจารณา',
     14008: 'ค่าคอมมิชชั่นพันธมิตรต้องน้อยกว่าค่าคอมมิชชั่นพันธมิตรที่เหนือ',
     14009: 'รายได้ของพันธมิตรต้องน้อยกว่ารายได้ของพันธมิตรที่เหนือ',
+    14014: 'หมายเลขโทรศัพท์ไม่ถูกต้อง / รูปแบบหมายเลขโทรศัพท์ไม่ถูกต้อง',
     14100: 'พันธมิตรนี้ไม่มีสมาชิกดาวน์ไลน์นี้',
     14101: 'พันธมิตรนี้ไม่มีสิทธิ์ในการดำเนินการนี้',
     14110: 'แพลตฟอร์มและไซต์ที่มีชื่อเดียวกันมีอยู่แล้ว',

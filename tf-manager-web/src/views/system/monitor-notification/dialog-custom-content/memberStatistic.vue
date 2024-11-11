@@ -1,12 +1,15 @@
 <template>
   <div>
-    <el-form ref="formRef" :model="formData" :rules="rules" label-width="150px" class="combined-form">
+    <el-form ref="formRef" :model="formData" :rules="rules" class="combined-form" label-width="auto">
       <h2>监控设置</h2>
       <el-form-item v-if="false" label="标题">
         <el-input v-model="formData.monitorSetting.title" />
       </el-form-item>
-      <el-form-item label="通知生成人数阈值" prop="monitorSetting.setting.notificationGenerationUserNumberThreshold">
-        <el-input-number :min="0" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberThreshold" />
+      <el-form-item label="通知生成人数上限阈值" prop="monitorSetting.setting.notificationGenerationUserNumberUpperThreshold">
+        <el-input-number :min="2" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberUpperThreshold" />
+      </el-form-item>
+      <el-form-item label="通知生成人数下限阈值" prop="monitorSetting.setting.notificationGenerationUserNumberLowerThreshold">
+        <el-input-number :min="1" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberLowerThreshold" />
       </el-form-item>
       <el-form-item label="状态" prop="monitorSetting.status">
         <el-switch
@@ -18,10 +21,18 @@
       </el-form-item>
 
       <h2>通知设置</h2>
-      <el-form-item label="通知内文" prop="notificationSetting.content">
+      <el-form-item label="通知内文(当高于上限)" prop="notificationSetting.upperContent">
         <el-input
           type="textarea"
-          v-model="formData.notificationSetting.content"
+          v-model="formData.notificationSetting.upperContent"
+          rows="4"
+          placeholder="请输入通知内容"
+        />
+      </el-form-item>
+      <el-form-item label="通知内文(当低于下限)" prop="notificationSetting.lowerContent">
+        <el-input
+          type="textarea"
+          v-model="formData.notificationSetting.lowerContent"
           rows="4"
           placeholder="请输入通知内容"
         />
@@ -29,42 +40,13 @@
       <el-form-item label="发送频率(分钟)" prop="notificationSetting.setting.backgroundNoticeIntervalMinutes">
         <el-input-number :min="0" v-model="formData.notificationSetting.setting.backgroundNoticeIntervalMinutes" />
       </el-form-item>
-      <el-form-item label="指定角色">
-        <el-select
-          v-model="selectedRoleNameArr"
-          size="small"
-          class="filter-item"
-          style="width: 350px"
-          multiple
-          filterable
-          @visible-change="handleRoleSelectorVisibleChange"
-          @remove-tag="handleRoleRemoved"
-        >
-          <el-option
-            v-for="item in simpleRoleArrBySite"
-            :key="item.id"
-            :label="item.name"
-            :value="item.name"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="排除用户">
-        <el-select
-          v-model="excludedUserNameArr"
-          size="small"
-          class="filter-item"
-          style="width: 350px"
-          multiple
-          filterable
-        >
-          <el-option
-            v-for="item in simpleUserArrBySelectedRoles"
-            :key="item.id"
-            :label="item.name"
-            :value="item.name"
-          />
-        </el-select>
-      </el-form-item>
+      <RoleUserSelector
+        ref="roleUserSelectorRef"
+        :siteId="store.state.user.siteId"
+        :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
+        :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
+        :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
+      />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
       </el-form-item>
@@ -86,13 +68,14 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, onMounted } from 'vue';
+import { defineProps, defineEmits, ref } from 'vue';
 import { ElMessage } from "element-plus";
-import { getSimpleRoles, getSimpleUsersByRoles } from "@/api/roles";
 import { useStore } from "@/store";
 import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
+import RoleUserSelector from "@/views/system/monitor-notification/dialog-custom-content/component/roleUserSelector.vue";
 
+const roleUserSelectorRef = ref(null);
 const store = useStore();
 const emit = defineEmits(['submitting', 'submitSuccess', 'submitFailed']);
 const props = defineProps({
@@ -114,16 +97,21 @@ function initializeFormData() {
     monitorSetting: {
       title: 'MEMBER_STATISTICS',
       siteId: store.state.user.siteId,
-      setting: { notificationGenerationUserNumberThreshold: 100 },
+      setting: {
+        notificationGenerationUserNumberUpperThreshold: 100,
+        notificationGenerationUserNumberLowerThreshold: 20
+      },
       status: 1,
     },
     notificationSetting: {
       title: 'MEMBER_STATISTICS',
       siteId: store.state.user.siteId,
-      content: '',
+      upperContent: '',
+      lowerContent: '',
       setting: {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
+        telegramUserIdToSendNotification: [],
         backgroundNoticeIntervalMinutes: 30,
       },
       status: 1,
@@ -136,35 +124,42 @@ function initializeFormData() {
 }
 
 function assignFormData() {
+  const cloneNotificationSetting = cloneDeep(props.currentItem.notificationSetting);
+  const contentJson = JSON.parse(cloneNotificationSetting.content);
+  cloneNotificationSetting.upperContent = contentJson.upper;
+  cloneNotificationSetting.lowerContent = contentJson.lower;
+  delete cloneNotificationSetting.content;
+
   return {
     monitorSetting: cloneDeep(props.currentItem.monitorSetting),
-    notificationSetting: cloneDeep(props.currentItem.notificationSetting),
+    notificationSetting: cloneNotificationSetting,
   }
 }
 
 const formRef = ref(null);
 
-const simpleRoleArrBySite = ref([]);
-const simpleUserArrBySelectedRoles = ref([]);
-
-const selectedRoleNameArr = ref([]);
-const excludedUserNameArr = ref([]);
-
 const rules = {
   monitorSetting: {
     setting: {
-      notificationGenerationUserNumberThreshold: [
-        { required: true, message: '请填写通知生成人数阈值', trigger: 'blur' },
-        { type: 'number', min: 20, message: '最小值为20', trigger: 'blur' }
-      ]
+      notificationGenerationUserNumberUpperThreshold: [
+        { required: true, message: '请填写通知生成人数上限阈值', trigger: 'blur' },
+        { type: 'number', min: 2, message: '最小值为2', trigger: 'blur' }
+      ],
+      notificationGenerationUserNumberLowerThreshold: [
+        { required: true, message: '请填写通知生成人数下限阈值', trigger: 'blur' },
+        { type: 'number', min: 1, message: '最小值为1', trigger: 'blur' }
+      ],
     },
     status: [
       { required: true, message: '请选择状态', trigger: 'change' }
     ]
   },
   notificationSetting: {
-    content: [
-      { required: true, message: '请填写通知内容', trigger: 'blur' }
+    upperContent: [
+      { required: true, message: '请填写上限通知内容', trigger: 'blur' }
+    ],
+    lowerContent: [
+      { required: true, message: '请填写下限通知内容', trigger: 'blur' }
     ],
     status: [
       { required: true, message: '请选择状态', trigger: 'change' }
@@ -179,21 +174,35 @@ const rules = {
 };
 
 const submitForm = async () => {
-  await formRef.value.validate();
+  const valid = await formRef.value.validate();
+  const upperLowerValid = validateUpperLowerThreshold();
+  if (!valid || !upperLowerValid) {
+    return;
+  }
 
   emit('submitting'); // 通知父元件
-  formData.value.notificationSetting.setting.systemRoleIdListToSendNotification = getRoleIdsByNames(selectedRoleNameArr.value, simpleRoleArrBySite.value)
-  formData.value.notificationSetting.setting.systemUserIdListToExclude = getUserIdsByNames(excludedUserNameArr.value, simpleUserArrBySelectedRoles.value)
+  // 整理资料
+  const cloneNotificationToSubmit = cloneDeep(formData.value.notificationSetting);
+  cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
+  cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
+  cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
 
-  const submitMonitor = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
-  const submitNotification = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;
+  cloneNotificationToSubmit.content = JSON.stringify({
+    upper: formData.value.notificationSetting.upperContent,
+    lower: formData.value.notificationSetting.lowerContent,
+  })
+  delete cloneNotificationToSubmit.upperContent;
+  delete cloneNotificationToSubmit.lowerContent;
+
+  const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
+  const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;
 
   try {
-    const monitorResponse = await submitMonitor(formData.value.monitorSetting);
+    const monitorResponse = await submitMonitorFn(formData.value.monitorSetting);
     if (monitorResponse.code !== 0) {
       throw new Error(`监控设置提交失败, code: ${monitorResponse.code}`);
     }
-    const notificationResponse = await submitNotification(formData.value.notificationSetting);
+    const notificationResponse = await submitNotificationFn(cloneNotificationToSubmit);
     if (notificationResponse.code !== 0) {
       throw new Error(`通知设置提交失败, code: ${notificationResponse.code}`);
     }
@@ -205,83 +214,23 @@ const submitForm = async () => {
   }
 };
 
-const handleRoleSelectorVisibleChange = (isVisible) => {
-  if (!isVisible) {
-    loadExcludedUserBySelectedRoles()
-  }
-};
+const validateUpperLowerThreshold = () => {
+  const upperThreshold = formData.value.monitorSetting.setting.notificationGenerationUserNumberUpperThreshold;
+  const lowerThreshold = formData.value.monitorSetting.setting.notificationGenerationUserNumberLowerThreshold;
 
-const handleRoleRemoved = () => {
-  loadExcludedUserBySelectedRoles()
-}
+  if (upperThreshold <= lowerThreshold) {
+    ElMessage.error('上限阈值必须高于下限阈值');
+    return false;
+  }
+
+  return true;
+};
 
 const toggleStatus = (value) => {
   formData.value.monitorSetting.status = value ? 1 : 0;
   formData.value.notificationSetting.status = value ? 1 : 0;
 };
 
-onMounted(async () => {
-  await loadSimpleRoleBySite();
-
-  selectedRoleNameArr.value = getRoleNamesByIds(formData.value.notificationSetting.setting.systemRoleIdListToSendNotification, simpleRoleArrBySite.value)
-  await loadExcludedUserBySelectedRoles()
-});
-
-async function loadSimpleRoleBySite() {
-  const res = await getSimpleRoles(store.state.user.siteId);
-  if (res.code !== 0) {
-    ElMessage({
-      message: 'Failed to get simple roles.',
-      type: 'error',
-    })
-    return;
-  }
-  simpleRoleArrBySite.value = res.data;
-}
-
-async function loadExcludedUserBySelectedRoles() {
-  if (selectedRoleNameArr.value.length === 0) {
-    simpleUserArrBySelectedRoles.value = [];
-    excludedUserNameArr.value = [];
-    return;
-  }
-  const res = await getSimpleUsersByRoles(getRoleIdsByNames(selectedRoleNameArr.value, simpleRoleArrBySite.value));
-  if (res.code !== 0) {
-    ElMessage({
-      message: 'Failed to get simple user by roles.',
-      type: 'error',
-    })
-    return;
-  }
-
-  simpleUserArrBySelectedRoles.value = res.data;
-  excludedUserNameArr.value = getUserNamesByIds(formData.value.notificationSetting.setting.systemUserIdListToExclude, simpleUserArrBySelectedRoles.value)
-}
-
-const getRoleIdsByNames = (roleNames, simpleRoleList) => {
-  return simpleRoleList
-    .filter(role => roleNames.includes(role.name))
-    .map(role => role.id);
-};
-
-function getRoleNamesByIds(roleIds, simpleRoleList) {
-  return roleIds.map(id => {
-    const role = simpleRoleList.find(role => role.id === id);
-    return role ? role.name : undefined;
-  }).filter(name => name !== undefined);
-}
-
-const getUserNamesByIds = (userIds, simpleUsers) => {
-  return simpleUsers
-    .filter(simpleUser => userIds.includes(simpleUser.id))
-    .map(simpleUser => simpleUser.name);
-};
-
-const getUserIdsByNames = (userNames, simpleUsers) => {
-  return simpleUsers
-    .filter(simpleUser => userNames.includes(simpleUser.name))
-    .map(simpleUser => simpleUser.id);
-};
 </script>
 
 <style scoped lang="scss">

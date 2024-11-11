@@ -109,7 +109,14 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
-  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+  const formattedAmount = isForceDecimal ? parseFloat(amount).toFixed(2) : parseInt(amount).toLocaleString("en-US");
+
+  return isForceDecimal
+    ? parseFloat(formattedAmount).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : formattedAmount;
+  // return isForceDecimal
+  //   ? amount.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
+  //   : parseInt(amount).toLocaleString("en-US", {});
 };
 
 function isNonNumericString(value) {

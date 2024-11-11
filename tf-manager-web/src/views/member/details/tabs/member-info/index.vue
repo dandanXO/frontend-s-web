@@ -505,6 +505,7 @@
           <el-button
             type="info"
             size="mini"
+            style="float: left;"
             v-permission="['sys:member:update:shareRatio']"
             @click="showDialog('UPDATE_SHARE_RATIO')"
           >

@@ -11,29 +11,35 @@
     <div class="withdraw-remaining-dialog__header">
       <div class="withdraw-remaining-dialog__header-title">
         <img src="@/assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-        <span>继续提款需完成以下条件</span>
+        <span>请完成以下条件</span>
       </div>
-      <span class="withdraw-remaining-dialog__header-help-text">若有疑问，请联系在线客服核查~</span>
+      <span class="withdraw-remaining-dialog__header-help-text">
+        若有疑问，请联系在线客服核查~
+        <br />
+        *若平台结算流水有延迟，请您10分钟后重试！
+      </span>
     </div>
     <img class="withdraw-remaining-dialog__pic" src="@/assets/images/finance/withdraw/withdraw-remaining-pic.png" />
     <div class="withdraw-remaining-dialog__body">
       <div class="withdraw-remaining-dialog__body-title">
-        完成
+        再完成
         <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
         流水，立即享受快速提款
-        <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" />
       </div>
       <table class="withdraw-remaining-dialog__body-table">
         <thead>
           <tr>
             <th align="center">投注要求</th>
-            <th align="center">流水进度</th>
+            <th align="center">
+              流水进度
+              <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" /> -->
+            </th>
             <th align="center">完成状态</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(record, index) in tableData" :key="index">
-            <td align="center">{{ getDisplayRemainingType(record.type) }}</td>
+            <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
             <td align="center">{{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}</td>
             <td align="center">
               <router-link class="action-button" to="/home">去完成</router-link>
@@ -41,7 +47,11 @@
           </tr>
         </tbody>
       </table>
-      <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+      <!-- <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button> -->
+      <div class="withdraw-remaining-dialog__buttons">
+        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+      </div>
     </div>
   </el-dialog>
 </template>
@@ -61,6 +71,15 @@ const router = useRouter();
 
 const tableData = ref([]);
 
+const getDisplayRemainingTypes = (items) => {
+  const typess = items.split(",");
+  let typeStr = [];
+  typess.forEach((type) => {
+    typeStr.push(getDisplayRemainingType(type));
+  });
+  return typeStr.join("，");
+};
+
 const getDisplayRemainingType = (type) => {
   switch (type) {
     case "esport":
@@ -79,7 +98,17 @@ const getDisplayRemainingType = (type) => {
       return "棋牌";
     case "slot":
       return "电子";
+    case "vSport":
+      return "虚拟运动";
+    case "miniGame":
+      return "小游戏";
+    case "cockfight":
+      return "斗鸡";
+    case "numberGame":
+      return "数字游戏";
     case "all":
+      return "任意类型";
+    default:
       return "任意类型";
   }
 };
@@ -176,7 +205,7 @@ onMounted(() => {
         font-size: 20px;
         font-weight: 600;
         line-height: 24px;
-        text-align: center;
+        text-align: left;
         display: flex;
         gap: 5px;
         align-items: center;
@@ -252,19 +281,38 @@ onMounted(() => {
       }
     }
 
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
       background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
+      background: url(@/assets/images/finance/withdraw/active-btn.png);
+      filter: hue-rotate(-30deg);
+      background-size: 100% 100%;
+      color: #fff;
       border-radius: 4px;
       padding: 10px 0;
       font-size: 18px;
       font-weight: 600;
       line-height: 25.2px;
       text-align: center;
+      cursor: pointer;
+      opacity: 0.9;
+      &:first-of-type {
+        background: url(@/assets/images/finance/withdraw/nonactive-btn.png);
+        background-size: 100% 100%;
+        color: #7a80a1;
+      }
 
       &:hover {
-        filter: brightness(1.2);
+        opacity: 1;
+        // filter: brightness(1.2);
       }
     }
   }
@@ -275,6 +323,7 @@ onMounted(() => {
   }
 
   .refresh-btn {
+    margin-bottom: 0px;
     cursor: pointer;
 
     &:hover {

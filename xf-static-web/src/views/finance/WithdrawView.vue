@@ -65,6 +65,7 @@
           label="提款金额"
           name="amount"
         >
+          <el-space>
           <el-row :gutter="10">
             <el-col :span="12">
               <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
@@ -83,6 +84,16 @@
               </span>
             </el-col>
           </el-row>
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
+            确定
+          </el-button>
+        </el-space>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -109,9 +120,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！
-            </div>
+<!--            <div v-if="isALIPAY" class="selected-tip">-->
+<!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
+<!--            </div>-->
           </el-col>
         </el-row>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
@@ -122,7 +133,7 @@
         </el-form-item>
         <el-form-item
           class="select"
-          style="margin-top: 20px"
+          style="margin-top: 10px"
           prop="cardId"
           :label="`选择${cardLabel()}`"
           :rules="[
@@ -184,15 +195,6 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button
-            :loading="loadingBtn"
-            :disable="loadingBtn"
-            size="large"
-            class="common-btn withdraw-btn"
-            @click="submitWithraw"
-          >
-            确定
-          </el-button>
         </div>
       </el-form>
     </div>
@@ -504,6 +506,8 @@ export default defineComponent({
         return '钱包地址'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝'
       } else {
         return '银行卡'
       }
@@ -662,6 +666,7 @@ export default defineComponent({
       align-items: center;
       flex-direction: column;
       cursor: pointer;
+      margin-right: 15px;
 
       .promo-label {
         position: absolute;
@@ -678,7 +683,8 @@ export default defineComponent({
 
       .promo-img {
         width: 40px;
-        padding: 6px 20px;
+        // padding: 6px 20px;
+        padding: 15px 10px;
         background: #2a313e;
         border: 1px solid transparent;
         margin-bottom: 5px;
@@ -724,7 +730,7 @@ export default defineComponent({
   }
   .withdraw-btn {
     // min-width: 300px;
-    margin: 30px auto;
+    // margin: 30px auto;
     &.cancel {
       margin-right: 60px;
     }
@@ -744,6 +750,9 @@ export default defineComponent({
 }
 .withdraw-form {
   padding: 20px 0;
+  .el-form-item__content {
+    gap: 15px;
+  }
 }
 </style>
 <style scoped lang="scss">
@@ -873,6 +882,7 @@ export default defineComponent({
 
 .selected-tip {
   margin-left: 150px;
+  margin-bottom: 15px;
 }
 
 .upgrade-btn {

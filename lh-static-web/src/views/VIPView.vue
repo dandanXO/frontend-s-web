@@ -156,31 +156,31 @@
               <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
             </div>
           </div>
-          </div>
-          <!-- <div
+        </div>
+        <!-- <div
             class="claim-btn"
             :class="{ disabled: isLoading['all'] || !isDataLoaded }"
             @click="handleClick('all', vipLevel)"
           >
             {{ isLoading["all"] ? "领取中" : "一键领取" }}
           </div> -->
-          <div class="amount" v-show="isDataLoaded && vipLevel !== 0">
-            <div class="text">
-                保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
-              </div>
-              <div class="progressBarContainer">
-                <div class="progressBarOuterBar">
-                  <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
-                </div>
-                <div class="progressBarDescriptionRetain">
-                  {{
-                     currentRetainAmount+ '/' + retainAmountRequired
-                  }}
-                </div>
-              </div>
+        <div class="amount" v-show="isDataLoaded && vipLevel !== 0">
+          <div class="text">
+            保级剩余天数：
+            <span class="required-amount">{{ balanceRetainDay }}</span>
+            天
+          </div>
+          <div class="progressBarContainer">
+            <div class="progressBarOuterBar">
+              <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
+            </div>
+            <div class="progressBarDescriptionRetain">
+              {{ currentRetainAmount + "/" + retainAmountRequired }}
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
     <div class="tips">
       等级晋升后开启90天保级期，保级期内完成有效投注要求则保级成功，未完成则降一级。
@@ -364,8 +364,8 @@
       <div class="right">
         <div class="vip-boxes">
           <template v-for="category in categories" :key="category.key">
-              <template v-for="(item, index) in vipItems" :key="index">
-                <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
+            <template v-for="(item, index) in vipItems" :key="index">
+              <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
                 <template
                   v-if="
                     store.token && isFirstTime && vipLevel !== 0
@@ -466,7 +466,7 @@
             <th>年度保级彩金</th>
             <th>生日彩金</th>
             <!--            <th>节日礼金</th>-->
-            <th>每日返水红包</th>
+            <th>每日额外返水红包</th>
             <th>会员日每月15号</th>
             <th>会员充值加码10%</th>
           </tr>
@@ -480,7 +480,7 @@
             <td>-</td>
             <!--            <td>-</td>-->
             <td>0.1%</td>
-            <td>8</td>
+            <td>5</td>
             <td>10</td>
           </tr>
           <tr>
@@ -491,7 +491,7 @@
             <td>-</td>
             <!--            <td>-</td>-->
             <td>0.2%</td>
-            <td>18</td>
+            <td>8</td>
             <td>28</td>
           </tr>
           <tr>
@@ -502,7 +502,7 @@
             <td>-</td>
             <!--            <td>-</td>-->
             <td>0.3%</td>
-            <td>28</td>
+            <td>18</td>
             <td>58</td>
           </tr>
           <tr>
@@ -513,7 +513,7 @@
             <td>38</td>
             <!--            <td>-</td>-->
             <td>0.5%</td>
-            <td>38</td>
+            <td>28</td>
             <td>88</td>
           </tr>
           <tr>
@@ -524,7 +524,7 @@
             <td>58</td>
             <!--            <td>-</td>-->
             <td>0.6%</td>
-            <td>58</td>
+            <td>38</td>
             <td>128</td>
           </tr>
           <tr>
@@ -535,7 +535,7 @@
             <td>88</td>
             <!--            <td>-</td>-->
             <td>0.8%</td>
-            <td>68</td>
+            <td>58</td>
             <td>188</td>
           </tr>
           <tr>
@@ -546,7 +546,7 @@
             <td>188</td>
             <!--            <td>-</td>-->
             <td>1.0%</td>
-            <td>128</td>
+            <td>68</td>
             <td>258</td>
           </tr>
           <tr>
@@ -557,7 +557,7 @@
             <td>288</td>
             <!--            <td>188</td>-->
             <td>1.2%</td>
-            <td>208</td>
+            <td>128</td>
             <td>388</td>
           </tr>
           <tr>
@@ -568,7 +568,7 @@
             <td>388</td>
             <!--            <td>288</td>-->
             <td>1.3%</td>
-            <td>388</td>
+            <td>208</td>
             <td>508</td>
           </tr>
           <tr>
@@ -579,7 +579,7 @@
             <td>588</td>
             <!--            <td>388</td>-->
             <td>1.5%</td>
-            <td>588</td>
+            <td>388</td>
             <td>888</td>
           </tr>
           <tr>
@@ -590,7 +590,7 @@
             <td>888</td>
             <!--            <td>888</td>-->
             <td>1.8%</td>
-            <td>888</td>
+            <td>588</td>
             <td>1,288</td>
           </tr>
           <tr>
@@ -601,7 +601,7 @@
             <td>1,888</td>
             <!--            <td>1,888</td>-->
             <td>2.0%</td>
-            <td>1,888</td>
+            <td>888</td>
             <td>2,888</td>
           </tr>
         </tbody>
@@ -622,16 +622,16 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr>
+          <tr>
             <td>VIP0</td>
             <td>0.45%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.40%</td>
             <td>0.60%</td>
-            <td>0.15%</td>
+            <!-- <td>0.15%</td> -->
             <td>8,888</td>
-          </tr> -->
+          </tr>
           <tr>
             <td>VIP1</td>
             <td>0.45%</td>
@@ -798,26 +798,26 @@
         <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款</li>
       </ol>
 
-      <h2>五. 每日返水红包</h2>
+      <h2>五. 每日额外返水红包</h2>
       <ol class="terms">
         <li>
-          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
+          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
           <br />
-          例：VIP12会员当日的返水金额为1000元，则按照VIP12每日返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
+          例：VIP12会员当日的返水金额为1000元，则按照VIP12每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
         </li>
       </ol>
 
       <h2>六. 会员日</h2>
       <ol class="terms">
         <li>
-          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至21号23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃：
+          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：
         </li>
       </ol>
 
       <h2>七. 会员充值加码10%</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金一倍流水）即可提款；
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（彩金三倍流水）即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -1190,7 +1190,7 @@ const runVipAPI = (res) => {
     // balanceRetainAmount.value = +res.data.retainAmountRequired - +res.data.currentRetainAmount
     currentRetainDay.value = res.data.currentRetainDay;
     retainDayRequired.value = res.data.retainDayRequired;
-    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay;
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     isDataLoaded.value = true;
     getVipLevelProgress(vipLevel.value, "bet");
@@ -1206,7 +1206,7 @@ const categories = ref([
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
   { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
-  { key: "redPacket", image: "rebate", displayName: "每日返水红包" },
+  { key: "redPacket", image: "rebate", displayName: "每日额外返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
   { key: "birthday", image: "birthday", displayName: "生日礼金" }
@@ -1388,6 +1388,17 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
+  position: relative;
+  background-image: url("../assets/vip/vip-bg.jpg");
+  background-color: #f3f7fd;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #8d8d8d;
+  min-height: 100vh;
+  padding: 0 0 80px;
+
   .loading-icon {
     width: 25px;
     height: 25px;
@@ -1414,16 +1425,6 @@ $border-settings: 1px solid #e5e7eb;
       transform: rotate(360deg);
     }
   }
-  position: relative;
-  background-image: url("../assets/vip/vip-bg.jpg");
-  background-color: #f3f7fd;
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-  background-attachment: fixed;
-  color: #8d8d8d;
-  min-height: 100vh;
-  padding: 0 0 80px;
 
   .header-section {
     margin: 0 auto;
@@ -1443,7 +1444,7 @@ $border-settings: 1px solid #e5e7eb;
     min-height: 600px;
   }
   .current-vip-status {
-    max-width: 1200px;
+    max-width: 1300px;
     border: 2px solid #799df8;
     margin: 50px auto;
     background: #212b4ae0;
@@ -1517,15 +1518,15 @@ $border-settings: 1px solid #e5e7eb;
           justify-content: center;
           &Retain {
             display: flex;
-          color: #fff;
-          font-size: 17.987px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-          width: 100%;
-          text-align: center;
-          margin: -30px auto;
-          justify-content: center;
+            color: #fff;
+            font-size: 17.987px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            width: 100%;
+            text-align: center;
+            margin: -30px auto;
+            justify-content: center;
           }
         }
       }
@@ -1551,7 +1552,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .month-birthday-bonus {
     border: 2px solid #799df8;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 50px auto 0;
     background: #212b4ae0;
     border-radius: 30px;
@@ -1559,7 +1560,7 @@ $border-settings: 1px solid #e5e7eb;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 20px;
-    gap: 60px;
+    gap: 30px;
     .left {
       flex: 3;
       position: relative;
@@ -2066,7 +2067,7 @@ $border-settings: 1px solid #e5e7eb;
     border-radius: 10px;
     overflow: auto;
     width: 95%;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0px auto 20px;
     table {
       table-layout: fixed;
@@ -2091,7 +2092,7 @@ $border-settings: 1px solid #e5e7eb;
     }
   }
   .terms-conditions {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     width: 80%;
     position: relative;
@@ -2106,6 +2107,9 @@ $border-settings: 1px solid #e5e7eb;
       background: linear-gradient(180deg, #ffffff 18.57%, #b3d7f0 85%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      font-size: 48px;
       &:before {
         content: "";
         background: url(../assets/vip/decal.png);
@@ -2123,9 +2127,6 @@ $border-settings: 1px solid #e5e7eb;
         background-size: cover;
         transform: rotateY(180deg);
       }
-      background-clip: text;
-      text-align: center;
-      font-size: 48px;
     }
     h2 {
       color: #ffffff;

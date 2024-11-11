@@ -75,7 +75,7 @@
                   <img src="./imgs/service-icon.png" alt="" />
                 </div>
                 <div style="display: flex; flex-direction: column">
-                  <span class="title">Amico专员ID</span>
+                  <span class="title">Amico 专员 ID</span>
                   <span id="agent1-id">vip516</span>
                 </div>
               </div>
@@ -89,7 +89,7 @@
                   <img src="./imgs/service-icon.png" alt="" />
                 </div>
                 <div style="display: flex; flex-direction: column">
-                  <span class="title">Amico专员ID</span>
+                  <span class="title">Amico 专员 ID</span>
                   <span id="agent2-id">vip119</span>
                 </div>
               </div>
@@ -211,18 +211,28 @@
             landingPageLink: "https://am787.cc",
             agent1ID: "vip118",
             agent2ID: "vip119"
+          },
+
+          "64927.me": {
+            group1Title: "服力群",
+            group1Number: "673169074",
+            group2Title: "转运群",
+            group2Number: "706924666",
+            landingPageLink: "https://am787.cc",
+            agent1ID: "vip118",
+            agent2ID: "vip119"
           }
         };
 
         // Default content if no hostname matches
         const defaultInfo = {
-          group1Title: "164 富力",
-          group1Number: "925319859",
-          group2Title: "服力群",
-          group2Number: "673169074",
-          landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
-          agent1ID: "vip885",
-          agent2ID: "vip856"
+          group1Title: "服力群",
+          group1Number: "673169074",
+          group2Title: "转运群",
+          group2Number: "706924666",
+          landingPageLink: "https://am787.cc",
+          agent1ID: "vip118",
+          agent2ID: "vip119"
         };
 
         const selectedInfo = contactInfo[hostname] || defaultInfo;
@@ -250,8 +260,6 @@
       console.log(hostname);
       if (hostname.indexOf("68754.org") > -1) {
         LA.init({ id: "KaSb7vNX6FriaxnP", ck: "KaSb7vNX6FriaxnP" });
-      } else if (hostname.indexOf("29464.co") > -1) {
-        LA.init({ id: "KaOxkrS1U1fw1QAu", ck: "KaOxkrS1U1fw1QAu" });
       } else if (hostname.indexOf("38154.co") > -1) {
         LA.init({ id: "KUixGBqQEJLhKcoX", ck: "KUixGBqQEJLhKcoX" });
       } else if (hostname.indexOf("42369.cn") > -1) {
@@ -303,7 +311,11 @@
       } else if (hostname.indexOf("57613.ltd") > -1) {
         LA.init({ id: "KbTETcF6RHjV1xXc", ck: "KbTETcF6RHjV1xXc" });
       } else if (hostname.indexOf("62502.co") > -1) {
-        LA.init({id:"KbWyBlBkLIdYIb2U",ck:"KbWyBlBkLIdYIb2U"})
+        LA.init({id:"KbWyBlBkLIdYIb2U",ck:"KbWyBlBkLIdYIb2U"});
+      } else if (hostname.indexOf("64927.me") > -1) {
+        LA.init({id:"KbzBx25Y2ydtDI5t",ck:"KbzBx25Y2ydtDI5t"});
+      } else if(hostname.indexOf("29464.co") > -1){
+        LA.init({id:"KcMVV8vbcudOZEnh",ck:"KcMVV8vbcudOZEnh"})
       } else {
         LA.init({ id: "KSr3JcaReSdptM1c", ck: "KSr3JcaReSdptM1c" });
       }

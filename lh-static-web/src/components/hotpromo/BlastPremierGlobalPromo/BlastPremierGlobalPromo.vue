@@ -40,19 +40,19 @@
               @click="setActiveItem(item.no)"
             >
               <img
-                v-if="item.treasure"
+                v-if="item.treasureLevel"
                 :src="
-                  require(`@/assets/images/promotion/hotpromo/blastpremier/treasure-level-${item.treasure.toLowerCase()}.png`)
+                  require(`@/assets/images/promotion/hotpromo/blastpremier/treasure-level-${item.treasureLevel.toLowerCase()}.png`)
                 "
               />
               <div v-else class="img-placeholder" />
               <div class="required-key">
                 <div class="container-description">
-                  <span>{{getTreasureDescription(item.treasure)}}</span>
+                  <span>{{ getTreasureDescription(item.treasureLevel) }}</span>
                 </div>
                 <div class="key-container">
                   <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
-                  <span>x{{ item.keyRequired }}</span>
+                  <span>x{{ item.quantity }}</span>
                 </div>
               </div>
             </div>
@@ -68,11 +68,11 @@
     </div>
     <div class="section second">
       <div class="title">
-        <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-2-spring.png" />
+        <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-1-spring.png" />
       </div>
       <div class="tips">
         <div class="tips-inner">
-          活动期间,连续投注BLAST Premier 秋季小组赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱。
+          活动期间,连续投注BLAST Premier 全球总决赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱
         </div>
       </div>
       <div class="title">
@@ -115,29 +115,14 @@
     <div class="section third">
       <div class="title"><img src="@/assets/images/promotion/hotpromo/blastpremier/section-3-spring.png" /></div>
       <div class="content">
-        <p>
-          1. 活动期间,每日投注BLAST Premier
-          全球总决赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限
-        </p>
-        <p>
-          2.
-          活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿
-        </p>
-        <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款</p>
-        <p>
-          4. 活动期间,参与BLAST Premier
-          全球总决赛有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个宝箱每位用户仅可开启一次
-        </p>
-        <p>
-          5.
-          活动期间,若用户连续签到中断,则重新开始计算,已开启过的宝箱无法二次开启,签到彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款
-        </p>
-        <p>6. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利</p>
-        <p>
-          7.
-          任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单
-        </p>
-        <p>8. 为避免文字理解差异,本站保留本活动最终解释权</p>
+        <p>1. 活动期间,仅计算电竞场馆每日投注BLAST Premier 全球总决赛达到100元有效投注即可在次日12：00点左右自动获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；</p>
+        <p>2. 活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则视为放弃，不予补偿；</p>
+        <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款；</p>
+        <p>4. 活动期间,仅计算电竞场馆参与BLAST Premier 全球总决赛有效投注≥1,000元在次日12:00点左右获得签到天数,达到指定签到天数则可开启签到宝箱,每个宝箱每位用户仅可开启一次；</p>
+        <p>5. 活动期间,若用户连续签到中断,则重新开始计算,已开启过的宝箱无法二次开启,签到彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款；</p>
+        <p>6. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；</p>
+        <p>7. 任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；</p>
+        <p>8. 为避免文字理解差异,本站保留本活动最终解释权。</p>
       </div>
     </div>
 
@@ -218,12 +203,15 @@
 import { ref, onMounted, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
+import { ResponseCode } from "@/api/response";
 import {
-  getGlobalCheckInRecord,
-  openGlobalTreasure,
-  getGlobalKeyRecord,
-  getGlobalOpenRecord,
-  getGlobalTreasureDetail
+  getTreasureDetail,
+  getKeyCount,
+  getCheckInRecord,
+  openTreasure,
+  getKeyRecord,
+  getOpenRecord,
+  claimCheckInTreasure
 } from "@/api/index/promo";
 import { ElLoading } from "element-plus";
 import { useNotify } from "@/hooks/notify";
@@ -240,12 +228,12 @@ const items = ref([
   { no: 3, amt: 30 }
 ]);
 const activeItem = ref(3);
-const selectedTreasureLevel = ref("DRAGON");
+const selectedTreasureLevel = ref("Dragon");
 
 const setActiveItem = (itemNo) => {
   const item = items.value.find((i) => i.no === itemNo);
   if (item) {
-    selectedTreasureLevel.value = item.treasure;
+    selectedTreasureLevel.value = item.treasureLevel;
     activeItem.value = item.no;
     reorderItems(item);
   }
@@ -281,12 +269,20 @@ const openBox = (item) => {
     background: "rgba(0, 0, 0, 0.7)"
   });
 
-  openGlobalTreasure(props.promoCode, item).then((res) => {
+  openTreasure(props.promoCode, item).then((res) => {
     if (res.code === 0) {
       // Open Dialog
       openModal("amt", res.data);
       init();
-    } else {
+    } else if (
+      !(
+        res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+        res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+        res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+        res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+        res.code === ResponseCode.ERROR_SYSTEM
+      )
+    ) {
       notify({
         type: "error",
         message: res.message
@@ -299,12 +295,12 @@ const openBox = (item) => {
 };
 
 const getTreasureDescription = (treasureLevel) => {
-  if (treasureLevel === 'NORMAL') {
-    return '普通宝箱';
-  } else if (treasureLevel === 'CS') {
-    return 'CS宝箱';
-  } else if (treasureLevel === 'DRAGON'){
-    return '龙宝箱';
+  if (treasureLevel === "NORMAL") {
+    return "普通宝箱";
+  } else if (treasureLevel === "CS") {
+    return "CS宝箱";
+  } else if (treasureLevel === "DRAGON") {
+    return "龙宝箱";
   }
 };
 
@@ -326,68 +322,55 @@ const dayList = ref([
 ]);
 
 const init = () => {
-  // getTreasureDetail(props.promoCode).then((res) => {
-  //   if (res.code === 0) {
-  //     res.data.forEach((element, i) => {
-  //       element.no = i + 1;
-  //     });
-  //     items.value = res.data;
-  //     setActiveItem(activeItem.value);
-  //   }
-  // });
-  // First Privilege
-  getGlobalTreasureDetail(props.promoCode).then((res) => {
+  getTreasureDetail(props.promoCode).then((res) => {
     if (res.code === 0) {
-      keyNumber.value = res.data.keyLeft;
-        res.data.treasures.forEach((element, i) => {
-          element.no = i + 1;
-        });
-        items.value = res.data.treasures
-        setActiveItem(activeItem.value);
+      res.data.forEach((element, i) => {
+        element.no = i + 1;
+      });
+      items.value = res.data;
+      setActiveItem(activeItem.value);
+    }
+  });
+  // First Privilege
+  getKeyCount(props.promoCode).then((res) => {
+    if (res.code === 0) {
+      keyNumber.value = res.data;
     }
   });
   //   Second Privilege
-  getGlobalCheckInRecord('lh1-blast-premier-check-in').then((res) => {
+  getCheckInRecord(props.promoCode).then((res) => {
     if (res.code === 0) {
       checkInDetails.value = res.data;
-      signNumber.value = checkInDetails.value.dailyCheckInClaimed;
-      if (signNumber.value) {
-        dayList.value.forEach((day, index) => {
-          if (index < signNumber.value) {
-            day.claimed = true;
-            day.toClaim = false; 
-          }
-        });
-      }
-      // dayList.value = [];
-      // checkInDetails.value.dayList.forEach((day) => {
-      //   const obj = {
-      //     no: day,
-      //     claimed: false,
-      //     toClaim: false
-      //   };
-      //   dayList.value.push(obj);
-      // });
-      // populateDayList(checkInDetails.value);
+      signNumber.value = checkInDetails.value.currentConsecutiveDay;
+      dayList.value = [];
+      checkInDetails.value.dayList.forEach((day) => {
+        const obj = {
+          no: day,
+          claimed: false,
+          toClaim: false
+        };
+        dayList.value.push(obj);
+      });
+      populateDayList(checkInDetails.value);
     }
   });
 };
-// const populateDayList = (check) => {
-//   check.claimed.forEach((element) => {
-//     dayList.value.forEach((day) => {
-//       if (day.no === element) {
-//         day.claimed = true;
-//       }
-//     });
-//   });
-//   check.toClaim.forEach((element) => {
-//     dayList.value.forEach((day) => {
-//       if (day.no === element) {
-//         day.toClaim = true;
-//       }
-//     });
-//   });
-// };
+const populateDayList = (check) => {
+  check.claimed.forEach((element) => {
+    dayList.value.forEach((day) => {
+      if (day.no === element) {
+        day.claimed = true;
+      }
+    });
+  });
+  check.toClaim.forEach((element) => {
+    dayList.value.forEach((day) => {
+      if (day.no === element) {
+        day.toClaim = true;
+      }
+    });
+  });
+};
 const amountClaimed = ref(0);
 const isClaimModal = ref(false);
 // Dialogs
@@ -421,7 +404,7 @@ const openModal = (modal, item, itemIndex) => {
       text: "加载记录中",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    getGlobalKeyRecord(props.promoCode, search.value).then((res) => {
+    getKeyRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         keyRecords.value = res.data.records;
         isKeyRecordModal.value = true;
@@ -437,7 +420,7 @@ const openModal = (modal, item, itemIndex) => {
       text: "加载记录中",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    getGlobalOpenRecord(props.promoCode, search.value).then((res) => {
+    getOpenRecord(props.promoCode, search.value).then((res) => {
       if (res.code === 0) {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
@@ -451,24 +434,24 @@ const openModal = (modal, item, itemIndex) => {
     isClaimModal.value = true;
     amountClaimed.value = item;
   }
-  // if (modal === "claim") {
-  //   const loading = ElLoading.service({
-  //     lock: true,
-  //     text: "开启中",
-  //     background: "rgba(0, 0, 0, 0.7)"
-  //   });
-  //   claimCheckInTreasure(props.promoCode, item.no).then((res) => {
-  //     if (res.code === 0) {
-  //       amountClaimed.value = res.data;
-  //       isClaimModal.value = true;
-  //       dayList.value[itemIndex].toClaim = false;
-  //       dayList.value[itemIndex].claimed = true;
-  //     }
-  //   });
-  //   setTimeout(() => {
-  //     loading.close();
-  //   }, 1000);
-  // }
+  if (modal === "claim") {
+    const loading = ElLoading.service({
+      lock: true,
+      text: "开启中",
+      background: "rgba(0, 0, 0, 0.7)"
+    });
+    claimCheckInTreasure(props.promoCode, item.no).then((res) => {
+      if (res.code === 0) {
+        amountClaimed.value = res.data;
+        isClaimModal.value = true;
+        dayList.value[itemIndex].toClaim = false;
+        dayList.value[itemIndex].claimed = true;
+      }
+    });
+    setTimeout(() => {
+      loading.close();
+    }, 1000);
+  }
 };
 
 // Reference

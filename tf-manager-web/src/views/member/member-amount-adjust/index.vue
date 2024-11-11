@@ -70,6 +70,20 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.createBy"
+          style="width: 200px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.createBy')"
+        />
+        <el-input
+          v-model.number="request.reimburseAmount"
+          style="width: 100px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.amountGreaterThan')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -682,6 +696,7 @@
             {{ t('fields.cancel') }}
           </el-button>
           <el-button
+            :loading="isBtnLoading"
             v-if="uiControl.dialogType === 'CREATE_ADD'"
             type="primary"
             @click="createAdd"
@@ -689,6 +704,7 @@
             {{ t('fields.confirm') }}
           </el-button>
           <el-button
+            :loading="isBtnLoading"
             v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
             type="primary"
             @click="createDeduct"
@@ -818,6 +834,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="!isCnySite(request.siteId) || (isCnySite(request.siteId) && LOGIN_USER_TYPE === ADMIN.value)"
       :total="page.total"
       :page-sizes="[20, 50, 100, 150]"
       layout="total,sizes,prev, pager, next"
@@ -873,12 +890,13 @@ import {
   getMemberBalanceByLoginNameSite,
 } from '../../../api/member'
 import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
+import { ADMIN, TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { getConfigList } from '../../../api/config'
+import { isCnySite } from "../../../utils/site";
 
 const { t } = useI18n()
 const store = useStore()
@@ -890,6 +908,7 @@ const addAmountAdjustmentType = ref('NORMAL');
 // const calculate = reactive({
 //   deposit: 0,
 // })
+const isBtnLoading = ref(false)
 const siteList = reactive({
   list: [],
 })
@@ -1010,6 +1029,8 @@ const request = reactive({
   loginName: null,
   operationType: null,
   cause: null,
+  createBy: null,
+  reimburseAmount: null
 })
 
 const form = reactive({
@@ -1110,9 +1131,9 @@ const formRules = reactive({
 })
 
 function validateField(field) {
-  if (formRef.value) {
+  /* if (formRef.value) {
     formRef.value.validateField(field);
-  }
+  } */
 }
 
 const importRules = reactive({
@@ -1411,6 +1432,8 @@ function resetQuery() {
   request.loginName = null
   request.operationType = null
   request.cause = null
+  request.createBy = null
+  request.reimburseAmount = null
 }
 
 function checkQuery() {
@@ -1436,6 +1459,9 @@ function checkQuery() {
         'end'
       )
       query.createTime = query.createTime.join(',')
+    }
+    if (request.reimburseAmount !== null) {
+      query.reimburseAmount = request.reimburseAmount
     }
   }
 
@@ -1566,6 +1592,7 @@ function createAdd() {
   const originalRollover = form.rollover;
 
   memberAmountAdjustForm.value.validate(async valid => {
+    isBtnLoading.value = true;
     form.id = null;
     form.memberId = null;
 
@@ -1591,31 +1618,41 @@ function createAdd() {
     } catch (error) {
       form.deposit = originalDeposit;
       form.rollover = originalRollover;
-      console.log(error)
+      console.log(error);
+    } finally {
+      isBtnLoading.value = false;
     }
   });
 }
 function createDeduct() {
   memberAmountAdjustForm.value.validate(async valid => {
-    form.id = null
-    form.memberId = null
-    const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
-    form.memberId = id
-    if (isAffiliateUser.value===true) {
-      form.rollover = 0
-      form.gameTypeRollover = null
-    } else {
-      form.gameTypeRollover = constructRollover()
-    }
-    if (valid) {
-      await createDeductMemberAmountAdjust(form)
-      uiControl.dialogVisible = false
-      await loadMemberAmountAdjust()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
-    }
-  })
-}
+    isBtnLoading.value = true;
+    try {
+      form.id = null;
+      form.memberId = null;
+      const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
+      form.memberId = id;
 
+      if (isAffiliateUser.value === true) {
+        form.rollover = 0;
+        form.gameTypeRollover = null;
+      } else {
+        form.gameTypeRollover = constructRollover();
+      }
+
+      if (valid) {
+        await createDeductMemberAmountAdjust(form);
+        uiControl.dialogVisible = false;
+        await loadMemberAmountAdjust();
+        ElMessage({ message: t('message.addSuccess'), type: 'success' });
+      }
+    } catch (error) {
+      console.error('Error during createDeduct:', error);
+    } finally {
+      isBtnLoading.value = false;
+    }
+  });
+}
 async function downloadTemplate() {
   const exportAmountAdjust = [EXPORT_AMOUNT_ADJUST_LIST_HEADER]
   const maxLengthAdmountAdjust = []
@@ -1728,7 +1765,10 @@ async function confirmImport() {
             if (k !== 'loginName') {
               item[k] = v
             }
-          })
+          });
+
+          item.gameTypeRollover= constructRollover();
+
         }
         data.push(item)
       })

@@ -33,7 +33,8 @@ export const userStore = defineStore("userStore", {
       siteId: 8,
       unreadTotal: 0,
       visitorId: "",
-      isAffiliateA: false
+      isAffiliateA: false,
+      withdrawType: ""
     };
   },
   actions: {
@@ -87,6 +88,7 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
             this.registeredWithdrawPassword = ret.data.registeredWithdrawPassword;
+            this.withdrawType = ret.data.withdrawType;
           } else {
             ElMessage.error(ret.message);
           }
