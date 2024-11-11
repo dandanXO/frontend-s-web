@@ -4,7 +4,7 @@
       <div class="balance">
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
-          <template v-else>{{ convertToCommaAmount(store.balance, false) }}</template>
+          <template v-else>{{ convertToCommaAmount(store.balance, 2) }}</template>
         </span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
@@ -15,7 +15,7 @@
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
           <template v-else>
-            {{ withdrawableBalance >= 0 ? convertToCommaAmount(withdrawableBalance, false) : "0" }}
+            {{ convertToCommaAmount(withdrawableBalance, 2)  }}
           </template>
         </span>
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
