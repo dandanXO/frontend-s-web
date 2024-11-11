@@ -289,6 +289,7 @@ export default defineComponent({
             if (response.code === 1312) {
               isShowWithdrawErrorBlock.value = true;
               loadingBtn.value = false;
+              return
             }
             if (response.code === 0) {
               store.getBalance();
