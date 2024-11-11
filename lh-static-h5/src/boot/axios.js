@@ -316,6 +316,9 @@ export default boot(({ app, router }) => {
       Loading.hide();
       const errorType = getErrorType(response.config.baseURL);
 
+      if (res.code === ResponseCode.ERROR_WITHDRAW_AMOUNT) {
+        return res;
+      }
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }

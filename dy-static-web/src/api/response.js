@@ -19,7 +19,7 @@ export const ResponseCode = {
   ERROR_AMOUNT_PRIVILEGE_DEPOSIT: 11004
 };
 
-const skipCode = [11002];
+const skipCode = [11002, 1312];
 
 export function SkipErrorCode(code) {
   for (let i = 0; i < skipCode.length; i++) {
