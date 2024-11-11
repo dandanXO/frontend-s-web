@@ -4,4 +4,5 @@
     <string name="title_activity_main">97.PKR</string>
     <string name="package_name">com.ind.app97pkr</string>
     <string name="custom_url_scheme">com.ind.app97pkr</string>
+    <string name="onesignal_notification_accent_color">000000</string>
 </resources>
