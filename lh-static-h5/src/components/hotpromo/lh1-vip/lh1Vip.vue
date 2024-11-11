@@ -31,8 +31,8 @@
           <th style="width: 15%">生日礼金</th>
 <!--          <th style="width: 15%">节日彩金</th>-->
           <th>每日额外返水红包</th>
-          <th>会员日每月 15 号</th>
-          <th>会员加码充值送 10% 加码券</th>
+          <th>每月15号红包</th>
+          <th>充值赠送20%奖金</th>
         </tr>
       </thead>
       <tbody>
@@ -151,7 +151,7 @@
       </p>
 
       <p>
-        <strong>六。会员日</strong>
+        <strong>六。每月15号红包</strong>
         <ol class="terms non-style">
           <li>
             会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：
@@ -160,10 +160,10 @@
       </p>
 
       <p>
-        <strong>七。会员充值加码10%</strong>
+        <strong>七。充值赠送20%奖金</strong>
         <ol class="terms got-bullets">
           <li class="numbered">
-            VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（彩金三倍流水）即可提款；
+            VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（彩金八倍流水）即可提款；
           </li>
           <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
         </ol>
@@ -229,7 +229,7 @@ const vipLevel2s = ref([
     holidayBonus: "-",
     dailyTurnoverGift: "0.1%",
     weeklyDepositBonus: 5,
-    monthlyUpgradeBonus: 10
+    monthlyUpgradeBonus: 38
   },
   {
     vip: "VIP2",
@@ -237,7 +237,7 @@ const vipLevel2s = ref([
     holidayBonus: "-",
     dailyTurnoverGift: "0.2%",
     weeklyDepositBonus: 8,
-    monthlyUpgradeBonus: 28
+    monthlyUpgradeBonus: 88
   },
   {
     vip: "VIP3",
@@ -245,7 +245,7 @@ const vipLevel2s = ref([
     holidayBonus: "-",
     dailyTurnoverGift: "0.3%",
     weeklyDepositBonus: 18,
-    monthlyUpgradeBonus: 58
+    monthlyUpgradeBonus: 158
   },
   {
     vip: "VIP4",
@@ -253,7 +253,7 @@ const vipLevel2s = ref([
     holidayBonus: "-",
     dailyTurnoverGift: "0.5%",
     weeklyDepositBonus: 28,
-    monthlyUpgradeBonus: 88
+    monthlyUpgradeBonus: 288
   },
   {
     vip: "VIP5",
@@ -261,7 +261,7 @@ const vipLevel2s = ref([
     holidayBonus: "-",
     dailyTurnoverGift: "0.6%",
     weeklyDepositBonus: 38,
-    monthlyUpgradeBonus: 128
+    monthlyUpgradeBonus: 388
   },
   {
     vip: "VIP6",
@@ -269,7 +269,7 @@ const vipLevel2s = ref([
     holidayBonus: "-",
     dailyTurnoverGift: "0.8%",
     weeklyDepositBonus: 58,
-    monthlyUpgradeBonus: 188
+    monthlyUpgradeBonus: 488
   },
   {
     vip: "VIP7",
@@ -277,7 +277,7 @@ const vipLevel2s = ref([
     holidayBonus: "-",
     dailyTurnoverGift: "1.0%",
     weeklyDepositBonus: 68,
-    monthlyUpgradeBonus: 258
+    monthlyUpgradeBonus: 588
   },
   {
     vip: "VIP8",
@@ -285,7 +285,7 @@ const vipLevel2s = ref([
     holidayBonus: 188,
     dailyTurnoverGift: "1.2%",
     weeklyDepositBonus: 128,
-    monthlyUpgradeBonus: 388
+    monthlyUpgradeBonus: 688
   },
   {
     vip: "VIP9",
@@ -293,7 +293,7 @@ const vipLevel2s = ref([
     holidayBonus: 288,
     dailyTurnoverGift: "1.3%",
     weeklyDepositBonus: 208,
-    monthlyUpgradeBonus: 508
+    monthlyUpgradeBonus: 788
   },
   {
     vip: "VIP10",
