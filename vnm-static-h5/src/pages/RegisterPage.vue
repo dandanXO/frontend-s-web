@@ -120,9 +120,8 @@
       </div>
     </q-form>
 
-
-    <div class="login-bottom-div" @click="openDialog('hundred')">
-      <img src="../assets/images/login/register-banner.jpg" />
+    <div class="login-bottom-div">
+    <img src="../assets/images/login/register-banner.png" />
     </div>
   </div>
   <q-dialog v-model="showHundredDialog" width="100%" show-close>

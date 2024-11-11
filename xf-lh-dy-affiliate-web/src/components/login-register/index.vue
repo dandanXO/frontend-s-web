@@ -2,7 +2,7 @@
   <div
     class="firstPage"
     :class="[
-      props.siteId !== '5' && props.siteId !== '9' && props.siteId !== '18' ? '' : 'ind-firstPage',
+      props.siteId !== '5' && props.siteId !== '9' ? '' : 'ind-firstPage',
       props.siteId !== '7' ? '' : 'lh',
       props.siteId !== '8' ? '' : 'vi',
       props.siteId !== '10' ? '' : 'kr',
@@ -1425,15 +1425,6 @@ export default defineComponent({
         currentSite.value.logo = pakLogo
         state.loginForm.site = 'PAK'
         setLanguage('zh')
-      }
-      if (props.siteId === '18') {
-        currentSite.value.firstLiner = 'Começa a partir de 55ACE'
-        currentSite.value.secondLiner =
-          'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
-        currentSite.value.logo = indLogo
-        state.loginForm.site = 'BR1'
-        currentSite.value.lang = 'PT'
-        setLanguage('pt')
       }
     }
     onMounted(() => {

@@ -139,7 +139,7 @@
 </template>
 
 <script setup>
-import { claimCompetitionBetBonus, getCompetitionBetYesterday } from "@/api/index/promo";
+import { claimCompetitionBonus, getCompetitionBetYesterday } from "@/api/index/promo";
 import { onMounted, ref, defineProps } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
@@ -168,7 +168,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBetBonus(promoCode.value)
+  claimCompetitionBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({

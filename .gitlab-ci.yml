@@ -228,13 +228,6 @@ deploy-ind2-download:
 
 #===============================================================================================
 
-deploy-id1-download:
-  extends: .s3-deploy
-  variables:
-    PROJECT: id1-download
-
-#===============================================================================================
-
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
@@ -373,6 +366,20 @@ build-image-tha-static-h5:
     PROJECT: tha-static-h5
   needs:
     - build-tha-static-h5
+
+#===============================================================================================
+
+build-vnm-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: vnm-static-h5
+
+build-image-vnm-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: vnm-static-h5
+  needs:
+    - build-vnm-static-h5
 
 #===============================================================================================
 
@@ -632,6 +639,7 @@ deploy-lh-landing-v7:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v7
+#===============================================================================================
 
 #===============================================================================================
 
@@ -639,14 +647,6 @@ deploy-lh-landing-v8:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v8
-
-#===============================================================================================
-
-deploy-lh-landing-v9:
-  extends: .s3-deploy
-  variables:
-    PROJECT: lh-landing-v9
-
 #===============================================================================================
 
 deploy-lh-redirect:
@@ -808,46 +808,10 @@ deploy-pak-landing-v2:
 
 #===============================================================================================
 
-build-pak-landing-v3:
-  extends: .build-projects
-  variables:
-    PROJECT: pak-landing-v3
-
-build-image-pak-landing-v3:
-  extends: .docker-build
-  variables:
-    PROJECT: pak-landing-v3
-  needs:
-    - build-pak-landing-v3
-
-#===============================================================================================
-
-build-pak-landing-v4:
-  extends: .build-projects
-  variables:
-    PROJECT: pak-landing-v4
-
-build-image-pak-landing-v4:
-  extends: .docker-build
-  variables:
-    PROJECT: pak-landing-v4
-  needs:
-    - build-pak-landing-v4
-
-#===============================================================================================
-
-
 deploy-pak-download-pwa:
   extends: .s3-deploy
   variables:
     PROJECT: pak-download-pwa
-
-#===============================================================================================
-
-deploy-pak-redirect-v2:
-  extends: .s3-deploy
-  variables:
-    PROJECT: pak-redirect-v2
 
 #===============================================================================================
 
@@ -961,6 +925,20 @@ build-image-ph1-static-v1:
     PROJECT: ph1-static-v1
   needs:
     - build-ph1-static-v1
+
+#===============================================================================================
+
+build-id1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: id1-static-v1
+
+build-image-id1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: id1-static-v1
+  needs:
+    - build-id1-static-v1
 
 #===============================================================================================
 

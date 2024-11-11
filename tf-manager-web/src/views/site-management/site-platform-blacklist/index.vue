@@ -29,7 +29,7 @@
             v-for="item in platforms.list"
             :key="item.name"
             :label="item.name"
-            :value="item.code"
+            :value="item.name"
           />
         </el-select>
         <el-input
@@ -147,7 +147,7 @@
               v-for="item in platforms.list"
               :key="item.name"
               :label="item.name"
-              :value="item.code"
+              :value="item.name"
             />
           </el-select>
         </el-form-item>

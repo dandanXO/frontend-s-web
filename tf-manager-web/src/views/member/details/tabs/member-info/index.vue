@@ -6,6 +6,22 @@
           <span class="role-span">{{ t('fields.accountInfo') }}</span>
         </div>
       </template>
+      <el-button
+        type="info"
+        size="mini"
+        style="float: right;"
+        @click="toggleWallet"
+      >Toggle Wallet</el-button>
+      <el-row>
+        <span>
+          Wallet Type : {{ memberDetail.walletType }}
+        </span>
+      </el-row>
+      <el-row>
+        <span>
+          Fiat Balance : {{ memberDetail.fiatBalance }}, USDT Balance : {{ memberDetail.usdtBalance }}
+        </span>
+      </el-row>
       <el-descriptions
         size="small"
         class="margin-top"
@@ -523,20 +539,7 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context"
-        >
-          <template #label>
-            <div>
-              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
-              {{ t('fields.gender') }}
-            </div>
-          </template>
-          <span v-if="memberDetail.gender !== null && memberDetail.gender !== ''">{{ t(`fields.${memberDetail.gender}`) }}</span>
-          <span v-else>-</span>
-        </el-descriptions-item>
+        <el-descriptions-item />
         <el-descriptions-item />
       </el-descriptions>
     </el-card>
@@ -1113,16 +1116,6 @@
               </div>
             </div>
           </el-descriptions-item>
-          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7">
-            <div style="display: inline-block;" v-loading="loading.total">
-              <div class="balance">
-                $
-                <span
-                  v-formatter="{data: memberDetail.totalValidBet, type: 'money'}"
-                />
-              </div>
-            </div>
-          </el-descriptions-item>
           <el-descriptions-item :label="t('fields.payout')">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
@@ -1681,7 +1674,7 @@ import {
   editShareRatio,
   updateWithdrawType,
   toggleMemberWallet,
-  walletBalance
+  walletBalance,
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1693,7 +1686,7 @@ import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
-import { getConfigListByGroup, getOpenForMember } from '../../../../../api/config'
+import { getConfigListByGroup } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
 import { isInd, isKorea } from '@/utils/site'
 
@@ -1846,7 +1839,6 @@ export default defineComponent({
       fiatBalance: null,
       usdtBalance: null,
       walletType: null,
-      gender: null,
     })
 
     const affiliateDetail = reactive({
@@ -2615,19 +2607,11 @@ export default defineComponent({
       ElMessage({ message: t('message.success'), type: 'success' })
     }
 
-    const loadSupportMultiWallet = async () => {
-      const { data: config } = await getOpenForMember(site.id, 'support_multi_wallet', props.mbrId)
-      uiControl.supportMultiWallet = config
-    }
-
     const loadWallet = async () => {
-      await loadSupportMultiWallet()
-      if (uiControl.supportMultiWallet) {
-        const { data: wallet } = await walletBalance(props.mbrId, site.id)
-        memberDetail.fiatBalance = wallet.fiat
-        memberDetail.usdtBalance = wallet.usdt
-        memberDetail.walletType = wallet.walletType
-      }
+      const { data: balance } = await walletBalance(props.mbrId, site.id)
+      memberDetail.fiatBalance = balance.fiat
+      memberDetail.usdtBalance = balance.usdt
+      memberDetail.walletType = balance.walletType
     }
 
     async function toggleWallet() {
@@ -2776,7 +2760,7 @@ export default defineComponent({
       withdrawTypeFormRules,
       withdrawTypeForm,
       withdrawType,
-      updateWithdrawTypeForm
+      updateWithdrawTypeForm,
     }
   },
 })
@@ -2827,10 +2811,9 @@ export default defineComponent({
   }
 }
 
-:deep(
-  .el-tabs__content) {
-    padding: 0;
-  }
+:deep(.el-tabs__content) {
+  padding: 0;
+}
 
 .platform {
   display: flex;
