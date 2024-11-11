@@ -268,7 +268,6 @@ onActivated(() => {
   rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
 });
 
-
 watch(
   () => route.hash,
   (newHash) => {
@@ -289,7 +288,6 @@ watch(
   },
   { immediate: true }
 );
-
 </script>
 <style lang="scss" scoped>
 .game-list-wrapper {
@@ -310,14 +308,13 @@ watch(
     justify-content: flex-start;
     align-items: center;
     gap: 0px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-color: transparent transparent;
 
     &::-webkit-scrollbar {
       display: none;
     }
-
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-color: transparent transparent;
 
     .game-platform {
       padding: 0;
@@ -387,14 +384,13 @@ watch(
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-color: transparent transparent;
 
     &::-webkit-scrollbar {
       display: none;
     }
-
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-color: transparent transparent;
 
     .game-lists {
       gap: 8px;
