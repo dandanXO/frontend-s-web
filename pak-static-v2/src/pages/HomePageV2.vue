@@ -4209,7 +4209,7 @@ const showCongratsModal = () => {
 }
 
 .congrats-container {
-  background-color: #111934;
+  background: linear-gradient(180deg, #FFFFFF 0%, #D5E6FF 100%);
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -4253,7 +4253,7 @@ const showCongratsModal = () => {
   }
 
   .congrats-title {
-    color: #ffffff;
+    color: #458bff;
     display: flex;
     justify-content: center;
     font-size: 16px;

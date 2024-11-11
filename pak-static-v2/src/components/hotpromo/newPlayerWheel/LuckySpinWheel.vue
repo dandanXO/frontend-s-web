@@ -254,7 +254,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 #remaning-draw-amt {
   font-size: 20px;
-  color: #61ff00;
+  color: #004798;
   font-weight: bold;
 }
 .spin-wheel-container {
@@ -666,7 +666,7 @@ onMounted(() => {
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
+  background: linear-gradient(180deg, #FFFFFF 0%, #D5E6FF 100%);
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -710,7 +710,7 @@ onMounted(() => {
   }
 
   .congrats-title {
-    color: #ffffff;
+    color: #458bff;
     display: flex;
     justify-content: center;
     font-size: 16px;
