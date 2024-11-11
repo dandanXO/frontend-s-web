@@ -755,7 +755,6 @@ const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
   // selectedWithdraw.value.forEach((method) => (method.active = false));
   // item.active = true;
-
   selectedWithdraw.value.forEach((method) => {
     method.active = false;
   });
