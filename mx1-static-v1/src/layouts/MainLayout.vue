@@ -487,7 +487,7 @@ export default defineComponent({
       if (isAndroid()) {
         setTimeout(() => {
           SplashScreen.hide();
-        }, 1000);
+        }, 500);
       }
     });
     return {
