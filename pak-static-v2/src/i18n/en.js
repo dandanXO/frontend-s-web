@@ -255,10 +255,13 @@ export default {
   },
   deposit: {
     selectAmount: "Select Amount",
+    minimum_amt_requirement: "Minimum Deposit of 1000, No Maximum Limit.",
+    please_pay_exact_amt: "Please pay the exact discounted amount to ensure automatic crediting.",
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
-    useFtdPrivilege: "Use Slot First Deposit Privilege"
+    useFtdPrivilege: "Use Slot First Deposit Privilege",
+    unlimited: "Unlimited"
   },
   withdraw: {
     cashBalance: "Cash Balance",

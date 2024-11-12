@@ -7,38 +7,19 @@
       <div class="left-list">
         <div class="buttons">
           <div class="left-btns">
-            <div
-              class="inbox-btn"
-              :class="{ active: !viewSentList }"
-              @click="mailTabChange('inbox')"
-            >
-              Inbox
-            </div>
-            <div
-              class="sent-btn"
-              :class="{ active: viewSentList }"
-              @click="mailTabChange('sent')"
-            >
-              Outbox
-            </div>
+            <div class="inbox-btn" :class="{ active: !viewSentList }" @click="mailTabChange('inbox')">Inbox</div>
+            <div class="sent-btn" :class="{ active: viewSentList }" @click="mailTabChange('sent')">Outbox</div>
           </div>
-          <div class="rounded-btn" @click="newMailVisible = true">
-            Compose
-            <div class="new"><RiMailAddLine /></div>
-          </div>
+          <div class="rounded-btn" @click="newMailVisible = true">Compose</div>
         </div>
         <div class="mail-list">
-          <div
-            v-if="mailboxState.mailboxList[mailboxState.active].list.length > 0"
-          >
+          <div v-if="mailboxState.mailboxList[mailboxState.active].list.length > 0">
             <div style="flex: 2" v-if="!newMailVisible">
               <div class="mailbox-list" :class="{ hide: mailOpened }">
                 <div
                   class="mailbox-item"
                   :class="{ active: selectedId === m.id, unread: m.status }"
-                  v-for="(m, index) in mailboxState.mailboxList[
-                    mailboxState.active
-                  ].list"
+                  v-for="(m, index) in mailboxState.mailboxList[mailboxState.active].list"
                   :key="m.id"
                   @click="selectItem(m, index)"
                 >
@@ -85,8 +66,7 @@
                   filled
                   :rules="[
                     (val) => (val && val.length > 0) || 'Title is required.',
-                    (val) =>
-                      (val && val.length < 255) || 'Length should be less than 255.'
+                    (val) => (val && val.length < 255) || 'Length should be less than 255.'
                   ]"
                   ref="titleRef"
                   name="title"
@@ -101,8 +81,7 @@
                   ref="contentRef"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Content is required',
-                    (val) =>
-                      (val && val.length < 501) || 'Length should be less than 500'
+                    (val) => (val && val.length < 501) || 'Length should be less than 500'
                   ]"
                   name="content"
                   filled
@@ -119,16 +98,8 @@
             </div>
           </div>
         </div>
-        <div
-          class="mail-list"
-          v-if="
-            mailboxState.mailboxList[mailboxState.active].list.length <= 0 &&
-            !newMailVisible
-          "
-        >
-          <span class="mailbox-list no-message"
-            >There are currently no messages.</span
-          >
+        <div class="mail-list" v-if="mailboxState.mailboxList[mailboxState.active].list.length <= 0 && !newMailVisible">
+          <span class="mailbox-list no-message">There are currently no messages.</span>
         </div>
       </div>
     </div>
@@ -138,7 +109,6 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref } from "vue";
 // import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
-import { RiMailAddLine } from "vue-remix-icons";
 import { convertToGMT55 } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -146,7 +116,6 @@ var qs = require("qs");
 
 export default defineComponent({
   name: "MailboxView",
-  components: { RiMailAddLine },
   setup() {
     const mailboxState = reactive({
       active: "inbox",

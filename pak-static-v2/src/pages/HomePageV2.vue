@@ -496,7 +496,6 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
@@ -2483,7 +2482,6 @@ const initOneSignal = () => {
   });
 };
 
-
 const loadCustomerAddress = () => {
   cached
     .get("customerAddress", () =>
@@ -4209,7 +4207,7 @@ const showCongratsModal = () => {
 }
 
 .congrats-container {
-  background: linear-gradient(180deg, #FFFFFF 0%, #D5E6FF 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #d5e6ff 100%);
   max-width: 400px;
   width: 100%;
   padding: 16px;
