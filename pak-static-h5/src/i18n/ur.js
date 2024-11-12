@@ -257,7 +257,8 @@ export default {
     depositTutorial: "جمع کرنے کا ٹیوٹوریل",
     select_privilege: "خصوصی اختیار منتخب کریں",
     incorrectPrivilege: "آپ کی جمع کروائی گئی ڈپازٹ پروموشن غلط ہے۔ براہ کرم دوبارہ ڈپازٹ جمع کرنے کی کوشش کریں۔",
-    useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں"
+    useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں",
+    unlimited: "لامحدود"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
