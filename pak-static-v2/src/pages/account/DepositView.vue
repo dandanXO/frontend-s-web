@@ -40,7 +40,11 @@
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div class="lil-title q-mt-sm">{{ $t("deposit.selectAmount") }}</div>
+    <div class="flex-between-c q-pb-sm">
+      <div class="lil-title q-mt-sm">{{ $t("deposit.selectAmount") }}</div>
+      <div class="q-ml-md q-mt-sm font-small" v-if="isBank2">{{ $t("deposit.minimum_amt_requirement") }}</div>
+    </div>
+
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
@@ -106,6 +110,11 @@
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
+
+          <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
+            {{ $t("deposit.please_pay_exact_amt") }}
+          </div>
+
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -361,7 +370,6 @@ import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -397,6 +405,10 @@ const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated
 //     // router.push(`/account/profile`);
 //   }
 // };
+
+const isBank2 = computed(() => {
+  return activeMethod.value.code === "BANK-2";
+});
 
 const isFormFilled = ref(false);
 const isDeposited = ref(false);
@@ -557,14 +569,7 @@ function initPay() {
       }
     }
 
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -828,12 +833,7 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (response.payResultType === "GET_SUBMIT") {
@@ -877,8 +877,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {
@@ -1309,6 +1308,16 @@ onMounted(() => {
   span {
     color: #b81212;
   }
+}
+
+.flex-between-c {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.font-small {
+  font-size: 12px;
 }
 
 .flex-div {
