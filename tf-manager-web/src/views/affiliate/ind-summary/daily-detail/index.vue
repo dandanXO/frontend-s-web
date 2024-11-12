@@ -4,18 +4,6 @@
       <div class="search">
         <div>
           <el-select
-            v-model="request.siteId"
-            :placeholder="t('fields.site')"
-            @change="handleChangeSites"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
-          <el-select
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
             multiple
@@ -325,7 +313,6 @@ import {
   queryDailySummaryList,
   queryDailySummaryTotalList,
 } from '../../../../api/affiliate-daily-summary'
-import { getSiteListSimple } from '../../../../api/site'
 import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
@@ -355,7 +342,7 @@ const affiliateNames = ref([])
 const request = reactive({
   size: 20,
   current: 1,
-  siteId: null,
+  siteId: store.state.user.siteId,
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
   affiliateCode: null,
@@ -367,21 +354,15 @@ const total = reactive({
 })
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  siteList.list = store.state.user.sites
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId || siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
+    const site = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
-    request.siteId = site.value.id
+    request.siteId = site.id
   }
-  loadAffiliateList()
-}
-
-function handleChangeSites() {
-  request.loginNameList = null
   loadAffiliateList()
 }
 
