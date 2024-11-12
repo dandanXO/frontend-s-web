@@ -90,6 +90,8 @@
 </template>
 
 <script>
+import { SplashScreen } from "@capacitor/splash-screen";
+import { isAndroid } from "boot/utils";
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -464,6 +466,12 @@ export default defineComponent({
 
     onMounted(() => {
       checkRoute();
+
+      if (isAndroid()) {
+        setTimeout(() => {
+          SplashScreen.hide();
+        }, 500);
+      }
     });
     return {
       tab: ref("home"),
