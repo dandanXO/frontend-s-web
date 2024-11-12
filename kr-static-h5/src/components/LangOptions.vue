@@ -38,6 +38,11 @@ const langOptions = [
     label: "English",
     value: "en",
     icon: "iconen"
+  },
+  {
+    label: "Vietnamese",
+    value: "vi",
+    icon: "iconvi"
   }
 ];
 </script>
