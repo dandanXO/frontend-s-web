@@ -35,11 +35,6 @@ const langOptions = [
     icon: "iconvn"
   },
   {
-    label: "English",
-    value: "en",
-    icon: "iconen"
-  },
-  {
     label: "Vietnamese",
     value: "vi",
     icon: "iconvi"
