@@ -65,10 +65,15 @@ module.exports = configure(function (ctx) {
       // showProgress: false,
       // gzip: true,
       // analyze: true,
-
+      minify: true,
+      uglifyOptions: {
+        compress: {
+          drop_console: true, // Removes all console logs
+        },
+      },
       // Options below are automatically set depending on the env, set them if you want to override
-      // extractCSS: false,
-
+      extractCSS: true,
+      sourceMap: false,
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
 
@@ -81,6 +86,11 @@ module.exports = configure(function (ctx) {
 
         // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {
+          chain.optimization.splitChunks({
+            chunks: 'all',
+            maxSize: 150000, // 每个 chunk 最大200KB
+          });
+
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
             {
               test: /\.(jpe?g|png|gif|svg)$/i,
@@ -217,7 +227,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true,
+      hideSplashscreen: false,
       // (Optional) If not present, will look for package.json > name
       appName: "55Ace", // string
       backButtonExit: "*"

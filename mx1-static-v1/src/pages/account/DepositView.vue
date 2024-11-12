@@ -270,7 +270,6 @@ import { api, cashier } from "@/boot/axios";
 import { convertToCommaAmount } from "@/boot/utils";
 import BankComponent from "@/components/finance/fBank";
 import { userStore } from "@/stores/index";
-import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import { openURL, Platform, useQuasar } from "quasar";
 import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef, watch } from "vue";
@@ -421,8 +420,7 @@ function initPay() {
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
         !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
+        Platform.is.name !== "webkit"
       )
     ) {
       let isBacked = localStorage.getItem("isBacked");
@@ -607,8 +605,7 @@ async function pDepo(deposit) {
           if (
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -664,8 +661,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {
