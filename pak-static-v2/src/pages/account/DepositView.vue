@@ -199,6 +199,7 @@
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
+          v-show="false"
           v-if="hasPrivilege && unselectedPrivileges.length > 0"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
@@ -985,7 +986,7 @@ const loadAppTabs = () => {
         store.ftd = data.ftd;
 
         if (store.ftd) {
-          isFtdPrivilegeEnable.value = true;
+          // isFtdPrivilegeEnable.value = true;
         }
       }
     }
