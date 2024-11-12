@@ -5,36 +5,6 @@
     <div class="slot-ftd-section" v-if="isFtdPrivilege">
       <img src="../../assets/images/bonus/slot-ftd-img.png" />
     </div>
-    <!-- <div class="deposit-options">
-      <div class="lil-title">
-        Payment Channel
-        <span>*</span>
-      </div>
-      <div class="deposit-option-container">
-        <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
-          <img
-            class="deposit-option-btn q-mt-sm"
-            :src="`${imgURL}/payment/${item.nodeIcon}`"
-            @click="handleDepositNodeClick(item)"
-            :class="{ active: activeMethod.nodeIcon === item.nodeIcon }"
-            style="width: 100%"
-          />
-          <div :class="['selected-svg', activeMethod.nodeIcon === item.nodeIcon && 'active']">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path
-                d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
-                fill="white"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <pre>activeMethod--{{ activeMethod }}</pre> -->
-    <!-- <pre>payMethods-{{ payMethods }}</pre> -->
-    <!-- <pre>depositItems--{{ depositItems }}</pre> -->
-    <!-- <pre>selectedPayType-{{ selectedPayType }}</pre> -->
 
     <div class="node-wrapper">
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
@@ -43,7 +13,7 @@
     <div class="flex-between-c q-pb-sm">
       <div class="lil-title q-mt-sm q-mr-lg">{{ $t("deposit.selectAmount") }}</div>
 
-      <div class="q-ml-md q-mt-sm font-small">{{ $t("deposit.minimum_amt_requirement") }}</div>
+      <div class="q-ml-md q-mt-sm font-small" v-if="isBank2">{{ $t("deposit.minimum_amt_requirement") }}</div>
     </div>
 
     <div class="deposit-item-container q-mt-sm">
@@ -114,7 +84,7 @@
             </div>
           </div>
 
-          <div class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
+          <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
             {{ $t("deposit.please_pay_exact_amt") }}
           </div>
           <q-input
@@ -232,14 +202,6 @@
         <!--        </div>-->
       </q-form>
     </div>
-
-    <!-- <div class="q-mt-lg"> -->
-    <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
-    <!-- <div :class="`btn-submit`" @click="confirmDeposit">
-        <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
-        <template v-else>Submit</template>
-      </div> -->
-    <!-- </div> -->
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
       <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
@@ -373,7 +335,6 @@ import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -397,18 +358,9 @@ const emits = defineEmits(["closeModal"]);
 
 const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
 
-// const checkNewUser = () => {
-//   if (store.realName == "" || store.realName == null) {
-//     emits("closeModal");
-//     $q.notify({
-//       color: "negative",
-//       position: "top",
-//       message: "Please fill in your personal details",
-//       icon: "report_problem"
-//     });
-//     // router.push(`/account/profile`);
-//   }
-// };
+const isBank2 = computed(() => {
+  return activeMethod.value.code === "BANK-2";
+});
 
 const isFormFilled = ref(false);
 const isDeposited = ref(false);
@@ -575,14 +527,7 @@ function initPay() {
       }
     }
 
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -652,6 +597,8 @@ const onSelect = (value) => {
       checkPrivilege(value);
     }
   }
+  // console.log("THIS");
+  // console.log(activeMethod.value);
 };
 
 function checkMinDepositAmt(val) {
@@ -846,12 +793,7 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (response.payResultType === "GET_SUBMIT") {
@@ -895,8 +837,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {

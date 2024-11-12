@@ -7,38 +7,19 @@
       <div class="left-list">
         <div class="buttons">
           <div class="left-btns">
-            <div
-              class="inbox-btn"
-              :class="{ active: !viewSentList }"
-              @click="mailTabChange('inbox')"
-            >
-              Inbox
-            </div>
-            <div
-              class="sent-btn"
-              :class="{ active: viewSentList }"
-              @click="mailTabChange('sent')"
-            >
-              Outbox
-            </div>
+            <div class="inbox-btn" :class="{ active: !viewSentList }" @click="mailTabChange('inbox')">Inbox</div>
+            <div class="sent-btn" :class="{ active: viewSentList }" @click="mailTabChange('sent')">Outbox</div>
           </div>
-          <div class="rounded-btn" @click="newMailVisible = true">
-            Compose
-            <div class="new"><RiMailAddLine /></div>
-          </div>
+          <div class="rounded-btn" @click="newMailVisible = true">Compose</div>
         </div>
         <div class="mail-list">
-          <div
-            v-if="mailboxState.mailboxList[mailboxState.active].list.length > 0"
-          >
+          <div v-if="mailboxState.mailboxList[mailboxState.active].list.length > 0">
             <div style="flex: 2" v-if="!newMailVisible">
               <div class="mailbox-list" :class="{ hide: mailOpened }">
                 <div
                   class="mailbox-item"
                   :class="{ active: selectedId === m.id, unread: m.status }"
-                  v-for="(m, index) in mailboxState.mailboxList[
-                    mailboxState.active
-                  ].list"
+                  v-for="(m, index) in mailboxState.mailboxList[mailboxState.active].list"
                   :key="m.id"
                   @click="selectItem(m, index)"
                 >
@@ -85,8 +66,7 @@
                   filled
                   :rules="[
                     (val) => (val && val.length > 0) || 'Title is required.',
-                    (val) =>
-                      (val && val.length < 255) || 'Length should be less than 255.'
+                    (val) => (val && val.length < 255) || 'Length should be less than 255.'
                   ]"
                   ref="titleRef"
                   name="title"
@@ -101,8 +81,7 @@
                   ref="contentRef"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Content is required',
-                    (val) =>
-                      (val && val.length < 501) || 'Length should be less than 500'
+                    (val) => (val && val.length < 501) || 'Length should be less than 500'
                   ]"
                   name="content"
                   filled
@@ -119,16 +98,8 @@
             </div>
           </div>
         </div>
-        <div
-          class="mail-list"
-          v-if="
-            mailboxState.mailboxList[mailboxState.active].list.length <= 0 &&
-            !newMailVisible
-          "
-        >
-          <span class="mailbox-list no-message"
-            >There are currently no messages.</span
-          >
+        <div class="mail-list" v-if="mailboxState.mailboxList[mailboxState.active].list.length <= 0 && !newMailVisible">
+          <span class="mailbox-list no-message">There are currently no messages.</span>
         </div>
       </div>
     </div>
@@ -138,15 +109,12 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref } from "vue";
 // import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
-import { RiMailAddLine } from "vue-remix-icons";
-import { convertToGMT55 } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 var qs = require("qs");
 
 export default defineComponent({
   name: "MailboxView",
-  components: { RiMailAddLine },
   setup() {
     const mailboxState = reactive({
       active: "inbox",
@@ -155,23 +123,23 @@ export default defineComponent({
           list: [],
           pageNum: null,
           pageSize: null,
-          total: 0,
+          total: 0
         },
         sent: {
           list: [],
           pageNum: null,
           pageSize: null,
           total: 0,
-          orderBy: 'createTime'
+          orderBy: "createTime"
         },
         write: {
           title: "",
-          content: "",
-        },
-      },
+          content: ""
+        }
+      }
     });
     const $q = useQuasar();
-     const mailboxData = ref({});
+    const mailboxData = ref({});
     const mailOpened = ref(false);
     const viewSentList = ref(false);
     const newMailVisible = ref(false);
@@ -180,96 +148,101 @@ export default defineComponent({
     const selectItem = (item, index) => {
       selectedId.value = item.id;
       mailOpened.value = true;
-      newMailVisible.value = false
+      newMailVisible.value = false;
       selectedIndex.value = index;
       mailDetailList.value = item;
-      item.status = ''
-    }
+      item.status = "";
+    };
     const loadPersonalMailbox = () => {
-      mailboxState.mailboxList[mailboxState.active].list = []
-      if (mailboxState.active === 'inbox') {
+      mailboxState.mailboxList[mailboxState.active].list = [];
+      if (mailboxState.active === "inbox") {
         mailboxData.value = {
           type: null,
           current: mailboxState.mailboxList[mailboxState.active].pageNum,
           size: mailboxState.mailboxList[mailboxState.active].pageSize,
           orderBy: "sendTime"
-        }
+        };
         $q.loading.show({
-          message: '加载信箱...'
-        })
-        api.get("/session/inbox", {
-          params: {
-            type: mailboxData.value.type,
-            current: mailboxData.value.current,
-            size: mailboxData.value.size,
-            orderBy: mailboxData.value.orderBy
-          }
-        }).then((response) => {
-          $q.loading.hide()
-          if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-          }
-        }).catch((error) => {
-          $q.loading.hide()
-          console.log("error", error);
+          message: "加载信箱..."
         });
+        api
+          .get("/session/inbox", {
+            params: {
+              type: mailboxData.value.type,
+              current: mailboxData.value.current,
+              size: mailboxData.value.size,
+              orderBy: mailboxData.value.orderBy
+            }
+          })
+          .then((response) => {
+            $q.loading.hide();
+            if (response.code === 0) {
+              mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
+            }
+          })
+          .catch((error) => {
+            $q.loading.hide();
+            console.log("error", error);
+          });
       }
-      if (mailboxState.active === 'sent') {
+      if (mailboxState.active === "sent") {
         mailboxData.value = {
           type: null,
           current: mailboxState.mailboxList[mailboxState.active].pageNum,
           size: mailboxState.mailboxList[mailboxState.active].pageSize,
           orderBy: "createTime"
-        }
+        };
         $q.loading.show({
-          message: '加载信箱...'
-        })
-        api.get("/session/outbox", {
-          params: {
-            type: mailboxData.value.type,
-            current: mailboxData.value.current,
-            size: mailboxData.value.size,
-            orderBy: mailboxData.value.orderBy
-          }
-        }).then((response) => {
-          $q.loading.hide()
-          if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-            mailboxState.mailboxList[mailboxState.active].total = response.data.total;
-          }
-        }).catch((error) => {
-          $q.loading.hide()
-          console.log("error", error);
+          message: "加载信箱..."
         });
+        api
+          .get("/session/outbox", {
+            params: {
+              type: mailboxData.value.type,
+              current: mailboxData.value.current,
+              size: mailboxData.value.size,
+              orderBy: mailboxData.value.orderBy
+            }
+          })
+          .then((response) => {
+            $q.loading.hide();
+            if (response.code === 0) {
+              mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
+              mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+            }
+          })
+          .catch((error) => {
+            $q.loading.hide();
+            console.log("error", error);
+          });
       }
     };
     const changePage = (page, pageSize) => {
-      loadPersonalMailbox(page, pageSize)
+      loadPersonalMailbox(page, pageSize);
       // const pageSize = 2
     };
 
     const mailTabChange = (nk) => {
-      selectedId.value = null
-      mailOpened.value = false
+      selectedId.value = null;
+      mailOpened.value = false;
 
-     mailboxData.value = {
+      mailboxData.value = {
         type: null,
         current: mailboxState.mailboxList[nk].pageNum,
         size: mailboxState.mailboxList[nk].pageSize,
-        orderBy: 'createTime'
-      }
+        orderBy: "createTime"
+      };
 
-      if (nk === 'sent') {
-        mailboxState.active = 'sent'
-        viewSentList.value = true
-        loadPersonalMailbox()
-      }
-      else if (nk === 'inbox') {
-        mailboxState.active = 'inbox'
-        viewSentList.value = false
+      if (nk === "sent") {
+        mailboxState.active = "sent";
+        viewSentList.value = true;
+        loadPersonalMailbox();
+      } else if (nk === "inbox") {
+        mailboxState.active = "inbox";
+        viewSentList.value = false;
         loadPersonalMailbox();
       }
-      newMailVisible.value = false
+      newMailVisible.value = false;
     };
 
     onMounted(() => {
@@ -277,69 +250,67 @@ export default defineComponent({
     });
 
     const formRef = ref();
-    const mailDetailList = ref({})
+    const mailDetailList = ref({});
     const rules = {
       title: [
         {
           required: true,
           message: "请输入标题",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           max: 255,
           message: "标题长度需少于 255 字",
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       content: [
         {
           required: true,
           message: "请输入内容",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           max: 500,
           message: "内容长度需少于 500字",
-          trigger: "change",
-        },
-      ],
+          trigger: "change"
+        }
+      ]
     };
     const titleRef = ref();
     const contentRef = ref();
     const onSubmit = () => {
       titleRef.value.validate();
       contentRef.value.validate();
-      if (
-        titleRef.value.hasError ||
-        contentRef.value.hasError
-      ) {
+      if (titleRef.value.hasError || contentRef.value.hasError) {
         $q.loading.hide();
       } else {
-          api.post("/session/writeOutbox", qs.stringify(mailboxState.mailboxList.write)).then((response) => {
-            if(response.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "发送成功",
-                  icon: "check_circle_outline"
-                });
-                mailboxState.mailboxList.write.title = "";
-                mailboxState.mailboxList.write.content = "";
-                newMailVisible.value = false
-                mailTabChange('sent')
-              } else {
-
-                // $q.notify({
-                //   color: "negative",
-                //   position: "top",
-                //   message: response.message,
-                //   icon: "report_problem"
-                // });
-              }
+        api
+          .post("/session/writeOutbox", qs.stringify(mailboxState.mailboxList.write))
+          .then((response) => {
+            if (response.code === 0) {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "发送成功",
+                icon: "check_circle_outline"
+              });
+              mailboxState.mailboxList.write.title = "";
+              mailboxState.mailboxList.write.content = "";
+              newMailVisible.value = false;
+              mailTabChange("sent");
+            } else {
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: response.message,
+              //   icon: "report_problem"
+              // });
+            }
           })
-        .catch((error) => {
-          console.log("error", error);
-        });
+          .catch((error) => {
+            console.log("error", error);
+          });
       }
     };
     return {
@@ -360,8 +331,8 @@ export default defineComponent({
       mailboxData,
       titleRef,
       contentRef
-    }
-  },
+    };
+  }
 });
 </script>
 <style lang="scss">
