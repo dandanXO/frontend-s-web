@@ -85,7 +85,6 @@ export default {
     home_fishing: "Câu Cá",
     home_poker: "Poker",
     home_casual: "Khác",
-    home_lottery: "Lottery",
     home_lottery: "Xổ Số",
 
     // notify msg
