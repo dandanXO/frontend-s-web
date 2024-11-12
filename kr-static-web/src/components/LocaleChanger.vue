@@ -35,7 +35,7 @@ export default {
       setLanguage(newLanguage);
     };
     const langs = [
-      { code: "en", text: "English" },
+      // { code: "en", text: "English" },
       { code: "kr", text: "Korean" },
       { code: "vi", text: "Vietnamese" }
     ];
