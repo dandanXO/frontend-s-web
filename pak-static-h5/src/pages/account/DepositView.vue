@@ -40,7 +40,12 @@
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div class="lil-title q-mt-sm">{{ $t("deposit.selectAmount") }}</div>
+    <div class="flex-between-c q-pb-sm">
+      <div class="lil-title q-mt-sm q-mr-lg">{{ $t("deposit.selectAmount") }}</div>
+
+      <div class="q-ml-md q-mt-sm font-small">{{ $t("deposit.minimum_amt_requirement") }}</div>
+    </div>
+
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
@@ -107,6 +112,10 @@
             <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
+          </div>
+
+          <div class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
+            {{ $t("deposit.please_pay_exact_amt") }}
           </div>
           <q-input
             class="deposit-input q-mt-sm"
@@ -1292,10 +1301,21 @@ onMounted(() => {
 .lil-title {
   color: #d0d0d0;
   font-weight: 600;
+  white-space: nowrap;
 
   span {
     color: #b81212;
   }
+}
+
+.flex-between-c {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.font-small {
+  font-size: 12px;
 }
 
 .flex-div {
