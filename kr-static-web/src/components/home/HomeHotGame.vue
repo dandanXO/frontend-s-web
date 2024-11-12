@@ -493,7 +493,7 @@ $transition_timer: 0.5s;
           }
 
           .hotgame-icon {
-            height: 2rem;
+            height: 2.5rem;
             margin: 0 0 1rem 0;
             transform: translate(0px, 1px);
           }
@@ -577,7 +577,7 @@ $transition_timer: 0.5s;
           width: 38.5rem;
           // margin: 0 0 0 0px;
           margin: 0 -10px 0 0px;
-          padding-left: 0.75rem;
+          padding-left: 1rem;
           height: 500px;
         }
 
@@ -699,8 +699,8 @@ $transition_timer: 0.5s;
               width: 3.25rem;
 
               .game-provider-img {
-                width: 2rem;
-                height: 2rem;
+                width: 3rem;
+                height: 3rem;
                 padding: 0.25rem;
                 border-radius: 0.3145rem;
                 // border: 1px solid #FD574C;
