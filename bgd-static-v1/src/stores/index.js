@@ -8,7 +8,10 @@ import OneSignal from "onesignal-cordova-plugin";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
-const ftdEvent = new Event("ftdSuccess");
+
+const createFtdEvent = (triggeredPixels) => {
+  return new CustomEvent("ftdSuccess", { detail: triggeredPixels });
+};
 
 export const userStore = defineStore("userStore", {
   state: () => {
@@ -52,7 +55,8 @@ export const userStore = defineStore("userStore", {
       hasUpdatedOneSignal: false,
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
-      ftd: "CLOSE"
+      ftd: "CLOSE",
+      isTkPixel: false
     };
   },
   actions: {
@@ -270,10 +274,13 @@ export const userStore = defineStore("userStore", {
           .then((res) => {
             console.log(res);
             if (res.code === 0) {
-              if (this.isFbPixel && this.balance === 0 && res.data !== 0) {
+              if ((this.isFbPixel || this.isTkPixel) && this.balance === 0 && res.data !== 0) {
+                const triggeredPixels = [];
+                if (this.isFbPixel) triggeredPixels.push("fb");
+                if (this.isTkPixel) triggeredPixels.push("tk");
                 const isNewUser = sessionStorage.getItem("newUserFtd");
                 if (isNewUser && isNewUser === this.nickName) {
-                  document.dispatchEvent(ftdEvent);
+                  document.dispatchEvent(createFtdEvent(triggeredPixels));
                 }
               }
               this.balance = res.data;

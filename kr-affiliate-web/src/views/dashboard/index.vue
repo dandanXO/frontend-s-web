@@ -202,16 +202,16 @@
                       {{ record.member }}
                     </td>
                     <td>
-                      {{ record.deposit }}
+                      {{ formatCommaAmt(record.deposit) }}
                     </td>
                     <td>
-                      {{ record.depositCount }}
+                      {{ formatCommaAmt(record.depositCount) }}
                     </td>
                     <td>
-                      {{ record.balance }}
+                      {{ formatCommaAmt(record.balance) }}
                     </td>
                     <td>
-                      {{ record.withdraw }}
+                      {{ formatCommaAmt(record.withdraw) }}
                     </td>
                   </tr>
                 </tbody>
@@ -234,10 +234,10 @@
                       {{ record.member }}
                     </td>
                     <td>
-                      {{ record.withdraw }}
+                      {{ formatCommaAmt(record.withdraw) }}
                     </td>
                     <td>
-                      {{ record.withdrawCount }}
+                      {{ formatCommaAmt(record.withdrawCount) }}
                     </td>
                   </tr>
                 </tbody>
@@ -260,10 +260,10 @@
                       {{ record.member }}
                     </td>
                     <td>
-                      {{ record.bet }}
+                      {{ formatCommaAmt(record.bet) }}
                     </td>
                     <td>
-                      {{ record.betCount }}
+                      {{ formatCommaAmt(record.betCount) }}
                     </td>
                   </tr>
                 </tbody>

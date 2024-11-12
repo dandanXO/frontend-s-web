@@ -14,6 +14,7 @@ const PH1_SITE_ID = 16;
 const ID1_SITE_ID = 17;
 const BR1_SITE_ID = 18;
 const PAK2_SITE_ID = 19;
+const PK3_SITE_ID = 20;
 const MX1_SITE_ID = 21;
 
 export const isIndiaSite = (siteId) => {
@@ -145,6 +146,12 @@ export const getSiteTitle = (siteId) => {
       break;
     case PAK2_SITE_ID :
       siteTitle = "后台 "
+      break;
+    case PK3_SITE_ID :
+      siteTitle = "55Ace "
+      break;
+    default:
+      siteTitle = "后台"
       break;
   }
 

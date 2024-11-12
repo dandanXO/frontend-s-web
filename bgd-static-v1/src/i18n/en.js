@@ -164,6 +164,8 @@ export default {
     content_rules_02: "Content length is 500 words or less"
   },
   btn: {
+    login: "Login",
+    register: "Register",
     confirm: "Confirm",
     submit: "Submit",
     addNewAccount: "Add New Account",
@@ -490,8 +492,8 @@ export default {
     bank: "BANK",
     noRecord: "No record",
     noMoreRecord: "No more record",
-    bytoday: "By Today",
-    byyesterday: "By Yesterday",
+    bytoday: "Today",
+    byyesterday: "Yesterday",
     all: "All",
     turnover_requi: "TurnOver Requirement"
   },
@@ -664,9 +666,12 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    35015: "The same device has already claimed this discount.",
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
     45001: "Received random bonus today",
+    47000: "The discount has not yet been claimed.",
+    47001: "No amount available for claim.",
     50000: "The maximum number of transfers for today has been reached",
     50001: "The number of available transfers has been reached, please continue betting before transferring again",
     51000: "Today's sign-in reward has already been claimed",

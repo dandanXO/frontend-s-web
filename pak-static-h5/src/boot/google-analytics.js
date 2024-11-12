@@ -27,7 +27,7 @@ export default boot(({ app, router }) => {
         const source = referrer || "Direct";
 
         app.config.globalProperties.$gtag.event("user_referral", {
-          custom_user_id: store.id,
+          custom_user_id: store.nickName,
           referrer_source: source
           // debug_mode: true
         });

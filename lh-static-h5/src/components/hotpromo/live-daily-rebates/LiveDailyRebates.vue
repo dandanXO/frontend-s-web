@@ -7,14 +7,14 @@
           :class="{ active: tabValue === 'lh1-live-daily-bonus' }"
           @click="tabValue = 'lh1-live-daily-bonus'"
         >
-          活动 1
+          日投返利
         </div>
         <div
           class="tab"
           :class="{ active: tabValue === 'lh1-live-weekly-bonus' }"
           @click="tabValue = 'lh1-live-weekly-bonus'"
         >
-          活动 2
+          周投返利
         </div>
       </div>
 
@@ -61,7 +61,7 @@
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
+                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
                   alt=""
                   width="100%"
                 />
@@ -203,7 +203,7 @@
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn.png"
+                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
                   alt=""
                   width="100%"
                 />

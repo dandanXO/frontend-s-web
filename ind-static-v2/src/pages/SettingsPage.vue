@@ -105,7 +105,8 @@
               :key="i"
               :name="i"
               class="column no-wrap flex-center"
-              :img-src="imgURL + banner.mobileImageUrl"
+              :img-src="banner.mobileImageUrl"
+              @click="goToPage(banner)"
             ></q-carousel-slide>
           </q-carousel>
         </q-card-section>
@@ -136,11 +137,12 @@
 </template>
 
 <script setup>
-import { onActivated, ref } from "vue";
+import { onActivated, onMounted, ref } from "vue";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import { api } from "boot/axios";
 
 const store = userStore();
 const router = useRouter();
@@ -148,8 +150,8 @@ const qs = require("qs");
 const $q = useQuasar();
 
 const slide = ref(0);
-// const imgURL = process.env.IMAGE_CDN + "/promo/";
-const imgURL = "";
+const imgURL = process.env.IMAGE_CDN + "/promo/";
+
 const btm_banners = ref([
   {
     mobileImageUrl: require("../assets/images/account/account-banner-2.jpg")
@@ -162,6 +164,27 @@ const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
+
+const loadBanner = () => {
+  api.get("/opt-session/promo/banner?category=CENTERPROMO").then((response) => {
+    if (response.code === 0) {
+      response.data.forEach((item) => {
+        item.mobileImageUrl = imgURL + item.mobileImageUrl;
+      });
+      btm_banners.value = response.data;
+    }
+  });
+};
+
+const goToPage = (promo) => {
+  if (promo.redirectUrl && promo.redirectUrl !== "0") {
+    router.push(promo.redirectUrl);
+  }
+};
+
+onMounted(() => {
+  loadBanner();
+});
 
 onActivated(() => {
   store.getUnreadTotal();
@@ -260,12 +283,11 @@ const logout = () => {
     // width: calc(330px + 100px);
     text-transform: uppercase;
 
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-size: 20px;
     font-weight: 700;
     line-height: 16px;
     letter-spacing: -0.0008em;
-
   }
 }
 
@@ -393,17 +415,17 @@ const logout = () => {
 }
 
 .btn-cancel {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
   font-weight: 700;
   color: #fff;
-  border: 1px solid #5D8956;
+  border: 1px solid #5d8956;
   border-radius: 8px;
   width: 140px;
   height: 42px;
 }
 .btn-confirm {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
-  border: 1px solid #5D8956;
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
+  border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;
   height: 42px;

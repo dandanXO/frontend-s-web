@@ -1352,7 +1352,7 @@
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">Rs58</div>
+      <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">

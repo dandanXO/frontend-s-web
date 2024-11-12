@@ -19,17 +19,6 @@
                 <div v-else-if="obj === 'depositAmount'">
                   <div class="row items-center justify-between">
                     <div>{{ det[obj] }}</div>
-                    <div v-if="recordType === 'deposit' || recordType === 'withdraw'" class="buttons">
-                      <q-btn
-                        @click="copyText(det.serialNumber, '存款编码')"
-                        round
-                        size="xs"
-                        class="btn-deposit"
-                        color="bright"
-                      >
-                        <img src="../assets/records/copy-icon.png" />
-                      </q-btn>
-                    </div>
                   </div>
                 </div>
                 <div v-else-if="obj === 'withdrawAmount'">
@@ -90,50 +79,6 @@
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
-
-                    <div v-if="recordType === 'withdraw'" class="buttons">
-                      <template
-                        v-if="
-                          det.status === 'SUCCESS' &&
-                          (det.currencyName === 'CNY' || det.currencyName === 'AliCNY') &&
-                          det.confirmStatus === 0
-                        "
-                      >
-                        <q-btn
-                          @click="openWithdrawConfirmDialog(det)"
-                          outline
-                          size="md"
-                          class="btn-cfm-deposit bg-greyblue row justify-between items-center"
-                          icon="check_circle"
-                          label="确认到账"
-                        />
-                      </template>
-
-                      <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
-                        <q-btn
-                          @click="openWithdrawCancelDialog(det)"
-                          outline
-                          label="取消"
-                          size="sm"
-                          color="bright"
-                          class="q-mr-sm"
-                        />
-                      </template>
-
-                      <template
-                        v-if="det.status === 'SUCCESS' && det.currencyName === 'CNY' && det.confirmStatus === 1"
-                      >
-                        <q-btn
-                          disable
-                          outline
-                          round
-                          size="md"
-                          class="btn-deposit"
-                          color="positive"
-                          icon="check_circle"
-                        />
-                      </template>
-                    </div>
                   </div>
                 </div>
                 <div v-else-if="obj === 'betStatus'">
@@ -172,6 +117,57 @@
               </div>
             </template>
           </div>
+                  <div v-if="recordType === 'withdraw' || recordType === 'deposit'" class="buttons"> 
+                       <q-btn
+                          @click="copyText(det.serialNumber, '存款编码')"
+                           outline
+                           size="md"
+                           class="btn-cfm-deposit bg-greyblue row justify-between items-center"
+                           icon="content_copy"
+                           label="复制"
+                         />
+                       <template
+                         v-if="
+                           det.status === 'SUCCESS' &&
+                           (det.currencyName === 'CNY' || det.currencyName === 'AliCNY') &&
+                           det.confirmStatus === 0
+                         "
+                       >
+                         <q-btn
+                           @click="openWithdrawConfirmDialog(det)"
+                           outline
+                           size="md"
+                           class="btn-cfm-deposit bg-greyblue row justify-between items-center"
+                           icon="check_circle"
+                           label="确认到账"
+                         />
+                       </template>
+ 
+                       <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
+                         <q-btn
+                           @click="openWithdrawCancelDialog(det)"
+                           outline
+                           label="取消"
+                           size="sm"
+                           color="bright"
+                           class="q-mr-sm"
+                         />
+                       </template>
+ 
+                       <template
+                         v-if="det.status === 'SUCCESS' && det.currencyName === 'CNY' && det.confirmStatus === 1"
+                       >
+                         <q-btn
+                           disable
+                           outline
+                           round
+                           size="md"
+                           class="btn-deposit"
+                           color="positive"
+                           icon="check_circle"
+                         />
+                       </template>
+                     </div> 
         </q-card>
 
         <template v-slot:loading>
@@ -571,6 +567,9 @@ export default defineComponent({
 
 .buttons {
   text-align: right;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 .btn-deposit {

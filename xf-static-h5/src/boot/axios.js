@@ -173,6 +173,9 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
+      if (res.code === ResponseCode.ERROR_WITHDRAW_AMOUNT) {
+        return res;
+      }
       if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
         return res;
       }
