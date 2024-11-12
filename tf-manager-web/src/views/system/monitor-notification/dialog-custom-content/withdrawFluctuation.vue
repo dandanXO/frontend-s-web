@@ -44,9 +44,12 @@
           inactive-text="禁用"
         />
       </el-form-item>
-      <el-row justify="center">
+      <el-row justify="center" :gutter="20">
         <el-col :span="6">
           <el-button type="primary" @click="submitForm" style="width: 100%">送出</el-button>
+        </el-col>
+        <el-col :span="6">
+          <TestTriggerButton title="WITHDRAW_FLUCTUATION" />
         </el-col>
       </el-row>
     </el-form>
@@ -59,6 +62,7 @@ import { useStore } from "@/store";
 import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
 import RoleUserSelector from "./component/roleUserSelector.vue";
+import TestTriggerButton from "@/views/system/monitor-notification/dialog-custom-content/component/testTriggerButton.vue";
 const roleUserSelectorRef = ref(null);
 
 const store = useStore();
