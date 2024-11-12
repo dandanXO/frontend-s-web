@@ -36,7 +36,8 @@ export default {
     };
     const langs = [
       { code: "en", text: "English" },
-      { code: "kr", text: "Korean" }
+      { code: "kr", text: "Korean" },
+      { code: "vi", text: "Vietnamese" }
     ];
     return {
       languageVal,
@@ -54,23 +55,29 @@ export default {
   img {
     width: 40px;
   }
+
   .el-dropdown {
     outline: none;
+
     img {
       width: 25px;
     }
   }
+
   .el-dropdown-menu {
     img {
       width: 25px;
     }
   }
+
   :focus-visible {
     outline: none;
   }
 }
+
 .el-dropdown-menu__item {
   gap: 5px;
+
   img {
     width: 25px;
   }
