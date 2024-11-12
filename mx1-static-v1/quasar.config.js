@@ -86,6 +86,11 @@ module.exports = configure(function (ctx) {
 
         // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {
+          chain.optimization.splitChunks({
+            chunks: 'all',
+            maxSize: 150000, // 每个 chunk 最大200KB
+          });
+
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
             {
               test: /\.(jpe?g|png|gif|svg)$/i,
