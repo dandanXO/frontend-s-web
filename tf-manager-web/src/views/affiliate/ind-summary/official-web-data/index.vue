@@ -3,18 +3,6 @@
     <div class="header-container">
       <div class="search">
         <div>
-          <el-select
-            v-model="request.siteId"
-            size="small"
-            :placeholder="t('fields.site')"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -286,7 +274,6 @@ import {
   queryDailySummaryByType,
   queryDailySummaryTotal,
 } from '../../../../api/affiliate-daily-summary'
-import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { useStore } from '../../../../store'
@@ -314,7 +301,7 @@ const defaultEndDate = convertDate(new Date())
 const request = reactive({
   size: 20,
   current: 1,
-  siteId: null,
+  siteId: store.state.user.siteId,
   recordTime: [defaultStartDate, defaultEndDate],
   belongType: 'OFFICIAL',
 })
@@ -324,15 +311,14 @@ const total = reactive({
 })
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  siteList.list = store.state.user.sites
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId || siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
+    const site = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
-    request.siteId = site.value.id
+    request.siteId = site.id
   }
 }
 
