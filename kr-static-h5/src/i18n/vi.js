@@ -51,6 +51,7 @@ export default {
     euroCountdown02: " NGÀY CÒN LẠI",
     helloUsername: "Xin chào,",
     btn_redeem: "nhận thưởng",
+    select_a_type: "Chọn loại",
 
     // redeem point start
     redeem_point_pending_list: "Danh Sách Chờ Xử Lý",
@@ -75,6 +76,18 @@ export default {
     menu_others: "Khác",
     menu_cockfighting: "Đá Gà",
     menu_minigame: "Khác",
+    // home
+    home_livecasino: "Live Casino",
+    home_slot: "Slot",
+    home_esports: "ESPORTS",
+    home_sports: "Sport",
+    home_cockfighting: "ĐÁ GÀ",
+    home_fishing: "Câu Cá",
+    home_poker: "Poker",
+    home_casual: "Khác",
+    home_lottery: "Lottery",
+    home_lottery: "Xổ Số",
+
     // notify msg
     msg_update_successful: "Cập nhật thành công",
     msg_bind_card_first: "Vui lòng liên kết thẻ ngân hàng của bạn trước",

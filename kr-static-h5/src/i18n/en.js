@@ -51,6 +51,7 @@ export default {
     euroCountdown02: " DAYS LEFT",
     helloUsername: "Hi,",
     btn_redeem: "redeem",
+    select_a_type: "Select a type",
 
     // redeem point start
     redeem_point_pending_list: "Pending List",
@@ -75,6 +76,17 @@ export default {
     menu_others: "Others",
     menu_cockfighting: "Cock Fighting",
     menu_minigame: "Others",
+    // home
+    home_livecasino: "Live Casino",
+    home_slot: "Slot",
+    home_esports: "ESPORTS",
+    home_sports: "Sport",
+    home_cockfighting: "Cockfighting",
+    home_fishing: "Fishing",
+    home_poker: "Poker",
+    home_casual: "Mini Game",
+    home_lottery: "Lottery",
+
     // notify msg
     msg_update_successful: "Update successful",
     msg_bind_card_first: "Please bind your bank card first",

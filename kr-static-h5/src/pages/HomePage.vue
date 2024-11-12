@@ -68,7 +68,7 @@
       </div>
       <!-- <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div> -->
     </div>
-    <div class="header-lang" v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')">
+    <div class="header-lang" v-if="store.token">
       <LangOptions />
     </div>
 
@@ -245,7 +245,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                  {{ item[`title_${$t("lang.langVal")}`] }}
                 </div>
               </div>
             </div>
@@ -270,7 +270,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                  {{ item[`title_${$t("lang.langVal")}`] }}
                 </div>
               </div>
             </div>
@@ -295,7 +295,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                  {{ item[`title_${$t("lang.langVal")}`] }}
                 </div>
               </div>
             </div>
@@ -320,7 +320,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                  {{ item[`title_${$t("lang.langVal")}`] }}
                 </div>
               </div>
             </div>
@@ -343,7 +343,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                  {{ item[`title_${$t("lang.langVal")}`] }}
                 </div>
               </div>
             </div>
@@ -367,7 +367,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                  {{ item[`title_${$t("lang.langVal")}`] }}
                 </div>
               </div>
             </div>
@@ -390,7 +390,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                  {{ item[`title_${$t("lang.langVal")}`] }}
                 </div>
               </div>
             </div>
@@ -745,6 +745,8 @@ import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
 import { isAndroid } from "src/boot/utils";
 import RedeemPoint from "src/components/shared/RedeemPoint.vue";
+import { useI18n } from "vue-i18n";
+import i18n from "src/i18n/index.js";
 
 export default defineComponent({
   name: "IndexPage",
@@ -760,6 +762,7 @@ export default defineComponent({
     RedeemPoint
   },
   setup() {
+    const { t } = useI18n();
     const isWelcomeFlag = ref(true);
     const isRebateModalVisible = ref(false);
     const rebateAmt = ref(0);
@@ -1139,6 +1142,8 @@ export default defineComponent({
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+    const languages = i18n.global.messages.value;
+
     const getPlatList = () => {
       cached
         .get(platformApiKey, () =>
@@ -1164,8 +1169,8 @@ export default defineComponent({
             // console.log(platTypes);
             if (platTypes.indexOf("ESPORT") > -1) {
               var espObj = Object.assign({}, element);
-              espObj.title_kr = espObj.name + " e 스포츠";
-              espObj.title_en = espObj.name + " ESPORTS";
+
+              setTitleByLang(espObj, "home_esports");
               espObj.icon = "esport";
               esport.value.push(espObj);
             }
@@ -1176,8 +1181,7 @@ export default defineComponent({
                 spObj.name = "SBO";
               }
 
-              spObj.title_kr = "스포츠 " + spObj.name;
-              spObj.title_en = "Sport " + spObj.name;
+              setTitleByLang(spObj, "home_sports", { prefix: true });
               spObj.icon = "sport";
               sport.value.push(spObj);
             }
@@ -1190,15 +1194,15 @@ export default defineComponent({
               if (liveObj.code === "PP") {
                 liveObj.gameCode = 101;
               }
-              liveObj.title_kr = liveObj.name + " 라이브 카지노";
-              liveObj.title_en = liveObj.name + " Live Casino";
+              setTitleByLang(liveObj, "home_livecasino");
+
               liveObj.icon = "live";
               livecasino.value.push(liveObj);
             }
             if (platTypes.indexOf("COCKFIGHT") > -1) {
               var cockObj = Object.assign({}, element);
-              cockObj.title_kr = "ĐÁ GÀ";
-              cockObj.title_en = "Cockfighting";
+
+              setTitleByLang(cockObj, "home_cockfighting", { noName: true });
               cockObj.icon = "cockfight";
               cockfight.value.push(cockObj);
             }
@@ -1210,8 +1214,8 @@ export default defineComponent({
               if (slotObj.name === "AG") {
                 slotObj.name = "XIN";
               }
-              slotObj.title_kr = slotObj.name + " 슬롯";
-              slotObj.title_en = slotObj.name + " Slot";
+
+              setTitleByLang(slotObj, "home_slot");
               slotObj.icon = "slot";
 
               let slotItem = {
@@ -1230,19 +1234,16 @@ export default defineComponent({
               if (fishObj.name === "JiliGames") {
                 fishObj.name = "Jili";
               }
-              fishObj.title_kr = fishObj.name + " 낚시 게임";
-              fishObj.title_en = fishObj.name + " Fishing";
+              setTitleByLang(fishObj, "home_fishing", { noName: true });
               fishObj.icon = "fish";
               fishing.value.push(fishObj);
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
               if (pokerObj.name === "Spribe") {
-                pokerObj.title_kr = pokerObj.name;
-                pokerObj.title_en = pokerObj.name;
+                setTitleByLang(pokerObj, null);
               } else {
-                pokerObj.title_kr = pokerObj.name + " 포커";
-                pokerObj.title_en = pokerObj.name + " Poker";
+                setTitleByLang(pokerObj, "home_poker");
               }
               pokerObj.icon = "poker";
               if (pokerObj.code === "GPI") {
@@ -1253,9 +1254,7 @@ export default defineComponent({
             if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
 
-              casualObj.title_kr = casualObj.name + " 미니 게임";
-              casualObj.title_en = casualObj.name + " Mini Game";
-
+              setTitleByLang(casualObj, "home_casual");
               if (casualObj.code === "Spribe") {
                 casualObj.gameCode = "aviator";
               }
@@ -1265,8 +1264,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
-              lottObj.title_kr = "Xổ Số " + lottObj.name;
-              lottObj.title_en = "Lottery " + lottObj.name;
+              setTitleByLang(lottObj, "home_lottery", { prefix: true });
               lottObj.icon = "lottery";
               if (lottObj.code === "GPI") {
                 lottObj.gameCode = "sode";
@@ -1280,6 +1278,26 @@ export default defineComponent({
           });
         })
         .catch((err) => {});
+    };
+
+    const setTitleByLang = (obj, i18nKey, options) => {
+      // options obj: prefix (bool), noName (bool)
+      for (let key in languages) {
+        if (i18nKey) {
+          const title = languages[key]?.lang?.[i18nKey];
+          if (languages.hasOwnProperty(key)) {
+            if (options?.noName) {
+              obj[`title_${key}`] = title;
+            } else if (options?.prefix) {
+              obj[`title_${key}`] = `${title} ${obj.name}`;
+            } else {
+              obj[`title_${key}`] = `${obj.name} ${title}`;
+            }
+          }
+        } else if (languages.hasOwnProperty(key)) {
+          obj[`title_${key}`] = obj.name;
+        }
+      }
     };
 
     const tab = ref("");
