@@ -764,9 +764,9 @@
           >
             <el-option
               v-for="item in paymentCardList.list"
-              :key="item.id"
+              :key="item.identifyCode"
               :label="item.identifyCode"
-              :value="item.id"
+              :value="item.identifyCode"
             />
           </el-select>
         </el-form-item>
@@ -1181,7 +1181,7 @@ function resetQuery() {
   request.maxWithdrawAmount = null
   request.vipId = vipList.list[0].id
   request.checkBy = null
-  request.paymentCard = paymentCardList.list[0].id
+  request.paymentCard = paymentCardList.list[0].identifyCode
   request.paymentBy = null
   request.cancelType = cancelTypeList.list[0].id
   request.checkTime = uiControl.timeList[0]
@@ -1292,7 +1292,7 @@ async function loadPaymentCards() {
   })
 
   if (!request.paymentCard) {
-    request.paymentCard = paymentCardList.list[0].id
+    request.paymentCard = paymentCardList.list[0].identifyCode
   }
 }
 
@@ -1419,7 +1419,9 @@ function checkQuery() {
     query.totalTimeMoreThan = null
     query.totalTimeWithin = null
   }
-
+  if (query.paymentCard === 'ALL') {
+    query.paymentCard = null
+  }
   query.checkTime = null
   query.payTime = null
   query.totalTime = null
