@@ -1183,6 +1183,7 @@ We sincerely congratulate you on your exchange and wish you only the best days a
     mail_deleteall: "Delete all",
     mail_selectone: "Select one",
     mail_read: "Read",
+    mail_unread: "Unread",
     mail_delete: "Delete",
 
     feedback_delete_selected_message: "Deleted selected messages",

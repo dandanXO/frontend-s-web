@@ -1179,6 +1179,7 @@ export default {
     mail_deleteall: "Xóa tất cả",
     mail_selectone: "Chọn một",
     mail_read: "Đọc",
+    mail_unread: "Chưa đọc",
     mail_delete: "Xóa",
 
     feedback_delete_selected_message: "Đã xóa các tin nhắn đã chọn",

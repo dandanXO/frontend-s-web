@@ -1161,6 +1161,7 @@ export default {
     mail_deleteall: "모두 삭제",
     mail_selectone: "하나 더 선택하세요",
     mail_read: "읽음",
+    mail_unread: "읽지않음",
     mail_delete: "삭제",
 
     feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
