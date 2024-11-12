@@ -105,7 +105,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpLine style="fill: #5f4682; width: 24px; height: 24px" />
+          <img style=" width: 24px; height: 24px" class="filter-purple" src="../assets/images/index/volume-up-line.svg" />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -1019,7 +1019,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
@@ -3220,6 +3219,10 @@ onBeforeUnmount(() => {
       align-items: center;
       height: 28px;
       width: 28px;
+    }
+
+    .filter-purple{
+      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%) contrast(96%);
     }
 
     .marquee-container {
