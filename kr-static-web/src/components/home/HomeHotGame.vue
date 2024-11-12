@@ -577,7 +577,7 @@ $transition_timer: 0.5s;
           width: 38.5rem;
           // margin: 0 0 0 0px;
           margin: 0 -10px 0 0px;
-          padding-left: 0.75rem;
+          padding-left: 1rem;
           height: 500px;
         }
 
