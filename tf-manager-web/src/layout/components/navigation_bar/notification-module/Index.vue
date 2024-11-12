@@ -13,14 +13,6 @@ const store = useStore()
 const socket = getCurrentInstance().appContext.config.globalProperties.$socket;
 const router = useRouter();
 
-const sendWSMessage = (jsonStr) => {
-  if (socket && socket.webSocket && socket.webSocket.readyState === WebSocket.OPEN) {
-    socket.webSocket.send(jsonStr);
-  } else {
-    console.error('WebSocket is not open.');
-  }
-};
-
 const storeNotifications = computed(() => store.state.user.notifications);
 
 const isNotificationDialogVisible = ref(false);
@@ -67,11 +59,10 @@ function markNotificationRead(notificationRecordId) {
   const message = JSON.stringify({
     type: "MARK_NOTIFICATION_READ",
     content: {
-      systemUserId: store.state.user.id,
       notificationRecordId: notificationRecordId
     }
   });
-  sendWSMessage(message)
+  socket.sendWSMessage(message);
 }
 
 const closeDialogAndRedirectTo = (path) => {
