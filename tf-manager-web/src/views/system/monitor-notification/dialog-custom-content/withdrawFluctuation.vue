@@ -18,10 +18,10 @@
       </el-form-item>
 
       <h2>通知设置</h2>
-      <el-form-item label="通知内文" prop="notificationSetting.content">
+      <el-form-item label="通知内文" prop="notificationSetting.template">
         <el-input
           type="textarea"
-          v-model="formData.notificationSetting.content"
+          v-model="formData.notificationSetting.template"
           rows="4"
           placeholder="请输入通知内容"
         />
@@ -48,7 +48,7 @@
         <el-col :span="6">
           <el-button type="primary" @click="submitForm" style="width: 100%">送出</el-button>
         </el-col>
-        <el-col :span="6">
+        <el-col v-if="props.mode === 'update'" :span="6">
           <TestTriggerButton title="WITHDRAW_FLUCTUATION" />
         </el-col>
       </el-row>
@@ -133,7 +133,7 @@ const rules = {
     status: [
       { required: true, message: '请选择状态', trigger: 'change' }
     ],
-    content: [
+    template: [
       { required: true, message: '请填写通知内文', trigger: 'blur' },
     ],
   }
