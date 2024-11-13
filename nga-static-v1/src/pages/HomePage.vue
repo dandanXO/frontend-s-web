@@ -1,60 +1,65 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-  <q-carousel
-    class="home"
-    id="home"
-    autoplay
-    navigation
-    v-model="slide"
-    swipeable
-    transition-next="slide-left"
-    transition-prev="slide-right"
-    animated
-    infinite
-    data-aos="fade-in"
-    data-aos-duration="1200"
-    data-aos-once="true"
-  >
-    <q-carousel-slide
-      v-for="(banner, i) in banners"
-      :key="i"
-      :name="i"
-      class="column no-wrap flex-center"
-      :img-src="returnBannerUrl(banner)"
-      @click="gotoPromo(banner)"
-    ></q-carousel-slide>
+  <template v-if="bannerLoading">
+    <q-skeleton style="height: 200px" />
+  </template>
+  <tmeplate v-else>
+    <q-carousel
+      class="home"
+      id="home"
+      autoplay
+      navigation
+      v-model="slide"
+      swipeable
+      transition-next="slide-left"
+      transition-prev="slide-right"
+      animated
+      infinite
+      data-aos="fade-in"
+      data-aos-duration="1200"
+      data-aos-once="true"
+    >
+      <q-carousel-slide
+        v-for="(banner, i) in banners"
+        :key="i"
+        :name="i"
+        class="column no-wrap flex-center"
+        :img-src="returnBannerUrl(banner)"
+        @click="gotoPromo(banner)"
+      ></q-carousel-slide>
 
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        v-if="active"
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: #661ebf;
-        "
-      />
-      <q-btn
-        v-else
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.2);
-        "
-      />
-    </template>
-  </q-carousel>
+      <template v-slot:navigation-icon="{ active, onClick }">
+        <q-btn
+          v-if="active"
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: #661ebf;
+          "
+        />
+        <q-btn
+          v-else
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+          "
+        />
+      </template>
+    </q-carousel>
+  </tmeplate>
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
@@ -86,13 +91,11 @@
               :name="i"
               @click="gotoFloatPromo(promo)"
               :img-src="`${imgURL}/promo/${promo.icon}`"
-            >
-            </q-carousel-slide>
+            ></q-carousel-slide>
           </q-carousel>
         </div>
       </div>
     </q-page-sticky>
-
 
     <PushNotification
       :pushNotificationData="pushNotificationData"
@@ -102,7 +105,11 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpLine style="fill: #5f4682; width: 24px; height: 24px" />
+          <img
+            style="width: 24px; height: 24px"
+            class="filter-purple"
+            src="../assets/images/index/volume-up-line.svg"
+          />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -193,7 +200,9 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${store.h5Url}static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                  return `url(${
+                                    store.h5Url
+                                  }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -219,7 +228,9 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -255,7 +266,9 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -279,7 +292,9 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(${
+                                store.h5Url
+                              }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -343,7 +358,9 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(${store.h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${
+                                store.h5Url
+                              }static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -398,7 +415,9 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -456,7 +475,9 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -499,7 +520,9 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -556,7 +579,9 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -586,7 +611,9 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -1096,7 +1123,6 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
@@ -1733,7 +1759,246 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([{"id":87,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":1,"siteName":null,"platformId":93,"platformName":"Spribe","platformCode":"Spribe","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Spribe"},{"id":69,"name":"Bubbles","code":"bubbles","status":"OPEN","icon":"11/Turbo/cb12bfaf-fada-4619-9ff5-59627f4f54d2.jpg","sequence":2,"siteName":null,"platformId":124,"platformName":"Turbo","platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":83,"name":"OctobeerFortunes","code":"WCPPS_388","status":"OPEN","icon":"14/WCPPS/388.png","sequence":3,"siteName":null,"platformId":148,"platformName":"WCPPS","platformCode":"WCPPS","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"WCPPS"},{"id":80,"name":"WildWestGold","code":"WCPPS_14","status":"OPEN","icon":"14/WCPPS/14.png","sequence":4,"siteName":null,"platformId":148,"platformName":"WCPPS","platformCode":"WCPPS","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"WCPPS"},{"id":81,"name":"SugarRush - SpeedyCandy","code":"WCPPS_380","status":"OPEN","icon":"14/WCPPS/380.png","sequence":5,"siteName":null,"platformId":148,"platformName":"WCPPS","platformCode":"WCPPS","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"WCPPS"},{"id":72,"name":"Mahjong Ways","code":"65","status":"OPEN","icon":"13/PG/65.png","sequence":6,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":73,"name":"Dragon Hatch","code":"57","status":"OPEN","icon":"13/PG/57.png","sequence":7,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":74,"name":"Fortune Tiger","code":"126","status":"OPEN","icon":"13/PG/126.png","sequence":8,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":67,"name":"Aero","code":"aero","status":"OPEN","icon":"11/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png","sequence":9,"siteName":null,"platformId":124,"platformName":"Turbo","platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":68,"name":"Crash X","code":"crash","status":"OPEN","icon":"11/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg","sequence":10,"siteName":null,"platformId":124,"platformName":"Turbo","platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"code":"WCEvo","platform":"WCEvo","type":"platform","name":"Evo","id":123,"status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":999},{"code":"WCPP","platform":"WCPP","type":"platform","name":"WCPP","id":143,"status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PP","sequence":99},{"code":"WCPT","platform":"WCPT","type":"platform","name":"WCPT","id":103,"status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":999}]);
+const hotGameList = ref([
+  {
+    id: 87,
+    name: "Aviator",
+    code: "aviator",
+    status: "OPEN",
+    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
+    sequence: 1,
+    siteName: null,
+    platformId: 93,
+    platformName: "Spribe",
+    platformCode: "Spribe",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "Spribe"
+  },
+  {
+    id: 69,
+    name: "Bubbles",
+    code: "bubbles",
+    status: "OPEN",
+    icon: "11/Turbo/cb12bfaf-fada-4619-9ff5-59627f4f54d2.jpg",
+    sequence: 2,
+    siteName: null,
+    platformId: 124,
+    platformName: "Turbo",
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "Turbo"
+  },
+  {
+    id: 83,
+    name: "OctobeerFortunes",
+    code: "WCPPS_388",
+    status: "OPEN",
+    icon: "14/WCPPS/388.png",
+    sequence: 3,
+    siteName: null,
+    platformId: 148,
+    platformName: "WCPPS",
+    platformCode: "WCPPS",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "WCPPS"
+  },
+  {
+    id: 80,
+    name: "WildWestGold",
+    code: "WCPPS_14",
+    status: "OPEN",
+    icon: "14/WCPPS/14.png",
+    sequence: 4,
+    siteName: null,
+    platformId: 148,
+    platformName: "WCPPS",
+    platformCode: "WCPPS",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "WCPPS"
+  },
+  {
+    id: 81,
+    name: "SugarRush - SpeedyCandy",
+    code: "WCPPS_380",
+    status: "OPEN",
+    icon: "14/WCPPS/380.png",
+    sequence: 5,
+    siteName: null,
+    platformId: 148,
+    platformName: "WCPPS",
+    platformCode: "WCPPS",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "WCPPS"
+  },
+  {
+    id: 72,
+    name: "Mahjong Ways",
+    code: "65",
+    status: "OPEN",
+    icon: "13/PG/65.png",
+    sequence: 6,
+    siteName: null,
+    platformId: 21,
+    platformName: "PG",
+    platformCode: "PG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "PG"
+  },
+  {
+    id: 73,
+    name: "Dragon Hatch",
+    code: "57",
+    status: "OPEN",
+    icon: "13/PG/57.png",
+    sequence: 7,
+    siteName: null,
+    platformId: 21,
+    platformName: "PG",
+    platformCode: "PG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "PG"
+  },
+  {
+    id: 74,
+    name: "Fortune Tiger",
+    code: "126",
+    status: "OPEN",
+    icon: "13/PG/126.png",
+    sequence: 8,
+    siteName: null,
+    platformId: 21,
+    platformName: "PG",
+    platformCode: "PG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "PG"
+  },
+  {
+    id: 67,
+    name: "Aero",
+    code: "aero",
+    status: "OPEN",
+    icon: "11/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png",
+    sequence: 9,
+    siteName: null,
+    platformId: 124,
+    platformName: "Turbo",
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "Turbo"
+  },
+  {
+    id: 68,
+    name: "Crash X",
+    code: "crash",
+    status: "OPEN",
+    icon: "11/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg",
+    sequence: 10,
+    siteName: null,
+    platformId: 124,
+    platformName: "Turbo",
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "Turbo"
+  },
+  {
+    code: "WCEvo",
+    platform: "WCEvo",
+    type: "platform",
+    name: "Evo",
+    id: 123,
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 999
+  },
+  {
+    code: "WCPP",
+    platform: "WCPP",
+    type: "platform",
+    name: "WCPP",
+    id: 143,
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "PP",
+    sequence: 99
+  },
+  {
+    code: "WCPT",
+    platform: "WCPT",
+    type: "platform",
+    name: "WCPT",
+    id: 103,
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 999
+  }
+]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -2082,29 +2347,24 @@ const setWithExpiry = (key, value, interval) => {
   sessionStorage.setItem(key, JSON.stringify(item));
 };
 
+const bannerLoading = ref(false);
+
 function loadData() {
+  bannerLoading.value = true;
   api
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = res.data;
-      } else {
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: res.data.message,
-        //   icon: "report_problem"
-        // });
+        setTimeout(() => {
+          bannerLoading.value = false;
+        }, 1000);
       }
-      // banners.value = response.data;
     })
-    .catch(() => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: "Loading failed",
-      //   icon: "report_problem"
-      // });
+    .finally(() => {
+      setTimeout(() => {
+        bannerLoading.value = false;
+      }, 1000);
     });
 }
 
@@ -2674,6 +2934,11 @@ onMounted(() => {
       align-items: center;
       height: 28px;
       width: 28px;
+    }
+
+    .filter-purple {
+      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%)
+        contrast(96%);
     }
 
     .marquee-container {
@@ -3521,7 +3786,6 @@ onMounted(() => {
     }
   }
 }
-
 
 .hb-float {
   position: relative;
