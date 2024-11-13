@@ -25,7 +25,7 @@
       </div>
 
       <div class="method-title q-mb-sm q-mt-md">{{ $t("deposit.paymentChannels") }}</div>
-      <div class="deposit-methods-container">
+      <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
             <!-- <div class="item-img">
