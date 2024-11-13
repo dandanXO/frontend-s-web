@@ -8,7 +8,7 @@
           style="width: 200px"
           :placeholder="t('fields.username')"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -22,7 +22,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           clearable
           v-model="request.enable"
@@ -471,7 +471,7 @@ const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const LOGIN_USER_NAME = computed(() => store.state.user.name)
-const site = ref(null)
+// const site = ref(null)
 const userTypeList = computed(() => {
   if (
     store.state.user.userType === MANAGER.value ||
@@ -583,7 +583,7 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
-  request.siteId = site.value ? site.value.id : store.state.user.siteId
+  request.siteId = store.state.user.siteId
   request.role = null
 }
 
@@ -868,9 +868,9 @@ function setSiteIdArray() {
   form.siteId = form.siteIdArray[0]
 }
 
-async function siteChange() {
-  await loadRoles(request.siteId)
-}
+// async function siteChange() {
+//   await loadRoles(request.siteId)
+// }
 
 watch(
   () => form.siteIdArray || form.siteId,
@@ -915,16 +915,16 @@ watch(
 onMounted(async () => {
   await loadSites()
   await loadDefaultSites()
-  request.siteId = siteList.list[0].id
-  if (LOGIN_USER_TYPE.value === TENANT.value) {
-    uiControl.userTypeSelect = true
-    uiControl.siteSelectVisible = false
-    uiControl.rolesSelect = false
-    site.value = siteList.list.find(
-      s => s.siteName === store.state.user.siteName
-    )
-    request.siteId = site.value.id
-  }
+  request.siteId = store.state.user.siteId
+  // if (LOGIN_USER_TYPE.value === TENANT.value) {
+  //   uiControl.userTypeSelect = true
+  //   uiControl.siteSelectVisible = false
+  //   uiControl.rolesSelect = false
+  //   site.value = siteList.list.find(
+  //     s => s.siteName === store.state.user.siteName
+  //   )
+  //   request.siteId = site.value.id
+  // }
   await loadRoles()
   await loadUser()
   await loadNetPhone()
