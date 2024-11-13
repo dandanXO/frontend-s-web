@@ -28,9 +28,9 @@
       <div class="deposit-methods-container">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
-            <div class="item-img">
+            <!-- <div class="item-img">
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
-            </div>
+            </div> -->
             <div class="item-title">{{ item.nodeName }}</div>
           </div>
         </template>
