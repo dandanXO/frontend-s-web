@@ -98,7 +98,23 @@
         size="small"
         label-width="170px"
       >
-
+        <el-form-item :label="t('fields.site')" prop="sites">
+          <el-select
+            v-model="form.sites"
+            value-key="id"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+            filterable
+            multiple
+          >
+            <el-option
+              v-for="item in availableSites"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.site')" prop="siteId">
           <el-select
             v-model="form.siteId"
@@ -117,7 +133,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.telegramUsername')" prop="telegramUsername">
-          <el-input :disabled="uiControl.dialogType === 'APPROVE'" v-model="form.telegramUsername" style="width: 350px" />
+          <el-input :disabled="uiControl.dialogType === 'APPROVE' || uiControl.dialogType === 'EDIT'" v-model="form.telegramUsername" style="width: 350px" />
         </el-form-item>
         <el-form-item :label="t('fields.alias')" prop="alias">
           <el-input v-model="form.alias" style="width: 350px" />
@@ -143,6 +159,13 @@
         width="55"
         v-if="!hasRole(['SUB_TENANT'])"
       />
+      <el-table-column prop="sites" :label="t('fields.site')" width="250">
+        <template #default="scope">
+          <span v-if="scope.row.sites !== null">
+            {{ scope.row.sites.map(siteId => siteName(siteId)).join(', ') }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column prop="telegramUsername" :label="t('fields.telegramUsername')" width="250" />
       <el-table-column prop="alias" :label="t('fields.alias')" width="250" />
       <el-table-column prop="status" :label="t('fields.status')" width="250">
@@ -181,6 +204,14 @@
         v-if="!hasRole(['SUB_TENANT']) && (hasPermission('sys:telegram-user:approve') || hasPermission(['sys:telegram-user:del']) )"
       >
         <template #default="scope">
+          <el-button
+            v-if="scope.row.status !== 'PENDING_VERIFY'"
+            icon="el-icon-edit"
+            size="mini"
+            type="primary"
+            v-permission="['sys:telegram-user:edit']"
+            @click="showEdit(scope.row)"
+          />
           <el-button
             v-if="scope.row.status === 'PENDING_VERIFY'"
             icon="el-icon-circle-check"
@@ -225,7 +256,7 @@
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import { required } from '../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getUsers, addUser, deleteUser, approveUser } from "../../../api/telegram";
+import { getUsers, addUser, deleteUser, approveUser, updateUser } from "../../../api/telegram";
 import { getSiteListSimple } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store';
@@ -235,8 +266,9 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const site = ref(null);
+const availableSites = ref([]);
 const settingsForm = ref(null)
+const site = ref(null)
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -272,12 +304,13 @@ const request = reactive({
 
 const form = reactive({
   siteId: null,
+  sites: null,
   telegramUsername: null,
   alias: null,
 })
 
 const formRules = reactive({
-  siteId: [required(t('message.validateSiteRequired'))],
+  sites: [required(t('message.validateSiteRequired'))],
   telegramUsername: [required(t('message.validateTelegramUsernameRequired'))],
   alias: [required(t('message.validateAliasRequired'))],
 })
@@ -312,6 +345,11 @@ function handleSelectionChange(val) {
 async function loadMediaDisplaySettings() {
   page.loading = true
   const { data: ret } = await getUsers(request)
+  ret.records.forEach(data => {
+    if (data.sites !== null) {
+      data.sites = data.sites.split(',').map(id => parseInt(id))
+    }
+  })
   page.pages = ret.pages
   // ret.records.forEach(data => {
   //   data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
@@ -327,12 +365,18 @@ async function loadSites() {
   sites.list = ret
 }
 
+function siteName(siteId) {
+  const site = availableSites.value.find(s => s.id === parseInt(siteId))
+  return site ? site.siteName : siteId
+}
+
 function changePage(page) {
   request.current = page
   loadMediaDisplaySettings()
 }
 
 function showDialog(type) {
+  console.log('showDialog', type)
   if (type === 'CREATE') {
     if (settingsForm.value) {
       settingsForm.value.resetFields()
@@ -349,7 +393,11 @@ function showDialog(type) {
   } else if (type === 'APPROVE') {
     uiControl.dialogTitle = t('fields.approve')
     uiControl.editVisible = true
+  } else if (type === 'EDIT') {
+    uiControl.dialogTitle = t('fields.edit')
+    uiControl.editVisible = true
   }
+
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
@@ -385,15 +433,21 @@ async function removeLimit(limit) {
 }
 
 function showApprove(limit) {
-  console.log(limit)
   showDialog('APPROVE')
   nextTick(() => {
     for (const key in limit) {
-      if (Object.keys(form).find(k => k === key)) {
-      }
       form[key] = limit[key]
     }
   })
+}
+
+function showEdit(limit) {
+  nextTick(() => {
+    for (const key in limit) {
+      form[key] = limit[key]
+    }
+  })
+  showDialog('EDIT')
 }
 
 function approve() {
@@ -407,11 +461,24 @@ function approve() {
   })
 }
 
+function update() {
+  settingsForm.value.validate(async valid => {
+    if (valid) {
+      await updateUser(form)
+      uiControl.dialogVisible = false
+      await loadMediaDisplaySettings()
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+    }
+  })
+}
+
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create()
   } else if (uiControl.dialogType === 'APPROVE') {
     approve()
+  } else if (uiControl.dialogType === 'EDIT') {
+    update()
   }
 }
 
@@ -420,6 +487,7 @@ function handleChangeSite(value) {
 }
 
 onMounted(async () => {
+  availableSites.value = store.state.user.sites
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
