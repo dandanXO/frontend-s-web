@@ -322,6 +322,7 @@ export default {
     UEFA: '欧足联',
     UCL: '欧洲冠军联赛',
     HOTELCASINO: '酒店真人',
+    COMMISSION: '佣金',
   },
   homeBannerType: {
     HOME: '首页',

@@ -37,6 +37,7 @@ export default {
   },
   menu: {
     undefined: '',
+    Announcement: '발표',
     Dashboard: '홈',
 
     // Downline Info Start
@@ -75,6 +76,7 @@ export default {
     'Affiliate Center': '대리점 센터',
     Deposit: '충전요청',
     'Bind Bank Cards': '환전계좌추가',
+    'Bank Card': '환전계좌',
     'Bank Withdrawal': '은행 출금',
     Transfer: '대리입금',
     'Referral Centre': '추천 센터',
@@ -85,7 +87,10 @@ export default {
     'Personal Center': '개인 센터',
     'Settlement Center': '수수료',
     'Finance Report': '실시간정산내역',
+    'Finance': '재원',
     'Settlement Report': '루징정산',
+    'Settlement': '합의',
+    'Credit Flow': '금액변동내역',
     'Channel Pack': '채널 패킹',
     contactUs: '문의하기',
     'Daily Detail': '일일 상세 내역',
@@ -97,6 +102,9 @@ export default {
     'Bet Management': '베팅관리',
     'Bet History': '회원베팅기록',
     inquiry: '문의',
+    'Personal Info': '개인 정보',
+    'Message': '사이트 메시지',
+    'Contact Us': '문의하기',
   },
   common: {
     title: '대리 시스템',
