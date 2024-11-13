@@ -359,26 +359,22 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, createVNode} from "vue";
+import { defineComponent, onMounted, reactive, ref } from "vue";
 // import { Modal, message } from "ant-design-vue";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import {RiSpamLine, RiLink} from "vue-remix-icons";
 // import { loadMemberInfo, loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/personal/personal";
-import moment from "moment";
-import {api} from "boot/axios"
-import {useQuasar} from "quasar";
-import {userStore} from "stores/index";
+import { api } from "boot/axios";
 import * as _ from "lodash";
+import moment from "moment";
+import { useQuasar } from "quasar";
+import { userStore } from "stores/index";
 
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
-  components: {
-    // eslint-disable-next-line vue/no-unused-components
-    RiSpamLine, RiLink
-  },
+
   setup() {
     const store = userStore();
     const $q = useQuasar();
