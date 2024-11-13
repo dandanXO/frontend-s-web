@@ -2970,6 +2970,8 @@ export default {
     google_auth_code: 'Enter 6 digits Google Authenticator Code',
     register_count: 'Today Register Count:',
     register_limit: 'Today Register Limit:',
+    deposit_count: 'Today Deposit Count:',
+    deposit_limit: 'Today Deposit Limit:',
   },
   posterType: {
     overall: 'Overall Referral',
