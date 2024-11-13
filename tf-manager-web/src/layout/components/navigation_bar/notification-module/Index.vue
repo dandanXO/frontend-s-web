@@ -13,14 +13,6 @@ const store = useStore()
 const socket = getCurrentInstance().appContext.config.globalProperties.$socket;
 const router = useRouter();
 
-const sendWSMessage = (jsonStr) => {
-  if (socket && socket.webSocket && socket.webSocket.readyState === WebSocket.OPEN) {
-    socket.webSocket.send(jsonStr);
-  } else {
-    console.error('WebSocket is not open.');
-  }
-};
-
 const storeNotifications = computed(() => store.state.user.notifications);
 
 const isNotificationDialogVisible = ref(false);
@@ -67,11 +59,10 @@ function markNotificationRead(notificationRecordId) {
   const message = JSON.stringify({
     type: "MARK_NOTIFICATION_READ",
     content: {
-      systemUserId: store.state.user.id,
       notificationRecordId: notificationRecordId
     }
   });
-  sendWSMessage(message)
+  socket.sendWSMessage(message);
 }
 
 const closeDialogAndRedirectTo = (path) => {
@@ -134,15 +125,27 @@ function formatTimestamp(timestamp) {
 </template>
 
 <style scoped lang="scss">
+/* For Webkit browsers (e.g., Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 6px; /* Adjust the width as needed */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #465e7c; /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #516e92; /* Color of the scrollbar track */
+}
 #notification-dialog-wrapper {
   :deep(.el-dialog){
     border-radius: 10px;
   }
   :deep(.el-dialog__header) {
     border-radius: 10px 10px 0px 0px;
-    border-bottom: 2px solid rgb(177.3, 179.4, 183.6);
     padding: 0 16px;
-    background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+    background: #304156;
   }
   :deep(.el-dialog__headerbtn){
     top: 12px;
@@ -151,12 +154,16 @@ function formatTimestamp(timestamp) {
   :deep(.el-dialog__close){
     font-size: 1.4rem;
     font-weight: bold;
+    color: #bfcbd9;
   }
   :deep(.el-dialog__body) {
     padding: 12px 10px;
+    background: #bfcbd9;
+    border-radius: 0 0 10px 10px;
   }
   :deep(.el-dialog__title){
     font-weight: bold;
+    color: #bfcbd9;
   }
 }
 
@@ -206,7 +213,7 @@ function formatTimestamp(timestamp) {
   flex-direction: column;
   gap: 10px;
   position: relative;
-  background: rgba(222,222,222,0.6);
+  background: rgba(254,254,254,0.5);
   border: 1px solid #d3d3d3;
   padding: 14px 18px 10px;
   margin-bottom: 8px;
@@ -234,16 +241,31 @@ function formatTimestamp(timestamp) {
 
   .notification-item-redirection {
     display: flex;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
     margin-left: auto;
+    &:hover {
+      background-color: #0056b3;
+    }
   }
 
   .notification-item-title {
     font-weight: bold;
     font-size: 1.2rem;
+    color: #434343;
   }
 
   .notification-item-title, .notification-item-content, .notification-item-datetime {
     line-height: 1rem;
+  }
+  .notification-item-content {
+    color: #9d6464;
   }
 
   .notification-item-datetime {

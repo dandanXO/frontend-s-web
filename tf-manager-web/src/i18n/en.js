@@ -2729,6 +2729,7 @@ export default {
     'Alipay Payment on going': 'Alipay Paying',
     'Automatic Payment': 'Automatic Paying',
     'Waiting Auto Pay': 'Waiting Auto Pay',
+    'Waiting Auto Payment': 'Waiting Auto Pay',
     'AutoWithdraw Under review': 'Under review',
     'AutoWithdraw Under review Risk': 'Under review risk',
     'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
@@ -2970,6 +2971,8 @@ export default {
     google_auth_code: 'Enter 6 digits Google Authenticator Code',
     register_count: 'Today Register Count:',
     register_limit: 'Today Register Limit:',
+    deposit_count: 'Today Deposit Count:',
+    deposit_limit: 'Today Deposit Limit:',
   },
   posterType: {
     overall: 'Overall Referral',

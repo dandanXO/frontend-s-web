@@ -11,9 +11,9 @@
             name="title"
             v-model="mailDetailList.feedbackType"
             :options="feedbackTypes"
-            :label="`${mailDetailList.feedbackType || '유형을 선택하세요'}`"
+            :label="`${mailDetailList.feedbackType || $t('lang.select_a_type')}`"
             ref="feedbackTypeRef"
-            :rules="[(val) => !!val || '유형을 선택하세요']"
+            :rules="[(val) => !!val || $t('lang.select_a_type')]"
           />
           <q-input
             :rules="[

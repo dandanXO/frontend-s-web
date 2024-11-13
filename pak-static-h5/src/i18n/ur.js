@@ -252,10 +252,13 @@ export default {
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
+    minimum_amt_requirement: "کم از کم جمع رقم 1000 ہے، کوئی زیادہ سے زیادہ حد نہیں ہے۔",
+    please_pay_exact_amt: "براہ کرم خودکار کریڈٹ کو یقینی بنانے کے لیے عین رعایتی رقم ادا کریں۔",
     depositTutorial: "جمع کرنے کا ٹیوٹوریل",
     select_privilege: "خصوصی اختیار منتخب کریں",
     incorrectPrivilege: "آپ کی جمع کروائی گئی ڈپازٹ پروموشن غلط ہے۔ براہ کرم دوبارہ ڈپازٹ جمع کرنے کی کوشش کریں۔",
-    useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں"
+    useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں",
+    unlimited: "لامحدود"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
