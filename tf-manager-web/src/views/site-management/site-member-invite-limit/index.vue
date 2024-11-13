@@ -183,6 +183,14 @@
               <td>{{ $t('google.register_limit') }}</td>
               <td>{{ regLimitData.regLimit }}</td>
             </tr>
+            <tr>
+              <td>{{ $t('google.deposit_count') }}</td>
+              <td>{{ regLimitData.depositCount }}</td>
+            </tr>
+            <tr>
+              <td>{{ $t('google.deposit_count') }}</td>
+              <td>{{ regLimitData.depositLimit }}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -662,7 +670,9 @@ async function removeLimit(limit) {
 
 const regLimitData = reactive({
   regCount: "",
-  regLimit: ""
+  regLimit: "",
+  depositCount: "",
+  depositLimit: "",
 })
 const checkInviteLimit = async (user) => {
   // console.log(user);
@@ -673,6 +683,8 @@ const checkInviteLimit = async (user) => {
   console.log(apiResponse);
   regLimitData.regCount = apiResponse.data.regCount;
   regLimitData.regLimit = apiResponse.data.regLimit;
+  regLimitData.depositCount = apiResponse.data.depositCount;
+  regLimitData.depositLimit = apiResponse.data.depositLimit;
   uiControl.dialogVisible2 = true
 }
 
