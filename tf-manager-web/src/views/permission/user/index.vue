@@ -471,7 +471,7 @@ const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const LOGIN_USER_NAME = computed(() => store.state.user.name)
-// const site = ref(null)
+const site = ref(null)
 const userTypeList = computed(() => {
   if (
     store.state.user.userType === MANAGER.value ||
@@ -916,15 +916,15 @@ onMounted(async () => {
   await loadSites()
   await loadDefaultSites()
   request.siteId = store.state.user.siteId
-  // if (LOGIN_USER_TYPE.value === TENANT.value) {
-  //   uiControl.userTypeSelect = true
-  //   uiControl.siteSelectVisible = false
-  //   uiControl.rolesSelect = false
-  //   site.value = siteList.list.find(
-  //     s => s.siteName === store.state.user.siteName
-  //   )
-  //   request.siteId = site.value.id
-  // }
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    uiControl.userTypeSelect = true
+    uiControl.siteSelectVisible = false
+    uiControl.rolesSelect = false
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    // request.siteId = site.value.id
+  }
   await loadRoles()
   await loadUser()
   await loadNetPhone()
