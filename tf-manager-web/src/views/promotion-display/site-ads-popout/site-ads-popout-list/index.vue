@@ -23,7 +23,7 @@
             :value="item.value"
           />
         </el-select>
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -37,7 +37,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           v-if="uiControl.showSiteType === true"
           v-model="request.siteType"
@@ -405,7 +405,7 @@ const formRules = reactive({
 function resetQuery() {
   request.title = null
   request.status = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id;
+  request.siteId = store.state.user.siteId
   if (isVnm(request.siteId)) {
     uiControl.showSiteType = true;
   } else {
@@ -442,14 +442,14 @@ function showDialog(type) {
   // uiControl.dialogVisible = true
 }
 
-async function changeSite() {
-  request.siteType = 'main'
-  if (isVnm(request.siteId)) {
-    uiControl.showSiteType = true;
-  } else {
-    uiControl.showSiteType = false;
-  }
-}
+// async function changeSite() {
+//   request.siteType = 'main'
+//   if (isVnm(request.siteId)) {
+//     uiControl.showSiteType = true;
+//   } else {
+//     uiControl.showSiteType = false;
+//   }
+// }
 
 // function handleChange() {}
 
@@ -575,7 +575,7 @@ onMounted(async () => {
     request.current = Number(route.query.current)
   }
   await loadSites();
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
