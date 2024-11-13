@@ -334,7 +334,7 @@ const onEnterGameClick = (plat, platType) => {
     const platItem = plat.content[currentPlat.code.toLowerCase()];
     // console.log(platItem);
 
-    const platformName = currentPlat.alias ?? (platItem && platItem.title) ? platItem.title : currentPlat.name;
+    const platformName = currentPlat.alias ?? (platItem && platItem?.title) ? platItem?.title : currentPlat.name;
     platformGame.value.open(platformName, currentPlat.code, currentPlat.gameCode);
   }
 };
