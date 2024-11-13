@@ -184,7 +184,7 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission('sys:telegram-user:approve') || hasPermission(['sys:telegram-user:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:telegram-user:approve']) || hasPermission(['sys:telegram-user:edit']) || hasPermission(['sys:telegram-user:del']) )"
       >
         <template #default="scope">
           <el-button
