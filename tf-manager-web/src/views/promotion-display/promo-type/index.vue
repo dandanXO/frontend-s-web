@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           v-if="uiControl.showSiteTypeSearch"
           v-model="request.siteType"
@@ -670,7 +670,7 @@ let choosePromoType = [];
 
 function resetQuery() {
   request.status = null;
-  request.siteId = site.value ? site.value.id : siteList.list[0].id;
+  request.siteId = store.state.user.siteId
   request.siteType = 'main'
   if (isVnm(request.siteId)) {
     uiControl.showSiteTypeSearch = true;
@@ -679,14 +679,14 @@ function resetQuery() {
   }
 }
 
-async function changeSiteSearch() {
-  request.siteType = 'main'
-  if (isVnm(request.siteId)) {
-    uiControl.showSiteTypeSearch = true;
-  } else {
-    uiControl.showSiteTypeSearch = false;
-  }
-}
+// async function changeSiteSearch() {
+//   request.siteType = 'main'
+//   if (isVnm(request.siteId)) {
+//     uiControl.showSiteTypeSearch = true;
+//   } else {
+//     uiControl.showSiteTypeSearch = false;
+//   }
+// }
 
 async function changeSite() {
   form.siteType = 'main'
@@ -898,7 +898,7 @@ async function loadSiteImage() {
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = store.state.user.siteId
 }
 
 async function changeImagePage(page) {
@@ -990,7 +990,7 @@ onMounted(async () => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    request.siteId = siteList.list[0].id
+    request.siteId = store.state.user.siteId
   }
 
   if (isVnm(request.siteId)) {
