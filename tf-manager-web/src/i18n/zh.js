@@ -2676,6 +2676,7 @@ export default {
     'Alipay Payment on going': '支付宝支付中',
     'Automatic Payment': '自动支付',
     'Waiting Auto Pay': '等待自动支付',
+    'Waiting Auto Payment': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
     'AutoWithdraw Under review Risk': '风险提现终审',
     'AutoWithdraw Withdrawal Record': '提交记录',

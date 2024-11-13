@@ -2729,6 +2729,7 @@ export default {
     'Alipay Payment on going': 'Alipay Paying',
     'Automatic Payment': 'Automatic Paying',
     'Waiting Auto Pay': 'Waiting Auto Pay',
+    'Waiting Auto Payment': 'Waiting Auto Pay',
     'AutoWithdraw Under review': 'Under review',
     'AutoWithdraw Under review Risk': 'Under review risk',
     'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
