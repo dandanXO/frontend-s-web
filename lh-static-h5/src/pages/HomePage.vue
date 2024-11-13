@@ -1591,7 +1591,7 @@ export default defineComponent({
         //   effectiveCode = alias || code.toLowerCase();
         // }
 
-        return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase()}.png`)}`;
+        return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase().replace(/\s+/g, "")}.png`)}`;
       } catch (e) {
         return `${require(`../assets/images/home/logo-empty.png`)}`;
       }
@@ -1606,9 +1606,13 @@ export default defineComponent({
         //   effectiveCode = alias || code.toLowerCase();
         // }
         if ($q.dark.isActive) {
-          return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}-dark.png`)})`;
+          return `url(${require(`../assets/images/home/${platform}/platform-item-${code
+            .toLowerCase()
+            .replace(/\s+/g, "")}-dark.png`)})`;
         } else {
-          return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+          return `url(${require(`../assets/images/home/${platform}/platform-item-${code
+            .toLowerCase()
+            .replace(/\s+/g, "")}.png`)})`;
         }
       } catch (e) {
         if ($q.dark.isActive) {
