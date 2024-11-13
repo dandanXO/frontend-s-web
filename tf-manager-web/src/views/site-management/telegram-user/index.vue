@@ -115,23 +115,6 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="form.siteId"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 350px"
-            filterable
-            @change="handleChangeSite"
-            :disabled="uiControl.dialogType === 'APPROVE'"
-          >
-            <el-option
-              v-for="item in sites.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item :label="t('fields.telegramUsername')" prop="telegramUsername">
           <el-input :disabled="uiControl.dialogType === 'APPROVE' || uiControl.dialogType === 'EDIT'" v-model="form.telegramUsername" style="width: 350px" />
         </el-form-item>
@@ -303,7 +286,6 @@ const request = reactive({
 })
 
 const form = reactive({
-  siteId: null,
   sites: null,
   telegramUsername: null,
   alias: null,
@@ -480,10 +462,6 @@ function submit() {
   } else if (uiControl.dialogType === 'EDIT') {
     update()
   }
-}
-
-function handleChangeSite(value) {
-  form.siteId = value
 }
 
 onMounted(async () => {
