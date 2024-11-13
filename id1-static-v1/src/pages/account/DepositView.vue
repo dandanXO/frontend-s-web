@@ -24,9 +24,6 @@
         </template>
       </div>
 
-      <!-- <pre>selectedItem--{{ selectedItem }}</pre> -->
-      <!-- <pre>selectedChannel--{{ selectedChannel }}</pre> -->
-
       <div class="method-title q-mb-sm q-mt-md">{{ $t("deposit.paymentChannels") }}</div>
       <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
@@ -231,7 +228,9 @@
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilege"
+        v-if="
+          isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilege
+        "
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
@@ -269,7 +268,6 @@ import { api, cashier } from "@/boot/axios";
 import { convertToCommaAmount } from "@/boot/utils";
 import BankComponent from "@/components/finance/fBank";
 import { userStore } from "@/stores/index";
-import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import { openURL, Platform, useQuasar } from "quasar";
 import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef, watch } from "vue";
@@ -421,14 +419,7 @@ function initPay() {
       paymentMethodsItems.value = res.data.payments;
       goSelectedMethod(res.data.payments[0]);
     }
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -604,12 +595,7 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (!newWin) {
@@ -664,8 +650,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {
