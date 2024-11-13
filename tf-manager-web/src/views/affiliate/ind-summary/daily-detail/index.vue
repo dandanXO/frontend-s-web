@@ -53,7 +53,7 @@
         :resizable="true"
         :data="page.records"
         v-loading="page.loading"
-        row-key="affiliateId"
+        :row-key="(row) => `${row.affiliateId}-${row.recordTime}`"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         :summary-method="getSummaries"
