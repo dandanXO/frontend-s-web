@@ -944,7 +944,7 @@ const loadAppTabs = () => {
         store.ftd = data.ftd;
 
         if (store.ftd) {
-          isFtdPrivilegeEnable.value = true;
+        //   isFtdPrivilegeEnable.value = true;
         }
       }
     }
