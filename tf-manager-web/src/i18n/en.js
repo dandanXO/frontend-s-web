@@ -317,6 +317,7 @@ export default {
     UEFA: 'UEFA EUROPA',
     UCL: 'UEFA CHAMPIONS LEAGUE',
     HOTELCASINO: 'HOTELCASINO',
+    COMMISSION: 'COMMISSION',
   },
   homeBannerType: {
     HOME: 'Home',
