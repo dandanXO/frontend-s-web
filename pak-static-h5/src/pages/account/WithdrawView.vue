@@ -2,14 +2,16 @@
   <q-page>
     <div class="withdrawal-summary">
       <div class="balance">
-        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+        <span v-else class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <span class="amount">
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+        <span v-else class="amount">
           {{
             selectedWithdrawalMethod.withdrawableBalance >= 0
               ? convertToCommaAmount(selectedWithdrawalMethod.withdrawableBalance, false)
@@ -524,6 +526,13 @@ onMounted(() => {
   store.getBalance();
   // loadPlatform()
 });
+
+onActivated(() => {
+  checkNewUser();
+  store.getBalance();
+  // loadPlatform()
+});
+
 const platforms = reactive([]);
 const loadPlatform = () => {
   api.get("/platform").then((res) => {
@@ -745,25 +754,29 @@ const selectedWithdrawalMethodMaintenanceDateRange = computed(() =>
 );
 
 const getWithdrawalMethods = () => {
-  api.get("/session/withdraw/entrance").then((response) => {
-    if (response.code === 0) {
-      withdrawalMethods.value = response.data;
-      //Remove this for real data
-      // withdrawalMethods.value = [
-      //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
-      //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
-      if (withdrawalMethods.value.length > 0) {
-        selectMethod(withdrawalMethods.value[0], 0);
+  isLoadingWithdrawalMethod.value = true;
+  api
+    .get("/session/withdraw/entrance")
+    .then((response) => {
+      if (response.code === 0) {
+        withdrawalMethods.value = response.data;
+        //Remove this for real data
+        // withdrawalMethods.value = [
+        //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
+        //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
+        if (withdrawalMethods.value.length > 0) {
+          selectMethod(withdrawalMethods.value[0], 0);
+        }
+      } else {
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: response.message,
+        //   icon: "report_problem"
+        // });
       }
-    } else {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: response.message,
-      //   icon: "report_problem"
-      // });
-    }
-  });
+    })
+    .finally(() => (isLoadingWithdrawalMethod.value = false));
 };
 const updateWithdrawAmt = () => {
   withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
