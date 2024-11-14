@@ -718,6 +718,8 @@ export default {
     redeemConvert: '전환',
     dashboardMemberBalance: '회원잔액',
     totalWithdrawalAmount: '총 출금액',
+    dismiss: '해고하다',
+    affiliateAnnouncement: '제휴사 공지'
   },
   google: {
     google_auth_menu: '구글 인증',
