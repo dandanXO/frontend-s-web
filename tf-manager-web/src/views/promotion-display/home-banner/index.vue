@@ -40,7 +40,7 @@
           />
         </el-select>
 
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -54,7 +54,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -841,13 +841,13 @@ function resetQuery() {
   request.title = null
   request.state = null
   request.siteType = "main"
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   uiControl.showSiteType = false;
 }
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : siteList.list[0].id
+  imageRequest.siteId = store.state.user.siteId
 }
 
 function changePage(page) {
@@ -989,7 +989,7 @@ async function loadSiteImage(type) {
   } else {
     imageRequest.promoType = 'MOBILE_BANNER'
   }
-  imageRequest.siteId = site.value ? site.value.id : siteList.list[0].id
+  imageRequest.siteId = store.state.user.siteId
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages
@@ -1142,14 +1142,14 @@ async function loadDarkMode() {
   }
 }
 
-async function changeSite() {
-  request.siteType = 'main'
-  if (isVnm(request.siteId)) {
-    uiControl.showSiteType = true;
-  } else {
-    uiControl.showSiteType = false;
-  }
-}
+// async function changeSite() {
+//   request.siteType = 'main'
+//   if (isVnm(request.siteId)) {
+//     uiControl.showSiteType = true;
+//   } else {
+//     uiControl.showSiteType = false;
+//   }
+// }
 
 onMounted(async () => {
   await loadSites()
@@ -1159,7 +1159,7 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   } else {
-    request.siteId = siteList.list[0].id
+    request.siteId = store.state.user.siteId
   }
   if (isVnm(request.siteId)) {
     uiControl.showSiteType = true;

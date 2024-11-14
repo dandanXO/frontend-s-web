@@ -517,7 +517,7 @@ const getNavigationData = () => {
       path: '/personal',
       children: [
         {
-          path: '',
+          path: '/info',
           title: t('fields.personalInfo'),
           label: 'personalInfo',
           active: false,

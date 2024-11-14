@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.loginName"
           size="small"
@@ -111,6 +111,7 @@
 import { onMounted, reactive } from "vue";
 import { getCouponRecords } from "../../../api/privilege-coupon";
 import { useI18n } from "vue-i18n";
+import { useStore } from '../../../store';
 import { getSiteListSimple } from "../../../api/site";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
@@ -125,7 +126,7 @@ const uiControl = reactive({
     { key: 3, displayName: "USED", value: "USED" }
   ]
 });
-
+const store = useStore()
 const page = reactive({
   pages: 0,
   records: [],
@@ -216,7 +217,7 @@ async function loadSites() {
 
 onMounted(async() => {
   await loadSites();
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
 });
 </script>
 

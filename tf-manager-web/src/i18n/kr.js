@@ -285,6 +285,7 @@ export default {
     COCKFIGHT: '닭싸움',
     MSI: 'MSI',
     HOTELCASINO: '호텔 카지노',
+    COMMISSION: '커미션',
   },
   homeBannerType: {
     HOME: '홈',

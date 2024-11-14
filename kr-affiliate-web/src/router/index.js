@@ -340,7 +340,7 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: '',
+        path: 'info',
         component: () => import('../views/personal/index.vue'),
         name: 'Personal Info',
         meta: {

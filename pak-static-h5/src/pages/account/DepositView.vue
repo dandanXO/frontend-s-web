@@ -2,7 +2,7 @@
   <!-- <DepositComponent /> -->
   <!-- <pre>{{ paymentNode.value }}</pre> -->
   <div class="deposit-wrapper">
-    <div class="slot-ftd-section" v-if="isFtdPrivilege">
+    <div class="slot-ftd-section" v-if="isFtdPrivilege && isFtdPrivilegePayType">
       <img src="../../assets/images/bonus/slot-ftd-img.png" />
     </div>
 
@@ -73,7 +73,7 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
           <div class="lil-title flex-div" style="justify-content: space-between">
-            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN'">
+            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1">
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
