@@ -12,8 +12,9 @@ export const useUI = defineStore("ui-store", {
       bottomInsetHeight: 0,
       CSAUrl: "",
       adjust_register_event: "",
-      maintenanceStartTime:"",
-      maintenanceEndTime:""
+      maintenanceStartTime: "",
+      maintenanceEndTime: "",
+      firstScreenLoading: !!sessionStorage.getItem("FIRST_SCREEN_CACHE") || true
     };
   },
   actions: {
