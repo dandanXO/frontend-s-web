@@ -18,6 +18,7 @@
               :editable="false"
               :clearable="false"
               style="width: 100%;"
+              :shortcuts="shortcuts"
             />
           </el-form-item>
         </el-col>
@@ -172,6 +173,101 @@ const data = reactive({
   status: '-',
   payTime: '-',
 })
+
+const shortcuts = [
+  {
+    text: t('fields.today'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.yesterday'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'days')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'days')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'weeks')
+          .startOf('isoWeek')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'weeks')
+          .endOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'months')
+          .endOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+]
 
 function disabledDate(time) {
   return time.getTime() > new Date().getTime()

@@ -105,7 +105,7 @@
           </thead>
           <tbody>
             <tr v-for="record in page.records" :key="record.id">
-              <td>
+              <td :data-label="t('fields.loginName')">
                 <el-link
                   type="primary"
                   @click="searchDownline(record.id, record.loginName)"
@@ -113,37 +113,37 @@
                   {{ record.loginName }}
                 </el-link>
               </td>
-              <td>
+              <td :data-label="t('fields.affiliateCode')">
                 <span v-if="record.affiliateCode === null">-</span>
                 <span v-if="record.affiliateCode !== null">
                   {{ record.affiliateCode }}
                 </span>
               </td>
-              <td>
+              <td :data-label="t('fields.affiliateLevel')">
                 <span v-if="record.affiliateLevel === null">-</span>
                 <span v-if="record.affiliateLevel !== null">
                   {{ t('affiliate.level.' + record.affiliateLevel) }}
                 </span>
               </td>
-              <td>
+              <td :data-label="t('fields.commission')">
                 <span v-if="record.commission === null">0 %</span>
                 <span v-if="record.commission !== null">
                   {{ record.commission * 100 }} %
                 </span>
               </td>
-              <td>
+              <td :data-label="t('fields.totalDownlineMember')">
                 <span v-if="record.downlineMember === null">-</span>
                 <span v-if="record.downlineMember !== null">
                   {{ record.downlineMember }}
                 </span>
               </td>
-              <td>
+              <td :data-label="t('fields.totalDownlineAffiliate') ">
                 <span v-if="record.downlineAffiliate === null">-</span>
                 <span v-if="record.downlineAffiliate !== null">
                   {{ record.downlineAffiliate }}
                 </span>
               </td>
-              <td>
+              <td :data-label="t('fields.affiliateStatus')">
                 <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">
                   {{ t('affiliate.status.' + record.affiliateStatus) }}
                 </el-tag>
@@ -169,12 +169,12 @@
                   -
                 </el-tag>
               </td>
-              <td>{{ record.site }}</td>
-              <td>
+              <td :data-label="t('fields.site')">{{ record.site }}</td>
+              <td :data-label="t('fields.balance')">
                 $
                 <span v-formatter="{data: record.balance, type: 'money'}" />
               </td>
-              <td>
+              <td :data-label="t('fields.registerTime')">
                 <span v-if="record.regTime === null">-</span>
                 <span
                   v-if="record.regTime !== null"
