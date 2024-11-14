@@ -40,12 +40,17 @@
       <el-form-item label="发送频率(分钟)" prop="notificationSetting.setting.backgroundNoticeIntervalMinutes">
         <el-input-number :min="0" v-model="formData.notificationSetting.setting.backgroundNoticeIntervalMinutes" />
       </el-form-item>
+      <UserTypeCheckbox
+        ref="userTypeCheckboxRef"
+        :systemUserTypeListToSendNotification="formData.notificationSetting.setting.systemUserTypeListToSendNotification"
+      />
       <RoleUserSelector
         ref="roleUserSelectorRef"
         :siteId="store.state.user.siteId"
         :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
         :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
         :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
+        :isRoleAndExcludeEnabled="true"
       />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
@@ -78,8 +83,10 @@ import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
 import RoleUserSelector from "@/views/system/monitor-notification/dialog-custom-content/component/roleUserSelector.vue";
 import TestTriggerButton from "@/views/system/monitor-notification/dialog-custom-content/component/testTriggerButton.vue";
+import UserTypeCheckbox from "@/views/system/monitor-notification/dialog-custom-content/component/userTypeCheckbox.vue";
 
 const roleUserSelectorRef = ref(null);
+const userTypeCheckboxRef = ref(null);
 const store = useStore();
 const emit = defineEmits(['submitting', 'submitSuccess', 'submitFailed']);
 const props = defineProps({
@@ -115,6 +122,7 @@ function initializeFormData() {
       setting: {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
+        systemUserTypeListToSendNotification: [],
         telegramUserIdToSendNotification: [],
         backgroundNoticeIntervalMinutes: 30,
       },
@@ -190,6 +198,7 @@ const submitForm = async () => {
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
   cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
+  cloneNotificationToSubmit.setting.systemUserTypeListToSendNotification = userTypeCheckboxRef.value.fetchSystemUserTypeListToSendNotification();
 
   cloneNotificationToSubmit.template = JSON.stringify({
     upper: formData.value.notificationSetting.upperTemplate,
