@@ -720,6 +720,8 @@ export default {
     redeemConvert: 'Redeem',
     dashboardMemberBalance: 'Member Balance',
     totalWithdrawalAmount: 'Withdraw Amount',
+    dismiss: 'Dismiss',
+    affiliateAnnouncement: 'Affiliate Announcement'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
