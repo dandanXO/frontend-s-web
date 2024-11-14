@@ -45,3 +45,7 @@ export const deleteAffAnnouncement = ids => {
     ContentType.form
   )
 }
+
+export const getAffiliateLoginNameList = (siteId, value) => {
+  return https().request(`/affiliateAnnouncement/loginName-list/${siteId}`, Method.GET, { loginName: value }, ContentType.form);
+};

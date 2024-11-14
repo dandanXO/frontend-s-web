@@ -2124,6 +2124,8 @@ export default {
     showLogo: 'Show Logo',
     adjustTarget: 'Adjust Target',
     ignoreSettlement: 'Ignore Settlement',
+    sendType: 'Send Type',
+    specificAffiliate: 'Specific Affiliate',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
