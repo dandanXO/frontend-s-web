@@ -21,7 +21,7 @@
               />
             </div>
             <div class="reward-info-content">
-              电子上周负盈利：
+              电子周负盈利：
               <span class="amount">{{ profitAmount }}元</span>
             </div>
           </div>
