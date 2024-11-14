@@ -1,6 +1,5 @@
 <template>
   <div class="q-pa-md">
-    <!-- <div id="id-sticky-header"> -->
     <div v-if="isH5" class="download-top-container">
       <div class="download-top-box">
         <q-icon name="close" @click="closeTopBox" />
@@ -142,24 +141,34 @@
       <div ref="swiperContainerRef" class="swiper-container">
         <div class="index-platform-container">
           <!-- Main Swiper -> pass thumbs swiper instance -->
-          <div class="secondSwiper" id="btm-second-swiper">
-            <div id="id-slot-slide" class="slot-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>电子游戏</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in slot"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="`slot?platform=${item.code}`"
-                  />
-                  <!-- <div v-for="(slt, i) in slot" :key="i" class="game-item-div">
+          <template v-if="platListLoading">
+            <div class="home-game-boards">
+              <div class="game-list-div">
+                <div v-for="index in 9" :key="index">
+                  <q-skeleton style="height: 170px" />
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="secondSwiper" id="btm-second-swiper">
+              <div id="id-slot-slide" class="slot-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>电子游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in slot"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="`slot?platform=${item.code}`"
+                    />
+                    <!-- <div v-for="(slt, i) in slot" :key="i" class="game-item-div">
                     <router-link :to="`slot?platform=${slt.code}`" class="game-board">
                       <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
                       <div class="game-platform-img">
@@ -211,169 +220,170 @@
                       </div>
                     </router-link>
                   </div> -->
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div id="id-live-slide" class="live-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>真人娱乐</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in livecasino"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="''"
-                    :onClick="
-                      item.code === 'BBINDY' && item.name === 'BBIN'
-                        ? () => playGame(item.name, item.code, 'bblive_lobby_app')
-                        : () => playGame(item.name, item.code, item.gameCode)
-                    "
-                  />
+              <div id="id-live-slide" class="live-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>真人娱乐</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in livecasino"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="
+                        item.code === 'BBINDY' && item.name === 'BBIN'
+                          ? () => playGame(item.name, item.code, 'bblive_lobby_app')
+                          : () => playGame(item.name, item.code, item.gameCode)
+                      "
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div id="id-sport-slide" class="sport-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>体育赛事</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in sport"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="''"
-                    :onClick="() => playGame(item.name, item.code, item.gameCode)"
-                  />
+              <div id="id-sport-slide" class="sport-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>体育赛事</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in sport"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div id="id-esport-slide" class="esport-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>电竞赛事</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in esport"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="''"
-                    :onClick="() => playGame(item.name, 'platformType', item.code)"
-                  />
+              <div id="id-esport-slide" class="esport-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>电竞赛事</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in esport"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, 'platformType', item.code)"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div id="id-fish-slide" class="fish-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>捕鱼游戏</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in fishing"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="''"
-                    :onclick="
-                      item.code === 'GPS' && item.name === 'GPS'
-                        ? () => playGame(item.name, item.code, '7202')
-                        : item.code === 'GAGFPS' && item.name === 'AGF'
-                        ? () => playGame(item.name, item.code, '6')
-                        : item.code === 'SG' && item.name === 'SG'
-                        ? () => playGame(item.name, item.code, 'F-SF01')
-                        : () => playGame(item.name, item.code, item.code)
-                    "
-                  />
+              <div id="id-fish-slide" class="fish-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>捕鱼游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in fishing"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onclick="
+                        item.code === 'GPS' && item.name === 'GPS'
+                          ? () => playGame(item.name, item.code, '7202')
+                          : item.code === 'GAGFPS' && item.name === 'AGF'
+                          ? () => playGame(item.name, item.code, '6')
+                          : item.code === 'SG' && item.name === 'SG'
+                          ? () => playGame(item.name, item.code, 'F-SF01')
+                          : () => playGame(item.name, item.code, item.code)
+                      "
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div id="id-poker-slide" class="poker-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>棋牌游戏</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in poker"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="''"
-                    :onclick="() => playGame(item.name, item.code, item.gameCode)"
-                  />
+              <div id="id-poker-slide" class="poker-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>棋牌游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in poker"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onclick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>彩票游戏</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in lottery"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="''"
-                    :onClick="() => playGame(item.name, item.code, item.gameCode)"
-                  />
+              <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>彩票游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in lottery"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div id="id-casual-slide" class="casual-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>小游戏</h2>
-                <div class="game-list-div">
-                  <GameBoard
-                    v-for="(item, i) in casuals"
-                    :key="i"
-                    :title="item.title"
-                    :name="item.name"
-                    :code="item.code"
-                    :icon="item.icon"
-                    :underMaintenance="item.underMaintenance"
-                    :maintenanceStartTime="item.maintenanceStartTime"
-                    :maintenanceEndTime="item.maintenanceEndTime"
-                    :link="''"
-                    :onClick="() => playGame(item.name, item.code, item.gameCode)"
-                  />
+              <div id="id-casual-slide" class="casual-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>小游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in casuals"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </template>
         </div>
       </div>
     </div>
@@ -911,7 +921,12 @@ export default defineComponent({
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+    const platListLoading = ref(false);
+
     const getPlatList = () => {
+      platListLoading.value = true;
+
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -923,11 +938,8 @@ export default defineComponent({
           ui.slotLists = [];
           pf.forEach((element) => {
             const platTypes = element.gameType.split(",");
-            // console.log(platTypes);
             if (platTypes.indexOf("ESPORT") > -1) {
               var espObj = Object.assign({}, element);
-              // console.log(espObj);
-
               if (espObj.code === "TFGaming") {
                 espObj.title = "兴發电竞";
               }
@@ -945,14 +957,12 @@ export default defineComponent({
               esport.value.push(espObj);
 
               //Add 1 More Casual minigame.
-              // if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
               casualObj.gameCode = "casual";
               casualObj.title = casualObj.name + " 小游戏";
               casualObj.icon = "casual";
               casualObj.subtitle = "小游戏";
               casuals.value.push(casualObj);
-              // }
             }
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
@@ -1044,7 +1054,12 @@ export default defineComponent({
             }
           });
         })
-        .catch((err) => {});
+        .catch((err) => {})
+        .finally(() => {
+          setTimeout(() => {
+            platListLoading.value = false;
+          }, 500);
+        });
     };
 
     const liveTabs = ref("");
@@ -1269,7 +1284,8 @@ export default defineComponent({
       isScrolling,
       swiperContainerRef,
       scrollToSlide,
-      isOutdatedApp
+      isOutdatedApp,
+      platListLoading
     };
   }
 });
