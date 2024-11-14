@@ -9,7 +9,7 @@
       <el-carousel-item v-for="announcement in affiliateAnnouncementPopupList" :key="announcement.id">
         <div class="announcement-item">
             <div class="title">{{ announcement.title }}</div>
-            <div>
+            <div v-if="announcement.popUpImage">
               <img class="popup-img" :src="`${imageDir}/announcement/${announcement.popUpImage}`" />
             </div>
             <div v-html="announcement.content"></div>
@@ -34,7 +34,7 @@ import { useI18n } from 'vue-i18n';
 import { getId } from "@/utils/cookies";
 
 const { t } = useI18n();
-const dialogVisible = ref(true);
+const dialogVisible = ref(false);
 const affiliateAnnouncementPopupList = ref([]);
 const imageDir = process.env.VUE_APP_IMAGE_CDN;
 const affiliateId = getId();
@@ -53,7 +53,8 @@ const fetchAnnouncementListPopup = () => {
   getAffAnnouncementPopupList(affiliateId).then((res) => {
       const { code, data } = res;
       
-      if(code === 0) {
+      if(code === 0 && data.length) {
+        dialogVisible.value = true;
         affiliateAnnouncementPopupList.value = data;
       }
   });
