@@ -2123,6 +2123,8 @@ export default {
     showLogo: '显示图标',
     adjustTarget: '平账目标',
     ignoreSettlement: '忽略结算',
+    sendType: '发送方法',
+    specificAffiliate: '指定代理',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

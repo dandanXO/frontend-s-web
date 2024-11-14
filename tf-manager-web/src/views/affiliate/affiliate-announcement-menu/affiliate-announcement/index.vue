@@ -143,11 +143,11 @@
         <el-form-item :label="t('fields.title')" prop="title">
           <el-input v-model="form.title" style="width: 350px;" maxlength="50" />
         </el-form-item>
-        <el-form-item :label="t('fields.sendType')" prop="sendType">
+        <el-form-item :label="t('fields.sendType')" prop="sendType" v-if="form.siteId === 10">
           <el-radio v-model="form.sendType" label="ALL"> {{ t('fields.all') }}</el-radio>
           <el-radio v-model="form.sendType" label="SPECIFIC"> {{ t('fields.specificAffiliate') }}</el-radio>
         </el-form-item>
-        <el-form-item :label="t('fields.recipient')" v-if="form.sendType === 'SPECIFIC'">
+        <el-form-item :label="t('fields.recipient')" v-if="form.sendType === 'SPECIFIC' && form.siteId === 10">
           <el-tag
             v-for="tag in dynamicTags"
             :key="tag"
@@ -171,11 +171,12 @@
         <el-form-item
           :label="t('fields.hasPopUp')"
           prop="hasPopUp"
+          v-if="form.siteId === 10"
         >
           <el-radio v-model="form.hasPopUp" :label="true">{{ t('fields.yes') }}</el-radio>
           <el-radio v-model="form.hasPopUp" :label="false">{{ t('fields.no') }}</el-radio>
         </el-form-item>
-        <el-form-item :label="t('fields.image')" prop="popUpImage" v-if="form.hasPopUp">
+        <el-form-item :label="t('fields.image')" prop="popUpImage" v-if="form.hasPopUp && form.siteId === 10">
           <el-row :gutter="10">
             <el-col v-if="form.popUpImage" style="width: 250px">
               <el-image
