@@ -8,7 +8,7 @@
       <el-form-item label="存款浮动通知阀值(%)" prop="monitorSetting.setting.depositChangeAlertThreshold">
         <el-input-number :min="0.1" :step="0.1" v-model="formData.monitorSetting.setting.depositChangeAlertThreshold" />
       </el-form-item>
-      <el-form-item label="状态" prop="monitorSetting.status">
+      <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
           active-text="启用"
