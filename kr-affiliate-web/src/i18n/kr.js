@@ -886,6 +886,7 @@ export default {
     yourCurrentPoint: '현재 포인트 :',
     confirmRedeem: '당신은 상환하고 싶나요 ?',
     redeemSuccess: '성공적인 상환',
+    amountMustBeMultipleOf10000: '금액은 10000의 배수여야 합니다.',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',

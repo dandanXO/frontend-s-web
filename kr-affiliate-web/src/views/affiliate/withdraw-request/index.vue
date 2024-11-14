@@ -430,11 +430,11 @@ onMounted(async() => {
   await retrieveSecurityQuestion();
   await checkWithdrawPw();
   if (!hasSecurityQn.value && !hasWithdrawPw.value) {
-    router.push("/personal?name=secAndPw");
+    router.push("/personal/info?name=secAndPw");
   } else if (!hasWithdrawPw.value) {
-    router.push("/personal?name=withdrawpw");
+    router.push("/personal/info?name=withdrawpw");
   } else if (!hasSecurityQn.value) {
-    router.push("/personal?name=securityQn");
+    router.push("/personal/info?name=securityQn");
   }
   await loadAffiliateBalance();
   getWithdrawalMethods()

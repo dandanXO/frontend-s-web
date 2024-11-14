@@ -895,6 +895,7 @@ export default {
     yourCurrentPoint: 'Your Current Point :',
     confirmRedeem: 'Do you want to redeeem?',
     redeemSuccess: 'Redeem Successful',
+    amountMustBeMultipleOf10000: 'Amount must be multiple of 10000',
   },
   posterType: {
     OVERALL: 'Overall Referral',
