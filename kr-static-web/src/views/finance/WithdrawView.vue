@@ -474,6 +474,8 @@ export default defineComponent({
             " - " +
             selectedWithdrawalMethod.value.withdrawMax.toLocaleString()
           );
+        } else if (Number(v) % 10000) {
+          return Promise.reject(t("account.withdraw_amount_unit"));
         } else {
           return Promise.resolve();
         }

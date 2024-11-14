@@ -65,6 +65,7 @@ export default {
     cockfight: "투계",
     deposit_should_between: "금액을 입력하세요: ",
     deposit_amount_unit: "입금 금액은 10,000 단위여야 합니다.",
+    withdraw_amount_unit: "출금 금액은 10,000 단위여야 합니다.",
     msg_deleted: "메시지가 삭제되었습니다.",
     please_select_bank: "은행을 선택하세요.",
     you_account_has_been_sent_email: "귀하의 계정 코드가 이메일로 전송되었습니다.",
