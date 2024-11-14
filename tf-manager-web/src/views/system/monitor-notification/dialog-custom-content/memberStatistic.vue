@@ -11,7 +11,7 @@
       <el-form-item label="通知生成人数下限阈值" prop="monitorSetting.setting.notificationGenerationUserNumberLowerThreshold">
         <el-input-number :min="1" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberLowerThreshold" />
       </el-form-item>
-      <el-form-item label="状态" prop="monitorSetting.status">
+      <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
           active-text="启用"
