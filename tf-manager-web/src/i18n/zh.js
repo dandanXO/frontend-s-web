@@ -322,6 +322,7 @@ export default {
     UEFA: '欧足联',
     UCL: '欧洲冠军联赛',
     HOTELCASINO: '酒店真人',
+    COMMISSION: '佣金',
   },
   homeBannerType: {
     HOME: '首页',
@@ -2123,6 +2124,8 @@ export default {
     showLogo: '显示图标',
     adjustTarget: '平账目标',
     ignoreSettlement: '忽略结算',
+    sendType: '发送方法',
+    specificAffiliate: '指定代理',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2676,6 +2679,7 @@ export default {
     'Alipay Payment on going': '支付宝支付中',
     'Automatic Payment': '自动支付',
     'Waiting Auto Pay': '等待自动支付',
+    'Waiting Auto Payment': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
     'AutoWithdraw Under review Risk': '风险提现终审',
     'AutoWithdraw Withdrawal Record': '提交记录',
@@ -2917,6 +2921,8 @@ export default {
     google_auth_code: '请输入6位数谷歌验证码',
     register_count: '今日已注册数',
     register_limit: '今日可注册数',
+    deposit_count: '今日已首存数',
+    deposit_limit: '今日可首存数',
   },
   posterType: {
     overall: '综合推广图',

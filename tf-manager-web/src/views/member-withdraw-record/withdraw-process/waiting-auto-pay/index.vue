@@ -87,7 +87,7 @@
         @click="toApply()"
         @keydown.enter.prevent
       >
-        {{ t('fields.toApplying') }}
+        {{ t('fields.toBeforePaid') }}
       </el-button>
     </div>
 
@@ -250,7 +250,7 @@
         >
           <template #default="scope">
             <el-button size="mini" type="primary" @click="toApply(scope.row)" @keydown.enter.prevent>
-              {{ t('fields.toApplying') }}
+              {{ t('fields.toBeforePaid') }}
             </el-button>
             <el-button
               v-if="isPak(request.siteId)"
@@ -504,7 +504,7 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecordWaitingAutopay,
-  fromWaitingAutoPayToApply,
+  fromWaitingAutoPayToBeforePaid,
   autoWithdrawToFail,
   autoWithdrawToSuccess
 } from '../../../../api/member-withdraw-record'
@@ -733,9 +733,9 @@ async function loadSites() {
 
 async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromWaitingAutoPayToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
+    await fromWaitingAutoPayToBeforePaid([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await fromWaitingAutoPayToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
+    await fromWaitingAutoPayToBeforePaid(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })

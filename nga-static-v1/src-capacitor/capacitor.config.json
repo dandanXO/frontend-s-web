@@ -1,5 +1,11 @@
 {
   "appId": "com.ind.appnga",
   "appName": "55Ace",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "showSpinner": true
+    }
+  }
 }

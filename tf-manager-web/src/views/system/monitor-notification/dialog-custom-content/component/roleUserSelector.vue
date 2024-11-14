@@ -144,7 +144,12 @@ async function loadSimpleTelegramUsersBySite() {
   if (res.code !== 0) {
     return;
   }
-  simpleTelegramUsers.value = res.data;
+  for (const user of res.data) {
+    if (user.status === "STOPPED") {
+      user.alias = user.alias + "(已停用)";
+    }
+  }
+  simpleTelegramUsers.value = res.data
 }
 
 const getUserNamesByIds = (userIds, simpleUsers) => {

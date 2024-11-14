@@ -1,12 +1,5 @@
 <template>
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    "
-  ></div>
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh"></div>
 </template>
 <script setup>
 import { onMounted } from "vue";
@@ -14,7 +7,6 @@ import { doIt } from "boot/action";
 import { cashier } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import i18n from "../i18n/index";
-import liff from "@line/liff";
 // import {Preferences} from "@capacitor/preferences";
 import { useRouter } from "vue-router";
 
@@ -63,12 +55,7 @@ const qs = require("qs");
 // }
 
 function closeWindowOrBack() {
-  if (
-    (Platform.is.desktop || Platform.is.webkit) &&
-    !Platform.is.capacitor &&
-    Platform.is.name !== "webkit" &&
-    !liff.isInClient()
-  ) {
+  if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
     window.close();
   } else {
     router.go(-1);
@@ -76,12 +63,7 @@ function closeWindowOrBack() {
 }
 
 function postMessage(item1, item2) {
-  if (
-    (Platform.is.desktop || Platform.is.webkit) &&
-    !Platform.is.capacitor &&
-    Platform.is.name !== "webkit" &&
-    !liff.isInClient()
-  ) {
+  if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
     window.opener.postMessage(item1, item2);
   } else {
     window.postMessage(item1, item2);
@@ -109,12 +91,7 @@ onMounted(async () => {
   $q.loading.show({
     message: "Loading..."
   });
-  if (
-    (Platform.is.desktop || Platform.is.webkit) &&
-    !Platform.is.capacitor &&
-    Platform.is.name !== "webkit" &&
-    !liff.isInClient()
-  ) {
+  if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
     let params = localStorage.getItem("formDetails");
     params = params ? JSON.parse(params) : "";
     // var form = params;

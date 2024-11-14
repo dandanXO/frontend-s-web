@@ -552,6 +552,15 @@ $node-color: #458BFF;
 }
 @media (max-width: 768px) {
   .node {
+    .node-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+
+      .node-item {
+        min-width: 70px;
+      }
+    }
     .node {
       .account-title-container {
         margin: 0 -10px;

@@ -109,6 +109,10 @@ export const fromWaitingAutoPayToApply = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/waitingAutoPayToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
+export const fromWaitingAutoPayToBeforePaid = async (ids) => {
+  await https().httpClient.post('/memberWithdrawRecord/waitingAutoPayToBeforePaid?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
+};
+
 export const fromAffiliateCheckingToApply = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/affiliateCheckingToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };

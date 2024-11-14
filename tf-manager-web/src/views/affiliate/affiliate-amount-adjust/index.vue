@@ -771,7 +771,7 @@ function disabledDate(time) {
       moment(new Date())
         .subtract(2, 'months')
         .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+        .format('x') || time.getTime() > moment(new Date()).add(1, 'day')
   )
 }
 
