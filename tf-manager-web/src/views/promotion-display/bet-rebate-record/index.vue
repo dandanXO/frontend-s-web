@@ -322,6 +322,7 @@ import { hasRole, hasPermission } from '../../../utils/util'
 import * as XLSX from 'xlsx';
 import moment from 'moment';
 import { useI18n } from "vue-i18n";
+import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
 import { adjustAmount, distribute, getTotal, getBetRebateRecord } from '../../../api/bet-rebate-record';
@@ -431,6 +432,12 @@ function restrictDecimalInput(event) {
 const formRules = reactive({
   amount: [required(t('message.validateAmountRequired'))]
 })
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+  request.siteId = store.state.user.siteId
+};
 
 function checkQuery() {
   const requestCopy = { ...request };
@@ -589,7 +596,8 @@ function distributeRebate() {
   });
 }
 
-onMounted(() => {
+onMounted(async() => {
+  await loadSites();
   request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);

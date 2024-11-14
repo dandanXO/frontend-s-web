@@ -528,7 +528,7 @@ import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createPromoType, updatePromoType, getPromoType, updatestatus, deletePromoType } from "@/api/promo-type";
-
+import { getSiteListSimple } from "@/api/site";
 import { hasRole, hasPermission } from "@/utils/util";
 import { useI18n } from "vue-i18n";
 import { useStore } from '@/store';
@@ -870,6 +870,11 @@ function constructName() {
   return JSON.stringify(json)
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
 function showImageDialog() {
   if (imageFormRef.value) {
     imageFormRef.value.resetFields()
@@ -980,6 +985,7 @@ function getName(nameStr) {
 }
 
 onMounted(async () => {
+  await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

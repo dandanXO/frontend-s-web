@@ -947,6 +947,7 @@ async function cancelBySearch() {
 
 onMounted(async() => {
   await loadSites();
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

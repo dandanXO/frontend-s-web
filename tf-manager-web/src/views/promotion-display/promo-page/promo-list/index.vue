@@ -196,7 +196,7 @@ import {
   updatePromoPagesState
 } from '../../../../api/promoPages'
 import { useRoute, useRouter } from 'vue-router'
-
+import { getSiteListSimple } from '../../../../api/site'
 import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
@@ -296,6 +296,11 @@ async function loadPromoPages() {
   page.records = ret.records
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 async function removePromo(promoPages) {
   ElMessageBox.confirm(t('message.confirmDelete'), {
     confirmButtonText: t('fields.confirm'),
@@ -333,6 +338,7 @@ onMounted(async () => {
   if (route.query.current != null) {
     request.current = Number(route.query.current)
   }
+  await loadSites()
   request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(

@@ -686,7 +686,7 @@ import {
 } from '../../../api/homeBanner'
 import { createSiteImage, getSiteImage } from '../../../api/site-image'
 import { uploadImage } from '../../../api/image'
-
+import { getSiteListSimple } from '../../../api/site'
 import { required } from '../../../utils/validate'
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
@@ -995,6 +995,11 @@ async function loadSiteImage(type) {
   imageList.pages = ret.pages
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 async function removeBanner(banner) {
   ElMessageBox.confirm(t('message.confirmDelete'), {
     confirmButtonText: t('fields.confirm'),
@@ -1146,7 +1151,8 @@ async function loadDarkMode() {
 //   }
 // }
 
-onMounted(async() => {
+onMounted(async () => {
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

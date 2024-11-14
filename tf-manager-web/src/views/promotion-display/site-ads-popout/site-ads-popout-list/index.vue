@@ -313,6 +313,7 @@ import {
   updateAdsPopoupStatus
 } from '../../../../api/site-ads-popout'
 import { uploadImage } from '../../../../api/image'
+import { getSiteListSimple } from '../../../../api/site'
 import { required } from '../../../../utils/validate'
 import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
@@ -539,6 +540,11 @@ async function loadAdsPopoutList() {
   page.records = ret.records
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 async function removeAdsPopout(adspopout) {
   ElMessageBox.confirm(
     t('message.confirmDelete'),
@@ -568,6 +574,7 @@ onMounted(async () => {
   if (route.query.current != null) {
     request.current = Number(route.query.current)
   }
+  await loadSites();
   request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
