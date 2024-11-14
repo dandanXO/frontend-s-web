@@ -66,12 +66,12 @@
       </thead>
       <tbody v-if="page.records.length > 0">
         <tr v-for="item in page.records" :key="item.id">
-          <td>{{ item.serialNumber }}</td>
-          <td>{{ formatMoney(item.withdrawAmount) }} {{ returnCurrency() }}</td>
-          <td>{{ item.withdrawDate }}</td>
-          <td>{{ item.bankName }}</td>
-          <td>{{ item.cardNumber }}</td>
-          <td>
+          <td :data-label="t('fields.serialNumber')">{{ item.serialNumber }}</td>
+          <td :data-label="t('fields.withdrawAmount')">{{ formatMoney(item.withdrawAmount) }} {{ returnCurrency() }}</td>
+          <td :data-label="t('fields.withdrawDate')">{{ item.withdrawDate }}</td>
+          <td :data-label="t('fields.bankName')">{{ item.bankName }}</td>
+          <td :data-label="t('fields.cardNumber')">{{ item.cardNumber }}</td>
+          <td :data-label="t('fields.status')">
             <el-tag v-if="item.status === 'FAIL'" type="danger">
               {{ t('withdrawStatus.' + item.status) }}
             </el-tag>
@@ -80,7 +80,7 @@
             </el-tag>
             <el-tag v-else>{{ t('withdrawStatus.' + item.status) }}</el-tag>
           </td>
-          <td>
+          <td :data-label="t('fields.confirmStatus')">
             <el-tag
               v-if="item.confirmStatus === '0' && item.status === 'SUCCESS'"
               type="danger"
