@@ -552,6 +552,13 @@ $node-color: #458BFF;
 }
 @media (max-width: 768px) {
   .node {
+    .node-content {
+      gap: 10px;
+
+      .node-item {
+        min-width: 70px;
+      }
+    }
     .node {
       .account-title-container {
         margin: 0 -10px;
