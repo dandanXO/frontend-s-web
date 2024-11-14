@@ -188,7 +188,7 @@
               <td>{{ regLimitData.depositCount }}</td>
             </tr>
             <tr>
-              <td>{{ $t('google.deposit_count') }}</td>
+              <td>{{ $t('google.deposit_limit') }}</td>
               <td>{{ regLimitData.depositLimit }}</td>
             </tr>
           </tbody>
