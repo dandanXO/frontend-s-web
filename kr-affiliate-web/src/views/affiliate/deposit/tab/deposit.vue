@@ -75,7 +75,7 @@
             <el-form-item class="helptxt" :label="$t('fields.depositAmount')" prop="localAmount">
               <el-input
                 v-if="amountList.length === 0"
-                v-model="form.localAmount"
+                v-model="depositAmountFormatted"
                 :placeholder="isUSDT ? $t('message.inputUSDTAmount') : $t('message.inputAmount')"
               />
 
@@ -192,7 +192,7 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef, watch } from "vue";
 import {
   loadPay,
   verifyAmount,
@@ -253,6 +253,17 @@ const copyMessage = (position, text) => {
   copybtntxt[position].value = t('common.copied');
 };
 
+const depositAmountFormatted = ref('');
+
+watch(() => depositAmountFormatted.value, () => {
+  const depositAmount = depositAmountFormatted.value.replace(/\$\s?|(,*)/g, '');
+  if (isNaN(depositAmount)) {
+  } else {
+    depositAmountFormatted.value = `${depositAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    form.localAmount = Number(depositAmount);
+  }
+})
+
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
   copybtntxt.forEach((element) => {
@@ -278,14 +289,14 @@ const rules = {
       message: t('message.requiredAmount'),
       trigger: "blur"
     },
-    {
-      pattern: "^([1-9][0-9]*)$",
-      message: t('message.requiredPositiveInteger'),
-      trigger: "change"
-    },
+    // {
+    //   pattern: "^([1-9][0-9]*)$",
+    //   message: t('message.requiredPositiveInteger'),
+    //   trigger: "change"
+    // },
     {
       validator: verifyDepositAmount,
-      trigger: "change"
+      trigger: "blur"
     }
   ],
   bankId: [
@@ -539,6 +550,7 @@ function doDeposit(data) {
 }
 
 async function verifyDepositAmount(r, v) {
+  v = v + "";
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
@@ -547,6 +559,8 @@ async function verifyDepositAmount(r, v) {
           " - " +
           activeMethod.value.depositMax
         ));
+    } if (v%10000!==0) {
+      return Promise.reject(new Error(t('message.amountMustBeMultipleOf10000')))
     } else {
       if (checkAmount.flag) {
         return Promise.resolve();

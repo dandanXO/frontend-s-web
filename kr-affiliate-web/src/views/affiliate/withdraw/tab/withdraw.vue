@@ -569,7 +569,7 @@ onMounted(async () => {
   //   router.push('/personal?name=securityQn')
   // }
   if (!hasWithdrawPw.value) {
-    router.push('/personal?name=withdrawpw')
+    router.push('/personal/info?name=withdrawpw')
   } 
   await loadAffiliateBalance()
   getWithdrawalMethods()

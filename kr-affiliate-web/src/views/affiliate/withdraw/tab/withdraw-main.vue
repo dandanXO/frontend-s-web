@@ -73,7 +73,7 @@
       </el-form-item>
       <!-- <el-form-item label>
             </el-form-item> -->
-      <div class="account-tip remain-box">
+      <div class="account-tip remain-box" style="margin-top: 15px">
         <div
           v-if="
             selectedWithdrawalMethod.withdrawMin &&
@@ -315,6 +315,8 @@ const checkAmt = (rule, value, callback) => {
             `Amount should be between ${selectedWithdrawalMethod.value.withdrawMin} & ${selectedWithdrawalMethod.value.withdrawMax}`
           )
         )
+      } if (value%10000!==0) {
+        callback(new Error(t('message.amountMustBeMultipleOf10000')))
       } else {
         callback()
       }
@@ -336,10 +338,14 @@ function showDialog(type) {
   //   })
   // } else 
   if (type === 'WITHDRAW_PASS') {
-    withdrawPwForm.withdrawPassword = null
-    uiControl.dialogTitle = t('fields.withdrawPassword')
-    uiControl.dialogVisible = true
-    uiControl.dialogType = type
+    formRef.value.validate(async valid => {
+      if (valid) {
+        withdrawPwForm.withdrawPassword = null
+        uiControl.dialogTitle = t('fields.withdrawPassword')
+        uiControl.dialogVisible = true
+        uiControl.dialogType = type
+      }
+    })
   }
 }
 
@@ -569,7 +575,7 @@ onMounted(async () => {
   //   router.push('/personal?name=securityQn')
   // }
   if (!hasWithdrawPw.value) {
-    router.push('/personal?name=withdrawpw')
+    router.push('/personal/info?name=withdrawpw')
   } 
   await loadAffiliateBalance()
   getWithdrawalMethods()
