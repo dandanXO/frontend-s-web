@@ -18,7 +18,7 @@
         <div class="affiliate-program">
         <img src="@/assets/images/affiliate/rules-dark.png" />
 
-          <div class="affiliate-subgroup agent-content-item" style="display:none;">
+          <div class="affiliate-subgroup agent-content-item">
             <div class="affiliate-sub">
               <div class="affiliate-subtitle">电竞佣金方案</div>
               <div class="affiliate-terms">分红条款</div>
@@ -82,7 +82,7 @@
             </div>
           </div>
           <img src="@/assets/images/affiliate/calc-dark.png" />
-          <div class="affiliate-subgroup agent-content-item" style="display:none;">
+          <div class="affiliate-subgroup agent-content-item">
             <div class="affiliate-sub">
               <div class="affiliate-subtitle">计算公式</div>
               <div class="agent-demo">
@@ -452,6 +452,12 @@
             padding: 30px;
             box-shadow: 0px 0px 10px 0px #0000001a;
             color: #424f72;
+            &:before {
+              background-color: linear-gradient(180deg, #2c3f64, #152240);
+              width: 100%;
+              height: 100%;
+              content: "";
+            }
             .affiliate-subtitle {
               font-size: 20px;
               font-weight: 700;

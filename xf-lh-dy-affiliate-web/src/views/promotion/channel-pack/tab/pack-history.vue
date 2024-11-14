@@ -50,67 +50,69 @@
         </el-col>
       </el-row>
     </el-form>
-    <table class="custom-table" cellpadding="0" cellspacing="0" border="0">
-      <thead>
-        <tr>
-          <th scope="col">{{ t('fields.sequence') }}</th>
-          <th scope="col">{{ t('fields.packType') }}</th>
-          <th scope="col">{{ t('fields.osType') }}</th>
-          <th scope="col">{{ t('fields.appName') }}</th>
-          <th scope="col">{{ t('fields.appIcon') }}</th>
-          <th scope="col">{{ t('fields.buildStatus') }}</th>
-          <th scope="col">{{ t('fields.download') }}</th>
-          <th scope="col">{{ t('fields.packDate') }}</th>
-          <th scope="col">{{ t('fields.operate') }}</th>
-        </tr>
-      </thead>
-      <tbody v-if="page.records.length > 0">
-        <tr v-for="(item, index) in page.records" :key="item.id">
-          <td :data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
-          <td :data-label="t('fields.packType')">
-            {{ $t(`appType.${item.appType}`) }}
-          </td>
-          <td :data-label="t('fields.osType')">
-            {{ $t(`osType.${item.osType}`) }}
-          </td>
-          <td :data-label="t('fields.appName')">{{ item.appName }}</td>
-          <td :data-label="t('fields.appIcon')">
-            <div v-if="item.appIcon !== null" class="preview">
-              <img :src="imageDir + item.appIcon" alt="app-icon">
-            </div>
-            <div v-else>
-              {{ $t('fields.unchanged') }}
-            </div>
-          </td>
-          <td :data-label="t('fields.buildStatus')">
-            {{ $t(`packStatus.${item.status}`) }}
-          </td>
-          <td :data-label="t('fields.download')">{{ item.downloadCount }}</td>
-          <td :data-label="t('fields.packDate')">
-            <span v-if="item.finishTime === null">-</span>
-            <span v-else>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
-          </td>
-          <td :data-label="t('fields.operate')">
-            <el-button
-              v-if="item.status === 'SUCCESS'"
-              class="success-btn"
-              type="primary"
-              @click="viewDetail(item)"
-            >
-              {{ $t('fields.detail') }}
-            </el-button>
-            <el-button
-              v-if="item.status === 'IN_QUEUE'"
-              class="danger-btn"
-              @click="cancelPack(item.id)"
-            >
-              {{ $t('fields.cancel') }}
-            </el-button>
-            <span v-if="item.status === 'CANCEL'">-</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="width: 100%; margin: 10px auto; overflow: auto;">
+      <table class="custom-table" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.sequence') }}</th>
+            <th scope="col">{{ t('fields.packType') }}</th>
+            <th scope="col">{{ t('fields.osType') }}</th>
+            <th scope="col">{{ t('fields.appName') }}</th>
+            <th scope="col">{{ t('fields.appIcon') }}</th>
+            <th scope="col">{{ t('fields.buildStatus') }}</th>
+            <th scope="col">{{ t('fields.download') }}</th>
+            <th scope="col">{{ t('fields.packDate') }}</th>
+            <th scope="col">{{ t('fields.operate') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="page.records.length > 0">
+          <tr v-for="(item, index) in page.records" :key="item.id">
+            <td :data-label="t('fields.sequence')">{{ (request.current - 1) * 10 + index + 1 }}</td>
+            <td :data-label="t('fields.packType')">
+              {{ $t(`appType.${item.appType}`) }}
+            </td>
+            <td :data-label="t('fields.osType')">
+              {{ $t(`osType.${item.osType}`) }}
+            </td>
+            <td :data-label="t('fields.appName')">{{ item.appName }}</td>
+            <td :data-label="t('fields.appIcon')">
+              <div v-if="item.appIcon !== null" class="preview">
+                <img :src="imageDir + item.appIcon" alt="app-icon">
+              </div>
+              <div v-else>
+                {{ $t('fields.unchanged') }}
+              </div>
+            </td>
+            <td :data-label="t('fields.buildStatus')">
+              {{ $t(`packStatus.${item.status}`) }}
+            </td>
+            <td :data-label="t('fields.download')">{{ item.downloadCount }}</td>
+            <td :data-label="t('fields.packDate')">
+              <span v-if="item.finishTime === null">-</span>
+              <span v-else>{{ moment(item.finishTime).format('YYYY/MM/DD HH:mm:ss') }}</span>
+            </td>
+            <td :data-label="t('fields.operate')">
+              <el-button
+                v-if="item.status === 'SUCCESS'"
+                class="success-btn"
+                type="primary"
+                @click="viewDetail(item)"
+              >
+                {{ $t('fields.detail') }}
+              </el-button>
+              <el-button
+                v-if="item.status === 'IN_QUEUE'"
+                class="danger-btn"
+                @click="cancelPack(item.id)"
+              >
+                {{ $t('fields.cancel') }}
+              </el-button>
+              <span v-if="item.status === 'CANCEL'">-</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div v-if="page.records.length === 0">
       <emptyComp />
     </div>

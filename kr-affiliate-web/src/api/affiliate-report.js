@@ -63,3 +63,12 @@ export const getAffiliateDashboardData = query => {
     ContentType.form
   )
 }
+
+export const getDashboardDataDetail = query => {
+  return https().request(
+    '/affiliate-report/dashboard-data-detail',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}

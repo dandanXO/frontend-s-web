@@ -477,7 +477,7 @@ function checkBankCards() {
       center: true,
     })
       .then(() => {
-        router.push('/affiliate/bankCard')
+        router.push('/affiliate/bank-card')
       })
       .catch(() => {})
   } else {
@@ -491,7 +491,7 @@ function checkBankCards() {
       center: true,
     })
       .then(() => {
-        router.push('/affiliate/bankCard')
+        router.push('/affiliate/bank-card')
       })
       .catch(() => {})
   }

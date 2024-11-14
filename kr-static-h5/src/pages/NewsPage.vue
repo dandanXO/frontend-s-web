@@ -136,11 +136,6 @@ const newsItems = ref([
   padding: 4px;
 
   .header-left {
-    // height: 50px;
-
-    // @media (max-width: 400px) {
-    //   height: 40px;
-    // }
 
     img {
       // height: 100%;
@@ -212,11 +207,12 @@ const newsItems = ref([
 <style lang="scss">
 .q-select__dialog {
   label {
+    display: none;
     img {
       width: 30px;
       height: 30px;
     }
-    display: none;
+
   }
 }
 </style>

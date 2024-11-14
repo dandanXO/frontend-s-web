@@ -14,21 +14,23 @@
           </div>
         </div>
         <table class="olympic24-match-game-info-table">
-          <tr>
-            <th>竞猜正确场次</th>
-            <th>投注返比</th>
-            <th>彩金上限</th>
-          </tr>
-          <tr>
-            <td>≥1</td>
-            <td>0.8%</td>
-            <td>88</td>
-          </tr>
-          <tr>
-            <td>≥2</td>
-            <td>1.0%</td>
-            <td>188</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>竞猜正确场次</th>
+              <th>投注返比</th>
+              <th>彩金上限</th>
+            </tr>
+            <tr>
+              <td>≥1</td>
+              <td>0.8%</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>≥2</td>
+              <td>1.0%</td>
+              <td>188</td>
+            </tr>
+          </tbody>
         </table>
 
         <div class="olympic24-match-game-bottom">
@@ -486,9 +488,6 @@ onMounted(() => {
   position: relative;
   margin-bottom: 12px;
   .olympic24-match-game-status {
-    &-ended {
-      filter: grayscale(1);
-    }
     width: 280px;
     height: 40px;
     // background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
@@ -509,6 +508,10 @@ onMounted(() => {
     background-image: url("../../../assets/promo/lh-olympic-match/date-header.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
+
+    &-ended {
+      filter: grayscale(1);
+    }
   }
 }
 

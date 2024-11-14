@@ -4,9 +4,9 @@
 
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
-// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 import { userStore } from "@/store";
+import { loadAffiliateByDomain } from "@/api/index/promo";
 import { getVisitorId } from "@/utils/utils";
 import { submitMemberStats } from "@/api/index/site";
 import { useRouter } from "vue-router";
@@ -72,6 +72,20 @@ export default defineComponent({
       });
     };
 
+    const getAffiliateByDomain = async () => {
+      var host = window.location.host;
+      var siteCode = process.env.VUE_APP_SITE;
+      // host = "";
+      loadAffiliateByDomain(host, siteCode).then((res) => {
+        console.log(res);
+        if (res.code === 0 && res.data !== "") {
+          // alert(res.data)
+          var agentCode = res.data;
+          sessionStorage.setItem("AFFILIATE_CODE", agentCode);
+        }
+      });
+    };
+
     const checkSessStorageItem = () => {
       const checkItem = sessionStorage.getItem("ERROR_TOKEN_LOGGED");
       if (checkItem) {
@@ -86,6 +100,8 @@ export default defineComponent({
     onMounted(() => {
       checkSID();
       checkServerStatus();
+
+      getAffiliateByDomain();
       checkSessStorageItem();
 
       setTimeout(getOnlineStatApi, 2000);

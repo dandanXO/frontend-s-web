@@ -4,6 +4,7 @@ export default {
     myPoint: '내 포인트',
     memberMoney: '회원 머니',
     memberPoint: '회원 포인트',
+    myCommission: '커미션 잔액',
     eggs: '보유알',
     memberInquiry: '고객문의',
     depositApplication: '충전신청(대기)',
@@ -36,6 +37,7 @@ export default {
   },
   menu: {
     undefined: '',
+    Announcement: '발표',
     Dashboard: '홈',
 
     // Downline Info Start
@@ -74,6 +76,7 @@ export default {
     'Affiliate Center': '대리점 센터',
     Deposit: '충전요청',
     'Bind Bank Cards': '환전계좌추가',
+    'Bank Card': '환전계좌',
     'Bank Withdrawal': '은행 출금',
     Transfer: '대리입금',
     'Referral Centre': '추천 센터',
@@ -84,7 +87,10 @@ export default {
     'Personal Center': '개인 센터',
     'Settlement Center': '수수료',
     'Finance Report': '실시간정산내역',
+    'Finance': '재원',
     'Settlement Report': '루징정산',
+    'Settlement': '합의',
+    'Credit Flow': '금액변동내역',
     'Channel Pack': '채널 패킹',
     contactUs: '문의하기',
     'Daily Detail': '일일 상세 내역',
@@ -96,6 +102,9 @@ export default {
     'Bet Management': '베팅관리',
     'Bet History': '회원베팅기록',
     inquiry: '문의',
+    'Personal Info': '개인 정보',
+    'Message': '사이트 메시지',
+    'Contact Us': '문의하기',
   },
   common: {
     title: '대리 시스템',
@@ -179,6 +188,7 @@ export default {
     POKER: '포커',
     LOTTERY: '복권',
     MINIGAME: '미니게임',
+    HOTELCASINO: '호텔 카지노',
   },
   result: {
     WIN: '승',
@@ -705,6 +715,9 @@ export default {
     downlineTotalWithdraw: '하부회원 총 출금액',
     downlineTotalDepositWithdraw: '입출금차액',
     affiliateInTransfer: '총판',
+    redeemConvert: '전환',
+    dashboardMemberBalance: '회원잔액',
+    totalWithdrawalAmount: '총 출금액',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -926,6 +939,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: '배팅비율-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: '배팅비율-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: '배팅비율-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: '배팅비율-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: '이익률-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '이익률-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
@@ -933,6 +947,7 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '이익률-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: '이익률-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: '이익률-HOTELCASINO',
   },
   sendMessageType: {
     NOTIFICATION: '통지',

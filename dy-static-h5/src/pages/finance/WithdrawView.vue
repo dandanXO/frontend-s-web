@@ -158,7 +158,10 @@
                 {{
                   selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                    : (
+                        withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                        selectedWithdrawalMethod.withdrawFee
+                      ).toFixed(2)
                 }}
                 USDT
               </span>
@@ -213,9 +216,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
-            </div>
+            <!--            <div v-if="isALIPAY" class="selected-tip">-->
+            <!--              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！-->
+            <!--            </div>-->
           </div>
         </q-form>
       </div>
@@ -233,6 +236,23 @@
           </router-link>
           <router-link to="/account/withdraw">
             <q-btn color="dyblue" label="绑定" />
+          </router-link>
+        </div>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="isShowWithdrawErrorBlock" persistent no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; max-width: 290px; padding: 15px; flex-direction: column" class="text-black">
+        <q-card-section class="q-mb-md">
+          <!-- <div class="text-h6 text-center">请先完成上比提款</div> -->
+          您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
+        </q-card-section>
+
+        <div class="flex flex-center">
+          <div>
+            <q-btn style="width: 100px;" @click="isShowWithdrawErrorBlock = false;" class="q-mr-md" label="取消" />
+          </div>
+          <router-link to="/account/records/withdraw">
+            <q-btn style="width: 100px;" color="dyblue" label="前往确认" />
           </router-link>
         </div>
       </q-card>
@@ -357,7 +377,7 @@ export default defineComponent({
     };
 
     const withdrawLoading = ref(false);
-
+    const isShowWithdrawErrorBlock = ref(false);
     const submitWithdraw = () => {
       if (!checkNewUser()) return
 
@@ -372,6 +392,11 @@ export default defineComponent({
         withdrawLoading.value = false;
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
+          if (response.code === 1312) {
+            isShowWithdrawErrorBlock.value = true;
+            withdrawLoading.value = false;
+            return
+          }
           if (response.code === 0) {
             $q.notify({
               color: "positive",
@@ -493,6 +518,8 @@ export default defineComponent({
         return '钱包地址'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝'
       } else {
         return '银行卡'
       }
@@ -503,6 +530,8 @@ export default defineComponent({
         return '虚拟钱包'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝卡'
       } else {
         return '银行卡片'
       }
@@ -593,7 +622,8 @@ export default defineComponent({
       handleUpgradeClick,
       isNewUser,
       router,
-      isShowRemainingDialog
+      isShowRemainingDialog,
+      isShowWithdrawErrorBlock
     };
   }
 });

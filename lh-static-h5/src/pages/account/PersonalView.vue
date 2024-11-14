@@ -363,7 +363,7 @@ export default defineComponent({
 
     onActivated(() => {
       loadInfo();
-      getCode();
+      // getCode();
     });
 
     const verificationImg = ref("");

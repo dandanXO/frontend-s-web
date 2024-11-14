@@ -46,7 +46,7 @@
             v-for="(method, i) in withdrawalMethods"
             :key="i"
             class="txt-center withdraw-type-item"
-            @click="selectMethod(method, i)"
+            @click="i === activeItem ? '' : selectMethod(method, i)"
             :class="{ active: i === activeItem }"
           >
             <span class="promo" v-if="method.recommended">
@@ -68,8 +68,8 @@
           label="提款金额"
           name="amount"
         >
-        <el-space>
-          <el-row :gutter="10" style="align-items: center">
+          <el-space>
+            <el-row :gutter="10" style="align-items: center">
               <el-col :span="12">
                 <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
                   <template #append>{{ store.currency.label }}</template>
@@ -87,7 +87,7 @@
                 </span>
               </el-col>
             </el-row>
-            
+
             <el-button
               :loading="loadingBtn"
               :disable="loadingBtn"
@@ -124,9 +124,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
-            </div>
+            <!--            <div v-if="isALIPAY" class="selected-tip">-->
+            <!--              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！-->
+            <!--            </div>-->
           </el-col>
         </el-row>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
@@ -151,6 +151,7 @@
             v-model="withdrawInfo.cardId"
             :placeholder="`选择${cardLabel()}`"
             style="width: 300px"
+            :loading="isBankCardsLoading"
           >
             <el-option
               v-for="b in withdrawState.bankCardList"
@@ -194,13 +195,24 @@
           v-html="selectedWithdrawalMethod.tips"
         ></div> -->
 
-        <div class="flex-box flex-justify-center">
-        </div>
+        <div class="flex-box flex-justify-center"></div>
       </el-form>
     </div>
 
     <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
-
+    <el-dialog 
+      align-center
+      width="530"
+      :show-close="false"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
+      v-model="isShowWithdrawErrorBlock">
+      您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
+      <div class="withdraw-remaining-dialog__buttons">
+        <el-button class="common-btn" @click="isShowWithdrawErrorBlock = false">返回</el-button>
+        <router-link to="/center/transit-record?type=withdraw"><el-button class="common-btn">前往确认</el-button></router-link>
+      </div>
+    </el-dialog>
     <!-- <el-dialog
       width="500"
       v-model="isShowSubmitDialog"
@@ -304,7 +316,7 @@ export default defineComponent({
 
       return true;
     }
-
+    const isShowWithdrawErrorBlock = ref(false);
     const submitWithraw = () => {
       if (!checkBeforeSubmit()) return
 
@@ -313,6 +325,11 @@ export default defineComponent({
         .validate()
         .then(() => {
           confirmWithdraw(withdrawInfo).then((response) => {
+            if(response.code === 1312) {
+              isShowWithdrawErrorBlock.value = true;
+              loadingBtn.value = false;
+              return
+            }
             if(response.code === 0) {
               store.getBalance();
               ElMessage({
@@ -372,7 +389,11 @@ export default defineComponent({
       }
     })
 
+    const isBankCardsLoading = ref(false);
     const checkBankCards = () => {
+      if (!isBankCardsLoading) {
+        return;
+      }
 
       if(isUSDT.value){
         ElMessageBox.alert(
@@ -432,6 +453,7 @@ export default defineComponent({
 
     }
     const loadCards = () => {
+        isBankCardsLoading.value = true;
         withdrawState.bankCardList = []
         loadBankCards().then((response) => {
           if (response.code === 0) {
@@ -454,7 +476,9 @@ export default defineComponent({
         }).catch((error) => {
           console.log(error.message);
           // message.error(error.message, 4)
-           })
+        }).finally(() => {
+        isBankCardsLoading.value = false;
+        })
     }
 
     async function verifyWithdrawAmount(r, v) {
@@ -566,7 +590,8 @@ export default defineComponent({
       isShowSubmitDialog,
       handleBindRealName,
       handleBindPhoneNumber,
-      isShowRemainingDialog
+      isShowRemainingDialog,
+      isShowWithdrawErrorBlock
     };
   },
 });
@@ -669,7 +694,7 @@ export default defineComponent({
       align-items: center;
       flex-direction: column;
       cursor: pointer;
-      margin-right:15px;
+      margin-right: 15px;
 
       .promo-label {
         position: absolute;
@@ -945,5 +970,13 @@ export default defineComponent({
 
 .right-icon {
   background-position: 100% 0%;
+}
+.withdraw-remaining-dialog__buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 </style>

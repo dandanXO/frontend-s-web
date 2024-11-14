@@ -8,17 +8,19 @@
     v-if="showDialog"
   >
     <div class="popup-wrapper">
-      <template v-if="popupBanners[0]">
+      <template v-if="popupBanners.length">
         <a
+          v-for="(item,index) in popupBanners"
+          :key="index"
           class="popup-container"
         >
-          <img :key="popupBanners[0].mobileImgUrl" :src="imgURL + popupBanners[0].desktopImgUrl" class="alert-img" />
+          <img :key="item.mobileImgUrl" :src="imgURL + item.desktopImgUrl" class="alert-img" />
           <div class="popup-footer">
             <div>
-              <el-checkbox label="오늘 이창을 다시열지 않기" v-model="checkedBox" style="background-color: transparent" @click="handleCheckLoginBanner(popupBanners[0].title)" />
+              <el-checkbox label="오늘 이창을 다시열지 않기" v-model="item.checkedBox" style="background-color: transparent" @click="handleCheckLoginBanner(item.title)" />
             </div>
             <div class="btn-container">
-              <el-button type="info" size="small" @click="handleCloseLoginBanner($event, popupBanners[0].title)">닫기</el-button>
+              <el-button type="info" size="small" @click="handleCloseLoginBanner($event, item.title)">닫기</el-button>
             </div>
           </div>
         </a>
@@ -86,52 +88,30 @@ const loadBanners = () => {
   });
 };
 
-// const getWithExpiry = (key) => {
-//   const itemStr = localStorage.getItem(key);
-//   if (!itemStr) return null;
-//
-//   const item = JSON.parse(itemStr);
-//   const now = new Date();
-//   if (now.getTime() > item.expiry) {
-//     localStorage.removeItem(key);
-//     return null;
-//   }
-//   return item.value;
-// };
 
-// const isImpt = getWithExpiry("isImpt");
-
-// const isFirstView = ref(false);
-// const homePopupImg = ref("");
-// const homePopupPath = ref("");
 const isImportantAnnoucementModal = ref(false);
-// const homePopupFrequency = ref(0);
-// const homePopupFrequencyNum = ref(0);
-// const homePopupContent = ref("");
-// const homePopupType = ref("");
-// const homePopupId = ref(0);
 
 const closedLoginBannerList = ref(new Set());
 const checkedLoginBannerList = ref(new Set());
 
-const handleCloseLoginBanner = (e, index) => {
+const handleCloseLoginBanner = (e, title) => {
   e.preventDefault();
 
-  if(!checkedLoginBannerList.value.has(index)){
+  if(!checkedLoginBannerList.value.has(title)){
 
     return
 
   }
   // closedLoginBannerList.value.add(index);
 
-  popupBanners.value.shift()
+  popupBanners.value = popupBanners.value.filter(itme=>itme.title !=title)
   checkedBox.value = false
-  if (checkedLoginBannerList.value.has(index)) {
+  if (checkedLoginBannerList.value.has(title)) {
     if (sessionStorage.getItem("CLOSED_LOGIN_BANNER")) {
-      const result = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER"))).add(index);
+      const result = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER"))).add(title);
       sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify(Array.from(result)));
     } else {
-      sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify([index]));
+      sessionStorage.setItem("CLOSED_LOGIN_BANNER", JSON.stringify([title]));
     }
   }
   if(popupBanners.value.length<=0){
@@ -205,6 +185,10 @@ const fetchPopoutData = () => {
   loadLoginHomePopup().then((res) => {
     if (res.code === 0) {
       popupBanners.value = res.data;
+      popupBanners.value.forEach(item=>{
+        item.checkedBox = false
+        return item
+      })
       closedLoginBannerList.value = new Set(JSON.parse(sessionStorage.getItem("CLOSED_LOGIN_BANNER")) || []);
 
       if(localStorage.getItem('disableShowLoginThreeStep') === 'true'){
@@ -286,7 +270,7 @@ watch(
 
 .popup-wrapper {
   position: absolute;
-
+  width: 99%;
   left: 50%;
   transform: translate(-50%, 0%);
   height: 100%;

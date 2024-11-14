@@ -492,3 +492,24 @@ export function getCycleLossRefundInit(promoCode) {
 export function claimCycleLossRefund(promoCode) {
   return eventapi.post(`/session/cycle-loss-refund/claim`, qs.stringify({ promoCode }));
 }
+
+export function getCompetitionLossInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-loss/init?v=${randNum}`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionLoss(promoCode) {
+  return eventapi.post(`/session/competition-loss/claim`, qs.stringify({ promoCode }));
+}
+export function getWeeklySlotLossBonusInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/weeklySlotLossBonus/init?v=${randNum}`)
+}
+
+export function claimWeeklySlotLossBonusInit() {
+  return eventapi.put("/bonus/claim/lh1-weekly-slot-loss-bonus")
+}

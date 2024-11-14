@@ -98,7 +98,7 @@
                 <q-select
                   v-model="selectedBankType"
                   filled
-                  :options="[{ name: '银行卡' }, { name: '数字货币' }, { name: '电子钱包' }]"
+                  :options="[{ name: '银行卡' }, { name: '支付宝' }, { name: '数字货币' }, { name: '电子钱包' }]"
                   label="类型"
                   color="blue"
                   label-color="dyblue"
@@ -569,13 +569,23 @@ export default defineComponent({
         if (selectedBankType.value === "银行卡") {
           isCrypto.value = false
           isEWALLET.value = false
-          if (element.bankType === 'BANK') {
+          isALIPAY.value = false
+          if (element.bankType === 'BANK' && element.code !== 'alipay') {
+            banksList.value.push(element);
+          }
+        }
+        if (selectedBankType.value === "支付宝") {
+          isCrypto.value = false
+          isEWALLET.value = false
+          isALIPAY.value = true
+          if (element.bankType === 'BANK' && element.code === 'alipay') {
             banksList.value.push(element);
           }
         }
         if (selectedBankType.value === "数字货币") {
           isCrypto.value = true
           isEWALLET.value = false
+          isALIPAY.value = false
           if (element.bankType === 'CRYPTO') {
             banksList.value.push(element);
           }
@@ -583,6 +593,7 @@ export default defineComponent({
         if (selectedBankType.value === "电子钱包") {
           isEWALLET.value = true
           isCrypto.value = false
+          isALIPAY.value = false
           if (element.bankType === 'EWALLET') {
             banksList.value.push(element);
           }
@@ -655,10 +666,10 @@ export default defineComponent({
     }
 
     const selectCard = () => {
-      isALIPAY.value = false;
-      if(bankCardInfo.bankId === 81) {
-          isALIPAY.value = true;
-        }
+      // isALIPAY.value = false;
+      // if(bankCardInfo.bankId === 'alipay') {
+      //     isALIPAY.value = true;
+      //   }
     }
 
     const chooseCard = () => {
@@ -666,6 +677,8 @@ export default defineComponent({
         return '虚拟币'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return "支付宝"
       } else {
         return '银行'
       }
@@ -677,6 +690,8 @@ export default defineComponent({
         return '电子钱包'
       } else if (isEWALLET.value && isSZPAY.value) {
         return '数字人民币使用的手机号'
+      } else if (isALIPAY.value) {
+        return "支付宝账号"
       } else {
         return '银行卡号'
       }
@@ -802,7 +817,12 @@ export default defineComponent({
     //   ]
     // };
     let validateBankLength = (val) => {
-      if (isCrypto.value == true) {
+      if (isALIPAY.value == true) {
+        if (!/^\d+$/.test(val)) {
+          return '请输入数字'
+        }
+        return (val.length > 10 && val.length < 21) || '长度应为11到20个字符'
+      } else if (isCrypto.value == true) {
         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
       } else if (isEWALLET.value == true) {
         var selectedCode = null
@@ -834,14 +854,10 @@ export default defineComponent({
             selectedBankCode = bank.code
           }
         });
-        if (selectedBankCode === 'alipay') {
-          return (val.length > 10 && val.length < 21) || '长度应为11到20个字符'
-        } else {
           if (!/^\d+$/.test(val)) {
             return '请输入数字'
           }
           return (val.length > 15 && val.length < 20) || '长度应为16到19个字符'
-        }
       }
     }
     const isValidCnPhone = () => {

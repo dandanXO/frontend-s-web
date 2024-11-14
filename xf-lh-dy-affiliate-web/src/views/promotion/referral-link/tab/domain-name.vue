@@ -93,7 +93,10 @@
           type="primary"
           @click="
             handleLinkSelection(
-              linkDiaglogControl.dialogRegenerateLinkType,
+              {
+                domain: linkDiaglogControl.dialogLongLink,
+                way: linkDiaglogControl.dialogWay
+              },
               linkDiaglogControl.dialogRegenerateUrlType
             )
           "
@@ -258,6 +261,8 @@ function handleLinkSelection(item, urlType) {
   linkDiaglogControl.dialogVisible = true
   linkDiaglogControl.dialogRegenerateLinkType = request.linkType
   linkDiaglogControl.dialogRegenerateUrlType = urlType
+  linkDiaglogControl.dialogLongLink = item.domain
+  linkDiaglogControl.dialogWay = item.way
 
   navigator.clipboard.writeText(shortUrl)
 }
@@ -321,6 +326,12 @@ async function loadReferralLink() {
 async function loadAffiliateDomain() {
   const { data: domain } = await getAffiliateDomain(store.state.user.id)
   affInfo.domains = domain
+
+  for (let i = 0; i < affInfo.domains.length; i++) {
+    if (!affInfo.domains[i].domain.startsWith('https://')) {
+      affInfo.domains[i].domain = 'https://' + affInfo.domains[i].domain
+    }
+  }
 }
 
 onMounted(() => {

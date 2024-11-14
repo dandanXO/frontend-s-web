@@ -300,6 +300,7 @@ export default {
     addBankToWithdrawPlatform: 'เพิ่มธนาคารเพื่อถอนแพลตฟอร์ม',
     addBanner: 'เพิ่มแบนเนอร์',
     addRewardGroup: 'เพิ่มกลุ่มรางวัล',
+    addBlacklist: 'เพิ่มแบนเนอร์',
     addCurrency: 'เพิ่มสกุลเงิน',
     addCurrencyRate: 'เพิ่มอัตราแลกเปลี่ยน',
     addDepositSetting: 'เพิ่มการตั้งค่าการฝากเงิน',
@@ -364,6 +365,7 @@ export default {
     afterBalance: 'หลังจากยอดคงเหลือ',
     afterEdit: 'หลังแก้ไข',
     amount: 'จำนวน',
+    amountGreaterThan: 'จำนวนเงินที่มากกว่า',
     adjust: 'ปรับจำนวนเงิน',
     alias: 'นามแฝง',
     allvip: 'วีไอพีทั้งหมด',
@@ -584,6 +586,7 @@ export default {
     editBankCard: 'แก้ไขเลขที่บัญชีธนาคาร',
     editBanner: 'แก้ไขแบนเนอร์',
     editBelongType: 'แก้ไขประเภทหน้า',
+    editBlacklist: 'แก้ไขบัญชีดำ',
     editCurrency: 'แก้ไขสกุลเงิน',
     editCurrencyRate: 'แก้ไขอัตราแลกเปลี่ยน',
     editDepositSetting: 'แก้ไขการตั้งค่าการฝากเงิน',
@@ -1764,6 +1767,7 @@ export default {
     'Vip Report': 'รายงานวีไอพี',
     'System Value Rules': 'กฎการตั้งค่า',
     'Sites Config': 'การตั้งค่าเว็บไซต์',
+    'Site Platform Blacklist': 'บัญชีดำแพลตฟอร์มเว็บไซต์',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
@@ -1837,7 +1841,10 @@ export default {
     HOME: 'หน้าแรก',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์'
+    MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์',
+    DEPOSIT_FLUCTUATION: 'ความผันผวนของเงินฝาก',
+    WITHDRAW_FLUCTUATION: 'การเปลี่ยนแปลงการถอนเงิน',
+    BONUS_FLUCTUATION: 'การเปลี่ยนแปลงโบนัส',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

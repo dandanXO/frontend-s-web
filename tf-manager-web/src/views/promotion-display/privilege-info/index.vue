@@ -29,7 +29,7 @@
             :value="item.value"
           />
         </el-select>
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -42,7 +42,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -665,6 +665,7 @@ const uiControl = reactive({
     { key: 6, displayName: 'POKER', value: 'poker' },
     { key: 7, displayName: 'LOTTERY', value: 'lottery' },
     { key: 8, displayName: 'CASUAL', value: 'casual' },
+    { key: 9, displayName: 'HOTELCASINO', value: 'hotelcasino' },
   ],
   gameTypeRolloverTypes: [
     { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ALL_TYPES' },
@@ -799,7 +800,7 @@ function resetQuery() {
   request.name = null
   request.code = null
   request.status = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
 }
 
 function handleCheckedChange(type) {
@@ -1392,7 +1393,7 @@ function removeJsonEditorElement() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

@@ -2,14 +2,16 @@
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="withdrawal-summary" v-if="selectedMethodItem">
       <div class="balance">
-        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px;"/>
+        <span v-else class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <span class="amount">
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px;"/>
+        <span v-else class="amount">
           {{
             selectedMethodItem.withdrawableBalance >= 0
               ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)

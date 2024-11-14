@@ -79,148 +79,149 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
 
-      <table
-        style="width: 98%; margin: 0 auto;"
-        cellpadding="0"
-        cellspacing="0"
-        border="0"
-        class="custom-table"
-      >
-        <thead>
-          <tr>
-            <th>{{ t('fields.loginName') }}</th>
-            <th>{{ t('fields.affiliateCode') }}</th>
-            <th>{{ t('fields.affiliateLevel') }}</th>
-            <th>{{ t('fields.commission') }}</th>
-            <th>{{ t('fields.totalDownlineMember') }}</th>
-            <th>{{ t('fields.totalDownlineAffiliate') }}</th>
-            <th>{{ t('fields.affiliateStatus') }}</th>
-            <th>{{ t('fields.site') }}</th>
-            <th>{{ t('fields.balance') }}</th>
-            <th>{{ t('fields.registerTime') }}</th>
-            <!--            <th>{{ t('fields.totalDeposit') }}</th>-->
-            <!--            <th>{{ t('fields.totalWithdraw') }}</th>-->
-            <th v-if="store.state.user.siteCode !== 'VNM'">{{ t('fields.operate') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="record in page.records" :key="record.id">
-            <td>
-              <el-link
-                type="primary"
-                @click="searchDownline(record.id, record.loginName)"
-              >
-                {{ record.loginName }}
-              </el-link>
-            </td>
-            <td>
-              <span v-if="record.affiliateCode === null">-</span>
-              <span v-if="record.affiliateCode !== null">
-                {{ record.affiliateCode }}
-              </span>
-            </td>
-            <td>
-              <span v-if="record.affiliateLevel === null">-</span>
-              <span v-if="record.affiliateLevel !== null">
-                {{ t('affiliate.level.' + record.affiliateLevel) }}
-              </span>
-            </td>
-            <td>
-              <span v-if="record.commission === null">0 %</span>
-              <span v-if="record.commission !== null">
-                {{ record.commission * 100 }} %
-              </span>
-            </td>
-            <td>
-              <span v-if="record.downlineMember === null">-</span>
-              <span v-if="record.downlineMember !== null">
-                {{ record.downlineMember }}
-              </span>
-            </td>
-            <td>
-              <span v-if="record.downlineAffiliate === null">-</span>
-              <span v-if="record.downlineAffiliate !== null">
-                {{ record.downlineAffiliate }}
-              </span>
-            </td>
-            <td>
-              <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">
-                {{ t('affiliate.status.' + record.affiliateStatus) }}
-              </el-tag>
-              <el-tag
-                v-if="record.affiliateStatus === 'NORMAL'"
-                type="success"
-                size="normal"
-              >
-                {{ t('affiliate.status.' + record.affiliateStatus) }}
-              </el-tag>
-              <el-tag
-                v-if="record.affiliateStatus === 'DISABLE'"
-                type="danger"
-                size="normal"
-              >
-                {{ t('affiliate.status.' + record.affiliateStatus) }}
-              </el-tag>
-              <el-tag
-                v-if="record.affiliateStatus === null"
-                type="info"
-                size="normal"
-              >
-                -
-              </el-tag>
-            </td>
-            <td>{{ record.site }}</td>
-            <td>
-              $
-              <span v-formatter="{data: record.balance, type: 'money'}" />
-            </td>
-            <td>
-              <span v-if="record.regTime === null">-</span>
-              <span
-                v-if="record.regTime !== null"
-                v-formatter="{
-                  data: record.regTime,
-                  formatter: 'YYYY/MM/DD HH:mm:ss',
-                  type: 'date',
-                }"
-              />
-            </td>
-            <!--            <td>-->
-            <!--              $-->
-            <!--              <span-->
-            <!--                v-formatter="{data: record.totalDeposit, type: 'money'}"-->
-            <!--              />-->
-            <!--            </td>-->
-            <!--            <td>-->
-            <!--              $-->
-            <!--              <span-->
-            <!--                v-formatter="{data: record.totalWithdraw, type: 'money'}"-->
-            <!--              />-->
-            <!--            </td>-->
-            <td>
-              <el-button
-                icon="el-icon-edit"
-                size="normal"
-                type="success"
-                :disabled="breadcrumbNameList.length > 1"
-                v-if="store.state.user.siteCode !== 'VNM'"
-                @click="showEdit(record)"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div v-if="page.records.length === 0">
-        <emptyComp />
+      <div style="width: 98%; margin: 10px auto; overflow: auto;">
+        <table
+          cellpadding="0"
+          cellspacing="0"
+          border="0"
+          class="custom-table"
+        >
+          <thead>
+            <tr>
+              <th>{{ t('fields.loginName') }}</th>
+              <th>{{ t('fields.affiliateCode') }}</th>
+              <th>{{ t('fields.affiliateLevel') }}</th>
+              <th>{{ t('fields.commission') }}</th>
+              <th>{{ t('fields.totalDownlineMember') }}</th>
+              <th>{{ t('fields.totalDownlineAffiliate') }}</th>
+              <th>{{ t('fields.affiliateStatus') }}</th>
+              <th>{{ t('fields.site') }}</th>
+              <th>{{ t('fields.balance') }}</th>
+              <th>{{ t('fields.registerTime') }}</th>
+              <!--            <th>{{ t('fields.totalDeposit') }}</th>-->
+              <!--            <th>{{ t('fields.totalWithdraw') }}</th>-->
+              <th v-if="store.state.user.siteCode !== 'VNM'">{{ t('fields.operate') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="record in page.records" :key="record.id">
+              <td>
+                <el-link
+                  type="primary"
+                  @click="searchDownline(record.id, record.loginName)"
+                >
+                  {{ record.loginName }}
+                </el-link>
+              </td>
+              <td>
+                <span v-if="record.affiliateCode === null">-</span>
+                <span v-if="record.affiliateCode !== null">
+                  {{ record.affiliateCode }}
+                </span>
+              </td>
+              <td>
+                <span v-if="record.affiliateLevel === null">-</span>
+                <span v-if="record.affiliateLevel !== null">
+                  {{ t('affiliate.level.' + record.affiliateLevel) }}
+                </span>
+              </td>
+              <td>
+                <span v-if="record.commission === null">0 %</span>
+                <span v-if="record.commission !== null">
+                  {{ record.commission * 100 }} %
+                </span>
+              </td>
+              <td>
+                <span v-if="record.downlineMember === null">-</span>
+                <span v-if="record.downlineMember !== null">
+                  {{ record.downlineMember }}
+                </span>
+              </td>
+              <td>
+                <span v-if="record.downlineAffiliate === null">-</span>
+                <span v-if="record.downlineAffiliate !== null">
+                  {{ record.downlineAffiliate }}
+                </span>
+              </td>
+              <td>
+                <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">
+                  {{ t('affiliate.status.' + record.affiliateStatus) }}
+                </el-tag>
+                <el-tag
+                  v-if="record.affiliateStatus === 'NORMAL'"
+                  type="success"
+                  size="normal"
+                >
+                  {{ t('affiliate.status.' + record.affiliateStatus) }}
+                </el-tag>
+                <el-tag
+                  v-if="record.affiliateStatus === 'DISABLE'"
+                  type="danger"
+                  size="normal"
+                >
+                  {{ t('affiliate.status.' + record.affiliateStatus) }}
+                </el-tag>
+                <el-tag
+                  v-if="record.affiliateStatus === null"
+                  type="info"
+                  size="normal"
+                >
+                  -
+                </el-tag>
+              </td>
+              <td>{{ record.site }}</td>
+              <td>
+                $
+                <span v-formatter="{data: record.balance, type: 'money'}" />
+              </td>
+              <td>
+                <span v-if="record.regTime === null">-</span>
+                <span
+                  v-if="record.regTime !== null"
+                  v-formatter="{
+                    data: record.regTime,
+                    formatter: 'YYYY/MM/DD HH:mm:ss',
+                    type: 'date',
+                  }"
+                />
+              </td>
+              <!--            <td>-->
+              <!--              $-->
+              <!--              <span-->
+              <!--                v-formatter="{data: record.totalDeposit, type: 'money'}"-->
+              <!--              />-->
+              <!--            </td>-->
+              <!--            <td>-->
+              <!--              $-->
+              <!--              <span-->
+              <!--                v-formatter="{data: record.totalWithdraw, type: 'money'}"-->
+              <!--              />-->
+              <!--            </td>-->
+              <td>
+                <el-button
+                  icon="el-icon-edit"
+                  size="normal"
+                  type="success"
+                  :disabled="breadcrumbNameList.length > 1"
+                  v-if="store.state.user.siteCode !== 'VNM'"
+                  @click="showEdit(record)"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div v-if="page.records.length === 0">
+          <emptyComp />
+        </div>
+        <el-pagination
+          class="pagination"
+          @current-change="changePage"
+          layout="prev, pager, next"
+          :page-size="request.size"
+          :page-count="page.pages"
+          :current-page="request.current"
+        />
       </div>
-      <el-pagination
-        class="pagination"
-        @current-change="changePage"
-        layout="prev, pager, next"
-        :page-size="request.size"
-        :page-count="page.pages"
-        :current-page="request.current"
-      />
     </el-card>
 
     <el-dialog

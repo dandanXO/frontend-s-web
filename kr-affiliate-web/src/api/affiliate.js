@@ -148,3 +148,7 @@ export const redeemPoint = () => {
 export const getDownlineAffiliates = () => {
   return https().request('/downline/getAllDownlines', Method.GET);
 };
+
+export const getDownlineMembers = (id) => {
+  return https().request(`/downline/${id}/getDownlineMembers`, Method.GET);
+};

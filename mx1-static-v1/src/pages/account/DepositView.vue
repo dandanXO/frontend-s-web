@@ -52,7 +52,7 @@
       </template>
     </template>
 
-    <div class="slot-ftd-section" v-if="isFtdPrivilege">
+    <div class="slot-ftd-section" v-if="isFtdPrivilegeEnable">
       <img src="@/assets/images/bonus/slot-ftd-img.png" />
     </div>
 
@@ -62,6 +62,15 @@
       <div class="deposit-methods-container col-three">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
+            <!-- <q-badge
+              v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
+              color="orange"
+              floating
+              rounded
+            >
+              +{{ convertToCommaAmount(amount * 0.05) }}
+            </q-badge>
+            <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge> -->
             <q-badge
               v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
               color="orange"
@@ -70,7 +79,9 @@
             >
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
-            <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge>
+            <q-badge v-if="isFtdPrivilegeEnable" color="orange" floating rounded>
+              +{{ getFtdCommaAmount(amount) }}
+            </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
             </div>
@@ -114,6 +125,11 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
+            <div class="lil-title flex-div q-mb-sm" style="justify-content: space-between">
+              <q-checkbox v-model="isFtdPrivilegeEnable" v-if="!store.ftd">
+                {{ $t("deposit.useFtdPrivilege") }}
+              </q-checkbox>
+            </div>
             <div class="lil-title">
               {{ $t("deposit.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
@@ -148,12 +164,11 @@
               </template>
 
               <template v-slot:append>
-                <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
+                <div class="amt-input-append" v-if="isFtdPrivilegeEnable && form.localAmount">
                   {{ $t("deposit.extra") }}:
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
-
-                <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
+                <div class="amt-input-append" v-else-if="isPrivilege && form.localAmount">
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
@@ -210,14 +225,14 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
+      <!-- <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
-      </div>
+      </div> -->
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilegeEnable"
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
@@ -255,10 +270,9 @@ import { api, cashier } from "@/boot/axios";
 import { convertToCommaAmount } from "@/boot/utils";
 import BankComponent from "@/components/finance/fBank";
 import { userStore } from "@/stores/index";
-import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import { openURL, Platform, useQuasar } from "quasar";
-import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef } from "vue";
+import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { t } from "@/boot/lang";
 import KYCUserForm from "components/KYCUserForm.vue";
@@ -355,7 +369,7 @@ const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
+// const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   activeMethod.value = item;
@@ -363,7 +377,7 @@ const goSelectedMethod = (item) => {
   selectedChanelExtra.value = [];
   // selectedItemChannel.value = item.children;
   // goSelectedChannel(item.children[0]);
-  goSelectedChannel(item)
+  goSelectedChannel(item);
 };
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
@@ -406,8 +420,7 @@ function initPay() {
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
         !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
+        Platform.is.name !== "webkit"
       )
     ) {
       let isBacked = localStorage.getItem("isBacked");
@@ -539,7 +552,11 @@ async function confirmDeposit() {
             }
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          // if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          //   form.privilegeId = extraPrivilegeId.value;
+          // }
+
+          if (extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
@@ -588,8 +605,7 @@ async function pDepo(deposit) {
           if (
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -645,8 +661,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {
@@ -750,6 +765,9 @@ const loadAppTabs = () => {
         store.extraPrivilegeId = data.deposit.privilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
+
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
+        paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
       if (data && data.hasOwnProperty("ftd")) {
         store.ftd = data.ftd;
@@ -775,6 +793,27 @@ const scrollToInput = () => {
     });
   }
 };
+
+const isFtdPrivilegeEnable = ref(false);
+
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === "OPEN" && isFtdPrivilegeEnable.value === true
+);
+
+const isFtdPrivilegePayType = computed(
+  () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
+);
+
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    }
+  },
+  { immediate: true }
+);
 
 onActivated(() => {
   initPay();

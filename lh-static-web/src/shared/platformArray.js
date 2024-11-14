@@ -230,6 +230,14 @@ export const slotPlatforms = [
     caption: "",
     gameCode: ""
   },
+  {
+    code: "PP",
+    cnname: "PP电子",
+    image: "pp",
+    message: "",
+    caption: "",
+    gameCode: ""
+  },
   // {
   //   code: "EVO",
   //   cnname: "EVO电子",

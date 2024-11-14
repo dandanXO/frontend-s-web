@@ -1921,7 +1921,7 @@ export default defineComponent({
     const hotLives = ref(["AG"]);
     const hotEsports = ref(["TFGaming", "IMES"]);
     const hotSports = ref(["IM", "PM"]);
-    const hotPokers = ref(["KY"]);
+    const hotPokers = ref([""]);
     const hotLotterys = ref([""]);
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";

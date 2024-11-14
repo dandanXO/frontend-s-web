@@ -617,6 +617,7 @@ import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
 import { useLocalStorage } from "@vueuse/core";
+import { useRoute } from 'vue-router';
 
 const copy = (text) => {
   const el = document.createElement('textarea');
@@ -1105,7 +1106,11 @@ export default defineComponent({
 
       return formattedDate
     }
+    const route = useRoute();
     onMounted(() => {
+      if (route.query.type === 'withdraw') {
+        recordActive.value = 'withdraw';
+      }
       getTime();
     });
     const platformsList = ref([])

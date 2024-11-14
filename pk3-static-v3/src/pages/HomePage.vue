@@ -1,60 +1,65 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-  <q-carousel
-    class="home"
-    id="home"
-    autoplay
-    navigation
-    v-model="slide"
-    swipeable
-    transition-next="slide-left"
-    transition-prev="slide-right"
-    animated
-    infinite
-    data-aos="fade-in"
-    data-aos-duration="1200"
-    data-aos-once="true"
-  >
-    <q-carousel-slide
-      v-for="(banner, i) in banners"
-      :key="i"
-      :name="i"
-      class="column no-wrap flex-center"
-      :img-src="returnBannerUrl(banner)"
-      @click="gotoPromo(banner)"
-    ></q-carousel-slide>
+  <template v-if="bannerLoading">
+    <q-skeleton style="height: 200px" />
+  </template>
+  <template v-else>
+    <q-carousel
+      class="home"
+      id="home"
+      autoplay
+      navigation
+      v-model="slide"
+      swipeable
+      transition-next="slide-left"
+      transition-prev="slide-right"
+      animated
+      infinite
+      data-aos="fade-in"
+      data-aos-duration="1200"
+      data-aos-once="true"
+    >
+      <q-carousel-slide
+        v-for="(banner, i) in banners"
+        :key="i"
+        :name="i"
+        class="column no-wrap flex-center"
+        :img-src="returnBannerUrl(banner)"
+        @click="gotoPromo(banner)"
+      ></q-carousel-slide>
 
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        v-if="active"
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: #661ebf;
-        "
-      />
-      <q-btn
-        v-else
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.2);
-        "
-      />
-    </template>
-  </q-carousel>
+      <template v-slot:navigation-icon="{ active, onClick }">
+        <q-btn
+          v-if="active"
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: #661ebf;
+          "
+        />
+        <q-btn
+          v-else
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+          "
+        />
+      </template>
+    </q-carousel>
+  </template>
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
@@ -86,8 +91,7 @@
               :name="i"
               @click="gotoFloatPromo(promo)"
               :img-src="`${imgURL}/promo/${promo.icon}`"
-            >
-            </q-carousel-slide>
+            ></q-carousel-slide>
           </q-carousel>
         </div>
       </div>
@@ -101,7 +105,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpLine style="fill: #5f4682; width: 24px; height: 24px" />
+          <img style=" width: 24px; height: 24px" class="filter-purple" src="../assets/images/index/volume-up-line.svg" />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -1015,12 +1019,11 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const categoriesList = ref([
-  { title: "Hot", icon: "hot", active: false },
+  { title: "Hot", icon: "hot", active: true },
   { title: "Lobby", icon: "lobby", active: false },
   { title: "Slot", icon: "slot", active: false },
   { title: "Casino", icon: "casino", active: false },
@@ -1619,388 +1622,7 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([
-  {
-    id: 116,
-    name: "Super Ace",
-    code: "49",
-    status: "OPEN",
-    icon: "5/JILI/49.png",
-    sequence: 1,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 117,
-    name: "Golden Empire",
-    code: "103",
-    status: "OPEN",
-    icon: "5/JILI/103.png",
-    sequence: 3,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 157,
-    name: "Fortune Gems 2",
-    code: "223",
-    status: "OPEN",
-    icon: "16/JILI/7a390a37-8613-47c5-93af-fda8491bd021.png",
-    sequence: 4,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 118,
-    name: "Fortune Gems",
-    code: "109",
-    status: "OPEN",
-    icon: "5/JILI/109.png",
-    sequence: 5,
-    siteName: null,
-    platformId: 8,
-    platformName: "JiliGames",
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 119,
-    name: "Chinese New Year 2",
-    code: "22041",
-    status: "OPEN",
-    icon: "16/FC/22041.png",
-    sequence: 10,
-    siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 120,
-    name: "Sweet Bonanza 1000",
-    code: "vs20fruitswx",
-    status: "OPEN",
-    icon: "14/PP/vs20fruitswx.png",
-    sequence: 11,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "PP"
-  },
-  {
-    id: 121,
-    name: "Lucky Fortunes",
-    code: "22040",
-    status: "OPEN",
-    icon: "16/FC/22040.png",
-    sequence: 12,
-    siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 122,
-    name: "Gates of Olympus 1000",
-    code: "vs20olympx",
-    status: "OPEN",
-    icon: "14/PP/vs20olympx.png",
-    sequence: 13,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "PP"
-  },
-  {
-    id: 123,
-    name: "Sweet Bonanza",
-    code: "vs20fruitsw",
-    status: "OPEN",
-    icon: "14/PP/vs20fruitsw.png",
-    sequence: 14,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "PP"
-  },
-  {
-    id: 124,
-    name: "Sugar Rush 1000",
-    code: "vs20sugarrushx",
-    status: "OPEN",
-    icon: "14/PP/vs20sugarrushx.png",
-    sequence: 17,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "PP"
-  },
-  {
-    id: 125,
-    name: "Starlight Princess 1000",
-    code: "vs20starlightx",
-    status: "OPEN",
-    icon: "14/PP/vs20starlightx.png",
-    sequence: 20,
-    siteName: null,
-    platformId: 22,
-    platformName: "PP",
-    platformCode: "PP",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "PP"
-  },
-  {
-    id: 126,
-    name: "Chinese New Year",
-    code: "22020",
-    status: "OPEN",
-    icon: "16/FC/22020.png",
-    sequence: 21,
-    siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 127,
-    name: "Night Market",
-    code: "22018",
-    status: "OPEN",
-    icon: "16/FC/22018.png",
-    sequence: 22,
-    siteName: null,
-    platformId: 36,
-    platformName: "FC",
-    platformCode: "FC",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "FC"
-  },
-  {
-    id: 129,
-    name: "FRUITY BONANZA",
-    code: "14085",
-    status: "OPEN",
-    icon: "13/JDB/14085.png",
-    sequence: 24,
-    siteName: null,
-    platformId: 31,
-    platformName: "JDB",
-    platformCode: "JDB",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JDB"
-  },
-  {
-    id: 130,
-    name: "Coin Volcano",
-    code: "WCBNG_185",
-    status: "OPEN",
-    icon: "5/WCBNG/185.png",
-    sequence: 27,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 131,
-    name: "3 Hot Chillies",
-    code: "WCBNG_197",
-    status: "OPEN",
-    icon: "5/WCBNG/197.png",
-    sequence: 29,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 132,
-    name: "OPEN SESAME MEGA",
-    code: "14086",
-    status: "OPEN",
-    icon: "13/JDB/14086.png",
-    sequence: 32,
-    siteName: null,
-    platformId: 31,
-    platformName: "JDB",
-    platformCode: "JDB",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JDB"
-  },
-  {
-    id: 133,
-    name: "777 Coins",
-    code: "WCBNG_194",
-    status: "OPEN",
-    icon: "5/WCBNG/194.png",
-    sequence: 33,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 134,
-    name: "Aztec Fire 2",
-    code: "WCBNG_207",
-    status: "OPEN",
-    icon: "5/WCBNG/207.png",
-    sequence: 36,
-    siteName: null,
-    platformId: 114,
-    platformName: "BNG",
-    platformCode: "WCBNG",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "WCBNG"
-  },
-  {
-    id: 135,
-    name: "Money Tree",
-    code: "208",
-    status: "OPEN",
-    icon: "16/CQ9/208.png",
-    sequence: 39,
-    siteName: null,
-    platformId: 33,
-    platformName: "CQ9",
-    platformCode: "CQ9",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "CQ9"
-  }
-]);
+const hotGameList = ref([{"id":271,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":1,"siteName":null,"platformId":93,"platformName":"Spribe","platformCode":"Spribe","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"Spribe"},{"id":277,"name":"7up7down","code":"124","status":"OPEN","icon":"5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png","sequence":2,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":279,"name":"Mines","code":"229","status":"OPEN","icon":"11/JILI/c77236e7-a298-488a-975d-c1fd7f8e30f2.jpg","sequence":3,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":280,"name":"Dragon & Tiger","code":"123","status":"OPEN","icon":"5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png","sequence":4,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":281,"name":"Color Game","code":"197","status":"OPEN","icon":"11/JILI/86ae93d2-1e8d-4eb8-8b67-ce9db4e74ea6.png","sequence":5,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":282,"name":"Money Coming","code":"51","status":"OPEN","icon":"5/JILI/51.png","sequence":6,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":283,"name":"Fortune Gems 2","code":"223","status":"OPEN","icon":"5/JILI/223.png","sequence":7,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":284,"name":"Andar Bahar","code":"79","status":"OPEN","icon":"5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png","sequence":8,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":285,"name":"Bombing Fishing","code":"20","status":"OPEN","icon":"5/JILI/20.png","sequence":9,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":286,"name":"Dinosaur Tycoon","code":"42","status":"OPEN","icon":"5/JILI/42.png","sequence":10,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":287,"name":"Happy Fishing","code":"82","status":"OPEN","icon":"5/JILI/82.png","sequence":11,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":288,"name":"Jackpot Fishing","code":"32","status":"OPEN","icon":"5/JILI/32.png","sequence":12,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":289,"name":"Mega Fishing","code":"74","status":"OPEN","icon":"5/JILI/74.png","sequence":13,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":290,"name":"Cai Shen Fishing","code":"7003","status":"OPEN","icon":"13/JDB/7003.png","sequence":14,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":291,"name":"Shade Dragons Fishing","code":"7004","status":"OPEN","icon":"13/JDB/7004.png","sequence":15,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":292,"name":"Dragon Fishing","code":"7001","status":"OPEN","icon":"5/JDB/7001.png","sequence":16,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":293,"name":"Dragon Master","code":"7006","status":"OPEN","icon":"13/JDB/7006.png","sequence":17,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":294,"name":"GOLDEN GENIE","code":"22047","status":"OPEN","icon":"16/FC/22047.png","sequence":18,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"FC"},{"id":295,"name":"Bao Chuan Fishing","code":"21004","status":"OPEN","icon":"16/FC/21004.png","sequence":19,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"FC"},{"id":296,"name":"SUGAR BANG BANG","code":"22043","status":"OPEN","icon":"16/FC/22043.png","sequence":20,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"FC"}]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -2077,6 +1699,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
+          console.log(JSON.stringify(hotGameList.value))
           isHotGameLoading.value = false;
         });
     });
@@ -2375,29 +1998,25 @@ const setWithExpiry = (key, value, interval) => {
   sessionStorage.setItem(key, JSON.stringify(item));
 };
 
+const bannerLoading = ref(false);
+
 function loadData() {
+  bannerLoading.value = true;
   api
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = res.data;
-      } else {
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: res.data.message,
-        //   icon: "report_problem"
-        // });
+
+        setTimeout(() => {
+          bannerLoading.value = false;
+        }, 1000);
       }
-      // banners.value = response.data;
     })
-    .catch(() => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: "Loading failed",
-      //   icon: "report_problem"
-      // });
+    .finally(() => {
+      setTimeout(() => {
+          bannerLoading.value = false;
+        }, 1000);
     });
 }
 
@@ -3035,6 +2654,10 @@ onBeforeUnmount(() => {
       align-items: center;
       height: 28px;
       width: 28px;
+    }
+
+    .filter-purple{
+      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%) contrast(96%);
     }
 
     .marquee-container {

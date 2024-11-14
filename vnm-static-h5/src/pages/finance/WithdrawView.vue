@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <q-btn v-if="store.memberType === 'TEST' && !isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+    <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
         <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
         <span>{{ $t("lang.transfer_upgradeWithdraw") }}</span>
     </q-btn>

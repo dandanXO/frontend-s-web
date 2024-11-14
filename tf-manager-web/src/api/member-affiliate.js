@@ -306,3 +306,12 @@ export const updateAffiliateWithdrawPassword = (id, password, site) => {
     ContentType.form
   )
 }
+
+export const updateIgnoreSettlement = (id, state) => {
+  return https().request(
+    `/affiliate/${id}/updateIgnoreSettlement?_method=PUT`,
+    Method.POST,
+    { state: state },
+    ContentType.form
+  )
+}

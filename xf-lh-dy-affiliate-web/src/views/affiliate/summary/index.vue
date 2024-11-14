@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <div>
+        <div style="display: flex;gap: 10px; flex-wrap: wrap;">
           <el-input
             v-model="request.loginName"
             style="width: 200px"
@@ -12,7 +12,7 @@
           />
           <el-input
             v-model="request.affiliateCode"
-            style="width: 200px; margin-left: 10px; margin-bottom: 10px;"
+            style="width: 200px;"
             size="small"
             maxlength="50"
             :placeholder="t('fields.affiliateCode')"
@@ -40,36 +40,35 @@
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
-            style="width: 300px; margin-left: 10px"
+            style="width: 300px;"
             :shortcuts="shortcuts"
             :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
           />
-        </div>
-        <div style="margin-bottom: 10px;">
-          <!--          <span style="font-size: small">-->
-          <!--            {{ t('fields.minActiveMemberCount') }}-->
-          <!--          </span>-->
-          <!--          <el-input-number-->
-          <!--            v-model="request.activeMember"-->
-          <!--            style="width: 100px; margin-left: 10px"-->
-          <!--            size="small"-->
-          <!--            maxlength="5"-->
-          <!--            :label="t('fields.activeMember')"-->
-          <!--          />-->
-          <el-button
-            style="margin-left: 20px"
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="loadRecord()"
-          >
-            {{ t('fields.search') }}
-          </el-button>
-          <el-button size="mini" @click="resetQuery()">
-            {{ t('fields.reset') }}
-          </el-button>
+          <div style="margin-bottom: 10px;">
+            <!--          <span style="font-size: small">-->
+            <!--            {{ t('fields.minActiveMemberCount') }}-->
+            <!--          </span>-->
+            <!--          <el-input-number-->
+            <!--            v-model="request.activeMember"-->
+            <!--            style="width: 100px; margin-left: 10px"-->
+            <!--            size="small"-->
+            <!--            maxlength="5"-->
+            <!--            :label="t('fields.activeMember')"-->
+            <!--          />-->
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="loadRecord()"
+            >
+              {{ t('fields.search') }}
+            </el-button>
+            <el-button size="mini" @click="resetQuery()">
+              {{ t('fields.reset') }}
+            </el-button>
+          </div>
         </div>
         <el-row class="summary-container" v-if="(parseInt(store.state.user.siteId) === 10)">
           <div class="summary-stat">

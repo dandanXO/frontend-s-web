@@ -24,17 +24,17 @@
         </template>
       </div>
 
-      <!-- <div class="method-title q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
-      <div class="deposit-methods-container">
+      <div class="method-title q-mb-sm q-mt-md">{{ $t("deposit.paymentChannels") }}</div>
+      <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
-            <div class="item-img">
+            <!-- <div class="item-img">
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
-            </div>
+            </div> -->
             <div class="item-title">{{ item.nodeName }}</div>
           </div>
         </template>
-      </div> -->
+      </div>
 
       <template v-if="selectedChanelExtra.length > 0">
         <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.bank") }}</div>
@@ -71,6 +71,8 @@
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
             <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge>
+            <!-- <q-badge v-if="activeMethod.privilegeId" floating rounded>+{{ item.hotLabel }}</q-badge> -->
+            <!-- <q-badge v-if="isFtdPrivilegePayType" floating rounded>+{{ getFtdCommaAmount(item.amount) }}</q-badge> -->
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
             </div>
@@ -114,6 +116,12 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
+            <div class="lil-title flex-div" style="justify-content: space-between">
+              <q-checkbox v-model="isFtdPrivilegeEnable" v-if="!store.ftd">
+                {{ $t("deposit.useFtdPrivilege") }}
+              </q-checkbox>
+            </div>
+
             <div class="lil-title">
               {{ $t("deposit.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
@@ -147,7 +155,7 @@
                 </span>
               </template>
 
-              <template v-slot:append>
+              <!-- <template v-slot:append>
                 <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
                   {{ $t("deposit.extra") }}:
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
@@ -157,7 +165,7 @@
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
-              </template>
+              </template> -->
             </q-input>
           </div>
 
@@ -210,14 +218,14 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
+      <!-- <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
-      </div>
+      </div> -->
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilegeEnable"
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
@@ -252,16 +260,15 @@
 
 <script setup>
 import { api, cashier } from "@/boot/axios";
+import { t } from "@/boot/lang";
 import { convertToCommaAmount } from "@/boot/utils";
 import BankComponent from "@/components/finance/fBank";
 import { userStore } from "@/stores/index";
-import liff from "@line/liff";
+import KYCUserForm from "components/KYCUserForm.vue";
 import { storeToRefs } from "pinia";
 import { openURL, Platform, useQuasar } from "quasar";
-import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef } from "vue";
+import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { t } from "@/boot/lang";
-import KYCUserForm from "components/KYCUserForm.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -337,8 +344,8 @@ const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
 };
 const getFtdCommaAmount = (amount) => {
-  if (amount < 888000) {
-    return `${amount / 1000}`;
+  if (amount < 888) {
+    return `${amount}`;
   } else {
     return `888`;
   }
@@ -347,6 +354,7 @@ const getFtdCommaAmount = (amount) => {
 const selectedItem = ref();
 const selectedItemPrivilegeId = ref();
 const extraPrivilegeId = ref();
+const ftdPrivilegeId = ref();
 const selectedItemChannel = ref();
 const selectedItemAmount = ref();
 const selectedChannel = ref();
@@ -355,15 +363,15 @@ const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
+// const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   activeMethod.value = item;
   isSelectedMethod.value = true;
   selectedChanelExtra.value = [];
-  // selectedItemChannel.value = item.children;
-  // goSelectedChannel(item.children[0]);
-  goSelectedChannel(item);
+  selectedItemChannel.value = item.children;
+  goSelectedChannel(item.children[0]);
+  // goSelectedChannel(item);
 };
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
@@ -399,15 +407,20 @@ function initPay() {
     $q.loading.hide();
     isLoadingInitPay.value = false;
     if (res.code === 0) {
-      paymentMethodsItems.value = res.data.payments;
-      goSelectedMethod(res.data.payments[0]);
+      // paymentMethodsItems.value = res.data.payments;
+      // goSelectedMethod(res.data.payments[0]);
+
+      const methodsWithChildren = res.data.payments.filter((method) => method.children && method.children.length > 0);
+      if (methodsWithChildren.length > 0) {
+        paymentMethodsItems.value = methodsWithChildren;
+        goSelectedMethod(methodsWithChildren[0]);
+      }
     }
     if (
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
         !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
+        Platform.is.name !== "webkit"
       )
     ) {
       let isBacked = localStorage.getItem("isBacked");
@@ -504,7 +517,7 @@ async function confirmDeposit() {
           $q.notify({
             color: "negative",
             position: "top",
-            message: d.message,
+            message: `Suggested amount: ${d.data.suggestion}`,
             icon: "report_problem"
           });
 
@@ -539,8 +552,16 @@ async function confirmDeposit() {
             }
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          if (isFtdPrivilege.value && ftdPrivilegeId.value) {
+            form.privilegeId = ftdPrivilegeId.value;
+          }
+
+          if (isPrivilege.value && !isFtdPrivilege.value && extraPrivilegeId.value) {
             form.privilegeId = extraPrivilegeId.value;
+          }
+
+          if (isFtdPrivilegePayType.value && ftdPrivilegeId.value && isFtdPrivilegeEnable.value) {
+            form.privilegeId = ftdPrivilegeId.value;
           }
 
           const copy = { ...form };
@@ -588,8 +609,7 @@ async function pDepo(deposit) {
           if (
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -645,8 +665,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {
@@ -747,12 +766,20 @@ const loadAppTabs = () => {
       const { data } = res;
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
-        store.extraPrivilegeId = data.deposit.privilegeId;
-
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
+
+        store.ftdPrivilegeId = data.deposit.ftdPrivilegeId;
+        ftdPrivilegeId.value = data.deposit.ftdPrivilegeId;
+
+        store.extraPrivilegeId = data.deposit.privilegeId;
+        extraPrivilegeId.value = data.deposit.privilegeId;
       }
       if (data && data.hasOwnProperty("ftd")) {
         store.ftd = data.ftd;
+
+        if (store.ftd) {
+          isFtdPrivilegeEnable.value = true;
+        }
       }
     }
   });
@@ -776,6 +803,24 @@ const scrollToInput = () => {
   }
 };
 
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
+const isFtdPrivilegeEnable = ref(false);
+// const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
+const isFtdPrivilegePayType = computed(
+  () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
+);
+const isFtdPrivilege = computed(() => extraPrivilegeId.value && !ftd.value && isFtdPrivilegeEnable.value === true);
+
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    }
+  },
+  { immediate: true }
+);
+
 onActivated(() => {
   initPay();
   loadInfo();
@@ -795,6 +840,11 @@ onMounted(() => {
   margin: 0 auto;
   border-radius: 0.5rem;
   background: #1b2232;
+}
+
+.tutorial-link {
+  color: #5c46e7;
+  text-decoration: underline;
 }
 
 .submit-message {
@@ -1180,15 +1230,18 @@ onMounted(() => {
     .item-img {
       margin: auto;
       padding-bottom: 6px;
+      width: 100%;
       img {
         display: block;
         width: 100%;
-        max-width: max-content;
+        // max-width: max-content;
+        max-width: 50px;
         border-radius: 6px;
+        margin: auto;
       }
     }
     .item-title {
-      font-size: 14px;
+      font-size: 10px;
       color: rgba(255, 255, 255, 0.7);
       text-align: center;
       margin-top: auto;

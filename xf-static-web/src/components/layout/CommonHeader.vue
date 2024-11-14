@@ -410,9 +410,14 @@
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item label="推荐码" prop="codeAffiliate" v-if="!hasAffiliate">
+            <el-form-item label="推荐码" prop="codeAffiliate" v-if="!hasReferrer">
               <el-space>
-                <el-input class="half" v-model="regForm.codeAffiliate" placeholder="输入推荐码" />
+                <el-input
+                  :disabled="hasAffiliate"
+                  class="half"
+                  v-model="regForm.codeAffiliate"
+                  placeholder="输入推荐码"
+                />
                 <!-- <el-input
                   v-else
                   class="half"
@@ -432,6 +437,15 @@
                     <InfoFilled />
                   </el-icon>
                 </el-tooltip> -->
+              </el-space>
+            </el-form-item>
+            <el-form-item label="推荐码" prop="codeAffiliate" v-else>
+              <el-space>
+                <el-input class="half" v-model="regForm.codeAffiliate" placeholder="输入推荐码" disabled />
+                <el-icon>
+                  <InfoFilled style="font-size: 10px; line-height: 20px" />
+                </el-icon>
+                <div class="link">若不是合营下会员无需填写</div>
               </el-space>
             </el-form-item>
           </el-form>
@@ -1070,6 +1084,7 @@ export default defineComponent({
     const mobileLoginRef = ref([])
     const captchaRef = ref([])
     const hasAffiliate = ref(false);
+    const hasReferrer= ref(false);
     const regCountdown = ref(registerSendOtpDisabledTimeoutLeft)
     const loginCountdown = ref(0)
 
@@ -1376,9 +1391,6 @@ export default defineComponent({
       if (affCode) {
         hasAffiliate.value = true
         regForm.codeAffiliate = affCode;
-        // if (!store.token) {
-        //   registerDialogVisible.value = true;
-        // }
       }
     }
 
@@ -1644,6 +1656,12 @@ export default defineComponent({
       headTimer = null;
     });
 
+    watch(() => registerDialogVisible.value, () => {
+      if (registerDialogVisible.value) {
+        getAffiliateCode();
+      }
+    });
+
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         loginDialogVisible.value = true
@@ -1666,11 +1684,9 @@ export default defineComponent({
 
     const getReferalCode = () => {
       const referCode = sessionStorage.getItem("REFERRAL_CODE");
-      // console.log("got Code");
-      // console.log(referCode);
       if (referCode && route.query && route.query.refer) {
         registerDialogVisible.value = true;
-        hasAffiliate.value = true
+        hasReferrer.value = true
         regForm.referrer = referCode;
       }
     }
@@ -2259,6 +2275,7 @@ export default defineComponent({
       typeActive: '1',
       getAffiliateCode,
       hasAffiliate,
+      hasReferrer,
       countdownTimer,
       regCountdown,
       loginCountdown,

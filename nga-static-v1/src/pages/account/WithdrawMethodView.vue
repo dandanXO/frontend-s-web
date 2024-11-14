@@ -1,6 +1,30 @@
 <template>
   <div class="withdrawal-modal-view">
     <template v-if="isSelectedMethod">
+      <div class="withdrawal-summary" v-if="selectedMethodItem">
+        <div class="balance">
+          <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+          <span v-else class="amount">
+            {{ store.balance > 0 ? convertToCommaAmount(store.balance, false) : "0.00" }}
+          </span>
+          <div class="title">Cash Balance</div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="withdrawable">
+          <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+          <span v-else class="amount">
+            {{
+              selectedMethodItem.withdrawableBalance > 0
+                ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+                : "0.00"
+            }}
+          </span>
+          <div class="title">Withdrawable</div>
+        </div>
+      </div>
+
       <div class="method-options">
         <div class="method-title">Payment Method</div>
         <div class="options-picker" @click="resetSelectedMethod()">
@@ -33,8 +57,7 @@
               hide-selected
               @filter="filterBank"
               behavior="menu"
-            >
-            </q-select>
+            ></q-select>
           </div>
         </div>
       </div>
@@ -199,7 +222,8 @@
         <div class="fund-container q-mt-sm q-mb-md">
           <div>
             <span class="fund-title">Available:</span>
-            NGN {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+            <q-spinner v-if="isRefreshRemainWager" />
+            <span v-else>NGN {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}</span>
           </div>
         </div>
 
@@ -228,7 +252,16 @@
             </div>
             <div class="desc desc_white">
               <!-- NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
-              NGN: {{ selectedMethodItem.remainWagers }}
+              <!-- NGN: {{ selectedMethodItem.remainWagers }} -->
+              <div class="remain-wager-wrapper" @click="refreshRemainWager">
+                <q-spinner v-if="isRefreshRemainWager" />
+                <span v-else>NGN: {{ convertToCommaAmount(selectedMethodItem.remainWagers, true) }}</span>
+                <img
+                  class="refresh-btn-img"
+                  :class="{ rotate: isRefreshRemainWager }"
+                  src="../../assets/images/account/refresh-icon.svg"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -367,7 +400,6 @@ const getWithdrawalMethods = () => {
       // let bankWithdraws = response.data.withdraws;
       // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
 
-
       let bankWithdraws = res.data.withdraws
         .map((withdraw) => {
           return withdraw.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
@@ -375,7 +407,6 @@ const getWithdrawalMethods = () => {
         .flat();
 
       paymentMethodsItems.value = bankWithdraws.flat();
-
     } else {
       $q.notify({
         color: "negative",
@@ -484,7 +515,7 @@ const withdrawInfo = reactive({
 });
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
-  cardNumber: "",
+  cardNumber: ""
   // cardAddress: ""
 });
 
@@ -503,7 +534,6 @@ watch(
   (newValue) => {
     const selectedBank = filteredBankList.value.find((bank) => bank.id === newValue);
     filterCards(selectedBank);
-
   }
 );
 
@@ -801,6 +831,29 @@ const toggleAmount = (type) => {
       break;
   }
 };
+
+const isRefreshRemainWager = ref(false);
+
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  api
+    .get("/session/withdraw/withdrawableBalance/refresh")
+    .then((res) => {
+      selectedMethodItem.value = {
+        ...selectedMethodItem.value,
+        ...res.data
+      };
+
+      isRefreshRemainWager.value = false;
+    })
+    .catch(() => {
+      isRefreshRemainWager.value = false;
+    })
+    .finally(() => {
+      isRefreshRemainWager.value = false;
+    });
+};
 </script>
 
 <style scoped lang="scss">
@@ -889,6 +942,7 @@ const toggleAmount = (type) => {
   .withdrawal-summary {
     padding: 1rem;
     margin-top: 0;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -1080,6 +1134,22 @@ const toggleAmount = (type) => {
           font-weight: 400;
           &_white {
             color: #ffffff;
+          }
+        }
+
+        .remain-wager-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          cursor: pointer;
+
+          .refresh-btn-img {
+            width: 20px;
+            height: 20px;
+
+            &.rotate {
+              animation: rotateTwice 1s infinite linear;
+            }
           }
         }
       }

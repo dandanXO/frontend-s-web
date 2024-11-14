@@ -11,13 +11,16 @@
               :editable="false" :clearable="false" :default-time="defaultTime" style="width: 100%;" />
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
-            <el-input v-model="request.loginName" size="normal" class="input-small"
-              :placeholder="t('fields.loginName')" />
+            <el-select v-model="request.affiliateId" size="normal" :placeholder="t('fields.affiliate')" class="filter-item"
+              style="width: 100%" @focus="loadAffiliateList" filterable @change="loadMemberList">
+              <el-option :label="store.state.user.name" :value="null"/>
+              <el-option v-for="item in downlineAffiliateList" :key="item.loginName" :label="item.loginName" :value="item.affiliateId" />
+            </el-select>
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
-            <el-select v-model="request.platform" size="normal" :placeholder="t('fields.platform')" class="filter-item"
-              style="width: 100%" @focus="loadPlatform" @change="populateGameType">
-              <el-option v-for="item in list.platform" :key="item.id" :label="item.name" :value="item.code" />
+            <el-select v-model="request.loginName" size="normal" :placeholder="t('fields.loginName')" class="filter-item"
+              style="width: 100%" filterable clearable>
+              <el-option v-for="item in downlineMemberList.list" :key="item.loginName" :label="item.loginName" :value="item.loginName" />
             </el-select>
           </el-col>
           <!-- <el-col :xl="3" :lg="6" :md="12">
@@ -31,6 +34,12 @@
               class="filter-item" style="width: 100%;">
               <el-option v-for="item in uiControl.status" :key="item.key" :label="item.displayName"
                 :value="item.value" />
+            </el-select>
+          </el-col>
+          <el-col :xl="3" :lg="6" :md="12">
+            <el-select v-model="request.platform" size="normal" :placeholder="t('fields.platform')" class="filter-item"
+              style="width: 100%" @focus="loadPlatform" @change="populateGameType">
+              <el-option v-for="item in list.platform" :key="item.id" :label="item.name" :value="item.code" />
             </el-select>
           </el-col>
           <el-col :xl="3" :lg="8" :md="12">
@@ -237,6 +246,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import emptyComp from "@/components/empty"
 import Loading from '@/components/loading/Loading.vue';
+import { getDownlineAffiliates, getDownlineMembers } from '../../../api/affiliate';
 
 const store = useStore();
 const { t } = useI18n();
@@ -259,6 +269,11 @@ const details = reactive({
   betStatus: null,
   settleTime: null
 })
+
+let downlineAffiliateList = [];
+let downlineMemberList = reactive({
+  list:[]
+});
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -356,7 +371,8 @@ const request = reactive({
   loginName: null,
   platform: null,
   gameType: [],
-  status: ["SETTLED", "CANCEL"]
+  status: ["SETTLED", "CANCEL"],
+  affiliateId: null,
 });
 
 const page = reactive({
@@ -387,6 +403,8 @@ function resetQuery() {
   request.platform = null;
   request.gameType = null;
   request.status = ["SETTLED", "CANCEL"];
+  request.affiliateId = null;
+  loadMemberList();
   populateGameType();
 }
 
@@ -397,6 +415,22 @@ async function loadPlatform() {
     list.platform = ret.filter(p => p.gameType.includes(request.gameType));
   } else {
     list.platform = ret;
+  }
+}
+
+async function loadAffiliateList() {
+  const { data: ret} = await getDownlineAffiliates();
+  downlineAffiliateList = ret;
+}
+
+async function loadMemberList() {
+  request.loginName = null;
+  if (request.affiliateId) {
+    const { data: ret} = await getDownlineMembers(request.affiliateId);
+    downlineMemberList.list = ret;
+  } else {
+    const { data: ret} = await getDownlineMembers(store.state.user.id);
+    downlineMemberList.list = ret;
   }
 }
 
@@ -442,11 +476,13 @@ async function loadBetRecords() {
   }
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
   page.pages = ret.pages;
-  page.records = ret.records;
-  page.total = ret.total;
-  page.totalBet = ret.sums.totalBet;
-  page.totalPayout = ret.sums.totalPayout;
-  page.totalCompanyProfit = ret.sums.totalBet - ret.sums.totalPayout;
+  if (ret.sums !== null && ret.sums !== undefined) {
+    page.total = ret.total;
+    page.records = ret.records;
+    page.totalBet = ret.sums.totalBet;
+    page.totalPayout = ret.sums.totalPayout;
+    page.totalCompanyProfit = ret.sums.totalBet - ret.sums.totalPayout;
+  }    
   page.loading = false;
 }
 
@@ -497,6 +533,8 @@ onMounted(() => {
   loadPlatform();
   loadBetRecords();
   populateGameType();
+  loadAffiliateList();
+  loadMemberList();
 });
 </script>
 

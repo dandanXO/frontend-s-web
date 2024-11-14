@@ -915,11 +915,12 @@ export default defineComponent({
 <style lang="scss">
 .q-select__dialog {
   label {
+    display: none;
     img {
       width: 30px;
       height: 30px;
     }
-    display: none;
+
   }
 }
 </style>

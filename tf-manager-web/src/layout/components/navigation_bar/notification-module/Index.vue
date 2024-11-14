@@ -4,21 +4,14 @@ import SvgIcon from "@/components/SvgIcon/index.vue";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import { WebSocketActionTypes } from "@/store/modules/socket/action-types";
-import { CircleCloseFilled, Right } from '@element-plus/icons-vue';
+import { CircleCloseFilled } from '@element-plus/icons-vue';
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
 
 const store = useStore()
 const socket = getCurrentInstance().appContext.config.globalProperties.$socket;
 const router = useRouter();
-
-const sendWSMessage = (jsonStr) => {
-  if (socket && socket.webSocket && socket.webSocket.readyState === WebSocket.OPEN) {
-    socket.webSocket.send(jsonStr);
-  } else {
-    console.error('WebSocket is not open.');
-  }
-};
 
 const storeNotifications = computed(() => store.state.user.notifications);
 
@@ -27,6 +20,7 @@ const isNotificationDialogVisible = ref(false);
 const toggleNotificationDialog = () => {
   isNotificationDialogVisible.value = !isNotificationDialogVisible.value;
 };
+const { t } = useI18n()
 
 const handleReceivedWsEvent = (event) => {
   switch (event.event) {
@@ -41,7 +35,7 @@ const handleReceivedWsEvent = (event) => {
         store.dispatch(UserActionTypes.ACTION_REFRESH_NOTIFICATIONS, updatedNotificationRecords);
         store.dispatch(WebSocketActionTypes.REMOVE_SOCKET_EVENTS, event);
         ElMessage({
-          message: 'success',
+          message: t('transfer.status.success'),
           type: 'success',
         })
       }
@@ -65,11 +59,10 @@ function markNotificationRead(notificationRecordId) {
   const message = JSON.stringify({
     type: "MARK_NOTIFICATION_READ",
     content: {
-      systemUserId: store.state.user.id,
       notificationRecordId: notificationRecordId
     }
   });
-  sendWSMessage(message)
+  socket.sendWSMessage(message);
 }
 
 const closeDialogAndRedirectTo = (path) => {
@@ -109,34 +102,22 @@ function formatTimestamp(timestamp) {
     >
       <div class="notification-body">
         <div v-for="notification in storeNotifications" :key="notification.id" class="notification-content">
-          <el-row>
-            <el-col :span="2" class="notification-content-left">
-              <el-icon :size="25" title="不再显示">
-                <CircleCloseFilled v-if="notification.id" @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
-              </el-icon>
-            </el-col>
-            <el-col :span="20" class="notification-content-middle">
-              <div class="notification-content-right-header">
-                {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}
-              </div>
-              <div class="notification-content-right-body">
-                {{ $te(`fields.${notification.content}`) ? $t(`fields.${notification.content}`) : notification.content }}
-              </div>
-              <el-row :justify=" 'space-between' " class="notification-content-right-footer">
-                <el-col :span="12">
-                  {{ notification.siteId ? getSiteNameBySiteId(notification.siteId) : '' }}
-                </el-col>
-                <el-col :span="12" class="notification-content-right-footer-right">
-                  {{ formatTimestamp(notification.createTime) }}
-                </el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="2" class="notification-content-left">
-              <el-icon :size="25" title="跳转页面">
-                <Right v-if="notification.redirectionPath" @click="closeDialogAndRedirectTo(notification.redirectionPath)" style="cursor: pointer;" />
-              </el-icon>
-            </el-col>
-          </el-row>
+          <div class="notification-item">
+            <el-icon :size="25" title="不再显示" class="notification-item-close">
+              <CircleCloseFilled v-if="notification.id" @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
+            </el-icon>
+
+            <div class="notification-item-header">
+              <div class="notification-item-title">{{ notification.siteId ? `[${getSiteNameBySiteId(notification.siteId)}]` : '' }} {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}</div>
+              <div class="notification-item-datetime">{{ formatTimestamp(notification.createTime) }}</div>
+            </div>
+            <div class="notification-item-body">
+              <div class="notification-item-content">{{ $te(`fields.${notification.content}`) ? $t(`fields.${notification.content}`) : notification.content }}</div>
+            </div>
+            <button title="跳转页面" v-if="notification.redirectionPath" @click="closeDialogAndRedirectTo(notification.redirectionPath)" class="notification-item-redirection">
+              {{ $t('fields.redirect') }}
+            </button>
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -144,13 +125,45 @@ function formatTimestamp(timestamp) {
 </template>
 
 <style scoped lang="scss">
+/* For Webkit browsers (e.g., Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 6px; /* Adjust the width as needed */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #465e7c; /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #516e92; /* Color of the scrollbar track */
+}
 #notification-dialog-wrapper {
+  :deep(.el-dialog){
+    border-radius: 10px;
+  }
   :deep(.el-dialog__header) {
-    border-bottom: 2px solid rgb(177.3, 179.4, 183.6);
-    padding: 0 10px;
+    border-radius: 10px 10px 0px 0px;
+    padding: 0 16px;
+    background: #304156;
+  }
+  :deep(.el-dialog__headerbtn){
+    top: 12px;
+    right: 12px;
+  }
+  :deep(.el-dialog__close){
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #bfcbd9;
   }
   :deep(.el-dialog__body) {
-    padding: 10px 5px;
+    padding: 12px 10px;
+    background: #bfcbd9;
+    border-radius: 0 0 10px 10px;
+  }
+  :deep(.el-dialog__title){
+    font-weight: bold;
+    color: #bfcbd9;
   }
 }
 
@@ -160,7 +173,7 @@ function formatTimestamp(timestamp) {
 }
 
 .notification-content {
-  margin: 0 5px 10px 5px;
+  margin: 5px 5px 8px 5px;
 }
 
 .notification-content-left {
@@ -195,4 +208,69 @@ function formatTimestamp(timestamp) {
   text-align: end;
 }
 
+.notification-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  background: rgba(254,254,254,0.5);
+  border: 1px solid #d3d3d3;
+  padding: 14px 18px 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+
+  .notification-item-close {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+
+    &:hover{
+      opacity: 0.9;
+    }
+    &:active{
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
+
+  .notification-item-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .notification-item-redirection {
+    display: flex;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: auto;
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  .notification-item-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #434343;
+  }
+
+  .notification-item-title, .notification-item-content, .notification-item-datetime {
+    line-height: 1rem;
+  }
+  .notification-item-content {
+    color: #9d6464;
+  }
+
+  .notification-item-datetime {
+    padding-right: 24px;
+    font-size: smaller;
+  }
+}
 </style>

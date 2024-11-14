@@ -1,4 +1,7 @@
-# dy
+# DY 东赢 Vue3.0
+
+- DY Web page.
+- Node Version >= 16.17.0
 
 ## Project setup
 ```
@@ -13,16 +16,6 @@ npm run serve
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Preview Production View
-```
-First Time:
-npm i -g serve
-```
-
-```
-serve -s dist
 ```
 
 ### Lints and fixes files

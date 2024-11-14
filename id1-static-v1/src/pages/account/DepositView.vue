@@ -24,17 +24,17 @@
         </template>
       </div>
 
-      <!-- <div class="method-title q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
-      <div class="deposit-methods-container">
+      <div class="method-title q-mb-sm q-mt-md">{{ $t("deposit.paymentChannels") }}</div>
+      <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
-            <div class="item-img">
+            <!-- <div class="item-img">
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
-            </div>
+            </div> -->
             <div class="item-title">{{ item.nodeName }}</div>
           </div>
         </template>
-      </div> -->
+      </div>
 
       <template v-if="selectedChanelExtra.length > 0">
         <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.bank") }}</div>
@@ -161,7 +161,10 @@
                   <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
 
-                <div class="amt-input-append" v-if="isPrivilege && form.localAmount && paytypeWithPrivilege.includes(selectedChannel.payType)">
+                <div
+                  class="amt-input-append"
+                  v-if="isPrivilege && form.localAmount && paytypeWithPrivilege.includes(selectedChannel.payType)"
+                >
                   {{ $t("deposit.extra") }}:
                   <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
@@ -218,17 +221,19 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
+      <!-- <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
-      </div>
+      </div> -->
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+        v-if="
+          isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilege
+        "
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
-        <div class="q-mt-sm" v-if="!isPrivilege">{{ $t("deposit.wagerExample") }}</div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
       </div>
     </template>
   </div>
@@ -263,7 +268,6 @@ import { api, cashier } from "@/boot/axios";
 import { convertToCommaAmount } from "@/boot/utils";
 import BankComponent from "@/components/finance/fBank";
 import { userStore } from "@/stores/index";
-import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import { openURL, Platform, useQuasar } from "quasar";
 import { computed, defineEmits, nextTick, onActivated, onMounted, reactive, ref, shallowRef, watch } from "vue";
@@ -373,9 +377,10 @@ const goSelectedMethod = (item) => {
   activeMethod.value = item;
   isSelectedMethod.value = true;
   selectedChanelExtra.value = [];
-  // selectedItemChannel.value = item.children;
-  // goSelectedChannel(item.children[0]);
-  goSelectedChannel(item);
+
+  selectedItemChannel.value = item.children;
+  goSelectedChannel(item.children[0]);
+  // goSelectedChannel(item);
 };
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
@@ -414,14 +419,7 @@ function initPay() {
       paymentMethodsItems.value = res.data.payments;
       goSelectedMethod(res.data.payments[0]);
     }
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -597,12 +595,7 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (!newWin) {
@@ -657,8 +650,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {
@@ -762,7 +754,7 @@ const loadAppTabs = () => {
         store.extraPrivilegeId = data.deposit.privilegeId;
         extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
 
-        selectedItemPrivilegeId.value = store.extraPrivilegeId;
+        // selectedItemPrivilegeId.value = store.extraPrivilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
@@ -1216,7 +1208,7 @@ onMounted(() => {
       }
     }
     .item-title {
-      font-size: 14px;
+      font-size: 12px;
       color: rgba(255, 255, 255, 0.7);
       text-align: center;
       margin-top: auto;

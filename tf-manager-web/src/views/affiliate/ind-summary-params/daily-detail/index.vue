@@ -68,7 +68,7 @@
         :resizable="true"
         :data="page.records"
         v-loading="page.loading"
-        row-key="id"
+        :row-key="(row) => `${row.affiliateId}-${row.recordTime}`"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         :summary-method="getSummaries"
@@ -297,15 +297,12 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
-        layout="total,sizes,prev, pager, next"
-        style="margin-top: 10px"
-        v-model:page-size="request.size"
-        v-model:page-count="page.pages"
-        v-model:current-page="request.current"
-        @current-change="loadRecord"
-        @size-change="loadRecord"
+        class="pagination"
+        @current-change="changePage"
+        layout="prev, pager, next"
+        :page-size="request.size"
+        :page-count="page.pages"
+        :current-page="request.current"
       />
     </el-card>
   </div>
@@ -586,6 +583,11 @@ function getSummaries(param) {
     })
   }
   return sums
+}
+
+function changePage(page) {
+  request.current = page
+  loadRecord()
 }
 
 onMounted(async () => {

@@ -284,6 +284,8 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: '닭싸움',
     MSI: 'MSI',
+    HOTELCASINO: '호텔 카지노',
+    COMMISSION: '커미션',
   },
   homeBannerType: {
     HOME: '홈',
@@ -508,6 +510,7 @@ export default {
     addBankToWithdrawPlatform: '출금 플랫폼에 은행 추가',
     addBanner: '배너 추가',
     addBbDacha: 'BB Dacha 추가',
+    addBlacklist: '블랙리스트 추가',
     addRewardGroup: '보상 그룹 추가',
     addCurrency: '통화 추가',
     addCurrencyRate: '환율 추가',
@@ -592,6 +595,7 @@ export default {
     afterBalance: '이후 잔액',
     afterEdit: '편집 후',
     amount: '금액',
+    amountGreaterThan: '보다 큰 금액',
     amountLimitPerRain: '비별 금액 제한',
     adjust: '금액 조정',
     alias: '별명',
@@ -889,6 +893,7 @@ export default {
     editBankCard: '은행 카드 편집',
     editBanner: '배너 편집',
     editBelongType: '소속 유형 편집',
+    editBlacklist: '블랙리스트 수정',
     editConfig: '구성 편집',
     editCurrency: '통화 편집',
     editCurrencyRate: '통화 환율 편집',
@@ -1860,7 +1865,9 @@ export default {
     updateWithdrawPassword: '출금 비밀번호 업데이트',
     self: '(본인)',
     batchFrozenMember: '회원 일괄 동결',
-    showLogo: '아이콘 표시'
+    showLogo: '아이콘 표시',
+    adjustTarget: '목표 조정',
+    ignoreSettlement: '결제를 무시하다',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2342,6 +2349,7 @@ export default {
     affiliateReactivated: '활성화 성공',
     required_6_digits_code: '6자리 숫자로 구성',
     required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
+    validateAdjustColumnRequired: '잔액 목표가 필요합니다.',
   },
   menu: {
     undefined: '',
@@ -2581,6 +2589,9 @@ export default {
     'Vip Report': 'VIP 보고서',
     'System Value Rules': '설정 규칙',
     'Sites Config': '사이트 설정',
+    'Affiliate Point Record': '제휴 포인트 기록',
+    'Member Ratio Edit Record': '리베이트 비율 변경 기록',
+    'Site Platform Blacklist': '사이트 플랫폼 블랙리스트',
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -2734,6 +2745,7 @@ export default {
     AGENT_SHARE_BET_RATIO_SPORT: '배팅비율-SPORT',
     AGENT_SHARE_BET_RATIO_CASUAL: '배팅비율-CASUAL',
     AGENT_SHARE_BET_RATIO_POKER: '배팅비율-POKER',
+    AGENT_SHARE_BET_RATIO_HOTELCASINO: '배팅비율-HOTELCASINO',
     AGENT_SHARE_PROFIT_RATIO_FISH: '이익률-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '이익률-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
@@ -2741,9 +2753,13 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '이익률-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: '이익률-POKER',
+    AGENT_SHARE_PROFIT_RATIO_HOTELCASINO: '이익률-HOTELCASINO',
   },
   monitorTitle: {
-    MEMBER_STATISTICS: '온라인 사용자'
+    MEMBER_STATISTICS: '온라인 사용자',
+    DEPOSIT_FLUCTUATION: '예금 변동',
+    WITHDRAW_FLUCTUATION: '출금 변동',
+    BONUS_FLUCTUATION: '보너스 변동',
   },
   error: {
     400: '잘못된 요청',

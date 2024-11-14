@@ -78,14 +78,14 @@
             {{ data.accountAdjustment }}
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             {{ t('fields.paymentFee') }}
           </el-col>
           <el-col :span="12">
             {{ data.paymentFeeAmount }}
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="12">
             {{ t('fields.commission') }}

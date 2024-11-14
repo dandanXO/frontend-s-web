@@ -7,14 +7,14 @@
           :class="{ active: tabValue === 'lh1-live-daily-bonus' }"
           @click="tabValue = 'lh1-live-daily-bonus'"
         >
-          活动 1
+          日投返利
         </div>
         <div
           class="tab"
           :class="{ active: tabValue === 'lh1-live-weekly-bonus' }"
           @click="tabValue = 'lh1-live-weekly-bonus'"
         >
-          活动 2
+          周投返利
         </div>
       </div>
 
@@ -47,7 +47,7 @@
             </div>
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-                <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@
             </div>
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-                <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
               </div>
             </div>
           </div>
@@ -347,7 +347,6 @@ watch(
 
 .livepoker-rebate-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  padding: 30px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
   margin-top: 40px;
@@ -360,12 +359,14 @@ watch(
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 30px 40px;
   }
 
   .livepoker-rebate-section-right {
     margin-top: auto;
-    margin-bottom: auto;
-    width: 254px;
+    margin-right: 100px;
+    margin-bottom: 30px;
+    width: 200px;
 
     .bonus-image {
       cursor: pointer;

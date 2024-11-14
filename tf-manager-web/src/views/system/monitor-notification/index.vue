@@ -19,7 +19,7 @@
                   :key="item"
                   @click="openDialog(item, 'create')"
                 >
-                  {{ item }}
+                  {{ $t(`monitorTitle.${item}`) }}
                 </el-dropdown-item>
               </template>
             </el-dropdown-menu>
@@ -32,6 +32,7 @@
         :span="8"
         v-for="(settings, title) in titleMatchSettings"
         :key="title"
+        style="margin-bottom: 20px"
       >
         <el-card shadow="hover">
           <div class="card-content">
@@ -42,7 +43,7 @@
       </el-col>
     </el-row>
     <div id="setting-dialog-wrapper">
-      <el-dialog v-model="dialogVisible" title="详细信息" width="60%">
+      <el-dialog v-model="dialogVisible" :title="currentDialogTitle" width="60%">
         <div class="dialog-content-wrapper">
           <component
             :is="currentComponent"
@@ -65,10 +66,16 @@ import { getAllConfigurable, getAllSettingBySiteId } from "@/api/monitor-notific
 import { useStore } from "@/store";
 import { ElMessage } from "element-plus";
 import MemberStatisticComponent from './dialog-custom-content/memberStatistic.vue';
+import DepositFluctuationComponent from './dialog-custom-content/depositFluctuation.vue';
+import WithdrawFluctuationComponent from './dialog-custom-content/withdrawFluctuation.vue';
+import BonusFluctuationComponent from './dialog-custom-content/bonusFluctuation.vue';
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n()
 const store = useStore();
 const allConfigurableTypeName = ref([]);
 const currentComponent = shallowRef(null);
+const currentDialogTitle = ref("");
 const componentKey = ref(0); // 新增的 key，用于强制重新渲染组件
 
 const allSettingOrganized = ref({
@@ -118,6 +125,8 @@ const handleSubmitFailed = () => {
 }
 
 const openDialog = (title, mode) => {
+  currentDialogTitle.value = t(`monitorTitle.${title}`)
+
   if (mode === 'create') {
     if (title === 'other') {
       // other走其他逻辑，之后功能扩充再说，目前监控与通知配置都是一对的
@@ -148,6 +157,9 @@ const openDialog = (title, mode) => {
 
 const componentMapping = {
   MEMBER_STATISTICS: MemberStatisticComponent,
+  DEPOSIT_FLUCTUATION: DepositFluctuationComponent,
+  WITHDRAW_FLUCTUATION: WithdrawFluctuationComponent,
+  BONUS_FLUCTUATION: BonusFluctuationComponent,
 };
 
 async function loadAllConfigurableTypeName() {

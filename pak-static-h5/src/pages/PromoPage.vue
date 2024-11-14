@@ -100,6 +100,15 @@
               </div>
 
               <div class="promo-content-inner">
+                <RouterLink
+                  v-if="parsedParam.showEarnMoney"
+                  class="content-go-earn-money-btn"
+                  :class="isFtdPromoEnded ? 'is-disabled' : ''"
+                  to="/earn-money"
+                >
+                  <img src="../assets/images/bonus/share-icon.png" />
+                  <span>Earn Money</span>
+                </RouterLink>
                 <div class="content-title">{{ selectedPromo.title }}</div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
@@ -698,7 +707,8 @@ export default defineComponent({
       isMoneyRainModal,
       isFetchingPromo,
       extensionState,
-      isOpenExtension
+      isOpenExtension,
+      parsedParam
       // MediaSettingsComponent
     };
   }
@@ -1264,6 +1274,41 @@ export default defineComponent({
     img {
       display: block;
       width: 30px;
+    }
+  }
+  .content-go-earn-money-btn {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 4px 0;
+    border-radius: 5px;
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    text-decoration: none;
+
+    &.is-disabled {
+      pointer-events: none;
+      filter: brightness(0.4);
+    }
+
+    img {
+      width: 28px !important;
+      margin: 0px;
+      display: inline-block;
+      height: auto;
+    }
+
+    span {
+      color: #000;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    &:active {
+      transform: translate(0px, 1px);
+      filter: brightness(0.85);
     }
   }
 }

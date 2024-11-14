@@ -48,6 +48,7 @@ export const userStore = defineStore("userStore", {
       hasUpdatedOneSignal: false,
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
+      ftdPrivilegeId: "",
       ftd: true
     };
   },

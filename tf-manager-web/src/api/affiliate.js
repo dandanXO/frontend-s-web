@@ -32,3 +32,7 @@ export const getMemberBankLog = (id, query) => {
 export const getAffiliateBalanceByWalletOrCommission = (loginName, siteId, mainWallet) => {
   return https().request(`/affiliate/getAffiliateBalanceByWalletOrCommission`, Method.GET, { loginName: loginName, siteId: siteId, mainWallet: mainWallet }, ContentType.form);
 };
+
+export const deleteBankCard = (card) => {
+  return https().request(`/affiliate/${card.memberId}/memberBankCard?_method=delete`, Method.POST, { cardId: card.id }, ContentType.form);
+};

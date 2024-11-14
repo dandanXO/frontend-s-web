@@ -9,7 +9,7 @@ import { getRndInteger } from "boot/utils";
 console.log(window.location.hostname);
 const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1 || window.location.hostname.indexOf("dy639.") > -1;
 
-const globalAndCNLinks = ["dongyingbet6", "dongyingbet6"];
+const globalAndCNLinks = ["dongyingbet6", "dongyingbet8", "dy605.vip", "dy595.cc", "dy673.cc", "dy732.cc"];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 const imgCDN = process.env.IMAGE_CDN;
@@ -206,6 +206,9 @@ export default boot(({ app, router }) => {
       Loading.hide();
       const errorType = getErrorType(response.config.baseURL);
       if (res.code === ResponseCode.ERROR_SYSTEM) {
+        return res;
+      }
+      if (res.code === ResponseCode.ERROR_WITHDRAW_AMOUNT) {
         return res;
       }
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
