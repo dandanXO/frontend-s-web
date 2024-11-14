@@ -14,7 +14,7 @@
           style="width: 200px;margin-left: 5px"
           :placeholder="t('fields.domain')"
         />
-        <el-select
+        <!-- <el-select
           v-if="hasRole(['ADMIN'])"
           v-model="request.siteId"
           size="small"
@@ -29,7 +29,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -310,11 +310,13 @@ import {
   delAffiliateDomain,
   updateAffiliateDomain,
 } from '../../../api/affiliate-domain'
+import { useStore } from '../../../store';
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission, hasRole } from '../../../utils/util'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+const store = useStore();
 const memberForm = ref(null)
 const table = ref(null)
 const siteList = reactive({
@@ -363,7 +365,7 @@ const formRules = reactive({
 
 function resetQuery() {
   request.affiliateName = null
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
 }
 
 function checkQuery() {
@@ -411,7 +413,7 @@ function showEdit(affiliateDomain) {
 function showDialog(type) {
   if (type === 'CREATE') {
     form.id = null
-    form.siteId = siteList.list[0].id
+    form.siteId = store.state.user.siteId
     form.affiliateName = null
     form.way = null
     form.domain = null
@@ -466,7 +468,7 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
 })
 </script>
 

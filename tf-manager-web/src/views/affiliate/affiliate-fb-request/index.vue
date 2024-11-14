@@ -20,7 +20,7 @@
           style="width: 200px;margin-left: 5px"
           :placeholder="t('fields.fbid')"
         />
-        <el-select
+        <!-- <el-select
           v-if="hasRole(['ADMIN'])"
           v-model="request.siteId"
           size="small"
@@ -35,7 +35,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -294,8 +294,10 @@ import {
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission, hasRole } from '../../../utils/util'
 import { useI18n } from 'vue-i18n'
+import { useStore } from '../../../store'
 
 const { t } = useI18n()
+const store = useStore()
 const memberForm = ref(null)
 const table = ref(null)
 const siteList = reactive({
@@ -345,7 +347,7 @@ function resetQuery() {
   request.loginName = null
   request.url = null
   request.fbId = null
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
 }
 
 function checkQuery() {
@@ -392,7 +394,7 @@ function showEdit(affiliateFBRequest) {
 function showDialog(type) {
   if (type === 'CREATE') {
     form.id = null
-    form.siteId = siteList.list[0].id
+    form.siteId = store.state.user.siteId
     form.loginName = null
     form.url = null
     form.fbId = null
@@ -448,7 +450,7 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   await loadAffiliateFBRequests()
 })
 </script>
