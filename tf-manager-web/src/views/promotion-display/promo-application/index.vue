@@ -143,7 +143,7 @@ import { hasPermission } from '../../../utils/util'
 import * as XLSX from 'xlsx';
 import moment from 'moment';
 import { useI18n } from "vue-i18n";
-import { getSiteListSimple } from '../../../api/site';
+
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
 import { getPromoApplication } from '../../../api/promo-application';
@@ -200,12 +200,6 @@ function convertDate(date) {
 function disabledDate(time) {
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
 }
-
-async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
-  request.siteId = siteList.list[0].id;
-};
 
 function checkQuery() {
   const requestCopy = { ...request };
@@ -287,8 +281,7 @@ function pushRecordToData(records, exportData) {
   exportData.push(...data);
 }
 
-onMounted(async() => {
-  await loadSites();
+onMounted(() => {
   request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);

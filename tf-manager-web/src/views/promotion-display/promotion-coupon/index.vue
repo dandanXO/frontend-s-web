@@ -112,7 +112,6 @@ import { onMounted, reactive } from "vue";
 import { getCouponRecords } from "../../../api/privilege-coupon";
 import { useI18n } from "vue-i18n";
 import { useStore } from '../../../store';
-import { getSiteListSimple } from "../../../api/site";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
 import { formatInputTimeZone } from '@/utils/format-timeZone'
@@ -210,13 +209,7 @@ function changePage(page) {
   }
 }
 
-async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
-}
-
-onMounted(async() => {
-  await loadSites();
+onMounted(() => {
   request.siteId = store.state.user.siteId
 });
 </script>

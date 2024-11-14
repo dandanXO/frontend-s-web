@@ -143,7 +143,6 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import { hasPermission, hasRole } from '@/utils/util'
 import moment from 'moment';
 import { useI18n } from "vue-i18n";
-import { getSiteListSimple } from '@/api/site';
 import { useStore } from '@/store';
 import { TENANT } from '@/store/modules/user/action-types';
 import { distribute, getReferFriendPromo } from '@/api/refer-friend-promo';
@@ -186,12 +185,6 @@ const page = reactive({
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
 }
-
-async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
-  request.siteId = siteList.list[0].id;
-};
 
 function checkQuery() {
   const requestCopy = { ...request };
@@ -248,8 +241,7 @@ function distributeRefer(row) {
   });
 }
 
-onMounted(async() => {
-  await loadSites();
+onMounted(() => {
   request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);

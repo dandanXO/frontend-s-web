@@ -590,7 +590,7 @@ import {
 } from '../../../api/privilege-info'
 import { getVipList } from '../../../api/vip'
 import { getActivePaymentTypes } from '../../../api/payment-type'
-import { getSiteListSimple } from '../../../api/site'
+
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -912,11 +912,6 @@ async function loadVips() {
 async function loadActivePaymentType() {
   const { data: type } = await getActivePaymentTypes()
   paymentTypeList.list = type
-}
-
-async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
 }
 
 function changePage(page) {
@@ -1392,7 +1387,6 @@ function removeJsonEditorElement() {
 }
 
 onMounted(async () => {
-  await loadSites()
   request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
