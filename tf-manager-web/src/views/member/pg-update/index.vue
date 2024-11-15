@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -17,7 +17,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-date-picker
           v-model="request.date"
           format="DD/MM/YYYY"
@@ -103,10 +103,12 @@ import { onMounted, reactive } from "vue";
 import { ElMessage } from "element-plus";
 import { getPending, updatePending } from "../../../api/pg-update";
 import { useI18n } from "vue-i18n";
+import { useStore } from '@/store'
 import { getSiteListSimple } from "../../../api/site";
 import moment from "moment";
 
 const { t } = useI18n();
+const store = useStore()
 const siteList = reactive({
   list: []
 });
@@ -198,7 +200,7 @@ function getShowRecords() {
 
 onMounted(async() => {
   await loadSites();
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
   await loadPendingRecords();
 });
 </script>

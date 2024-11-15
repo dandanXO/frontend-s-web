@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -18,7 +18,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.loginName"
           size="small"
@@ -233,7 +233,7 @@ let timeZone = null;
 function resetQuery() {
   request.loginName = null
   request.feedbackType = null
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.isNotRead = false
   request.isNotReplied = false
 }
@@ -292,7 +292,7 @@ async function showReadFeedback(feedback) {
       uiControl.formDisabled = true
     } else {
       if (isCnySite(request.siteId)) {
-        form.replyTitle = '回复: ' + form.title;
+        form.replyTitle = '回复：' + form.title;
       } else {
         form.replyTitle = "RE: " + form.title
       }
@@ -322,7 +322,7 @@ async function loadFeedbackTypesBySiteId() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
