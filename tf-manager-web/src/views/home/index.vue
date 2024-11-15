@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           clearable
           v-model="request.siteId"
           size="small"
@@ -18,7 +18,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY"
@@ -427,6 +427,7 @@ import {
   reactive,
   // ref,
 } from '@vue/runtime-core'
+import { useStore } from '@/store'
 import Chart from '@/components/charts/Charts'
 import moment from 'moment'
 import { getSiteListSimple } from '../../api/site'
@@ -437,6 +438,7 @@ const defaultStartDate = convertDate(currentDate, true)
 const defaultEndDate = convertDate(currentDate, false)
 
 const { t } = useI18n()
+const store = useStore()
 const request = reactive({
   siteId: null,
   createTime: [defaultStartDate, defaultEndDate],
@@ -832,7 +834,7 @@ onMounted(async () => {
 async function loadSitesSummary() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   getDailySummaryList()
 }
 
