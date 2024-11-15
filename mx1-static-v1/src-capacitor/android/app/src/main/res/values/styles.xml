@@ -19,4 +19,14 @@
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
         <item name="android:background"></item>
     </style>
+
+  <!-- styles.xml -->
+  <style name="Theme.App.Splash" parent="Theme.SplashScreen">
+    <!-- Set the splash screen background color -->
+    <item name="windowSplashScreenBackground">@color/colorBgPrimary</item>
+    <!-- Set the splash screen icon to display in the center -->
+    <item name="windowSplashScreenAnimatedIcon">@drawable/icon_splash</item>
+    <!-- Optional: Set the icon background color -->
+    <item name="windowSplashScreenIconBackgroundColor">@color/colorBgPrimary</item>
+  </style>
 </resources>
