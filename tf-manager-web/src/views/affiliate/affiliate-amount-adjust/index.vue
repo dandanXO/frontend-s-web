@@ -17,7 +17,7 @@
           :editable="false"
           :clearable="false"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -31,7 +31,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.loginName"
           style="width: 200px; margin-left: 10px"
@@ -778,9 +778,9 @@ function disabledDate(time) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list[0].id
-  form.siteId = siteList.list[0].id
-  importForm.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
+  form.siteId = store.state.user.siteId
+  importForm.siteId = store.state.user.siteId
 }
 
 async function loadFormSelect() {
@@ -809,7 +809,7 @@ async function loadCauseBySiteId() {
 
 function resetQuery() {
   request.createTime = [defaultStartDate, defaultEndDate]
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.loginName = null
   request.operationType = null
   request.cause = null
