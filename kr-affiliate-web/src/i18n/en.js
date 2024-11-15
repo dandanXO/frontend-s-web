@@ -1025,5 +1025,6 @@ export default {
     14012: 'Can only create affiliate with lower level',
     14013: 'Affiliate has downline, cannot set to lower level',
     40006: 'Affiliate does not have enough point to redeem',
+    1313: 'Unable to recycle amount due to insufficient rollover',
   },
 }

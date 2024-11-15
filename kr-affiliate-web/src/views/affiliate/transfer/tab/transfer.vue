@@ -99,7 +99,7 @@ const form = reactive({
   memberType: null,
   loginName: null,
   transferAmount: '',
-  rollover: null,
+  rollover: 1,
   siteId: null,
   withdrawPassword: null
 });
