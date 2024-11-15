@@ -1110,7 +1110,6 @@ export default defineComponent({
       api
         .get("/config/appDownloadUrl")
         .then((res) => {
-          // console.log(res);
           downloadUrl.value = res.data;
         })
         .catch((err) => {

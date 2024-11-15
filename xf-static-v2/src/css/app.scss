@@ -178,19 +178,19 @@ svg {
   background-color: transparent;
 
   .q-tab {
-    // padding: 5px 0 0px;
-    // background: #0F182E;
     color: #7a899e;
     opacity: 1 !important;
+    border-radius: 50%;
 
     .menu-icon {
       &.account {
         display: block;
-        padding: 6px;
+        padding: 8px;
         border-radius: 50%;
         background: #0f182e;
         box-shadow: 0px -2px 4px 1px rgba(255, 255, 255, 0.1);
-        margin-top: -10px;
+        // margin-top: -6px;
+        margin-bottom: 6px;
 
         img {
           display: block;
