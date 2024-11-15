@@ -1868,6 +1868,9 @@ export default {
     showLogo: '아이콘 표시',
     adjustTarget: '목표 조정',
     ignoreSettlement: '결제를 무시하다',
+    sendType: '전송 방법',
+    specificAffiliate: '지정 대리인',
+    hasPopUp: '팝업창이 있어요',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',

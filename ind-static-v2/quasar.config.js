@@ -66,8 +66,16 @@ module.exports = configure(function (ctx) {
       // gzip: true,
       // analyze: true,
 
+      minify: true,
+      uglifyOptions: {
+        compress: {
+          drop_console: true, // Removes all console logs
+        },
+      },
+
       // Options below are automatically set depending on the env, set them if you want to override
-      // extractCSS: false,
+      extractCSS: true,
+      sourceMap: false,
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
@@ -216,7 +224,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true,
+      hideSplashscreen: false,
       // (Optional) If not present, will look for package.json > name
       appName: "IndWin7", // string
       backButtonExit: "*"

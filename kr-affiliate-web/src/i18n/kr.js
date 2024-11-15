@@ -718,6 +718,8 @@ export default {
     redeemConvert: '전환',
     dashboardMemberBalance: '회원잔액',
     totalWithdrawalAmount: '총 출금액',
+    dismiss: '해고하다',
+    affiliateAnnouncement: '제휴사 공지'
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -884,6 +886,7 @@ export default {
     yourCurrentPoint: '현재 포인트 :',
     confirmRedeem: '당신은 상환하고 싶나요 ?',
     redeemSuccess: '성공적인 상환',
+    amountMustBeMultipleOf10000: '금액은 10000의 배수여야 합니다.',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',

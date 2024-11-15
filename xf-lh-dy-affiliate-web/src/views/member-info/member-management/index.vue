@@ -628,17 +628,17 @@
             v-for="(item, index) in memberDepositInfo.page.records"
             :key="item.id"
           >
-            <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
-            <td>{{ item.serialNumber }}</td>
-            <td>{{ item.paymentType }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.depositAmount.toFixed(0) : item.depositAmount.toFixed(2) }}</td>
-            <td>
+            <td :data-label="t('fields.sequence')">{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
+            <td :data-label="t('fields.serialNumber')">{{ item.serialNumber }}</td>
+            <td :data-label="t('fields.paymentType')">{{ item.paymentType }}</td>
+            <td :data-label="t('fields.depositAmount')">{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.depositAmount.toFixed(0) : item.depositAmount.toFixed(2) }}</td>
+            <td :data-label="t('fields.depositDate')">
               {{ formatDate(item.depositDate) }}
             </td>
-            <td>
+            <td :data-label="t('fields.finishDate')">
               {{ formatDate(item.finishDate) }}
             </td>
-            <td>
+            <td :data-label="t('fields.status')">
               <span
                 v-if="['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(item.status)"
               >
@@ -707,11 +707,11 @@
         </thead>
         <tbody v-if="memberPrivilegeInfo.page.records.length > 0">
           <tr v-for="item in memberPrivilegeInfo.page.records" :key="item.id">
-            <td>{{ item.serialNumber }}</td>
-            <td>{{ item.privilegeName }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.amount.toFixed(0) : item.amount.toFixed(2) }}</td>
-            <td>{{ item.rollover }}</td>
-            <td>
+            <td :data-label="t('fields.serialNumber')">{{ item.serialNumber }}</td>
+            <td :data-label="t('fields.privilegeName')">{{ item.privilegeName }}</td>
+            <td :data-label="t('fields.amount')">{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.amount.toFixed(0) : item.amount.toFixed(2) }}</td>
+            <td :data-label="t('fields.rollover')">{{ item.rollover }}</td>
+            <td :data-label="t('fields.recordTime')">
               {{ formatDate(item.recordTime) }}
             </td>
           </tr>

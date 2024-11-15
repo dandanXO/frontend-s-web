@@ -164,6 +164,42 @@ elTables.forEach((elTable) => {
     background: #F4F9FD;
   }
 }
+
+@media(max-width:750px){
+  .custom-table {
+    display: block;
+  }
+  .custom-table thead {
+    display: none; /* Hide headers for grid style */
+  }
+  .custom-table tbody{
+    width: 100%;
+    display: block;
+  }
+  .custom-table tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    width: 100%;
+  }
+  .custom-table td {
+    display: block;
+    text-align: left;
+    padding: 3px 8px;
+    font-weight: bold;
+  }
+  .custom-table td:before {
+    content: attr(data-label); /* Use data-label to show header name */
+    font-weight: normal;
+    display: block;
+    text-transform: uppercase;
+    color: #666;
+  }
+}
+
 .el-form-item__content {
   width: 100%;
 }

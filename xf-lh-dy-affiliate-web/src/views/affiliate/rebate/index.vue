@@ -77,39 +77,39 @@
         </thead>
         <tbody>
           <tr v-for="record in page.records" :key="record.id">
-            <td>
+            <td :data-label="t('fields.gameType')">
               <span v-if="record.gameType === null">-</span>
               <span v-if="record.gameType !== null">
                 {{ t(`gameType.${record.gameType}`) }}
               </span>
             </td>
-            <td>
+            <td :data-label="t('fields.betAmount')">
               <span v-if="record.betAmount === null">-</span>
               <span v-if="record.betAmount !== null">
                 {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 {{ record.betAmount }}
               </span>
             </td>
-            <td>
+            <td :data-label="t('fields.rebateAmount')">
               <span v-if="record.rebateAmount === null">-</span>
               <span v-if="record.rebateAmount !== null">
                 {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 {{ record.rebateAmount }}
               </span>
             </td>
-            <td>
+            <td :data-label="t('fields.status')">
               <span v-if="record.status === null">-</span>
               <span v-if="record.status !== null">
                 {{ t(`rebateStatus.${record.status}`) }}
               </span>
             </td>
-            <td>
+            <td :data-label="t('fields.recordTime')">
               <span v-if="record.recordTime === null">-</span>
               <span v-if="record.recordTime !== null">
                 {{ record.recordTime }}
               </span>
             </td>
-            <td>
+            <td :data-label="t('fields.payTime')">
               <span v-if="record.distributeTime === null">-</span>
               <span v-if="record.distributeTime !== null">
                 {{ record.distributeTime }}

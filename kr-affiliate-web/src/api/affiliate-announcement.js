@@ -30,3 +30,11 @@ export const getUnreadAnnouncementCount = (memberId, query) => {
     query
   )
 }
+
+export const getAffAnnouncementPopupList = (memberId, query) => {
+  return https().request(
+    `/affiliateAnnouncement/popUp/${memberId}`,
+    Method.GET,
+    query
+  )
+}

@@ -780,9 +780,6 @@ export default defineComponent({
     // };
     let validateBankLength = (val) => {
       if (isALIPAY.value == true) {
-        if (!/^\d+$/.test(val)) {
-          return '请输入数字'
-        }
         return (val.length > 10 && val.length < 21) || '长度应为11到20个字符'
       } else if (isCrypto.value == true) {
         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'
