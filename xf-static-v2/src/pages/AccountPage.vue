@@ -547,19 +547,14 @@ onBeforeUnmount(() => {
 
 .acct-nav {
   background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
-  // margin: 10px auto;
-  // padding: 5px;
-  // gap: 10px;
   border-radius: 8px;
   overflow: hidden;
 
   .acct-title {
     display: flex;
-    // margin-top: 4px;
     justify-content: space-between;
     align-items: center;
     color: #ffffff;
-    // .acct-header-icon
     background: #445f95;
     padding: 12px;
     font-size: 16px;
@@ -599,6 +594,7 @@ onBeforeUnmount(() => {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    padding: 12px 0;
 
     a {
       width: 33.33%;
@@ -648,8 +644,6 @@ onBeforeUnmount(() => {
 
 .acct-logout {
   padding: 10px;
-  // margin: 5px 10px;
-  // background-color: #33bcd4;
   background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
   text-align: center;
   border-radius: 8px;
@@ -683,9 +677,6 @@ onBeforeUnmount(() => {
 
 .rotating {
   animation: rotate 1s linear infinite;
-}
-
-.acc-btns-container {
 }
 
 .card_btm {
