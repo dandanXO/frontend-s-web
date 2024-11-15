@@ -3,216 +3,234 @@
     <div class="summoner">
       <el-tabs v-model="tabPosition" class="summoner-tabs">
         <el-tab-pane name="first" label="精英召唤">
-          <div class="main-desc">
-            被唤醒人每日存款≥200元，唤醒人与被唤醒人都可活动对应的存款彩金。
-          </div>
+          <div class="main-desc">被唤醒人每日存款≥200元，唤醒人与被唤醒人都可活动对应的存款彩金。</div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
-              <tr>
-                <th>
-                  被唤醒人每日存款
-                </th>
-                <th>
-                  唤醒人每日返利
-                </th>
-                <th>
-                  被唤醒人每日返利
-                </th>
-                <th>
-                  彩金上限
-                </th>
-                <th>
-                  流水倍数
-                </th>
-              </tr>
-              <tr>
-                <td>唤醒第一日存款≥200</td>
-                <td>8</td>
-                <td>当日存款5% </td>
-                <td rowspan="5">888元 </td>
-                <td rowspan="5">3倍 </td>
-              </tr>
-              <tr>
-                <td>唤醒第二日存款≥200</td>
-                <td>18</td>
-                <td>当日存款5% </td>
-              </tr>
-              <tr>
-                <td>唤醒第三日存款≥200</td>
-                <td>28</td>
-                <td>当日存款5% </td>
-              </tr>
-              <tr>
-                <td>唤醒第四日存款≥200</td>
-                <td>58</td>
-                <td>当日存款8% </td>
-              </tr>
-              <tr>
-                <td>唤醒第五日存款≥200</td>
-                <td>88</td>
-                <td>当日存款10% </td>
-              </tr></tbody>
+                <tr>
+                  <th>被唤醒人每日存款</th>
+                  <th>唤醒人每日返利</th>
+                  <th>被唤醒人每日返利</th>
+                  <th>彩金上限</th>
+                  <th>流水倍数</th>
+                </tr>
+                <tr>
+                  <td>唤醒第一日存款≥200</td>
+                  <td>8</td>
+                  <td>当日存款5%</td>
+                  <td rowspan="5">888元</td>
+                  <td rowspan="5">3倍</td>
+                </tr>
+                <tr>
+                  <td>唤醒第二日存款≥200</td>
+                  <td>18</td>
+                  <td>当日存款5%</td>
+                </tr>
+                <tr>
+                  <td>唤醒第三日存款≥200</td>
+                  <td>28</td>
+                  <td>当日存款5%</td>
+                </tr>
+                <tr>
+                  <td>唤醒第四日存款≥200</td>
+                  <td>58</td>
+                  <td>当日存款8%</td>
+                </tr>
+                <tr>
+                  <td>唤醒第五日存款≥200</td>
+                  <td>88</td>
+                  <td>当日存款10%</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <router-link to="center/share" class="summon-btn">
-            <img src="../../../assets/images/promotion/hotpromo/summoner/summon-btn.png">
+            <img src="../../../assets/images/promotion/hotpromo/summoner/summon-btn.png" />
           </router-link>
-          <div class="summon-btn"  @click="claimReward">
-            <img src="../../../assets/images/promotion/hotpromo/summoner/claim-summon-btn.png">
+          <div class="summon-btn" @click="claimReward">
+            <img src="../../../assets/images/promotion/hotpromo/summoner/claim-summon-btn.png" />
           </div>
           <div class="findfriend" @click="getSummonRecord">
-            <img src="../../../assets/images/promotion/hotpromo/summoner/findfriend-btn.png">
+            <img src="../../../assets/images/promotion/hotpromo/summoner/findfriend-btn.png" />
           </div>
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png">
+              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
             </p>
-            <p>1. 活动期间，获得唤醒人与被唤醒人身份即可参与此活动；<br>
-              <br>
-              <div style="padding-left: 20px;">
-                唤醒人：<br>
-                VIP1或以上等级会员符 合唤醒人身份<br>
-                <br>
-                被唤醒人：<br>
-                VIP1或以上等级会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br>
-                <br>
+            <p>
+              1. 活动期间，获得唤醒人与被唤醒人身份即可参与此活动；
+              <br />
+              <br />
+              <div style="padding-left: 20px">
+                唤醒人：
+                <br />
+                VIP1或以上等级会员符 合唤醒人身份
+                <br />
+                <br />
+                被唤醒人：
+                <br />
+                VIP1或以上等级会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；
+                <br />
+                <br />
               </div>
-              2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥200元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；<br>
-              <br>
-              3. 被唤醒人五日内需连续每日存款，若中断存款将视为放弃本活动优惠彩金；<br>
-              <br>
-              4. 彩金需点击活动页面【点击领取】按钮领取彩金，彩金3倍流水即可提款；<br>
-              <br>
-<!--              5. 本活动不与【精英回归 再战未来】活动共享彩金；<br>-->
-<!--              <br>-->
-              5. 同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；<br>
-              <br>
-              6. 任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；<br>
-              <br>
-              7. 为避免文字理解差异，本活动最终解释权归雷火电竞所有；</p>
+              2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥200元，唤醒人与被唤醒人即可享受存款彩金，
+              3倍流水即可提款；
+              <br />
+              <br />
+              3. 被唤醒人五日内需连续每日存款，若中断存款将视为放弃本活动优惠彩金；
+              <br />
+              <br />
+              4. 彩金需点击活动页面【点击领取】按钮领取彩金，彩金3倍流水即可提款；
+              <br />
+              <br />
+              <!--              5. 本活动不与【精英回归 再战未来】活动共享彩金；<br>-->
+              <!--              <br>-->
+              5.
+              同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；
+              <br />
+              <br />
+              6.
+              任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
+              <br />
+              <br />
+              7. 为避免文字理解差异，本活动最终解释权归雷火电竞所有；
+            </p>
           </div>
         </el-tab-pane>
         <el-tab-pane name="sec" label="唤醒圣堂">
-
           <div class="sub-desc">
             活动期间，会员历史存款≥500且超过15天未投注与存款的会员即可进行召回，被唤醒人需当日存款与投注≥100元即可领取彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
-              <tr>
-                <th>
-                  成功唤醒人数
-                </th>
-                <th>
-                  唤醒礼金/人
-                </th>
-                <th>
-                  流水倍数
-                </th>
-              </tr>
-              <tr>
-                <td>≥1</td>
-                <td>10</td>
-                <td rowspan="5">3倍流水</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>58</td>
-              </tr>
-              <tr>
-                <td>≥10</td>
-                <td>128</td>
-              </tr>
-              <tr>
-                <td>≥20</td>
-                <td>218</td>
-              </tr>
-              <tr>
-                <td>≥30</td>
-                <td>388</td>
-              </tr></tbody>
+                <tr>
+                  <th>成功唤醒人数</th>
+                  <th>唤醒礼金/人</th>
+                  <th>流水倍数</th>
+                </tr>
+                <tr>
+                  <td>≥1</td>
+                  <td>10</td>
+                  <td rowspan="5">3倍流水</td>
+                </tr>
+                <tr>
+                  <td>≥5</td>
+                  <td>58</td>
+                </tr>
+                <tr>
+                  <td>≥10</td>
+                  <td>128</td>
+                </tr>
+                <tr>
+                  <td>≥20</td>
+                  <td>218</td>
+                </tr>
+                <tr>
+                  <td>≥30</td>
+                  <td>388</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <router-link to="center/share" class="summon-btn">
-            <img src="../../../assets/images/promotion/hotpromo/summoner/summon-btn.png">
+            <img src="../../../assets/images/promotion/hotpromo/summoner/summon-btn.png" />
           </router-link>
           <div class="findfriend" @click="getSummonRecord">
-            <img src="../../../assets/images/promotion/hotpromo/summoner/findfriend-btn.png">
+            <img src="../../../assets/images/promotion/hotpromo/summoner/findfriend-btn.png" />
           </div>
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png">
+              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
             </p>
             <p>
-              1. 活动期间，会员历史存款≥500且会员超过15天未投注与存款的会员即可符合被唤醒人条件，申请当天被唤醒人当日存款与投注≥100元即可符合领取彩金条件。<br><br>
+              1.
+              活动期间，会员历史存款≥500且会员超过15天未投注与存款的会员即可符合被唤醒人条件，申请当天被唤醒人当日存款与投注≥100元即可符合领取彩金条件。
+              <br />
+              <br />
 
-              2. 本活动全体会员皆可参与；<br><br>
+              2. 本活动全体会员皆可参与；
+              <br />
+              <br />
 
-              3. 唤醒奖励将随召回人数的上涨而增加，最高388元/人，仅需3倍流水即可出款；<br><br>
+              3. 唤醒奖励将随召回人数的上涨而增加，最高388元/人，仅需3倍流水即可出款；
+              <br />
+              <br />
 
-              4. 同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；<br><br>
+              4.
+              同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；
+              <br />
+              <br />
 
-              5. 任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；<br><br>
+              5.
+              任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
+              <br />
+              <br />
 
               6. 为避免文字理解差异，本活动最终解释权归雷火电竞所有；
             </p>
           </div>
         </el-tab-pane>
         <el-tab-pane name="third" label="唤醒答谢">
-
-          <div class="main-desc">
-            活动期间，被唤醒会员完成第五日存款数量≥5人即可获得额外加赠彩金。
-          </div>
+          <div class="main-desc">活动期间，被唤醒会员完成第五日存款数量≥5人即可获得额外加赠彩金。</div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
-              <tr>
-                <th>完成第5日存款被唤醒人数量 </th>
-                <th>额外加赠</th>
-                <th>流水倍数</th>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>58</td>
-                <td rowspan="5">3倍流水</td>
-              </tr>
-              <tr>
-                <td>≥10</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>≥20</td>
-                <td>128</td>
-              </tr>
-              <tr>
-                <td>≥30</td>
-                <td>288</td>
-              </tr></tbody>
+                <tr>
+                  <th>完成第5日存款被唤醒人数量</th>
+                  <th>额外加赠</th>
+                  <th>流水倍数</th>
+                </tr>
+                <tr>
+                  <td>≥5</td>
+                  <td>58</td>
+                  <td rowspan="5">3倍流水</td>
+                </tr>
+                <tr>
+                  <td>≥10</td>
+                  <td>88</td>
+                </tr>
+                <tr>
+                  <td>≥20</td>
+                  <td>128</td>
+                </tr>
+                <tr>
+                  <td>≥30</td>
+                  <td>288</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <router-link to="center/share" class="summon-btn">
-            <img src="../../../assets/images/promotion/hotpromo/summoner/summon-btn.png">
+            <img src="../../../assets/images/promotion/hotpromo/summoner/summon-btn.png" />
           </router-link>
 
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png">
+              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
             </p>
             <p>
-              1. 活动期间，唤醒人完成被唤醒人数≥5人且被唤醒人完成五日存款，唤醒人则符合额外加赠彩金；<br><br>
+              1. 活动期间，唤醒人完成被唤醒人数≥5人且被唤醒人完成五日存款，唤醒人则符合额外加赠彩金；
+              <br />
+              <br />
 
-              2. 本活动全体会员皆可参与（合作代理所发展的下线不适合此优惠）；<br><br>
+              2. 本活动全体会员皆可参与（合作代理所发展的下线不适合此优惠）；
+              <br />
+              <br />
 
-              3. 同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；<br><br>
+              3.
+              同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；
+              <br />
+              <br />
 
-              4. 任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；<br><br>
+              4.
+              任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
+              <br />
+              <br />
 
               5. 为避免文字理解差异，本活动最终解释权归雷火电竞所有；
             </p>
           </div>
-
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -226,41 +244,39 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted } from "vue";
 import { claimSummon, getSummonRewardRecord } from "@/api/index/promo.js";
 import { useNotify } from "@/hooks/notify";
 const notify = useNotify();
-const tabPosition = ref('first');
+const tabPosition = ref("first");
 const isShowFriendDialog = ref(false);
 const tableData = ref([]);
 const page = reactive({
   current: 1,
   size: 20
-})
+});
 const props = defineProps(["promoCode"]);
 const getSummonRecord = () => {
   getSummonRewardRecord(page).then((res) => {
     if (res.code === 0) {
-      tableData.value = res.data.records
+      tableData.value = res.data.records;
       isShowFriendDialog.value = true;
     }
-  })
-}
+  });
+};
 
 const claimReward = () => {
   // debugger;
   claimSummon(props.promoCode).then((res) => {
     if (res.code === 0) {
-      notify.redPacket("成功领取奖励", res.data)
-    }else{
+      notify.redPacket("成功领取奖励", res.data);
+    } else {
       notify.error(res.message);
     }
-  })
-}
+  });
+};
 
-onMounted(() => {
-
-})
+onMounted(() => {});
 </script>
 <style scoped lang="scss">
 .summoner {
@@ -291,7 +307,7 @@ onMounted(() => {
     line-height: 42px;
     text-align: center;
     padding: 0;
-    opacity: .6;
+    opacity: 0.6;
 
     &.is-active {
       opacity: 1;
@@ -307,7 +323,6 @@ onMounted(() => {
 
     td,
     th {
-
       font-family: PingFang SC;
       font-size: 20px;
       font-weight: 600;
@@ -317,8 +332,8 @@ onMounted(() => {
     }
 
     th {
-      background: #E7F3FF;
-      color: #424F72;
+      background: #e7f3ff;
+      color: #424f72;
 
       &:first-child {
         border-radius: 10px 0 0 0;
@@ -330,9 +345,9 @@ onMounted(() => {
     }
 
     td {
-      color: #7A8EB9;
+      color: #7a8eb9;
       background: #ffffff;
-      border: 1px solid #ECEDF0;
+      border: 1px solid #ecedf0;
     }
   }
 
@@ -342,11 +357,11 @@ onMounted(() => {
     display: block;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       opacity: 0.9;
     }
-    &:active{
-      filter:brightness(0.85);
+    &:active {
+      filter: brightness(0.85);
     }
 
     img {
@@ -383,7 +398,7 @@ onMounted(() => {
 }
 
 .main-desc {
-  color: #7A8EB9;
+  color: #7a8eb9;
   font-family: PingFang SC;
   font-size: 20px;
   font-weight: 500;
@@ -393,14 +408,13 @@ onMounted(() => {
 }
 
 .sub-desc {
-  color: #7A8EB9;
+  color: #7a8eb9;
   font-family: PingFang SC;
   font-size: 20px;
   font-weight: 500;
   line-height: 34.45px;
   margin: 30px auto;
   text-align: center;
-
 }
 :deep(.summoner-modal .el-dialog__body) {
   padding: 0;
@@ -413,11 +427,12 @@ onMounted(() => {
   table {
     background: transparent;
     tr {
-      th, td {
+      th,
+      td {
         text-align: center;
       }
       th {
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         color: #fff;
         &:first-child {
           border-radius: 10px 0 0 0;
@@ -428,9 +443,9 @@ onMounted(() => {
         }
       }
       td {
-        color: #7A8EB9;
+        color: #7a8eb9;
         background: #ffffff;
-        border: 1px solid #ECEDF0;
+        border: 1px solid #ecedf0;
       }
       &:last-child {
         td {
