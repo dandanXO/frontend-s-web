@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: expectedBonus <= 0 }">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: expectedBonus <= 0 || !isClaimable }">
             <img
               v-if="expectedBonus <= 0"
               src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
@@ -58,6 +58,7 @@ const store = userStore();
 const profitAmount = ref(0);
 const expectedBonus = ref(0);
 const isClaiming = ref(false);
+const isClaimable = ref(false);
 
 const handleClaimBonus = () => {
   if (isClaiming.value) return;
@@ -96,6 +97,7 @@ const fetchData = async () => {
     const res = await getWeeklySlotLossBonusInit();
     profitAmount.value = res.data.profitAmount || 0;
     expectedBonus.value = res.data.expectedBonus || 0;
+    isClaimable.value = res.data.claimDay
   } catch (error) {
     console.log(error);
   }

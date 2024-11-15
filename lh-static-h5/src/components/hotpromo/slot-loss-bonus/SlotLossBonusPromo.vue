@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" :class="{disabled: expectedBonus <= 0}" @click="handleClaimBonus">
+          <div class="bonus-image" :class="{disabled: expectedBonus <= 0 || !isClaimable}" @click="handleClaimBonus">
             <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
@@ -69,6 +69,7 @@ const router = useRouter();
 const profitAmount = ref(0);
 const expectedBonus = ref(0);
 const isClaiming = ref(false);
+const isClaimable = ref(false);
 
 const handleClaimBonus = () => {
   if (isClaiming.value === true) {
@@ -124,6 +125,7 @@ const fetchData = async () => {
     const res = await getWeeklySlotLossBonusInit(promoCode.value);
     profitAmount.value = res.data.profitAmount || 0;
     expectedBonus.value = res.data.expectedBonus || 0;
+    isClaimable.value = res.data.claimDay
   } catch (error) {
     console.log(error);
   }
