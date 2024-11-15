@@ -44,10 +44,8 @@
       </div>
     </swiper-slide>
   </swiper>
-
-  <!-- <pre>tab---{{ list }}</pre> -->
-  <!-- <pre>selectedTab---{{ selectedTab }}</pre> -->
 </template>
+
 <script setup>
 // Import Swiper Vue.js components
 import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y, Navigation, Pagination } from "swiper";
@@ -96,41 +94,28 @@ onMounted(() => scrollSlide(selectedTab.value));
 
 watch(selectedTab, scrollSlide);
 </script>
-<style lang="scss" scoped>
-:deep(.firstSwiper .swiper-wrapper) {
-  // background: #fff;
-  // background: salmon;
-}
 
+<style lang="scss" scoped>
 .first-swiper {
-  // background: #fff;
   background: #183249;
   justify-content: flex-start;
   align-items: stretch;
-  // backdrop-filter: blur(4px);
-
-  // box-shadow: 0px 2px 2px 0px #0000001A;
-
   box-shadow: 0px 0px 4px 0px #ffffff40 inset;
   border-radius: 12px;
   padding: 4px 8px;
 }
 
 .home-select-slide {
-  // box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
   align-items: center;
   padding: 2px 12px;
   min-height: 32px;
   margin: 5px 0;
   border-radius: 12px;
   display: flex;
-  // flex-wrap: nowrap;
   justify-content: center;
   gap: 6px;
-  // min-width:60px;
 
   img {
-    // width: auto;
     width: 20px;
   }
 
@@ -142,7 +127,6 @@ watch(selectedTab, scrollSlide);
   }
 
   &.selected {
-    // background: linear-gradient(180deg, #7dd4fd 0, #4c9dec 100%);
     background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
     box-shadow: 0px 0px 4px 0px #ffffff inset;
 
