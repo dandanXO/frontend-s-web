@@ -359,7 +359,12 @@
                     @change="searchRecord"
                   >
                     <el-option key="" value="">-</el-option>
-                    <el-option v-for="p in platformsList" :label="p.alias" :key="p.code + '@' + p.gameType + '@' + p.alias" :value="p.code + '@' + p.gameType + '@' + p.alias" />
+                    <el-option
+                      v-for="p in platformsList"
+                      :label="p.alias"
+                      :key="p.code + '@' + p.gameType + '@' + p.alias"
+                      :value="p.code + '@' + p.gameType + '@' + p.alias"
+                    />
                   </el-select>
                 </el-form-item>
                 <el-form-item label="开始">
@@ -1034,13 +1039,14 @@ export default defineComponent({
             searchForm.gameBetRecord.platform = platformArr[0];
             searchForm.gameBetRecord.gameType = platformArr[1];
             searchForm.gameBetRecord.platformName = platformArr[2];
-          } else {
+          } else if(selectedPlatform==="") {
             searchForm.gameBetRecord.platform = ""
             searchForm.gameBetRecord.gameType = ""
             searchForm.gameBetRecord.platformName = null
           }
         }
       }
+      console.log(searchForm[recordActive.value]);
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
           pagination.total = response.data.total;
