@@ -125,7 +125,7 @@ const searchRecord = (data) => {
 
 const isEnded = ref(false);
 
-var apiUrl = "/session/member/gameBetRecord";
+var apiUrl = "/session/member/gameBetRecordWithType";
 var getRecordTotalApiUrl = "/session/member/gameBetRecordTotal";
 
 var endDate = reactive(moment().format("YYYY-MM-DD"));
@@ -174,15 +174,28 @@ const loadDepositTable = (isNew) => {
     visible.value = true;
   }
 
-  var platformName = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
   let paramData = {
     startDate: startDate,
     endDate: endDate,
-    platform: platformName,
+    platform: "",
+    gameType: "",
+    platformName: "",
     memberId: store.id,
     size: 10,
     current: current.value
   };
+
+  let selectedPlatform = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
+  if (selectedPlatform.includes("@")) {
+    const platformArr = selectedPlatform.split("@");
+    paramData.platform = platformArr[0];
+    paramData.gameType = platformArr[1];
+    paramData.platformName = platformArr[2];
+  } else {
+    paramData.platform = "";
+    paramData.gameType = "";
+    paramData.platformName = null;
+  }
 
   api
     .get(apiUrl, {
@@ -276,8 +289,8 @@ const getGameName = (gameName) => {
 const loadPlatformLists = () => {
   platformsList.value = [];
   cached
-    .get("LOGGEDPLATFORMS", () =>
-      api.get("/session/loggedInPlatform").then((response) => {
+    .get("PLATFORMSTYPES", () =>
+      api.get("/platformWithType").then((response) => {
         return response;
       })
     )
@@ -291,7 +304,7 @@ const loadPlatformLists = () => {
         const option = {
           // label: getGameName(item.name),
           label: item.alias,
-          value: item.code
+          value: item.code + "@" + item.gameType + "@" + item.alias
         };
         platformsList.value.push(option);
       });
