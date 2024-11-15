@@ -9,9 +9,6 @@
           <q-btn glossy color="brand" to="/login">登录</q-btn>
           <q-btn outline color="brand" to="/register">注册</q-btn>
         </q-card-actions>
-        <!-- <q-card-actions v-if="store.hasToken()">
-          <q-btn glossy color="brand" @click="logout">Logout</q-btn>
-        </q-card-actions> -->
         <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
           <span style="font-size: 10px; margin-left: 5px; display: block">充值</span>
         </q-btn>
@@ -31,19 +28,6 @@
           icon="menu"
         />
       </q-card-section>
-      <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
-        <q-card-section class="acct-section">
-          <div class="label">Main account:</div>
-          <div class="amt">{{ mainWallet }}</div>
-        </q-card-section>
-        <q-separator vertical />
-        <q-btn class="flex" to="/finance/deposit" no-caps flat
-          ><RiWalletLine />Top-up center</q-btn
-        >
-        <q-btn to="/finance/withdraw" no-caps flat
-          ><RiBankCardLine />Quick Withdraw</q-btn
-        >
-      </q-card-actions> -->
     </q-header>
 
     <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
@@ -61,14 +45,6 @@
         </div>
       </q-scroll-area>
     </q-drawer>
-    <!-- <q-scroll-area
-      ref="scrollPageRef"
-      class="scrollArea"
-    >
-      <q-page-container>
-        <router-view />
-      </q-page-container>
-    </q-scroll-area> -->
 
     <q-page-container>
       <router-view />
@@ -369,7 +345,7 @@ export default defineComponent({
     const pageName = ref("");
     const hasPage = ref(false);
     const hasDrawer = ref(false);
-    const leftDrawerOpen = ref(false);
+
     const platformsFixed = ref([
       {
         id: "81",
@@ -439,7 +415,6 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
 
     const isPlatformActive = (platformCode) => {
       return route.query.platform === platformCode;
@@ -450,10 +425,6 @@ export default defineComponent({
     });
     return {
       tab: ref("home"),
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
       logout,
       store,
       scrollPageRef,
@@ -479,13 +450,11 @@ export default defineComponent({
 
   .q-btn {
     width: 100%;
-    // width: 40%;
     box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
   }
 }
 
 .scrollArea {
-  // height: calc(100vh - 70px);
   height: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -528,7 +497,6 @@ svg path {
   padding-top: 4px;
 
   :deep(.q-tabs__content) {
-    // background: salmon;
     padding-bottom: 4px;
   }
 }

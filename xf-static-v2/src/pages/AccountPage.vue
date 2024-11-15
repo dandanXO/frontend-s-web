@@ -141,272 +141,316 @@
       </q-item-section>
     </div>
 
-    <a @click="logout">
-      <div class="acct-logout q-mx-md">
+    <div>
+      <div class="acct-logout q-mx-md" @click="isLogout = true">
         <div class="acct-nav-label">退出登录</div>
         <div class="acct-logout-img">
           <img src="../assets/images/account/menu_logout.png" />
         </div>
       </div>
-    </a>
+    </div>
   </q-page>
+
+  <q-dialog width="100%" v-model="isLogout" no-backdrop-dismiss no-esc-dismiss>
+    <div class="dialog-card q-ma-md q-pa-md">
+      <div class="dialog-title">温馨提示</div>
+      <div class="dialog-desc">确认退出登录吗？</div>
+
+      <div class="dialog-actions">
+        <div class="action-btn">
+          <q-btn @click="isLogout = false" color="blueborderbtn" label="取消" rounded size="md" style="width: 100%" />
+        </div>
+        <div class="action-btn">
+          <q-btn @click="logout()" color="brightbtn" label="确定" rounded size="md" style="width: 100%" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
-<script>
-import { defineComponent, ref, computed, onMounted, onActivated, onBeforeUnmount } from "vue";
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+<script setup>
 import { App } from "@capacitor/app";
+import { eventapi } from "boot/axios";
 import { Platform } from "quasar";
 import { convertToCommaAmount } from "src/boot/utils.js";
-import { eventapi } from "boot/axios";
+import { userStore } from "stores/index";
+import { computed, onActivated, onBeforeUnmount, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-export default defineComponent({
-  name: "AccountPage",
-  setup() {
-    const router = useRouter();
-    const store = userStore();
-    const logout = () => {
-      store.memberLogout().then(() => {
-        router.push("/");
-      });
-    };
+const router = useRouter();
+const store = userStore();
 
-    const appVersionNo = ref(null);
+const isLogout = ref(false);
+const logout = () => {
+  store.memberLogout().then(() => {
+    router.push("/");
+  });
+};
 
-    const vipLevel = computed(() => {
-      if (store.vip == "VIP0") {
-        return 1;
-      } else if (store.vip == "VIP1") {
-        return 1;
-      } else if (store.vip == "VIP2") {
-        return 2;
-      } else if (store.vip == "VIP3") {
-        return 3;
-      } else if (store.vip == "VIP4") {
-        return 4;
-      } else if (store.vip == "VIP5") {
-        return 5;
-      } else if (store.vip == "VIP6") {
-        return 6;
-      } else if (store.vip == "VIP7") {
-        return 7;
-      } else if (store.vip == "VIP8") {
-        return 8;
-      } else if (store.vip == "VIP9") {
-        return 9;
-      } else if (store.vip == "VIP10") {
-        return 10;
-      } else if (store.vip == "VIP11") {
-        return 11;
-      } else if (store.vip == "VIP12") {
-        return 12;
-      }
-      return store.vip;
-    });
+const appVersionNo = ref(null);
 
-    const timerBalance = ref();
-
-    const vip = computed(() => {
-      return store.vip;
-    });
-    const selfTgurl = ref("https://" + store.evip);
-
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "1.0.0`";
-      } else {
-      }
-    };
-
-    const mainWallet = computed(() => {
-      return store.balance.toFixed(2);
-    });
-
-    const isRefreshingMainWallet = ref(false);
-
-    const refreshMainWallet = () => {
-      store.getBalance();
-
-      isRefreshingMainWallet.value = true;
-
-      setTimeout(() => {
-        isRefreshingMainWallet.value = false;
-      }, 3000);
-    };
-
-    const openDeposit = () => {
-      // to="finance/deposit"
-      localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
-      router.push("finance/deposit");
-    };
-
-    const getBalance = () => {
-      timerBalance.value = setInterval(function () {
-        if (store.hasToken()) {
-          store.getBalance();
-        }
-      }, 20000);
-    };
-
-    const isH5 = ref(false);
-    const checkPlatform = () => {
-      //Is iOS Webclip App || Is Android Apk
-      if (
-        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
-      ) {
-        isH5.value = false;
-      } else {
-        isH5.value = true;
-      }
-    };
-
-    const currentBetAmount = ref(0);
-    const currentDepositAmount = ref(0);
-
-    const getVipDetails = () => {
-      const randNum = Math.floor(Math.random() * 1000) + 1;
-      eventapi.get(`/vip-bonus/get-detail?v=${randNum}`).then((res) => {
-        currentBetAmount.value = res.data.currentBetAmount;
-        currentDepositAmount.value = res.data.currentDepositAmount;
-      });
-    };
-
-    // const vipLevel = ref('');
-
-    const vipItems = [
-      {
-        vipLevel: "1",
-        upgrade: 5000,
-        monthly: "",
-        birthday: "",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥500元, 返现15%, 最高188元"
-      },
-      {
-        vipLevel: "2",
-        upgrade: 20000,
-        monthly: "188",
-        birthday: "",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥500元, 返现15%, 最高258元"
-      },
-      {
-        vipLevel: "3",
-        upgrade: 200000,
-        monthly: "688",
-        birthday: "888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥500元,返现15%, 最高288元"
-      },
-      {
-        vipLevel: "4",
-        upgrade: 500000,
-        monthly: "1,588",
-        birthday: "2,888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥1000元,返现25%, 最高388元"
-      },
-      {
-        vipLevel: "5",
-        upgrade: 2000000,
-        monthly: "2,888",
-        birthday: "5,888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥1000元,返现25%, 最高588元"
-      },
-      {
-        vipLevel: "6",
-        upgrade: 5000000,
-        monthly: "6,888",
-        birthday: "8,888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥1000元,返现25%, 最高688元"
-      },
-      {
-        vipLevel: "7",
-        upgrade: 8000000,
-        monthly: "18,888",
-        birthday: "48,888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元,返现35%, 最高888元"
-      },
-      {
-        vipLevel: "8",
-        upgrade: 10000000,
-        monthly: "18,888",
-        birthday: "48,888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1288元"
-      },
-      {
-        vipLevel: "9",
-        upgrade: 20000000,
-        monthly: "18,888",
-        birthday: "48,888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1888元"
-      },
-      {
-        vipLevel: "10",
-        upgrade: 30000000,
-        monthly: "18,888",
-        birthday: "48,888",
-        monthlySaving: "",
-        oneMonthSaving: "每月单笔≥2000元,返现40%, 最高2888元"
-      }
-    ];
-
-    const progessPercentage = (upgradeAmt) => {
-      return (currentDepositAmount.value / upgradeAmt) * 100;
-    };
-
-    onActivated(() => {
-      store.getUnreadTotal();
-    });
-
-    onMounted(() => {
-      getBalance();
-      // store.getUnreadTotal();
-      store.getBalance();
-      getVersionNo();
-      checkPlatform();
-      store.getUnreadTotal();
-      getVipDetails();
-    });
-
-    onBeforeUnmount(() => {
-      clearInterval(timerBalance.value);
-    });
-
-    return {
-      header: "Account",
-      logout,
-      mainWallet,
-      getBalance,
-      store,
-      openDeposit,
-      vipLevel,
-      appVersionNo,
-      isH5,
-      checkPlatform,
-      selfTgurl,
-      refreshMainWallet,
-      isRefreshingMainWallet,
-      convertToCommaAmount,
-      currentBetAmount,
-      currentDepositAmount,
-      vipItems,
-      progessPercentage
-    };
+const vipLevel = computed(() => {
+  if (store.vip == "VIP0") {
+    return 1;
+  } else if (store.vip == "VIP1") {
+    return 1;
+  } else if (store.vip == "VIP2") {
+    return 2;
+  } else if (store.vip == "VIP3") {
+    return 3;
+  } else if (store.vip == "VIP4") {
+    return 4;
+  } else if (store.vip == "VIP5") {
+    return 5;
+  } else if (store.vip == "VIP6") {
+    return 6;
+  } else if (store.vip == "VIP7") {
+    return 7;
+  } else if (store.vip == "VIP8") {
+    return 8;
+  } else if (store.vip == "VIP9") {
+    return 9;
+  } else if (store.vip == "VIP10") {
+    return 10;
+  } else if (store.vip == "VIP11") {
+    return 11;
+  } else if (store.vip == "VIP12") {
+    return 12;
   }
+  return store.vip;
 });
+
+const timerBalance = ref();
+
+const vip = computed(() => {
+  return store.vip;
+});
+const selfTgurl = ref("https://" + store.evip);
+
+const getVersionNo = async () => {
+  if (store.getDeviceType() == "ANDROID") {
+    const info = await App.getInfo();
+    var current_version = info.version;
+    appVersionNo.value = current_version;
+  } else if (store.getDeviceType() == "IOS") {
+    appVersionNo.value = "1.0.0`";
+  } else {
+  }
+};
+
+const mainWallet = computed(() => {
+  return store.balance.toFixed(2);
+});
+
+const isRefreshingMainWallet = ref(false);
+
+const refreshMainWallet = () => {
+  store.getBalance();
+
+  isRefreshingMainWallet.value = true;
+
+  setTimeout(() => {
+    isRefreshingMainWallet.value = false;
+  }, 3000);
+};
+
+const openDeposit = () => {
+  // to="finance/deposit"
+  localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
+  router.push("finance/deposit");
+};
+
+const getBalance = () => {
+  timerBalance.value = setInterval(function () {
+    if (store.hasToken()) {
+      store.getBalance();
+    }
+  }, 20000);
+};
+
+const isH5 = ref(false);
+const checkPlatform = () => {
+  //Is iOS Webclip App || Is Android Apk
+  if (
+    (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
+    (Platform.is.android && Platform.is.capacitor)
+  ) {
+    isH5.value = false;
+  } else {
+    isH5.value = true;
+  }
+};
+
+const currentBetAmount = ref(0);
+const currentDepositAmount = ref(0);
+
+const getVipDetails = () => {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  eventapi.get(`/vip-bonus/get-detail?v=${randNum}`).then((res) => {
+    currentBetAmount.value = res.data.currentBetAmount;
+    currentDepositAmount.value = res.data.currentDepositAmount;
+  });
+};
+
+// const vipLevel = ref('');
+
+const vipItems = [
+  {
+    vipLevel: "1",
+    upgrade: 5000,
+    monthly: "",
+    birthday: "",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥500元, 返现15%, 最高188元"
+  },
+  {
+    vipLevel: "2",
+    upgrade: 20000,
+    monthly: "188",
+    birthday: "",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥500元, 返现15%, 最高258元"
+  },
+  {
+    vipLevel: "3",
+    upgrade: 200000,
+    monthly: "688",
+    birthday: "888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥500元,返现15%, 最高288元"
+  },
+  {
+    vipLevel: "4",
+    upgrade: 500000,
+    monthly: "1,588",
+    birthday: "2,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥1000元,返现25%, 最高388元"
+  },
+  {
+    vipLevel: "5",
+    upgrade: 2000000,
+    monthly: "2,888",
+    birthday: "5,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥1000元,返现25%, 最高588元"
+  },
+  {
+    vipLevel: "6",
+    upgrade: 5000000,
+    monthly: "6,888",
+    birthday: "8,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥1000元,返现25%, 最高688元"
+  },
+  {
+    vipLevel: "7",
+    upgrade: 8000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现35%, 最高888元"
+  },
+  {
+    vipLevel: "8",
+    upgrade: 10000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1288元"
+  },
+  {
+    vipLevel: "9",
+    upgrade: 20000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1888元"
+  },
+  {
+    vipLevel: "10",
+    upgrade: 30000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现40%, 最高2888元"
+  }
+];
+
+const progessPercentage = (upgradeAmt) => {
+  return (currentDepositAmount.value / upgradeAmt) * 100;
+};
+
+onActivated(() => {
+  store.getUnreadTotal();
+});
+
+onMounted(() => {
+  getBalance();
+  // store.getUnreadTotal();
+  store.getBalance();
+  getVersionNo();
+  checkPlatform();
+  store.getUnreadTotal();
+  getVipDetails();
+});
+
+onBeforeUnmount(() => {
+  clearInterval(timerBalance.value);
+});
+
+// return {
+//   logout,
+//   mainWallet,
+//   getBalance,
+//   store,
+//   openDeposit,
+//   vipLevel,
+//   appVersionNo,
+//   isH5,
+//   checkPlatform,
+//   selfTgurl,
+//   refreshMainWallet,
+//   isRefreshingMainWallet,
+//   convertToCommaAmount,
+//   currentBetAmount,
+//   currentDepositAmount,
+//   vipItems,
+//   progessPercentage,
+//   isLogout
+// };
 </script>
+
+<style lang="scss">
+.dialog-card {
+  background: linear-gradient(0deg, #213057, #213057),
+    linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  width: 100%;
+
+  .dialog-title {
+    font-size: 20px;
+  }
+
+  .dialog-desc {
+    padding-top: 16px;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding-top: 24px;
+
+    .action-btn {
+      display: flex;
+      width: 100%;
+    }
+  }
+}
+</style>
+
 <style scoped lang="scss">
 .profile {
   // background: url(../assets/images/account/account-bg.png) no-repeat center

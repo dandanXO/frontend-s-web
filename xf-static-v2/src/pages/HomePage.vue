@@ -26,45 +26,50 @@
 
   <div class="home-all-slider" v-scroll="onHomeScroll">
     <div class="q-px-md">
-      <q-carousel
-        class="home"
-        autoplay
-        navigation
-        v-model="slide"
-        swipeable
-        transition-next="slide-left"
-        transition-prev="slide-right"
-        animated
-        infinite
-      >
-        <template v-slot:navigation-icon="{ active, onClick }">
-          <q-btn
-            padding="3px"
-            v-if="active"
-            size="xs"
-            color="white"
-            @click="onClick"
-            style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-          />
-          <q-btn
-            padding="3px"
-            v-else
-            size="xs"
-            color="transparent"
-            @click="onClick"
-            style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-          />
-        </template>
+      <template v-if="bannerLoading">
+        <q-skeleton style="height: 200px" />
+      </template>
+      <template v-else>
+        <q-carousel
+          class="home"
+          autoplay
+          navigation
+          v-model="slide"
+          swipeable
+          transition-next="slide-left"
+          transition-prev="slide-right"
+          animated
+          infinite
+        >
+          <template v-slot:navigation-icon="{ active, onClick }">
+            <q-btn
+              padding="3px"
+              v-if="active"
+              size="xs"
+              color="white"
+              @click="onClick"
+              style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+            />
+            <q-btn
+              padding="3px"
+              v-else
+              size="xs"
+              color="transparent"
+              @click="onClick"
+              style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+            />
+          </template>
 
-        <q-carousel-slide
-          v-for="(banner, i) in banners"
-          :key="i"
-          :name="i"
-          class="column no-wrap flex-center"
-          :img-src="imgURL + banner.mobileImageUrl"
-          @click="gotoPromo(banner)"
-        ></q-carousel-slide>
-      </q-carousel>
+          <q-carousel-slide
+            v-for="(banner, i) in banners"
+            :key="i"
+            :name="i"
+            class="column no-wrap flex-center"
+            :img-src="imgURL + banner.mobileImageUrl"
+            @click="gotoPromo(banner)"
+          ></q-carousel-slide>
+        </q-carousel>
+      </template>
 
       <div class="midd">
         <div class="station-notice-wrapper">
@@ -168,58 +173,6 @@
                       :maintenanceEndTime="item.maintenanceEndTime"
                       :link="`slot?platform=${item.code}`"
                     />
-                    <!-- <div v-for="(slt, i) in slot" :key="i" class="game-item-div">
-                    <router-link :to="`slot?platform=${slt.code}`" class="game-board">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${slt.icon.toLowerCase()}-${slt.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="slt.name"
-                        />
-                      </div>
-
-                      <div class="game-title">
-                        <h3>{{ slt.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${slt.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="slt.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
-
-                      <div class="maintenance-box" v-if="slt.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </router-link>
-                  </div> -->
                   </div>
                 </div>
               </div>
@@ -269,7 +222,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="id-esport-slide" class="esport-slides home-swiper-slide">
                 <div class="home-game-boards">
                   <h2>电竞赛事</h2>
@@ -290,7 +242,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="id-fish-slide" class="fish-slides home-swiper-slide">
                 <div class="home-game-boards">
                   <h2>捕鱼游戏</h2>
@@ -319,7 +270,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="id-poker-slide" class="poker-slides home-swiper-slide">
                 <div class="home-game-boards">
                   <h2>棋牌游戏</h2>
@@ -340,7 +290,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
                 <div class="home-game-boards">
                   <h2>彩票游戏</h2>
@@ -361,7 +310,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="id-casual-slide" class="casual-slides home-swiper-slide">
                 <div class="home-game-boards">
                   <h2>小游戏</h2>
@@ -513,23 +461,20 @@ export default defineComponent({
     };
     const onHomeScroll = (position) => {
       if (route.path === "/") {
-        // console.log(position);
         scrollPosition.value = position;
         if (position === 0) {
           isZeroScrollPos.value = true;
         } else {
           isZeroScrollPos.value = false;
         }
-        // if (!store.hasToken()) {
+
         if (position > 55) {
           isShowDownload.value = false;
         } else {
           isShowDownload.value = true;
         }
-        // }
 
         if (position > 430) {
-          // console.log("3500000");
           isStickyGameType.value = true;
         } else {
           isStickyGameType.value = false;
@@ -562,8 +507,6 @@ export default defineComponent({
           const liveTop = liveSlide.getBoundingClientRect().top;
           const lotteryTop = lotterySlide.getBoundingClientRect().top;
           const casualTop = casualSlide.getBoundingClientRect().top;
-
-          // console.log("selectedTab: ", selectedTab.value);
 
           if (casualTop - 630 <= stickyHeight) {
             selectedTab.value = "casual";
@@ -599,7 +542,6 @@ export default defineComponent({
       slotSwiper2.value = swiper;
     };
     const setSelectedSwiper = (tab) => {
-      // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "slot") {
         scrollToSlide("id-slot-slide");
@@ -879,29 +821,24 @@ export default defineComponent({
       router.push(`/promo?name=${urlString}`);
     };
 
+    const bannerLoading = ref(false);
+
     function loadData() {
+      bannerLoading.value = true;
       api
         .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: res.data.message,
-            //   icon: "report_problem"
-            // });
+            setTimeout(() => {
+              bannerLoading.value = false;
+            }, 500);
           }
-          // banners.value = response.data;
         })
-        .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
+        .finally(() => {
+          setTimeout(() => {
+            bannerLoading.value = false;
+          }, 500);
         });
     }
 
@@ -1285,7 +1222,8 @@ export default defineComponent({
       swiperContainerRef,
       scrollToSlide,
       isOutdatedApp,
-      platListLoading
+      platListLoading,
+      bannerLoading
     };
   }
 });
@@ -1400,7 +1338,7 @@ export default defineComponent({
 }
 
 .download-top-container {
-  padding: 4px 10px;
+  padding: 4px 0px;
 
   .download-top-box {
     display: flex;
@@ -1529,8 +1467,8 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
-  height: 75px;
+  padding: 16px 0 0;
+  // height: 75px;
 
   .message {
     flex: 1;
@@ -1554,14 +1492,11 @@ export default defineComponent({
   .menulist {
     flex: 4;
     display: flex;
-    // margin-left: auto;
     justify-content: flex-end;
     gap: 12px;
-    // background:salmon;
 
     .men {
       text-decoration: none;
-      // color: #ffffff;
       color: #00bfd7;
       gap: 6px;
       display: flex;
@@ -1786,7 +1721,7 @@ export default defineComponent({
 }
 
 .home-game-boards {
-  padding-top: 16px;
+  // padding-top: 16px;
   h2 {
     //margin-top: 15px;
     //margin-bottom: 15px;
@@ -1843,12 +1778,6 @@ export default defineComponent({
           justify-content: center;
           align-items: center;
           padding: 8px 4px;
-
-          // position: absolute;
-          // background: salmon;
-          // bottom: 0;
-          // width: 100%;
-          // width: calc(100% - 16px);
 
           h3 {
             font-size: 14px;
