@@ -6,6 +6,10 @@ export function getPlatformList() {
   return cached.get("PLATFORMS", () => server.REST.get("/platform"));
 }
 
+export function getPlatformWithTypeList() {
+  return cached.get("PLATFORMS", () => server.REST.get("/platformWithType"));
+}
+
 export function getLoggedInPlatformList() {
   return cached.get("LOGGEDINPLATFORMS", () =>
     server.REST.get("/session/loggedInPlatform")
