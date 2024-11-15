@@ -2086,6 +2086,9 @@ a {
 .overlapParent {
   display: grid;
   grid-template-columns: 1fr;
+  .el-image {
+    align-self: flex-start
+  }
 }
 
 .el-image {
