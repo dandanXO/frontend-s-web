@@ -89,7 +89,7 @@ const searchRecord = () => {
 
 const isEnded = ref(false);
 
-var apiUrl = "/session/member/gameBetRecord";
+var apiUrl = "/session/member/gameBetRecordWithType";
 
 var endDate = reactive(moment().format("YYYY-MM-DD"));
 var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));
@@ -108,25 +108,7 @@ const loadNewData = () => {
     current.value++;
   } else {
     current.value = 1;
-    // endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-    // console.log(endDate);
 
-    // startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-    // console.log(startDate);
-
-    // const startMonth = moment(startDate).format("MM");
-    // const endMonth = moment(endDate).format("MM");
-    // if (startMonth !== endMonth) {
-    //   // If startDate and endDate are in the same month, take the latest month's data
-    //   const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
-    //   startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
-    // }
-
-    // if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
-    //   console.log("mor than 3 months");
-    //   isEnded.value = true;
-    //   return;
-    // }
     isEnded.value = true;
     return;
   }
@@ -138,15 +120,28 @@ const loadDepositTable = (isNew) => {
     visible.value = true;
   }
 
-  var platformName = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
   let paramData = {
     startDate: startDate,
     endDate: endDate,
-    platform: platformName,
+    platform: "",
+    gameType: "",
+    platformName: "",
     memberId: store.id,
     size: 20,
     current: current.value
   };
+
+  let selectedPlatform = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
+  if (selectedPlatform.includes("@")) {
+    const platformArr = selectedPlatform.split("@");
+    paramData.platform = platformArr[0];
+    paramData.gameType = platformArr[1];
+    paramData.platformName = platformArr[2];
+  } else {
+    paramData.platform = "";
+    paramData.gameType = "";
+    paramData.platformName = null;
+  }
 
   api
     .get(apiUrl, {
@@ -163,72 +158,13 @@ const loadDepositTable = (isNew) => {
         visible.value = false;
       }
     });
-
-  const obj = {
-    memberId: store.id,
-    platform: platformName,
-    startDate: startDate,
-    endDate: endDate
-  };
-};
-
-const getGameName = (gameName) => {
-  if (!gameName) {
-    return "";
-  }
-
-  switch (gameName) {
-    case "IMES":
-      return "IM电竞";
-    case "TCG":
-      return "TCG彩票";
-    case "MGP":
-      return "MG电子";
-    case "CQ9":
-      return "CQ电子";
-    case "SABA":
-      return "SABA体育";
-    case "TFGaming":
-      return "DY电竞 ";
-    case "SW":
-      return "SW电子";
-    case "GPS":
-      return "GPS捕鱼";
-    case "PMFISH":
-      return "DB捕鱼";
-    case "IA":
-      return "小艾电竞 ";
-    case "LEG":
-      return "乐游棋牌";
-    case "DT":
-      return "大唐棋牌";
-    case "IM":
-      return "IM体育";
-    case "BBIN":
-      return "BBIN真人, BBIN电子, BBIN彩票";
-    case "KY":
-      return "开元棋牌";
-    case "PT":
-      return "PT电子";
-    case "PG":
-      return "PG电子";
-    case "AG":
-      return "AG真人, XIN电子";
-    case "AGF":
-      return "AG捕鱼";
-    case "ALLBET":
-      return "ALLBET真人";
-
-    default:
-      return gameName;
-  }
 };
 
 const loadPlatformLists = () => {
   platformsList.value = [];
   cached
-    .get("LOGGEDPLATFORMS", () =>
-      api.get("/session/loggedInPlatform").then((response) => {
+    .get("PLATFORMSTYPES", () =>
+      api.get("/platformWithType").then((response) => {
         return response;
       })
     )
@@ -240,8 +176,8 @@ const loadPlatformLists = () => {
 
       data.forEach((item) => {
         var option = {
-          label: getGameName(item.name),
-          value: item.code
+          label: item.alias,
+          value: item.code + "@" + item.gameType + "@" + item.alias
         };
         platformsList.value.push(option);
       });
