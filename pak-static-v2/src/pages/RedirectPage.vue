@@ -12,7 +12,11 @@ import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 
 const countdown = ref(5);
-const allowedDomains = [];
+const allowedDomains = ['5fwuk.cc',
+'erdqo.cc',
+'hgwpc.cc',
+'qtmjv.cc',
+'x0ezt.cc'];
 
 const router = useRouter();
 const redirected = ref(false);
