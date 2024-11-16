@@ -53,11 +53,11 @@
         <div class="title"></div>
         <div class="little-title" style="flex-direction: column; align-items: flex-start">
           <div class="left">活动时间</div>
-          <div class="right">2024年11月15日起</div>
+          <div class="right">2024年11月16日起</div>
         </div>
         <div class="little-title" style="flex-direction: column; align-items: flex-start">
           <div class="left">活动内容</div>
-          <div class="right">活动期间，当日 LOL 传奇杯有效投注≥3,000 元即可获得 最高 2,888 元的奖励金</div>
+          <div class="right">活动期间，当日 LOL传奇杯有效投注≥3,000 元即可获得 最高 2,888 元的奖励金</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
