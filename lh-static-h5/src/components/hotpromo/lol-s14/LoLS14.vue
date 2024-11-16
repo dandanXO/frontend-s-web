@@ -53,11 +53,11 @@
         <div class="title"></div>
         <div class="little-title" style="flex-direction: column; align-items: flex-start">
           <div class="left">活动时间</div>
-          <div class="right">2024 年 9 月 25 日起</div>
+          <div class="right">2024年11月16日起</div>
         </div>
         <div class="little-title" style="flex-direction: column; align-items: flex-start">
           <div class="left">活动内容</div>
-          <div class="right">活动期间，当日 S14 全球总决赛有效投注≥1,500 元即可获得 最高 1888 元的奖励金</div>
+          <div class="right">活动期间，当日 LOL传奇杯有效投注≥3,000 元即可获得 最高 2,888 元的奖励金</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
@@ -105,7 +105,6 @@
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             会员 A 在电竞 LOL 传奇杯比赛中投注 5,000 元在次日可获传奇礼金 28 元。
-
           </div>
         </div>
       </div>
@@ -115,16 +114,19 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，活动仅计算电竞场馆中 LOL 传奇杯比赛赛事，会员在当日 LOL 传奇杯比赛累计有效投注≥3000 元即可获得对应彩金，有效投注次日清零；注：奖金不叠加派发，奖金按最高档位每日派发一次。
+            活动期间，活动仅计算电竞场馆中 LOL 传奇杯比赛赛事，会员在当日 LOL 传奇杯比赛累计有效投注≥3000
+            元即可获得对应彩金，有效投注次日清零；注：奖金不叠加派发，奖金按最高档位每日派发一次。
             <span style="color: #ff0000; display: contents">注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 LOL 传奇杯比赛已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 5 倍流水即可出款；
+            活动期间，活动仅计算当日 LOL 传奇杯比赛已结算的赛事总有效投注，次日 24
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 5 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -132,7 +134,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
