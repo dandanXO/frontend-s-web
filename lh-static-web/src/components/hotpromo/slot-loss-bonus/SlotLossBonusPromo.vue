@@ -38,7 +38,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -97,7 +96,7 @@ const fetchData = async () => {
     const res = await getWeeklySlotLossBonusInit();
     profitAmount.value = res.data.profitAmount || 0;
     expectedBonus.value = res.data.expectedBonus || 0;
-    isClaimable.value = res.data.claimDay
+    isClaimable.value = res.data.claimDay;
   } catch (error) {
     console.log(error);
   }
@@ -131,7 +130,7 @@ onMounted(() => {
   justify-content: space-between;
   background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
   background-size: 100% 100%;
-  font-family: 'PingFang SC', 'PingFang', sans-serif;
+  font-family: "PingFang SC", "PingFang", sans-serif;
 
   .livepoker-rebate-section-left {
     display: flex;
@@ -159,6 +158,7 @@ onMounted(() => {
       &.disabled {
         cursor: not-allowed;
         pointer-events: none;
+        filter: grayscale(1);
       }
 
       img {
