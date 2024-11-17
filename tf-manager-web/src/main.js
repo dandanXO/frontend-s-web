@@ -77,6 +77,11 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'pak';
     break;
+  case process.env.VUE_APP_PK2_HOST:
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
+    siteId = 'pk2';
+    break;
   case process.env.VUE_APP_NGA_HOST:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
@@ -176,6 +181,9 @@ if (siteId === 'dy') {
 } else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1' || siteId === 'br1' || siteId === 'mx1' || siteId === 'pk3' || siteId === 'id1') {
   link.href = '/ind-favicon.ico';
   title.innerText = '55Ace';
+} else if (siteId === 'pak' || siteId === 'pk2') {
+  link.href = '/pak-favicon.ico';
+  title.innerText = 'B9Game';
 } else if (siteId === 'lh') {
   link.href = '/favicon.ico';
   title.innerText = '雷火后台';
