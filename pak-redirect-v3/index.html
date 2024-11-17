@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="css/index.css" />
+  <title>Pakistan</title>
+  <link rel="stylesheet" href="assets/css/index.css" />
+  <script src="assets/js/crypto-js.min.js"></script>
+  <script src="assets/js/index.js"></script>
 
-  <script>
-    const REDIRECT_TARGET = "https://www.b9game0.com";
+  <script type="text/javascript">
+    const encryptedUrl = "U2FsdGVkX19AEmNt222DxLAaqG7gfgIvh+FHdjHt6Iz9+M0taAXkE6GH/Akeek/Y";
+    const secretKey = "Aa123456";  //
+
+    function decryptUrl(encryptedUrl, secretKey) {
+      const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
+      return bytes.toString(CryptoJS.enc.Utf8);
+    }
+    const decryptedUrl = decryptUrl(encryptedUrl, secretKey);
+
     const path = window.location.pathname.replace(/\/$/, "");
     const matches = path.match(/\/r\/(.*)/);
-    const affiliate = matches ? matches[1] : "12345"; // default affiliate id
-    window.location.replace(`${REDIRECT_TARGET}/refer/${affiliate}`);
+    const affiliate = matches ? matches[1] : "4F09FA";
+    window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
   </script>
 </html>
 <body id="pak-redirect-v3">
