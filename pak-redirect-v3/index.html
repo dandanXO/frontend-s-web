@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="css/index.css" />
+
+  <script>
+    const REDIRECT_TARGET = "https://www.b9game0.com";
+    const path = window.location.pathname.replace(/\/$/, "");
+    const matches = path.match(/\/r\/(.*)/);
+    const affiliate = matches ? matches[1] : "12345"; // default affiliate id
+    window.location.replace(`${REDIRECT_TARGET}/refer/${affiliate}`);
+  </script>
+</html>
+<body>
+  <div></div>
+</body>
