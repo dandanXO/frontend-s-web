@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CountDown</title>
     <script src="assets/js/crypto-js.min.js"></script>
+    <script src="assets/js/index.js"></script>
     <style>
         * {
             margin: 0;
@@ -72,8 +73,10 @@
 
         let countdownTime = 5;
 
-        const encryptedUrl = "U2FsdGVkX18wf6flDR28GKkf6OFCxydWUzcsLvSxdcqus6anCm3lGfNJ41zRR+lX";
+        const encryptedUrl = "U2FsdGVkX1/Au37hYQpgnhtHMBn6cdBOzYr+jnq8Vz3ZF5bksKtZtWPgD///Cws+";
         const secretKey = "Aa123456";  //
+
+        console.log(encryptUrl("https://bgd.b9game0.com/",secretKey))
 
         const countdown = setInterval(() => {
             document.getElementById('countdown').innerText = `Waiting time : ${countdownTime} seconds;`
