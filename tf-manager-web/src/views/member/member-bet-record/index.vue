@@ -71,7 +71,7 @@
           <el-option
             v-for="item in platform.list"
             :key="item.id"
-            :label="item.name"
+            :label="item.code"
             :value="item.code"
           />
         </el-select>
