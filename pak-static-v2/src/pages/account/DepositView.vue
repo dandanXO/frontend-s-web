@@ -850,6 +850,9 @@ async function pDepo(deposit) {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                 }
               }
+            } else if (isTikTokInAppBrowser()) {
+              alert("Opening new URL...");
+              window.location.href = response.requestUrl;
             } else {
               const newWin = window.open(`/`);
               if (!newWin) {
@@ -932,6 +935,11 @@ async function pDepo(deposit) {
       btnLoading.value = false;
     });
 }
+
+const isTikTokInAppBrowser = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  return /TikTok/i.test(userAgent) && /Chrome|Chromium|Safari/i.test(userAgent);
+};
 
 const nodeKey = ref(0);
 const refreshNode = () => {
