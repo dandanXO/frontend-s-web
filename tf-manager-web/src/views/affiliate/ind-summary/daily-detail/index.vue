@@ -462,6 +462,7 @@ function checkQuery() {
       })
       .join(',')
     // query.loginNameList = request.loginNameList.join(',')
+    //
   }
 
   query.affiliateLevel = request.affiliateLevel
