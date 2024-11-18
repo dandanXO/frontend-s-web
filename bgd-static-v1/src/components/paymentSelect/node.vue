@@ -18,7 +18,10 @@
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow txt-title">{{ item.nodeName }}</div>
-          <div class="payment-range-div" v-if="level > 1">
+          <div class="payment-range-div" v-if="level > 1 && item.depositMax === 9999999">
+            {{ displayWithThousand(item.depositMin) }} - {{ $t("deposit.unlimited") }}
+          </div>
+          <div class="payment-range-div" v-else-if="level > 1">
             {{ displayWithThousand(item.depositMin) }} - {{ displayWithThousand(item.depositMax) }}
           </div>
           <div class="promo">

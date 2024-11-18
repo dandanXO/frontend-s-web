@@ -2,14 +2,16 @@
   <q-page>
     <div class="withdrawal-summary">
       <div class="balance">
-        <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+        <span v-else class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <span class="amount">
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+        <span v-else class="amount">
           {{
             selectedWithdrawalMethod.withdrawableBalance >= 0
               ? convertToCommaAmount(selectedWithdrawalMethod.withdrawableBalance, false)
@@ -528,6 +530,13 @@ onMounted(() => {
   store.getBalance();
   // loadPlatform()
 });
+
+onActivated(() => {
+  checkNewUser();
+  store.getBalance();
+  // loadPlatform()
+});
+
 const platforms = reactive([]);
 const loadPlatform = () => {
   api.get("/platform").then((res) => {
@@ -749,6 +758,8 @@ const selectedWithdrawalMethodMaintenanceDateRange = computed(() =>
 );
 
 const getWithdrawalMethods = () => {
+  isLoadingWithdrawalMethod.value = true;
+
   api.get("/session/withdraw/entrance").then((response) => {
     if (response.code === 0) {
       withdrawalMethods.value = response.data;
@@ -767,7 +778,7 @@ const getWithdrawalMethods = () => {
       //   icon: "report_problem"
       // });
     }
-  });
+  }).finally(() => (isLoadingWithdrawalMethod.value = false));
 };
 const updateWithdrawAmt = () => {
   withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
