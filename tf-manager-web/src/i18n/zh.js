@@ -2126,6 +2126,9 @@ export default {
     ignoreSettlement: '忽略结算',
     sendType: '发送方法',
     specificAffiliate: '指定代理',
+    subType: '子类型',
+    active: '已启用',
+    inactive: '未启用',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -3070,6 +3073,24 @@ export default {
     DEPOSIT_FLUCTUATION: '存款波动',
     WITHDRAW_FLUCTUATION: '提款波动',
     BONUS_FLUCTUATION: '优惠波动',
+  },
+  domain: {
+    domainMainType: {
+      FRONTEND: '前台域名',
+      BACKEND: '后台域名',
+    },
+    domainFrontendType: {
+      LANDING: '落地页',
+      DOWNLOAD: '下载页',
+      AFFILIATE: '代理',
+      HOME: '首页',
+      MANAGER: '管理后台',
+    },
+    domainBackendType: {
+      API: 'API',
+      MANAGER: '管理后台',
+      AFFILIATE: '代理后台',
+    }
   },
   error: {
     400: '请求无效',
