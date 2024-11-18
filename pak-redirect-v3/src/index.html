@@ -5,9 +5,9 @@
   <link rel="stylesheet" href="assets/css/index.css" />
   <script src="assets/js/crypto-js.min.js"></script>
   <script src="assets/js/index.js"></script>
-  <script type="text/javascript">
-    const encryptedUrl = "U2FsdGVkX19AEmNt222DxLAaqG7gfgIvh+FHdjHt6Iz9+M0taAXkE6GH/Akeek/Y";
+  <script>
     const secretKey = "Aa123456";
+    const encryptedUrl = `U2FsdGVkX19AEmNt222DxLAaqG7gfgIvh+FHdjHt6Iz9+M0taAXkE6GH/Akeek/Y`;
 
     function decryptUrl(encryptedUrl, secretKey) {
       const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
