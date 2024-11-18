@@ -20,9 +20,9 @@
     const path = window.location.pathname.replace(/\/$/, "");
     const matches = path.match(/\/r\/(.*)/);
     const affiliate = matches ? matches[1] : "4F09FA";
-    // window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
+    window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
 
-    alert(decryptedUrl);
+    // alert(decryptedUrl);
   </script>
 </head>
 <body id="pak-redirect-v3">
