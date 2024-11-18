@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pakistan</title>
+  <link rel="stylesheet" href="/assets/css/index.css" />
+  <script src="/assets/js/crypto-js.min.js"></script>
+  <script src="/assets/js/index.js"></script>
+  <script>
+    console.log("11/18")
+
+    const secretKey = `Aa123456`;
+    const encryptedUrl = `U2FsdGVkX182a9uWyAo7IYD3f2voqBrN70Jn6lc0xJtCNRUe3mey26DJ7jZ+Q3k4`;
+
+    const decryptUrl= (encryptedUrl, secretKey) => {
+      const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
+      return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
+    const decryptedUrl = decryptUrl(encryptedUrl, secretKey);
+
+    const path = window.location.pathname.replace(/\/$/, "");
+    const matches = path.match(/\/r\/(.*)/);
+    const affiliate = matches ? matches[1] : "A74B03";
+    window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
+
+    // alert(decryptedUrl);
+  </script>
+</head>
+<body id="pk2-redirect-v3">
+<div>&nbsp;</div>
+</body>
+</html>
