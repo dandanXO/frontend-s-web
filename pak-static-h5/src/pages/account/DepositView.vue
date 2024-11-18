@@ -73,7 +73,10 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
           <div class="lil-title flex-div" style="justify-content: space-between">
-            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1">
+            <q-checkbox
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
+            >
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
@@ -795,7 +798,12 @@ async function pDepo(deposit) {
         } else {
           if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
-              const newWin = window.open(`/`, `_self`);
+              let newWin;
+              if (window.navigator.userAgent.includes("ByteLocale")) {
+                newWin = window.open("/");
+              } else {
+                newWin = window.open(`/`, `_self`);
+              }
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
               }
@@ -944,7 +952,7 @@ const loadAppTabs = () => {
         store.ftd = data.ftd;
 
         if (store.ftd) {
-        //   isFtdPrivilegeEnable.value = true;
+          //   isFtdPrivilegeEnable.value = true;
         }
       }
     }
