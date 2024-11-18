@@ -796,9 +796,6 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (store.memberType === "TEST" && store.nickName === "03080808080") {
-            alert(navigator.userAgent);
-          }
           if (isTikTokInAppBrowser()) {
             window.location.href = response.requestUrl;
             return;
