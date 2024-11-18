@@ -26,7 +26,7 @@
           style="width: 400px; margin-left: 5px;"
         >
           <el-option
-            v-for="item in uiControl.eventType"
+            v-for="item in request.eventType"
             :key="item.value"
             :label="t('rollover.rolloverEventType.' + item.displayName)"
             :value="item.value"
