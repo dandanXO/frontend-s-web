@@ -1032,3 +1032,17 @@ build-image-xf-static-v2:
     - build-xf-static-v2
 
 #===============================================================================================
+
+build-pk2-redirect-v3:
+  extends: .build-projects
+  variables:
+    PROJECT: pk2-redirect-v3
+
+build-image-pk2-redirect-v3:
+  extends: .docker-build
+  variables:
+    PROJECT: pk2-redirect-v3
+  needs:
+    - build-pk2-redirect-v3
+
+#===============================================================================================
