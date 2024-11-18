@@ -915,6 +915,8 @@ deploy-mx1-download:
   variables:
     PROJECT: mx1-download
     SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
 
 #===============================================================================================
 
