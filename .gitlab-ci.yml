@@ -67,9 +67,11 @@ default:
 
 .s3-deploy:
   stage: deploy
+  variables:
+    SITE_CODE: ""
   image: amazon/aws-cli
   script:
-    - if [ "$CI_COMMIT_BRANCH" == "test" ]; then export BUCKET=p8s1-dev-$PROJECT; elif [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
+    - if [ "$CI_COMMIT_BRANCH" == "test" ]; then export BUCKET=p8s1-dev-$PROJECT; elif [ "$CI_COMMIT_BRANCH" == "staging" ]; then export BUCKET=p8s1-$CI_COMMIT_BRANCH-$PROJECT; elif [ "$CI_COMMIT_BRANCH" == "production" ] && [ "$SITE_CODE" == "P8S1-BR1" ]; then export BUCKET=p8s1-br1-$PROJECT; else export BUCKET=p8s1-$PROJECT; fi
     - aws s3 sync $PROJECT s3://$BUCKET
   rules:
     - if: '$CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
@@ -908,6 +910,16 @@ build-image-pk3-static-v3:
 
 #===============================================================================================
 
+deploy-mx1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: mx1-download
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
+
+#===============================================================================================
+
 build-mx1-static-v1:
   extends: .build-projects
   variables:
@@ -1030,5 +1042,19 @@ build-image-xf-static-v2:
     PROJECT: xf-static-v2
   needs:
     - build-xf-static-v2
+
+#===============================================================================================
+
+build-pk2-redirect-v3:
+  extends: .build-projects
+  variables:
+    PROJECT: pk2-redirect-v3
+
+build-image-pk2-redirect-v3:
+  extends: .docker-build
+  variables:
+    PROJECT: pk2-redirect-v3
+  needs:
+    - build-pk2-redirect-v3
 
 #===============================================================================================
