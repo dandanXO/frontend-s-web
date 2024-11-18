@@ -851,10 +851,17 @@ deploy-pak-redirect-v2:
 
 #===============================================================================================
 
-deploy-pak-redirect-v3:
-  extends: .s3-deploy
+build-pak-redirect-v3:
+  extends: .build-projects
   variables:
     PROJECT: pak-redirect-v3
+
+build-image-pak-redirect-v3:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-redirect-v3
+  needs:
+    - build-pak-redirect-v3
 
 #===============================================================================================
 
