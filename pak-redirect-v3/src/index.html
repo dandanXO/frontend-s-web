@@ -3,23 +3,27 @@
 <head>
   <title>Pakistan</title>
   <link rel="stylesheet" defer="defer" href="assets/css/index.css" />
-  <script defer="defer" src="assets/js/crypto-js.min.js"></script>
+<!--  <script defer="defer" src="assets/js/crypto-js.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script defer="defer" src="assets/js/index.js"></script>
-  <script>
+  <script defer>
+
     const secretKey = "Aa123456";
     const encryptedUrl = `U2FsdGVkX19AEmNt222DxLAaqG7gfgIvh+FHdjHt6Iz9+M0taAXkE6GH/Akeek/Y`;
 
-    function decryptUrl(encryptedUrl, secretKey) {
+    const decryptUrl= (encryptedUrl, secretKey) => {
       const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
       return bytes.toString(CryptoJS.enc.Utf8);
     }
+
     const decryptedUrl = decryptUrl(encryptedUrl, secretKey);
 
     const path = window.location.pathname.replace(/\/$/, "");
     const matches = path.match(/\/r\/(.*)/);
     const affiliate = matches ? matches[1] : "4F09FA";
     // window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
-    alert(affiliate);
+
+    alert(decryptedUrl);
   </script>
 </head>
 <body id="pak-redirect-v3">
