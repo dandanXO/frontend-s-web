@@ -7,7 +7,7 @@
 
   <script type="text/javascript">
     const encryptedUrl = "U2FsdGVkX19AEmNt222DxLAaqG7gfgIvh+FHdjHt6Iz9+M0taAXkE6GH/Akeek/Y";
-    const secretKey = "Aa123456";  //
+    const secretKey = "Aa123456";
 
     function decryptUrl(encryptedUrl, secretKey) {
       const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
