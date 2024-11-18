@@ -127,8 +127,8 @@ export const sportsPlatforms = [
     code: "FB",
     cnname: "FB体育",
     image: "fb",
-    message: "奇幻赛事、特别投注，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰",
-    caption: "奇幻赛事、特别投注",
+    message: "奇幻赛事，特别投注，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰",
+    caption: "奇幻赛事，特别投注",
     gameCode: ""
   }
   // {

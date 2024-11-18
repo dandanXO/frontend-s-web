@@ -6,10 +6,12 @@ export function getPlatformList() {
   return cached.get("PLATFORMS", () => server.REST.get("/platform"));
 }
 
+export function getPlatformWithTypeList() {
+  return cached.get("PLATFORMSTYPES", () => server.REST.get("/platformWithType"));
+}
+
 export function getLoggedInPlatformList() {
-  return cached.get("LOGGEDINPLATFORMS", () =>
-    server.REST.get("/session/loggedInPlatform")
-  );
+  return cached.get("LOGGEDINPLATFORMS", () => server.REST.get("/session/loggedInPlatform"));
 }
 
 export function getPlatformListDisplay() {
@@ -35,10 +37,7 @@ export function getPlatformGames(code, gameType) {
   );
 }
 
-export function launchSessionGame(
-  platform,
-  { gameCode = null, isMobile = false } = {}
-) {
+export function launchSessionGame(platform, { gameCode = null, isMobile = false } = {}) {
   var way = null;
   if (getDevice() === "MOBILE") {
     way = getMobileOS();
@@ -48,10 +47,7 @@ export function launchSessionGame(
   });
 }
 
-export function launchGame(
-  platform,
-  { gameCode = null, isMobile = false } = {}
-) {
+export function launchGame(platform, { gameCode = null, isMobile = false } = {}) {
   return server.REST.get("/game/launch", {
     params: { platform, gameCode, isMobile }
   });

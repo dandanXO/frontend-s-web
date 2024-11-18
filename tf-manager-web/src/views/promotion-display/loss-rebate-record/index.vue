@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -15,7 +15,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-date-picker
           v-model="request.recordTime"
           format="DD/MM/YYYY"
@@ -298,7 +298,7 @@ const request = reactive({
 
 function resetQuery() {
   request.recordTime = [defaultDate, defaultDate];
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
   request.loginName = null;
   request.status = ["PENDING", "DISTRIBUTED"];
 }
@@ -474,6 +474,7 @@ function distributeRebate() {
 
 onMounted(async() => {
   await loadSites();
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

@@ -66,13 +66,19 @@ span.color-red {
     padding-top: 30px;
     display: flex;
     justify-content: center;
-    padding-bottom: 60px;
 }
 
 .main-title img {
     display: block;
     width: 100%;
     max-width: 410px;
+}
+
+.main-cs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
 }
 
 .main-content {

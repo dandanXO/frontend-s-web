@@ -37,6 +37,7 @@ export default {
   },
   menu: {
     undefined: '',
+    Announcement: '발표',
     Dashboard: '홈',
 
     // Downline Info Start
@@ -75,6 +76,7 @@ export default {
     'Affiliate Center': '대리점 센터',
     Deposit: '충전요청',
     'Bind Bank Cards': '환전계좌추가',
+    'Bank Card': '환전계좌',
     'Bank Withdrawal': '은행 출금',
     Transfer: '대리입금',
     'Referral Centre': '추천 센터',
@@ -85,7 +87,10 @@ export default {
     'Personal Center': '개인 센터',
     'Settlement Center': '수수료',
     'Finance Report': '실시간정산내역',
+    'Finance': '재원',
     'Settlement Report': '루징정산',
+    'Settlement': '합의',
+    'Credit Flow': '금액변동내역',
     'Channel Pack': '채널 패킹',
     contactUs: '문의하기',
     'Daily Detail': '일일 상세 내역',
@@ -97,6 +102,9 @@ export default {
     'Bet Management': '베팅관리',
     'Bet History': '회원베팅기록',
     inquiry: '문의',
+    'Personal Info': '개인 정보',
+    'Message': '사이트 메시지',
+    'Contact Us': '문의하기',
   },
   common: {
     title: '대리 시스템',
@@ -710,6 +718,8 @@ export default {
     redeemConvert: '전환',
     dashboardMemberBalance: '회원잔액',
     totalWithdrawalAmount: '총 출금액',
+    dismiss: '해고하다',
+    affiliateAnnouncement: '제휴사 공지'
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -876,6 +886,7 @@ export default {
     yourCurrentPoint: '현재 포인트 :',
     confirmRedeem: '당신은 상환하고 싶나요 ?',
     redeemSuccess: '성공적인 상환',
+    amountMustBeMultipleOf10000: '금액은 10000의 배수여야 합니다.',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',
@@ -1004,5 +1015,6 @@ export default {
     14012: '낮은 레벨의 제휴만 생성 가능',
     14013: '제휴사에는 다운라인이 있으므로 더 낮은 수준으로 설정할 수 없습니다.',
     40006: '제휴사에 사용할 포인트가 부족합니다.',
+    1313: '회원님께 내려주신 포인트는 실 입금과 동일함으로 회원님께서 100% 롤링후 잔액회수 가능합니다',
   },
 }

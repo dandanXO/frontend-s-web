@@ -216,14 +216,14 @@
           <template v-else>{{ $t("btn.submit") }}</template>
         </div>
       </div>
-      <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
+      <!-- <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
-      </div>
+      </div> -->
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilegeEnable"
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">
@@ -264,7 +264,6 @@ import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRouter, useRoute } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -468,8 +467,7 @@ function initPay() {
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
         !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
+        Platform.is.name !== "webkit"
       )
     ) {
       let isBacked = localStorage.getItem("isBacked");
@@ -672,8 +670,7 @@ async function pDepo(deposit) {
           if (
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -729,8 +726,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {

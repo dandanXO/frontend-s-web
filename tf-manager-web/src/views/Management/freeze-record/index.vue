@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container" style="margin-bottom: 40px">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -18,7 +18,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.memberName"
           size="small"
@@ -416,7 +416,7 @@ function resetQuery() {
   request.freezeType = null
   request.createBy = null
   request.createTime = []
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
 }
 
 async function loadSites() {
@@ -613,8 +613,8 @@ async function confirmImport() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
-  importForm.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
+  importForm.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

@@ -8,7 +8,7 @@
       <el-form-item label="提款浮动通知阀值(%)" prop="monitorSetting.setting.withdrawChangeAlertThreshold">
         <el-input-number :min="0.1" :step="0.1" v-model="formData.monitorSetting.setting.withdrawChangeAlertThreshold" />
       </el-form-item>
-      <el-form-item label="状态" prop="monitorSetting.status">
+      <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
           active-text="启用"
@@ -18,20 +18,25 @@
       </el-form-item>
 
       <h2>通知设置</h2>
-      <el-form-item label="通知内文" prop="notificationSetting.content">
+      <el-form-item label="通知内文" prop="notificationSetting.template">
         <el-input
           type="textarea"
-          v-model="formData.notificationSetting.content"
+          v-model="formData.notificationSetting.template"
           rows="4"
           placeholder="请输入通知内容"
         />
       </el-form-item>
+      <UserTypeCheckbox
+        ref="userTypeCheckboxRef"
+        :systemUserTypeListToSendNotification="formData.notificationSetting.setting.systemUserTypeListToSendNotification"
+      />
       <RoleUserSelector
         ref="roleUserSelectorRef"
         :siteId="store.state.user.siteId"
         :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
         :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
         :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
+        :isRoleAndExcludeEnabled="true"
       />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
@@ -44,9 +49,12 @@
           inactive-text="禁用"
         />
       </el-form-item>
-      <el-row justify="center">
+      <el-row justify="center" :gutter="20">
         <el-col :span="6">
           <el-button type="primary" @click="submitForm" style="width: 100%">送出</el-button>
+        </el-col>
+        <el-col v-if="props.mode === 'update'" :span="6">
+          <TestTriggerButton title="WITHDRAW_FLUCTUATION" />
         </el-col>
       </el-row>
     </el-form>
@@ -59,8 +67,11 @@ import { useStore } from "@/store";
 import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
 import RoleUserSelector from "./component/roleUserSelector.vue";
-const roleUserSelectorRef = ref(null);
+import TestTriggerButton from "@/views/system/monitor-notification/dialog-custom-content/component/testTriggerButton.vue";
+import UserTypeCheckbox from "@/views/system/monitor-notification/dialog-custom-content/component/userTypeCheckbox.vue";
 
+const roleUserSelectorRef = ref(null);
+const userTypeCheckboxRef = ref(null);
 const store = useStore();
 const emit = defineEmits(['submitting', 'submitSuccess', 'submitFailed']);
 const props = defineProps({
@@ -94,6 +105,7 @@ function initializeFormData() {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
         telegramUserIdToSendNotification: [],
+        systemUserTypeListToSendNotification: [],
       },
       status: 1,
       tgSetting: null,
@@ -129,7 +141,7 @@ const rules = {
     status: [
       { required: true, message: '请选择状态', trigger: 'change' }
     ],
-    content: [
+    template: [
       { required: true, message: '请填写通知内文', trigger: 'blur' },
     ],
   }
@@ -148,6 +160,7 @@ const submitForm = async () => {
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
   cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
+  cloneNotificationToSubmit.setting.systemUserTypeListToSendNotification = userTypeCheckboxRef.value.fetchSystemUserTypeListToSendNotification();
 
   const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
   const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;

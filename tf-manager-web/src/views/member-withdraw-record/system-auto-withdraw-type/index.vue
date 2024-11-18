@@ -353,7 +353,7 @@
           :label="t('fields.maxWithdrawAmount')"
           prop="withdrawAmountMax"
           :rules="numberRules.repeatNumberValidation"
-          v-if="request.siteId !== 11"
+          v-if="!isPak(request.siteId)"
         >
           <el-input-number
             v-model="form.withdrawAmountMax"
@@ -408,7 +408,7 @@
             <div class="clearfix">
               <span style="margin-left: 60px; font-size: small;font-weight:bold">{{ t('fields.withdrawPlatform') }}</span>
             </div>
-            <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="request.siteId !== 11">
+            <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="!isPak(request.siteId)">
               <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
               <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" align="center">
                 <template #default="scope">
@@ -541,7 +541,7 @@
               size="mini"
               type="warning"
               @click="showPlatfromDialog('CREATE', scope.row)"
-              v-if="request.siteId !== 11"
+              v-if="!isPak(request.siteId)"
             />
           </template>
         </el-table-column>

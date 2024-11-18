@@ -8,7 +8,6 @@
           <!--          <q-chip v-if="trans.icon === 'inbox' && store.unreadInboxMail!= 0" color="brand" size="sm">-->
           <!--            {{ store.unreadInboxMail }}-->
           <!--          </q-chip>-->
-          <RiArrowRightSLine />
         </div>
       </router-link>
     </div>
@@ -17,13 +16,9 @@
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {userStore} from "../../stores/index";
-import {RiArrowRightSLine} from "vue-remix-icons";
 
 export default defineComponent({
   name: "IndexPage",
-  components: {
-    RiArrowRightSLine
-  },
   setup() {
 
     const store = userStore();

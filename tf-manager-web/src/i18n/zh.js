@@ -322,6 +322,7 @@ export default {
     UEFA: '欧足联',
     UCL: '欧洲冠军联赛',
     HOTELCASINO: '酒店真人',
+    COMMISSION: '佣金',
   },
   homeBannerType: {
     HOME: '首页',
@@ -2123,6 +2124,11 @@ export default {
     showLogo: '显示图标',
     adjustTarget: '平账目标',
     ignoreSettlement: '忽略结算',
+    sendType: '发送方法',
+    specificAffiliate: '指定代理',
+    subType: '子类型',
+    active: '已启用',
+    inactive: '未启用',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2676,6 +2682,7 @@ export default {
     'Alipay Payment on going': '支付宝支付中',
     'Automatic Payment': '自动支付',
     'Waiting Auto Pay': '等待自动支付',
+    'Waiting Auto Payment': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
     'AutoWithdraw Under review Risk': '风险提现终审',
     'AutoWithdraw Withdrawal Record': '提交记录',
@@ -2917,6 +2924,8 @@ export default {
     google_auth_code: '请输入6位数谷歌验证码',
     register_count: '今日已注册数',
     register_limit: '今日可注册数',
+    deposit_count: '今日已首存数',
+    deposit_limit: '今日可首存数',
   },
   posterType: {
     overall: '综合推广图',
@@ -3064,6 +3073,24 @@ export default {
     DEPOSIT_FLUCTUATION: '存款波动',
     WITHDRAW_FLUCTUATION: '提款波动',
     BONUS_FLUCTUATION: '优惠波动',
+  },
+  domain: {
+    domainMainType: {
+      FRONTEND: '前台域名',
+      BACKEND: '后台域名',
+    },
+    domainFrontendType: {
+      LANDING: '落地页',
+      DOWNLOAD: '下载页',
+      AFFILIATE: '代理',
+      HOME: '首页',
+      MANAGER: '管理后台',
+    },
+    domainBackendType: {
+      API: 'API',
+      MANAGER: '管理后台',
+      AFFILIATE: '代理后台',
+    }
   },
   error: {
     400: '请求无效',

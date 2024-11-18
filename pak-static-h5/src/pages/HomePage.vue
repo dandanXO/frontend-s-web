@@ -1383,7 +1383,6 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";

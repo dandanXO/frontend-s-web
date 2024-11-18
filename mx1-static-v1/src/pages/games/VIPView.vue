@@ -43,7 +43,7 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ convertToCommaAmount(Number(vip.ugprade) / 5000) }}
+                {{ vip.ugprade }}
               </div>
 
               <div class="progress-bar-container">

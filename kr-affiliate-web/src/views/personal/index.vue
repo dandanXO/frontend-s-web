@@ -120,22 +120,25 @@
               >
                 <el-button
                   v-if="hasWithdrawPw"
-                  type="text"
+                  type="primary"
                   @click="showDialog('WITHDRAW_PASSWORD')"
-                >
+                  style="margin-top: 10px"
+                  >
                   {{ t('fields.edit') }}
                 </el-button>
                 <el-button
                   v-if="hasWithdrawPw"
-                  type="text"
+                  type="primary"
                   @click="showForgetPassword()"
+                  style="margin-top: 10px"
                 >
                   {{ t('fields.forgetPassword') }}
                 </el-button>
                 <el-button
                   v-else
-                  type="text"
+                  type="primary"
                   @click="showDialog('WITHDRAW_PASSWORD')"
+                  style="margin-top: 10px"
                 >
                   {{ t('fields.bind') }}
                 </el-button>
@@ -149,7 +152,7 @@
                 style="display: flex"
                 :label="t('fields.loginPassword')"
               >
-                <el-button type="text" @click="showDialog('PASSWORD')">
+                <el-button type="primary" @click="showDialog('PASSWORD')" style="margin-top: 10px">
                   {{ t('fields.edit') }}
                 </el-button>
               </el-form-item>
@@ -162,13 +165,14 @@
                 style="display: flex"
                 :label="t('fields.securityQuestion')"
               >
-                <el-button v-if="hasSecurityQn" type="text" disabled>
+                <el-button v-if="hasSecurityQn" type="primary" disabled style="margin-top: 10px">
                   {{ t('fields.binded') }}
                 </el-button>
                 <el-button
                   v-else
-                  type="text"
+                  type="primary"
                   @click="showDialog('SECURITY_QUESTION')"
+                  style="margin-top: 10px"
                 >
                   {{ t('fields.bind') }}
                 </el-button>
@@ -182,10 +186,10 @@
                 style="display: flex"
                 :label="t('fields.authenticator')"
               >
-                <el-button v-if="hasGoogleAuthenticator" type="text" disabled>
+                <el-button v-if="hasGoogleAuthenticator" type="primary" disabled style="margin-top: 10px">
                   {{ t('fields.binded') }}
                 </el-button>
-                <el-button v-else type="text" @click="goToGoogleAuthenticator">
+                <el-button v-else type="primary" @click="goToGoogleAuthenticator" style="margin-top: 10px">
                   {{ t('fields.bind') }}
                 </el-button>
               </el-form-item>

@@ -4,18 +4,6 @@
       <div class="search">
         <div>
           <el-select
-            v-model="request.siteId"
-            :placeholder="t('fields.site')"
-            @change="handleChangeSites"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
-          <el-select
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
             multiple
@@ -65,7 +53,7 @@
         :resizable="true"
         :data="page.records"
         v-loading="page.loading"
-        row-key="affiliateId"
+        :row-key="(row) => `${row.affiliateId}-${row.recordTime}`"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         :summary-method="getSummaries"
@@ -306,15 +294,12 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
-        layout="total,sizes,prev, pager, next"
-        style="margin-top: 10px"
-        v-model:page-size="request.size"
-        v-model:page-count="page.pages"
-        v-model:current-page="request.current"
-        @current-change="loadRecord"
-        @size-change="loadRecord"
+        class="pagination"
+        @current-change="changePage"
+        layout="prev, pager, next"
+        :page-size="request.size"
+        :page-count="page.pages"
+        :current-page="request.current"
       />
     </el-card>
   </div>
@@ -328,7 +313,6 @@ import {
   queryDailySummaryList,
   queryDailySummaryTotalList,
 } from '../../../../api/affiliate-daily-summary'
-import { getSiteListSimple } from '../../../../api/site'
 import { getAffiliateList } from '../../../../api/affiliate-record'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
@@ -358,7 +342,7 @@ const affiliateNames = ref([])
 const request = reactive({
   size: 20,
   current: 1,
-  siteId: null,
+  siteId: store.state.user.siteId,
   recordTime: [defaultStartDate, defaultEndDate],
   loginNameList: null,
   affiliateCode: null,
@@ -370,21 +354,15 @@ const total = reactive({
 })
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  siteList.list = store.state.user.sites
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId || siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
+    const site = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
-    request.siteId = site.value.id
+    request.siteId = site.id
   }
-  loadAffiliateList()
-}
-
-function handleChangeSites() {
-  request.loginNameList = null
   loadAffiliateList()
 }
 
@@ -520,15 +498,16 @@ function getSummaries(param) {
         ) {
           sums[index] = total.data[prop]
         } else if (index === 8 || index === 13 || index === 14) {
-          const pageRowCount = Number(page.records.reduce((sum, row) => {
-            return sum + Number(row[prop])
-          }, 0))
-          const totalPageCount = Number(total.data[prop])
-          if (pageRowCount !== totalPageCount) {
-            sums[index] = `${total.data[prop]} (${pageRowCount})`
-          } else {
-            sums[index] = total.data[prop]
-          }
+          // const pageRowCount = Number(page.records.reduce((sum, row) => {
+          //   return sum + Number(row[prop])
+          // }, 0))
+          // const totalPageCount = Number(total.data[prop])
+          // if (pageRowCount !== totalPageCount) {
+          //   sums[index] = `${total.data[prop]} (${pageRowCount})`
+          // } else {
+          //   sums[index] = total.data[prop]
+          // }
+          sums[index] = total.data[prop]
         } else if (index === 6) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
@@ -551,6 +530,11 @@ function getSummaries(param) {
     })
   }
   return sums
+}
+
+function changePage(page) {
+  request.current = page
+  loadRecord()
 }
 
 onMounted(async () => {

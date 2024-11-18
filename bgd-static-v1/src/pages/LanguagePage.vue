@@ -9,7 +9,7 @@
           </div>
         </template>
       </q-radio>
-      <q-radio class="select-item" v-model="group" val="ur">
+      <q-radio class="select-item" v-model="group" val="bn">
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-ur.png`)" class="flag" />

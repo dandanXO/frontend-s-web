@@ -176,6 +176,7 @@ const request = reactive({
   type: null,
   size: 20,
   current: 1,
+  status: true
 })
 
 const page = reactive({

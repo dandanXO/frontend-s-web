@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
+    path: "/redirect",
+    component: () => import("pages/RedirectPage.vue") // Your new redirect page
+  },
+  {
     path: "/",
     redirect: "/home"
     // children: [{ path: "", component: () => import("pages/LandingPage.vue") }],
@@ -69,12 +73,12 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
   },
-  {
-    path: "/interest-profit",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/InterestProfitPage.vue") }],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/interest-profit",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/InterestProfitPage.vue") }],
+  //   meta: { requiresAuth: true }
+  // },
   // {
   //   path: "/bonus",
   //   component: () => import("layouts/MainLayout.vue"),

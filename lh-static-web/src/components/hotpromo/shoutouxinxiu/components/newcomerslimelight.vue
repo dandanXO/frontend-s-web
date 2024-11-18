@@ -12,22 +12,24 @@
   </div>
 
   <table cellpadding="0" cellspacing="0" border="0">
-    <tr>
-      <th>激活条件</th>
-      <th>当日有效投注额</th>
-      <th>新秀金</th>
-      <th>流水要求</th>
-    </tr>
-    <tr>
-      <td rowspan="2">投注电竞馆</td>
-      <td>18</td>
-      <td>18</td>
-      <td rowspan="2">1倍</td>
-    </tr>
-    <tr>
-      <td>28</td>
-      <td>58</td>
-    </tr>
+    <tbody>
+      <tr>
+        <th>激活条件</th>
+        <th>当日有效投注额</th>
+        <th>新秀金</th>
+        <th>流水要求</th>
+      </tr>
+      <tr>
+        <td rowspan="2">投注电竞馆</td>
+        <td>18</td>
+        <td>18</td>
+        <td rowspan="2">1倍</td>
+      </tr>
+      <tr>
+        <td>28</td>
+        <td>58</td>
+      </tr>
+    </tbody>
   </table>
 
   <div class="emergency-hint" style="margin-top: 12px">
@@ -47,7 +49,7 @@ import { firstBet } from "@/api/promotion/eurocup";
 import { userStore } from "@/store";
 import { useNotify } from "@/hooks/notify";
 
-const notify = useNotify()
+const notify = useNotify();
 const store = userStore();
 const bonusOpened = ref(false);
 const winAmount = ref(0);

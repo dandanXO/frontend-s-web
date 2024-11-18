@@ -10,9 +10,9 @@
         <el-tab-pane :label="t('fields.transfer')" name="transfer">
           <TransferTab />
         </el-tab-pane>
-        <el-tab-pane :label="t('fields.commissionTransfer')" name="commission-transfer">
+        <!-- <el-tab-pane :label="t('fields.commissionTransfer')" name="commission-transfer">
           <CommissionTransferTab />
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane :label="t('fields.transferRecord')" name="transfer-record">
           <TransferRecordTab />
         </el-tab-pane>

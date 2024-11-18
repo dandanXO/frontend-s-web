@@ -2,7 +2,7 @@
   <!-- <DepositComponent /> -->
   <!-- <pre>{{ paymentNode.value }}</pre> -->
   <div class="deposit-wrapper">
-    <div class="slot-ftd-section" v-if="isFtdPrivilege">
+    <div class="slot-ftd-section" v-if="isFtdPrivilege && isFtdPrivilegePayType">
       <img src="../../assets/images/bonus/slot-ftd-img.png" />
     </div>
     <!-- <div class="deposit-options">
@@ -40,7 +40,11 @@
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div class="lil-title q-mt-sm">{{ $t("deposit.selectAmount") }}</div>
+    <div class="flex-between-c q-pb-sm">
+      <div class="lil-title q-mt-sm">{{ $t("deposit.selectAmount") }}</div>
+      <div class="q-ml-md q-mt-sm font-small" v-if="isBank2">{{ $t("deposit.minimum_amt_requirement") }}</div>
+    </div>
+
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
@@ -96,7 +100,10 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
           <div class="lil-title flex-div" style="justify-content: space-between">
-            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN'">
+            <q-checkbox
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
+            >
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
@@ -106,6 +113,11 @@
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
+
+          <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
+            {{ $t("deposit.please_pay_exact_amt") }}
+          </div>
+
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -190,6 +202,7 @@
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
+          v-show="false"
           v-if="hasPrivilege && unselectedPrivileges.length > 0"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
@@ -361,7 +374,6 @@ import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -397,6 +409,10 @@ const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated
 //     // router.push(`/account/profile`);
 //   }
 // };
+
+const isBank2 = computed(() => {
+  return activeMethod.value.code === "BANK-2";
+});
 
 const isFormFilled = ref(false);
 const isDeposited = ref(false);
@@ -557,14 +573,7 @@ function initPay() {
       }
     }
 
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -790,6 +799,26 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result;
 
+        //FB Tracking.
+        if (store.isFbPixel) {
+          fbq("track", "Purchase", {
+            currency: "PKR",
+            value: obj.localAmount
+          });
+        }
+
+        if (store.isTkPixel) {
+          ttq.track(
+            "Purchase",
+            {
+              currency: "PKR",
+              value: obj.localAmount,
+              content_type: "product"
+            },
+            { event_id: Date.now() }
+          );
+        }
+
         // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
         // if (!isFirstDepo) {
         //   console.log("First Depo");
@@ -808,12 +837,11 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
+          if (isTikTokInAppBrowser()) {
+            window.location.href = response.requestUrl;
+            return;
+          }
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (response.payResultType === "GET_SUBMIT") {
@@ -857,8 +885,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
               } else {
@@ -909,6 +936,12 @@ async function pDepo(deposit) {
       btnLoading.value = false;
     });
 }
+
+// Detect if is inside TikTok in-app browser
+const isTikTokInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return ua.indexOf("ByteLocale") > -1;
+};
 
 const nodeKey = ref(0);
 const refreshNode = () => {
@@ -966,7 +999,7 @@ const loadAppTabs = () => {
         store.ftd = data.ftd;
 
         if (store.ftd) {
-          isFtdPrivilegeEnable.value = true;
+          // isFtdPrivilegeEnable.value = true;
         }
       }
     }
@@ -1289,6 +1322,16 @@ onMounted(() => {
   span {
     color: #b81212;
   }
+}
+
+.flex-between-c {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.font-small {
+  font-size: 12px;
 }
 
 .flex-div {

@@ -63,8 +63,8 @@ const isLoadingBalance = ref(false);
 const links = computed(() => [
   { icon: DepositIcon, text: t("home.link_deposit"), to: `/deposit?from=${route.path}` },
   { icon: WithdrawIcon, text: t("home.link_withdraw"), to: `/withdraw?from=${route.path}` },
-  { icon: ShareIcon, text: t("home.link_share"), to: `/earn-money?from=${route.path}` },
-  { icon: ProfitIcon, text: t("home.link_profit"), to: `/interest-profit?from=${route.path}` }
+  { icon: ShareIcon, text: t("home.link_share"), to: `/earn-money?from=${route.path}` }
+  // { icon: ProfitIcon, text: t("home.link_profit"), to: `/interest-profit?from=${route.path}` }
 ]);
 
 const refreshBalance = () => {

@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input v-model="request.loginName" style="width: 200px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.loginName')" />
         <el-date-picker
           v-model="request.recordTime"
@@ -363,7 +363,7 @@ function disabledDate(time) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
   siteList.list = site;
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
 };
 
 async function loadGameTypes() {
@@ -378,7 +378,7 @@ async function loadPlatforms() {
 
 function resetQuery() {
   request.recordTime = null;
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
   request.loginName = null;
 }
 

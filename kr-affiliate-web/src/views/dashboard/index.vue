@@ -1,5 +1,6 @@
 <template>
   <div class="page-container">
+    <AffiliateAnnouncement />
     <el-row>
       <el-col>
         <div class="clearfix" style="margin-bottom: 5px;margin-top: 10px;">
@@ -284,6 +285,7 @@ import { useRouter } from 'vue-router'
 import { getAffiliateInfo } from '../../api/affiliate'
 import { getAffiliateDashboardData, getDashboardDataDetail } from '../../api/affiliate-report'
 import emptyComp from '@/components/empty'
+import AffiliateAnnouncement from '@/components/affiliate-announcement';
 
 const store = useStore()
 const router = useRouter()

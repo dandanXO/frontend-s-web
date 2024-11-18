@@ -25,6 +25,7 @@
           :item="route"
           :base-path="route.path"
           :has-new-user="hasNewUser"
+          :has-new-feedback="hasNewFeedback"
         />
       </el-menu>
     </el-scrollbar>
@@ -54,6 +55,7 @@ import { hasPermission } from '../../../utils/util'
 import { getNewRegisterMemberLists } from '../../../api/member'
 import { isKorea } from '@/utils/site'
 import { getDepositRecord } from '../../../api/member-deposit-record'
+import { getNewMemberFeedback } from "@/api/member-feedback"
 
 export default defineComponent({
   components: {
@@ -64,6 +66,7 @@ export default defineComponent({
   setup() {
     const isMounted = ref(false);
     const hasNewUser = ref(false);
+    const hasNewFeedback = ref(false);
     const notificationAudioRef = ref();
     const startDate = new Date();
     startDate.setDate(startDate.getDate());
@@ -238,6 +241,22 @@ export default defineComponent({
       }
     }
 
+    const checkFeedback = async() => {
+      const siteId = store.state.user.siteId;
+      if (isKorea(siteId)) {
+        const { data: ret } = await getNewMemberFeedback(siteId);
+        // console.log(ret);
+        if (ret === 0) {
+          // sessionStorage.setItem("NEW_REGISTER_USER", 0);
+          hasNewFeedback.value = false
+        } else {
+          if (notificationAudioRef.value) notificationAudioRef.value.play()
+          hasNewFeedback.value = true
+          // sessionStorage.setItem("NEW_REGISTER_USER", ret);
+        }
+      }
+    }
+
     onMounted(async () => {
       if (
         !hasPermission(['sys:withdraw:apply']) &&
@@ -274,6 +293,12 @@ export default defineComponent({
           await checkDeposit()
         }, 180000)
       }
+      if (hasPermission(['sys:feedback:read'])) {
+        await checkFeedback()
+        setInterval(async () => {
+          await checkFeedback()
+        }, 180000)
+      }
       isMounted.value = true
     })
 
@@ -287,7 +312,8 @@ export default defineComponent({
       isMounted,
       notificationAudioRef,
       hasNewUser,
-      isKorea
+      isKorea,
+      hasNewFeedback,
     }
   },
 })

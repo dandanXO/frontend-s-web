@@ -12,14 +12,15 @@
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
             <el-select v-model="request.affiliateId" size="normal" :placeholder="t('fields.affiliate')" class="filter-item"
-              style="width: 100%" @focus="loadAffiliateList" filterable clearable @change="loadMemberList">
+              style="width: 100%" @focus="loadAffiliateList" filterable @change="loadMemberList">
+              <el-option :label="store.state.user.name" :value="null"/>
               <el-option v-for="item in downlineAffiliateList" :key="item.loginName" :label="item.loginName" :value="item.affiliateId" />
             </el-select>
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
             <el-select v-model="request.loginName" size="normal" :placeholder="t('fields.loginName')" class="filter-item"
               style="width: 100%" filterable clearable>
-              <el-option v-for="item in downlineMemberList" :key="item.loginName" :label="item.loginName" :value="item.loginName" />
+              <el-option v-for="item in downlineMemberList.list" :key="item.loginName" :label="item.loginName" :value="item.loginName" />
             </el-select>
           </el-col>
           <!-- <el-col :xl="3" :lg="6" :md="12">
@@ -270,7 +271,9 @@ const details = reactive({
 })
 
 let downlineAffiliateList = [];
-let downlineMemberList = [];
+let downlineMemberList = reactive({
+  list:[]
+});
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -424,10 +427,10 @@ async function loadMemberList() {
   request.loginName = null;
   if (request.affiliateId) {
     const { data: ret} = await getDownlineMembers(request.affiliateId);
-    downlineMemberList = ret;
+    downlineMemberList.list = ret;
   } else {
     const { data: ret} = await getDownlineMembers(store.state.user.id);
-    downlineMemberList = ret;
+    downlineMemberList.list = ret;
   }
 }
 

@@ -397,9 +397,9 @@ const loadBankCards = () => {
           if (res.code === 0) {
             for (let i = 0, l = res.data.length; i < l; i++) {
               const data = res.data[i];
-              const { bankType, bankCode } = data;
-              // is bank
-              if (bankType === "BANK") bankList.value.push(data);
+              const { bankType, id } = data;
+              // is bank & not alipay (78)
+              if (bankType === "BANK" && id !== 78) bankList.value.push(data);
             }
           }
         })

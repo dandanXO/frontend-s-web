@@ -37,6 +37,7 @@ export default {
   },
   menu: {
     undefined: '',
+    Announcement: 'Announcement',
     Dashboard: 'Dashboard',
 
     // Downline Info Start
@@ -75,6 +76,7 @@ export default {
     'Affiliate Center': 'Affiliate Center',
     Deposit: 'Deposit',
     'Bind Bank Cards': 'Bind Bank Cards',
+    'Bank Card': 'Bank Card',
     'Bank Withdrawal': 'Bank Withdrawal',
     Transfer: 'Transfer',
     'Referral Centre': 'Referral Centre',
@@ -85,7 +87,10 @@ export default {
     'Personal Center': 'Personal Center',
     'Settlement Center': 'Settlement Center',
     'Finance Report': 'Finance Report',
+    'Finance': 'Finance',
     'Settlement Report': 'Settlement Report',
+    'Settlement': 'Settlement',
+    'Credit Flow': 'Credit Flow',
     'Channel Pack': 'Channel Pack',
     contactUs: 'Contact Us',
     'Daily Detail': 'Daily Detail',
@@ -95,6 +100,9 @@ export default {
     'Rebate Report': 'Rebate Report',
     message: 'Message',
     inquiry: 'Inquiry',
+    'Personal Info': 'Personal Info',
+    'Message': 'Message',
+    'Contact Us': 'Contact Us',
   },
   common: {
     title: 'Affiliate System',
@@ -319,6 +327,7 @@ export default {
     affiliateWithdraw: 'Bank Withdraw',
     affiliateWithdrawRecord: 'Bank Withdraw Record',
     amount: 'Amount',
+    pointAmount: 'Point Amount',
     amountOfFirstDeposit: 'Amount of First Deposit',
     answerOne: 'Answer One',
     answerTwo: 'Answer Two',
@@ -364,6 +373,7 @@ export default {
     companyProfit: 'Company Profit',
     confirm: 'Confirm',
     confirmNewPassword: 'Confirm New Password',
+    confirmStatus: 'Confirm Status',
     confirmWithdraw: 'Confirm Withdraw',
     copy: 'Copy',
     createAffiliate: 'Create Affiliate',
@@ -548,6 +558,7 @@ export default {
     visitsNo: 'Number of Visits',
     winLoss: 'Win/Loss',
     withdraw: 'Withdraw',
+    withdrawDate: 'Withdraw Date',
     withdrawAmount: 'Withdraw Amount',
     withdrawCount: 'Withdraw Count',
     withdrawPassword: 'Withdraw Password',
@@ -709,6 +720,8 @@ export default {
     redeemConvert: 'Redeem',
     dashboardMemberBalance: 'Member Balance',
     totalWithdrawalAmount: 'Withdraw Amount',
+    dismiss: 'Dismiss',
+    affiliateAnnouncement: 'Affiliate Announcement'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -882,6 +895,7 @@ export default {
     yourCurrentPoint: 'Your Current Point :',
     confirmRedeem: 'Do you want to redeeem?',
     redeemSuccess: 'Redeem Successful',
+    amountMustBeMultipleOf10000: 'Amount must be multiple of 10000',
   },
   posterType: {
     OVERALL: 'Overall Referral',
@@ -1011,5 +1025,6 @@ export default {
     14012: 'Can only create affiliate with lower level',
     14013: 'Affiliate has downline, cannot set to lower level',
     40006: 'Affiliate does not have enough point to redeem',
+    1313: 'Unable to recycle amount due to insufficient rollover',
   },
 }

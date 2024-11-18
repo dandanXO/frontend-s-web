@@ -1,88 +1,75 @@
 <template>
   <div class="q-pa-md">
-    <div id="id-sticky-header">
-      <div v-if="isH5" class="download-top-container">
-        <div class="download-top-box">
-          <q-icon name="close" @click="closeTopBox" />
-          <img class="headicon" src="../assets/images/index/head_logo.png" />
-          <div class="download-txt-container">
-            <span class="download-title text-bold">兴發 APP</span>
-            <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
-          </div>
+    <div v-if="isH5" class="download-top-container">
+      <div class="download-top-box">
+        <q-icon name="close" @click="closeTopBox" />
+        <img class="headicon" src="../assets/images/index/head_logo.png" />
+        <div class="download-txt-container">
+          <span class="download-title text-bold">兴發 APP</span>
+          <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
+        </div>
+        <div class="buttons">
           <div class="buttons">
-            <div class="buttons">
-              <!-- <q-btn
-            size="sm"
-            href="/wap/login.html?way=reg"
-            label="注册"
-            color="dyblue"
-          />
-            href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
-              <q-btn
-                size="md"
-                :href="`${downloadUrl}`"
-                target="_blank"
-                label="立即下载"
-                color="brightbtn"
-                class="top-btn"
-              />
-            </div>
+            <q-btn
+              size="md"
+              :href="`${downloadUrl}`"
+              target="_blank"
+              label="立即下载"
+              color="brightbtn"
+              class="top-btn"
+            />
           </div>
         </div>
       </div>
-      <!-- <div v-if="isStickyGameType" class="home-header-section fixed-header">
-        <div class="q-pa-md">
-          <GameTypeSwiper
-            v-model="selectedTab"
-            scroll-to-center
-            :list="tabs"
-            @swiper="setSecondSwiper"
-            @select-swiper="setSelectedSwiper"
-          />
-        </div>
-      </div> -->
     </div>
+  </div>
 
-    <div class="home-all-slider" v-scroll="onHomeScroll">
-      <q-carousel
-        class="home"
-        autoplay
-        navigation
-        v-model="slide"
-        swipeable
-        transition-next="slide-left"
-        transition-prev="slide-right"
-        animated
-        infinite
-      >
-        <template v-slot:navigation-icon="{ active, onClick }">
-          <q-btn
-            padding="3px"
-            v-if="active"
-            size="xs"
-            color="white"
-            @click="onClick"
-            style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-          />
-          <q-btn
-            padding="3px"
-            v-else
-            size="xs"
-            color="transparent"
-            @click="onClick"
-            style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-          />
-        </template>
+  <div class="home-all-slider" v-scroll="onHomeScroll">
+    <div class="q-px-md">
+      <template v-if="bannerLoading">
+        <q-skeleton style="height: 200px" />
+      </template>
+      <template v-else>
+        <q-carousel
+          class="home"
+          autoplay
+          navigation
+          v-model="slide"
+          swipeable
+          transition-next="slide-left"
+          transition-prev="slide-right"
+          animated
+          infinite
+        >
+          <template v-slot:navigation-icon="{ active, onClick }">
+            <q-btn
+              padding="3px"
+              v-if="active"
+              size="xs"
+              color="white"
+              @click="onClick"
+              style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+            />
+            <q-btn
+              padding="3px"
+              v-else
+              size="xs"
+              color="transparent"
+              @click="onClick"
+              style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+            />
+          </template>
 
-        <q-carousel-slide
-          v-for="(banner, i) in banners"
-          :key="i"
-          :name="i"
-          class="column no-wrap flex-center"
-          :img-src="imgURL + banner.mobileImageUrl"
-          @click="gotoPromo(banner)"
-        ></q-carousel-slide>
-      </q-carousel>
+          <q-carousel-slide
+            v-for="(banner, i) in banners"
+            :key="i"
+            :name="i"
+            class="column no-wrap flex-center"
+            :img-src="imgURL + banner.mobileImageUrl"
+            @click="gotoPromo(banner)"
+          ></q-carousel-slide>
+        </q-carousel>
+      </template>
 
       <div class="midd">
         <div class="station-notice-wrapper">
@@ -97,28 +84,19 @@
             </div>
           </marquee-text>
         </div>
-        <!-- <div class="share" @click="router.push('/promo?id=35')">
-      <RiUserShared2Line />
-    </div> -->
       </div>
 
       <div class="welcome-bar">
         <div class="logo"><img src="../assets/logo.png" /></div>
         <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}</div>
-        <!-- <div v-if="store.token"> -->
-        <!-- <q-badge color="orange" text-color="black" :label="store.vip" /> -->
-        <!--      <span class="q-ml-sm">￥{{ store.balance }}</span>-->
-        <!-- </div> -->
         <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue">登录</q-btn>
         <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange">注册</q-btn>
 
         <router-link v-if="store.token" to="/account" class="login">
-          <!--      <span class="log" style="white-space: nowrap">已登录</span>-->
           <div class="user-status">
             <q-avatar size="40px">
               <img src="../assets/images/index/profile-img.png" />
             </q-avatar>
-
             <div class="user-vip">{{ store.vip }}</div>
           </div>
         </router-link>
@@ -151,645 +129,209 @@
           </router-link>
         </div>
       </div>
+    </div>
 
-      <!-- home header -->
-      <div class="home-header-section">
-        <!-- :style="{ visibility: isStickyGameType ? 'hidden' : 'visible' }" -->
-        <!-- scroll-to-center -->
-        <GameTypeSwiper
-          scroll-to-center
-          :list="tabs"
-          v-model="selectedTab"
-          @swiper="setSecondSwiper"
-          @select-swiper="setSelectedSwiper"
-        />
-      </div>
-
-      <!-- <pre>scrollPosition---{{ scrollPosition }}</pre> -->
-      <!-- <pre>isStickyGameType---{{ isStickyGameType }}</pre> -->
-
-      <div ref="swiperContainerRef" class="swiper-container">
-        <!-- Thumbs Swiper -> store swiper instance -->
-        <!-- It is also required to set watchSlidesProgress prop -->
-        <!-- <swiper
-        :modules="[Thumbs, Controller]"
-        slides-per-view="auto"
-        :freeMode="true"
-        :set-wrapper-size="true"
-        :scrollbar="{ draggable: true }"
-        :mousewheel="true"
-        watch-slides-progress
+    <!-- home header -->
+    <div class="home-header-section" id="id-sticky-header">
+      <GameTypeSwiper
+        scroll-to-center
+        :list="tabs"
+        v-model="selectedTab"
         @swiper="setSecondSwiper"
-        :controller="{ control: firstSwiper }"
-        class="firstSwiper"
-      >
-        <swiper-slide
-          :class="tab.name && { tbact: selectedTab === tab.name }"
-          @click="setSelectedSwiper(tab)"
-          v-for="(tab, i) in tabs"
-          :key="i"
-          style="width: calc(100vw / 6)"
-        >
-          {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
-        </swiper-slide>
-      </swiper> -->
+        @select-swiper="setSelectedSwiper"
+      />
+    </div>
 
+    <div class="q-px-md">
+      <div ref="swiperContainerRef" class="swiper-container">
         <div class="index-platform-container">
           <!-- Main Swiper -> pass thumbs swiper instance -->
-          <div class="secondSwiper" id="btm-second-swiper">
-            <div id="id-slot-slide" class="slot-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>电子游戏</h2>
-                <div class="game-list-div">
-                  <div v-for="(slt, i) in slot" :key="i" class="game-item-div">
-                    <router-link :to="`slot?platform=${slt.code}`" class="game-board">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${slt.icon.toLowerCase()}-${slt.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="slt.name"
-                        />
-                      </div>
+          <template v-if="platListLoading">
+            <div class="home-game-boards">
+              <div class="game-list-div">
+                <div v-for="index in 9" :key="index">
+                  <q-skeleton style="height: 170px" />
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="secondSwiper" id="btm-second-swiper">
+              <div id="id-slot-slide" class="slot-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>电子游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in slot"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="`slot?platform=${item.code}`"
+                    />
+                  </div>
+                </div>
+              </div>
 
-                      <div class="game-title">
-                        <h3>{{ slt.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${slt.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="slt.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
+              <div id="id-live-slide" class="live-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>真人娱乐</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in livecasino"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="
+                        item.code === 'BBINDY' && item.name === 'BBIN'
+                          ? () => playGame(item.name, item.code, 'bblive_lobby_app')
+                          : () => playGame(item.name, item.code, item.gameCode)
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
 
-                      <div class="maintenance-box" v-if="slt.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(slt.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </router-link>
+              <div id="id-sport-slide" class="sport-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>体育赛事</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in sport"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-esport-slide" class="esport-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>电竞赛事</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in esport"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, 'platformType', item.code)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-fish-slide" class="fish-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>捕鱼游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in fishing"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onclick="
+                        item.code === 'GPS' && item.name === 'GPS'
+                          ? () => playGame(item.name, item.code, '7202')
+                          : item.code === 'GAGFPS' && item.name === 'AGF'
+                          ? () => playGame(item.name, item.code, '6')
+                          : item.code === 'SG' && item.name === 'SG'
+                          ? () => playGame(item.name, item.code, 'F-SF01')
+                          : () => playGame(item.name, item.code, item.code)
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-poker-slide" class="poker-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>棋牌游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in poker"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onclick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>彩票游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in lottery"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-casual-slide" class="casual-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>小游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in casuals"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
                   </div>
                 </div>
               </div>
             </div>
-
-            <div id="id-live-slide" class="live-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>真人娱乐</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(live, i) in livecasino" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(live.name, live.code, 'bblive_lobby_app')">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${live.icon.toLowerCase()}-${live.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="live.name"
-                        />
-                      </div>
-
-                      <div class="game-title">
-                        <h3>{{ live.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${live.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="live.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
-
-                      <div class="maintenance-box" v-if="live.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(live.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="id-sport-slide" class="sport-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>体育赛事</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(sp, i) in sport" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${sp.icon.toLowerCase()}-${sp.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="sp.name"
-                        />
-                      </div>
-
-                      <div class="game-title">
-                        <h3>{{ sp.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${sp.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="sp.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
-
-                      <div class="maintenance-box" v-if="sp.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="id-esport-slide" class="esport-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>电竞赛事</h2>
-                <div class="game-list-div">
-                  <div v-for="(es, i) in esport" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(es.name, 'platformType', es.code)">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${es.icon.toLowerCase()}-${es.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="es.name"
-                        />
-                      </div>
-
-                      <div class="game-title">
-                        <h3>{{ es.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${es.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="es.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
-
-                      <div class="maintenance-box" v-if="es.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="es.maintenanceStartTime && es.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(es.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="id-fish-slide" class="fish-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>捕鱼游戏</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(fish, i) in fishing" :key="i" class="game-item-div">
-                    <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
-                      <div class="game-board" @click="playGame(fish.name, fish.code, '7202')">
-                        <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                        <div class="game-platform-img">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/game-${fish.icon.toLowerCase()}-${fish.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="fish.name"
-                          />
-                        </div>
-
-                        <div class="game-title">
-                          <h3>{{ fish.title }}</h3>
-                          <div class="game-title-logo">
-                            <img
-                              :src="
-                                (() => {
-                                  try {
-                                    return require(`../assets/images/games/logo/plat_logo_${fish.name.toLowerCase()}.png`);
-                                  } catch (e) {
-                                    return require(`../assets/images/games/game-img.png`);
-                                  }
-                                })()
-                              "
-                              :alt="fish.name"
-                            />
-                          </div>
-                          <q-btn class="game-btn" dense>立即进入</q-btn>
-                        </div>
-
-                        <div class="maintenance-box" v-if="fish.underMaintenance">
-                          <p>维护中</p>
-                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间：</div>
-                            <p class="small-size">
-                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                            </p>
-                            <p class="small-size">-</p>
-                            <p class="small-size">
-                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                            </p>
-                          </template>
-                        </div>
-                      </div>
-                    </template>
-                    <template v-else-if="fish.code === 'AGF' && fish.name === 'AGF'">
-                      <div class="game-board" @click="playGame(fish.name, fish.code, '6')">
-                        <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                        <div class="game-platform-img">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/game-${fish.icon.toLowerCase()}-${fish.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="fish.name"
-                          />
-                        </div>
-
-                        <div class="game-title">
-                          <h3>{{ fish.title }}</h3>
-                          <div class="game-title-logo">
-                            <img
-                              :src="
-                                (() => {
-                                  try {
-                                    return require(`../assets/images/games/logo/plat_logo_${fish.name.toLowerCase()}.png`);
-                                  } catch (e) {
-                                    return require(`../assets/images/games/game-img.png`);
-                                  }
-                                })()
-                              "
-                              :alt="fish.name"
-                            />
-                          </div>
-                          <q-btn class="game-btn" dense>立即进入</q-btn>
-                        </div>
-
-                        <div class="maintenance-box" v-if="fish.underMaintenance">
-                          <p>维护中</p>
-                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间：</div>
-                            <p class="small-size">
-                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                            </p>
-                            <p class="small-size">-</p>
-                            <p class="small-size">
-                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                            </p>
-                          </template>
-                        </div>
-                      </div>
-                    </template>
-
-                    <template v-else>
-                      <div class="game-board" @click="playGame(fish.name, fish.code, fish.code)">
-                        <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                        <div class="game-platform-img">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/game-${fish.icon.toLowerCase()}-${fish.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="fish.name"
-                          />
-                        </div>
-
-                        <div class="game-title">
-                          <h3>{{ fish.title }}</h3>
-                          <div class="game-title-logo">
-                            <img
-                              :src="
-                                (() => {
-                                  try {
-                                    return require(`../assets/images/games/logo/plat_logo_${fish.name.toLowerCase()}.png`);
-                                  } catch (e) {
-                                    return require(`../assets/images/games/game-img.png`);
-                                  }
-                                })()
-                              "
-                              :alt="fish.name"
-                            />
-                          </div>
-                          <q-btn class="game-btn" dense>立即进入</q-btn>
-                        </div>
-
-                        <div class="maintenance-box" v-if="fish.underMaintenance">
-                          <p>维护中</p>
-                          <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间：</div>
-                            <p class="small-size">
-                              {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                            </p>
-                            <p class="small-size">-</p>
-                            <p class="small-size">
-                              {{ moment(fish.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                            </p>
-                          </template>
-                        </div>
-                      </div>
-                    </template>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="id-poker-slide" class="poker-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>棋牌游戏</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(poke, i) in poker" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(poke.name, poke.code, '')">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${poke.icon.toLowerCase()}-${poke.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="poke.name"
-                        />
-                      </div>
-
-                      <div class="game-title">
-                        <h3>{{ poke.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${poke.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="poke.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
-
-                      <div class="maintenance-box" v-if="poke.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(poke.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>彩票游戏</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(lotter, i) in lottery" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(lotter.name, lotter.code, lotter.gameCode)">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${lotter.icon.toLowerCase()}-${lotter.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="lotter.name"
-                        />
-                      </div>
-
-                      <div class="game-title">
-                        <h3>{{ lotter.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${lotter.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="lotter.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
-
-                      <div class="maintenance-box" v-if="lotter.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(lotter.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="id-casual-slide" class="casual-slides home-swiper-slide">
-              <div class="home-game-boards">
-                <h2>小游戏</h2>
-
-                <div class="game-list-div">
-                  <div v-for="(cas, i) in casuals" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(cas.name, cas.code, cas.gameCode)">
-                      <div class="game-img"><img :src="require(`../assets/images/games/game-platform.png`)" /></div>
-                      <div class="game-platform-img">
-                        <img
-                          :src="
-                            (() => {
-                              try {
-                                return require(`../assets/images/games/game-${cas.icon.toLowerCase()}-${cas.name.toLowerCase()}.png`);
-                              } catch (e) {
-                                return require(`../assets/images/games/game-img.png`);
-                              }
-                            })()
-                          "
-                          :alt="cas.name"
-                        />
-                      </div>
-
-                      <div class="game-title">
-                        <h3 class="small-size">{{ cas.title }}</h3>
-                        <div class="game-title-logo">
-                          <img
-                            :src="
-                              (() => {
-                                try {
-                                  return require(`../assets/images/games/logo/plat_logo_${cas.name.toLowerCase()}.png`);
-                                } catch (e) {
-                                  return require(`../assets/images/games/game-img.png`);
-                                }
-                              })()
-                            "
-                            :alt="cas.name"
-                          />
-                        </div>
-                        <q-btn class="game-btn" dense>立即进入</q-btn>
-                      </div>
-
-                      <div class="maintenance-box" v-if="cas.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="cas.maintenanceStartTime && cas.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(cas.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(cas.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </template>
         </div>
       </div>
     </div>
@@ -820,66 +362,12 @@
         <q-btn size="md" label="立即下载" color="brightbtn" @click="openDownloadPage" />
       </div>
     </div>
-    <!-- <q-card style="width: 100%" class="bg-bright text-black">
-      <div class="modalcontent">
-        <div class="headers">
-          <div class="titles backgroundColor">更新公告</div>
-        </div>
-        <div class="contents">检测到新版本，你是否要更新？</div>
-        <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">取消</div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">立即更新</div>
-        </div>
-      </div>
-    </q-card> -->
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
     <div style="width: 90%; min-height: 400px" class="bg-darkbox">
       <AnnouncementView />
     </div>
-
-    <!-- <q-card style="width: 100%" class="bg-primary text-white">
-      <q-card-section class="q-mb-md">
-        <q-tabs
-          v-model="activeKey"
-          dense
-          class="text-grey"
-          active-color="bright"
-          indicator-color="bright"
-          align="justify"
-        >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-        </q-tabs>
-
-        <q-separator />
-
-        <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
-              <div v-for="(ann, idx) in announcementList" :key="idx">
-                <span v-if="ann.typeId === tab.id">
-                  <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
-                    group="somegroup"
-                    icon="volume_up"
-                    :label="ann.title"
-                  >
-                    <q-card>
-                      <q-card-section>
-                        {{ ann.content }}
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
-
-                  <q-separator></q-separator>
-                </span>
-              </div>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card-section>
-    </q-card> -->
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnouncementModal" @update:model-value="setExpiryBanner()">
@@ -900,39 +388,32 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
-import { cached, TIME_EXPIRED } from "boot/cache";
-import { useQuasar, Platform } from "quasar";
-import { userStore } from "stores/index";
-import GameModal from "components/modal/GameModal";
-import MarqueeText from "vue-marquee-text-component";
 import { App } from "@capacitor/app";
-
+import { useLocalStorage } from "@vueuse/core";
+import { api } from "boot/axios";
+import { cached } from "boot/cache";
+import GameBoard from "components/home/GameBoard.vue";
+import GameTypeSwiper from "components/home/GameTypeSwiper.vue";
+import GameModal from "components/modal/GameModal";
+import moment from "moment";
+import AnnouncementView from "pages/account/AnnouncementView.vue";
+import { Platform, useQuasar } from "quasar";
+import { translateRecord } from "src/directives/translate";
+import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { Scrollbar } from "swiper";
-// Import Swiper Vue.js components
-import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Thumbs, Controller } from "swiper";
-// Import Swiper styles
+import SwiperCore, { A11y, Controller, HashNavigation, Keyboard, Mousewheel, Scrollbar, Thumbs } from "swiper";
 import "swiper/css";
 import "swiper/css/scrollbar";
-import { useLocalStorage } from "@vueuse/core";
-import moment from "moment";
+import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+import MarqueeText from "vue-marquee-text-component";
+import { useRoute, useRouter } from "vue-router";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
-
-// import PlatformBlock from "components/platform/PlatformBlock.vue";
-import { translateRecord } from "src/directives/translate";
-
-import GameTypeSwiper from "components/home/GameTypeSwiper.vue";
-import AnnouncementView from "pages/account/AnnouncementView.vue";
 
 export default defineComponent({
   name: "IndexPage",
   components: {
+    GameBoard,
     GameModal,
     MarqueeText,
     GameTypeSwiper,
@@ -940,7 +421,6 @@ export default defineComponent({
   },
   setup() {
     const isFirstView = ref(false);
-
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -981,23 +461,20 @@ export default defineComponent({
     };
     const onHomeScroll = (position) => {
       if (route.path === "/") {
-        // console.log(position);
         scrollPosition.value = position;
         if (position === 0) {
           isZeroScrollPos.value = true;
         } else {
           isZeroScrollPos.value = false;
         }
-        // if (!store.hasToken()) {
+
         if (position > 55) {
           isShowDownload.value = false;
         } else {
           isShowDownload.value = true;
         }
-        // }
 
         if (position > 430) {
-          // console.log("3500000");
           isStickyGameType.value = true;
         } else {
           isStickyGameType.value = false;
@@ -1031,14 +508,14 @@ export default defineComponent({
           const lotteryTop = lotterySlide.getBoundingClientRect().top;
           const casualTop = casualSlide.getBoundingClientRect().top;
 
-          if (casualTop <= stickyHeight) {
+          if (casualTop - 630 <= stickyHeight) {
             selectedTab.value = "casual";
           } else if (lotteryTop <= stickyHeight) {
             selectedTab.value = "lottery";
           } else if (pokerTop <= stickyHeight) {
             selectedTab.value = "poker";
           } else if (fishTop <= stickyHeight) {
-            selectedTab.value = "fish";
+            selectedTab.value = "fishing";
           } else if (esportTop <= stickyHeight) {
             selectedTab.value = "esport";
           } else if (sportTop <= stickyHeight) {
@@ -1065,7 +542,6 @@ export default defineComponent({
       slotSwiper2.value = swiper;
     };
     const setSelectedSwiper = (tab) => {
-      // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "slot") {
         scrollToSlide("id-slot-slide");
@@ -1096,84 +572,13 @@ export default defineComponent({
       }
     };
 
-    // const setSelectedSwiper = (tab) => {
-    //   selectedTab.value = tab.name;
-    //   // console.log(tab.name);
-    //   var slideIndex = 0;
-    //   if (tab.name === "slot") {
-    //     slideIndex = 0;
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-
-    //   if (tab.name === "live") {
-    //     slideIndex = slot.value.length;
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-    //   if (tab.name === "sport") {
-    //     slideIndex = livecasino.value.length + slot.value.length;
-
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-    //   if (tab.name === "esport") {
-    //     slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
-
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-
-    //   if (tab.name === "fishing") {
-    //     slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
-
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-    //   if (tab.name === "poker") {
-    //     slideIndex =
-    //       livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
-
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-    //   if (tab.name === "lottery") {
-    //     slideIndex =
-    //       livecasino.value.length +
-    //       sport.value.length +
-    //       esport.value.length +
-    //       slot.value.length +
-    //       fishing.value.length +
-    //       poker.value.length;
-
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-    //   if (tab.name === "casual") {
-    //     slideIndex =
-    //       livecasino.value.length +
-    //       sport.value.length +
-    //       esport.value.length +
-    //       slot.value.length +
-    //       fishing.value.length +
-    //       poker.value.length +
-    //       lottery.value.length;
-
-    //     firstSwiper.value?.slideTo(slideIndex, 500);
-    //   }
-    // };
     const onSlideChange = (swiper) => {
-      // console.log("Swiping hEre")
-      // Get the active slide index
       const activeIndex = swiper.activeIndex;
-
-      // Get the active slide element
       const activeSlide = swiper.slides[activeIndex];
-
-      // Get the class name of the active slide
       const activeSlideClassName = activeSlide.className;
-      // Check if the class name contains "sport," "slot," or "esport"
-      // Array of keywords to check
       const keywords = ["slot", "live", "sport", "esport", "fishing", "poker", "lottery", "casual"];
-
-      // Iterate over each keyword
       for (const keyword of keywords) {
-        // Check if the class name contains the current keyword
         if (activeSlideClassName.includes(keyword)) {
-          // console.log("select: "+ keyword);
           selectedTab.value = keyword;
         }
       }
@@ -1283,9 +688,9 @@ export default defineComponent({
     });
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      // console.log(gameName)
-      // console.log(platformCode)
-      // console.log(gameCode)
+      // console.log(gameName);
+      // console.log(platformCode);
+      // console.log(gameCode);
       // console.log(gameStatus);
 
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
@@ -1416,29 +821,24 @@ export default defineComponent({
       router.push(`/promo?name=${urlString}`);
     };
 
+    const bannerLoading = ref(false);
+
     function loadData() {
+      bannerLoading.value = true;
       api
         .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: res.data.message,
-            //   icon: "report_problem"
-            // });
+            setTimeout(() => {
+              bannerLoading.value = false;
+            }, 500);
           }
-          // banners.value = response.data;
         })
-        .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
+        .finally(() => {
+          setTimeout(() => {
+            bannerLoading.value = false;
+          }, 500);
         });
     }
 
@@ -1458,7 +858,12 @@ export default defineComponent({
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+    const platListLoading = ref(false);
+
     const getPlatList = () => {
+      platListLoading.value = true;
+
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -1470,11 +875,8 @@ export default defineComponent({
           ui.slotLists = [];
           pf.forEach((element) => {
             const platTypes = element.gameType.split(",");
-            // console.log(platTypes);
             if (platTypes.indexOf("ESPORT") > -1) {
               var espObj = Object.assign({}, element);
-              // console.log(espObj);
-
               if (espObj.code === "TFGaming") {
                 espObj.title = "兴發电竞";
               }
@@ -1492,14 +894,12 @@ export default defineComponent({
               esport.value.push(espObj);
 
               //Add 1 More Casual minigame.
-              // if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
               casualObj.gameCode = "casual";
               casualObj.title = casualObj.name + " 小游戏";
               casualObj.icon = "casual";
               casualObj.subtitle = "小游戏";
               casuals.value.push(casualObj);
-              // }
             }
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
@@ -1570,7 +970,7 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
               fishing.value.push(fishObj);
-              console.log(fishObj);
+              // console.log(fishObj);
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
@@ -1591,7 +991,12 @@ export default defineComponent({
             }
           });
         })
-        .catch((err) => {});
+        .catch((err) => {})
+        .finally(() => {
+          setTimeout(() => {
+            platListLoading.value = false;
+          }, 500);
+        });
     };
 
     const liveTabs = ref("");
@@ -1660,17 +1065,9 @@ export default defineComponent({
     const isAppUpdateModal = ref(false);
     const isOutdatedApp = ref(false);
     const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        // alert(info.version);
         var current_version = parseInt(info.version.replaceAll(".", ""));
-
-        // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
@@ -1680,13 +1077,9 @@ export default defineComponent({
           var version_info = res.data.version;
           var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
           download_url.value = res.data.url;
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
           if (latest_ver_no > current_version) {
             isAppUpdateModal.value = true;
           }
-
           if (min_version) {
             var min_ver_no = parseInt(min_version.replaceAll(".", ""));
             if (min_ver_no > current_version) {
@@ -1717,7 +1110,6 @@ export default defineComponent({
       api
         .get("/config/appDownloadUrl")
         .then((res) => {
-          // console.log(res);
           downloadUrl.value = res.data;
         })
         .catch((err) => {
@@ -1828,7 +1220,9 @@ export default defineComponent({
       isScrolling,
       swiperContainerRef,
       scrollToSlide,
-      isOutdatedApp
+      isOutdatedApp,
+      platListLoading,
+      bannerLoading
     };
   }
 });
@@ -1840,9 +1234,7 @@ export default defineComponent({
 }
 
 .secondSwiper {
-  // height: calc(100vh - 380px);
   padding-bottom: 0px;
-  // padding-top: 16px;
 }
 
 .longer-swiper {
@@ -1870,22 +1262,7 @@ export default defineComponent({
     img {
       width: 100%;
     }
-
-    &:first-child {
-      // padding-top: 65px;
-      // margin-top: -40px;
-      // padding-top: 30px;
-    }
-
-    &-active {
-      // padding-top: 30px;
-    }
   }
-}
-
-:deep(.firstSwiper .swiper-wrapper) {
-  // background: #23263c;
-  // background: #00bfd71a;
 }
 
 .swiper-container {
@@ -1957,101 +1334,10 @@ export default defineComponent({
       }
     }
   }
-  // .modalcontent {
-  //   background: #fff;
-  //   height: 232px;
-  //   box-sizing: border-box;
-
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: space-between;
-  //   align-items: flex-start;
-  //   padding: 0px 0px 16px;
-
-  //   .headers {
-  //     width: 100%;
-  //     box-sizing: border-box;
-  //     height: 37px;
-  //     line-height: 37px;
-  //     background: #1976d2;
-  //     color: #fff;
-  //     text-align: center;
-  //     font-size: 15px;
-  //     font-weight: bold;
-  //     letter-spacing: 1px;
-  //   }
-
-  //   .contents {
-  //     width: 100%;
-  //     box-sizing: border-box;
-  //     padding: 10px 12px;
-  //     text-align: center;
-
-  //     .contentfonts {
-  //       text-align: center;
-  //       color: #333;
-  //       font-size: 16px;
-  //       margin: 37px 0 20.5px 0;
-  //     }
-
-  //     .inputs {
-  //       width: 292px;
-  //       height: 36px;
-  //       border-radius: 4px 4px;
-  //       border: 1px solid #666;
-  //       box-sizing: border-box;
-  //       margin: 0 auto;
-  //       padding-left: 20px;
-
-  //       .van-field__control {
-  //         height: 100%;
-  //         width: 100%;
-  //       }
-  //     }
-  //   }
-
-  //   .btnsreas {
-  //     width: 100%;
-  //     box-sizing: border-box;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: space-between;
-  //     padding: 0 20px;
-  //     margin-top: 23.5px;
-
-  //     .cacnels {
-  //       flex: 1;
-  //       background: #f7fcfd;
-  //       box-sizing: border-box;
-  //       color: #1976d2;
-  //       border: 1px solid #1976d2;
-  //       border-radius: 6px;
-  //       line-height: 40px;
-  //       height: 40px;
-  //       text-align: center;
-  //       letter-spacing: 1px;
-  //       font-size: 14px;
-  //       margin-right: 8px;
-  //     }
-
-  //     .confirmsbtns {
-  //       flex: 1;
-  //       box-sizing: border-box;
-  //       border-radius: 6px;
-  //       line-height: 40px;
-  //       height: 40px;
-  //       text-align: center;
-  //       color: #fff;
-  //       background: #1976d2;
-  //       letter-spacing: 1px;
-  //       font-size: 14px;
-  //     }
-  //   }
-  // }
 }
 
 .download-top-container {
-  padding: 4px 10px;
+  padding: 4px 0px;
 
   .download-top-box {
     display: flex;
@@ -2180,8 +1466,8 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
-  height: 75px;
+  padding: 16px 0 0;
+  // height: 75px;
 
   .message {
     flex: 1;
@@ -2205,14 +1491,11 @@ export default defineComponent({
   .menulist {
     flex: 4;
     display: flex;
-    // margin-left: auto;
     justify-content: flex-end;
     gap: 12px;
-    // background:salmon;
 
     .men {
       text-decoration: none;
-      // color: #ffffff;
       color: #00bfd7;
       gap: 6px;
       display: flex;
@@ -2437,7 +1720,7 @@ export default defineComponent({
 }
 
 .home-game-boards {
-  padding-top: 16px;
+  // padding-top: 16px;
   h2 {
     //margin-top: 15px;
     //margin-bottom: 15px;
@@ -2448,27 +1731,20 @@ export default defineComponent({
   }
 
   .game-list-div {
-    // display: flex;
-    // flex-wrap: wrap;
     display: grid;
     column-gap: 16px;
     row-gap: 10px;
     grid-template-columns: repeat(3, 1fr);
-    // justify-content: flex-start;
 
     .game-item-div {
-      // width: calc((100% - 35px) / 3);
-      // background-image: url("../assets/images/games/slot-game-pg.png");
-      // background-size: 100% 100%;
-      // background-size: cover;
-
       &.slot-item {
         width: 100%;
       }
 
       .game-board {
         position: relative;
-        // height: 170px;
+        width: 100%;
+        display: flex;
 
         .game-img {
           img {
@@ -2490,26 +1766,21 @@ export default defineComponent({
         .game-title {
           position: absolute;
           bottom: 8px;
-          // background:
           backdrop-filter: blur(20px);
           background: rgba(0, 0, 0, 0.2);
           width: calc(100% - 16px);
           border-radius: 8px;
           left: 50%;
           transform: translateX(-50%);
-          // height: 70px;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           padding: 8px 4px;
-          // background-image: url("../assets/images/games/game-box.png");
 
           h3 {
             font-size: 14px;
             color: #fff;
-            // margin-top: 0px;
-            // margin-bottom: 7px;
             text-align: center;
             font-weight: 500;
             letter-spacing: 1px;
@@ -2525,10 +1796,12 @@ export default defineComponent({
 
           .game-title-logo {
             padding-top: 6px;
+            margin: 4px 0;
             img {
+              display: block;
+              width: auto;
               height: 100%;
               max-height: 16px;
-              // max-width:90px;
             }
           }
 
@@ -2544,19 +1817,6 @@ export default defineComponent({
             font-size: 12px;
           }
         }
-
-        // .game-title {
-        //   position: absolute;
-        //   z-index: 2;
-        //   bottom: 0px;
-        //   left: 0px;
-        //   right: 0px;
-        //   width: 100%;
-        //   display: flex;
-        //   flex-direction: column;
-        //   align-items: center;
-        //   justify-content: space-between;
-        // }
 
         .maintenance-box {
           position: absolute;
@@ -2621,6 +1881,8 @@ export default defineComponent({
   position: sticky;
   top: 0;
   z-index: 99;
+  padding: 16px;
+  background: #1a2338;
 
   &.fixed-header {
     position: fixed;

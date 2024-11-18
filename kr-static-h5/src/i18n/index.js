@@ -2,6 +2,7 @@ import { createI18n } from "vue-i18n";
 import kr from "./kr";
 import cn from "./cn";
 import en from "./en";
+import vi from "./vi";
 
 const i18n = createI18n({
   legacy: false,
@@ -10,7 +11,8 @@ const i18n = createI18n({
   messages: {
     kr,
     en,
-    cn
+    cn,
+    vi
   },
   globalInjection: true
 });
