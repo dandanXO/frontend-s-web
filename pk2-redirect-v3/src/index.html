@@ -6,7 +6,7 @@
   <script src="/assets/js/crypto-js.min.js"></script>
   <script src="/assets/js/index.js"></script>
   <script>
-    console.log("11/18")
+    console.log("11/18 3pm")
 
     const secretKey = `Aa123456`;
     const encryptedUrl = `U2FsdGVkX182a9uWyAo7IYD3f2voqBrN70Jn6lc0xJtCNRUe3mey26DJ7jZ+Q3k4`;
@@ -22,8 +22,6 @@
     const matches = path.match(/\/r\/(.*)/);
     const affiliate = matches ? matches[1] : "A74B03";
     window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
-
-    // alert(decryptedUrl);
   </script>
 </head>
 <body id="pk2-redirect-v3">
