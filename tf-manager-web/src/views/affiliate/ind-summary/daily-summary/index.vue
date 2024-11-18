@@ -633,15 +633,16 @@ function getSummaries(param) {
           // WithdrawCount, FtdCount, totalMemberDepositCount, totalMemberUsdtDepositCount, totalMemberBetCount
           sums[index] = totalPage.records[0][prop]
         } else if (index === 7 || index === 13 || index === 15) {
-          const pageRowCount = Number(page.records.reduce((sum, row) => {
-            return sum + Number(row[prop])
-          }, 0))
-          const totalPageCount = Number(totalPage.records[0][prop])
-          if (pageRowCount !== totalPageCount) {
-            sums[index] = `${totalPage.records[0][prop]} (${pageRowCount})`
-          } else {
-            sums[index] = totalPage.records[0][prop]
-          }
+          // const pageRowCount = Number(page.records.reduce((sum, row) => {
+          //   return sum + Number(row[prop])
+          // }, 0))
+          // const totalPageCount = Number(totalPage.records[0][prop])
+          // if (pageRowCount !== totalPageCount) {
+          //   sums[index] = `${totalPage.records[0][prop]} (${pageRowCount})`
+          // } else {
+          //   sums[index] = totalPage.records[0][prop]
+          // }
+          sums[index] = totalPage.records[0][prop]
         } else if (index === 6) {
           // registerCount
           sums[index] = totalPage.records[0].registerCount
