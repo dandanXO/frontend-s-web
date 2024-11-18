@@ -1,6 +1,6 @@
-# B9.GAME App (pak-h5-project)
+# B9.GAME App (bgd-h5-project)
 
-B9.GAME (**pak**) H5 APP
+B9.GAME (**bgd**) H5 APP
 
 - Node Version >= 16.17.0
 - H5 + Android APP
@@ -50,7 +50,7 @@ npx cap run android
 4(b). Build on Android Studio/ Build .apk
 npx cap open android
 
-4(c). Rename - pak-app-1.0.x
+4(c). Rename - bgd-app-1.0.x
 
 ```
 

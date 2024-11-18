@@ -1,6 +1,6 @@
-# PAK redirect -v3
+# BGD redirect -v3
 
-- PAK redirection page.
+- BGD redirection page.
 - Node Version >= 16.17.0
 
 ## Project setup
