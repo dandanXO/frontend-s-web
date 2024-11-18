@@ -2928,6 +2928,7 @@ export default {
     'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
     'Telegram User': 'Telegram User',
+    'Site Domain': 'Site Domain',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
