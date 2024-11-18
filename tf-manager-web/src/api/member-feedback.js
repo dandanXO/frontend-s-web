@@ -12,3 +12,12 @@ export const readFeedback = (feedback) => {
 export const replyFeedback = (id, siteId, replyTitle, replyContent) => {
   return https().request(`/memberFeedback/reply`, Method.POST, { id: id, siteId: siteId, title: replyTitle, content: replyContent }, ContentType.form);
 };
+
+export const getNewMemberFeedback = siteId => {
+  return https().request(
+    `/memberFeedback/getNewFeedback/${siteId}`,
+    Method.GET,
+    {},
+    ContentType.form
+  )
+}
