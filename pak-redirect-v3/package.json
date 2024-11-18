@@ -1,0 +1,36 @@
+{
+  "name": "pak-redirect-v3",
+  "version": "1.0.0",
+  "description": "Redirection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "npx webpack serve",
+    "serve:test": "cross-env NODE_ENV=development dotenv -e .env.test vue-cli-service serve",
+    "build:dev": "npx webpack --mode production",
+    "build:test": "npx webpack --mode production",
+    "build:staging": "npx webpack",
+    "build:prod": "npx webpack --mode production",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "html-webpack-plugin": "^5.6.3",
+    "prettier": "^2.5.1",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  },
+  "keywords": [
+    "Pk"
+  ],
+  "author": "Wei Seng",
+  "license": "ISC"
+}
