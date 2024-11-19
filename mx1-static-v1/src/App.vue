@@ -289,7 +289,7 @@ export default defineComponent({
 
             setTimeout(() => {
               setStatusBarColor();
-            }, 1500);
+            }, 2000);
           },
           false
         );
