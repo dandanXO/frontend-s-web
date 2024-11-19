@@ -98,8 +98,9 @@ const simpleTelegramUsers = ref([]);
 
 onMounted(async () => {
   await loadSimpleRoleBySite();
-
-  selectedRoleNameArr.value = getRoleNamesByIds(props.systemRoleIdListToSendNotification, simpleRoleArrBySite.value)
+  if (props.systemRoleIdListToSendNotification) {
+    selectedRoleNameArr.value = getRoleNamesByIds(props.systemRoleIdListToSendNotification, simpleRoleArrBySite.value)
+  }
   await loadExcludedUserBySelectedRoles();
   await loadSimpleTelegramUsersBySite();
 });

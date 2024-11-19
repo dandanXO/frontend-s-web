@@ -3077,6 +3077,7 @@ export default {
     WITHDRAW_FLUCTUATION: '提款波动',
     BONUS_FLUCTUATION: '优惠波动',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ主题闲置',
+    DOMAIN_VALID: '域名有效期',
   },
   domain: {
     domainMainType: {
