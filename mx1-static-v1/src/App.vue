@@ -287,9 +287,9 @@ export default defineComponent({
           () => {
             onDeviceReady();
 
-            setTimeout(() => {
-              setStatusBarColor();
-            }, 2000);
+            // setTimeout(() => {
+            //   setStatusBarColor();
+            // }, 2000);
           },
           false
         );
