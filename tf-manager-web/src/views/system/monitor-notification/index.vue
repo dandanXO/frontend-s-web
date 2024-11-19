@@ -69,6 +69,7 @@ import MemberStatisticComponent from './dialog-custom-content/memberStatistic.vu
 import DepositFluctuationComponent from './dialog-custom-content/depositFluctuation.vue';
 import WithdrawFluctuationComponent from './dialog-custom-content/withdrawFluctuation.vue';
 import BonusFluctuationComponent from './dialog-custom-content/bonusFluctuation.vue';
+import MQTopicLastConsumeTimeCheckComponent from './dialog-custom-content/mqTopicLastConsumeTimeCheck.vue';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n()
@@ -160,6 +161,7 @@ const componentMapping = {
   DEPOSIT_FLUCTUATION: DepositFluctuationComponent,
   WITHDRAW_FLUCTUATION: WithdrawFluctuationComponent,
   BONUS_FLUCTUATION: BonusFluctuationComponent,
+  MQ_LAST_CONSUME_TIME_CHECK: MQTopicLastConsumeTimeCheckComponent,
 };
 
 async function loadAllConfigurableTypeName() {
