@@ -230,7 +230,11 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    popup: {
+      getFreeLuckyDraw: "Get a free lucky draw ticket",
+      downloadAppLoginAcc: "Download the app and log in to your account to get it",
+    }
   },
   settings: {
     totalScore: "Total Score",
@@ -494,6 +498,7 @@ export default {
     orderNo: "Order NO.",
     bank: "BANK",
     noRecord: "No record",
+    noMessage: "No message",
     noMoreRecord: "No more record",
     bytoday: "Today",
     byyesterday: "Yesterday",
