@@ -230,7 +230,11 @@ export default {
     cat_slotsgame: "স্লট গেম",
     cat_fishing: "ফিসিং",
     cat_poker: "পোকার",
-    cat_sport: "স্পোর্ট"
+    cat_sport: "স্পোর্ট",
+    popup: {
+      getFreeLuckyDraw: "একটি বিনামূল্যের লাকি ড্র টিকিট পান",
+      downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন",
+    }
   },
   settings: {
     totalScore: "মোট স্কোর",

@@ -73,7 +73,7 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
           <div class="lil-title flex-div" style="justify-content: space-between">
-            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1">
+            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1" style="white-space: pre-wrap;">
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
