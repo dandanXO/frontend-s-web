@@ -4,8 +4,8 @@
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
     <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
     <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-coupons.png" /></div>
-    <div class="congrats-title">Get a free lucky draw ticket</div>
-    <div class="congrats-highlight">Download the app and log in to your account to get it</div>
+    <div class="congrats-title">{{ $t("home.popup.getFreeLuckyDraw") }}</div>
+    <div class="congrats-highlight">{{ $t("home.popup.downloadAppLoginAcc") }}</div>
 
     <div class="congrats-button">
       <q-btn no-caps unelevated class="btn-primary" :loading="false" :href="ui.downloadAppUrl">
@@ -27,6 +27,7 @@ const ui = useUI();
   bottom: -60px;
   left: 50%;
   transform: translateX(-50%);
+  white-space: nowrap;
 }
 .congrats-wrapper {
   overflow: hidden;
