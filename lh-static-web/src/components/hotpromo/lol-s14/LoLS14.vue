@@ -36,11 +36,11 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年9月25日起</div>
+          <div class="right">2024年11月16日起</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">活动期间，当日 S14 全球总决赛有效投注≥1,500 元即可获得 最高1888元的奖励金</div>
+          <div class="right">活动期间，当日 LOL传奇杯有效投注≥3,000 元即可获得 最高 2,888 元的奖励金</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tbody>
@@ -49,8 +49,8 @@
               <th>投注嘉奖</th>
             </tr>
             <tr>
-              <td>≥1,500</td>
-              <td>8 元</td>
+              <td>≥3,000</td>
+              <td>12 元</td>
             </tr>
             <tr>
               <td>≥5,000</td>
@@ -61,35 +61,35 @@
               <td>58 元</td>
             </tr>
             <tr>
-              <td>≥15,000</td>
+              <td>≥30,000</td>
               <td>88 元</td>
             </tr>
             <tr>
-              <td>≥30,000</td>
+              <td>≥50,000</td>
               <td>168 元</td>
             </tr>
             <tr>
-              <td>≥50,000</td>
+              <td>≥100,000</td>
               <td>288 元</td>
             </tr>
             <tr>
-              <td>≥100,000</td>
+              <td>≥300,000</td>
               <td>588 元</td>
             </tr>
             <tr>
-              <td>≥300,000</td>
-              <td>1,288 元</td>
+              <td>≥500,000</td>
+              <td>888 元</td>
             </tr>
             <tr>
-              <td>≥500,000</td>
-              <td>1,888 元</td>
+              <td>≥1,000,000</td>
+              <td>2,888 元</td>
             </tr>
           </tbody>
         </table>
 
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            例：用户 A 在09月25日投注 S14 全球总决赛有效投注 5,000 元，用户 A 在次日 24 小时内可获得彩金：28元
+            会员 A 在电竞 LOL 传奇杯比赛中投注 5,000 元在次日可获传奇礼金 28 元。
           </div>
         </div>
       </div>
@@ -99,14 +99,15 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，活动仅计算电竞场馆中 S14 全球总决赛赛事，会员在当日 S14 全球总决赛中累计有效投注≥1,500
-            元即可获得对应彩金，有效投注次日清零；
+            活动期间，活动仅计算电竞场馆中 LOL 传奇杯比赛赛事，会员在当日 LOL 传奇杯比赛累计有效投注≥3000
+            元即可获得对应彩金，有效投注次日清零；注：奖金不叠加派发，奖金按最高档位每日派发一次。
+
             <span style="color: #ff0000; display: contents">注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 S14 全球总决赛已结算的赛事总有效投注，次日 24
-            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 3 倍流水即可出款；
+            活动期间，活动仅计算当日 LOL 传奇杯比赛已结算的赛事总有效投注，次日 24
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 5 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>

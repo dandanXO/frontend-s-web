@@ -2126,6 +2126,9 @@ export default {
     ignoreSettlement: 'Ignore Settlement',
     sendType: 'Send Type',
     specificAffiliate: 'Specific Affiliate',
+    subType: 'Sub Type',
+    active: 'Active',
+    inactive: 'Inactive',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -3124,6 +3127,24 @@ export default {
     WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
     BONUS_FLUCTUATION: 'Bonus fluctuation',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
+  },
+  domain: {
+    domainMainType: {
+      FRONTEND: 'Frontend',
+      BACKEND: 'Backend',
+    },
+    domainFrontendType: {
+      LANDING: 'Landing',
+      DOWNLOAD: 'Download',
+      AFFILIATE: 'Affiliate',
+      HOME: 'Home',
+      MANAGER: 'Manager',
+    },
+    domainBackendType: {
+      API: 'API',
+      MANAGER: 'Manager',
+      AFFILIATE: 'Affiliate',
+    }
   },
   error: {
     400: 'Bad Request',

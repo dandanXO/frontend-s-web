@@ -73,7 +73,6 @@ span.color-red {
     padding-top: 30px;
     display: flex;
     justify-content: center;
-    padding-bottom: 60px;
 }
 
 .main-title img {
@@ -92,6 +91,13 @@ span.color-red {
     display: flex;
     flex-direction: column;
     gap: 36px;
+}
+
+.main-cs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
 }
 
 .liner-set {

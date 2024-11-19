@@ -73,7 +73,10 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
           <div class="lil-title flex-div" style="justify-content: space-between">
-            <q-checkbox v-model="isFtdPrivilegeEnable" v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1">
+            <q-checkbox
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
+            >
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
@@ -793,6 +796,10 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
+          if (isTikTokInAppBrowser()) {
+            window.location.href = response.requestUrl;
+            return;
+          }
           if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -889,6 +896,12 @@ async function pDepo(deposit) {
     });
 }
 
+// Detect if is inside TikTok in-app browser
+const isTikTokInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return ua.indexOf("ByteLocale") > -1;
+};
+
 const nodeKey = ref(0);
 const refreshNode = () => {
   // Update the key to force re-render
@@ -944,7 +957,7 @@ const loadAppTabs = () => {
         store.ftd = data.ftd;
 
         if (store.ftd) {
-        //   isFtdPrivilegeEnable.value = true;
+          //   isFtdPrivilegeEnable.value = true;
         }
       }
     }

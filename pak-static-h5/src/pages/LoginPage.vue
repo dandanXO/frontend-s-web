@@ -139,7 +139,7 @@
         <router-link class="form-text" to="/register" style="color: #00ae00">Create account</router-link>
       </div> -->
     </div>
-    <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
+    <router-link to="/forgot-password" class="forget-pwd">Forget password</router-link>
 
     <div class="no-domain bottom-btn-primary">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
@@ -825,6 +825,13 @@ export default defineComponent({
       display: flex;
     }
   }
+  .forget-pwd {
+    color: #9f9f9f;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 20px 20px;
+  }
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
     background-size: 100% 100%;
@@ -857,13 +864,7 @@ export default defineComponent({
         color: #83e977;
       }
     }
-    .forget-pwd {
-      color: #9f9f9f;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin: 0 20px 20px;
-    }
+
     .social-container {
       margin: 10px auto;
       width: 95%;

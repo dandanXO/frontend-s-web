@@ -1,0 +1,9 @@
+{
+  "appId": "com.ind.appb9mega1",
+  "appName": "B9mega1",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "7rzyd3kui.b9mega1.com"
+  }
+}
