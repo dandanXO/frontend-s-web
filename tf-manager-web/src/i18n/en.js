@@ -3127,6 +3127,7 @@ export default {
     DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
     WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
     BONUS_FLUCTUATION: 'Bonus fluctuation',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
   },
   domain: {
     domainMainType: {

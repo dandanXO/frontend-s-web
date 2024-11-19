@@ -36,9 +36,9 @@ watch(languageVal, (newVal) => {
 
 const langOptions = [
   {
-    label: "Urdu",
-    value: "ur",
-    icon: "iconur"
+    label: "Bengali",
+    value: "bn",
+    icon: "iconbn"
   },
   {
     label: "English",

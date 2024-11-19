@@ -940,7 +940,7 @@ async function pDepo(deposit) {
 // Detect if is inside TikTok in-app browser
 const isTikTokInAppBrowser = () => {
   const ua = navigator.userAgent || navigator.vendor || window.opera;
-  return ua.indexOf("TikTok") > -1;
+  return ua.indexOf("ByteLocale") > -1;
 };
 
 const nodeKey = ref(0);
