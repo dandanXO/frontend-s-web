@@ -95,7 +95,9 @@
 
 <script>
 import { SplashScreen } from "@capacitor/splash-screen";
+import { StatusBar, Style } from "@capacitor/status-bar";
 import { isAndroid } from "boot/utils";
+import { AddressbarColor } from "quasar";
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -480,6 +482,21 @@ export default defineComponent({
       }
     };
 
+    const setStatusBarColor = async () => {
+      AddressbarColor.set("#3E1474");
+      //   if (Platform.is.capacitor && Platform.is.android) {
+      //     // console.log("STATUSBARR");
+      //     await nextTick();
+      await StatusBar.hide();
+      await StatusBar.setBackgroundColor({ color: "#3E1474" });
+      await StatusBar.setStyle({ style: Style.Dark });
+      await StatusBar.setOverlaysWebView({ overlay: true });
+      // setTimeout(() => {
+      //   getInsetHeight();
+      // }, 250);
+      //   }
+    };
+
     onMounted(() => {
       checkRoute();
       checkFirstScreen();
@@ -488,6 +505,9 @@ export default defineComponent({
         setTimeout(() => {
           SplashScreen.hide();
         }, 500);
+        setTimeout(() => {
+          setStatusBarColor();
+        }, 2000);
       }
     });
     return {
