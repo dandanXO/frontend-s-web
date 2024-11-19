@@ -1,7 +1,7 @@
 <template>
   <div class="hotgame-section">
     <div class="hotgame-tabs-wrapper">
-        <img class="separator-img" style="width:100%;" src="../../../assets/home/hotgame/home-separator.png" />
+        <!-- <img class="separator-img" style="width:100%;" src="../../../assets/home/hotgame/home-separator.png" /> -->
         <img class="title-img" style="display:flex;margin:auto;width:60%;" src="../../../assets//home/hotgame/hotgame-title-dark.png" />
         <el-tabs :tab-position="tabPosition" class="hotgame-tabs">
           <el-tab-pane :label="hotgame.title" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`" @click="onBannerClick(hotgameIndex)">

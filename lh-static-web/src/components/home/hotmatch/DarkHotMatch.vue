@@ -2,7 +2,7 @@
   <div
   class="hot-match-container"
   >
-  <img src="@/assets/home/hotmatch/hot-match-title.png" style="display: flex; margin: auto; width: 60%" />
+  <img src="@/assets/home/hotmatch/hot-match-title.png" style="display: flex; margin: 20px auto; width: 60%" />
     <img v-if="isFetchingHotMatches" class="hot-match-loading" src="@/assets/home/hotmatch/loading.gif" />
     <div class="competition-items" >
       <div
@@ -223,7 +223,6 @@ onMounted(() => {
   width: 100%;
   max-width: 1385px;
   margin: auto;
-  margin-top: -35px;
 
   .competition-item {
     display: flex;
