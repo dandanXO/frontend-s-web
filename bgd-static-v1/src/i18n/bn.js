@@ -498,6 +498,7 @@ export default {
     orderNo: "অর্ডার নং",
     bank: "ব্যাংক",
     noRecord: "কোনো রেকর্ড নেই",
+    noMessage: "কোন বার্তা নেই",
     noMoreRecord: "আর কোনো রেকর্ড নেই",
     bytoday: "আজ",
     byyesterday: "গতকাল",
