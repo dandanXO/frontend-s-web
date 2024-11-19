@@ -3073,6 +3073,7 @@ export default {
     DEPOSIT_FLUCTUATION: '存款波动',
     WITHDRAW_FLUCTUATION: '提款波动',
     BONUS_FLUCTUATION: '优惠波动',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ主题闲置',
   },
   domain: {
     domainMainType: {
