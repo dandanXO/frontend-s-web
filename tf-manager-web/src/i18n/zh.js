@@ -2878,6 +2878,7 @@ export default {
     'Member Ratio Edit Record': '返水比例更改记录',
     'Site Platform Blacklist': '站点平台黑名单',
     'Telegram User': 'Telegram用户管理',
+    'Site Domain': '站点域名管理',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3076,6 +3077,7 @@ export default {
     WITHDRAW_FLUCTUATION: '提款波动',
     BONUS_FLUCTUATION: '优惠波动',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ主题闲置',
+    DOMAIN_VALID: '域名有效期',
   },
   domain: {
     domainMainType: {

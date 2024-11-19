@@ -2930,6 +2930,7 @@ export default {
     'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
     'Telegram User': 'Telegram User',
+    'Site Domain': 'Site Domain',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3129,6 +3130,7 @@ export default {
     WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
     BONUS_FLUCTUATION: 'Bonus fluctuation',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
+    DOMAIN_VALID: 'Domain Validity',
   },
   domain: {
     domainMainType: {
