@@ -25,7 +25,7 @@
               :src="`${imageDir}/announcement/${announcement.popUpImage}`"
             />
           </div>
-          <div v-html="announcement.content"></div>
+          <div v-html="formattedText(announcement.content)"></div>
           <div class="dismiss-checkbox">
             <el-checkbox
               v-model="announcement.isChecked"
@@ -63,6 +63,10 @@ const dismissAnnouncement = announcementId => {
       fetchAnnouncementListPopup()
     }
   })
+}
+
+const formattedText = text => {
+  return text.replace(/\n/g, '<br/>')
 }
 
 const fetchAnnouncementListPopup = () => {
