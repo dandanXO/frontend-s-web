@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.privilegeName"
           size="small"
@@ -599,7 +599,7 @@ const request = reactive({
 function resetQuery() {
   request.sendTime = [];
   request.type = null;
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
 }
 
 const form = reactive({
@@ -1257,7 +1257,7 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    request.siteId = siteList.list[0].id;
+    request.siteId = store.state.user.siteId
   }
   await loadSystemMessageTemplate()
 })

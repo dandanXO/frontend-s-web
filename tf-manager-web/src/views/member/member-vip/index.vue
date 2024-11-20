@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container" style="margin-bottom: 40px">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -17,7 +17,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input type="textarea" v-model="request.loginName" :rows="4" style="width: 400px; margin-top: 5px;" :placeholder="t('fields.loginName')" />
         <div class="btn-group">
           <el-button
@@ -89,7 +89,7 @@ const siteList = reactive({
 
 function resetQuery() {
   request.loginName = null;
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId;
 }
 
 async function loadSites() {
@@ -179,7 +179,7 @@ async function requestExportExcel() {
 
 onMounted(async() => {
   await loadSites();
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
 });
 
 </script>

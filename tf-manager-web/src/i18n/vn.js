@@ -2709,6 +2709,7 @@ export default {
     DEPOSIT_FLUCTUATION: 'Biến động tiền gửi',
     WITHDRAW_FLUCTUATION: 'Biến động rút tiền',
     BONUS_FLUCTUATION: 'Biến động tiền thưởng',
+    MQ_LAST_CONSUME_TIME_CHECK: 'Chủ đề MQ không hoạt động',
   },
   error: {
     400: 'Yêu cầu không hợp lệ',

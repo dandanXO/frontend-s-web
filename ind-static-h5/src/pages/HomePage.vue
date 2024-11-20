@@ -1,60 +1,65 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-  <q-carousel
-    class="home"
-    id="home"
-    autoplay
-    navigation
-    v-model="slide"
-    swipeable
-    transition-next="slide-left"
-    transition-prev="slide-right"
-    animated
-    infinite
-    data-aos="fade-in"
-    data-aos-duration="1200"
-    data-aos-once="true"
-  >
-    <q-carousel-slide
-      v-for="(banner, i) in banners"
-      :key="i"
-      :name="i"
-      class="column no-wrap flex-center"
-      :img-src="returnBannerUrl(banner)"
-      @click="gotoPromo(banner)"
-    ></q-carousel-slide>
+  <template v-if="bannerLoading">
+    <q-skeleton style="height: 200px" />
+  </template>
+  <template v-else>
+    <q-carousel
+      class="home"
+      id="home"
+      autoplay
+      navigation
+      v-model="slide"
+      swipeable
+      transition-next="slide-left"
+      transition-prev="slide-right"
+      animated
+      infinite
+      data-aos="fade-in"
+      data-aos-duration="1200"
+      data-aos-once="true"
+    >
+      <q-carousel-slide
+        v-for="(banner, i) in banners"
+        :key="i"
+        :name="i"
+        class="column no-wrap flex-center"
+        :img-src="returnBannerUrl(banner)"
+        @click="gotoPromo(banner)"
+      ></q-carousel-slide>
 
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        v-if="active"
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: #661ebf;
-        "
-      />
-      <q-btn
-        v-else
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.2);
-        "
-      />
-    </template>
-  </q-carousel>
+      <template v-slot:navigation-icon="{ active, onClick }">
+        <q-btn
+          v-if="active"
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: #661ebf;
+          "
+        />
+        <q-btn
+          v-else
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+          "
+        />
+      </template>
+    </q-carousel>
+  </template>
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
@@ -102,7 +107,11 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <RiVolumeUpLine style="fill: #5f4682; width: 24px; height: 24px" />
+          <img
+            style="width: 24px; height: 24px"
+            class="filter-purple"
+            src="../assets/images/index/volume-up-line.svg"
+          />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -1132,7 +1141,6 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
@@ -2398,29 +2406,24 @@ const setWithExpiry = (key, value, interval) => {
   sessionStorage.setItem(key, JSON.stringify(item));
 };
 
+const bannerLoading = ref(false);
+
 function loadData() {
+  bannerLoading.value = true;
   api
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = res.data;
-      } else {
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: res.data.message,
-        //   icon: "report_problem"
-        // });
+        setTimeout(() => {
+          bannerLoading.value = false;
+        }, 1000);
       }
-      // banners.value = response.data;
     })
-    .catch(() => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: "Loading failed",
-      //   icon: "report_problem"
-      // });
+    .finally(() => {
+      setTimeout(() => {
+        bannerLoading.value = false;
+      }, 1000);
     });
 }
 
@@ -2964,6 +2967,11 @@ onBeforeUnmount(() => {
       align-items: center;
       height: 28px;
       width: 28px;
+    }
+
+    .filter-purple {
+      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%)
+        contrast(96%);
     }
 
     .marquee-container {

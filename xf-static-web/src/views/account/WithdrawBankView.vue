@@ -298,9 +298,6 @@ export default defineComponent({
       if (selectedBankType.value === "alipay") {
         min = 11;
         max = 20;
-        if (!/^\d+$/.test(v)) {
-          return Promise.reject("请输入数字");
-        }
       } else if (selectedBankType.value === 'Bank') {
         var selectedBankCode = null;
         banksList.value.forEach(bank => {

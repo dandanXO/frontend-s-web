@@ -67,7 +67,7 @@ onMounted(() => {
   justify-content: center;
   gap: 10px;
   border-radius: 5px;
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  background: linear-gradient(270deg, #3080f4 0%, #70b1ff 100%);
   color: #000;
 
   &.is-disabled {

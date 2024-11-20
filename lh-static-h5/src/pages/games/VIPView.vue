@@ -325,8 +325,8 @@
             <th>生日<br>彩金</th>
             <!--            <th>节日礼金</th>-->
             <th>每日额外返水红包</th>
-            <th>会员日每月<br>15号</th>
-            <th>会员充值加码10%</th>
+            <th>每月15号<br>红包</th>
+            <th>充值赠送20%奖金</th>
           </tr>
         </thead>
         <tbody>
@@ -339,7 +339,7 @@
             <!--            <td>-</td>-->
             <td>0.1%</td>
             <td>5</td>
-            <td>10</td>
+            <td>38</td>
           </tr>
           <tr>
             <td>VIP2</td>
@@ -350,7 +350,7 @@
             <!--            <td>-</td>-->
             <td>0.2%</td>
             <td>8</td>
-            <td>28</td>
+            <td>88</td>
           </tr>
           <tr>
             <td>VIP3</td>
@@ -361,7 +361,7 @@
             <!--            <td>-</td>-->
             <td>0.3%</td>
             <td>18</td>
-            <td>58</td>
+            <td>158</td>
           </tr>
           <tr>
             <td>VIP4</td>
@@ -372,7 +372,7 @@
             <!--            <td>-</td>-->
             <td>0.5%</td>
             <td>28</td>
-            <td>88</td>
+            <td>288</td>
           </tr>
           <tr>
             <td>VIP5</td>
@@ -383,7 +383,7 @@
             <!--            <td>-</td>-->
             <td>0.6%</td>
             <td>38</td>
-            <td>128</td>
+            <td>388</td>
           </tr>
           <tr>
             <td>VIP6</td>
@@ -394,7 +394,7 @@
             <!--            <td>-</td>-->
             <td>0.8%</td>
             <td>58</td>
-            <td>188</td>
+            <td>488</td>
           </tr>
           <tr>
             <td>VIP7</td>
@@ -405,7 +405,7 @@
             <!--            <td>-</td>-->
             <td>1.0%</td>
             <td>68</td>
-            <td>258</td>
+            <td>588</td>
           </tr>
           <tr>
             <td>VIP8</td>
@@ -416,7 +416,7 @@
             <!--            <td>188</td>-->
             <td>1.2%</td>
             <td>128</td>
-            <td>388</td>
+            <td>688</td>
           </tr>
           <tr>
             <td>VIP9</td>
@@ -427,7 +427,7 @@
             <!--            <td>288</td>-->
             <td>1.3%</td>
             <td>208</td>
-            <td>508</td>
+            <td>788</td>
           </tr>
           <tr>
             <td>VIP10</td>
@@ -666,17 +666,17 @@
         </li>
       </ol>
 
-      <h2>六. 会员日</h2>
+      <h2>六. 每月15号红包</h2>
       <ol class="terms">
         <li>
           会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至23:59期间登录活动页面领取对应等级的会员日礼金（以领取时的等级为准），会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：
         </li>
       </ol>
 
-      <h2>七. 会员充值加码10%</h2>
+      <h2>七. 充值赠送20%奖金</h2>
       <ol class="terms got-bullets">
         <li class="numbered">
-          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内在充值页面进行勾选优惠使用，成功使用后需要（彩金三倍流水）即可提款；
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
@@ -1247,8 +1247,8 @@ const runVipAPI = (res) => {
 //TODO: 节日礼金去掉了
 const categories = [
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
-  { key: "monthly", image: "monthly", displayName: "会员日红包" },
-  { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
+  { key: "monthly", image: "monthly", displayName: "每月15号红包" },
+  { key: "coupon", image: "coupon", displayName: "充值赠送20%奖金" },
   { key: "redPacket", image: "rebate", displayName: "每日额外返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },

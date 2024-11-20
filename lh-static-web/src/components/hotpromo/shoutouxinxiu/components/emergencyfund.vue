@@ -14,32 +14,34 @@
     如果会员领取相应场馆的新秀享头彩，那么领取彩金当日如果有负盈利即可在次日24小时内点击领取。
   </div> -->
   <table cellpadding="0" cellspacing="0" border="0">
-    <tr>
-      <th>负盈利</th>
-      <th>救援金</th>
-      <th>流水要求</th>
-    </tr>
-    <tr>
-      <td>500</td>
-      <td>8</td>
-      <td rowspan="5">1倍</td>
-    </tr>
-    <tr>
-      <td>1,000</td>
-      <td>18</td>
-    </tr>
-    <tr>
-      <td>5,000</td>
-      <td>58</td>
-    </tr>
-    <tr>
-      <td>10,000</td>
-      <td>188</td>
-    </tr>
-    <tr>
-      <td>30,000</td>
-      <td>388</td>
-    </tr>
+    <tbody>
+      <tr>
+        <th>负盈利</th>
+        <th>救援金</th>
+        <th>流水要求</th>
+      </tr>
+      <tr>
+        <td>500</td>
+        <td>8</td>
+        <td rowspan="5">1倍</td>
+      </tr>
+      <tr>
+        <td>1,000</td>
+        <td>18</td>
+      </tr>
+      <tr>
+        <td>5,000</td>
+        <td>58</td>
+      </tr>
+      <tr>
+        <td>10,000</td>
+        <td>188</td>
+      </tr>
+      <tr>
+        <td>30,000</td>
+        <td>388</td>
+      </tr>
+    </tbody>
   </table>
   <div class="emergency-rules">
     <div class="emergency-rules__rule-title">
@@ -69,7 +71,7 @@
 import { claimSaveBonus } from "@/api/promotion/eurocup";
 import { useNotify } from "@/hooks/notify";
 
-const notify = useNotify()
+const notify = useNotify();
 
 const claimPromo = () => {
   claimSaveBonus().then((res) => {

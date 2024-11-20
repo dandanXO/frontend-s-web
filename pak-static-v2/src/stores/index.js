@@ -2,17 +2,21 @@ import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import { useUI } from "stores/ui";
+import OneSignal from "onesignal-cordova-plugin";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
-const ftdEvent = new Event("ftdSuccess");
+
+const createFtdEvent = (triggeredPixels) => {
+  return new CustomEvent("ftdSuccess", { detail: triggeredPixels });
+};
 
 export const userStore = defineStore("userStore", {
   state: () => {
     const getStoreToken = () => {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         return LocalStorage.getItem("TOKEN", "");
       } else {
         return SessionStorage.getItem("TOKEN") || "";
@@ -50,12 +54,14 @@ export const userStore = defineStore("userStore", {
       isFbPixel: false,
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
-      ftd: "CLOSE"
+      ftd: "CLOSE",
+      isTkPixel: false,
+      hasUpdatedOneSignal: false,
     };
   },
   actions: {
     hasToken() {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
@@ -111,7 +117,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/pakLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -141,7 +147,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -169,7 +175,7 @@ export const userStore = defineStore("userStore", {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
-      this.token = isAndroid() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
+      this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -207,6 +213,13 @@ export const userStore = defineStore("userStore", {
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.guest = guest;
 
+          if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
+            OneSignal.login(this.nickName);
+            OneSignal.User.addTag("user_name", this.nickName);
+            OneSignal.User.addTag("VIP", this.vip);
+            this.hasUpdatedOneSignal = true;
+          }
+
           if (evip) {
             var exclusive = JSON.parse(evip);
             this.evip = exclusive.wap;
@@ -231,10 +244,13 @@ export const userStore = defineStore("userStore", {
           .then((res) => {
             console.log(res);
             if (res.code === 0) {
-              if (this.isFbPixel && this.balance === 0 && res.data !== 0) {
+              if ((this.isFbPixel || this.isTkPixel) && this.balance === 0 && res.data !== 0) {
+                const triggeredPixels = [];
+                if (this.isFbPixel) triggeredPixels.push("fb");
+                if (this.isTkPixel) triggeredPixels.push("tk");
                 const isNewUser = sessionStorage.getItem("newUserFtd");
                 if (isNewUser && isNewUser === this.nickName) {
-                  document.dispatchEvent(ftdEvent);
+                  document.dispatchEvent(createFtdEvent(triggeredPixels));
                 }
               }
               this.balance = res.data;
@@ -255,7 +271,7 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       const ui = useUI();
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         LocalStorage.set("TOKEN", token, 86400);
         ui.showLoggedIn();
       } else {
@@ -267,6 +283,12 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
+
+        this.hasUpdatedOneSignal = false;
+
+        if (isAndroid() && OneSignal !== undefined) {
+          OneSignal.logout();
+        }
 
         location.href = "/";
       });

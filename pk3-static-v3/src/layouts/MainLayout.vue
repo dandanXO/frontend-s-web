@@ -87,9 +87,15 @@
       </q-tabs>
     </q-footer>
   </q-layout>
+
+  <div class="first-screen-loading" v-show="ui.firstScreenLoading">
+    <img src="@/assets/55-ace-logo.png" alt="" />
+  </div>
 </template>
 
 <script>
+import { SplashScreen } from "@capacitor/splash-screen";
+import { isAndroid } from "boot/utils";
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -117,6 +123,15 @@ export default defineComponent({
         router.push("/home");
       });
     };
+
+    const checkFirstScreen = () => {
+      if (ui.firstScreenLoading) {
+        setTimeout(() => {
+          ui.firstScreenLoading = false;
+        }, 500);
+      }
+    };
+
     watch(
       () => route.path,
       async () => {
@@ -464,6 +479,13 @@ export default defineComponent({
 
     onMounted(() => {
       checkRoute();
+      checkFirstScreen();
+
+      if (isAndroid()) {
+        setTimeout(() => {
+          SplashScreen.hide();
+        }, 500);
+      }
     });
     return {
       tab: ref("home"),
@@ -563,6 +585,29 @@ svg path {
 
   svg {
     width: 250px;
+  }
+}
+
+.first-screen-loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  max-width: 100%;
+  background: #11131e;
+  background-size: cover;
+  background-position: center center;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 200px;
   }
 }
 </style>

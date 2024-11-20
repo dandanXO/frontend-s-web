@@ -25,20 +25,20 @@
           :placeholder="t('fields.name')"
         />
 
-        <el-select
-          v-model="request.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
+        <!--        <el-select-->
+        <!--          v-model="request.siteId"-->
+        <!--          size="small"-->
+        <!--          :placeholder="t('fields.site')"-->
+        <!--          class="filter-item"-->
+        <!--          style="width: 120px; margin-left: 5px"-->
+        <!--        >-->
+        <!--          <el-option-->
+        <!--            v-for="item in siteList.list"-->
+        <!--            :key="item.id"-->
+        <!--            :label="item.siteName"-->
+        <!--            :value="item.id"-->
+        <!--          />-->
+        <!--        </el-select>-->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -182,7 +182,6 @@ import {
   getTotalPrivilegeAmount,
   getPrivilegeReportExport,
 } from '../../../api/report-privilege'
-import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
@@ -216,7 +215,7 @@ const request = reactive({
   current: 1,
   name: null,
   recordTime: [defaultStartDate, defaultEndDate],
-  siteId: null,
+  siteId: store.state.user.siteId,
 })
 
 const uiControl = reactive({
@@ -345,8 +344,8 @@ function patchRecord(records) {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  // const { data: site } = await getSiteListSimple()
+  siteList.list = store.state.user.sites
 }
 
 function changePage(page) {
@@ -381,7 +380,7 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId || siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

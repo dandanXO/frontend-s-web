@@ -190,46 +190,48 @@
         </div>
         <div class="table-content">
           <table>
-            <tr>
-              <td>单笔存款</td>
-              <td>获得票数</td>
-              <td>当日票数上限</td>
-            </tr>
-            <tr>
-              <td>每日登陆</td>
-              <td>1</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>≥200</td>
-              <td>1</td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>≥500</td>
-              <td>1</td>
-              <td>5</td>
-            </tr>
-            <tr>
-              <td>≥1,500</td>
-              <td>2</td>
-              <td>12</td>
-            </tr>
-            <tr>
-              <td>≥3,000</td>
-              <td>5</td>
-              <td>35</td>
-            </tr>
-            <tr>
-              <td>≥5,000</td>
-              <td>9</td>
-              <td>72</td>
-            </tr>
-            <tr>
-              <td>≥10,000</td>
-              <td>20</td>
-              <td>200</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>单笔存款</td>
+                <td>获得票数</td>
+                <td>当日票数上限</td>
+              </tr>
+              <tr>
+                <td>每日登陆</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>≥200</td>
+                <td>1</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>≥500</td>
+                <td>1</td>
+                <td>5</td>
+              </tr>
+              <tr>
+                <td>≥1,500</td>
+                <td>2</td>
+                <td>12</td>
+              </tr>
+              <tr>
+                <td>≥3,000</td>
+                <td>5</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>≥5,000</td>
+                <td>9</td>
+                <td>72</td>
+              </tr>
+              <tr>
+                <td>≥10,000</td>
+                <td>20</td>
+                <td>200</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -296,16 +298,18 @@
         <div class="title">投票记录</div>
         <div class="vote-records">
           <table class="table-titles">
-            <tr>
-              <th>队伍</th>
-              <th>时间</th>
-              <th>票数</th>
-            </tr>
-            <tr v-for="(voteRecord, voteIndex) in paginatedVoteRecords" :key="voteIndex">
-              <td>{{ voteRecord.teamNameLocal }}</td>
-              <td>{{ moment(voteRecord.voteTime, "M/D/YY, h:mm A").format("YYYY年M月D日HH:mm") }}</td>
-              <td style="font-family: 'HYYakuHei800'; color: #70cbfb">{{ voteRecord.votes }} 票</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th>队伍</th>
+                <th>时间</th>
+                <th>票数</th>
+              </tr>
+              <tr v-for="(voteRecord, voteIndex) in paginatedVoteRecords" :key="voteIndex">
+                <td>{{ voteRecord.teamNameLocal }}</td>
+                <td>{{ moment(voteRecord.voteTime, "M/D/YY, h:mm A").format("YYYY年M月D日HH:mm") }}</td>
+                <td style="font-family: 'HYYakuHei800'; color: #70cbfb">{{ voteRecord.votes }} 票</td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div class="pagination-wrapper">

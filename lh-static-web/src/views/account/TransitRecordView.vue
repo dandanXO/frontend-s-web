@@ -409,7 +409,7 @@
                   <el-select
                     clearable
                     style="width: 200px"
-                    v-model="searchForm.gameBetRecord.platform"
+                    v-model="searchForm.gameBetRecord.platformName"
                     placeholder="平台"
                     @change="searchRecord"
                     value-key="code"
@@ -417,10 +417,10 @@
                     <el-option key="" label="-全部平台-" value="">-</el-option>
                     <el-option
                       v-for="p in platformsList"
-                      :key="p.code"
                       :label="p.alias"
-                      :value="p.code"
-                    ></el-option>
+                      :key="p.code + '@' + p.gameType + '@' + p.alias"
+                      :value="p.code + '@' + p.gameType + '@' + p.alias"
+                    />
                   </el-select>
                 </el-form-item>
                 <el-form-item label="开始">
@@ -687,7 +687,7 @@ import {
   cancellationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
-import { getPlatformList } from "@/api/platform/platform";
+import {getLoggedInPlatformList, getPlatformWithTypeList} from "@/api/platform/platform";
 import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue";
 import EmptyData from "@/components/emptyData.vue";
@@ -750,6 +750,8 @@ const searchForm = reactive({
     startDate: "",
     endDate: "",
     platform: "",
+    gameType: "",
+    platformName: "",
     memberId: store.id,
     current: 1,
     size: 10,
@@ -843,7 +845,7 @@ const tableColumns = {
     },
     {
       title: "游戏平台",
-      dataIndex: "platform",
+      dataIndex: "alias",
       key: "platform"
     },
     {
@@ -1066,6 +1068,19 @@ export default defineComponent({
         } else {
           searchForm[recordActive.value].pagingState = pagination.pagingState;
         }
+        if (recordActive.value === 'gameBetRecord') {
+          let selectedPlatform = searchForm.gameBetRecord.platformName;
+          if (selectedPlatform.includes("@")){
+            const platformArr = selectedPlatform.split('@');
+            searchForm.gameBetRecord.platform = platformArr[0];
+            searchForm.gameBetRecord.gameType = platformArr[1];
+            searchForm.gameBetRecord.platformName = platformArr[2];
+          } else if(selectedPlatform==="") {
+            searchForm.gameBetRecord.platform = ""
+            searchForm.gameBetRecord.gameType = ""
+            searchForm.gameBetRecord.platformName = null
+          }
+        }
       }
       if (recordActive.value === "gameBetRecord" && searchForm[recordActive.value].platform === "BBINDY") {
         searchForm[recordActive.value].platform = "BBIN";
@@ -1150,6 +1165,9 @@ export default defineComponent({
 
     const route = useRoute();
     onMounted(() => {
+      if (route.query.type === 'withdraw') {
+        recordActive.value = 'withdraw';
+      }
       getTime();
     });
     const platformsList = ref([]);
@@ -1160,7 +1178,7 @@ export default defineComponent({
         notify.error("开始与结束月份必须一致");
       }
 
-      getPlatformList().then((ret) => {
+      getPlatformWithTypeList().then((ret) => {
         platformsList.value = ret;
       });
 

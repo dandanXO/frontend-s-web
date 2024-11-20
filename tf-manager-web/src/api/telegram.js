@@ -25,3 +25,7 @@ export const deleteUser = async ids => {
 export const approveUser = (user) => {
   return https().request("/telegram/approve?_method=PUT", Method.POST, user, ContentType.form);
 };
+
+export const updateUser = (user) => {
+  return https().request("/telegram/update-user?_method=PUT", Method.POST, user, ContentType.form);
+};

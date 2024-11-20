@@ -237,7 +237,6 @@ import { api } from "boot/axios";
 import NoInfoComponent from "../NoInfoComponent.vue";
 import LoadingComponent from "../LoadingComponent.vue";
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
-import { Bar } from "vue-chartjs";
 import { userStore } from "stores/index";
 import moment from "moment";
 import Swiper from "swiper";

@@ -99,7 +99,7 @@ const form = reactive({
   memberType: null,
   loginName: null,
   transferAmount: '',
-  rollover: null,
+  rollover: 1,
   siteId: null,
   withdrawPassword: null
 });
@@ -168,7 +168,7 @@ async function loadAffiliateBalance() {
 async function checkWithdrawPw() {
   const { data: exists } = await checkHasWithdrawPw(store.state.user.id, store.state.user.siteId);
   if (!exists) {
-    router.push("/personal?name=withdrawpw");
+    router.push("/personal/info?name=withdrawpw");
   }
 }
 

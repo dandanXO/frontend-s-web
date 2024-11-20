@@ -297,7 +297,7 @@ import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount, isAndroid } from "src/boot/utils";
+import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -488,7 +488,7 @@ onMounted(() => {
   ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";
-  if (isAndroid()) {
+  if (isAndroid() || isInPwa()) {
     isSideDownload.value = false;
   } else {
     isSideDownload.value = true;

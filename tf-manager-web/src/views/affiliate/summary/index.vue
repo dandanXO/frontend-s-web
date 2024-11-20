@@ -17,7 +17,7 @@
             maxlength="50"
             :placeholder="t('fields.affiliateCode')"
           />
-          <el-select
+          <!-- <el-select
             v-if="hasRole(['ADMIN'])"
             v-model="request.siteId"
             size="small"
@@ -32,7 +32,7 @@
               :label="item.siteName"
               :value="item.id"
             />
-          </el-select>
+          </el-select> -->
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -729,7 +729,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import { hasRole, hasPermission } from '../../../utils/util'
+import { hasPermission } from '../../../utils/util'
 import moment from 'moment'
 import {
   getAffiliateSummary,
@@ -738,11 +738,13 @@ import {
 } from '../../../api/affiliate-record'
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
+import { useStore } from '../../../store'
 import { getShortcuts } from '@/utils/datetime'
 /* import { ElMessage } from 'element-plus'
 import { useStore } from "@/store"; */
 
 const { t } = useI18n()
+const store = useStore()
 const siteList = reactive({
   list: [],
 })
@@ -769,7 +771,7 @@ const uiControl = reactive({
     },
   ],
 })
-const site = ref(null)
+// const site = ref(null)
 const startDate = new Date()
 startDate.setTime(
   moment(startDate)
@@ -832,7 +834,7 @@ function resetQuery() {
   request.loginName = null
   request.affiliateCode = null
   request.activeMember = 0
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
 }
 
 function resetPopupQuery() {
@@ -1091,7 +1093,7 @@ function changePage(page, pageType) {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>

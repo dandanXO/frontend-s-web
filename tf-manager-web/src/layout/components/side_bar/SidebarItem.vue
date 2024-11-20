@@ -45,6 +45,7 @@
           :is-first-level="false"
           :base-path="resolvePath(child.path)"
           :has-new-user="hasNewUser"
+          :has-new-feedback="hasNewFeedback"
           class="nest-menu"
         />
       </template>
@@ -87,6 +88,10 @@ export default defineComponent({
     hasNewUser: {
       type: Boolean,
       required: false
+    },
+    hasNewFeedback: {
+      type: Boolean,
+      required: false
     }
   },
   components: {
@@ -110,7 +115,8 @@ export default defineComponent({
       autoWithdraw: 'AutoWithdraw Under review',
       upperLevelDeposit: ['Deposit Management'],
       financeFeedback: 'Finance Feedback',
-      member: 'Member List'
+      member: 'Member List',
+      memberFeedback: 'Member Feedback',
     })
 
     const alwaysShowRootMenu = computed(() => {
@@ -296,6 +302,13 @@ export default defineComponent({
       }
     }
 
+    const checkNewFeedback = () => {
+      const menuItem = props.item.name;
+      if (menu.memberFeedback === menuItem) {
+        hasTips.value = props.hasNewFeedback
+      }
+    }
+
     const resolvePath = (routePath) => {
       if (isExternal(routePath)) {
         return routePath;
@@ -311,6 +324,7 @@ export default defineComponent({
     })
 
     watch(() => props.hasNewUser, checkNewUser)
+    watch(() => props.hasNewFeedback, checkNewFeedback)
 
     return {
       alwaysShowRootMenu,

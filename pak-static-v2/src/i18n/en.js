@@ -255,10 +255,13 @@ export default {
   },
   deposit: {
     selectAmount: "Select Amount",
+    minimum_amt_requirement: "Minimum Deposit of 1000, No Maximum Limit.",
+    please_pay_exact_amt: "Please pay the exact discounted amount to ensure automatic crediting.",
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
-    useFtdPrivilege: "Use Slot First Deposit Privilege"
+    useFtdPrivilege: "Use Slot First Deposit Privilege",
+    unlimited: "Unlimited"
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -671,7 +674,9 @@ export default {
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
     45001: "Received random bonus today",
-    50000: "The maximum number of transfers for today has been reached",
+    47000: "The discount has not yet been claimed.",
+    47001: "No amount available for claim.",
+    50000: "Temporary unable to bind card",
     50001: "The number of available transfers has been reached, please continue betting before transferring again",
     51000: "Today's sign-in reward has already been claimed",
     51001: "Requirements not met",

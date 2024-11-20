@@ -351,14 +351,17 @@
                   <el-select
                     allowClear
                     style="width: 300px"
-                    v-model="searchForm.gameBetRecord.platform"
+                    v-model="searchForm.gameBetRecord.platformName"
                     placeholder="平台"
                     @change="searchRecord"
                   >
                     <el-option key="" value="">-</el-option>
-                    <el-option v-for="p in platformsList" :key="p.name" :value="p.name">
-                      {{ getPlatform(p.name) }}
-                    </el-option>
+                    <el-option
+                      v-for="p in platformsList"
+                      :label="p.alias"
+                      :key="p.code + '@' + p.gameType + '@' + p.alias"
+                      :value="p.code + '@' + p.gameType + '@' + p.alias"
+                    />
                   </el-select>
                 </el-form-item>
                 <el-form-item label="开始">
@@ -601,7 +604,6 @@ import {defineComponent, onMounted, reactive, ref} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {
   loadRecords,
-  gameBetRecordTotal,
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
@@ -611,10 +613,11 @@ import {
 import moment from "moment";
 import {useLocalStorage} from "@vueuse/core";
 // import { message } from "ant-design-vue";
-import {getPlatformList, getLoggedInPlatformList} from "@/api/platform/platform";
+import {getLoggedInPlatformList, getPlatformWithTypeList} from "@/api/platform/platform";
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
+import { useRoute } from 'vue-router';
 
 
 const copy = (text) => {
@@ -671,6 +674,8 @@ const searchForm = reactive({
     startDate: "",
     endDate: "",
     platform: "",
+    gameType: "",
+    platformName: "",
     memberId: store.id,
     current: 1,
     size: 10,
@@ -764,7 +769,7 @@ const tableColumns = {
     },
     {
       title: "游戏平台",
-      dataIndex: "platform",
+      dataIndex: "alias",
       key: "platform"
     },
     {
@@ -1006,7 +1011,7 @@ export default defineComponent({
       // recordActive.value = key.props.name
       loading.value = true;
       if (recordActive.value === 'gameBetRecord') {
-        getPlatList();
+        getPlatList(recordActive.value);
       } else if (recordActive.value === 'reminderRecord') {
         financeFeedbackList(searchForm[recordActive.value]).then((response) => {
           if (response.code === 0) {
@@ -1025,8 +1030,22 @@ export default defineComponent({
           searchForm[recordActive.value].pagingState = null;
         } else {
           searchForm[recordActive.value].pagingState = pagination.pagingState;
+        } 
+        if (recordActive.value === 'gameBetRecord') {
+          let selectedPlatform = searchForm.gameBetRecord.platformName;
+          if (selectedPlatform.includes("@")){
+            const platformArr = selectedPlatform.split('@');
+            searchForm.gameBetRecord.platform = platformArr[0];
+            searchForm.gameBetRecord.gameType = platformArr[1];
+            searchForm.gameBetRecord.platformName = platformArr[2];
+          } else if(selectedPlatform==="") {
+            searchForm.gameBetRecord.platform = ""
+            searchForm.gameBetRecord.gameType = ""
+            searchForm.gameBetRecord.platformName = null
+          }
         }
       }
+      console.log(searchForm[recordActive.value]);
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
           pagination.total = response.data.total;
@@ -1094,35 +1113,24 @@ export default defineComponent({
       searchRecord();
     };
 
+    const route = useRoute();
+
     onMounted(() => {
+      if (route.query.type === 'withdraw') {
+        recordActive.value = 'withdraw';
+      }
       getTime();
     });
     const platformsList = ref([])
-    const getPlatList = () => {
-      if(store.token){
-        getLoggedInPlatformList().then((ret) => {
-          platformsList.value = ret
-        })
-      }else{
-        getPlatformList().then((ret) => {
-          platformsList.value = ret
-        })
+    const getPlatList = (v) => {
+      const startMonth = new Date(searchForm[v].startDate).getMonth()
+      const endMonth = new Date(searchForm[v].endDate).getMonth()
+      if (startMonth !== endMonth) {
+        ElMessage.error('开始与结束月份必须一致');
       }
-
-
-      // const obj = {
-      //   memberId: searchForm.gameBetRecord.memberId,
-      //   platform: searchForm.gameBetRecord.platform,
-      //   startDate: searchForm.gameBetRecord.startDate,
-      //   endDate: searchForm.gameBetRecord.endDate,
-      // }
-      // gameBetRecordTotal(obj).then((ret) => {
-      //   if (ret.code === 0) {
-      //     totalBetRecord.totalBet = ret.data.totalBet
-      //     totalBetRecord.totalPayout = ret.data.totalPayout
-      //   }
-      // })
-
+      getPlatformWithTypeList().then((ret) => {
+        platformsList.value = ret
+      })
     };
     const selectedBetRecord = ref({})
     const betRecordDialog = ref(false)
@@ -1319,10 +1327,6 @@ export default defineComponent({
         return '自动支付' // Automatic Payment
       } else if (transferType === 'WAITING_CALLBACK') {
         return '自动支付中' // Waiting Callback
-      } else if (transferType === 'PENDING') {
-        return '支付中' // Pending
-      } else if (transferType === 'SUCCESS') {
-        return '成功' // Success
       } else if (transferType === 'SUPPLEMENT_SUCCESS') {
         return '成功' // Supplement Success
       } else if (transferType === 'CLOSED') {

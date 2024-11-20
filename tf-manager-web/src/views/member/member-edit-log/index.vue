@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -17,7 +17,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.loginName"
           size="small"
@@ -428,7 +428,7 @@ function resetQuery() {
   request.loginName = null
   request.type = null
   request.createBy = null
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.createTime = [defaultStartDate, defaultEndDate]
 }
 
@@ -452,7 +452,7 @@ const editLogFormRules = reactive({
 })
 
 function showDialog() {
-  memberInfoForm.siteId = siteList.list[0].id
+  memberInfoForm.siteId = store.state.user.siteId
   if (memberMainInfoForm.value) {
     memberMainInfoForm.value.resetFields()
   }
@@ -567,7 +567,7 @@ async function toCheck(val) {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

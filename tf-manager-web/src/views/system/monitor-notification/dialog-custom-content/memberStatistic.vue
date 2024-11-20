@@ -11,7 +11,7 @@
       <el-form-item label="通知生成人数下限阈值" prop="monitorSetting.setting.notificationGenerationUserNumberLowerThreshold">
         <el-input-number :min="1" v-model="formData.monitorSetting.setting.notificationGenerationUserNumberLowerThreshold" />
       </el-form-item>
-      <el-form-item label="状态" prop="monitorSetting.status">
+      <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
           active-text="启用"
@@ -21,18 +21,18 @@
       </el-form-item>
 
       <h2>通知设置</h2>
-      <el-form-item label="通知内文(当高于上限)" prop="notificationSetting.upperContent">
+      <el-form-item label="通知内文(当高于上限)" prop="notificationSetting.upperTemplate">
         <el-input
           type="textarea"
-          v-model="formData.notificationSetting.upperContent"
+          v-model="formData.notificationSetting.upperTemplate"
           rows="4"
           placeholder="请输入通知内容"
         />
       </el-form-item>
-      <el-form-item label="通知内文(当低于下限)" prop="notificationSetting.lowerContent">
+      <el-form-item label="通知内文(当低于下限)" prop="notificationSetting.lowerTemplate">
         <el-input
           type="textarea"
-          v-model="formData.notificationSetting.lowerContent"
+          v-model="formData.notificationSetting.lowerTemplate"
           rows="4"
           placeholder="请输入通知内容"
         />
@@ -40,12 +40,17 @@
       <el-form-item label="发送频率(分钟)" prop="notificationSetting.setting.backgroundNoticeIntervalMinutes">
         <el-input-number :min="0" v-model="formData.notificationSetting.setting.backgroundNoticeIntervalMinutes" />
       </el-form-item>
+      <UserTypeCheckbox
+        ref="userTypeCheckboxRef"
+        :systemUserTypeListToSendNotification="formData.notificationSetting.setting.systemUserTypeListToSendNotification"
+      />
       <RoleUserSelector
         ref="roleUserSelectorRef"
         :siteId="store.state.user.siteId"
         :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
         :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
         :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
+        :isRoleAndExcludeEnabled="true"
       />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
@@ -58,9 +63,12 @@
           inactive-text="禁用"
         />
       </el-form-item>
-      <el-row justify="center">
+      <el-row justify="center" :gutter="20">
         <el-col :span="6">
           <el-button type="primary" @click="submitForm" style="width: 100%">送出</el-button>
+        </el-col>
+        <el-col v-if="props.mode === 'update'" :span="6">
+          <TestTriggerButton title="MEMBER_STATISTICS" />
         </el-col>
       </el-row>
     </el-form>
@@ -74,8 +82,11 @@ import { useStore } from "@/store";
 import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
 import RoleUserSelector from "@/views/system/monitor-notification/dialog-custom-content/component/roleUserSelector.vue";
+import TestTriggerButton from "@/views/system/monitor-notification/dialog-custom-content/component/testTriggerButton.vue";
+import UserTypeCheckbox from "@/views/system/monitor-notification/dialog-custom-content/component/userTypeCheckbox.vue";
 
 const roleUserSelectorRef = ref(null);
+const userTypeCheckboxRef = ref(null);
 const store = useStore();
 const emit = defineEmits(['submitting', 'submitSuccess', 'submitFailed']);
 const props = defineProps({
@@ -106,11 +117,12 @@ function initializeFormData() {
     notificationSetting: {
       title: 'MEMBER_STATISTICS',
       siteId: store.state.user.siteId,
-      upperContent: '',
-      lowerContent: '',
+      upperTemplate: '',
+      lowerTemplate: '',
       setting: {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
+        systemUserTypeListToSendNotification: [],
         telegramUserIdToSendNotification: [],
         backgroundNoticeIntervalMinutes: 30,
       },
@@ -125,10 +137,10 @@ function initializeFormData() {
 
 function assignFormData() {
   const cloneNotificationSetting = cloneDeep(props.currentItem.notificationSetting);
-  const contentJson = JSON.parse(cloneNotificationSetting.content);
-  cloneNotificationSetting.upperContent = contentJson.upper;
-  cloneNotificationSetting.lowerContent = contentJson.lower;
-  delete cloneNotificationSetting.content;
+  const templateJson = JSON.parse(cloneNotificationSetting.template);
+  cloneNotificationSetting.upperTemplate = templateJson.upper;
+  cloneNotificationSetting.lowerTemplate = templateJson.lower;
+  delete cloneNotificationSetting.template;
 
   return {
     monitorSetting: cloneDeep(props.currentItem.monitorSetting),
@@ -155,10 +167,10 @@ const rules = {
     ]
   },
   notificationSetting: {
-    upperContent: [
+    upperTemplate: [
       { required: true, message: '请填写上限通知内容', trigger: 'blur' }
     ],
-    lowerContent: [
+    lowerTemplate: [
       { required: true, message: '请填写下限通知内容', trigger: 'blur' }
     ],
     status: [
@@ -186,13 +198,14 @@ const submitForm = async () => {
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
   cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
+  cloneNotificationToSubmit.setting.systemUserTypeListToSendNotification = userTypeCheckboxRef.value.fetchSystemUserTypeListToSendNotification();
 
-  cloneNotificationToSubmit.content = JSON.stringify({
-    upper: formData.value.notificationSetting.upperContent,
-    lower: formData.value.notificationSetting.lowerContent,
+  cloneNotificationToSubmit.template = JSON.stringify({
+    upper: formData.value.notificationSetting.upperTemplate,
+    lower: formData.value.notificationSetting.lowerTemplate,
   })
-  delete cloneNotificationToSubmit.upperContent;
-  delete cloneNotificationToSubmit.lowerContent;
+  delete cloneNotificationToSubmit.upperTemplate;
+  delete cloneNotificationToSubmit.lowerTemplate;
 
   const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
   const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;

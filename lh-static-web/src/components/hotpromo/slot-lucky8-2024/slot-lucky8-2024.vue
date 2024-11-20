@@ -4,38 +4,40 @@
       <div class="luck8-game-money-info">
         <div class="title"></div>
         <table class="luck8-game-info-table">
-          <tr>
-            <th>电游平台</th>
-            <th>游戏时间</th>
-            <th>获奖注单号</th>
-            <th>投注金额</th>
-            <th>活动彩金</th>
-            <th>操作</th>
-          </tr>
+          <tbody>
+            <tr>
+              <th>电游平台</th>
+              <th>游戏时间</th>
+              <th>获奖注单号</th>
+              <th>投注金额</th>
+              <th>活动彩金</th>
+              <th>操作</th>
+            </tr>
 
-          <tr v-for="(item, index) in tableData" :key="index">
-            <td>
-              {{ item.platform }}
-              <!-- <span class="inner-time">{{ item.time }}</span> -->
-            </td>
-            <td>{{ item.betTime }}</td>
-            <td>{{ item.betId }}</td>
-            <td>{{ item.bet }}</td>
-            <td>{{ item.prizeAmount }}</td>
-            <td>
-              <button
-                @click="!item.claimTime ? handleSubmitVote(item) : null"
-                :class="
-                  item.claimTime ? 'option-btn-redeemed' : hasClaimed ? 'option-btn-disable' : 'option-btn-active'
-                "
-              >
-                {{ item.claimTime ? "已领取" : hasClaimed ? "已失效" : "领取" }}
-              </button>
-            </td>
-          </tr>
-          <tr v-if="tableData.length === 0">
-            <td colspan="6">暂无数据</td>
-          </tr>
+            <tr v-for="(item, index) in tableData" :key="index">
+              <td>
+                {{ item.platform }}
+                <!-- <span class="inner-time">{{ item.time }}</span> -->
+              </td>
+              <td>{{ item.betTime }}</td>
+              <td>{{ item.betId }}</td>
+              <td>{{ item.bet }}</td>
+              <td>{{ item.prizeAmount }}</td>
+              <td>
+                <button
+                  @click="!item.claimTime ? handleSubmitVote(item) : null"
+                  :class="
+                    item.claimTime ? 'option-btn-redeemed' : hasClaimed ? 'option-btn-disable' : 'option-btn-active'
+                  "
+                >
+                  {{ item.claimTime ? "已领取" : hasClaimed ? "已失效" : "领取" }}
+                </button>
+              </td>
+            </tr>
+            <tr v-if="tableData.length === 0">
+              <td colspan="6">暂无数据</td>
+            </tr>
+          </tbody>
         </table>
         <div class="little-title" style="margin-top: 20px">
           <div class="left">申请方式</div>
@@ -53,7 +55,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动场馆</div>
-          <div class="right">PG电子、PT电子、XIN电子</div>
+          <div class="right">全电子场馆</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
@@ -63,33 +65,35 @@
           </div>
         </div>
         <table class="luck8-game-info-table-2">
-          <tr>
-            <th>注单编号</th>
-            <th>获得投注金额倍数</th>
-            <th>加赠最高礼金</th>
-            <th>流水要求</th>
-          </tr>
-          <tr>
-            <td>********888</td>
-            <td>3</td>
-            <td>388 元</td>
-            <td rowspan="4">8 倍</td>
-          </tr>
-          <tr>
-            <td>*******8888</td>
-            <td>5</td>
-            <td>888 元</td>
-          </tr>
-          <tr>
-            <td>******88888</td>
-            <td>8</td>
-            <td>1,888 元</td>
-          </tr>
-          <tr>
-            <td>*****888888</td>
-            <td>10</td>
-            <td>2,888 元</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>注单编号</th>
+              <th>获得投注金额倍数</th>
+              <th>加赠最高礼金</th>
+              <th>流水要求</th>
+            </tr>
+            <tr>
+              <td>********888</td>
+              <td>3</td>
+              <td>388 元</td>
+              <td rowspan="4">8 倍</td>
+            </tr>
+            <tr>
+              <td>*******8888</td>
+              <td>5</td>
+              <td>888 元</td>
+            </tr>
+            <tr>
+              <td>******88888</td>
+              <td>8</td>
+              <td>1,888 元</td>
+            </tr>
+            <tr>
+              <td>*****888888</td>
+              <td>10</td>
+              <td>2,888 元</td>
+            </tr>
+          </tbody>
         </table>
         <div class="little2-title">
           <div

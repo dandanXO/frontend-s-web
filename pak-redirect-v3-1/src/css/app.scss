@@ -1,0 +1,39 @@
+.q-layout,
+.q-header,
+.q-footer,
+.q-page {
+  margin: 0 auto;
+}
+.q-header,
+.q-page {
+  max-width: 540px;
+}
+
+.q-layout {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+html {
+  width: 100%;
+  margin: 0 auto;
+}
+body {
+  background: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #fff;
+}
+
+.q-btn {
+  text-transform: none;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.q-inner-loading {
+  background-color: transparent;
+}

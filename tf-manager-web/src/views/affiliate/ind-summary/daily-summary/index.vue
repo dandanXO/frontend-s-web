@@ -2,18 +2,6 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
-          v-model="request.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
         <el-date-picker
           v-model="request.recordTime"
           format="DD/MM/YYYY"
@@ -281,23 +269,15 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="netProfit"
+        prop="profit"
         :label="t('fields.netProfit')"
         align="center"
         width="120"
       >
         <template #default="scope">
           $
-          <span
-            v-formatter="{
-              data:
-                scope.row.depositAmount -
-                scope.row.withdrawAmount -
-                scope.row.depositAmount * 0.08 -
-                scope.row.companyWinLoss * 0.13,
-              type: 'money',
-            }"
-          />
+          <!-- eslint-disable -->
+          <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
         </template>
       </el-table-column>
     </el-table>
@@ -446,22 +426,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="netProfit"
+          prop="profit"
           :label="t('fields.netProfit')"
           align="center"
         >
           <template #default="scope">
             $
-            <span
-              v-formatter="{
-                data:
-                  scope.row.deposit -
-                  scope.row.withdraw -
-                  scope.row.deposit * 0.08 -
-                  (scope.row.totalBet - scope.row.totalPayout) * 0.13,
-                type: 'money',
-              }"
-            />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
           </template>
         </el-table-column>
       </el-table>
@@ -488,7 +460,6 @@ import {
   getExportSummaryReport,
   // getExportSummaryMemberReport
 } from '../../../../api/report-summary'
-import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
@@ -538,7 +509,7 @@ const request = reactive({
   memberName: null,
   privilegeName: null,
   recordTime: [defaultStartDate, defaultEndDate],
-  siteId: null,
+  siteId: store.state.user.siteId,
 })
 
 // const memberPage = reactive({
@@ -601,15 +572,14 @@ async function loadSummaryRecord() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  siteList.list = store.state.user.sites
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId || siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
+    const site = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
-    request.siteId = site.value.id
+    request.siteId = site.id
   }
 }
 
@@ -647,15 +617,16 @@ function getSummaries(param) {
           // WithdrawCount, FtdCount, totalMemberDepositCount, totalMemberUsdtDepositCount, totalMemberBetCount
           sums[index] = totalPage.records[0][prop]
         } else if (index === 7 || index === 13 || index === 15) {
-          const pageRowCount = Number(page.records.reduce((sum, row) => {
-            return sum + Number(row[prop])
-          }, 0))
-          const totalPageCount = Number(totalPage.records[0][prop])
-          if (pageRowCount !== totalPageCount) {
-            sums[index] = `${totalPage.records[0][prop]} (${pageRowCount})`
-          } else {
-            sums[index] = totalPage.records[0][prop]
-          }
+          // const pageRowCount = Number(page.records.reduce((sum, row) => {
+          //   return sum + Number(row[prop])
+          // }, 0))
+          // const totalPageCount = Number(totalPage.records[0][prop])
+          // if (pageRowCount !== totalPageCount) {
+          //   sums[index] = `${totalPage.records[0][prop]} (${pageRowCount})`
+          // } else {
+          //   sums[index] = totalPage.records[0][prop]
+          // }
+          sums[index] = totalPage.records[0][prop]
         } else if (index === 6) {
           // registerCount
           sums[index] = totalPage.records[0].registerCount
@@ -677,19 +648,6 @@ function getSummaries(param) {
             parseFloat(
               totalPage.records[0].depositAmount -
                 totalPage.records[0].withdrawAmount
-            ).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (index === 18) {
-          // netProfit
-          sums[index] =
-            '$' +
-            parseFloat(
-              totalPage.records[0].depositAmount -
-                totalPage.records[0].withdrawAmount -
-                totalPage.records[0].depositAmount * 0.08 -
-                totalPage.records[0].companyWinLoss * 0.13
             ).toLocaleString('en-US', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,

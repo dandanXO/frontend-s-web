@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -14,7 +14,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           v-model="request.targetType"
           size="small"
@@ -126,8 +126,10 @@ import {
   convertDateToStart,
   convertDateToEnd,
 } from '@/utils/datetime'
+import { useStore } from '../../../store'
 
 const { t } = useI18n()
+const store = useStore()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
@@ -213,7 +215,7 @@ function resetQuery() {
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   sites.list = ret
-  request.siteId = sites.list[0].id;
+  request.siteId = store.state.user.siteId
 }
 
 async function loadUserActionLog() {

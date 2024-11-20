@@ -98,7 +98,76 @@ const globalLinks = [
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const globalAndCNLinks = ["leihuo", "lhgl", "e693.cc", "e890.cc", "e561.cc", "e396.cc", "lh713.vip", "65130.vip", "lh560.cc", "lh878.cc", "lh202.cc", "lh274.cc", "lh160.cc", "lh096.cc", "lh513.cc"];
+const globalAndCNLinks = [
+  "055267.com",
+  "355277.com",
+  "858862.com",
+  "leihuo",
+  "lhgl",
+  "e693.cc",
+  "e890.cc",
+  "e561.cc",
+  "e396.cc",
+  "lh713.vip",
+  "65130.vip",
+  "lh560.cc",
+  "lh878.cc",
+  "lh202.cc",
+  "lh274.cc",
+  "lh160.cc",
+  "lh096.cc",
+  "lh513.cc",
+  "lh558.cc",
+  "lh786.cc",
+  "lh139.cc",
+  "lh255.cc",
+  "lh747.cc",
+  "lh021.cc",
+  "lh217.cc",
+  "lh119.cc",
+  "lh349.cc",
+  "lh477.cc",
+  "lh409.cc",
+  "lh685.cc",
+  "lh726.cc",
+  "lh976.cc",
+  "lh875.cc",
+  "lh042.cc",
+  "lh841.cc",
+  "lh922.cc",
+  "lh461.cc",
+  "lh516.cc",
+  "lh961.cc",
+  "lh289.cc",
+  "lh173.cc",
+  "lh317.cc",
+  "lh155.cc",
+  "lh268.cc",
+  "lh407.cc",
+  "lh511.cc",
+  "lh797.cc",
+  "lh657.cc",
+  "lh017.cc",
+  "lh070.cc",
+  "lh096.cc",
+  "lh167.cc",
+  "lh181.cc",
+  "lh350.cc",
+  "lh389.cc",
+  "lh531.cc",
+  "lh579.cc",
+  "lh638.cc",
+  "lh650.cc",
+  "lh717.cc",
+  "lh736.cc",
+  "lh798.cc",
+  "lh819.cc",
+  "lh868.cc",
+  "lh899.cc",
+  "lh939.cc",
+  "lh971.cc",
+  "lh178.cc"
+];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 const REPLACEMENT_DOMAIN = "random";
@@ -316,6 +385,9 @@ export default boot(({ app, router }) => {
       Loading.hide();
       const errorType = getErrorType(response.config.baseURL);
 
+      if (res.code === ResponseCode.ERROR_WITHDRAW_AMOUNT) {
+        return res;
+      }
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }

@@ -81,7 +81,7 @@
               label-width="150px"
             >
               <el-form-item>
-                {{ uiControl.dialogContent }}
+                <div v-html="formattedText(uiControl.dialogContent)"></div>
               </el-form-item>
             </el-form>
           </el-dialog>
@@ -125,7 +125,9 @@
               align="center"
             >
               <template #default="scope">
-                <span v-formatter="{ data: scope.row.createTime, type: 'date'}" />
+                <span
+                  v-formatter="{ data: scope.row.createTime, type: 'date' }"
+                />
               </template>
             </el-table-column>
 
@@ -176,6 +178,7 @@ const request = reactive({
   type: null,
   size: 20,
   current: 1,
+  status: true,
 })
 
 const page = reactive({
@@ -211,6 +214,10 @@ function handleSelectionChange(val) {
     uiControl.editBtn = false
     uiControl.removeBtn = false
   }
+}
+
+const formattedText = text => {
+  return text.replace(/\n/g, '<br/>')
 }
 
 function handleClose() {
@@ -329,7 +336,7 @@ onMounted(() => {
 })
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 .header-container {
   margin: 40px 0 20px;
   display: flex;
@@ -361,26 +368,12 @@ onMounted(() => {
     display: flex;
   }
 }
+</style>
 
+<style lang="scss">
 @media (max-width: 768px) {
-  // .inputs-wrap {
-  //   flex-direction: column;
-  //   gap: 10px;
-  //   .el-input--small {
-  //     width: 100% !important;
-  //     max-width: unset !important;
-  //     margin: 0 !important;
-  //     .el-button {
-  //       margin: 0 !important;
-  //     }
-  //   }
-  //   .input-small {
-  //     max-width: unset;
-  //     width: 100%;
-  //     &.el-range-editor--small.el-input__inner {
-  //       max-width: unset;
-  //     }
-  //   }
-  // }
+  .el-dialog {
+    width: 100%;
+  }
 }
 </style>

@@ -490,7 +490,7 @@
             type="info"
             size="mini"
             style="float: left;"
-            v-permission="['sys:member:update:shareRatio']"
+            v-if="hasPermission(['sys:member:update:shareRatio'])"
             @click="showDialog('UPDATE_SHARE_RATIO')"
           >
             {{ t('fields.update') }}
@@ -1696,6 +1696,7 @@ import { callTelephone, stopTelephone } from '../../../../../api/vcall'
 import { getConfigListByGroup, getOpenForMember } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
 import { isInd, isKorea } from '@/utils/site'
+import { hasPermission } from '@/utils/util'
 
 const store = useStore()
 export default defineComponent({
@@ -2776,7 +2777,8 @@ export default defineComponent({
       withdrawTypeFormRules,
       withdrawTypeForm,
       withdrawType,
-      updateWithdrawTypeForm
+      updateWithdrawTypeForm,
+      hasPermission
     }
   },
 })

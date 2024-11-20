@@ -237,6 +237,19 @@
       </template>
     </el-dialog>
     <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
+    <el-dialog 
+      align-center
+      width="530"
+      :show-close="false"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
+      v-model="isShowWithdrawErrorBlock">
+      您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
+      <div class="withdraw-remaining-dialog__buttons">
+        <el-button class="common-btn" @click="isShowWithdrawErrorBlock = false">返回</el-button>
+        <router-link to="/center/transit-record?type=withdraw"><el-button class="common-btn">前往确认</el-button></router-link>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -307,6 +320,7 @@ export default defineComponent({
       return true;
     }
 
+    const isShowWithdrawErrorBlock = ref(false);
     const submitWithraw = () => {
       if (!checkBeforeSubmit()) return
 
@@ -315,6 +329,11 @@ export default defineComponent({
         .validate()
         .then(() => {
           confirmWithdraw(withdrawInfo).then((response) => {
+            if(response.code === 1312) {
+              isShowWithdrawErrorBlock.value = true;
+              loadingBtn.value = false;
+              return
+            }
             if(response.code === 0) {
               store.getBalance();
               ElMessage({
@@ -570,7 +589,8 @@ export default defineComponent({
       isShowSubmitDialog,
       handleBindRealName,
       handleBindPhoneNumber,
-      isShowRemainingDialog
+      isShowRemainingDialog,
+      isShowWithdrawErrorBlock
     };
   },
 });
@@ -913,5 +933,13 @@ export default defineComponent({
 .dialog-wrapper {
   overflow: hidden;
   border-radius: 8px !important;
+}
+.withdraw-remaining-dialog__buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 </style>

@@ -1,42 +1,44 @@
 <template>
   <div>
-    <el-form-item label="指定角色">
-      <el-select
-        v-model="selectedRoleNameArr"
-        size="small"
-        class="filter-item"
-        style="width: 350px"
-        multiple
-        filterable
-        @visible-change="handleRoleSelectorVisibleChange"
-        @remove-tag="handleRoleRemoved"
-      >
-        <el-option
-          v-for="item in simpleRoleArrBySite"
-          :key="item.id"
-          :label="item.name"
-          :value="item.name"
-        />
-      </el-select>
-    </el-form-item>
+    <div v-if="isRoleAndExcludeEnabled">
+      <el-form-item label="指定角色">
+        <el-select
+          v-model="selectedRoleNameArr"
+          size="small"
+          class="filter-item"
+          style="width: 350px"
+          multiple
+          filterable
+          @visible-change="handleRoleSelectorVisibleChange"
+          @remove-tag="handleRoleRemoved"
+        >
+          <el-option
+            v-for="item in simpleRoleArrBySite"
+            :key="item.id"
+            :label="item.name"
+            :value="item.name"
+          />
+        </el-select>
+      </el-form-item>
 
-    <el-form-item label="排除用户">
-      <el-select
-        v-model="excludedUserNameArr"
-        size="small"
-        class="filter-item"
-        style="width: 350px"
-        multiple
-        filterable
-      >
-        <el-option
-          v-for="item in simpleUserArrBySelectedRoles"
-          :key="item.id"
-          :label="item.name"
-          :value="item.name"
-        />
-      </el-select>
-    </el-form-item>
+      <el-form-item label="排除用户">
+        <el-select
+          v-model="excludedUserNameArr"
+          size="small"
+          class="filter-item"
+          style="width: 350px"
+          multiple
+          filterable
+        >
+          <el-option
+            v-for="item in simpleUserArrBySelectedRoles"
+            :key="item.id"
+            :label="item.name"
+            :value="item.name"
+          />
+        </el-select>
+      </el-form-item>
+    </div>
     <el-form-item label="Telegram用户">
       <el-select
         v-model="telegramUserIdArr"
@@ -80,6 +82,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  isRoleAndExcludeEnabled: {
+    type: Boolean,
+    default: true
+  }
 });
 
 const selectedRoleNameArr = ref([]);
@@ -92,8 +98,9 @@ const simpleTelegramUsers = ref([]);
 
 onMounted(async () => {
   await loadSimpleRoleBySite();
-
-  selectedRoleNameArr.value = getRoleNamesByIds(props.systemRoleIdListToSendNotification, simpleRoleArrBySite.value)
+  if (props.systemRoleIdListToSendNotification) {
+    selectedRoleNameArr.value = getRoleNamesByIds(props.systemRoleIdListToSendNotification, simpleRoleArrBySite.value)
+  }
   await loadExcludedUserBySelectedRoles();
   await loadSimpleTelegramUsersBySite();
 });
@@ -138,7 +145,12 @@ async function loadSimpleTelegramUsersBySite() {
   if (res.code !== 0) {
     return;
   }
-  simpleTelegramUsers.value = res.data;
+  for (const user of res.data) {
+    if (user.status === "STOPPED") {
+      user.alias = user.alias + "(已停用)";
+    }
+  }
+  simpleTelegramUsers.value = res.data
 }
 
 const getUserNamesByIds = (userIds, simpleUsers) => {
