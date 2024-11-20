@@ -5,15 +5,15 @@
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
             <div><img src="../../../assets/promo/lh-livepoker-rebate/section-title-img.png" /></div>
-            投注嘉奖
+            每周奖励
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              昨日累计有效投注：
-              <span class="amount">{{ ytdCompetitionValidBet.totalValidBet }}元</span>
+              昨日累计负盈利：
+              <span class="amount">{{ totalLoss }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -22,13 +22,13 @@
             </div>
             <div class="reward-info-content">
               可领取彩金：
-              <span class="amount">{{ ytdCompetitionValidBet.bonus }}元</span>
+              <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: ytdCompetitionValidBet.bonus <= 0 }">
-            <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+            <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -36,62 +36,76 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年12月9日至2024年12月15日</div>
+          <div class="right">2024年11月26日至2024年12月1日</div>
         </div>
         <div class="little-title">
-          <div class="left">活动内容</div>
-          <div class="right">活动期间，当日2024曼谷ESL One有效投注≥1,500 元即可获得 最高1288元的奖励金</div>
+          <div class="left">活动对象</div>
+          <div class="right">投注DOTA爆炸大满贯 2024的会员</div>
+        </div>
+        <div class="little-title">
+          <div class="left">活动平台</div>
+          <div class="right">电竞</div>
+        </div>
+        <div class="little-title"
+          style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
+        >
+          <div class="left">优惠详情</div>
+          <div class="right">会员在本站电竞场馆中，北京时间当日负盈利达到1000元及以上，次日即可领取救援金，最高可达1,288元！</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tbody>
-            <tr>
-              <th>有效投注</th>
-              <th>投注金</th>
-              <th>流水倍数</th>
-            </tr>
-            <tr>
-              <td>≥1,500</td>
-              <td>8 元</td>
-              <td :rowspan="9">8倍流水</td>
-            </tr>
-            <tr>
-              <td>≥5,000</td>
-              <td>28 元</td>
-            </tr>
-            <tr>
-              <td>≥10,000</td>
-              <td>58 元</td>
-            </tr>
-            <tr>
-              <td>≥15,000</td>
-              <td>88 元</td>
-            </tr>
-            <tr>
-              <td>≥30,000</td>
-              <td>168 元</td>
-            </tr>
-            <tr>
-              <td>≥50,000</td>
-              <td>288 元</td>
-            </tr>
-            <tr>
-              <td>≥100,000</td>
-              <td>588 元</td>
-            </tr>
-            <tr>
-              <td>≥300,000</td>
-              <td>888 元</td>
-            </tr>
-            <tr>
-              <td>≥500,000</td>
-              <td>1,288 元</td>
-            </tr>
-          </tbody>
+              <tr>
+                <th>电竞负盈利</th>
+                <th>救援金</th>
+                <th>流水倍数</th>
+              </tr>
+              <tr>
+                <td>≥1,000</td>
+                <td>8元</td>
+                <td :rowspan="9">5倍流水</td>
+              </tr>
+              <tr>
+                <td>≥3,000</td>
+                <td>18元</td>
+              </tr>
+              <tr>
+                <td>≥5,000</td>
+                <td>38元</td>
+              </tr>
+              <tr>
+                <td>≥10,000</td>
+                <td>88元</td>
+              </tr>
+              <tr>
+                <td>≥30,000</td>
+                <td>188元</td>
+              </tr>
+              <tr>
+                <td>≥50,000</td>
+                <td>388元</td>
+              </tr>
+              <tr>
+                <td>≥100,000</td>
+                <td>558元</td>
+              </tr>
+              <tr>
+                <td>≥300,000</td>
+                <td>888元</td>
+              </tr>
+              <tr>
+                <td>≥500,000</td>
+                <td>1,288元</td>
+              </tr>
+            </tbody>
         </table>
 
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            例：用户 A 在09月25日投注2024曼谷ESL One有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288元
+            <div class="livepoker-rebate-game-bottom-left-btn">
+              <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
+              <span>示例</span>
+            </div>
+            会员A在电竞场馆投注DOTA爆炸大满贯 2024,当日产生负盈利为6000元,次日即可获得救援金38元。
           </div>
         </div>
       </div>
@@ -99,39 +113,36 @@
       <div class="livepoker-rebate-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
-          <div class="item">
-            <div class="item-num">1</div>
-            活动期间，活动仅计算电竞场馆中2024曼谷ESL One赛事，会员在当日2024曼谷ESL One中累计有效投注≥1,500
-            元即可获得对应彩金，有效投注次日清零；
+            <div class="item">
+              <div class="item-num">1</div>
+              <div style="display: flex; flex-direction: column">
+                <div>
+                  活动期间，活动仅计算电竞场馆中DOTA爆炸大满贯 2024赛事，会员在当日DOTA爆炸大满贯 2024中累计负盈利≥1,000 元即可获得对应彩金，负盈利次日清零； 
+                </div>
+                <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-num">2</div>
+              活动期间，活动仅计算DOTA爆炸大满贯 2024已结算的赛事总负盈利，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金5 倍流水即可出款；
+            </div>
+            <div class="item">
+              <div class="item-num">3</div>
+              任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            </div>
+            <div class="item">
+              <div class="item-num">4</div>
+              根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+            </div>
+            <div class="item">
+              <div class="item-num">5</div>
+              此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            </div>
+            <div class="item">
+              <div class="item-num">6</div>
+              为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            </div>
           </div>
-          <div class="item-note">
-            <span>注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
-          </div>
-
-          <div class="item">
-            <div class="item-num">2</div>
-            活动期间，活动仅计算当日 2024曼谷ESL One已结算的赛事总有效投注，次日 24
-            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
-          </div>
-          <div class="item">
-            <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7
-            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
-          </div>
-          <div class="item">
-            <div class="item-num">4</div>
-            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
-          </div>
-          <div class="item">
-            <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一账户，若有违规者，将不享受此红利；
-          </div>
-          <div class="item">
-            <div class="item-num">6</div>
-            为避免文字理解差异，东赢电竞保留此活动最终解释权；
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -141,7 +152,7 @@
 import { onMounted, ref, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
 
-import { getCompetitionToday, getCompetitionYesterday, claimCompetitionBonus } from "@/api/index/promo";
+import { getCompetitionLossInit, claimCompetitionLoss } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 
@@ -150,8 +161,8 @@ const promoCode = ref(props.promoCode);
 const notify = useNotify();
 const store = userStore();
 
-const ytdCompetitionValidBet = ref(0);
-const claimableBonus = ref(0);
+const totalLoss = ref(0);
+const bonus = ref(0);
 
 const handleClaimBonus = () => {
   if (!store.hasToken()) {
@@ -168,7 +179,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBonus(promoCode.value)
+  claimCompetitionLoss(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -184,16 +195,27 @@ const handleClaimBonus = () => {
     });
 };
 
-const init = () => {
-  Promise.all([getCompetitionToday(), getCompetitionYesterday(promoCode.value)]).then(([resTdy, resYtd]) => {
-    if (resTdy.code === 0) {
-      claimableBonus.value = resTdy.data || 0;
-    }
-
-    if (resYtd.code === 0) {
-      ytdCompetitionValidBet.value = resYtd.data || 0;
-    }
-  });
+const fetchData = async () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+  try {
+    const res = await getCompetitionLossInit(props.promoCode);
+    totalLoss.value = res.data?.totalLoss || 0;
+    bonus.value = res.data?.bonus || 0;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 onMounted(() => {
@@ -204,7 +226,7 @@ onMounted(() => {
     // });
     return;
   }
-  init();
+  fetchData();
 });
 </script>
 
@@ -241,7 +263,6 @@ onMounted(() => {
     .bonus-image {
       cursor: pointer;
       width: 100%;
-      max-width: 216px;
 
       &:hover {
         filter: brightness(0.9);
@@ -250,6 +271,7 @@ onMounted(() => {
         transform: translate(0px, 1px);
         opacity: 0.9;
       }
+
       &.disabled {
         filter: grayscale(100%);
         cursor: not-allowed;
@@ -427,15 +449,6 @@ onMounted(() => {
     font-weight: 400;
     line-height: 36px;
     color: #000000;
-    .item-note {
-      display: flex;
-      margin-left: 10%;
-      > span {
-        color: #ff0000;
-        display: contents;
-        line-height: 2.5;
-      }
-    }
     .item {
       padding-left: 24px;
       display: flex;
