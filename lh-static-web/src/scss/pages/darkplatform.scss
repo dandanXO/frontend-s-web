@@ -21,7 +21,7 @@
     max-width: $maxwidth;
     margin-left: auto;
     margin-right: auto;
-    padding: 60px 0 10px;
+    padding: 0px 0 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -129,7 +129,7 @@
         }
 
         .platform-list-box {
-          margin-bottom: 1.5rem;
+          // margin-bottom: 1.5rem;
           display: flex;
           flex-wrap: wrap;
         }
@@ -148,6 +148,7 @@
             color: #b7c1ff;
             font-size: 16px;
             margin-top: -20px;
+            white-space: pre-wrap;
           }
 
           &:hover, &.active {
@@ -717,6 +718,7 @@
       .platform-container-inner {
         .platform-item {
           align-items: center;
+          gap: 10px;
           .platform-title-wrap {
             .platform-title,
             .platform-subtitle {
