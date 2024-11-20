@@ -1248,7 +1248,8 @@ export default {
     configValue: 'Config Value',
     configDescribes: 'Config Describes',
     batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
-    showLogo: 'แสดงไอคอน'
+    showLogo: 'แสดงไอคอน',
+    isSeamlessTransfer: 'ไม่มีการโอน',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
@@ -1579,6 +1580,7 @@ export default {
     requestExportToExcelDone1: 'คำขอถูกส่งเรียบร้อยแล้ว กรุณาคลิก',
     requestExportToExcelDone2: 'เพื่อการตรวจสอบความคืบหน้าและดาวน์โหลด',
     roleMustOnlyOne: 'โปรดเลือกบทบาทที่ต้องได้รับอนุมัติ',
+    validateIsSeamlessTransferRequired: 'จำเป็นสำหรับการไม่มีการโอน',
   },
   menu: {
     undefined: 'ไม่ได้กำหนด',

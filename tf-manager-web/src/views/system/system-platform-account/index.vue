@@ -170,6 +170,15 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.isSeamlessTransfer')" prop="isSeamlessTransfer">
+            <el-switch
+              v-model="form.isSeamlessTransfer"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+            />
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item
             :label="t('fields.nextActivationTime')"
             prop="nextActivationTime"
@@ -454,6 +463,7 @@ const form = reactive({
   nextGetBetIndex: null,
   nextGetBetPage: null,
   rate: null,
+  isSeamlessTransfer: null,
 })
 
 // const dateTimeVal = ref([])
@@ -477,6 +487,7 @@ const formRules = reactive({
   nextGetBetEndTime: [required(t('message.validateNextGetBetEndTime'))],
   nextGetBetPage: [required(t('message.validateNextGetBetPage'))],
   rate: [required(t('message.validateRateRequired'))],
+  isSeamlessTransfer: [required(t('message.validateIsSeamlessTransferRequired'))],
 })
 
 const platforms = reactive({
@@ -587,6 +598,7 @@ function showDialog(type) {
     form.nextGetBetStartTime = date
     form.nextGetBetEndTime = date
     form.nextActivationTime = date
+    form.isSeamlessTransfer = false
     // dateTimeVal.value = [new Date(), new Date()]
     uiControl.dialogTitle = t('fields.addPlatformAccount')
     editorValue = ''
