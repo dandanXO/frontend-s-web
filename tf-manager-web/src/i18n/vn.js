@@ -1825,7 +1825,8 @@ export default {
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
-    showLogo: 'hiển thị biểu tượng'
+    showLogo: 'hiển thị biểu tượng',
+    isSeamlessTransfer: 'Không cần chuyển nhượng',
   },
   message: {
     startenddatemore3months:
@@ -2322,6 +2323,7 @@ export default {
     validatePlanDaysRequired: 'Cần có thời gian đầu tư',
     validatePlanLimitMinRequired: 'Yêu cầu giới hạn đầu tư tối thiểu',
     validatePlanLimitMaxRequired: 'Yêu cầu giới hạn đầu tư tối đa',
+    validateIsSeamlessTransferRequired: 'Nó là cần thiết để không chuyển nhượng',
   },
   menu: {
     undefined: '',

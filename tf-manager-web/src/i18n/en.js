@@ -2131,6 +2131,7 @@ export default {
     subType: 'Sub Type',
     active: 'Active',
     inactive: 'Inactive',
+    isSeamlessTransfer: 'Seamless Transfer',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2649,6 +2650,7 @@ export default {
     validateLoginNameNoSpecialCharacter:
       'The login name can only contain underscores (_), numbers, and letters.',
     validateAdjustColumnRequired: 'Adjust Column is required',
+    validateIsSeamlessTransferRequired: 'Is Seamless Transfer is required',
   },
   menu: {
     undefined: '',
