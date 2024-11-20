@@ -76,6 +76,7 @@
     <Tpworld2024 v-if="list.redirectUrl === 'dy2-tpworld-2024'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'dy2-national-day-2024'" :promo-code="list.promoCode" />
     <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
+    <Dota2BlastSlam2024 v-if="list.redirectUrl === 'dy2-dota2-blast-slam-2024'" :promo-code="list.promoCode" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
@@ -181,6 +182,7 @@ import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue"
 import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
 import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
+import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"
 import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 
@@ -242,6 +244,7 @@ export default defineComponent({
     Tpworld2024,
     NationalDay2024,
     LoLS14,
+    Dota2BlastSlam2024,
     BlackMythWuKongPromo,
     SubmitClaimPromo,
     S14VotePromo,
