@@ -498,6 +498,7 @@ export default {
     orderNo: "Order NO.",
     bank: "BANK",
     noRecord: "No record",
+    noMessage: "No message",
     noMoreRecord: "No more record",
     bytoday: "Today",
     byyesterday: "Yesterday",
