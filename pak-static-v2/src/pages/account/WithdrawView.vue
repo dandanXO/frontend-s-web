@@ -593,6 +593,7 @@ const submitWithdraw = async () => {
             icon: "check_circle_outline"
           });
           getWithdrawalMethods();
+          store.getBalance();
 
           // FB tracking :: apply-withdrawal
           if (store.isAffiliateA) {
