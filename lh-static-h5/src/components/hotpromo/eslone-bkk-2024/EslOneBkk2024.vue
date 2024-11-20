@@ -114,7 +114,9 @@
             <div class="item-num">1</div>
             活动期间，活动仅计算电竞场馆中2024曼谷ESL One赛事，会员在当日2024曼谷ESL One中累计有效投注≥1,500
             元即可获得对应彩金，有效投注次日清零；
-            <span style="color: #ff0000; display: contents"> 注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
+          </div>
+          <div class="item-note">
+            <span>注：奖金不叠加派发，奖金按最高档位每日派发一次。</span>
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -445,6 +447,16 @@ onMounted(() => {
     line-height: 20px;
     color: #000000;
     padding: 8px;
+    .item-note {
+      display: flex;
+      margin-left: calc(16px + 10%);
+      margin-right: calc(16px + 10%);
+      margin-bottom: 4px;
+      > span {
+        color: #ff0000;
+        display: contents;
+      }
+    }
     .item {
       display: flex;
       gap: 10px;
