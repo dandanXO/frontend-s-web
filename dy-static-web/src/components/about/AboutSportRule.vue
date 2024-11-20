@@ -16,7 +16,7 @@
 
 <style scoped lang="scss">
 .top-container {
-  font-family: Microsoft YaHei;
+  font-family: PingFang SC;
   font-size: 18px;
   font-weight: 400;
   line-height: 40px;

@@ -65,7 +65,7 @@ const isDark = useDark();
 
 <style scoped lang="scss">
 .top-container {
-  font-family: Microsoft YaHei;
+  font-family: PingFang SC;
   font-size: 18px;
   font-weight: 400;
   line-height: 40px;
@@ -96,7 +96,7 @@ const isDark = useDark();
 
     .title {
       color: #4c88f8;
-      font-family: Microsoft YaHei;
+      font-family: PingFang SC;
       font-size: 14px;
       font-weight: 700;
       line-height: 27px;
@@ -106,7 +106,7 @@ const isDark = useDark();
 
     .desc {
       color: #4c88f8;
-      font-family: Microsoft YaHei;
+      font-family: PingFang SC;
       font-size: 14px;
       font-weight: 700;
       line-height: 27px;
@@ -116,7 +116,7 @@ const isDark = useDark();
 
     .info {
       color: #7a80a1;
-      font-family: Microsoft YaHei;
+      font-family: PingFang SC;
       font-size: 14px;
       font-weight: 400;
       line-height: 31px;

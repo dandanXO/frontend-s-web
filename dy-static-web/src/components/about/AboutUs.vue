@@ -62,7 +62,7 @@
 
 <style scoped lang="scss">
 .top-container {
-  font-family: Microsoft YaHei;
+  font-family: PingFang SC;
   font-size: 18px;
   font-weight: 400;
   line-height: 40px;
@@ -95,7 +95,7 @@
 
     .title {
       color: #4c88f8;
-      font-family: Microsoft YaHei;
+      font-family: PingFang SC;
       font-size: 12px;
       font-weight: 700;
       line-height: 27px;
@@ -115,7 +115,7 @@
 
     .desc {
       color: black;
-      font-family: Microsoft YaHei;
+      font-family: PingFang SC;
       font-size: 14px;
       font-weight: 700;
       line-height: 27px;
@@ -125,7 +125,7 @@
 
     .info {
       color: #A4AABB;
-      font-family: Microsoft YaHei;
+      font-family: PingFang SC;
       font-size: 14px;
       font-weight: 400;
       line-height: 31px;
