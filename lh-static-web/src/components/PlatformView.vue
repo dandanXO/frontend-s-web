@@ -65,7 +65,7 @@
                       />
                     </span>
                   </div>
-                  <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
+                  <div class="list-item-txt">{{ plat.alias ? getAliasName(plat, platformType) : plat.cnname }}</div>
                 </span>
               </div>
 
@@ -368,6 +368,17 @@ const getPlatGameList = () => {
         console.log(err.message);
       });
   }
+};
+
+const getAliasName = (plat, platformType) => {
+  // console.log(plat);
+  if (plat.alias.includes("、")) {
+    const aliass = plat.alias.split("、");
+    const gameTypes = plat.gameType.split(",");
+    const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
+    return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+  }
+  return plat.alias;
 };
 
 const searchList = () => {
