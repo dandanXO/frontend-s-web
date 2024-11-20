@@ -4,10 +4,10 @@ apply plugin: 'cloudwise'
 cloudwise { injectDebug = true }
 
 android {
-    namespace "com.ind.appmx1"
+    namespace "com.ind.appco1"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.ind.appmx1"
+        applicationId "com.ind.appco1"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

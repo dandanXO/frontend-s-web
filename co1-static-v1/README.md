@@ -1,6 +1,7 @@
-# MX1 App (MX1-h5-project)
+# CO1 App (col1-55ace-project)
 
-Pakistan 3 - H5 APP
+Columbia 55Ace - H5 APP
+- Use Spanish as default Language.
 - Node Version >= 16.17.0
 - H5 + Android APP
 
@@ -50,7 +51,7 @@ npx cap run android
 4(b). Build on Android Studio/ Build .apk
 npx cap open android
 
-4(c). Rename - mx1-app-1.0.x
+4(c). Rename - co1-app-1.0.x
 
 ```
 

@@ -72,6 +72,7 @@
     <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <EslOneBkk2024 v-if="list.redirectUrl === 'dy2-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'dy2-blast-premier'" :promo-code="list.promoCode" />
     <Tpworld2024 v-if="list.redirectUrl === 'dy2-tpworld-2024'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'dy2-national-day-2024'" :promo-code="list.promoCode" />
@@ -82,11 +83,11 @@
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
-    <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode"/>
-    <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode"/>
-    <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode"/>
+    <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode" />
+    <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode" />
+    <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
-    <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
+    <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
 
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
@@ -173,7 +174,6 @@ import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
 import PerfectWorldMajor2024 from "@/components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 
-
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
@@ -185,6 +185,7 @@ import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
 import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"
 import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
+import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -240,6 +241,7 @@ export default defineComponent({
     newFootballFight,
     BbdachaCsgo2,
     EslProCsgo2,
+    EslOneBkk2024,
     BlastPremier,
     Tpworld2024,
     NationalDay2024,
