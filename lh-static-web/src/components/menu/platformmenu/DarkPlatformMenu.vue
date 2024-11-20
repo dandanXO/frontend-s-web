@@ -125,11 +125,27 @@ const gotoGame = (item, platformType) => {
   if (platformType === "slot") {
     router.push(`/slot?plat=${item.code}`);
   } else {
-    const platName = item.alias ?? item.cnname ?? item.name;
+    const platName = getAliasName(item, platformType);
     emits("load-game", platName, item.code, item.gameCode);
     // emits("load-game", item);
   }
 };
+
+const getAliasName = (plat, platformType) => {
+  if (plat.alias) {
+    // console.log(plat);
+    if (plat.alias.includes("、")) {
+      const aliass = plat.alias.split("、");
+      const gameTypes = plat.gameType.split(",");
+      const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
+      return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+    }
+    return plat.alias;
+  } else {
+    return plat.cnname;
+  }
+};
+
 const checkWindowSize = () => {
   // console.log('resize');
   // Access and modify the ref here

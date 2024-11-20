@@ -2595,6 +2595,7 @@ export default {
     'Affiliate Point Record': '제휴 포인트 기록',
     'Member Ratio Edit Record': '리베이트 비율 변경 기록',
     'Site Platform Blacklist': '사이트 플랫폼 블랙리스트',
+    'Affiliate Deposit Withdraw Summary': '에이전트 입출금 요약',
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -2763,6 +2764,7 @@ export default {
     DEPOSIT_FLUCTUATION: '예금 변동',
     WITHDRAW_FLUCTUATION: '출금 변동',
     BONUS_FLUCTUATION: '보너스 변동',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
   },
   error: {
     400: '잘못된 요청',

@@ -275,14 +275,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="netProfit"
+          prop="profit"
           :label="t('fields.netProfit')"
           align="center"
           width="120"
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.netProfit, type: 'money' }" />
+            <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
           </template>
         </el-table-column>
       </el-table>

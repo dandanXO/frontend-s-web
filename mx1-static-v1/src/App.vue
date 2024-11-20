@@ -4,7 +4,7 @@
 
 <script>
 import { AddressbarColor, Platform, useQuasar } from "quasar";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, nextTick } from "vue";
 import { useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
@@ -193,16 +193,17 @@ export default defineComponent({
 
     const setStatusBarColor = async () => {
       AddressbarColor.set("#3E1474");
-      if (Platform.is.capacitor && Platform.is.android) {
-        // console.log("STATUSBARR");
-        await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
-        await StatusBar.setBackgroundColor({ color: "#3E1474" });
-        await StatusBar.setStyle({ style: Style.Dark });
-        // setTimeout(() => {
-        //   getInsetHeight();
-        // }, 250);
-      }
+      //   if (Platform.is.capacitor && Platform.is.android) {
+      //     // console.log("STATUSBARR");
+      //     await nextTick();
+      await StatusBar.hide();
+      await StatusBar.setBackgroundColor({ color: "#3E1474" });
+      await StatusBar.setStyle({ style: Style.Dark });
+      await StatusBar.setOverlaysWebView({ overlay: true });
+      // setTimeout(() => {
+      //   getInsetHeight();
+      // }, 250);
+      //   }
     };
 
     const router = useRouter();
@@ -285,7 +286,10 @@ export default defineComponent({
           "deviceready",
           () => {
             onDeviceReady();
-            setStatusBarColor();
+
+            // setTimeout(() => {
+            //   setStatusBarColor();
+            // }, 2000);
           },
           false
         );

@@ -140,8 +140,8 @@ export default {
     virtualWallet_placeholder: "অনুগ্রহ করে ভার্চুয়াল ওয়ালেট ঢোকান",
     virtualWallet_rules_01: "অনুগ্রহ করে ভার্চুয়াল ওয়ালেট লিখুন",
     virtualWallet_id_rule: "অনুগ্রহ করে 13 সংখ্যার আইডেন্টিটি আইডি লিখুন",
-    virtualWallet_rules_02: "ফোন নম্বর অবশ্যই '03' দিয়ে শুরু করতে হবে",
-    virtualWallet_rules_03: "ইওয়ালেটে 11টি সংখ্যা থাকতে হবে",
+    virtualWallet_rules_02: "ফোন নম্বর অবশ্যই '01' দিয়ে শুরু করতে হবে",
+    virtualWallet_rules_03: "ইওয়ালেটে 10 - 11টি সংখ্যা থাকতে হবে",
     virtualWallet_warmReminder:
       "উষ্ণ রিমাইন্ডার: যদি কার্ডধারীর নাম মেলে না, আপনি তথ্য সংশোধন করতে অনলাইন গ্রাহক সেবার সাথে যোগাযোগ করতে পারবেন। আপনার সহায়তা এবং বোঝার জন্য আপনাকে ধন্যবাদ!",
     virtualWallet_warmReminder_02:
@@ -230,7 +230,11 @@ export default {
     cat_slotsgame: "স্লট গেম",
     cat_fishing: "ফিসিং",
     cat_poker: "পোকার",
-    cat_sport: "স্পোর্ট"
+    cat_sport: "স্পোর্ট",
+    popup: {
+      getFreeLuckyDraw: "একটি বিনামূল্যের লাকি ড্র টিকিট পান",
+      downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন",
+    }
   },
   settings: {
     totalScore: "মোট স্কোর",
@@ -494,6 +498,7 @@ export default {
     orderNo: "অর্ডার নং",
     bank: "ব্যাংক",
     noRecord: "কোনো রেকর্ড নেই",
+    noMessage: "কোন বার্তা নেই",
     noMoreRecord: "আর কোনো রেকর্ড নেই",
     bytoday: "আজ",
     byyesterday: "গতকাল",

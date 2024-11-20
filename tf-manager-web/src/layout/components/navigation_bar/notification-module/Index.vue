@@ -263,6 +263,7 @@ function formatTimestamp(timestamp) {
 
   .notification-item-title, .notification-item-content, .notification-item-datetime {
     line-height: 1rem;
+    white-space: pre-line;
   }
   .notification-item-content {
     color: #9d6464;

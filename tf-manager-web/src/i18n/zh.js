@@ -1066,6 +1066,7 @@ export default {
     feedbackStatusSuccess: '已核实',
     feedbackTime: '催单日期',
     feeRate: '收费率',
+    fetchTime: '抓取时间',
     subtractAmount: '扣费金额',
     field: '数据名称',
     finalSum: '最终佣金',
@@ -1931,6 +1932,7 @@ export default {
     football: '足球',
     basketball: '篮球',
     esport: '电竞',
+    competitionMatching: '匹配赛事',
     competitionType: '赛事类别',
     competitionName: '赛事名称',
     competitionTime: '赛事时间',
@@ -2876,6 +2878,8 @@ export default {
     'Member Ratio Edit Record': '返水比例更改记录',
     'Site Platform Blacklist': '站点平台黑名单',
     'Telegram User': 'Telegram用户管理',
+    'Affiliate Deposit Withdraw Summary': '代理存提汇总',
+    'Site Domain': '站点域名管理',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3073,6 +3077,8 @@ export default {
     DEPOSIT_FLUCTUATION: '存款波动',
     WITHDRAW_FLUCTUATION: '提款波动',
     BONUS_FLUCTUATION: '优惠波动',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ主题闲置',
+    DOMAIN_VALID: '域名有效期',
   },
   domain: {
     domainMainType: {

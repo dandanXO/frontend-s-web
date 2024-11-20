@@ -8,6 +8,18 @@
       <el-form-item label="优惠浮动通知阀值(%)" prop="monitorSetting.setting.bonusChangeAlertThreshold">
         <el-input-number :min="0.1" :step="0.1" v-model="formData.monitorSetting.setting.bonusChangeAlertThreshold" />
       </el-form-item>
+      <el-form-item label="监控频率(分钟)" prop="monitorSetting.setting.executeIntervalMinutes">
+        <el-input-number :min="30" :step="30" v-model="formData.monitorSetting.setting.executeIntervalMinutes" />
+      </el-form-item>
+      <el-form-item label="监控模式" prop="monitorSetting.setting.scanMode">
+        <el-radio-group v-model="formData.monitorSetting.setting.scanMode">
+          <el-radio label="TOTAL_TODAY">单日累积</el-radio>
+          <el-radio label="LAST_HOURS">时段回推(小时)</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="回推时段(小时)" prop="monitorSetting.setting.totalBonusLastHours">
+        <el-input-number :min="1" :step="1" v-model="formData.monitorSetting.setting.totalBonusLastHours" :disabled="formData.monitorSetting.setting.scanMode !== 'LAST_HOURS'" />
+      </el-form-item>
       <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
@@ -95,6 +107,9 @@ function initializeFormData() {
       siteId: store.state.user.siteId,
       setting: {
         bonusChangeAlertThreshold: 20.0,
+        executeIntervalMinutes: 30,
+        totalBonusLastHours: 1,
+        scanMode: 'TOTAL_TODAY'
       },
       status: 1,
     },
@@ -131,6 +146,17 @@ const rules = {
       bonusChangeAlertThreshold: [
         { required: true, message: '请填写优惠浮动通知阀值(%)', trigger: 'blur' },
         { type: 'number', min: 0.1, message: '最小值为0.1', trigger: 'blur' }
+      ],
+      executeIntervalMinutes: [
+        { required: true, message: '请填写监控频率(分钟)', trigger: 'blur' },
+        { type: 'number', min: 30, message: '最小值为30', trigger: 'blur' }
+      ],
+      scanMode: [
+        { required: true, message: '请选取监控模式', trigger: 'blur' },
+      ],
+      totalBonusLastHours: [
+        { required: true, message: '回推时段(小时)', trigger: 'blur' },
+        { type: 'number', min: 1, message: '最小值为1', trigger: 'blur' }
       ],
     },
     status: [

@@ -269,23 +269,15 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="netProfit"
+        prop="profit"
         :label="t('fields.netProfit')"
         align="center"
         width="120"
       >
         <template #default="scope">
           $
-          <span
-            v-formatter="{
-              data:
-                scope.row.depositAmount -
-                scope.row.withdrawAmount -
-                scope.row.depositAmount * 0.08 -
-                scope.row.companyWinLoss * 0.13,
-              type: 'money',
-            }"
-          />
+          <!-- eslint-disable -->
+          <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
         </template>
       </el-table-column>
     </el-table>
@@ -434,22 +426,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="netProfit"
+          prop="profit"
           :label="t('fields.netProfit')"
           align="center"
         >
           <template #default="scope">
             $
-            <span
-              v-formatter="{
-                data:
-                  scope.row.deposit -
-                  scope.row.withdraw -
-                  scope.row.deposit * 0.08 -
-                  (scope.row.totalBet - scope.row.totalPayout) * 0.13,
-                type: 'money',
-              }"
-            />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
           </template>
         </el-table-column>
       </el-table>
@@ -664,19 +648,6 @@ function getSummaries(param) {
             parseFloat(
               totalPage.records[0].depositAmount -
                 totalPage.records[0].withdrawAmount
-            ).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        } else if (index === 18) {
-          // netProfit
-          sums[index] =
-            '$' +
-            parseFloat(
-              totalPage.records[0].depositAmount -
-                totalPage.records[0].withdrawAmount -
-                totalPage.records[0].depositAmount * 0.08 -
-                totalPage.records[0].companyWinLoss * 0.13
             ).toLocaleString('en-US', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,

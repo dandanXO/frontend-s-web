@@ -87,16 +87,8 @@
                   "
                 />
                 <div :class="`game-provider-text ${hotgame.currentPlat === provider ? 'active' : ''}`">
-                  {{ provider.alias ?? provider.name }}
+                  {{ getAliasName(provider, hotgame.section) }}
                 </div>
-                <!-- <img :src="provider.icon" /> -->
-                <!-- <img
-                  :class="`game-provider-img ${hotgame.currentProvider === provider.key ? 'active' : ''}`"
-                  :src="provider.icon"
-                />
-                <div :class="`game-provider-text ${hotgame.currentProvider === provider.key ? 'active' : ''}`">
-                  {{ provider.name }}
-                </div> -->
               </div>
             </div>
             <template v-if="hotgame.currentPlat?.underMaintenance === true ? 'maintenance' : ''">
@@ -689,6 +681,22 @@ const onEnterGameClick = (plat, platType) => {
   }
 };
 const platformsListDisplay = ref([]);
+
+const getAliasName = (plat, platformType) => {
+  // console.log(plat);
+  if (plat.alias) {
+    // console.log(plat);
+    if (plat.alias.includes("、")) {
+      const aliass = plat.alias.split("、");
+      const gameTypes = plat.gameType.split(",");
+      const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
+      return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+    }
+    return plat.alias;
+  } else {
+    return plat.name;
+  }
+};
 
 const setHotGame = () => {
   if (store.token) {

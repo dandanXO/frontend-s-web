@@ -97,6 +97,7 @@
     <NewFootball v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <EslOneBkk2024 v-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
     <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
@@ -115,8 +116,11 @@
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
-    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'"/>
-    <ValorantChampionTour2024 v-if="list.redirectUrl === 'lh1-valorant-champion-tour-2024'" :promo-code="list.promoCode" />
+    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
+    <ValorantChampionTour2024
+      v-if="list.redirectUrl === 'lh1-valorant-champion-tour-2024'"
+      :promo-code="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -143,6 +147,7 @@ import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
+import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 
 const Olympic24Match = defineAsyncComponent(() => import("../components/hotpromo/Olympic24Match/Olympic24Match.vue"));
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
@@ -235,7 +240,9 @@ const BlastPremier = defineAsyncComponent(() => import("../components/hotpromo/b
 const Tpworld2024 = defineAsyncComponent(() => import("./hotpromo/tpworld-2024/Tpworld-2024.vue"));
 const DreamLeagueS24 = defineAsyncComponent(() => import("./hotpromo/dream-league-s24/DreamLeagueS24.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
-const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
+const PerfectWorldMajor2024 = defineAsyncComponent(() =>
+  import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue")
+);
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const Dota2Pgl = defineAsyncComponent(() => import("../components/hotpromo/dota2-pgl/Dota2Pgl.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
@@ -253,7 +260,9 @@ const BbDachaBelgrade = defineAsyncComponent(() => import("./hotpromo/bb-dacha-b
 const ElisaGift = defineAsyncComponent(() => import("./hotpromo/elisa-gift/ElisaGift.vue"));
 const PokerWinningPromo = defineAsyncComponent(() => import("./hotpromo/poker-winning/PokerWinningPromo.vue"));
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
-const ValorantChampionTour2024 = defineAsyncComponent(() => import("./hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
+const ValorantChampionTour2024 = defineAsyncComponent(() =>
+  import("./hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -319,6 +328,7 @@ export default defineComponent({
     LivepokerRebate,
     BbdachaCsgo2,
     EslProCsgo2,
+    EslOneBkk2024,
     BlastPremier,
     Tpworld2024,
     DreamLeagueS24,

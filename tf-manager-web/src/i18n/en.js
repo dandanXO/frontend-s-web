@@ -1064,6 +1064,7 @@ export default {
     feedbackStatusSuccess: 'Success',
     feedbackTime: 'Feedback Time',
     feeRate: 'Fee Rate',
+    fetchTime: 'Fetch Time',
     subtractAmount: 'Subtract Amount',
     field: 'Field',
     finalSum: 'Final Sum',
@@ -1931,6 +1932,7 @@ export default {
     football: 'Football',
     basketball: 'Basketball',
     esport: 'E-Sport',
+    competitionMatching: 'Competition Matching',
     competitionType: 'Competition Type',
     competitionName: 'Competition Name',
     competitionTime: 'Competition Time',
@@ -2928,6 +2930,8 @@ export default {
     'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
     'Telegram User': 'Telegram User',
+    'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
+    'Site Domain': 'Site Domain',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3126,6 +3130,8 @@ export default {
     DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
     WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
     BONUS_FLUCTUATION: 'Bonus fluctuation',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
+    DOMAIN_VALID: 'Domain Validity',
   },
   domain: {
     domainMainType: {
