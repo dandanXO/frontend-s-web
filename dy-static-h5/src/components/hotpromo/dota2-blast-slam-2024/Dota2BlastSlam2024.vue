@@ -56,17 +56,11 @@
             <div class="left">活动时间</div>
             <div class="right">2024年11月26日至2024年12月1日</div>
           </div>
-          <div
-            class="little-title"
-            style="justify-content: flex-start; align-items: flex-start"
-          >
+          <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
             <div class="left">活动对象</div>
             <div class="right">投注DOTA爆炸大满贯 2024的会员</div>
           </div>
-          <div
-            class="little-title"
-            style="justify-content: flex-start; align-items: flex-start"
-          >
+          <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
             <div class="left">活动平台</div>
             <div class="right">电竞</div>
           </div>
@@ -75,7 +69,9 @@
             style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
           >
             <div class="left">优惠详情</div>
-            <div class="right">会员在本站电竞场馆中，北京时间当日负盈利达到1000元及以上，次日即可领取救援金，最高可达1,288元！</div>
+            <div class="right">
+              会员在本站电竞场馆中，北京时间当日负盈利达到1000元及以上，次日即可领取救援金，最高可达1,288元！
+            </div>
           </div>
           <table class="livepoker-rebate-game-info-table">
             <tbody>
@@ -145,18 +141,21 @@
               <div class="item-num">1</div>
               <div style="display: flex; flex-direction: column">
                 <div>
-                  活动期间，活动仅计算电竞场馆中DOTA爆炸大满贯 2024赛事，会员在当日DOTA爆炸大满贯 2024中累计负盈利≥1,000 元即可获得对应彩金，负盈利次日清零； 
+                  活动期间，活动仅计算电竞场馆中DOTA爆炸大满贯 2024赛事，会员在当日DOTA爆炸大满贯 2024中累计负盈利≥1,000
+                  元即可获得对应彩金，负盈利次日清零；
                 </div>
                 <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
               </div>
             </div>
             <div class="item">
               <div class="item-num">2</div>
-              活动期间，活动仅计算DOTA爆炸大满贯 2024已结算的赛事总负盈利，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金5 倍流水即可出款；
+              活动期间，活动仅计算DOTA爆炸大满贯 2024已结算的赛事总负盈利，次日 24
+              小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金5 倍流水即可出款；
             </div>
             <div class="item">
               <div class="item-num">3</div>
-              任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+              任何低于欧洲盘 1.7 或亚洲盘 0.7
+              水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
             </div>
             <div class="item">
               <div class="item-num">4</div>
@@ -164,11 +163,12 @@
             </div>
             <div class="item">
               <div class="item-num">5</div>
-              此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+              此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+              地址视为同一账户，若有违规者，将不享受此红利；
             </div>
             <div class="item">
               <div class="item-num">6</div>
-              为避免文字理解差异，雷火电竞保留此活动最终解释权；
+              为避免文字理解差异，东赢电竞保留此活动最终解释权；
             </div>
           </div>
         </div>
@@ -179,10 +179,7 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import {
-  getCompetitionLossInit,
-  claimCompetitionLoss,
-} from "../../../api/index/promo";
+import { getCompetitionLossInit, claimCompetitionLoss } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
