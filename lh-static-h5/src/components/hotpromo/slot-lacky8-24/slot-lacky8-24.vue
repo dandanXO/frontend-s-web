@@ -523,7 +523,7 @@ onMounted(() => {
       background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 290px;
+      width: 350px;
       height: 30px;
       display: flex;
       justify-content: center;
@@ -648,6 +648,9 @@ onMounted(() => {
     font-weight: 400;
     line-height: 18px;
     color: #000000;
+    white-space: pre-wrap;
+    max-width: 70px;
+    word-wrap: break-word;
   }
 }
 

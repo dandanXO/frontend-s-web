@@ -837,6 +837,10 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
+          if (isTikTokInAppBrowser()) {
+            window.location.href = response.requestUrl;
+            return;
+          }
           if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -850,9 +854,6 @@ async function pDepo(deposit) {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                 }
               }
-            } else if (isTikTokInAppBrowser()) {
-              alert("Opening new URL...");
-              window.location.href = response.requestUrl;
             } else {
               const newWin = window.open(`/`);
               if (!newWin) {
@@ -936,9 +937,10 @@ async function pDepo(deposit) {
     });
 }
 
+// Detect if is inside TikTok in-app browser
 const isTikTokInAppBrowser = () => {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  return /TikTok/i.test(userAgent) && /Chrome|Chromium|Safari/i.test(userAgent);
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return ua.indexOf("ByteLocale") > -1;
 };
 
 const nodeKey = ref(0);

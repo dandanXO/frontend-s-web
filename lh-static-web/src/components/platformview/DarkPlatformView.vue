@@ -56,7 +56,7 @@
                       :src="require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}.png`)"
                     />
                   </div>
-                  <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
+                  <div class="list-item-txt">{{ plat.alias ? getAliasName(plat, platformType) : plat.cnname }}</div>
                 </span>
               </div>
 
@@ -179,7 +179,7 @@
                 <!-- <div class="slot-name">
                     <img src="../../assets/images/games/play-icon.png" />
                     {{ game.name }}
-  
+
                     <div class="slot-fav">
                       <el-icon :width="30">
                         <RiHeartLine />
@@ -358,6 +358,17 @@ const getPlatGameList = () => {
         console.log(err.message);
       });
   }
+};
+
+const getAliasName = (plat, platformType) => {
+  // console.log(plat);
+  if (plat.alias.includes("、")) {
+    const aliass = plat.alias.split("、");
+    const gameTypes = plat.gameType.split(",");
+    const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
+    return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+  }
+  return plat.alias;
 };
 
 const searchList = () => {

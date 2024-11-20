@@ -1064,6 +1064,7 @@ export default {
     feedbackStatusSuccess: 'Success',
     feedbackTime: 'Feedback Time',
     feeRate: 'Fee Rate',
+    fetchTime: 'Fetch Time',
     subtractAmount: 'Subtract Amount',
     field: 'Field',
     finalSum: 'Final Sum',
@@ -1931,6 +1932,7 @@ export default {
     football: 'Football',
     basketball: 'Basketball',
     esport: 'E-Sport',
+    competitionMatching: 'Competition Matching',
     competitionType: 'Competition Type',
     competitionName: 'Competition Name',
     competitionTime: 'Competition Time',
@@ -2126,6 +2128,9 @@ export default {
     ignoreSettlement: 'Ignore Settlement',
     sendType: 'Send Type',
     specificAffiliate: 'Specific Affiliate',
+    subType: 'Sub Type',
+    active: 'Active',
+    inactive: 'Inactive',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2926,6 +2931,7 @@ export default {
     'Site Platform Blacklist': 'Site Platform Blacklist',
     'Telegram User': 'Telegram User',
     'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
+    'Site Domain': 'Site Domain',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3124,6 +3130,26 @@ export default {
     DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
     WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
     BONUS_FLUCTUATION: 'Bonus fluctuation',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
+    DOMAIN_VALID: 'Domain Validity',
+  },
+  domain: {
+    domainMainType: {
+      FRONTEND: 'Frontend',
+      BACKEND: 'Backend',
+    },
+    domainFrontendType: {
+      LANDING: 'Landing',
+      DOWNLOAD: 'Download',
+      AFFILIATE: 'Affiliate',
+      HOME: 'Home',
+      MANAGER: 'Manager',
+    },
+    domainBackendType: {
+      API: 'API',
+      MANAGER: 'Manager',
+      AFFILIATE: 'Affiliate',
+    }
   },
   error: {
     400: 'Bad Request',

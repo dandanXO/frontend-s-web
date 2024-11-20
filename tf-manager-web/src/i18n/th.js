@@ -1845,6 +1845,7 @@ export default {
     DEPOSIT_FLUCTUATION: 'ความผันผวนของเงินฝาก',
     WITHDRAW_FLUCTUATION: 'การเปลี่ยนแปลงการถอนเงิน',
     BONUS_FLUCTUATION: 'การเปลี่ยนแปลงโบนัส',
+    MQ_LAST_CONSUME_TIME_CHECK: 'หัวข้อ MQ ไม่ถูกใช้งาน',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

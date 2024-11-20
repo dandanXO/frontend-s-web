@@ -1,5 +1,5 @@
 import { createI18n } from "vue-i18n";
-import ur from "./ur";
+import bn from "./bn";
 import en from "./en";
 
 const i18n = createI18n({
@@ -7,7 +7,7 @@ const i18n = createI18n({
   locale: localStorage.getItem("languageLocale") || "en",
   allowComposition: true,
   messages: {
-    ur,
+    bn,
     en
   },
   globalInjection: true

@@ -9,7 +9,7 @@
     console.log("11/18")
 
     const secretKey = `Aa123456`;
-    const encryptedUrl = `U2FsdGVkX19AEmNt222DxLAaqG7gfgIvh+FHdjHt6Iz9+M0taAXkE6GH/Akeek/Y`;
+    const encryptedUrl = `U2FsdGVkX1/Au37hYQpgnhtHMBn6cdBOzYr+jnq8Vz3ZF5bksKtZtWPgD///Cws+`;
 
     const decryptUrl= (encryptedUrl, secretKey) => {
       const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
@@ -20,8 +20,8 @@
 
     const path = window.location.pathname.replace(/\/$/, "");
     const matches = path.match(/\/r\/(.*)/);
-    const affiliate = matches ? matches[1] : "4F09FA";
-    window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
+    const affiliate = matches ? matches[1] : "857738";
+    window.location.replace(`${decryptedUrl}refer/${affiliate}`);
 
     // alert(decryptedUrl);
   </script>
