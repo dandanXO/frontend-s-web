@@ -2131,6 +2131,7 @@ export default {
     subType: '子类型',
     active: '已启用',
     inactive: '未启用',
+    isSeamlessTransfer: '免转',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2598,6 +2599,7 @@ export default {
     validateBetRebatePercentageRequired: '每日投注返水百分比必填',
     validateLoginNameNoSpecialCharacter: '登录名只能包含下划线（_），数字和字母。',
     validateAdjustColumnRequired: '平账目标必填',
+    validateIsSeamlessTransferRequired: '是免转必填',
   },
   menu: {
     undefined: '',
