@@ -40,3 +40,7 @@ export const updateSettlementState = (ids, state) => {
 export const getAffiliateList = (siteId) => {
   return https().request(`/affiliateRecord/getAllAffiliateBySiteId?siteId=${siteId}`, Method.GET);
 }
+
+export const getAffiliateDepositWithdrawSummary = (query) => {
+  return https().request("/affiliateRecord/deposit-withdraw-summary", Method.GET, query, ContentType.form);
+}

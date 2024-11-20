@@ -15,8 +15,8 @@ const fbclid = searchParams.get("fbclid");
 const fbpid = searchParams.get("fbpid");
 const autoDownload = searchParams.get("autoDownload");
 
-console.log("CO1 11-20")
-affidValue = affidValue ?? "888297";
+console.log("CO1 1120!!")
+affidValue = affidValue ?? "00DD33";
 
 var apiUrl = "";
 var adjustUrlCode = "";
@@ -25,10 +25,9 @@ getApiUrl();
 async function getApiUrl() {
     var button;
 
-
     //Put your APK Lists Here.
     let affiliateLists = {
-        "888297": {
+        "00DD33": {
             "adCode": "1i3731pm",
             "version": "1.0.1",
             "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784200796020738/android/apk/1.0.1_20241119181617.apk"
@@ -135,19 +134,9 @@ theleftbtn.onclick = function () {
         thelist.scrollLeft = 0;
     }
 
-    // thelist705.scrollLeft = thelist705.scrollLeft - 500;
-    // if (thelist705.scrollLeft < 0) {
-    //     thelist705.scrollLeft = 0;
-    // }
-    //
-    // thelist706.scrollLeft = thelist706.scrollLeft - 500;
-    // if (thelist706.scrollLeft < 0) {
-    //     thelist706.scrollLeft = 0;
-    // }
 };
 
 // change images based on id param
-// const scrollListing = document.querySelector('.scroll-listing');
 const defaultScrollList = document.querySelector("#scroll-list");
 
 var imageUrls = [];

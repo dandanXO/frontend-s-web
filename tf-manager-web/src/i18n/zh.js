@@ -2878,6 +2878,7 @@ export default {
     'Member Ratio Edit Record': '返水比例更改记录',
     'Site Platform Blacklist': '站点平台黑名单',
     'Telegram User': 'Telegram用户管理',
+    'Affiliate Deposit Withdraw Summary': '代理存提汇总',
     'Site Domain': '站点域名管理',
   },
   google: {

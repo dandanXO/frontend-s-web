@@ -1058,3 +1058,27 @@ build-image-pk2-redirect-v3:
     - build-pk2-redirect-v3
 
 #===============================================================================================
+
+deploy-co1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: co1-download
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
+
+#===============================================================================================
+
+build-co1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: co1-static-v1
+
+build-image-co1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: co1-static-v1
+  needs:
+    - build-co1-static-v1
+
+#===============================================================================================
