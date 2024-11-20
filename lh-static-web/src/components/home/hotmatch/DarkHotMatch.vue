@@ -33,7 +33,7 @@
                   <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
                   <span>{{ hotMatch.teamOneName }}</span>
                 </div>
-                <div class="hot-match-time">{{ hotMatch.competitionTime }}</div>
+                <div class="hot-match-time">{{ hotMatch.displayEndTime }}</div>
                 <div class="hot-match-team">
                   <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
                   <span>{{ hotMatch.teamTwoName }}</span>
