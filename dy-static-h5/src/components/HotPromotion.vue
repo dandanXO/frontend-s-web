@@ -108,6 +108,7 @@
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode"/>
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
+    <Dota2BlastSlam2024 v-if="list.redirectUrl === 'dy2-dota2-blast-slam-2024'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -226,6 +227,7 @@ const PullbackTide = defineAsyncComponent(()=>import("./hotpromo/pullback-tide/P
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
 const ElisaGift = defineAsyncComponent(()=>import("./hotpromo/elisa-gift/ElisaGift.vue"));
 const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
+const Dota2BlastSlam2024 = defineAsyncComponent(() => import("./hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -293,7 +295,8 @@ export default defineComponent({
     Cba30Dream,
     ElisaGift,
     ChallengeComebackPromo,
-    PerfectWorldMajor2024
+    PerfectWorldMajor2024,
+    Dota2BlastSlam2024
   },
   props: {
     list: {
