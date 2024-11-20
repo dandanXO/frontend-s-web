@@ -66,7 +66,7 @@
               <li @click="addToBookmark">加入收藏</li>
           </ul> -->
         <ul class="index_bottom_des">
-          <li>浏览器下载</li>
+          <li>推荐浏览器</li>
           <li>
             <a href="https://s3-ap-northeast-1.amazonaws.com/brows/googlechromestandaloneenterprise64.msi">
               谷歌浏览器
