@@ -140,8 +140,8 @@ export default {
     virtualWallet_placeholder: "অনুগ্রহ করে ভার্চুয়াল ওয়ালেট ঢোকান",
     virtualWallet_rules_01: "অনুগ্রহ করে ভার্চুয়াল ওয়ালেট লিখুন",
     virtualWallet_id_rule: "অনুগ্রহ করে 13 সংখ্যার আইডেন্টিটি আইডি লিখুন",
-    virtualWallet_rules_02: "ফোন নম্বর অবশ্যই '03' দিয়ে শুরু করতে হবে",
-    virtualWallet_rules_03: "ইওয়ালেটে 11টি সংখ্যা থাকতে হবে",
+    virtualWallet_rules_02: "ফোন নম্বর অবশ্যই '01' দিয়ে শুরু করতে হবে",
+    virtualWallet_rules_03: "ইওয়ালেটে 10 - 11টি সংখ্যা থাকতে হবে",
     virtualWallet_warmReminder:
       "উষ্ণ রিমাইন্ডার: যদি কার্ডধারীর নাম মেলে না, আপনি তথ্য সংশোধন করতে অনলাইন গ্রাহক সেবার সাথে যোগাযোগ করতে পারবেন। আপনার সহায়তা এবং বোঝার জন্য আপনাকে ধন্যবাদ!",
     virtualWallet_warmReminder_02:
