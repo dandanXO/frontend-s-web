@@ -2930,6 +2930,7 @@ export default {
     'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
     'Telegram User': 'Telegram User',
+    'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
     'Site Domain': 'Site Domain',
   },
   google: {
