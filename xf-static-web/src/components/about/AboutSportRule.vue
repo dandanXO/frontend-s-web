@@ -1,7 +1,7 @@
 <template>
   <div class="top-container">
     <h3 class="title">投注</h3>
-    <div class="content">在雷火首页选择体育场馆进入投注界面，根据比赛时间，投注界面可以分为【滚球】、【今日】、【早盘】三种，可以将不同的赛事组合为串关，以小博大。</div>
+    <div class="content">在兴发首页选择体育场馆进入投注界面，根据比赛时间，投注界面可以分为【滚球】、【今日】、【早盘】三种，可以将不同的赛事组合为串关，以小博大。</div>
     <div class="content" style="margin-top: 20px;">
       注意：以下盘口是指90分钟常规时间，包括补时。如有加时赛、点球会单独开盘口。
     </div>

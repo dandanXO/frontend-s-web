@@ -16,7 +16,7 @@
 
     <h3 class="title">游戏出错或有纠纷的情况下我该怎么办?</h3>
     <div class="content">请您通过在线客服联系我们的客服人员，并提供以下信息：</div>
-    <div class="content">1.您的雷火账号。</div>
+    <div class="content">1.您的兴发账号。</div>
     <div class="content">2.游戏详情，包括：游戏名称、投注编号、金额、时间。</div>
   </div>
 </template>
