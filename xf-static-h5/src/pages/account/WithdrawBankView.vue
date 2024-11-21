@@ -197,7 +197,7 @@
           />
 
           <div class="q-mt-sm q-mb-sm text-orange" v-if="isEWALLET">
-            <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
+            <span>*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
           </div>
 
           <q-input
@@ -215,7 +215,7 @@
               <q-icon color="bright" name="smartphone" />
             </template>
             <template v-slot:append>
-              <q-btn 
+              <q-btn
               :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
               color="brightbtn"
               :disable="otpCountdownCount > 0"
