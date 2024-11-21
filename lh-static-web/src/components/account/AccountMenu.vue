@@ -23,7 +23,7 @@
           </span>
           <el-icon style="cursor: pointer">
             <!--            <RiRefreshLine color="#468CFF" />-->
-            <img src="../../assets/home/refresh-line.svg" />
+            <img class="fill-white" src="../../assets/home/refresh-line.svg" />
           </el-icon>
         </div>
         <div class="profile-actions">

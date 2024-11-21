@@ -1,6 +1,6 @@
 <template>
   <div class="announcement-component">
-    <el-carousel height="auto" class="banner-slider" :autoplay="false" :interval="5000">
+    <el-carousel class="banner-slider" :autoplay="false" :interval="5000">
       <el-carousel-item class="banner-container" v-for="item in 2" :key="item">
         <div class="announcement-title">体育场馆维护公告{{ item }}</div>
         <div class="announcement-content">

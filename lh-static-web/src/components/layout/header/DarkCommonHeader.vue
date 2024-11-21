@@ -180,7 +180,7 @@
                 </span>
               </div>
               <el-icon class="reload-btn">
-                <img src="../../../assets/home/refresh-line.svg" />
+                <img class="fill-a98f7c" src="../../../assets/home/refresh-line.svg" />
               </el-icon>
             </a>
           </div>
@@ -1549,6 +1549,7 @@ body {
       }
 
       .reload-btn {
+        cursor: pointer;
         fill: #468cff;
       }
     }

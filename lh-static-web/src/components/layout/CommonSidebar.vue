@@ -5,7 +5,7 @@
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span style="margin-left: 5px">
           官网客服
-          <img src="../../assets/home/24-hours-line.svg" class="icon-24h" />
+          <img width="20px" height="20px" src="../../assets/home/24-hours-line.svg" class="icon-24h" />
         </span>
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">

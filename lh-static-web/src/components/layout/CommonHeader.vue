@@ -202,7 +202,7 @@
                 </span>
               </div>
               <el-icon class="reload-btn">
-                <img src="../../assets/home/refresh-line.svg" />
+                <img class="fill-468cff" src="../../assets/home/refresh-line.svg" />
               </el-icon>
             </a>
           </div>
@@ -1692,8 +1692,8 @@ body {
       }
 
       .reload-btn {
+        cursor: pointer;
         fill: #468cff;
-        color: #468cff;
       }
     }
   }
@@ -2758,6 +2758,7 @@ body {
           &.second-nav {
             .header-menu-item {
               > a {
+                cursor: pointer;
                 color: $font-3-dark;
                 .hover-icon {
                   filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg)
