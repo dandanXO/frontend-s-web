@@ -1143,7 +1143,7 @@ body {
 .bank-card-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px;
 
   .bank-card-item {
     width: calc(50% - 10px);
