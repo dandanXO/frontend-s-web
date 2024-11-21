@@ -3012,10 +3012,6 @@ body {
     font-family: "PingFang SC" !important;
   }
 
-  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
-    // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
-  }
-
   .geetest_captcha.geetest_dark.geetest_lock_success
     .geetest_content
     .geetest_tip_container
@@ -3038,10 +3034,6 @@ body {
   .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
     background: #2a313e;
   }
-
-  // .geetest_captcha.geetest_customTheme .geetest_gradient_bar {
-  //   background-color: red;
-  // }
 
   .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
   .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
