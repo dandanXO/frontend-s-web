@@ -32,7 +32,7 @@
           />
         </el-select>
 
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -48,7 +48,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input v-model="request.loginName" style="width: 200px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.loginName')" />
         <el-input v-model="request.serialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.serialNo')" />
         <el-input v-model="request.thirdSerialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.thirdSerialNo')" />
@@ -275,7 +275,7 @@ const uiControl = reactive({
   dialogTitle: "",
   dialogType: "SUPPLEMENT",
   status: [
-    // 隐藏其他status
+    // 隐藏其他 status
     { key: 1, displayName: "PENDING", value: "PENDING" }
   ],
   sortList: [
@@ -351,7 +351,7 @@ function resetQuery() {
   request.serialNumber = null;
   request.loginName = null;
   request.thirdSerialNumber = null;
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
   request.sort = 1
 };
 
@@ -474,7 +474,7 @@ async function loadSites() {
 
 onMounted(async() => {
   await loadSites();
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
