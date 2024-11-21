@@ -1,5 +1,7 @@
 <template>
-  <img class="title-img" style="display:flex;margin:0 auto;width:60%;margin-top: 30px;margin-bottom: -120px;" src="../../../assets//home/hotgame/hotgame-title-dark.png" />
+  <div style="position:relative;display:flex;margin:0 auto;width:850px;">
+    <img class="title-img" style="position:absolute;top:0%;left:50%;transform: translate(-50%,50%);width:100%;z-index:1;" src="../../../assets//home/hotgame/hotgame-title-dark.png" />
+  </div>
   <div class="hotgame-section">
     <div class="hotgame-tabs-wrapper">
         <!-- <img class="separator-img" style="width:100%;" src="../../../assets/home/hotgame/home-separator.png" /> -->

@@ -2,7 +2,7 @@
   <div
   class="hot-match-container"
   >
-  <img src="@/assets/home/hotmatch/hot-match-title.png" style="display: flex; margin: 20px auto 10px; width: 60%" />
+  <img src="@/assets/home/hotmatch/hot-match-title.png" style="display: flex; margin: 20px auto 10px; width: 850px" />
     <img v-if="isFetchingHotMatches" class="hot-match-loading" src="@/assets/home/hotmatch/loading.gif" />
     <div class="competition-items" >
       <div
