@@ -1,8 +1,8 @@
 <template>
+  <img class="title-img" style="display:flex;margin:0 auto;width:60%;margin-top: 30px;margin-bottom: -120px;" src="../../../assets//home/hotgame/hotgame-title-dark.png" />
   <div class="hotgame-section">
     <div class="hotgame-tabs-wrapper">
         <!-- <img class="separator-img" style="width:100%;" src="../../../assets/home/hotgame/home-separator.png" /> -->
-        <img class="title-img" style="display:flex;margin:0 auto;padding-bottom:70px;width:60%;" src="../../../assets//home/hotgame/hotgame-title-dark.png" />
         <el-tabs :tab-position="tabPosition" class="hotgame-tabs">
           <el-tab-pane :label="hotgame.title" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`" @click="onBannerClick(hotgameIndex)">
             <div :class="`hotgame-content-wrapper show`">
