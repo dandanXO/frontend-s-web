@@ -36,7 +36,19 @@
       >
         <el-card shadow="hover">
           <div class="card-content">
-            <div class="card-title">{{ $t(`monitorTitle.${title}`) }}</div>
+            <el-row justify="space-around" class="card-header">
+              <el-col :span="12" class="card-title">
+                {{ $t(`monitorTitle.${title}`) }}
+              </el-col>
+              <el-col :span="12">
+                <el-row justify="end">
+                  <el-switch
+                    v-model="statusSwitchByTitle[title]"
+                    @change="(newValue) => toggleSettingStatus(newValue, title)"
+                  />
+                </el-row>
+              </el-col>
+            </el-row>
             <el-button @click="openDialog(title, 'update')" class="card-button">查看详情</el-button>
           </div>
         </el-card>
@@ -62,7 +74,8 @@
 
 <script setup>
 import { onMounted, ref, computed, shallowRef } from 'vue';
-import { getAllConfigurable, getAllSettingBySiteId } from "@/api/monitor-notification";
+import { getAllConfigurable, getAllSettingBySiteId, updateNotificationSettingAndMonitorSetting } from "@/api/monitor-notification";
+import { cloneDeep } from 'lodash';
 import { useStore } from "@/store";
 import { ElMessage } from "element-plus";
 import MemberStatisticComponent from './dialog-custom-content/memberStatistic.vue';
@@ -215,6 +228,8 @@ async function loadAllSetting() {
   titleToMonitorSetting.forEach(monitor => {
     allSettingOrganized.value.other.monitorSettings.push(monitor);
   });
+
+  loadStatusSwitchByOrganizedSettings();
 }
 
 const currentConfigurableTypeArr = ref([]);
@@ -227,6 +242,56 @@ const handleDropdownVisibilityChange = (visible) => {
   if (visible) {
     listConfigurableTypes();
   }
+}
+
+const statusSwitchByTitle = ref({});
+
+const toggleSettingStatus = async (newValue, title) => {
+  const newStatus = newValue ? 1 : 0;
+  statusSwitchByTitle.value[title] = newValue;
+
+  const cloneMonitorSettingByTitle = cloneDeep(titleMatchSettings.value[title].monitorSetting);
+  const cloneNotificationSettingByTitle = cloneDeep(titleMatchSettings.value[title].notificationSetting);
+
+  cloneMonitorSettingByTitle.status = newStatus;
+  cloneNotificationSettingByTitle.status = newStatus;
+
+  try {
+    const res = await updateNotificationSettingAndMonitorSetting(cloneNotificationSettingByTitle, cloneMonitorSettingByTitle);
+    if (res.code === 0) {
+      allSettingOrganized.value[title].monitorSetting = cloneMonitorSettingByTitle;
+      allSettingOrganized.value[title].notificationSetting = cloneNotificationSettingByTitle;
+
+      ElMessage({
+        message: `切换成功-${t(`monitorTitle.${title}`)}`,
+        type: 'success',
+      })
+    } else {
+      statusSwitchByTitle.value[title] = !newValue;
+      ElMessage({
+        message: `切换失败-${t(`monitorTitle.${title}`)}`,
+        type: 'error',
+      })
+    }
+  } catch (error) {
+    statusSwitchByTitle.value[title] = !newValue;
+    ElMessage({
+      message: `切换失败-${t(`monitorTitle.${title}`)}`,
+      type: 'error',
+    })
+  }
+};
+
+const loadStatusSwitchByOrganizedSettings = () => {
+  const statusSwitch = {};
+
+  for (const key in allSettingOrganized.value) {
+    if (key !== 'other') {
+      statusSwitch[key] = allSettingOrganized.value[key].monitorSetting.status === 1 && allSettingOrganized.value[key].notificationSetting.status === 1;
+    }
+  }
+
+  statusSwitchByTitle.value = statusSwitch;
 }
 
 onMounted(async () => {
@@ -243,10 +308,12 @@ onMounted(async () => {
   justify-content: space-between;
 }
 
+.card-header {
+  margin: 10px 0 20px 0;
+}
 .card-title {
   font-size: 20px;
   font-weight: bold;
-  margin: 10px 0;
 }
 
 .card-button {
