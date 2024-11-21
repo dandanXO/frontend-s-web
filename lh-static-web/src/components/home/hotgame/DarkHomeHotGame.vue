@@ -943,6 +943,8 @@ $transition_timer: 0.5s;
     align-items: center;
     justify-content: center;
     // background-color:lemonchiffon;
+    height: 971px;
+    width: 1903px;
 
     .hotgame-tabs {
       height: 700px;
@@ -1894,6 +1896,7 @@ $transition_timer: 0.5s;
 
 .dark {
   .hotgame-section {
+    overflow-x: auto;
     .hotgame-container {
       .hotgame-wrapper {
         .hotgame-banner-wrapper {
