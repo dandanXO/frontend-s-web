@@ -4,7 +4,7 @@ import router from "@/router";
 import { useStore } from "./store";
 import { MenuActionType } from "@/store/modules/menu/action-types";
 
-const whiteList = ['/403', '/login', '/my/login', '/my/register', '/kaka/login', '/kaka/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register', '/ph1/summary', '/br1/login', '/br1/register']
+const whiteList = ['/403', '/login', '/my/login', '/my/register', '/kaka/login', '/kaka/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register', '/ph1/summary']
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, _, next) => {
@@ -35,7 +35,7 @@ router.beforeEach(async (to, _, next) => {
       } else if (currentHost === ph1Host) {
         next(`/ph1/summary`)
       } else {
-        console.log("IS Check")
+        console.log("IS this")
         console.log(siteCode)
         if (siteCode === 'lh1') {
           next(`/lh/login?redirect=${to.path}`)
@@ -55,8 +55,6 @@ router.beforeEach(async (to, _, next) => {
           next(`/kr/login?redirect=${to.path}`)
         } else if (siteCode === 'pak') {
           next(`/pak/login?redirect=${to.path}`)
-        } else if (siteCode === 'br1') {
-          next(`/br1/login?redirect=${to.path}`)
         } else {
           next(`/login?redirect=${to.path}`);
         }
