@@ -5,13 +5,13 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="12"
+          maxlength="10"
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_02')
+            (val) => (val && val.length >= 10) || $t('form.phone_rules_02')
           ]"
           label-color="brand"
           autocomplete="username"
