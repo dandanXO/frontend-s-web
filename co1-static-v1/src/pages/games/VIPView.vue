@@ -43,7 +43,7 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ vip.ugprade }}
+                {{ convertToCommaAmount(vip.ugprade) }}
               </div>
 
               <div class="progress-bar-container">
@@ -608,7 +608,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${convertToCommaAmount(currentDeposit)} / ${convertToCommaAmount(vipInfo.ugprade)}`,
+      progressBarText: `${currentDeposit} / ${vipInfo.ugprade}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
