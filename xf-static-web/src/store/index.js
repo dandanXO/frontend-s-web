@@ -39,9 +39,11 @@ export const userStore = defineStore("userStore", {
             this.getMemberInfo();
           } else {
             // throw new Error(ret.message);
+            window.captchaObj.reset();
           }
         })
         .catch((err) => {
+          window.captchaObj.reset();
           console.log(err);
           // message.error(err.message);
         });
