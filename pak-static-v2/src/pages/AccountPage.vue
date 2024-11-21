@@ -197,7 +197,7 @@
             <div class="pc-form-label">Full Name</div>
             <div class="pc-form-input">
               <q-input
-                filled
+                outlined
                 dense
                 clearable
                 placeholder="Enter Your Full Name"
@@ -212,7 +212,7 @@
             <div class="pc-form-input">
               <q-input
                 type="number"
-                filled
+                outlined
                 dense
                 clearable
                 placeholder="Enter Your Phone"
@@ -240,7 +240,7 @@
             <div class="pc-form-label">Verification Code</div>
             <div class="pc-form-input">
               <q-input
-                filled
+                outlined
                 dense
                 clearable
                 placeholder="Enter Verification Code"
@@ -256,7 +256,7 @@
             <div class="pc-form-label">Email</div>
             <div class="pc-form-input">
               <q-input
-                filled
+                outlined
                 dense
                 clearable
                 placeholder="Enter Your Email"
@@ -466,7 +466,7 @@
             <div class="pc-form-label">Login Name</div>
             <div class="pc-form-input">
               <q-input
-                filled
+                outlined
                 dense
                 clearable
                 v-model="newLoginName"
@@ -489,7 +489,7 @@
             <div class="pc-form-label">New Password</div>
             <div class="pc-form-input">
               <q-input
-                filled
+                outlined
                 dense
                 clearable
                 placeholder="Enter New Password"
@@ -519,7 +519,7 @@
             <div class="pc-form-label">Confirm New Password</div>
             <div class="pc-form-input">
               <q-input
-                filled
+                outlined
                 dense
                 clearable
                 placeholder="Enter Confirm New Password"
@@ -577,7 +577,7 @@
             <div class="pc-form-label">{{ $t("form.captchaCode") }}</div>
             <div class="pc-form-input">
               <q-input
-                filled
+                outlined
                 hide-bottom-space
                 dense
                 clearable
@@ -1504,12 +1504,19 @@ const openConfirmSignOutDialog = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(255, 255, 255, 0.15) !important;
-      border-radius: 4px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 10px;
+      background-color: #fff;
     }
 
-    :deep(.q-field__native) {
-      color: rgba(255, 255, 255, 0.6);
+    :deep(.q-field__control):before {
+      // border-color: #072a19;
+      // background-color: #0b0e0d;
+      // border-width: 2px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
     }
   }
 

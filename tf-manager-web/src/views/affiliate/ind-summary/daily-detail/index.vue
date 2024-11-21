@@ -462,6 +462,7 @@ function checkQuery() {
       })
       .join(',')
     // query.loginNameList = request.loginNameList.join(',')
+    //
   }
 
   query.affiliateLevel = request.affiliateLevel
@@ -498,15 +499,16 @@ function getSummaries(param) {
         ) {
           sums[index] = total.data[prop]
         } else if (index === 8 || index === 13 || index === 14) {
-          const pageRowCount = Number(page.records.reduce((sum, row) => {
-            return sum + Number(row[prop])
-          }, 0))
-          const totalPageCount = Number(total.data[prop])
-          if (pageRowCount !== totalPageCount) {
-            sums[index] = `${total.data[prop]} (${pageRowCount})`
-          } else {
-            sums[index] = total.data[prop]
-          }
+          // const pageRowCount = Number(page.records.reduce((sum, row) => {
+          //   return sum + Number(row[prop])
+          // }, 0))
+          // const totalPageCount = Number(total.data[prop])
+          // if (pageRowCount !== totalPageCount) {
+          //   sums[index] = `${total.data[prop]} (${pageRowCount})`
+          // } else {
+          //   sums[index] = total.data[prop]
+          // }
+          sums[index] = total.data[prop]
         } else if (index === 6) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =

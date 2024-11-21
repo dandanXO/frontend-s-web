@@ -8,7 +8,6 @@ import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import axios from "axios";
 import CsClient from "csweb-client";
-// import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import { getVisitorId } from "boot/utils";
 import { useRouter } from "vue-router";

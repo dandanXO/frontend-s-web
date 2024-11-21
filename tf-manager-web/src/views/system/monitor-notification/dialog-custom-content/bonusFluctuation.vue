@@ -8,7 +8,19 @@
       <el-form-item label="优惠浮动通知阀值(%)" prop="monitorSetting.setting.bonusChangeAlertThreshold">
         <el-input-number :min="0.1" :step="0.1" v-model="formData.monitorSetting.setting.bonusChangeAlertThreshold" />
       </el-form-item>
-      <el-form-item label="状态" prop="monitorSetting.status">
+      <el-form-item label="监控频率(分钟)" prop="monitorSetting.setting.executeIntervalMinutes">
+        <el-input-number :min="30" :step="30" v-model="formData.monitorSetting.setting.executeIntervalMinutes" />
+      </el-form-item>
+      <el-form-item label="监控模式" prop="monitorSetting.setting.scanMode">
+        <el-radio-group v-model="formData.monitorSetting.setting.scanMode">
+          <el-radio label="TOTAL_TODAY">单日累积</el-radio>
+          <el-radio label="LAST_HOURS">时段回推(小时)</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="回推时段(小时)" prop="monitorSetting.setting.totalBonusLastHours">
+        <el-input-number :min="1" :step="1" v-model="formData.monitorSetting.setting.totalBonusLastHours" :disabled="formData.monitorSetting.setting.scanMode !== 'LAST_HOURS'" />
+      </el-form-item>
+      <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
           active-text="启用"
@@ -26,12 +38,17 @@
           placeholder="请输入通知内容"
         />
       </el-form-item>
+      <UserTypeCheckbox
+        ref="userTypeCheckboxRef"
+        :systemUserTypeListToSendNotification="formData.notificationSetting.setting.systemUserTypeListToSendNotification"
+      />
       <RoleUserSelector
         ref="roleUserSelectorRef"
         :siteId="store.state.user.siteId"
         :systemRoleIdListToSendNotification="formData.notificationSetting.setting.systemRoleIdListToSendNotification"
         :systemUserIdListToExclude="formData.notificationSetting.setting.systemUserIdListToExclude"
         :telegramUserIdToSendNotification="formData.notificationSetting.setting.telegramUserIdToSendNotification"
+        :isRoleAndExcludeEnabled="true"
       />
       <el-form-item label="跳转页面路径" prop="notificationSetting.redirectionPath">
         <el-input v-model="formData.notificationSetting.redirectionPath" />
@@ -63,8 +80,10 @@ import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
 import RoleUserSelector from "@/views/system/monitor-notification/dialog-custom-content/component/roleUserSelector.vue";
 import TestTriggerButton from "@/views/system/monitor-notification/dialog-custom-content/component/testTriggerButton.vue";
+import UserTypeCheckbox from "@/views/system/monitor-notification/dialog-custom-content/component/userTypeCheckbox.vue";
 
 const roleUserSelectorRef = ref(null);
+const userTypeCheckboxRef = ref(null);
 const store = useStore();
 const emit = defineEmits(['submitting', 'submitSuccess', 'submitFailed']);
 const props = defineProps({
@@ -88,6 +107,9 @@ function initializeFormData() {
       siteId: store.state.user.siteId,
       setting: {
         bonusChangeAlertThreshold: 20.0,
+        executeIntervalMinutes: 30,
+        totalBonusLastHours: 1,
+        scanMode: 'TOTAL_TODAY'
       },
       status: 1,
     },
@@ -98,6 +120,7 @@ function initializeFormData() {
         systemRoleIdListToSendNotification: [],
         systemUserIdListToExclude: [],
         telegramUserIdToSendNotification: [],
+        systemUserTypeListToSendNotification: [],
       },
       status: 1,
       tgSetting: null,
@@ -123,6 +146,17 @@ const rules = {
       bonusChangeAlertThreshold: [
         { required: true, message: '请填写优惠浮动通知阀值(%)', trigger: 'blur' },
         { type: 'number', min: 0.1, message: '最小值为0.1', trigger: 'blur' }
+      ],
+      executeIntervalMinutes: [
+        { required: true, message: '请填写监控频率(分钟)', trigger: 'blur' },
+        { type: 'number', min: 30, message: '最小值为30', trigger: 'blur' }
+      ],
+      scanMode: [
+        { required: true, message: '请选取监控模式', trigger: 'blur' },
+      ],
+      totalBonusLastHours: [
+        { required: true, message: '回推时段(小时)', trigger: 'blur' },
+        { type: 'number', min: 1, message: '最小值为1', trigger: 'blur' }
       ],
     },
     status: [
@@ -152,6 +186,7 @@ const submitForm = async () => {
   cloneNotificationToSubmit.setting.systemRoleIdListToSendNotification = roleUserSelectorRef.value.fetchSystemRoleIdListToSendNotification();
   cloneNotificationToSubmit.setting.systemUserIdListToExclude = roleUserSelectorRef.value.fetchSystemUserIdListToExclude();
   cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
+  cloneNotificationToSubmit.setting.systemUserTypeListToSendNotification = userTypeCheckboxRef.value.fetchSystemUserTypeListToSendNotification();
 
   const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
   const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;

@@ -197,6 +197,7 @@
         <el-form-item class="txt-center" v-if="isSendOtp">
           <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
         </el-form-item>
+        <span v-if="isEWALLET" class="tip-text">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
       </el-form>
     </el-dialog>
     <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
@@ -297,9 +298,6 @@ export default defineComponent({
       if (selectedBankType.value === "alipay") {
         min = 11;
         max = 20;
-        if (!/^\d+$/.test(v)) {
-          return Promise.reject("请输入数字");
-        }
       } else if (selectedBankType.value === "Bank") {
         min = 16;
         max = 19;
@@ -1377,6 +1375,12 @@ body {
       }
     }
   }
+}
+
+.tip-text {
+  display: block;
+  width: 100%;
+  color: #ff7f10;
 }
 </style>
 

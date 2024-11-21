@@ -49,7 +49,7 @@
             :value="item.value"
           />
         </el-select>
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -63,7 +63,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -1015,7 +1015,7 @@ function resetQuery() {
   request.telephone = null
   request.affiliateStatus = null
   request.affiliateCode = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.belongType = null
   uiControl.searchDialogVisible = false
 }
@@ -1075,7 +1075,7 @@ function showDialog(type, affiliate) {
     if (memberForm.value) {
       memberForm.value.resetFields()
     }
-    form.siteId = siteList.list[0].id
+    form.siteId = store.state.user.siteId
     form.affiliateLevel = uiControl.affiliateLevel[0].value
     form.commissionModel = uiControl.commissionModel[0].value
     form.timeType = uiControl.timeType[0].value
@@ -1216,7 +1216,7 @@ async function changeDisplayAmountState(id, state) {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

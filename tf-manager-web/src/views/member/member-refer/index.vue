@@ -23,7 +23,7 @@
           :disabled-date="disabledDate"
           :editable="false"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -37,7 +37,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -206,7 +206,7 @@ const request = reactive({
 function resetQuery() {
   request.loginName = null
   request.memberRemark = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.regTime = null
   request.referrerId = null
   uiControl.referrer = null
@@ -286,7 +286,7 @@ onMounted(async () => {
     request.referrerId = router.currentRoute.value.query.id
     uiControl.referrer = router.currentRoute.value.query.referrer
   } else {
-    request.siteId = siteList.list[0].id
+    request.siteId = store.state.user.siteId
     if (LOGIN_USER_TYPE.value === TENANT.value) {
       site.value = siteList.list.find(
         s => s.siteName === store.state.user.siteName

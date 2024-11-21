@@ -57,19 +57,6 @@
                 <div class="slot-name">{{ game.name }}</div>
               </q-list>
             </transition>
-            <!-- <q-img
-                loading="lazy"
-                :src="game.icon"
-                :placeholder-src="defaultImg"
-                fit="cover"
-                height="120px"
-                no-spinner
-            >
-              <template v-slot:loading>
-                <img :src="game.default" style="height: 140px; max-width: 200px; border-radius: 15px; overflow:hidden;">
-              </template>
-            </q-img> -->
-            <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
           </div>
         </div>
         <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />

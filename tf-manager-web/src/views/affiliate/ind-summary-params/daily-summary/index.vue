@@ -275,14 +275,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="netProfit"
+          prop="profit"
           :label="t('fields.netProfit')"
           align="center"
           width="120"
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.netProfit, type: 'money' }" />
+            <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
           </template>
         </el-table-column>
       </el-table>
@@ -516,15 +516,16 @@ function getSummaries(param) {
           // withdrawCount, registerCount, ftdCount, totalDepositCount, totalBetCount
           sums[index] = total.data[prop]
         } else if (index === 7 || index === 12 || index === 14) {
-          const pageRowCount = Number(page.records.reduce((sum, row) => {
-            return sum + Number(row[prop])
-          }, 0))
-          const totalPageCount = Number(total.data[prop])
-          if (pageRowCount !== totalPageCount) {
-            sums[index] = `${total.data[prop]} (${pageRowCount})`
-          } else {
-            sums[index] = total.data[prop]
-          }
+          // const pageRowCount = Number(page.records.reduce((sum, row) => {
+          //   return sum + Number(row[prop])
+          // }, 0))
+          // const totalPageCount = Number(total.data[prop])
+          // if (pageRowCount !== totalPageCount) {
+          //   sums[index] = `${total.data[prop]} (${pageRowCount})`
+          // } else {
+          //   sums[index] = total.data[prop]
+          // }
+          sums[index] = total.data[prop]
         } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =

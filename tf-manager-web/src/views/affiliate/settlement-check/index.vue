@@ -3,7 +3,7 @@
     <div class="header-container">
       <div class="search">
         <div>
-          <el-select
+          <!-- <el-select
             v-if="hasRole(['ADMIN'])"
             v-model="request.siteId"
             size="small"
@@ -18,7 +18,7 @@
               :label="item.siteName"
               :value="item.id"
             />
-          </el-select>
+          </el-select> -->
           <el-date-picker
             v-model="request.month"
             format="MM/YYYY"
@@ -568,7 +568,7 @@ async function loadSites() {
 function resetQuery() {
   request.month = defaultQueryMonth
   request.affiliateName = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.status = ['CHECKING', 'CLEARED']
 }
 
@@ -683,7 +683,7 @@ async function adjust() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

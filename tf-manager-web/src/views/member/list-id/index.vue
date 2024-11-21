@@ -43,7 +43,7 @@
           style="width: 100px; margin-left: 5px;"
           :placeholder="t('fields.upLineLoginName')"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -59,7 +59,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -907,7 +907,7 @@ function resetQuery() {
   request.riskId = null
   request.financialId = null
   request.status = null
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.regTime = []
   uiControl.searchDialogVisible = false
 }
@@ -1081,7 +1081,7 @@ async function setIpLabels() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

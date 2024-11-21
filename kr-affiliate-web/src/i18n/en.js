@@ -720,6 +720,8 @@ export default {
     redeemConvert: 'Redeem',
     dashboardMemberBalance: 'Member Balance',
     totalWithdrawalAmount: 'Withdraw Amount',
+    dismiss: 'Dismiss',
+    affiliateAnnouncement: 'Affiliate Announcement'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -893,6 +895,7 @@ export default {
     yourCurrentPoint: 'Your Current Point :',
     confirmRedeem: 'Do you want to redeeem?',
     redeemSuccess: 'Redeem Successful',
+    amountMustBeMultipleOf10000: 'Amount must be multiple of 10000',
   },
   posterType: {
     OVERALL: 'Overall Referral',
@@ -1022,5 +1025,6 @@ export default {
     14012: 'Can only create affiliate with lower level',
     14013: 'Affiliate has downline, cannot set to lower level',
     40006: 'Affiliate does not have enough point to redeem',
+    1313: 'Unable to recycle amount due to insufficient rollover',
   },
 }

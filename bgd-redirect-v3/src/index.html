@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bangladesh</title>
+  <link rel="stylesheet" href="/assets/css/index.css" />
+  <script src="/assets/js/crypto-js.min.js"></script>
+  <script defer="defer" src="/assets/js/index.js"></script>
+  <script>
+    console.log("11/18")
+
+    const secretKey = `Aa123456`;
+    const encryptedUrl = `U2FsdGVkX1/Au37hYQpgnhtHMBn6cdBOzYr+jnq8Vz3ZF5bksKtZtWPgD///Cws+`;
+
+    const decryptUrl= (encryptedUrl, secretKey) => {
+      const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
+      return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
+    const decryptedUrl = decryptUrl(encryptedUrl, secretKey);
+
+    const path = window.location.pathname.replace(/\/$/, "");
+    const matches = path.match(/\/r\/(.*)/);
+    const affiliate = matches ? matches[1] : "857738";
+    window.location.replace(`${decryptedUrl}refer/${affiliate}`);
+
+    // alert(decryptedUrl);
+  </script>
+</head>
+<body id="bgd-redirect-v3">
+<div>&nbsp;</div>
+</body>
+</html>

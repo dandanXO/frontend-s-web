@@ -354,14 +354,17 @@
                   <el-select
                     allowClear
                     style="width: 300px"
-                    v-model="searchForm.gameBetRecord.platform"
+                    v-model="searchForm.gameBetRecord.platformName"
                     placeholder="平台"
                     @change="searchRecord"
                   >
                     <el-option key="" value="">-</el-option>
-                    <el-option v-for="p in platformsList" :key="p.name" :value="p.name">
-                      {{ getGameName(p.name) }}
-                    </el-option>
+                    <el-option
+                      v-for="p in platformsList"
+                      :label="p.alias"
+                      :key="p.code + '@' + p.gameType + '@' + p.alias"
+                      :value="p.code + '@' + p.gameType + '@' + p.alias"
+                    />
                   </el-select>
                 </el-form-item>
                 <el-form-item label="开始">
@@ -604,7 +607,6 @@ import {defineComponent, onMounted, reactive, ref} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {
   loadRecords,
-  gameBetRecordTotal,
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
@@ -612,7 +614,7 @@ import {
   cancellationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
-import {getPlatformList} from "@/api/platform/platform";
+import { getPlatformWithTypeList } from "@/api/platform/platform";
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
@@ -673,6 +675,8 @@ const searchForm = reactive({
     startDate: "",
     endDate: "",
     platform: "",
+    gameType: "",
+    platformName: "",
     memberId: store.id,
     current: 1,
     size: 10,
@@ -836,7 +840,7 @@ const tableColumns = {
     },
     {
       title: "游戏平台",
-      dataIndex: "platform"
+      dataIndex: "alias"
     },
     {
       title: "投注",
@@ -1028,7 +1032,21 @@ export default defineComponent({
         } else {
           searchForm[recordActive.value].pagingState = pagination.pagingState;
         }
+        if (recordActive.value === 'gameBetRecord') {
+          let selectedPlatform = searchForm.gameBetRecord.platformName;
+          if (selectedPlatform.includes("@")){
+            const platformArr = selectedPlatform.split('@');
+            searchForm.gameBetRecord.platform = platformArr[0];
+            searchForm.gameBetRecord.gameType = platformArr[1];
+            searchForm.gameBetRecord.platformName = platformArr[2];
+          } else if(selectedPlatform==="") {
+            searchForm.gameBetRecord.platform = ""
+            searchForm.gameBetRecord.gameType = ""
+            searchForm.gameBetRecord.platformName = null
+          }
+        }
       }
+      console.log(searchForm[recordActive.value]);
       loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
         if (response.code === 0) {
           pagination.total = response.data.total;
@@ -1093,19 +1111,6 @@ export default defineComponent({
       });
       searchRecord();
     };
-    function formatDate(date) {
-      const originalDate = new Date(date);
-
-      // Extract components
-      const year = originalDate.getFullYear();
-      const month = (originalDate.getMonth() + 2).toString().padStart(2, '0');
-      const day = originalDate.getDate().toString().padStart(2, '0');
-
-      // Format as 'YYYY-MM-DD'
-      const formattedDate = `${year}-${month}-${day}`;
-
-      return formattedDate
-    }
     const route = useRoute();
     onMounted(() => {
       if (route.query.type === 'withdraw') {
@@ -1118,34 +1123,11 @@ export default defineComponent({
       const startMonth = new Date(searchForm[v].startDate).getMonth()
       const endMonth = new Date(searchForm[v].endDate).getMonth()
       if (startMonth !== endMonth) {
-        // // Invalid date range, adjust the end date to the last day of the month
-        // const currentDate = new Date(searchForm[v].startDate);
-        // const lastDayOfMonth = getLastDayOfMonth(currentDate);
-        // // Convert the end date to a Date object
-        // const endDateObject = new Date(searchForm[v].endDate);
-        // // Set the day of the month to the last day of the month
-        // endDateObject.setDate(lastDayOfMonth);
-        // // Update searchForm[v].endDate with the adjusted Date object
-        // searchForm[v].endDate = formatDate(endDateObject);
         ElMessage.error('开始与结束月份必须一致');
       }
-      getPlatformList().then((ret) => {
+      getPlatformWithTypeList().then((ret) => {
         platformsList.value = ret
       })
-
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate,
-      }
-      // gameBetRecordTotal(obj).then((ret) => {
-      //   if (ret.code === 0) {
-      //     totalBetRecord.totalBet = ret.data.totalBet
-      //     totalBetRecord.totalPayout = ret.data.totalPayout
-      //   }
-      // })
-
     };
     const selectedBetRecord = ref({})
     const betRecordDialog = ref(false)
@@ -1311,10 +1293,6 @@ export default defineComponent({
         return '自动支付' // Automatic Payment
       } else if (transferType === 'WAITING_CALLBACK') {
         return '自动支付中' // Waiting Callback
-      } else if (transferType === 'PENDING') {
-        return '支付中' // Pending
-      } else if (transferType === 'SUCCESS') {
-        return '成功' // Success
       } else if (transferType === 'SUPPLEMENT_SUCCESS') {
         return '成功' // Supplement Success
       } else if (transferType === 'CLOSED') {
@@ -1528,58 +1506,6 @@ export default defineComponent({
     }
     const formRef = ref(null)
 
-    const getGameName = (gameName) => {
-      if (!gameName) {
-        return ''
-      }
-
-      switch (gameName) {
-        case 'IMES':
-          return 'IM电竞';
-        case 'TCG':
-          return 'TCG彩票';
-        case 'MGP':
-          return 'MG电子';
-        case 'CQ9':
-          return 'CQ电子';
-        case 'SABA':
-          return 'SABA体育';
-        case 'TFGaming':
-          return 'DY电竞 ';
-        case 'SW':
-          return 'SW电子';
-        case 'GPS':
-          return 'GPS捕鱼';
-        case 'PMFISH':
-          return 'DB捕鱼';
-        case 'IA':
-          return '小艾电竞 ';
-        case 'DT':
-          return '大唐棋牌';
-        case 'LEG':
-          return '乐游棋牌';
-        case 'IM':
-          return 'IM体育';
-        case 'BBIN':
-          return 'BBIN真人, BBIN电子, BBIN彩票';
-        case 'KY':
-          return '开元棋牌';
-        case 'PT':
-          return 'PT电子';
-        case 'PG':
-          return 'PG电子';
-        case 'AG':
-          return 'AG真人, XIN电子';
-        case 'AGF':
-          return 'AG捕鱼';
-        case 'ALLBET':
-          return 'ALLBET真人';
-
-        default:
-          return gameName;
-      }
-    }
-
     return {
       recordActive,
       uploadFileRef,
@@ -1627,7 +1553,6 @@ export default defineComponent({
       getTransferChangeType,
       getPlatform,
       imgURL,
-      getGameName,
       getFormatBetTime,
       copy
     };

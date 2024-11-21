@@ -86,7 +86,6 @@
         </q-label>
         <q-input
           ref="cardNumberRef"
-          type="number"
           standout
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"

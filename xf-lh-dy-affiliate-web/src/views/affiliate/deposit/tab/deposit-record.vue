@@ -53,17 +53,17 @@
       </thead>
       <tbody v-if="page.records.length > 0">
         <tr v-for="item in page.records" :key="item.id">
-          <td>{{ item.serialNumber }}</td>
-          <td>$ {{ formatMoney(item.depositAmount) }}</td>
-          <td>
+          <td :data-label="t('fields.serialNumber')">{{ item.serialNumber }}</td>
+          <td :data-label="t('fields.depositAmount')">$ {{ formatMoney(item.depositAmount) }}</td>
+          <td :data-label="t('fields.depositDate')">
             <span v-if="item.depositDate === null">-</span>
             <span v-if="item.depositDate !== null">{{ item.depositDate }}</span>
           </td>
-          <td>
+          <td :data-label="t('fields.finishDate')">
             <span v-if="item.finishDate === null">-</span>
             <span v-if="item.finishDate !== null">{{ item.finishDate }}</span>
           </td>
-          <td>
+          <td :data-label="t('fields.status')">
             <el-tag v-if="item.status === 'SUCCESS' || item.status === 'SUPPLEMENT_SUCCESS'" type="success" size="normal">{{ t('depositStatus.' + item.status) }}</el-tag>
             <el-tag v-else-if="item.status === 'CLOSED'" type="danger" size="normal">{{ t('depositStatus.' + item.status) }}</el-tag>
             <el-tag v-else-if="item.status === 'PENDING'" type="warning" size="normal">{{ t('depositStatus.' + item.status) }}</el-tag>

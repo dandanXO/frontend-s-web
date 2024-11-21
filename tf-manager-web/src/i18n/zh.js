@@ -117,7 +117,8 @@ export default {
     financialLevel: '财务组别',
     todayWithdrawCount: '当天提款笔数',
     profit: '会员盈利',
-    risk: '风险等级'
+    risk: '风险等级',
+    monthlyProfit: '30天盈利'
   },
   outboxStatus: {
     0: '未回复',
@@ -1066,6 +1067,7 @@ export default {
     feedbackStatusSuccess: '已核实',
     feedbackTime: '催单日期',
     feeRate: '收费率',
+    fetchTime: '抓取时间',
     subtractAmount: '扣费金额',
     field: '数据名称',
     finalSum: '最终佣金',
@@ -1931,6 +1933,7 @@ export default {
     football: '足球',
     basketball: '篮球',
     esport: '电竞',
+    competitionMatching: '匹配赛事',
     competitionType: '赛事类别',
     competitionName: '赛事名称',
     competitionTime: '赛事时间',
@@ -2124,6 +2127,12 @@ export default {
     showLogo: '显示图标',
     adjustTarget: '平账目标',
     ignoreSettlement: '忽略结算',
+    sendType: '发送方法',
+    specificAffiliate: '指定代理',
+    subType: '子类型',
+    active: '已启用',
+    inactive: '未启用',
+    isSeamlessTransfer: '免转',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2591,6 +2600,7 @@ export default {
     validateBetRebatePercentageRequired: '每日投注返水百分比必填',
     validateLoginNameNoSpecialCharacter: '登录名只能包含下划线（_），数字和字母。',
     validateAdjustColumnRequired: '平账目标必填',
+    validateIsSeamlessTransferRequired: '是免转必填',
   },
   menu: {
     undefined: '',
@@ -2871,6 +2881,8 @@ export default {
     'Member Ratio Edit Record': '返水比例更改记录',
     'Site Platform Blacklist': '站点平台黑名单',
     'Telegram User': 'Telegram用户管理',
+    'Affiliate Deposit Withdraw Summary': '代理存提汇总',
+    'Site Domain': '站点域名管理',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3068,6 +3080,26 @@ export default {
     DEPOSIT_FLUCTUATION: '存款波动',
     WITHDRAW_FLUCTUATION: '提款波动',
     BONUS_FLUCTUATION: '优惠波动',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ主题闲置',
+    DOMAIN_VALID: '域名有效期',
+  },
+  domain: {
+    domainMainType: {
+      FRONTEND: '前台域名',
+      BACKEND: '后台域名',
+    },
+    domainFrontendType: {
+      LANDING: '落地页',
+      DOWNLOAD: '下载页',
+      AFFILIATE: '代理',
+      HOME: '首页',
+      MANAGER: '管理后台',
+    },
+    domainBackendType: {
+      API: 'API',
+      MANAGER: '管理后台',
+      AFFILIATE: '代理后台',
+    }
   },
   error: {
     400: '请求无效',

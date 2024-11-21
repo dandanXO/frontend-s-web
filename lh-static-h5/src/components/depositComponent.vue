@@ -1,7 +1,12 @@
 <template>
   <div class="loader" v-if="isFetchingApi" />
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
-    <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="deposit" redirect="finance/deposit" style="padding:10px 0px 10px;" />
+    <DepositWithdrawTransferTabs
+      v-if="$q.dark.isActive"
+      activeTab="deposit"
+      redirect="finance/deposit"
+      style="padding: 10px 0px 10px"
+    />
     <div class="q-mb-sm">
       <!--      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>-->
     </div>
@@ -60,7 +65,7 @@
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-container-form">
         <div v-if="amountList.length === 0" class="input-money q-mb-xs">
           <div class="input-currency">
-            {{ isUSDT ? 'USDT' : store.currency.value }}
+            {{ isUSDT ? "USDT" : store.currency.value }}
           </div>
 
           <q-input
@@ -76,8 +81,7 @@
             flat
             outlined
             hide-bottom-space
-          >
-          </q-input>
+          ></q-input>
         </div>
         <div v-else class="flex-c-center q-mb-md">
           <div class="input-currency">
@@ -97,11 +101,10 @@
             :rules="verifyDepositAmount"
             padding="none"
             dense
-          >
-          </q-select>
+          ></q-select>
         </div>
 
-        <div class="q-mb-xs" style="color:#98a7b5;">
+        <div class="q-mb-xs" style="color: #98a7b5">
           单笔存款：{{
             calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
@@ -110,14 +113,14 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="currency-info q-mb-xs">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; justify-content: space-between; align-items: center">
             <span>实时汇率：</span>
             <span>
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
           </div>
-          <div style="display: flex; justify-content: center; align-items: center;">
+          <div style="display: flex; justify-content: center; align-items: center">
             <span>预计到帐：</span>
             <span class="text-white">
               {{
@@ -183,14 +186,9 @@
           <span v-else>流水倍数要求（本金+彩金）：{{ selectedPrivilege.rollover }}倍</span>
         </div>
 
-        <q-btn
-          class="deposit-btn"
-          :loading="btnLoading"
-          @click="confirmDeposit"
-          label="确认"
-        />
+        <q-btn class="deposit-btn" :loading="btnLoading" @click="confirmDeposit" label="确认" />
       </q-form>
-      
+
       <div class="q-mt-sm active-method-msg" v-html="activeMethod.msg"></div>
     </div>
     <div class="deposit-container" v-else>
@@ -405,7 +403,7 @@ import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
+import DepositWithdrawTransferTabs from "components/finance/DepositWithdrawTransferTabs.vue";
 
 var qs = require("qs");
 
@@ -506,6 +504,11 @@ const getRollOverText = (rolltext) => {
 
   var fulltext = "流水倍数要求（本金+彩金）：";
   var rolloverlists = [];
+  if (thetext.rolloverType && thetext.rollover) {
+    fulltext += `${thetext.rollover} 倍`;
+    return fulltext;
+  }
+
   if (thetext.sport) {
     rolloverlists.push("体育" + thetext.sport + "倍");
   }
@@ -1062,13 +1065,14 @@ onMounted(() => {
       background: none;
       height: unset;
     }
-    
+
     .q-field__control {
       min-height: unset;
       height: unset;
     }
-    
-    .q-field__control, .q-field__marginal {
+
+    .q-field__control,
+    .q-field__marginal {
       background: #273354;
     }
 
@@ -1087,8 +1091,9 @@ onMounted(() => {
       box-shadow: none;
       background: none;
     }
-    
-    .q-field__control, .q-field__marginal {
+
+    .q-field__control,
+    .q-field__marginal {
       background: #273354;
     }
 
@@ -1133,12 +1138,13 @@ onMounted(() => {
       align-items: center;
     }
 
-    .input-currency, .deposit-btn {
-      background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    .input-currency,
+    .deposit-btn {
+      background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
       background-size: cover;
       box-shadow: none;
       border-radius: 4px;
-      border: 1px solid #3A93CE;
+      border: 1px solid #3a93ce;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -1150,11 +1156,10 @@ onMounted(() => {
       width: 100%;
       height: 40px;
       border-radius: 4px;
- 
     }
 
     .currency-info {
-      display:flex;
+      display: flex;
       justify-content: space-between;
       color: #98a7b5;
       gap: 10px;

@@ -65,7 +65,7 @@
                       />
                     </span>
                   </div>
-                  <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
+                  <div class="list-item-txt">{{ getAliasName(plat, platformType) }}</div>
                 </span>
               </div>
 
@@ -75,7 +75,7 @@
               <div class="platform-play-btn" v-if="platformType !== 'slot'">
                 <div
                   class="btn-blue"
-                  @click="openGame(item, item.code, item.gameCode)"
+                  @click="openGame(getAliasName(item, platformType), item.code, item.gameCode)"
                   :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
                 >
                   <span class="maintenance-state" v-if="item.underMaintenance === true">
@@ -157,7 +157,7 @@
               v-for="game in gamePage.gameList"
               :key="game.id"
             >
-              <a @click="openGame(game, selectedPlat, game.code)">
+              <a @click="openGame(getAliasName(game, platformType), selectedPlat, game.code)">
                 <div class="slot-img">
                   <el-image :src="game.icon" lazy>
                     <template #placeholder>
@@ -314,8 +314,7 @@ const clickPlat = (plat) => {
   selectedPlat.value = plat.code;
 };
 
-const openGame = (item, platformCode, gameCode) => {
-  const platName = item.alias ?? item.cnname ?? item.name;
+const openGame = (platName, platformCode, gameCode) => {
   platformGame.value.open(platName, platformCode, gameCode);
 };
 
@@ -367,6 +366,21 @@ const getPlatGameList = () => {
       .catch((err) => {
         console.log(err.message);
       });
+  }
+};
+
+const getAliasName = (plat, platformType) => {
+  if (plat.alias) {
+    // console.log(plat);
+    if (plat.alias.includes("、")) {
+      const aliass = plat.alias.split("、");
+      const gameTypes = plat.gameType.split(",");
+      const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
+      return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+    }
+    return plat.alias;
+  } else {
+    return plat.cnname;
   }
 };
 

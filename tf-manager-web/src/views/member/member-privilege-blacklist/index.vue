@@ -24,7 +24,7 @@
           />
         </el-select>
 
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -40,7 +40,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
 
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadBlacklist()">
           {{ t('fields.search') }}
@@ -381,7 +381,7 @@ const importRules = reactive({
 function resetQuery() {
   request.loginName = null;
   request.privilegeId = null;
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
 }
 
 async function loadBlacklist() {
@@ -646,7 +646,7 @@ async function confirmImport() {
 
 onMounted(async() => {
   await loadSites();
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
@@ -656,7 +656,7 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     await loadPrivilegeInfos(site.value.id);
   } else {
-    await loadPrivilegeInfos(siteList.list[0].id);
+    await loadPrivilegeInfos(store.state.user.siteId);
   }
   await loadBlacklist();
 });

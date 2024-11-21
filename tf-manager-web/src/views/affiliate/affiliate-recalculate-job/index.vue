@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search" v-if="hasRole(['ADMIN'])">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.loginName"
           size="small"
@@ -239,7 +239,7 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    request.siteId = siteList.list[0].id;
+    request.siteId = store.state.user.siteId
   }
   await loadJobs();
 });

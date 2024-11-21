@@ -98,6 +98,9 @@ const globalLinks = [
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
 const globalAndCNLinks = [
+  "055267.com",
+  "355277.com",
+  "858862.com",
   "leihuo",
   "lhgl",
   "e693.cc",

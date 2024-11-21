@@ -38,34 +38,36 @@
         <div class="activity-title">活动对象</div>
         <div class="activity-content-container">
           <table class="content-table">
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
-            </tr>
-            <tr class="txt-blue">
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>一等奖</td>
-              <td>保时捷</td>
-            </tr>
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
-            </tr>
-            <tr>
-              <td>恭喜</td>
-              <td>765****3234</td>
-              <td>抽中</td>
-              <td>二等奖</td>
-              <td>Iphone15</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>恭喜</td>
+                <td>765****3234</td>
+                <td>抽中</td>
+                <td>二等奖</td>
+                <td>Iphone15</td>
+              </tr>
+              <tr class="txt-blue">
+                <td>恭喜</td>
+                <td>765****3234</td>
+                <td>抽中</td>
+                <td>一等奖</td>
+                <td>保时捷</td>
+              </tr>
+              <tr>
+                <td>恭喜</td>
+                <td>765****3234</td>
+                <td>抽中</td>
+                <td>二等奖</td>
+                <td>Iphone15</td>
+              </tr>
+              <tr>
+                <td>恭喜</td>
+                <td>765****3234</td>
+                <td>抽中</td>
+                <td>二等奖</td>
+                <td>Iphone15</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
