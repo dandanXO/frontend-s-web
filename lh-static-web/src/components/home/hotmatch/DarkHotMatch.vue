@@ -33,7 +33,7 @@
                   <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
                   <span>{{ hotMatch.teamOneName }}</span>
                 </div>
-                <div class="hot-match-time">{{ hotMatch.displayEndTime }}</div>
+                <div class="hot-match-time">{{ hotMatch.displayEndTime }}<div class="bet-btn" @click="props.openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)">立即投注</div></div>
                 <div class="hot-match-team">
                   <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
                   <span>{{ hotMatch.teamTwoName }}</span>
@@ -57,6 +57,7 @@ const competitionTypes = ref([]);
 const selectedCompetitionType = ref();
 const imgUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
 const isFetchingHotMatches = ref(false);
+const props = defineProps(['openGame']);
 const getCompetitionTypeCnLabel = (enLabel) => {
   switch (enLabel) {
     case "Football":
@@ -166,7 +167,8 @@ onMounted(() => {
         justify-content: flex-start;
         gap: 5px;
         width: 300px;
-        height: 135px;
+        height: 145px;
+        position: relative;
 
         .hot-match-name,
         .hot-match-time {
@@ -189,6 +191,21 @@ onMounted(() => {
 
           .hot-match-time {
             width: 85px;
+
+            .bet-btn {
+              position: absolute;
+              left: 50%;
+              bottom: 0%;
+              transform: translate(-50%, -50%);
+              padding: 3px 8px;
+              background: linear-gradient(to bottom, #6581ef 0%, #242d6f 100%);
+              border-radius: 5px;
+              cursor: pointer;
+
+              &:hover {
+                filter: brightness(1.1);
+              }
+            }
           }
 
           .hot-match-team {
@@ -208,6 +225,10 @@ onMounted(() => {
 
           .hot-match-img {
             width: 50px;
+            background-color: #8a8af7;
+            border-radius: 100px;
+            padding: 5px;
+            aspect-ratio: 1/1;
           }
         }
       }
