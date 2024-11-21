@@ -22,7 +22,8 @@
             <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ floor(store.balance, 2) }}</span>
           </span>
           <el-icon style="cursor: pointer">
-            <RiRefreshLine color="#468CFF" />
+            <!--            <RiRefreshLine color="#468CFF" />-->
+            <img src="../../assets/home/refresh-line.svg" />
           </el-icon>
         </div>
         <div class="profile-actions">
@@ -176,7 +177,6 @@ import moment from "moment";
 import { computed, ref, reactive, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-import { RiRefreshLine, RiAddLine } from "vue-remix-icons";
 import { uploadImage, saveImage } from "@/api/personal/common";
 import { Cropper, CircleStencil } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";

@@ -202,7 +202,7 @@
                 </span>
               </div>
               <el-icon class="reload-btn">
-                <RiRefreshLine />
+                <img src="../../assets/home/refresh-line.svg" />
               </el-icon>
             </a>
           </div>
@@ -467,7 +467,6 @@ import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { useNotify } from "@/hooks/notify";
-import { RiRefreshLine } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
@@ -506,7 +505,6 @@ export default defineComponent({
     FishingMenu,
     PromotionMenu,
     AppMenu,
-    RiRefreshLine,
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
@@ -1695,6 +1693,7 @@ body {
 
       .reload-btn {
         fill: #468cff;
+        color: #468cff;
       }
     }
   }

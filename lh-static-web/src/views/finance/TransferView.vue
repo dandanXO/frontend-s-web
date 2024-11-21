@@ -52,11 +52,11 @@
         <div class="transfer-balance-box">
           <div class="platform-details">
             <div class="plat-name" v-if="p.code === 'FlashTech'">
-              <RiWirelessChargingLine />
+              <img src="../../assets/home/wireless-charging-line.svg" />
               Sport
             </div>
             <div class="plat-name" v-else>
-              <RiWirelessChargingLine />
+              <img src="../../assets/home/wireless-charging-line.svg" />
               {{ platNames[p.code] || p.name }}
               <div class="balance-refresh" @click="refreshBalance(p.code)">
                 <el-icon>
@@ -152,7 +152,6 @@ import { useNotify } from "@/hooks/notify";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
 import { Refresh, Right } from "@element-plus/icons-vue"
-import { RiWirelessChargingLine } from "vue-remix-icons";
 // import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -160,8 +159,7 @@ export default defineComponent({
   components: {
     // RiSpamLine, RiRestartLine
     Refresh,
-    Right,
-    RiWirelessChargingLine
+    Right
 },
   setup() {
     const notify = useNotify();

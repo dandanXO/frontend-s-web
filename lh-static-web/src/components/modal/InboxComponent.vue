@@ -13,7 +13,7 @@
           <div class="footer-button detail" @click="goToMailDetail(item)">
             查看详情
             <el-icon :size="20">
-              <RiArrowDropRightLine />
+              <img src="../../assets/home/arrow-drop-right-line.svg" />
             </el-icon>
           </div>
         </div>
@@ -24,7 +24,6 @@
 
 <script setup>
 import { userStore } from "@/store";
-import { RiArrowDropRightLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

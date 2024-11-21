@@ -574,6 +574,11 @@ button {
   }
 }
 
+.fill-424f72 {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(3%) saturate(7223%) hue-rotate(187deg) brightness(94%)
+    contrast(79%);
+}
+
 .dark {
   #app {
     background: $background-dark;
