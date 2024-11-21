@@ -174,7 +174,7 @@
   <style scoped lang="scss">
   .service-section {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1300px;
     margin: 0 auto;
     margin-top: -50px;
 
@@ -189,8 +189,8 @@
 
         .counter {
           .circle {
-            width: 17rem;
-            height: 17rem;
+            width: 15rem;
+            height: 15rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -201,7 +201,7 @@
             margin: 0 0 .5rem 0;
 
             .inner-circle {
-              margin-top: 20px;
+              margin-top: 10px;
               width: 19rem;
               height: 17rem;
               display: flex;
@@ -221,7 +221,7 @@
               .auto-counter {
                 // filter: drop-shadow(0px 2px #c4effa);
                 font-family: serif;
-                font-size: 4rem;
+                font-size: 3rem;
                 font-weight: 600;
                 line-height: normal;
                 letter-spacing: 0.14144rem;
@@ -252,7 +252,7 @@
           .title {
             color: #fff;
             font-family: 'PingFang SC';
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 400;
             line-height: 30.8px;
             letter-spacing: 0.04em;
@@ -263,7 +263,7 @@
           .title-en {
             color: #fff;
             font-family: 'PingFang SC';
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 400;
             line-height: 22.4px;
             text-align: center;
@@ -288,7 +288,7 @@
             align-items: center;
             justify-content: center;
             padding: 2rem 4rem;
-            gap: 10px;
+            gap: 5px;
 
             .left-container {
               .circle-wrapper {
@@ -298,7 +298,7 @@
                 position: relative;
 
                 .circle {
-                  width: 7.5rem;
+                  width: 7rem;
                   visibility: hidden;
                 }
 
@@ -313,7 +313,7 @@
                 color: #fff;
                 margin-bottom: 15px;
                 font-family: "PingFang SC";
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 500;
                 line-height: 33.6px;
                 text-align: center;
@@ -322,7 +322,7 @@
               .desc {
                 color: #fff;
                 font-family: PingFang SC;
-                font-size: 17px;
+                font-size: 14px;
                 font-weight: 400;
                 line-height: 28px;
                 letter-spacing: 0.03em;
@@ -375,8 +375,8 @@
             // @include content-block-dark;
             background: url("../../../assets/home/service/bg.png") no-repeat center center;
             background-size: 100% 100%;
-            width: 325px;
-            height: 480px;
+            width: 285px;
+            height: 465px;
           }
         }
       }
