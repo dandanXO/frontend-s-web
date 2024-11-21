@@ -248,7 +248,7 @@
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
           <!--          </div>-->
           <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
-            <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
+            <div class="q-mt-sm text-neontb">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</div>
             <div
               class="q-mt-sm q-mb-sm text-center"
               v-if="selectedWithdrawalMethod.code !== 'SZPAY' && !$q.dark.isActive"
