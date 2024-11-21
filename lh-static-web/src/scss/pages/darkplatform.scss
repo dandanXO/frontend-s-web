@@ -80,7 +80,7 @@
         font-size: 80px;
         line-height: 1.1;
         text-align: left;
-        padding-top: 30px;
+        padding-top: 0px;
         text-align: center;
 
         //background: linear-gradient(180deg, #3AACFF 30.46%, #FF53F8 71.84%);
@@ -116,7 +116,7 @@
 
       .platform-txt-box {
         color: #fff;
-        max-width: 32rem;
+        max-width: 38rem;
         min-width: 45px;
         min-height: 50px;
         text-align: center;
@@ -130,8 +130,9 @@
 
       .platform-list-box {
         display: flex;
-        //flex-wrap: wrap;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
+        max-width: 610px;
+        //flex-wrap: nowrap;
       }
 
       .platform-list-item {
@@ -197,7 +198,7 @@
       }
 
       .platform-play-btn {
-        margin-top: 1rem;
+        margin-top: 0.5rem;
 
         .maintenance-p {
           margin: 15px 3px;
@@ -742,7 +743,7 @@
         .platform-txt-box {
           color: #fff;
           font-family: "PingFang SC";
-          font-size: 20px;
+          font-size: 18px;
           font-weight: 500;
           line-height: 27px;
           letter-spacing: 0.04em;
