@@ -111,14 +111,15 @@ export default {
   withdrawRuleType: {
     min: 'minimum ',
     max: 'maximum ',
-    withdrawAmount: 'withdraw amount',
-    balanceBeforeWithdrawal: 'balance before withdrawal',
-    balanceAfterWithdrawal: 'balance after withdrawal',
-    vip: 'vip',
-    financialLevel: 'financial level',
-    todayWithdrawCount: 'Today withdraw count',
-    profit: 'member profit',
-    risk: 'risk level'
+    withdrawAmount: 'withdraw amount ',
+    balanceBeforeWithdrawal: 'balance before withdrawal ',
+    balanceAfterWithdrawal: 'balance after withdrawal ',
+    vip: 'vip ',
+    financialLevel: 'financial level ',
+    todayWithdrawCount: 'Today withdraw count ',
+    profit: 'member profit ',
+    risk: 'risk level ',
+    monthlyProfit: 'Thirty Days profit '
   },
   outboxStatus: {
     0: 'Not reply yet',
