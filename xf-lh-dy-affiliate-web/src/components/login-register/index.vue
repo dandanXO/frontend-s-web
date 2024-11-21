@@ -1326,12 +1326,28 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      if (props.siteId !== '10') {
-        var myElement = document.getElementById('login-swiper')
-        console.log(myElement)
-        myElement.swiper.slideTo(1)
+      const windowWidth = window.innerWidth;
+      const isMobile = windowWidth < 768;
+      const isCitySite = props.siteId === '10';
+      const contactUrl = 'https://t.me/city88888';
+
+      if (isMobile) {
+        if (!isCitySite) {
+          const customerServiceElement = document.getElementById('div-customer-service');
+          window.scrollTo({
+            top: customerServiceElement.offsetTop,
+            behavior: 'smooth'
+          });
+        } else {
+          window.open(contactUrl, '_blank').focus();
+        }
       } else {
-        window.open('https://t.me/city88888', '_blank').focus()
+        if (!isCitySite) {
+          const loginSwiperElement = document.getElementById('login-swiper');
+          loginSwiperElement.swiper.slideTo(1);
+        } else {
+          window.open(contactUrl, '_blank').focus();
+        }
       }
     }
 
@@ -2061,6 +2077,9 @@ a {
 .overlapParent {
   display: grid;
   grid-template-columns: 1fr;
+  .el-image {
+    align-self: flex-start
+  }
 }
 
 .el-image {

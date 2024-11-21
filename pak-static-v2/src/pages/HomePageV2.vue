@@ -465,7 +465,7 @@
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">Rs58</div>
+      <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">
@@ -496,8 +496,8 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
+import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -2461,6 +2461,27 @@ const populatePushNotificationData = (data) => {
   pushNotificationData.value = data;
 };
 
+const initOneSignal = () => {
+  OneSignal.initialize("3db3bbd6-0350-4f85-bb26-3c1fcc5cafaa");
+
+  let myClickListener = async function (event) {
+    console.log("CLICK PUSH");
+    let notificationData = event;
+    console.log(notificationData);
+    console.log(notificationData.notification.title);
+    console.log(notificationData.notification.body);
+    console.log(notificationData.notification.additionalData);
+    populatePushNotificationData(notificationData.notification);
+  };
+  OneSignal.Notifications.addEventListener("click", myClickListener);
+
+  // Prompts the user for notification permissions.
+  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+  OneSignal.Notifications.requestPermission(true).then((accepted) => {
+    console.log("User accepted notifications: " + accepted);
+  });
+};
+
 const loadCustomerAddress = () => {
   cached
     .get("customerAddress", () =>
@@ -2662,6 +2683,10 @@ onMounted(() => {
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
+  if (Platform.is.android && Platform.is.capacitor) {
+    initOneSignal();
+  }
 });
 
 watch(
@@ -4182,7 +4207,7 @@ const showCongratsModal = () => {
 }
 
 .congrats-container {
-  background-color: #111934;
+  background: linear-gradient(180deg, #ffffff 0%, #d5e6ff 100%);
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -4226,7 +4251,7 @@ const showCongratsModal = () => {
   }
 
   .congrats-title {
-    color: #ffffff;
+    color: #458bff;
     display: flex;
     justify-content: center;
     font-size: 16px;

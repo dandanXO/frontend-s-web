@@ -1,7 +1,7 @@
 <template>
   <q-page class="account-message-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="t('records.noMessage')"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
       <img
         class="new-message-ribbon"
@@ -35,6 +35,7 @@ import { userStore } from "stores/index";
 import { convertToGMT55 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { t } from "src/boot/lang";
 
 const router = useRouter();
 const store = userStore();

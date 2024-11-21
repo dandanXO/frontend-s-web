@@ -111,14 +111,15 @@ export default {
   withdrawRuleType: {
     min: 'minimum ',
     max: 'maximum ',
-    withdrawAmount: 'withdraw amount',
-    balanceBeforeWithdrawal: 'balance before withdrawal',
-    balanceAfterWithdrawal: 'balance after withdrawal',
-    vip: 'vip',
-    financialLevel: 'financial level',
-    todayWithdrawCount: 'Today withdraw count',
-    profit: 'member profit',
-    risk: 'risk level'
+    withdrawAmount: 'withdraw amount ',
+    balanceBeforeWithdrawal: 'balance before withdrawal ',
+    balanceAfterWithdrawal: 'balance after withdrawal ',
+    vip: 'vip ',
+    financialLevel: 'financial level ',
+    todayWithdrawCount: 'Today withdraw count ',
+    profit: 'member profit ',
+    risk: 'risk level ',
+    monthlyProfit: 'Thirty Days profit '
   },
   outboxStatus: {
     0: 'Not reply yet',
@@ -317,6 +318,7 @@ export default {
     UEFA: 'UEFA EUROPA',
     UCL: 'UEFA CHAMPIONS LEAGUE',
     HOTELCASINO: 'HOTELCASINO',
+    COMMISSION: 'COMMISSION',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -1063,6 +1065,7 @@ export default {
     feedbackStatusSuccess: 'Success',
     feedbackTime: 'Feedback Time',
     feeRate: 'Fee Rate',
+    fetchTime: 'Fetch Time',
     subtractAmount: 'Subtract Amount',
     field: 'Field',
     finalSum: 'Final Sum',
@@ -1930,6 +1933,7 @@ export default {
     football: 'Football',
     basketball: 'Basketball',
     esport: 'E-Sport',
+    competitionMatching: 'Competition Matching',
     competitionType: 'Competition Type',
     competitionName: 'Competition Name',
     competitionTime: 'Competition Time',
@@ -2123,6 +2127,12 @@ export default {
     showLogo: 'Show Logo',
     adjustTarget: 'Adjust Target',
     ignoreSettlement: 'Ignore Settlement',
+    sendType: 'Send Type',
+    specificAffiliate: 'Specific Affiliate',
+    subType: 'Sub Type',
+    active: 'Active',
+    inactive: 'Inactive',
+    isSeamlessTransfer: 'Seamless Transfer',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2641,6 +2651,7 @@ export default {
     validateLoginNameNoSpecialCharacter:
       'The login name can only contain underscores (_), numbers, and letters.',
     validateAdjustColumnRequired: 'Adjust Column is required',
+    validateIsSeamlessTransferRequired: 'Is Seamless Transfer is required',
   },
   menu: {
     undefined: '',
@@ -2729,6 +2740,7 @@ export default {
     'Alipay Payment on going': 'Alipay Paying',
     'Automatic Payment': 'Automatic Paying',
     'Waiting Auto Pay': 'Waiting Auto Pay',
+    'Waiting Auto Payment': 'Waiting Auto Pay',
     'AutoWithdraw Under review': 'Under review',
     'AutoWithdraw Under review Risk': 'Under review risk',
     'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
@@ -2921,6 +2933,8 @@ export default {
     'Member Ratio Edit Record': 'Share Ratio Edit Record',
     'Site Platform Blacklist': 'Site Platform Blacklist',
     'Telegram User': 'Telegram User',
+    'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
+    'Site Domain': 'Site Domain',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2970,6 +2984,8 @@ export default {
     google_auth_code: 'Enter 6 digits Google Authenticator Code',
     register_count: 'Today Register Count:',
     register_limit: 'Today Register Limit:',
+    deposit_count: 'Today Deposit Count:',
+    deposit_limit: 'Today Deposit Limit:',
   },
   posterType: {
     overall: 'Overall Referral',
@@ -3117,6 +3133,26 @@ export default {
     DEPOSIT_FLUCTUATION: 'Deposit fluctuation',
     WITHDRAW_FLUCTUATION: 'Withdraw fluctuation',
     BONUS_FLUCTUATION: 'Bonus fluctuation',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
+    DOMAIN_VALID: 'Domain Validity',
+  },
+  domain: {
+    domainMainType: {
+      FRONTEND: 'Frontend',
+      BACKEND: 'Backend',
+    },
+    domainFrontendType: {
+      LANDING: 'Landing',
+      DOWNLOAD: 'Download',
+      AFFILIATE: 'Affiliate',
+      HOME: 'Home',
+      MANAGER: 'Manager',
+    },
+    domainBackendType: {
+      API: 'API',
+      MANAGER: 'Manager',
+      AFFILIATE: 'Affiliate',
+    }
   },
   error: {
     400: 'Bad Request',

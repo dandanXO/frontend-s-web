@@ -48,6 +48,14 @@ export class Socket {
     this.webSocket.onclose = ev => { this.reconnect(); this.store.commit(SOCKET_ONCLOSE, ev) };
   }
 
+  sendWSMessage(jsonStr) {
+    if (this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
+      this.webSocket.send(jsonStr);
+    } else {
+      console.error("WebSocket is not open.");
+    }
+  }
+
   reconnect() {
     if (this.lockReconnect) return;
     this.lockReconnect = true;

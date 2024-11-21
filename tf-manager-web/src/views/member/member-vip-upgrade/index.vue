@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY"
@@ -163,7 +163,7 @@ const request = reactive({
 
 function resetQuery() {
   request.loginName = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.createTime = [defaultStartDate, defaultEndDate]
 }
 
@@ -224,8 +224,8 @@ onMounted(async () => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    site.value = siteList.list[0];
-    request.siteId = site.value.id;
+    site.value = store.state.user.siteId
+    request.siteId = store.state.user.siteId
   }
   await loadVipUpgradeList();
 })

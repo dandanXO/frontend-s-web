@@ -69,7 +69,7 @@
         <!--        </div>-->
         <div class="little-title">
           <div class="left">活动场馆</div>
-          <div class="right" style="margin-top: 4px">PG电子、PT电子、XIN电子</div>
+          <div class="right" style="margin-top: 4px">全电子场馆</div>
         </div>
         <div class="little-title" style="flex-direction: column; align-items: unset">
           <div class="left">活动内容</div>
@@ -523,7 +523,7 @@ onMounted(() => {
       background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 290px;
+      width: 350px;
       height: 30px;
       display: flex;
       justify-content: center;
@@ -648,6 +648,9 @@ onMounted(() => {
     font-weight: 400;
     line-height: 18px;
     color: #000000;
+    white-space: pre-wrap;
+    max-width: 70px;
+    word-wrap: break-word;
   }
 }
 

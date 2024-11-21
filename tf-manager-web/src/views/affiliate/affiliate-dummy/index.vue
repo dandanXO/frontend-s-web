@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.loginName"
           size="small"
@@ -434,7 +434,7 @@ async function loadPlatform() {
 }
 
 function resetQuery() {
-  request.siteId = site.value.id;
+  request.siteId = store.state.user.siteId;
   request.loginName = null;
   request.affiliateName = null;
   request.recordTime = [defaultDate, defaultDate];
@@ -575,7 +575,7 @@ onMounted(async () => {
   } else {
     site.value = sites.list[0];
   }
-  request.siteId = site.value.id;
+  request.siteId = store.state.user.siteId;
   await loadPlatform();
 });
 

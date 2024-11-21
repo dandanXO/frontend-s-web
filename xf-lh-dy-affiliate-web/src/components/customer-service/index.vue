@@ -1,6 +1,7 @@
 <template>
   <div
     class="customer-service"
+    id="div-customer-service"
     :class="{
       kaka: props.siteId === '15'
     }"

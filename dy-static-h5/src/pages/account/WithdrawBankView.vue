@@ -110,7 +110,7 @@
                 />
               </div>
               <span v-if="selectedBankType === '电子钱包'" class="tip-text">
-                *特别说明：提款钱包和游戏账号的姓名务必一致
+                *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
               </span>
 
               <div class="col-12">
@@ -818,9 +818,6 @@ export default defineComponent({
     // };
     let validateBankLength = (val) => {
       if (isALIPAY.value == true) {
-        if (!/^\d+$/.test(val)) {
-          return '请输入数字'
-        }
         return (val.length > 10 && val.length < 21) || '长度应为11到20个字符'
       } else if (isCrypto.value == true) {
         return (val.length > 33 && val.length < 37) || '长度应为34到36个字符'

@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container" style="margin-bottom: 40px">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,13 +16,8 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
-        <el-input
-          v-model="request.memberName"
-          size="small"
-          style="width: 180px; margin-left: 5px"
-          :placeholder="t('fields.loginName')"
-        />
+        </el-select> -->
+        <el-input v-model="request.memberName" size="small" style="width: 180px; margin-left: 5px" :placeholder="t('fields.loginName')" />
         <el-select
           clearable
           v-model="request.status"
@@ -384,7 +379,7 @@ function resetQuery() {
   request.platformCode = null;
   request.type = null;
   request.times = [defaultStartDate, defaultEndDate];
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
   loadPlatformNames()
 }
 
@@ -472,9 +467,9 @@ function submit() {
   validate()
 }
 
-onMounted(async () => {
-  await loadSites()
-  request.siteId = siteList.list[0].id
+onMounted(async() => {
+  await loadSites();
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

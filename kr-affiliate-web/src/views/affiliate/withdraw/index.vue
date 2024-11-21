@@ -7,9 +7,9 @@
         </div>
       </template>
       <el-tabs v-model="activeName" style="margin:20px;">
-        <el-tab-pane :label="t('menu.CommWithdraw')" name="withdraw">
+        <!-- <el-tab-pane :label="t('menu.CommWithdraw')" name="withdraw">
           <WithdrawTab />
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane :label="t('menu.Withdraw')" name="withdraw-main">
           <MainWalletWithdrawTab />
         </el-tab-pane>
@@ -32,5 +32,5 @@ import MainWalletWithdrawTab from './tab/withdraw-main.vue'
 import WithdrawRecordTab from './tab/withdraw-record.vue'
 
 const { t } = useI18n()
-const activeName = ref('withdraw')
+const activeName = ref('withdraw-main')
 </script>

@@ -48,6 +48,7 @@
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <EslOneBkk2024 v-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
     <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
@@ -59,6 +60,7 @@
     <LongNewVip v-if="list.redirectUrl === 'lh1-vip'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'lh1-national-day-2024'" :promo-code="list.promoCode" />
     <LoLS14 v-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
+    <Dota2BlastSlam2024 v-if="list.redirectUrl === 'lh1-dota2-blast-slam-2024'" :promo-code="list.promoCode" />
     <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode" />
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game'"></CnyStepGame2024Promo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
@@ -101,8 +103,11 @@
     <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
-    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'"/>
-    <ValorantChampionTour2024 v-if="list.redirectUrl === 'lh1-valorant-champion-tour-2024'" :promo-code="list.promoCode" />
+    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
+    <ValorantChampionTour2024
+      v-if="list.redirectUrl === 'lh1-valorant-champion-tour-2024'"
+      :promo-code="list.promoCode"
+    />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -159,6 +164,7 @@ import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
 import LongNewVip from "../components/hotpromo/longNewVip/LongNewVip.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue";
 import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue";
+import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue";
 import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
@@ -215,6 +221,7 @@ import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import PokerWinningPromo from "@/components/hotpromo/poker-winning/PokerWinningPromo.vue";
 import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue";
 import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue";
+import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -290,6 +297,7 @@ export default defineComponent({
     LivepokerRebate,
     BbdachaCsgo2,
     EslProCsgo2,
+    EslOneBkk2024,
     BlastPremier,
     Tpworld2024,
     DreamLeagueS24,
@@ -301,6 +309,7 @@ export default defineComponent({
     LongNewVip,
     NationalDay2024,
     LoLS14,
+    Dota2BlastSlam2024,
     Dota2Ti13,
     BlackMythWuKongPromo,
     DailiPromo,

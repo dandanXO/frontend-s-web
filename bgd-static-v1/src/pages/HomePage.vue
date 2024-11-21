@@ -1352,7 +1352,7 @@
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">{{ store.currency.label }}58</div>
+      <div class="congrats-highlight">{{ store.currency.label }}28</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">
@@ -1383,7 +1383,6 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
 import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";

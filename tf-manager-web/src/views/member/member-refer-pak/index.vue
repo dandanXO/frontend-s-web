@@ -8,7 +8,7 @@
           style="width: 200px;"
           :placeholder="t('fields.loginName')"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -22,7 +22,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-date-picker
           v-model="request.regTime"
           format="DD/MM/YYYY"
@@ -231,7 +231,7 @@ const request = reactive({
 function resetQuery() {
   request.loginName = null
   request.memberRemark = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.referrerId = null
   request.regTime = []
   uiControl.referrer = null
@@ -336,7 +336,7 @@ onMounted(async () => {
     request.referrerId = router.currentRoute.value.query.id
     uiControl.referrer = router.currentRoute.value.query.referrer
   } else {
-    request.siteId = siteList.list[0].id
+    request.siteId = store.state.user.siteId
     if (LOGIN_USER_TYPE.value === TENANT.value) {
       site.value = siteList.list.find(
         s => s.siteName === store.state.user.siteName

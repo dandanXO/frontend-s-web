@@ -31,7 +31,7 @@
           :placeholder="t('fields.privilegeName')"
         />
 
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -44,7 +44,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -468,7 +468,7 @@ function resetQuery() {
   request.memberName = null
   request.privilegeName = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
 }
 
 function checkQuery() {
@@ -795,8 +795,8 @@ onMounted(async () => {
     request.siteId = site.value.id
     importForm.siteId = site.value.id
   } else {
-    request.siteId = siteList.list[0].id
-    importForm.siteId = siteList.list[0].id
+    request.siteId = store.state.user.siteId
+    importForm.siteId = store.state.user.siteId
   }
   await loadPrivilegeRecord()
 })

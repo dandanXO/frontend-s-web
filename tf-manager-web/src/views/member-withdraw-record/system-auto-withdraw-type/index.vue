@@ -174,7 +174,7 @@
                 <template v-else>
                   <el-input-number
                     v-model="scope.row.value"
-                    :min="0"
+                    :min="-Infinity"
                     class="form-input"
                     :controls="false"
                     :step="1"
@@ -353,7 +353,7 @@
           :label="t('fields.maxWithdrawAmount')"
           prop="withdrawAmountMax"
           :rules="numberRules.repeatNumberValidation"
-          v-if="request.siteId !== 11"
+          v-if="!isPak(request.siteId)"
         >
           <el-input-number
             v-model="form.withdrawAmountMax"
@@ -408,7 +408,7 @@
             <div class="clearfix">
               <span style="margin-left: 60px; font-size: small;font-weight:bold">{{ t('fields.withdrawPlatform') }}</span>
             </div>
-            <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="request.siteId !== 11">
+            <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="!isPak(request.siteId)">
               <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
               <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" align="center">
                 <template #default="scope">
@@ -541,7 +541,7 @@
               size="mini"
               type="warning"
               @click="showPlatfromDialog('CREATE', scope.row)"
-              v-if="request.siteId !== 11"
+              v-if="!isPak(request.siteId)"
             />
           </template>
         </el-table-column>
@@ -694,6 +694,8 @@ const ruleType = reactive({
     { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#afterBalance>' },
     { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
     { key: 13, name: t('withdrawRuleType.risk'), value: "matches '.*,' + T(String).valueOf(#riskId) + ',.*'" },
+    { key: 6, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.max'), value: '#monthlyProfit<' },
+    { key: 6, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.min'), value: '#monthlyProfit>' }
   ],
 })
 
@@ -860,7 +862,7 @@ function getValue(str, keyword) {
 }
 
 function getValueList(str) {
-  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(\d+)/g;
+  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(-?\d+)/g;
   const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
   const results = [];
   let match;

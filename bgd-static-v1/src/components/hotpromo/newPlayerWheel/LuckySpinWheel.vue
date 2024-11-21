@@ -52,7 +52,9 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { userStore } from "src/stores";
 
+const store = userStore();
 const { t } = useI18n();
 const $q = useQuasar();
 const router = useRouter();

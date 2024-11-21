@@ -5,5 +5,11 @@
   "server": {
     "androidScheme": "https",
     "hostname": "www.indwin7.com"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "showSpinner": true
+    }
   }
 }

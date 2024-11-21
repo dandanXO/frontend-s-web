@@ -18,23 +18,12 @@ export const actions = {
     let { userName, password, googleCode } = userInfo
     userName = userName.trim()
     const currentHost = window.location.host
-    if (
-      currentHost === process.env.VUE_APP_IND_HOST ||
-      currentHost === process.env.VUE_APP_IW2_HOST
-    ) {
-      const { data: token } = await indLoginRequest({
-        userName: userName,
-        password,
-        googleCode: googleCode,
-      })
-      commit(UserMutationTypes.SET_TOKEN, token)
-    } else if (currentHost === process.env.VUE_APP_PAK_HOST) {
-      const { data: token } = await pakLoginRequest({
-        userName: userName,
-        password,
-        googleCode: googleCode,
-      })
-      commit(UserMutationTypes.SET_TOKEN, token)
+    if (currentHost === process.env.VUE_APP_IND_HOST || currentHost === process.env.VUE_APP_IW2_HOST) {
+      const { data: token } = await indLoginRequest({ userName: userName, password, googleCode: googleCode });
+      commit(UserMutationTypes.SET_TOKEN, token);
+    } else if (currentHost === process.env.VUE_APP_PAK_HOST || currentHost === process.env.VUE_APP_PK2_HOST || currentHost === process.env.VUE_APP_BGD_HOST) {
+      const { data: token } = await pakLoginRequest({ userName: userName, password, googleCode: googleCode });
+      commit(UserMutationTypes.SET_TOKEN, token);
     } else {
       const { data: token } = await loginRequest({
         userName: userName,

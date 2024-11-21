@@ -37,7 +37,7 @@ const menu2Router = (menus) => {
       menu.children = filterChildren(menu.children, menu);
     }
     if (menu.component) {
-      if (menu.component === "Layout") { // Layout组件特殊处理
+      if (menu.component === "Layout") { // Layout 组件特殊处理
         menu.component = Layout;
       } else {
         const component = menu.component;
@@ -57,6 +57,7 @@ export const actions = {
   async [MenuActionType.ACTION_SET_ROUTES](
     { commit }) {
     let { data: menus } = await loadAuthMenu();
+    console.log(menus, 'dan')
     menus = menu2Router(menus);
     commit(MenuMutationType.SET_ROUTES, menus);
   }

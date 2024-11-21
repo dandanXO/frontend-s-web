@@ -36,7 +36,7 @@ const ui = useUI();
   align-items: center;
 }
 .congrats-container {
-  background-color: #111934;
+  background: linear-gradient(180deg, #FFFFFF 0%, #D5E6FF 100%);
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -80,7 +80,7 @@ const ui = useUI();
   }
 
   .congrats-title {
-    color: #ffffff;
+    color: #458bff;
     display: flex;
     justify-content: center;
     font-size: 18px;
@@ -88,7 +88,7 @@ const ui = useUI();
   }
 
   .congrats-highlight {
-    color: #fff96f;
+    color: #004798;
     font-size: 16px;
     text-align: center;
     background-image: url(../../assets/images/index/modal/congrats-highlight-bg.png);
@@ -107,7 +107,7 @@ const ui = useUI();
   background: rgba(255, 255, 255, 0.1);
 
   :deep(.q-icon) {
-    color: #fff;
+    color: #333;
   }
 }
 </style>

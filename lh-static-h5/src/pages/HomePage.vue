@@ -1223,18 +1223,8 @@ export default defineComponent({
               if (espObj.code === "TFGaming") {
                 espObj.title = "雷火电竞";
                 espObj.sequence = -1;
-              }
-              if (espObj.code === "IA") {
-                espObj.title = "小艾电竞";
-              }
-              if (espObj.code === "PMES") {
-                espObj.title = "DB电竞";
-              }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM 电竞";
-              }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
+              } else {
+                espObj.title = getAliasName(element, "ESPORT");
               }
               espObj.icon = "esport";
               espObj.subtitle = "电竞赛事";
@@ -1252,27 +1242,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
-              if (spObj.code === "IM") {
-                spObj.title = "IM 体育";
-              }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
-              }
-              if (spObj.code === "PM") {
-                spObj.title = "熊猫体育";
-              }
-              if (spObj.code === "CR") {
-                spObj.title = "CR 体育";
-              }
-              if (spObj.code === "SABA") {
-                spObj.title = "沙巴体育";
-              }
-              if (spObj.code === "FB") {
-                spObj.title = "FB 体育";
-              }
-              if (spObj.code === "PINNACLE") {
-                spObj.title = "AP 体育";
-              }
+              spObj.title = getAliasName(element, "SPORT");
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
               sport.value.push(spObj);
@@ -1280,23 +1250,7 @@ export default defineComponent({
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
 
-              // if (liveObj.alias) {
-              //   liveObj.title = translateRecord(liveObj.alias) + " 真人";
-              // } else {
-              //   liveObj.title = translateRecord(liveObj.name) + " 真人";
-              // }
-
-              if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB 真人";
-              } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE 真人";
-              } else if (liveObj.code === "BBINDY") {
-                liveObj.title = "BBIN 真人";
-              } else if (liveObj.code === "FBLive") {
-                liveObj.title = "FB真人";
-              } else {
-                liveObj.title = translateRecord(liveObj.name) + "真人";
-              }
+              liveObj.title = getAliasName(element, "LIVE");
 
               if (liveObj.code === "BBINDY") {
                 liveObj.gameCode = "bblive_lobby_pc";
@@ -1310,13 +1264,7 @@ export default defineComponent({
               // console.log(element)
               var slotObj = Object.assign({}, element);
 
-              if (slotObj.code === "AG") {
-                slotObj.title = "XIN 电子";
-              } else if (slotObj.alias) {
-                slotObj.title = translateRecord(slotObj.alias);
-              } else {
-                slotObj.title = translateRecord(slotObj.name);
-              }
+              slotObj.title = getAliasName(element, "SLOT");
 
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
@@ -1334,7 +1282,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
-              fishObj.title = translateRecord(fishObj.name);
+              fishObj.title = getAliasName(element, "FISH");
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
@@ -1348,7 +1296,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
+              pokerObj.title = getAliasName(element, "POKER");
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
 
@@ -1360,39 +1308,42 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
-              lottObj.title = lottObj.name + "彩票";
+              lottObj.title = getAliasName(element, "LOTTERY");
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               //HArdCode hid BBIN
               lottery.value.push(lottObj);
+            }
+            if (platTypes.indexOf("CASUAL") > -1) {
+              var casualObj = Object.assign({}, element);
+              casualObj.title = getAliasName(element, "CASUAL");
+              casualObj.icon = "casual";
+              casualObj.subtitle = "小游戏";
+
+              if (casualObj.code === "TFGaming") {
+                casualObj.gameCode = 0;
+              }
+
+              casuals.value.push(casualObj);
             }
           });
 
           esport.value = esport.value.sort((a, b) => {
             return a.sequence - b.sequence;
           });
-          // if (store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') {
-          var casualObj = {
-            id: 99,
-            name: "TFGaming",
-            code: "TFGaming",
-            status: "OPEN",
-            walletType: "SEAMLESS",
-            gameType: "CASUAL",
-            followType: "NEW",
-            underMaintenance: false,
-            maintenanceStartTime: null,
-            maintenanceEndTime: null,
-            alias: "小游戏",
-            sequence: 200,
-            title: "小游戏",
-            icon: "casual",
-            subtitle: "小游戏"
-          };
-          casuals.value.push(casualObj);
-          // }
         })
         .catch((err) => {});
+    };
+
+    const getAliasName = (plat, platformType) => {
+      // console.log(plat);
+      if (plat.alias.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+      }
+      return plat.alias;
     };
 
     const tab = ref("esport");
@@ -1548,50 +1499,9 @@ export default defineComponent({
       window.open(theurl, "_blank");
     };
 
-    // const getImgPlatformLogo = (platform, code) => {
-    //   try {
-    //     return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase()}.png`)}`;
-    //   } catch (e) {
-    //     return `${require(`../assets/images/home/logo-empty.png`)}`;
-    //   }
-    // };
-
-    // const getImgPlatformBg = (platform, code) => {
-    //   try {
-    //     return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
-    //   } catch (e) {
-    //     return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
-    //   }
-    // };
-
-    // const getImgPlatformLogo = (platform, code, alias) => {
-    //   try {
-    //     const effectiveCode = alias || code.toLowerCase();
-    //     return `${require(`../assets/images/home/${platform}/logo-${effectiveCode.toLowerCase()}.png`)}`;
-    //   } catch (e) {
-    //     return `${require(`../assets/images/home/logo-empty.png`)}`;
-    //   }
-    // };
-
-    // const getImgPlatformBg = (platform, code, alias) => {
-    //   try {
-    //     const effectiveCode = alias || code.toLowerCase();
-    //     return `url(${require(`../assets/images/home/${platform}/platform-item-${effectiveCode.toLowerCase()}.png`)})`;
-    //   } catch (e) {
-    //     return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
-    //   }
-    // };
-
     const getImgPlatformLogo = (platform, code, alias) => {
       try {
-        // let effectiveCode;
-        // if (code.toLowerCase() === "pm" || code.toLowerCase() === "db") {
-        //   effectiveCode = code.toLowerCase();
-        // } else {
-        //   effectiveCode = alias || code.toLowerCase();
-        // }
-
-        return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase()}.png`)}`;
+        return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase().replace(/\s+/g, "")}.png`)}`;
       } catch (e) {
         return `${require(`../assets/images/home/logo-empty.png`)}`;
       }
@@ -1606,9 +1516,13 @@ export default defineComponent({
         //   effectiveCode = alias || code.toLowerCase();
         // }
         if ($q.dark.isActive) {
-          return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}-dark.png`)})`;
+          return `url(${require(`../assets/images/home/${platform}/platform-item-${code
+            .toLowerCase()
+            .replace(/\s+/g, "")}-dark.png`)})`;
         } else {
-          return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+          return `url(${require(`../assets/images/home/${platform}/platform-item-${code
+            .toLowerCase()
+            .replace(/\s+/g, "")}.png`)})`;
         }
       } catch (e) {
         if ($q.dark.isActive) {

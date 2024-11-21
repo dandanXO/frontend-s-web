@@ -248,7 +248,7 @@
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
           <!--          </div>-->
           <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
-            <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
+            <div class="q-mt-sm text-neontb">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</div>
             <div
               class="q-mt-sm q-mb-sm text-center"
               v-if="selectedWithdrawalMethod.code !== 'SZPAY' && !$q.dark.isActive"
@@ -324,6 +324,23 @@
     </q-dialog>
   </q-page>
 
+  <q-dialog v-model="isShowWithdrawErrorBlock" persistent no-backdrop-dismiss no-esc-dismiss>
+    <q-card style="width: 100%; max-width: 290px; padding: 15px; flex-direction: column" class="text-black">
+      <q-card-section class="q-mb-md">
+        <!-- <div class="text-h6 text-center">请先完成上比提款</div> -->
+        您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
+      </q-card-section>
+
+      <div class="flex flex-center">
+        <div>
+          <q-btn style="width: 100px;" @click="isShowWithdrawErrorBlock = false;" class="q-mr-md" label="取消" />
+        </div>
+        <router-link to="/account/records/withdraw">
+          <q-btn style="width: 100px;" color="brightbtn" label="前往确认" />
+        </router-link>
+      </div>
+    </q-card>
+  </q-dialog>
   <q-dialog class="modal-common-div" width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 1rem 0.5rem" class="">
       <q-card-section class="contents">
@@ -436,6 +453,7 @@ export default defineComponent({
     };
 
     const withdrawLoading = ref(false);
+    const isShowWithdrawErrorBlock = ref(false);
 
     const submitWithdraw = () => {
       cardRef.value.validate();
@@ -449,6 +467,11 @@ export default defineComponent({
         withdrawLoading.value = false;
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
+          if (response.code === 1312) {
+            isShowWithdrawErrorBlock.value = true;
+            withdrawLoading.value = false;
+            return
+          }
           if (response.code === 0) {
             notify({
               type: "success",
@@ -671,7 +694,8 @@ export default defineComponent({
       withdrawLoading,
       isAutoWithdrawal,
       handleUpgradeClick,
-      isShowRemainingDialog
+      isShowRemainingDialog,
+      isShowWithdrawErrorBlock
     };
   }
 });

@@ -30,7 +30,7 @@
           :placeholder="t('fields.loginName')"
         />
 
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -43,7 +43,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
 
         <el-select
           v-model="request.bindType"
@@ -268,7 +268,7 @@ function convertDate(date) {
 function resetQuery() {
   request.loginName = null
   request.cardTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.cardNo = null
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value
@@ -325,7 +325,7 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

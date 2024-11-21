@@ -29,7 +29,7 @@
           <el-option
             v-for="item in platform.list"
             :key="item.id"
-            :label="item.name"
+            :label="item.code"
             :value="item.code"
           />
         </el-select>
@@ -134,6 +134,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
+        <el-table-column prop="competitionName" :label="t('fields.competitionMatching')" align="center" min-width="200" />
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>
@@ -149,6 +150,15 @@
             <span
               v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
               v-formatter="{data: scope.row.settleTime, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column prop="fetchTime" :label="t('fields.fetchTime')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.fetchTime === null">-</span>
+            <span
+              v-if="scope.row.fetchTime !== null"
+              v-formatter="{data: scope.row.fetchTime, timeZone: timeZone, type: 'date'}"
             />
           </template>
         </el-table-column>

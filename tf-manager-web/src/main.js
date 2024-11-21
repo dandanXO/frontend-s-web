@@ -77,6 +77,16 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'pak';
     break;
+  case process.env.VUE_APP_PK2_HOST:
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
+    siteId = 'pk2';
+    break;
+  case process.env.VUE_APP_BGD_HOST:
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
+    siteId = 'bgd';
+    break;
   case process.env.VUE_APP_NGA_HOST:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
@@ -163,6 +173,7 @@ if (!title) {
   title = document.createElement('title');
   document.head.appendChild(title);
 }
+
 if (siteId === 'dy') {
   link.href = '/dy-favicon.ico';
   title.innerText = '东赢后台';
@@ -172,9 +183,12 @@ if (siteId === 'dy') {
 } else if (siteId === 'th') {
   link.href = '/th-favicon.ico';
   title.innerText = 'Jolly88';
-} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1' || siteId === 'br1' || siteId === 'mx1' || siteId === 'pk3') {
+} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1' || siteId === 'br1' || siteId === 'mx1' || siteId === 'pk3' || siteId === 'id1') {
   link.href = '/ind-favicon.ico';
   title.innerText = '55Ace';
+} else if (siteId === 'pak' || siteId === 'pk2' || siteId === 'bgd') {
+  link.href = '/pak-favicon.ico';
+  title.innerText = 'B9Game';
 } else if (siteId === 'lh') {
   link.href = '/favicon.ico';
   title.innerText = '雷火后台';

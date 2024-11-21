@@ -78,6 +78,17 @@ export default {
     menu_cockfighting: "닭싸움",
     menu_minigame: "미니 게임",
     menu_rebate: "환급",
+    // home
+    home_livecasino: "라이브 카지노",
+    home_slot: "슬롯",
+    home_esports: "e 스포츠",
+    home_sports: "스포츠",
+    home_cockfighting: "ĐÁ GÀ",
+    home_fishing: "낚시",
+    home_poker: "포커",
+    home_casual: "미니 게임",
+    home_lottery: "복권",
+    select_a_type: "유형을 선택하세요",
 
     // notify msg
     msg_update_successful: "업데이트 성공",
@@ -1150,6 +1161,7 @@ export default {
     mail_deleteall: "모두 삭제",
     mail_selectone: "하나 더 선택하세요",
     mail_read: "읽음",
+    mail_unread: "읽지않음",
     mail_delete: "삭제",
 
     feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",

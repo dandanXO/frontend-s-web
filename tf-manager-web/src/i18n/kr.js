@@ -285,6 +285,7 @@ export default {
     COCKFIGHT: '닭싸움',
     MSI: 'MSI',
     HOTELCASINO: '호텔 카지노',
+    COMMISSION: '커미션',
   },
   homeBannerType: {
     HOME: '홈',
@@ -1867,6 +1868,10 @@ export default {
     showLogo: '아이콘 표시',
     adjustTarget: '목표 조정',
     ignoreSettlement: '결제를 무시하다',
+    sendType: '전송 방법',
+    specificAffiliate: '지정 대리인',
+    hasPopUp: '팝업창이 있어요',
+    isSeamlessTransfer: '환승불가입니다',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2348,7 +2353,8 @@ export default {
     affiliateReactivated: '활성화 성공',
     required_6_digits_code: '6자리 숫자로 구성',
     required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
-    validateAdjustColumnRequired: '잔액 목표가 필요합니다.',
+    validateAdjustColumnRequired: '전송하지 않으려면 필요합니다.',
+    validateIsSeamlessTransferRequired: 'isSeamlessTransfer is required',
   },
   menu: {
     undefined: '',
@@ -2591,6 +2597,7 @@ export default {
     'Affiliate Point Record': '제휴 포인트 기록',
     'Member Ratio Edit Record': '리베이트 비율 변경 기록',
     'Site Platform Blacklist': '사이트 플랫폼 블랙리스트',
+    'Affiliate Deposit Withdraw Summary': '에이전트 입출금 요약',
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -2759,6 +2766,7 @@ export default {
     DEPOSIT_FLUCTUATION: '예금 변동',
     WITHDRAW_FLUCTUATION: '출금 변동',
     BONUS_FLUCTUATION: '보너스 변동',
+    MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
   },
   monitorTitle: {
     MEMBER_STATISTICS: '온라인 사용자'

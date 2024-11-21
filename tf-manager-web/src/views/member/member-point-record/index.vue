@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.loginName"
           size="small"
@@ -226,6 +226,18 @@
           />
         </template>
       </el-table-column>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.updateTime,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"
@@ -310,7 +322,7 @@ function convertDate(date) {
 function resetQuery() {
   request.name = null
   request.status = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.recordTime = [defaultStartDate, defaultEndDate]
 }
 
@@ -384,7 +396,7 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   } else {
-    request.siteId = siteList.list[0].id
+    request.siteId = store.state.user.siteId
   }
   loadPrivilegeList()
 })

@@ -34,9 +34,9 @@
          <span class="note">Note: Your Invite Bonus has not been shared</span>
 
          <div class="links">
-           <RiFacebookCircleLine /><RiWhatsappLine />
+           <!-- <RiFacebookCircleLine /><RiWhatsappLine />
            <RiTelegramLine /><RiTwitterLine />
-           <RiInstagramLine />
+           <RiInstagramLine /> -->
          </div>
        </div>
      </div>
@@ -65,8 +65,6 @@
 </template>
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted } from "vue";
-import { RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine
- } from "vue-remix-icons"
 import moment from 'moment'
 import { api } from "boot/axios";
 import Vue from "vue";
@@ -74,7 +72,7 @@ import VueQRCodeComponent from 'vue-qrcode-component'
 export default defineComponent({
   name: "ShareView",
   components: {
-    RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent
+    VueQRCodeComponent
   },
   setup() {
     const searchForm = reactive({

@@ -35,11 +35,15 @@
     <div class="bottom-footer">
       <div class="bottom-footer-inner">
         <ul>
-          <li><router-link to="/about?id=about">关于兴發</router-link></li>
-          <li><router-link to="/about?id=contactus">联系我们</router-link></li>
-          <li><router-link to="/about?id=terms">法律依据</router-link></li>
-          <li><router-link to="/about?id=privacy">隐私条款</router-link></li>
-          <li><router-link to="/about?id=service">服务条款</router-link></li>
+          <li><router-link to="/about?id=us">关于兴發</router-link></li>
+          <li><router-link to="/about?id=guide">新手引导</router-link></li>
+          <li><router-link to="/about?id=sportrule">体育投注规则</router-link></li>
+          <li><router-link to="/about?id=aboutQaGame">游戏问题</router-link></li>
+          <li><router-link to="/about?id=responsibility">竞猜责任</router-link></li>
+          <li><router-link to="/about?id=cooperate">合作商户</router-link></li>
+          <li><router-link to="/about?id=rule">规则与条款</router-link></li>
+          <li><router-link to="/about?id=privacy">隐私保护规则</router-link></li>
+          <li><router-link to="/about?id=contact">联系我们</router-link></li>
           <li><router-link to="/agent">代理加盟</router-link></li>
         </ul>
         <div class="tagline">
@@ -48,7 +52,7 @@
       </div>
     </div>
   </footer>
-  <!-- 
+  <!--
   <RegisterModal ref="regModal" /> -->
 </template>
 <script>
@@ -290,9 +294,14 @@ export default defineComponent({
         li {
           a {
             display: block;
-            padding: 30px 10px;
+            padding: 20px 10px;
             color: $footer-link;
             text-decoration: none;
+          }
+
+          a:hover,
+          a:active {
+            color: #fff;
           }
         }
       }
