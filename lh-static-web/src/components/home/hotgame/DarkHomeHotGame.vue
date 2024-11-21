@@ -1897,6 +1897,11 @@ $transition_timer: 0.5s;
 .dark {
   .hotgame-section {
     overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      visibility: hidden;
+    }
+
     .hotgame-container {
       .hotgame-wrapper {
         .hotgame-banner-wrapper {
