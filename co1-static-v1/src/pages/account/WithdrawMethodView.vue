@@ -199,6 +199,31 @@
             </div>
           </template>
 
+          <!-- account type options -->
+          <div
+            v-if="isBankType === 'BANK' && !(bankCardList.length > 0 && !isAddNewAccount)"
+            class="account-type-container"
+          >
+            <div class="method-title q-mb-sm">{{ $t("withdraw.choose") }} {{ $t("withdraw.accountType") }}</div>
+            <div class="mid-wrapper">
+              <div class="w-form-item w-form-item--bankcard">
+                <div class="w-form-input">
+                  <q-select
+                    ref="cardAddressRef"
+                    class="bank-select-input"
+                    filled
+                    dense
+                    clearable
+                    v-model="bankCardField.cardAddress"
+                    :options="accTypeList"
+                    :rules="[() => isValidCardAddress()]"
+                    hide-bottom-space
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="top-wrapper">
             <div class="title">
               {{ $t("withdraw.withdrawalAmount") }} ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
@@ -493,6 +518,7 @@ const selectWithdrawCurrency = (item) => {
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
+const accTypeList = ["CHECKING", "SAVINGS"];
 
 const displayCardType = computed(() => {
   if (selectedMethodItem.value.payType === "EWALLET") {
@@ -576,6 +602,7 @@ const cardRef = ref();
 const amountRef = ref();
 // const bankAddressRef = ref();
 const bankNumberRef = ref();
+const cardAddressRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
@@ -592,7 +619,7 @@ const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
   cardNumber: "",
-  // cardAddress: "",
+  cardAddress: "",
   withdrawCode: "",
   withdrawPlatformId: "",
   amount: ""
@@ -654,8 +681,9 @@ const submitWithdrawBank = () => {
   isSubmitDisable.value = true;
   amountRef.value.validate();
   bankNumberRef.value.validate();
+  cardAddressRef.value.validate();
 
-  if (amountRef.value.hasError || bankNumberRef.value.hasError) {
+  if (amountRef.value.hasError || bankNumberRef.value.hasError || cardAddressRef.value.hasError) {
     $q.loading.hide();
     isSubmitDisable.value = false;
     return;
@@ -683,6 +711,7 @@ const submitWithdrawBank = () => {
         bankCardField.cardNumber = "";
         bankCardField.amount = "";
         withdrawInfo.amount = "";
+        bankCardField.cardAddress = "";
       }
     })
     .catch((error) => {
@@ -773,7 +802,7 @@ const goSelectedMethod = (item) => {
   isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;
   bankCardField.cardNumber = "";
-  bankCardField.cardAddress = "";
+  bankCardField.cardAddress = item.bankList[0].cardAddress;
   withdrawInfo.amount = "";
 };
 
@@ -804,11 +833,13 @@ const isValidCardNumber = () => {
 
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
-  const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+  // const result = !cardAddress
+  //   ? "Please Enter Bank Ifsc Code"
+  //   : cardAddress.length < 3
+  //   ? "Bank IFSC Code Must Be More Than 3 Characters"
+  //   : true;
+  // return result;
+  const result = !cardAddress ? t("form.accountType_rules_01") : true;
   return result;
 };
 
@@ -1149,6 +1180,7 @@ const refreshRemainWager = () => {
     }
   }
 
+  .account-type-container,
   .bank-account-container {
     border-radius: 0.5rem;
     // background: rgba(21, 0, 37, 0.2);
