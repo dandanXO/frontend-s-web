@@ -183,6 +183,9 @@ export default {
     accountNumber_placeholder: "Introduzca el número de cuenta",
     accountNumber_rules_01: "Introduzca el número de cuenta",
     accountNumber_rules_02: "Introduzca un número de cuenta válido",
+    accountType_selectionTitle: "Tipo de Cuenta",
+    accountType_select: "Seleccionar Tipo de Cuenta",
+    accountType_rules_01: "Introduzca el tipo de cuenta",
     holderName: "Nombre del Titular",
     holderName_placeholder: "Introduzca el Nombre del Titular",
     holderName_rules_01: "Introduzca el Nombre del Titular",
@@ -339,10 +342,12 @@ export default {
     dailyLimit: "Límite Diario",
     remainWagers: "Saldo restante",
     withdrawTutorial: "Tutorial de Retiro",
-    withdrawalMethodInMaintenance: "Este canal está en mantenimiento de {startTime} a {endTime}. Por favor, utiliza otro canal para operaciones de retiro. ¡Gracias!",
+    withdrawalMethodInMaintenance:
+      "Este canal está en mantenimiento de {startTime} a {endTime}. Por favor, utiliza otro canal para operaciones de retiro. ¡Gracias!",
     bankName: "Nombre del Banco",
     choose: "Elegir",
     account: "Cuenta",
+    accountType: "Tipo de Cuenta",
     addNewAccount: "Agregar Nueva Cuenta",
     withdrawalAmount: "Monto de Retiro",
     available: "Disponible"
@@ -353,7 +358,8 @@ export default {
     addBank: "Añadir Banco",
     addEWallet: "Agregar Billetera Electrónica",
     areYouSureUnbind: "¿Estás seguro de que deseas desvincular?",
-    account: "Cuenta"
+    account: "Cuenta",
+    accountType: "Tipo de Cuenta"
   },
   order: {
     withdrawal: "Retiro",
