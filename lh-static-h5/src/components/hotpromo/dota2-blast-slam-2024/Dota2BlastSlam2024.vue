@@ -43,7 +43,7 @@
           <div class="livepoker-rebate-section-right">
             <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-btn.png"
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png"
                 alt=""
                 width="100%"
               />
