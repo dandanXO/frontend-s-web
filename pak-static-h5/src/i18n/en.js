@@ -691,6 +691,13 @@ export default {
     53011: "Interest withdrawal turnover requirement is not completed, so you cannot deposit again",
     54000: "The collection time has not yet arrived.",
     54001: "The user has not bound a withdrawal account.",
-    54002: "The user's bank card is already bound to another account."
+    54002: "The user's bank card is already bound to another account.",
+    57000: "Code Fully Redeemed",
+    57001: "Cannot Be Redeem",
+    57002: "Bet does not met requirement",
+    57003: "Deposit does not met requirement",
+    57004: "History deposit does not met requirement",
+    57005: "Code Redeem Error",
+    57006: "Invalid Code"
   }
 };
