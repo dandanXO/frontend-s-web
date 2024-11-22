@@ -85,7 +85,7 @@
           maxlength="50"
           :placeholder="t('fields.thirdSerialNo')"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -101,7 +101,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -859,7 +859,7 @@ function resetQuery() {
   request.paymentType = uiControl.payTypeList[0].code
   request.transactionTime = uiControl.timeList[0].value
   uiControl.dialogVisible = false
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.sort = 1
 }
 
@@ -1055,7 +1055,7 @@ async function syncRecord(record) {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
