@@ -369,6 +369,24 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-form-item :label="t('fields.gameType')" prop="gameType">
+          <el-select
+            v-model="form.gameTypes"
+            :placeholder="t('fields.gameType')"
+            style="width: 300px;"
+            default-first-option
+            filterable
+            multiple
+            @focus="loadGameTypes"
+          >
+            <el-option
+              v-for="item in gameTypes.list"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.minDayBetAmount')" prop="minDayBetAmount" style="width: 600px;">
           $
           <el-input-number
@@ -581,6 +599,7 @@ import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
 import { formatTimeZone } from "@/utils/format-timeZone";
 import { createPromoCodeConfig, getPromoCodeConfigList, updatePromoCodeConfig } from '../../../api/privilege-promo-code-config'
+import { getGameTypes } from '../../../api/game'
 
 const router = useRouter()
 const {t} = useI18n();
@@ -606,6 +625,10 @@ const ways = reactive({
   list: [],
 })
 let timeZone = null;
+
+const gameTypes = reactive({
+  list: [],
+})
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -664,6 +687,7 @@ const form = reactive({
   eligibleWays: [],
   status: null,
   minDayBetAmount: 0,
+  gameTypes: null
 })
 
 const vipFixedRuleForm = reactive({
@@ -731,14 +755,17 @@ function showEdit(banner) {
   }
   nextTick(() => {
     for (const key in banner) {
-      if (key === 'fixedVipRules') {
+      if (key === 'gameTypes' ) {
+          // game type 需要进行转换
+        if (banner[key] != null) {
+          form.gameTypes = banner[key].split(',') // string 转 array
+        }
+      } else if (key === 'fixedVipRules') {
         form.fixedVipRules = JSON.parse(banner[key])
       } else if (key === 'rangeVipRules') {
         form.rangeVipRules = JSON.parse(banner[key])
       } else if (key === 'eligibleWays') {
         form.eligibleWays = JSON.parse(banner[key])
-      } else if (key === 'startTime' || key === 'endTime') {
-        form[key] = moment(banner[key]).format('YYYY-MM-DD HH:mm:ss')
       } else if (Object.keys(form).find(k => k === key)) {
         form[key] = banner[key]
       }
@@ -964,6 +991,7 @@ function edit() {
   bannerForm.value.validate(async valid => {
     if (valid) {
       console.log(form)
+      form.gameTypes = form.gameTypes.join(",")
       await updatePromoCodeConfig(form)
       uiControl.dialogVisible = false
       await loadPromoConfig()
@@ -980,6 +1008,11 @@ function submit() {
   }
 }
 
+async function loadGameTypes() {
+  const { data: gameType } = await getGameTypes()
+  gameTypes.list = gameType;
+}
+
 onMounted(async () => {
   await loadSites();
   await loadVips();
@@ -991,6 +1024,7 @@ onMounted(async () => {
     request.siteId = site.value.id;
   }
   changeSite(request.siteId)
+  loadGameTypes()
 })
 </script>
 
