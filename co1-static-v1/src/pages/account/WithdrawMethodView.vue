@@ -210,7 +210,7 @@
                 <div class="w-form-input">
                   <q-select
                     ref="cardAddressRef"
-                    class="bank-select-input"
+                    class="account-type-select-input"
                     filled
                     dense
                     clearable
@@ -802,7 +802,7 @@ const goSelectedMethod = (item) => {
   isBankType.value = filteredBankList.value[0].bankType;
   bankCardField.bankId = item.bankList[0].id;
   bankCardField.cardNumber = "";
-  bankCardField.cardAddress = item.bankList[0].cardAddress;
+  bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
 };
 
@@ -1247,6 +1247,7 @@ const refreshRemainWager = () => {
       }
     }
 
+    .account-type-select-input,
     .bank-select-input {
       :deep(.q-field__append) {
         height: 60px;

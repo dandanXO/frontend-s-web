@@ -65,7 +65,7 @@
               />
             </div>
 
-            <div class="q-my-sm" v-if="currentCardType === 'Bank' || currentCardType === 'EWallet'">
+            <div class="q-my-sm" v-if="currentCardType === 'Bank'">
               <div class="input-title">{{ dialogDisplays.accountTypeTitle }}</div>
               <q-select
                 ref="refAccType"
