@@ -161,7 +161,11 @@ export default {
     content: "Content",
     content_placeholder: "Please enter content",
     content_rules_01: "Please enter content",
-    content_rules_02: "Content length is 500 words or less"
+    content_rules_02: "Content length is 500 words or less",
+    exchangeTitle: "Enter redemption code",
+    redemptionCode: "Enter redemption code",
+    redemptionCode_rule_01: "Please insert Phone number",
+    redemptionCode_placeholder: "pleases Enter redemption code"
   },
   btn: {
     login: "Login",
@@ -249,7 +253,8 @@ export default {
     charity: "Charity",
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
-    interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    exchange: "Exchange"
   },
   deposit: {
     selectAmount: "Select Amount",

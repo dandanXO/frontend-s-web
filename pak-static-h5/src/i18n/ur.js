@@ -160,7 +160,11 @@ export default {
     content: "مواد",
     content_placeholder: "براہ کرم مواد درج کریں",
     content_rules_01: "براہ کرم مواد درج کریں",
-    content_rules_02: "مواد کی لمبائی 500 الفاظ یا اس سے کم ہونی چاہئے"
+    content_rules_02: "مواد کی لمبائی 500 الفاظ یا اس سے کم ہونی چاہئے",
+    exchangeTitle: "ریڈیمپشن کوڈ درج کریں",
+    redemptionCode: "ریڈیمپشن کوڈ درج کریں",
+    redemptionCode_placeholder: "براہ کرم ریڈیمپشن کوڈ درج کریں",
+    redemptionCode_rule_01: "براہ کرم فون نمبر درج کریں"
   },
   btn: {
     login: "لاگ ان",
@@ -248,7 +252,8 @@ export default {
     charity: "خیرات",
     logout: "لاگ آوٹ",
     depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
-    interestProfit: "سود کا منافع"
+    interestProfit: "سود کا منافع",
+    exchange: "ایکسچینج"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
