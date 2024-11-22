@@ -899,6 +899,7 @@ async function getVipBySiteId(siteId) {
 function create() {
   bannerForm.value.validate(async valid => {
     if (valid) {
+      form.gameTypes = form.gameTypes.join(",")
       await createPromoCodeConfig(form)
       uiControl.dialogVisible = false
       await loadPromoConfig()
