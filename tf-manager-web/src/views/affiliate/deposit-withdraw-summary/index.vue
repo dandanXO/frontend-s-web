@@ -46,6 +46,14 @@
           <el-button size="mini" @click="resetQuery()">
             {{ t('fields.reset') }}
           </el-button>
+          <el-button
+            size="mini"
+            type="primary"
+            v-permission="['sys:affiliate:deposit-withdraw-summary:export']"
+            @click="requestExportExcel"
+          >
+            {{ t('fields.requestExportToExcel') }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -133,6 +141,22 @@
         @size-change="loadRecord"
       />
     </el-card>
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -142,6 +166,7 @@ import { hasPermission } from '../../../utils/util'
 import moment from 'moment'
 import {
   getAffiliateDepositWithdrawSummary,
+  exportAffiliateDepositWithdrawSummary
 } from '../../../api/affiliate-record'
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
@@ -168,6 +193,10 @@ startDate.setTime(
 )
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+
+const uiControl = reactive({
+  messageVisible: false,
+})
 
 const request = reactive({
   size: 20,
@@ -238,6 +267,14 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   page.loading = false
+}
+
+async function requestExportExcel() {
+  const query = checkQuery()
+  const { data: ret } = await exportAffiliateDepositWithdrawSummary(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 onMounted(async () => {
