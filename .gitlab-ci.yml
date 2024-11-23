@@ -39,7 +39,7 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
-    - export NODE_OPTIONS="$NODE_OPTIONS"
+    - export NODE_OPTIONS="$NODE_OPTIONS" 
     - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
   artifacts:
    untracked: true
@@ -807,6 +807,13 @@ deploy-pak-landing-v2:
   extends: .s3-deploy
   variables:
     PROJECT: pak-landing-v2
+
+#===============================================================================================
+
+deploy-pak-bga-b9-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pak-bga-b9-landing
 
 #===============================================================================================
 
