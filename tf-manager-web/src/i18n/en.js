@@ -1463,6 +1463,7 @@ export default {
     recordTime: 'Record Time',
     redeemCash: 'Redeem Cash',
     redeemedBy: 'Redeemed By',
+    redeemCode: 'Redeem Code',
     redeemPoints: 'Redeem Points',
     redirect: 'Redirect',
     reenterPassword: 'Re-Enter Password',
