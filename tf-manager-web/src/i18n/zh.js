@@ -3094,6 +3094,7 @@ export default {
     BONUS_FLUCTUATION: '优惠波动',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ主题闲置',
     DOMAIN_VALID: '域名有效期',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置(注单捞取)',
   },
   domain: {
     domainMainType: {

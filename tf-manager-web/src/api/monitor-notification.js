@@ -24,3 +24,7 @@ export const createNotificationSetting = (notificationSetting) => {
 export const updateNotificationSetting = (notificationSetting) => {
   return https().request(`/system-monitor-notification/notification`, Method.POST, notificationSetting, ContentType.json);
 };
+
+export const updateNotificationSettingAndMonitorSetting = (notificationSetting, monitorSetting) => {
+  return https().request(`/system-monitor-notification/monitor-notification`, Method.POST, { systemMonitorSetting: monitorSetting, systemNotificationSetting: notificationSetting }, ContentType.json);
+};
