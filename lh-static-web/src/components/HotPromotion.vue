@@ -932,4 +932,133 @@ export default defineComponent({
     }
   }
 }
+
+.section-bg {
+  border: 1px solid rgba(172, 212, 246, 1);
+  background: #F2F8FE;
+  border-radius: 12px;
+  padding: 30px;
+  font-family: 'PingFang SC';
+
+  .section-table {
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+      white-space: pre-wrap;
+      
+      &:not(:last-child) {
+        border-right: 1px solid #dcdce8;
+      }
+    }
+
+    td {
+      border: 1px solid #dcdce8;
+      color: #333;
+    }
+  }
+
+  .element-bg {
+    color: #fff !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+  }
+
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    padding-right: 10px;
+    font-family: 'PingFang SC';
+    color: #fff;
+  }
+
+  .title-img {
+    aspect-ratio: 2952 / 176;
+    background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 905px 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: #4c4c6c;
+    letter-spacing: 3px;
+  }
+
+  .item {
+    color: #333;
+    padding-left: 24px;
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+
+    .item-num {
+      color: #ffffff;
+      font-size: 1rem;
+      line-height: 1;
+      border-radius: 50%;
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2px;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    }
+  }
+}
+
+.dark {
+  .section-bg {
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+    border: 1px solid #be9457 !important;
+    color: #fff;
+
+    .title-img {
+      color: #fff;
+    }
+
+    .section-table {
+      th {
+        color: #fff !important;
+        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+      }
+
+      td {
+        border: 1px solid #dcdce8;
+        color: #fff;
+      }
+    }
+
+    .element-bg {
+      color: #fff !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+    }
+
+    .ribbon {
+      clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      padding-right: 10px;
+      font-family: 'PingFang SC';
+      color: #fff;
+    }
+
+    .item {
+      color: #fff;
+
+      .item-num {
+        color: #fff !important;
+        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+      }
+    }
+  }
+}
 </style>
