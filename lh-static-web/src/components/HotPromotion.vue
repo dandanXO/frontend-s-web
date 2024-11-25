@@ -969,10 +969,16 @@ export default defineComponent({
 
   .ribbon {
     clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
-    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     padding-right: 10px;
     font-family: 'PingFang SC';
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width:fit-content;
+    padding: 0px 20px 0px 10px;
   }
 
   .title-img {
@@ -986,6 +992,7 @@ export default defineComponent({
     align-items: center;
     font-size: 35px;
     color: #4c4c6c;
+    font-weight: bold;
     letter-spacing: 3px;
   }
 
@@ -1043,11 +1050,7 @@ export default defineComponent({
     }
 
     .ribbon {
-      clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
       background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
-      padding-right: 10px;
-      font-family: 'PingFang SC';
-      color: #fff;
     }
 
     .item {
