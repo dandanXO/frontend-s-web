@@ -1,6 +1,6 @@
 <template>
   <div class="flex-div">
-    <span>日期：</span>
+    <span class="q-mr-md">日期</span>
     <q-input readonly rounded outlined dense :model-value="startDate" color="white" bg-color="recinputstyle">
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
