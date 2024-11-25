@@ -1033,12 +1033,16 @@ export default defineComponent({
     .section-table {
       th {
         color: #fff !important;
-        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
         background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+        border-radius: 0px !important;
+
+        &:not(:last-child) {
+          border-right: 1px solid #484c5770;
+        }
       }
 
       td {
-        border: 1px solid #dcdce8;
+        border: 1px solid #484c5770;
         color: #fff;
       }
     }

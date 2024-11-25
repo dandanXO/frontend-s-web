@@ -849,7 +849,7 @@ export default defineComponent({
       }
 
       td {
-        border: 1px solid #dcdce8;
+        border: 1px solid #484c5770;
         color: #fff;
       }
     }

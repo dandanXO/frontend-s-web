@@ -12,29 +12,50 @@
               <div class="title-wrapper">
                 <Transition :key="transitionDesc" name="fade" enter>
                   <div class="title" v-if="hotgame.currentProvider">
-                    {{
+                    <span v-if="hotgame.type === 'esport'">电竞赛事</span>
+                    <span v-else-if="hotgame.type === 'sport'">体育赛事</span>
+                    <span v-else-if="hotgame.type === 'live'">真人娱乐</span>
+                    <span v-else-if="hotgame.type === 'lottery'">彩票</span>
+                    <span v-else-if="hotgame.type === 'slot'">电子游戏</span>
+                    <span v-else-if="hotgame.type === 'poker'">棋牌游戏</span>
+                    <span v-else-if="hotgame.type === 'fish'">捕鱼游戏</span>
+                    <span v-else>{{
                       hotgame.content &&
                       hotgame.content[hotgame.currentProvider.toLowerCase()] &&
                       hotgame.content[hotgame.currentProvider.toLowerCase()].title
-                    }}
+                    }}</span>
                   </div>
                 </Transition>
                 <div class="subtitle">
-                  {{
+                  <span v-if="hotgame.type === 'esport'">E-SPORTS</span>
+                  <span v-else-if="hotgame.type === 'sport'">SPORTS</span>
+                  <span v-else-if="hotgame.type === 'live'">LIVE CASINO</span>
+                  <span v-else-if="hotgame.type === 'lottery'">LOTTERY</span>
+                  <span v-else-if="hotgame.type === 'slot'">SLOT GAMES</span>
+                  <span v-else-if="hotgame.type === 'poker'">POKER GAMES</span>
+                  <span v-else-if="hotgame.type === 'fish'">FISHING GAMES</span>
+                  <span v-else>{{
                     hotgame.content &&
                     hotgame.content[hotgame.currentProvider.toLowerCase()] &&
                     hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
-                  }}
+                  }}</span>
                 </div>
                 <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
               </div>
               <div class="description">
                 <div class="desc">
-                  {{
+                  <span v-if="hotgame.type === 'esport'">覆盖所有顶尖赛事，超过百场电竞对决及万种投注玩法。完美还原电竞赛场的紧张氛围，为您打造沉浸式体验，让您轻松上手，随时随地开启精彩对决！</span>
+                  <span v-else-if="hotgame.type === 'sport'">提供全球热门赛事，涵盖足球、篮球、网球等上千场实时投注选择。拥有直观的界面和实时数据更新，让您随时掌握赛事动态，轻松下注，畅享体育激情！</span>
+                  <span v-else-if="hotgame.type === 'live'">真实互动的在线娱乐体验，百种经典真人游戏应有尽有。高清直播与专业荷官，为您带来仿若亲临现场的感受，公平公正，轻松尽享真人魅力！</span>
+                  <span v-else-if="hotgame.type === 'lottery'">涵盖全球主流彩种，玩法丰富，奖金丰厚。操作简单，结果透明，让您轻松下注，体验中奖时刻的无限惊喜，随时随地实现梦想！</span>
+                  <span v-else-if="hotgame.type === 'slot'">汇聚全球经典与创新的电子游戏，千种主题万种乐趣。高清画质与流畅操作感，让您仿佛置身奇幻世界，享受极致娱乐体验，轻松畅玩不停！</span>
+                  <span v-else-if="hotgame.type === 'poker'">集合经典与创新的棋牌玩法，万人同场竞技，乐趣无穷。流畅的操作体验与智能匹配机制，让您一展身手，轻松赢取无限荣耀！</span>
+                  <span v-else-if="hotgame.type === 'fish'">深海探险的奇幻之旅，逼真场景与丰富玩法引爆指尖激情。上百种鱼类和多样武器选择，让您轻松捕获无尽奖励，享受捕鱼的无限乐趣！</span>
+                  <span v-else>{{
                     hotgame.content &&
                     hotgame.content[hotgame.currentProvider.toLowerCase()] &&
                     hotgame.content[hotgame.currentProvider.toLowerCase()].desc
-                  }}
+                  }}</span>
                 </div>
                 <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
               </div>
