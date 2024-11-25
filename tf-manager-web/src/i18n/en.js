@@ -3358,6 +3358,7 @@ export default {
     31001: 'No matches on the selected date',
     45300: 'Member already has dummy record on the selected date',
     45301: 'Member dummy record on the selected date does not exists',
-    45302: 'Member does not belong to any affiliate'
+    45302: 'Member does not belong to any affiliate',
+    50002: 'The maximum amount for adjustment has been exceeded'
   },
 }
