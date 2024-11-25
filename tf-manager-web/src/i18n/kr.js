@@ -2768,6 +2768,7 @@ export default {
     WITHDRAW_FLUCTUATION: '출금 변동',
     BONUS_FLUCTUATION: '보너스 변동',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '스케줄 작업 유휴',
   },
   error: {
     400: '잘못된 요청',

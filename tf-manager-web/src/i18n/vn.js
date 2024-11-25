@@ -2713,6 +2713,7 @@ export default {
     WITHDRAW_FLUCTUATION: 'Biến động rút tiền',
     BONUS_FLUCTUATION: 'Biến động tiền thưởng',
     MQ_LAST_CONSUME_TIME_CHECK: 'Chủ đề MQ không hoạt động',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Nhiệm vụ theo lịch trình bị nhàn rỗi',
   },
   error: {
     400: 'Yêu cầu không hợp lệ',
