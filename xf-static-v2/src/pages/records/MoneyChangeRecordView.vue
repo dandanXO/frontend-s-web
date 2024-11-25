@@ -3,6 +3,7 @@
     <RecordDateFilter class="q-ma-md" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
 
     <RecordComponent
+      ref="recordRef"
       recordType="moneyChange"
       :loading="visible"
       :list="tableData"
