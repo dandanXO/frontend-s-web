@@ -42,7 +42,7 @@
       <div class="sitemap">
         <ul class="index_bottom_des">
           <li>关于东赢</li>
-          <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
+          <li><router-link to="/about?id=us">关于我们</router-link></li>
           <li><router-link to="/promotion">优惠活动</router-link></li>
           <li @click="openRegPage">免费开户</li>
           <!--              <li><router-link to="/agent">代理加盟</router-link></li>-->
@@ -68,30 +68,30 @@
         <ul class="index_bottom_des">
           <li>浏览器下载</li>
           <li>
-            <a href="https://s3-ap-northeast-1.amazonaws.com/brows/googlechromestandaloneenterprise64.msi">
-              谷歌浏览器
-            </a>
+            <a href="https://www.google.com/intl/zh-CN/chrome/" target="_blank">谷歌浏览器</a>
           </li>
           <li>
-            <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE"
-            >
-              IE9浏览器
-            </a>
+            <a href="https://www.microsoft.com/zh-cn/edge/?form=MA13FJ" target="_blank">Edge浏览器</a>
           </li>
           <li>
-            <a href="http://download.firefox.com.cn/releases-sha2/stub/official/zh-CN/Firefox-latest.exe">火狐浏览器</a>
+            <a href="https://download-ssl.firefox.com.cn/releases-sha2/stub/official/zh-CN/Firefox-latest.exe" download>
+              火狐浏览器
+            </a>
           </li>
         </ul>
       </div>
       <div class="bottom-footer-inner">
         <ul>
-          <li><router-link to="/about?id=aboutus">关于东赢</router-link></li>
-          <li><router-link to="/about?id=terms">法律依据</router-link></li>
-          <li><router-link to="/about?id=privacy">隐私条款</router-link></li>
-          <li><router-link to="/about?id=service">服务条款</router-link></li>
-          <li><router-link to="/about?id=contactus">联系我们</router-link></li>
-          <!--          <li><a href="/agent">加盟代理</a></li>-->
+          <li><router-link to="/about?id=us">关于东赢</router-link></li>
+          <li><router-link to="/about?id=guide">新手引导</router-link></li>
+          <li><router-link to="/about?id=sportrule">体育投注规则</router-link></li>
+          <li><router-link to="/about?id=aboutQaGame">游戏问题</router-link></li>
+          <li><router-link to="/about?id=responsibility">竞猜责任</router-link></li>
+          <li><router-link to="/about?id=cooperate">合作商户</router-link></li>
+          <li><router-link to="/about?id=rule">规则与条款</router-link></li>
+          <li><router-link to="/about?id=privacy">隐私保护规则</router-link></li>
+          <li><router-link to="/about?id=contact">联系我们</router-link></li>
+          <li><a href="/agent">加盟代理</a></li>
         </ul>
         <div class="tagline">东赢是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div>
       </div>
@@ -390,7 +390,7 @@ export default defineComponent({
     .bottom-footer-inner {
       color: #ffffff;
       display: flex;
-      width: 600px;
+      width: 1100px;
       margin: 0 auto;
       flex-direction: column;
       ul {

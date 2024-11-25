@@ -113,14 +113,11 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
+  const formattedAmount = isForceDecimal ? parseFloat(amount).toFixed(2) : parseInt(amount).toLocaleString("en-US");
 
-  const digits = isForceDecimal ? 2 : 0;
-
-  if(typeof amount === 'number') {
-    return amount.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
-  } else {
-    return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
-  }
+  return isForceDecimal
+    ? parseFloat(formattedAmount).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : formattedAmount;
 };
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);

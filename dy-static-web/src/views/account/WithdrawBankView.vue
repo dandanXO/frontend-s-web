@@ -149,7 +149,7 @@
             </el-col>
           </el-row>
           <span v-if="selectedBankType === 'e-Wallet'" class="tip-text">
-            *特别说明：提款钱包和游戏账号的姓名务必一致
+            *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
           </span>
         </el-form-item>
         <el-form-item>

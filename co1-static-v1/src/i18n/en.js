@@ -72,10 +72,10 @@ export default {
     phone: "Teléfono",
     phone_placeholder: "Introducir número de teléfono",
     phone_rules_01: "Introducir número de teléfono",
-    phone_rules_02: "El número de teléfono debe tener entre 10 y 11 dígitos.",
-    phone_rules_03: "El número de teléfono debe comenzar con '03'",
+    phone_rules_02: "El número de teléfono debe tener 10 dígitos.",
+    phone_rules_03: "El número de teléfono debe comenzar con '3'",
     phone_rules_04: "Por favor, introduzca un número de teléfono válido",
-    prependNumber: "+52",
+    prependNumber: "+57",
     password: "Contraseña",
     password_placeholder: "Introducir contraseña",
     password_rules_01: "Introducir contraseña",
@@ -156,7 +156,7 @@ export default {
     virtualWallet_placeholder: "Por favor, ingrese a la billetera virtual",
     virtualWallet_rules_01: "Por favor, ingrese a la billetera virtual",
     virtualWallet_id_rule: "Por favor ingrese su ID de identidad de 13 dígitos",
-    virtualWallet_rules_02: "El número de teléfono debe comenzar con '03'",
+    virtualWallet_rules_02: "El número de teléfono debe comenzar con '3'",
     virtualWallet_rules_03: "El monedero electrónico debe tener 11 dígitos",
     virtualWallet_warmReminder:
       "Recordatorio amable: Si el nombre del titular de la tarjeta no coincide, puedes contactar al servicio de atención al cliente en línea para corregir la información. ¡Gracias por tu apoyo y comprensión!",
@@ -183,6 +183,9 @@ export default {
     accountNumber_placeholder: "Introduzca el número de cuenta",
     accountNumber_rules_01: "Introduzca el número de cuenta",
     accountNumber_rules_02: "Introduzca un número de cuenta válido",
+    accountType_selectionTitle: "Tipo de Cuenta",
+    accountType_select: "Seleccionar Tipo de Cuenta",
+    accountType_rules_01: "Introduzca el tipo de cuenta",
     holderName: "Nombre del Titular",
     holderName_placeholder: "Introduzca el Nombre del Titular",
     holderName_rules_01: "Introduzca el Nombre del Titular",
@@ -339,10 +342,12 @@ export default {
     dailyLimit: "Límite Diario",
     remainWagers: "Saldo restante",
     withdrawTutorial: "Tutorial de Retiro",
-    withdrawalMethodInMaintenance: "Este canal está en mantenimiento de {startTime} a {endTime}. Por favor, utiliza otro canal para operaciones de retiro. ¡Gracias!",
+    withdrawalMethodInMaintenance:
+      "Este canal está en mantenimiento de {startTime} a {endTime}. Por favor, utiliza otro canal para operaciones de retiro. ¡Gracias!",
     bankName: "Nombre del Banco",
     choose: "Elegir",
     account: "Cuenta",
+    accountType: "Tipo de Cuenta",
     addNewAccount: "Agregar Nueva Cuenta",
     withdrawalAmount: "Monto de Retiro",
     available: "Disponible"
@@ -353,7 +358,8 @@ export default {
     addBank: "Añadir Banco",
     addEWallet: "Agregar Billetera Electrónica",
     areYouSureUnbind: "¿Estás seguro de que deseas desvincular?",
-    account: "Cuenta"
+    account: "Cuenta",
+    accountType: "Tipo de Cuenta"
   },
   order: {
     withdrawal: "Retiro",

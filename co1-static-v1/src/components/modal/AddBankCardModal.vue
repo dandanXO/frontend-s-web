@@ -64,6 +64,22 @@
                 label-color="secondary"
               />
             </div>
+
+            <div class="q-my-sm" v-if="currentCardType === 'Bank'">
+              <div class="input-title">{{ dialogDisplays.accountTypeTitle }}</div>
+              <q-select
+                ref="refAccType"
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardAddress"
+                :label="dialogDisplays.accountTypePlaceholder"
+                :rules="[(_) => isValidAccType()]"
+                label-color="secondary"
+                :options="accTypeList"
+              />
+            </div>
           </q-form>
         </q-card-section>
 
@@ -73,7 +89,7 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (isValidCardAccount() === true && isValidCardNumber() === true)
+              (isValidCardAccount() === true && isValidCardNumber() === true && isValidAccType() === true)
             ) || isDisableBtn
           "
         ></ConfirmButton>
@@ -108,6 +124,7 @@ const refBankCardNum = ref();
 
 // display
 const currBankList = ref([]);
+const accTypeList = ["CHECKING", "SAVINGS"];
 
 // cache
 const bankList = [];
@@ -189,7 +206,9 @@ const dialogDisplays = reactive({
   title: t("form.bank_title"),
   selectionTitle: t("form.bank_selectionTitle"),
   selectionPlaceholder: t("form.bank_select"),
-  selectionError: t("form.bank_selectError")
+  selectionError: t("form.bank_selectError"),
+  accountTypeTitle: t("form.accountType_selectionTitle"),
+  accountTypePlaceholder: t("form.accountType_select")
 });
 const selectBankType = () => {
   currBankList.value = [];
@@ -238,6 +257,13 @@ const isValidBank = () => {
   const { bankId } = bankCardField;
 
   const result = !bankId ? dialogDisplays.selectionError : true;
+  return result;
+};
+
+const isValidAccType = () => {
+  const { cardAddress } = bankCardField;
+
+  const result = !cardAddress ? dialogDisplays.selectionError : true;
   return result;
 };
 

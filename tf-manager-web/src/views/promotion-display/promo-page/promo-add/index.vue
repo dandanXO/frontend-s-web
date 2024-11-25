@@ -2014,6 +2014,7 @@ function getName(nameStr) {
 
 onMounted(async () => {
   await loadSites()
+  imageForm.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
     form.siteId = store.state.user.siteId

@@ -1871,6 +1871,7 @@ export default {
     sendType: '전송 방법',
     specificAffiliate: '지정 대리인',
     hasPopUp: '팝업창이 있어요',
+    isSeamlessTransfer: '환승불가입니다',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2352,7 +2353,8 @@ export default {
     affiliateReactivated: '활성화 성공',
     required_6_digits_code: '6자리 숫자로 구성',
     required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
-    validateAdjustColumnRequired: '잔액 목표가 필요합니다.',
+    validateAdjustColumnRequired: '전송하지 않으려면 필요합니다.',
+    validateIsSeamlessTransferRequired: 'isSeamlessTransfer is required',
   },
   menu: {
     undefined: '',
@@ -2459,6 +2461,7 @@ export default {
     'Red Packet Rain': '빨간색 포켓 비',
     'Red Packet Rain List': '빨간색 포켓 비 목록',
     'Member Free Game': '회원 무료 게임',
+    'Promo Code Redeem Config': 'Promo Code Redeem Config',
     Lottery: '로또',
     'Lottery Record List': '로또 기록 목록',
     'Lottery Result List': '로또 결과 목록',

@@ -8,6 +8,14 @@
       <el-form-item label="允许主题闲置时间(分钟)" prop="monitorSetting.setting.consumptionGapMinutesThreshold">
         <el-input-number :min="1" :step="1" v-model="formData.monitorSetting.setting.consumptionGapMinutesThreshold" />
       </el-form-item>
+      <el-form-item label="排除监控主题列表">
+        <el-input
+          type="textarea"
+          v-model="excludeTopicNamesStr"
+          rows="4"
+          placeholder="请输入欲排除监控的主题名称，用','分隔"
+        />
+      </el-form-item>
       <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
@@ -62,7 +70,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits, ref, onMounted } from 'vue';
 import { useStore } from "@/store";
 import { cloneDeep } from 'lodash';
 import { createMonitorSetting, updateMonitorSetting, createNotificationSetting, updateNotificationSetting } from "@/api/monitor-notification";
@@ -95,6 +103,7 @@ function initializeFormData() {
       siteId: store.state.user.siteId,
       setting: {
         consumptionGapMinutesThreshold: 3,
+        excludeTopicNames: [""],
       },
       status: 1,
     },
@@ -124,6 +133,13 @@ function assignFormData() {
 }
 
 const formRef = ref(null);
+const excludeTopicNamesStr = ref('');
+
+onMounted(() => {
+  if (formData.value.monitorSetting.setting.excludeTopicNames) {
+    excludeTopicNamesStr.value = formData.value.monitorSetting.setting.excludeTopicNames.join(',');
+  }
+});
 
 const rules = {
   monitorSetting: {
@@ -162,11 +178,14 @@ const submitForm = async () => {
   cloneNotificationToSubmit.setting.telegramUserIdToSendNotification = roleUserSelectorRef.value.fetchTelegramUserId();
   cloneNotificationToSubmit.setting.systemUserTypeListToSendNotification = userTypeCheckboxRef.value.fetchSystemUserTypeListToSendNotification();
 
+  const cloneMonitorToSubmit = cloneDeep(formData.value.monitorSetting);
+  cloneMonitorToSubmit.setting.excludeTopicNames = excludeTopicNamesStr.value.split(',').map(item => item.trim());
+
   const submitMonitorFn = props.mode === 'create' ? createMonitorSetting : updateMonitorSetting;
   const submitNotificationFn = props.mode === 'create' ? createNotificationSetting : updateNotificationSetting;
 
   try {
-    const monitorResponse = await submitMonitorFn(formData.value.monitorSetting);
+    const monitorResponse = await submitMonitorFn(cloneMonitorToSubmit);
     if (monitorResponse.code !== 0) {
       throw new Error(`监控设置提交失败, code: ${monitorResponse.code}`);
     }

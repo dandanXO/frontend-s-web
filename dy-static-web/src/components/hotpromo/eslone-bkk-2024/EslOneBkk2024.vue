@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: ytdCompetitionValidBet.bonus <= 0 }">
             <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -129,7 +129,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -249,6 +249,11 @@ onMounted(() => {
       &:active {
         transform: translate(0px, 1px);
         opacity: 0.9;
+      }
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
   }

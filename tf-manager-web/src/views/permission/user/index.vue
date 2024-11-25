@@ -746,6 +746,9 @@ function create() {
 function edit() {
   userForm.value.validate(async valid => {
     if (valid) {
+      if (form.siteId === 0 && (form.siteIdArray !== null || form.siteIdArray !== 0)) {
+        form.siteId = form.siteIdArray[0]
+      }
       await updateUser(form)
       uiControl.dialogVisible = false
       await loadUser()
