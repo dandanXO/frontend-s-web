@@ -184,8 +184,7 @@
       </q-form>
 
       <div class="note">
-        温馨提示：若持卡人姓名不符可联系在线客服更正信息，感谢您的支持与 理解！<br>
-        *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
+        温馨提示：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
       </div>
 
       <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />

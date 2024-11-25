@@ -2461,6 +2461,7 @@ export default {
     'Red Packet Rain': '빨간색 포켓 비',
     'Red Packet Rain List': '빨간색 포켓 비 목록',
     'Member Free Game': '회원 무료 게임',
+    'Promo Code Redeem Config': 'Promo Code Redeem Config',
     Lottery: '로또',
     'Lottery Record List': '로또 기록 목록',
     'Lottery Result List': '로또 결과 목록',
