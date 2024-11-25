@@ -2366,6 +2366,7 @@ export default {
     validateDesktopImageRequired: '桌面图像必填',
     validateDesktopBannerRequired: '桌面广告图必填',
     validateDeviceRequired: '设备必填',
+    validateDisplayEndTimeBeforeStartTime: '显示结束时间不可早于显示开始时间',
     validateDomainRequired: '域名必填',
     validateEmailRequired: '邮箱必填',
     validateEmailFormat: '请输入正确的邮箱格式',

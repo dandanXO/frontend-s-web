@@ -2075,6 +2075,7 @@ export default {
     validateDesktopImageRequired: 'Yêu cầu hình ảnh máy tính để bàn',
     validateDesktopBannerRequired: 'Yêu cầu banner máy tính để bàn',
     validateDeviceRequired: 'Yêu cầu thiết bị',
+    validateDisplayEndTimeBeforeStartTime: 'Thời gian kết thúc hiển thị không được sớm hơn thời gian bắt đầu hiển thị',
     validateDomainRequired: 'Yêu cầu miền',
     validateEmailRequired: 'Yêu cầu email',
     validateEmailFormat: 'Nhập định dạng email hợp lệ',
