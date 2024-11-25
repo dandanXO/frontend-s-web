@@ -810,6 +810,13 @@ deploy-pak-landing-v2:
 
 #===============================================================================================
 
+deploy-pak-bga-b9-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pak-bga-b9-landing
+
+#===============================================================================================
+
 build-pak-landing-v3:
   extends: .build-projects
   variables:

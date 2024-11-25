@@ -1314,31 +1314,23 @@ export default defineComponent({
               //HArdCode hid BBIN
               lottery.value.push(lottObj);
             }
+            if (platTypes.indexOf("CASUAL") > -1) {
+              var casualObj = Object.assign({}, element);
+              casualObj.title = getAliasName(element, "CASUAL");
+              casualObj.icon = "casual";
+              casualObj.subtitle = "小游戏";
+
+              if (casualObj.code === "TFGaming") {
+                casualObj.gameCode = 0;
+              }
+
+              casuals.value.push(casualObj);
+            }
           });
 
           esport.value = esport.value.sort((a, b) => {
             return a.sequence - b.sequence;
           });
-          // if (store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') {
-          var casualObj = {
-            id: 99,
-            name: "TFGaming",
-            code: "TFGaming",
-            status: "OPEN",
-            walletType: "SEAMLESS",
-            gameType: "CASUAL",
-            followType: "NEW",
-            underMaintenance: false,
-            maintenanceStartTime: null,
-            maintenanceEndTime: null,
-            alias: "雷火小游戏",
-            sequence: 200,
-            title: "雷火小游戏",
-            icon: "casual",
-            subtitle: "小游戏"
-          };
-          casuals.value.push(casualObj);
-          // }
         })
         .catch((err) => {});
     };

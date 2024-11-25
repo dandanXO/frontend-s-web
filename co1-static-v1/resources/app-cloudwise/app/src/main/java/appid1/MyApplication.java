@@ -1,4 +1,4 @@
-package com.ind.appmx1;
+package com.ind.appco1;
 
 import android.app.Application;
 

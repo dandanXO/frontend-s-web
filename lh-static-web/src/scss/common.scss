@@ -568,6 +568,12 @@ button {
   opacity: 0;
 }
 
+.el-button.cancel-btn {
+  span {
+    color: #424f72;
+  }
+}
+
 .dark {
   #app {
     background: $background-dark;

@@ -8,6 +8,9 @@
       <el-form-item label="域名剩余有效天数" prop="monitorSetting.setting.domainValidRemainingDays">
         <el-input-number :min="7" :step="1" v-model="formData.monitorSetting.setting.domainValidRemainingDays" />
       </el-form-item>
+      <el-form-item label="后台域名PING间隔（分钟）" prop="monitorSetting.setting.domainPingCheckIntervalMinutes">
+        <el-input-number :min="7" :step="1" v-model="formData.monitorSetting.setting.domainPingCheckIntervalMinutes" />
+      </el-form-item>
       <el-form-item v-if="false" label="状态" prop="monitorSetting.status">
         <el-switch
           :value="formData.monitorSetting.status === 1"
@@ -95,6 +98,7 @@ function initializeFormData() {
       siteId: store.state.user.siteId,
       setting: {
         domainValidRemainingDays: 7,
+        domainPingCheckIntervalMinutes: 15,
       },
       status: 1,
     },
@@ -132,6 +136,10 @@ const rules = {
       domainValidRemainingDays: [
         { required: true, message: '请填写域名剩余有效天数', trigger: 'blur' },
         { type: 'number', min: 7, message: '最小值为7', trigger: 'blur' }
+      ],
+      domainPingCheckIntervalMinutes: [
+        { required: true, message: '请填写Ping间隔', trigger: 'blur' },
+        { type: 'number', min: 5, message: '最小值为5', trigger: 'blur' }
       ],
     },
     status: [

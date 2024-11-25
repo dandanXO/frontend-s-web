@@ -176,7 +176,7 @@
               class="q-mt-md text-orange"
               v-if="['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
             >
-              <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
+              <span>*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
             </div>
           </div>
 

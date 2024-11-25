@@ -1825,7 +1825,8 @@ export default {
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
-    showLogo: 'hiển thị biểu tượng'
+    showLogo: 'hiển thị biểu tượng',
+    isSeamlessTransfer: 'Không cần chuyển nhượng',
   },
   message: {
     startenddatemore3months:
@@ -2322,6 +2323,7 @@ export default {
     validatePlanDaysRequired: 'Cần có thời gian đầu tư',
     validatePlanLimitMinRequired: 'Yêu cầu giới hạn đầu tư tối thiểu',
     validatePlanLimitMaxRequired: 'Yêu cầu giới hạn đầu tư tối đa',
+    validateIsSeamlessTransferRequired: 'Nó là cần thiết để không chuyển nhượng',
   },
   menu: {
     undefined: '',
@@ -2432,6 +2434,7 @@ export default {
     'Red Packet Rain': 'Mưa phong bao đỏ',
     'Red Packet Rain List': 'Danh sách mưa phong bao đỏ',
     'Member Free Game': 'Trò chơi miễn phí cho thành viên',
+    'Promo Code Redeem Config': 'Promo Code Redeem Config',
     Lottery: 'Xổ số',
     'Lottery Record List': 'Danh sách lịch sử xổ số',
     'Lottery Result List': 'Danh sách kết quả xổ số',

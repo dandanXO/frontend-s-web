@@ -66,34 +66,34 @@
           name="amount"
         >
           <el-space>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
-                <template #append>{{ store.currency.label }}</template>
-              </el-input>
-            </el-col>
-            <el-col :span="12">
-              <span v-if="selectedWithdrawalMethod">
-                {{
-                  `单笔限额：${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
-                }}
-                <br />
-                {{
-                  `今日提款：${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余：${selectedWithdrawalMethod.withdrawMaxTimes} 次`
-                }}
-              </span>
-            </el-col>
-          </el-row>
-          <el-button
-            :loading="loadingBtn"
-            :disable="loadingBtn"
-            size="large"
-            class="common-btn withdraw-btn"
-            @click="submitWithraw"
-          >
-            确定
-          </el-button>
-        </el-space>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
+                  <template #append>{{ store.currency.label }}</template>
+                </el-input>
+              </el-col>
+              <el-col :span="12">
+                <span v-if="selectedWithdrawalMethod">
+                  {{
+                    `单笔限额：${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                  }}
+                  <br />
+                  {{
+                    `今日提款：${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余：${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                  }}
+                </span>
+              </el-col>
+            </el-row>
+            <el-button
+              :loading="loadingBtn"
+              :disable="loadingBtn"
+              size="large"
+              class="common-btn withdraw-btn"
+              @click="submitWithraw"
+            >
+              确定
+            </el-button>
+          </el-space>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -120,9 +120,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-<!--            <div v-if="isALIPAY" class="selected-tip">-->
-<!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
-<!--            </div>-->
+            <!--            <div v-if="isALIPAY" class="selected-tip">-->
+            <!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
+            <!--            </div>-->
           </el-col>
         </el-row>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
@@ -165,7 +165,10 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - selectedWithdrawalMethod.withdrawFee).toFixed(2)
+                : (
+                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                    selectedWithdrawalMethod.withdrawFee
+                  ).toFixed(2)
             }}
             USDT
           </div>
@@ -177,7 +180,7 @@
             style="margin: 15px 0px; color: #ff7f10"
             v-if="['KDPAY', 'OKPAY', 'EBPAY', 'BLBPAY', 'JDPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
           >
-            *特别说明：提款钱包和游戏账号的姓名务必一致
+            *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
           </div>
           <el-button class="common-btn" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
@@ -194,8 +197,7 @@
           v-html="selectedWithdrawalMethod.tips"
         ></div> -->
 
-        <div class="flex-box flex-justify-center">
-        </div>
+        <div class="flex-box flex-justify-center"></div>
       </el-form>
     </div>
 
@@ -237,17 +239,20 @@
       </template>
     </el-dialog>
     <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
-    <el-dialog 
+    <el-dialog
       align-center
       width="530"
       :show-close="false"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
-      v-model="isShowWithdrawErrorBlock">
+      v-model="isShowWithdrawErrorBlock"
+    >
       您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
       <div class="withdraw-remaining-dialog__buttons">
         <el-button class="common-btn" @click="isShowWithdrawErrorBlock = false">返回</el-button>
-        <router-link to="/center/transit-record?type=withdraw"><el-button class="common-btn">前往确认</el-button></router-link>
+        <router-link to="/center/transit-record?type=withdraw">
+          <el-button class="common-btn">前往确认</el-button>
+        </router-link>
       </div>
     </el-dialog>
   </div>
