@@ -1295,6 +1295,7 @@ export default {
     recordTime: 'Thời gian ghi chép',
     redeemCash: 'Đổi tiền mặt',
     redeemedBy: 'Đã đổi bởi',
+    redeemCode: 'Mã đổi thưởng',
     redeemPoints: 'Đổi điểm',
     redirect: 'Chuyển hướng',
     reenterPassword: 'Nhập lại mật khẩu',

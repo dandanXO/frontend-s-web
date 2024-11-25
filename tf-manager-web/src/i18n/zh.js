@@ -1463,6 +1463,7 @@ export default {
     recordTime: '记录时间',
     redeemCash: '奖品折现',
     redeemedBy: '领取人',
+    redeemCode: '兑换码',
     redeemPoints: '兑换分数',
     redirect: '域名转址',
     reenterPassword: '重新输入密码',

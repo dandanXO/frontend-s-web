@@ -913,6 +913,7 @@ export default {
     recordDate: 'วันที่บันทึก',
     recordTime: 'บันทึกเวลา',
     redeemedBy: 'แลกโดย',
+    redeemCode: 'รหัสแลกรางวัล',
     redirect: 'เปลี่ยนเส้นทาง',
     reenterPassword: 'ป้อนรหัสผ่านอีกครั้ง',
     referrer: 'ผู้อ้างอิง',

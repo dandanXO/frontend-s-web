@@ -1314,6 +1314,7 @@ export default {
     recordTime: '기록 시간',
     redeemCash: '현금 교환',
     redeemedBy: '교환자',
+    redeemCode: '리딤 코드',
     redeemPoints: '포인트 교환',
     redirect: '리디렉트',
     reenterPassword: '비밀번호 재입력',
