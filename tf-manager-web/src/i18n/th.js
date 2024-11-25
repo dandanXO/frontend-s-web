@@ -1419,6 +1419,7 @@ export default {
     validateDesktopImageRequired: 'จำเป็นต้องมีรูปภาพเดสก์ท็อป',
     validateDesktopBannerRequired: 'จำเป็นต้องมีแบนเนอร์เดสก์ท็อป',
     validateDeviceRequired: 'จำเป็นต้องมีอุปกรณ์',
+    validateDisplayEndTimeBeforeStartTime: 'เวลาสิ้นสุดการแสดงผลต้องไม่เร็วกว่าเวลาเริ่มต้นการแสดงผล',
     validateDomainRequired: 'จำเป็นต้องมีโดเมน',
     validateEmailRequired: 'จำเป็นต้องระบุอีเมล',
     validateEmailFormat: 'กรุณากรอกรูปแบบที่อยู่อีเมลที่ถูกต้อง',

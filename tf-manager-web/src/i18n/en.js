@@ -2400,6 +2400,7 @@ export default {
     validateDesktopImageRequired: 'Desktop Image is required',
     validateDesktopBannerRequired: 'Desktop Banner is required',
     validateDeviceRequired: 'Device is required',
+    validateDisplayEndTimeBeforeStartTime: 'Display End Time Cannot Before Display Start Time',
     validateDomainRequired: 'Domain is required',
     validateEmailRequired: 'Email is required',
     validateEmailFormat: 'Please input the correct email address format',

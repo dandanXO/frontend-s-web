@@ -928,7 +928,17 @@ const formRules = reactive({
   sequence: [required(t('message.validateSequenceRequired'))],
   status: [required(t('message.validateStatusRequired'))],
   displayStartTime: [required(t('message.validateDateRequired'))],
-  displayEndTime: [required(t('message.validateDateRequired'))],
+  displayEndTime: [required(t('message.validateDateRequired')),
+    {
+      validator: (rule, value, callback) => {
+        if (form.displayStartTime !== null && new Date(value) < new Date(form.displayStartTime)) {
+          callback(new Error(t('message.validateDisplayEndTimeBeforeStartTime')));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'change'
+    }],
 })
 
 const bulkFormRules = reactive({

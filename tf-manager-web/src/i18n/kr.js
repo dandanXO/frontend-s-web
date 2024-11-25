@@ -2115,6 +2115,7 @@ export default {
     validateDesktopImageRequired: '데스크탑 이미지가 필요합니다',
     validateDesktopBannerRequired: '데스크탑 배너가 필요합니다',
     validateDeviceRequired: '장치가 필요합니다',
+    validateDisplayEndTimeBeforeStartTime: '표시 종료 시간은 표시 시작 시간보다 이전일 수 없습니다.',
     validateDomainRequired: '도메인이 필요합니다',
     validateEmailRequired: '이메일이 필요합니다',
     validateEmailFormat: '올바른 이메일 주소 형식을 입력하세요',
