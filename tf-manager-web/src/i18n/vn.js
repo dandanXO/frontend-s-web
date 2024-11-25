@@ -2434,6 +2434,7 @@ export default {
     'Red Packet Rain': 'Mưa phong bao đỏ',
     'Red Packet Rain List': 'Danh sách mưa phong bao đỏ',
     'Member Free Game': 'Trò chơi miễn phí cho thành viên',
+    'Promo Code Redeem Config': 'Promo Code Redeem Config',
     Lottery: 'Xổ số',
     'Lottery Record List': 'Danh sách lịch sử xổ số',
     'Lottery Result List': 'Danh sách kết quả xổ số',

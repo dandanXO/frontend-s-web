@@ -395,7 +395,6 @@ export default defineComponent({
               if(!isAndroid()){
                 isPromoDetail.value = true;
                 selectedPromo.value = promo;
-                selectedPromoDate.value = '';
               }
           }
         }

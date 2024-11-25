@@ -82,7 +82,7 @@
           :clearable="false"
         />
 
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -95,7 +95,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
 
         <el-input
           v-model="request.updateBy"
@@ -461,7 +461,7 @@ function resetQuery() {
   request.name = null
   request.feedbackTime = [null, null]
   request.commitTime = [null, null]
-  request.siteId = site.value.id ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.orderNo = null
   request.type = typeList.list[0].value
   request.status = statusList.list[0].value
@@ -522,7 +522,7 @@ async function loadSites() {
 onMounted(async () => {
   await loadSites()
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

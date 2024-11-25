@@ -18,7 +18,7 @@
     <div class="withdraw-remaining-dialog__body">
       <div class="withdraw-remaining-dialog__body-title">
         {{ $t("withdraw.dialog.complete") }}
-        <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
+        <span class="text-yellow">{{ convertToCommaAmount(totalRemaining, true) }}</span>
         {{ $t("withdraw.dialog.enjoy") }}
       </div>
       <span class="withdraw-remaining-dialog__header-help-text">
@@ -40,7 +40,9 @@
         <tbody>
           <tr v-for="(record, index) in tableData" :key="index">
             <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
-            <td align="center">{{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}</td>
+            <td align="center">
+              {{ convertToCommaAmount(record.progress, true) }}/{{ convertToCommaAmount(record.total, true) }}
+            </td>
             <td align="center">
               <router-link class="action-button" to="/home">{{ $t("withdraw.dialog.goComplete") }}</router-link>
             </td>

@@ -1675,6 +1675,7 @@ export default {
     'Edit Ads Popout': 'แก้ไขป๊อปเอาท์โฆษณา',
     'Red Packet Rain List': 'Red Packet Rain List',
     'Member Free Game': 'Member Free Game',
+    'Promo Code Redeem Config': 'Promo Code Redeem Config',
     Lottery: 'หวย',
     'Lottery Record List': 'บันทึกรายการหวย',
     'Lottery Result List': 'บันทึกการผลรางวัลหวย',
