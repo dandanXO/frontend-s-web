@@ -3,7 +3,7 @@
     <div class="header-container">
       <div class="search">
         <div>
-          <el-select v-model="request.siteId" :placeholder="t('fields.site')">
+          <!-- <el-select v-model="request.siteId" :placeholder="t('fields.site')">
             <el-option
               v-for="item in siteList.list"
               :key="item.id"
@@ -11,7 +11,7 @@
               :value="item.id"
               @change="handleChangeSites"
             />
-          </el-select>
+          </el-select> -->
           <!-- <el-select
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
@@ -360,7 +360,7 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
@@ -397,26 +397,26 @@ async function loadSites() {
   }
 }
 
-function handleChangeSites() {
-  if (
-    route.query.loginNameList !== null &&
-    route.query.loginNameList !== undefined
-  ) {
-    if (previouseLoginNameList.value !== null) {
-      if (route.query.loginNameList !== previouseLoginNameList.value) {
-        resetQuery()
-        loadRecord()
-      }
-    } else {
-      previouseLoginNameList = route.query.loginNameList
-      loadRecord()
-    }
-  } else if (
-    route.query.superiorLoginName !== null &&
-    route.query.superiorLoginName !== undefined
-  ) {
-  }
-}
+// function handleChangeSites() {
+//   if (
+//     route.query.loginNameList !== null &&
+//     route.query.loginNameList !== undefined
+//   ) {
+//     if (previouseLoginNameList.value !== null) {
+//       if (route.query.loginNameList !== previouseLoginNameList.value) {
+//         resetQuery()
+//         loadRecord()
+//       }
+//     } else {
+//       previouseLoginNameList = route.query.loginNameList
+//       loadRecord()
+//     }
+//   } else if (
+//     route.query.superiorLoginName !== null &&
+//     route.query.superiorLoginName !== undefined
+//   ) {
+//   }
+// }
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
