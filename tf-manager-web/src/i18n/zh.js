@@ -2367,6 +2367,7 @@ export default {
     validateDesktopImageRequired: '桌面图像必填',
     validateDesktopBannerRequired: '桌面广告图必填',
     validateDeviceRequired: '设备必填',
+    validateDisplayEndTimeBeforeStartTime: '显示结束时间不可早于显示开始时间',
     validateDomainRequired: '域名必填',
     validateEmailRequired: '邮箱必填',
     validateEmailFormat: '请输入正确的邮箱格式',
@@ -3095,6 +3096,7 @@ export default {
     BONUS_FLUCTUATION: '优惠波动',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ主题闲置',
     DOMAIN_VALID: '域名有效期',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置(注单捞取)',
   },
   domain: {
     domainMainType: {
@@ -3305,6 +3307,7 @@ export default {
     40003: '会员已被唤醒',
     45300: '玩家于此记录时间的虚拟数据已存在',
     45301: '玩家于此记录时间的虚拟数据不存在',
-    45302: '玩家不属于任何代理'
+    45302: '玩家不属于任何代理',
+    50002: '已超过平账最大金额'
   },
 }

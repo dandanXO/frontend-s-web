@@ -75,7 +75,7 @@
             :value="item.id"
           />
         </el-select>
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -88,7 +88,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -395,7 +395,7 @@ function resetQuery() {
   request.selectedDateType = uiControl.selectedDateType[0].value
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.regTime = []
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.loginName = null
   request.affiliateName = null
   request.isDeposit = 1
@@ -667,7 +667,7 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

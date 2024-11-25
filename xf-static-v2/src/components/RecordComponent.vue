@@ -284,9 +284,8 @@ export default defineComponent({
     const onLoad = (index, done) => {
       comList.value = props.list;
       // console.log("onLoad");
-      // console.log(comList.value);
       setTimeout(() => {
-        if (!props.isEnded) {
+        if (!props.isEnded || comList.value.length > 0) {
           if (comList.value.length) {
             var slicedArray = comList.value.splice(0, 3);
             slicedArray.forEach((element) => {

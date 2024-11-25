@@ -2401,6 +2401,7 @@ export default {
     validateDesktopImageRequired: 'Desktop Image is required',
     validateDesktopBannerRequired: 'Desktop Banner is required',
     validateDeviceRequired: 'Device is required',
+    validateDisplayEndTimeBeforeStartTime: 'Display End Time Cannot Before Display Start Time',
     validateDomainRequired: 'Domain is required',
     validateEmailRequired: 'Email is required',
     validateEmailFormat: 'Please input the correct email address format',
@@ -3148,6 +3149,7 @@ export default {
     BONUS_FLUCTUATION: 'Bonus fluctuation',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
     DOMAIN_VALID: 'Domain Validity',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
   },
   domain: {
     domainMainType: {
@@ -3357,6 +3359,7 @@ export default {
     31001: 'No matches on the selected date',
     45300: 'Member already has dummy record on the selected date',
     45301: 'Member dummy record on the selected date does not exists',
-    45302: 'Member does not belong to any affiliate'
+    45302: 'Member does not belong to any affiliate',
+    50002: 'The maximum amount for adjustment has been exceeded'
   },
 }

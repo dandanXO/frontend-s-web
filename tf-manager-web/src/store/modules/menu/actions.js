@@ -57,7 +57,7 @@ export const actions = {
   async [MenuActionType.ACTION_SET_ROUTES](
     { commit }) {
     let { data: menus } = await loadAuthMenu();
-    console.log(menus, 'dan')
+    // console.log(menus, 'dan')
     menus = menu2Router(menus);
     commit(MenuMutationType.SET_ROUTES, menus);
   }
