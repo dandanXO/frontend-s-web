@@ -1849,7 +1849,7 @@ export default {
     WITHDRAW_FLUCTUATION: 'การเปลี่ยนแปลงการถอนเงิน',
     BONUS_FLUCTUATION: 'การเปลี่ยนแปลงโบนัส',
     MQ_LAST_CONSUME_TIME_CHECK: 'หัวข้อ MQ ไม่ถูกใช้งาน',
-    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'งานที่กำหนดเวลาว่าง',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'งานว่าง(ดึงข้อมูลการเดิมพัน)',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',

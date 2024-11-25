@@ -3147,7 +3147,7 @@ export default {
     BONUS_FLUCTUATION: 'Bonus fluctuation',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
     DOMAIN_VALID: 'Domain Validity',
-    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Scheduled task idling',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
   },
   domain: {
     domainMainType: {
