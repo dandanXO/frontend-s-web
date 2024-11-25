@@ -35,6 +35,59 @@
           </div>
         </div>
 
+        <div class="pc-form-item" v-if="formDetail.realName">
+          <div class="pc-form-label">{{ $t("form.fullName") }}</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.realName"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            >
+              <!-- <template v-slot:append>
+                <q-btn :label="$t('form.edit')" dense no-caps @click="editNameDialog = true" />
+              </template> -->
+            </q-input>
+          </div>
+        </div>
+
+        <div class="pc-form-item" v-if="formDetail.email">
+          <div class="pc-form-label">{{ $t("form.email") }}</div>
+          <div class="pc-form-input">
+            <q-input v-model="formDetail.email" filled dense clearable borderless standout hide-bottom-space readonly>
+              <!-- <template v-slot:append>
+                <q-btn :label="$t('form.edit')" dense no-caps @click="editEmailDialog = true" />
+              </template> -->
+            </q-input>
+          </div>
+        </div>
+
+        <div class="pc-form-item" v-if="formDetail.docType">
+          <div class="pc-form-label">{{ $t("form.docType") }}</div>
+          <div class="pc-form-input">
+            <q-input v-model="formDetail.docType" filled dense clearable borderless standout hide-bottom-space readonly>
+              <template v-slot:append>
+                <q-btn :label="$t('form.edit')" dense no-caps @click="editTaxDetailsDialog = true" />
+              </template>
+            </q-input>
+          </div>
+        </div>
+
+        <div class="pc-form-item" v-if="formDetail.taxId">
+          <div class="pc-form-label">{{ $t("form.taxId") }}</div>
+          <div class="pc-form-input">
+            <q-input v-model="formDetail.taxId" filled dense clearable borderless standout hide-bottom-space readonly>
+              <template v-slot:append>
+                <q-btn :label="$t('form.edit')" dense no-caps @click="editTaxDetailsDialog = true" />
+              </template>
+            </q-input>
+          </div>
+        </div>
+
         <div class="pc-tip">
           <div>
             <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">{{ $t("form.changePassword") }}</a>
@@ -83,7 +136,9 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
-      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">{{ $t('form.otp') }}</q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">
+        {{ $t("form.otp") }}
+      </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="captchaRef" label="OTP">
@@ -116,7 +171,7 @@
 
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.fullName') }}</div>
+            <div class="pc-form-label">{{ $t("form.fullName") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -130,7 +185,7 @@
           </div>
 
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.phone') }}</div>
+            <div class="pc-form-label">{{ $t("form.phone") }}</div>
             <div class="pc-form-input">
               <q-input
                 type="number"
@@ -219,11 +274,11 @@
         v-close-popup
       />
       <div class="popout-dialog-container">
-        <div class="txt-title">{{ $t('header.changePassword') }}</div>
+        <div class="txt-title">{{ $t("header.changePassword") }}</div>
 
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.password') }}</div>
+            <div class="pc-form-label">{{ $t("form.password") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -248,7 +303,7 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.newPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.newPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -261,8 +316,7 @@
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
                   (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
-                  (val) =>
-                    (val.length >= 6 && val.length <= 11) || $t('form.newPassword_rules_02'),
+                  (val) => (val.length >= 6 && val.length <= 11) || $t('form.newPassword_rules_02'),
                   () => isAlphanumeric(updatePwdInfo.password, $t('form.newPassword'))
                 ]"
               >
@@ -278,7 +332,7 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.confirmNewPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.confirmNewPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -308,7 +362,9 @@
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">{{ $t('btn.confirm') }}</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
       </div>
     </div>
@@ -318,10 +374,10 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">{{ $t('form.changeNewpassword') }}</div>
+        <div class="txt-title">{{ $t("form.changeNewpassword") }}</div>
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.loginName') }}</div>
+            <div class="pc-form-label">{{ $t("form.loginName") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -344,7 +400,7 @@
           </div>
 
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.newPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.newPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -374,7 +430,7 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.confirmNewPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.confirmNewPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -448,7 +504,9 @@
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">{{ $t('btn.confirm') }}</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
       </div>
     </div>
@@ -458,13 +516,152 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">{{ $t('btn.signOut') }}</div>
+        <div class="txt-title">{{ $t("btn.signOut") }}</div>
 
-        <div class="txt-content q-mt-md text-center">{{ $t('notify.signOutMessage') }}</div>
+        <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
           <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="editTaxDetailsDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" v-close-popup class="popout-close" @click="loadInfo()" />
+      <div class="popout-dialog-container popout-dark">
+        <div class="txt-title">{{ $t("form.details") }}</div>
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-input">
+              <q-select
+                v-model="formDetail.docType"
+                :options="selectDocType"
+                option-value="valType"
+                option-label="name"
+                emit-value
+                map-options
+                filled
+                label="ID Type"
+                color="white"
+              >
+                <template v-slot:prepend>
+                  <img src="../assets/images/account/kyc-icon-person.png" />
+                </template>
+              </q-select>
+            </div>
+          </div>
+          <div class="pc-form-item">
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                :placeholder="`ID Number`"
+                v-model="formDetail.taxId"
+                :rules="[(_) => isValidTaxId()]"
+                hide-bottom-space
+              >
+                <template v-slot:prepend>
+                  <img src="../assets/images/account/kyc-icon-id.png" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+
+          <q-btn
+            :loading="btnLoading"
+            rounded
+            flat
+            no-caps
+            class="btn-submit"
+            :disable="!(isValidTaxId() === true)"
+            @click="updateNewTax"
+          >
+            {{ $t("btn.submit") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="editNameDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" v-close-popup class="popout-close" @click="loadInfo()" />
+      <div class="popout-dialog-container popout-dark">
+        <div class="txt-title">{{ $t("form.details") }}</div>
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                :placeholder="`Full Name`"
+                v-model="formDetail.realName"
+                :rules="[(_) => isValidName()]"
+                hide-bottom-space
+              >
+                <template v-slot:prepend>
+                  <img src="../assets/images/account/kyc-icon-person.png" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+
+          <q-btn
+            :loading="btnLoading"
+            rounded
+            flat
+            no-caps
+            class="btn-submit"
+            :disable="!(isValidName() === true)"
+            @click="updateNewName"
+          >
+            {{ $t("btn.submit") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="editEmailDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" v-close-popup class="popout-close" @click="loadInfo()" />
+      <div class="popout-dialog-container popout-dark">
+        <div class="txt-title">{{ $t("form.details") }}</div>
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-input">
+              <q-input
+                filled
+                dense
+                clearable
+                :placeholder="`Email`"
+                v-model="formDetail.email"
+                :rules="[(_) => isValidEmail()]"
+                hide-bottom-space
+              >
+                <template v-slot:prepend>
+                  <img src="../assets/images/account/kyc-icon-email.png" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+
+          <q-btn
+            :loading="btnLoading"
+            rounded
+            flat
+            no-caps
+            class="btn-submit"
+            :disable="!(isValidEmail() === true)"
+            @click="updateNewEmail"
+          >
+            {{ $t("btn.submit") }}
+          </q-btn>
         </div>
       </div>
     </div>
@@ -496,6 +693,10 @@ const logout = () => {
     router.push("/home");
   });
 };
+
+const editTaxDetailsDialog = ref(false);
+const editNameDialog = ref(false);
+const editEmailDialog = ref(false);
 
 const btnLoading = ref(false);
 
@@ -613,9 +814,17 @@ const loadInfo = () => {
   formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
   formDetail.emailVerified = personalState.memberInfo.emailVerified;
 
+  formDetail.docType = docTypeDescriptions[personalState.memberInfo.docType];
+  formDetail.taxId = personalState.memberInfo.taxId;
+
   isEditEmail.value = formDetail.emailVerified === false ? true : false;
   isEditBirthday.value = formDetail.birthday == "" ? true : false;
   isEditPhone.value = formDetail.phoneVerified === false ? true : false;
+};
+
+const docTypeDescriptions = {
+  CC: "Identity Document",
+  NIT: "Tax ID Number in Colombia"
 };
 
 const canEdit = computed(() => {
@@ -656,6 +865,17 @@ onMounted(() => {
   getVersionNo();
 
   window.location.search.includes("personal") && openPersonalCenterDialog();
+
+  selectDocType.value = [
+    {
+      valType: "CC",
+      name: "Identity Document"
+    },
+    {
+      valType: "NIT",
+      name: "Tax ID Number in Colombia"
+    }
+  ];
 });
 
 const verificationImg = ref("");
@@ -966,9 +1186,12 @@ const updatePwdInfo = reactive({
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-  return passwordPattern.test(value) || t('form.mustBeAlphaNumeric', {
-    field: translation
-  });
+  return (
+    passwordPattern.test(value) ||
+    t("form.mustBeAlphaNumeric", {
+      field: translation
+    })
+  );
 };
 
 const submitUpdatePwd = () => {
@@ -1060,6 +1283,129 @@ const resetChangePasswordInfo = () => {
 const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
+
+const isValidTaxId = () => {
+  const { docType, taxId } = formDetail;
+  const patterns = {
+    CC: /^\d{6,10}$/, // CC requires 6-10 digits
+    NIT: /^\d{9}$/ // NIT requires exactly 9 digits
+  };
+  const pattern = patterns[docType];
+
+  const result = !taxId
+    ? t("form.taxId_rules_01") // Replace with appropriate translation key
+    : !pattern
+    ? t("form.taxId_rules_02") // Handle unsupported docType
+    : !pattern.test(taxId)
+    ? t("form.taxId_rules_03") // Replace with appropriate translation key
+    : true;
+
+  return result;
+};
+
+const selectDocType = ref([]);
+
+const updateNewTax = () => {
+  btnLoading.value = true;
+  const updateInfo = {};
+  updateInfo.docType = formDetail.docType;
+  updateInfo.taxId = formDetail.taxId;
+
+  api
+    .post("/session/account", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.updatedSuccessfully"),
+          icon: "check_circle_outline"
+        });
+        emits("closeUserKYCDialog");
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+      editTaxDetailsDialog.value = false;
+      loadInfo();
+    });
+};
+
+// updateNewName
+const updateNewName = () => {
+  btnLoading.value = true;
+  const updateInfo = {};
+  updateInfo.realName = formDetail.realName;
+
+  api
+    .post("/session/account", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.updatedSuccessfully"),
+          icon: "check_circle_outline"
+        });
+        emits("closeUserKYCDialog");
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+      editNameDialog.value = false;
+      loadInfo();
+    });
+};
+
+// updateNewName
+const updateNewEmail = () => {
+  btnLoading.value = true;
+  const updateInfo = {};
+  updateInfo.email = formDetail.email;
+
+  api
+    .post("/session/account", qs.stringify(updateInfo))
+    .then((r) => {
+      if (r.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.updatedSuccessfully"),
+          icon: "check_circle_outline"
+        });
+        emits("closeUserKYCDialog");
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      btnLoading.value = false;
+      editEmailDialog.value = false;
+      loadInfo();
+    });
 };
 </script>
 
@@ -1238,5 +1584,30 @@ const openConfirmSignOutDialog = () => {
   height: 42px;
   color: #5c46e7;
   border-radius: 8px;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 600;
+  height: 46px;
+  transition: 0.3s all;
+  color: #ffffff;
+  margin: auto;
+  border-radius: 6px;
+  background: #5c46e7;
+  width: 100%;
+  aspect-ratio: 335/46;
+
+  &:before {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+  }
 }
 </style>
