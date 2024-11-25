@@ -2900,5 +2900,6 @@ export default {
     30000: 'Cập nhật trạng thái giao dịch PG không thành công',
     24003: 'Kết quả đã được xử lý trước đó',
     27000: 'Không đủ lượng chìa khóa',
+    50002: 'Số tiền điều chỉnh tối đa đã vượt quá'
   },
 }
