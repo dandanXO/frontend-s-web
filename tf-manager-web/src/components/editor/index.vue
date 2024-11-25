@@ -11,7 +11,7 @@ import E from 'wangeditor'
 import WangEditor from 'wangeditor';
 import i18next from 'i18next';
 import { useI18n } from "vue-i18n";
-
+import beautify from 'js-beautify';
 
 export default defineComponent({
   name: 'Editor',
@@ -56,10 +56,16 @@ export default defineComponent({
         if (!isHtmlView) {
           // 切换到 HTML View
           const htmlContent = instance.txt.html();
+
+          const formattedHtml = beautify.html(htmlContent, {
+            indent_size: 2, // 缩进宽度
+            wrap_line_length: 80, // 每行的最大字符数
+          });
+
           const textarea = document.createElement('textarea');
           textarea.style.width = '100%';
           textarea.style.height = `${container.offsetHeight}px`;
-          textarea.value = htmlContent;
+          textarea.value = formattedHtml;
           textarea.setAttribute('data-html-textarea', 'true');
 
           container.setAttribute('data-html-view', 'true');
