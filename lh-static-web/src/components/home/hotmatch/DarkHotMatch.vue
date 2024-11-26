@@ -53,7 +53,7 @@ import { getHotMatches } from "@/api/index/hotmatch.js";
 import { useLocalStorage } from "@vueuse/core";
 
 const hotMatches = ref([]);
-const competitionTypes = ref([]);
+const competitionTypes = ref(['ESport', 'Football', 'Basketball']);
 const selectedCompetitionType = ref();
 const imgUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
 const isFetchingHotMatches = ref(false);
@@ -93,7 +93,7 @@ onMounted(() => {
 
     if (res.code === 0) {
       const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
-      competitionTypes.value = uniqueCompetitionTypes;
+      // competitionTypes.value = uniqueCompetitionTypes;
 
       if (uniqueCompetitionTypes.length > 0) {
         selectedCompetitionType.value = uniqueCompetitionTypes[0];
@@ -293,5 +293,9 @@ onMounted(() => {
       }
     }
   }
+}
+
+:deep(.el-carousel__indicators) {
+  bottom: -8px;
 }
 </style>

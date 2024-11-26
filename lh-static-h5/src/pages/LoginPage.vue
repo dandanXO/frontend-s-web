@@ -886,7 +886,7 @@ export default defineComponent({
         align-items: flex-start;
         text-align: center;
         background-color: transparent;
-        margin-top: -55px;
+        margin-top: -60px;
         padding-bottom: 30px;
 
         .tab-wrapper {

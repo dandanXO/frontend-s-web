@@ -141,7 +141,7 @@
   
   <style scoped lang="scss">
   .notice-header {
-    color: #468cff;
+    color: #a98f7c;
     font-family: "Inter Bold";
     font-size: 22px;
     font-weight: 600;

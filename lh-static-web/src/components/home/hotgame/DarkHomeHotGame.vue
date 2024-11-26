@@ -983,6 +983,10 @@ $transition_timer: 0.5s;
         margin-top: 11%;
         margin-left: 15%;
       }
+      
+      :deep(.el-tabs__nav) {
+        gap: 8px;
+      }
 
       :deep(.el-tabs__nav-wrap:after) {
         background-color: #d2d2d25c;
@@ -990,6 +994,7 @@ $transition_timer: 0.5s;
 
       :deep(.el-tabs__item) {
         font-family: PingFang SC;
+        font-size: 18px;
       }
 
       :deep(.el-tabs__item.is-active),

@@ -183,14 +183,15 @@
 
       .top-container {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         padding: 0 6rem;
         margin: 0;
+        gap: 40px;
 
         .counter {
           .circle {
-            width: 15rem;
-            height: 15rem;
+            width: 13rem;
+            height: 13rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -201,7 +202,6 @@
             margin: 0 0 .5rem 0;
 
             .inner-circle {
-              margin-top: 10px;
               width: 19rem;
               height: 17rem;
               display: flex;
@@ -252,7 +252,7 @@
           .title {
             color: #fff;
             font-family: 'PingFang SC';
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 400;
             line-height: 30.8px;
             letter-spacing: 0.04em;
@@ -263,7 +263,7 @@
           .title-en {
             color: #fff;
             font-family: 'PingFang SC';
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 400;
             line-height: 22.4px;
             text-align: center;
@@ -287,7 +287,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem 4rem;
+            padding: 0px 10px;
             gap: 5px;
 
             .left-container {
@@ -298,7 +298,7 @@
                 position: relative;
 
                 .circle {
-                  width: 7rem;
+                  width: 100px;
                   visibility: hidden;
                 }
 
@@ -311,7 +311,7 @@
             .right-container {
               .title {
                 color: #fff;
-                margin-bottom: 15px;
+                margin-bottom: 10px;
                 font-family: "PingFang SC";
                 font-size: 20px;
                 font-weight: 500;
@@ -324,7 +324,7 @@
                 font-family: PingFang SC;
                 font-size: 14px;
                 font-weight: 400;
-                line-height: 28px;
+                line-height: 20px;
                 letter-spacing: 0.03em;
                 text-align: left;
 
@@ -375,8 +375,9 @@
             // @include content-block-dark;
             background: url("../../../assets/home/service/bg.png") no-repeat center center;
             background-size: 100% 100%;
-            width: 285px;
-            height: 465px;
+            width: 250px;
+            height: 365px;
+            padding: 40px;
           }
         }
       }

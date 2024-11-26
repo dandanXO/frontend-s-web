@@ -29,7 +29,7 @@
                 <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
                 <span>{{ hotMatch.teamOneName }}</span>
             </div>
-            <div class="hot-match-time">{{ hotMatch.competitionTime }}</div>
+            <div class="hot-match-time">{{ hotMatch.competitionTime }}<div class="bet-btn" @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)">立即投注</div></div>
             <div class="hot-match-team">
                 <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
                 <span>{{ hotMatch.teamTwoName }}</span>
@@ -38,11 +38,14 @@
         </div>
         </div>
     </div>
+
+    <GameModal ref="gameRef" />
 </template>
 
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { api } from "boot/axios";
+import GameModal from "../components/modal/GameModal.vue";
 
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
@@ -56,6 +59,12 @@ const hotMatchesByType = computed(() => {
 
   return [];
 });
+
+const gameRef = ref();
+
+const openGame = (gameName, code, gameCode) => {
+  gameRef.value.open(gameName, code, gameCode);
+};
 
 onMounted(() => {
     api.get("/platform-competition").then((res) => {
@@ -144,6 +153,7 @@ onMounted(() => {
         align-items: center;
         justify-content: flex-start;
         gap: 10px;
+        position: relative;
 
         .hot-match-name,
         .hot-match-time {
@@ -162,6 +172,21 @@ onMounted(() => {
 
           .hot-match-time {
             width: 85px;
+
+            .bet-btn {
+              position: absolute;
+              left: 50%;
+              bottom: 0%;
+              transform: translate(-50%, -50%);
+              padding: 3px 8px;
+              background: linear-gradient(to bottom, #5d7dbf 0%, #242d6f 100%);
+              border-radius: 5px;
+              cursor: pointer;
+
+              &:hover {
+                filter: brightness(1.1);
+              }
+            }
           }
 
           .hot-match-team {
@@ -181,6 +206,10 @@ onMounted(() => {
 
           .hot-match-img {
             width: 70px;
+            background-color: #27385b;
+            border-radius: 100px;
+            padding: 5px;
+            aspect-ratio: 1 / 1;
           }
         }
       }
