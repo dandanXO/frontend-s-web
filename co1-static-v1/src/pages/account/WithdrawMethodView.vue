@@ -4,7 +4,7 @@
       <div class="balance">
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
-          <template v-else>{{ convertToCommaAmount(store.balance, 2) }}</template>
+          <template v-else>{{ convertToCommaAmount(store.balance) }}</template>
         </span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
@@ -15,7 +15,7 @@
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
           <template v-else>
-            {{ convertToCommaAmount(withdrawableBalance, 2) }}
+            {{ convertToCommaAmount(withdrawableBalance) }}
           </template>
         </span>
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
@@ -233,7 +233,7 @@
 
           <div class="mid-wrapper">
             <q-input
-              type="number"
+              type="tel"
               ref="amountRef"
               filled
               dense
@@ -253,6 +253,7 @@
               hide-bottom-space
               @focus="scrollToInput"
               @blur="isInputFocus = false"
+              @update:model-value="removeDecimals"
             >
               <template v-slot:append>
                 <q-btn-group>
@@ -931,6 +932,10 @@ const scrollToInput = () => {
       }
     });
   }
+};
+
+const removeDecimals = (value) => {
+  withdrawInfo.amount = value.replace(/[^0-9]/g, "");
 };
 
 // KYC Dialog
