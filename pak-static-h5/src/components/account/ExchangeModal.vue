@@ -63,7 +63,7 @@
 
       <div class="redeem-success-content">
         <img class="redeem-success-img" src="../../assets/images/exchange/redeem_success.png" />
-        <div class="redeem-amt">{{ convertToCommaAmount(redeemedAmt, true) }}</div>
+        <div class="redeem-amt">{{ convertToCommaAmount(redeemedAmt, true) }}Rs</div>
       </div>
     </div>
   </q-dialog>
@@ -81,6 +81,10 @@ const { modelValue } = toRefs(props);
 
 const showRedeemedDialog = ref(false);
 const redeemedAmt = ref(0);
+
+//FOR TESTING.
+// showRedeemedDialog.value = true;
+// redeemedAmt.value = 188;
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -178,13 +182,14 @@ const closeRedeemSuccessDialog = () => {
   }
   .redeem-success-content {
     position: relative;
+
     .redeem-success-img {
       width: 320px;
     }
     .redeem-amt {
-      font-size: 32px;
+      font-size: 28px;
       position: absolute;
-      bottom: 126px;
+      bottom: 115px;
       left: 58px;
     }
   }
