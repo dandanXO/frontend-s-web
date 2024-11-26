@@ -1,6 +1,11 @@
 <template>
   <q-page class="transfer-container">
-    <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="transfer" redirect="account/transfer" style="padding: 15px 15px 5px 15px;"/>
+    <DepositWithdrawTransferTabs
+      v-if="$q.dark.isActive"
+      activeTab="transfer"
+      redirect="account/transfer"
+      style="padding: 15px 15px 5px 15px"
+    />
     <div class="account-tabs-div" v-else>
       <div class="account-item is-active">
         <span>转账</span>
@@ -220,11 +225,10 @@ import { useQuasar } from "quasar";
 import { translateRecord } from "src/directives/translate";
 import MarqueeText from "vue-marquee-text-component";
 import { useNotify } from "src/hooks/notify";
-import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
+import DepositWithdrawTransferTabs from "components/finance/DepositWithdrawTransferTabs.vue";
 
 components: {
-  AcctBal,
-  DepositWithdrawTransferTabs
+  AcctBal, DepositWithdrawTransferTabs;
 }
 const notify = useNotify();
 const store = userStore();
@@ -284,7 +288,7 @@ const updateTransferDropdown = () => {
 
     console.log(transferFromOpt.value);
 
-    if (!transferTo.value || transferTo.value === "main") {
+    if (platforms.length > 0 && (!transferTo.value || transferTo.value === "main")) {
       transferTo.value = platforms[0].id;
     }
   }
@@ -649,7 +653,7 @@ onMounted(() => {
   }
 
   .transfer-tab-section {
-    background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
+    background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
     margin-left: auto;
     margin-right: auto;
   }
@@ -688,7 +692,8 @@ onMounted(() => {
     }
   }
 
-  .q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
+  .q-field--filled.q-field--dark .q-field__control,
+  .q-field--filled.q-field--dark .q-field__control:before {
     background: none;
   }
 }
