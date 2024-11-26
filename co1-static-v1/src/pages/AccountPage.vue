@@ -71,7 +71,7 @@
           <div class="pc-form-input">
             <q-input v-model="formDetail.docType" filled dense clearable borderless standout hide-bottom-space readonly>
               <template v-slot:append>
-                <q-btn :label="$t('form.edit')" dense no-caps @click="editTaxDetailsDialog = true" />
+                <q-btn :label="$t('form.edit')" dense no-caps @click="openEditTaxDetailsDialog" />
               </template>
             </q-input>
           </div>
@@ -80,9 +80,18 @@
         <div class="pc-form-item" v-if="formDetail.idNumber">
           <div class="pc-form-label">{{ $t("form.idNumber") }}</div>
           <div class="pc-form-input">
-            <q-input v-model="formDetail.idNumber" filled dense clearable borderless standout hide-bottom-space readonly>
+            <q-input
+              v-model="formDetail.idNumber"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            >
               <template v-slot:append>
-                <q-btn :label="$t('form.edit')" dense no-caps @click="editTaxDetailsDialog = true" />
+                <q-btn :label="$t('form.edit')" dense no-caps @click="openEditTaxDetailsDialog" />
               </template>
             </q-input>
           </div>
@@ -692,6 +701,12 @@ const logout = () => {
     loadingLogout.value = false;
     router.push("/home");
   });
+};
+
+const openEditTaxDetailsDialog = () => {
+  editTaxDetailsDialog.value = true;
+  formDetail.docType = "";
+  formDetail.idNumber = "";
 };
 
 const editTaxDetailsDialog = ref(false);
