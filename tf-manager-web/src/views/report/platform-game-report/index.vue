@@ -561,7 +561,7 @@ function getSummaries(param) {
         } else {
           sums[index] = 0
         }
-        if (index === 5 || index === 6 || index === 7) {
+        if (index === 5 || index === 6 || index === 7 || index === 8) {
           sums[index] =
             '$ ' +
             sums[index].toLocaleString('en-US', {
