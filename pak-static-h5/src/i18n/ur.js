@@ -164,7 +164,9 @@ export default {
     exchangeTitle: "ریڈیمپشن کوڈ درج کریں",
     redemptionCode: "ریڈیمپشن کوڈ درج کریں",
     redemptionCode_placeholder: "براہ کرم ریڈیمپشن کوڈ درج کریں",
-    redemptionCode_rule_01: "براہ کرم فون نمبر درج کریں"
+    redemptionCode_rule_01: "براہ کرم فون نمبر درج کریں",
+    redemptionInvalidCode:
+      "یہ کوڈ غلط ہے۔ براہ کرم درست پرومو کوڈ حاصل کرنے کے لیے ہمارے آفیشل واٹس ایپ چینل سے رابطہ کریں۔"
   },
   btn: {
     login: "لاگ ان",
