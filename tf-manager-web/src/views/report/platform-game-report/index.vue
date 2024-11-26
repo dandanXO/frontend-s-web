@@ -173,6 +173,20 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="totalBet"
+        :label="t('reportGame.gameValidBetAmountTotal')"
+      >
+        <template #default="scope">
+          $
+          <span
+            v-formatter="{
+              data: scope.row.totalValidBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="totalPayout"
         :label="t('reportGame.gamePayoutAmountTotal')"
       >
