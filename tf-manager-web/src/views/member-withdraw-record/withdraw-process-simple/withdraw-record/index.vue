@@ -90,7 +90,7 @@
             v-for="item in paymentCardList.list"
             :key="item.id"
             :label="item.identifyCode"
-            :value="item.id"
+            :value="item.identifyCode"
           />
         </el-select>
         <el-button

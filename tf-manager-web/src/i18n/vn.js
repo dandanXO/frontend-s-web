@@ -1295,6 +1295,7 @@ export default {
     recordTime: 'Thời gian ghi chép',
     redeemCash: 'Đổi tiền mặt',
     redeemedBy: 'Đã đổi bởi',
+    redeemCode: 'Mã đổi thưởng',
     redeemPoints: 'Đổi điểm',
     redirect: 'Chuyển hướng',
     reenterPassword: 'Nhập lại mật khẩu',
@@ -2075,6 +2076,7 @@ export default {
     validateDesktopImageRequired: 'Yêu cầu hình ảnh máy tính để bàn',
     validateDesktopBannerRequired: 'Yêu cầu banner máy tính để bàn',
     validateDeviceRequired: 'Yêu cầu thiết bị',
+    validateDisplayEndTimeBeforeStartTime: 'Thời gian kết thúc hiển thị không được sớm hơn thời gian bắt đầu hiển thị',
     validateDomainRequired: 'Yêu cầu miền',
     validateEmailRequired: 'Yêu cầu email',
     validateEmailFormat: 'Nhập định dạng email hợp lệ',
@@ -2434,6 +2436,7 @@ export default {
     'Red Packet Rain': 'Mưa phong bao đỏ',
     'Red Packet Rain List': 'Danh sách mưa phong bao đỏ',
     'Member Free Game': 'Trò chơi miễn phí cho thành viên',
+    'Promo Code Redeem Config': 'Promo Code Redeem Config',
     Lottery: 'Xổ số',
     'Lottery Record List': 'Danh sách lịch sử xổ số',
     'Lottery Result List': 'Danh sách kết quả xổ số',
@@ -2712,6 +2715,7 @@ export default {
     WITHDRAW_FLUCTUATION: 'Biến động rút tiền',
     BONUS_FLUCTUATION: 'Biến động tiền thưởng',
     MQ_LAST_CONSUME_TIME_CHECK: 'Chủ đề MQ không hoạt động',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Nhiệm vụ nhàn rỗi(Truy xuất dữ liệu cược)',
   },
   error: {
     400: 'Yêu cầu không hợp lệ',
@@ -2897,5 +2901,6 @@ export default {
     30000: 'Cập nhật trạng thái giao dịch PG không thành công',
     24003: 'Kết quả đã được xử lý trước đó',
     27000: 'Không đủ lượng chìa khóa',
+    50002: 'Số tiền điều chỉnh tối đa đã vượt quá'
   },
 }

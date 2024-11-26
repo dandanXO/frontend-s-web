@@ -232,7 +232,12 @@
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilegeEnable"
+        v-if="
+          isPrivilege &&
+          selectedChannel &&
+          paytypeWithPrivilege.includes(selectedChannel.payType) &&
+          !isFtdPrivilegeEnable
+        "
       >
         <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
@@ -259,7 +264,7 @@
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close-dark" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
@@ -416,13 +421,7 @@ function initPay() {
       paymentMethodsItems.value = res.data.payments;
       goSelectedMethod(res.data.payments[0]);
     }
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit"
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -602,11 +601,7 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit"
-          ) {
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (!newWin) {
@@ -746,7 +741,7 @@ const loadInfo = () => {
     openGuestKYCDialog();
   }
 
-  if (!store.guest && personalState.memberInfo.realName === null) {
+  if (!store.guest && !personalState.memberInfo.realName) {
     openUserKYCDialog();
   }
 };

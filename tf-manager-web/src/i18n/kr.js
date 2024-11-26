@@ -1314,6 +1314,7 @@ export default {
     recordTime: '기록 시간',
     redeemCash: '현금 교환',
     redeemedBy: '교환자',
+    redeemCode: '리딤 코드',
     redeemPoints: '포인트 교환',
     redirect: '리디렉트',
     reenterPassword: '비밀번호 재입력',
@@ -2115,6 +2116,7 @@ export default {
     validateDesktopImageRequired: '데스크탑 이미지가 필요합니다',
     validateDesktopBannerRequired: '데스크탑 배너가 필요합니다',
     validateDeviceRequired: '장치가 필요합니다',
+    validateDisplayEndTimeBeforeStartTime: '표시 종료 시간은 표시 시작 시간보다 이전일 수 없습니다.',
     validateDomainRequired: '도메인이 필요합니다',
     validateEmailRequired: '이메일이 필요합니다',
     validateEmailFormat: '올바른 이메일 주소 형식을 입력하세요',
@@ -2461,6 +2463,7 @@ export default {
     'Red Packet Rain': '빨간색 포켓 비',
     'Red Packet Rain List': '빨간색 포켓 비 목록',
     'Member Free Game': '회원 무료 게임',
+    'Promo Code Redeem Config': 'Promo Code Redeem Config',
     Lottery: '로또',
     'Lottery Record List': '로또 기록 목록',
     'Lottery Result List': '로또 결과 목록',
@@ -2767,6 +2770,7 @@ export default {
     WITHDRAW_FLUCTUATION: '출금 변동',
     BONUS_FLUCTUATION: '보너스 변동',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '작업 유휴(베팅 기록 가져오기)',
   },
   monitorTitle: {
     MEMBER_STATISTICS: '온라인 사용자'
@@ -2955,5 +2959,6 @@ export default {
     30000: 'PG 업데이트 트랜잭션 상태 업데이트 실패',
     24003: '결과가 이미 처리되었습니다',
     27000: '키 수량이 충분하지 않습니다',
+    50002: '조정 가능 최대 금액을 초과했습니다'
   },
 }

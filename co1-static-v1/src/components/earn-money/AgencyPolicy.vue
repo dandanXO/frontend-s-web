@@ -107,25 +107,25 @@
           <tr>
             <td>{{ $t("earnMoney.about.faq_06_table_you") }}</td>
             <td>8(1.0%)</td>
-            <td>$194,400</td>
+            <td>$486,000,000</td>
             <td>49</td>
           </tr>
           <tr>
             <td>A</td>
             <td>8(1.0%)</td>
-            <td>$152,000</td>
+            <td>$380,000,000</td>
             <td>35</td>
           </tr>
           <tr>
             <td>B</td>
             <td>6(0.8%)</td>
-            <td>$42,000</td>
+            <td>$100,500,000</td>
             <td>13</td>
           </tr>
           <tr>
             <td>C</td>
             <td>1(0.3%)</td>
-            <td>$400</td>
+            <td>$100,000</td>
             <td>1</td>
           </tr>
         </tbody>

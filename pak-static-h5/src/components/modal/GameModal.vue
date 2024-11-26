@@ -332,7 +332,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      if (platformCode !== "LuckySport") {
+        visible.value = true;
+      }
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -364,6 +366,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               setTimeout(function () {
                 src.value = srcDoc.substring(0, srcDoc.indexOf("?"));
               }, 1000);
+            } else if (platformCode === "LuckySport") {
+              if (way === "ANDROID") {
+                cordova.InAppBrowser.open(srcDoc, "_blank", "location=no,zoom=no");
+              } else {
+                window.open(srcDoc, "_blank", "location=no,zoom=no");
+              }
             } else {
               src.value = srcDoc;
             }
