@@ -26,9 +26,17 @@
                   />
                 </div>
 
-                <p class="text-red error-text" v-if="isInvalidCode">
-                  {{ $t("form.redemptionInvalidCode") }}
-                </p>
+                <div class="error-invalid-text" v-if="isInvalidCode">
+                  <p class="text-red error-text">
+                    {{ $t("form.redemptionInvalidCode") }}
+                  </p>
+                  <img
+                    class="btn-icon"
+                    @click="openWhatsApp()"
+                    id="whatapp-icon"
+                    src="../../assets/images/auth/whatsapp-icon.png"
+                  />
+                </div>
               </template>
             </InputField>
           </div>
@@ -61,7 +69,8 @@
   </q-dialog>
 </template>
 <script setup>
-import { onActivated, onMounted, ref, toRefs } from "vue";
+import { useUI } from "stores/ui";
+import { ref, toRefs } from "vue";
 import InputField from "../../components/auth/InputField.vue";
 import { api, eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
@@ -76,7 +85,7 @@ const redeemedAmt = ref(0);
 const emit = defineEmits(["update:modelValue"]);
 
 const $q = useQuasar();
-
+const ui = useUI();
 const isInvalidCode = ref(false);
 const btnLoading = ref(false);
 const redemptionCodeRef = ref();
@@ -109,6 +118,10 @@ const submitRedemption = async () => {
       }
     })
     .finally(() => (btnLoading.value = false));
+};
+
+const openWhatsApp = () => {
+  window.open(ui.whatsappUrl, "_blank");
 };
 
 const closeRedeemSuccessDialog = () => {
@@ -174,6 +187,44 @@ const closeRedeemSuccessDialog = () => {
       bottom: 126px;
       left: 58px;
     }
+  }
+}
+
+#whatapp-icon {
+  margin-left: 8px;
+  width: 36px;
+  height: 36px;
+  animation: smallbeat 2s infinite;
+}
+
+.error-invalid-text {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+@keyframes smallbeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
 </style>
