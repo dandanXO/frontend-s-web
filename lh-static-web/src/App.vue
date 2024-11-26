@@ -102,6 +102,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkServerStatus();
+      console.log("TEStigger");
       checkSID();
 
       getAffiliateByDomain();
