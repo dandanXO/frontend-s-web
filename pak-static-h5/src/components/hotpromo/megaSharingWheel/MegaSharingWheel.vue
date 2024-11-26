@@ -1,31 +1,27 @@
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
-        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-btn.png" />
-      </div>
-      <div class="wheel-top-btn">
-        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-indicate.png" />
+      <div ref="drawBtnRef" :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spin(3)">
+        <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/click-spin-btn.png" />
       </div>
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
-          <div id="spin-wheel-id" class="spin-wheel">
+          <div class="spin-wheel">
             <img
-              id="spin-wheel-bg"
+              ref="spinBoardRef"
               class="wheel-bg"
-              src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-bg.png"
+              src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/spin-wheel-bg-stage-1.png"
             />
-            <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
+            <div ref="spinNumRef" class="spin-wheel-number" style="display: none"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="remaining-draw-wrapper">
-      <p class="remaining-draw-text">
-        {{ $t("hotPromo.aviatorWheel.remainingDrawTimes") }}:
-        <span id="remaning-draw-amt">{{ remainingDraws }}</span>
-      </p>
+    <div class="claim-btn-wrapper">
+      <button class="claim-btn">
+        {{ $t("btn.claim") }}
+      </button>
     </div>
   </div>
 
@@ -46,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, toRefs } from "vue";
+import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
@@ -239,13 +235,10 @@ const initSpinWheel = () => {
 onMounted(() => {
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
-    var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
+    const driftDegree = 22;
+    var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1 + driftDegree;
     degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
-
-  spinBoardRef.value = document.getElementById("spin-wheel-bg");
-  spinNumRef.value = document.getElementById("spin-wheel-number");
-  drawBtnRef.value = document.querySelector(".draw-btn");
 
   initSpinWheel();
 });
@@ -259,7 +252,7 @@ onMounted(() => {
 }
 .spin-wheel-container {
   position: relative;
-  margin: 0px auto;
+  margin: 0px auto 40px;
   text-align: center;
   width: 330px;
   height: 330px;
@@ -329,32 +322,19 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
-.wheel-top-btn {
-  width: 155px;
-  height: 115px;
-  position: absolute;
-  top: 21px;
-  left: 50%;
-  right: 0;
-  z-index: 24;
-  transform: translateX(-50%);
-  img {
-    width: 155px;
-    height: 115px;
-  }
-}
+
 .draw-btn {
-  width: 130px;
+  // width: 130px;
   height: auto;
   aspect-ratio: 1/1;
   z-index: 25;
   position: absolute;
-  top: calc(50%);
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.5);
 
   &.disabled {
-    filter: brightness(0.85);
+    filter: brightness(0.85) scale(0.5);
     opacity: 1 !important;
     pointer-events: none;
   }
@@ -376,7 +356,6 @@ onMounted(() => {
 }
 
 .click-pointer:active {
-  transform: translate(-50%, calc(-50% + 1px));
   filter: brightness(0.9);
 }
 
@@ -406,10 +385,6 @@ onMounted(() => {
   img {
     width: 100%;
   }
-}
-
-.draw-btn img {
-  width: 100%;
 }
 
 .spin-wheel-board {
@@ -551,22 +526,24 @@ onMounted(() => {
   }
 }
 
-.remaining-draw-wrapper {
-  background-image: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-highlight.png);
-  background-size: 75% 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  padding: 2px;
-
-  .remaining-draw-text {
-    color: #ffffff;
+.claim-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  .claim-btn {
+    margin: 0 auto;
+    aspect-ratio: 138/58;
+    background: url(../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/claim-btn.png) no-repeat;
+    background-size: cover;
+    border: none;
+    width: 138px;
+    padding: 2px 0 26px;
     font-size: 20px;
-    // margin: 0px auto 15px;
-    margin: auto;
-    text-align: center;
-    width: 300px;
-    position: relative;
-    z-index: 23;
+    font-weight: 700;
+    line-height: 30px;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(1.2);
+    }
   }
 }
 

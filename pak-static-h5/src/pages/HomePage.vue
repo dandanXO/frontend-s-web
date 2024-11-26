@@ -1324,27 +1324,35 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog v-model="isLuckyDrawModal">
-    <div class="luckyspin-wrapper">
-      <div class="luckyspin-header">
-        <img src="../assets/images/index/modal/luckyspin-title.png" />
-      </div>
-      <div class="luckyspin-container">
-        <div class="luckyspin-title">
-          <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+  <template v-if="isAndroid()">
+    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+      <div class="luckyspin-wrapper">
+        <div class="luckyspin-header">
+          <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
+        <div class="luckyspin-container">
+          <PopupController v-model="popupPromo" />
+          <div class="luckyspin-title">
+            <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+          </div>
 
-        <LuckySpinWheel />
+          <LuckySpinWheel show-controller />
+        </div>
+        <div class="q-mt-md">
+          <q-icon name="highlight_off" size="md" v-close-popup />
+        </div>
       </div>
-      <div class="q-mt-md">
-        <q-icon name="highlight_off" size="md" v-close-popup />
-      </div>
-    </div>
-  </q-dialog>
-
-  <q-dialog v-model="isCongratsModal">
-    <CongratsModal />
-  </q-dialog>
+    </q-dialog>
+  </template>
+  <template v-else>
+    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+      <CongratsModal>
+        <template #controller>
+          <PopupController v-model="popupPromo" />
+        </template>
+      </CongratsModal>
+    </q-dialog>
+  </template>
 
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
@@ -1362,9 +1370,23 @@
     </div>
   </q-dialog>
 
-  <q-dialog v-model="isMoneyRainModal">
-    <MoneyRainModal />
+  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true">
+    <MoneyRainModal>
+      <template #controller>
+        <PopupController v-model="popupPromo" />
+      </template>
+    </MoneyRainModal>
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
+
+  <q-dialog v-if="popupPromo === 'mega-sharing-wheel'" :model-value="true" full-width class="mega-sharing-wheel-dialog">
+    <!-- <q-btn class="mega-sharing-wheel-dialog-back" icon="chevron_left" round dense /> -->
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense />
+    <MegaSharingWheelModal>
+      <template #controller>
+        <PopupController v-model="popupPromo" />
+      </template>
+    </MegaSharingWheelModal>
   </q-dialog>
 
   <q-dialog v-model="isMediaSettingsModal">
@@ -1413,6 +1435,8 @@ import "swiper/css/effect-coverflow";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import PopupController from "src/components/PopupController.vue";
+import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -1420,11 +1444,12 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
-const isLuckyDrawModal = ref(false);
-const isCongratsModal = ref(false);
+// const isLuckyDrawModal = ref(false);
+// const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
-const isMoneyRainModal = ref(false);
+// const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
+const popupPromo = ref("mega-sharing-wheel");
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -3201,7 +3226,8 @@ const gotoPromo = (banner) => {
       if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
     } else {
       if (banner.redirectUrl === "redpacketrain") {
-        isMoneyRainModal.value = true;
+        // isMoneyRainModal.value = true;
+        popupPromo.value = "money-rain";
       } else {
         router.push(`/promo?name=${banner.redirectUrl}`);
       }
@@ -3528,7 +3554,8 @@ const mediaCode = ref("");
 
 const gotoFloatPromo = (val) => {
   if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
-    isMoneyRainModal.value = true;
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -3565,7 +3592,8 @@ onActivated(() => {
   // }
 
   if (route.query.login === "true") {
-    isMoneyRainModal.value = true;
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
   }
 
   if (route.query.token) {
@@ -3634,7 +3662,8 @@ const showSpinWheel = () => {
         if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
-          isLuckyDrawModal.value = true;
+          // isLuckyDrawModal.value = true;
+          popupPromo.value = "lucky-spin-wheel";
         }
       }
     })
@@ -3647,7 +3676,8 @@ const showCongratsModal = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
-        isCongratsModal.value = true;
+        // isCongratsModal.value = true;
+        popupPromo.value = "luck-spin-wheel";
       }
     }
   });
@@ -5286,5 +5316,15 @@ const showCongratsModal = () => {
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+.mega-sharing-wheel-dialog {
+  position: relative;
+
+  .mega-sharing-wheel-dialog-close {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    border: 1px solid #ffffff;
+  }
 }
 </style>

@@ -1,0 +1,153 @@
+<!-- eslint-disable vue/no-parsing-error -->
+<template>
+  <div class="popup-controller-wrapper" :class="controllerStyle">
+    <div class="swiper-btn-prev" @click="handlePrevClick">
+      <q-btn icon="chevron_left" round dense flat />
+    </div>
+    <div class="promo-list-wrapper">
+      <a
+        v-for="(promo, index) in promoList"
+        class="promo-list-item"
+        :key="index"
+        :class="{ selected: promo.code === modelValue }"
+        @click="handlePromoClick(promo.code)"
+      >
+        {{ promo.name }}
+      </a>
+    </div>
+    <div class="swiper-btn-next" @click="handleNextClick"><q-btn icon="chevron_right" round dense flat /></div>
+  </div>
+</template>
+<script setup>
+import { computed, ref, toRefs } from "vue";
+import { useI18n } from "vue-i18n";
+
+const props = defineProps(["modelValue"]);
+const { modelValue } = toRefs(props);
+
+const emit = defineEmits("update:modelValue");
+
+const { t } = useI18n();
+
+const promoList = computed(() => [
+  { code: "lucky-spin-wheel", name: t("home.cashGift") },
+  { code: "money-rain", name: t("home.welcomeNewPlayer") },
+  { code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") }
+]);
+
+const currentPromo = computed(() => {
+  const index = promoList.value.findIndex((promo) => promo.code === modelValue.value);
+  return index === -1 ? 0 : index;
+});
+
+const controllerStyle = computed(() => {
+  switch (modelValue.value) {
+    case "mega-sharing-wheel":
+      return "style-2";
+    case "money-rain":
+    case "lucky-spin-wheel":
+    default:
+      return "style-1";
+  }
+});
+
+const handlePromoClick = (code) => {
+  emit("update:modelValue", code);
+};
+
+const handlePrevClick = () => {
+  if (currentPromo.value === 0) {
+    emit("update:modelValue", promoList.value[promoList.value.length - 1].code);
+  } else {
+    emit("update:modelValue", promoList.value[currentPromo.value - 1].code);
+  }
+};
+
+const handleNextClick = () => {
+  if (currentPromo.value === promoList.value.length - 1) {
+    emit("update:modelValue", promoList.value[0].code);
+  } else {
+    emit("update:modelValue", promoList.value[currentPromo.value + 1].code);
+  }
+};
+</script>
+<style lang="scss" scoped>
+.popup-controller-wrapper {
+  --bg-color: #88dfac;
+  --selected-bg-color: #ffed8f;
+  --border-color: #ffffffcc;
+  --selected-border-color: #1effae;
+  --text-color: #fff;
+  --selected-text-color: #00b352;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  .swiper-btn-prev,
+  .swiper-btn-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  .promo-list-wrapper {
+    display: flex;
+    gap: 14px;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    .promo-list-item {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 5px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 18px;
+      text-align: center;
+      color: var(--text-color);
+      &.selected {
+        background: var(--selected-bg-color);
+        border-color: var(--selected-border-color);
+        border-radius: 4px;
+        transform: scale(1.1);
+        color: var(--selected-text-color);
+      }
+    }
+  }
+
+  &.style-1 {
+    --bg-color: #88dfac;
+    --selected-bg-color: #ffed8f;
+    --border-color: #ffffffcc;
+    --selected-border-color: #1effae;
+    --text-color: #fff;
+    --selected-text-color: #00b352;
+    .swiper-btn-prev,
+    .swiper-btn-next {
+      background-clip: border-box;
+    }
+
+    .promo-list-item {
+      background-clip: border-box;
+      &.selected {
+        box-shadow: 0px 4px 4px 0px #15ffab40 inset, 0px 2px 0px 0px #68df65;
+      }
+    }
+  }
+  &.style-2 {
+    --bg-color: #24283b;
+    --selected-bg-color: linear-gradient(180deg, #ff674d 0%, #fe340a 100%);
+    --border-color: #ffffffcc;
+    --selected-border-color: #fff;
+    --text-color: #fff;
+    --selected-text-color: #fff;
+  }
+}
+</style>

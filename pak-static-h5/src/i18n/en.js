@@ -195,7 +195,8 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    claim: "Claim"
   },
   notify: {
     noRecord: "No Record",
@@ -236,7 +237,10 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    cashGift: "Cash Gifts",
+    welcomeNewPlayer: "Welcome New Players",
+    MegaSharingRoulette: "Mega Sharing Roulette"
   },
   settings: {
     totalScore: "Total Score",
@@ -544,6 +548,19 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    megaSharingWheel: {
+      wheelTitle: "Mega Sharing Roulette",
+      missionTitle: "Rewards",
+      invitedUsersDeposit: "Invited Users' Deposit Count ≥ ",
+      invitedUsersValidBet: "Invited Users' Valid Bet ≥ ",
+      EligibleInvitedUsers: "Eligible Invited Users ≥ ",
+      missionDescription: "Finish the task to claim your ticket",
+      timeLimited: "Time-limited",
+      day: "Days",
+      hour: "Hours",
+      minute: "Min",
+      second: "Sec"
     }
   },
   maintenance: {
