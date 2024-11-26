@@ -298,6 +298,7 @@ export default {
     gameMemberCountTotal: 'Total Bet Member Count',
     gameBetCountTotal: 'Total Bet Transaction Count',
     gameBetAmountTotal: 'Total Bet Amount',
+    gameValidBetAmountTotal: 'Total Valid Bet Amount',
     gamePayoutAmountTotal: 'Total Payout Amount',
     gameWinLossTotal: 'Total Win/Loss Amount',
   },
