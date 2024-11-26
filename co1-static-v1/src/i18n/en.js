@@ -456,7 +456,7 @@ export default {
       weAdvocateBenefits: "Creemenos firmemente en otorgarles beneficios y bonificaciones a todos nuestros usuarios.",
       agencyPolicy: "Política de referidos",
       theTableBelowShows: "En la siguiente tabla se muestra cómo se asignan las retribuciones.",
-      point_01: "Usuarios activos: importe diario en apuestas $400",
+      point_01: "Usuarios activos: importe diario en apuestas $100,000",
       point_02:
         "Su retribución se calcula en base al importe total apostado por los miembros referidos por Ud. La retribución obtenida puede ser retirada o utilizada para efectuar apuestas.",
       point_03: "Recomiende a tantos amigos como pueda para obtener un mayor porcentaje de reembolsos.",
