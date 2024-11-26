@@ -35,11 +35,11 @@
                 '.png')
             "
           />
-          <img
-            v-if="props.platformType === 'slot' && item.code.toLowerCase() === 'pt' || props.platformType === 'live' && (item.code.toLowerCase() === 'pmlive' || item.code.toLowerCase() === 'won')"
-            src="@/assets/images/index/new-ribbon.svg"
-            class="new-ribbon"
-          />
+          <!--          <img-->
+          <!--            v-if="props.platformType === 'slot' && item.code.toLowerCase() === 'pt' || props.platformType === 'live' && (item.code.toLowerCase() === 'pmlive' || item.code.toLowerCase() === 'won')"-->
+          <!--            src="@/assets/images/index/new-ribbon.svg"-->
+          <!--            class="new-ribbon"-->
+          <!--          />-->
         </div>
         <div class="platform-menu-btn">
           <a>{{ $t("common.playnow") }}</a>
