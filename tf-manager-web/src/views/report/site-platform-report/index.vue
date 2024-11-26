@@ -41,6 +41,14 @@
         >
           {{ t('fields.search') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:report:sitePlatformBR:export']"
+          @click="requestExportExcel"
+          style="float: right;"
+        >{{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
 
@@ -121,13 +129,24 @@
       @current-change="changepage"
       @size-change="loadRecord"
     />
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import moment from 'moment'
-import { getBetRecords } from '../../../api/site-platform-bet-record'
+import { getBetRecords, exportBetRecords } from '../../../api/site-platform-bet-record'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -146,6 +165,10 @@ const defaultEndDate = convertDateToEnd(now)
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
+
+const uiControl = reactive({
+  messageVisible: false
+});
 
 const siteList = reactive({
   list: [],
@@ -201,6 +224,27 @@ function changepage(page) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+async function requestExportExcel() {
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await exportBetRecords(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 
 const shortcuts = getShortcuts(t)
@@ -326,7 +370,7 @@ watch(() => {
 <style>
 .el-table .cell {
   word-break: break-word;
-  text-overflow: none;
+  text-overflow: unset;
 }
 .warning-row {
   color: #ff0000;
