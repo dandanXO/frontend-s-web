@@ -7,7 +7,7 @@
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="150">
         <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm"
-                :class="{active: isSelectedMail === det.title }" style="background: #212534; color: #bacef1;"
+                :class="{active: isSelectedMail === det.id }" style="background: #212534; color: #bacef1;"
                 @click="selectMail(det)">
           <div style="display:flex; justify-content: space-between; align-items: center">
             <div>
@@ -17,7 +17,7 @@
             <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0"/>
 
           </div>
-          <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`">
+          <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.id ? 'auto' : '0px'}`">
             {{ det.content }}
           </div>
           <div v-if="mailType === 'outbox'" class="buttons">
@@ -86,7 +86,7 @@ export default defineComponent({
     const isSelectedMail = ref('');
     const selectMail = (mail) => {
       console.log(mail.id);
-      isSelectedMail.value = mail.title;
+      isSelectedMail.value = mail.id;
       // context.emit('readMsg', mail.id);
     }
     onMounted(() => {
