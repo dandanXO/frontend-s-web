@@ -77,10 +77,10 @@
           </div>
         </div>
 
-        <div class="pc-form-item" v-if="formDetail.taxId">
-          <div class="pc-form-label">{{ $t("form.taxId") }}</div>
+        <div class="pc-form-item" v-if="formDetail.idNumber">
+          <div class="pc-form-label">{{ $t("form.idNumber") }}</div>
           <div class="pc-form-input">
-            <q-input v-model="formDetail.taxId" filled dense clearable borderless standout hide-bottom-space readonly>
+            <q-input v-model="formDetail.idNumber" filled dense clearable borderless standout hide-bottom-space readonly>
               <template v-slot:append>
                 <q-btn :label="$t('form.edit')" dense no-caps @click="editTaxDetailsDialog = true" />
               </template>
@@ -544,7 +544,7 @@
                 emit-value
                 map-options
                 filled
-                label="ID Type"
+                :label="$t('form.docType')"
                 color="white"
               >
                 <template v-slot:prepend>
@@ -559,9 +559,9 @@
                 filled
                 dense
                 clearable
-                :placeholder="`ID Number`"
-                v-model="formDetail.taxId"
-                :rules="[(_) => isValidTaxId()]"
+                :placeholder="$t('form.idNumber')"
+                v-model="formDetail.idNumber"
+                :rules="[(_) => isValidIdNumber()]"
                 hide-bottom-space
               >
                 <template v-slot:prepend>
@@ -577,7 +577,7 @@
             flat
             no-caps
             class="btn-submit"
-            :disable="!(isValidTaxId() === true)"
+            :disable="!(isValidIdNumber() === true)"
             @click="updateNewTax"
           >
             {{ $t("btn.submit") }}
@@ -815,7 +815,7 @@ const loadInfo = () => {
   formDetail.emailVerified = personalState.memberInfo.emailVerified;
 
   formDetail.docType = docTypeDescriptions[personalState.memberInfo.docType];
-  formDetail.taxId = personalState.memberInfo.taxId;
+  formDetail.idNumber = personalState.memberInfo.taxId;
 
   isEditEmail.value = formDetail.emailVerified === false ? true : false;
   isEditBirthday.value = formDetail.birthday == "" ? true : false;
@@ -823,8 +823,8 @@ const loadInfo = () => {
 };
 
 const docTypeDescriptions = {
-  CC: "Identity Document",
-  NIT: "Tax ID Number in Colombia"
+  CC: t("form.identityDocument"),
+  NIT: t("form.taxIdNumberInColumbia")
 };
 
 const canEdit = computed(() => {
@@ -869,11 +869,11 @@ onMounted(() => {
   selectDocType.value = [
     {
       valType: "CC",
-      name: "Identity Document"
+      name: t("form.identityDocument")
     },
     {
       valType: "NIT",
-      name: "Tax ID Number in Colombia"
+      name: t("form.taxIdNumberInColumbia")
     }
   ];
 });
@@ -1285,20 +1285,20 @@ const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
 
-const isValidTaxId = () => {
-  const { docType, taxId } = formDetail;
+const isValidIdNumber = () => {
+  const { docType, idNumber } = formDetail;
   const patterns = {
     CC: /^\d{6,10}$/, // CC requires 6-10 digits
     NIT: /^\d{9}$/ // NIT requires exactly 9 digits
   };
   const pattern = patterns[docType];
 
-  const result = !taxId
-    ? t("form.taxId_rules_01") // Replace with appropriate translation key
+  const result = !idNumber
+    ? t("form.idNumber_rules_01") // Replace with appropriate translation key
     : !pattern
-    ? t("form.taxId_rules_02") // Handle unsupported docType
-    : !pattern.test(taxId)
-    ? t("form.taxId_rules_03") // Replace with appropriate translation key
+    ? t("form.idNumber_rules_02") // Handle unsupported docType
+    : !pattern.test(idNumber)
+    ? t("form.idNumber_rules_03") // Replace with appropriate translation key
     : true;
 
   return result;
@@ -1310,7 +1310,7 @@ const updateNewTax = () => {
   btnLoading.value = true;
   const updateInfo = {};
   updateInfo.docType = formDetail.docType;
-  updateInfo.taxId = formDetail.taxId;
+  updateInfo.taxId = formDetail.idNumber;
 
   api
     .post("/session/account", qs.stringify(updateInfo))

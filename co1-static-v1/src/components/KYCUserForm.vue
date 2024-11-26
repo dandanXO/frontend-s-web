@@ -27,7 +27,7 @@
               emit-value
               map-options
               filled
-              label="ID Type"
+              :label="$t('form.docType')"
               color="white"
             >
               <template v-slot:prepend>
@@ -42,9 +42,9 @@
               filled
               dense
               clearable
-              :placeholder="`ID Number`"
-              v-model="formDetail.taxId"
-              :rules="[(_) => isValidTaxId()]"
+              :placeholder="$t('form.idNumber')"
+              v-model="formDetail.idNumber"
+              :rules="[(_) => isValidIdNumber()]"
               hide-bottom-space
             >
               <template v-slot:prepend>
@@ -59,7 +59,7 @@
               filled
               dense
               clearable
-              :placeholder="`Email`"
+              :placeholder="$t('form.email')"
               v-model="formDetail.email"
               :rules="[(_) => isValidEmail()]"
               hide-bottom-space
@@ -76,7 +76,7 @@
               filled
               dense
               clearable
-              :placeholder="`Full Name`"
+              :placeholder="$t('form.fullName')"
               v-model="formDetail.realName"
               :rules="[(_) => isValidName()]"
               hide-bottom-space
@@ -95,7 +95,7 @@
         flat
         no-caps
         class="btn-submit"
-        :disable="!(isValidName() === true && isValidTaxId() === true && isValidEmail() === true)"
+        :disable="!(isValidName() === true && isValidIdNumber() === true && isValidEmail() === true)"
         @click="submitKYCNewUser"
       >
         {{ $t("btn.submit") }}
@@ -134,20 +134,20 @@ const isValidName = () => {
   return result;
 };
 
-const isValidTaxId = () => {
-  const { docType, taxId } = formDetail;
+const isValidIdNumber = () => {
+  const { docType, idNumber } = formDetail;
   const patterns = {
     CC: /^\d{6,10}$/, // CC requires 6-10 digits
     NIT: /^\d{9}$/ // NIT requires exactly 9 digits
   };
   const pattern = patterns[docType];
 
-  const result = !taxId
-    ? t("form.taxId_rules_01") // Replace with appropriate translation key
+  const result = !idNumber
+    ? t("form.idNumber_rules_01") // Replace with appropriate translation key
     : !pattern
-    ? t("form.taxId_rules_02") // Handle unsupported docType
-    : !pattern.test(taxId)
-    ? t("form.taxId_rules_03") // Replace with appropriate translation key
+    ? t("form.idNumber_rules_02") // Handle unsupported docType
+    : !pattern.test(idNumber)
+    ? t("form.idNumber_rules_03") // Replace with appropriate translation key
     : true;
 
   return result;
@@ -190,7 +190,7 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.docType = formDetail.docType;
-  updateInfo.taxId = formDetail.taxId;
+  updateInfo.taxId = formDetail.idNumber;
   updateInfo.email = formDetail.email;
   updateInfo.realName = formDetail.realName;
 
@@ -228,11 +228,11 @@ onMounted(() => {
   selectDocType.value = [
     {
       valType: "CC",
-      name: "Identity Document"
+      name: t("form.identityDocument")
     },
     {
       valType: "NIT",
-      name: "Tax ID Number in Colombia"
+      name: t("form.taxIdNumberInColumbia")
     }
   ];
 });
