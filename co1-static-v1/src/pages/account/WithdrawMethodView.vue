@@ -216,6 +216,10 @@
                     clearable
                     v-model="bankCardField.cardAddress"
                     :options="accTypeList"
+                    option-value="valType"
+                    option-label="name"
+                    emit-value
+                    map-options
                     :rules="[() => isValidCardAddress()]"
                     hide-bottom-space
                   />
@@ -519,7 +523,7 @@ const selectWithdrawCurrency = (item) => {
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
-const accTypeList = ["CHECKING", "SAVINGS"];
+const accTypeList = ref([]);
 
 const displayCardType = computed(() => {
   if (selectedMethodItem.value.payType === "EWALLET") {
@@ -817,6 +821,17 @@ onMounted(() => {
   checkNewUser();
   // loadCards();
   loadInfo();
+
+  accTypeList.value = [
+    {
+      valType: "CHECKING",
+      name: t("form.accChecking")
+    },
+    {
+      valType: "SAVINGS ",
+      name: t("form.accSavings")
+    }
+  ];
 });
 
 onActivated(() => {

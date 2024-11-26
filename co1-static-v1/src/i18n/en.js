@@ -135,6 +135,8 @@ export default {
     docType: "Tipo de ID",
     identityDocument: "Documento de identidad",
     taxIdNumberInColumbia: "Número de identificación fiscal en Colombia",
+    accChecking: "Cuenta corriente",
+    accSavings: "Cuenta de ahorros",
     edit: "Editar",
     changePassword: "Cambiar Contraseña",
     currentPassword: "Contraseña Actual",
