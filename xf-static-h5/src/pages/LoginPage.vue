@@ -545,6 +545,10 @@ export default defineComponent({
       }
     });
 
+    watch(loginType, () => {
+      initGeetestCaptcha();
+    });
+
     onMounted(() => {
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
