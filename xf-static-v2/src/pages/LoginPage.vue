@@ -712,16 +712,14 @@ export default defineComponent({
 #captchaContainer {
   width: 100%;
 
-  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
-  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
-    border-color: #333c4b;
-    border-top-right-radius: 28px;
-    border-bottom-right-radius: 28px;
+  .geetest_content {
+    color: white;
   }
 
-  .geetest_captcha.geetest_dark .geetest_content,
-  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_content {
-    border-color: #39c422;
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg, #fff, #f4f4f4) !important;
+    border-color: #333c4b;
   }
 
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
@@ -735,12 +733,6 @@ export default defineComponent({
     .geetest_tips_wrap
     .geetest_tip {
     color: #39c522 !important;
-  }
-
-  .geetest_captcha .geetest_holder .geetest_btn_svg,
-  .geetest_popup_wrap .geetest_holder .geetest_btn_svg {
-    border-top-right-radius: 28px;
-    border-bottom-right-radius: 28px;
   }
 
   .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
@@ -769,14 +761,10 @@ export default defineComponent({
   .geetest_captcha.geetest_dark .geetest_holder .geetest_mask,
   .geetest_popup_wrap.geetest_dark .geetest_holder .geetest_mask {
     background-color: #2a313e;
-    border-top-right-radius: 28px !important;
-    border-bottom-right-radius: 28px !important;
   }
 
   .geetest_captcha .geetest_holder .geetest_content .geetest_space_center {
     background-color: #2a313e;
-    border-top-right-radius: 28px;
-    border-bottom-right-radius: 28px;
   }
 }
 
