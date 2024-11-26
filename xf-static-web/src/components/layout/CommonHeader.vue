@@ -151,18 +151,19 @@
                 <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
               </el-form-item>
               <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input
+                <el-row style="justify-content: start; align-items: center">
+                  <el-col :span="24">
+                    <!-- <el-input
                       v-model="loginForm.captchaCode"
                       label="验证码"
                       placeholder="验证码"
                       @keyup.enter="submitLogin"
-                    />
+                    /> -->
+                    <div id="captchaContainer"></div>
                   </el-col>
-                  <el-col :span="12">
+                  <!-- <el-col :span="12">
                     <img style="width: 70%" :src="verificationImg" @click="getCode" />
-                  </el-col>
+                  </el-col> -->
                 </el-row>
               </el-form-item>
               <el-button
@@ -1109,19 +1110,19 @@ export default defineComponent({
           trigger: "blur"
         }
       ],
-      captchaCode: [
-        {
-          required: true,
-          message: "请输入验证码",
-          trigger: "blur"
-        },
-        {
-          min: 4,
-          max: 4,
-          message: "长度为 4",
-          trigger: "blur"
-        }
-      ]
+      // captchaCode: [
+      //   {
+      //     required: true,
+      //     message: "请输入验证码",
+      //     trigger: "blur"
+      //   },
+      //   {
+      //     min: 4,
+      //     max: 4,
+      //     message: "长度为 4",
+      //     trigger: "blur"
+      //   }
+      // ]
     };
 
     const mobileLoginRules = {
@@ -1656,6 +1657,15 @@ export default defineComponent({
       headTimer = null;
     });
 
+    const stopWatchLoginDialogVisible = watch(loginDialogVisible, () => {
+      initGeetest()
+      stopWatchLoginDialogVisible();
+    });
+
+    watch(loginTabs, () => {
+      window.captchaObj.reset();
+    })
+
     watch(() => registerDialogVisible.value, () => {
       if (registerDialogVisible.value) {
         getAffiliateCode();
@@ -2015,13 +2025,22 @@ export default defineComponent({
         const sidParam = store.visitorId;
 
         loginRef.value.validate().then(() => {
+          const validate = window?.captchaObj.getValidate();
+          if (!validate) {
+            ElMessage.error('请完成验证码');
+            return;
+          }
           store
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
                 sid: sidParam,
-                captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId,
+                // captchaCode: loginForm.captchaCode,
+                // codeId: loginForm.codeId,
+                lotNumber: loginForm.lot_number,
+                captchaOutput: loginForm.captcha_output,
+                passToken: loginForm.pass_token,
+                genTime: loginForm.gen_time
               })
               .then(() => {
                 const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
@@ -2044,6 +2063,10 @@ export default defineComponent({
           }).finally(() => {
             loadingBtn.value = false;
           });
+        })
+        .catch(() => {})
+        .finally(() => {
+          loadingBtn.value = false;
         });
       })();
     };
@@ -2153,6 +2176,77 @@ export default defineComponent({
       }
       return 8;
     }
+
+    // Dynamically load the Geetest script
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    const initGeetest = async () => {
+      try {
+        // Step 1: Load Geetest script
+        await loadScript("https://static.geetest.com/v4/gt4.js");
+
+        // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+        const geetestConfig = {
+          config: {
+            captchaId: "c0e407fcee1b1c3a51d269495cf9524c",
+            language: "zh",
+            nativeButton: {
+              width: '300px',
+              height: "40px"
+            },
+            nextWidth: "220px",
+            product: "float"
+          },
+          handler: captchaHandler
+        };
+
+        // Step 3: Initialize Geetest with the config
+        await window.initGeetest4(geetestConfig.config, geetestConfig.handler);
+      } catch (error) {
+        // message.value = "Error loading Geetest!";
+        console.error("Geetest loading error:", error);
+      }
+    }
+
+    const captchaHandler = (captchaObj) => {
+      window.captchaObj = captchaObj;
+      captchaObj
+        .appendTo("#captchaContainer")
+        .onReady(function () {
+          console.log("ready");
+        })
+        .onNextReady(function () {
+          console.log("nextReady");
+        })
+        .onBoxShow(function () {
+          console.log("boxShow");
+          loadingBtn.value = true;
+        })
+        .onError(function (e) {
+          console.log(e);
+        })
+        .onSuccess(function () {
+          let result = window.captchaObj.getValidate();
+          console.log("success", result);
+
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
+          loadingBtn.value = false;
+        }).onClose(function () {
+          console.log("close")
+          loadingBtn.value = false;
+        });
+    }
+
 
     watch(
         () => regForm.password,
@@ -2902,5 +2996,64 @@ body {
 .mailbox-notify {
   position: relative;
   margin-right: 20px;
+}
+
+#captchaContainer {
+  width: 100%;
+
+  .geetest_captcha {
+    color: #fff;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg, #fff, #f4f4f4) !important;
+    border-color: #333c4b;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #fff;
+    font-family: "PingFang SC" !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success
+    .geetest_content
+    .geetest_tip_container
+    .geetest_tips_wrap
+    .geetest_tip {
+    color: #39c522 !important;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn {
+    border: 1px solid #dfdfdf;
+    background: #2a313e;
+  }
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
+    color: #a0bcd6;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
+    background: #2a313e;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
+  .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
+    background-color: #a0bcd6;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #409eff;
+  }
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_mask,
+  .geetest_popup_wrap.geetest_dark .geetest_holder .geetest_mask {
+    background-color: #2a313e;
+  }
+
+  .geetest_captcha .geetest_holder .geetest_content .geetest_space_center {
+    background-color: #2a313e;
+  }
 }
 </style>
