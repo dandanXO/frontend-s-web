@@ -164,8 +164,10 @@ export default {
     content_rules_02: "Content length is 500 words or less",
     exchangeTitle: "Enter redemption code",
     redemptionCode: "Enter redemption code",
-    redemptionCode_rule_01: "Please insert Phone number",
-    redemptionCode_placeholder: "pleases Enter redemption code"
+    redemptionCode_rule_01: "Please insert redemption code",
+    redemptionCode_placeholder: "Pleases Enter redemption code",
+    redemptionInvalidCode:
+      "The code is invalid. Please check our official WhatsApp channel for the correct promo code to redeem."
   },
   btn: {
     login: "Login",

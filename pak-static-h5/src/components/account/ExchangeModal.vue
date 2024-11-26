@@ -19,11 +19,16 @@
                     clearable
                     color="green"
                     ref="redemptionCodeRef"
+                    :error="isInvalidCode"
                     :placeholder="$t('form.redemptionCode_placeholder')"
                     :rules="[(val) => (val && val.length > 0) || $t('form.redemptionCode_rule_01')]"
                     v-model="formDetail.redemptionCode"
                   />
                 </div>
+
+                <p class="text-red error-text" v-if="isInvalidCode">
+                  {{ $t("form.redemptionInvalidCode") }}
+                </p>
               </template>
             </InputField>
           </div>
@@ -56,6 +61,7 @@ const emit = defineEmits(["update:modelValue"]);
 
 const $q = useQuasar();
 
+const isInvalidCode = ref(false);
 const btnLoading = ref(false);
 const redemptionCodeRef = ref();
 const formDetail = ref({
@@ -63,6 +69,7 @@ const formDetail = ref({
 });
 
 const submitRedemption = async () => {
+  isInvalidCode.value = false;
   const isValid = await redemptionCodeRef.value.validate();
   if (!isValid) return;
 
@@ -79,12 +86,17 @@ const submitRedemption = async () => {
         });
         formDetail.value.redemptionCode = undefined;
         emit("update:modelValue", false);
+      } else {
+        isInvalidCode.value = true;
       }
     })
     .finally(() => (btnLoading.value = false));
 };
 </script>
 <style lang="scss" scoped>
+.error-text {
+  font-size: 13px;
+}
 .pc-form {
   margin-top: 20px;
   width: 100%;
