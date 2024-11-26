@@ -669,6 +669,10 @@ export default defineComponent({
 #captchaContainer {
   width: 100%;
 
+  .geetest_captcha {
+    color: #fff;
+  }
+
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
   .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
     background-image: linear-gradient(180deg, #fff, #f4f4f4) !important;

@@ -3001,6 +3001,10 @@ body {
 #captchaContainer {
   width: 100%;
 
+  .geetest_captcha {
+    color: #fff;
+  }
+
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
   .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
     background-image: linear-gradient(180deg, #fff, #f4f4f4) !important;
@@ -3008,7 +3012,7 @@ body {
   }
 
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
-    color: #424f72;
+    color: #fff;
     font-family: "PingFang SC" !important;
   }
 
