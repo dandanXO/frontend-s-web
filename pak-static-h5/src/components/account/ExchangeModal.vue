@@ -47,15 +47,31 @@
       </div>
     </div>
   </q-dialog>
+  <q-dialog width="100%" :modelValue="showRedeemedDialog">
+    <div class="redeem-success-container">
+      <div class="close-div">
+        <q-btn dense rounded icon="close" class="popout-close" @click="closeRedeemSuccessDialog" />
+      </div>
+
+      <div class="redeem-success-content">
+        <img class="redeem-success-img" src="../../assets/images/exchange/redeem_success.png" />
+        <div class="redeem-amt">{{ convertToCommaAmount(redeemedAmt, true) }}</div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
 import { onActivated, onMounted, ref, toRefs } from "vue";
 import InputField from "../../components/auth/InputField.vue";
 import { api, eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const props = defineProps(["modelValue"]);
 const { modelValue } = toRefs(props);
+
+const showRedeemedDialog = ref(false);
+const redeemedAmt = ref(0);
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -86,11 +102,17 @@ const submitRedemption = async () => {
         });
         formDetail.value.redemptionCode = undefined;
         emit("update:modelValue", false);
+        showRedeemedDialog.value = true;
+        redeemedAmt.value = res.data;
       } else {
         isInvalidCode.value = true;
       }
     })
     .finally(() => (btnLoading.value = false));
+};
+
+const closeRedeemSuccessDialog = () => {
+  showRedeemedDialog.value = false;
 };
 </script>
 <style lang="scss" scoped>
@@ -130,6 +152,27 @@ const submitRedemption = async () => {
       position: absolute;
       top: 0;
       right: 0;
+    }
+  }
+}
+
+.redeem-success-container {
+  display: flex;
+  flex-direction: column;
+  .close-div {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .redeem-success-content {
+    position: relative;
+    .redeem-success-img {
+      width: 320px;
+    }
+    .redeem-amt {
+      font-size: 32px;
+      position: absolute;
+      bottom: 126px;
+      left: 58px;
     }
   }
 }
