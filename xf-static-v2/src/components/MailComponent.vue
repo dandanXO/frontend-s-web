@@ -10,7 +10,7 @@
           class="bg-darkbox"
           v-for="(det, n) in truncatedList"
           :key="n"
-          :class="{ active: isSelectedMail === det.title }"
+          :class="{ active: isSelectedMail === det.id }"
           @click="selectMail(det)"
         >
           <div style="display: flex; justify-content: space-between; align-items: center">
@@ -20,7 +20,7 @@
             </div>
             <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0" />
           </div>
-          <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`">
+          <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.id ? 'auto' : '0px'}`">
             {{ det.content }}
           </div>
           <div v-if="mailType === 'outbox'" class="buttons">
@@ -87,7 +87,7 @@ export default defineComponent({
     const isSelectedMail = ref("");
     const selectMail = (mail) => {
       console.log(mail.id);
-      isSelectedMail.value = mail.title;
+      isSelectedMail.value = mail.id;
       // context.emit('readMsg', mail.id);
     };
     onMounted(() => {
