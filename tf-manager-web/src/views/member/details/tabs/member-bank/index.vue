@@ -1,13 +1,13 @@
 <template>
   <div class="roles-main">
     <el-button
-      v-show="route.query.site === '11'"
+      v-permission="['sys:member:update:withdraw-cards']"
       icon="el-icon-plus"
       size="mini"
       type="primary"
       @click="showDialog"
     >
-      {{ t('fields.add') }}
+      {{ t('fields.addCriditCard') }}
     </el-button>
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
