@@ -139,7 +139,7 @@
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
           {{ $t("btn.login") }}
         </q-btn>
-        <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onSubmit">
+        <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" :to="'/register'">
           {{ $t("btn.register") }}
         </q-btn>
       </div>
@@ -799,11 +799,11 @@ export default defineComponent({
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding: 20% 0;
+  padding-top: 20%;
 }
 
 .back-left {

@@ -21,12 +21,12 @@
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
 
-    <div class="auth-tab-wrapper">
+    <!-- <div class="auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
-    </div>
+    </div> -->
 
     <div class="register-form-wrapper">
       <q-form class="rounded-borders">
@@ -193,6 +193,13 @@
           <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
         </div>
       --></q-form>
+
+      <div class="mui-row q-mt-sm" :class="isAgreeReg ? 'checked' : ''">
+        <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
+          {{ $t("form.register_agree_01") }}
+          <a href="#" style="text-decoration: none; color: #24ee89;">{{ $t("form.register_agree_02") }}</a>
+        </q-checkbox>
+      </div>
     </div>
 
     <div class="bottom-btn">
@@ -204,33 +211,26 @@
         :loading="isLoading"
         @click="onSubmit"
       >
-        {{ $t("btn.confirm") }}
+        {{ $t("btn.register") }}
       </q-btn>
-    </div>
-
-    <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
-      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-        {{ $t("form.register_agree_01") }}
-        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
-      </q-checkbox>
     </div>
 
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-        <div>WhatsApp</div>
+        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-phone.png" />
+        <div>Service</div>
       </div>
       <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
+        <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>
       <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
-        <div>Youtube</div>
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
+        <div>Tiktok</div>
       </div>
       <div class="list-item" @click="openCharity()">
-        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-        <div>Charity</div>
+        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/icon-charity.png" />
+        <div>Charitable</div>
       </div>
       <!--      <div class="list-item" @click="openTiktok()">-->
       <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
@@ -238,9 +238,9 @@
       <!--      </div>-->
     </div>
 
-    <div class="bottom-img">
+    <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -813,6 +813,62 @@ function charType(num) {
 </script>
 
 <style scoped lang="scss">
+.btn-primary {
+  color: #000a01;
+  height: 34px;
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  background: url("../assets/images/common/btn-primary.svg") no-repeat center center;
+  font-weight: 600;
+  border-radius: 6px;
+  text-transform: uppercase;
+
+  &__full {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    z-index: -1;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+  }
+}
+
+// secondary btn
+.btn-secondary {
+  color: #ffffff;
+  height: 34px;
+  font-weight: 600;
+  background: #232325;
+  border-radius: 6px;
+  position: relative;
+  text-transform: uppercase;
+  background: url("../assets/images/common/btn-secondary.svg") no-repeat center center;
+
+  &__full {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(180deg, #61ff00 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: -1;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+  }
+}
+
 .auth-tab-wrapper {
   width: 90%;
   margin: 0 auto;
@@ -855,10 +911,12 @@ function charType(num) {
   padding-top: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   // justify-content: center;
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  padding-top: 20%;
 }
 
 .back-left {
@@ -875,7 +933,7 @@ function charType(num) {
   img {
     display: block;
     width: 100%;
-    max-width: 140px;
+    max-width: 180px;
     margin-bottom: 10px;
   }
 }
@@ -956,14 +1014,15 @@ function charType(num) {
 }
 
 .rmb-checked-box {
-  font-size: 14px;
-  color: #91829d;
+  font-size: 12px;
+  color: #8c968f;
 
   :deep(.q-checkbox__bg) {
     border-radius: 50%;
+    border-color: #24ee89;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #00ae00;
+    background: #24ee89;
 
     svg {
       color: #fff;
@@ -1005,7 +1064,7 @@ function charType(num) {
 }
 
 .btn-lists {
-  display: flex;
+  display: none;
   justify-content: space-evenly;
   gap: 0px;
   width: 100%;
