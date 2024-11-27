@@ -17,12 +17,11 @@
             :value="item.id"
           />
         </el-select> -->
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadAffiliateCommission()">
+        <el-button icon="el-icon-search" size="mini" type="success" @click="loadAffiliateCommission()">
           {{ t('fields.search') }}
         </el-button>
         <el-button size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
-      </div>
-      <div class="btn-group">
+
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
                    v-permission="['sys:affiliate-commission:create']"
         >
