@@ -101,7 +101,7 @@ watch(selectedTab, scrollSlide);
   justify-content: flex-start;
   align-items: stretch;
   box-shadow: 0px 0px 4px 0px #ffffff40 inset;
-  border-radius: 12px;
+  border-radius: 32px;
   padding: 4px 8px;
 }
 
@@ -110,7 +110,7 @@ watch(selectedTab, scrollSlide);
   padding: 2px 12px;
   min-height: 32px;
   margin: 5px 0;
-  border-radius: 12px;
+  border-radius: 32px;
   display: flex;
   justify-content: center;
   gap: 6px;

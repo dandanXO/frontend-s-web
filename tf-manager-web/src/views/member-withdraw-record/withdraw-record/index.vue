@@ -951,6 +951,12 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.accountNumber')" prop="cardNumber">
+          <el-input
+            v-model="request.cardNumber"
+            style="width: 250px"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="resetQuery()">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="advancedSearch()">{{ t('fields.search') }}</el-button>
@@ -1134,7 +1140,8 @@ const request = reactive({
   doris: false,
   withdrawReviewType: null,
   currencyId: null,
-  riskId: null
+  riskId: null,
+  cardNumber: null
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {

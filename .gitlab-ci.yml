@@ -1096,3 +1096,13 @@ build-image-co1-static-v1:
     - build-co1-static-v1
 
 #===============================================================================================
+
+deploy-bz1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: bz1-download
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
+
+#===============================================================================================

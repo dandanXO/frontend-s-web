@@ -5,16 +5,28 @@
       <div class="affiliate-container">
         <img src="../assets/images/affiliate/affiliate_plan_img.png" />
         <div class="btn-group">
-          <img
-            src="../assets/images/affiliate/join_us_btn.png"
+          <q-btn
+            color="brightbtn"
+            size="md"
             @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
-          />
-          <img
-            src="../assets/images/affiliate/login_btn.png"
+            rounded
+            style="width: 100%"
+          >
+            加入我们
+          </q-btn>
+          <q-btn
+            color="brightbtn"
+            size="md"
             @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/login')"
-          />
-          <img
-            src="../assets/images/affiliate/email_btn.png"
+            rounded
+            style="width: 100%"
+          >
+            登录
+          </q-btn>
+
+          <q-btn
+            color="orangebtn"
+            size="md"
             @click.stop.prevent="
               openWindow(
                 `https://csweb01.amv4xjcbd.com/?partnerCode=XFCS&lang=zh-CN&way=${regDevice}&token=${store.token}`,
@@ -23,7 +35,11 @@
                 650
               )
             "
-          />
+            rounded
+            style="width: 100%"
+          >
+            邮箱找回
+          </q-btn>
         </div>
       </div>
       <!-- <div class="buttons">
@@ -188,16 +204,25 @@
         </div>
       </div>
       <div class="agent-reg-btn">
-        <img
+        <!-- <img
           src="../assets/images/affiliate/apply_agency_btn.png"
           @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
-        />
+        /> -->
         <!-- <a
           :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
           class="agent-reg-btn"
         >
           立即申请代理
         </a> -->
+        <q-btn
+          color="brightbtn"
+          size="md"
+          @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
+          rounded
+          style="width: 100%"
+        >
+          立即申请代理
+        </q-btn>
       </div>
       <div class="contact-us-container">
         <div class="customer-service">
@@ -376,6 +401,9 @@ export default defineComponent({
         flex-direction: column;
         align-items: flex-end;
         justify-content: space-evenly;
+        width: 70%;
+        max-width: 120px;
+        margin-left: auto;
         > img {
           width: 80%;
         }
