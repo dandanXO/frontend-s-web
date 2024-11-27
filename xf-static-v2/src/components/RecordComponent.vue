@@ -95,7 +95,14 @@
                 det.confirmStatus === 0
               "
             >
-              <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
+              <q-btn
+                @click="openWithdrawConfirmDialog(det)"
+                outline
+                label="确认到账"
+                class="btn-reminder"
+                size="sm"
+                color="bright"
+              />
             </template>
 
             <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">

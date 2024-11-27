@@ -86,17 +86,14 @@ export default defineComponent({
     };
 
     const tableHeaders = ([
-      {
-        key: "serialNumber",
-        label: "单号"
-      },
+
       {
         key: "withdrawAmount",
         label: "提款金额(元)"
       },
       {
         key: "status",
-        label: "状态"
+        label: "提款存款状态"
       },
       // {
       //   key: 'typeText',
@@ -104,8 +101,12 @@ export default defineComponent({
       // },
       {
         key: "withdrawDate",
-        label: "提款日期"
-      }
+        label: "提款时间"
+      },
+      {
+        key: "serialNumber",
+        label: "提款编码"
+      },
     ]);
 
     const handleDateChange = (data) => {
