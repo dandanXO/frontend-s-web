@@ -114,9 +114,9 @@
           </template>
         </InputRowGrid>
 
-        <div class="forgot-password">
+        <!-- <div class="forgot-password">
           <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
-        </div>
+        </div> -->
 
         <!-- <div style="padding-top: 30px"> -->
         <!-- <PrimaryButton :onClick="onSubmit" :label="'Login'" /> -->
@@ -135,30 +135,34 @@
         &nbsp;
         <router-link class="form-text" to="/register" style="color: #00ae00">Create account</router-link>
       </div> -->
+      <div class="bottom-btn">
+        <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
+          {{ $t("btn.login") }}
+        </q-btn>
+        <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onSubmit">
+          {{ $t("btn.register") }}
+        </q-btn>
+      </div>
     </div>
 
-    <div class="bottom-btn">
-      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
-        {{ $t("btn.confirm") }}
-      </q-btn>
-    </div>
+    
 
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-        <div>WhatsApp</div>
+        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-phone.png" />
+        <div>Service</div>
       </div>
       <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
+        <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>
-      <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
-        <div>Youtube</div>
+      <div class="list-item" @click="openTiktok()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
+        <div>Tiktok</div>
       </div>
       <div class="list-item" @click="openCharity()">
-        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-        <div>Charity</div>
+        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/icon-charity.png" />
+        <div>Charitable</div>
       </div>
       <!--      <div class="list-item" @click="openTiktok()">-->
       <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
@@ -166,8 +170,11 @@
       <!--      </div>-->
     </div>
 
-    <div class="bottom-img">
+    <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
+    </div> -->
+    <div class="forgot-password">
+      <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
     </div>
   </div>
 
@@ -693,9 +700,68 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
+
+.btn-primary {
+  color: #000a01;
+  height: 34px;
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  background: url("../assets/images/common/btn-primary.svg") no-repeat center center;
+  font-weight: 600;
+  border-radius: 6px;
+  text-transform: uppercase;
+
+  &__full {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    z-index: -1;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+  }
+}
+
+// secondary btn
+.btn-secondary {
+  color: #ffffff;
+  height: 34px;
+  font-weight: 600;
+  background: #232325;
+  border-radius: 6px;
+  position: relative;
+  text-transform: uppercase;
+  background: url("../assets/images/common/btn-secondary.svg") no-repeat center center;
+
+  &__full {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(180deg, #61ff00 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: -1;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+  }
+}
+
+
 .auth-tab-wrapper {
   width: 90%;
   margin: 0 auto;
+  display: none;
 
   .q-tab {
     min-height: 45px;
@@ -733,11 +799,11 @@ export default defineComponent({
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
-  padding-top: 20px;
+  justify-content: space-around;
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  padding: 20% 0;
 }
 
 .back-left {
@@ -754,7 +820,7 @@ export default defineComponent({
   img {
     display: block;
     width: 100%;
-    max-width: 140px;
+    max-width: 180px;
     margin-bottom: 10px;
   }
 }
@@ -824,6 +890,9 @@ export default defineComponent({
 
 .login-form-wrapper {
   padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 
   :deep(.q-field__control) {
     height: 45px;
@@ -835,11 +904,12 @@ export default defineComponent({
 }
 
 .forgot-password {
-  margin: 8px 0px 0px;
-  text-align: right;
+  margin: 30px 0px 0px;
+  text-align: center;
 
   .form-text {
-    color: #c1dffc;
+    color: #9f9f9f;
+    text-decoration: underline;
   }
 }
 
@@ -872,8 +942,9 @@ export default defineComponent({
 }
 
 .bottom-btn {
-  // margin-top: 20px;
-  padding: 3px 20px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .bottom-img {
