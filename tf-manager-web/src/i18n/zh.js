@@ -306,6 +306,7 @@ export default {
     gameValidBetAmountTotal: '总有效下注金额',
     gamePayoutAmountTotal: '总派彩金额',
     gameWinLossTotal: '总输/赢金额',
+    totalValidBet: "有效投注"
   },
   gameType: {
     ALL: '全部',

@@ -272,6 +272,7 @@ export default {
     gameValidBetAmountTotal: 'Tổng số tiền đặt cược hiệu quả',
     gamePayoutAmountTotal: 'Tổng số tiền thanh toán',
     gameWinLossTotal: 'Tổng số tiền thắng/thua',
+    totalValidBet: "Tổng Cược Hợp Lệ"
   },
   gameType: {
     ALL: 'Toàn bộ',

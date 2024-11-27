@@ -211,6 +211,7 @@ export default {
     gameValidBetAmountTotal: 'จำนวนเงินเดิมพันที่มีผลรวม',
     gamePayoutAmountTotal: 'ยอดจ่ายทั้งหมด',
     gameWinLossTotal: 'จำนวนเงินชนะ/แพ้ทั้งหมด',
+    totalValidBet: "ยอดเดิมพันที่มีผลทั้งหมด"
   },
   gameType: {
     SLOT: 'สล็อต',
