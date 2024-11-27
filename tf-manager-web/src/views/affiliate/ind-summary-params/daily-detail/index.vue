@@ -3,7 +3,7 @@
     <div class="header-container">
       <div class="search">
         <div>
-          <el-select
+          <!-- <el-select
             v-model="request.siteId"
             :placeholder="t('fields.site')"
             @change="handleChangeSites()"
@@ -14,7 +14,7 @@
               :label="item.siteName"
               :value="item.id"
             />
-          </el-select>
+          </el-select> -->
           <el-select
             v-if="
               route.query.loginNameList !== null &&
@@ -364,16 +364,16 @@ const total = reactive({
   data: null,
 })
 
-function handleChangeSites() {
-  request.loginNameList = null
-  loadAffiliateList()
-}
+// function handleChangeSites() {
+//   request.loginNameList = null
+//   loadAffiliateList()
+// }
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
@@ -403,7 +403,7 @@ async function loadSitesWithPreDefineAffiliate() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

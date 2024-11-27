@@ -17,6 +17,7 @@
               label="立即下载"
               color="brightbtn"
               class="top-btn"
+              rounded
             />
           </div>
         </div>
@@ -1807,7 +1808,7 @@ export default defineComponent({
 
           .game-btn {
             background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
-            border-radius: 6px;
+            // border-radius: 6px;
             color: #ffffff;
             padding: 2px 4px;
             line-height: 1;

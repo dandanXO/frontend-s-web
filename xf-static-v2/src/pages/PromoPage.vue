@@ -10,7 +10,7 @@
           v-if="!isPromoDetail"
           v-model:tab="tab"
           :items="tabItems"
-          :border-radius="10"
+          :border-radius="50"
           background-color="#183249;"
         />
       </div>

@@ -73,18 +73,16 @@
               type="text"
               v-model="loginForm.captchaCode"
               label="验证码"
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入验证码',
-                (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
-              ]"
               label-color="brand"
               rounded
               outlined
               color="white"
               bg-color="inputstyle"
+              readonly
             >
               <template v-slot:append>
-                <img :src="verificationImg" @click="getCode" />
+                <div id="captchaContainer"></div>
+                <!-- <img :src="verificationImg" @click="getCode" /> -->
               </template>
               <template v-slot:prepend>
                 <q-icon color="bright" name="security" size="24px" />
@@ -226,7 +224,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
@@ -388,19 +386,33 @@ export default defineComponent({
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
           $q.loading.show({
             message: "登录中"
           });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
             $q.loading.hide();
           } else {
+            const validate = window?.captchaObj.getValidate();
+            if (!validate) {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: "请完成验证码",
+                icon: "report_problem"
+              });
+              $q.loading.hide();
+              return;
+            }
             const loginDetails = {
               loginName: loginForm.loginName,
               password: loginForm.password,
               sid: sidParam,
-              captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId,
+              // captchaCode: loginForm.captchaCode,
+              // codeId: loginForm.codeId,
+              lotNumber: loginForm.lot_number,
+              captchaOutput: loginForm.captcha_output,
+              passToken: loginForm.pass_token,
+              genTime: loginForm.gen_time,
               ...(appVersionNo.value !== null ? { appVersion: appVer } : {})
             };
 
@@ -431,7 +443,7 @@ export default defineComponent({
                 }
               })
               .catch((error) => {
-                loginForm.captchaCode = "";
+                window.captchaObj.reset();
                 getCode();
                 $q.loading.hide();
               });
@@ -479,6 +491,75 @@ export default defineComponent({
       }
     };
 
+    // Dynamically load the Geetest script
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    const initGeetestCaptcha = async () => {
+      try {
+        // Step 1: Load Geetest script
+        await loadScript("https://static.geetest.com/v4/gt4.js");
+
+        // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+        const geetestConfig = {
+          config: {
+            captchaId: "c0e407fcee1b1c3a51d269495cf9524c",
+            language: "zh",
+            nativeButton: {
+              width: "calc(100vw - 180px)",
+              height: "43px"
+            },
+            nextWidth: "220px",
+            product: "float"
+          },
+          handler: captchaHandler
+        };
+
+        // Step 3: Initialize Geetest with the config
+        await window.initGeetest4(geetestConfig.config, geetestConfig.handler);
+      } catch (error) {
+        // message.value = "Error loading Geetest!";
+        console.error("Geetest loading error:", error);
+      }
+    };
+
+    const captchaHandler = (captchaObj) => {
+      window.captchaObj = captchaObj;
+      captchaObj
+        .appendTo("#captchaContainer")
+        .onReady(function () {
+          console.log("ready");
+        })
+        .onNextReady(function () {
+          console.log("nextReady");
+        })
+        .onBoxShow(function () {
+          console.log("boxShow");
+          isLoading.value = true;
+        })
+        .onError(function (e) {
+          console.log(e);
+        })
+        .onSuccess(function () {
+          console.log("success");
+          let result = window.captchaObj.getValidate();
+          for (let key in result) {
+            loginForm[key] = result[key];
+          }
+          isLoading.value = false;
+        })
+        .onClose(function () {
+          isLoading.value = false;
+        });
+    };
+
     const backHome = () => {
       router.push("/");
     };
@@ -496,6 +577,15 @@ export default defineComponent({
       }
     };
 
+    watch(tab, (newVal) => {
+      if (newVal === "login") {
+        initGeetestCaptcha();
+      }
+    });
+    watch(loginType, () => {
+      initGeetestCaptcha();
+    });
+
     onMounted(() => {
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
@@ -503,6 +593,7 @@ export default defineComponent({
         tab.value = "register";
       }
       checkRememberPwd();
+      initGeetestCaptcha();
       getVersionNo();
     });
     return {
@@ -610,5 +701,74 @@ export default defineComponent({
     color: #33bcd4;
     text-decoration: none;
   }
+}
+
+@media (min-width: 500px) {
+  #captchaContainer .geetest_holder {
+    width: 320px !important;
+  }
+}
+
+#captchaContainer {
+  width: 100%;
+
+  .geetest_content {
+    color: white;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg, #fff, #f4f4f4) !important;
+    border-color: #333c4b;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #424f72;
+    font-family: "PingFang SC" !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success
+    .geetest_content
+    .geetest_tip_container
+    .geetest_tips_wrap
+    .geetest_tip {
+    color: #39c522 !important;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn {
+    border: 1px solid #dfdfdf;
+    background: #2a313e;
+  }
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
+    color: #a0bcd6;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
+    background: #2a313e;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
+  .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
+    background-color: #a0bcd6;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #409eff;
+  }
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_mask,
+  .geetest_popup_wrap.geetest_dark .geetest_holder .geetest_mask {
+    background-color: #2a313e;
+  }
+
+  .geetest_captcha .geetest_holder .geetest_content .geetest_space_center {
+    background-color: #2a313e;
+  }
+}
+
+.q-field--outlined.q-field--readonly .q-field__control:before {
+  border-style: double;
 }
 </style>

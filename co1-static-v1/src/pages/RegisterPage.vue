@@ -128,7 +128,7 @@ export default defineComponent({
       referrer: "",
       smsCodeId: "",
       smsCode: "",
-      realName: "lee bruce"
+      realName: ""
     });
     const getCode = () => {
       // api

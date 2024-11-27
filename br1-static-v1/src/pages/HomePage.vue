@@ -2692,7 +2692,7 @@ const translateTitle = (title) => {
     hot: t("home.menu_hot"),
     lobby: t("home.menu_lobby"),
     slot: t("home.menu_slot"),
-    casino: t("home.cat_livecasino"),
+    casino: t("home.menu_live"),
     fishing: t("home.menu_fish"),
     sport: t("home.menu_sport")
   };

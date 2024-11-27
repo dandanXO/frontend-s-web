@@ -591,6 +591,7 @@ function edit() {
 }
 
 function submit() {
+  form.domain = form.domain.replace("https://", "").replace("http://", "");
   form.domain = form.http + form.domain
   if (uiControl.dialogType === 'CREATE') {
     create()

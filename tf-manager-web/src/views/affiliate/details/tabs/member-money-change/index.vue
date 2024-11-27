@@ -24,6 +24,14 @@
           @click="loadMemberMoneyChange(true)"
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:affiliate:detail']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
 
@@ -57,7 +65,8 @@
             <span v-else-if="scope.row.type === 'AFFILIATE_TRANSFER' && scope.row.subType === 'COMMISSION'">{{ t('moneyChange.subType.AFFILIATE_COMMISSION') }}</span>
             <span
               v-else-if="scope.row.subType === 'DEPOSIT' || scope.row.subType === 'WITHDRAW' ||
-                scope.row.subType === 'TRASNFER_IN' || scope.row.subType === 'TRANSFER_OUT' || scope.row.subType === 'AFFILIATE_SETTLEMENT'"
+                scope.row.subType === 'TRASNFER_IN' || scope.row.subType === 'TRANSFER_OUT' || scope.row.subType === 'AFFILIATE_SETTLEMENT'
+                || scope.row.subType === 'AFFILIATE_RECEIVE'"
             >{{ t('moneyChange.subType.' + scope.row.subType) }}</span>
             <span v-else>{{ scope.row.subType }}</span>
           </template>
@@ -129,6 +138,22 @@
         @size-change="loadMemberMoneyChange(true)"
       />
     </el-card>
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -140,6 +165,13 @@ import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { useRoute } from "vue-router";
+import { requestMemberMoneyChangeExport } from "@/api/member";
+import { useStore } from "@/store";
+
+const store = useStore()
+const uiControl = reactive({
+  messageVisible: false,
+})
 
 const { t } = useI18n();
 const props = defineProps({
@@ -228,6 +260,41 @@ async function loadMemberMoneyChange(frombutton) {
   page.records = ret.records;
   page.pagingState = ret.pagingState
   page.loading = false;
+}
+
+async function requestExportExcel() {
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(
+        query.recordTime[0],
+        props.timeZone,
+        'start'
+      )
+      query.recordTime[1] = formatInputTimeZone(
+        query.recordTime[1],
+        props.timeZone,
+        'end'
+      )
+      query.recordTime = query.recordTime.join(',')
+    }
+  }
+  query.siteId = site.id
+  query.memberId = props.affId
+  query.pagingState = page.pagingState
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await requestMemberMoneyChangeExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 onMounted(() => {

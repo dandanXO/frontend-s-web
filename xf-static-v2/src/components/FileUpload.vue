@@ -1,12 +1,5 @@
 <template>
-  <q-file
-    name="upload_img"
-    v-model="file"
-    label="上传图片"
-    outlined
-    color="white"
-    bg-color="recinputstyle"
-  >
+  <q-file name="upload_img" v-model="file" label="上传图片" outlined color="white" bg-color="roundedinputstyle" rounded>
     <template v-slot:prepend>
       <q-icon name="cloud_upload" size="sm" />
     </template>
