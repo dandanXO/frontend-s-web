@@ -226,7 +226,7 @@
           </div>
 
           <div class="text-orange" v-if="isEWALLET">
-            <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
+            <span>*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
           </div>
 
           <div class="q-mt-md">
@@ -313,7 +313,7 @@
               <img
                 :src="phoneVerificationImg"
                 title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer; border-radius: 32px;"
+                style="margin-top: 6px; cursor: pointer; border-radius: 32px"
                 @click="getCode"
               />
             </template>
