@@ -71,7 +71,16 @@
             <div class="item-content">
               <div>
                 <div class="item-acc">{{ $t("bank.account") }}: {{ item.cardNumber }}</div>
-                <div class="item-acc">{{ $t("bank.accountType") }}: {{ item.cardAddress }}</div>
+                <div class="item-acc">
+                  {{ $t("bank.accountType") }}:
+                  {{
+                    item.cardAddress?.includes("SAVINGS")
+                      ? $t("form.accSavings")
+                      : item.cardAddress?.includes("CHECKING")
+                      ? $t("form.accChecking")
+                      : item.cardAddress
+                  }}
+                </div>
               </div>
 
               <div class="item-copy">

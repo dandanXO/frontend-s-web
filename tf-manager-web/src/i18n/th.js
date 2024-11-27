@@ -208,8 +208,10 @@ export default {
     gameMemberCountTotal: 'จำนวนสมาชิกเดิมพันทั้งหมด',
     gameBetCountTotal: 'จำนวนธุรกรรมการเดิมพันทั้งหมด',
     gameBetAmountTotal: 'จำนวนเงินเดิมพันทั้งหมด',
+    gameValidBetAmountTotal: 'จำนวนเงินเดิมพันที่มีผลรวม',
     gamePayoutAmountTotal: 'ยอดจ่ายทั้งหมด',
     gameWinLossTotal: 'จำนวนเงินชนะ/แพ้ทั้งหมด',
+    totalValidBet: "ยอดเดิมพันที่มีผลทั้งหมด"
   },
   gameType: {
     SLOT: 'สล็อต',
@@ -913,6 +915,7 @@ export default {
     recordDate: 'วันที่บันทึก',
     recordTime: 'บันทึกเวลา',
     redeemedBy: 'แลกโดย',
+    redeemCode: 'รหัสแลกรางวัล',
     redirect: 'เปลี่ยนเส้นทาง',
     reenterPassword: 'ป้อนรหัสผ่านอีกครั้ง',
     referrer: 'ผู้อ้างอิง',
@@ -1419,6 +1422,7 @@ export default {
     validateDesktopImageRequired: 'จำเป็นต้องมีรูปภาพเดสก์ท็อป',
     validateDesktopBannerRequired: 'จำเป็นต้องมีแบนเนอร์เดสก์ท็อป',
     validateDeviceRequired: 'จำเป็นต้องมีอุปกรณ์',
+    validateDisplayEndTimeBeforeStartTime: 'เวลาสิ้นสุดการแสดงผลต้องไม่เร็วกว่าเวลาเริ่มต้นการแสดงผล',
     validateDomainRequired: 'จำเป็นต้องมีโดเมน',
     validateEmailRequired: 'จำเป็นต้องระบุอีเมล',
     validateEmailFormat: 'กรุณากรอกรูปแบบที่อยู่อีเมลที่ถูกต้อง',
@@ -1849,6 +1853,7 @@ export default {
     WITHDRAW_FLUCTUATION: 'การเปลี่ยนแปลงการถอนเงิน',
     BONUS_FLUCTUATION: 'การเปลี่ยนแปลงโบนัส',
     MQ_LAST_CONSUME_TIME_CHECK: 'หัวข้อ MQ ไม่ถูกใช้งาน',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'งานว่าง(ดึงข้อมูลการเดิมพัน)',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',
@@ -2013,5 +2018,6 @@ export default {
     21100: 'ตั๋วสำหรับสมาชิกคนนี้ได้ถึงขีดจำกัดตั๋วสูงสุดแล้ว',
     21101: 'ไม่พบลูกกลิ้งหลายล้อสำหรับไซต์นี้',
     30000: 'การอัปเดตสถานะธุรกรรม PG ล้มเหลว',
+    50002: 'จำนวนเงินสูงสุดที่ต้องปรับเกินกำหนด'
   },
 }

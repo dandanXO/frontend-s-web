@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
       </div>
       <div class="btn-group">
         <el-button
@@ -1191,7 +1191,7 @@ onMounted(async() => {
     request.siteId = site.value.id;
   } else {
     site.value = list.sites[0];
-    request.siteId = site.value.id;
+    request.siteId = store.state.user.siteId
   }
   checkUseRule()
   await loadWithdrawPlatform()

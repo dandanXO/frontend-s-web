@@ -753,9 +753,9 @@ export default defineComponent({
 
     const getVipProgress = (max) => {
       if (max) {
-        vipProgress.value = parseFloat(store.currentDeposit) / parseFloat(store.currentDeposit);
+        vipProgress.value = parseFloat(store.currentUpgradeBetAmt) / parseFloat(store.currentUpgradeBetAmt);
       } else {
-        vipProgress.value = parseFloat(store.currentDeposit) / parseFloat(store.levelUpDeposit);
+        vipProgress.value = parseFloat(store.currentBetAmt) / parseFloat(store.currentUpgradeBetAmt);
       }
     };
     const submitPhotoLoading = ref(false);

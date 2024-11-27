@@ -144,6 +144,7 @@ export default {
       AFFILIATE_SETTLEMENT: '제휴 정산',
       AFFILIATE_DEPOSIT: '잔액에서 이체',
       AFFILIATE_COMMISSION: '커미션 잔액에서 이체',
+      AFFILIATE_RECEIVE: '받다',
     },
   },
   status: {
@@ -268,8 +269,10 @@ export default {
     gameMemberCountTotal: '총 베팅 회원 수',
     gameBetCountTotal: '총 베팅 거래 수',
     gameBetAmountTotal: '총 베팅 금액',
+    gameValidBetAmountTotal: '총 유효 베팅 금액',
     gamePayoutAmountTotal: '총 지급 금액',
     gameWinLossTotal: '총 승/패 금액',
+    totalValidBet: "총 유효 베팅"
   },
   gameType: {
     ALL: '전체',
@@ -1314,6 +1317,7 @@ export default {
     recordTime: '기록 시간',
     redeemCash: '현금 교환',
     redeemedBy: '교환자',
+    redeemCode: '리딤 코드',
     redeemPoints: '포인트 교환',
     redirect: '리디렉트',
     reenterPassword: '비밀번호 재입력',
@@ -2115,6 +2119,7 @@ export default {
     validateDesktopImageRequired: '데스크탑 이미지가 필요합니다',
     validateDesktopBannerRequired: '데스크탑 배너가 필요합니다',
     validateDeviceRequired: '장치가 필요합니다',
+    validateDisplayEndTimeBeforeStartTime: '표시 종료 시간은 표시 시작 시간보다 이전일 수 없습니다.',
     validateDomainRequired: '도메인이 필요합니다',
     validateEmailRequired: '이메일이 필요합니다',
     validateEmailFormat: '올바른 이메일 주소 형식을 입력하세요',
@@ -2768,6 +2773,7 @@ export default {
     WITHDRAW_FLUCTUATION: '출금 변동',
     BONUS_FLUCTUATION: '보너스 변동',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
+    JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '작업 유휴(베팅 기록 가져오기)',
   },
   error: {
     400: '잘못된 요청',
@@ -2953,5 +2959,6 @@ export default {
     30000: 'PG 업데이트 트랜잭션 상태 업데이트 실패',
     24003: '결과가 이미 처리되었습니다',
     27000: '키 수량이 충분하지 않습니다',
+    50002: '조정 가능 최대 금액을 초과했습니다'
   },
 }

@@ -4,7 +4,7 @@
       <div class="balance">
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
-          <template v-else>{{ convertToCommaAmount(store.balance, 2) }}</template>
+          <template v-else>{{ convertToCommaAmount(store.balance) }}</template>
         </span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
@@ -15,7 +15,7 @@
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
           <template v-else>
-            {{ convertToCommaAmount(withdrawableBalance, 2) }}
+            {{ convertToCommaAmount(withdrawableBalance) }}
           </template>
         </span>
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
@@ -216,6 +216,10 @@
                     clearable
                     v-model="bankCardField.cardAddress"
                     :options="accTypeList"
+                    option-value="valType"
+                    option-label="name"
+                    emit-value
+                    map-options
                     :rules="[() => isValidCardAddress()]"
                     hide-bottom-space
                   />
@@ -233,7 +237,7 @@
 
           <div class="mid-wrapper">
             <q-input
-              type="number"
+              type="tel"
               ref="amountRef"
               filled
               dense
@@ -253,6 +257,7 @@
               hide-bottom-space
               @focus="scrollToInput"
               @blur="isInputFocus = false"
+              @update:model-value="removeDecimals"
             >
               <template v-slot:append>
                 <q-btn-group>
@@ -375,7 +380,7 @@
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close-dark" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
@@ -518,7 +523,7 @@ const selectWithdrawCurrency = (item) => {
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
-const accTypeList = ["CHECKING", "SAVINGS"];
+const accTypeList = ref([]);
 
 const displayCardType = computed(() => {
   if (selectedMethodItem.value.payType === "EWALLET") {
@@ -816,6 +821,17 @@ onMounted(() => {
   checkNewUser();
   // loadCards();
   loadInfo();
+
+  accTypeList.value = [
+    {
+      valType: "CHECKING",
+      name: t("form.accChecking")
+    },
+    {
+      valType: "SAVINGS ",
+      name: t("form.accSavings")
+    }
+  ];
 });
 
 onActivated(() => {
@@ -933,6 +949,10 @@ const scrollToInput = () => {
   }
 };
 
+const removeDecimals = (value) => {
+  withdrawInfo.amount = value.replace(/[^0-9]/g, "");
+};
+
 // KYC Dialog
 const personalState = reactive({
   memberInfo: {}
@@ -951,7 +971,7 @@ const closeUserKYCDialog = () => {
 const loadInfo = () => {
   personalState.memberInfo = userStore();
 
-  if (!store.guest && personalState.memberInfo.realName === null) {
+  if (!store.guest && personalState.memberInfo.realName === "") {
     openUserKYCDialog();
   }
 };
