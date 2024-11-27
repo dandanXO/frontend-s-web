@@ -33,7 +33,7 @@
                   <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
                   <span>{{ hotMatch.teamOneName }}</span>
                 </div>
-                <div class="hot-match-time">{{ hotMatch.displayEndTime }}<div class="bet-btn" @click="props.openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)">立即投注</div></div>
+                <div class="hot-match-time">{{ hotMatch.competitionTime }}<div class="bet-btn" @click="props.openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)">立即投注</div></div>
                 <div class="hot-match-team">
                   <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
                   <span>{{ hotMatch.teamTwoName }}</span>
@@ -51,6 +51,7 @@
 import { onMounted, ref, computed } from "vue";
 import { getHotMatches } from "@/api/index/hotmatch.js";
 import { useLocalStorage } from "@vueuse/core";
+import moment from 'moment';
 
 const hotMatches = ref([]);
 const competitionTypes = ref(['ESport', 'Football', 'Basketball']);
@@ -97,7 +98,11 @@ onMounted(() => {
 
       if (uniqueCompetitionTypes.length > 0) {
         selectedCompetitionType.value = uniqueCompetitionTypes[0];
-        hotMatches.value = res.data;
+        const ongoingCompetitions = res.data.filter((competition) => {
+          const now = moment().format('YYYY-MM-DD HH:mm:ss');
+          return moment(now).isBetween(competition.displayStartTime, competition.displayEndTime, undefined, '[]');
+        });
+        hotMatches.value = ongoingCompetitions;
       }
     }
   }).catch(() => {
