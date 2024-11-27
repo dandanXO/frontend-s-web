@@ -179,7 +179,9 @@ export default boot(({ app, router }) => {
         res.code === ResponseCode.ERROR_WITHDRAW_LIMIT_MEMBER ||
         res.code === ResponseCode.ERROR_NO_ELIGIBLE_PLAN_FOUND ||
         res.code === ResponseCode.ERROR_NO_CASH_FLOW ||
-        res.code === ResponseCode.ERROR_INVALID_REDEEM_CODE
+        res.code === ResponseCode.ERROR_INVALID_REDEEM_CODE ||
+        res.code === ResponseCode.ERROR_MAX_NUMBER_OF_REDEEM ||
+        res.code === ResponseCode.ERROR_CODE_FULLY_REDEEM
       ) {
         res.message =
           i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";

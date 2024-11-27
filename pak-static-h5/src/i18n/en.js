@@ -167,7 +167,11 @@ export default {
     redemptionCode_rule_01: "Please insert redemption code",
     redemptionCode_placeholder: "Pleases Enter redemption code",
     redemptionInvalidCode:
-      "The code is invalid. Please check our official WhatsApp channel for the correct promo code to redeem."
+      "The code is invalid. Please check our official WhatsApp channel for the correct promo code to redeem.",
+    redemptionAlreadyRedeemed:
+      "You have already participated in this redemption. Please wait for the next free redemption code release on our official WhatsApp channel.",
+    redemptionFullyRedeemed:
+      "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time."
   },
   btn: {
     login: "Login",
