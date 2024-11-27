@@ -271,6 +271,7 @@ export default {
     gameValidBetAmountTotal: '총 유효 베팅 금액',
     gamePayoutAmountTotal: '총 지급 금액',
     gameWinLossTotal: '총 승/패 금액',
+    totalValidBet: "총 유효 베팅"
   },
   gameType: {
     ALL: '전체',

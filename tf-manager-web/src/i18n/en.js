@@ -301,6 +301,7 @@ export default {
     gameValidBetAmountTotal: 'Total Valid Bet Amount',
     gamePayoutAmountTotal: 'Total Payout Amount',
     gameWinLossTotal: 'Total Win/Loss Amount',
+    totalValidBet: "Total Valid Bet"
   },
   gameType: {
     ALL: 'ALL',

@@ -115,6 +115,7 @@
               prop="betCount"
               :label="t('reportGame.gameBetCount')"
             />
+
             <el-table-column prop="bet" :label="t('reportGame.gameBetAmount')">
               <template #default="scope1">
                 $
@@ -158,6 +159,7 @@
         prop="totalBetCount"
         :label="t('reportGame.gameBetCountTotal')"
       />
+
       <el-table-column
         prop="totalBet"
         :label="t('reportGame.gameBetAmountTotal')"
@@ -172,6 +174,7 @@
           />
         </template>
       </el-table-column>
+
       <el-table-column
         prop="totalBet"
         :label="t('reportGame.gameValidBetAmountTotal')"
