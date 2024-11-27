@@ -924,6 +924,17 @@ export default defineComponent({
         }
       }
 
+      .geetest-captcha-wrapper {
+        background: linear-gradient(180deg, #2e4166 0%, #1a263f 100%);
+
+        .input-icon {
+          filter: brightness(0) invert(1);
+        }
+        .input-label {
+          color: #fff;
+        }
+      }
+
       .login-form {
         padding: 65px 20px 20px 20px;
         background: linear-gradient(180deg, #2e4166 0%, #1a263f 100%);

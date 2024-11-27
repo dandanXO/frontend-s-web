@@ -489,6 +489,10 @@ onMounted(async () => {
   padding: 20px;
   align-items: flex-start;
   margin-top: 20px;
+
+  p {
+    color: #000;
+  }
   .left-panel {
     flex: 4;
     .big-icon {
