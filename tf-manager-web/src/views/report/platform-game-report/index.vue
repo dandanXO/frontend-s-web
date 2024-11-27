@@ -176,7 +176,7 @@
       </el-table-column>
 
       <el-table-column
-        prop="totalBet"
+        prop="totalValidBet"
         :label="t('reportGame.gameValidBetAmountTotal')"
       >
         <template #default="scope">
@@ -543,7 +543,8 @@ onMounted(async () => {
 
 function getSummaries(param) {
   if (hasPermission(['sys:report:platform:game:report:summary'])) {
-    const { columns, data } = param
+    const { columns, data } = param;
+    // console.log(param);
     const sums = []
     columns.forEach((column, index) => {
       if (index === 0) {
@@ -574,6 +575,9 @@ function getSummaries(param) {
         }
       }
     })
+
+    // console.log("SUMS")
+    // console.log(sums);
 
     return sums
   } else {
