@@ -1,7 +1,7 @@
 <template>
   <div class="roles-main">
     <el-button
-      v-permission="['sys:member:update:withdraw-cards']"
+      v-permission="['sys:member:update:withdraw-card']"
       icon="el-icon-plus"
       size="mini"
       type="primary"
