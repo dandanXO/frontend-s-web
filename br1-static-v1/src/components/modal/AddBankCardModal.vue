@@ -330,11 +330,11 @@ const isValidCardNumber = () => {
 
   // if (selectedOption.value === "phone") {
   result = !cardNumber ? t("form.phone_rules_01") : true;
-  if (cardNumber.startsWith("0")) {
-    return t("form.phone_rules_03");
-  }
+  // if (cardNumber.startsWith("0")) {
+  //   return t("form.phone_rules_03");
+  // }
   const digitCount = cardNumber.match(/\d/g)?.length || 0;
-  if (digitCount !== 8) {
+  if (digitCount < 8 || digitCount > 11) {
     return t("form.phone_rules_02");
   }
   // } else if (selectedOption.value === "email") {
