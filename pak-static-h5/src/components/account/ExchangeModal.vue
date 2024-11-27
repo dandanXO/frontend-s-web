@@ -30,7 +30,7 @@
                   <p class="text-red error-text" v-if="errorCode === 57000">
                     {{ $t("form.redemptionFullyRedeemed") }}
                   </p>
-                  <p class="text-red error-text" v-else-if="errorCode === 50001">
+                  <p class="text-red error-text" v-else-if="errorCode === 50001 || errorCode === 35001">
                     {{ $t("form.redemptionAlreadyRedeemed") }}
                   </p>
                   <p class="text-red error-text" v-else-if="errorCode === 57006">
