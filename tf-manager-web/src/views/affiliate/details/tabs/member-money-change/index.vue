@@ -57,7 +57,8 @@
             <span v-else-if="scope.row.type === 'AFFILIATE_TRANSFER' && scope.row.subType === 'COMMISSION'">{{ t('moneyChange.subType.AFFILIATE_COMMISSION') }}</span>
             <span
               v-else-if="scope.row.subType === 'DEPOSIT' || scope.row.subType === 'WITHDRAW' ||
-                scope.row.subType === 'TRASNFER_IN' || scope.row.subType === 'TRANSFER_OUT' || scope.row.subType === 'AFFILIATE_SETTLEMENT'"
+                scope.row.subType === 'TRASNFER_IN' || scope.row.subType === 'TRANSFER_OUT' || scope.row.subType === 'AFFILIATE_SETTLEMENT'
+                || scope.row.subType === 'AFFILIATE_RECEIVE'"
             >{{ t('moneyChange.subType.' + scope.row.subType) }}</span>
             <span v-else>{{ scope.row.subType }}</span>
           </template>
