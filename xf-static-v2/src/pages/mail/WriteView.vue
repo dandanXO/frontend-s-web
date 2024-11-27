@@ -16,6 +16,7 @@
           outlined
           color="white"
           bg-color="recinputstyle"
+          rounded
         />
       </div>
 
@@ -49,6 +50,7 @@
           outlined
           color="white"
           bg-color="recinputstyle"
+          rounded
         />
       </div>
       <div class="bg-dark">
@@ -78,7 +80,7 @@
         />
       </div>
       <div class="">
-        <q-btn class="fit" color="brightbtn" @click="onSubmit" label="发送" />
+        <q-btn class="fit" color="brightbtn" @click="onSubmit" label="发送" rounded />
       </div>
     </q-form>
   </div>
