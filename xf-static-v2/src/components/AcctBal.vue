@@ -17,11 +17,11 @@
       </div>
 
       <div class="refreshItems row q-gutter-x-md">
-        <q-btn color="brightbtn" @click="refreshBalance('all')" :disable="isRefreshingBalance">
+        <q-btn color="brightbtn" @click="refreshBalance('all')" :disable="isRefreshingBalance" rounded>
           <template v-if="!isRefreshingBalance">刷新余额</template>
           <template v-else>请稍等{{ seconds }}秒</template>
         </q-btn>
-        <q-btn @click="transferOutAll" color="orangebtn" :disable="isTransferring">
+        <q-btn @click="transferOutAll" color="orangebtn" :disable="isTransferring" rounded>
           <template v-if="!isTransferring">一键转出</template>
           <template v-else>转出中...</template>
         </q-btn>

@@ -273,7 +273,7 @@ onMounted(() => {
       width: 100%;
       border: none;
       background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
-      border-radius: 4px;
+      border-radius: 40px;
       padding: 10px 0;
       font-size: var(--font-size-large);
       font-weight: 600;

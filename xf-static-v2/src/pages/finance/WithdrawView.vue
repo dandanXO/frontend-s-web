@@ -6,7 +6,7 @@
         <div class="withdrawalmethod">
           <div class="title-wrapper" style="padding-bottom: 0px">
             <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
-            <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+            <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick" rounded>
               <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
               <span>升级快速提款</span>
             </q-btn>
@@ -43,10 +43,11 @@
             map-options
             :rules="[(val) => !!val || '请选择' + chooseLabel()]"
             padding="none"
+            style="width: 100%"
+            rounded
             outlined
             color="white"
             bg-color="recinputstyle"
-            style="width: 100%"
           >
             <template v-slot:no-option>
               <q-item>
@@ -107,6 +108,7 @@
             ]"
             clearable
             label-color="brand"
+            rounded
             outlined
             color="white"
             bg-color="recinputstyle"
@@ -118,7 +120,7 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
-                <q-btn @click="updateWithdrawAmt" label="全额提款" color="brightbtn" />
+                <q-btn @click="updateWithdrawAmt" label="全额提款" color="brightbtn" rounded />
               </span>
             </template>
           </q-input>
@@ -175,6 +177,7 @@
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
+                rounded
                 @click="openEWalletTutorial"
                 :label="tutorialLabel()"
               />
@@ -219,6 +222,7 @@
               :disable="withdrawLoading"
               label="立即提款"
               size="md"
+              rounded
             />
           </div>
           <div class="q-py-md text-orange">

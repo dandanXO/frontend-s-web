@@ -77,7 +77,7 @@
             "
             class="buttons"
           >
-            <q-btn label="催单" @click="feedbackTrans(det)" color="orangebtn" class="btn-reminder" size="md" />
+            <q-btn label="催单" @click="feedbackTrans(det)" color="orangebtn" class="btn-reminder" size="md" rounded />
           </div>
 
           <div v-if="recordType === 'withdraw'" class="buttons">
@@ -151,7 +151,8 @@
               disable
               outlined
               color="white"
-              bg-color="recinputstyle"
+              bg-color="roundedinputstyle"
+              rounded
             />
           </div>
 
@@ -177,7 +178,8 @@
               :max-rows="5"
               outlined
               color="white"
-              bg-color="recinputstyle"
+              bg-color="roundedinputstyle"
+              rounded
             />
           </div>
 
@@ -188,6 +190,7 @@
             label="发送"
             style="width: 100%"
             @click="submitReminder"
+            rounded
           />
         </q-form>
       </q-card-section>
