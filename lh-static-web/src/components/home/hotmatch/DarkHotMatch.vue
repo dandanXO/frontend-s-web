@@ -230,7 +230,7 @@ onMounted(() => {
 
           .hot-match-img {
             width: 50px;
-            background-color: #8a8af7;
+            background-color: #27307c;
             border-radius: 100px;
             padding: 5px;
             aspect-ratio: 1/1;
