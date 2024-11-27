@@ -184,7 +184,7 @@
                   {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
                 </span>
 
-                <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
+                <q-btn class="style-blue-btn" icon="add" dense @click="handleBackBtn()" />
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
@@ -607,7 +607,7 @@ onMounted(() => {
     flex-direction: column;
     padding-left: 16px;
     padding-right: 16px;
-    gap: 12px;
+    gap: 0px;
     transition: 0.3s all;
 
     overflow-y: auto;
@@ -627,6 +627,8 @@ onMounted(() => {
       align-items: center;
       width: 170px;
       background-color: rgba(255, 255, 255, 0.05);
+      background: url("../assets/images/common/side-menu-item-bg.svg") no-repeat center center;
+      background-size: 100% 100%;
       border-radius: 5px;
       color: #9f9f9f;
       font-weight: bold;
@@ -634,7 +636,7 @@ onMounted(() => {
       text-decoration: none;
 
       &__download {
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #24EE89 0%, #9FE871 100%);
         color: #000a01;
         font-weight: bold;
 
@@ -648,7 +650,7 @@ onMounted(() => {
 
       &__transparent {
         background-color: transparent;
-        height: 40px;
+        height: 50px;
       }
 
       &__checkin {
@@ -726,8 +728,8 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background-image: url("../assets/images/auth/auth-bg.png");
-  background-size: 100% 100%;
+  // background-image: url("../assets/images/auth/auth-bg.png");
+  // background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   position: fixed;
@@ -861,8 +863,9 @@ onMounted(() => {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
       // background: #192633;
-      background: rgba(0, 10, 1, 0.6);
-      border-radius: 10px;
+      // background: rgba(0, 10, 1, 0.6);
+      background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+      border-radius: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -987,6 +990,8 @@ onMounted(() => {
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
   animation: blink 1.5s infinite;
+  border-radius: 25px;
+  box-shadow: 0px 2px 0px 0px #1dca6a;
 }
 
 .menu-line {
