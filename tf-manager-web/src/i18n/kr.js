@@ -144,6 +144,7 @@ export default {
       AFFILIATE_SETTLEMENT: '제휴 정산',
       AFFILIATE_DEPOSIT: '잔액에서 이체',
       AFFILIATE_COMMISSION: '커미션 잔액에서 이체',
+      AFFILIATE_RECEIVE: '받다',
     },
   },
   status: {

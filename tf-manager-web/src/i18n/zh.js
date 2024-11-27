@@ -166,6 +166,7 @@ export default {
       AFFILIATE_COMMISSION: '佣金代存',
       MAIN_WALLET: '主钱包平账',
       COMMISSION_WALLET: '佣金钱包平账',
+      AFFILIATE_RECEIVE: '代收',
     },
   },
   status: {
