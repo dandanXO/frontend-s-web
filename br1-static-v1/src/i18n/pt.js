@@ -293,7 +293,7 @@ export default {
     menu_hot: "Popular",
     menu_live: "Live",
     menu_fish: "Pesca",
-    menu_slot: "Caça-Níqueis",
+    menu_slot: "Slot",
     menu_poker: "Poker",
     menu_sport: "Esporte",
     cat_hotgames: "Jogos Populares",
