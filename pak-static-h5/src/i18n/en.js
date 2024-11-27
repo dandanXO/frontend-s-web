@@ -164,8 +164,14 @@ export default {
     content_rules_02: "Content length is 500 words or less",
     exchangeTitle: "Enter redemption code",
     redemptionCode: "Enter redemption code",
-    redemptionCode_rule_01: "Please insert Phone number",
-    redemptionCode_placeholder: "pleases Enter redemption code"
+    redemptionCode_rule_01: "Please insert redemption code",
+    redemptionCode_placeholder: "Pleases Enter redemption code",
+    redemptionInvalidCode:
+      "The code is invalid. Please check our official WhatsApp channel for the correct promo code to redeem.",
+    redemptionAlreadyRedeemed:
+      "You have already participated in this redemption. Please wait for the next free redemption code release on our official WhatsApp channel.",
+    redemptionFullyRedeemed:
+      "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time."
   },
   btn: {
     login: "Login",
@@ -680,7 +686,8 @@ export default {
     45001: "Received random bonus today",
     47000: "The discount has not yet been claimed.",
     47001: "No amount available for claim.",
-    50000: "Temporary unable to bind card",
+    50000:
+      "To keep your funds safe, you need to wait 48 hours after changing your password before adding a new wallet.",
     50001: "The number of available transfers has been reached, please continue betting before transferring again",
     51000: "Today's sign-in reward has already been claimed",
     51001: "Requirements not met",

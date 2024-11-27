@@ -25,7 +25,8 @@
         readonly
         filled
         color="white"
-        bg-color="recinputstyle"
+        bg-color="roundedinputstyle"
+        rounded
       />
       <q-input
         ref="realNameRef"
@@ -38,7 +39,7 @@
         :readonly="personalState.memberInfo.realName ? true : false"
         filled
         color="white"
-        bg-color="recinputstyle"
+        bg-color="roundedinputstyle"
       />
       <q-input
         ref="birthdayRef"
@@ -51,7 +52,7 @@
         :rules="[(val) => (val && val.length > 0) || '请输入生日']"
         filled
         color="white"
-        bg-color="recinputstyle"
+        bg-color="roundedinputstyle"
       >
         <template v-slot:append>
           <q-icon
@@ -84,7 +85,7 @@
           readonly
           filled
           color="white"
-          bg-color="recinputstyle"
+          bg-color="roundedinputstyle"
           style="width: 100%"
         >
           <template v-slot:append v-if="isEditPhone">
@@ -94,6 +95,7 @@
               label="验证"
               @click="goToPage('/account/verifyTelephone')"
               style="white-space: nowrap"
+              rounded
             />
           </template>
         </q-input>
@@ -110,7 +112,7 @@
           readonly
           filled
           color="white"
-          bg-color="recinputstyle"
+          bg-color="roundedinputstyle"
           style="width: 100%"
         >
           <template v-slot:append v-if="isEditEmail">
@@ -120,13 +122,14 @@
               label="验证"
               @click="goToPage('/account/verifyEmail')"
               style="white-space: nowrap"
+              rounded
             />
           </template>
         </q-input>
       </div>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" style="width: 100%" @click="updateState" label="保存信息" />
+        <q-btn size="md" color="brightbtn" style="width: 100%" @click="updateState" label="保存信息" rounded />
       </div>
     </q-form>
   </div>
@@ -155,7 +158,7 @@
               <img
                 :src="verificationImg"
                 title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer"
+                style="margin-top: 6px; cursor: pointer; border-radius: 32px"
                 @click="getCode"
               />
             </template>

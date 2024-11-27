@@ -116,6 +116,9 @@ const formatMoney = () => {
   rawNumber.value = rawNumber.value.replace(/,/g, '');
 }
 const formatWithCommas = (value) => {
+  if (!value) {
+    return '';
+  }
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 

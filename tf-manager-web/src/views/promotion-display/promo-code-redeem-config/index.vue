@@ -93,6 +93,12 @@
             style="width: 350px"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.redeemCode')" prop="alias">
+          <el-input
+            v-model="form.alias"
+            style="width: 350px"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.site')" prop="siteId">
           <el-select
             v-model="form.siteId"
@@ -481,7 +487,8 @@
       <el-table-column type="selection" />
       <el-table-column prop="name" :label="t('fields.name')" />
       <el-table-column prop="code" :label="t('fields.code')" />
-      <el-table-column prop="status" :label="t('fields.status')" width="150">
+      <el-table-column prop="alias" :label="t('fields.redeemCode')" />
+      <el-table-column prop="status" :label="t('fields.status')" width="100">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             {{ scope.row.status }}
@@ -514,33 +521,6 @@
             v-if="scope.row.endTime !== null"
             v-formatter="{
               data: scope.row.endTime,
-              timeZone: scope.row.timeZone,
-              type: 'date',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')">
-        <template #default="scope">
-          <span v-if="scope.row.createTime === null">-</span>
-          <span
-            v-if="scope.row.createTime !== null"
-            v-formatter="{
-              data: scope.row.createTime,
-              timeZone: scope.row.timeZone,
-              type: 'date',
-            }"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')">
-        <template #default="scope">
-          <span v-if="scope.row.updateTime === null">-</span>
-          <span
-            v-if="scope.row.updateTime !== null"
-            v-formatter="{
-              data: scope.row.updateTime,
               timeZone: scope.row.timeZone,
               type: 'date',
             }"
@@ -670,6 +650,7 @@ const form = reactive({
   siteId: null,
   name: null,
   code: null,
+  alias: null,
   startTime: null,
   endTime: null,
   bonusType: 'FIXED',
@@ -710,6 +691,7 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   name: [required(t('message.validateNameRequired'))],
   code: [required(t('message.validateCodeRequired'))],
+  alias: [required(t('message.validateCodeRequired'))],
   startTime: [required(t('message.validateStartTimeRequired'))],
   endTime: [required(t('message.validateEndTimeRequired'))],
   status: [required(t('message.validateStatusRequired'))]

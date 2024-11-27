@@ -1,12 +1,15 @@
 <template>
   <div class="table-record">
+    <RecordDateFilter class="q-ma-md" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+
     <RecordComponent
-        recordType="transfer"
-        :loading="visible"
-        :list="tableData"
-        :headers="tableHeaders"
-        @loadnewdata="loadNewData"
-        :isEnded="isEnded"
+      ref="recordRef"
+      recordType="transfer"
+      :loading="visible"
+      :list="tableData"
+      :headers="tableHeaders"
+      @loadnewdata="loadNewData"
+      :isEnded="isEnded"
     />
   </div>
 </template>
@@ -16,9 +19,11 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
 import {api} from "boot/axios";
 import {cached} from "boot/cache";
+import RecordDateFilter from "src/components/RecordDateFilter.vue";
 
 export default defineComponent({
   components: {
+    RecordDateFilter,
     RecordComponent
   },
   setup() {
@@ -29,18 +34,17 @@ export default defineComponent({
 
     var apiUrl = "/session/member/transfer";
 
-    var endDate = moment().format("YYYY-MM-DD");
-    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+    const endDate = ref(moment().format("YYYY-MM-DD"));
+    const startDate = ref(moment().add(-7, "days").format("YYYY-MM-DD"));
+
+    const recordRef = ref();
+    var current = ref(1);
+    var maxPage = ref(0);
 
     const loadNewData = () => {
-      startDate = moment(startDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(startDate);
-
-      endDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-      console.log(endDate);
-
-      if (startDate <= moment().add(-30, "days").format("YYYY-MM-DD")) {
-        console.log("mor than 3 months");
+      if (maxPage.value > current.value) {
+        current.value++;
+      } else {
         isEnded.value = true;
         return;
       }
@@ -51,15 +55,14 @@ export default defineComponent({
       if (isNew) {
         visible.value = true;
       }
-      console.log(startDate);
-      console.log(endDate);
 
       let paramData = {
-        "startDate": startDate,
-        "endDate": endDate
+        "startDate": startDate.value,
+        "endDate": endDate.value,
+        "size": 10,
+        "current": current.value
       };
-      var apiKey = apiUrl + "_" + startDate + "_" + endDate;
-      console.log(apiKey);
+      var apiKey = apiUrl + "_" + startDate.value + "_" + endDate.value + "_" + current.value;
 
       cached.get(apiKey, () => api.get(apiUrl, {
             params: paramData
@@ -67,18 +70,18 @@ export default defineComponent({
           {expired_value: 30}
       ).then((res) => {
         console.log(res);
+        maxPage.value = res.pages;
 
         if (isNew) {
           visible.value = false;
         }
 
         tableData.value.push(...res.records);
-        // console.log("TableData");
-        // console.log(tableData.value);
       }).catch((err) => {
         if (isNew) {
           visible.value = false;
         }
+        isEnded.value = true;
       });
     };
 
@@ -109,7 +112,20 @@ export default defineComponent({
       }
 
     ]);
+
+    const handleDateChange = (data) => {
+      const {val, isStartDate} = data
+      isStartDate ? startDate.value = val : endDate.value = val
+      tableData.value = [];
+      current.value = 1;
+      isEnded.value = false;
+      recordRef.value.clearTable();
+      loadDepositTable(true);
+    };
+
     onMounted(() => {
+      current.value = 1;
+      tableData.value = [];
       loadDepositTable();
     });
 
@@ -118,7 +134,11 @@ export default defineComponent({
       tableHeaders,
       visible,
       loadNewData,
-      isEnded
+      isEnded,
+      handleDateChange,
+      recordRef,
+      endDate,
+      startDate
     };
   }
 });

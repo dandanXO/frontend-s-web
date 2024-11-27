@@ -8,7 +8,7 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.site')" prop="siteId" v-if="hasRole(['TENANT','ADMIN'])">
+        <!-- <el-form-item :label="t('fields.site')" prop="siteId" v-if="hasRole(['TENANT','ADMIN'])">
           <el-select
             v-model="form.siteId"
             size="small"
@@ -24,7 +24,7 @@
               :value="item.id"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="t('fields.tips')" prop="tips">
           <el-input type="textarea" :rows="6" v-model="form.tips" style="width: 500px" :disabled="!uiControl.editState" />
         </el-form-item>
@@ -120,7 +120,7 @@ async function cancel() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
   sites.list = site;
-  form.siteId = site[0].id;
+  form.siteId = store.state.user.siteId
 }
 
 onMounted(async () => {
@@ -130,7 +130,7 @@ onMounted(async () => {
       site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
       form.siteId = site.value.id;
     } else {
-      form.siteId = sites.list[0].id;
+      form.siteId = store.state.user.siteId
     }
   }
   await loadTips();
