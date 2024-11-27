@@ -576,7 +576,7 @@ export default {
     activeUser: 'Active User',
     actualRate: 'Actual Rate',
     add: 'Add',
-    addCriditCard: '新增银行卡',
+    addCriditCard: 'Add Bank Card',
     addAds: 'Add Ads Popout',
     addAdjustmentReason: 'Add Adjustment Reason',
     addAffiliate: 'Add Affiliate',
