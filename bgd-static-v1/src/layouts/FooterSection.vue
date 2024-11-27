@@ -57,14 +57,12 @@ const tab = ref("home");
     content: "";
     display: block;
     position: absolute;
-    width: 42px;
+    width: 55px;
     height: 38px;
 
-    top: 6px;
+    top: 25%;
     pointer-events: none;
-    left: 50%;
-    // margin-top: -10px;
-    transform: translateX(-50%);
+    left: 15%;
     background-size: contain;
     background-image: url("../assets/images/index/menu/icon-hover.png");
     background-repeat: no-repeat;
@@ -73,7 +71,8 @@ const tab = ref("home");
 }
 
 .earn-money {
-  animation: blink 1.5s infinite;
+  height: 80px;
+  // animation: blink 1.5s infinite;
 }
 
 @keyframes blink {

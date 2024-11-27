@@ -7,7 +7,7 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo"><img src="../assets/images/index/download/download-logo.png" /></div>
+      <div class="download-logo"><img height="30px" src="../assets/images/index/download/download-logo.png" /></div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
@@ -157,7 +157,7 @@
       </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
+          <img src="../assets/images/auth/b9-logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -557,7 +557,7 @@ onMounted(() => {
 
       a {
         text-decoration: none;
-        background: linear-gradient(163.93deg, #bdff00 11.18%, #ff9900 112.24%);
+        background: linear-gradient(180deg, #24EE89 0%, #9FE871 100%);
         color: #131313;
         font-weight: bold;
         font-size: 12px;

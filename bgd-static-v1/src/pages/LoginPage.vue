@@ -706,6 +706,7 @@ export default defineComponent({
   height: 34px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   background: url("../assets/images/common/btn-primary.svg") no-repeat center center;
+  background-size: 100%;
   font-weight: 600;
   border-radius: 6px;
   text-transform: uppercase;
@@ -738,7 +739,7 @@ export default defineComponent({
   position: relative;
   text-transform: uppercase;
   background: url("../assets/images/common/btn-secondary.svg") no-repeat center center;
-
+  background-size: 100%;
   &__full {
     width: 100%;
     height: 40px;
