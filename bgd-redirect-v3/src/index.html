@@ -4,12 +4,12 @@
   <title>Bangladesh</title>
   <link rel="stylesheet" href="/assets/css/index.css" />
   <script src="/assets/js/crypto-js.min.js"></script>
-  <script defer="defer" src="/assets/js/index.js"></script>
+  <script src="/assets/js/index.js"></script>
   <script>
-    console.log("11/18")
+    console.log("11/27")
 
     const secretKey = `Aa123456`;
-    const encryptedUrl = `U2FsdGVkX1/Au37hYQpgnhtHMBn6cdBOzYr+jnq8Vz3ZF5bksKtZtWPgD///Cws+`;
+    const encryptedUrl = `U2FsdGVkX1+Ia42coypB0lY9kFonhI0Raa4jQpGPLETM9dWp/ovTCEwmUVu/u/oP`;
 
     const decryptUrl= (encryptedUrl, secretKey) => {
       const bytes = CryptoJS.AES.decrypt(encryptedUrl, secretKey);
@@ -21,7 +21,7 @@
     const path = window.location.pathname.replace(/\/$/, "");
     const matches = path.match(/\/r\/(.*)/);
     const affiliate = matches ? matches[1] : "857738";
-    window.location.replace(`${decryptedUrl}refer/${affiliate}`);
+    window.location.replace(`${decryptedUrl}/refer/${affiliate}`);
 
     // alert(decryptedUrl);
   </script>
