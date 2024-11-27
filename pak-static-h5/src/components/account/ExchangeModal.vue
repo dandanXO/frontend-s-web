@@ -27,7 +27,13 @@
                 </div>
 
                 <div class="error-invalid-text" v-if="isInvalidCode">
-                  <p class="text-red error-text">
+                  <p class="text-red error-text" v-if="errorCode === 57000">
+                    {{ $t("form.redemptionFullyRedeemed") }}
+                  </p>
+                  <p class="text-red error-text" v-else-if="errorCode === 50001">
+                    {{ $t("form.redemptionAlreadyRedeemed") }}
+                  </p>
+                  <p class="text-red error-text" v-else>
                     {{ $t("form.redemptionInvalidCode") }}
                   </p>
                   <img
@@ -97,6 +103,8 @@ const formDetail = ref({
   redemptionCode: undefined
 });
 
+const errorCode = ref(0);
+
 const submitRedemption = async () => {
   isInvalidCode.value = false;
   const isValid = await redemptionCodeRef.value.validate();
@@ -118,6 +126,7 @@ const submitRedemption = async () => {
         showRedeemedDialog.value = true;
         redeemedAmt.value = res.data;
       } else {
+        errorCode.value = res.code;
         isInvalidCode.value = true;
       }
     })
