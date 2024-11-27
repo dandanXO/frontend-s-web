@@ -955,7 +955,6 @@
           <el-input
             v-model="request.cardNumber"
             style="width: 250px"
-            maxlength="20"
           />
         </el-form-item>
         <div class="dialog-footer">
