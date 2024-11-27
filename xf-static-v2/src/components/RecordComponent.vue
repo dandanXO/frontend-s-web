@@ -9,15 +9,22 @@
         <div v-for="(det, n) in truncatedList" :key="n" class="bg-darkbox" style="position: relative">
           <!-- Table top amount start -->
           <template v-for="header in headers" :key="header.key">
+            <!-- deposit -->
             <div v-if="header.key === 'depositAmount'" class="amount-container">
               <div class="amount-header-title">{{ header.label }}</div>
               <div class="amount-desc">{{ det.depositAmount }}</div>
+            </div>
+
+            <!-- withdraw -->
+            <div v-if="header.key === 'withdrawAmount'" class="amount-container">
+              <div class="amount-header-title">{{ header.label }}</div>
+              <div class="amount-desc">{{ det.withdrawAmount }}</div>
             </div>
           </template>
           <!-- Table top amount end -->
 
           <div class="table-data" v-for="(head, e) in headers" :key="e">
-            <template v-if="head.key !== 'depositAmount'">
+            <template v-if="head.key !== 'depositAmount' && head.key !== 'withdrawAmount'">
               <div class="label">{{ head.label }}:</div>
               <template v-for="obj in Object.keys(det)" :key="obj">
                 <div v-if="obj === head.key" class="desc">

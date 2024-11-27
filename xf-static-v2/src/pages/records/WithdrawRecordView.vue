@@ -92,7 +92,7 @@ export default defineComponent({
       },
       {
         key: "withdrawAmount",
-        label: "提款数额"
+        label: "提款金额(元)"
       },
       {
         key: "status",
