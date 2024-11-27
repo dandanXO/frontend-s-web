@@ -15,12 +15,13 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             >
               <template v-slot:prepend>
                 <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer" />
               </template>
               <template v-slot:append>
-                <q-btn type="submit" @click="searchList" label="搜索" color="brightbtn" />
+                <q-btn type="submit" @click="searchList" label="搜索" color="brightbtn" rounded />
               </template>
             </q-input>
           </q-form>

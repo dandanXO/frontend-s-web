@@ -32,6 +32,7 @@
             outlined
             color="white"
             bg-color="recinputstyle"
+            rounded
           >
             <template v-slot:append v-if="showVerifyBtn">
               <q-btn
@@ -40,6 +41,7 @@
                 label="发送验证码"
                 @click="openVerificationDialog()"
                 style="white-space: nowrap"
+                rounded
               />
             </template>
           </q-input>
@@ -62,6 +64,7 @@
             outlined
             color="white"
             bg-color="recinputstyle"
+            rounded
           ></q-input>
         </div>
       </div>

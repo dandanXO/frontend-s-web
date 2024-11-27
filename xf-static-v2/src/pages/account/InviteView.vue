@@ -23,7 +23,7 @@
 
             <div class="share-link-div" v-else>
               <a :href="selfTgurl" target="_blank" id="selfTgurl">{{ selfTgurl }}</a>
-              <q-btn color="brightbtn" @click="copyText(selfTgurl)">复制</q-btn>
+              <q-btn color="brightbtn" @click="copyText(selfTgurl)" rounded>复制</q-btn>
             </div>
           </div>
         </div>

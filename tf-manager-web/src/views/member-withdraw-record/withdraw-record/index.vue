@@ -951,11 +951,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.cardNumber')" prop="cardNumber">
+        <el-form-item :label="t('fields.accountNumber')" prop="cardNumber">
           <el-input
             v-model="request.cardNumber"
             style="width: 250px"
-            maxlength="20"
           />
         </el-form-item>
         <div class="dialog-footer">
