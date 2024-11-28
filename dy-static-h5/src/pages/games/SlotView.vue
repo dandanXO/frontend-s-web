@@ -209,7 +209,7 @@ export default defineComponent({
     //         id: 2,
     //         code: 'portrait',
     //         name: '',
-    //         label: 'PG竖版老虎机'
+    //         label: 'PG 竖版老虎机'
     //       },
     //       {
     //         id: 3,
@@ -230,7 +230,7 @@ export default defineComponent({
     //         id: 2,
     //         code: 'portrait',
     //         name: '',
-    //         label: 'PG竖版老虎机'
+    //         label: 'PG 竖版老虎机'
     //       },
     //       {
     //         id: 3,
@@ -294,7 +294,8 @@ export default defineComponent({
       } else if (Platform.is.ios) {
         way = "IOS"
       }
-      cached.get(key, () => api.get("/platformGames", {
+      const platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatformGames' : "/platformGames";
+      cached.get(key, () => api.get(platformApiUrl, {
         params: {platformId: code, gameType: gameType, device: regDevice, way: way},
       }).then((res) => {
         if (res.code === 0) {

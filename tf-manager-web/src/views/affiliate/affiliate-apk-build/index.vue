@@ -14,20 +14,20 @@
           style="width: 200px; margin-left: 5px;"
           :placeholder="t('fields.affiliateCode')"
         />
-        <el-select
-          v-model="request.siteCode"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in list.sites"
-            :key="item.siteCode"
-            :label="item.siteName"
-            :value="item.siteCode"
-          />
-        </el-select>
+        <!--        <el-select-->
+        <!--          v-model="request.siteCode"-->
+        <!--          size="small"-->
+        <!--          :placeholder="t('fields.site')"-->
+        <!--          class="filter-item"-->
+        <!--          style="width: 120px; margin-left: 5px"-->
+        <!--        >-->
+        <!--          <el-option-->
+        <!--            v-for="item in list.sites"-->
+        <!--            :key="item.siteCode"-->
+        <!--            :label="item.siteName"-->
+        <!--            :value="item.siteCode"-->
+        <!--          />-->
+        <!--        </el-select>-->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -277,7 +277,7 @@ import {
   buildAllApk,
   cancelAllApk
 } from '../../../api/affiliate-apk'
-import { getSiteListSimple } from '../../../api/site'
+// import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 
@@ -307,7 +307,7 @@ const request = reactive({
   current: 1,
   loginName: null,
   affiliateCode: null,
-  siteCode: null,
+  siteCode: null
 })
 
 const form = reactive({
@@ -463,8 +463,8 @@ async function cancelAll() {
 }
 
 async function loadSites() {
-  const { data: ret } = await getSiteListSimple()
-  list.sites = ret
+  // const { data: ret } = await getSiteListSimple()
+  list.sites = store.state.user.sites
 }
 
 onMounted(async () => {
@@ -473,9 +473,10 @@ onMounted(async () => {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
     request.siteCode = site.value.siteCode;
   } else {
-    site.value = list.sites[0];
+    site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
     request.siteCode = site.value.siteCode;
   }
+
   await loadAffiliates()
 })
 </script>

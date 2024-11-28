@@ -41,6 +41,7 @@
             v-for="(plat, n) in platformsList"
             :key="n"
             :label="plat.icon"
+            rounded
           />
         </div>
       </q-scroll-area>

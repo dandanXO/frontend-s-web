@@ -164,7 +164,13 @@ export default {
     exchangeTitle: "ریڈیمپشن کوڈ درج کریں",
     redemptionCode: "ریڈیمپشن کوڈ درج کریں",
     redemptionCode_placeholder: "براہ کرم ریڈیمپشن کوڈ درج کریں",
-    redemptionCode_rule_01: "براہ کرم فون نمبر درج کریں"
+    redemptionCode_rule_01: "براہ کرم فون نمبر درج کریں",
+    redemptionInvalidCode:
+      "یہ کوڈ غلط ہے۔ براہ کرم درست پرومو کوڈ حاصل کرنے کے لیے ہمارے آفیشل واٹس ایپ چینل سے رابطہ کریں۔",
+    redemptionAlreadyRedeemed:
+      "آپ نے پہلے ہی اس ریڈیمپشن میں حصہ لے لیا ہے۔ براہ کرم ہمارے آفیشل واٹس ایپ چینل پر اگلے مفت ریڈیمپشن کوڈ کے اجرا کا انتظار کریں۔",
+    redemptionFullyRedeemed:
+      "یہ کوڈ مکمل طور پر ریڈیم کر لیا گیا ہے۔ براہ کرم ہمارے آفیشل واٹس ایپ چینل کو فالو کریں تاکہ اگلے مفت کوڈ کو وقت پر حاصل کر سکیں۔"
   },
   btn: {
     login: "لاگ ان",
@@ -192,7 +198,10 @@ export default {
     downloadApp: "ایپ ڈاؤن لوڈ کریں",
     downloadNow: "ابھی ڈاؤنلوڈ کریں",
     recharge: "ری چارج کریں",
-    getInterestProfit: "سود کا منافع حاصل کریں۔"
+    getInterestProfit: "سود کا منافع حاصل کریں۔",
+    claim: "دعوی کریں",
+    receive: "موصول کریں",
+    completed: "مکمل"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -233,7 +242,10 @@ export default {
     cat_slotsgame: "سلاٹس کھیل",
     cat_fishing: "ماہی گیری",
     cat_poker: "پوکر",
-    cat_sport: "کھیل"
+    cat_sport: "کھیل",
+    cashGift: "نقدی تحفے",
+    welcomeNewPlayer: "نئے کھلاڑیوں کو خوش آمدید",
+    MegaSharingRoulette: "میگا شیئرنگ رولیٹی"
   },
   settings: {
     totalScore: "کل اسکور",
@@ -538,6 +550,20 @@ export default {
       days: "دن",
       signIn: "سائن ان",
       signedIn: "سائن ان کیا ہوا"
+    },
+    megaSharingWheel: {
+      wheelTitle: "میگا شیئرنگ رولیٹی",
+      missionTitle: "انعامات",
+      invitedUsersDeposit: "مدعو صارفین کی جمع کی تعداد ≥ ",
+      invitedUsersValidBet: "مدعو صارفین کی درست شرط ≥ ",
+      EligibleInvitedUsers: "اہل مدعو صارفین ≥ ",
+      missionDescription: "اپنا ٹکٹ حاصل کرنے کے لئے کام مکمل کریں",
+      timeLimited: "وقت محدود",
+      day: "دن",
+      hour: "گھنٹے",
+      minute: "منٹ",
+      second: "سیکنڈ",
+      rewardClaimed: "انعام پہلے ہی حاصل کیا جا چکا ہے"
     }
   },
   maintenance: {
@@ -695,6 +721,10 @@ export default {
     57003: "جمع کی ضرورت پوری نہیں ہوئی",
     57004: "تاریخی جمع کی ضرورت پوری نہیں ہوئی",
     57005: "کوڈ ریڈیم کی خرابی",
-    57006: "غلط کوڈ"
+    57006: "غلط کوڈ",
+    58000: "سسٹم اسٹیج کی غلطی",
+    58001: "سسٹم اسٹیج سیٹنگ کی غلطی",
+    58002: "ایونٹ شروع نہیں ہوا",
+    58003: "ایونٹ ختم ہو چکا ہے"
   }
 };

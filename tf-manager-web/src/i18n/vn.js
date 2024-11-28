@@ -269,8 +269,10 @@ export default {
     gameMemberCountTotal: 'Tổng số thành viên cược',
     gameBetCountTotal: 'Tổng số giao dịch cược',
     gameBetAmountTotal: 'Tổng số tiền cược',
+    gameValidBetAmountTotal: 'Tổng số tiền đặt cược hiệu quả',
     gamePayoutAmountTotal: 'Tổng số tiền thanh toán',
     gameWinLossTotal: 'Tổng số tiền thắng/thua',
+    totalValidBet: "Tổng Cược Hợp Lệ"
   },
   gameType: {
     ALL: 'Toàn bộ',
@@ -477,6 +479,7 @@ export default {
     activeUser: 'Người dùng hoạt động',
     actualRate: 'Hình thuộc',
     add: 'Thêm',
+    addCriditCard: 'Thêm thẻ ngân hàng',
     addAds: 'Thêm quảng cáo',
     addAdjustmentReason: 'Thêm lý do điều chỉnh',
     addAffiliate: 'Thêm đối tác liên kết',
@@ -2569,7 +2572,7 @@ export default {
     'Vip Report': 'Báo cáo VIP',
     'System Value Rules': 'Quy tắc giá trị hệ thống',
     'Sites Config': 'Cấu hình trang web',
-    'Mooncake Fest Spin Record': '中秋节转盘2024',
+    'Mooncake Fest Spin Record': '中秋节转盘 2024',
     'Site Platform Blacklist': 'Danh sách đen nền tảng trang web',
   },
   google: {

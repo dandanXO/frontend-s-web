@@ -23,7 +23,7 @@
                 </div>
               </div>
 
-              <q-btn @click="confirmUnbindCard(bc)" label="解绑" unelevated style="color: #00bfd7" />
+              <q-btn @click="confirmUnbindCard(bc)" label="解绑" unelevated style="color: #00bfd7" rounded />
             </div>
           </template>
           <div class="widthdrawBankView--content-cta">
@@ -33,6 +33,7 @@
               label="绑定"
               icon="add_circle_outline"
               @click="bankCardModal('bank')"
+              rounded
             />
           </div>
         </div>
@@ -55,12 +56,13 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             />
           </div>
 
           <div class="flex flex-center">
-            <q-btn class="q-mr-md" label="取消" color="orangebtn" @click="isUnbindCardModal = false" />
-            <q-btn color="brightbtn" label="提交" @click="unbindBankCard(unbindcarddetail)" />
+            <q-btn class="q-mr-md" label="取消" color="orangebtn" @click="isUnbindCardModal = false" rounded />
+            <q-btn color="brightbtn" label="提交" @click="unbindBankCard(unbindcarddetail)" rounded />
           </div>
         </q-form>
       </q-card>
@@ -93,6 +95,7 @@
                   outlined
                   color="white"
                   bg-color="recinputstyle"
+                  rounded
                 />
               </div>
               <div class="col-12">
@@ -115,6 +118,7 @@
                   outlined
                   color="white"
                   bg-color="recinputstyle"
+                  rounded
                 >
                   <template v-slot:selected-item="scope">
                     <q-item-section avatar>
@@ -163,6 +167,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             />
           </div>
 
@@ -181,6 +186,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             />
           </div>
 
@@ -198,6 +204,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             ></q-input>
           </div>
 
@@ -214,11 +221,12 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             />
           </div>
 
           <div class="text-orange" v-if="isEWALLET">
-            <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
+            <span>*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
           </div>
 
           <div class="q-mt-md">
@@ -238,6 +246,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             >
               <template v-slot:prepend>
                 <q-icon color="bright" name="smartphone" />
@@ -248,6 +257,7 @@
                   color="brightbtn"
                   :disable="otpCountdownCount > 0"
                   @click="openPhoneVeriDialog()"
+                  rounded
                 />
               </template>
             </q-input>
@@ -270,6 +280,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             >
               <template v-slot:prepend>
                 <q-icon color="bright" name="shield" />
@@ -278,8 +289,8 @@
           </div>
 
           <div class="flex flex-center">
-            <q-btn class="q-mr-md" label="取消" color="orangebtn" @click="bankCardModalState.visible = false" />
-            <q-btn v-if="isSendOtp" color="brightbtn" label="提交" @click="submitBankCard" />
+            <q-btn class="q-mr-md" label="取消" color="orangebtn" @click="bankCardModalState.visible = false" rounded />
+            <q-btn v-if="isSendOtp" color="brightbtn" label="提交" @click="submitBankCard" rounded />
           </div>
         </q-form>
       </q-card>
@@ -290,12 +301,19 @@
         <q-toolbar-title class="q-mb-md">验证码</q-toolbar-title>
 
         <q-card-section>
-          <q-input v-model="innerCaptchaRef" placeholder="验证码" outlined color="white" bg-color="recinputstyle">
+          <q-input
+            v-model="innerCaptchaRef"
+            placeholder="验证码"
+            outlined
+            color="white"
+            bg-color="recinputstyle"
+            rounded
+          >
             <template v-slot:append>
               <img
                 :src="phoneVerificationImg"
                 title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer"
+                style="margin-top: 6px; cursor: pointer; border-radius: 32px"
                 @click="getCode"
               />
             </template>
@@ -683,12 +701,14 @@ export default defineComponent({
         message: "你确定要解绑： " + card.bankName + "?",
         ok: {
           push: true,
+          rounded: true,
           color: 'brightbtn',
           label: "确认",
           tabindex: 1
         },
         cancel: {
           push: true,
+          rounded: true,
           color: 'warning',
           label: "取消",
           tabindex: 0
@@ -1028,7 +1048,7 @@ export default defineComponent({
 .bank-card-item {
   background: #273354;
   box-shadow: 0px 0px 2px 0px #a9c9ea inset;
-  border-radius: 8px;
+  border-radius: 32px;
   padding: 8px 16px;
   display: flex;
   justify-content: space-between;

@@ -78,6 +78,10 @@
                 :rules="[(_) => isValidAccType()]"
                 label-color="secondary"
                 :options="accTypeList"
+                option-value="valType"
+                option-label="name"
+                emit-value
+                map-options
               />
             </div>
           </q-form>
@@ -99,7 +103,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 
@@ -124,7 +128,7 @@ const refBankCardNum = ref();
 
 // display
 const currBankList = ref([]);
-const accTypeList = ["CHECKING", "SAVINGS"];
+const accTypeList = ref([]);
 
 // cache
 const bankList = [];
@@ -158,12 +162,12 @@ const onAddCardClick = (type) => {
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "Please fill in your personal details",
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: "Please fill in your personal details",
+      //   icon: "report_problem"
+      // });
       router.push("/account/profile");
     } else {
       isAddCardDialogOpen.value = true;
@@ -307,6 +311,19 @@ const addCard = () => {
       isDisableBtn.value = false;
     });
 };
+
+onMounted(() => {
+  accTypeList.value = [
+    {
+      valType: "CHECKING",
+      name: t("form.accChecking")
+    },
+    {
+      valType: "SAVINGS ",
+      name: t("form.accSavings")
+    }
+  ];
+});
 
 defineExpose({
   onAddCardClick

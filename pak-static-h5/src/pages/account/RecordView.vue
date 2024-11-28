@@ -67,13 +67,23 @@
               }"
               :label="getRecordStatus(e.betStatus)"
             ></q-btn>
-            <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+            <div class="date">{{ normalDateTime(e.betTime) }}</div>
           </div>
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
           RS
-          <span :class="`${['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus) ? (e.payout <= 0 ? 'loss-amt' : 'win-amt') : 'bet-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
+          <span
+            :class="`${
+              ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus)
+                ? e.payout <= 0
+                  ? 'loss-amt'
+                  : 'win-amt'
+                : 'bet-amt'
+            }`"
+          >
+            {{ convertToCommaAmount(e.payout, true) }}
+          </span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -102,9 +112,7 @@ import { onActivated, onMounted, reactive, ref, computed } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
+import { updateDate, normalDateTime, convertToGMT55 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -256,21 +264,6 @@ const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
 });
-const getGameBetRecordTotal = () => {
-  const obj = {
-    memberId: store.id,
-    platform: searchForm.platform,
-    startDate: convertToGMT8(searchForm.startDate),
-    endDate: convertToGMT8(searchForm.endDate)
-  };
-  api.get("/session/member/gameBetRecordTotal", { params: obj }).then((res) => {
-    if (res.code === 0) {
-      const { totalBet, totalPayout } = res.data;
-      totalBetRecord.totalBet = totalBet;
-      totalBetRecord.totalPayout = totalPayout;
-    }
-  });
-};
 
 const getRecordStatus = (recordStatus) => {
   if (recordStatus === "SETTLE") {

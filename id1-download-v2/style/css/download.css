@@ -1,0 +1,195 @@
+.header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  transition: box-shadow 0.2s ease-in-out;
+  width: 100%;
+  z-index: 3;
+}
+
+.header .google-play {
+  display: flex;
+  align-items: center;
+  gap: 7.5px;
+  margin: 0 32px 0 0;
+}
+
+.header .google-play svg {
+  height: 40px;
+  width: 40px;
+}
+
+.header .google-play .text {
+  color: rgb(95, 99, 104);
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  line-height: 1.75rem;
+  font-size: 1.375rem;
+  letter-spacing: 0;
+  font-weight: 600;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.header .navigation-tab {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  color: rgb(95, 99, 104);
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.0178571429em;
+  font-weight: 600;
+}
+
+.header .navigation-tab .tab {
+  min-width: auto;
+}
+
+.header .navigation-tab .selected-tab {
+  color: rgb(1, 135, 95);
+  min-width: auto;
+  border-bottom: 3px solid rgb(1, 135, 95);
+}
+
+.header .profile {
+  margin: 0 0 0 auto;
+}
+
+.content {
+  padding: 96px 0;
+}
+
+.content .top-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content .top-container .left-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.content .top-container .left-container .title {
+  font-family: "Google Sans Display", Roboto, Arial, sans-serif;
+  line-height: 3.25rem;
+  font-size: 2.75rem;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+.content .top-container .left-container .desc {
+  color: #01875f;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  line-height: 1.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.00625em;
+  font-weight: 500;
+}
+
+.content .top-container .left-container .app-info {
+  display: flex;
+}
+
+.content .top-container .left-container .app-info .review {
+  padding: 0 24px 0 0;
+  border-right: 1px solid rgb(232, 234, 237);
+}
+
+.content .top-container .left-container .app-info .download {
+  padding: 0 24px;
+  border-right: 1px solid rgb(232, 234, 237);
+}
+
+.content .top-container .left-container .app-info .rated {
+  padding: 0 0 0 24px;
+}
+
+.content .top-container .left-container .app-info .first {
+  display: flex;
+  align-items: center;
+  color: rgb(32, 33, 36);
+  stop-color: rgb(32, 33, 36);
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.0178571429em;
+  font-weight: 500;
+  align-items: center;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.content .top-container .left-container .app-info .first svg {
+  width: 20px;
+}
+
+.content .top-container .left-container .app-info .second {
+  color: rgb(95, 99, 104);
+  stop-color: rgb(95, 99, 104);
+  font-family: Roboto, Arial, sans-serif;
+  line-height: 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.025em;
+  font-weight: 400;
+  align-items: center;
+  display: flex;
+  height: 20px;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.content .top-container .left-container .install {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.0178571429em;
+  font-weight: 500;
+  margin: 6px 0;
+}
+
+.content .top-container .left-container .install .install-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  min-width: 160px;
+  background: #01875f;
+  border-radius: 8px;
+  color: white;
+}
+
+.content .top-container .left-container .install .install-share {
+  fill: #01875f;
+}
+
+.content .top-container .left-container .install .install-save {
+  fill: rgb(154, 160, 166);
+}
+
+.content .swiper-img {
+  width: 100%;
+}
+
+.content .right-container {
+}
+
+.content .right-container img {
+  width: 150px;
+}
+
+.footer {
+}

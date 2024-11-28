@@ -13,8 +13,9 @@
             ref="subMsg0"
             label-color="brand"
             clearable
-            outlined
             v-model="submitMessage[0]"
+            rounded
+            outlined
             color="white"
             bg-color="recinputstyle"
           >
@@ -32,8 +33,9 @@
             ref="subMsg1"
             label-color="brand"
             clearable
-            outlined
             v-model="submitMessage[1]"
+            rounded
+            outlined
             color="white"
             bg-color="recinputstyle"
           >
@@ -51,8 +53,9 @@
             ref="subMsg2"
             label-color="brand"
             clearable
-            outlined
             v-model="submitMessage[2]"
+            rounded
+            outlined
             color="white"
             bg-color="recinputstyle"
           >
@@ -70,8 +73,9 @@
             ref="subMsg4"
             label-color="brand"
             clearable
-            outlined
             v-model="submitMessage[4]"
+            rounded
+            outlined
             color="white"
             bg-color="recinputstyle"
           >
@@ -89,8 +93,9 @@
             ref="subMsg3"
             label-color="brand"
             clearable
-            outlined
             v-model="submitMessage[3]"
+            rounded
+            outlined
             color="white"
             bg-color="recinputstyle"
           >
@@ -109,8 +114,9 @@
             ref="subMsg5"
             label-color="brand"
             clearable
-            outlined
             v-model="submitMessage[5]"
+            rounded
+            outlined
             color="white"
             bg-color="recinputstyle"
           >
@@ -136,6 +142,7 @@
               :rules="verifyDepositAmount"
               label-color="brand"
               clearable
+              rounded
               outlined
               color="white"
               bg-color="recinputstyle"
@@ -159,10 +166,13 @@
             v-model="form.localAmount"
             :rules="verifyDepositAmount"
             padding="none"
+            emit-value
+            map-options
+            style="width: 100%"
+            rounded
             outlined
             color="white"
             bg-color="recinputstyle"
-            style="width: 100%"
           >
             <template v-slot:prepend>
               <span style="font-size: 26px" class="text-white">
@@ -226,11 +236,12 @@
           v-if="hasPrivilege && !isUSDT"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
+          style="width: 100%"
+          @update:model-value="checkMinDepositAmt"
+          rounded
           outlined
           color="white"
           bg-color="recinputstyle"
-          style="width: 100%"
-          @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
@@ -278,6 +289,7 @@
             @click="confirmDeposit"
             label="确认"
             size="md"
+            rounded
             style="width: 100%"
           />
         </div>

@@ -12,7 +12,7 @@
         @update:model-value="searchRecord"
         outlined
         color="white"
-        bg-color="recinputstyle"
+        bg-color="roundedinputstyle"
       >
         <template v-slot:prepend><span>选择平台:</span></template>
       </q-select>
@@ -103,11 +103,25 @@ const loadDepositTable = (isNew) => {
   let paramData = {
     startDate: startDate,
     endDate: endDate,
-    platform: platformName,
+    platform: "",
+    gameType: "",
+    platformName: "",
     memberId: store.id,
     size: 10,
     current: current.value
   };
+
+  let selectedPlatform = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
+  if (selectedPlatform.includes("@")) {
+    const platformArr = selectedPlatform.split("@");
+    paramData.platform = platformArr[0];
+    paramData.gameType = platformArr[1];
+    paramData.platformName = platformArr[2];
+  } else {
+    paramData.platform = "";
+    paramData.gameType = "";
+    paramData.platformName = null;
+  }
 
   api
     .get(apiUrl, {
@@ -127,8 +141,8 @@ const loadDepositTable = (isNew) => {
 };
 
 const loadPlatformLists = () => {
-  var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
-  var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+  var platformApiUrl = "/platformWithType";
+  var platformApiKey = "PLATFORMSTYPES";
 
   cached
     .get(platformApiKey, () =>
@@ -140,8 +154,8 @@ const loadPlatformLists = () => {
       console.log(data);
       _.each(data, function (item, index) {
         var option = {
-          label: item.name,
-          value: item.code
+          label: item.alias,
+          value: item.code + "@" + item.gameType + "@" + item.alias
         };
         platformsList.value.push(option);
       });

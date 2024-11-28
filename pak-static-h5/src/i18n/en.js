@@ -164,8 +164,14 @@ export default {
     content_rules_02: "Content length is 500 words or less",
     exchangeTitle: "Enter redemption code",
     redemptionCode: "Enter redemption code",
-    redemptionCode_rule_01: "Please insert Phone number",
-    redemptionCode_placeholder: "pleases Enter redemption code"
+    redemptionCode_rule_01: "Please insert redemption code",
+    redemptionCode_placeholder: "Pleases Enter redemption code",
+    redemptionInvalidCode:
+      "The code is invalid. Please check our official WhatsApp channel for the correct promo code to redeem.",
+    redemptionAlreadyRedeemed:
+      "You have already participated in this redemption. Please wait for the next free redemption code release on our official WhatsApp channel.",
+    redemptionFullyRedeemed:
+      "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time."
   },
   btn: {
     login: "Login",
@@ -193,7 +199,10 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    claim: "Claim",
+    receive: "Receive",
+    completed: "Completed"
   },
   notify: {
     noRecord: "No Record",
@@ -234,7 +243,10 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    cashGift: "Cash Gifts",
+    welcomeNewPlayer: "Welcome New Players",
+    MegaSharingRoulette: "Mega Sharing Roulette"
   },
   settings: {
     totalScore: "Total Score",
@@ -542,6 +554,20 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    megaSharingWheel: {
+      wheelTitle: "Mega Sharing Roulette",
+      missionTitle: "Rewards",
+      invitedUsersDeposit: "Invited Users' Deposit Count ≥ ",
+      invitedUsersValidBet: "Invited Users' Valid Bet ≥ ",
+      EligibleInvitedUsers: "Eligible Invited Users ≥ ",
+      missionDescription: "Finish the task to claim your ticket",
+      timeLimited: "Time-limited",
+      day: "Days",
+      hour: "Hours",
+      minute: "Min",
+      second: "Sec",
+      rewardClaimed: "Reward has already been claimed"
     }
   },
   maintenance: {
@@ -699,6 +725,10 @@ export default {
     57003: "Deposit does not met requirement",
     57004: "History deposit does not met requirement",
     57005: "Code Redeem Error",
-    57006: "Invalid Code"
+    57006: "Invalid Code",
+    58000: "System Stage Error",
+    58001: "System Stage Settings Error",
+    58002: "Event haven't start",
+    58003: "Event have ended"
   }
 };

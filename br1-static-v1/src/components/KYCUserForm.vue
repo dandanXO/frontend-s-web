@@ -3,15 +3,29 @@
     <div class="txt-title">{{ $t("form.pleaseCompleteKYC") }}</div>
     <div class="pc-form">
       <div class="pc-form-item">
-        <div class="pc-form-label">{{ $t("form.fullName") }}</div>
+        <div class="pc-form-label">{{ $t("form.firstName") }}</div>
         <div class="pc-form-input">
           <q-input
             filled
             dense
             clearable
-            :placeholder="$t('form.fullName_placeholder')"
-            v-model="formDetail.realName"
-            :rules="[(_) => isValidName()]"
+            :placeholder="$t('form.firstName_placeholder')"
+            v-model="formDetail.firstName"
+            :rules="[(_) => isValidFirstName()]"
+          />
+        </div>
+      </div>
+
+      <div class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.lastName") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.lastName_placeholder')"
+            v-model="formDetail.lastName"
+            :rules="[(_) => isValidLastName()]"
           />
         </div>
       </div>
@@ -23,7 +37,7 @@
       flat
       no-caps
       class="style-btn-confirm"
-      :disable="!(isValidName() === true)"
+      :disable="!(isValidFirstName() === true && isValidLastName() === true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -45,13 +59,27 @@ const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 const btnLoading = ref(false);
-const isValidName = () => {
-  const { realName } = formDetail;
-  const namePattern = /^[A-Za-z]+[A-Za-z\s]*[A-Za-z]$/;
-  const result = !realName
-    ? t("form.fullName_rules_01")
-    : !namePattern.test(realName)
-    ? t("form.fullName_rules_02")
+
+const isValidFirstName = () => {
+  const { firstName } = formDetail;
+  const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]*[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]$/;
+
+  const result = !firstName
+    ? t("form.firstName_rules_01")
+    : !namePattern.test(firstName)
+    ? t("form.firstName_rules_02")
+    : true;
+  return result;
+};
+
+const isValidLastName = () => {
+  const { lastName } = formDetail;
+  const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]*[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]$/;
+
+  const result = !lastName
+    ? t("form.lastName_rules_01")
+    : !namePattern.test(lastName)
+    ? t("form.lastName_rules_02")
     : true;
   return result;
 };
@@ -83,7 +111,7 @@ const submitKYCNewUser = () => {
 
 const updateNewUserState = () => {
   const updateInfo = {};
-  updateInfo.realName = formDetail.realName;
+  updateInfo.realName = `${formDetail.firstName},${formDetail.lastName}`;
 
   api
     .post("/session/account", qs.stringify(updateInfo))
