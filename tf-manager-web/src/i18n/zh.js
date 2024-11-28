@@ -26,6 +26,7 @@ export default {
     timeType: {
       MONTHLY: '每月',
       WEEKLY: '每周',
+      HALF_MONTH: '半月',
     },
     status: {
       APPLY: '申请',

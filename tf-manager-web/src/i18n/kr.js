@@ -25,6 +25,7 @@ export default {
     timeType: {
       MONTHLY: '월간',
       WEEKLY: '주간',
+      HALF_MONTH: '반달',
     },
     status: {
       APPLY: '신청',
