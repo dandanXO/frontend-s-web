@@ -69,7 +69,7 @@ const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref();
-const remainingDraws = ref(0);
+// const remainingDraws = ref(0);
 const winnersList = ref([]);
 
 let finalDegree = 0;
@@ -112,18 +112,18 @@ const spin = (prizeIndex, stopCallback) => {
   stopSpin(prizeIndex, stopCallback);
 };
 
-const getRecords = () => {
-  eventapi
-    .get("/aviatorWheel/records")
-    .then((res) => {
-      if (res.code == 0) {
-        winnersList.value = res.data;
-      }
-    })
-    .catch((err) => {
-      console.log("here", err);
-    });
-};
+// const getRecords = () => {
+//   eventapi
+//     .get("/aviatorWheel/records")
+//     .then((res) => {
+//       if (res.code == 0) {
+//         winnersList.value = res.data;
+//       }
+//     })
+//     .catch((err) => {
+//       console.log("here", err);
+//     });
+// };
 
 const stopSpin = (prizeIndex, stopCallback) => {
   // call api
@@ -205,15 +205,20 @@ const spinWheel = () => {
     return;
   }
 
-  if (remainingDraws.value <= 0) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
-      icon: "report_problem"
-    });
+  if (!props.canSpinWheel) {
+    emit("update:showMission", true);
     return;
   }
+
+  // if (remainingDraws.value <= 0) {
+  //   $q.notify({
+  //     color: "negative",
+  //     position: "top",
+  //     message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
+  //     icon: "report_problem"
+  //   });
+  //   return;
+  // }
 
   eventapi
     .post(`/session/lucky-spin-refer-friend/spin?stage=${props.stage}`)
@@ -228,7 +233,7 @@ const spinWheel = () => {
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
           prizePopupBonusAmt.value = res.data;
-          remainingDraws.value = 0;
+          // remainingDraws.value = 0;
         });
       }
     })
@@ -248,15 +253,15 @@ const spinWheel = () => {
     });
 };
 
-const initSpinWheel = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
-    if (res.code == 0) {
-      remainingDraws.value = res.data.spinChance;
-    }
-  });
+// const initSpinWheel = () => {
+//   eventapi.get("/new-user-roulette/init").then((res) => {
+//     if (res.code == 0) {
+//       remainingDraws.value = res.data.spinChance;
+//     }
+//   });
 
-  // getRecords();
-};
+//   // getRecords();
+// };
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
@@ -266,7 +271,7 @@ onMounted(() => {
     degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
 
-  initSpinWheel();
+  // initSpinWheel();
 });
 </script>
 
