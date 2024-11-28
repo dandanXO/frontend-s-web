@@ -77,7 +77,7 @@ let speed = 1;
 var spinSchedule;
 var degree;
 
-const props = defineProps(["canSpinWheel", "showMission", "stage"]);
+const props = defineProps(["canSpinWheel", "showMission", "stage", "hasClaimed"]);
 const emit = defineEmits(["update:showMission", "getReferFriendInfo"]);
 
 const handleReceiveBtnClick = () => {
@@ -199,6 +199,15 @@ const spinWheel = () => {
     return;
   }
 
+  if (props.hasClaimed) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: t("hotPromo.megaSharingWheel.rewardClaimed"),
+      icon: "report_problem"
+    });
+    return;
+  }
   if (!props.canSpinWheel) {
     emit("update:showMission", true);
     return;

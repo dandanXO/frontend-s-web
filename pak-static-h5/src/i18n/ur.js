@@ -562,7 +562,8 @@ export default {
       day: "دن",
       hour: "گھنٹے",
       minute: "منٹ",
-      second: "سیکنڈ"
+      second: "سیکنڈ",
+      rewardClaimed: "انعام پہلے ہی حاصل کیا جا چکا ہے"
     }
   },
   maintenance: {

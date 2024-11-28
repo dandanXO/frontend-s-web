@@ -566,7 +566,8 @@ export default {
       day: "Days",
       hour: "Hours",
       minute: "Min",
-      second: "Sec"
+      second: "Sec",
+      rewardClaimed: "Reward has already been claimed"
     }
   },
   maintenance: {
