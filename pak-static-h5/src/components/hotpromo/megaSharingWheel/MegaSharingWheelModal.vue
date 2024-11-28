@@ -112,7 +112,6 @@ const endTime = ref(moment(now.value));
 
 const remainingTime = computed(() => {
   const startTime = moment(now.value);
-  // const endTime = moment("2024/12/31 00:00:00");
   const duration = moment.duration(endTime.value?.diff(startTime) >= 0 ? endTime.value?.diff(startTime) : 0);
   return [
     {
@@ -183,12 +182,6 @@ const getReferFriendInfo = () => {
       const currentStageInfo = stageResData[index];
       missionCount.value = currentStageInfo.memberStateVO;
       endTime.value = moment(stageResData[index].stageEndTime);
-      // TEST
-      // missionCount.value = {
-      //   eligibleInviteesCount: 1,
-      //   inviteesDepositCount: 1,
-      //   inviteesValidBet: 1000
-      // };
 
       missionDetails.value = [
         {
