@@ -162,12 +162,12 @@ const onAddCardClick = (type) => {
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "Please fill in your personal details",
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: "Please fill in your personal details",
+      //   icon: "report_problem"
+      // });
       router.push("/account/profile");
     } else {
       isAddCardDialogOpen.value = true;
