@@ -61,11 +61,31 @@ const props = defineProps({
     required: true
   },
 });
+const skypeLink = () => {
+  if (props.siteId === '6') {
+    return 'live:.cid.1b8d9a018a52a8f5'
+  } else if (props.siteId === '1') {
+    return 'live:.cid.178f76828f54342e'
+  } else {
+    return 'live:.cid.1a1ab9b6b5b0721f'
+  }
+}
+const bubbleLink = () => {
+  if (props.siteId === '6') {
+    return 'LH1008666'
+  } else if (props.siteId === '1') {
+    return 'xfdlkf001'
+  } else {
+    return 'LH1008666'
+  }
+}
 const mailLink = () => {
   if (props.siteId === '7') {
     return 'mailto:affiliate@e8007.com'
   } else if (props.siteId === '8') {
     return 'vnaffiliates@tf88.com'
+  } else if (props.siteId === '1') {
+    return ''
   } else {
     return 'mailto:affiliate@dyvip99.com'
   }
@@ -73,6 +93,10 @@ const mailLink = () => {
 const qqLink = () => {
   if (props.siteId === '7') {
     return '1903687863'
+  } else if (props.siteId === '1') {
+    return '1600337511'
+  } else if (props.siteId === '6') {
+    return '1827985941'
   } else {
     return '100983290'
   }
@@ -84,6 +108,10 @@ const telegramLink = () => {
     return '@dailykakagame'
   } else if (props.siteId === '8') {
     return '@dailitf88'
+  } else if (props.siteId === '1') {
+    return '@xf100200'
+  } else if (props.siteId === '6') {
+    return '@dyhykf001'
   } else {
     return 'leihuo123'
   }
@@ -117,7 +145,7 @@ const initContactList = () => {
     {
       icon: 'cskype',
       type: t('common.skype'),
-      link: 'live:.cid.1a1ab9b6b5b0721f',
+      link: skypeLink(),
       btns: [{
         text: t('common.copy'),
         action: ''
@@ -143,7 +171,7 @@ const initContactList = () => {
     {
       icon: 'bubble-logo',
       type: t('common.paopao'),
-      link: 'LH1008666',
+      link: bubbleLink(),
       btns: [{
         text: t('common.copy'),
         action: ''
@@ -223,7 +251,7 @@ const initContactList = () => {
       }
     ]
   }
-  if (props.siteId === '7' || props.siteId === '6') {
+  if (props.siteId === '7' || props.siteId === '6' || props.siteId === '1') {
     contactlist.value.shift()
   }
 }
