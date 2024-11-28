@@ -169,7 +169,8 @@ export default defineComponent({
       var way = store.getDeviceType();
 
       isLoading.value = true;
-      cached.get(key, () => api.get("/platformGames", {
+      const platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatformGames' : "/platformGames";
+      cached.get(key, () => api.get(platformApiUrl, {
         params: {platformId: code, gameType: gameType, device: regDevice, way: way},
       }).then((res) => {
         if (res.code === 0) {
