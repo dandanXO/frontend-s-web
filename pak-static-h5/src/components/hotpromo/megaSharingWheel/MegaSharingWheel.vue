@@ -19,13 +19,13 @@
     </div>
 
     <div class="claim-btn-wrapper">
-      <button class="claim-btn" @click="handleClaimBtnClick">
+      <button class="claim-btn" @click="spinWheel">
         {{ $t("btn.claim") }}
       </button>
     </div>
   </div>
 
-  <q-dialog v-model="showPrizePopup" backdrop-filter="none">
+  <q-dialog v-model="showPrizePopup" backdrop-filter="none" persistent>
     <div class="congrats-container">
       <div class="congrats-header">
         <span class="congrats-amt">{{ convertToCommaAmount(prizePopupBonusAmt) }}PKR</span>
@@ -79,12 +79,6 @@ var degree;
 
 const props = defineProps(["canSpinWheel", "showMission", "stage"]);
 const emit = defineEmits(["update:showMission", "getReferFriendInfo"]);
-
-const handleClaimBtnClick = () => {
-  if (!props.canSpinWheel) {
-    emit("update:showMission", true);
-  }
-};
 
 const handleReceiveBtnClick = () => {
   showPrizePopup.value = false;

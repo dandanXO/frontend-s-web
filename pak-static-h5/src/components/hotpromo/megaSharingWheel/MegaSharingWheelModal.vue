@@ -46,7 +46,7 @@
             :canSpinWheel="canSpinWheel"
             v-model:showMission="showMission"
             :stage="stage"
-            @getReferFriendInfo="getReferFriendInfo"
+            @getReferFriendInfo="claimBonus"
           />
         </div>
         <div class="progress-bar">
@@ -168,6 +168,11 @@ const totalProgress = computed(() => {
   const finishedMissionLength = missionDetails.value.filter((item) => item.current >= item.total).length;
   return ((finishedMissionLength / missionDetails.value.length) * 100).toFixed(2);
 });
+
+const claimBonus = () => {
+  canSpinWheel.value = false;
+  getReferFriendInfo();
+};
 
 const getReferFriendInfo = () => {
   eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {

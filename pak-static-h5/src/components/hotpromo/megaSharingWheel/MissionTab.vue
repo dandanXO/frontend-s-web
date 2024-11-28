@@ -11,10 +11,10 @@
           </span>
           <button
             class="mission-item__action"
-            :class="{ completed: mission.current / mission.total === 1 }"
-            @click="handleConfirmBtnClick(mission.current / mission.total === 1)"
+            :class="{ completed: mission.current / mission.total >= 1 }"
+            @click="handleConfirmBtnClick(mission.current / mission.total >= 1)"
           >
-            {{ mission.current / mission.total === 1 ? $t("btn.completed") : $t("btn.confirm") }}
+            {{ mission.current / mission.total >= 1 ? $t("btn.completed") : $t("btn.confirm") }}
           </button>
         </div>
         <ProgressBar class="mission-item__progress" :progress="(mission.current / mission.total) * 100">
