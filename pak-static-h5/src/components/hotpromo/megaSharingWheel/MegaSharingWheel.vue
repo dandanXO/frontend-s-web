@@ -10,7 +10,11 @@
             <img
               ref="spinBoardRef"
               class="wheel-bg"
-              src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/spin-wheel-bg-stage-1.png"
+              :src="
+                require(`../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/spin-wheel-bg-stage-${
+                  !stage ? 1 : stage
+                }.png`)
+              "
             />
             <div ref="spinNumRef" class="spin-wheel-number" style="display: none"></div>
           </div>
@@ -42,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
@@ -58,7 +62,16 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [999999999, 388, 888, 288888, 188, 88888, 8888, 1888];
+
+const SPIN_WHEEL_PRIZES = computed(() => {
+  if (props.stage === 1) {
+    return [999999999, 388, 888, 288888, 188, 88888, 8888, 1888];
+  } else if (props.stage === 2) {
+    return [999999999, 388, 888, 288888, 5888, 88888, 8888, 1888];
+  } else {
+    return [999999999, 168888, 5888, 288888, 688, 88888, 8888, 1888];
+  }
+});
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -231,7 +244,7 @@ const spinWheel = () => {
         // if (res.data.type === "CONSOLATION") {
         //   bonusIndex = -1;
         // }
-        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+        const prizeIndex = SPIN_WHEEL_PRIZES.value.findIndex((prize) => prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
