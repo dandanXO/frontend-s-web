@@ -43,8 +43,9 @@
             :style="{ marginLeft: glowDrift }"
           />
           <MegaSharingWheel
-            :canSpinWheel="canSpinWheel"
             v-model:showMission="showMission"
+            :canSpinWheel="canSpinWheel"
+            :hasClaimed="hasClaimed"
             :stage="stage"
             @getReferFriendInfo="claimBonus"
           />
@@ -106,6 +107,7 @@ const winnerContainerRef = ref();
 let stage = 0;
 const winnerList = ref([]);
 const canSpinWheel = ref(false);
+const hasClaimed = ref(false);
 
 const missionCount = ref();
 const endTime = ref(moment(now.value));
@@ -212,6 +214,7 @@ const getReferFriendInfo = () => {
         currentStageInfo.inviteesBettingAmountState === true &&
         currentStageInfo.inviteesDepositCountState === true;
 
+      hasClaimed.value = currentStageInfo.hasClaimed;
       clearInterval(winnerTimer.value);
 
       winnerTimer.value = setInterval(() => {
