@@ -10,7 +10,11 @@
             <img
               ref="spinBoardRef"
               class="wheel-bg"
-              src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/spin-wheel-bg-stage-1.png"
+              :src="
+                require(`../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/spin-wheel-bg-stage-${
+                  !stage ? 1 : stage
+                }.png`)
+              "
             />
             <div ref="spinNumRef" class="spin-wheel-number" style="display: none"></div>
           </div>
@@ -48,6 +52,7 @@ import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
+import { computed } from "@angular/core";
 
 const { t } = useI18n();
 const $q = useQuasar();
@@ -58,7 +63,16 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [999999999, 388, 888, 288888, 188, 88888, 8888, 1888];
+
+const SPIN_WHEEL_PRIZES = computed(() => {
+  if (props.stage === 1) {
+    return [999999999, 388, 888, 288888, 188, 88888, 8888, 1888];
+  } else if (props.stage === 2) {
+    return [999999999, 888, 1888, 288888, 388, 88888, 8888, 5888];
+  } else {
+    return [999999999, 1888, 5888, 288888, 688, 88888, 168888, 8888];
+  }
+});
 
 // spin wheel element refs
 const spinBoardRef = ref();
