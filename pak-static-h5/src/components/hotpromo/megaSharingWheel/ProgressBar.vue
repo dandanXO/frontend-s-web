@@ -1,13 +1,13 @@
 <template>
   <div class="progress-bar-wrapper">
-    <div v-show="progress" class="progress-bar-inner" :style="{ width: progress >= 100 ? 100 : progress + '%' }" />
+    <div v-show="progress" class="progress-bar-inner" :style="{ width: progressPercentage + '%' }" />
     <span class="progress-text">
-      <slot name="text">{{ progress }}%</slot>
+      <slot name="text">{{ progressPercentage }}%</slot>
     </span>
   </div>
 </template>
 <script setup>
-import { toRefs } from "vue";
+import { toRefs, computed } from "vue";
 
 const props = defineProps({
   progress: {
@@ -17,6 +17,16 @@ const props = defineProps({
 });
 
 const { progress } = toRefs(props);
+
+const progressPercentage = computed(() => {
+  if (isNaN(progress.value) || !progress.value) {
+    return 0;
+  } else if (progress.value >= 100) {
+    return 100;
+  } else {
+    return progress.value;
+  }
+});
 </script>
 <style lang="scss" scoped>
 .progress-bar-wrapper {
