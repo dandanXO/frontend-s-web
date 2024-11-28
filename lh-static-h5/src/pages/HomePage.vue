@@ -1982,10 +1982,9 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: $box-width;
+  width: 100%;
+  padding: 4px 1rem;
   margin: 0 auto;
-  padding: 4px;
-
   .header-left {
     height: 45px;
 
@@ -2482,7 +2481,8 @@ export default defineComponent({
 
 .body--dark {
   .home-header {
-    background-color: #212B43;
+    background: #212b43;
+    background-color: #212b43;
     padding: 4px 1rem;
     width: 100%;
   }
@@ -2533,10 +2533,10 @@ export default defineComponent({
           background-size: 100% 100%;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
-            top:1px;
-            left:1px;
-            border-top-left-radius:8px;
-            display:none;
+            top: 1px;
+            left: 1px;
+            border-top-left-radius: 8px;
+            display: none;
           }
           .platform-subtitle {
             color: $font-1-dark;
