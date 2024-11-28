@@ -23,7 +23,7 @@
             :value="item.value"
           />
         </el-select>
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -36,7 +36,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -498,8 +498,8 @@ onMounted(async() => {
     form.siteId = site.value.id;
     request.siteId = site.value.id
   } else {
-    form.siteId = siteList.list[0].id;
-    request.siteId = siteList.list[0].id;
+    form.siteId = store.state.user.siteId;
+    request.siteId = store.state.user.siteId;
   }
   await loadWithdrawPlatform();
   await loadCurrencyNames();
