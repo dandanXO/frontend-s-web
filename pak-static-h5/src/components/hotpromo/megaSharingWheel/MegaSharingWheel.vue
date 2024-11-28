@@ -46,13 +46,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
-import { computed } from "@angular/core";
 
 const { t } = useI18n();
 const $q = useQuasar();
