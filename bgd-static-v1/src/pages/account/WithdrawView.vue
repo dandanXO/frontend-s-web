@@ -761,25 +761,28 @@ const selectedWithdrawalMethodMaintenanceDateRange = computed(() =>
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
 
-  api.get("/session/withdraw/entrance").then((response) => {
-    if (response.code === 0) {
-      withdrawalMethods.value = response.data;
-      //Remove this for real data
-      // withdrawalMethods.value = [
-      //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
-      //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
-      if (withdrawalMethods.value.length > 0) {
-        selectMethod(withdrawalMethods.value[0], 0);
+  api
+    .get("/session/withdraw/entrance")
+    .then((response) => {
+      if (response.code === 0) {
+        withdrawalMethods.value = response.data;
+        //Remove this for real data
+        // withdrawalMethods.value = [
+        //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
+        //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
+        if (withdrawalMethods.value.length > 0) {
+          selectMethod(withdrawalMethods.value[0], 0);
+        }
+      } else {
+        // $q.notify({
+        //   color: "negative",
+        //   position: "top",
+        //   message: response.message,
+        //   icon: "report_problem"
+        // });
       }
-    } else {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: response.message,
-      //   icon: "report_problem"
-      // });
-    }
-  }).finally(() => (isLoadingWithdrawalMethod.value = false));
+    })
+    .finally(() => (isLoadingWithdrawalMethod.value = false));
 };
 const updateWithdrawAmt = () => {
   withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
@@ -933,7 +936,8 @@ const openWithdrawTutorialVideo = () => {
         border-radius: 3.125rem;
         opacity: 0.8;
         // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
-        background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
+        background: linear-gradient(90deg, #05f79a -1.25%, #150a08 104.06%);
+
         padding: 5px 10px;
         text-transform: uppercase;
 
@@ -992,7 +996,7 @@ const openWithdrawTutorialVideo = () => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0e1412;
+  background-color: #232524;
 }
 
 .tutorial-link {
@@ -1119,7 +1123,7 @@ const openWithdrawTutorialVideo = () => {
     border-radius: 3.125rem;
     opacity: 0.8;
     // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
-    background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
+    background: linear-gradient(90deg, #05f79a -1.25%, #150a08 104.06%);
     padding: 5px 10px;
     text-transform: uppercase;
 

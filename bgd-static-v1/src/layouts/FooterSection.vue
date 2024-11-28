@@ -57,16 +57,11 @@ const tab = ref("home");
     content: "";
     display: block;
     position: absolute;
-    width: 55px;
-    height: 38px;
-
-    top: 25%;
+    width: 100%;
+    height: 30px;
     pointer-events: none;
-    left: 15%;
+    background: url("../assets/images/index/menu/icon-hover.png") no-repeat center center;
     background-size: contain;
-    background-image: url("../assets/images/index/menu/icon-hover.png");
-    background-repeat: no-repeat;
-    // background-image: url("../assets/images/account/shadow2-bg.png");
   }
 }
 

@@ -144,17 +144,17 @@
     <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <tbody>
-        <tr>
-          <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.friendCount") }}</td>
-          <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.inviteBonus") }}</td>
-        </tr>
-
-        <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
           <tr>
-            <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
-            <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
+            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.friendCount") }}</td>
+            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.inviteBonus") }}</td>
           </tr>
-        </template>
+
+          <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+            <tr>
+              <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+              <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
 
@@ -211,33 +211,33 @@
     <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <tbody>
-        <tr>
-          <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.reward.player") }}</td>
-          <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.reward.money") }}</td>
-        </tr>
+          <tr>
+            <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.reward.player") }}</td>
+            <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.reward.money") }}</td>
+          </tr>
         </tbody>
       </table>
       <div class="table-container" ref="tableContainer">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
           <tbody>
-          <template v-if="inviteesRecords && inviteesRecords.length === 0">
-            <tr>
-              <td colspan="2">{{ $t("notify.noRecord") }}</td>
-            </tr>
-          </template>
-          <template v-else>
-            <template v-for="(item, index) in inviteesRecords" :key="index">
+            <template v-if="inviteesRecords && inviteesRecords.length === 0">
               <tr>
-                <td style="width: 60%">
-                  <div class="player-details">
-                    <img :src="getRandomImage(index)" width="30" />
-                    {{ item.loginName }}
-                  </div>
-                </td>
-                <td style="width: 40%">{{ store.currency.value }} {{ item.finalAmount }}</td>
+                <td colspan="2">{{ $t("notify.noRecord") }}</td>
               </tr>
             </template>
-          </template>
+            <template v-else>
+              <template v-for="(item, index) in inviteesRecords" :key="index">
+                <tr>
+                  <td style="width: 60%">
+                    <div class="player-details">
+                      <img :src="getRandomImage(index)" width="30" />
+                      {{ item.loginName }}
+                    </div>
+                  </td>
+                  <td style="width: 40%">{{ store.currency.value }} {{ item.finalAmount }}</td>
+                </tr>
+              </template>
+            </template>
           </tbody>
         </table>
       </div>
@@ -685,7 +685,7 @@ watch(activeSetting, checkIsShowDetail);
         span {
           font-size: 24px;
           font-weight: bold;
-          color: #70bc62;
+          color: #24ee89;
         }
       }
 
@@ -765,7 +765,7 @@ watch(activeSetting, checkIsShowDetail);
       }
       .link-copy {
         color: #0f0b0b;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -837,7 +837,7 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:last-child {
-          color: #70bc62;
+          color: #24ee89;
         }
       }
     }
@@ -963,7 +963,7 @@ watch(activeSetting, checkIsShowDetail);
 
     &.active {
       font-weight: bold;
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
     }
 
     &:active {

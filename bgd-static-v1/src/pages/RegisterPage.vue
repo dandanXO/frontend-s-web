@@ -32,7 +32,7 @@
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('form.phone')">
+            <InputField :label="$t('form.phone')" fancy>
               <template #input>
                 <q-input
                   type="tel"
@@ -52,14 +52,14 @@
                   :placeholder="$t('form.phone_placeholder')"
                 >
                   <template v-slot:prepend>
-                    <q-icon name="smartphone" />
+                    <FancyIcon name="smartphone" />
                     <div class="prepend-number">+880</div>
                   </template>
                 </q-input>
               </template>
             </InputField>
 
-            <InputField :label="$t('form.password')">
+            <InputField :label="$t('form.password')" fancy>
               <template #input>
                 <q-input
                   ref="pwdRef"
@@ -76,7 +76,7 @@
                   :placeholder="$t('form.password_placeholder')"
                 >
                   <template v-slot:prepend>
-                    <q-icon name="lock" />
+                    <FancyIcon name="lock" />
                   </template>
                   <template v-slot:append>
                     <q-icon
@@ -197,7 +197,7 @@
       <div class="mui-row q-mt-sm" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
           {{ $t("form.register_agree_01") }}
-          <a href="#" style="text-decoration: none; color: #24ee89;">{{ $t("form.register_agree_02") }}</a>
+          <a href="#" style="text-decoration: none; color: #24ee89">{{ $t("form.register_agree_02") }}</a>
         </q-checkbox>
       </div>
     </div>
@@ -257,13 +257,15 @@ import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
+import FancyIcon from "src/components/auth/FancyIcon.vue";
 
 export default defineComponent({
   name: "RegisterPage",
   methods: { isAndroid },
   components: {
     InputRowGrid,
-    InputField
+    InputField,
+    FancyIcon
     // PrimaryButton
   },
   setup() {

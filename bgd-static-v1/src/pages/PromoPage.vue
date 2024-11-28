@@ -753,28 +753,11 @@ export default defineComponent({
     }
 
     :deep(.q-tab--active) {
-      color: white;
+      color: #000a01;
       // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
       // background-size: 100% 100%;
-      background: linear-gradient(
-        180deg,
-        rgba(97, 255, 0, 0) 0%,
-        rgba(97, 255, 0, 0.25) 50.5%,
-        rgba(97, 255, 0, 0) 100%
-      );
+      background: url(../assets/images/account/deposit-withdraw-tab-active.png) no-repeat center center;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-
-      &:before {
-        content: "";
-        background-color: #70bc62;
-        height: 3px;
-        border-radius: 4px;
-        width: 30%;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-      }
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -785,6 +768,8 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
 .promo-container {
+  background: url(../assets/images/promotion/promo-bg.png) no-repeat center center;
+  background-size: 100% 100%;
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -1106,11 +1091,14 @@ export default defineComponent({
             font-size: 12px;
           }
 
+          tr {
+            background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+          }
+
           th {
             padding: 5px;
             text-align: center;
-
-            background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+            color: #000000;
 
             &:first-child {
               border-top-left-radius: 8px;
@@ -1201,16 +1189,22 @@ export default defineComponent({
 
   .q-tab__label {
     font-size: 13px;
+    color: #8c968f;
   }
 
   .q-tab--inactive {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  .q-tab--active .q-tab__indicator {
-    width: 100%;
-    height: 2px;
-    background: #70bc62;
+  .q-tab--active {
+    .q-tab__label {
+      color: #24ee89;
+    }
+    .q-tab__indicator {
+      width: 100%;
+      height: 2px;
+      background: #24ee89;
+    }
   }
 
   .q-tab__label {

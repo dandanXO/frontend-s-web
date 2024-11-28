@@ -32,7 +32,7 @@
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="$t('form.phone')">
+            <InputField :label="$t('form.phone')" fancy>
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input
@@ -54,14 +54,15 @@
                   :placeholder="$t('form.phone_placeholder')"
                 >
                   <template v-slot:prepend>
-                    <q-icon name="smartphone" />
+                    <FancyIcon name="smartphone" />
+                    <!-- <q-icon name="smartphone" /> -->
                     <div class="prepend-number">+880</div>
                   </template>
                 </q-input>
               </template>
             </InputField>
 
-            <InputField :label="$t('form.password')">
+            <InputField :label="$t('form.password')" fancy>
               <template #input>
                 <q-input
                   ref="passwordRef"
@@ -76,7 +77,7 @@
                   :placeholder="$t('form.password_placeholder')"
                 >
                   <template v-slot:prepend>
-                    <q-icon name="lock" />
+                    <FancyIcon name="lock" />
                   </template>
                   <template v-slot:append>
                     <q-icon
@@ -144,8 +145,6 @@
         </q-btn>
       </div>
     </div>
-
-    
 
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
@@ -219,6 +218,7 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, trackNewUserFtd } from "boot/utils";
 import { App } from "@capacitor/app";
+import FancyIcon from "src/components/auth/FancyIcon.vue";
 
 export default defineComponent({
   name: "LoginPage",
@@ -226,7 +226,8 @@ export default defineComponent({
   components: {
     // PrimaryButton,
     InputField,
-    InputRowGrid
+    InputRowGrid,
+    FancyIcon
     // RiArrowDropLeftLine
   },
   setup() {
@@ -700,7 +701,6 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-
 .btn-primary {
   color: #000a01;
   height: 34px;
@@ -757,7 +757,6 @@ export default defineComponent({
     right: -1px;
   }
 }
-
 
 .auth-tab-wrapper {
   width: 90%;
@@ -895,13 +894,13 @@ export default defineComponent({
   flex-direction: column;
   gap: 30px;
 
-  :deep(.q-field__control) {
-    height: 45px;
+  // :deep(.q-field__control) {
+  //   height: 45px;
 
-    .q-field__marginal {
-      height: 45px;
-    }
-  }
+  //   .q-field__marginal {
+  //     height: 45px;
+  //   }
+  // }
 }
 
 .forgot-password {

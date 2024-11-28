@@ -863,19 +863,29 @@ defineExpose({
   }
 
   .btn-cancel {
-    background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-    border: 1px solid #5d8956;
+    background: url(../../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
+    background-size: contain;
     font-weight: 700;
-    color: #ffffff;
-    border-radius: 12px;
+    color: #fff;
+    width: 140px;
+    height: 42px;
+    border: none;
+    &::before {
+      display: none;
+    }
   }
 
   .btn-confirm {
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    border: 1px solid #5d8956;
+    background: url(../../assets/images/index/btn-bg-green-small.png) no-repeat center center;
+    background-size: contain;
     font-weight: 700;
-    color: #fff;
-    border-radius: 12px;
+    width: 140px;
+    height: 42px;
+    color: #000a01;
+    border: none;
+    &::before {
+      display: none;
+    }
   }
 }
 .loader-container {

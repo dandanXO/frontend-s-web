@@ -92,24 +92,27 @@
             {{ $t("deposit.please_pay_exact_amt") }}
           </div>
 
-          <q-input
-            class="deposit-input q-mt-sm"
-            ref="depositAmtRef"
-            name="localAmount"
-            hide-bottom-space
-            filled
-            v-model="form.localAmount"
-            :rules="verifyDepositAmount"
-            dense
-            clearable
-          >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="currency">
-                <template v-if="isUSDT">USDT</template>
-                <template v-else>{{ store.currency.value }}</template>
-              </span>
+          <InputField>
+            <template #input>
+              <q-input
+                class="deposit-input q-mt-sm"
+                ref="depositAmtRef"
+                name="localAmount"
+                hide-bottom-space
+                outlined
+                v-model="form.localAmount"
+                :rules="verifyDepositAmount"
+                clearable
+              >
+                <template v-slot:prepend>
+                  <span style="font-size: 26px" class="currency">
+                    <template v-if="isUSDT">USDT</template>
+                    <template v-else>{{ store.currency.value }}</template>
+                  </span>
+                </template>
+              </q-input>
             </template>
-          </q-input>
+          </InputField>
         </div>
 
         <!-- <q-select
@@ -352,6 +355,7 @@ import KYCUserForm from "../../components/KYCUserForm.vue";
 import { t } from "src/boot/lang";
 import { useCheckKYC } from "src/hooks/checkKYC";
 import { storeToRefs } from "pinia";
+import InputField from "src/components/auth/InputField.vue";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
@@ -997,6 +1001,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import "../../css/mixin.scss";
+
 .deposit-tabs {
   width: 100%;
   margin: 0 16px;
@@ -1063,7 +1069,7 @@ onMounted(() => {
 
 :deep(.q-field--filled.q-field--dark .q-field__control) {
   border-radius: 0.5rem;
-  background: #0b0e0d !important;
+  background: #ffffff1a !important;
   border: 1px solid #072a19;
 }
 
@@ -1084,7 +1090,7 @@ onMounted(() => {
 
     .deposit-amt {
       border-radius: 4px;
-      background: #0b0e0d;
+      background: #ffffff1a;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -1094,11 +1100,16 @@ onMounted(() => {
       height: 4rem;
       font-weight: 600;
       aspect-ratio: 106/64;
+      &::after {
+        @include gradient-border(
+          linear-gradient(90deg, rgba(243, 195, 93, 0.15) 0%, rgba(243, 195, 93, 0) 24%, rgba(243, 195, 93, 0.15) 100%)
+        );
+      }
 
       &.active {
         // background: #00b900;
         color: #000a01;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
       }
     }
 
@@ -1134,12 +1145,25 @@ onMounted(() => {
       margin: 20px auto 0 auto;
 
       .deposit-input {
-        background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;
         height: 46px;
 
         :deep(.q-field__control) {
+          height: 46px;
+          &::before {
+            @include gradient-border(
+              linear-gradient(
+                90deg,
+                rgba(243, 195, 93, 0.15) 0%,
+                rgba(243, 195, 93, 0) 24%,
+                rgba(243, 195, 93, 0.15) 100%
+              )
+            );
+          }
+          border-radius: 10px;
+        }
+        :deep(.q-field__marginal) {
           height: 46px;
         }
       }
@@ -1297,7 +1321,7 @@ onMounted(() => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0e1412;
+  background-color: #232524;
   // margin: 16px;
 }
 

@@ -52,24 +52,23 @@
           <img src="../assets/images/auth/menu-luckyspin.png" />
         </div>
       </div>
-
-      <div class="side-menu-item" @click="activateSlide('Slot')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Slot' }" @click="activateSlide('Slot')">
         <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
         {{ $t("sideNav.slots") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Live')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Live' }" @click="activateSlide('Live')">
         <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
         {{ $t("sideNav.livecasino") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Fish')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Fish' }" @click="activateSlide('Fish')">
         <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
         {{ $t("sideNav.fishing") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Poker')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Poker' }" @click="activateSlide('Poker')">
         <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
         {{ $t("sideNav.poker") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Sport')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Sport' }" @click="activateSlide('Sport')">
         <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
         {{ $t("sideNav.sport") }}
       </div>
@@ -148,7 +147,11 @@
 
   <div
     class="infoboard-container"
-    :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }"
+    :class="{
+      'q-pa-md': !homeProfile,
+      'with-top-download': topDownload && !ui.hideDownload,
+      'with-background': isScrolled
+    }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
@@ -283,7 +286,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -303,6 +306,8 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+
+const isScrolled = ref(false);
 
 const loadCustomerAddress = () => {
   cached
@@ -466,6 +471,10 @@ const isSideDownload = ref(false);
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -484,6 +493,11 @@ onMounted(() => {
     isSideDownload.value = true;
   }
   afterMounted();
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -557,7 +571,7 @@ onMounted(() => {
 
       a {
         text-decoration: none;
-        background: linear-gradient(180deg, #24EE89 0%, #9FE871 100%);
+        background: linear-gradient(180deg, #24ee89 0%, #9fe871 100%);
         color: #131313;
         font-weight: bold;
         font-size: 12px;
@@ -635,8 +649,17 @@ onMounted(() => {
       line-height: 1.2;
       text-decoration: none;
 
+      &.active {
+        background-image: url("../assets/images/common/side-menu-item-bg-active.svg");
+        color: #24ee89;
+        img {
+          filter: brightness(0) saturate(100%) invert(79%) sepia(53%) saturate(579%) hue-rotate(85deg) brightness(87%)
+            contrast(117%);
+        }
+      }
+
       &__download {
-        background: linear-gradient(90deg, #24EE89 0%, #9FE871 100%);
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
         color: #000a01;
         font-weight: bold;
 
@@ -744,6 +767,10 @@ onMounted(() => {
     // border-top-right-radius: 25px;
     // border-top-left-radius: 25px;
     top: 56px;
+  }
+
+  &.with-background {
+    background: #150a08;
   }
 
   .infoboard-wrapper {
@@ -992,6 +1019,7 @@ onMounted(() => {
   animation: blink 1.5s infinite;
   border-radius: 25px;
   box-shadow: 0px 2px 0px 0px #1dca6a;
+  color: #144a1a;
 }
 
 .menu-line {
