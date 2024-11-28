@@ -1,6 +1,6 @@
 <template>
   <div class="progress-bar-wrapper">
-    <div v-show="progress" class="progress-bar-inner" :style="{ width: progress + '%' }" />
+    <div v-show="progress" class="progress-bar-inner" :style="{ width: progress >= 100 ? 100 : progress + '%' }" />
     <span class="progress-text">
       <slot name="text">{{ progress }}%</slot>
     </span>
