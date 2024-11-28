@@ -718,6 +718,10 @@ export default {
     57003: "Deposit does not met requirement",
     57004: "History deposit does not met requirement",
     57005: "Code Redeem Error",
-    57006: "Invalid Code"
+    57006: "Invalid Code",
+    58000: "System Stage Error",
+    58001: "System Stage Settings Error",
+    58002: "Event haven't start",
+    58003: "Event have ended"
   }
 };
