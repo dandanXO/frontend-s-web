@@ -27,6 +27,7 @@ export default {
     timeType: {
       MONTHLY: 'Monthly',
       WEEKLY: 'Weekly',
+      HALF_MONTH: 'Half Month',
     },
     status: {
       APPLY: 'Apply',
