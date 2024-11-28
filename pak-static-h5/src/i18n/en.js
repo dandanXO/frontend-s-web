@@ -196,7 +196,9 @@ export default {
     downloadNow: "Download Now",
     recharge: "Recharge",
     getInterestProfit: "Get Interest Profit",
-    claim: "Claim"
+    claim: "Claim",
+    receive: "Receive",
+    completed: "Completed"
   },
   notify: {
     noRecord: "No Record",

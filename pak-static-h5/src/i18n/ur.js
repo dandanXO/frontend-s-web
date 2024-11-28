@@ -195,7 +195,9 @@ export default {
     downloadNow: "ابھی ڈاؤنلوڈ کریں",
     recharge: "ری چارج کریں",
     getInterestProfit: "سود کا منافع حاصل کریں۔",
-    claim: "دعوی کریں"
+    claim: "دعوی کریں",
+    receive: "موصول کریں",
+    completed: "مکمل"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",

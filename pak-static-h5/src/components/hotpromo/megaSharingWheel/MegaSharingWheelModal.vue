@@ -9,38 +9,48 @@
       @click="handleBackClick"
     />
     <div class="mega-sharing-wheel-modal-wrapper">
-      <div class="mega-sharing-wheel-modal__title">
-        <span v-if="showMission">{{ $t("hotPromo.megaSharingWheel.missionTitle") }}</span>
-        <span v-else>{{ $t("hotPromo.megaSharingWheel.wheelTitle") }}</span>
-      </div>
-      <div v-if="!showMission">
-        <div class="controller-wrapper">
-          <slot name="controller" />
+      <div class="mega-sharing-wheel-modal__top-content">
+        <div class="mega-sharing-wheel-modal__title">
+          <span v-if="showMission">{{ $t("hotPromo.megaSharingWheel.missionTitle") }}</span>
+          <span v-else>{{ $t("hotPromo.megaSharingWheel.wheelTitle") }}</span>
         </div>
-        <div class="mega-sharing-wheel-modal__time-limit-wrapper">
-          <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/clock.svg" />
-          <span>{{ $t("hotPromo.megaSharingWheel.timeLimited") }}</span>
-          <div
-            v-for="(item, index) in remainingTime"
-            :key="index"
-            class="mega-sharing-wheel-modal__time-limit-item-wrapper"
-          >
-            <div class="mega-sharing-wheel-modal__time-limit-value">
-              {{ item.value }}
+        <div v-if="!showMission">
+          <div class="controller-wrapper">
+            <slot name="controller" />
+          </div>
+          <div class="mega-sharing-wheel-modal__time-limit-wrapper">
+            <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/clock.svg" />
+            <span>{{ $t("hotPromo.megaSharingWheel.timeLimited") }}</span>
+            <div
+              v-for="(item, index) in remainingTime"
+              :key="index"
+              class="mega-sharing-wheel-modal__time-limit-item-wrapper"
+            >
+              <div class="mega-sharing-wheel-modal__time-limit-value">
+                {{ item.value }}
+              </div>
+              <span class="mega-sharing-wheel-modal__time-limit-label">{{ item.label }}</span>
             </div>
-            <span class="mega-sharing-wheel-modal__time-limit-label">{{ item.label }}</span>
           </div>
         </div>
+      </div>
+
+      <div v-if="!showMission">
         <div class="mega-sharing-wheel-modal__spin-wrapper">
           <img
             class="mega-sharing-wheel-modal__spin-glow"
             src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/spin-wheel-glow.png"
             :style="{ marginLeft: glowDrift }"
           />
-          <MegaSharingWheel />
+          <MegaSharingWheel
+            :canSpinWheel="canSpinWheel"
+            v-model:showMission="showMission"
+            :stage="stage"
+            @getReferFriendInfo="getReferFriendInfo"
+          />
         </div>
         <div class="progress-bar">
-          <ProgressBar :progress="50" />
+          <ProgressBar :progress="totalProgress" />
         </div>
         <div class="mega-sharing-wheel-modal__winner-wrapper">
           <div class="mega-sharing-wheel-modal__winner-bg top" />
@@ -49,20 +59,21 @@
             src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/winner-decoration.png"
           />
           <div ref="winnerContainerRef" class="mega-sharing-wheel-modal__winner-list">
-            <div v-for="(winner, index) in mockWinners" :key="index" class="mega-sharing-wheel-modal__winner-item">
-              <span>{{ winner.name }}</span>
-              <span class="prize">{{ winner.prize }}</span>
+            <div v-for="(winner, index) in winnerList" :key="index" class="mega-sharing-wheel-modal__winner-item">
+              <span>{{ winner.loginName }}</span>
+              <span class="prize">{{ winner.bonus }}</span>
             </div>
           </div>
           <div class="mega-sharing-wheel-modal__winner-bg bottom" />
         </div>
       </div>
-      <MissionTab v-else />
+      <MissionTab v-else :missionDetails="missionDetails" :totalProgress="totalProgress" />
     </div>
   </div>
 </template>
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from "vue";
+import { eventapi } from "boot/axios";
 import MegaSharingWheel from "./MegaSharingWheel.vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
@@ -92,6 +103,12 @@ const dateTimer = ref();
 const winnerTimer = ref();
 const winnerContainerRef = ref();
 
+let stage = 0;
+const winnerList = ref([]);
+const canSpinWheel = ref(false);
+
+const missionCount = ref();
+
 const remainingTime = computed(() => {
   const startTime = moment(now.value);
   const endTime = moment("2024/12/31 00:00:00");
@@ -117,12 +134,88 @@ const remainingTime = computed(() => {
 });
 
 const glowDrift = computed(() => {
-  if (width.value >= 550) return "0px";
-  return width.value * 0.59 - 320 + "px";
+  if (width.value >= 450) return "0px";
+  else if (width.value >= 350) return width.value * 0.7 - 305 + "px";
+  else return width.value * 0.7 - 300 + "px";
 });
 
 const handleBackClick = () => {
   showMission.value = false;
+};
+
+const getWinnerList = () => {
+  eventapi.get(`/session/lucky-spin-refer-friend/records?stage=${stage}`).then((res) => {
+    winnerList.value.splice(0, winnerList.value.length, ...res.data);
+    let scrollPosition = 0;
+
+    if (winnerContainerRef?.value?.scrollHeight) {
+      if (scrollPosition >= winnerContainerRef.value.scrollHeight) {
+        scrollPosition = 0;
+      } else {
+        scrollPosition += 43;
+      }
+
+      winnerContainerRef.value.scrollTo({
+        top: scrollPosition,
+        behavior: "smooth"
+      });
+    }
+  });
+};
+
+const missionDetails = ref([]);
+const totalProgress = computed(() => {
+  const finishedMissionLength = missionDetails.value.filter((item) => item.current >= item.total).length;
+  return ((finishedMissionLength / missionDetails.value.length) * 100).toFixed(2);
+});
+
+const getReferFriendInfo = () => {
+  eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {
+    const resData = res.data.stageStatusVOList;
+    const index = resData.findIndex((item) => item.stageOpen);
+    if (index !== -1) {
+      stage = index + 1;
+      getWinnerList();
+
+      const currentStageInfo = resData[index];
+      // missionCount.value = currentStageInfo.memberStateVO;
+      missionCount.value = {
+        eligibleInviteesCount: 1,
+        inviteesDepositCount: 1,
+        inviteesValidBet: 1000
+      };
+
+      missionDetails.value = [
+        {
+          title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"),
+          total: 2,
+          current: missionCount.value?.inviteesDepositCount ?? 0
+        },
+        {
+          title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"),
+          total: 1000,
+          current: missionCount.value?.inviteesValidBet ?? 0
+        },
+        {
+          title: t("hotPromo.megaSharingWheel.EligibleInvitedUsers"),
+          total: 5,
+          current: missionCount.value?.eligibleInviteesCount ?? 0
+        }
+      ];
+
+      canSpinWheel.value =
+        currentStageInfo.hasClaimed === false &&
+        currentStageInfo.eligibleInviteesCountState === true &&
+        currentStageInfo.inviteesBettingAmountState === true &&
+        currentStageInfo.inviteesDepositCountState === true;
+
+      clearInterval(winnerTimer.value);
+
+      winnerTimer.value = setInterval(() => {
+        getWinnerList();
+      }, 5000);
+    }
+  });
 };
 
 onMounted(() => {
@@ -130,20 +223,7 @@ onMounted(() => {
     now.value = Date.now();
   }, 1000);
 
-  let scrollPosition = 0;
-
-  winnerTimer.value = setInterval(() => {
-    if (scrollPosition >= winnerContainerRef.value.scrollHeight) {
-      scrollPosition = 0;
-    } else {
-      scrollPosition += 43;
-    }
-
-    winnerContainerRef.value.scrollTo({
-      top: scrollPosition,
-      behavior: "smooth"
-    });
-  }, 2000);
+  getReferFriendInfo();
 });
 
 onUnmounted(() => {
@@ -152,12 +232,21 @@ onUnmounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.mega-sharing-wheel-modal-outer-wrapper {
+  max-height: 100% !important;
+}
 .mega-sharing-wheel-modal-wrapper {
-  max-width: 550px;
+  max-width: 450px;
   margin: 0 auto;
   overflow-x: hidden;
   min-height: calc(100vh - 108px);
   position: relative;
+  background: url(../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/main-bg.png) no-repeat;
+  background-size: cover;
+  .mega-sharing-wheel-modal__top-content {
+    background: url(../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/top-content-bg.png) no-repeat;
+    background-size: cover;
+  }
   .mega-sharing-wheel-modal__title {
     position: relative;
     background: url(../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/title.png) no-repeat;
@@ -165,13 +254,13 @@ onUnmounted(() => {
     aspect-ratio: 272/138;
     margin: 0 auto 12px;
     width: 100%;
-    max-width: 272px;
+    max-width: 220px;
 
     span {
       position: absolute;
       width: 100%;
-      bottom: 10px;
-      font-size: 18px;
+      bottom: 7px;
+      font-size: 14px;
       line-height: 24px;
       font-weight: 700;
       text-align: center;
@@ -179,7 +268,7 @@ onUnmounted(() => {
   }
   .controller-wrapper {
     width: fit-content;
-    margin: 0 auto 12px;
+    margin: 0 12px 12px;
   }
   .mega-sharing-wheel-modal__time-limit-wrapper {
     display: flex;
@@ -187,7 +276,7 @@ onUnmounted(() => {
     justify-content: center;
     gap: 10px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
 
     img {
       align-self: flex-start;
@@ -239,8 +328,8 @@ onUnmounted(() => {
     .mega-sharing-wheel-modal__spin-glow {
       position: absolute;
       animation: spin 5s linear infinite;
-      width: 550px;
-      top: -130px;
+      width: 450px;
+      top: -90px;
       pointer-events: none;
       transform: translate(-50%, -50%);
       z-index: -1;
@@ -311,10 +400,16 @@ onUnmounted(() => {
 
 .mega-sharing-wheel-dialog-back {
   position: absolute;
-  left: 40px;
-  top: 40px;
+  left: 16px;
+  top: 16px;
   border: 1px solid #ffffff;
 }
+
+:deep(.promo-list-item) {
+  place-content: center;
+  line-height: 12px !important;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);

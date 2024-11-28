@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div ref="drawBtnRef" :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spin(3)">
+      <div ref="drawBtnRef" :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
         <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/click-spin-btn.png" />
       </div>
       <div class="spin-wheel-board">
@@ -19,7 +19,7 @@
     </div>
 
     <div class="claim-btn-wrapper">
-      <button class="claim-btn">
+      <button class="claim-btn" @click="handleClaimBtnClick">
         {{ $t("btn.claim") }}
       </button>
     </div>
@@ -27,15 +27,15 @@
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <div class="congrats-container">
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
-      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">Rs28</div>
+      <div class="congrats-header">
+        <span class="congrats-amt">{{ convertToCommaAmount(prizePopupBonusAmt) }}PKR</span>
+        <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/claim-success.png" />
+      </div>
 
-      <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
-          {{ $t("btn.recharge") }}
-        </q-btn>
+      <div class="receive-button-wrapper">
+        <button class="receive-btn" :loading="false" @click="handleReceiveBtnClick">
+          {{ $t("btn.receive") }}
+        </button>
       </div>
     </div>
   </q-dialog>
@@ -45,20 +45,20 @@
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import moment from "moment";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const { t } = useI18n();
 const $q = useQuasar();
 const router = useRouter();
 
 // spin wheel constants
-const TOTAL_ITEMS = 6;
+const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [28, 999999, 188, 888, 999998, 388, 488, 588];
+const SPIN_WHEEL_PRIZES = [999999999, 388, 888, 288888, 188, 88888, 8888, 1888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -76,6 +76,20 @@ let finalDegree = 0;
 let speed = 1;
 var spinSchedule;
 var degree;
+
+const props = defineProps(["canSpinWheel", "showMission", "stage"]);
+const emit = defineEmits(["update:showMission", "getReferFriendInfo"]);
+
+const handleClaimBtnClick = () => {
+  if (!props.canSpinWheel) {
+    emit("update:showMission", true);
+  }
+};
+
+const handleReceiveBtnClick = () => {
+  showPrizePopup.value = false;
+  emit("getReferFriendInfo");
+};
 
 const spin = (prizeIndex, stopCallback) => {
   spinButtonDisable.value = true;
@@ -124,6 +138,7 @@ const stopSpin = (prizeIndex, stopCallback) => {
   // stop spin variables
   const stopTime = 3;
   const stopSpinRound = 3 * 360;
+  console.log("degreesToStopAt", degreesToStopAt);
   const endDegree = degreesToStopAt.value[prizeIndex].degree;
 
   const attemptStopSpin = () => {
@@ -201,23 +216,34 @@ const spinWheel = () => {
   }
 
   eventapi
-    .post("/new-user-roulette/spin")
+    .post(`/session/lucky-spin-refer-friend/spin?stage=${props.stage}`)
     .then((res) => {
       if (res.code == 0) {
-        var bonusIndex = res.data.bonusAmount;
-        if (res.data.type === "CONSOLATION") {
-          bonusIndex = -1;
-        }
+        var bonusIndex = res.data;
+        // if (res.data.type === "CONSOLATION") {
+        //   bonusIndex = -1;
+        // }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-        spin(3, () => {
+        spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = res.data.bonusAmount;
+          prizePopupBonusAmt.value = res.data;
           remainingDraws.value = 0;
         });
       }
     })
     .catch((err) => {
+      // TEST
+      // var bonusIndex = 1888;
+      // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+
+      // console.log("prizeIndex", prizeIndex);
+      // spin(prizeIndex, () => {
+      //   showPrizePopup.value = true;
+      //   prizePopupBonusAmt.value = 1888;
+      //   remainingDraws.value = 0;
+      // });
+
       console.log(err);
     });
 };
@@ -235,8 +261,8 @@ const initSpinWheel = () => {
 onMounted(() => {
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
-    const driftDegree = 22;
-    var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1 + driftDegree;
+    const driftDegree = -45;
+    var the_degree = driftDegree * i - 22.5;
     degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
 
@@ -252,16 +278,16 @@ onMounted(() => {
 }
 .spin-wheel-container {
   position: relative;
-  margin: 0px auto 40px;
+  margin: 0px auto 18px;
   text-align: center;
-  width: 330px;
-  height: 330px;
+  width: 300px;
+  height: 300px;
 }
 
 .spin-wheel-frame {
   position: relative;
-  width: 330px;
-  height: 330px;
+  width: 300px;
+  height: 300px;
   margin: 0 auto;
   // background: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-frame.png) no-repeat center
   //   center;
@@ -294,8 +320,8 @@ onMounted(() => {
   z-index: 2;
   top: 0px;
   left: 0px;
-  width: 330px;
-  height: 330px;
+  width: 300px;
+  height: 300px;
   overflow: hidden;
 }
 
@@ -525,17 +551,19 @@ onMounted(() => {
     }
   }
 }
-
+.receive-button-wrapper,
 .claim-btn-wrapper {
   display: flex;
   justify-content: center;
+
+  .receive-btn,
   .claim-btn {
     margin: 0 auto;
     aspect-ratio: 138/58;
     background: url(../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/claim-btn.png) no-repeat;
-    background-size: cover;
+    background-size: contain;
     border: none;
-    width: 138px;
+    width: 120px;
     padding: 2px 0 26px;
     font-size: 20px;
     font-weight: 700;
@@ -644,69 +672,35 @@ onMounted(() => {
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
   border-radius: 12px;
-
-  &:before {
-    content: "";
-    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
-    background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 150px;
-    position: absolute;
-    left: 0;
-    top: -150px;
-  }
+  background: none;
 
   .congrats-header {
     display: flex;
     justify-content: center;
     margin-top: -18px;
     z-index: 2;
+    position: relative;
 
+    .congrats-amt {
+      position: absolute;
+      bottom: 40px;
+      font-family: Poppins;
+      font-size: 24px;
+      font-weight: 900;
+      text-align: center;
+      text-underline-position: from-font;
+      color: #fff96f;
+    }
     img {
       display: block;
       width: 100%;
-      max-width: 320px;
     }
-  }
-
-  .congrats-coupons {
-    img {
-      display: block;
-      width: 100%;
-      margin: auto;
-      max-width: 240px;
-    }
-  }
-
-  .congrats-title {
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .congrats-highlight {
-    color: #fff96f;
-    font-size: 26px;
-    font-weight: bold;
-    text-align: center;
-    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
-    padding: 2px 12px;
-    background-repeat: no-repeat;
-    background-size: 70% 100%;
-    background-position: center;
-    margin-top: 16px;
   }
 }
 </style>

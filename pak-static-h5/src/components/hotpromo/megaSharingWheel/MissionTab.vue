@@ -3,15 +3,21 @@
     <span class="mission-description">{{ $t("hotPromo.megaSharingWheel.missionDescription") }}</span>
     <ProgressBar class="mission-total-progress" :progress="totalProgress" />
     <div class="mission-list">
-      <div v-for="(mission, index) in missionDetail" :key="index" class="mission-item">
+      <div v-for="(mission, index) in missionDetails" :key="index" class="mission-item">
         <div class="mission-item__description-wrapper">
           <span class="mission-item__title">
             {{ mission.title }}
             <span class="mission-item__title-amount">{{ mission.total }}</span>
           </span>
-          <button class="mission-item__action">{{ $t("btn.confirm") }}</button>
+          <button
+            class="mission-item__action"
+            :class="{ completed: mission.current / mission.total === 1 }"
+            @click="handleConfirmBtnClick(mission.current / mission.total === 1)"
+          >
+            {{ mission.current / mission.total === 1 ? $t("btn.completed") : $t("btn.confirm") }}
+          </button>
         </div>
-        <ProgressBar class="mission-item__progress" :progress="mission.progress * 100">
+        <ProgressBar class="mission-item__progress" :progress="(mission.current / mission.total) * 100">
           <template #text>
             {{ mission.current }}
           </template>
@@ -25,21 +31,17 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, toRefs } from "vue";
+import { useRouter } from "vue-router";
 import ProgressBar from "./ProgressBar.vue";
-import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
+const router = useRouter();
+const props = defineProps(["missionDetails", "totalProgress"]);
 
-const missionDetail = computed(() => [
-  { title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"), progress: 0, total: 2, current: 0 },
-  { title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"), progress: 0.3, total: 1000, current: 300 },
-  { title: t("hotPromo.megaSharingWheel.EligibleInvitedUsers"), progress: 0.4, total: 5, current: 2 }
-]);
-const totalProgress = computed(() => {
-  const finishedMissionLength = missionDetail.value.filter((item) => item.progress >= item.total).length;
-  return (finishedMissionLength / missionDetail.value.length) * 100;
-});
+const handleConfirmBtnClick = (isCompleted) => {
+  if (!isCompleted) {
+    router.push("/earn-money");
+  }
+};
 </script>
 <style lang="scss" scoped>
 .mission-tab-wrapper {
@@ -49,6 +51,8 @@ const totalProgress = computed(() => {
   width: 100%;
   max-width: 375px;
   margin: 0 auto;
+  padding: 0 20px;
+
   .mission-description {
     margin-bottom: 14px;
     font-size: 12px;
@@ -97,6 +101,9 @@ const totalProgress = computed(() => {
           cursor: pointer;
           &:hover {
             filter: brightness(1.2);
+          }
+          &.completed {
+            filter: grayscale(100%) opacity(0.5);
           }
         }
       }

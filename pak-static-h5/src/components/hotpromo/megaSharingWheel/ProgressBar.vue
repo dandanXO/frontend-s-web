@@ -11,7 +11,7 @@ import { toRefs } from "vue";
 
 const props = defineProps({
   progress: {
-    type: Number,
+    type: [Number, String],
     default: 0
   }
 });
