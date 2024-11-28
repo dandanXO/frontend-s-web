@@ -743,8 +743,8 @@ const withdrawInfo = reactive({
 });
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
-  firstName: store.realName.split(",")[0]?.trim(),
-  lastName: store.realName.split(",")[1]?.trim(),
+  firstName: store.realName ? store.realName.split(",")[0]?.trim() : '',
+  lastName: store.realName ? store.realName.split(",")[1]?.trim() : '',
   cardNumber: ""
   // cardAddress: ""
 });
@@ -752,8 +752,8 @@ const withdrawReadOnlyInfo = reactive({
 const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
-  firstName: store.realName.split(",")[0]?.trim(),
-  lastName: store.realName.split(",")[1]?.trim(),
+  firstName: store.realName ? store.realName.split(",")[0]?.trim() : '',
+  lastName: store.realName ? store.realName.split(",")[1]?.trim() : '',
   cardNumber: "",
   cardAddress: "",
   email: "",
@@ -866,8 +866,8 @@ const submitWithdrawBank = () => {
         resetSelectedMethod();
 
         // (bankCardField.cardAccount = store.realName), (bankCardField.cardNumber = "");
-        (bankCardField.firstName = store.realName.split(",")[0]?.trim()),
-          (bankCardField.lastName = store.realName.split(",")[1]?.trim()),
+        (bankCardField.firstName = store.realName ? store.realName.split(",")[0]?.trim() : ''),
+          (bankCardField.lastName = store.realName ? store.realName.split(",")[1]?.trim() : ''),
           (bankCardField.cardNumber = "");
         bankCardField.amount = "";
         withdrawInfo.amount = "";

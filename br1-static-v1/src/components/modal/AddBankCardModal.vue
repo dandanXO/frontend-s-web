@@ -202,8 +202,8 @@ const ewalletList = [];
 const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
-  firstName: store.realName.split(",")[0]?.trim(),
-  lastName: store.realName.split(",")[1]?.trim(),
+  firstName: store.realName ? store.realName.split(",")[0]?.trim() : '',
+  lastName: store.realName ? store.realName.split(",")[1]?.trim() : '',
   cardNumber: "",
   cardAddress: "",
   email: ""
@@ -316,8 +316,8 @@ const clearField = () => {
   bankCardField.bankId = undefined;
   bankCardField.cardNumber = "";
   bankCardField.cardAccount = store.realName;
-  bankCardField.firstName = store.realName.split(",")[0]?.trim();
-  bankCardField.lastName = store.realName.split(",")[1]?.trim();
+  bankCardField.firstName = store.realName ? store.realName.split(",")[0]?.trim() : '';
+  bankCardField.lastName = store.realName ? store.realName.split(",")[1]?.trim() : '';
   bankCardField.cardAddress = "";
   bankCardField.email = "";
 };
