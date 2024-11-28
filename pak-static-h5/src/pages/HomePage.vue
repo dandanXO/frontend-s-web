@@ -1382,7 +1382,7 @@
   -
   <q-dialog v-if="popupPromo === 'mega-sharing-wheel'" :model-value="true" full-width class="mega-sharing-wheel-dialog">
     <!-- <q-btn class="mega-sharing-wheel-dialog-back" icon="chevron_left" round dense /> -->
-    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense />
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
     <MegaSharingWheelModal>
       <template #controller>
         <PopupController v-model="popupPromo" />
@@ -1450,7 +1450,7 @@ const { t } = useI18n();
 const isShowPrizeModal = ref(false);
 // const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
-const popupPromo = ref("mega-sharing-wheel");
+const popupPromo = ref("");
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -5318,15 +5318,12 @@ const showCongratsModal = () => {
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
 }
-.mega-sharing-wheel-dialog {
-  position: relative;
-
-  .mega-sharing-wheel-dialog-close {
-    position: absolute;
-    right: 16px;
-    top: 16px;
-    border: 1px solid #ffffff;
-    z-index: 1;
-  }
+.mega-sharing-wheel-dialog .mega-sharing-wheel-dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: all;
 }
 </style>

@@ -407,11 +407,6 @@ onUnmounted(() => {
   border: 1px solid #ffffff;
 }
 
-:deep(.promo-list-item) {
-  place-content: center;
-  line-height: 12px !important;
-}
-
 @keyframes spin {
   from {
     transform: rotate(0deg);

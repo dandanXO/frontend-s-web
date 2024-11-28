@@ -109,7 +109,8 @@ const handleNextClick = () => {
       padding: 5px 14px;
       font-size: 10px;
       font-weight: 700;
-      line-height: 18px;
+      place-content: center;
+      line-height: 12px;
       text-align: center;
       color: var(--text-color);
       &.selected {
