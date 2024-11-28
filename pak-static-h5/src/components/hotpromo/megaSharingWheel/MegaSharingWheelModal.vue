@@ -181,9 +181,10 @@ const getReferFriendInfo = () => {
     const stageResData = res.data.stageStatusVOList;
     const stageReqResData = res.data.stageRequirementVO;
 
-    const index = stageResData.findIndex((item) => item.stageOpen);
-    if (index !== -1) {
-      stage = index + 1;
+    if (stageResData.length > 0) {
+      const index = stageResData[0].stage;
+      stage = index;
+
       getWinnerList();
 
       const currentStageInfo = stageResData[index];
