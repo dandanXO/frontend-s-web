@@ -3678,7 +3678,7 @@ const showCongratsModal = () => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         // isCongratsModal.value = true;
-        popupPromo.value = "luck-spin-wheel";
+        popupPromo.value = "lucky-spin-wheel";
       }
     }
   });
