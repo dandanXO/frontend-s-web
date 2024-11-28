@@ -11,18 +11,19 @@
   <!--  </q-page-sticky>-->
 
   <div class="login-container" :class="isRestrictedDomain ? 'w-domain' : ''">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
+    <div class="back-left" v-if="!isRestrictedDomain">
+      <router-link :to="'/home'">
+        <img src="../assets/images/index/btn-back.png" />
       </router-link>
-    </div> -->
+    </div>
+
     <div class="is-domain top-img">
       <img src="../assets/images/index/register-topimg.png" />
     </div>
     <div class="no-domain login-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
     </div>
-    <div class="back-btn-img" @click="router.replace('/')">
+    <div class="back-btn-img" v-if="isRestrictedDomain" @click="router.replace('/')">
       <img src="../assets/images/index/btn-back.png" />
     </div>
     <div class="no-domain auth-tab-wrapper">
@@ -921,8 +922,10 @@ export default defineComponent({
   padding: 0 16px;
   display: flex;
   justify-content: center;
+  text-align: center;
+
   img {
-    display: block;
+    display: inline-block;
     width: 100%;
     max-width: 140px;
     margin-bottom: 10px;

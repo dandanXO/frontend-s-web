@@ -13,7 +13,7 @@
         <div class="game-title-logo">
           <img :src="logoImage()" :alt="name" />
         </div>
-        <q-btn class="game-btn" dense>立即进入</q-btn>
+        <q-btn class="game-btn" dense rounded>立即进入</q-btn>
       </div>
 
       <div class="maintenance-box" v-if="underMaintenance">

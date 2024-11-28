@@ -17,6 +17,7 @@
               label="立即下载"
               color="brightbtn"
               class="top-btn"
+              rounded
             />
           </div>
         </div>
@@ -89,8 +90,8 @@
       <div class="welcome-bar">
         <div class="logo"><img src="../assets/logo.png" /></div>
         <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}</div>
-        <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue">登录</q-btn>
-        <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange">注册</q-btn>
+        <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue" rounded>登录</q-btn>
+        <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange" rounded>注册</q-btn>
 
         <router-link v-if="store.token" to="/account" class="login">
           <div class="user-status">
@@ -1694,7 +1695,7 @@ export default defineComponent({
 .auth-btn {
   padding-left: 12px;
   padding-right: 12px;
-  border-radius: 6px;
+  // border-radius: 6px;
   box-shadow: 0px 2px 4px 0px #ffffff inset;
   color: #ffffff;
   white-space: nowrap;
@@ -1807,7 +1808,7 @@ export default defineComponent({
 
           .game-btn {
             background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
-            border-radius: 6px;
+            // border-radius: 6px;
             color: #ffffff;
             padding: 2px 4px;
             line-height: 1;

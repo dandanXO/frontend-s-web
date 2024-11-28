@@ -1,6 +1,9 @@
 import { server } from "@/utils/request";
 import { getDevice, getMobileOS } from "@/utils/utils";
 import cached from "@/utils/cache";
+import { userStore } from "@/store";
+
+
 
 export function getPlatformList() {
   return cached.get("PLATFORMS", () => server.REST.get("/platform"));
@@ -19,22 +22,25 @@ export function getPlatformListDisplay() {
 }
 
 export function getPlatformGames(code, gameType) {
+  const store = userStore()
   const regDevice = getDevice();
   var way = null;
   if (getDevice() === "MOBILE") {
     way = getMobileOS();
   }
   const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
-  return cached.get(key, () =>
-    server.REST.get("/platformGames", {
-      params: {
-        platformId: code,
-        gameType: gameType,
-        device: regDevice,
-        way: way
-      }
-    })
-  );
+  const apiUrl = store.hasToken() ? '/session/loggedInPlatformGames': '/platformGames'
+
+    return cached.get(key, () =>
+      server.REST.get(apiUrl, {
+        params: {
+          platformId: code,
+          gameType: gameType,
+          device: regDevice,
+          way: way
+        }
+      })
+    );
 }
 
 export function launchSessionGame(platform, { gameCode = null, isMobile = false } = {}) {

@@ -402,7 +402,7 @@ import { defineComponent, onMounted, reactive, ref, watch, computed } from "vue"
 import { api } from "boot/axios"
 import { useQuasar } from "quasar"
 import { userStore } from "stores/index"
-import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
+import { updateDate, convertToGMT8 } from "src/boot/utils";
 import moment from "moment"
 import { t } from "src/boot/lang";
 const store = userStore();
@@ -841,9 +841,6 @@ export default defineComponent({
       getTime,
       noDataLabel: "No information",
       rowPerPageLabel: "Record per page",
-      humanDatetime(ts) {
-        return convertToGMT55(ts);
-      },
       getPlatList,
       platformsList,
       betDetails,
