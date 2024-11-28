@@ -171,13 +171,15 @@ const totalProgress = computed(() => {
 
 const getReferFriendInfo = () => {
   eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {
-    const resData = res.data.stageStatusVOList;
-    const index = resData.findIndex((item) => item.stageOpen);
+    const stageResData = res.data.stageStatusVOList;
+    const stageReqResData = res.data.stageRequirementVO;
+
+    const index = stageResData.findIndex((item) => item.stageOpen);
     if (index !== -1) {
       stage = index + 1;
       getWinnerList();
 
-      const currentStageInfo = resData[index];
+      const currentStageInfo = stageResData[index];
       missionCount.value = currentStageInfo.memberStateVO;
 
       // TEST
@@ -190,17 +192,17 @@ const getReferFriendInfo = () => {
       missionDetails.value = [
         {
           title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"),
-          total: 2,
+          total: stageReqResData.minInviteesDepositCount,
           current: missionCount.value?.inviteesDepositCount ?? 0
         },
         {
           title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"),
-          total: 1000,
+          total: stageReqResData.minInviteesValidBet,
           current: missionCount.value?.inviteesValidBet ?? 0
         },
         {
           title: t("hotPromo.megaSharingWheel.EligibleInvitedUsers"),
-          total: 5,
+          total: stageReqResData.minEligibleInviteesCount,
           current: missionCount.value?.eligibleInviteesCount ?? 0
         }
       ];
