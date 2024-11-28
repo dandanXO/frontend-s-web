@@ -228,12 +228,12 @@ const onAddCardClick = (type) => {
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: t("notify.fillInPersonalDetails"),
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: t("notify.fillInPersonalDetails"),
+      //   icon: "report_problem"
+      // });
       router.push("/account/profile");
     } else {
       isAddCardDialogOpen.value = true;
