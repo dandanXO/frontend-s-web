@@ -1,68 +1,64 @@
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
-        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-btn.png" />
-      </div>
-      <div class="wheel-top-btn">
-        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-indicate.png" />
+      <div ref="drawBtnRef" :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
+        <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/click-spin-btn.png" />
       </div>
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
-          <div id="spin-wheel-id" class="spin-wheel">
+          <div class="spin-wheel">
             <img
-              id="spin-wheel-bg"
+              ref="spinBoardRef"
               class="wheel-bg"
-              src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-bg.png"
+              src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/spin-wheel-bg-stage-1.png"
             />
-            <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
+            <div ref="spinNumRef" class="spin-wheel-number" style="display: none"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="remaining-draw-wrapper">
-      <p class="remaining-draw-text">
-        {{ $t("hotPromo.aviatorWheel.remainingDrawTimes") }}:
-        <span id="remaning-draw-amt">{{ remainingDraws }}</span>
-      </p>
+    <div class="claim-btn-wrapper">
+      <button class="claim-btn" @click="handleClaimBtnClick">
+        {{ $t("btn.claim") }}
+      </button>
     </div>
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <div class="congrats-container">
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
-      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">Rs28</div>
+      <div class="congrats-header">
+        <span class="congrats-amt">{{ convertToCommaAmount(prizePopupBonusAmt) }}PKR</span>
+        <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/claim-success.png" />
+      </div>
 
-      <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
-          {{ $t("btn.recharge") }}
-        </q-btn>
+      <div class="receive-button-wrapper">
+        <button class="receive-btn" :loading="false" @click="handleReceiveBtnClick">
+          {{ $t("btn.receive") }}
+        </button>
       </div>
     </div>
   </q-dialog>
 </template>
 
 <script setup>
-import { ref, onMounted, toRefs } from "vue";
+import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import moment from "moment";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const { t } = useI18n();
 const $q = useQuasar();
 const router = useRouter();
 
 // spin wheel constants
-const TOTAL_ITEMS = 6;
+const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [28, 999999, 188, 888, 999998, 388, 488, 588];
+const SPIN_WHEEL_PRIZES = [999999999, 388, 888, 288888, 188, 88888, 8888, 1888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -73,13 +69,27 @@ const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref();
-const remainingDraws = ref(0);
+// const remainingDraws = ref(0);
 const winnersList = ref([]);
 
 let finalDegree = 0;
 let speed = 1;
 var spinSchedule;
 var degree;
+
+const props = defineProps(["canSpinWheel", "showMission", "stage"]);
+const emit = defineEmits(["update:showMission", "getReferFriendInfo"]);
+
+const handleClaimBtnClick = () => {
+  if (!props.canSpinWheel) {
+    emit("update:showMission", true);
+  }
+};
+
+const handleReceiveBtnClick = () => {
+  showPrizePopup.value = false;
+  emit("getReferFriendInfo");
+};
 
 const spin = (prizeIndex, stopCallback) => {
   spinButtonDisable.value = true;
@@ -102,18 +112,18 @@ const spin = (prizeIndex, stopCallback) => {
   stopSpin(prizeIndex, stopCallback);
 };
 
-const getRecords = () => {
-  eventapi
-    .get("/aviatorWheel/records")
-    .then((res) => {
-      if (res.code == 0) {
-        winnersList.value = res.data;
-      }
-    })
-    .catch((err) => {
-      console.log("here", err);
-    });
-};
+// const getRecords = () => {
+//   eventapi
+//     .get("/aviatorWheel/records")
+//     .then((res) => {
+//       if (res.code == 0) {
+//         winnersList.value = res.data;
+//       }
+//     })
+//     .catch((err) => {
+//       console.log("here", err);
+//     });
+// };
 
 const stopSpin = (prizeIndex, stopCallback) => {
   // call api
@@ -128,6 +138,7 @@ const stopSpin = (prizeIndex, stopCallback) => {
   // stop spin variables
   const stopTime = 3;
   const stopSpinRound = 3 * 360;
+  console.log("degreesToStopAt", degreesToStopAt);
   const endDegree = degreesToStopAt.value[prizeIndex].degree;
 
   const attemptStopSpin = () => {
@@ -194,60 +205,73 @@ const spinWheel = () => {
     return;
   }
 
-  if (remainingDraws.value <= 0) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
-      icon: "report_problem"
-    });
+  if (!props.canSpinWheel) {
+    emit("update:showMission", true);
     return;
   }
 
+  // if (remainingDraws.value <= 0) {
+  //   $q.notify({
+  //     color: "negative",
+  //     position: "top",
+  //     message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
+  //     icon: "report_problem"
+  //   });
+  //   return;
+  // }
+
   eventapi
-    .post("/new-user-roulette/spin")
+    .post(`/session/lucky-spin-refer-friend/spin?stage=${props.stage}`)
     .then((res) => {
       if (res.code == 0) {
-        var bonusIndex = res.data.bonusAmount;
-        if (res.data.type === "CONSOLATION") {
-          bonusIndex = -1;
-        }
+        var bonusIndex = res.data;
+        // if (res.data.type === "CONSOLATION") {
+        //   bonusIndex = -1;
+        // }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-        spin(3, () => {
+        spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = res.data.bonusAmount;
-          remainingDraws.value = 0;
+          prizePopupBonusAmt.value = res.data;
+          // remainingDraws.value = 0;
         });
       }
     })
     .catch((err) => {
+      // TEST
+      // var bonusIndex = 1888;
+      // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+
+      // console.log("prizeIndex", prizeIndex);
+      // spin(prizeIndex, () => {
+      //   showPrizePopup.value = true;
+      //   prizePopupBonusAmt.value = 1888;
+      //   remainingDraws.value = 0;
+      // });
+
       console.log(err);
     });
 };
 
-const initSpinWheel = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
-    if (res.code == 0) {
-      remainingDraws.value = res.data.spinChance;
-    }
-  });
+// const initSpinWheel = () => {
+//   eventapi.get("/new-user-roulette/init").then((res) => {
+//     if (res.code == 0) {
+//       remainingDraws.value = res.data.spinChance;
+//     }
+//   });
 
-  // getRecords();
-};
+//   // getRecords();
+// };
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
-    var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
+    const driftDegree = -45;
+    var the_degree = driftDegree * i - 22.5;
     degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
 
-  spinBoardRef.value = document.getElementById("spin-wheel-bg");
-  spinNumRef.value = document.getElementById("spin-wheel-number");
-  drawBtnRef.value = document.querySelector(".draw-btn");
-
-  initSpinWheel();
+  // initSpinWheel();
 });
 </script>
 
@@ -259,16 +283,16 @@ onMounted(() => {
 }
 .spin-wheel-container {
   position: relative;
-  margin: 0px auto;
+  margin: 0px auto 18px;
   text-align: center;
-  width: 330px;
-  height: 330px;
+  width: 300px;
+  height: 300px;
 }
 
 .spin-wheel-frame {
   position: relative;
-  width: 330px;
-  height: 330px;
+  width: 300px;
+  height: 300px;
   margin: 0 auto;
   // background: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-frame.png) no-repeat center
   //   center;
@@ -301,8 +325,8 @@ onMounted(() => {
   z-index: 2;
   top: 0px;
   left: 0px;
-  width: 330px;
-  height: 330px;
+  width: 300px;
+  height: 300px;
   overflow: hidden;
 }
 
@@ -329,32 +353,19 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
-.wheel-top-btn {
-  width: 155px;
-  height: 115px;
-  position: absolute;
-  top: 21px;
-  left: 50%;
-  right: 0;
-  z-index: 24;
-  transform: translateX(-50%);
-  img {
-    width: 155px;
-    height: 115px;
-  }
-}
+
 .draw-btn {
-  width: 130px;
+  // width: 130px;
   height: auto;
   aspect-ratio: 1/1;
   z-index: 25;
   position: absolute;
-  top: calc(50%);
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.5);
 
   &.disabled {
-    filter: brightness(0.85);
+    filter: brightness(0.85) scale(0.5);
     opacity: 1 !important;
     pointer-events: none;
   }
@@ -376,7 +387,6 @@ onMounted(() => {
 }
 
 .click-pointer:active {
-  transform: translate(-50%, calc(-50% + 1px));
   filter: brightness(0.9);
 }
 
@@ -406,10 +416,6 @@ onMounted(() => {
   img {
     width: 100%;
   }
-}
-
-.draw-btn img {
-  width: 100%;
 }
 
 .spin-wheel-board {
@@ -550,23 +556,27 @@ onMounted(() => {
     }
   }
 }
+.receive-button-wrapper,
+.claim-btn-wrapper {
+  display: flex;
+  justify-content: center;
 
-.remaining-draw-wrapper {
-  background-image: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-highlight.png);
-  background-size: 75% 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  padding: 2px;
-
-  .remaining-draw-text {
-    color: #ffffff;
+  .receive-btn,
+  .claim-btn {
+    margin: 0 auto;
+    aspect-ratio: 138/58;
+    background: url(../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/claim-btn.png) no-repeat;
+    background-size: contain;
+    border: none;
+    width: 120px;
+    padding: 2px 0 26px;
     font-size: 20px;
-    // margin: 0px auto 15px;
-    margin: auto;
-    text-align: center;
-    width: 300px;
-    position: relative;
-    z-index: 23;
+    font-weight: 700;
+    line-height: 30px;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(1.2);
+    }
   }
 }
 
@@ -667,69 +677,35 @@ onMounted(() => {
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
   border-radius: 12px;
-
-  &:before {
-    content: "";
-    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
-    background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 150px;
-    position: absolute;
-    left: 0;
-    top: -150px;
-  }
+  background: none;
 
   .congrats-header {
     display: flex;
     justify-content: center;
     margin-top: -18px;
     z-index: 2;
+    position: relative;
 
+    .congrats-amt {
+      position: absolute;
+      bottom: 40px;
+      font-family: Poppins;
+      font-size: 24px;
+      font-weight: 900;
+      text-align: center;
+      text-underline-position: from-font;
+      color: #fff96f;
+    }
     img {
       display: block;
       width: 100%;
-      max-width: 320px;
     }
-  }
-
-  .congrats-coupons {
-    img {
-      display: block;
-      width: 100%;
-      margin: auto;
-      max-width: 240px;
-    }
-  }
-
-  .congrats-title {
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .congrats-highlight {
-    color: #fff96f;
-    font-size: 26px;
-    font-weight: bold;
-    text-align: center;
-    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
-    padding: 2px 12px;
-    background-repeat: no-repeat;
-    background-size: 70% 100%;
-    background-position: center;
-    margin-top: 16px;
   }
 }
 </style>
