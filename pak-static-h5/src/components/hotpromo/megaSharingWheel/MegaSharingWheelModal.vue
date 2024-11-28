@@ -178,12 +178,14 @@ const getReferFriendInfo = () => {
       getWinnerList();
 
       const currentStageInfo = resData[index];
-      // missionCount.value = currentStageInfo.memberStateVO;
-      missionCount.value = {
-        eligibleInviteesCount: 1,
-        inviteesDepositCount: 1,
-        inviteesValidBet: 1000
-      };
+      missionCount.value = currentStageInfo.memberStateVO;
+
+      // TEST
+      // missionCount.value = {
+      //   eligibleInviteesCount: 1,
+      //   inviteesDepositCount: 1,
+      //   inviteesValidBet: 1000
+      // };
 
       missionDetails.value = [
         {
