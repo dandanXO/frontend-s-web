@@ -104,7 +104,7 @@ const dateTimer = ref();
 const winnerTimer = ref();
 const winnerContainerRef = ref();
 
-let stage = 0;
+const stage = ref(0);
 const winnerList = ref([]);
 const canSpinWheel = ref(false);
 const hasClaimed = ref(false);
@@ -146,7 +146,7 @@ const handleBackClick = () => {
 };
 
 const getWinnerList = () => {
-  eventapi.get(`/session/lucky-spin-refer-friend/records?stage=${stage}`).then((res) => {
+  eventapi.get(`/session/lucky-spin-refer-friend/records?stage=${stage.value}`).then((res) => {
     winnerList.value.splice(0, winnerList.value.length, ...res.data);
     let scrollPosition = 0;
 
@@ -182,14 +182,13 @@ const getReferFriendInfo = () => {
     const stageReqResData = res.data.stageRequirementVO;
 
     if (stageResData.length > 0) {
-      const index = stageResData[0].stage;
-      stage = index;
+      stage.value = stageResData[0].stage;
 
       getWinnerList();
 
-      const currentStageInfo = stageResData[index];
+      const currentStageInfo = stageResData[0];
       missionCount.value = currentStageInfo.memberStateVO;
-      endTime.value = moment(stageResData[index].stageEndTime);
+      endTime.value = moment(stageResData[0].stageEndTime);
 
       missionDetails.value = [
         {
