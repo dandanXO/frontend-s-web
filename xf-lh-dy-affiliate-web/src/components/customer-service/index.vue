@@ -79,6 +79,17 @@ const bubbleLink = () => {
     return 'LH1008666'
   }
 }
+
+const amicoLink = () => {
+  if (props.siteId === '6') {
+    return 'vip777'
+  } else if (props.siteId === '1') {
+    return 'vip444'
+  } else {
+    return 'vip777'
+  }
+}
+
 const mailLink = () => {
   if (props.siteId === '7') {
     return 'mailto:affiliate@e8007.com'
@@ -253,6 +264,21 @@ const initContactList = () => {
   }
   if (props.siteId === '7' || props.siteId === '6' || props.siteId === '1') {
     contactlist.value.shift()
+  }
+  if (props.siteId === '6' || props.siteId === '1') {
+    contactlist.value.push({
+      icon: 'amico-logo',
+      type: "AMICO",
+      link: amicoLink(),
+      btns: [{
+        text: t('common.copy'),
+        action: ''
+      },
+      {
+        text: t('common.download'),
+        action: 'https://am35.cc/'
+      }]
+    })
   }
 }
 const copyMessage = (position, text, btnPosition) => {
