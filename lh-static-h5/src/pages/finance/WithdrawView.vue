@@ -361,7 +361,7 @@
 </template>
 
 <script setup>
-import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
+import { reactive, ref, computed, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -393,9 +393,9 @@ const withdrawInfo = reactive({
 const isLoaded = ref(false);
 const isShowRemainingDialog = ref(false);
 
-const hasWithdrawCard = computed(() => {
-  return false && withdrawState.bankCardList.length === 0;
-});
+// const hasWithdrawCard = computed(() => {
+//   return false && withdrawState.bankCardList.length === 0;
+// });
 const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 
@@ -410,23 +410,8 @@ const checkNewUser = () => {
 onMounted(() => {
   checkNewUser();
   store.getBalance();
-  // loadPlatform()
 });
 const platforms = reactive([]);
-const loadPlatform = () => {
-  api.get("/platform").then((res) => {
-    res.data.forEach((p) => {
-      if (p.walletType !== "SEAMLESS") {
-        platforms.push({
-          id: p.id,
-          code: p.code,
-          amount: 0
-        });
-      }
-    });
-    refreshBalance("all");
-  });
-};
 const refreshBalance = (plat) => {
   if (plat === "all") {
     platforms.forEach((platform) => {
@@ -548,13 +533,6 @@ const loadCards = () => {
             }
           }
         });
-        // else {
-        //   response.data.forEach(element => {
-        //     if (element.bankId !== 39) {
-        //       withdrawState.bankCardList.push(element)
-        //     }
-        //   });
-        // }
 
         if (cardRef.value) {
           cardRef.value.resetValidation();
