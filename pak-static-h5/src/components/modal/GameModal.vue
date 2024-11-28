@@ -367,11 +367,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 src.value = srcDoc.substring(0, srcDoc.indexOf("?"));
               }, 1000);
             } else if (platformCode === "LuckySport") {
-              if (way === "ANDROID") {
-                cordova.InAppBrowser.open(srcDoc, "_blank", "location=no,zoom=no");
-              } else {
-                window.open(srcDoc, "_blank", "location=no,zoom=no");
-              }
+              window.open(srcDoc, "_blank", "location=no,zoom=no");
             } else {
               src.value = srcDoc;
             }
