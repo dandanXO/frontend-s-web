@@ -19,7 +19,7 @@
     </div>
 
     <div class="claim-btn-wrapper">
-      <button class="claim-btn" @click="handleClaimBtnClick">
+      <button class="claim-btn" @click="spinWheel">
         {{ $t("btn.claim") }}
       </button>
     </div>
@@ -79,12 +79,6 @@ var degree;
 
 const props = defineProps(["canSpinWheel", "showMission", "stage"]);
 const emit = defineEmits(["update:showMission", "getReferFriendInfo"]);
-
-const handleClaimBtnClick = () => {
-  if (!props.canSpinWheel) {
-    emit("update:showMission", true);
-  }
-};
 
 const handleReceiveBtnClick = () => {
   showPrizePopup.value = false;
