@@ -1381,7 +1381,6 @@
 
   -
   <q-dialog v-if="popupPromo === 'mega-sharing-wheel'" :model-value="true" full-width class="mega-sharing-wheel-dialog">
-    <!-- <q-btn class="mega-sharing-wheel-dialog-back" icon="chevron_left" round dense /> -->
     <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
     <MegaSharingWheelModal>
       <template #controller>
@@ -5330,7 +5329,7 @@ const showCongratsModal = () => {
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
 }
-.mega-sharing-wheel-dialog .mega-sharing-wheel-dialog-close {
+.mega-sharing-wheel-dialog-close {
   position: absolute;
   top: 16px;
   right: 0;
