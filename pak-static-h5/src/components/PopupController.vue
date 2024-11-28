@@ -19,21 +19,31 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, toRefs } from "vue";
+import { computed, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-const props = defineProps(["modelValue"]);
+const props = defineProps(["modelValue", "hasWheel"]);
 const { modelValue } = toRefs(props);
 
 const emit = defineEmits("update:modelValue");
 
 const { t } = useI18n();
+const isAdded = ref(false);
 
-const promoList = computed(() => [
+const promoList = ref([
   { code: "lucky-spin-wheel", name: t("home.cashGift") },
-  { code: "money-rain", name: t("home.welcomeNewPlayer") },
-  { code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") }
+  { code: "money-rain", name: t("home.welcomeNewPlayer") }
 ]);
+if (props.hasWheel && !isAdded.value) {
+  promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
+}
+
+watch(props, (newVal, oldVal) => {
+  if (newVal.hasWheel === true && isAdded.value === false) {
+    isAdded.value = true;
+    promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
+  }
+});
 
 const currentPromo = computed(() => {
   const index = promoList.value.findIndex((promo) => promo.code === modelValue.value);

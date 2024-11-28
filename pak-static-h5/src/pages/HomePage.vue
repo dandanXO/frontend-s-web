@@ -1331,7 +1331,7 @@
           <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
         <div class="luckyspin-container">
-          <PopupController v-model="popupPromo" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
           <div class="luckyspin-title">
             <img src="../assets/images/index/modal/luckyspin-welcome.png" />
           </div>
@@ -1348,7 +1348,7 @@
     <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <CongratsModal>
         <template #controller>
-          <PopupController v-model="popupPromo" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
         </template>
       </CongratsModal>
     </q-dialog>
@@ -1373,7 +1373,7 @@
   <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true">
     <MoneyRainModal>
       <template #controller>
-        <PopupController v-model="popupPromo" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
       </template>
     </MoneyRainModal>
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
@@ -1385,7 +1385,7 @@
     <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
     <MegaSharingWheelModal>
       <template #controller>
-        <PopupController v-model="popupPromo" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
       </template>
     </MegaSharingWheelModal>
   </q-dialog>
@@ -1412,9 +1412,6 @@ import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
-import DepositComponent from "../components/depositComponent.vue";
-import KYCGuestForm from "../components/KYCGuestForm.vue";
-import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
@@ -3589,17 +3586,22 @@ onActivated(() => {
 
   checkSpinWheel();
 
-  // if (store.hasToken()) {
-  // }
-
   if (route.query.login === "true") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
   }
 
+  if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
+    checkInviteWheel();
+  }
+
   if (route.query.token) {
     store.autoLogin(route.query.token);
     checkSpinWheel();
+
+    if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
+      checkInviteWheel();
+    }
   }
   afterActivated();
 });
@@ -3644,6 +3646,16 @@ watch(
 //     }
 //   }
 // );
+
+const hasInviteWheelPromo = ref(false);
+const checkInviteWheel = () => {
+  eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {
+    const stageResData = res.data.stageStatusVOList;
+    if (stageResData.length > 0) {
+      hasInviteWheelPromo.value = true;
+    }
+  });
+};
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
