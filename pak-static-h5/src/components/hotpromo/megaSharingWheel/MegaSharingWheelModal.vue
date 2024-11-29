@@ -194,17 +194,20 @@ const getReferFriendInfo = () => {
         {
           title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"),
           total: stageReqResData.minInviterDepositCount,
-          current: missionCount.value?.inviterDepositCount ?? 0
+          current: missionCount.value?.inviterDepositCount ?? 0,
+          actionBtnName: t("btn.deposit")
         },
         {
           title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"),
           total: stageReqResData.minInviterValidBet,
-          current: missionCount.value?.inviterValidBet ?? 0
+          current: missionCount.value?.inviterValidBet ?? 0,
+          actionBtnName: t("btn.betting")
         },
         {
           title: t("hotPromo.megaSharingWheel.EligibleInvitedUsers"),
           total: stageReqResData.minEligibleInviteesCount,
-          current: missionCount.value?.eligibleInviteesCount ?? 0
+          current: missionCount.value?.eligibleInviteesCount ?? 0,
+          actionBtnName: t("btn.share")
         }
       ];
 

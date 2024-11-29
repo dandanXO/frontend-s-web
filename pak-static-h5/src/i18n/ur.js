@@ -197,7 +197,10 @@ export default {
     getInterestProfit: "سود کا منافع حاصل کریں۔",
     claim: "دعوی کریں",
     receive: "موصول کریں",
-    completed: "مکمل"
+    completed: "مکمل",
+    deposit: "جمع",
+    betting: "جوا",
+    share: "شیئر"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",

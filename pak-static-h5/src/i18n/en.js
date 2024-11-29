@@ -198,7 +198,10 @@ export default {
     getInterestProfit: "Get Interest Profit",
     claim: "Claim",
     receive: "Receive",
-    completed: "Completed"
+    completed: "Completed",
+    deposit: "Deposit",
+    betting: "Betting",
+    share: "Share"
   },
   notify: {
     noRecord: "No Record",

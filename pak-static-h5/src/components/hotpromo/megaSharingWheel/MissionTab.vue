@@ -14,7 +14,7 @@
             :class="{ completed: mission.current / mission.total >= 1 }"
             @click="handleConfirmBtnClick(mission)"
           >
-            {{ mission.current / mission.total >= 1 ? $t("btn.completed") : $t("btn.confirm") }}
+            {{ mission.current / mission.total >= 1 ? $t("btn.completed") : mission.actionBtnName }}
           </button>
         </div>
         <ProgressBar class="mission-item__progress" :progress="(mission.current / mission.total) * 100">
