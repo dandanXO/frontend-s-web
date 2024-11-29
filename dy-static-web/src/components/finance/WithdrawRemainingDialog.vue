@@ -23,7 +23,7 @@
     <div class="withdraw-remaining-dialog__body">
       <div class="withdraw-remaining-dialog__body-title">
         再完成
-        <span class="text-yellow">{{ convertToCommaAmount(totalRemaining) }}</span>
+        <span class="text-yellow">{{ convertToCommaAmount(totalRemaining, true) }}</span>
         流水，立即享受快速提款
       </div>
       <table class="withdraw-remaining-dialog__body-table">
@@ -40,7 +40,7 @@
         <tbody>
           <tr v-for="(record, index) in tableData" :key="index">
             <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
-            <td align="center">{{ convertToCommaAmount(record.progress) }}/{{ convertToCommaAmount(record.total) }}</td>
+            <td align="center">{{ convertToCommaAmount(record.progress, true) }}/{{ convertToCommaAmount(record.total, true) }}</td>
             <td align="center">
               <router-link class="action-button" to="/home">去完成</router-link>
             </td>

@@ -72,6 +72,14 @@
           <el-button size="mini" @click="resetQuery()">
             {{ t('fields.reset') }}
           </el-button>
+          <el-button
+            size="mini"
+            type="primary"
+            v-permission="['sys:affiliate:summary:export']"
+            @click="requestExportExcel"
+          >
+            {{ t('fields.requestExportToExcel') }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -724,6 +732,22 @@
         "
       />
     </el-dialog>
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -735,6 +759,7 @@ import {
   getAffiliateSummary,
   getAffiliateChildSummary,
   getAffiliateSummaryNewMember,
+  exportAffiliateSummary
 } from '../../../api/affiliate-record'
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
@@ -770,6 +795,7 @@ const uiControl = reactive({
       value: 'AFFILIATE',
     },
   ],
+  messageVisible: false,
 })
 // const site = ref(null)
 const startDate = new Date()
@@ -1089,6 +1115,14 @@ function changePage(page, pageType) {
   }
   // memberRequest.current = page
   // loadNewMember(newMembers.list)
+}
+
+async function requestExportExcel() {
+  const query = checkQuery()
+  const { data: ret } = await exportAffiliateSummary(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 onMounted(async () => {

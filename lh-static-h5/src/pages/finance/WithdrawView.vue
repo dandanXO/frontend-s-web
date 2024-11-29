@@ -248,7 +248,7 @@
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
           <!--          </div>-->
           <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
-            <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
+            <div class="q-mt-sm text-neontb">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</div>
             <div
               class="q-mt-sm q-mb-sm text-center"
               v-if="selectedWithdrawalMethod.code !== 'SZPAY' && !$q.dark.isActive"
@@ -306,22 +306,22 @@
       </div>
     </div>
 
-    <q-dialog v-model="hasWithdrawCard" persistent>
-      <q-card style="width: 100%; padding: 10px">
-        <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">请先绑定银行卡</div>
-        </q-card-section>
+    <!--    <q-dialog v-model="hasWithdrawCard" persistent>-->
+    <!--      <q-card style="width: 100%; padding: 10px">-->
+    <!--        <q-card-section class="q-mb-md">-->
+    <!--          <div class="text-h6 text-center">请先绑定银行卡</div>-->
+    <!--        </q-card-section>-->
 
-        <div class="flex flex-center">
-          <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消" />
-          </router-link>
-          <router-link to="/account/withdraw">
-            <q-btn color="brightbtn" label="绑定" />
-          </router-link>
-        </div>
-      </q-card>
-    </q-dialog>
+    <!--        <div class="flex flex-center">-->
+    <!--          <router-link to="/account">-->
+    <!--            <q-btn class="q-mr-md" label="取消" />-->
+    <!--          </router-link>-->
+    <!--          <router-link to="/account/withdraw">-->
+    <!--            <q-btn color="brightbtn" label="绑定" />-->
+    <!--          </router-link>-->
+    <!--        </div>-->
+    <!--      </q-card>-->
+    <!--    </q-dialog>-->
   </q-page>
 
   <q-dialog v-model="isShowWithdrawErrorBlock" persistent no-backdrop-dismiss no-esc-dismiss>
@@ -333,10 +333,10 @@
 
       <div class="flex flex-center">
         <div>
-          <q-btn style="width: 100px;" @click="isShowWithdrawErrorBlock = false;" class="q-mr-md" label="取消" />
+          <q-btn style="width: 100px" @click="isShowWithdrawErrorBlock = false" class="q-mr-md" label="取消" />
         </div>
         <router-link to="/account/records/withdraw">
-          <q-btn style="width: 100px;" color="brightbtn" label="前往确认" />
+          <q-btn style="width: 100px" color="brightbtn" label="前往确认" />
         </router-link>
       </div>
     </q-card>
@@ -360,345 +360,292 @@
   <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
 </template>
 
-<script lang="js">
-/* eslint-disable */
-import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
-import {userStore} from "stores/index";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
-import AcctBal from "../../components/AcctBal.vue";
-import{useLocalStorage} from "@vueuse/core"
+<script setup>
+import { reactive, ref, computed, onMounted } from "vue";
+import { userStore } from "stores/index";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+// import AcctBal from "../../components/AcctBal.vue";
+import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
-import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
+import DepositWithdrawTransferTabs from "components/finance/DepositWithdrawTransferTabs.vue";
 import WithdrawRemainingDialog from "src/components/WithdrawRemainingDialog.vue";
 
-export default defineComponent({
-  name: "WithdrawView",
-  components: {AcctBal, DepositWithdrawTransferTabs, WithdrawRemainingDialog},
-  setup() {
-    const notify = useNotify();
-    const store = userStore();
-    const isNewUser = ref(false);
-    const $q = useQuasar();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
-    const imgWithdrawURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/withdraw/";
+const notify = useNotify();
+const store = userStore();
+const isNewUser = ref(false);
+const $q = useQuasar();
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
+const imgWithdrawURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/withdraw/";
 
-    const amountRef = ref();
-    const cardRef = ref();
-    const activeItem = ref(0);
-    const withdrawFormRef = ref(null);
-    const withdrawState = reactive({
-      bankCardList: []
-    });
-    const qs = require("qs");
-    const withdrawInfo = reactive({
-      cardId: undefined,
-      amount: ""
-    });
-    const isLoaded = ref(false);
-    const isShowRemainingDialog = ref(false)
+const amountRef = ref();
+const cardRef = ref();
+const activeItem = ref(0);
+const withdrawFormRef = ref(null);
+const withdrawState = reactive({
+  bankCardList: []
+});
+const qs = require("qs");
+const withdrawInfo = reactive({
+  cardId: undefined,
+  amount: ""
+});
+const isLoaded = ref(false);
+const isShowRemainingDialog = ref(false);
 
-    const hasWithdrawCard = computed(() => {
-      return (isLoaded == true) && withdrawState.bankCardList.length === 0;
-    });
-    const withdrawalMethods = ref([]);
-    const selectedWithdrawalMethod = ref([]);
+// const hasWithdrawCard = computed(() => {
+//   return false && withdrawState.bankCardList.length === 0;
+// });
+const withdrawalMethods = ref([]);
+const selectedWithdrawalMethod = ref([]);
 
-    const checkNewUser = () => {
-      if (store.phone == "") {
-        isNewUser.value = true;
-      } else {
-        getWithdrawalMethods()
-      }
-    };
+const checkNewUser = () => {
+  if (store.phone == "") {
+    isNewUser.value = true;
+  } else {
+    getWithdrawalMethods();
+  }
+};
 
-    onMounted(() => {
-      checkNewUser();
-      store.getBalance();
-      // loadPlatform()
-    });
-    const platforms = reactive([]);
-    const loadPlatform = () => {
-      api.get("/platform").then((res) => {
-        res.data.forEach(p => {
-          if (p.walletType !== "SEAMLESS") {
-            platforms.push({
-              id: p.id,
-              code: p.code,
-              amount: 0
-            });
-          }
-        });
-        refreshBalance("all");
-      });
-    };
-    const refreshBalance = (plat) => {
-      if (plat === "all") {
-        platforms.forEach(platform => {
-          platform.isLoading = true;
-          if (platform.code) {
-            api.get("/session/balance", {params: {platform: platform.code}}).then((res) => {
-              if (platform) {
-                platform.amount = res.data;
-                platform.isLoading = false;
-              }
-            }).catch((e) => {
-                platform.isLoading = false;
-              }
-            );
-
-          }
-        });
-      }
-    };
-
-    const withdrawLoading = ref(false);
-    const isShowWithdrawErrorBlock = ref(false);
-
-    const submitWithdraw = () => {
-      cardRef.value.validate();
-      amountRef.value.validate();
-      $q.loading.show({
-        message: "确认中。。。"
-      });
-      withdrawLoading.value = true;
-      if (cardRef.value.hasError || amountRef.value.hasError) {
-        $q.loading.hide();
-        withdrawLoading.value = false;
-      } else {
-        api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
-          if (response.code === 1312) {
-            isShowWithdrawErrorBlock.value = true;
-            withdrawLoading.value = false;
-            return
-          }
-          if (response.code === 0) {
-            notify({
-              type: "success",
-              message: "提交成功",
-            });
-            getWithdrawalMethods();
-
-            withdrawInfo.amount = "";
-            if (amountRef.value) {
-              setTimeout(()=>{
-                amountRef.value.resetValidation();
-              },0)
+onMounted(() => {
+  checkNewUser();
+  store.getBalance();
+});
+const platforms = reactive([]);
+const refreshBalance = (plat) => {
+  if (plat === "all") {
+    platforms.forEach((platform) => {
+      platform.isLoading = true;
+      if (platform.code) {
+        api
+          .get("/session/balance", { params: { platform: platform.code } })
+          .then((res) => {
+            if (platform) {
+              platform.amount = res.data;
+              platform.isLoading = false;
             }
+          })
+          .catch((e) => {
+            platform.isLoading = false;
+          });
+      }
+    });
+  }
+};
 
-            withdrawLoading.value = false;
+const withdrawLoading = ref(false);
+const isShowWithdrawErrorBlock = ref(false);
 
-          } else {
-            notify({
-              type: "error",
-              message: response.message,
-            });
-
-            withdrawLoading.value = false;
-          }
-        }).catch((error) => {
-          console.log("error", error);
+const submitWithdraw = () => {
+  cardRef.value.validate();
+  amountRef.value.validate();
+  $q.loading.show({
+    message: "确认中。。。"
+  });
+  withdrawLoading.value = true;
+  if (cardRef.value.hasError || amountRef.value.hasError) {
+    $q.loading.hide();
+    withdrawLoading.value = false;
+  } else {
+    api
+      .post("/session/withdraw/", qs.stringify(withdrawInfo))
+      .then((response) => {
+        if (response.code === 1312) {
+          isShowWithdrawErrorBlock.value = true;
           withdrawLoading.value = false;
-          // notify({
-          //   type: "error",
-          //          //   message: response.message,
-          //          // });
-        });
-        $q.loading.hide();
-      }
-    };
-    const isUSDT = ref(false);
-    const isEWALLET = ref(false);
-    const isALIPAY = ref(false);
-    const selectMethod = (method, index) => {
-      withdrawInfo.withdrawCode = null;
-      withdrawInfo.cardId = null;
-      selectedWithdrawalMethod.value = method;
-      withdrawInfo.withdrawCode = method.code;
-      isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY')
-      isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
-      activeItem.value = index;
-      loadCards();
-    };
-
-    const loadCards = () => {
-      api.get("/session/bankCard").then((response) => {
-        isLoaded.value = true;
-        withdrawState.bankCardList = [];
-        if (response.code === 0) {
-          // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
-          response.data.forEach(element => {
-            if (element.bankType === "BANK") {
-              if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element)
-              }
-              if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-                withdrawState.bankCardList.push(element)
-              }
-            } else {
-              if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element);
-              }
-            }
-          });
-          // else {
-          //   response.data.forEach(element => {
-          //     if (element.bankId !== 39) {
-          //       withdrawState.bankCardList.push(element)
-          //     }
-          //   });
-          // }
-
-          if (cardRef.value) {
-            cardRef.value.resetValidation();
-          }
-          withdrawInfo.amount = "";
-          if (amountRef.value) {
-            setTimeout(()=>{
-              amountRef.value.resetValidation();
-            },0)
-          }
+          return;
         }
-      }).catch((error) => {
-        console.log("error", error);
-      });
-    };
-    const getWithdrawalMethods = () => {
-      api.get("/session/withdraw/entrance/status").then((response) => {
         if (response.code === 0) {
-          if(isAutoWithdrawal.value){
-            isShowRemainingDialog.value = !response.data.withdrawStatus
-          }
-          withdrawalMethods.value = response.data.withdrawShowList;
-          //Remove this for real data
-          // withdrawalMethods.value = [
-          //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
-          //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
-          if (withdrawalMethods.value.length > 0) {
-            selectMethod(withdrawalMethods.value[0], 0);
-          }
-        } else {
-          notify({
-            type: "error",
-            message: response.message,
-          });
-        }
-      });
-    };
-    const updateWithdrawAmt = () => {
-      withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
-    };
-
-    const chooseLabel = () => {
-      if (isUSDT.value) {
-        return '钱包地址'
-        // return '虚拟币'
-      } else if (isEWALLET.value) {
-        return '电子钱包'
-      } else {
-        return '银行卡'
-      }
-    }
-
-    const isValidUSDTAmt = (val) => {
-      if(!isUSDT.value){
-        return true;
-      }
-      const usdtPattern = /^([1-9][0-9]*)$/;
-      return usdtPattern.test(withdrawInfo.amount) || "金额应为正数";
-    }
-
-    const chooseCard = () => {
-      if (isUSDT.value) {
-        return '虚拟钱包'
-      } else if (isEWALLET.value) {
-        return '电子钱包'
-      } else {
-        return '银行卡片'
-      }
-    }
-    const tutorialLabel = () => {
-      if (selectedWithdrawalMethod.value.code === 'KDPAY') {
-        return 'K豆教程视频'
-      } else if (selectedWithdrawalMethod.value.code === 'EBPAY') {
-        return 'EB教程视频'
-      } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
-        return 'OK教程视频'
-      } else if (selectedWithdrawalMethod.value.code === 'BLBPAY') {
-        return '808钱包教程视频'
-      } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
-        return 'JDPAY教程视频'
-      }
-    }
-    const openEWalletTutorial = () => {
-      if(!selectedWithdrawalMethod.value.url) return
-      window.open(selectedWithdrawalMethod.value.url);
-    };
-
-    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
-
-    const handleUpgradeClick = () => {
-      $q.loading.show({
-        message: "升级中。。。"
-      });
-      api.get("/session/updateAutoWithdraw").then(async (res) => {
-        if(res.code === 0) {
           notify({
             type: "success",
-            message: "成功升级为快速提款!"
+            message: "提交成功"
           });
+          getWithdrawalMethods();
 
-          await store.getMemberInfo()
+          withdrawInfo.amount = "";
+          if (amountRef.value) {
+            setTimeout(() => {
+              amountRef.value.resetValidation();
+            }, 0);
+          }
+
+          withdrawLoading.value = false;
         } else {
           notify({
             type: "error",
-            message: res.message
+            message: response.message
           });
+
+          withdrawLoading.value = false;
         }
-      }).finally(() => $q.loading.hide())
-    }
-
-
-    return {
-      noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
-      amountRef,
-      cardRef,
-      withdrawInfo,
-      submitWithdraw,
-      withdrawState,
-      withdrawalMethods,
-      activeItem,
-      selectMethod,
-      imgURL,
-      imgWithdrawURL,
-      step: ref(),
-      selectedWithdrawalMethod,
-      loadCards,
-      isUSDT,
-      isEWALLET,
-      isALIPAY,
-      store,
-      updateWithdrawAmt,
-      platforms,
-      hasWithdrawCard,
-      withdrawFormRef,
-      isLoaded,
-      chooseLabel,
-      chooseCard,
-      openEWalletTutorial,
-      tutorialLabel,
-      isNewUser,
-      checkNewUser,
-      isValidUSDTAmt,
-      withdrawLoading,
-      isAutoWithdrawal,
-      handleUpgradeClick,
-      isShowRemainingDialog,
-      isShowWithdrawErrorBlock
-    };
+      })
+      .catch((error) => {
+        console.log("error", error);
+        withdrawLoading.value = false;
+        // notify({
+        //   type: "error",
+        //          //   message: response.message,
+        //          // });
+      });
+    $q.loading.hide();
   }
-});
+};
+const isUSDT = ref(false);
+const isEWALLET = ref(false);
+const isALIPAY = ref(false);
+const selectMethod = (method, index) => {
+  withdrawInfo.withdrawCode = null;
+  withdrawInfo.cardId = null;
+  selectedWithdrawalMethod.value = method;
+  withdrawInfo.withdrawCode = method.code;
+  isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
+  isEWALLET.value =
+    withdrawInfo.withdrawCode.includes("KDPAY") ||
+    withdrawInfo.withdrawCode.includes("EBPAY") ||
+    withdrawInfo.withdrawCode.includes("OKPAY") ||
+    withdrawInfo.withdrawCode.includes("SZPAY") ||
+    withdrawInfo.withdrawCode.includes("JDPAY") ||
+    withdrawInfo.withdrawCode.includes("BLBPAY");
+  isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
+  activeItem.value = index;
+  loadCards();
+};
+
+const loadCards = () => {
+  withdrawState.bankCardList = [];
+  api
+    .get("/session/bankCard")
+    .then((response) => {
+      isLoaded.value = true;
+      if (response.code === 0) {
+        // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
+        response.data.forEach((element) => {
+          if (element.bankType === "BANK") {
+            if (element.bankCode !== "alipay" && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element);
+            }
+            if (element.bankCode === "alipay" && selectedWithdrawalMethod.value.code === "ALIPAY") {
+              withdrawState.bankCardList.push(element);
+            }
+          } else {
+            if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element);
+            }
+          }
+        });
+
+        if (cardRef.value) {
+          cardRef.value.resetValidation();
+        }
+        withdrawInfo.amount = "";
+        if (amountRef.value) {
+          setTimeout(() => {
+            amountRef.value.resetValidation();
+          }, 0);
+        }
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+const getWithdrawalMethods = () => {
+  api.get("/session/withdraw/entrance/status").then((response) => {
+    if (response.code === 0) {
+      if (isAutoWithdrawal.value) {
+        isShowRemainingDialog.value = !response.data.withdrawStatus;
+      }
+      withdrawalMethods.value = response.data.withdrawShowList;
+      //Remove this for real data
+      // withdrawalMethods.value = [
+      //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
+      //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
+      if (withdrawalMethods.value.length > 0) {
+        selectMethod(withdrawalMethods.value[0], 0);
+      }
+    } else {
+      notify({
+        type: "error",
+        message: response.message
+      });
+    }
+  });
+};
+const updateWithdrawAmt = () => {
+  withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
+};
+
+const chooseLabel = () => {
+  if (isUSDT.value) {
+    return "钱包地址";
+    // return '虚拟币'
+  } else if (isEWALLET.value) {
+    return "电子钱包";
+  } else {
+    return "银行卡";
+  }
+};
+
+const isValidUSDTAmt = (val) => {
+  if (!isUSDT.value) {
+    return true;
+  }
+  const usdtPattern = /^([1-9][0-9]*)$/;
+  return usdtPattern.test(withdrawInfo.amount) || "金额应为正数";
+};
+
+const chooseCard = () => {
+  if (isUSDT.value) {
+    return "虚拟钱包";
+  } else if (isEWALLET.value) {
+    return "电子钱包";
+  } else {
+    return "银行卡片";
+  }
+};
+const tutorialLabel = () => {
+  if (selectedWithdrawalMethod.value.code === "KDPAY") {
+    return "K豆教程视频";
+  } else if (selectedWithdrawalMethod.value.code === "EBPAY") {
+    return "EB教程视频";
+  } else if (selectedWithdrawalMethod.value.code === "OKPAY") {
+    return "OK教程视频";
+  } else if (selectedWithdrawalMethod.value.code === "BLBPAY") {
+    return "808钱包教程视频";
+  } else if (selectedWithdrawalMethod.value.code === "JDPAY") {
+    return "JDPAY教程视频";
+  }
+};
+const openEWalletTutorial = () => {
+  if (!selectedWithdrawalMethod.value.url) return;
+  window.open(selectedWithdrawalMethod.value.url);
+};
+
+const isAutoWithdrawal = computed(() => store.withdrawType === "AUTO_WITHDRAW");
+
+const handleUpgradeClick = () => {
+  $q.loading.show({
+    message: "升级中。。。"
+  });
+  api
+    .get("/session/updateAutoWithdraw")
+    .then(async (res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: "成功升级为快速提款!"
+        });
+
+        await store.getMemberInfo();
+      } else {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .finally(() => $q.loading.hide());
+};
 </script>
 <style lang="scss">
 .withdraw-section {

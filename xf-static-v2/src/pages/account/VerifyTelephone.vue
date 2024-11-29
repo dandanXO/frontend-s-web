@@ -42,6 +42,7 @@
                 label="发送验证码"
                 @click="openVerificationDialog()"
                 style="white-space: nowrap"
+                rounded
               />
             </template>
           </q-input>
@@ -70,7 +71,7 @@
     </q-form>
 
     <div class="text-center q-mt-md" v-if="canEdit">
-      <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" label="验证手机号" style="width: 100%" />
+      <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" label="验证手机号" style="width: 100%" rounded />
     </div>
   </div>
 

@@ -93,6 +93,12 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
           </a>
+          <a v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST' )" target="_blank" @click="handleExchangeClick">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/exchange-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
+          </a>
         </div>
       </div>
 
@@ -163,6 +169,7 @@
       </div>
     </div>
   </q-dialog>
+  <ExchangeModal v-model="showExchangeModal" />
 </template>
 
 <script setup>
@@ -171,6 +178,7 @@ import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import ExchangeModal from "../components/account/ExchangeModal.vue";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 
@@ -198,11 +206,14 @@ const getPromoImage = () => {
 };
 
 const loadingLogout = ref(false);
+const showExchangeModal = ref(false);
 
 const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
+
+const handleExchangeClick = () => (showExchangeModal.value = true);
 
 onActivated(() => {
   store.getUnreadTotal();

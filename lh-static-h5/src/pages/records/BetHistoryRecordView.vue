@@ -216,12 +216,12 @@ const loadDepositTable = (isNew) => {
       }
     });
 
-  const obj = {
-    memberId: store.id,
-    platform: platformName,
-    startDate: startDate,
-    endDate: endDate
-  };
+  // const obj = {
+  //   memberId: store.id,
+  //   platform: platformName,
+  //   startDate: startDate,
+  //   endDate: endDate
+  // };
   // api
   //   .get(getRecordTotalApiUrl, {
   //     params: obj

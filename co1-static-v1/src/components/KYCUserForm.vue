@@ -1,39 +1,112 @@
 <template>
-  <div class="popout-dialog-container">
-    <div class="txt-title">{{ $t("form.pleaseCompleteKYC") }}</div>
-    <div class="pc-form">
-      <div class="pc-form-item">
-        <div class="pc-form-label">{{ $t("form.fullName") }}</div>
-        <div class="pc-form-input">
-          <q-input
-            filled
-            dense
-            clearable
-            :placeholder="$t('form.fullName_placeholder')"
-            v-model="formDetail.realName"
-            :rules="[(_) => isValidName()]"
-          />
+  <div class="popout-dialog-container popout-dark">
+    <template v-if="isShowForm">
+      <div class="txt-title">{{ $t("form.kycIdentifyVerification") }}</div>
+      <div class="kyc-verify">
+        <div class="kyc-verify-title">{{ $t("form.verifyProcess") }}</div>
+        <div class="kyc-verify-item q-gutter-y-sm">
+          <div>{{ $t("form.kycPara_01") }}</div>
+          <div class="row no-wrap">
+            <div>{{ $t("form.kycPara_02") }}</div>
+            <div><img src="../assets/images/account/kyc-item.png" /></div>
+          </div>
+        </div>
+        <div class="btn-submit" @click="isShowForm = true">{{ $t("btn.startNow") }}</div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="txt-title">{{ $t("form.details") }}</div>
+      <div class="pc-form">
+        <div class="pc-form-item">
+          <div class="pc-form-input">
+            <q-select
+              v-model="formDetail.docType"
+              :options="selectDocType"
+              option-value="valType"
+              option-label="name"
+              emit-value
+              map-options
+              filled
+              :label="$t('form.docType')"
+              color="white"
+            >
+              <template v-slot:prepend>
+                <img src="../assets/images/account/kyc-icon-person.png" />
+              </template>
+            </q-select>
+          </div>
+        </div>
+        <div class="pc-form-item">
+          <div class="pc-form-input">
+            <q-input
+              filled
+              dense
+              clearable
+              :placeholder="$t('form.idNumber')"
+              v-model="formDetail.idNumber"
+              :rules="[(_) => isValidIdNumber()]"
+              hide-bottom-space
+            >
+              <template v-slot:prepend>
+                <img src="../assets/images/account/kyc-icon-id.png" />
+              </template>
+            </q-input>
+          </div>
+        </div>
+        <div class="pc-form-item">
+          <div class="pc-form-input">
+            <q-input
+              filled
+              dense
+              clearable
+              :placeholder="$t('form.email')"
+              v-model="formDetail.email"
+              :rules="[(_) => isValidEmail()]"
+              hide-bottom-space
+            >
+              <template v-slot:prepend>
+                <img src="../assets/images/account/kyc-icon-email.png" />
+              </template>
+            </q-input>
+          </div>
+        </div>
+        <div class="pc-form-item">
+          <div class="pc-form-input">
+            <q-input
+              filled
+              dense
+              clearable
+              :placeholder="$t('form.fullName')"
+              v-model="formDetail.realName"
+              :rules="[(_) => isValidName()]"
+              hide-bottom-space
+            >
+              <template v-slot:prepend>
+                <img src="../assets/images/account/kyc-icon-person.png" />
+              </template>
+            </q-input>
+          </div>
         </div>
       </div>
-    </div>
 
-    <q-btn
-      :loading="btnLoading"
-      rounded
-      flat
-      no-caps
-      class="style-btn-confirm"
-      :disable="!(isValidName() === true)"
-      @click="submitKYCNewUser"
-    >
-      {{ $t("btn.submit") }}
-    </q-btn>
+      <q-btn
+        :loading="btnLoading"
+        rounded
+        flat
+        no-caps
+        class="btn-submit"
+        :disable="!(isValidName() === true && isValidIdNumber() === true && isValidEmail() === true)"
+        @click="submitKYCNewUser"
+      >
+        {{ $t("btn.submit") }}
+      </q-btn>
+    </template>
   </div>
 </template>
 
 <script setup>
 import { useQuasar } from "quasar";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
@@ -58,6 +131,34 @@ const isValidName = () => {
     : !namePattern.test(realName)
     ? t("form.fullName_rules_02")
     : true;
+  return result;
+};
+
+const isValidIdNumber = () => {
+  const { docType, idNumber } = formDetail;
+  const patterns = {
+    CC: /^\d{6,10}$/, // CC requires 6-10 digits
+    NIT: /^\d{9}$/ // NIT requires exactly 9 digits
+  };
+  const pattern = patterns[docType];
+
+  const result = !idNumber
+    ? t("form.idNumber_rules_01") // Replace with appropriate translation key
+    : !pattern
+    ? t("form.idNumber_rules_02") // Handle unsupported docType
+    : !pattern.test(idNumber)
+    ? t("form.idNumber_rules_03") // Replace with appropriate translation key
+    : true;
+
+  return result;
+};
+
+const isValidEmail = () => {
+  const { email } = formDetail;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const result = !email ? t("form.email_rules_01") : !emailPattern.test(email) ? t("form.email_rules_02") : true;
+
   return result;
 };
 
@@ -88,6 +189,9 @@ const submitKYCNewUser = () => {
 
 const updateNewUserState = () => {
   const updateInfo = {};
+  updateInfo.docType = formDetail.docType;
+  updateInfo.taxId = formDetail.idNumber;
+  updateInfo.email = formDetail.email;
   updateInfo.realName = formDetail.realName;
 
   api
@@ -115,6 +219,23 @@ const updateNewUserState = () => {
       btnLoading.value = false;
     });
 };
+
+const isShowForm = ref(false);
+
+const selectDocType = ref([]);
+
+onMounted(() => {
+  selectDocType.value = [
+    {
+      valType: "CC",
+      name: t("form.identityDocument")
+    },
+    {
+      valType: "NIT",
+      name: t("form.taxIdNumberInColumbia")
+    }
+  ];
+});
 </script>
 
 <style lang="scss" scoped>
@@ -240,5 +361,52 @@ const updateNewUserState = () => {
   font-weight: 600;
   width: 100%;
   margin-top: 16px;
+}
+
+.kyc-verify {
+  // display: flex;
+  // justify-content: flex-start;
+  width: 100%;
+  margin-top: 16px;
+
+  .kyc-verify-title {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .kyc-verify-item {
+    background: #282930;
+    padding: 6px 12px 12px;
+    margin-top: 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 16px;
+  }
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 600;
+  height: 46px;
+  transition: 0.3s all;
+  color: #ffffff;
+  margin: auto;
+  border-radius: 6px;
+  background: #5c46e7;
+  width: 100%;
+  aspect-ratio: 335/46;
+
+  &:before {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+  }
 }
 </style>

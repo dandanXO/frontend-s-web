@@ -18,6 +18,8 @@
               lazy-rules
               clearable
               :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
+              label-color="brand"
+              rounded
               outlined
               color="white"
               bg-color="recinputstyle"
@@ -49,6 +51,7 @@
               lazy-rules
               clearable
               :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
+              rounded
               outlined
               color="white"
               bg-color="recinputstyle"
@@ -81,6 +84,7 @@
                 (val) => (val && val.length > 0) || '请再次输入新密码',
                 (val) => val === updatePwdInfo.password || '确认密码与新密码不符合'
               ]"
+              rounded
               outlined
               color="white"
               bg-color="recinputstyle"
@@ -97,7 +101,15 @@
           </div>
         </div>
       </div>
-      <q-btn type="submit" class="q-mt-md" label="修改密码" width="100%" color="brightbtn" style="width: 100%" />
+      <q-btn
+        type="submit"
+        class="q-mt-md q-btn-blue"
+        label="修改密码"
+        width="100%"
+        style="width: 100%"
+        rounded
+        size="md"
+      />
     </q-form>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
       </div>
       <div class="btn-group">
         <el-button
@@ -174,7 +174,7 @@
                 <template v-else>
                   <el-input-number
                     v-model="scope.row.value"
-                    :min="0"
+                    :min="-Infinity"
                     class="form-input"
                     :controls="false"
                     :step="1"
@@ -694,6 +694,8 @@ const ruleType = reactive({
     { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#afterBalance>' },
     { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
     { key: 13, name: t('withdrawRuleType.risk'), value: "matches '.*,' + T(String).valueOf(#riskId) + ',.*'" },
+    { key: 6, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.max'), value: '#monthlyProfit<' },
+    { key: 6, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.min'), value: '#monthlyProfit>' }
   ],
 })
 
@@ -860,7 +862,7 @@ function getValue(str, keyword) {
 }
 
 function getValueList(str) {
-  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(\d+)/g;
+  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(-?\d+)/g;
   const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
   const results = [];
   let match;
@@ -1189,7 +1191,7 @@ onMounted(async() => {
     request.siteId = site.value.id;
   } else {
     site.value = list.sites[0];
-    request.siteId = site.value.id;
+    request.siteId = store.state.user.siteId
   }
   checkUseRule()
   await loadWithdrawPlatform()

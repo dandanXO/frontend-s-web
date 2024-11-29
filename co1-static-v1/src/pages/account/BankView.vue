@@ -69,7 +69,20 @@
               </div>
             </div>
             <div class="item-content">
-              <div class="item-acc">{{ $t("bank.account") }}: {{ item.cardNumber }}</div>
+              <div>
+                <div class="item-acc">{{ $t("bank.account") }}: {{ item.cardNumber }}</div>
+                <div class="item-acc">
+                  {{ $t("bank.accountType") }}:
+                  {{
+                    item.cardAddress?.includes("SAVINGS")
+                      ? $t("form.accSavings")
+                      : item.cardAddress?.includes("CHECKING")
+                      ? $t("form.accChecking")
+                      : item.cardAddress
+                  }}
+                </div>
+              </div>
+
               <div class="item-copy">
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
@@ -500,9 +513,11 @@ onActivated(() => {
       padding-top: 6px;
       display: flex;
       justify-content: space-between;
+      align-items: flex-end;
 
       .item-acc {
         font-size: 12px;
+        padding-bottom: 2px;
       }
 
       .item-copy {

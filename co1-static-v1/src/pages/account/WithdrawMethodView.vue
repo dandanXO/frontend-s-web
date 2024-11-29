@@ -4,7 +4,7 @@
       <div class="balance">
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
-          <template v-else>{{ convertToCommaAmount(store.balance, 2) }}</template>
+          <template v-else>{{ convertToCommaAmount(store.balance) }}</template>
         </span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
@@ -15,7 +15,7 @@
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
           <template v-else>
-            {{ convertToCommaAmount(withdrawableBalance, 2) }}
+            {{ convertToCommaAmount(withdrawableBalance) }}
           </template>
         </span>
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
@@ -199,6 +199,35 @@
             </div>
           </template>
 
+          <!-- account type options -->
+          <div
+            v-if="isBankType === 'BANK' && !(bankCardList.length > 0 && !isAddNewAccount)"
+            class="account-type-container"
+          >
+            <div class="method-title q-mb-sm">{{ $t("withdraw.choose") }} {{ $t("withdraw.accountType") }}</div>
+            <div class="mid-wrapper">
+              <div class="w-form-item w-form-item--bankcard">
+                <div class="w-form-input">
+                  <q-select
+                    ref="cardAddressRef"
+                    class="account-type-select-input"
+                    filled
+                    dense
+                    clearable
+                    v-model="bankCardField.cardAddress"
+                    :options="accTypeList"
+                    option-value="valType"
+                    option-label="name"
+                    emit-value
+                    map-options
+                    :rules="[() => isValidCardAddress()]"
+                    hide-bottom-space
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="top-wrapper">
             <div class="title">
               {{ $t("withdraw.withdrawalAmount") }} ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
@@ -208,7 +237,7 @@
 
           <div class="mid-wrapper">
             <q-input
-              type="number"
+              type="tel"
               ref="amountRef"
               filled
               dense
@@ -228,6 +257,7 @@
               hide-bottom-space
               @focus="scrollToInput"
               @blur="isInputFocus = false"
+              @update:model-value="removeDecimals"
             >
               <template v-slot:append>
                 <q-btn-group>
@@ -350,7 +380,7 @@
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close-dark" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
@@ -493,6 +523,7 @@ const selectWithdrawCurrency = (item) => {
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
+const accTypeList = ref([]);
 
 const displayCardType = computed(() => {
   if (selectedMethodItem.value.payType === "EWALLET") {
@@ -576,6 +607,7 @@ const cardRef = ref();
 const amountRef = ref();
 // const bankAddressRef = ref();
 const bankNumberRef = ref();
+const cardAddressRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
@@ -592,7 +624,7 @@ const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
   cardNumber: "",
-  // cardAddress: "",
+  cardAddress: "",
   withdrawCode: "",
   withdrawPlatformId: "",
   amount: ""
@@ -654,8 +686,9 @@ const submitWithdrawBank = () => {
   isSubmitDisable.value = true;
   amountRef.value.validate();
   bankNumberRef.value.validate();
+  cardAddressRef.value.validate();
 
-  if (amountRef.value.hasError || bankNumberRef.value.hasError) {
+  if (amountRef.value.hasError || bankNumberRef.value.hasError || cardAddressRef.value.hasError) {
     $q.loading.hide();
     isSubmitDisable.value = false;
     return;
@@ -683,6 +716,7 @@ const submitWithdrawBank = () => {
         bankCardField.cardNumber = "";
         bankCardField.amount = "";
         withdrawInfo.amount = "";
+        bankCardField.cardAddress = "";
       }
     })
     .catch((error) => {
@@ -733,12 +767,12 @@ const goToBank = () => {
 
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("notify.pleaseFillInPersonalDetails"),
-      icon: "report_problem"
-    });
+    // $q.notify({
+    //   color: "negative",
+    //   position: "top",
+    //   message: t("notify.pleaseFillInPersonalDetails"),
+    //   icon: "report_problem"
+    // });
     router.push(`/withdraw`);
   }
 };
@@ -787,6 +821,17 @@ onMounted(() => {
   checkNewUser();
   // loadCards();
   loadInfo();
+
+  accTypeList.value = [
+    {
+      valType: "CHECKING",
+      name: t("form.accChecking")
+    },
+    {
+      valType: "SAVINGS ",
+      name: t("form.accSavings")
+    }
+  ];
 });
 
 onActivated(() => {
@@ -804,11 +849,13 @@ const isValidCardNumber = () => {
 
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
-  const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+  // const result = !cardAddress
+  //   ? "Please Enter Bank Ifsc Code"
+  //   : cardAddress.length < 3
+  //   ? "Bank IFSC Code Must Be More Than 3 Characters"
+  //   : true;
+  // return result;
+  const result = !cardAddress ? t("form.accountType_rules_01") : true;
   return result;
 };
 
@@ -902,6 +949,10 @@ const scrollToInput = () => {
   }
 };
 
+const removeDecimals = (value) => {
+  withdrawInfo.amount = value.replace(/[^0-9]/g, "");
+};
+
 // KYC Dialog
 const personalState = reactive({
   memberInfo: {}
@@ -920,7 +971,7 @@ const closeUserKYCDialog = () => {
 const loadInfo = () => {
   personalState.memberInfo = userStore();
 
-  if (!store.guest && personalState.memberInfo.realName === null) {
+  if (!store.guest && personalState.memberInfo.realName === "") {
     openUserKYCDialog();
   }
 };
@@ -1149,6 +1200,7 @@ const refreshRemainWager = () => {
     }
   }
 
+  .account-type-container,
   .bank-account-container {
     border-radius: 0.5rem;
     // background: rgba(21, 0, 37, 0.2);
@@ -1215,6 +1267,7 @@ const refreshRemainWager = () => {
       }
     }
 
+    .account-type-select-input,
     .bank-select-input {
       :deep(.q-field__append) {
         height: 60px;

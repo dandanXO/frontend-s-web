@@ -563,7 +563,7 @@ export default defineComponent({
       } else if (window.location.pathname === "/promotion") {
         window.location.href = "xfapp:/promo";
       } else {
-        router.push("/" + prePage);
+        router.push(prePage);
       }
     };
 

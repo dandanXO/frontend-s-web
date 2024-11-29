@@ -17,7 +17,7 @@
           :editable="false"
           :clearable="false"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -31,7 +31,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           v-model="request.platform"
           size="small"
@@ -115,6 +115,7 @@
               prop="betCount"
               :label="t('reportGame.gameBetCount')"
             />
+
             <el-table-column prop="bet" :label="t('reportGame.gameBetAmount')">
               <template #default="scope1">
                 $
@@ -158,6 +159,7 @@
         prop="totalBetCount"
         :label="t('reportGame.gameBetCountTotal')"
       />
+
       <el-table-column
         prop="totalBet"
         :label="t('reportGame.gameBetAmountTotal')"
@@ -167,6 +169,21 @@
           <span
             v-formatter="{
               data: scope.row.totalBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="totalValidBet"
+        :label="t('reportGame.gameValidBetAmountTotal')"
+      >
+        <template #default="scope">
+          $
+          <span
+            v-formatter="{
+              data: scope.row.totalValidBet,
               type: 'money',
             }"
           />
@@ -417,7 +434,7 @@ const shortcuts = [
 
 async function loadDaily(row, expandedRows) {
   // 该处是用于判断是展开还是收起行，只有展开的时候做请求，避免多次请求！
-  // 展开的时候expandedRows有值，收起的时候为空.
+  // 展开的时候 expandedRows 有值，收起的时候为空。
   if (expandedRows.length > 0) {
     const dailyquery = {}
     const requestCopy = { ...request }
@@ -463,7 +480,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.platform = null
   platforms.list = []
 }
@@ -489,7 +506,7 @@ async function loadReport(first) {
   })
 
   if (first === true) {
-    // 给每行数据强制追加一个数据项, 以便注入每日数据
+    // 给每行数据强制追加一个数据项，以便注入每日数据
     ret.records.map(item => {
       item.ruleItemData = []
     })
@@ -513,7 +530,7 @@ function changePage(page) {
 onMounted(async () => {
   await loadSites()
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
@@ -526,7 +543,8 @@ onMounted(async () => {
 
 function getSummaries(param) {
   if (hasPermission(['sys:report:platform:game:report:summary'])) {
-    const { columns, data } = param
+    const { columns, data } = param;
+    // console.log(param);
     const sums = []
     columns.forEach((column, index) => {
       if (index === 0) {
@@ -547,7 +565,7 @@ function getSummaries(param) {
         } else {
           sums[index] = 0
         }
-        if (index === 5 || index === 6 || index === 7) {
+        if (index === 5 || index === 6 || index === 7 || index === 8) {
           sums[index] =
             '$ ' +
             sums[index].toLocaleString('en-US', {
@@ -557,6 +575,9 @@ function getSummaries(param) {
         }
       }
     })
+
+    // console.log("SUMS")
+    // console.log(sums);
 
     return sums
   } else {

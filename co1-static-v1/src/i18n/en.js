@@ -82,7 +82,8 @@ export default {
     password_rules_02: "La contraseña debe tener más de 6 caracteres",
     strongerPasswordRecommended: "Se recomienda una contraseña más segura",
     forgotPassword: "Contraseña olvidada",
-    forgotPassword_desc: "Por favor, introduzca su nombre de usuario y número de teléfono y le enviaremos una contraseña temporal a su número de teléfono registrado.",
+    forgotPassword_desc:
+      "Por favor, introduzca su nombre de usuario y número de teléfono y le enviaremos una contraseña temporal a su número de teléfono registrado.",
     register_agree_01: "Acepto el acuerdo de ",
     register_agree_02: "privacidad",
     email: "Correo Electrónico",
@@ -127,6 +128,16 @@ export default {
     fullName_placeholder: "Introduzca su nombre completo",
     fullName_rules_01: "Introduzca su nombre completo",
     fullName_rules_02: "Por favor, Introduzca su nombre completo válido",
+    idNumber: "Número de cédula",
+    idNumber_rules_01: "Se requiere número de identificación",
+    idNumber_rules_02: "Tipo de documento no válido seleccionado",
+    idNumber_rules_03: "El número de identificación proporcionado no coincide con el formato requerido",
+    docType: "Tipo de ID",
+    identityDocument: "Documento de identidad",
+    taxIdNumberInColumbia: "Número de identificación fiscal en Colombia",
+    accChecking: "Cuenta corriente",
+    accSavings: "Cuenta de ahorros",
+    edit: "Editar",
     changePassword: "Cambiar Contraseña",
     currentPassword: "Contraseña Actual",
     currentPassword_placeholder: "Introduzca la contraseña actual",
@@ -134,6 +145,11 @@ export default {
     changeNewpassword: "Cambiar nueva contraseña",
     passwordResetCompleted: "Restablecimiento de contraseña completado",
     pleaseCompleteKYC: "Por favor, complete CSC (Identificación del Cliente)",
+    kycIdentifyVerification: "Verificación de identidad KYC",
+    kycPara_01: "Por favor, introduzca su nombre y número de identificación.",
+    kycPara_02: "Una vez verificado, el nombre y el número de identificación no se pueden cambiar.",
+    verifyProcess: "Verificar proceso",
+    details: "Detalles",
     bindEmail: "Vincular Correo Electrónico",
     code: "Código",
     code_placeholder: "Introduzca el código de verificación",
@@ -183,6 +199,9 @@ export default {
     accountNumber_placeholder: "Introduzca el número de cuenta",
     accountNumber_rules_01: "Introduzca el número de cuenta",
     accountNumber_rules_02: "Introduzca un número de cuenta válido",
+    accountType_selectionTitle: "Tipo de Cuenta",
+    accountType_select: "Seleccionar Tipo de Cuenta",
+    accountType_rules_01: "Introduzca el tipo de cuenta",
     holderName: "Nombre del Titular",
     holderName_placeholder: "Introduzca el Nombre del Titular",
     holderName_rules_01: "Introduzca el Nombre del Titular",
@@ -206,6 +225,7 @@ export default {
   btn: {
     confirm: "Confirmar",
     submit: "Enviar",
+    startNow: "Empieza ahora",
     addNewAccount: "Añadir una nueva cuenta",
     update: "Actualizar",
     updated: "Actualizado",
@@ -232,7 +252,7 @@ export default {
     notAMember: "¿No eres miembro?",
     createAccount: "Crear una Cuenta",
     copy: "Copiando",
-    joinNow: "Únete Ahora",
+    joinNow: "Únete Ahora"
   },
   notify: {
     noRecord: "No hay registros",
@@ -310,7 +330,8 @@ export default {
     selectAmount: "Seleccionar Monto",
     depositTutorial: "Tutorial de Depósito",
     select_privilege: "Seleccionar Privilegio",
-    incorrectPrivilege: "La promoción de depósito que enviaste es incorrecta. Por favor, intenta enviar el depósito nuevamente.",
+    incorrectPrivilege:
+      "La promoción de depósito que enviaste es incorrecta. Por favor, intenta enviar el depósito nuevamente.",
     depositMethod: "Método de depósito",
     paymentChannels: "Medios de pago",
     wagerRequirement: "Requisito de apuesta (para retiro): 20 veces el monto de su depósito",
@@ -339,10 +360,12 @@ export default {
     dailyLimit: "Límite Diario",
     remainWagers: "Saldo restante",
     withdrawTutorial: "Tutorial de Retiro",
-    withdrawalMethodInMaintenance: "Este canal está en mantenimiento de {startTime} a {endTime}. Por favor, utiliza otro canal para operaciones de retiro. ¡Gracias!",
+    withdrawalMethodInMaintenance:
+      "Este canal está en mantenimiento de {startTime} a {endTime}. Por favor, utiliza otro canal para operaciones de retiro. ¡Gracias!",
     bankName: "Nombre del Banco",
     choose: "Elegir",
     account: "Cuenta",
+    accountType: "Tipo de Cuenta",
     addNewAccount: "Agregar Nueva Cuenta",
     withdrawalAmount: "Monto de Retiro",
     available: "Disponible"
@@ -353,7 +376,8 @@ export default {
     addBank: "Añadir Banco",
     addEWallet: "Agregar Billetera Electrónica",
     areYouSureUnbind: "¿Estás seguro de que deseas desvincular?",
-    account: "Cuenta"
+    account: "Cuenta",
+    accountType: "Tipo de Cuenta"
   },
   order: {
     withdrawal: "Retiro",
@@ -400,12 +424,14 @@ export default {
     experience: "Experiencia",
     dailyWithdrawalTimes: "Frecuencia de Retiro Diario",
     rewards: "Recompensas",
-    vipTable_txt: "Una vez que tus depósitos cumplan con los requisitos de mejora, tu nivel VIP se actualizará de inmediato, aumentando tu monto de retiro.",
+    vipTable_txt:
+      "Una vez que tus depósitos cumplan con los requisitos de mejora, tu nivel VIP se actualizará de inmediato, aumentando tu monto de retiro.",
     monthlyCumulative: "Depósito Mensual Acumulado por alcanzar niveles Vip superiores",
     deposit: "Depósito",
     afterTheRecharge:
       "Una vez que los ingresos del día alcancen el estándar fijado, al día siguiente se incrementará su nivel VIP y se abonarán los premios por el ascenso de nivel correspondientes.",
-    promotionBonus: "Bonificación por Promoción: A cada progreso realizado, podrá recibir de modo instantáneo el premio asociado a la promoción.",
+    promotionBonus:
+      "Bonificación por Promoción: A cada progreso realizado, podrá recibir de modo instantáneo el premio asociado a la promoción.",
     vipMonthCashBonus: "Bono Mensual en Efectivo VIP",
     cashBonus:
       "Bonificación en efectivo: En función de su nivel VIP a final de mes, recibirá esta recompensa a las 10 A.M. del día 1 del mes siguiente.",
@@ -427,37 +453,54 @@ export default {
     about: {
       invitetoEarn: "Invitar para Ganar",
       simplyShare: "Simplemente comparte tu código QR exclusivo",
-      inviteMoreFriends: "Cuantos más amigos invite, mayores serán los beneficios que obtenga. Cada miembro que se une al Club Skyace es a la vez un jugador y un agente.",
+      inviteMoreFriends:
+        "Cuantos más amigos invite, mayores serán los beneficios que obtenga. Cada miembro que se une al Club Skyace es a la vez un jugador y un agente.",
       weAdvocateBenefits: "Creemenos firmemente en otorgarles beneficios y bonificaciones a todos nuestros usuarios.",
       agencyPolicy: "Política de referidos",
       theTableBelowShows: "En la siguiente tabla se muestra cómo se asignan las retribuciones.",
-      point_01: "Usuarios activos: importe diario en apuestas $400",
-      point_02: "Su retribución se calcula en base al importe total apostado por los miembros referidos por Ud. La retribución obtenida puede ser retirada o utilizada para efectuar apuestas.",
+      point_01: "Usuarios activos: importe diario en apuestas $100,000",
+      point_02:
+        "Su retribución se calcula en base al importe total apostado por los miembros referidos por Ud. La retribución obtenida puede ser retirada o utilizada para efectuar apuestas.",
       point_03: "Recomiende a tantos amigos como pueda para obtener un mayor porcentaje de reembolsos.",
       point_04: "Obtenga ingresos vitalicios por los jugadores referidos por Ud.",
       faq: "PREGUNTAS FRECUENTES",
       faq_01: "1. ¿Cómo obtener ingresos por comisiones?",
-      faq_01_01: "Puede ganar hasta un 1.5% del importe de las puestas diarias de los jugadores que nos haya referido. Cuanto mayor sea su nivel, mayor será el porcentaje de las comisiones que podrá obtener.",
-      faq_01_02: "Si el usuario o los usuarios referidos por Ud. se convierten a su vez en agentes y se hallan en un nivel inferior al de su superior inmediato, entonces usted podrá recibir hasta el 1.2% del importe de las bonificaciones en las apuestas de los usuarios referidos por Ud. El porcentaje de las comisiones dependen de la diferencia en el nivel entre usted y los usuarios referidos por Ud., cuanto mayores sean dichas diferencias de nivel, mayores serán las comisiones que obtendrá.",
+      faq_01_01:
+        "Puede ganar hasta un 1.5% del importe de las puestas diarias de los jugadores que nos haya referido. Cuanto mayor sea su nivel, mayor será el porcentaje de las comisiones que podrá obtener.",
+      faq_01_02:
+        "Si el usuario o los usuarios referidos por Ud. se convierten a su vez en agentes y se hallan en un nivel inferior al de su superior inmediato, entonces usted podrá recibir hasta el 1.2% del importe de las bonificaciones en las apuestas de los usuarios referidos por Ud. El porcentaje de las comisiones dependen de la diferencia en el nivel entre usted y los usuarios referidos por Ud., cuanto mayores sean dichas diferencias de nivel, mayores serán las comisiones que obtendrá.",
       faq_02: "2.  ¿Cómo invitar a tus amigos?",
-      faq_02_01: "Comparta nuestros juegos a través de las redes sociales o comparta el enlace de recomendación con sus amigos.",
-      faq_02_02: "Los amigos deben hacer clic en tu enlace de promoción, descargar la App, instalar el juego y registrarse para empezar a apostar para obtener comisión.",
+      faq_02_01:
+        "Comparta nuestros juegos a través de las redes sociales o comparta el enlace de recomendación con sus amigos.",
+      faq_02_02:
+        "Los amigos deben hacer clic en tu enlace de promoción, descargar la App, instalar el juego y registrarse para empezar a apostar para obtener comisión.",
       faq_02_03: "El registro de los usuarios debe realizarse a través de un enlace de recomendación.",
       faq_03: "3. ¿Para qué sirven los niveles?",
-      faq_03_01: "Hemos creado 13 niveles para los usarios en función del número de usuarios recomendados y de la cantidad de apuestas que efectúan.",
-      faq_03_02: "Las condiciones para ascender de nivel exigen que se cumplan al mismo tiempo las condiciones relativas al importe de las apuestas y al volumen del equipo de usarios referidos por Ud. Cuanto más elevado sea su nivel, mayor será el porcentaje de las comisiones que obtendrá sobre importe de las apuestas de los usuarios referidos por Ud.",
-      faq_03_03: "Diferencias de nivel: Cuando el nivel inmediatamente superior menos el nivel del miembro directo correspondiente es ≥ 1, existe una diferencia de nivel; en caso contrario, no existe diferencia de nivel.",
-      faq_03_04: "Cuanto mayor sea su nivel, mayor será el porcentaje de las comisiones que obtendrá por las apuestas por las diferencias de nivel existentes.",
+      faq_03_01:
+        "Hemos creado 13 niveles para los usarios en función del número de usuarios recomendados y de la cantidad de apuestas que efectúan.",
+      faq_03_02:
+        "Las condiciones para ascender de nivel exigen que se cumplan al mismo tiempo las condiciones relativas al importe de las apuestas y al volumen del equipo de usarios referidos por Ud. Cuanto más elevado sea su nivel, mayor será el porcentaje de las comisiones que obtendrá sobre importe de las apuestas de los usuarios referidos por Ud.",
+      faq_03_03:
+        "Diferencias de nivel: Cuando el nivel inmediatamente superior menos el nivel del miembro directo correspondiente es ≥ 1, existe una diferencia de nivel; en caso contrario, no existe diferencia de nivel.",
+      faq_03_04:
+        "Cuanto mayor sea su nivel, mayor será el porcentaje de las comisiones que obtendrá por las apuestas por las diferencias de nivel existentes.",
       faq_04: "4. ¿Cómo subir de nivel?",
-      faq_04_01: "Cuantos más miembros referidos por Ud. se registren en los juegos y más apuesten, Ud. podrá ascender a niveles superiores.",
-      faq_04_02: "Si Ud. dispone de capacidades de promoción extraordinarias en cualesquiera canales, por favor, póngase en contacto con nuestro centro de atención al cliente para que pueda efectuar las comprobaciones pertinentes.",
+      faq_04_01:
+        "Cuantos más miembros referidos por Ud. se registren en los juegos y más apuesten, Ud. podrá ascender a niveles superiores.",
+      faq_04_02:
+        "Si Ud. dispone de capacidades de promoción extraordinarias en cualesquiera canales, por favor, póngase en contacto con nuestro centro de atención al cliente para que pueda efectuar las comprobaciones pertinentes.",
       faq_05: "5. ¿Cómo convertir a tus amigos en miembros?",
-      faq_05_01: "Inicie sesión en 55Ace, y comparta su enlace de recomendación son sus amigos en la página de recomendación, y ayúdeles para que efectúen su registro a partir del enlace, y de ese modo podrán convertirse en tus miembros directos.",
-      faq_05_02: "Anime a sus miembros para que inviten a sus propios amigos a jugar en nuestra plataforma, y los amigos a los que ellos inviten se convertirán en sus miembros indirectos.",
-      faq_05_03: "Cuando los amigos de tus afiliados directos se conviertan en afiliados indirectos, podrán seguir aumentando su número de afiliados de esta forma. Todos sus sub-miembros serán considerados como tus sub-miembros indirectos.",
+      faq_05_01:
+        "Inicie sesión en 55Ace, y comparta su enlace de recomendación son sus amigos en la página de recomendación, y ayúdeles para que efectúen su registro a partir del enlace, y de ese modo podrán convertirse en tus miembros directos.",
+      faq_05_02:
+        "Anime a sus miembros para que inviten a sus propios amigos a jugar en nuestra plataforma, y los amigos a los que ellos inviten se convertirán en sus miembros indirectos.",
+      faq_05_03:
+        "Cuando los amigos de tus afiliados directos se conviertan en afiliados indirectos, podrán seguir aumentando su número de afiliados de esta forma. Todos sus sub-miembros serán considerados como tus sub-miembros indirectos.",
       faq_06: "6. ¿Cómo obtener comisiones de sus miembros registrados?",
-      faq_06_01: "Debe de haber una diferencia de nivel entre usted y todos sus miembros registrados de nivel inferior, de lo contrario no se generará ninguna comisión en base a las diferencias de nivel.",
-      faq_06_02: "La proporción de las comsiones se determina en base a la diferencia entre su propio nivel y el nivel de sus miembros registrados subordinados.",
+      faq_06_01:
+        "Debe de haber una diferencia de nivel entre usted y todos sus miembros registrados de nivel inferior, de lo contrario no se generará ninguna comisión en base a las diferencias de nivel.",
+      faq_06_02:
+        "La proporción de las comsiones se determina en base a la diferencia entre su propio nivel y el nivel de sus miembros registrados subordinados.",
       faq_06_example: "Ejemplo",
       faq_06_table_name: "Nombre",
       faq_06_table_level: "Nivel",
@@ -496,7 +539,7 @@ export default {
       teamDetailsYesterday: "Detalles del Equipo (Ayer)",
       teamMember: "Miembro del Equipo",
       income: "Ingresos",
-      calculating: "Calculador",
+      calculating: "Calculador"
     },
     earn: {
       inviteToEarn: "Invitar para Ganar",
@@ -505,7 +548,8 @@ export default {
       point_02_title: "Haga que sus amigos empiecen a jugar",
       point_02_desc: "Podrá comprobar a los amigos referidos que se registraron con su código.",
       point_03_title: "Empiece a obtener diariamente ingresos por comisiones",
-      point_03_desc: "Obtendrá sus beneficios, con total independiencia de si sus referidos ganan o pierden. Cuantos más amigos refiera al Club Skyace, mayores serán los ingresos que obtenga diariamente. Empiece a obtener diariamente ingresos por comisiones",
+      point_03_desc:
+        "Obtendrá sus beneficios, con total independiencia de si sus referidos ganan o pierden. Cuantos más amigos refiera al Club Skyace, mayores serán los ingresos que obtenga diariamente. Empiece a obtener diariamente ingresos por comisiones",
       myReferralLink: "Mi enlace de recomendación",
       save: "GUARDAR",
       copiedtoClipboard: "copiado al portapapeles"
@@ -529,10 +573,13 @@ export default {
       player: "Jugador",
       money: "Dinero",
       eligibility_tips: "Elegibilidad: <br />El depósito del invitado debe ser ≥ 300.",
-      betting_tips: "Comisión por Apuestas: <br />Refiere e invita a nuevos usuarios a apostar y gana una comisión de reembolso del 0.6% a largo plazo.",
-      deposit_tips: "Comisión por Depósito: <br />Gana un reembolso del 5% en el primer depósito de cada nuevo miembro que refieras.",
+      betting_tips:
+        "Comisión por Apuestas: <br />Refiere e invita a nuevos usuarios a apostar y gana una comisión de reembolso del 0.6% a largo plazo.",
+      deposit_tips:
+        "Comisión por Depósito: <br />Gana un reembolso del 5% en el primer depósito de cada nuevo miembro que refieras.",
       shareTitle: "B9GAME Comparte y Gana",
-      shareText: "B9GAME Comparte y Gana:\n\tGana hasta 500 Rs por amigo.\n\tObtén un reembolso del 5% en tu primer depósito.\n\tDisfruta de un reembolso del 0.6% a largo plazo en todas las apuestas.\n¡Descarga la aplicación ahora y recibe una recompensa en efectivo misteriosa!\n{url}"
+      shareText:
+        "B9GAME Comparte y Gana:\n\tGana hasta 500 Rs por amigo.\n\tObtén un reembolso del 5% en tu primer depósito.\n\tDisfruta de un reembolso del 0.6% a largo plazo en todas las apuestas.\n¡Descarga la aplicación ahora y recibe una recompensa en efectivo misteriosa!\n{url}"
     },
     teamManagement: {
       searchField: {
@@ -635,7 +682,7 @@ export default {
         payout: "Pago",
         deposit: "Depósito",
         withdraw: "Retirar",
-        firstdepositcount: "Conteo del Primer Depósito",
+        firstdepositcount: "Conteo del Primer Depósito"
       }
     }
   },
@@ -727,7 +774,8 @@ export default {
     content03: "Lamentamos los inconvenientes causados y apreciamos su paciencia."
   },
   promo_activitiesDetails: {
-    activitiesContent: "Cuantos más días consecutivos cumplas con los requisitos de depósito, más bonificaciones extra recibirás.",
+    activitiesContent:
+      "Cuantos más días consecutivos cumplas con los requisitos de depósito, más bonificaciones extra recibirás.",
     depositOftheDay: "Depósito del Día",
     numberOfDailyWager: "Número de Apuestas Diarias",
     day: "Día",
@@ -736,9 +784,12 @@ export default {
     wagerX5: "Apuesta x5",
     deposit: "Depósito",
     noticeDesc: "Aviso: ¡Esta promoción no cuenta para las apuestas de CASINO y DEPORTES!",
-    rules_01: "1. Ejemplo: En el primer día, si depositas $200, se te darán $17 después de completar el requisito de facturación. Si no haces un depósito el segundo día, pero haces un depósito el tercer día, se recalculará como si fuera el primer día.",
-    rules_02: "2. .El bono del día solo se puede reclamar una vez. Por ejemplo, cada cuenta solo puede reclamar $17 el primer día.",
-    rules_03: "3. .Después de cumplir con el requisito de depósito, debes jugar en las máquinas tragamonedas para comenzar a calcular la facturación, y el bono se otorgará después de completar la facturación.",
+    rules_01:
+      "1. Ejemplo: En el primer día, si depositas $200, se te darán $17 después de completar el requisito de facturación. Si no haces un depósito el segundo día, pero haces un depósito el tercer día, se recalculará como si fuera el primer día.",
+    rules_02:
+      "2. .El bono del día solo se puede reclamar una vez. Por ejemplo, cada cuenta solo puede reclamar $17 el primer día.",
+    rules_03:
+      "3. .Después de cumplir con el requisito de depósito, debes jugar en las máquinas tragamonedas para comenzar a calcular la facturación, y el bono se otorgará después de completar la facturación.",
     rules_04: "4. Una vez que se cumplan los requisitos, el sistema emitirá automáticamente el bono."
   },
   promo_ph1SlotFtd: {

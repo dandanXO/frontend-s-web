@@ -237,6 +237,13 @@ deploy-id1-download:
 
 #===============================================================================================
 
+deploy-id1-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: id1-download-v2
+
+#===============================================================================================
+
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
@@ -810,6 +817,13 @@ deploy-pak-landing-v2:
 
 #===============================================================================================
 
+deploy-pak-bga-b9-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pak-bga-b9-landing
+
+#===============================================================================================
+
 build-pak-landing-v3:
   extends: .build-projects
   variables:
@@ -1080,5 +1094,15 @@ build-image-co1-static-v1:
     PROJECT: co1-static-v1
   needs:
     - build-co1-static-v1
+
+#===============================================================================================
+
+deploy-bz1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: bz1-download
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
 
 #===============================================================================================

@@ -44,3 +44,11 @@ export const getAffiliateList = (siteId) => {
 export const getAffiliateDepositWithdrawSummary = (query) => {
   return https().request("/affiliateRecord/deposit-withdraw-summary", Method.GET, query, ContentType.form);
 }
+
+export const exportAffiliateSummary = (query) => {
+  return https().request("/affiliateRecord/summary/export", Method.GET, query, ContentType.form);
+};
+
+export const exportAffiliateDepositWithdrawSummary = (query) => {
+  return https().request("/affiliateRecord/deposit-withdraw-summary/export", Method.GET, query, ContentType.form);
+};

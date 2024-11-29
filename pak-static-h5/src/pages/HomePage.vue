@@ -1324,27 +1324,35 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog v-model="isLuckyDrawModal">
-    <div class="luckyspin-wrapper">
-      <div class="luckyspin-header">
-        <img src="../assets/images/index/modal/luckyspin-title.png" />
-      </div>
-      <div class="luckyspin-container">
-        <div class="luckyspin-title">
-          <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+  <template v-if="isAndroid()">
+    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+      <div class="luckyspin-wrapper">
+        <div class="luckyspin-header">
+          <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
+        <div class="luckyspin-container">
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+          <div class="luckyspin-title">
+            <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+          </div>
 
-        <LuckySpinWheel />
+          <LuckySpinWheel show-controller />
+        </div>
+        <div class="q-mt-md">
+          <q-icon name="highlight_off" size="md" v-close-popup />
+        </div>
       </div>
-      <div class="q-mt-md">
-        <q-icon name="highlight_off" size="md" v-close-popup />
-      </div>
-    </div>
-  </q-dialog>
-
-  <q-dialog v-model="isCongratsModal">
-    <CongratsModal />
-  </q-dialog>
+    </q-dialog>
+  </template>
+  <template v-else>
+    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+      <CongratsModal>
+        <template #controller>
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+        </template>
+      </CongratsModal>
+    </q-dialog>
+  </template>
 
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
@@ -1362,9 +1370,28 @@
     </div>
   </q-dialog>
 
-  <q-dialog v-model="isMoneyRainModal">
-    <MoneyRainModal />
-    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
+    <MoneyRainModal>
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+      </template>
+    </MoneyRainModal>
+    <q-btn class="money-rain-close" icon="close" round dense @click="moneyRainDialogClose" />
+  </q-dialog>
+
+  -
+  <q-dialog
+    v-if="popupPromo === 'mega-sharing-wheel'"
+    :model-value="megaSharingWheelDialogModel"
+    full-width
+    class="mega-sharing-wheel-dialog"
+  >
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
+    <MegaSharingWheelModal>
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+      </template>
+    </MegaSharingWheelModal>
   </q-dialog>
 
   <q-dialog v-model="isMediaSettingsModal">
@@ -1375,7 +1402,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1389,9 +1416,6 @@ import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
-import DepositComponent from "../components/depositComponent.vue";
-import KYCGuestForm from "../components/KYCGuestForm.vue";
-import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
@@ -1413,6 +1437,8 @@ import "swiper/css/effect-coverflow";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import PopupController from "src/components/PopupController.vue";
+import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -1420,11 +1446,13 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
-const isLuckyDrawModal = ref(false);
-const isCongratsModal = ref(false);
+// const isLuckyDrawModal = ref(false);
+// const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
-const isMoneyRainModal = ref(false);
+// const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
+const popupPromo = ref("");
+const megaSharingWheelDialogModel = ref(true);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -1465,6 +1493,13 @@ const activeCategoryLabel = computed(() => {
 //   item.active = true;
 // };
 
+provide("closeMegaSharingWheelDialog", () => {
+  megaSharingWheelDialogModel.value = false;
+});
+
+const moneyRainDialogClose = () => {
+  popupPromo.value = "";
+};
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
@@ -3201,7 +3236,8 @@ const gotoPromo = (banner) => {
       if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
     } else {
       if (banner.redirectUrl === "redpacketrain") {
-        isMoneyRainModal.value = true;
+        // isMoneyRainModal.value = true;
+        popupPromo.value = "money-rain";
       } else {
         router.push(`/promo?name=${banner.redirectUrl}`);
       }
@@ -3415,7 +3451,13 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data;
+      hbPromo.value = data.data.filter(
+        (redirectList) =>
+          redirectList.code !== "pak-mega-sharing-wheel" ||
+          (redirectList.code === "pak-mega-sharing-wheel" &&
+            store.token &&
+            (store.memberType === "TEST" || store.memberType === "PROMO_TEST"))
+      );
     });
 };
 
@@ -3528,7 +3570,8 @@ const mediaCode = ref("");
 
 const gotoFloatPromo = (val) => {
   if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
-    isMoneyRainModal.value = true;
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -3561,16 +3604,22 @@ onActivated(() => {
 
   checkSpinWheel();
 
-  // if (store.hasToken()) {
-  // }
-
   if (route.query.login === "true") {
-    isMoneyRainModal.value = true;
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
+  }
+
+  if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
+    checkInviteWheel();
   }
 
   if (route.query.token) {
     store.autoLogin(route.query.token);
     checkSpinWheel();
+
+    if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
+      checkInviteWheel();
+    }
   }
   afterActivated();
 });
@@ -3616,6 +3665,16 @@ watch(
 //   }
 // );
 
+const hasInviteWheelPromo = ref(false);
+const checkInviteWheel = () => {
+  eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {
+    const stageResData = res.data.stageStatusVOList;
+    if (stageResData.length > 0) {
+      hasInviteWheelPromo.value = true;
+    }
+  });
+};
+
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
     setTimeout(() => {
@@ -3634,7 +3693,8 @@ const showSpinWheel = () => {
         if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
-          isLuckyDrawModal.value = true;
+          // isLuckyDrawModal.value = true;
+          popupPromo.value = "lucky-spin-wheel";
         }
       }
     })
@@ -3647,7 +3707,8 @@ const showCongratsModal = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
-        isCongratsModal.value = true;
+        // isCongratsModal.value = true;
+        popupPromo.value = "lucky-spin-wheel";
       }
     }
   });
@@ -5267,6 +5328,7 @@ const showCongratsModal = () => {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  pointer-events: all;
 }
 
 .hb-float {
@@ -5286,5 +5348,13 @@ const showCongratsModal = () => {
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+.mega-sharing-wheel-dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: all;
 }
 </style>

@@ -30,6 +30,9 @@ export const userStore = defineStore("userStore", {
     };
   },
   actions: {
+    hasToken() {
+      return this.token ? true : false;
+    },
     memberLogin(loginInfo) {
       return login(loginInfo)
         .then((ret) => {
@@ -39,9 +42,11 @@ export const userStore = defineStore("userStore", {
             this.getMemberInfo();
           } else {
             // throw new Error(ret.message);
+            window.captchaObj.reset();
           }
         })
         .catch((err) => {
+          window.captchaObj.reset();
           console.log(err);
           // message.error(err.message);
         });

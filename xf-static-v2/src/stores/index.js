@@ -1,8 +1,8 @@
-import {defineStore} from "pinia";
-import {api, cashier, eventapi} from "boot/axios";
-import {SessionStorage, Notify, Platform} from "quasar";
+import { defineStore } from "pinia";
+import { api, cashier, eventapi } from "boot/axios";
+import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
-import {isAndroid} from "boot/utils"
+import { isAndroid } from "boot/utils";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -32,8 +32,8 @@ export const userStore = defineStore("userStore", {
       vip: "",
       evip: "",
       h5Url: "",
-      currency: {value: "￥", label: "RMB"},
-      personalAddress: '',
+      currency: { value: "￥", label: "RMB" },
+      personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,
       emailVerified: false,
@@ -74,9 +74,7 @@ export const userStore = defineStore("userStore", {
     },
     isApp() {
       if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
+        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
         (Platform.is.android && Platform.is.capacitor)
       ) {
         return true;
@@ -107,6 +105,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
+          window.captchaObj.reset();
           Notify.create({
             color: "negative",
             position: "top",
@@ -187,7 +186,7 @@ export const userStore = defineStore("userStore", {
           this.memberType = response.data.memberType;
           this.vip = response.data.vip;
           this.profilePicture = response.data.pictureUrl;
-          this.displayName = response.data.displayName
+          this.displayName = response.data.displayName;
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
           this.emailVerified = response.data.emailVerified;
@@ -195,7 +194,7 @@ export const userStore = defineStore("userStore", {
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
-            this.h5Url= exclusive.web;
+            this.h5Url = exclusive.web;
           }
 
           this.unreadInboxMail = 0;
@@ -225,12 +224,12 @@ export const userStore = defineStore("userStore", {
     },
     getUnreadTotal() {
       if (this.token) {
-        return api.get('/session/inbox/getUnreadTotal').then((total) => {
+        return api.get("/session/inbox/getUnreadTotal").then((total) => {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
           }
-        })
+        });
       }
     },
     autoLogin(token) {
@@ -241,14 +240,12 @@ export const userStore = defineStore("userStore", {
       }
     },
     memberLogout() {
-      return api
-        .post("/session/logout")
-        .then(() => {
-          LocalStorage.remove("TOKEN");
-          SessionStorage.remove("TOKEN");
+      return api.post("/session/logout").then(() => {
+        LocalStorage.remove("TOKEN");
+        SessionStorage.remove("TOKEN");
 
-          location.reload();
-        });
+        location.reload();
+      });
     }
   }
 });

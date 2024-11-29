@@ -177,7 +177,6 @@
           v-model="selectedPrivilege"
           emit-value
           v-if="hasPrivilege && unselectedPrivileges.length > 0"
-          v-show="false"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
         >

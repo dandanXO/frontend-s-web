@@ -64,6 +64,26 @@
                 label-color="secondary"
               />
             </div>
+
+            <div class="q-my-sm" v-if="currentCardType === 'Bank'">
+              <div class="input-title">{{ dialogDisplays.accountTypeTitle }}</div>
+              <q-select
+                ref="refAccType"
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardAddress"
+                :label="dialogDisplays.accountTypePlaceholder"
+                :rules="[(_) => isValidAccType()]"
+                label-color="secondary"
+                :options="accTypeList"
+                option-value="valType"
+                option-label="name"
+                emit-value
+                map-options
+              />
+            </div>
           </q-form>
         </q-card-section>
 
@@ -73,7 +93,7 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (isValidCardAccount() === true && isValidCardNumber() === true)
+              (isValidCardAccount() === true && isValidCardNumber() === true && isValidAccType() === true)
             ) || isDisableBtn
           "
         ></ConfirmButton>
@@ -83,7 +103,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 
@@ -108,6 +128,7 @@ const refBankCardNum = ref();
 
 // display
 const currBankList = ref([]);
+const accTypeList = ref([]);
 
 // cache
 const bankList = [];
@@ -141,12 +162,12 @@ const onAddCardClick = (type) => {
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "Please fill in your personal details",
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: "Please fill in your personal details",
+      //   icon: "report_problem"
+      // });
       router.push("/account/profile");
     } else {
       isAddCardDialogOpen.value = true;
@@ -189,7 +210,9 @@ const dialogDisplays = reactive({
   title: t("form.bank_title"),
   selectionTitle: t("form.bank_selectionTitle"),
   selectionPlaceholder: t("form.bank_select"),
-  selectionError: t("form.bank_selectError")
+  selectionError: t("form.bank_selectError"),
+  accountTypeTitle: t("form.accountType_selectionTitle"),
+  accountTypePlaceholder: t("form.accountType_select")
 });
 const selectBankType = () => {
   currBankList.value = [];
@@ -241,6 +264,13 @@ const isValidBank = () => {
   return result;
 };
 
+const isValidAccType = () => {
+  const { cardAddress } = bankCardField;
+
+  const result = !cardAddress ? dialogDisplays.selectionError : true;
+  return result;
+};
+
 const isDisableBtn = ref(false);
 
 const isValidCardAccount = () => {
@@ -281,6 +311,19 @@ const addCard = () => {
       isDisableBtn.value = false;
     });
 };
+
+onMounted(() => {
+  accTypeList.value = [
+    {
+      valType: "CHECKING",
+      name: t("form.accChecking")
+    },
+    {
+      valType: "SAVINGS ",
+      name: t("form.accSavings")
+    }
+  ];
+});
 
 defineExpose({
   onAddCardClick

@@ -38,7 +38,13 @@
 
             <el-col :span="6" class="dashboard-col">
               <div class="number-span">
-                {{ formatCommaAmt(dashboard.totalBalance) }}
+                <el-link
+                  type="primary"
+                  class="number-span"
+                  @click="openDialog('FUNDS')"
+                >
+                  {{ formatCommaAmt(dashboard.totalBalance) }}
+                </el-link>
               </div>
               <div class="title-span">
                 {{ $t('fields.total_remaining_amt') }}
@@ -173,7 +179,7 @@
           <div class="scrollable-container" v-loading="uiControl.dialogLoading">
             <div>
               <table class="custom-table">
-                <thead>
+                <thead v-if="uiControl.dialogType !== 'FUNDS'">
                   <tr>
                     <th scope="col">{{ t('fields.affiliate') }}</th>
                     <th scope="col">{{ t('fields.affiliateLevel') }}</th>
@@ -268,6 +274,37 @@
                     </td>
                   </tr>
                 </tbody>
+                <thead v-if="uiControl.dialogType === 'FUNDS'">
+                  <tr>
+                    <th scope="col">{{ t('fields.member') }}</th>
+                    <th scope="col">{{ t('fields.balance') }}</th>
+                    <th scope="col">{{ t('fields.depositAmount') }}</th>
+                    <th scope="col">{{ t('fields.withdrawAmount') }}</th>
+                  </tr>
+                </thead>
+                <tbody v-if="uiControl.dialogType === 'FUNDS'">
+                  <tr v-if="dashboard.memberFunds.length === 0">
+                    <td colspan="4">
+                      <!-- Display your empty component or message here -->
+                      <emptyComp />
+                    </td>
+                  </tr>
+                  <tr
+                    v-for="(record, index) in dashboard.memberFunds"
+                    :key="index"
+                  >
+                    <td>{{ record.member }}</td>
+                    <td>
+                      {{ formatCommaAmt(record.balance) }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.deposit) }}
+                    </td>
+                    <td>
+                      {{ formatCommaAmt(record.withdraw) }}
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -321,6 +358,7 @@ const dashboard = reactive({
   totalBalance: 0,
   validBet: 0,
   totalWin: 0,
+  memberFunds: []
 })
 
 const recordsDetail = reactive({
@@ -436,10 +474,12 @@ async function openDialog(type) {
     uiControl.dialogTitle = t('fields.withdrawal')
     uiControl.dialogThirdCol = t('fields.withdrawAmount')
     uiControl.dialogLastCol = t('fields.withdrawCount')
-  } else {
+  } else if (type === 'BET') {
     uiControl.dialogTitle = t('fields.bet')
     uiControl.dialogThirdCol = t('fields.betAmount')
     uiControl.dialogLastCol = t('fields.numberOfbets')
+  } else {
+
   }
   uiControl.dialogLoading = false
 }

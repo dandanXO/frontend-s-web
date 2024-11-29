@@ -2,21 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
-          v-model="request.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-          @change="handleChangeSite()"
-        >
-          <el-option
-            v-for="item in list.sites"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
+        <!--        <el-select-->
+        <!--          v-model="request.siteId"-->
+        <!--          size="small"-->
+        <!--          :placeholder="t('fields.site')"-->
+        <!--          class="filter-item"-->
+        <!--          style="width: 120px; margin-left: 5px"-->
+        <!--          @change="handleChangeSite()"-->
+        <!--        >-->
+        <!--          <el-option-->
+        <!--            v-for="item in list.sites"-->
+        <!--            :key="item.id"-->
+        <!--            :label="item.siteName"-->
+        <!--            :value="item.id"-->
+        <!--          />-->
+        <!--        </el-select>-->
         <el-select
           filterable
           clearable
@@ -237,7 +237,7 @@
 
 <script setup>
 import { nextTick, onMounted, reactive, ref, computed } from 'vue'
-import { getSiteListSimple } from '../../../api/site'
+// import { getSiteListSimple } from '../../../api/site'
 import { getAffiliateFinancialConfigList, createAffiliateFinancialConfig, updateAffiliateFinancialConfig } from '../../../api/affiliate-financial-config'
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
@@ -294,8 +294,8 @@ const formRules = reactive({
 const selected = reactive({ paymentId: [] })
 
 async function loadSites() {
-  const { data: ret } = await getSiteListSimple()
-  list.sites = ret
+  // const { data: ret } = await getSiteListSimple()
+  list.sites = store.state.user.sites
 }
 
 async function loadPayment() {
@@ -334,13 +334,13 @@ async function loadAffiliates() {
   list.affiliates = ret
 }
 
-async function handleChangeSite() {
-  await loadAffiliateFinancialConfig()
-  await loadPayment()
-  await loadWithdrawPlatform()
-  await loadSiteWithdrawPlatform(request.siteId)
-  await loadAffiliates()
-}
+// async function handleChangeSite() {
+//   await loadAffiliateFinancialConfig()
+//   await loadPayment()
+//   await loadWithdrawPlatform()
+//   await loadSiteWithdrawPlatform(request.siteId)
+//   await loadAffiliates()
+// }
 
 function handleChangePayments() {
   form.paymentIds = selected.paymentId.join(',')
@@ -387,7 +387,7 @@ function showDialog(type) {
 function create() {
   affiliateFinancialConfigForm.value.validate(async valid => {
     if (valid) {
-      form.siteId = request.siteId
+      form.siteId = store.state.user.siteId
       form.status = true
       await createAffiliateFinancialConfig(form)
       uiControl.dialogVisible = false
@@ -400,7 +400,7 @@ function create() {
 function edit() {
   affiliateFinancialConfigForm.value.validate(async valid => {
     if (valid) {
-      form.siteId = request.siteId
+      form.siteId = store.state.user.siteId
       form.status = true
       await updateAffiliateFinancialConfig(form)
       uiControl.dialogVisible = false
@@ -433,8 +433,7 @@ onMounted(async() => {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    site.value = list.sites[0];
-    request.siteId = site.value.id;
+    request.siteId = store.state.user.siteId;
   }
   await loadAffiliates()
   await loadWithdrawPlatform()

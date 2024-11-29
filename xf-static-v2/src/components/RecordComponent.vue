@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-inner-loading :showing="loading">
-      <q-spinner-gears size="50px" color="brightbtn" />
+      <q-spinner-ios color="white" size="8em" />
       <div class="label" style="color: #fff">加载中</div>
     </q-inner-loading>
     <div v-if="!loading" class="q-pa-md">
@@ -9,15 +9,21 @@
         <div v-for="(det, n) in truncatedList" :key="n" class="bg-darkbox" style="position: relative">
           <!-- Table top amount start -->
           <template v-for="header in headers" :key="header.key">
+            <!-- deposit -->
             <div v-if="header.key === 'depositAmount'" class="amount-container">
               <div class="amount-header-title">{{ header.label }}</div>
               <div class="amount-desc">{{ det.depositAmount }}</div>
             </div>
+
+            <!-- withdraw -->
+            <div v-if="header.key === 'withdrawAmount'" class="amount-container">
+              <div class="amount-header-title">{{ header.label }}</div>
+              <div class="amount-desc">{{ det.withdrawAmount }}</div>
+            </div>
           </template>
           <!-- Table top amount end -->
-
           <div class="table-data" v-for="(head, e) in headers" :key="e">
-            <template v-if="head.key !== 'depositAmount'">
+            <template v-if="head.key !== 'depositAmount' && head.key !== 'withdrawAmount'">
               <div class="label">{{ head.label }}:</div>
               <template v-for="obj in Object.keys(det)" :key="obj">
                 <div v-if="obj === head.key" class="desc">
@@ -33,8 +39,19 @@
                       </q-tooltip>
                     </q-link>
                   </div>
+
                   <div v-else-if="obj === 'status'">
-                    {{ checkRecord(det[obj]) }}
+                    <template v-if="recordType === 'withdraw' || recordType === 'deposit'">
+                      <div class="status-row" :class="`status__${det[obj].toLowerCase()}`">
+                        <q-icon name="cancel" v-if="det[obj] === 'FAIL'" />
+                        <q-icon
+                          name="check_circle"
+                          v-if="det[obj] === 'SUCCESS' || det[obj] === 'SUPPLEMENT_SUCCESS'"
+                        />
+                        {{ checkRecord(det[obj]) }}
+                      </div>
+                    </template>
+                    <template v-else>{{ checkRecord(det[obj]) }}</template>
                   </div>
                   <div v-else-if="obj === 'betStatus'">
                     {{ checkRecord(det[obj]) }}
@@ -77,7 +94,7 @@
             "
             class="buttons"
           >
-            <q-btn label="催单" @click="feedbackTrans(det)" color="orangebtn" class="btn-reminder" size="md" />
+            <q-btn label="催单" @click="feedbackTrans(det)" color="orangebtn" class="btn-reminder" size="md" rounded />
           </div>
 
           <div v-if="recordType === 'withdraw'" class="buttons">
@@ -88,7 +105,14 @@
                 det.confirmStatus === 0
               "
             >
-              <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
+              <q-btn
+                @click="openWithdrawConfirmDialog(det)"
+                outline
+                label="确认到账"
+                class="btn-reminder"
+                size="sm"
+                color="bright"
+              />
             </template>
 
             <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
@@ -151,7 +175,8 @@
               disable
               outlined
               color="white"
-              bg-color="recinputstyle"
+              bg-color="roundedinputstyle"
+              rounded
             />
           </div>
 
@@ -177,7 +202,8 @@
               :max-rows="5"
               outlined
               color="white"
-              bg-color="recinputstyle"
+              bg-color="roundedinputstyle"
+              rounded
             />
           </div>
 
@@ -188,6 +214,7 @@
             label="发送"
             style="width: 100%"
             @click="submitReminder"
+            rounded
           />
         </q-form>
       </q-card-section>
@@ -284,9 +311,8 @@ export default defineComponent({
     const onLoad = (index, done) => {
       comList.value = props.list;
       // console.log("onLoad");
-      // console.log(comList.value);
       setTimeout(() => {
-        if (!props.isEnded) {
+        if (!props.isEnded || comList.value.length > 0) {
           if (comList.value.length) {
             var slicedArray = comList.value.splice(0, 3);
             slicedArray.forEach((element) => {
@@ -575,5 +601,21 @@ export default defineComponent({
 .btn-copyserialnum {
   margin-left: 4px;
   color: #00bfd7;
+}
+
+.status-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+
+  &.status__fail {
+    color: #f53434;
+  }
+
+  &.status__success,
+  &.status__supplement_success {
+    color: #11aa66;
+  }
 }
 </style>

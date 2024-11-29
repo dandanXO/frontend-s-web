@@ -48,7 +48,9 @@ export const userStore = defineStore("userStore", {
       hasUpdatedOneSignal: false,
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
-      ftd: true
+      ftd: true,
+      docType: "",
+      taxId: ""
     };
   },
   actions: {
@@ -214,7 +216,9 @@ export const userStore = defineStore("userStore", {
             evip,
             currentDeposit,
             levelUpDeposit,
-            guest
+            guest,
+            docType,
+            taxId
           } = response.data;
 
           this.id = id;
@@ -232,6 +236,8 @@ export const userStore = defineStore("userStore", {
           this.currentDeposit = parseFloat(currentDeposit);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.guest = guest;
+          this.docType = docType;
+          this.taxId = taxId;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);
@@ -264,9 +270,9 @@ export const userStore = defineStore("userStore", {
           .then((res) => {
             if (res.code === 0) {
               this.balance = res.data;
-              } else {
-                this.balance = 0;
-              }
+            } else {
+              this.balance = 0;
+            }
           });
       }
     },

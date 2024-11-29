@@ -890,7 +890,7 @@ async function fail() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   const { data: config } = await getConfigList("withdraw_risk_apply", request.siteId);
   if (config.length !== 0) {
     request.riskId = config[0].value
