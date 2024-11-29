@@ -1,7 +1,8 @@
 <template>
   <q-page>
     <div class="loading-div" v-if="isLoading">
-      <q-spinner-hourglass color="deep-orange" size="8em" />
+      <!-- <q-spinner-hourglass color="deep-orange" size="8em" /> -->
+      <q-spinner-ios color="white" size="8em" />
     </div>
     <div class="pageitem">
       <div class="topbar">
@@ -44,7 +45,7 @@
                   :placeholder-src="game.default"
                   fit="cover"
                   spinner-color="white"
-                  style="border-top-left-radius: 10px; border-top-right-radius: 10px; overflow: hidden; aspect-ratio: 1;"
+                  style="border-top-left-radius: 10px; border-top-right-radius: 10px; overflow: hidden; aspect-ratio: 1"
                   :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
                 >
                   <template v-slot:loading>

@@ -16,7 +16,7 @@
         </div>
 
         <div v-if="!src" class="loading-div">
-          <q-spinner-hourglass color="blue-6" size="8em" />
+          <q-spinner-ios color="white" size="8em" />
         </div>
 
         <template v-if="transferInfo.platform === 'PG'">
