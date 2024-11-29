@@ -97,34 +97,68 @@
           window["WebScript"].notifyApp("LH_ANDROID");
         }
 
-        window.addEventListener("message", function (event) {
-          alert("OK WE RECEIVE message EVENTLISTENER!");
-          if (event.data.data !== undefined) {
-            alert("OK event.data.data is not undefined!");
-            // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
-            const returnJson = event.data.data;
-            if (returnJson && returnJson.rstDomain) {
-              window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
+        window.notifyApp = function (message) {
+          try {
+            // 将 JSON 字符串解析为 JavaScript 对象
+            const data = JSON.parse(message);
 
-              document.addEventListener("DOMContentLoaded", function () {
-                var bodyElement = document.body;
-                bodyElement.classList.add("body-applinks");
-              });
-            }
-            if (returnJson && returnJson.actDomain) {
-              window.localStorage.setItem("LH_H5_EVT_URL", returnJson.actDomain);
-            }
-            if (returnJson && returnJson.crDomain) {
-              window.localStorage.setItem("LH_H5_CRT_URL", returnJson.crDomain);
-            }
-            if (returnJson && returnJson.upImg) {
-              window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
-            }
-          } else {
-            alert(JSON.stringify(event));
-            alert("Ok We Received, BUT event.data.data !== undefined");
+            // 打印数据到控制台，供调试用
+            console.log("Received message from Flutter:", data);
+            alert("Received message from Flutter:");
+            alert(data);
+            alert("ACTDOMAIN" + data.data.actDomain);
+
+            // const returnJson = data.data;
+            // if (returnJson && returnJson.rstDomain) {
+            //   window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
+            //
+            //   document.addEventListener("DOMContentLoaded", function () {
+            //     var bodyElement = document.body;
+            //     bodyElement.classList.add("body-applinks");
+            //   });
+            // }
+            // if (returnJson && returnJson.actDomain) {
+            //   window.localStorage.setItem("LH_H5_EVT_URL", returnJson.actDomain);
+            // }
+            // if (returnJson && returnJson.crDomain) {
+            //   window.localStorage.setItem("LH_H5_CRT_URL", returnJson.crDomain);
+            // }
+            // if (returnJson && returnJson.upImg) {
+            //   window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
+            // }
+          } catch (error) {
+            console.error("Error parsing message from Flutter:", error);
           }
-        });
+        };
+
+        // window.addEventListener("message", function (event) {
+        //   alert("OK WE RECEIVE message EVENTLISTENER!");
+        //   if (event.data.data !== undefined) {
+        //     alert("OK event.data.data is not undefined!");
+        //     // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
+        //     const returnJson = event.data.data;
+        //     if (returnJson && returnJson.rstDomain) {
+        //       window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
+        //
+        //       document.addEventListener("DOMContentLoaded", function () {
+        //         var bodyElement = document.body;
+        //         bodyElement.classList.add("body-applinks");
+        //       });
+        //     }
+        //     if (returnJson && returnJson.actDomain) {
+        //       window.localStorage.setItem("LH_H5_EVT_URL", returnJson.actDomain);
+        //     }
+        //     if (returnJson && returnJson.crDomain) {
+        //       window.localStorage.setItem("LH_H5_CRT_URL", returnJson.crDomain);
+        //     }
+        //     if (returnJson && returnJson.upImg) {
+        //       window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
+        //     }
+        //   } else {
+        //     alert(JSON.stringify(event));
+        //     alert("Ok We Received, BUT event.data.data !== undefined");
+        //   }
+        // });
       }
     </script>
 
