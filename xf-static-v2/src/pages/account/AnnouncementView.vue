@@ -10,11 +10,7 @@
           <span v-for="ann in announcementsList" :key="ann" class="q-gutter-y-md">
             <div v-if="ann.typeId === tab.id">
               <q-expansion-item class="expansion-bg" expand-separator :label="ann.title">
-                <!-- <q-card> -->
-                <!-- <q-card-section> -->
-                {{ ann.content }}
-                <!-- </q-card-section> -->
-                <!-- </q-card> -->
+                <div class="expansion-content">{{ ann.content }}</div>
               </q-expansion-item>
               <div class="text-center q-pa-md text-brand" v-if="ann.content.length === 0">暂时无通知</div>
             </div>
@@ -24,6 +20,7 @@
     </q-tab-panels>
   </div>
 </template>
+
 <script lang="js">
 import { defineComponent, onMounted, ref } from "vue";
 import { api } from "boot/axios";
@@ -123,7 +120,7 @@ export default defineComponent({
 
   :deep(.q-expansion-item__content) {
     background: #394870;
-    padding: 10px 10px 15px;
+    // padding: 10px 10px 15px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     color: #ffffff99;
@@ -158,5 +155,9 @@ export default defineComponent({
 
 .q-tab-panels--dark {
   background: none;
+}
+
+.expansion-content {
+  padding: 10px 10px 15px;
 }
 </style>
