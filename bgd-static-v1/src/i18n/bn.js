@@ -135,6 +135,7 @@ export default {
     cryptoAccount_rules_03: "ক্রিপ্টো অ্যাকাউন্টে অবশ্যই 34 অক্ষর থাকতে হবে",
     cryptoAccount_rules_04: "ক্রিপ্টো অ্যাকাউন্ট অবশ্যই '0x' দিয়ে শুরু করতে হবে",
     cryptoAccount_rules_05: "ক্রিপ্টো অ্যাকাউন্টে অবশ্যই 42 অক্ষর থাকতে হবে",
+    cryptoAccount_rules_06: "ক্রিপ্টো অ্যাকাউন্টে দশমিক সংখ্যা থাকতে পারবে না",
     virtualWalletType: "ভার্চুয়াল ওয়ালেট টাইপ",
     virtualWallet: "ভার্চুয়াল ওয়ালেট",
     virtualWallet_placeholder: "অনুগ্রহ করে ভার্চুয়াল ওয়ালেট ঢোকান",
@@ -142,6 +143,7 @@ export default {
     virtualWallet_id_rule: "অনুগ্রহ করে 13 সংখ্যার আইডেন্টিটি আইডি লিখুন",
     virtualWallet_rules_02: "ফোন নম্বর অবশ্যই '01' দিয়ে শুরু করতে হবে",
     virtualWallet_rules_03: "ইওয়ালেটে 10 - 11টি সংখ্যা থাকতে হবে",
+    virtualWallet_rules_04: "ভার্চুয়াল ওয়ালেট ডেসিমাল পয়েন্ট থাকতে পারবে না",
     virtualWallet_warmReminder:
       "উষ্ণ রিমাইন্ডার: যদি কার্ডধারীর নাম মেলে না, আপনি তথ্য সংশোধন করতে অনলাইন গ্রাহক সেবার সাথে যোগাযোগ করতে পারবেন। আপনার সহায়তা এবং বোঝার জন্য আপনাকে ধন্যবাদ!",
     virtualWallet_warmReminder_02:
@@ -517,6 +519,7 @@ export default {
     bankAccountNum: "ব্যাংক অ্যাকাউন্ট নম্বর",
     pleaseEnterCardAccount: "অনুগ্রহ করে ব্যাংক অ্যাকাউন্ট নম্বর লিখুন",
     bankCardMust16NumberandAbove: "ব্যাংক অ্যাকাউন্ট নম্বর 16 নম্বর এবং তার বেশি হতে হবে",
+    bankCardDisallowDecimal: "ব্যাংক অ্যাকাউন্ট নম্বরে দশমিক সংখ্যা থাকতে পারবে না",
     nameofCardAcc: "কার্ড অ্যাকাউন্টের নাম",
     insertCardAccName: "অনুগ্রহ করে কার্ড অ্যাকাউন্টের নাম লিখুন"
   },
