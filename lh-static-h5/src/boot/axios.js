@@ -415,7 +415,7 @@ export default boot(({ app, router }) => {
 
     if (window.location.pathname === "/deposittest" || window.location.pathname === "/viptest") {
       console.log(config.baseURL + config.url);
-      alert(config.baseURL + config.url);
+      // alert(config.baseURL + config.url);
     }
 
     if (config.data) {

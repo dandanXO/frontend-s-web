@@ -59,6 +59,12 @@ const routes = [
     meta: { requiresAuth: true, isApp: true }
   },
   {
+    path: "/promotiontest",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
     path: "/deposit",
     component: () => import("layouts/MainLayout.vue"),
     children: [
