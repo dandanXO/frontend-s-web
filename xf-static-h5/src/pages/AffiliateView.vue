@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="buttons">
-        <a :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a href="https://affiliate-web.gwd4jptunz.com/xf/login">登录</a>
+        <a :href="'https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a href="https://xf1-affiliate.gwd4jptunz.com/xf/login">登录</a>
         <a
           @click.stop.prevent="
             openWindow(
@@ -191,7 +191,7 @@
       </div>
       <div class="agent-demo-btm" style="margin-top: 20px; padding-bottom: 40px">
         <a
-          :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
+          :href="'https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
           class="agent-reg-btn"
         >
           立即申请代理
