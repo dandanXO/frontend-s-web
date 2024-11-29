@@ -193,13 +193,13 @@ const getReferFriendInfo = () => {
       missionDetails.value = [
         {
           title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"),
-          total: stageReqResData.minInviteesDepositCount,
-          current: missionCount.value?.inviteesDepositCount ?? 0
+          total: stageReqResData.minInviterDepositCount,
+          current: missionCount.value?.inviterDepositCount ?? 0
         },
         {
           title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"),
-          total: stageReqResData.minInviteesValidBet,
-          current: missionCount.value?.inviteesValidBet ?? 0
+          total: stageReqResData.minInviterValidBet,
+          current: missionCount.value?.inviterValidBet ?? 0
         },
         {
           title: t("hotPromo.megaSharingWheel.EligibleInvitedUsers"),
@@ -211,8 +211,8 @@ const getReferFriendInfo = () => {
       canSpinWheel.value =
         currentStageInfo.hasClaimed === false &&
         currentStageInfo.eligibleInviteesCountState === true &&
-        currentStageInfo.inviteesBettingAmountState === true &&
-        currentStageInfo.inviteesDepositCountState === true;
+        currentStageInfo.inviterBettingAmountState === true &&
+        currentStageInfo.inviterDepositCountState === true;
 
       hasClaimed.value = currentStageInfo.hasClaimed;
       clearInterval(winnerTimer.value);
