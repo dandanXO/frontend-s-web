@@ -25,12 +25,13 @@
     :slidesPerView="4.5"
     watch-slides-progress
     class="first-swiper"
-    centered-slides
-    centered-slides-bounds
     slide-to-clicked-slide
+    centered-slides-bounds
     center-insufficient-slides
     @swiper="initSwiper"
   >
+    <!-- centered-slides -->
+    <!-- centered-slides-bounds -->
     <swiper-slide
       :class="tab.name && { tbact: selectedTab === tab.name }"
       @click="handleClick(tab)"
@@ -38,10 +39,14 @@
       :key="i"
     >
       <div class="home-select-slide" :class="selectedTab == tab.name ? 'selected' : ''">
-        <!-- <img :style="`margin-top:${tab.mb}px;`" :src="require('../../assets/images/index/' + tab.icon)" /> -->
         <img :src="require(`../../assets/images/index/menu-icon-${tab.icon}.png`)" v-if="selectedTab == tab.name" />
         <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
       </div>
+
+      <!-- <div>
+        <img :src="require(`../../assets/images/index/menu-icon-${tab.icon}.png`)" v-if="selectedTab == tab.name" />
+        <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
+      </div> -->
     </swiper-slide>
   </swiper>
 </template>
@@ -82,7 +87,7 @@ const scrollSlide = () => {
   if (!scrollToCenter.value || !swiperRef.value) return;
   const index = list.value.findIndex((el) => el.name === selectedTab.value);
   if (index < 0) return;
-  swiperRef.value.slideTo(index, 500);
+  swiperRef.value.slideTo(index, 200);
 };
 
 const initSwiper = (swiper) => {
@@ -103,6 +108,7 @@ watch(selectedTab, scrollSlide);
   box-shadow: 0px 0px 4px 0px #ffffff40 inset;
   border-radius: 32px;
   padding: 4px 8px;
+  display: flex;
 }
 
 .home-select-slide {

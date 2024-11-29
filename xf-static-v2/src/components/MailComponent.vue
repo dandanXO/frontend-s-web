@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-inner-loading :showing="loading">
-      <q-spinner-gears size="50px" color="brand" />
+      <q-spinner-ios color="white" size="8em" />
       <div class="label">加载中</div>
     </q-inner-loading>
     <div v-if="!loading">

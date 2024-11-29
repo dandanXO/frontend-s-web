@@ -501,11 +501,11 @@ export default defineComponent({
           const casualSlide = document.getElementById("id-casual-slide");
 
           const slotTop = slotSlide.getBoundingClientRect().top;
+          const liveTop = liveSlide.getBoundingClientRect().top;
           const sportTop = sportSlide.getBoundingClientRect().top;
           const esportTop = esportSlide.getBoundingClientRect().top;
           const fishTop = fishSlide.getBoundingClientRect().top;
           const pokerTop = pokerSlide.getBoundingClientRect().top;
-          const liveTop = liveSlide.getBoundingClientRect().top;
           const lotteryTop = lotterySlide.getBoundingClientRect().top;
           const casualTop = casualSlide.getBoundingClientRect().top;
 
