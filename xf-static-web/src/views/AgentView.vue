@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="buttons">
-        <a :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a href="https://affiliate-web.gwd4jptunz.com/xf/login">登录</a>
+        <a :href="'https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a href="https://xf1-affiliate.gwd4jptunz.com/xf/login">登录</a>
         <a
           @click.stop.prevent="
             openWindow(
