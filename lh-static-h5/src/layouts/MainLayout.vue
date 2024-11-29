@@ -130,8 +130,9 @@
       </q-route-tab>
 
       <q-route-tab to="/promo" name="promo">
-        <div v-if="$q.dark.isActive" style="padding: 15px;border-radius: 100px;background: radial-gradient(#213057 0%, #213057 50%, #0F182E 50%, #0F182F 100%);">
+        <div v-if="$q.dark.isActive" style="padding: 0.8rem 1rem;border-radius: 100px;background: radial-gradient(#213057 0%, #213057 50%, #0F182E 50%, #0F182F 100%);">
           <img
+            style="width: 1.8rem"
             class="inactive"
             src="../assets/images/footer/promo-icon-dark.svg"
           />

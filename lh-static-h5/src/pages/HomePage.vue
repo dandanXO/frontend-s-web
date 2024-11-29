@@ -2492,6 +2492,13 @@ export default defineComponent({
     background-color: #212b43;
     padding: 4px 1rem;
     width: 100%;
+
+    .header-right {
+      .btn-pointer {
+        width: 20px;
+        height: auto;
+      }
+    }
   }
   .download-top-container {
     background: $background-dark-light;

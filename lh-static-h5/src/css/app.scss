@@ -682,6 +682,13 @@ svg {
     }
   }
 
+  .q-footer .q-tab img {
+    width: 1.5rem;
+  }
+  .q-footer .q-tab span {
+    font-size: 0.9rem;
+  }
+
   .q-footer {
     box-shadow: none;
     
@@ -689,7 +696,7 @@ svg {
       background: linear-gradient(to bottom,transparent 0%, transparent 32%, #0f182e 32%,#0f182e 100%);
     }
     .q-tab {
-      height: 95px;
+      height: 5.2rem;
       background: transparent;
       .q-tab__content {
         flex-wrap: nowrap;
