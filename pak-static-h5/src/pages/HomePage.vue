@@ -3451,7 +3451,13 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data;
+      hbPromo.value = data.data.filter(
+        (redirectList) =>
+          redirectList.code !== "pak-mega-sharing-wheel" ||
+          (redirectList.code === "pak-mega-sharing-wheel" &&
+            store.token &&
+            (store.memberType === "TEST" || store.memberType === "PROMO_TEST"))
+      );
     });
 };
 
