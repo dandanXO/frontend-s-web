@@ -50,18 +50,38 @@ const tab = ref("home");
 </script>
 
 <style lang="scss" scoped>
-:deep(.q-tab--active) {
-  position: relative;
+.q-tabs {
+  .q-tab {
+    &:first-child {
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
+    }
+    &:last-child {
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
+    &.q-hoverable {
+      :deep(.q-focus-helper) {
+        height: unset;
+        top: 13%;
+        bottom: 8%;
+      }
+    }
 
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 30px;
-    pointer-events: none;
-    background: url("../assets/images/index/menu/icon-hover.png") no-repeat center center;
-    background-size: contain;
+    :deep(.q-tab--active) {
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        pointer-events: none;
+        background: url("../assets/images/index/menu/icon-hover.png") no-repeat center center;
+        background-size: contain;
+      }
+    }
   }
 }
 

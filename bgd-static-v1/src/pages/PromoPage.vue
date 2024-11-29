@@ -1279,7 +1279,7 @@ export default defineComponent({
     gap: 10px;
     margin: 4px 0;
     border-radius: 5px;
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
     text-decoration: none;
 
     &.is-disabled {

@@ -1196,14 +1196,14 @@ const openWithdrawTutorialVideo = () => {
   .bank-card-item {
     padding: 3px;
     border-radius: 1.25rem;
-    background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
     position: relative;
     transition: 0.3s all;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: #000a01;
 
     .card-label {
       font-size: 1rem;
