@@ -44,8 +44,7 @@
                   :placeholder-src="game.default"
                   fit="cover"
                   spinner-color="white"
-                  position="50% 20%"
-                  style="border-top-left-radius: 10px; border-top-right-radius: 10px; overflow: hidden"
+                  style="border-top-left-radius: 10px; border-top-right-radius: 10px; overflow: hidden; aspect-ratio: 1;"
                   :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
                 >
                   <template v-slot:loading>
@@ -327,9 +326,9 @@ export default defineComponent({
   }
 });
 </script>
+
 <style scoped lang="scss">
 .pageitem {
-  // border: 1px solid #ffffff;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -338,23 +337,13 @@ export default defineComponent({
   overflow: auto;
 
   .topbar {
-    // position: sticky;
     z-index: 99;
     padding-bottom: 10px;
     top: 0;
 
     .bookmarks {
       cursor: pointer;
-      // display: flex;
-      // flex-wrap: wrap;
-      // grid-gap: 20px;
-      // max-width: 1400px;
-      // width: 100%;
       gap: 5px;
-      // overflow: auto;
-      // padding: 10px 20px 20px;
-      // justify-content: flex-start;
-      // flex-wrap: wrap;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
 
@@ -397,8 +386,6 @@ export default defineComponent({
         padding: 10px;
         text-align: center;
         background: #2b2b4b;
-        // border-radius: 0px;
-        // box-shadow: rgb(0 0 0 / 24%) 0px 6px 12px 0px;
 
         &:hover {
           // transform: scale(1.01274) translate(0px, -4px);

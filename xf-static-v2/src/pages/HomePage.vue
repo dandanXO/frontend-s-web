@@ -1738,6 +1738,15 @@ export default defineComponent({
     grid-template-columns: repeat(3, 1fr);
 
     .game-item-div {
+      &.maintenance-on {
+        pointer-events: none;
+
+        .game-platform-img img,
+        .game-btn {
+          filter: grayscale(100%);
+        }
+      }
+
       &.slot-item {
         width: 100%;
       }
@@ -1860,7 +1869,7 @@ export default defineComponent({
           font-weight: 300;
           color: #fff;
           text-align: center;
-          margin-bottom: 5px;
+          // margin-bottom: 5px;
           width: 100%;
           letter-spacing: 1px;
         }
