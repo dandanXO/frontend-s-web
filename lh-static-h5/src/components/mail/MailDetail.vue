@@ -82,4 +82,20 @@ const handleRedirectClick = () => {
     }
   }
 }
+
+.body--dark {
+  .mail-detail-wrapper {
+    .mail-detail-title-wrapper {
+      .mail-detail-title__title {
+        font-size: 1.6rem;
+      }
+      .mail-detail-title__send-time {
+        font-size: 0.9rem;
+      }
+    }
+    .mail-detail-content-wrapper {
+      font-size: 0.9rem;
+    }
+  }
+}
 </style>

@@ -629,8 +629,8 @@
 
   <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
     <q-card
-      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px"
-      class="bg-[#0000001A] text-black"
+      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px;"
+      class="bg-[#0000001A] text-black station-notice-content-wrapper"
     >
       <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
         <q-tabs
@@ -646,7 +646,7 @@
 
         <q-separator />
 
-        <q-tab-panels v-model="activeKey" animated>
+        <q-tab-panels v-model="activeKey" animated style="background: transparent;">
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
             <q-list style="min-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
@@ -658,8 +658,8 @@
                     icon="notifications_none"
                     :label="ann.title"
                   >
-                    <q-card>
-                      <q-card-section style="color: #9f9f9f">
+                    <q-card style="background: transparent;">
+                      <q-card-section style="color: #9f9f9f;">
                         {{ ann.content }}
                       </q-card-section>
                     </q-card>
@@ -2482,6 +2482,12 @@ export default defineComponent({
 }
 
 .body--dark {
+  .station-notice-dialog {
+    .station-notice-content-wrapper {
+      background: #0f182e;
+    }
+  }
+
   .mid-announcement-section {
     height: 30px;
     margin: 2px auto;
@@ -2567,6 +2573,19 @@ export default defineComponent({
       }
     }
   }
+}
+
+:deep(.tabs-wrapper) {
+  background: transparent;
+  border-radius: 6px !important;
+  padding: 8px;
+  color: #737373;
+}
+
+.tab-active {
+  background: linear-gradient(180deg, #52acff 0%, #3559da 100%);
+  color: white;
+  border-radius: 6px;
 }
 
 @keyframes fadeIn {

@@ -286,6 +286,14 @@ svg {
     }
   }
 
+  .inactive {
+    display: block;
+  }
+
+  .hover {
+    display: none;
+  }
+
   &__indicator {
     display: none;
   }
@@ -302,6 +310,14 @@ svg {
       &.hover {
         display: block;
       }
+    }
+
+    .inactive {
+      display: none;
+    }
+
+    .hover {
+      display: block;
     }
   }
 }

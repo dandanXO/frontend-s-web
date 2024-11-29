@@ -130,7 +130,7 @@
       </q-route-tab>
 
       <q-route-tab to="/promo" name="promo">
-        <div v-if="$q.dark.isActive" style="padding: 0.8rem 1rem;border-radius: 100px;background: radial-gradient(#213057 0%, #213057 50%, #0F182E 50%, #0F182F 100%);">
+        <div class="inactive" v-if="$q.dark.isActive" style="padding: 0.8rem 1rem;border-radius: 100px;background: radial-gradient(#213057 0%, #213057 50%, #0F182E 50%, #0F182F 100%);">
           <img
             style="width: 1.8rem"
             class="inactive"
@@ -142,11 +142,13 @@
           v-else
           src="../assets/images/footer/promo-icon.png"
         />
-        <img
-          class="hover"
-          v-if="$q.dark.isActive"
-          src="../assets/images/footer/promo-icon-active-dark.svg"
-        />
+        <div class="hover" v-if="$q.dark.isActive" style="padding: 0.8rem 1rem;border-radius: 100px;background: radial-gradient(#213057 0%, #213057 50%, #0F182E 50%, #0F182F 100%);">
+          <img
+            style="width: 1.8rem"
+            class="hover"
+            src="../assets/images/footer/promo-icon-active-dark.svg"
+          />
+        </div>
         <img
           class="hover"
           v-else
