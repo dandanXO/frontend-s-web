@@ -2,313 +2,27 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="affiliate-title">
-        <img :src="require(`../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
-      </div>
-      <div class="buttons">
-        <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
-        <!--        <a class="outline" :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">-->
-        <!--          联系我们-->
-        <!--        </a>-->
-      </div>
-
-      <div class="affiliate-program-first">
-        <!-- <img src="@/assets/images/affiliate/rules-dark.png" /> -->
-        <div class="affiliate-subgroup agent-content-item">
-          <div class="affiliate-sub">
-            <div class="affiliate-subtitle">佣金结算规则</div>
-            <div class="affiliate-inner">
-              <div class="affiliate-terms">代理佣金结算规则</div>
-              <ul>
-                <li>佣金派发时间：每月1号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款</li>
-                <li>每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000为一个活跃玩家。</li>
-                <li>代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。</li>
-                <!-- <li>
-                  代理推广每月至少需要新注册活跃会员达到 3
-                  名，如无法达到将视为零推广雷火平台，代理部有权减少或扣除部分佣金，如果三个月累计新注册活跃会员未达到十位将会停用代理账户，需代理联系网站重新开启。
-                  <br />
-                </li> -->
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="affiliate-program">
-        <!-- <img src="@/assets/images/affiliate/rules-dark.png" /> -->
-
-        <div class="affiliate-subgroup agent-content-item">
-          <!-- <div class="affiliate-sub">
-            <div class="affiliate-subtitle">电竞佣金方案</div>
-            <div class="affiliate-inner">
-              <div class="affiliate-terms">分红条款</div>
-              <ul>
-                <li>月充值金额≥200 元为活跃玩家，当月需要至少五个活跃会员才能结算佣金。</li>
-                <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕。</li>
-                <li>佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
-                <li>
-                  代理佣金计算方式：
-                  <br />
-                  <span class="highlight">[（投注输赢额 - 优惠 100%）-（存款 + 提款）*1.6%-平台费*8%]*佣金比例</span>
-                </li>
-                <li>
-                  代理推广每月至少需要新注册活跃会员达到 3 名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。
-                </li>
-              </ul>
-            </div>
-          </div> -->
-          <div class="affiliate-sub">
-            <div class="affiliate-subtitle">佣金计算比例 </div>
-            <div class="affiliate-inner">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>代理</th>
-                    <th>盈利</th>
-                    <th>有效活跃会员</th>
-                    <th>佣金比例</th>
-                  </tr>
-                  <tr>
-                    <td>铜牌</td>
-                    <td>＜10W</td>
-                    <td>5</td>
-                    <td>35%</td>
-                  </tr>
-                  <tr>
-                    <td>银牌</td>
-                    <td>10W-30W</td>
-                    <td>10</td>
-                    <td>40%</td>
-                  </tr>
-                  <tr>
-                    <td>金牌</td>
-                    <td>30W-60W</td>
-                    <td>25</td>
-                    <td>45%</td>
-                  </tr>
-                  <tr>
-                    <td>钻石</td>
-                    <td>60W-100W</td>
-                    <td>50</td>
-                    <td>50%</td>
-                  </tr>
-                  <tr>
-                    <td>皇冠</td>
-                    <td>＞100W</td>
-                    <td>80</td>
-                    <td>55%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
-          </div>
-          <div class="affiliate-sub">
-            <div class="affiliate-subtitle">佣金计算规则</div>
-            <div class="affiliate-inner">
-              <div style="display: flex; justify-content: space-between">
-                <div>平台输赢</div>
-                <div style="color: rgba(255, 250, 134, 1)">10,000</div>
-              </div>
-            </div>
-            <div>
-              <div class="affiliate-inner" style="border-bottom-right-radius: 0px; border-bottom-left-radius: 0px">
-                <div style="display: flex; justify-content: space-between">
-                  <div>平台费</div>
-                  <div style="color: rgba(255, 250, 134, 1)">-800</div>
-                </div>
-              </div>
-              <div class="affiliate-inner-2" style="border-top-left-radius: 0px; border-top-right-radius: 0px">
-                平台费=游戏总输赢 x8%
-              </div>
-            </div>
-            <div>
-              <div class="affiliate-inner" style="border-bottom-right-radius: 0px; border-bottom-left-radius: 0px">
-                <div style="display: flex; justify-content: space-between">
-                  <div>红利</div>
-                  <div style="color: rgba(255, 250, 134, 1)">-200</div>
-                </div>
-              </div>
-              <div class="affiliate-inner-2" style="border-top-left-radius: 0px; border-top-right-radius: 0px">
-                返水，红利，存提手续费后台可见明细
-              </div>
-            </div>
-            <div class="affiliate-inner">
-              <div style="display: flex; justify-content: space-between">
-                <div>净利润</div>
-                <div style="color: rgba(255, 250, 134, 1)">9,000</div>
-              </div>
-            </div>
-            <div class="affiliate-inner">
-              <div style="display: flex; justify-content: space-between">
-                <div>佣金比例</div>
-                <div style="color: rgba(255, 250, 134, 1)">x35%</div>
-              </div>
-            </div>
-            <div class="affiliate-inner" style="margin-bottom: 28px">
-              <div style="display: flex; justify-content: space-between">
-                <div>代理佣金</div>
-                <div style="color: rgba(255, 250, 134, 1)">3,150</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- <img src="@/assets/images/affiliate/calc-dark.png" /> -->
-        <!-- <div class="affiliate-subgroup agent-content-item">
-          <div class="affiliate-sub">
-            <div class="affiliate-subtitle">计算公式？!!</div>
-            <div class="agent-demo">
-              <div class="agent-demo-bg">
-                <div class="agent-demo-example-title">例子 1</div>
-                <div class="agent-demo-example-text">
-                  <div class="agent-demo-example-boxes">
-                    <div class="agent-demo-example-box" v-for="eg in egAmts">
-                    <div class="agent-demo-example-box-key">
-                      {{ eg.key }}
-                    </div>
-                    <div class="agent-demo-example-box-amt">
-                      {{ eg.amt }}
-                    </div>
-                  </div>
-                  </div>
-                </div>
-                <div class="agent-demo-btm">
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">平台输赢</div>
-                      <div class="txt-right">1100</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除申请优惠</div>
-                      <div class="txt-right">-100</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除存提手续费 1.6%</div>
-                      <div class="txt-right">-16</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">平台服务费</div>
-                      <div class="txt-right">88</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">盈利</div>
-                      <div class="txt-right">896</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">乘以佣金比例</div>
-                      <div class="txt-right">*35%</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">代理佣金</div>
-                      <div class="txt-right">313.6</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="agent-demo-bg">
-                <div class="agent-demo-example-title">例子 2</div>
-                <div class="agent-demo-example-text">
-                  <div class="agent-demo-example-boxes">
-                    <div class="agent-demo-example-box" v-for="eg in eg2Amts">
-                    <div class="agent-demo-example-box-key">
-                      {{ eg.key }}
-                    </div>
-                    <div class="agent-demo-example-box-amt">
-                      {{ eg.amt }}
-                    </div>
-                  </div>
-                  </div>
-                </div>
-                <div class="agent-demo-btm">
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">平台输赢</div>
-                      <div class="txt-right">122000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除申请优惠</div>
-                      <div class="txt-right">-2000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">扣除存提手续费 1.6%</div>
-                      <div class="txt-right">-2240</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">平台服务费</div>
-                      <div class="txt-right">9760</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="agent-demo-btm">
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">盈利</div>
-                      <div class="txt-right">108000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">乘以佣金比例</div>
-                      <div class="txt-right">*40%</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="agent-demo-table">
-                  <div class="agent-demo-table-tr">
-                    <div class="txt-left">代理佣金</div>
-                    <div class="txt-right">43200</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的 1.6%</div>
-          </div>
-        </div> -->
-
         <div>
-          <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')" class="agent-reg-btn">立即申请代理</a>
-        </div>
-        <div class="contact-list affiliate-sub">
-          <div class="affiliate-subtitle">专属客服服务</div>
-          <div class="contact-bg">
+          <img :src="require(`../assets/images/affiliate/agent-title.png`)" alt="" />
+          <div>
             <div class="contact-left">
-              <img src="../assets/images/affiliate/agent-contact.png" />
-            </div>
-            <div class="contact-right">
               <div class="contact-box mail-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-mail.png" />
                 </div>
-                <div>合营部电邮</div>
-                <span ref="contact0">mailto:affiliate@e8007.com</span>
-                <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
+                <div class="contact-name">合营 QQ</div>
+                <span ref="contact0" class="contact-text">1903687863</span>
+                <div class="contact-buttons">
+                  <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
+                  <a target="_blank" href="#" class="download-btn">下载</a>
+                </div>
               </div>
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
-                <div>合营 QQ</div>
-                <span ref="contact1">1903687863</span>
+                <div class="contact-name">Telegram</div>
+                <span ref="contact1" class="contact-text">@LH18668</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
                   <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
@@ -318,8 +32,8 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-skype.png" />
                 </div>
-                <div>合营 Skype</div>
-                <span ref="contact2">live:.cid.1a1ab9b6b5b0721f</span>
+                <div class="contact-name">合营部 Skype</div>
+                <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.1a1ab9b6b5b0721f</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
                   <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
@@ -329,8 +43,8 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
-                <div>Telegram</div>
-                <span ref="contact3">@LH18668</span>
+                <div class="contact-name">丝瓜</div>
+                <span ref="contact3" class="contact-text">LH1008666</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
                   <a target="_blank" class="download-btn" href="https://telegram.org/">下载</a>
@@ -340,12 +54,141 @@
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
-                <div>泡泡</div>
-                <span ref="contact4">LH1008666</span>
+                <div class="contact-name">Amico</div>
+                <span ref="contact4" class="contact-text">vip333</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('4')">{{ copybtntxt4 }}</button>
                   <a target="_blank" class="download-btn" href="https://paopaoim.com/index.html">下载</a>
                 </div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
+              <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
+            </div>
+          </div>
+        </div>
+        <img :src="require(`../assets/images/affiliate/agent-main.png`)" width="688" />
+      </div>
+
+      <div class="affiliate-program-first">
+        <img src="@/assets/images/affiliate/contact-phone.png" />
+
+        <div class="affiliate-subgroup agent-content-item">
+          <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
+            <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
+            <div class="affiliate-sub">
+              <div class="affiliate-subtitle">以下为佣金占比示例</div>
+              <div class="affiliate-inner">
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>盈利</th>
+                      <th>活跃玩家</th>
+                      <th>佣金比</th>
+                      <th>二次充值会员</th>
+                      <th>奖励佣金比</th>
+                      <th>奖励后佣金比</th>
+                    </tr>
+                    <tr>
+                      <td>8000 以上</td>
+                      <td>＜10W</td>
+                      <td>5</td>
+                      <td>35%</td>
+                      <td>35%</td>
+                      <td>35%</td>
+                    </tr>
+                    <tr>
+                      <td>500,001-800,000</td>
+                      <td>10W-30W</td>
+                      <td>10</td>
+                      <td>40%</td>
+                      <td>40%</td>
+                      <td>40%</td>
+                    </tr>
+                    <tr>
+                      <td>300,001-500,000</td>
+                      <td>30W-60W</td>
+                      <td>25</td>
+                      <td>45%</td>
+                      <td>45%</td>
+                      <td>45%</td>
+                    </tr>
+                    <tr>
+                      <td>80,001-300,000</td>
+                      <td>60W-100W</td>
+                      <td>50</td>
+                      <td>50%</td>
+                      <td>50%</td>
+                      <td>50%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="affiliate-program">
+        <div class="affiliate-subgroup agent-content-item">
+          <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
+            <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
+            <div class="affiliate-sub" style="height: 500px; width: 450px">
+              <div class="affiliate-subtitle">以下为佣金计算示例</div>
+              <div class="affiliate-inner">
+                <table>
+                  <tr>
+                    <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                      游戏总输赢
+                    </td>
+                    <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                      10000
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">-平台费</td>
+                    <td class="highlight">-1500</td>
+                  </tr>
+                  <tr>
+                    <td :colspan="2">平台费=游戏总输赢*15%</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">-红利</td>
+                    <td class="highlight">-20</td>
+                  </tr>
+                  <tr>
+                    <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">=净利润</td>
+                    <td class="highlight">8480</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">*佣金比例</td>
+                    <td class="highlight">*33%</td>
+                  </tr>
+                  <tr>
+                    <td class="result">总佣金</td>
+                    <td class="result">2798.4</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
+            <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
+            <div class="affiliate-sub" style="height: 500px; justify-content: end">
+              <img :src="require(`../assets/images/affiliate/bonus-rabbit.png`)" alt="" class="bonus-rabbit" />
+              <div class="affiliate-inner" style="height: 80%">
+                <ul>
+                  <li>1.佣金派发时间：每月 1 号至 10 号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
+                  <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000 为一个活跃玩家。</li>
+                  <li>
+                    3.代理推广每月至少需要新注册活跃会员达到 3 名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -356,7 +199,6 @@
 </template>
 <script>
 import { defineComponent, ref } from "vue";
-// import { useI18n } from "vue-i18n";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 import { useDark } from "@vueuse/core";
@@ -366,50 +208,6 @@ export default defineComponent({
     const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
 
     const isDark = useDark();
-    const egAmts = ref([
-      {
-        key: "存款",
-        amt: "1000 元"
-      },
-      {
-        key: "提款",
-        amt: "0 元"
-      },
-      {
-        key: "总投注",
-        amt: "1100 元"
-      },
-      {
-        key: "总派彩",
-        amt: "00 元"
-      },
-      {
-        key: "优惠派彩",
-        amt: "100 元"
-      }
-    ]);
-    const eg2Amts = ref([
-      {
-        key: "存款",
-        amt: "130000 元"
-      },
-      {
-        key: "提款",
-        amt: "10000 元"
-      },
-      {
-        key: "总投注",
-        amt: "140000 元"
-      },
-      {
-        key: "总派彩",
-        amt: "18000 元"
-      },
-      {
-        key: "优惠派彩",
-        amt: "2000 元"
-      }
-    ]);
 
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
@@ -507,9 +305,7 @@ export default defineComponent({
       copybtntxt1,
       copybtntxt2,
       copybtntxt3,
-      copybtntxt4,
-      egAmts,
-      eg2Amts
+      copybtntxt4
     };
   }
 });
@@ -522,9 +318,9 @@ export default defineComponent({
 
   .affiliate {
     font-family: "PingFang SC";
-    background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
+    background: url("../assets/images/affiliate/background-image.png") no-repeat center top;
     background-position: top center;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-color: #f3f7fd;
     margin: 0 auto;
     padding: 140px 20px 160px;
@@ -535,26 +331,21 @@ export default defineComponent({
     gap: 100px;
 
     .affiliate-title,
-    .affiliate-desc,
-    .buttons {
-      margin-left: 33.33%;
-
-      @media (min-width: 2800px) {
-        margin-left: 15%;
-      }
-    }
-
-    .affiliate-desc {
+    .affiliate-program-first,
+    .affiliate-program {
       display: flex;
-      gap: 10px;
+      justify-content: space-between;
+      max-width: 1400px;
+      width: 100%;
     }
+
     .buttons {
       display: flex;
       gap: 10px;
       justify-content: center;
       align-items: center;
-      width: 800px;
       font-family: "PingFang SC";
+      margin-top: 40px;
       a {
         text-decoration: none;
         display: block;
@@ -577,1121 +368,213 @@ export default defineComponent({
         }
       }
     }
-    .steps {
-      background: #1e1b2e;
-      padding: 40px;
-      width: 95%;
-      margin: 50px auto;
-      max-width: 1200px;
-      display: flex;
-      justify-content: space-between;
-      .step {
-        display: flex;
-        color: #ffffff;
-        gap: 10px;
-        justify-content: flex-start;
-        align-items: center;
-        .stepdesc {
-          flex-direction: column;
-          display: flex;
-        }
-        .game-title {
-          font-family: Wave;
-          color: #ffd200;
-        }
-      }
-    }
-    .affiliate-program-first {
-      font-family: "PingFang SC";
-      color: #686c6f;
-      text-align: left;
-      max-width: $maxwidth;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 50px;
-      .affiliate-main-title {
-        font-size: 36px;
-        color: #2e84f5;
-        text-align: center;
-      }
-      .affiliate-subgroup {
-        margin-bottom: -32px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 50px;
-        .affiliate-sub {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          flex: 1;
-          background: url("../assets/images/affiliate/main-bg.png") no-repeat center center;
-          background-size: cover;
-          border-radius: 15px;
-          padding: 20px 40px;
-          box-shadow: 0px 0px 10px 0px #0000001a;
-          color: #424f72;
-          .affiliate-subtitle {
-            font-size: 30px;
-            font-weight: 700;
-            color: #ffffff;
-          }
-          .affiliate-inner {
-            background: #4d8de1;
-            border-radius: 8px;
-            padding: 10px 20px;
-          }
-          .affiliate-terms {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            margin-bottom: 15px;
-            &:before {
-              background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
-              content: "";
-              width: 6px;
-              height: 24px;
-              display: inline-block;
-              margin-right: 10px;
-            }
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 700;
-          }
-          .highlight {
-            // color: #2e84f5;
-          }
-        }
-      }
-      .agent-content-item ul {
-        font-family: PingFang SC;
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 28px;
-        text-align: left;
-        margin: 0;
-        padding-left: 20px;
-      }
-      .agent-content-item ul li {
-        color: #ffffff;
-        margin: 0;
-        &:not(:last-child) {
-          // margin-bottom: 41px;
-        }
-      }
-      .agent-content-item table {
-        width: 100%;
-        margin-top: 10px;
-        border-spacing: 0;
-        font-size: 18px;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .agent-content-item table td,
-      .agent-content-item table th {
-        width: 25%;
-        text-align: center;
-        color: #dde8f7;
-        border: 1px solid #4d8de1;
-        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
-      }
-      .agent-content-item table td {
-        height: 60px;
-        background: #3578d0;
-        color: #dde8f7;
-        border: 1px solid #4d8de1;
-      }
-      .agent-content-item table th {
-        height: 56px;
-      }
-      .agent-stress-tip {
-        font-family: PingFang SC;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 28px;
-        color: #3578d0;
-      }
-      .agent-demo {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
-        justify-items: center;
-      }
-      .agent-demo-bg {
-        width: 100%;
-      }
-      .agent-demo-example-title {
-        text-align: center;
-        color: #ffffff;
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 33.6px;
-      }
-      .agent-demo-example-text {
-        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: 700;
-        .agent-demo-example-boxes {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 20px;
-          padding: 20px;
-          width: 75%;
-          margin: 10px auto;
-          flex-wrap: wrap;
-          .agent-demo-example-box {
-            background: #4d8de1;
-            padding: 8px;
-            display: flex;
-            border-radius: 8px;
-            gap: 10px;
-            .agent-demo-example-box-key {
-              color: #ffffff;
-              white-space: nowrap;
-              font-size: 14.88px;
-              font-weight: 400;
-              line-height: 20.84px;
-            }
-            .agent-demo-example-box-amt {
-              color: #fffa86;
-              white-space: nowrap;
-              font-size: 14.88px;
-              font-weight: 400;
-              line-height: 20.84px;
-            }
-          }
-        }
-      }
-      .agent-demo-btm {
-        // border-bottom: 1px solid #00000033;
-      }
-      .agent-demo-table {
-        display: table;
-        width: 100%;
-        background: #4d8de1;
-        margin: 20px auto;
-        border-radius: 8px;
-      }
-      .agent-demo-table-tr {
-        display: table-row;
-      }
-      .agent-demo-table-tr div {
-        display: table-cell;
-        width: 50%;
-        padding: 10px 20px;
-        font-weight: 500;
-        font-size: 18px;
-      }
-      .txt-left {
-        color: #ffffff;
-        text-align: left !important;
-      }
-      .txt-right {
-        text-align: right !important;
-        color: #fffa86;
-      }
-      .agent-reg-btn {
-        width: 413px;
-        margin: 0px auto;
-        text-decoration: none;
-        display: block;
-        text-align: center;
-        line-height: 60px;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-        background: rgba(57, 152, 255, 1);
-        border-radius: 4px;
-        box-shadow: 0px -2px 5px 0px #b1d7ff inset;
-        box-shadow: 0px -1px 4px 0px #5894ff inset;
-      }
-      .agent-contact-bg {
-        background-color: #f8f8f8;
-        box-shadow: 0px 5px 4px 0px rgba(12, 3, 7, 0.1);
-        border-radius: 5px;
-      }
-      .agent-contact-main {
-        width: 944px;
-        height: 400px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .agent-contact-logo {
-        width: 150px;
-        text-align: center;
-        font-size: 24px;
-        color: #518bf7;
-      }
-      .agent-contact-ways {
-        width: 515px;
-      }
-      .agent-ways-box {
-        margin-top: 25px;
-      }
-      .agent-ways-way {
-        font-size: 16px;
-        color: #518bf7;
-      }
-      .agent-ways-val {
-        font-size: 16px;
-        color: #506180;
-        a {
-          display: inline-block;
-          vertical-align: middle;
-        }
-      }
-      .agent-contact-ewm {
-        width: 150px;
-      }
-      .agent-contact-ewm img {
-        width: 100%;
-      }
-    }
-    .affiliate-program {
-      font-family: "PingFang SC";
-      color: #686c6f;
-      text-align: left;
-      max-width: $maxwidth;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 50px;
-      .affiliate-main-title {
-        font-size: 36px;
-        color: #2e84f5;
-        text-align: center;
-      }
-      .affiliate-subgroup {
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 50px;
-        .affiliate-sub {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          flex: 1;
-          background: url("../assets/images/affiliate/main-bg.png") no-repeat center center;
-          background-size: cover;
-          border-radius: 15px;
-          padding: 20px 40px;
-          box-shadow: 0px 0px 10px 0px #0000001a;
-          color: #424f72;
-          .affiliate-subtitle {
-            font-size: 30px;
-            font-weight: 700;
-            color: #ffffff;
-          }
-          .affiliate-inner {
-            background: #4d8de1;
-            border-radius: 8px;
-            padding: 10px 20px;
-            color: #ffffff;
-          }
-          .affiliate-inner-2 {
-            display: flex;
-            justify-content: center;
-            background: #4d8de1;
-            border-radius: 8px;
-            padding: 10px 20px;
-            color: #fff;
-            background: rgba(53, 120, 208, 1);
-          }
-          .affiliate-terms {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            margin-bottom: 15px;
-            &:before {
-              background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
-              content: "";
-              width: 6px;
-              height: 24px;
-              display: inline-block;
-              margin-right: 10px;
-            }
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 700;
-          }
-          .highlight {
-            // color: #2e84f5;
-          }
-        }
-      }
-      .agent-content-item ul {
-        font-family: PingFang SC;
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 28px;
-        text-align: left;
-        margin: 0;
-        padding-left: 20px;
-      }
-      .agent-content-item ul li {
-        color: #ffffff;
-        margin: 0;
-        &:not(:last-child) {
-          // margin-bottom: 41px;
-        }
-      }
-      .agent-content-item table {
-        width: 100%;
-        margin-top: 10px;
-        border-spacing: 0;
-        font-size: 18px;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .agent-content-item table td,
-      .agent-content-item table th {
-        width: 25%;
-        text-align: center;
-        color: #dde8f7;
-        border: 1px solid #4d8de1;
-        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
-      }
-      .agent-content-item table td {
-        height: 60px;
-        background: #3578d0;
-        color: #dde8f7;
-        border: 1px solid #4d8de1;
-      }
-      .agent-content-item table th {
-        height: 56px;
-      }
-      .agent-stress-tip {
-        font-family: PingFang SC;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 28px;
-        color: #3578d0;
-      }
-      .agent-demo {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
-        justify-items: center;
-      }
-      .agent-demo-bg {
-        width: 100%;
-      }
-      .agent-demo-example-title {
-        text-align: center;
-        color: #ffffff;
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 33.6px;
-      }
-      .agent-demo-example-text {
-        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: 700;
-        .agent-demo-example-boxes {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 20px;
-          padding: 20px;
-          width: 75%;
-          margin: 10px auto;
-          flex-wrap: wrap;
-          .agent-demo-example-box {
-            background: #4d8de1;
-            padding: 8px;
-            display: flex;
-            border-radius: 8px;
-            gap: 10px;
-            .agent-demo-example-box-key {
-              color: #ffffff;
-              white-space: nowrap;
-              font-size: 14.88px;
-              font-weight: 400;
-              line-height: 20.84px;
-            }
-            .agent-demo-example-box-amt {
-              color: #fffa86;
-              white-space: nowrap;
-              font-size: 14.88px;
-              font-weight: 400;
-              line-height: 20.84px;
-            }
-          }
-        }
-      }
-      .agent-demo-btm {
-        // border-bottom: 1px solid #00000033;
-      }
-      .agent-demo-table {
-        display: table;
-        width: 100%;
-        background: #4d8de1;
-        margin: 20px auto;
-        border-radius: 8px;
-      }
-      .agent-demo-table-tr {
-        display: table-row;
-      }
-      .agent-demo-table-tr div {
-        display: table-cell;
-        width: 50%;
-        padding: 10px 20px;
-        font-weight: 500;
-        font-size: 18px;
-      }
-      .txt-left {
-        color: #ffffff;
-        text-align: left !important;
-      }
-      .txt-right {
-        text-align: right !important;
-        color: #fffa86;
-      }
-      .agent-reg-btn {
-        width: 413px;
-        margin: 0px auto;
-        text-decoration: none;
-        display: block;
-        text-align: center;
-        line-height: 40px;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-        background: rgba(57, 152, 255, 1);
-        border-radius: 4px;
-        box-shadow: 0px -2px 5px 0px #b1d7ff inset;
-        box-shadow: 0px -1px 4px 0px #5894ff inset;
-      }
-      .agent-contact-bg {
-        background-color: #f8f8f8;
-        box-shadow: 0px 5px 4px 0px rgba(12, 3, 7, 0.1);
-        border-radius: 5px;
-      }
-      .agent-contact-main {
-        width: 944px;
-        height: 400px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .agent-contact-logo {
-        width: 150px;
-        text-align: center;
-        font-size: 24px;
-        color: #518bf7;
-      }
-      .agent-contact-ways {
-        width: 515px;
-      }
-      .agent-ways-box {
-        margin-top: 25px;
-      }
-      .agent-ways-way {
-        font-size: 16px;
-        color: #518bf7;
-      }
-      .agent-ways-val {
-        font-size: 16px;
-        color: #506180;
-        a {
-          display: inline-block;
-          vertical-align: middle;
-        }
-      }
-      .agent-contact-ewm {
-        width: 150px;
-      }
-      .agent-contact-ewm img {
-        width: 100%;
-      }
-    }
   }
-  .contact-list {
+}
+
+.contact-left {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.contact-box {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  padding: 16px 12px 12px;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  font-size: 12px;
+  box-shadow: 0px 0px 9.81px 0px #08224a21 inset;
+  border: 0.76px solid #ffffff;
+}
+
+.contact-name {
+  color: #9ba1bc;
+}
+.contact-text {
+  color: #303442;
+}
+.contact-icon {
+  background: url(../assets/images/affiliate/icon-bg.png) no-repeat center center;
+  width: 36px;
+  height: 36px;
+  background-size: cover;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 24px;
+  }
+}
+.contact-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.copy-btn {
+  background-color: #dbe8ff;
+  border-radius: 100px;
+  color: #848fb1;
+  font-family: "PingFang SC";
+  flex: 1;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+.download-btn {
+  background-color: #08b5ff;
+  border-radius: 100px;
+  color: #fff;
+  font-family: "PingFang SC";
+  flex: 1;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+.affiliate-main-title {
+  font-size: 36px;
+  color: #2e84f5;
+  text-align: center;
+}
+.affiliate-subgroup {
+  margin-bottom: -32px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 50px;
+  .affiliate-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: white;
+    border-radius: 15px;
     padding: 20px 40px;
-    background: url("@/assets/images/affiliate/main-bg.png");
-    background-size: 100% 100%;
+    box-shadow: 0px 0px 10px 0px #0000001a;
+    color: #424f72;
+    box-sizing: border-box;
     position: relative;
     .affiliate-subtitle {
       font-size: 30px;
       font-weight: 700;
-      color: #ffffff;
+      color: #303441;
     }
-  }
-  .contact-bg {
-    display: flex;
-    position: relative;
-    .contact-left {
-    }
-    .contact-right {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-    .contact-box {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      background: #59a2ff;
-      padding: 20px;
-      justify-content: center;
-      align-items: center;
-      color: #ffffff;
-      width: 250px;
-      height: 210px;
+    .affiliate-inner {
+      background: #e3eeff;
       border-radius: 8px;
-      font-size: 18px;
-    }
-    .contact-icon {
-      background: url(../assets/images/affiliate/icon-bg.png) no-repeat center center;
-      width: 64px;
-      height: 64px;
-      padding: 10px;
-      background-size: cover;
-      border-radius: 50%;
-      img {
-        width: 100%;
+      padding: 20px;
+      color: #43609c;
+      height: 100%;
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .highlight {
+        background: #3578d033;
+        color: #43609c;
+      }
+
+      .result {
+        background: #3578d066;
+        color: #43609c;
       }
     }
-    .contact-buttons {
+    .affiliate-terms {
       display: flex;
-      gap: 10px;
-    }
-
-    .copy-btn {
-      background-color: #fff;
-      border-radius: 4px;
-      color: #000;
-      font-family: "PingFang SC";
-      width: 100px;
-      height: 33px;
-      font-weight: bold;
-    }
-
-    .download-btn {
-      background-color: #08b5ff;
-      border-radius: 4px;
-      color: #fff;
-      font-family: "PingFang SC";
-      width: 100px;
-      height: 33px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-}
-
-.dark {
-  .wrapper {
-    background-color: #17223e;
-    .affiliate {
-      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top;
-      background-color: #17223e;
-      background-position: top center;
-      background-size: 100%;
-      margin: 0 auto;
-      padding: 200px 20px 160px;
-      display: flex;
-      flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      gap: 50px;
-
-      .buttons {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        align-items: center;
-        width: 800px;
-        font-family: "PingFang SC";
-
-        a {
-          text-decoration: none;
-          display: block;
-          text-align: center;
-          line-height: 60px;
-          color: #fff;
-          font-size: 16px;
-          cursor: pointer;
-          width: 100%;
-          padding: 0px 50px;
-          border-radius: 50px;
-          background: url("../assets/images/affiliate/standard-button.svg") no-repeat center top;
-          background-size: 100% 100%;
-          box-shadow: none;
-
-          &:hover {
-            filter: brightness(0.9);
-          }
-
-          &.outline {
-            background: url("../assets/images/affiliate/standard-button-outline.svg") no-repeat center top;
-            background-size: 100% 100%;
-          }
-        }
+      margin-bottom: 15px;
+      &:before {
+        background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
+        content: "";
+        width: 6px;
+        height: 24px;
+        display: inline-block;
+        margin-right: 10px;
       }
-      .affiliate-program-first {
-        .agent-stress-tip {
-          color: #b7c1ff;
-        }
-        .affiliate-subgroup {
-          .affiliate-sub {
-            background: url("../assets/images/affiliate/main-bg-dark.png") no-repeat center center;
-            background-size: 100% 100%;
-            .affiliate-inner {
-              background: #17223e;
-            }
-          }
-        }
-        .agent-content-item table th,
-        .agent-content-item table td {
-          border-color: #17223e;
-        }
-        .agent-content-item table th {
-          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
-        }
-        .agent-content-item table td {
-          background: #374569;
-        }
-
-        .agent-demo-example-text {
-          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
-          .agent-demo-example-boxes {
-            .agent-demo-example-box {
-              background: #17223e;
-              .agent-demo-example-box-amt {
-                color: #b7c0ff;
-              }
-            }
-          }
-        }
-        .agent-demo-table {
-          background: #17223e;
-          .txt-right {
-            color: #b7c0ff;
-          }
-        }
-        .agent-reg-btn {
-          background: url(../assets/images/affiliate/agent-btn-dark.png);
-          background-size: 100% 100%;
-        }
-      }
-      .affiliate-program {
-        .agent-stress-tip {
-          color: #b7c1ff;
-        }
-        .affiliate-subgroup {
-          .affiliate-sub {
-            background: url("../assets/images/affiliate/main-bg-dark.png") no-repeat center center;
-            background-size: 100% 100%;
-            .affiliate-inner {
-              background: #17223e;
-            }
-          }
-        }
-        .agent-content-item table th,
-        .agent-content-item table td {
-          border-color: #17223e;
-        }
-        .agent-content-item table th {
-          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
-        }
-        .agent-content-item table td {
-          background: #374569;
-        }
-
-        .agent-demo-example-text {
-          background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
-          .agent-demo-example-boxes {
-            .agent-demo-example-box {
-              background: #17223e;
-              .agent-demo-example-box-amt {
-                color: #b7c0ff;
-              }
-            }
-          }
-        }
-        .agent-demo-table {
-          background: #17223e;
-          .txt-right {
-            color: #b7c0ff;
-          }
-        }
-        .agent-reg-btn {
-          background: url(../assets/images/affiliate/agent-btn-dark.png);
-          background-size: 100% 100%;
-        }
-      }
-      .contact-list {
-        padding: 20px 40px;
-        background: url("@/assets/images/affiliate/main-bg-dark.png");
-        background-size: 100% 100%;
-        position: relative;
-        .affiliate-subtitle {
-          font-size: 30px;
-          font-weight: 700;
-          color: #ffffff;
-        }
-      }
-      .contact-bg {
-        .contact-box {
-          background: linear-gradient(180deg, #3e5384 0%, #3558ab 100%);
-        }
-        .download-btn {
-          background: #4798e4;
-        }
-      }
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 700;
     }
   }
 }
-// .dark {
+.agent-content-item ul {
+  font-family: PingFang SC;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+  margin: 0;
+  padding-left: 20px;
+}
+.agent-content-item table {
+  width: 100%;
+  margin-top: 10px;
+  border-spacing: 0;
+  font-size: 18px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.agent-content-item table td,
+.agent-content-item table th {
+  text-align: center;
+  color: #dde8f7;
+  border: 1px solid #4d8de1;
+  background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
+}
+.agent-content-item table td {
+  height: 45px;
+  background: #e3eeff;
+  color: #43609c;
+  border: 0.76px solid #3578d01a;
+}
+.agent-content-item table th {
+  height: 56px;
+}
+.agent-contact-bg {
+  background-color: #f8f8f8;
+  box-shadow: 0px 5px 4px 0px rgba(12, 3, 7, 0.1);
+  border-radius: 5px;
+}
+.agent-contact-main {
+  width: 944px;
+  height: 400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.agent-contact-logo {
+  width: 150px;
+  text-align: center;
+  font-size: 24px;
+  color: #518bf7;
+}
+.agent-contact-ways {
+  width: 515px;
+}
+.agent-ways-box {
+  margin-top: 25px;
+}
+.agent-contact-ewm {
+  width: 150px;
+}
+.agent-contact-ewm img {
+  width: 100%;
+}
 
-//   .wrapper {
-//     font-size: 15px;
-//     background-color: #17223E;
-
-//     .affiliate {
-//       background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
-//       background-color: #17223E;
-//       background-position: top center;
-//       background-size: 100%;
-//       margin: 0 auto;
-//       padding: 200px 20px 160px;
-//       display: flex;
-//       flex-direction: column;
-//       justify-content: flex-start;
-//       align-items: center;
-//       gap: 50px;
-
-//       .affiliate-title, .affiliate-desc, .buttons {
-//         margin-left: 25%;
-//       }
-
-//       .affiliate-desc {
-//         display: flex;
-//         gap: 10px;
-//       }
-//       .buttons {
-//         display: flex;
-//         gap: 10px;
-//         justify-content: center;
-//         align-items: center;
-//         width: 800px;
-//         font-family: 'PingFang SC';
-
-//         a {
-//           text-decoration: none;
-//           display: block;
-//           text-align: center;
-//           line-height: 60px;
-//           color: #fff;
-//           font-size: 16px;
-//           cursor: pointer;
-//           width: 100%;
-//           padding: 0px 50px;
-//           border-radius: 50px;
-//           background: url("../assets/images/affiliate/standard-button.svg") no-repeat center top;
-//           background-size: 100% 100%;
-//           box-shadow: none;
-
-//           &:hover {
-//             filter: brightness(0.9);
-//           }
-
-//           &.outline {
-//             background: url("../assets/images/affiliate/standard-button-outline.svg") no-repeat center top;
-//             background-size: 100% 100%;
-//           }
-//         }
-//       }
-//       .steps {
-//         background: #1e1b2e;
-//         padding: 40px;
-//         width: 95%;
-//         margin: 50px auto;
-//         max-width: 1200px;
-//         display: flex;
-//         justify-content: space-between;
-//         .step {
-//           display: flex;
-//           color: #ffffff;
-//           gap: 10px;
-//           justify-content: flex-start;
-//           align-items: center;
-//           .stepdesc {
-//             flex-direction: column;
-//             display: flex;
-//           }
-//           .game-title {
-//             font-family: Wave;
-//             color: #ffd200;
-//           }
-//         }
-//       }
-
-//       .affiliate-program {
-//         color: #686c6f;
-//         text-align: left;
-//         max-width: $maxwidth;
-//         width: 100%;
-//         margin: 0 auto;
-//         display: flex;
-//         flex-direction: column;
-//         gap: 50px;
-//         .affiliate-main-title {
-//           font-size: 36px;
-//           color: #2e84f5;
-//           text-align: center;
-//         }
-//         .affiliate-subgroup {
-//           display: flex;
-//           justify-content: flex-start;
-//           align-items: flex-start;
-//           gap: 50px;
-//           .affiliate-sub {
-//             // background: #fff;
-//             background: url('../assets/images/affiliate/main-sub-bg.png')no-repeat center center;
-//             &:before {
-//               background-color: linear-gradient(180deg, #2c3f64, #152240);
-//               width: 100%;
-//               height: 100%;
-//               content: "";
-//             }
-//             .affiliate-subtitle {
-//               font-size: 20px;
-//               font-weight: 700;
-//               color: #2e84f5;
-//             }
-//             .affiliate-terms {
-//               color: #424f72;
-//               font-size: 18px;
-//               font-weight: 700;
-//             }
-//             .highlight {
-//               color: #2e84f5;
-//             }
-//           }
-//         }
-//         .agent-content-item ul {
-//           padding: 0;
-//           width: 100%;
-//           padding: 30px;
-//             width: 100%;
-//             background-color: rgb(23, 34, 62);
-//             border-radius: 8px;
-//             font-family: 'PingFang SC';
-//         }
-//         .agent-content-item ul li {
-//           // list-style: decimal;
-//           &:not(:last-child) {
-//             margin-bottom: 20px;
-//           }
-//         }
-//         .agent-content-item table {
-//           width: 100%;
-//           margin-top: 10px;
-//           border-spacing: 0;
-//         }
-//         .agent-content-item table td,
-//         .agent-content-item table th {
-//           width: 25%;
-//           text-align: center;
-//         }
-//         .agent-content-item table td {
-//           height: 60px;
-//           background-color: rgba(55, 69, 105, 1);
-//           font-family: 'PingFang SC';
-//         }
-//         .agent-content-item table th {
-//           color: #fff;
-//           height: 56px;
-//           font-weight: 700;
-//           background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
-//         }
-//         .agent-stress-tip {
-//           color: #a7a5a5;
-//         }
-//         .agent-demo {
-//           display: grid;
-//           grid-template-columns: 1fr 1fr;
-//           gap: 20px;
-//           justify-items: center;
-//         }
-//         .agent-demo-bg {
-//           padding: 10px 0px;
-//         }
-//         .agent-demo-example-text {
-//           color: #424f72;
-//           font-size: 18px;
-//           font-weight: 700;
-//           background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
-//           padding: 20px;
-//           border-radius: 8px;
-//         }
-//         .agent-demo-btm {
-//           border-bottom: 1px solid #00000033;
-//         }
-//         .agent-demo-table {
-//           display: table;
-//           width: 100%;
-//           background: linear-gradient(0deg, #f3f3f3, #f3f3f3), linear-gradient(0deg, #ffffff, #ffffff);
-//           margin: 20px auto;
-//           border-radius: 8px;
-//         }
-//         .agent-demo-table-tr {
-//           display: table-row;
-//         }
-//         .agent-demo-table-tr div {
-//           display: table-cell;
-//           width: 50%;
-//           padding: 10px 20px;
-//           font-weight: 500;
-//           font-size: 14px;
-//           color: #424f72;
-//         }
-//         .txt-left {
-//           text-align: left !important;
-//         }
-//         .txt-right {
-//           text-align: right !important;
-//         }
-//         .agent-reg-btn {
-//           width: 413px;
-//           margin: 0px auto;
-//           text-decoration: none;
-//           display: block;
-//           text-align: center;
-//           line-height: 60px;
-//           color: #fff;
-//           font-size: 16px;
-//           cursor: pointer;
-//           background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-//           border-radius: 50px;
-//           box-shadow: 0px -2px 5px 0px #b1d7ff inset;
-//           box-shadow: 0px -1px 4px 0px #5894ff inset;
-//         }
-//         .agent-contact-bg {
-//           background-color: #f8f8f8;
-//           box-shadow: 0px 5px 4px 0px rgba(12, 3, 7, 0.1);
-//           border-radius: 5px;
-//         }
-//         .agent-contact-main {
-//           width: 944px;
-//           height: 400px;
-//           margin: 0 auto;
-//           display: flex;
-//           align-items: center;
-//           justify-content: space-between;
-//         }
-//         .agent-contact-logo {
-//           width: 150px;
-//           text-align: center;
-//           font-size: 24px;
-//           color: #518bf7;
-//         }
-//         .agent-contact-ways {
-//           width: 515px;
-//         }
-//         .agent-ways-box {
-//           margin-top: 25px;
-//         }
-//         .agent-ways-way {
-//           font-size: 16px;
-//           color: #518bf7;
-//         }
-//         .agent-ways-val {
-//           font-size: 16px;
-//           color: #506180;
-//           a {
-//             display: inline-block;
-//             vertical-align: middle;
-//           }
-//         }
-//         .agent-contact-ewm {
-//           width: 150px;
-//         }
-//         .agent-contact-ewm img {
-//           width: 100%;
-//         }
-//       }
-//     }
-//   }
-//   .contact-bg {
-//     background: url("@/assets/images/affiliate/contact-dark.png");
-//     background-size: 100% 100%;
-//     aspect-ratio: 1400 / 560;
-//     position: relative;
-
-//     .contact-buttons {
-//         display: flex;
-//         gap: 5px;
-//     }
-
-//     .mail-buttons {
-//         position: absolute;
-//         top: 37%;
-//         left: 41.5%;
-//     }
-
-//     .qq-buttons {
-//         position: absolute;
-//         top: 37%;
-//         left: 58.5%;
-//     }
-
-//     .skype-buttons {
-//         position: absolute;
-//         top: 37%;
-//         left: 79.5%;
-//     }
-
-//     .telegram-buttons {
-//         position: absolute;
-//         top: 81%;
-//         left: 48.5%;
-//     }
-
-//     .bubble-buttons {
-//         position: absolute;
-//         top: 81%;
-//         left: 69%;
-//     }
-
-//     .copy-btn {
-//         background-color: #fff;
-//         border-radius: 4px;
-//         color: #000;
-//         font-family: 'PingFang SC';
-//         width: 100px;
-//         height: 33px;
-//         font-weight: bold;
-//     }
-
-//     .download-btn {
-//         background-color: #4798E4;
-//         border-radius: 4px;
-//         color: #fff;
-//         font-family: 'PingFang SC';
-//         width: 100px;
-//         height: 33px;
-//         font-weight: bold;
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//     }
-//   }
-
-// }
+.bonus-rabbit {
+  position: absolute;
+  top: -113px;
+  right: -20px;
+}
 </style>
