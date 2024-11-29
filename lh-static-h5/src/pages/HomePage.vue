@@ -112,7 +112,7 @@
           store.token ? (!isLoadingBalance ? "¥" + convertToCommaAmount(mainWallet, true) : "加载中...") : "您还未登录"
         }}
       </span>
-      <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
+      <span :class="!store.token ? 'main-loginregister' : ''">{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
@@ -2085,7 +2085,7 @@ export default defineComponent({
   }
 
   .menulist {
-    flex: 4;
+    flex: 6;
     padding-left: 8px;
     display: flex;
     justify-content: space-between;
@@ -2233,7 +2233,6 @@ export default defineComponent({
     .game-platform {
       padding: 0;
       margin: 0;
-      margin-bottom: 8px;
 
       .platform-item {
         position: relative;
@@ -2269,6 +2268,8 @@ export default defineComponent({
     img {
       display: block;
       width: 100%;
+      aspect-ratio: 45 / 53;
+      max-width: 100%;
     }
   }
 
@@ -2370,6 +2371,7 @@ export default defineComponent({
         overflow: hidden;
         display: grid;
         grid-template-columns: 50% 50%;
+        max-height: 106px;
 
         .platform-content {
           width: 100%;
@@ -2480,6 +2482,11 @@ export default defineComponent({
 }
 
 .body--dark {
+  .mid-announcement-section {
+    height: 30px;
+    margin: 2px auto;
+  }
+  
   .home-header {
     background: #212b43;
     background-color: #212b43;
@@ -2502,11 +2509,19 @@ export default defineComponent({
   }
 
   .details-bar {
+    padding: 0;
+    
     .main-balance {
       color: $font-3-dark;
     }
+
+    .main-loginregister {
+      color: #a98f7c;
+    }
+
     .message {
       color: $font-1-dark;
+      text-align: left;
     }
     .menulist {
       img {

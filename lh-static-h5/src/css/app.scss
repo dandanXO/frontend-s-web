@@ -684,8 +684,18 @@ svg {
 
   .q-footer {
     box-shadow: none;
+    
+    .q-tabs {
+      background: linear-gradient(to bottom,transparent 0%, transparent 32%, #0f182e 32%,#0f182e 100%);
+    }
     .q-tab {
-      background: #0f182e;
+      height: 95px;
+      background: transparent;
+      .q-tab__content {
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-self: flex-end;
+      }
       &--active {
         color: #fff;
       }
@@ -704,9 +714,16 @@ svg {
   }
 
   .station-notice-wrapper {
-    font-size: 1rem;
+    font-size: 12px;
     span {
       color: #fff;
+    }
+
+    .volume {
+      img {
+        width: 20px;
+        height: auto;
+      }
     }
   }
 

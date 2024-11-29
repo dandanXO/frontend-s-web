@@ -575,6 +575,12 @@ button {
 }
 
 .dark {
+  .banner-slider {
+    .el-carousel__indicators {
+      bottom: -10px;
+    }
+  }
+
   #app {
     background: $background-dark;
   }
