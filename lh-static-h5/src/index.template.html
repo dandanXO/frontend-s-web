@@ -85,28 +85,18 @@
         window.location.pathname === "/deposittest" ||
         window.location.pathname === "/promotiontest"
       ) {
-        alert("You are at TEST Page.");
-        //IOS
-        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {
-          alert('IOS! We Will Send window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS"); to App.');
-          window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
-        }
-        //ANDROID
-        if (window["WebScript"]) {
-          alert('We Will Send window["WebScript"].notifyApp("LH_ANDROID"); to App.');
-          window["WebScript"].notifyApp("LH_ANDROID");
-        }
+        alert("TEST 1129-0322");
 
         window.notifyApp = function (message) {
           try {
             // 将 JSON 字符串解析为 JavaScript 对象
-            const data = JSON.parse(message);
+            // const data = JSON.parse(message);
 
             // 打印数据到控制台，供调试用
-            console.log("Received message from Flutter:", data);
+            console.log("Received message from Flutter:", message);
             alert("Received message from Flutter:");
-            alert(data);
-            alert("ACTDOMAIN" + data.data.actDomain);
+            alert(message);
+            alert("DATA   " + message.data);
 
             // const returnJson = data.data;
             // if (returnJson && returnJson.rstDomain) {
@@ -127,38 +117,10 @@
             //   window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             // }
           } catch (error) {
+            alert("HAHAH ERROR HERRE.");
             console.error("Error parsing message from Flutter:", error);
           }
         };
-
-        // window.addEventListener("message", function (event) {
-        //   alert("OK WE RECEIVE message EVENTLISTENER!");
-        //   if (event.data.data !== undefined) {
-        //     alert("OK event.data.data is not undefined!");
-        //     // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
-        //     const returnJson = event.data.data;
-        //     if (returnJson && returnJson.rstDomain) {
-        //       window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
-        //
-        //       document.addEventListener("DOMContentLoaded", function () {
-        //         var bodyElement = document.body;
-        //         bodyElement.classList.add("body-applinks");
-        //       });
-        //     }
-        //     if (returnJson && returnJson.actDomain) {
-        //       window.localStorage.setItem("LH_H5_EVT_URL", returnJson.actDomain);
-        //     }
-        //     if (returnJson && returnJson.crDomain) {
-        //       window.localStorage.setItem("LH_H5_CRT_URL", returnJson.crDomain);
-        //     }
-        //     if (returnJson && returnJson.upImg) {
-        //       window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
-        //     }
-        //   } else {
-        //     alert(JSON.stringify(event));
-        //     alert("Ok We Received, BUT event.data.data !== undefined");
-        //   }
-        // });
       }
     </script>
 
