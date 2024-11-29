@@ -123,6 +123,11 @@
             // alert("DATA   " + message.data);
 
             const returnJson = message.data;
+            alert("rstDomain   " + returnJson.rstDomain);
+            alert("actDomain   " + returnJson.actDomain);
+            alert("crDomain   " + returnJson.crDomain);
+            alert("upImg   " + returnJson.upImg);
+
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
