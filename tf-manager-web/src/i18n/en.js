@@ -3134,6 +3134,7 @@ export default {
     BONUS_FLUCTUATION: 'Bonus fluctuation',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
     DOMAIN_VALID: 'Domain Validity',
+    WITHDRAW_ERROR: 'Withdraw Error',
   },
   domain: {
     domainMainType: {
