@@ -198,13 +198,13 @@ const fetchDownlines = () => {
 
   url += queryParams.join("&");
 
-  tableData.value = [{}, {}];
+  tableData.value = [];
   api
     .get(url)
     .then((response) => {
       loading.value = false;
       if (response.code === 0) {
-        // tableData.value = response.data.records;
+        tableData.value = response.data.records;
         totalPages.value = Math.ceil(response.data.total / itemsPerPage);
       }
     })
