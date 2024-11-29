@@ -74,7 +74,7 @@
       <div class="affiliate-program-first">
         <img src="@/assets/images/affiliate/contact-phone.png" />
 
-        <div class="affiliate-subgroup agent-content-item">
+        <div class="affiliate-subgroup agent-content-item" style="width: 60%;">
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
             <div class="affiliate-sub">
@@ -130,7 +130,7 @@
         </div>
       </div>
 
-      <div class="affiliate-program">
+      <div class="affiliate-program affiliate-program-last">
         <div class="affiliate-subgroup agent-content-item">
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
@@ -178,7 +178,7 @@
           </div>
 
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
-            <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
+            <img :src="require(`../assets/images/affiliate/rule-title.png`)" alt="" />
             <div class="affiliate-sub" style="height: 500px; justify-content: end">
               <img :src="require(`../assets/images/affiliate/bonus-rabbit.png`)" alt="" class="bonus-rabbit" />
               <div class="affiliate-inner" style="height: 80%">
@@ -337,6 +337,9 @@ export default defineComponent({
       justify-content: space-between;
       max-width: 1400px;
       width: 100%;
+    }
+    .affiliate-program-last{
+      margin-top: -150px;
     }
 
     .buttons {
