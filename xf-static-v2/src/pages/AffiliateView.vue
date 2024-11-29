@@ -8,7 +8,7 @@
           <q-btn
             color="brightbtn"
             size="md"
-            @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
+            @click="navigateToUrl('https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
             rounded
             style="width: 100%"
           >
@@ -17,7 +17,7 @@
           <q-btn
             color="brightbtn"
             size="md"
-            @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/login')"
+            @click="navigateToUrl('https://xf1-affiliate.gwd4jptunz.com/xf/login')"
             rounded
             style="width: 100%"
           >
@@ -43,8 +43,8 @@
         </div>
       </div>
       <!-- <div class="buttons">
-        <a :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a href="https://affiliate-web.gwd4jptunz.com/xf/login">登录</a>
+        <a :href="'https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a href="https://xf1-affiliate.gwd4jptunz.com/xf/login">登录</a>
         <a
           @click.stop.prevent="
             openWindow(
@@ -206,10 +206,10 @@
       <div class="agent-reg-btn">
         <!-- <img
           src="../assets/images/affiliate/apply_agency_btn.png"
-          @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
+          @click="navigateToUrl('https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
         /> -->
         <!-- <a
-          :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
+          :href="'https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
           class="agent-reg-btn"
         >
           立即申请代理
@@ -217,7 +217,7 @@
         <q-btn
           color="brightbtn"
           size="md"
-          @click="navigateToUrl('https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
+          @click="navigateToUrl('https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : ''))"
           rounded
           style="width: 100%"
         >
