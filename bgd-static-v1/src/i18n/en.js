@@ -141,8 +141,8 @@ export default {
     virtualWallet_placeholder: "Please insert virtual wallet",
     virtualWallet_rules_01: "Please insert virtual wallet",
     virtualWallet_id_rule: "Please insert 13 digits Identity ID",
-    virtualWallet_rules_02: "The phone number must start with '01'",
-    virtualWallet_rules_03: "The eWallet must be 10 - 11 digits",
+    virtualWallet_rules_02: "The eWallet number must start with '01'",
+    virtualWallet_rules_03: "The eWallet must be 11 digits",
     virtualWallet_rules_04: "The eWallet cannot have decimal points",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
@@ -235,7 +235,7 @@ export default {
     cat_sport: "Sport",
     popup: {
       getFreeLuckyDraw: "Get a free lucky draw ticket",
-      downloadAppLoginAcc: "Download the app and log in to your account to get it",
+      downloadAppLoginAcc: "Download the app and log in to your account to get it"
     }
   },
   settings: {
