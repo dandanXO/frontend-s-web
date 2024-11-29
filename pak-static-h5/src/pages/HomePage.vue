@@ -1370,13 +1370,13 @@
     </div>
   </q-dialog>
 
-  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true">
+  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal>
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
       </template>
     </MoneyRainModal>
-    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+    <q-btn class="money-rain-close" icon="close" round dense @click="moneyRainDialogClose" />
   </q-dialog>
 
   -
@@ -1497,6 +1497,9 @@ provide("closeMegaSharingWheelDialog", () => {
   megaSharingWheelDialogModel.value = false;
 });
 
+const moneyRainDialogClose = () => {
+  popupPromo.value = "";
+};
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
@@ -5319,6 +5322,7 @@ const showCongratsModal = () => {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  pointer-events: all;
 }
 
 .hb-float {
