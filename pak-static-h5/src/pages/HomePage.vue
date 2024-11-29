@@ -3572,6 +3572,8 @@ const gotoFloatPromo = (val) => {
   if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
+  } else if (val.type === "PROMO" && val.code === "pak-mega-sharing-wheel") {
+    popupPromo.value = "mega-sharing-wheel";
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
