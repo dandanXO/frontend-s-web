@@ -1376,7 +1376,7 @@
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
       </template>
     </MoneyRainModal>
-    <q-btn class="money-rain-close" icon="close" round dense @click="moneyRainDialogClose" />
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
   </q-dialog>
 
   -
@@ -1385,8 +1385,9 @@
     :model-value="megaSharingWheelDialogModel"
     full-width
     class="mega-sharing-wheel-dialog"
+    persistent
   >
-    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense @click="closeDialog" />
     <MegaSharingWheelModal>
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
@@ -1497,7 +1498,7 @@ provide("closeMegaSharingWheelDialog", () => {
   megaSharingWheelDialogModel.value = false;
 });
 
-const moneyRainDialogClose = () => {
+const closeDialog = () => {
   popupPromo.value = "";
 };
 const activateSlide = (item) => {
