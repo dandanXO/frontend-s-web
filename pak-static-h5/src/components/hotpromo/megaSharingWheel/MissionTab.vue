@@ -12,9 +12,9 @@
           <button
             class="mission-item__action"
             :class="{ completed: mission.current / mission.total >= 1 }"
-            @click="handleConfirmBtnClick(mission.current / mission.total >= 1)"
+            @click="handleConfirmBtnClick(mission)"
           >
-            {{ mission.current / mission.total >= 1 ? $t("btn.completed") : $t("btn.confirm") }}
+            {{ mission.current / mission.total >= 1 ? $t("btn.completed") : mission.actionBtnName }}
           </button>
         </div>
         <ProgressBar class="mission-item__progress" :progress="(mission.current / mission.total) * 100">
@@ -31,15 +31,30 @@
   </div>
 </template>
 <script setup>
+import { inject } from "vue";
 import { useRouter } from "vue-router";
 import ProgressBar from "./ProgressBar.vue";
+import { useI18n } from "vue-i18n";
 
 const router = useRouter();
 const props = defineProps(["missionDetails", "totalProgress"]);
+const { t } = useI18n();
 
-const handleConfirmBtnClick = (isCompleted) => {
+const closeMegaSharingWheelDialog = inject("closeMegaSharingWheelDialog");
+
+const handleConfirmBtnClick = (mission) => {
+  const isCompleted = mission.current / mission.total >= 1;
   if (!isCompleted) {
-    router.push("/earn-money");
+    switch (mission.title) {
+      case t("hotPromo.megaSharingWheel.invitedUsersDeposit"):
+        router.push("/deposit");
+        break;
+      case t("hotPromo.megaSharingWheel.invitedUsersValidBet"):
+        closeMegaSharingWheelDialog();
+        break;
+      default:
+        router.push("/earn-money");
+    }
   }
 };
 </script>

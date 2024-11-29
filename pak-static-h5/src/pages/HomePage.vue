@@ -1380,7 +1380,12 @@
   </q-dialog>
 
   -
-  <q-dialog v-if="popupPromo === 'mega-sharing-wheel'" :model-value="true" full-width class="mega-sharing-wheel-dialog">
+  <q-dialog
+    v-if="popupPromo === 'mega-sharing-wheel'"
+    :model-value="megaSharingWheelDialogModel"
+    full-width
+    class="mega-sharing-wheel-dialog"
+  >
     <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
     <MegaSharingWheelModal>
       <template #controller>
@@ -1397,7 +1402,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1447,6 +1452,7 @@ const isShowPrizeModal = ref(false);
 // const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
+const megaSharingWheelDialogModel = ref(true);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -1486,6 +1492,10 @@ const activeCategoryLabel = computed(() => {
 //   translatedCategoriesList.value.forEach((category) => (category.active = false));
 //   item.active = true;
 // };
+
+provide("closeMegaSharingWheelDialog", () => {
+  megaSharingWheelDialogModel.value = false;
+});
 
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
