@@ -182,6 +182,7 @@ export default {
       CHECKING: 'Checking',
       PAY: 'Pay',
       CLEARED: 'Cleared',
+      CANCEL: 'Cancel',
     },
     member: {
       NORMAL: 'Normal',
