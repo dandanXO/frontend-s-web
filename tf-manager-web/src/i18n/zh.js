@@ -181,6 +181,7 @@ export default {
       CHECKING: '审核中',
       PAY: '结算中',
       CLEARED: '已结算',
+      CANCEL: '已取消',
     },
     member: {
       NORMAL: '正常',

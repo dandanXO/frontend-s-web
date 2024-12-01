@@ -158,6 +158,7 @@ export default {
       CHECKING: '확인 중',
       PAY: '지급',
       CLEARED: '정리 완료',
+      CANCEL: '취소',
     },
     member: {
       NORMAL: '정상',

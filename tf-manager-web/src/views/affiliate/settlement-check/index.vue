@@ -331,6 +331,7 @@
           <template #default="scope">
             <el-tag v-if="scope.row.status === 'CHECKING'" type="warning">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
             <el-tag v-if="scope.row.status === 'CLEARED'" type="success">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'CANCEL'" type="danger">{{ t('status.settlement.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -497,6 +498,7 @@ const uiControl = reactive({
   status: [
     { key: 1, displayName: 'CHECKING', value: 'CHECKING' },
     { key: 2, displayName: 'CLEARED', value: 'CLEARED' },
+    { key: 3, displayName: 'CANCEL', value: 'CANCEL' },
   ],
   adjustColumn: [
     { key: 1, displayName: t('fields.finalSum'), value: "FINAL" },
