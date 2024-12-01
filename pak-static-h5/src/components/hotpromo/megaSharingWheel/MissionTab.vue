@@ -54,13 +54,13 @@ const handleConfirmBtnClick = (mission) => {
         if (route.path !== "/home") {
           router.push("/home");
         } else if (closeMegaSharingWheelDialog) {
-          closeMegaSharingWheelDialog();
         }
 
         break;
       default:
         router.push("/earn-money");
     }
+    closeMegaSharingWheelDialog();
   }
 };
 </script>
