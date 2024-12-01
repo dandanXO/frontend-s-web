@@ -3574,6 +3574,7 @@ const gotoFloatPromo = (val) => {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
   } else if (val.type === "PROMO" && val.code === "pak-mega-sharing-wheel") {
+    megaSharingWheelDialogModel.value = true;
     popupPromo.value = "mega-sharing-wheel";
   }
 
