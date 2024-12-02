@@ -63,8 +63,8 @@
               </div>
             </div>
             <div class="buttons">
-              <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
-              <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
+              <a class="outline" :href="affiliateUrl + 'login'">登录</a>
+              <a :href="affiliateUrl + 'register?agent=' + (affCode ? affCode : '')">加入我们</a>
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@ import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   setup() {
-    const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
+    const affiliateUrl = ref("https://xf1-affiliate.gwd4jptunz.com/xf/");
 
     const isDark = useDark();
 
