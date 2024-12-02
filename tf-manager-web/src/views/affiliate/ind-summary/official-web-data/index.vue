@@ -79,6 +79,16 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="oldMemberDepositCount"
+          :label="t('fields.oldMemberDepositCount')"
+          width="120"
+        />
+        <el-table-column
+          prop="oldMemberDepositCount"
+          :label="t('fields.oldMemberDepositCount')"
+          width="120"
+        />
+        <el-table-column
           prop="withdrawAmount"
           :label="t('fields.withdrawAmount')"
           align="center"
@@ -101,6 +111,16 @@
           prop="withdrawCount"
           :label="t('fields.withdrawCount')"
           align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="oldMemberWithdrawAmount"
+          :label="t('fields.oldMemberWithdrawAmount')"
+          width="120"
+        />
+        <el-table-column
+          prop="oldMemberWithdrawCount"
+          :label="t('fields.oldMemberWithdrawCount')"
           width="120"
         />
         <el-table-column

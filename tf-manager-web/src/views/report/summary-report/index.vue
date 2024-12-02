@@ -206,6 +206,16 @@
         width="120"
       />
       <el-table-column
+        prop="oldMemberDepositAmount"
+        :label="t('fields.oldMemberDepositAmount')"
+        width="120"
+      />
+      <el-table-column
+        prop="oldMemberDepositCount"
+        :label="t('fields.oldMemberDepositCount')"
+        width="120"
+      />
+      <el-table-column
         prop="withdrawAmount"
         :label="t('fields.withdrawAmount')"
         width="120"
@@ -231,6 +241,16 @@
       <el-table-column
         prop="withdrawCount"
         :label="t('fields.withdrawCount')"
+        width="120"
+      />
+      <el-table-column
+        prop="oldMemberWithdrawAmount"
+        :label="t('fields.oldMemberWithdrawAmount')"
+        width="120"
+      />
+      <el-table-column
+        prop="oldMemberWithdrawCount"
+        :label="t('fields.oldMemberWithdrawCount')"
         width="120"
       />
       <el-table-column prop="dif" :label="t('fields.dif')" width="100">
