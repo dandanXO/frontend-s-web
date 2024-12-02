@@ -90,8 +90,8 @@
       <div class="welcome-bar">
         <div class="logo"><img src="../assets/logo.png" /></div>
         <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}</div>
-        <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue">登录</q-btn>
-        <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange">注册</q-btn>
+        <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue" rounded>登录</q-btn>
+        <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange" rounded>注册</q-btn>
 
         <router-link v-if="store.token" to="/account" class="login">
           <div class="user-status">
@@ -501,11 +501,11 @@ export default defineComponent({
           const casualSlide = document.getElementById("id-casual-slide");
 
           const slotTop = slotSlide.getBoundingClientRect().top;
+          const liveTop = liveSlide.getBoundingClientRect().top;
           const sportTop = sportSlide.getBoundingClientRect().top;
           const esportTop = esportSlide.getBoundingClientRect().top;
           const fishTop = fishSlide.getBoundingClientRect().top;
           const pokerTop = pokerSlide.getBoundingClientRect().top;
-          const liveTop = liveSlide.getBoundingClientRect().top;
           const lotteryTop = lotterySlide.getBoundingClientRect().top;
           const casualTop = casualSlide.getBoundingClientRect().top;
 
@@ -1695,7 +1695,7 @@ export default defineComponent({
 .auth-btn {
   padding-left: 12px;
   padding-right: 12px;
-  border-radius: 6px;
+  // border-radius: 6px;
   box-shadow: 0px 2px 4px 0px #ffffff inset;
   color: #ffffff;
   white-space: nowrap;
@@ -1738,6 +1738,15 @@ export default defineComponent({
     grid-template-columns: repeat(3, 1fr);
 
     .game-item-div {
+      &.maintenance-on {
+        pointer-events: none;
+
+        .game-platform-img img,
+        .game-btn {
+          filter: grayscale(100%);
+        }
+      }
+
       &.slot-item {
         width: 100%;
       }
@@ -1860,7 +1869,7 @@ export default defineComponent({
           font-weight: 300;
           color: #fff;
           text-align: center;
-          margin-bottom: 5px;
+          // margin-bottom: 5px;
           width: 100%;
           letter-spacing: 1px;
         }

@@ -425,11 +425,7 @@
               {{ t('fields.timeType') }}
             </div>
           </template>
-          <el-tag v-if="memberDetail.timeType === 'MONTHLY'" size="mini">
-            {{ t('affiliate.timeType.' + memberDetail.timeType) }}
-          </el-tag>
           <el-tag
-            v-if="memberDetail.timeType === 'WEEKLY'"
             size="mini"
             type="success"
           >
@@ -565,7 +561,7 @@
             {{ t('fields.updatePassword') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item
+        <!-- <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
           class-name="member-context"
@@ -594,7 +590,7 @@
 
           </template>
 
-        </el-descriptions-item>
+        </el-descriptions-item> -->
 
       </el-descriptions>
     </el-card>
@@ -1584,7 +1580,7 @@ import {
   getDownlineShareRatio,
   reactivateAffiliate,
   updateAffiliateWithdrawPassword,
-  updateIgnoreSettlement
+  // updateIgnoreSettlement
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1648,6 +1644,7 @@ const uiControl = reactive({
   timeType: [
     { key: 1, displayName: t('affiliate.timeType.MONTHLY'), value: 'MONTHLY' },
     { key: 2, displayName: t('affiliate.timeType.WEEKLY'), value: 'WEEKLY' },
+    { key: 3, displayName: t('affiliate.timeType.HALF_MONTH'), value: 'HALF_MONTH' },
   ],
   belongType: [
     {
@@ -1979,9 +1976,9 @@ async function loadMemberStatus() {
   memberDetail.status = status
 }
 
-async function changeIgnoreSettlement(id, state) {
-  await updateIgnoreSettlement(id, state)
-}
+// async function changeIgnoreSettlement(id, state) {
+//   await updateIgnoreSettlement(id, state)
+// }
 
 function showDialog(type) {
   uiControl.dialogType = type

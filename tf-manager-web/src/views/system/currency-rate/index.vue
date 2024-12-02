@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           clearable
           v-model="request.siteId"
           size="small"
@@ -15,7 +15,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           clearable
           v-model="request.currencyId"
@@ -247,7 +247,7 @@ const formRules = reactive({
 })
 
 function resetQuery() {
-  request.siteId = list.site[0].id
+  request.siteId = store.state.user.siteId
   request.currencyId = ''
   list.currencies = []
 }
@@ -367,7 +367,7 @@ async function loadCurrency() {
 onMounted(async () => {
   await loadSite()
 
-  request.siteId = list.site[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     var a = list.site.find(s => s.siteName === store.state.user.siteName)
     request.siteId = a.id

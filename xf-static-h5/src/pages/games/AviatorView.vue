@@ -185,6 +185,7 @@ import {useRoute} from "vue-router";
 import BacktoTop from "components/backtotop.vue"
 import {scroll} from 'quasar'
 import {useLocalStorage} from "@vueuse/core";
+import {userStore} from "src/stores";
 
 export default defineComponent({
   components: {GameModal, BacktoTop},
@@ -192,6 +193,7 @@ export default defineComponent({
     const $q = useQuasar();
     const route = useRoute()
     const platforms = ref([]);
+    const store= userStore();
     const selectedPlatId = ref();
     const selectedPlat = ref(platforms.value[0]);
     const fishGame = ref(null);
@@ -269,8 +271,8 @@ export default defineComponent({
       const code = selectedPlatId.value;
       const gameType = "FISH";
       const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
-
-      cached.get(key, () => api.get("/platformGames", {
+      const platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatformGames' : "/platformGames";
+      cached.get(key, () => api.get(platformApiUrl, {
         params: {platformId: code, gameType: gameType, device: regDevice, way: way},
       }).then((res) => {
         isLoading.value = false;

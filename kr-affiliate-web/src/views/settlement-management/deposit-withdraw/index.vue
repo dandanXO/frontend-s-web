@@ -35,7 +35,7 @@
           </el-row>
         </el-form>
       </div>
-      <div style="overflow:scroll">
+      <div class="custom-table-wrapper">
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
@@ -88,6 +88,8 @@
             </tr>
           </tbody>
         </table>
+        <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
+        :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
     </div>
   </div>
@@ -95,7 +97,7 @@
 
 <script setup>
 import { reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n' 
 import Loading from '@/components/loading/Loading.vue'
 import { formatMoney } from '@/utils/format-money'
 import { getDepositWithdrawRecord } from '@/api/affiliate-report'
@@ -118,6 +120,13 @@ const request = reactive({
   type: 'DEPOSIT',
 })
 
+function changePage(page) {
+  if (request.current >= 1) {
+    request.current = page
+    loadRecords()
+  }
+}
+
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
 }
@@ -125,6 +134,108 @@ function convertDate(date) {
 function convertStartDate(date) {
   return moment(date).startOf('day').format('YYYY-MM-DD');
 }
+
+const shortcuts = [
+  {
+    text: t('fields.today'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('day')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.yesterday'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'days')
+          .startOf('day')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'days')
+          .endOf('day')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'weeks')
+          .startOf('isoWeek')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'weeks')
+          .endOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'months')
+          .endOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+]
 
 function formatDate(date) {
   if (date === null || date.length === 0) {

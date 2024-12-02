@@ -32,6 +32,7 @@
                   hide-bottom-space
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.cryptoAccount_rules_01'),
+                    (val) => (val && !val.includes('.')) || $t('form.virtualWallet_rules_04'),
                     validateCryptoNumber,
                     validateCryptoLength
                   ]"

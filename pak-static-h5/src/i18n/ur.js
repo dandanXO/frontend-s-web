@@ -133,6 +133,7 @@ export default {
     cryptoAccount_rules_02: "کرپٹو اکاؤنٹ 'T' سے شروع ہونا چاہیے",
     cryptoAccount_rules_04: "کرپٹو اکاؤنٹ کو '0x' سے شروع ہونا چاہیے",
     cryptoAccount_rules_05: "کرپٹو اکاؤنٹ میں 42 حروف ہونے چاہئیں",
+    cryptoAccount_rules_06: "کرپٹو اکاؤنٹ میں اعشاریہ پوائنٹس کی اجازت نہیں ہے",
     cryptoAccount_rules_03: "کریپٹو اکاؤنٹ میں 34 حروف کا ہونا ضروری ہے۔",
     virtualWalletType: "ورچوئل والٹ کی قسم",
     virtualWallet: "ورچوئل والٹ",
@@ -141,6 +142,7 @@ export default {
     virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہئے",
     virtualWallet_id_rule: "راہ کرم 13 ہندسوں کی شناختی شناخت داخل کریں",
     virtualWallet_rules_03: "ورچوئل والٹ میں 11 ہندسے ہونے چاہئیں",
+    virtualWallet_rules_04: "ورچوئل والٹ میں اعشاریہ پوائنٹس کی اجازت نہیں ہے",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
     virtualWallet_warmReminder_02:
@@ -198,7 +200,13 @@ export default {
     downloadApp: "ایپ ڈاؤن لوڈ کریں",
     downloadNow: "ابھی ڈاؤنلوڈ کریں",
     recharge: "ری چارج کریں",
-    getInterestProfit: "سود کا منافع حاصل کریں۔"
+    getInterestProfit: "سود کا منافع حاصل کریں۔",
+    claim: "دعوی کریں",
+    receive: "موصول کریں",
+    completed: "مکمل",
+    deposit: "جمع",
+    betting: "جوا",
+    share: "شیئر"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -239,7 +247,10 @@ export default {
     cat_slotsgame: "سلاٹس کھیل",
     cat_fishing: "ماہی گیری",
     cat_poker: "پوکر",
-    cat_sport: "کھیل"
+    cat_sport: "کھیل",
+    cashGift: "نقدی تحفے",
+    welcomeNewPlayer: "نئے کھلاڑیوں کو خوش آمدید",
+    MegaSharingRoulette: "میگا شیئرنگ رولیٹی"
   },
   settings: {
     totalScore: "کل اسکور",
@@ -519,6 +530,7 @@ export default {
     bankAccountNum: "بینک اکاؤنٹ نمبر",
     pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
     bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
+    bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"
   },
@@ -544,6 +556,20 @@ export default {
       days: "دن",
       signIn: "سائن ان",
       signedIn: "سائن ان کیا ہوا"
+    },
+    megaSharingWheel: {
+      wheelTitle: "میگا شیئرنگ رولیٹی",
+      missionTitle: "انعامات",
+      invitedUsersDeposit: "مدعو صارفین کی جمع کی تعداد ≥ ",
+      invitedUsersValidBet: "مدعو صارفین کی درست شرط ≥ ",
+      EligibleInvitedUsers: "اہل مدعو صارفین ≥ ",
+      missionDescription: "اپنا ٹکٹ حاصل کرنے کے لئے کام مکمل کریں",
+      timeLimited: "وقت محدود",
+      day: "دن",
+      hour: "گھنٹے",
+      minute: "منٹ",
+      second: "سیکنڈ",
+      rewardClaimed: "انعام پہلے ہی حاصل کیا جا چکا ہے"
     }
   },
   maintenance: {
@@ -701,6 +727,10 @@ export default {
     57003: "جمع کی ضرورت پوری نہیں ہوئی",
     57004: "تاریخی جمع کی ضرورت پوری نہیں ہوئی",
     57005: "کوڈ ریڈیم کی خرابی",
-    57006: "غلط کوڈ"
+    57006: "غلط کوڈ",
+    58000: "سسٹم اسٹیج کی غلطی",
+    58001: "سسٹم اسٹیج سیٹنگ کی غلطی",
+    58002: "ایونٹ شروع نہیں ہوا",
+    58003: "ایونٹ ختم ہو چکا ہے"
   }
 };

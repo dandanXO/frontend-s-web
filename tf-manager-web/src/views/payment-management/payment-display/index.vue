@@ -41,7 +41,7 @@
             </el-row>
           </div>
         </template>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="2" style="margin: 10px 0 30px; display: block;">
             <span>{{ t('fields.site') }}</span>
           </el-col>
@@ -56,7 +56,7 @@
               </el-option>
             </el-select>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-card v-loading="page.loading">
           <el-row>
             <el-col :span="4">
@@ -280,7 +280,7 @@ const uiControl = reactive({
   updateDialogVisible: false,
 })
 const searchCondition = reactive({
-  siteId: 1,
+  siteId: store.state.user.siteId,
 })
 const form = reactive({
   selectedGroup: '',
