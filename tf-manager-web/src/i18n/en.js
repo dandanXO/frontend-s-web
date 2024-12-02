@@ -3160,6 +3160,7 @@ export default {
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ Topic Idling',
     DOMAIN_VALID: 'Domain Validity',
     WITHDRAW_ERROR: 'Withdraw Error',
+    DEPOSIT_ERROR: 'Deposit Error',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
   },
   domain: {
