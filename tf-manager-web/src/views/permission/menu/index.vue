@@ -46,7 +46,7 @@
         <el-form-item v-show="form.type.toString() === 'BUTTON'" :label="t('fields.features')" prop="name">
           <el-input v-model="form.name" :placeholder="t('fields.features')" style="width: 178px;" />
         </el-form-item>
-        <el-form-item v-show="form.type.toString() !== 'CATALOG'" :label="t('fields.permission')" prop="permission">
+        <el-form-item v-show="form.type.toString() !== 'CATALOG' && form.type.toString() !== 'MENU' || (uiControl.dialogType !== 'CREATE' && form.permission)" :label="t('fields.permission')" prop="permission">
           <el-input v-model="form.permission" :placeholder="t('fields.permission')"
                     style="width: 178px;"
           />
