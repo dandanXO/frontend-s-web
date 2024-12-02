@@ -60,7 +60,7 @@
             </div>
             <div class="contact-actions">
                 <button class="copy-button" @click="copyText('LH1008666')">复制</button>
-                <a target="_blank" class="download-button" href="https://telegram.org/">下载</a>
+                <a target="_blank" class="download-button" href="https://ya.cn/index.html">下载</a>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
             </div>
             <div class="contact-actions">
                 <button class="copy-button"  @click="copyText('Vip333')">复制</button>
-                <a target="_blank" class="download-button" href="https://paopaoim.com/index.html">下载</a>
+                <a target="_blank" class="download-button" href="https://am35.cc">下载</a>
             </div>
         </div>
     </div>
