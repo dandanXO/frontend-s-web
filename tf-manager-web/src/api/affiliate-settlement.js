@@ -32,3 +32,7 @@ export const updatetoChecking = (id) => {
 export const confirmPay = (id) => {
   return https().request(`/affiliateSettlement/${id}/pay?_method=PUT`, Method.POST, {}, ContentType.form);
 };
+
+export const cancelSettlement = (id) => {
+  return https().request(`/affiliateSettlement/${id}/cancel?_method=PUT`, Method.POST, {}, ContentType.form);
+};

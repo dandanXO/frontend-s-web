@@ -443,6 +443,15 @@
             >
               {{ t('fields.settleEdit') }}
             </el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              v-permission="['sys:affiliate:settle:cancel']"
+              @click="cancel(scope.row)"
+              v-if="scope.row.status === 'CHECKING'"
+            >
+              {{ t('fields.cancel') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -469,6 +478,7 @@ import {
   getAffiliateSettlementChecking,
   pay,
   getAffiliateCommisionReport,
+  cancelSettlement,
 } from '../../../api/affiliate-settlement'
 import { getSiteListSimple } from '../../../api/site'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -663,6 +673,18 @@ async function confirmPay(check) {
     await pay(check.id)
     await loadSettlement()
     ElMessage({ message: t('message.commissionPaySuccess'), type: 'success' })
+  })
+}
+
+async function cancel(settlement) {
+  ElMessageBox.confirm(t('message.confirmCancel'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await cancelSettlement(settlement.id)
+    await loadSettlement()
+    ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
   })
 }
 
