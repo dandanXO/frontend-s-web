@@ -45,6 +45,7 @@
           <MegaSharingWheel
             v-model:showMission="showMission"
             :canSpinWheel="canSpinWheel"
+            :isDisableClaimBtn="isDisableClaimBtn"
             :hasClaimed="hasClaimed"
             :stage="stage"
             @getReferFriendInfo="claimBonus"
@@ -108,6 +109,7 @@ const stage = ref(0);
 const winnerList = ref([]);
 const canSpinWheel = ref(false);
 const hasClaimed = ref(false);
+const isDisableClaimBtn = ref(false);
 
 const missionCount = ref();
 const endTime = ref(moment(now.value));
@@ -177,54 +179,59 @@ const claimBonus = () => {
 };
 
 const getReferFriendInfo = () => {
-  eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {
-    const stageResData = res.data.stageStatusVOList;
-    const stageReqResData = res.data.stageRequirementVO;
+  clearInterval(winnerTimer.value);
 
-    if (stageResData.length > 0) {
-      stage.value = stageResData[0].stage;
+  getWinnerList();
+  winnerTimer.value = setInterval(() => {
+    getWinnerList();
+  }, 5000);
 
-      getWinnerList();
+  eventapi
+    .get("/session/lucky-spin-refer-friend/init")
+    .then((res) => {
+      const stageResData = res.data.stageStatusVOList;
+      const stageReqResData = res.data.stageRequirementVO;
 
-      const currentStageInfo = stageResData[0];
-      missionCount.value = currentStageInfo.memberStateVO;
-      endTime.value = moment(stageResData[0].stageEndTime);
+      if (stageResData.length > 0) {
+        stage.value = stageResData[0].stage;
 
-      missionDetails.value = [
-        {
-          title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"),
-          total: stageReqResData.minInviterDepositCount,
-          current: missionCount.value?.inviterDepositCount ?? 0,
-          actionBtnName: t("btn.deposit")
-        },
-        {
-          title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"),
-          total: stageReqResData.minInviterValidBet,
-          current: missionCount.value?.inviterValidBet ?? 0,
-          actionBtnName: t("btn.betting")
-        },
-        {
-          title: t("hotPromo.megaSharingWheel.EligibleInvitedUsers"),
-          total: stageReqResData.minEligibleInviteesCount,
-          current: missionCount.value?.eligibleInviteesCount ?? 0,
-          actionBtnName: t("btn.share")
-        }
-      ];
+        const currentStageInfo = stageResData[0];
+        missionCount.value = currentStageInfo.memberStateVO;
+        endTime.value = moment(stageResData[0].stageEndTime);
 
-      canSpinWheel.value =
-        currentStageInfo.hasClaimed === false &&
-        currentStageInfo.eligibleInviteesCountState === true &&
-        currentStageInfo.inviterBettingAmountState === true &&
-        currentStageInfo.inviterDepositCountState === true;
+        missionDetails.value = [
+          {
+            title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"),
+            total: stageReqResData.minInviterDepositCount,
+            current: missionCount.value?.inviterDepositCount ?? 0,
+            actionBtnName: t("btn.deposit")
+          },
+          {
+            title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"),
+            total: stageReqResData.minInviterValidBet,
+            current: missionCount.value?.inviterValidBet ?? 0,
+            actionBtnName: t("btn.betting")
+          },
+          {
+            title: t("hotPromo.megaSharingWheel.EligibleInvitedUsers"),
+            total: stageReqResData.minEligibleInviteesCount,
+            current: missionCount.value?.eligibleInviteesCount ?? 0,
+            actionBtnName: t("btn.share")
+          }
+        ];
 
-      hasClaimed.value = currentStageInfo.hasClaimed;
-      clearInterval(winnerTimer.value);
+        canSpinWheel.value =
+          currentStageInfo.hasClaimed === false &&
+          currentStageInfo.eligibleInviteesCountState === true &&
+          currentStageInfo.inviterBettingAmountState === true &&
+          currentStageInfo.inviterDepositCountState === true;
 
-      winnerTimer.value = setInterval(() => {
-        getWinnerList();
-      }, 5000);
-    }
-  });
+        hasClaimed.value = currentStageInfo.hasClaimed;
+      }
+    })
+    .catch(() => {
+      isDisableClaimBtn.value = true;
+    });
 };
 
 onMounted(() => {

@@ -736,6 +736,8 @@ export default {
     58000: "System Stage Error",
     58001: "System Stage Settings Error",
     58002: "Event haven't start",
-    58003: "Event have ended"
+    58003: "Event have expired",
+    58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
+    58005: "Congrats, You have Completed All Tasks"
   }
 };
