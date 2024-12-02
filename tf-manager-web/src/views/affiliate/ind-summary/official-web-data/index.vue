@@ -79,8 +79,8 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="oldMemberDepositCount"
-          :label="t('fields.oldMemberDepositCount')"
+          prop="oldMemberDepositAmount"
+          :label="t('fields.oldMemberDepositAmount')"
           width="120"
         />
         <el-table-column
