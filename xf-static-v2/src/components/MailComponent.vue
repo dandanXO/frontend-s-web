@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-inner-loading :showing="loading">
-      <q-spinner-gears size="50px" color="brand" />
+      <q-spinner-ios color="white" size="8em" />
       <div class="label">加载中</div>
     </q-inner-loading>
     <div v-if="!loading">
@@ -20,7 +20,11 @@
             </div>
             <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0" />
           </div>
-          <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.id ? 'auto' : '0px'}`">
+          <div
+            class="text-grey mailcontents"
+            :style="`height: ${isSelectedMail === det.id ? 'auto' : '0px'}`"
+            v-if="isSelectedMail === det.id"
+          >
             {{ det.content }}
           </div>
           <div v-if="mailType === 'outbox'" class="buttons">
@@ -132,5 +136,6 @@ export default defineComponent({
   height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 8px;
 }
 </style>

@@ -813,7 +813,7 @@ const isEditPhone = ref(false);
 const isEditBirthday = ref(false);
 const loadInfo = () => {
   personalState.memberInfo = userStore();
-  if (personalState.memberInfo.realName === null) {
+  if (personalState.memberInfo.realName === null || personalState.memberInfo.realName === '') {
     openUserKYCDialog();
   }
 

@@ -3,7 +3,7 @@
     <div class="header-container">
       <div class="search">
         <el-form :inline="true" size="small" label-width="30px">
-          <el-form-item :label="t('fields.site')">
+          <!-- <el-form-item :label="t('fields.site')">
             <el-select
               v-model="selected.siteName"
               size="small"
@@ -19,7 +19,7 @@
                 :value="item.id"
               />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
       </div>
     </div>
@@ -77,24 +77,24 @@ const request = reactive({
 
 const title = ref(['withdraw platform list', 'withdraw platform list']);
 
-function handleChangeSite() {
-  if (selected.siteName !== null) {
-    const site = list.sites.find(k => k.id === selected.siteName)
-    title.value = [t('fields.withdrawPlatformList'), site.siteName + " " + t('fields.withdrawPlatformList')]
-    resetPlatformData();
-    renderPlatformData();
-  }
-}
+// function handleChangeSite() {
+//   if (selected.siteName !== null) {
+//     const site = list.sites.find(k => k.id === selected.siteName)
+//     title.value = [t('fields.withdrawPlatformList'), site.siteName + " " + t('fields.withdrawPlatformList')]
+//     resetPlatformData();
+//     renderPlatformData();
+//   }
+// }
 
-function resetPlatformData() {
-  list.data = [];
-  value.value = [];
-}
+// function resetPlatformData() {
+//   list.data = [];
+//   value.value = [];
+// }
 
-function renderPlatformData() {
-  loadWithdrawPlatform();
-  loadSiteWithdrawPlatform(selected.siteName)
-}
+// function renderPlatformData() {
+//   loadWithdrawPlatform();
+//   loadSiteWithdrawPlatform(selected.siteName)
+// }
 
 function submit() {
   var arr = value.value;
@@ -145,7 +145,7 @@ async function loadSiteWithdrawPlatform(siteId) {
 
 onMounted(async() => {
   await loadSites();
-  selected.siteName = list.sites[0].id
+  selected.siteName = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
     selected.siteName = site.value.id;

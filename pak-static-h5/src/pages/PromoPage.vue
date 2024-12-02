@@ -196,6 +196,11 @@
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
 
+  <q-dialog v-model="isMegaSharingWheelModal" full-width class="mega-sharing-wheel-dialog">
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
+    <MegaSharingWheelModal />
+  </q-dialog>
+
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
     <div class="dialog-mid-text">Loading...</div>
   </q-dialog>
@@ -218,6 +223,7 @@ import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 // import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
 export default defineComponent({
@@ -226,7 +232,8 @@ export default defineComponent({
     GameModal,
     HotPromotion,
     ProfileSummary,
-    MoneyRainModal
+    MoneyRainModal,
+    MegaSharingWheelModal
     // MediaSettingsComponent
   },
   setup() {
@@ -234,6 +241,8 @@ export default defineComponent({
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
+
+    const popupPromo = ref("");
 
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
@@ -383,6 +392,7 @@ export default defineComponent({
     };
 
     const isMoneyRainModal = ref(false);
+    const isMegaSharingWheelModal = ref(false);
 
     const showPromoDetails = (promo) => {
       // debugger;
@@ -400,7 +410,10 @@ export default defineComponent({
         } else {
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
-          } else {
+          } else if (promo.redirectUrl === "pak-mega-sharing-wheel") {
+            isMegaSharingWheelModal.value = true;
+            popupPromo.value = "mega-sharing-wheel"
+          }else {
             if (extensionState.value) {
               isPromoDetail.value = true;
 
@@ -708,7 +721,9 @@ export default defineComponent({
       isFetchingPromo,
       extensionState,
       isOpenExtension,
-      parsedParam
+      parsedParam,
+      isMegaSharingWheelModal,
+      popupPromo
       // MediaSettingsComponent
     };
   }
@@ -1416,5 +1431,14 @@ export default defineComponent({
   left: 0;
   width: 100%;
   z-index: 9999;
+}
+
+.mega-sharing-wheel-dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: all;
 }
 </style>

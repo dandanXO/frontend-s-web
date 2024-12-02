@@ -105,7 +105,11 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img style=" width: 24px; height: 24px" class="filter-purple" src="../assets/images/index/volume-up-line.svg" />
+          <img
+            style="width: 24px; height: 24px"
+            class="filter-purple"
+            src="../assets/images/index/volume-up-line.svg"
+          />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -150,7 +154,12 @@
     </swiper>
 
     <template v-for="category in categoriesList" :key="category.title">
-      <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
+      <template
+        v-if="
+          ((category.title === 'Hot' || category.title === 'Popular') && category.active) ||
+          (category.title === 'Lobby' && category.active)
+        "
+      >
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
             <span class="txt-style">{{ $t("home.cat_hotgames") }}</span>
@@ -2339,8 +2348,8 @@ function loadData() {
     })
     .finally(() => {
       setTimeout(() => {
-          bannerLoading.value = false;
-        }, 1000);
+        bannerLoading.value = false;
+      }, 1000);
     });
 }
 
@@ -2980,8 +2989,9 @@ onBeforeUnmount(() => {
       width: 28px;
     }
 
-    .filter-purple{
-      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%) contrast(96%);
+    .filter-purple {
+      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%)
+        contrast(96%);
     }
 
     .marquee-container {

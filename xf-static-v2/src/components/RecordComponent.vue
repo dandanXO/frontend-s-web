@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-inner-loading :showing="loading">
-      <q-spinner-gears size="50px" color="brightbtn" />
+      <q-spinner-ios color="white" size="8em" />
       <div class="label" style="color: #fff">加载中</div>
     </q-inner-loading>
     <div v-if="!loading" class="q-pa-md">
@@ -22,7 +22,6 @@
             </div>
           </template>
           <!-- Table top amount end -->
-
           <div class="table-data" v-for="(head, e) in headers" :key="e">
             <template v-if="head.key !== 'depositAmount' && head.key !== 'withdrawAmount'">
               <div class="label">{{ head.label }}:</div>
@@ -40,8 +39,19 @@
                       </q-tooltip>
                     </q-link>
                   </div>
+
                   <div v-else-if="obj === 'status'">
-                    {{ checkRecord(det[obj]) }}
+                    <template v-if="recordType === 'withdraw' || recordType === 'deposit'">
+                      <div class="status-row" :class="`status__${det[obj].toLowerCase()}`">
+                        <q-icon name="cancel" v-if="det[obj] === 'FAIL'" />
+                        <q-icon
+                          name="check_circle"
+                          v-if="det[obj] === 'SUCCESS' || det[obj] === 'SUPPLEMENT_SUCCESS'"
+                        />
+                        {{ checkRecord(det[obj]) }}
+                      </div>
+                    </template>
+                    <template v-else>{{ checkRecord(det[obj]) }}</template>
                   </div>
                   <div v-else-if="obj === 'betStatus'">
                     {{ checkRecord(det[obj]) }}
@@ -591,5 +601,21 @@ export default defineComponent({
 .btn-copyserialnum {
   margin-left: 4px;
   color: #00bfd7;
+}
+
+.status-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+
+  &.status__fail {
+    color: #f53434;
+  }
+
+  &.status__success,
+  &.status__supplement_success {
+    color: #11aa66;
+  }
 }
 </style>

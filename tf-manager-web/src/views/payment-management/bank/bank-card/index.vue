@@ -14,7 +14,7 @@
           style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.identifyCode')"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -28,7 +28,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -416,7 +416,7 @@ function clearCheckAll() {
 function resetQuery() {
   request.name = null
   request.code = null
-  request.siteId = site.value ? site.value.id : list.site[0].id
+  request.siteId = store.state.user.siteId
 }
 
 function changePage(page) {
@@ -661,7 +661,7 @@ onMounted(async() => {
     site.value = list.site.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    site.value = list.site[0];
+    site.value = store.state.user.siteId;
     request.siteId = site.value.id;
   }
   await loadBankCard()

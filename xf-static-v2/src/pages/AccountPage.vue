@@ -39,11 +39,17 @@
 
         <div class="card_btm">
           <div class="progress-container">
-            <div class="progress-vip-stat">VIP {{ vipLevel - 1 }}</div>
+            <div class="progress-vip-stat">
+              <img :src="require(`../assets/images/account/vip-level-${vipLevel - 1}.png`)" />
+              VIP {{ vipLevel - 1 }}
+            </div>
             <div class="progress-bar-container">
               <div class="progress-bar" :style="{ width: progessPercentage(vipItems[vipLevel].upgrade) + '%' }"></div>
             </div>
-            <div class="progress-vip-stat">VIP {{ vipLevel }}</div>
+            <div class="progress-vip-stat">
+              VIP {{ vipLevel }}
+              <img :src="require(`../assets/images/account/vip-level-${vipLevel}.png`)" />
+            </div>
           </div>
 
           <div class="amt-info">
@@ -717,6 +723,14 @@ onBeforeUnmount(() => {
 
     .progress-vip-stat {
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      img {
+        display: block;
+        width: 36px;
+      }
     }
   }
 }
