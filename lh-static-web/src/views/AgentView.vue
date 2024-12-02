@@ -47,7 +47,7 @@
                 <span ref="contact3" class="contact-text">LH1008666</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
-                  <a target="_blank" class="download-btn" href="https://telegram.org/">下载</a>
+                  <a target="_blank" class="download-btn" href="https://am35.cc">下载</a>
                 </div>
               </div>
               <div class="contact-box bubble-buttons">
@@ -58,7 +58,7 @@
                 <span ref="contact4" class="contact-text">vip333</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('4')">{{ copybtntxt4 }}</button>
-                  <a target="_blank" class="download-btn" href="https://paopaoim.com/index.html">下载</a>
+                  <a target="_blank" class="download-btn" href="https://ya.cn/index.html">下载</a>
                 </div>
               </div>
             </div>
