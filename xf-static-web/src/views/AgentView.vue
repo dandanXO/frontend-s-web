@@ -14,7 +14,7 @@
                 <span ref="contact0" class="contact-text">1600337511</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
-                  <a target="_blank" href="#" class="download-btn">下载</a>
+                  <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
                 </div>
               </div>
               <div class="contact-box qq-buttons">
@@ -25,7 +25,7 @@
                 <span ref="contact1" class="contact-text">@xf100200</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
-                  <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
+                  <a target="_blank" href="https://telegram.org/download" class="download-btn">下载</a>
                 </div>
               </div>
               <div class="contact-box skype-buttons">
@@ -68,13 +68,13 @@
             </div>
           </div>
         </div>
-        <img :src="require(`../assets/images/affiliate/agent-main.png`)" width="750"  />
+        <img :src="require(`../assets/images/affiliate/agent-main.png`)" width="750" />
       </div>
 
       <div class="affiliate-program-first">
         <img src="@/assets/images/affiliate/contact-phone.png" />
 
-        <div class="affiliate-subgroup agent-content-item" style="width: 60%;">
+        <div class="affiliate-subgroup agent-content-item" style="width: 60%">
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
             <div class="affiliate-sub">
@@ -139,12 +139,8 @@
               <div class="affiliate-inner">
                 <table>
                   <tr>
-                    <td style="background: #339EBC; color: white">
-                      游戏总输赢
-                    </td>
-                    <td style="background: #339EBC; color: white">
-                      10000
-                    </td>
+                    <td style="background: #339ebc; color: white">游戏总输赢</td>
+                    <td style="background: #339ebc; color: white">10000</td>
                   </tr>
                   <tr>
                     <td class="highlight">-平台费</td>
@@ -182,8 +178,8 @@
               <img :src="require(`../assets/images/affiliate/bonus-rabbit.png`)" alt="" class="bonus-rabbit" />
               <div class="affiliate-inner" style="height: 80%">
                 <ul>
-                  <li>1.佣金派发时间：每月5号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款 </li>
-                  <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥200为一个活跃玩家。 </li>
+                  <li>1.佣金派发时间：每月5号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款</li>
+                  <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥200为一个活跃玩家。</li>
                   <li>
                     3.代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
                   </li>
@@ -337,7 +333,7 @@ export default defineComponent({
       max-width: 1400px;
       width: 100%;
     }
-    .affiliate-program-last{
+    .affiliate-program-last {
       margin-top: -150px;
     }
 
@@ -358,7 +354,7 @@ export default defineComponent({
         cursor: pointer;
         width: 120px;
         padding: 0px 50px;
-        background: linear-gradient(180deg, #00C7C0 0%, #0996C7 100%);
+        background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
         border-radius: 50px;
         box-shadow: 0px -2px 5px 0px #b1d7ff inset;
 
@@ -490,12 +486,12 @@ export default defineComponent({
       }
 
       .highlight {
-        background: #339EBC33;
+        background: #339ebc33;
         color: #fff;
       }
 
       .result {
-        background: #339EBC66;
+        background: #339ebc66;
         color: #fff;
       }
     }

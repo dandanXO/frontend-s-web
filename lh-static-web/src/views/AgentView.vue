@@ -14,7 +14,7 @@
                 <span ref="contact0" class="contact-text">1903687863</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
-                  <a target="_blank" href="#" class="download-btn">下载</a>
+                  <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
                 </div>
               </div>
               <div class="contact-box qq-buttons">
@@ -25,7 +25,7 @@
                 <span ref="contact1" class="contact-text">@LH18668</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
-                  <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
+                  <a target="_blank" href="https://telegram.org/download" class="download-btn">下载</a>
                 </div>
               </div>
               <div class="contact-box skype-buttons">
