@@ -443,6 +443,15 @@
             >
               {{ t('fields.settleEdit') }}
             </el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              v-permission="['sys:affiliate:settle:cancel']"
+              @click="showCancel(scope.row)"
+              v-if="scope.row.status === 'CHECKING'"
+            >
+              {{ t('fields.cancel') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -458,6 +467,40 @@
         @size-change="loadSettlement"
       />
     </el-card>
+    <el-dialog
+      :title="t('fields.cancel')"
+      v-model="uiControl.cancelDialogVisible"
+      append-to-body
+      width="580px"
+    >
+      <el-form
+        ref="cancelFormRef"
+        :model="cancelForm"
+        :rules="cancelFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.adjustReason')" prop="adjustReason">
+          <el-input
+            type="textarea"
+            v-model="cancelForm.adjustReason"
+            :rows="3"
+            style="width: 350px;"
+            max-length="255"
+            show-word-limit
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.cancelDialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="cancel">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -469,6 +512,7 @@ import {
   getAffiliateSettlementChecking,
   pay,
   getAffiliateCommisionReport,
+  cancelSettlement,
 } from '../../../api/affiliate-settlement'
 import { getSiteListSimple } from '../../../api/site'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -482,6 +526,7 @@ const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const adjustForm = ref(null)
+const cancelFormRef = ref(null)
 const siteList = reactive({
   list: [],
 })
@@ -503,7 +548,8 @@ const uiControl = reactive({
   adjustColumn: [
     { key: 1, displayName: t('fields.finalSum'), value: "FINAL" },
     { key: 2, displayName: t('fields.netProfit'), value: "COMM" }
-  ]
+  ],
+  cancelDialogVisible: false,
 })
 const defaultQueryMonth = convertDate(moment(new Date()));
 
@@ -539,6 +585,11 @@ const form = reactive({
   adjustColumn: null,
 })
 
+const cancelForm = reactive({
+  id: null,
+  adjustReason: null,
+})
+
 function restrictDecimalInput(event) {
   var charCode = event.which ? event.which : event.keyCode
   if ((charCode < 48 || charCode > 57) && charCode !== 46) {
@@ -559,6 +610,10 @@ const formRules = reactive({
   adjustColumn: [required(t('message.validateAdjustColumnRequired'))],
   adjustType: [required(t('message.validateAdjustTypeRequired'))],
   adjustAmount: [required(t('message.validateAdjustAmountRequired'))],
+  adjustReason: [required(t('message.validateAdjustReasonRequired'))],
+})
+
+const cancelFormRules = reactive({
   adjustReason: [required(t('message.validateAdjustReasonRequired'))],
 })
 
@@ -641,6 +696,14 @@ function showEdit(adjust, type) {
   uiControl.dialogVisible = true
 }
 
+function showCancel(settlement) {
+  if (cancelFormRef.value) {
+    cancelFormRef.value.resetFields()
+  }
+  cancelForm.id = settlement.id
+  uiControl.cancelDialogVisible = true
+}
+
 function showView(row) {
   console.log(row)
   uiControl1.dialogTitle =
@@ -663,6 +726,23 @@ async function confirmPay(check) {
     await pay(check.id)
     await loadSettlement()
     ElMessage({ message: t('message.commissionPaySuccess'), type: 'success' })
+  })
+}
+
+async function cancel() {
+  ElMessageBox.confirm(t('message.confirmCancel'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    cancelFormRef.value.validate(async valid => {
+      if (valid) {
+        await cancelSettlement(cancelForm.id, cancelForm)
+        uiControl.cancelDialogVisible = false
+        await loadSettlement()
+        ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
+      }
+    })
   })
 }
 
