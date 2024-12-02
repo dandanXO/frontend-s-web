@@ -157,17 +157,26 @@ const isValidCardAccount = () => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber ? "Please Enter Card Number" : true;
+  const result = !cardNumber
+    ? "Please Enter Account Number"
+    : !cardNumber.includes(".")
+    ? true
+    : "Account number must not contain a decimal point";
+
   return result;
 };
 
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
+
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
     ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+    : !cardAddress.includes(".")
+    ? true
+    : "Bank IFSC Code must not contain a decimal point";
+
   return result;
 };
 
