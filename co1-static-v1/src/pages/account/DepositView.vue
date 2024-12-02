@@ -920,7 +920,7 @@ onMounted(() => {
         background-color: rgba(21, 0, 37, 0.5);
         border-radius: 5px;
         width: 100%;
-        height: 46px;
+        // height: 46px;
 
         :deep(.q-field__control) {
           height: 46px;
