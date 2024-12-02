@@ -31,8 +31,8 @@ const { t } = useI18n();
 const isAdded = ref(false);
 
 const promoList = ref([
-  { code: "money-rain", name: t("home.welcomeNewPlayer") },
-  { code: "lucky-spin-wheel", name: t("home.cashGift") }
+  { code: "money-rain", name: t("home.cashGift") },
+  { code: "lucky-spin-wheel", name: t("home.welcomeNewPlayer") }
 ]);
 if (props.hasWheel && !isAdded.value) {
   promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });

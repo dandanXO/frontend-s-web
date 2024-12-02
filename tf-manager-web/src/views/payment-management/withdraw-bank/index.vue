@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.withdrawName"
           size="small"
@@ -288,10 +288,10 @@ function showDialog(type) {
   uiControl.dialogVisible = true
 }
 
-function handleSiteChange() {
-  loadWithdrawBankList()
-  loadWithdraw()
-}
+// function handleSiteChange() {
+//   loadWithdrawBankList()
+//   loadWithdraw()
+// }
 
 async function handleExpand(row, expandRow) {
   const requestCopy = { ...request }
@@ -377,7 +377,7 @@ onMounted(async () => {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    site.value = list.sites[0];
+    site.value = { id: store.state.user.siteId };
     request.siteId = site.value.id;
   }
   loadWithdrawBankList()

@@ -174,11 +174,11 @@
                   <span v-if="item.code === 'AG'">XIN</span>
                   <span v-else>{{ item.code }}</span>
                 </div>
-                <img
+                <!-- <img
                   v-if="item.code.toLowerCase() === 'pt'"
                   src="@/assets/images/index/new-ribbon-sm.svg"
                   class="new-ribbon"
-                />
+                /> -->
               </div>
             </template>
           </div>

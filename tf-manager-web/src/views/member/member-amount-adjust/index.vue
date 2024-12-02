@@ -1475,25 +1475,29 @@ async function loadMemberAmountAdjust() {
   page.numberOfReimbursement = 0
   page.numberOfDeduction = 0
   const query = checkQuery()
-  const { data: ret } = await getMemberAmountAdjust(query)
-  page.pages = ret.pages
-  page.records = ret.records
-  page.total = ret.total
-  if (page.records.length !== 0) {
-    const { data: noOfReimburse } = await getNumberOfReimburse(query)
-    const { data: noOfDeduct } = await getNumberOfDeduct(query)
-    if (noOfReimburse > 0) {
-      const { data: reimburseAmount } = await getTotalReimburseAmount(query)
-      page.numberOfReimbursement = noOfReimburse
-      page.totalReimburse = reimburseAmount
+  try {
+    const { data: ret } = await getMemberAmountAdjust(query)
+    page.pages = ret.pages
+    page.records = ret.records
+    page.total = ret.total
+    if (page.records.length !== 0) {
+      const { data: noOfReimburse } = await getNumberOfReimburse(query)
+      const { data: noOfDeduct } = await getNumberOfDeduct(query)
+      if (noOfReimburse > 0) {
+        const { data: reimburseAmount } = await getTotalReimburseAmount(query)
+        page.numberOfReimbursement = noOfReimburse
+        page.totalReimburse = reimburseAmount
+      }
+      if (noOfDeduct > 0) {
+        const { data: deductAmount } = await getTotalDeductionAmount(query)
+        page.numberOfDeduction = noOfDeduct
+        page.totalDeduct = deductAmount
+      }
     }
-    if (noOfDeduct > 0) {
-      const { data: deductAmount } = await getTotalDeductionAmount(query)
-      page.numberOfDeduction = noOfDeduct
-      page.totalDeduct = deductAmount
-    }
+    page.loading = false
+  }catch(error){
+    page.loading = false
   }
-  page.loading = false
 }
 
 async function showDialog(type) {

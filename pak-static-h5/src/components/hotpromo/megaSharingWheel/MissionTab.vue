@@ -32,15 +32,16 @@
 </template>
 <script setup>
 import { inject } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import ProgressBar from "./ProgressBar.vue";
 import { useI18n } from "vue-i18n";
 
 const router = useRouter();
 const props = defineProps(["missionDetails", "totalProgress"]);
 const { t } = useI18n();
+const route = useRoute();
 
-const closeMegaSharingWheelDialog = inject("closeMegaSharingWheelDialog");
+const closeMegaSharingWheelDialog = route.path === "/home" ? inject("closeMegaSharingWheelDialog") : null;
 
 const handleConfirmBtnClick = (mission) => {
   const isCompleted = mission.current / mission.total >= 1;
@@ -50,11 +51,16 @@ const handleConfirmBtnClick = (mission) => {
         router.push("/deposit");
         break;
       case t("hotPromo.megaSharingWheel.invitedUsersValidBet"):
-        closeMegaSharingWheelDialog();
+        if (route.path !== "/home") {
+          router.push("/home");
+        } else if (closeMegaSharingWheelDialog) {
+        }
+
         break;
       default:
         router.push("/earn-money");
     }
+    closeMegaSharingWheelDialog();
   }
 };
 </script>

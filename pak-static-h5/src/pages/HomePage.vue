@@ -1370,13 +1370,13 @@
     </div>
   </q-dialog>
 
-  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true">
+  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal>
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
       </template>
     </MoneyRainModal>
-    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
   </q-dialog>
 
   -
@@ -1385,8 +1385,9 @@
     :model-value="megaSharingWheelDialogModel"
     full-width
     class="mega-sharing-wheel-dialog"
+    persistent
   >
-    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense @click="closeDialog" />
     <MegaSharingWheelModal>
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
@@ -1497,6 +1498,9 @@ provide("closeMegaSharingWheelDialog", () => {
   megaSharingWheelDialogModel.value = false;
 });
 
+const closeDialog = () => {
+  popupPromo.value = "";
+};
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
@@ -3448,7 +3452,13 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data;
+      hbPromo.value = data.data.filter(
+        (redirectList) =>
+          redirectList.code !== "pak-mega-sharing-wheel" ||
+          (redirectList.code === "pak-mega-sharing-wheel" &&
+            store.token &&
+            (store.memberType === "TEST" || store.memberType === "PROMO_TEST"))
+      );
     });
 };
 
@@ -3563,6 +3573,9 @@ const gotoFloatPromo = (val) => {
   if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
+  } else if (val.type === "PROMO" && val.code === "pak-mega-sharing-wheel") {
+    megaSharingWheelDialogModel.value = true;
+    popupPromo.value = "mega-sharing-wheel";
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -5319,6 +5332,7 @@ const showCongratsModal = () => {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  pointer-events: all;
 }
 
 .hb-float {
