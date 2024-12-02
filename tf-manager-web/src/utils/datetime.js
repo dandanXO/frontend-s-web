@@ -198,3 +198,15 @@ export const convertDateToEnd = date => {
 export const isHistoryRecord = (date) => {
   return moment(date).isBefore(moment().subtract(3, 'days').startOf('day'))
 }
+
+export const getTimeZoneList = () => {
+  var list = moment.tz.names();
+  var timeZoneList = [];
+  list.forEach(tz => timeZoneList.push(moment.tz(tz).format('YYYY-MM-DD HH:mm:ssZ').slice(-6)))
+  timeZoneList.sort(function (a, b) {
+    let [ahh, amm] = a.split(':')
+    let [bhh, bmm] = b.split(':')
+    return (ahh * 60 + amm) - (bhh * 60 + bmm);
+  })
+  return [...new Set(timeZoneList)];
+}
