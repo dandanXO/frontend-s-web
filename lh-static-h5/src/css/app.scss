@@ -686,7 +686,6 @@ svg {
 
   .q-layout,
   .q-header,
-  .q-footer,
   .q-page {
     background: $background-dark;
   }
@@ -707,9 +706,12 @@ svg {
 
   .q-footer {
     box-shadow: none;
-    
+    height: 3.5rem;
+    overflow: visible;
+
     .q-tabs {
       background: linear-gradient(to bottom,transparent 0%, transparent 32%, #0f182e 32%,#0f182e 100%);
+      margin-top: -1.7rem;
     }
     .q-tab {
       height: 5.2rem;
@@ -721,6 +723,13 @@ svg {
       }
       &--active {
         color: #fff;
+      }
+      &.q-hoverable {
+        .q-focus-helper {
+          height: unset;
+          top: 1.7rem;
+          bottom: 0;
+        }
       }
     }
   }
