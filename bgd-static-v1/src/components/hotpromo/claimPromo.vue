@@ -1,5 +1,5 @@
 <template>
-  <div v-if="promoId === 581">
+  <div v-if="promoId === 586">
     <ActivitiesDetails />
   </div>
   <div class="common-promo" v-else>
@@ -13,7 +13,7 @@
       <div v-if="promoId === 27" class="extra-img">
         <!-- <img src="../../assets/images/promotion/hotpromo/common/extra.png" /> -->
       </div>
-      <div v-if="promoId === 581" class="extra-img">
+      <div v-if="promoId === 586" class="extra-img">
         <ActivitiesDetails />
       </div>
     </div>
@@ -35,7 +35,7 @@ export default defineComponent({
     }
   },
   components: {
-    ActivitiesDetails,
+    ActivitiesDetails
   },
   emits: ["daily-slot"],
   setup() {

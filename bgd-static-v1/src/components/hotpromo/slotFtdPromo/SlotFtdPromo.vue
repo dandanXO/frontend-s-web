@@ -67,7 +67,8 @@ onMounted(() => {
   justify-content: center;
   gap: 10px;
   border-radius: 5px;
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  background: url(../../../assets/images/index/btn-bg-green-large.png) no-repeat center center;
+  background-size: cover;
   color: #000;
 
   &.is-disabled {
@@ -83,7 +84,6 @@ onMounted(() => {
   }
 
   span {
-    color: #fff;
     font-size: 20px;
     font-weight: 700;
   }

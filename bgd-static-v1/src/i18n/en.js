@@ -236,7 +236,8 @@ export default {
     popup: {
       getFreeLuckyDraw: "Get a free lucky draw ticket",
       downloadAppLoginAcc: "Download the app and log in to your account to get it"
-    }
+    },
+    viewAll: "View All"
   },
   settings: {
     totalScore: "Total Score",
@@ -255,7 +256,8 @@ export default {
     charity: "Charity",
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
-    interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    viewDetails: "View Details"
   },
   deposit: {
     selectAmount: "Select Amount",

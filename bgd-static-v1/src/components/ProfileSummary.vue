@@ -7,7 +7,7 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo"><img src="../assets/images/index/download/download-logo.png" /></div>
+      <div class="download-logo"><img height="30px" src="../assets/images/index/download/download-logo.png" /></div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
@@ -52,24 +52,23 @@
           <img src="../assets/images/auth/menu-luckyspin.png" />
         </div>
       </div>
-
-      <div class="side-menu-item" @click="activateSlide('Slot')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Slot' }" @click="activateSlide('Slot')">
         <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
         {{ $t("sideNav.slots") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Live')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Live' }" @click="activateSlide('Live')">
         <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
         {{ $t("sideNav.livecasino") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Fish')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Fish' }" @click="activateSlide('Fish')">
         <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
         {{ $t("sideNav.fishing") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Poker')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Poker' }" @click="activateSlide('Poker')">
         <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
         {{ $t("sideNav.poker") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Sport')">
+      <div class="side-menu-item" :class="{ active: route.hash === '#Sport' }" @click="activateSlide('Sport')">
         <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
         {{ $t("sideNav.sport") }}
       </div>
@@ -148,7 +147,11 @@
 
   <div
     class="infoboard-container"
-    :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }"
+    :class="{
+      'q-pa-md': !homeProfile,
+      'with-top-download': topDownload && !ui.hideDownload,
+      'with-background': isScrolled
+    }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
@@ -157,7 +160,7 @@
       </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
+          <img src="../assets/images/auth/b9-logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -184,7 +187,7 @@
                   {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
                 </span>
 
-                <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
+                <q-btn class="style-blue-btn" icon="add" dense @click="handleBackBtn()" />
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
@@ -283,7 +286,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -303,6 +306,8 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+
+const isScrolled = ref(false);
 
 const loadCustomerAddress = () => {
   cached
@@ -466,6 +471,10 @@ const isSideDownload = ref(false);
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -484,6 +493,11 @@ onMounted(() => {
     isSideDownload.value = true;
   }
   afterMounted();
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -557,7 +571,7 @@ onMounted(() => {
 
       a {
         text-decoration: none;
-        background: linear-gradient(163.93deg, #bdff00 11.18%, #ff9900 112.24%);
+        background: linear-gradient(180deg, #24ee89 0%, #9fe871 100%);
         color: #131313;
         font-weight: bold;
         font-size: 12px;
@@ -607,7 +621,7 @@ onMounted(() => {
     flex-direction: column;
     padding-left: 16px;
     padding-right: 16px;
-    gap: 12px;
+    gap: 0px;
     transition: 0.3s all;
 
     overflow-y: auto;
@@ -627,14 +641,25 @@ onMounted(() => {
       align-items: center;
       width: 170px;
       background-color: rgba(255, 255, 255, 0.05);
+      background: url("../assets/images/common/side-menu-item-bg.svg") no-repeat center center;
+      background-size: 100% 100%;
       border-radius: 5px;
       color: #9f9f9f;
       font-weight: bold;
       line-height: 1.2;
       text-decoration: none;
 
+      &.active {
+        background-image: url("../assets/images/common/side-menu-item-bg-active.svg");
+        color: #24ee89;
+        img {
+          filter: brightness(0) saturate(100%) invert(79%) sepia(53%) saturate(579%) hue-rotate(85deg) brightness(87%)
+            contrast(117%);
+        }
+      }
+
       &__download {
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
         color: #000a01;
         font-weight: bold;
 
@@ -648,7 +673,7 @@ onMounted(() => {
 
       &__transparent {
         background-color: transparent;
-        height: 40px;
+        height: 50px;
       }
 
       &__checkin {
@@ -726,8 +751,8 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background-image: url("../assets/images/auth/auth-bg.png");
-  background-size: 100% 100%;
+  // background-image: url("../assets/images/auth/auth-bg.png");
+  // background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   position: fixed;
@@ -742,6 +767,10 @@ onMounted(() => {
     // border-top-right-radius: 25px;
     // border-top-left-radius: 25px;
     top: 56px;
+  }
+
+  &.with-background {
+    background: #150a08;
   }
 
   .infoboard-wrapper {
@@ -861,8 +890,9 @@ onMounted(() => {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
       // background: #192633;
-      background: rgba(0, 10, 1, 0.6);
-      border-radius: 10px;
+      // background: rgba(0, 10, 1, 0.6);
+      background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+      border-radius: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -987,6 +1017,9 @@ onMounted(() => {
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
   animation: blink 1.5s infinite;
+  border-radius: 25px;
+  box-shadow: 0px 2px 0px 0px #1dca6a;
+  color: #144a1a;
 }
 
 .menu-line {

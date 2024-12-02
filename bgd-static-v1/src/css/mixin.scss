@@ -1,0 +1,11 @@
+@mixin gradient-border($color) {
+  position: absolute;
+  content: "";
+  inset: 0;
+  padding: 2px;
+  background: $color !important;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  border: none;
+}

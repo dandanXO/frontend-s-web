@@ -50,30 +50,44 @@ const tab = ref("home");
 </script>
 
 <style lang="scss" scoped>
-:deep(.q-tab--active) {
-  position: relative;
+.q-tabs {
+  .q-tab {
+    &:first-child {
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
+    }
+    &:last-child {
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
+    &.q-hoverable {
+      :deep(.q-focus-helper) {
+        height: unset;
+        top: 13%;
+        bottom: 8%;
+      }
+    }
 
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 42px;
-    height: 38px;
+    :deep(.q-tab--active) {
+      position: relative;
 
-    top: 6px;
-    pointer-events: none;
-    left: 50%;
-    // margin-top: -10px;
-    transform: translateX(-50%);
-    background-size: contain;
-    background-image: url("../assets/images/index/menu/icon-hover.png");
-    background-repeat: no-repeat;
-    // background-image: url("../assets/images/account/shadow2-bg.png");
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        pointer-events: none;
+        background: url("../assets/images/index/menu/icon-hover.png") no-repeat center center;
+        background-size: contain;
+      }
+    }
   }
 }
 
 .earn-money {
-  animation: blink 1.5s infinite;
+  height: 80px;
+  // animation: blink 1.5s infinite;
 }
 
 @keyframes blink {

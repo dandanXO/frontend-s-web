@@ -236,7 +236,8 @@ export default {
     popup: {
       getFreeLuckyDraw: "একটি বিনামূল্যের লাকি ড্র টিকিট পান",
       downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন"
-    }
+    },
+    viewAll: "সব দেখুন"
   },
   settings: {
     totalScore: "মোট স্কোর",
@@ -255,7 +256,8 @@ export default {
     charity: "চ্যারিটি",
     logout: "লগ আউট",
     depositMonthlytoWinGifts: "উপহার জিততে প্রতি মাসিক জমা করুন",
-    interestProfit: "সুদের মুনাফা"
+    interestProfit: "সুদের মুনাফা",
+    viewDetails: "বিস্তারিত দেখুন"
   },
   deposit: {
     selectAmount: "পরিমাণ নির্বাচন করুন",
