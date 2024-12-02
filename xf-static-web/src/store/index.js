@@ -30,6 +30,9 @@ export const userStore = defineStore("userStore", {
     };
   },
   actions: {
+    hasToken() {
+      return this.token ? true : false;
+    },
     memberLogin(loginInfo) {
       return login(loginInfo)
         .then((ret) => {

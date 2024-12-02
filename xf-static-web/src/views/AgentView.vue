@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="buttons">
-        <a :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
-        <a href="https://affiliate-web.gwd4jptunz.com/xf/login">登录</a>
+        <a :href="'https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')">加入我们</a>
+        <a href="https://xf1-affiliate.gwd4jptunz.com/xf/login">登录</a>
         <a
           @click.stop.prevent="
             openWindow(
@@ -191,7 +191,7 @@
       </div>
       <div class="agent-demo-btm" style="margin-top: 20px; padding-bottom: 40px">
         <a
-          :href="'https://affiliate-web.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
+          :href="'https://xf1-affiliate.gwd4jptunz.com/xf/register?agent=' + (affCode ? affCode : '')"
           class="agent-reg-btn"
         >
           立即申请代理
@@ -212,13 +212,13 @@
             </div>
             <div class="agent-ways-box">
               <div class="agent-ways-way">合营QQ</div>
-              <div class="agent-ways-val">1193911745（工作时间：14:00-23:00）</div>
+              <div class="agent-ways-val">1600337511（工作时间：14:00-23:00）</div>
             </div>
             <div class="agent-ways-box">
               <div class="agent-ways-way">合营Skype</div>
               <div class="agent-ways-val">
-                live:.cid.2e3257b6f3c30c1(
-                <a href="skype:live:.cid.2e3257b6f3c30c1?chat">
+                live:.cid.178f76828f54342e(
+                <a href="skype:live:.cid.178f76828f54342e?chat">
                   <img src="../assets/images/affiliate/agent_skype.png" />
                 </a>
                 点击图标以联系，联系时请提供用户名)
@@ -226,7 +226,15 @@
             </div>
             <div class="agent-ways-box">
               <div class="agent-ways-way">合营Flygram</div>
-              <div class="agent-ways-val">搜索ID：XF666888 (下载链接: https://www.flygram8.com)</div>
+              <div class="agent-ways-val">搜索ID：@xf100200 (下载链接: https://www.flygram8.com)</div>
+            </div>
+            <div class="agent-ways-box">
+              <div class="agent-ways-way">合营泡泡</div>
+              <div class="agent-ways-val">xfdlkf001</div>
+            </div>
+            <div class="agent-ways-box">
+              <div class="agent-ways-way">合营AMICO</div>
+              <div class="agent-ways-val">vip444 (下载链接: https://am35.cc/)</div>
             </div>
             <!-- <div class="agent-ways-box">
 						<div class="agent-ways-way">合营微信</div>

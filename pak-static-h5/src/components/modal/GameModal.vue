@@ -332,7 +332,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      if (platformCode !== "LuckySport") {
+        visible.value = true;
+      }
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -364,6 +366,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               setTimeout(function () {
                 src.value = srcDoc.substring(0, srcDoc.indexOf("?"));
               }, 1000);
+            } else if (platformCode === "LuckySport") {
+              window.open(srcDoc, "_blank", "location=no,zoom=no");
             } else {
               src.value = srcDoc;
             }
@@ -512,6 +516,7 @@ defineExpose({
       position: absolute;
       top: 10px;
       left: 45px;
+
       .game-logo {
         width: 30vw;
         background-position: center;
@@ -764,6 +769,7 @@ defineExpose({
         margin-left: 3px;
         margin-right: 3px;
         transition: all 0.3s;
+
         img {
           display: block;
           width: 70%;
@@ -830,6 +836,7 @@ defineExpose({
     justify-content: center;
     gap: 30px;
     margin-top: 16px;
+
     .deposit-option-btn {
       color: #cccccc;
       background-color: rgba(21, 0, 37, 0.5) !important;
@@ -846,6 +853,7 @@ defineExpose({
 
       &.label-on-discount {
         position: relative;
+
         &:after {
           content: "";
           // background-image: url(../../assets/images/index/popout/label-discount.png);
@@ -878,6 +886,7 @@ defineExpose({
     border-radius: 12px;
   }
 }
+
 .loader-container {
   width: 100%;
   height: 400px;

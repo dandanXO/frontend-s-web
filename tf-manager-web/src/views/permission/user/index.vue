@@ -327,7 +327,7 @@
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column type="selection" width="55" />
+      <el-table-column type="selection" :selectable="selectable" width="55" />
       <el-table-column :label="t('fields.site')" :formatter="toSiteName" width="100" />
       <el-table-column prop="loginName" :label="t('fields.username')" width="200">
         <template #default="scope">
@@ -588,18 +588,16 @@ function resetQuery() {
 }
 
 function handleSelectionChange(val) {
-  if (val.value.loginName !== LOGIN_USER_NAME.value) {
-    chooseUser = val
-    if (chooseUser.length === 0) {
-      uiControl.editBtn = true
-      uiControl.removeBtn = true
-    } else if (chooseUser.length === 1) {
-      uiControl.editBtn = false
-      uiControl.removeBtn = false
-    } else {
-      uiControl.editBtn = true
-      uiControl.removeBtn = false
-    }
+  chooseUser = val
+  if (chooseUser.length === 0) {
+    uiControl.editBtn = true
+    uiControl.removeBtn = true
+  } else if (chooseUser.length === 1) {
+    uiControl.editBtn = false
+    uiControl.removeBtn = false
+  } else {
+    uiControl.editBtn = true
+    uiControl.removeBtn = false
   }
 }
 
@@ -869,6 +867,10 @@ function roleTxt(roleId) {
 
 function setSiteIdArray() {
   form.siteId = form.siteIdArray[0]
+}
+
+function selectable(row) {
+  return row.loginName !== LOGIN_USER_NAME.value
 }
 
 // async function siteChange() {

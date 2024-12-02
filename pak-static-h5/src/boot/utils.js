@@ -103,6 +103,9 @@ export const convertToGMT55 = (dateTime) => {
 export const convertToGMT8 = (dateTime) => {
   return moment(dateTime).utcOffset("+05:00").format("YYYY-MM-DD");
 };
+export const normalDateTime = (dateTime) => {
+  return moment(dateTime).format("YYYY-MM-DD HH:mm:ss");
+};
 
 export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (amount === null) {

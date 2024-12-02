@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="siteId.value"
           size="small"
           :placeholder="t('fields.site')"
@@ -16,7 +16,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.name"
           size="small"
@@ -136,7 +136,7 @@
           </el-select>
         </el-form-item>
 
-        <!--表里有， 暂时不用 -->
+        <!--表里有，暂时不用 -->
         <!-- <el-form-item :label="t('fields.type')" prop="type">
           <el-select
             clearable
@@ -353,7 +353,7 @@
       <el-table-column type="selection" v-if="!hasRole(['SUB_TENANT'])" />
       <el-table-column prop="name" :label="t('fields.bankName')" />
       <el-table-column prop="code" :label="t('fields.bankCode')" />
-      <!--表里有， 暂时不用 -->
+      <!--表里有，暂时不用 -->
       <!-- <el-table-column prop="type" :label="t('fields.type')" /> -->
       <el-table-column
         prop="status"
@@ -540,7 +540,7 @@ function resetQuery() {
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = store.state.user.siteId
 }
 
 function changePage(page) {
@@ -589,10 +589,10 @@ function handleChangeCurrencies() {
   }
 }
 
-function handleSiteChange() {
-  getCurrencyIds()
-  loadBankInfo()
-}
+// function handleSiteChange() {
+//   getCurrencyIds()
+//   loadBankInfo()
+// }
 
 function traceEditing() {
   var countEditChange = 0

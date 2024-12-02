@@ -16,18 +16,18 @@
         <!-- <img src="@/assets/images/affiliate/rules-dark.png" /> -->
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">佣金方案</div>
+            <div class="affiliate-subtitle">佣金结算规则</div>
             <div class="affiliate-inner">
               <div class="affiliate-terms">代理佣金结算规则</div>
               <ul>
-                <li>结算时间：每月 1 号 00:00 至每月最后一日 23:59:59；结算时间：每月 1 号至 10 号结算。</li>
-                <li>佣金派发：所有佣金由系统直接发放到代理账户，无需流水，绑定银行卡后即可提款。</li>
-                <li>每月至少有五个活跃会员才能结算佣金，单个会员当月充值≥200 元为一个活跃会员</li>
-                <li>
+                <li>佣金派发时间：每月1号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款</li>
+                <li>每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000为一个活跃玩家。</li>
+                <li>代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。</li>
+                <!-- <li>
                   代理推广每月至少需要新注册活跃会员达到 3
                   名，如无法达到将视为零推广雷火平台，代理部有权减少或扣除部分佣金，如果三个月累计新注册活跃会员未达到十位将会停用代理账户，需代理联系网站重新开启。
                   <br />
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -58,7 +58,7 @@
             </div>
           </div> -->
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">佣金如何计划</div>
+            <div class="affiliate-subtitle">佣金计算比例 </div>
             <div class="affiliate-inner">
               <table>
                 <tbody>
@@ -104,7 +104,7 @@
             <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
           </div>
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">佣金如何计划</div>
+            <div class="affiliate-subtitle">佣金计算规则</div>
             <div class="affiliate-inner">
               <div style="display: flex; justify-content: space-between">
                 <div>平台输赢</div>
