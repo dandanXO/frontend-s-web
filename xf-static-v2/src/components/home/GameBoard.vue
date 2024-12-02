@@ -1,5 +1,5 @@
 <template>
-  <div class="game-item-div">
+  <div class="game-item-div" :class="underMaintenance && 'maintenance-on'">
     <router-link class="game-board" :to="link" @click="onClick">
       <div class="game-img">
         <img :src="gameImage()" />
@@ -13,12 +13,14 @@
         <div class="game-title-logo">
           <img :src="logoImage()" :alt="name" />
         </div>
-        <q-btn class="game-btn" dense rounded>立即进入</q-btn>
+        <q-btn class="game-btn" dense rounded>
+          {{ underMaintenance ? "维护中" : "立即进入" }}
+        </q-btn>
       </div>
 
-      <div class="maintenance-box" v-if="underMaintenance">
-        <p>维护中</p>
-        <template v-if="maintenanceStartTime && maintenanceEndTime">
+      <!-- <div class="maintenance-box" v-if="underMaintenance"> -->
+      <!-- <p>维护中</p> -->
+      <!-- <template v-if="maintenanceStartTime && maintenanceEndTime">
           <div class="small-size q-mt-md">维护时间：</div>
           <p class="small-size">
             {{ formatTime(maintenanceStartTime) }}
@@ -27,8 +29,8 @@
           <p class="small-size">
             {{ formatTime(maintenanceEndTime) }}
           </p>
-        </template>
-      </div>
+        </template> -->
+      <!-- </div> -->
     </router-link>
   </div>
 </template>

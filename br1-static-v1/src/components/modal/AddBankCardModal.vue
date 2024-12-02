@@ -28,15 +28,28 @@
               />
             </div>
             <div class="q-my-sm">
-              <div class="input-title">{{ $t("form.holderName") }}</div>
+              <div class="input-title">{{ $t("form.firstName") }}</div>
               <q-input
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
-                v-model="bankCardField.cardAccount"
-                :label="$t('form.holderName_placeholder')"
-                :rules="[(_) => isValidCardAccount()]"
+                v-model="bankCardField.firstName"
+                :label="$t('form.firstName_placeholder')"
+                :rules="[(_) => isValidFirstName()]"
+                label-color="secondary"
+              />
+            </div>
+            <div class="q-my-sm">
+              <div class="input-title">{{ $t("form.lastName") }}</div>
+              <q-input
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.lastName"
+                :label="$t('form.lastName_placeholder')"
+                :rules="[(_) => isValidLastName()]"
                 label-color="secondary"
               />
             </div>
@@ -139,7 +152,8 @@
             !(
               // isValidBank() === true &&
               (
-                isValidCardAccount() === true &&
+                isValidFirstName() === true &&
+                isValidLastName() === true &&
                 isValidCardNumber() === true &&
                 isValidCardAddress() === true &&
                 isValidEmail() === true
@@ -188,6 +202,8 @@ const ewalletList = [];
 const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
+  firstName: store.realName ? store.realName.split(",")[0]?.trim() : '',
+  lastName: store.realName ? store.realName.split(",")[1]?.trim() : '',
   cardNumber: "",
   cardAddress: "",
   email: ""
@@ -212,12 +228,12 @@ const onAddCardClick = (type) => {
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: t("notify.fillInPersonalDetails"),
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: t("notify.fillInPersonalDetails"),
+      //   icon: "report_problem"
+      // });
       router.push("/account/profile");
     } else {
       isAddCardDialogOpen.value = true;
@@ -300,6 +316,8 @@ const clearField = () => {
   bankCardField.bankId = undefined;
   bankCardField.cardNumber = "";
   bankCardField.cardAccount = store.realName;
+  bankCardField.firstName = store.realName ? store.realName.split(",")[0]?.trim() : '';
+  bankCardField.lastName = store.realName ? store.realName.split(",")[1]?.trim() : '';
   bankCardField.cardAddress = "";
   bankCardField.email = "";
 };
@@ -320,6 +338,30 @@ const isValidCardAccount = () => {
     ? t("form.holderName_rules_01")
     : cardAccount.length < 2
     ? t("form.holderName_rules_02")
+    : true;
+  return result;
+};
+
+const isValidFirstName = () => {
+  const { firstName } = bankCardField;
+  const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]*[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]$/;
+
+  const result = !firstName
+    ? t("form.firstName_rules_01")
+    : !namePattern.test(firstName)
+    ? t("form.firstName_rules_02")
+    : true;
+  return result;
+};
+
+const isValidLastName = () => {
+  const { lastName } = bankCardField;
+  const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]*[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]$/;
+
+  const result = !lastName
+    ? t("form.lastName_rules_01")
+    : !namePattern.test(lastName)
+    ? t("form.lastName_rules_02")
     : true;
   return result;
 };
@@ -370,6 +412,7 @@ const isValidEmail = () => {
 const addCard = () => {
   isDisableBtn.value = true;
 
+  bankCardField.cardAccount = `${bankCardField.firstName},${bankCardField.lastName}`;
   const formData = { ...bankCardField };
 
   // if (selectedOption.value === "phone") {

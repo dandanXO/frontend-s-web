@@ -1,6 +1,9 @@
 <template>
   <!-- <div class="congrats-wrapper"> -->
   <div class="congrats-container">
+    <div v-if="$slots.controller" class="controller-wrapper">
+      <slot name="controller" />
+    </div>
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
     <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
     <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-coupons.png" /></div>
@@ -97,6 +100,14 @@ const ui = useUI();
     background-size: 70% 100%;
     background-position: center;
     margin-top: 16px;
+  }
+
+  .controller-wrapper {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
   }
 }
 

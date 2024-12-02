@@ -29,7 +29,7 @@
           <el-option
             v-for="item in platforms.list"
             :key="item.id"
-            :label="item.name"
+            :label="item.code"
             :value="item.id"
           />
         </el-select>
@@ -165,7 +165,7 @@
             <el-option
               v-for="item in dialogPlats.list"
               :key="item.id"
-              :label="item.name"
+              :label="item.code"
               :value="item.id"
             />
           </el-select>
@@ -456,6 +456,13 @@ async function loadGame() {
       ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
       : null
   });
+  ret.records.forEach(rec => {
+    const selectedPlatform = platforms.list.find(item => item.id === rec.platformId)
+
+    if (selectedPlatform !== undefined) {
+      rec.platformName = selectedPlatform.code;
+    }
+  });
   page.records = ret.records
   page.loading = false
 }
@@ -521,9 +528,13 @@ function showEdit(game) {
 
   nextTick(() => {
     for (const key in game) {
-      if (Object.keys(form).find(k => k === key)) {
+      if (key === 'platformName') {
+        const platformId = game.platformId;
+        const selectedPlatform = dialogPlats.list.find(item => item.id === platformId)
+        form[key] = selectedPlatform.code;
+      } else {
+        form[key] = game[key]
       }
-      form[key] = game[key]
       form.siteId = selectedSite.id
     }
     loadPlatformNames()

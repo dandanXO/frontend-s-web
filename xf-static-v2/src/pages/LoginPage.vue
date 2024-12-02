@@ -530,6 +530,8 @@ export default defineComponent({
       }
     };
 
+    const isLoading = ref(false);
+
     const captchaHandler = (captchaObj) => {
       window.captchaObj = captchaObj;
       captchaObj

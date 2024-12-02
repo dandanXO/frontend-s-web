@@ -767,12 +767,12 @@ const goToBank = () => {
 
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("notify.pleaseFillInPersonalDetails"),
-      icon: "report_problem"
-    });
+    // $q.notify({
+    //   color: "negative",
+    //   position: "top",
+    //   message: t("notify.pleaseFillInPersonalDetails"),
+    //   icon: "report_problem"
+    // });
     router.push(`/withdraw`);
   }
 };

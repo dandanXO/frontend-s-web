@@ -20,3 +20,7 @@ export const getWithdrawSettingList = (withdrawSetting) => {
 export const insertOrUpdate = (withdrawSetting) => {
   return https().request("/withdrawSetting/insertOrUpdate", Method.POST, { withdrawSetting: JSON.stringify(withdrawSetting) }, ContentType.form);
 };
+
+export const getWithdrawRequestErrors = () => {
+  return https().request("/withdrawSetting/requestErrors", Method.GET);
+}

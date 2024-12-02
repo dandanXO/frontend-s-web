@@ -133,6 +133,7 @@ export default {
     cryptoAccount_rules_02: "کرپٹو اکاؤنٹ 'T' سے شروع ہونا چاہیے",
     cryptoAccount_rules_04: "کرپٹو اکاؤنٹ کو '0x' سے شروع ہونا چاہیے",
     cryptoAccount_rules_05: "کرپٹو اکاؤنٹ میں 42 حروف ہونے چاہئیں",
+    cryptoAccount_rules_06: "کرپٹو اکاؤنٹ میں اعشاریہ پوائنٹس کی اجازت نہیں ہے",
     cryptoAccount_rules_03: "کریپٹو اکاؤنٹ میں 34 حروف کا ہونا ضروری ہے۔",
     virtualWalletType: "ورچوئل والٹ کی قسم",
     virtualWallet: "ورچوئل والٹ",
@@ -141,6 +142,7 @@ export default {
     virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہئے",
     virtualWallet_id_rule: "راہ کرم 13 ہندسوں کی شناختی شناخت داخل کریں",
     virtualWallet_rules_03: "ورچوئل والٹ میں 11 ہندسے ہونے چاہئیں",
+    virtualWallet_rules_04: "ورچوئل والٹ میں اعشاریہ پوائنٹس کی اجازت نہیں ہے",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
     virtualWallet_warmReminder_02:
@@ -510,6 +512,7 @@ export default {
     bankAccountNum: "بینک اکاؤنٹ نمبر",
     pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
     bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
+    bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"
   },

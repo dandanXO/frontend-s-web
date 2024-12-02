@@ -26,6 +26,7 @@ export default {
     timeType: {
       MONTHLY: '每月',
       WEEKLY: '每周',
+      HALF_MONTH: '半月',
     },
     status: {
       APPLY: '申请',
@@ -180,6 +181,7 @@ export default {
       CHECKING: '审核中',
       PAY: '结算中',
       CLEARED: '已结算',
+      CANCEL: '已取消',
     },
     member: {
       NORMAL: '正常',
@@ -3100,6 +3102,7 @@ export default {
     BONUS_FLUCTUATION: '优惠波动',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 主题闲置',
     DOMAIN_VALID: '域名有效期',
+    WITHDRAW_ERROR: '提款请求报错',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
   },
   domain: {

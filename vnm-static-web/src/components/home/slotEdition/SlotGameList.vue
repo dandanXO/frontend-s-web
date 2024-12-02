@@ -16,11 +16,11 @@
           <span class="slot-game-platform-btn__text-description">{{ $t("home.slotEdition.description") }}</span>
         </div>
         <img class="slot-game-platform-btn__icon" :src="getPlatformIcon(platform.code)" />
-        <img
+        <!-- <img
           v-if="platform.code.toLowerCase() === 'pt'"
           src="@/assets/images/index/new-ribbon.svg"
           class="new-ribbon"
-        />
+        /> -->
       </button>
     </div>
     <div v-if="isLoading" v-loading="isLoading" class="slot-game-loading-wrapper" />

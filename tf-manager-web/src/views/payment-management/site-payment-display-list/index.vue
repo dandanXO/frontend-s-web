@@ -1,7 +1,7 @@
 <template>
   <div class="roles-main">
     <div class="header-container">
-      <el-select
+      <!-- <el-select
         v-model="request.siteId"
         size="small"
         :placeholder="t('fields.site')"
@@ -15,7 +15,7 @@
           :label="item.siteName"
           :value="item.id"
         />
-      </el-select>
+      </el-select> -->
     </div>
 
     <el-table
@@ -247,7 +247,7 @@ function loadTable() {
 onMounted(async () => {
   await loadSites()
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
