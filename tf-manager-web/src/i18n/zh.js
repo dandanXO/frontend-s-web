@@ -1776,7 +1776,7 @@ export default {
     unlockMember: '解锁账号',
     unlockSetting: '解锁设置',
     unlockUser: '解锁用户',
-    unsettleCommission: '上月结余',
+    unsettleCommission: '上次结余',
     url: '访问 URL',
     update: '更新',
     updateAlias: '更新别名',
