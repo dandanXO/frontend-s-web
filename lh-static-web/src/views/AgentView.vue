@@ -82,49 +82,45 @@
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
             <div class="affiliate-sub">
-              <div class="affiliate-subtitle">以下为佣金占比示例</div>
+              <div class="affiliate-subtitle">佣金如何计划</div>
               <div class="affiliate-inner">
                 <table>
                   <tbody>
                     <tr>
+                      <th>代理</th>
                       <th>盈利</th>
-                      <th>活跃玩家</th>
-                      <th>佣金比</th>
-                      <th>二次充值会员</th>
-                      <th>奖励佣金比</th>
-                      <th>奖励后佣金比</th>
+                      <th>有效活跃会员</th>
+                      <th>佣金比例</th>
                     </tr>
                     <tr>
-                      <td>8000 以上</td>
+                      <td>铜牌</td>
                       <td>＜10W</td>
                       <td>5</td>
                       <td>35%</td>
-                      <td>35%</td>
-                      <td>35%</td>
                     </tr>
                     <tr>
-                      <td>500,001-800,000</td>
+                      <td>银牌</td>
                       <td>10W-30W</td>
                       <td>10</td>
                       <td>40%</td>
-                      <td>40%</td>
-                      <td>40%</td>
                     </tr>
                     <tr>
-                      <td>300,001-500,000</td>
+                      <td>金牌</td>
                       <td>30W-60W</td>
                       <td>25</td>
                       <td>45%</td>
-                      <td>45%</td>
-                      <td>45%</td>
                     </tr>
                     <tr>
-                      <td>80,001-300,000</td>
+                      <td>钻石</td>
                       <td>60W-100W</td>
                       <td>50</td>
                       <td>50%</td>
-                      <td>50%</td>
-                      <td>50%</td>
+                    </tr>
+                    <tr>
+                      <td>皇冠</td>
+                      <td>＞100W</td>
+                      <td>80</td>
+                      <td>55%</td>
                     </tr>
                   </tbody>
                 </table>
@@ -137,44 +133,44 @@
       <div class="affiliate-program affiliate-program-last">
         <div class="affiliate-subgroup agent-content-item">
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
-            <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
+            <img :src="require(`../assets/images/affiliate/bonus-title.png`)" alt="" />
             <div class="affiliate-sub" style="height: 500px; width: 450px">
-              <div class="affiliate-subtitle">以下为佣金计算示例</div>
+              <div class="affiliate-subtitle">佣金计算(以下为示例)</div>
               <div class="affiliate-inner">
                 <table>
                   <tr>
                     <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
-                      游戏总输赢
+                      平台输赢
                     </td>
                     <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
-                      10000
+                      10,000
                     </td>
                   </tr>
                   <tr>
-                    <td class="highlight">-平台费</td>
-                    <td class="highlight">-1500</td>
+                    <td class="highlight">平台费</td>
+                    <td class="highlight">-800</td>
                   </tr>
                   <tr>
-                    <td :colspan="2">平台费=游戏总输赢*15%</td>
+                    <td :colspan="2">平台费=游戏总输赢x8%</td>
                   </tr>
                   <tr>
-                    <td class="highlight">-红利</td>
-                    <td class="highlight">-20</td>
+                    <td class="highlight">红利</td>
+                    <td class="highlight">-200</td>
                   </tr>
                   <tr>
                     <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
                   </tr>
                   <tr>
-                    <td class="highlight">=净利润</td>
-                    <td class="highlight">8480</td>
+                    <td class="highlight">净利润</td>
+                    <td class="highlight">9,000</td>
                   </tr>
                   <tr>
-                    <td class="highlight">*佣金比例</td>
-                    <td class="highlight">*33%</td>
+                    <td class="highlight">佣金比例</td>
+                    <td class="highlight">x35%</td>
                   </tr>
                   <tr>
-                    <td class="result">总佣金</td>
-                    <td class="result">2798.4</td>
+                    <td class="result">代理佣金</td>
+                    <td class="result">3,150</td>
                   </tr>
                 </table>
               </div>
@@ -183,7 +179,7 @@
 
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/rule-title.png`)" alt="" />
-            <div class="affiliate-sub" style="height: 500px; justify-content: end">
+            <div class="affiliate-sub" style="height: 500px; justify-content: center">
               <img :src="require(`../assets/images/affiliate/bonus-rabbit.png`)" alt="" class="bonus-rabbit" />
               <div class="affiliate-inner" style="height: 80%">
                 <ul>
@@ -463,7 +459,7 @@ export default defineComponent({
     gap: 10px;
     background: white;
     border-radius: 15px;
-    padding: 20px 40px;
+    padding: 10px 40px;
     box-shadow: 0px 0px 10px 0px #0000001a;
     color: #424f72;
     box-sizing: border-box;
@@ -483,6 +479,10 @@ export default defineComponent({
       ul {
         list-style: none;
         padding: 0;
+
+        li {
+          padding: 15px 0;
+        }
       }
 
       .highlight {
@@ -537,9 +537,10 @@ export default defineComponent({
   color: #dde8f7;
   border: 1px solid #4d8de1;
   background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
+  padding: 5px 25px;
 }
 .agent-content-item table td {
-  height: 45px;
+  height: 42px;
   background: #e3eeff;
   color: #43609c;
   border: 0.76px solid #3578d01a;
@@ -581,7 +582,7 @@ export default defineComponent({
 
 .bonus-rabbit {
   position: absolute;
-  top: -113px;
+  top: -165px;
   right: -20px;
 }
 </style>
