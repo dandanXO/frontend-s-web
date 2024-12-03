@@ -4769,10 +4769,6 @@ const showCongratsModal = () => {
     }
   }
 
-  .platform-live-item--img {
-    border-radius: 10px;
-  }
-
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
     background: rgba(43, 55, 74, 0.6);
