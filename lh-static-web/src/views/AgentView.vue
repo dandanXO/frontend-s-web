@@ -12,7 +12,7 @@
                   <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
                 <div class="contact-name">合营 QQ</div>
-                <span ref="contact0" class="contact-text">1903687863</span>
+                <span ref="contact0" class="contact-text">2115894008</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
                   <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
@@ -24,7 +24,7 @@
                   <img src="../assets/images/affiliate/icon-skype.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
-                <span ref="contact1" class="contact-text">@LH18668</span>
+                <span ref="contact1" class="contact-text">@leihuo686</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
                   <a target="_blank" href="https://telegram.org/download" class="download-btn">下载</a>
@@ -36,7 +36,7 @@
                   <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">合营部 Skype</div>
-                <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.1a1ab9b6b5b0721f</span>
+                <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.8099acb97a5ea41</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
                   <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
@@ -48,7 +48,7 @@
                   <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
                 <div class="contact-name">丝瓜</div>
-                <span ref="contact3" class="contact-text">LH1008666</span>
+                <span ref="contact3" class="contact-text">Lh080688</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
                   <a target="_blank" class="download-btn" href="https://ya.cn/index.html">下载</a>
