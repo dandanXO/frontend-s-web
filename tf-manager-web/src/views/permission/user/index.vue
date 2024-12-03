@@ -662,6 +662,8 @@ function showDialog(type) {
   } else if (type === 'EDIT') {
     form.siteId = null
     form.siteIdArray = null
+    uiControl.siteSelectVisible = true
+    uiControl.rolesSelect = false
     uiControl.dialogTitle = t('fields.editUser')
   } else {
     uiControl.dialogTitle = t('fields.updatePassword')
