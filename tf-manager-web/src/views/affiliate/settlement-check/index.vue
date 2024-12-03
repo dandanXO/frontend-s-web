@@ -408,7 +408,7 @@
           :label="t('fields.operate')"
           align="center"
           fixed="right"
-          width="230"
+          width="300"
           v-if="
             !hasRole(['SUB_TENANT']) &&
               (hasPermission(['sys:affiliate:settle:view']) ||

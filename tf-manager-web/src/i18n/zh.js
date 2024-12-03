@@ -1245,7 +1245,7 @@ export default {
     memberPlatformUpdate: '同步密码',
     memberPrivilegeBlacklist: '会员优惠黑名单',
     memberProfit: '代理盈利',
-    memberProfitDownlineProfitUnsettleCommission: '代理盈利/下线盈利/上月结余',
+    memberProfitDownlineProfitUnsettleCommission: '代理盈利/下线盈利/上次结余',
     memberPrivilegeRecord: '会员优惠记录',
     memberRemark: '玩家备注',
     memberReport: '会员报表',
