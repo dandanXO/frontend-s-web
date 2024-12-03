@@ -1622,6 +1622,7 @@ export default {
     successRate: 'Transaction success rate',
     successAmounntRate: 'Amount success rate',
     successfullyExport: 'Successfully Export',
+    summary: 'summary',
     summaryAdjustment: 'Adjustment',
     summaryBonus: 'Bonus',
     summaryCompanyWinLoss: 'Company Win/Loss',

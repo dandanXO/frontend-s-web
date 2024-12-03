@@ -1428,6 +1428,7 @@ export default {
     successRate: 'Tỷ Lệ Thành Công',
     successAmounntRate: 'Tỷ Lệ Số Tiền Thành Công',
     successfullyExport: 'Xuất Thành Công',
+    summary: 'bản tóm tắt',
     summaryAdjustment: 'Điều Chỉnh',
     summaryBonus: 'Thưởng',
     summaryCompanyWinLoss: 'Lợi Nhuận/Thua Của Công Ty',
