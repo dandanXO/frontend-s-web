@@ -224,7 +224,7 @@ onMounted(async () => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    site.value = store.state.user.siteId
+    site.value = { id: store.state.user.siteId }
     request.siteId = store.state.user.siteId
   }
   await loadVipUpgradeList();

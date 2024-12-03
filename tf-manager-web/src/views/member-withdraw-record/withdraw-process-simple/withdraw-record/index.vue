@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -17,7 +17,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           v-model="searchRequest.selectedDateType"
           size="small"
@@ -1012,7 +1012,7 @@ function resetQuery() {
   request.name = null
   request.code = null
   uiControl.dialogVisible = false
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.sort = 1
 }
 
@@ -1361,7 +1361,7 @@ async function fail() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

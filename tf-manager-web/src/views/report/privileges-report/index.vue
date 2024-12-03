@@ -334,7 +334,7 @@ async function loadPrivilegeReport(first) {
 function patchRecord(records) {
   if (records.length > 0) {
     records.forEach((item, index) => {
-      if (item.alias !== null) {
+      if (item.alias !== null && (item.privilegeId !== "866")) {
         item.name = item.alias
       }
     })

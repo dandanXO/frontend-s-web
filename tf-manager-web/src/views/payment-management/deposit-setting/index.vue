@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="form.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -17,7 +17,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
       </div>
       <div class="btn-group">
         <el-radio-group v-model="form.payType">
@@ -266,12 +266,12 @@ async function loadFinancialLevels() {
   financialList.list = financial;
 };
 
-async function handleSiteNameCheckedChange() {
-  filterPayTypeByCurrency()
-  form.payType = filteredPayTypeList.list[0].code;
-  await loadFinancialLevels()
-  await loadDepositSetting()
-}
+// async function handleSiteNameCheckedChange() {
+//   filterPayTypeByCurrency()
+//   form.payType = filteredPayTypeList.list[0].code;
+//   await loadFinancialLevels()
+//   await loadDepositSetting()
+// }
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple();
@@ -392,7 +392,7 @@ onMounted(async() => {
     form.siteId = site.value.id;
   } else {
     site.value = siteList.list[0];
-    form.siteId = site.value.id;
+    form.siteId = store.state.user.siteId;
   }
   await loadCurrency()
   await loadFinancialLevels();

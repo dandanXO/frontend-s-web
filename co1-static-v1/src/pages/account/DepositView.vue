@@ -134,8 +134,9 @@
               {{ $t("deposit.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
             </div>
+
             <q-input
-              type="number"
+              type="tel"
               class="deposit-input q-mt-sm"
               ref="depositAmtRef"
               name="localAmount"
@@ -155,6 +156,7 @@
               @keyup.enter="confirmDeposit"
               @focus="scrollToInput"
               @blur="isInputFocus = false"
+              @update:model-value="removeDecimals"
             >
               <template v-slot:prepend>
                 <span style="font-size: 26px" class="currency">
@@ -789,6 +791,10 @@ const scrollToInput = () => {
   }
 };
 
+const removeDecimals = (value) => {
+  form.localAmount = value.replace(/[^0-9]/g, "");
+};
+
 const isFtdPrivilegeEnable = ref(false);
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
@@ -914,7 +920,7 @@ onMounted(() => {
         background-color: rgba(21, 0, 37, 0.5);
         border-radius: 5px;
         width: 100%;
-        height: 46px;
+        // height: 46px;
 
         :deep(.q-field__control) {
           height: 46px;

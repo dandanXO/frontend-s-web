@@ -196,7 +196,7 @@ const fetchDownlines = () => {
   queryParams.push(`size=${itemsPerPage}`);
   queryParams.push(`current=${currentPage.value}`);
 
-  url += queryParams.join('&');
+  url += queryParams.join("&");
 
   tableData.value = [];
   api

@@ -73,7 +73,7 @@
           icon="el-icon-search"
           size="mini"
           type="primary"
-          v-permission="['sys:member:list:advanced']"
+          v-permission="['sys:member:list:advanced-id']"
           @click="showAdvancedSearchDialog()"
         >
           {{ t('fields.advancedSearch') }}
@@ -84,7 +84,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:member:add']"
+          v-permission="['sys:member:add-id']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -93,7 +93,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:member:promo']"
+          v-permission="['sys:member:promo-id']"
           @click="showPromo()"
           :disabled="uiControl.promoBtn"
         >
@@ -102,7 +102,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:member:export']"
+          v-permission="['sys:member:export-id']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}

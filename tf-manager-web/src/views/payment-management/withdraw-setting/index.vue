@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
+        <!-- <el-select
           v-model="form.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -17,7 +17,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
       </div>
       <div class="btn-group">
         <el-radio-group v-model="form.currencyId">
@@ -472,8 +472,8 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     form.siteId = site.value.id;
   } else {
-    site.value = siteList.list[0];
-    form.siteId = site.value.id;
+    site.value = store.state.user.siteId;
+    form.siteId = store.state.user.siteId;
   }
   await handleSiteNameCheckedChange();
 })

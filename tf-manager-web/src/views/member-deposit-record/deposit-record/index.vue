@@ -288,7 +288,14 @@
           :label="t('fields.realName')"
           align="center"
           min-width="110"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.realName === null">-</span>
+            <span v-if="scope.row.realName !== null">
+              {{ scope.row.realName.replace(/,/g, ' ') }}
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="financial"
           :label="t('fields.financialLevel')"

@@ -27,31 +27,31 @@
             />
           </div> -->
 
-          <div class="q-my-sm">
-            <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
-            <q-select
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.bankId"
-              :label="dialogDisplays.selectionPlaceholder"
-              :rules="[(_) => isValidBank()]"
-              label-color="secondary"
-              :options="filteredBankList"
-              option-value="id"
-              option-label="name"
-              lazy-rules
-              emit-value
-              map-options
-              use-input
-              input-debounce="100"
-              fill-input
-              hide-selected
-              @filter="filterBank"
-              behavior="menu"
-            />
-          </div>
+            <div class="q-my-sm">
+              <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
+              <q-select
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.bankId"
+                :label="dialogDisplays.selectionPlaceholder"
+                :rules="[(_) => isValidBank()]"
+                label-color="secondary"
+                :options="filteredBankList"
+                option-value="id"
+                option-label="name"
+                lazy-rules
+                emit-value
+                map-options
+                use-input
+                input-debounce="100"
+                fill-input
+                hide-selected
+                @filter="filterBank"
+                behavior="menu"
+              />
+            </div>
 
             <div class="q-my-sm">
               <div class="input-title">Holder Name</div>
@@ -138,7 +138,7 @@ const currentCardType = ref("Bank");
 
 // display
 const currBankList = ref([]);
-const filteredBankList = ref([])
+const filteredBankList = ref([]);
 
 // cache
 const bankList = [];
@@ -210,21 +210,21 @@ const selectBankType = () => {
 
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;
-    filteredBankList.value = currBankList.value
+    filteredBankList.value = currBankList.value;
     dialogDisplays.title = "Add Bank Account";
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
   } else if (currentCardType.value === "Crypto") {
     currBankList.value = cryptoList;
-    filteredBankList.value = currBankList.value
+    filteredBankList.value = currBankList.value;
     dialogDisplays.title = "Add Crypto Wallet";
     dialogDisplays.selectionTitle = "Crypto";
     dialogDisplays.selectionPlaceholder = "Select Crypto";
     dialogDisplays.selectionError = "Please Select A Crypto";
   } else if (currentCardType.value === "EWallet") {
     currBankList.value = ewalletList;
-    filteredBankList.value = currBankList.value
+    filteredBankList.value = currBankList.value;
     dialogDisplays.title = "Add A Virtual Currency";
     dialogDisplays.selectionTitle = "eWallet";
     dialogDisplays.selectionPlaceholder = "Select eWallet";
@@ -264,8 +264,14 @@ const isValidCardAccount = () => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber ? "Please Enter Account Number": cardNumber.length < 10
-  ? "Account Number Must Be More Than Or 10 Characters" : true;
+  const result = !cardNumber
+    ? "Please Enter Account Number"
+    : cardNumber.length < 10
+    ? "Account Number Must Be More Than Or 10 Characters"
+    : !cardNumber.includes(".")
+    ? true
+    : "Account number must not contain a decimal point";
+
   return result;
 };
 
@@ -304,23 +310,23 @@ const addCard = () => {
 };
 
 const filterBank = (val, update) => {
-  if(currentCardType.value !== 'Bank') return
+  if (currentCardType.value !== "Bank") return;
 
-  if(!val) {
+  if (!val) {
     update(() => {
-      filteredBankList.value = currBankList.value
-    })
-    return
+      filteredBankList.value = currBankList.value;
+    });
+    return;
   }
   update(() => {
-    const result = currBankList.value.filter(bank => {
-      const bankName = bank.name.toLowerCase()
-      const lowerCaseVal = val.toLowerCase()
-      return bankName.includes(lowerCaseVal)
-    })
-    filteredBankList.value = result
-  })
-}
+    const result = currBankList.value.filter((bank) => {
+      const bankName = bank.name.toLowerCase();
+      const lowerCaseVal = val.toLowerCase();
+      return bankName.includes(lowerCaseVal);
+    });
+    filteredBankList.value = result;
+  });
+};
 
 defineExpose({
   onAddCardClick

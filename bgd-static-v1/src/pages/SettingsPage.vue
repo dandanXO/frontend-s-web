@@ -5,6 +5,7 @@
     <div class="top-setting-section">
       <div class="top-total-score">
         <div class="score-txt">{{ $t("settings.totalScore") }}</div>
+        <div></div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
       </div>
       <div class="top-section-inner">
@@ -230,13 +231,14 @@ const logout = () => {
   margin: 20px;
 
   .top-total-score {
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    padding: 20px 12px 30px;
-    margin: 0 20px;
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    padding: 16px;
+    margin: 0;
     border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    color: #000a01;
 
     .score-txt {
     }
@@ -250,13 +252,18 @@ const logout = () => {
         margin-right: 4px;
       }
     }
+    .right {
+      text-align: right;
+      color: inherit;
+      text-decoration: none;
+    }
   }
 
   .top-section-inner {
     background: #2e30344f;
     border-radius: 4px;
     width: 100%;
-    margin: -20px auto 0px;
+    margin: 12px auto 0px;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -444,8 +451,8 @@ const logout = () => {
 
 .acct-logout {
   height: 60px;
-  background: #2e30344f;
-  // background-image: url("../assets/images/account/logout-btn.png");
+  background: url("../assets/images/index/btn-bg-grey-large.png") no-repeat center center;
+  background-size: contain;
   // background-repeat: no-repeat;
   width: calc(95% - 20px);
   margin: 20px auto;
@@ -456,8 +463,9 @@ const logout = () => {
   align-items: center;
 
   .acct-nav-label {
-    color: rgba(206, 206, 206, 0.8);
+    color: #fff;
     font-size: 16px;
+    font-weight: 700;
   }
 
   &:active {
@@ -467,23 +475,28 @@ const logout = () => {
 }
 
 .btn-cancel {
-  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  background: url(../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
+  background-size: contain;
   font-weight: 700;
   color: #fff;
-  border: 1px solid #1baa99;
-  border-radius: 12px;
   width: 140px;
   height: 42px;
-  color: #70bc62;
+  border: none;
+  &::before {
+    display: none;
+  }
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  border: 1px solid #5d8956;
+  background: url(../assets/images/index/btn-bg-green-small.png) no-repeat center center;
+  background-size: contain;
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #fff;
-  border-radius: 12px;
+  color: #000a01;
+  border: none;
+  &::before {
+    display: none;
+  }
 }
 </style>
 

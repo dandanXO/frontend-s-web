@@ -194,6 +194,48 @@
 
             <div class="w-form-item w-form-item--bankcard">
               <div class="top-wrapper">
+                <div class="title">{{ $t("form.firstName") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="text"
+                  ref="bankFirstNameRef"
+                  :placeholder="$t('form.firstName_placeholder')"
+                  v-model="bankCardField.firstName"
+                  :rules="[(_) => isValidFirstName()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                ></q-input>
+              </div>
+            </div>
+
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.lastName") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  type="text"
+                  ref="bankLastNameRef"
+                  :placeholder="$t('form.lastName_placeholder')"
+                  v-model="bankCardField.lastName"
+                  :rules="[(_) => isValidLastName()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                ></q-input>
+              </div>
+            </div>
+
+            <!-- <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
                 <div class="title">{{ $t("form.holderName") }}</div>
               </div>
               <div class="mid-wrapper">
@@ -211,7 +253,7 @@
                   @blur="isInputFocus = false"
                 ></q-input>
               </div>
-            </div>
+            </div> -->
 
             <div class="w-form-item w-form-item--bankcard">
               <div class="top-wrapper">
@@ -687,6 +729,8 @@ const loadCards = () => {
 const cardRef = ref();
 const amountRef = ref();
 // const bankAddressRef = ref();
+const bankFirstNameRef = ref();
+const bankLastNameRef = ref();
 const bankAccountRef = ref();
 const bankNumberRef = ref();
 const bankAddressRef = ref();
@@ -699,6 +743,8 @@ const withdrawInfo = reactive({
 });
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
+  firstName: store.realName ? store.realName.split(",")[0]?.trim() : '',
+  lastName: store.realName ? store.realName.split(",")[1]?.trim() : '',
   cardNumber: ""
   // cardAddress: ""
 });
@@ -706,6 +752,8 @@ const withdrawReadOnlyInfo = reactive({
 const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
+  firstName: store.realName ? store.realName.split(",")[0]?.trim() : '',
+  lastName: store.realName ? store.realName.split(",")[1]?.trim() : '',
   cardNumber: "",
   cardAddress: "",
   email: "",
@@ -726,6 +774,8 @@ watch(withdrawalDialogTab, () => {
   withdrawInfo.cardId = null;
   withdrawInfo.amount = "";
   bankCardField.cardAccount = "";
+  bankCardField.firstName = "";
+  bankCardField.lastName = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   bankCardField.email = "";
@@ -735,6 +785,8 @@ const onCardChanged = () => {
   bankCardList.value.forEach((e) => {
     if (e.id === withdrawInfo.cardId) {
       bankCardField.cardAccount = e.cardAccount;
+      bankCardField.firstName = e.firstName;
+      bankCardField.lastName = e.lastName;
       bankCardField.cardNumber = e.cardNumber;
       bankCardField.cardAddress = e.cardAddress || "-";
     }
@@ -788,6 +840,7 @@ const submitWithdrawBank = () => {
   bankCardField.amount = withdrawInfo.amount;
   bankCardField.withdrawCode = selectedMethodItem.value.code;
   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
+  bankCardField.cardAccount = `${bankCardField.firstName},${bankCardField.lastName}`;
 
   const formData = { ...bankCardField };
 
@@ -812,7 +865,10 @@ const submitWithdrawBank = () => {
         getWithdrawalMethods();
         resetSelectedMethod();
 
-        (bankCardField.cardAccount = store.realName), (bankCardField.cardNumber = "");
+        // (bankCardField.cardAccount = store.realName), (bankCardField.cardNumber = "");
+        (bankCardField.firstName = store.realName ? store.realName.split(",")[0]?.trim() : ''),
+          (bankCardField.lastName = store.realName ? store.realName.split(",")[1]?.trim() : ''),
+          (bankCardField.cardNumber = "");
         bankCardField.amount = "";
         withdrawInfo.amount = "";
         bankCardField.bankId = currBankList.value[0].id;
@@ -866,12 +922,12 @@ const goToBank = () => {
 
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("notify.fillInPersonalDetails"),
-      icon: "report_problem"
-    });
+    // $q.notify({
+    //   color: "negative",
+    //   position: "top",
+    //   message: t("notify.fillInPersonalDetails"),
+    //   icon: "report_problem"
+    // });
     router.push(`/withdraw`);
   }
 };
@@ -935,28 +991,16 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
   let result = true;
 
-  // if (typeVal.value === "phone") {
   result = !cardNumber ? t("form.phone_rules_01") : true;
-  if (cardNumber.startsWith("0")) {
-    return t("form.phone_rules_03");
-  }
+
   const digitCount = cardNumber.match(/\d/g)?.length || 0;
-  if (digitCount !== 8) {
+  if (digitCount < 8 || digitCount > 11) {
     return t("form.phone_rules_02");
   }
-  // } else if (typeVal.value === "email") {
-  //   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   result = emailPattern.test(cardNumber) ? true : t("form.email_rules_02");
-  // } else if (typeVal.value === "cpf") {
-  //   const cpfPattern = /^\d{11}$/;
-  //   result = cpfPattern.test(cardNumber) ? true : t("form.cpf_rules_02");
-  // } else if (typeVal.value === "cnpj") {
-  //   const cnpjPattern = /^\d{14}$/;
-  //   result = cnpjPattern.test(cardNumber) ? true : t("form.cnpj_rules_02");
-  // } else if (typeVal.value === "evp") {
-  //   const evpPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  //   result = evpPattern.test(cardNumber) ? true : t("form.evp_rules_02");
-  // }
+
+  if (!/^[0-9]*$/.test(cardNumber)) {
+    return t("form.phone_rules_04");
+  }
 
   return result;
 };
@@ -1003,6 +1047,30 @@ const isValidCardAccount = () => {
     ? t("form.holderName_rules_01")
     : cardAccount.length < 2
     ? t("form.holderName_rules_02")
+    : true;
+  return result;
+};
+
+const isValidFirstName = () => {
+  const { firstName } = bankCardField;
+  const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]*[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]$/;
+
+  const result = !firstName
+    ? t("form.firstName_rules_01")
+    : !namePattern.test(firstName)
+    ? t("form.firstName_rules_02")
+    : true;
+  return result;
+};
+
+const isValidLastName = () => {
+  const { lastName } = bankCardField;
+  const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]*[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]$/;
+
+  const result = !lastName
+    ? t("form.lastName_rules_01")
+    : !namePattern.test(lastName)
+    ? t("form.lastName_rules_02")
     : true;
   return result;
 };

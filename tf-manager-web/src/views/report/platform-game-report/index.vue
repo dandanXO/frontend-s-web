@@ -115,6 +115,7 @@
               prop="betCount"
               :label="t('reportGame.gameBetCount')"
             />
+
             <el-table-column prop="bet" :label="t('reportGame.gameBetAmount')">
               <template #default="scope1">
                 $
@@ -158,6 +159,7 @@
         prop="totalBetCount"
         :label="t('reportGame.gameBetCountTotal')"
       />
+
       <el-table-column
         prop="totalBet"
         :label="t('reportGame.gameBetAmountTotal')"
@@ -167,6 +169,21 @@
           <span
             v-formatter="{
               data: scope.row.totalBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="totalValidBet"
+        :label="t('reportGame.gameValidBetAmountTotal')"
+      >
+        <template #default="scope">
+          $
+          <span
+            v-formatter="{
+              data: scope.row.totalValidBet,
               type: 'money',
             }"
           />
@@ -526,7 +543,8 @@ onMounted(async () => {
 
 function getSummaries(param) {
   if (hasPermission(['sys:report:platform:game:report:summary'])) {
-    const { columns, data } = param
+    const { columns, data } = param;
+    // console.log(param);
     const sums = []
     columns.forEach((column, index) => {
       if (index === 0) {
@@ -547,7 +565,7 @@ function getSummaries(param) {
         } else {
           sums[index] = 0
         }
-        if (index === 5 || index === 6 || index === 7) {
+        if (index === 5 || index === 6 || index === 7 || index === 8) {
           sums[index] =
             '$ ' +
             sums[index].toLocaleString('en-US', {
@@ -557,6 +575,9 @@ function getSummaries(param) {
         }
       }
     })
+
+    // console.log("SUMS")
+    // console.log(sums);
 
     return sums
   } else {

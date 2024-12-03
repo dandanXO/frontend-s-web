@@ -46,7 +46,7 @@
         <el-form-item v-show="form.type.toString() === 'BUTTON'" :label="t('fields.features')" prop="name">
           <el-input v-model="form.name" :placeholder="t('fields.features')" style="width: 178px;" />
         </el-form-item>
-        <el-form-item v-show="form.type.toString() !== 'CATALOG'" :label="t('fields.permission')" prop="permission">
+        <el-form-item v-show="form.type.toString() !== 'CATALOG' && form.type.toString() !== 'MENU' || (uiControl.dialogType !== 'CREATE' && form.permission)" :label="t('fields.permission')" prop="permission">
           <el-input v-model="form.permission" :placeholder="t('fields.permission')"
                     style="width: 178px;"
           />
@@ -76,6 +76,16 @@
             style="width: 450px;"
             :placeholder="t('fields.superiorCategory')" @selected="selectTreeNode"
             :view-val="form.parentId"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input
+            type="textarea"
+            :rows="3"
+            v-model="form.remark"
+            style="width: 450px"
+            maxlength="100"
+            show-word-limit
           />
         </el-form-item>
         <el-form-item :label="t('fields.site')" prop="sites">
@@ -116,7 +126,35 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="menuSort" :label="t('fields.sorting')" width="180" align="center" />
+      <el-table-column prop="type" :label="t('fields.type')" width="100" align="center">
+        <template #default="scope">
+          <el-tag v-if="scope.row.type === 'CATALOG'" size="mini">
+            {{ scope.row.type }}
+          </el-tag>
+          <el-tag
+            v-else-if="scope.row.type === 'MENU'"
+            type="success"
+            size="mini"
+          >
+            {{ scope.row.type }}
+          </el-tag>
+          <el-tag
+            v-else-if="scope.row.type === 'BUTTON'"
+            type="warning"
+            size="mini"
+          >
+            {{ scope.row.type }}
+          </el-tag>
+          <el-tag
+            v-else
+            type="danger"
+            size="mini"
+          >
+            -
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="menuSort" :label="t('fields.sorting')" width="80" align="center" />
       <el-table-column prop="permission" :label="t('fields.permission')" width="180" align="center" />
       <el-table-column prop="path" :label="t('fields.componentPath')" min-width="200" align="center" />
       <el-table-column :label="t('fields.hidden')" min-width="80" align="center">
@@ -125,13 +163,15 @@
           <span v-else>N</span>
         </template>
       </el-table-column>
+      <el-table-column prop="remark" :label="t('fields.remark')" width="180" align="left" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="180" align="center">
         <template #default="scope">
           <span v-formatter="{data: scope.row.createTime,formatter: 'HH:mm:ss MM/DD/YYYY',type: 'date'}" />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" fixed="right" min-width="120">
+      <el-table-column :label="t('fields.operate')" align="right" fixed="right" min-width="180">
         <template #default="scope">
+          <el-button v-if="scope.row.type !== 'BUTTON'" icon="el-icon-plus" size="mini" type="primary" @click="addChildMenu(scope.row)" />
           <el-button icon="el-icon-edit" size="mini" type="success" @click="editMenu(scope.row)" />
           <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeMenu(scope.row)" />
         </template>
@@ -201,6 +241,11 @@ async function load(tree, treeNode, resolve) {
 
 function selectTreeNode(id) {
   form.parentId = id;
+}
+
+function addChildMenu(row) {
+  showDialog('CREATE');
+  form.parentId = row.id
 }
 
 function showDialog(type) {

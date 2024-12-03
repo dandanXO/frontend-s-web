@@ -20,7 +20,7 @@
         <el-form-item :label="t('fields.siteCode')" prop="siteCode">
           <el-input v-model="siteForm.siteCode" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.parentSite')" prop="parentId">
+        <!-- <el-form-item :label="t('fields.parentSite')" prop="parentId">
           <el-select
             v-model="siteForm.parentId"
             value-key="id"
@@ -37,7 +37,7 @@
               :value="item.parentId"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="t('fields.currency')" prop="currency">
           <el-select
             filterable
@@ -61,7 +61,20 @@
           <el-input v-model="siteForm.remark" type="textarea" style="width: 350px;" :rows="5" />
         </el-form-item>
         <el-form-item :label="t('fields.timeZone')" prop="timeZone">
-          <el-input v-model="siteForm.timeZone" style="width: 350px;" />
+          <el-select
+            filterable
+            clearable
+            v-model="siteForm.timeZone"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in timeZone.list"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -95,102 +108,74 @@
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
-    </el-dialog>
-    <el-row :gutter="24">
-      <el-col :span="18">
-        <el-card shadow="never">
-          <div class="card-header">
-            <span>{{ t('fields.siteList') }}</span>
-            <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATESITE')">
-              {{ t('fields.add') }}
-            </el-button>
-          </div>
-          <el-divider />
-          <div>
-            <el-table :data="list" v-loading="sitePage.loading" ref="treeTable" row-key="id" size="small"
-                      highlight-current-row lazy @current-change="handleCurrentChange"
-                      :key="tableKey" :load="loadSearch"
-                      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-                      :empty-text="t('fields.noData')"
-            >
-              <el-table-column prop="siteName" :label="t('fields.siteName')" width="150" />
-              <el-table-column prop="siteCode" :label="t('fields.siteCode')" width="150" />
-              <el-table-column prop="domainCount" :label="t('fields.domainCount')" width="150" />
-              <el-table-column prop="subsiteCount" :label="t('fields.subSiteCount')" width="150" />
-              <el-table-column prop="currency" :label="t('fields.currency')" width="150" />
-              <el-table-column prop="createTime" :label="t('fields.createTime')" width="150">
-                <template #default="scope">
-                  <span v-formatter="{data: scope.row.createTime, type: 'date', timeZone: scope.row.timeZone}" />
-                </template>
-              </el-table-column>
-              <el-table-column prop="timeZone" :label="t('fields.timeZone')" width="150" />
-              <el-table-column :label="t('fields.operate')" align="right" fixed="right">
-                <template #default="scope">
-                  <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card>
-          <div class="card-header">
-            <!-- <span>{{ t('fields.domainList') }}</span>
-            <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATEDOMAIN')" :disabled="!currentsiteFormRow">
-              {{ t('fields.add') }}
-            </el-button> -->
-            <span>{{ t('fields.menuGame') }}</span>
-            <el-button icon="el-icon-check" size="mini" type="success" @click="saveMenu" :disabled="!currentsiteFormRow">
+      <el-card v-if="uiControl.dialogType === 'ASSIGN_GAME_TYPE'">
+        <div>
+          <el-row>
+            <el-col :span="10" class="list-col">
+              <div>
+                <span>{{ t('fields.gameType') }}</span>
+                <draggable class="list-group" v-model="gameType.list" group="my-group" @change="log">
+                  <template #item="{element}">
+                    <div class="list-group-item" style="background-color: #e6a23c">{{ element }}</div>
+                  </template>
+                </draggable>
+              </div>
+            </el-col>
+            <el-col :span="10" class="list-col">
+              <div>
+                <span>{{ t('fields.assigned') }}</span>
+                <draggable class="list-group" v-model="gameType.assigned" group="my-group" @change="log">
+                  <template #item="{element}">
+                    <div class="list-group-item" style="background-color: #67c23a">{{ element }}</div>
+                  </template>
+                </draggable>
+              </div>
+            </el-col>
+          </el-row>
+          <div class="dialog-footer">
+            <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+            <el-button icon="el-icon-check" type="primary" @click="saveMenu" :loading="uiControl.gameTypeLoading">
               {{ t('fields.save') }}
             </el-button>
           </div>
-          <el-divider />
-          <div>
-            <!--<el-table :data="domainPage.records" v-loading="domainPage.loading" ref="table" row-key="id" size="small" highlight-current-row>
-              <el-table-column :label="t('fields.domain')">
-                <template #default="scope">
-                  <el-form :ref="'domainForm' + scope.row.id" :model="scope.row">
-                    <el-form-item prop="domain" :rules="domainFormRules.domain">
-                      <el-input :ref="'domainRef' + scope.row.id" v-model="scope.row.domain" style="width: 150px" v-if="uiControl.editable === scope.row.id" placeholder="e.g:abc.com" />
-                    </el-form-item>
-                  </el-form>
-                  <span v-if="uiControl.editable !== scope.row.id"> {{ scope.row.domain }} </span>
-                </template>
-              </el-table-column>
-              <el-table-column :label="t('fields.operate')" align="right">
-                <template #default="scope">
-                  <el-button v-if="uiControl.editable === scope.row.id" type="primary" @click="editDomainFunc(scope.row)">{{ t('fields.confirm') }}</el-button>
-                  <el-button v-else icon="el-icon-edit" size="mini" type="success" @click="changeEditable(scope.row, $refs)" />
-                </template>
-              </el-table-column>
-            </el-table> -->
-            <el-row>
-              <el-col :span="10" class="list-col">
-                <div>
-                  <span>{{ t('fields.gameType') }}</span>
-                  <draggable class="list-group" v-model="gameType.list" group="my-group" @change="log">
-                    <template #item="{element}">
-                      <div class="list-group-item" style="background-color: #e6a23c">{{ element }}</div>
-                    </template>
-                  </draggable>
-                </div>
-              </el-col>
-              <el-col :span="10" class="list-col">
-                <div>
-                  <span>{{ t('fields.assigned') }}</span>
-                  <draggable class="list-group" v-model="gameType.assigned" group="my-group" @change="log">
-                    <template #item="{element}">
-                      <div class="list-group-item" style="background-color: #67c23a">{{ element }}</div>
-                    </template>
-                  </draggable>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+        </div>
+      </el-card>
+    </el-dialog>
+    <el-card shadow="never">
+      <div class="card-header">
+        <span>{{ t('fields.siteList') }}</span>
+        <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATESITE')">
+          {{ t('fields.add') }}
+        </el-button>
+      </div>
+      <el-divider />
+      <div>
+        <el-table :data="list" v-loading="sitePage.loading" ref="treeTable" row-key="id" size="small"
+                  highlight-current-row lazy
+                  :key="tableKey" :load="loadSearch"
+                  :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+                  :empty-text="t('fields.noData')"
+        >
+          <el-table-column prop="siteName" :label="t('fields.siteName')" width="150" />
+          <el-table-column prop="siteCode" :label="t('fields.siteCode')" width="150" />
+          <!-- <el-table-column prop="domainCount" :label="t('fields.domainCount')" width="150" /> -->
+          <!-- <el-table-column prop="subsiteCount" :label="t('fields.subSiteCount')" width="150" /> -->
+          <el-table-column prop="currency" :label="t('fields.currency')" min-width="280" />
+          <el-table-column prop="createTime" :label="t('fields.createTime')" width="180">
+            <template #default="scope">
+              <span v-formatter="{data: scope.row.createTime, type: 'date', timeZone: scope.row.timeZone}" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="timeZone" :label="t('fields.timeZone')" width="150" />
+          <el-table-column :label="t('fields.operate')" align="right" fixed="right" min-width="200">
+            <template #default="scope">
+              <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
+              <el-button size="mini" type="warning" @click="showMenuGame(scope.row)">{{ t('fields.menuGame') }}</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -208,6 +193,7 @@ import {
 } from "../../../api/domain";
 import { getCurrencyNames } from "../../../api/currency";
 import { useI18n } from "vue-i18n";
+import { getTimeZoneList } from "../../../utils/datetime";
 
 const { t } = useI18n();
 const gameType = reactive({
@@ -225,7 +211,8 @@ const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
   dialogType: "",
-  editable: ""
+  editable: "",
+  gameTypeLoading: false
 });
 const list = reactive([]);
 const sitePage = reactive({
@@ -263,6 +250,9 @@ const sites = reactive({
 const currencies = reactive({
   list: [],
 })
+const timeZone = reactive({
+  list: []
+})
 const validateAlphaNumericUnderscore = (rule, value, callback) => {
   if (!isAlphaNumericUnderscore(value)) {
     callback(new Error(t('message.validateAlphaNumericOnly')));
@@ -286,17 +276,17 @@ const domainFormRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   domain: [required(t('message.validateDomainRequired')), { validator: validateDomain, trigger: "blur" }]
 });
-const handleCurrentChange = (currentRow) => {
-  currentsiteFormRow.value = currentRow;
-  // loadDomains(currentsiteFormRow.value.id);
-  gameType.list = gameType.default;
-  gameType.assigned = JSON.parse(list.find(x => x.id === currentsiteFormRow.value.id).param);
-  if (gameType.assigned !== null) {
-    gameType.list = gameType.list.filter(gt => !gameType.assigned.includes(gt));
-  } else {
-    gameType.assigned = []
-  }
-}
+// const handleCurrentChange = (currentRow) => {
+//   currentsiteFormRow.value = currentRow;
+//   // loadDomains(currentsiteFormRow.value.id);
+//   gameType.list = gameType.default;
+//   gameType.assigned = JSON.parse(list.find(x => x.id === currentsiteFormRow.value.id).param);
+//   if (gameType.assigned !== null) {
+//     gameType.list = gameType.list.filter(gt => !gameType.assigned.includes(gt));
+//   } else {
+//     gameType.assigned = []
+//   }
+// }
 
 function log(evt) {
   console.log(evt);
@@ -378,6 +368,8 @@ function showDialog(type) {
     domainForm.id = null
     domainForm.domain = null
     domainForm.siteId = currentsiteFormRow.value.id
+  } else if (type === "ASSIGN_GAME_TYPE") {
+    uiControl.dialogTitle = t('fields.menuGame')
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -390,6 +382,9 @@ function showEdit(site) {
       if (Object.keys(siteForm).find(k => k === key)) {
         siteForm[key] = site[key];
       }
+    }
+    if (siteForm.timeZone !== null) {
+
     }
     if (siteForm.currency !== null) {
       const arr = siteForm.currency.split(",")
@@ -466,13 +461,33 @@ function submit() {
 }
 
 async function saveMenu() {
+  uiControl.gameTypeLoading = true;
   const param = gameType.assigned === null || gameType.assigned === undefined ? [] : JSON.stringify(gameType.assigned);
   await updateSiteMenu(currentsiteFormRow.value.id, param);
+  uiControl.dialogVisible = false;
+  uiControl.gameTypeLoading = false;
   await loadSites();
   ElMessage({ message: t('message.updateSuccess'), type: "success" });
 }
 
+function showMenuGame(row) {
+  currentsiteFormRow.value = row;
+  gameType.list = gameType.default;
+  gameType.assigned = JSON.parse(list.find(x => x.id === currentsiteFormRow.value.id).param);
+  if (gameType.assigned !== null) {
+    gameType.list = gameType.list.filter(gt => !gameType.assigned.includes(gt));
+  } else {
+    gameType.assigned = []
+  }
+  showDialog("ASSIGN_GAME_TYPE")
+}
+
+function getTimeZone() {
+  timeZone.list = getTimeZoneList()
+}
+
 onMounted(() => {
+  getTimeZone();
   loadSites();
   loadSiteNames();
   loadSiteNamesNoParenId();

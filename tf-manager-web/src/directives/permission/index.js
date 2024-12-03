@@ -5,7 +5,7 @@ function checkPermission(el, binding) {
   if (useStore().state.user.userType !== ADMIN.value) {
     const { value } = binding
     const roles = useStore().state.user.permissions
-
+    console.log(roles, 'dan')
     if (value && value instanceof Array) {
       if (value.length > 0) {
         const permissionRoles = value
@@ -25,7 +25,7 @@ function checkPermission(el, binding) {
 }
 
 /**
- * 权限检查指令，在el-tabs,el-table-column等控件中无效，此类控件使用 util.js中 hasRole 和 hasPermission
+ * 权限检查指令，在 el-tabs,el-table-column 等控件中无效，此类控件使用 util.js 中 hasRole 和 hasPermission
  * @type {Store<unknown>}
  */
 export const permission = {

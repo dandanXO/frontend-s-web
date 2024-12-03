@@ -1,7 +1,7 @@
 <template>
   <div class="flex-div">
     <span class="q-mr-md">日期</span>
-    <q-input readonly rounded outlined dense :model-value="startDate" color="white" bg-color="recinputstyle">
+    <q-input readonly rounded outlined dense :model-value="startDate" color="white" bg-color="roundedinputstyle">
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -20,7 +20,7 @@
       </template>
     </q-input>
     <span>—</span>
-    <q-input readonly rounded outlined dense :model-value="endDate" color="white" bg-color="recinputstyle">
+    <q-input readonly rounded outlined dense :model-value="endDate" color="white" bg-color="roundedinputstyle">
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -58,7 +58,7 @@ const searchRecord = (val, isStartDate) => {
   emit("handleDateChange", { val, isStartDate });
 };
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .flex-div {
   display: flex;
   align-items: center;

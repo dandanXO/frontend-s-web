@@ -158,20 +158,20 @@
           </div>
         </div>
         <div class="amount" v-show="isDataLoaded && vipLevel !== 0">
-            <div class="text">
-                保级剩余天数：<span class="required-amount">{{ balanceRetainDay }}</span> 天
-              </div>
-              <div class="progressBarContainer">
-                <div class="progressBarOuterBar">
-                  <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
-                </div>
-                <div class="progressBarDescriptionRetain">
-                  {{
-                    currentRetainAmount + '/' + retainAmountRequired
-                  }}
-                </div>
-              </div>
+          <div class="text">
+            保级剩余天数：
+            <span class="required-amount">{{ balanceRetainDay }}</span>
+            天
+          </div>
+          <div class="progressBarContainer">
+            <div class="progressBarOuterBar">
+              <div class="progressBarInnerBar" :style="{ width: retainPercentage + '%' }"></div>
             </div>
+            <div class="progressBarDescriptionRetain">
+              {{ currentRetainAmount + "/" + retainAmountRequired }}
+            </div>
+          </div>
+        </div>
       </div>
       <!-- <div
         class="claim-btn"
@@ -318,14 +318,26 @@
       <table border="1" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
-            <th>VIP<br>等级</th>
+            <th>
+              VIP
+              <br />
+              等级
+            </th>
             <!-- <th>会员等级</th> -->
             <th>首次保级彩金</th>
             <th>年度保级彩金</th>
-            <th>生日<br>彩金</th>
+            <th>
+              生日
+              <br />
+              彩金
+            </th>
             <!--            <th>节日礼金</th>-->
             <th>每日额外返水红包</th>
-            <th>每月15号<br>红包</th>
+            <th>
+              每月15号
+              <br />
+              红包
+            </th>
             <th>充值赠送20%奖金</th>
           </tr>
         </thead>
@@ -645,11 +657,7 @@
 
       <h2>三. 首次保级彩金</h2>
       <ol class="terms">
-        <li>
-          会员当月达到保级要求时，次月1日可领取首次保级彩金；
-          <br />
-          例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；彩金1倍流水即可提款
-        </li>
+        <li>会员在90天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金1倍流水即可提款。</li>
       </ol>
 
       <h2>四. 年度保级彩金</h2>
@@ -1234,7 +1242,7 @@ const runVipAPI = (res) => {
     // balanceRetainAmount.value = +res.data.retainAmountRequired - +res.data.currentRetainAmount
     currentRetainDay.value = res.data.currentRetainDay;
     retainDayRequired.value = res.data.retainDayRequired;
-    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay;
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     getVipLevelProgress(vipLevel.value, "bet");
     isDataLoaded.value = true;
@@ -1570,7 +1578,6 @@ $border-settings: 1px solid #e5e7eb;
             font-weight: 400;
             line-height: normal;
             margin: -24px auto 0;
-
           }
         }
       }

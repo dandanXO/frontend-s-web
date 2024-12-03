@@ -18,7 +18,7 @@
           :clearable="false"
           :default-time="defaultTime"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -34,7 +34,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           filterable
           clearable
@@ -890,7 +890,7 @@ async function fail() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   const { data: config } = await getConfigList("withdraw_risk_apply", request.siteId);
   if (config.length !== 0) {
     request.notEqualRiskId = config[0].value

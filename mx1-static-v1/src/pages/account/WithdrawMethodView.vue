@@ -798,7 +798,11 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-  const result = !cardNumber ? t("form.accountNumber_rules_01") : true;
+  const result = !cardNumber
+    ? t("form.accountNumber_rules_01")
+    : !cardNumber.includes(".")
+    ? true
+    : t("form.accountNumber_rules_03")
   return result;
 };
 

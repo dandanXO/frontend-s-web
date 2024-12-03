@@ -124,7 +124,7 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      var affiliateCode = "00DD33";
+      var affiliateCode = "80D342";
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {

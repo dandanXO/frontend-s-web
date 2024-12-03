@@ -135,13 +135,15 @@ export default {
     cryptoAccount_rules_03: "Crypto account must have 34 characters",
     cryptoAccount_rules_04: "Crypto account must start with '0x'",
     cryptoAccount_rules_05: "Crypto account must have 42 characters",
+    cryptoAccount_rules_06: "Crypto account cannot have decimal points",
     virtualWalletType: "Virtual Wallet Type",
     virtualWallet: "Virtual Wallet",
     virtualWallet_placeholder: "Please insert virtual wallet",
     virtualWallet_rules_01: "Please insert virtual wallet",
     virtualWallet_id_rule: "Please insert 13 digits Identity ID",
-    virtualWallet_rules_02: "The phone number must start with '01'",
-    virtualWallet_rules_03: "The eWallet must be 10 - 11 digits",
+    virtualWallet_rules_02: "The eWallet number must start with '01'",
+    virtualWallet_rules_03: "The eWallet must be 11 digits",
+    virtualWallet_rules_04: "The eWallet cannot have decimal points",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
@@ -233,8 +235,9 @@ export default {
     cat_sport: "Sport",
     popup: {
       getFreeLuckyDraw: "Get a free lucky draw ticket",
-      downloadAppLoginAcc: "Download the app and log in to your account to get it",
-    }
+      downloadAppLoginAcc: "Download the app and log in to your account to get it"
+    },
+    viewAll: "View All"
   },
   settings: {
     totalScore: "Total Score",
@@ -253,7 +256,8 @@ export default {
     charity: "Charity",
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
-    interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    viewDetails: "View Details"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -517,6 +521,7 @@ export default {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
     bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name"
   },
@@ -674,6 +679,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    35013: "Has already been redeemed by the same IP address",
     35015: "The same device has already claimed this discount.",
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",

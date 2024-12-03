@@ -17,6 +17,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             />
             <div class="icon">
               <img src="../../assets/images/finance/withdraw/arrow_right.png" />
@@ -33,6 +34,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
+              rounded
             />
           </div>
           <div class="transferamounts q-my-md">
@@ -52,6 +54,7 @@
             outlined
             color="white"
             bg-color="recinputstyle"
+            rounded
           >
             <template v-slot:prepend>
               <span style="font-size: 26px" class="text-bright">
@@ -60,7 +63,7 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
-                <q-btn label="最大金额" @click="updateTransferAmt" color="brightbtn" />
+                <q-btn label="最大金额" @click="updateTransferAmt" color="brightbtn" rounded />
               </span>
             </template>
           </q-input>
@@ -72,6 +75,7 @@
             @click="submitTransfer"
             label="立即转账"
             :loading="isTransferring"
+            rounded
           />
         </q-form>
       </div>
@@ -378,7 +382,7 @@ onMounted(() => {
     cursor: pointer;
     border: 1px solid transparent;
     padding: 5px 8px;
-    border-radius: 5px;
+    border-radius: 32px;
     text-align: center;
     background: #273354;
     width: 100%;

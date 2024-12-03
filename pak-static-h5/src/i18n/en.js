@@ -135,6 +135,7 @@ export default {
     cryptoAccount_rules_03: "Crypto account must have 34 characters",
     cryptoAccount_rules_04: "Crypto account must start with '0x'",
     cryptoAccount_rules_05: "Crypto account must have 42 characters",
+    cryptoAccount_rules_06: "Crypto account cannot have decimal points",
     virtualWalletType: "Virtual Wallet Type",
     virtualWallet: "Virtual Wallet",
     virtualWallet_placeholder: "Please insert virtual wallet",
@@ -142,6 +143,7 @@ export default {
     virtualWallet_id_rule: "Please insert 13 digits Identity ID",
     virtualWallet_rules_02: "The phone number must start with '03'",
     virtualWallet_rules_03: "The eWallet must have 11 digits",
+    virtualWallet_rules_04: "The eWallet cannot have decimal points",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
@@ -164,8 +166,14 @@ export default {
     content_rules_02: "Content length is 500 words or less",
     exchangeTitle: "Enter redemption code",
     redemptionCode: "Enter redemption code",
-    redemptionCode_rule_01: "Please insert Phone number",
-    redemptionCode_placeholder: "pleases Enter redemption code"
+    redemptionCode_rule_01: "Please insert redemption code",
+    redemptionCode_placeholder: "Pleases Enter redemption code",
+    redemptionInvalidCode:
+      "The code is invalid. Please check our official WhatsApp channel for the correct promo code to redeem.",
+    redemptionAlreadyRedeemed:
+      "You have already participated in this redemption. Please wait for the next free redemption code release on our official WhatsApp channel.",
+    redemptionFullyRedeemed:
+      "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time."
   },
   btn: {
     login: "Login",
@@ -193,7 +201,13 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    claim: "Claim",
+    receive: "Receive",
+    completed: "Completed",
+    deposit: "Deposit",
+    betting: "Betting",
+    share: "Share"
   },
   notify: {
     noRecord: "No Record",
@@ -234,7 +248,10 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    cashGift: "Cash Gifts",
+    welcomeNewPlayer: "Welcome New Players",
+    MegaSharingRoulette: "Mega Sharing Roulette"
   },
   settings: {
     totalScore: "Total Score",
@@ -517,6 +534,7 @@ export default {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
     bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name"
   },
@@ -542,6 +560,20 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    megaSharingWheel: {
+      wheelTitle: "Mega Sharing Roulette",
+      missionTitle: "Rewards",
+      invitersUsersDeposit: "Inviter's Deposit Count ≥ ",
+      invitersUsersValidBet: "Inviter's Valid Bet ≥ ",
+      EligibleInvitedUsers: "Eligible Invited Users ≥ ",
+      missionDescription: "Finish the task to claim your ticket",
+      timeLimited: "Time-limited",
+      day: "Days",
+      hour: "Hours",
+      minute: "Min",
+      second: "Sec",
+      rewardClaimed: "Reward has already been claimed"
     }
   },
   maintenance: {
@@ -674,6 +706,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    35013: "Has already been redeemed by the same IP address",
     35015: "The same device has already claimed this discount.",
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
@@ -699,6 +732,12 @@ export default {
     57003: "Deposit does not met requirement",
     57004: "History deposit does not met requirement",
     57005: "Code Redeem Error",
-    57006: "Invalid Code"
+    57006: "Invalid Code",
+    58000: "System Stage Error",
+    58001: "System Stage Settings Error",
+    58002: "Event haven't start",
+    58003: "Event have expired",
+    58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
+    58005: "Congrats, You have Completed All Tasks"
   }
 };

@@ -164,9 +164,9 @@
             size="small"
             class="filter-item"
             style="width: 350px"
-            :disabled="uiControl.userTypeSelect"
             :placeholder="t('fields.pleaseChoose')"
             default-first-option
+            @change="onUserTypeChange"
           >
             <el-option
               v-for="item in userTypeList"
@@ -189,6 +189,7 @@
             default-first-option
             :placeholder="t('fields.pleaseChoose')"
             @focus="loadSites"
+            @change="onSiteChange"
           >
             <el-option
               v-for="item in formSiteList.list"
@@ -327,7 +328,7 @@
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column type="selection" width="55" />
+      <el-table-column type="selection" :selectable="selectable" width="55" />
       <el-table-column :label="t('fields.site')" :formatter="toSiteName" width="100" />
       <el-table-column prop="loginName" :label="t('fields.username')" width="200">
         <template #default="scope">
@@ -442,7 +443,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import { numericOnly, required, size } from '../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
@@ -588,18 +589,16 @@ function resetQuery() {
 }
 
 function handleSelectionChange(val) {
-  if (val.value.loginName !== LOGIN_USER_NAME.value) {
-    chooseUser = val
-    if (chooseUser.length === 0) {
-      uiControl.editBtn = true
-      uiControl.removeBtn = true
-    } else if (chooseUser.length === 1) {
-      uiControl.editBtn = false
-      uiControl.removeBtn = false
-    } else {
-      uiControl.editBtn = true
-      uiControl.removeBtn = false
-    }
+  chooseUser = val
+  if (chooseUser.length === 0) {
+    uiControl.editBtn = true
+    uiControl.removeBtn = true
+  } else if (chooseUser.length === 1) {
+    uiControl.editBtn = false
+    uiControl.removeBtn = false
+  } else {
+    uiControl.editBtn = true
+    uiControl.removeBtn = false
   }
 }
 
@@ -680,7 +679,7 @@ function showEdit(user) {
   if (!user) {
     user = chooseUser[0]
   }
-  nextTick(() => {
+  nextTick(async() => {
     for (const key in user) {
       if (Object.keys(form).find(k => k === key)) {
         if (key === 'vcallId' && user[key] === 0) {
@@ -691,6 +690,12 @@ function showEdit(user) {
       }
     }
     form.id = user.id;
+
+    await loadRoles(
+      form.siteIdArray && form.siteIdArray !== null
+        ? form.siteIdArray
+        : form.siteId
+    )
   })
 }
 
@@ -869,51 +874,87 @@ function roleTxt(roleId) {
 
 function setSiteIdArray() {
   form.siteId = form.siteIdArray[0]
+  onSiteChange()
+}
+
+function selectable(row) {
+  return row.loginName !== LOGIN_USER_NAME.value
 }
 
 // async function siteChange() {
 //   await loadRoles(request.siteId)
 // }
 
-watch(
-  () => form.siteIdArray || form.siteId,
-  async (value, oldValue) => {
-    await loadRoles(
-      form.siteIdArray && form.siteIdArray !== null
-        ? form.siteIdArray
-        : form.siteId
-    )
-    if (uiControl.dialogType === 'CREATE') {
-      form.roles = null
-      if (value) {
-        uiControl.rolesSelect = false
-      }
-    } else if (uiControl.dialogType === 'EDIT') {
-      if (oldValue && value && value !== oldValue) {
-        form.roles = null
-      }
-      uiControl.rolesSelect = false
+async function onSiteChange() {
+  await loadRoles(
+    form.siteIdArray && form.siteIdArray !== null
+      ? form.siteIdArray
+      : form.siteId
+  )
+  form.roles = null
+  uiControl.rolesSelect = false
+}
+
+function onUserTypeChange() {
+  uiControl.siteSelectVisible = true
+  uiControl.rolesSelect = true
+  form.roles = null
+  if (form.userType && form.userType === 'MANAGER') {
+    form.siteId = 0
+  } else if (form.userType && form.userType === 'TENANT') {
+    if (form.siteId === 0) {
+      form.siteId = null
     }
+    form.siteIdArray = null
   }
-)
-watch(
-  () => form.userType,
-  async () => {
-    if (form.userType && form.userType === 'MANAGER') {
-      uiControl.userTypeSelect = true
-      uiControl.siteSelectVisible = true
-      uiControl.rolesSelect = true
-      form.siteId = 0
-    } else if (form.userType && form.userType === 'TENANT') {
-      uiControl.userTypeSelect = true
-      uiControl.siteSelectVisible = true
-      uiControl.rolesSelect = true
-      if (form.siteId === 0) {
-        form.siteId = null
-      }
-    }
+
+  if (form.siteId && form.siteId !== 0) {
+    uiControl.rolesSelect = false
   }
-)
+}
+
+// watch(
+//   () => form.siteIdArray || form.siteId,
+//   async (value, oldValue) => {
+//     console.log('site id array' + form.siteIdArray)
+//     console.log('site id' + form.siteId)
+//     await loadRoles(
+//       form.siteIdArray && form.siteIdArray !== null
+//         ? form.siteIdArray
+//         : form.siteId
+//     )
+//     if (uiControl.dialogType === 'CREATE') {
+//       form.roles = null
+//       if (value) {
+//         uiControl.rolesSelect = false
+//       }
+//     } else if (uiControl.dialogType === 'EDIT') {
+//       if (oldValue && value && value !== oldValue) {
+//         form.roles = null
+//       }
+//       uiControl.rolesSelect = false
+//     }
+//   }
+// )
+// watch(
+//   () => form.userType,
+//   async () => {
+//     if (form.userType && form.userType === 'MANAGER') {
+//       uiControl.userTypeSelect = true
+//       uiControl.siteSelectVisible = true
+//       uiControl.rolesSelect = true
+//       form.siteId = 0
+//     } else if (form.userType && form.userType === 'TENANT') {
+//       uiControl.userTypeSelect = true
+//       uiControl.siteSelectVisible = true
+//       uiControl.rolesSelect = true
+//       if (form.siteId === 0) {
+//         form.siteId = null
+//       }
+//       form.siteIdArray = null
+//     }
+//   }
+// )
 
 onMounted(async () => {
   await loadSites()

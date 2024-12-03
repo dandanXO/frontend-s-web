@@ -114,7 +114,7 @@ onActivated(() => {
   margin: 0;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  background: #2e30344f;
+  background-color: #ffffff0d;
   position: relative;
   box-shadow: none;
   backdrop-filter: blur(4px);
@@ -182,9 +182,10 @@ onActivated(() => {
     .detail-btn {
       border-radius: 30px;
       // background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
-      background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
-      border: 1px solid #5d8956;
+      background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+      border: 1px solid #000a01;
       font-size: 1rem;
+      color: #000a01;
       // font-weight: 700;
       padding: 0.2rem 1rem;
       min-height: unset;

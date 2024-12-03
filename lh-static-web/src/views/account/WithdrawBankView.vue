@@ -4,18 +4,8 @@
       <span class="account-title">添加银行卡</span>
     </div>
     <div class="account-content">
-      <div class="account-tip-text wbot">
-        <!-- <el-icon><InfoFilled /></el-icon> -->
-      </div>
-      <!-- <div class="addbuttons">
-        <div
-          class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
-          @click="bankCardModal('bank')"
-        >
-          <RiLink />
-          เพิ่มบัตร
-        </div>
-      </div> -->
+      <div class="account-tip-text wbot"></div>
+
       <div class="flex-box flex-wrap bank-card-list">
         <div
           class="bank-card-item"
@@ -36,7 +26,6 @@
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
             <!-- <img src="../../assets/images/account/unbind_bank_card.png" /> -->
-            <RiLinkUnlink />
           </div>
 
           <div class="flex-box cards">
@@ -50,10 +39,7 @@
             </div>
           </div>
         </div>
-        <div class="bank-card-item" @click="bankCardModal('bank')">
-          <RiLink />
-          绑卡
-        </div>
+        <div class="bank-card-item" @click="bankCardModal('bank')">绑卡</div>
       </div>
     </div>
     <div class="account-title-container bindunbind">
@@ -238,8 +224,6 @@ import {defineComponent, reactive, ref, onMounted} from "vue";
 import {getVerificationCode} from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
 import { ElMessageBox} from "element-plus";
-// import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import {RiLink, RiLinkUnlink} from "vue-remix-icons";
 import {
   loadBanks,
   loadBankCards,
@@ -252,17 +236,12 @@ import {
 import {userStore} from "@/store";
 import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
-import {InfoFilled} from "@element-plus/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 // import moment from "moment";
 
 export default defineComponent({
   name: "WithdrawBankView",
-  components: {
-    // eslint-disable-next-line vue/no-unused-components
-    InfoFilled, RiLink, RiLinkUnlink
-  },
   setup() {
     const notify = useNotify()
     let validateEmptyCardNo = async (r, v) => {

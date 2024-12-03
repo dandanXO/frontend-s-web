@@ -183,6 +183,7 @@ export default {
     accountNumber_placeholder: "Enter Account Number",
     accountNumber_rules_01: "Enter Account Number",
     accountNumber_rules_02: "Enter a Valid Account Number",
+    accountNumber_rules_03: "Account number must not contain a decimal point",
     holderName: "Holder Name",
     holderName_placeholder: "Enter Holder Name",
     holderName_rules_01: "Enter Holder Name",

@@ -17,7 +17,7 @@
           :clearable="false"
           :default-time="defaultTime"
         />
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -33,7 +33,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-input
           v-model="request.serialNumber"
           style="width: 300px; margin-left: 10px"
@@ -526,7 +526,7 @@ function resetQuery() {
   request.maxWithdrawAmount = null
   request.vipId = vipList.list[0].id
   uiControl.dialogVisible = false
-  request.siteId = siteList.list[0].id;
+  request.siteId = store.state.user.siteId
 }
 
 function handleSelectionChange(val) {
@@ -683,7 +683,7 @@ async function showDialog(type) {
 
 onMounted(async () => {
   await loadSites();
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   loadVips()
   loadFinancialLevels()
   loadBanks()

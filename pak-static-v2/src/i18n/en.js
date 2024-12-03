@@ -135,6 +135,7 @@ export default {
     cryptoAccount_rules_03: "Crypto account must have 34 characters",
     cryptoAccount_rules_04: "Crypto account must start with '0x'",
     cryptoAccount_rules_05: "Crypto account must have 42 characters",
+    cryptoAccount_rules_06: "Crypto account cannot have decimal points",
     virtualWalletType: "Virtual Wallet Type",
     virtualWallet: "Virtual Wallet",
     virtualWallet_placeholder: "Please insert virtual wallet",
@@ -142,6 +143,7 @@ export default {
     virtualWallet_id_rule: "Please insert 13 digits Identity ID",
     virtualWallet_rules_02: "The phone number must start with '03'",
     virtualWallet_rules_03: "The eWallet must have 11 digits",
+    virtualWallet_rules_04: "The eWallet cannot have decimal points",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
@@ -514,6 +516,7 @@ export default {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
     bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name"
   },
@@ -671,12 +674,14 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    35013: "Has already been redeemed by the same IP address",
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
     45001: "Received random bonus today",
     47000: "The discount has not yet been claimed.",
     47001: "No amount available for claim.",
-    50000: "To keep your funds safe, you need to wait 48 hours after changing your password before adding a new wallet.",
+    50000:
+      "To keep your funds safe, you need to wait 48 hours after changing your password before adding a new wallet.",
     50001: "The number of available transfers has been reached, please continue betting before transferring again",
     51000: "Today's sign-in reward has already been claimed",
     51001: "Requirements not met",

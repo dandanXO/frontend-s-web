@@ -836,18 +836,18 @@ onMounted(() => {
     // padding: 30px;
   }
   .deposit-container {
-    .el-space{ 
+    padding: 20px 30px;
+    .el-space {
       margin-bottom: 8px;
     }
     // background: #23263c;
     .deposit-form {
       position: relative;
-      .el-form-item { 
+      .el-form-item {
         margin-bottom: 0px;
       }
     }
-    padding: 20px 30px;
-    // background: #23263c;
+
     .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
       background: #23263c;
       border: #23263c;

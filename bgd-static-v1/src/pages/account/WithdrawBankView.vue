@@ -66,14 +66,14 @@
           <span>+添加虚拟币账户</span>
         </div> -->
 
-        <div style="display:none;" class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
+        <div style="display: none" class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
           <span>+ {{ $t("btn.addBankCard") }}</span>
         </div>
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
           <span>+ {{ $t("btn.addVirtualWallet") }}</span>
         </div>
-        <div style="display:none;" class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
+        <div style="display: none" class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
           <span>+ {{ $t("btn.addCrypto") }}</span>
         </div>
@@ -375,7 +375,7 @@ onActivated(() => {
         align-items: center;
         justify-content: center;
         width: 47.5%;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
         padding: 12px 5px;
         border-radius: 8px;
         color: #000a01;

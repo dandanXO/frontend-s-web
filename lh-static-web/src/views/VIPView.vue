@@ -787,9 +787,7 @@
       <h2>三. 首次保级彩金</h2>
       <ol class="terms">
         <li>
-          会员当月达到保级要求时，次月1日可领取首次保级彩金；
-          <br />
-          例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；彩金1倍流水即可提款
+          会员在90天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金1倍流水即可提款。
         </li>
       </ol>
 
@@ -856,7 +854,6 @@ import { ref, reactive, computed, onMounted, watch } from "vue";
 import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
-// import { message } from "ant-design-vue";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 

@@ -27,9 +27,9 @@
           </q-btn>
 
           <div class="acc-btns-container row q-gutter-x-sm q-ml-auto">
-            <q-btn color="brightbtn" size="sm" @click="openDeposit">存款</q-btn>
-            <q-btn color="brightbtn" size="sm" to="finance/withdraw">提款</q-btn>
-            <q-btn color="brightbtn" size="sm" to="account/transfer">转账</q-btn>
+            <q-btn color="brightbtn" size="sm" @click="openDeposit" rounded>存款</q-btn>
+            <q-btn color="brightbtn" size="sm" to="finance/withdraw" rounded>提款</q-btn>
+            <q-btn color="brightbtn" size="sm" to="account/transfer" rounded>转账</q-btn>
           </div>
         </div>
 
@@ -39,11 +39,17 @@
 
         <div class="card_btm">
           <div class="progress-container">
-            <div class="progress-vip-stat">VIP {{ vipLevel - 1 }}</div>
+            <div class="progress-vip-stat">
+              <img :src="require(`../assets/images/account/vip-level-${vipLevel - 1}.png`)" />
+              VIP {{ vipLevel - 1 }}
+            </div>
             <div class="progress-bar-container">
               <div class="progress-bar" :style="{ width: progessPercentage(vipItems[vipLevel].upgrade) + '%' }"></div>
             </div>
-            <div class="progress-vip-stat">VIP {{ vipLevel }}</div>
+            <div class="progress-vip-stat">
+              VIP {{ vipLevel }}
+              <img :src="require(`../assets/images/account/vip-level-${vipLevel}.png`)" />
+            </div>
           </div>
 
           <div class="amt-info">
@@ -717,6 +723,14 @@ onBeforeUnmount(() => {
 
     .progress-vip-stat {
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      img {
+        display: block;
+        width: 36px;
+      }
     }
   }
 }

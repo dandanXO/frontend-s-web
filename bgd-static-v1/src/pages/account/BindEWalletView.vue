@@ -106,7 +106,8 @@
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.virtualWallet_rules_01'),
                     (val) => val.startsWith('01') || $t('form.virtualWallet_rules_02'),
-                    (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.virtualWallet_rules_03')
+                    (val) => (val && val.length === 11) || $t('form.virtualWallet_rules_03'),
+                    (val) => (val && !val.includes('.')) || $t('form.virtualWallet_rules_04')
                   ]"
                 ></q-input>
               </template>
@@ -130,7 +131,8 @@
                   hide-bottom-space
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.virtualWallet_id_rule'),
-                    (val) => (val && val.length === 13) || $t('form.virtualWallet_id_rule')
+                    (val) => (val && val.length === 13) || $t('form.virtualWallet_id_rule'),
+                    (val) => (val && !val.includes('.')) || $t('form.virtualWallet_rules_04')
                   ]"
                 ></q-input>
               </template>

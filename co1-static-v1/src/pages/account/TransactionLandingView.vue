@@ -29,7 +29,7 @@ const withdrawViewRef = ref(null);
 watch(
   () => route.path,
   (newPath) => {
-    activeKey.value = newPath.includes("deposit") ? "deposit" : "withdraw";
+    activeKey.value = newPath.includes("deposit") ? "deposit" : newPath.includes("withdraw") ? "withdraw" : "account";
 
     if (newPath.includes("withdraw") && withdrawViewRef.value?.onActivated) {
       withdrawViewRef.value.onActivated();

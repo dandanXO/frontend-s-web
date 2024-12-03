@@ -260,6 +260,24 @@ export const getMemberListBySiteId = siteId => {
   )
 }
 
+export const getMemberWithdrawCard = (id, query) => {
+  return https().request(
+    `/member/${id}/withdraw/card`,
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const addMemberBankCard = (id, bankCard) => {
+  return https().request(
+    `/member/${id}/bankCard`,
+    Method.POST,
+    bankCard,
+    ContentType.form
+  )
+}
+
 export const findIdByLoginName = (loginName, sid) => {
   return https().request(
     '/member/loginName',
@@ -334,15 +352,6 @@ export const getMemberBalanceByLoginNameSite = (
     `/member/getMemberBalanceByLoginNameSite`,
     Method.GET,
     { loginName: loginName, siteId: siteId, currency: currency },
-    ContentType.form
-  )
-}
-
-export const getMemberCryptoBalanceByLoginNameSite = (loginName, siteId) => {
-  return https().request(
-    `/member/getMemberCryptoBalanceByLoginNameSite`,
-    Method.GET,
-    { loginName: loginName, siteId: siteId },
     ContentType.form
   )
 }
@@ -484,14 +493,6 @@ export const getMemberVipFinById = (siteId, ids, loginName) => {
   )
 }
 
-export const toggleMemberWallet = (id, siteId) => {
-  return https().request(`/member/toggleWallet/${id}/${siteId}`, Method.GET)
-}
-
-export const walletBalance = (id, siteId) => {
-  return https().request(`/member/all-wallet/${id}/${siteId}`, Method.GET)
-}
-
 export const updateWithdrawType = (id, withdrawType, siteId) => {
   return https().request(
     `/member/${id}/withdrawType?_method=PUT`,
@@ -501,10 +502,28 @@ export const updateWithdrawType = (id, withdrawType, siteId) => {
   )
 }
 
-export const freezeMemberBatchUpdate = (memberFreeze) => {
-  return https(5 * 60 * 1000).request("/member/freezeMemberBatchUpdate", Method.POST, { memberFreeze: JSON.stringify(memberFreeze) }, ContentType.form);
+export const toggleMemberWallet = (id, siteId) => {
+  return https().request(`/member/toggleWallet/${id}/${siteId}`, Method.GET)
+}
+
+export const walletBalance = (id, siteId) => {
+  return https().request(`/member/all-wallet/${id}/${siteId}`, Method.GET)
+}
+
+export const freezeMemberBatchUpdate = memberFreeze => {
+  return https(5 * 60 * 1000).request(
+    '/member/freezeMemberBatchUpdate',
+    Method.POST,
+    { memberFreeze: JSON.stringify(memberFreeze) },
+    ContentType.form
+  )
 }
 
 export const getRolloverEvents = (id, query) => {
-  return https().request(`/member/${id}/rollover-events`, Method.GET, query, ContentType.form)
+  return https().request(
+    `/member/${id}/rollover-events`,
+    Method.GET,
+    query,
+    ContentType.form
+  )
 }

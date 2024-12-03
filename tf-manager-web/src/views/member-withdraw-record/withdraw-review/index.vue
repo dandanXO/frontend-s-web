@@ -25,7 +25,7 @@
           :placeholder="t('fields.memberName')"
         />
 
-        <el-select
+        <!-- <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -39,7 +39,7 @@
             :label="item.siteName"
             :value="item.id"
           />
-        </el-select>
+        </el-select> -->
         <el-select
           v-model="request.sort"
           size="small"
@@ -627,7 +627,7 @@ function submit() {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   request.sort = sortList.list[0].value
 
   request.vip = vipList.list[0].id
@@ -819,7 +819,7 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

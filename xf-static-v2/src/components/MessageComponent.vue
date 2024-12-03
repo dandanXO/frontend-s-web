@@ -20,10 +20,22 @@
               class="action-buttons"
               v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
             >
-              <q-btn v-if="truncatedListByType.length" color="brightbtn" size="md" @click="readMails(item.type)">
+              <q-btn
+                v-if="truncatedListByType.length"
+                color="brightbtn"
+                size="md"
+                @click="readMails(item.type)"
+                rounded
+              >
                 全部已读
               </q-btn>
-              <q-btn v-if="truncatedListByType.length" color="darkbtn" size="md" @click="deleteMails(item.type)">
+              <q-btn
+                v-if="truncatedListByType.length"
+                color="darkbtn"
+                size="md"
+                @click="deleteMails(item.type)"
+                rounded
+              >
                 全部删除
               </q-btn>
               <q-toggle
@@ -34,8 +46,10 @@
                 color="blue"
                 class="q-ml-auto"
               />
-              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="readMails(item.type)">已读</q-btn>
-              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="deleteMails(item.type)">删除</q-btn>
+              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="readMails(item.type)" rounded>已读</q-btn>
+              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="deleteMails(item.type)" rounded>
+                删除
+              </q-btn>
             </div>
             <q-infinite-scroll @load="onLoad" :offset="150">
               <q-card
@@ -103,7 +117,7 @@
 
           <div class="loading-container" v-else>
             <q-inner-loading :showing="loading">
-              <q-spinner-gears size="50px" color="brand" />
+              <q-spinner-ios color="white" size="8em" />
               <div class="label">加载中</div>
             </q-inner-loading>
           </div>

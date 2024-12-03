@@ -115,6 +115,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
+          window.captchaObj.reset();
           Notify.create({
             color: "negative",
             position: "top",

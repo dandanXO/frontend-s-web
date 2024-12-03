@@ -129,10 +129,10 @@
       </div>
     </q-page-sticky>
 
-    <!-- <PushNotification
+    <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
-    /> -->
+    />
 
     <div class="notice-outer">
       <div class="midd">
@@ -1324,27 +1324,35 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog v-model="isLuckyDrawModal">
-    <div class="luckyspin-wrapper">
-      <div class="luckyspin-header">
-        <img src="../assets/images/index/modal/luckyspin-title.png" />
-      </div>
-      <div class="luckyspin-container">
-        <div class="luckyspin-title">
-          <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+  <template v-if="isAndroid()">
+    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+      <div class="luckyspin-wrapper">
+        <div class="luckyspin-header">
+          <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
+        <div class="luckyspin-container">
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+          <div class="luckyspin-title">
+            <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+          </div>
 
-        <LuckySpinWheel />
+          <LuckySpinWheel show-controller />
+        </div>
+        <div class="q-mt-md">
+          <q-icon name="highlight_off" size="md" v-close-popup />
+        </div>
       </div>
-      <div class="q-mt-md">
-        <q-icon name="highlight_off" size="md" v-close-popup />
-      </div>
-    </div>
-  </q-dialog>
-
-  <q-dialog v-model="isCongratsModal">
-    <CongratsModal />
-  </q-dialog>
+    </q-dialog>
+  </template>
+  <template v-else>
+    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+      <CongratsModal>
+        <template #controller>
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+        </template>
+      </CongratsModal>
+    </q-dialog>
+  </template>
 
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
@@ -1362,9 +1370,29 @@
     </div>
   </q-dialog>
 
-  <q-dialog v-model="isMoneyRainModal">
-    <MoneyRainModal />
-    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
+    <MoneyRainModal>
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+      </template>
+    </MoneyRainModal>
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+  </q-dialog>
+
+  -
+  <q-dialog
+    v-if="popupPromo === 'mega-sharing-wheel'"
+    :model-value="megaSharingWheelDialogModel"
+    full-width
+    class="mega-sharing-wheel-dialog"
+    persistent
+  >
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense @click="closeDialog" />
+    <MegaSharingWheelModal>
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+      </template>
+    </MegaSharingWheelModal>
   </q-dialog>
 
   <q-dialog v-model="isMediaSettingsModal">
@@ -1375,7 +1403,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1389,9 +1417,6 @@ import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
-import DepositComponent from "../components/depositComponent.vue";
-import KYCGuestForm from "../components/KYCGuestForm.vue";
-import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
@@ -1413,7 +1438,8 @@ import "swiper/css/effect-coverflow";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
-import { useOneSignalWrapper } from "src/hooks/oneSignalWrapper";
+import PopupController from "src/components/PopupController.vue";
+import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -1421,11 +1447,13 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
-const isLuckyDrawModal = ref(false);
-const isCongratsModal = ref(false);
+// const isLuckyDrawModal = ref(false);
+// const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
-const isMoneyRainModal = ref(false);
+// const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
+const popupPromo = ref("");
+const megaSharingWheelDialogModel = ref(true);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -1466,6 +1494,13 @@ const activeCategoryLabel = computed(() => {
 //   item.active = true;
 // };
 
+provide("closeMegaSharingWheelDialog", () => {
+  megaSharingWheelDialogModel.value = false;
+});
+
+const closeDialog = () => {
+  popupPromo.value = "";
+};
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
@@ -3202,7 +3237,8 @@ const gotoPromo = (banner) => {
       if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
     } else {
       if (banner.redirectUrl === "redpacketrain") {
-        isMoneyRainModal.value = true;
+        // isMoneyRainModal.value = true;
+        popupPromo.value = "money-rain";
       } else {
         router.push(`/promo?name=${banner.redirectUrl}`);
       }
@@ -3357,34 +3393,32 @@ const openLiveInNewTab = (url) => {
   window.open(absoluteUrl, "_blank");
 };
 
-// const { initOneSignal, pushNotificationData } = useOneSignalWrapper();
+const pushNotificationData = ref();
 
-// const pushNotificationData = ref();
+const populatePushNotificationData = (data) => {
+  pushNotificationData.value = data;
+};
 
-// const populatePushNotificationData = (data) => {
-//   pushNotificationData.value = data;
-// };
+const initOneSignal = () => {
+  OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
 
-// const initOneSignal = () => {
-//   OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
+  let myClickListener = async function (event) {
+    console.log("CLICK PUSH");
+    let notificationData = event;
+    console.log(notificationData);
+    console.log(notificationData.notification.title);
+    console.log(notificationData.notification.body);
+    console.log(notificationData.notification.additionalData);
+    populatePushNotificationData(notificationData.notification);
+  };
+  OneSignal.Notifications.addEventListener("click", myClickListener);
 
-//   let myClickListener = async function (event) {
-//     console.log("CLICK PUSH");
-//     let notificationData = event;
-//     console.log(notificationData);
-//     console.log(notificationData.notification.title);
-//     console.log(notificationData.notification.body);
-//     console.log(notificationData.notification.additionalData);
-//     populatePushNotificationData(notificationData.notification);
-//   };
-//   OneSignal.Notifications.addEventListener("click", myClickListener);
-
-//   // Prompts the user for notification permissions.
-//   //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
-//   OneSignal.Notifications.requestPermission(true).then((accepted) => {
-//     console.log("User accepted notifications: " + accepted);
-//   });
-// };
+  // Prompts the user for notification permissions.
+  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+  OneSignal.Notifications.requestPermission(true).then((accepted) => {
+    console.log("User accepted notifications: " + accepted);
+  });
+};
 
 const loadCustomerAddress = () => {
   cached
@@ -3418,7 +3452,13 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data;
+      hbPromo.value = data.data.filter(
+        (redirectList) =>
+          redirectList.code !== "pak-mega-sharing-wheel" ||
+          (redirectList.code === "pak-mega-sharing-wheel" &&
+            store.token &&
+            (store.memberType === "TEST" || store.memberType === "PROMO_TEST"))
+      );
     });
 };
 
@@ -3531,7 +3571,11 @@ const mediaCode = ref("");
 
 const gotoFloatPromo = (val) => {
   if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
-    isMoneyRainModal.value = true;
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
+  } else if (val.type === "PROMO" && val.code === "pak-mega-sharing-wheel") {
+    megaSharingWheelDialogModel.value = true;
+    popupPromo.value = "mega-sharing-wheel";
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -3564,16 +3608,22 @@ onActivated(() => {
 
   checkSpinWheel();
 
-  // if (store.hasToken()) {
-  // }
-
   if (route.query.login === "true") {
-    isMoneyRainModal.value = true;
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
+  }
+
+  if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
+    hasInviteWheelPromo.value = true;
   }
 
   if (route.query.token) {
     store.autoLogin(route.query.token);
     checkSpinWheel();
+
+    if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
+      hasInviteWheelPromo.value = true;
+    }
   }
   afterActivated();
 });
@@ -3594,7 +3644,9 @@ onMounted(() => {
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
   afterMounted();
 
-  // initOneSignal("4165d739-dd64-4f8f-b0b1-e3b17e62e3f3");
+  if (Platform.is.android && Platform.is.capacitor) {
+    initOneSignal();
+  }
 });
 
 watch(
@@ -3617,6 +3669,8 @@ watch(
 //   }
 // );
 
+const hasInviteWheelPromo = ref(false);
+
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
     setTimeout(() => {
@@ -3635,7 +3689,8 @@ const showSpinWheel = () => {
         if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
-          isLuckyDrawModal.value = true;
+          // isLuckyDrawModal.value = true;
+          popupPromo.value = "lucky-spin-wheel";
         }
       }
     })
@@ -3648,7 +3703,8 @@ const showCongratsModal = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
-        isCongratsModal.value = true;
+        // isCongratsModal.value = true;
+        popupPromo.value = "lucky-spin-wheel";
       }
     }
   });
@@ -5268,6 +5324,7 @@ const showCongratsModal = () => {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  pointer-events: all;
 }
 
 .hb-float {
@@ -5287,5 +5344,13 @@ const showCongratsModal = () => {
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+.mega-sharing-wheel-dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: all;
 }
 </style>

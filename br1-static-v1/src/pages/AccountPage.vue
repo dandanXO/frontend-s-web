@@ -7,10 +7,26 @@
 
       <q-form ref="profileFormRef" class="pc-form">
         <div class="pc-form-item" @click="openPersonalCenterDialog">
-          <div class="pc-form-label">{{ $t("form.fullName") }}</div>
+          <div class="pc-form-label">{{ $t("form.firstName") }}</div>
           <div class="pc-form-input">
             <q-input
-              v-model="formDetail.realName"
+              v-model="formDetail.firstName"
+              filled
+              dense
+              clearable
+              borderless
+              standout
+              hide-bottom-space
+              readonly
+            ></q-input>
+          </div>
+        </div>
+
+        <div class="pc-form-item" @click="openPersonalCenterDialog">
+          <div class="pc-form-label">{{ $t("form.lastName") }}</div>
+          <div class="pc-form-input">
+            <q-input
+              v-model="formDetail.lastName"
               filled
               dense
               clearable
@@ -663,6 +679,12 @@ const loadInfo = () => {
   }
   formDetail.nickName = personalState.memberInfo.nickName;
   formDetail.realName = personalState.memberInfo.realName;
+  formDetail.firstName = personalState.memberInfo.realName
+    ? personalState.memberInfo.realName.split(",")[0]?.trim()
+    : "";
+  formDetail.lastName = personalState.memberInfo.realName
+    ? personalState.memberInfo.realName.split(",")[1]?.trim()
+    : "";
   formDetail.birthday = personalState.memberInfo.birthday;
   formDetail.email = personalState.memberInfo.email;
   formDetail.phone = personalState.memberInfo.phone;
@@ -1031,9 +1053,12 @@ const updatePwdInfo = reactive({
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-  return passwordPattern.test(value) || t('form.mustBeAlphaNumeric', {
-    field: translation.toLowerCase(),
-  });
+  return (
+    passwordPattern.test(value) ||
+    t("form.mustBeAlphaNumeric", {
+      field: translation.toLowerCase()
+    })
+  );
 };
 
 const submitUpdatePwd = () => {
