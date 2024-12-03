@@ -1332,6 +1332,7 @@ export default {
     number: 'Number',
     oldMemberDepositAmount: 'Old Member Deposit Amount',
     oldMemberDepositCount: 'Old Member Deposit Count',
+    oldMemberDepositMemberCount: 'Old Member Deposit Member Count',
     oldMemberWithdrawAmount: 'Old Member Withdraw Amount',
     oldMemberWithdrawCount: 'Old Member Withdraw Count',
     oneTimeSpin: 'One Time Spin',
