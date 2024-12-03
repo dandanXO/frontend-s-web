@@ -53,25 +53,25 @@
     <q-footer v-if="ui.footer" elevated>
       <div class="bottom-nav">
         <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
-          <q-route-tab to="/" name="home" exact>
+          <q-route-tab to="/" name="home" exact :ripple="false">
             <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-home.png" /></div>
             <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-home-hover.png" /></div>
             首页
           </q-route-tab>
-          <q-route-tab to="/promo" name="promo">
+          <q-route-tab to="/promo" name="promo" :ripple="false">
             <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-promo.png" /></div>
             <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-promo-hover.png" /></div>
             优惠
           </q-route-tab>
-          <q-route-tab to="/account" name="account">
+          <q-route-tab to="/account" name="account" :ripple="false">
             <div class="menu-icon account"><img src="../assets/images/index/menu/menu-account-hover.png" /></div>
           </q-route-tab>
-          <q-route-tab to="/affiliate" name="affiliate">
+          <q-route-tab to="/affiliate" name="affiliate" :ripple="false">
             <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-affiliate.png" /></div>
             <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-affiliate-hover.png" /></div>
             加盟
           </q-route-tab>
-          <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
+          <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live" :ripple="false">
             <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-livechat.png" /></div>
             <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-livechat-hover.png" /></div>
             客服
