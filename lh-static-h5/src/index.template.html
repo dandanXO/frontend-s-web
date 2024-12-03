@@ -156,34 +156,40 @@
     </script>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-    <script type="text/javascript">
-      var hostname = window.location.hostname;
-      // console.log(hostname);
-      if (hostname.indexOf("lh99966.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KTtv5inKGfP1Jw2q", ck: "KTtv5inKGfP1Jw2q" });
-      } else if (hostname.indexOf("lh59799.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuG5CF21aRbjlTk", ck: "KUuG5CF21aRbjlTk" });
-      } else if (hostname.indexOf("lh81097.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuGmPWdYgRIM8ud", ck: "KUuGmPWdYgRIM8ud" });
-      } else if (hostname.indexOf("lh50891.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuGqH3PR39zTbTM", ck: "KUuGqH3PR39zTbTM" });
-      } else if (hostname.indexOf("lh89186.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuGtTl6ivPktez9", ck: "KUuGtTl6ivPktez9" });
-      }
-    </script>
-
     <script>
       var CWRUMLICENCE = "wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9";
     </script>
-    <script
-      src="https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9"
-      async
-    ></script>
+    <script type="text/javascript">
+      (function initTracking() {
+        const pathname = window.location.pathname;
+        const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite"]
+        if(appPaths.includes(pathname)) return
+
+        var hostname = window.location.hostname;
+        // console.log(hostname);
+        if (hostname.indexOf("lh99966.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KTtv5inKGfP1Jw2q", ck: "KTtv5inKGfP1Jw2q" });
+        } else if (hostname.indexOf("lh59799.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuG5CF21aRbjlTk", ck: "KUuG5CF21aRbjlTk" });
+        } else if (hostname.indexOf("lh81097.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGmPWdYgRIM8ud", ck: "KUuGmPWdYgRIM8ud" });
+        } else if (hostname.indexOf("lh50891.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGqH3PR39zTbTM", ck: "KUuGqH3PR39zTbTM" });
+        } else if (hostname.indexOf("lh89186.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGtTl6ivPktez9", ck: "KUuGtTl6ivPktez9" });
+        }
+
+        const cloudWiseScript = document.createElement("script");
+        cloudWiseScript.src = 'https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9';
+        cloudWiseScript.async = true;
+        document.head.appendChild(cloudWiseScript);
+      })();
+    </script>
   </head>
   <body>
     <!-- DO NOT touch the following DIV -->
