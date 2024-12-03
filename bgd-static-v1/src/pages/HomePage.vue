@@ -497,7 +497,9 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                            return `url(${require(`../assets/images/index/live/item-game-${
+                              item.name.toLowerCase() === 'evo' ? 'wc' : ''
+                            }${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
                             return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
