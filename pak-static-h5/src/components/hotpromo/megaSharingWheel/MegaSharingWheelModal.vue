@@ -201,13 +201,13 @@ const getReferFriendInfo = () => {
 
         missionDetails.value = [
           {
-            title: t("hotPromo.megaSharingWheel.invitedUsersDeposit"),
+            title: t("hotPromo.megaSharingWheel.invitersUsersDeposit"),
             total: stageReqResData.minInviterDepositCount,
             current: missionCount.value?.inviterDepositCount ?? 0,
             actionBtnName: t("btn.deposit")
           },
           {
-            title: t("hotPromo.megaSharingWheel.invitedUsersValidBet"),
+            title: t("hotPromo.megaSharingWheel.invitersUsersValidBet"),
             total: stageReqResData.minInviterValidBet,
             current: missionCount.value?.inviterValidBet ?? 0,
             actionBtnName: t("btn.betting")

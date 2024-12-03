@@ -564,8 +564,8 @@ export default {
     megaSharingWheel: {
       wheelTitle: "Mega Sharing Roulette",
       missionTitle: "Rewards",
-      invitedUsersDeposit: "Invited Users' Deposit Count ≥ ",
-      invitedUsersValidBet: "Invited Users' Valid Bet ≥ ",
+      invitersUsersDeposit: "Inviter's Deposit Count ≥ ",
+      invitersUsersValidBet: "Inviter's Valid Bet ≥ ",
       EligibleInvitedUsers: "Eligible Invited Users ≥ ",
       missionDescription: "Finish the task to claim your ticket",
       timeLimited: "Time-limited",
