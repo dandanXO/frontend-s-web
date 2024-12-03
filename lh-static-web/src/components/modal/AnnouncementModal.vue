@@ -46,7 +46,7 @@
         <div class="dialog-action-row">
           <div class="dialog-action-item close-icon" @click="visible = false">
             <el-icon size="32px">
-              <RiCloseFill />
+              <img src="../../assets/home/close-circle-fill.svg" />
             </el-icon>
           </div>
         </div>
@@ -59,7 +59,6 @@
 import { ref, watch, onMounted } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
-import { RiCloseFill } from "vue-remix-icons";
 import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";

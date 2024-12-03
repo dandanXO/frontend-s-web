@@ -100,6 +100,10 @@
   font-display: swap;
 }
 
+*, :after, :before {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -110,7 +114,10 @@ body {
     "WenQuanYi Micro Hei", sans-serif;
   background: #f5f6f8;
   a {
+    color: #1890ff;
     text-decoration: none;
+    outline: none;
+    cursor: pointer;
   }
   .is-active {
     .el-carousel__button {
@@ -572,6 +579,29 @@ button {
   span {
     color: #424f72;
   }
+}
+
+.fill-468cff {
+  filter: brightness(0) saturate(100%) invert(54%) sepia(80%) saturate(3385%) hue-rotate(199deg) brightness(100%)
+    contrast(101%);
+}
+
+.fill-black {
+  filter: brightness(0);
+}
+
+.fill-a98f7c {
+  filter: brightness(0) saturate(100%) invert(57%) sepia(10%) saturate(732%) hue-rotate(343deg) brightness(100%)
+    contrast(96%);
+}
+
+.fill-424f72 {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(3%) saturate(7223%) hue-rotate(187deg) brightness(94%)
+    contrast(79%);
+}
+
+.fill-white {
+  filter: brightness(0) invert(1);
 }
 
 .dark {

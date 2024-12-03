@@ -39,11 +39,11 @@
           </div>
 
           <div class="unlink-btn" @click="unbindBankCard(bc)">
-            <RiLinkUnlink />
+            <img width="24" height="24" class="fill-424f72" src="../../assets/home/link-unlink.svg" />
           </div>
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
-          <RiLink />
+          <img width="24" height="24" class="fill-424f72" src="../../assets/home/links-line.svg" />
           <span class="lock-card-txt">添加银行卡 / 支付宝 / 电子钱包 / 虚拟币</span>
         </div>
       </div>
@@ -197,7 +197,9 @@
         <el-form-item class="txt-center" v-if="isSendOtp">
           <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
         </el-form-item>
-        <span v-if="isEWALLET" class="tip-text">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
+        <span v-if="isEWALLET" class="tip-text">
+          *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
+        </span>
       </el-form>
     </el-dialog>
     <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
@@ -240,10 +242,8 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, watch } from "vue";
 import { getVerificationCode } from "@/api/index/login";
-// import { Modal, message } from "ant-design-vue";
 import { ElMessageBox } from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 import {
   loadBanks,
   loadAllBankCards,
@@ -266,9 +266,7 @@ export default defineComponent({
   name: "WithdrawBankView",
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    InfoFilled,
-    RiLink,
-    RiLinkUnlink
+    InfoFilled
   },
   setup() {
     const notify = useNotify();

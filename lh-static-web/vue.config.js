@@ -2,6 +2,7 @@ const { defineConfig } = require("@vue/cli-service");
 const defaultSettings = require("./src/settings.js");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
+const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 
 module.exports = defineConfig({
   lintOnSave: false,
@@ -46,7 +47,12 @@ module.exports = defineConfig({
           }
         })
       ]
-    }
+    },
+    plugins: [
+      new MomentLocalesPlugin({
+        localesToKeep: ["zh-cn"]
+      })
+    ]
   },
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
