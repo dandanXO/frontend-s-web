@@ -84,7 +84,7 @@
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
         <img style="width: 120px; height: 30px" src="../assets/images/affiliate/bonus-percentage-title.png" alt="" />
         <div class="affiliate-sub">
-          <div class="affiliate-subtitle">以下为佣金占比示例</div>
+          <div class="affiliate-subtitle">佣金如何计划</div>
           <div class="affiliate-inner">
             <table>
               <tbody>
@@ -134,38 +134,43 @@
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
         <img style="width: 120px; height: 30px" src="../assets/images/affiliate/bonus-title.png" alt="" />
         <div class="affiliate-sub">
-          <div class="affiliate-subtitle">以下为佣金计算示例</div>
+          <div class="affiliate-subtitle">佣金计算（以下为示例）</div>
+          <div style="color: white;">例子：存款1,000元 提款0元 优惠申请100元</div>
           <div class="affiliate-inner">
             <table>
               <tr>
                 <td style="background: #339ebc; color: white">平台输赢</td>
-                <td style="background: #339ebc; color: white">10000</td>
+                <td style="background: #339ebc; color: white">1,100</td>
               </tr>
               <tr>
-                <td class="highlight">-平台费</td>
-                <td class="highlight">-800</td>
+                <td class="highlight">-扣除申请优惠</td>
+                <td class="highlight">-100</td>
               </tr>
               <tr>
-                <td :colspan="2">平台费=游戏总输赢*15%</td>
+                <td class="highlight">扣除存提手续费1</td>
+                <td class="highlight">-10</td>
               </tr>
               <tr>
-                <td class="highlight">-红利</td>
-                <td class="highlight">-200</td>
+                <td class="highlight">平台服务费</td>
+                <td class="highlight">88</td>
               </tr>
               <tr>
-                <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
+                <td :colspan="2" style="padding:0;height:1px;"></td>
               </tr>
               <tr>
-                <td class="highlight">=净利润</td>
-                <td class="highlight">9000</td>
+                <td class="highlight">盈利</td>
+                <td class="highlight">902</td>
               </tr>
               <tr>
-                <td class="highlight">*佣金比例</td>
+                <td class="highlight">乘以佣金比例</td>
                 <td class="highlight">*35%</td>
               </tr>
               <tr>
-                <td class="result">总佣金</td>
-                <td class="result">2798.4</td>
+                <td :colspan="2" style="padding:0;height:1px;"></td>
+              </tr>
+              <tr>
+                <td class="result">代理佣金</td>
+                <td class="result">315.7</td>
               </tr>
             </table>
           </div>
@@ -180,12 +185,11 @@
           <img class="bonus-rabbit" src="../assets/images/affiliate/bonus-rabbit.png" alt="" />
           <div class="affiliate-inner">
             <ul>
-              <li>1.佣金派发时间：每月 1 号至 10 号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
-              <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000 为一个活跃玩家。</li>
-              <li>
-                3.代理推广每月至少需要新注册活跃会员达到 3
-                名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
-              </li>
+              <li>1.月充值金额≥200元为活跃玩家,当月需要至少五个活跃会员才能结算佣金。</li>
+              <li>2.当月的佣金分佣发放时间为下个月的五号到十号会结算完毕。</li>
+              <li>3.佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
+              <li>4.代理佣金计算方式：<br /><span style="color: #ee4148;">[（投注输赢额-优惠100%）-（存款+提款）*1%-平台费*8%]*佣金比例</span></li>
+              <li>5.代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广兴發平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。</li>
             </ul>
           </div>
         </div>
