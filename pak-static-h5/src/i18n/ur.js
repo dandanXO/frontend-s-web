@@ -560,8 +560,8 @@ export default {
     megaSharingWheel: {
       wheelTitle: "میگا شیئرنگ رولیٹی",
       missionTitle: "انعامات",
-      invitedUsersDeposit: "مدعو صارفین کی جمع کی تعداد ≥ ",
-      invitedUsersValidBet: "مدعو صارفین کی درست شرط ≥ ",
+      invitersUsersDeposit: "مدعو کرنے والے کی ڈپازٹ کی تعداد ≥ ",
+      invitersUsersValidBet: "مدعو کرنے والے کی درست بیٹ ≥ ",
       EligibleInvitedUsers: "اہل مدعو صارفین ≥ ",
       missionDescription: "اپنا ٹکٹ حاصل کرنے کے لئے کام مکمل کریں",
       timeLimited: "وقت محدود",
