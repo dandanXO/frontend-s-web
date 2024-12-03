@@ -58,7 +58,7 @@ const searchRecord = (val, isStartDate) => {
   emit("handleDateChange", { val, isStartDate });
 };
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .flex-div {
   display: flex;
   align-items: center;
