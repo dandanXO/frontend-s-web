@@ -706,20 +706,24 @@ svg {
 
   .q-footer {
     box-shadow: none;
-    height: 3.5rem;
+    height: 4rem;
     overflow: visible;
 
     .q-tabs {
-      background: linear-gradient(to bottom,transparent 0%, transparent 32%, #0f182e 32%,#0f182e 100%);
+      background: linear-gradient(to bottom, transparent 0%, transparent 32%, #0f182e 32%, #0f182e 100%);
       margin-top: -1.7rem;
     }
     .q-tab {
-      height: 5.2rem;
+      height: 4em;
+      align-self: flex-end;
       background: transparent;
       .q-tab__content {
         flex-wrap: nowrap;
         justify-content: flex-end;
         align-self: flex-end;
+      }
+      &:nth-child(3) {
+        height: 5.2rem;
       }
       &--active {
         color: #fff;
