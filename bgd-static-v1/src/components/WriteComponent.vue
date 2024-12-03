@@ -16,7 +16,6 @@
             label-color="brand"
             outlined
             color="green"
-            bg-color="black"
           />
 
           <!--
@@ -52,7 +51,6 @@
             outlined
             color="green"
             :placeholder="$t('form.subjectTitle_placeholder')"
-            bg-color="black"
           />
         </div>
 
@@ -105,7 +103,6 @@
             label-color="brand"
             outlined
             color="green"
-            bg-color="black"
           ></q-input>
         </div>
         <div class="bottom-btn">
@@ -216,6 +213,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import "../css/mixin.scss";
+
 .modal-feedback-div {
   background: white;
 }
@@ -237,6 +236,29 @@ onMounted(() => {
 
     .q-field--filled .q-field__control {
       // background: salmon;
+    }
+
+    .q-field {
+      :deep(.q-field__control) {
+        background: #ffffff1a;
+
+        &::before {
+          @include gradient-border(
+            linear-gradient(
+              90deg,
+              rgba(243, 195, 93, 0.15) 0%,
+              rgba(243, 195, 93, 0) 24%,
+              rgba(243, 195, 93, 0.15) 100%
+            )
+          );
+        }
+      }
+      :deep(.q-field__label) {
+        color: #5f6061;
+      }
+      :deep(.q-placeholder)::placeholder {
+        color: #5f6061;
+      }
     }
   }
 
@@ -285,12 +307,15 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  border: 1px solid #5d8956;
+  background: url(../assets/images/index/btn-bg-green-small.png) no-repeat center center;
+  background-size: contain;
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #fff;
-  border-radius: 12px;
+  color: #000a01;
+  border: none;
+  &::before {
+    display: none;
+  }
 }
 </style>

@@ -40,7 +40,7 @@
 
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('form.phone')">
+            <InputField :label="$t('form.phone')" fancy>
               <template #input>
                 <q-input
                   type="tel"
@@ -60,7 +60,7 @@
                   :placeholder="$t('form.phone_placeholder')"
                 >
                   <template v-slot:prepend>
-                    <q-icon name="smartphone" />
+                    <FancyIcon name="smartphone" />
                     <div class="prepend-number">+880</div>
                   </template>
                 </q-input>
@@ -77,7 +77,7 @@
               </template>
             </InputField> -->
 
-            <InputField :label="$t('form.email')">
+            <InputField :label="$t('form.email')" fancy>
               <template #input>
                 <q-input
                   type="email"
@@ -93,7 +93,7 @@
               </template>
             </InputField>
 
-            <InputField :label="$t('form.verificationCode')">
+            <InputField :label="$t('form.verificationCode')" fancy>
               <template #input>
                 <q-input
                   ref="ftCaptchaRef"
@@ -131,7 +131,7 @@
       <p>{{ $t("form.otp_sent_title") }}</p>
       <InputRowGrid>
         <template #fields>
-          <InputField :label="$t('form.otp')">
+          <InputField :label="$t('form.otp')" fancy>
             <template #input>
               <q-input
                 ref="codeRef"
@@ -147,7 +147,7 @@
             </template>
           </InputField>
 
-          <InputField :label="$t('form.newPassword')">
+          <InputField :label="$t('form.newPassword')" fancy>
             <template #input>
               <q-input
                 ref="newPwdRef"
@@ -175,7 +175,7 @@
             </template>
           </InputField>
 
-          <InputField :label="$t('form.confirmNewPassword')">
+          <InputField :label="$t('form.confirmNewPassword')" fancy>
             <template #input>
               <q-input
                 ref="newConfirmPwdRef"
@@ -223,7 +223,7 @@
             </template>
           </InputField>
 
-          <InputField :label="$t('form.verificationCode')">
+          <InputField :label="$t('form.verificationCode')" fancy>
             <template #input>
               <q-input
                 ref="captchaRef"
@@ -275,6 +275,8 @@ import ConfirmButton from "src/atoms/ConfirmButton.vue";
 import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import FancyInput from "src/components/auth/FancyInput.vue";
+import FancyIcon from "src/components/auth/FancyIcon.vue";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -326,6 +328,7 @@ const newConfirmPwdVModel = ref();
 const isRequestSent = ref(false);
 
 const onSubmitForgotPwd = () => {
+  console.log(loginNameRef.value);
   loginNameRef.value.validate();
   emailRef.value.validate();
   ftCaptchaRef.value.validate();

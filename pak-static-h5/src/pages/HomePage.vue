@@ -3614,7 +3614,7 @@ onActivated(() => {
   }
 
   if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
-    checkInviteWheel();
+    hasInviteWheelPromo.value = true;
   }
 
   if (route.query.token) {
@@ -3622,7 +3622,7 @@ onActivated(() => {
     checkSpinWheel();
 
     if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
-      checkInviteWheel();
+      hasInviteWheelPromo.value = true;
     }
   }
   afterActivated();
@@ -3670,14 +3670,6 @@ watch(
 // );
 
 const hasInviteWheelPromo = ref(false);
-const checkInviteWheel = () => {
-  eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {
-    const stageResData = res.data.stageStatusVOList;
-    if (stageResData.length > 0) {
-      hasInviteWheelPromo.value = true;
-    }
-  });
-};
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {

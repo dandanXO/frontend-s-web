@@ -1603,7 +1603,7 @@ const openConfirmSignOutDialog = () => {
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  background: url(../assets/images/index/btn-bg-green-small.png) no-repeat center center;
   border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;

@@ -82,25 +82,26 @@
       }
 
       thead {
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
         td {
           font-size: 1rem;
           font-weight: 700;
           line-height: 1;
           text-align: left;
           border-width: 0px !important;
-          background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+          color: #000000;
         }
       }
 
       tbody {
         > :nth-child(odd) {
-          background: rgba(112, 188, 98, 0.1);
+          background: #ffffff1a;
         }
 
         td {
           border: none;
           .win {
-            color: #70bc62;
+            color: #24ee89;
           }
           .loss {
             color: #dc1a00;
@@ -149,7 +150,7 @@
       span {
         font-size: 16px;
         font-weight: bold;
-        color: #70bc62;
+        color: #24ee89;
       }
     }
 

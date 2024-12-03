@@ -286,8 +286,8 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "优惠领取区";
         } else if (route.path === "/affiliate") {
-          prevPage.value = "account";
-          hasPage.value = true;
+          prevPage.value = "";
+          hasPage.value = false;
           pageName.value = "加盟";
         } else if (route.path === "/insert-bankinfo") {
           hasPage.value = true;

@@ -706,6 +706,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    35013: "Has already been redeemed by the same IP address",
     35015: "The same device has already claimed this discount.",
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
@@ -735,6 +736,8 @@ export default {
     58000: "System Stage Error",
     58001: "System Stage Settings Error",
     58002: "Event haven't start",
-    58003: "Event have ended"
+    58003: "Event have expired",
+    58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
+    58005: "Congrats, You have Completed All Tasks"
   }
 };

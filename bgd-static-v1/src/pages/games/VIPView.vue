@@ -856,27 +856,11 @@ const getMonthlyVip = () => {
     }
 
     :deep(.q-tab--active) {
-      color: white;
+      color: #000a01;
+      // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
       // background-size: 100% 100%;
-      background: linear-gradient(
-        180deg,
-        rgba(97, 255, 0, 0) 0%,
-        rgba(97, 255, 0, 0.25) 50.5%,
-        rgba(97, 255, 0, 0) 100%
-      );
+      background: url(../../assets/images/account/deposit-withdraw-tab-active.png) no-repeat center center;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-
-      &:before {
-        content: "";
-        background-color: #70bc62;
-        height: 3px;
-        border-radius: 4px;
-        width: 30%;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-      }
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -1079,11 +1063,13 @@ const getMonthlyVip = () => {
   overflow: hidden;
   font-size: 1rem;
   text-align: center;
+  background: url(../../assets/images/promotion/promo-bg.png) no-repeat;
+  background-size: 100% 100%;
 
   .top-header {
-    color: #f1f1f1;
+    color: #000000;
     // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
-    background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
   }
 
   .q-table__card {
@@ -1114,15 +1100,24 @@ const getMonthlyVip = () => {
   thead > :first-child {
     background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
   }
+  tbody {
+    background-size: cover;
+    > tr {
+      background-color: 100% 100%;
+      td {
+        border: 1px solid #ffffff1a;
+      }
+    }
+  }
   tbody > :nth-child(odd) {
     // background: rgba(21, 0, 37, 0.2);
-    background: rgba(112, 188, 98, 0.1);
+    background: #ffffff1a;
 
     // background: #652c93;
     // background: #652c9315;
   }
   tbody > :nth-child(even) {
-    // background: rgba(21, 0, 37, 0.5);
+    background: #ffffff0d;
     // background: #502175;
     // background: #00ae000c;
   }
