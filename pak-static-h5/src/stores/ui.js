@@ -24,6 +24,8 @@ export const useUI = defineStore("ui-store", {
       youtubeUrl: "",
       charityUrl: "",
       footerIcon: "",
+      promo_megaspin: "",
+      promo_exchange: "",
       maintenanceStartTime: "",
       maintenanceEndTime: "",
       isPageInitialized: false,
