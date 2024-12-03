@@ -1622,6 +1622,7 @@ export default {
     successRate: '笔数成功率',
     successAmounntRate: '金额成功率',
     successfullyExport: '成功导出',
+    summary: '汇总',
     summaryAdjustment: '账户调整',
     summaryBonus: '红利',
     summaryCompanyWinLoss: '公司输赢',

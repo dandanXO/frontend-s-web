@@ -1453,6 +1453,7 @@ export default {
     successRate: '거래 성공률',
     successAmounntRate: '금액 성공률',
     successfullyExport: '성공적으로 내보내기',
+    summary: '요약',
     summaryAdjustment: '조정',
     summaryBonus: '보너스',
     summaryCompanyWinLoss: '회사 수익/손실',

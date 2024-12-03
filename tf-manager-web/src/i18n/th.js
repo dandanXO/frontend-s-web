@@ -1023,6 +1023,7 @@ export default {
     subtotal: 'ผลรวมย่อย',
     success: 'สำเร็จ',
     successfullyExport: 'ส่งออกสำเร็จ',
+    summary: 'สรุป',
     summaryAdjustment: 'การปรับ',
     summaryBonus: 'โบนัส',
     summaryCompanyWinLoss: 'บริษัทชนะ/แพ้',
