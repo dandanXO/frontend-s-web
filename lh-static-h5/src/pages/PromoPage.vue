@@ -161,10 +161,6 @@
                     selectedPromo.promoCode === 'lh1worldcupdota2' ||
                     selectedPromo.promoCode === 'lh1-football-fight',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
-                  lhduanwu:
-                    selectedPromo.promoCode === 'lh-duanwujie24' ||
-                    selectedPromo.promoCode === 'lh1-deposit-rebates' ||
-                    selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
                   lheuromanual:
                     selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-daily-checkin',
                   meizhoubei:
@@ -208,9 +204,6 @@
                 >
                   <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
-                    <YallaCompass :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
@@ -337,14 +330,12 @@ import { useNotify } from "src/hooks/notify";
 import { cached } from "src/boot/cache";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
-const YallaCompass = defineAsyncComponent(() => import("src/components/hotpromo/yalla-compass/YallaCompass.vue"));
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     NBAWaterBattle,
-    YallaCompass
   },
   setup() {
     const notify = useNotify();
@@ -1089,19 +1080,6 @@ export default defineComponent({
 
           .hot-promo {
             border-radius: 0px;
-          }
-        }
-
-        &.lhduanwu {
-          margin: 0px;
-          background-image: url("../assets/images/promo/hotpromo/dragonboat/h5bg.jpg");
-          width: 100%;
-          background-position: top center;
-          background-size: 100% auto;
-          background-repeat: no-repeat;
-
-          .hot-promo {
-            padding: 15px;
           }
         }
 
