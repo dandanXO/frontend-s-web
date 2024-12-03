@@ -697,6 +697,10 @@ svg {
     }
   }
 
+  .q-footer {
+    background: #0f182e;
+  }
+
   .q-footer .q-tab img {
     width: 1.5rem;
   }
@@ -711,7 +715,7 @@ svg {
 
     .q-tabs {
       background: linear-gradient(to bottom, transparent 0%, transparent 32%, #0f182e 32%, #0f182e 100%);
-      margin-top: -1.7rem;
+      margin-top: -1.4rem;
     }
     .q-tab {
       height: 4em;
@@ -720,7 +724,9 @@ svg {
       .q-tab__content {
         flex-wrap: nowrap;
         justify-content: flex-end;
-        align-self: flex-end;
+        align-self: center;
+        padding: 0px;
+        margin-top: 0px;
       }
       &:nth-child(3) {
         height: 5.2rem;
@@ -734,6 +740,10 @@ svg {
           top: 1.7rem;
           bottom: 0;
         }
+      }
+
+      img {
+        margin-bottom: 5px;
       }
     }
   }
