@@ -43,6 +43,15 @@
         >
           {{ t('fields.batchCancel') }}
         </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="primary"
+          v-permission="['sys:withdrawable:refresh']"
+          @click="refreshWithdrawable()"
+        >
+          {{ t('fields.refreshWithdrawable') }}
+        </el-button>
       </div>
     </div>
 
@@ -209,7 +218,10 @@
         :current-page="request.current"
       />
       <div class="table-footer">
-        <span>{{ t('fields.totalBetAmount') }}</span>
+        <span>{{ t('fields.withdrawableBalance') }}</span>
+        <span style="margin-left: 10px">$</span>
+        <span v-formatter="{data: uiControl.withdrawable, type: 'money'}" />
+        <span style="margin-left: 30px">{{ t('fields.totalBetAmount') }}</span>
         <span style="margin-left: 10px">$</span>
         <span v-formatter="{data: page.totalValidBet, type: 'money'}" />
         <span style="margin-left: 30px">
@@ -279,6 +291,7 @@ import {
   getTotal, hasOngoingRecords,
   getRolloverBets
 } from '../../../../../api/member-rollover-records'
+import { getWithdrawableBalance, refreshWithdrawableBalance } from '../../../../../api/member'
 import { required } from '../../../../../utils/validate';
 import { ElMessage } from 'element-plus';
 import { useRoute } from 'vue-router';
@@ -312,6 +325,7 @@ const uiControl = reactive({
     { key: 3, displayName: 'VOID', value: 'VOID' },
     { key: 4, displayName: 'CANCEL', value: 'CANCEL' }
   ],
+  withdrawable: 0
 })
 
 const page = reactive({
@@ -419,6 +433,11 @@ function checkQuery() {
   return query
 }
 
+async function loadWithdrawableBalance() {
+  const { data: ret } = await getWithdrawableBalance(props.mbrId, site.id)
+  uiControl.withdrawable = ret
+}
+
 async function loadRolloverRecords() {
   page.loading = true
   const query = checkQuery()
@@ -474,6 +493,12 @@ function showCancelAllEdit() {
   }
 }
 
+async function refreshWithdrawable() {
+  await refreshWithdrawableBalance(props.mbrId, site.id)
+  await loadWithdrawableBalance()
+  loadRolloverRecords()
+}
+
 function showDialog(type) {
   if (type === "CANCEL") {
     form.remark = null;
@@ -510,6 +535,7 @@ function cancelAllRecord() {
 
 onMounted(() => {
   loadRolloverRecords()
+  loadWithdrawableBalance()
 })
 </script>
 

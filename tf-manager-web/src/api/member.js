@@ -527,3 +527,21 @@ export const getRolloverEvents = (id, query) => {
     ContentType.form
   )
 }
+
+export const getWithdrawableBalance = (id, siteId) => {
+  return https().request(
+    `/member/${id}/withdrawableBalance`,
+    Method.GET,
+    { siteId: siteId },
+    ContentType.form
+  )
+}
+
+export const refreshWithdrawableBalance = (id, siteId) => {
+  return https().request(
+    `/member/${id}/withdrawableBalance/refresh?_method=PUT`,
+    Method.POST,
+    { siteId: siteId },
+    ContentType.form
+  )
+}

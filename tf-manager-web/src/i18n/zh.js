@@ -1485,6 +1485,7 @@ export default {
     referrerList: '推荐列表',
     referFriendRebateDetails: '邀请好友投注返水明细',
     referFriendRebateRecords: '邀请好友投注返水记录',
+    refreshWithdrawable: '刷新可提余额',
     registered: '已注册',
     register: '新注册用户',
     registerAddress: '注册地址',
