@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <NewMemberGuide/>
+    <NewMemberGuide v-if="store.regSuccessGuideVisible"/>
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
@@ -206,14 +206,16 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, ref, watch, defineAsyncComponent } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 
 import { translateRecord } from "src/directives/translate";
 import { MAILBOX_TYPES } from "src/constant/mailbox";
-import NewMemberGuide from 'components/home/NewMemberGuide.vue'
+
+const NewMemberGuide = defineAsyncComponent(() => import('components/home/NewMemberGuide.vue'))
+
 export default defineComponent({
   name: "MainLayout",
 

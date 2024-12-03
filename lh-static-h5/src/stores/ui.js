@@ -20,7 +20,8 @@ export const useUI = defineStore("ui-store", {
       slotLists: [],
       CSAUrl: "",
       notificationQueue: [],
-      notificationZIndex: 9500
+      notificationZIndex: 9500,
+      currentRuntime: 'UNCHECKED',
     };
   },
   actions: {
