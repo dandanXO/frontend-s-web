@@ -657,8 +657,8 @@ function showDialog(type) {
     form.vcallId = null;
     uiControl.dialogTitle = t('fields.addUser')
     uiControl.userTypeSelect = false
-    uiControl.siteSelectVisible = false
-    uiControl.rolesSelect = true
+    uiControl.siteSelectVisible = true
+    uiControl.rolesSelect = false
   } else if (type === 'EDIT') {
     form.siteId = null
     form.siteIdArray = null
