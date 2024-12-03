@@ -46,19 +46,15 @@
     <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
     <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024'" :promo-code="list.promoCode" />
     <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot'" />
-    <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024'" :promo-code="list.promoCode" />
     <BlastPremierGlobalPromo v-if="list.redirectUrl === 'lh1-blast-premier-treasure'" :promo-code="list.promoCode" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual'" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao'" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match'" />
     <SlotLacky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
-    <IntelEls24 v-if="list.redirectUrl === 'lh1-intel-esl'" />
-    <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
     <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
     <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu'" />
-    <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen'" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
     <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-cycle-loss-refund'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
@@ -66,22 +62,17 @@
     <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
     <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" />
     <NewFootball v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
-    <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
     <EslOneBkk2024 v-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
-    <Dota2BlastSlam2024 v-if="list.redirectUrl === 'lh1-dota2-blast-slam-2024'" :promo-code="list.promoCode" />
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'lh1-national-day-2024'" :promo-code="list.promoCode" />
     <LoLS14 v-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
     <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode" />
-    <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <lh1Vip v-if="list.redirectUrl === 'lh1-vip'" />
-    <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
-    <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
     <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
     <ValorantChampionTour2024
@@ -144,9 +135,6 @@ const EuroCup2024 = defineAsyncComponent(() => import("../components/hotpromo/eu
 const EuroCup2024FirstShoot = defineAsyncComponent(() =>
   import("./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue")
 );
-const BlastPremierPromo = defineAsyncComponent(() =>
-  import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
-);
 const BlastPremierGlobalPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierGlobalPromo/BlastPremierGlobalPromo.vue")
 );
@@ -155,12 +143,9 @@ const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo
 const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
 const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const IntelEls24 = defineAsyncComponent(() => import("../components/hotpromo/intel-els-24/intel-els-24.vue"));
-const DepositRebates = defineAsyncComponent(() => import("../components/hotpromo/depositRebates/depositRebates.vue"));
 const DepositRebate2 = defineAsyncComponent(() => import("../components/hotpromo/depositRebate2/depositRebate2.vue"));
 const WinLossPromo = defineAsyncComponent(() => import("../components/hotpromo/winloss/WinLoss.vue"));
 const AijiasuPromo = defineAsyncComponent(() => import("../components/hotpromo/aijiasu/AijiasuPromo.vue"));
-const EuroRegen = defineAsyncComponent(() => import("../components/hotpromo/EuroRegen/EuroRegen.vue"));
 const newplayerGuide = defineAsyncComponent(() => import("../components/hotpromo/newplayerGuide/newplayerGuide.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const ChallengeComebackPromo = defineAsyncComponent(() =>
@@ -175,11 +160,9 @@ const LivepokerRebate = defineAsyncComponent(() =>
   import("../components/hotpromo/livepoker-rebate/LivepokerRebate.vue")
 );
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
-const EslProCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue"));
 const DreamLeagueS24 = defineAsyncComponent(() => import("./hotpromo/dream-league-s24/DreamLeagueS24.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
 const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
-const Dota2BlastSlam2024 = defineAsyncComponent(() => import("./hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"));
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
 const NationalDay2024 = defineAsyncComponent(() =>
@@ -187,12 +170,9 @@ const NationalDay2024 = defineAsyncComponent(() =>
 );
 const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
 const Dota2Ti13 = defineAsyncComponent(() => import("../components/hotpromo/dota2-ti13/Dota2Ti13.vue"));
-const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"));
 const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
 const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/daili/DailiPromo.vue"));
 const lh1Vip = defineAsyncComponent(() => import("./hotpromo/lh1-vip/lh1Vip.vue"));
-const BbDachaBelgrade = defineAsyncComponent(() => import("./hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue"));
-const ElisaGift = defineAsyncComponent(() => import("./hotpromo/elisa-gift/ElisaGift.vue"));
 const PokerWinningPromo = defineAsyncComponent(() => import("./hotpromo/poker-winning/PokerWinningPromo.vue"));
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
 const ValorantChampionTour2024 = defineAsyncComponent(() =>
@@ -207,7 +187,6 @@ export default defineComponent({
     NewFootball,
     DailyCheckin,
     SlotLacky8,
-    IntelEls24,
     fishHongbao,
     ClaimPromo,
     DragonCardPromo,
@@ -227,39 +206,31 @@ export default defineComponent({
     FtdPromo,
     EuroCup2024,
     EuroCup2024FirstShoot,
-    BlastPremierPromo,
     BlastPremierGlobalPromo,
     EurocupManual,
     SportZhongChao,
     Nba24Match,
-    DepositRebates,
     DepositRebate2,
     WinLossPromo,
     AijiasuPromo,
-    EuroRegen,
     newplayerGuide,
     OuZuLianPromo,
     ChallengeComebackPromo,
     OfficialGiftPromo,
     LPLLCK,
     LivepokerRebate,
-    EslProCsgo2,
     EslOneBkk2024,
     DreamLeagueS24,
     Cba30Dream,
     PerfectWorldMajor2024,
-    Dota2BlastSlam2024,
     LiveDailyRebates,
     NewVipRebate,
     NationalDay2024,
     LoLS14,
     Dota2Ti13,
-    BlackMythWuKongPromo,
     SubmitClaimPromo,
     DailiPromo,
     lh1Vip,
-    BbDachaBelgrade,
-    ElisaGift,
     PokerWinningPromo,
     SlotLossBonusPromo,
     ValorantChampionTour2024

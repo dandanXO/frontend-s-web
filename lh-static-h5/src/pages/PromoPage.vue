@@ -148,12 +148,6 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee
-                v-if="
-                  selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
-                  selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure'
-                "
-              />
               <div
                 class="inner"
                 :class="{
@@ -340,7 +334,6 @@ import { useLocalStorage } from "@vueuse/core";
 import HotPromotion from "components/HotPromotion";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
-import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { cached } from "src/boot/cache";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
@@ -350,7 +343,6 @@ export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee,
     NBAWaterBattle,
     YallaCompass
   },
