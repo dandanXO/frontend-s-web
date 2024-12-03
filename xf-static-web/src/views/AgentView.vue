@@ -132,7 +132,7 @@
             <img :src="require(`../assets/images/affiliate/bonus-calculation-title.png`)" alt="" />
             <div class="affiliate-sub" style="height: 515px; width: 450px">
               <div class="affiliate-subtitle">计算公式</div>
-              <div style="color: white;">例子1：存款1,000元 提款0元 优惠申请100元</div>
+              <div style="color: white;">例子：存款1,000元 提款0元 优惠申请100元</div>
               <div class="affiliate-inner">
                 <table>
                   <tr>
