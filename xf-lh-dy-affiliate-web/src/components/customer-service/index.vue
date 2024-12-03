@@ -21,8 +21,10 @@
       <div class="services">
         <div class="contact-boxes" :style="props.siteId === '8' ? 'gap: 50px;': ''">
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
-            <div class="contacticon"><img v-if="c.icon !== 'czalo'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.svg`)">
+            <div class="contacticon">
               <img v-if="c.icon === 'czalo'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.png`)">
+              <img v-else-if="c.icon === 'sigua'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.png`)">
+              <img v-else style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.svg`)">
             </div>
             <div class="type">{{ c.type }}</div>
             <div class="link">{{ c.link }}</div>
@@ -66,8 +68,17 @@ const skypeLink = () => {
     return 'live:.cid.1b8d9a018a52a8f5'
   } else if (props.siteId === '1') {
     return 'live:.cid.178f76828f54342e'
+  } else if (props.siteId === '7') {
+    return 'live:.cid.8099acb97a5ea41'
   } else {
     return 'live:.cid.1a1ab9b6b5b0721f'
+  }
+}
+const loofahLink = () => {
+  if (props.siteId === '7') {
+    return 'Lh080688'
+  } else if (props.siteId === '1') {
+    return 'xfdlk001'
   }
 }
 const bubbleLink = () => {
@@ -76,7 +87,7 @@ const bubbleLink = () => {
   } else if (props.siteId === '1') {
     return 'xfdlkf001'
   } else {
-    return 'LH1008666'
+    return 'LH080688'
   }
 }
 
@@ -103,7 +114,7 @@ const mailLink = () => {
 }
 const qqLink = () => {
   if (props.siteId === '7') {
-    return '1903687863'
+    return '2115894008'
   } else if (props.siteId === '1') {
     return '1600337511'
   } else if (props.siteId === '6') {
@@ -114,7 +125,7 @@ const qqLink = () => {
 }
 const telegramLink = () => {
   if (props.siteId === '7') {
-    return '@LH18668'
+    return '@leihuo686'
   } else if (props.siteId === '15') {
     return '@dailykakagame'
   } else if (props.siteId === '8') {
@@ -124,7 +135,7 @@ const telegramLink = () => {
   } else if (props.siteId === '6') {
     return '@dyhykf001'
   } else {
-    return 'leihuo123'
+    return '@leihuo123'
   }
 }
 const contactlist = ref()
@@ -262,7 +273,139 @@ const initContactList = () => {
       }
     ]
   }
-  if (props.siteId === '6' || props.siteId === '1') {
+  if (props.siteId === '7') {
+    contactlist.value = [
+      {
+        icon: 'cmail',
+        type: t('common.email'),
+        link: mailLink(),
+        btns: [{
+          text: t('common.askus'),
+          action: ''
+        }]
+      },
+      {
+        icon: 'cqq',
+        type: t('common.qq'),
+        link: qqLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://im.qq.com/index/'
+        }]
+      },
+      {
+        icon: 'cskype',
+        type: t('common.skype'),
+        link: skypeLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://www.skype.com/zh-Hans/get-skype/'
+        }]
+      },
+      {
+        icon: 'ctelegram',
+        type: 'Telegram',
+        link: telegramLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://telegram.org/'
+        }]
+      },
+      {
+        icon: 'sigua',
+        type: t('common.loofah'),
+        link: loofahLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://ya.cn/index.html'
+        }]
+      }
+    ]
+  }
+  if (props.siteId === '1') {
+    contactlist.value = [
+      {
+        icon: 'cmail',
+        type: t('common.email'),
+        link: mailLink(),
+        btns: [{
+          text: t('common.askus'),
+          action: ''
+        }]
+      },
+      {
+        icon: 'cqq',
+        type: t('common.qq'),
+        link: qqLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://im.qq.com/index/'
+        }]
+      },
+      {
+        icon: 'cskype',
+        type: t('common.skype'),
+        link: skypeLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://www.skype.com/zh-Hans/get-skype/'
+        }]
+      },
+      {
+        icon: 'ctelegram',
+        type: 'Telegram',
+        link: telegramLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://telegram.org/'
+        }]
+      },
+      {
+        icon: 'sigua',
+        type: t('common.loofah'),
+        link: loofahLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://ya.cn/index.html'
+        }]
+      }
+    ]
+  }
+  // 上面 if 各自有的客服管道
+  // 下面兩個 if 是大家固定要刪除或新增的 就不動
+  if (props.siteId === '6' || props.siteId === '1' || props.siteId === '7') {
     contactlist.value.shift()
   }
   if (props.siteId === '6' || props.siteId === '1' || props.siteId === '7') {
