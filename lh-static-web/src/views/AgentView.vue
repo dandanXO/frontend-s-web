@@ -8,7 +8,8 @@
             <div class="contact-left">
               <div class="contact-box mail-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-mail.png" />
+
+                  <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
                 <div class="contact-name">合营 QQ</div>
                 <span ref="contact0" class="contact-text">1903687863</span>
@@ -19,7 +20,8 @@
               </div>
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-qq.png" />
+
+                  <img src="../assets/images/affiliate/icon-skype.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
                 <span ref="contact1" class="contact-text">@LH18668</span>
@@ -30,7 +32,8 @@
               </div>
               <div class="contact-box skype-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-skype.png" />
+
+                  <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">合营部 Skype</div>
                 <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.1a1ab9b6b5b0721f</span>
@@ -41,24 +44,25 @@
               </div>
               <div class="contact-box telegram-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-telegram.png" />
+
+                  <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
                 <div class="contact-name">丝瓜</div>
                 <span ref="contact3" class="contact-text">LH1008666</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
-                  <a target="_blank" class="download-btn" href="https://am35.cc">下载</a>
+                  <a target="_blank" class="download-btn" href="https://ya.cn/index.html">下载</a>
                 </div>
               </div>
               <div class="contact-box bubble-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-bubble.png" />
+                  <img src="../assets/images/affiliate/amico-icon.png" />
                 </div>
                 <div class="contact-name">Amico</div>
                 <span ref="contact4" class="contact-text">vip333</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('4')">{{ copybtntxt4 }}</button>
-                  <a target="_blank" class="download-btn" href="https://ya.cn/index.html">下载</a>
+                  <a target="_blank" class="download-btn" href="https://am35.cc">下载</a>
                 </div>
               </div>
             </div>

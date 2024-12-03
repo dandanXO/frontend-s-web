@@ -1,200 +1,203 @@
 <template>
   <div class="affiliate-container">
     <div class="page-title" v-if="!$q.dark.isActive">
-      <div class="page-title-img" ><img src="../assets/images/affiliate/title-1.png" /></div>
-      <div class="page-title-img" ><img src="../assets/images/affiliate/title-2.png" /></div>
-      <div class="page-title-img" style="margin-top:32px;" ><img src="../assets/images/affiliate/title-3.png" /></div>
+      <div class="page-title-img"><img src="../assets/images/affiliate/title-1.png" /></div>
+      <div class="page-title-img"><img src="../assets/images/affiliate/title-2.png" /></div>
+      <div class="page-title-img" style="margin-top: 32px"><img src="../assets/images/affiliate/title-3.png" /></div>
     </div>
     <div class="page-title-img" v-else><img src="../assets/images/affiliate/affiliate-title.png" /></div>
-    <q-input style="width: 100%; opacity: 0; display: none;" filled color="white" ref="copyinput" v-model="text_copied" />
+    <q-input style="width: 100%; opacity: 0; height: 5px" filled color="white" ref="copyinput" v-model="text_copied" />
     <div class="contact-list">
-        <div class="contact-item">
-            <div class="contact-info">
-                <img src="../assets/images/affiliate/qqlogo.png" alt="QQ Icon" class="contact-icon">
-                <div class="contact-details">
-                    <span class="contact-name">雷火 QQ</span>
-                    <span class="contact-id">1903687863</span>
-                </div>
-            </div>
-            <div class="contact-actions">
-                <button @click="copyText('1903687863')" class="copy-button">复制</button>
-                <a target="_blank" href="https://im.qq.com/index/" class="download-button">下载</a>
-            </div>
+      <div class="contact-item">
+        <div class="contact-info">
+          <img src="../assets/images/affiliate/qqlogo.png" alt="QQ Icon" class="contact-icon" />
+          <div class="contact-details">
+            <span class="contact-name">雷火 QQ</span>
+            <span class="contact-id">1903687863</span>
+          </div>
         </div>
+        <div class="contact-actions">
+          <button @click="copyText('1903687863')" class="copy-button">复制</button>
+          <a target="_blank" href="https://im.qq.com/index/" class="download-button">下载</a>
+        </div>
+      </div>
 
-        <div class="contact-item">
-            <div class="contact-info">
-                <img src="../assets/images/affiliate/tglogo.png" alt="Telegram Icon" class="contact-icon">
-                <div class="contact-details">
-                    <span class="contact-name">Telegram</span>
-                    <span class="contact-id">@LH18668</span>
-                </div>
-            </div>
-            <div class="contact-actions">
-                <button class="copy-button" @click="copyText('@LH18668')">复制</button>
-                <a target="_blank" class="download-button" href="https://telegram.org/">下载</a>
-            </div>
+      <div class="contact-item">
+        <div class="contact-info">
+          <img src="../assets/images/affiliate/tglogo.png" alt="Telegram Icon" class="contact-icon" />
+          <div class="contact-details">
+            <span class="contact-name">Telegram</span>
+            <span class="contact-id">@LH18668</span>
+          </div>
         </div>
+        <div class="contact-actions">
+          <button class="copy-button" @click="copyText('@LH18668')">复制</button>
+          <a target="_blank" class="download-button" href="https://telegram.org/download">下载</a>
+        </div>
+      </div>
 
-        <div class="contact-item">
-            <div class="contact-info">
-                <img src="../assets/images/affiliate/skypelogo.png" alt="Skype Icon" class="contact-icon">
-                <div class="contact-details">
-                    <span class="contact-name">Skype</span>
-                    <span class="contact-id">live:.cid.1a1ab9b6b5b0721f</span>
-                </div>
-            </div>
-            <div class="contact-actions">
-                <button class="copy-button"  @click="copyText('live:.cid.1a1ab9b6b5b0721f')">复制</button>
-                <a target="_blank" class="download-button" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
-            </div>
+      <div class="contact-item">
+        <div class="contact-info">
+          <img src="../assets/images/affiliate/skypelogo.png" alt="Skype Icon" class="contact-icon" />
+          <div class="contact-details">
+            <span class="contact-name">Skype</span>
+            <span class="contact-id">live:.cid.1a1ab9b6b5b0721f</span>
+          </div>
         </div>
+        <div class="contact-actions">
+          <button class="copy-button" @click="copyText('live:.cid.1a1ab9b6b5b0721f')">复制</button>
+          <a target="_blank" class="download-button" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
+        </div>
+      </div>
 
-        <div class="contact-item">
-            <div class="contact-info">
-                <img src="../assets/images/affiliate/mmlogo.png" alt="丝瓜 Icon" class="contact-icon">
-                <div class="contact-details">
-                    <span class="contact-name">丝瓜</span>
-                    <span class="contact-id">LH1008666</span>
-                </div>
-            </div>
-            <div class="contact-actions">
-                <button class="copy-button" @click="copyText('LH1008666')">复制</button>
-                <a target="_blank" class="download-button" href="https://ya.cn/index.html">下载</a>
-            </div>
+      <div class="contact-item">
+        <div class="contact-info">
+          <img src="../assets/images/affiliate/mmlogo.png" alt="丝瓜 Icon" class="contact-icon" />
+          <div class="contact-details">
+            <span class="contact-name">丝瓜</span>
+            <span class="contact-id">LH1008666</span>
+          </div>
         </div>
+        <div class="contact-actions">
+          <button class="copy-button" @click="copyText('LH1008666')">复制</button>
+          <a target="_blank" class="download-button" href="https://ya.cn/index.html">下载</a>
+        </div>
+      </div>
 
-        <div class="contact-item">
-            <div class="contact-info">
-                <img src="../assets/images/affiliate/servicelogo.png" alt="Amico Icon" class="contact-icon">
-                <div class="contact-details">
-                    <span class="contact-name">Amico</span>
-                    <span class="contact-id">Vip333</span>
-                </div>
-            </div>
-            <div class="contact-actions">
-                <button class="copy-button"  @click="copyText('Vip333')">复制</button>
-                <a target="_blank" class="download-button" href="https://am35.cc">下载</a>
-            </div>
+      <div class="contact-item">
+        <div class="contact-info">
+          <img src="../assets/images/affiliate/servicelogo.png" alt="Amico Icon" class="contact-icon" />
+          <div class="contact-details">
+            <span class="contact-name">Amico</span>
+            <span class="contact-id">Vip333</span>
+          </div>
         </div>
+        <div class="contact-actions">
+          <button class="copy-button" @click="copyText('Vip333')">复制</button>
+          <a target="_blank" class="download-button" href="https://am35.cc">下载</a>
+        </div>
+      </div>
     </div>
     <div class="button-group">
-        <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"><button class="login-button">登陆</button></a>
-        <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"><button class="join-us-button">加入我们</button></a>
+      <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"><button class="login-button">登陆</button></a>
+      <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">
+        <button class="join-us-button">加入我们</button>
+      </a>
     </div>
     <div class="affiliate-subgroup agent-content-item">
-      <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%;">
-            <img style="width: 120px; height: 30px;" src="../assets/images/affiliate/bonus-percentage-title.png" alt="" />
-            <div class="affiliate-sub">
-              <div class="affiliate-subtitle">以下为佣金占比示例</div>
-              <div class="affiliate-inner">
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>代理</th>
-                      <th>盈利</th>
-                      <th>有效活跃会员</th>
-                      <th>佣金比例</th>
-                    </tr>
-                    <tr>
-                      <td>铜牌</td>
-                      <td>＜10W</td>
-                      <td>5</td>
-                      <td>35%</td>
-                    </tr>
-                    <tr>
-                      <td>银牌</td>
-                      <td>10W-30W</td>
-                      <td>10</td>
-                      <td>40%</td>
-                    </tr>
-                    <tr>
-                      <td>金牌</td>
-                      <td>30W-60W</td>
-                      <td>25</td>
-                      <td>45%</td>
-                    </tr>
-                    <tr>
-                      <td>钻石</td>
-                      <td>60W-100W</td>
-                      <td>50</td>
-                      <td>50%</td>
-                    </tr>
-                    <tr>
-                      <td>皇冠</td>
-                      <td>>100W</td>
-                      <td>80</td>
-                      <td>55%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+      <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
+        <img style="width: 120px; height: 30px" src="../assets/images/affiliate/bonus-percentage-title.png" alt="" />
+        <div class="affiliate-sub">
+          <div class="affiliate-subtitle">以下为佣金占比示例</div>
+          <div class="affiliate-inner">
+            <table>
+              <tbody>
+                <tr>
+                  <th>代理</th>
+                  <th>盈利</th>
+                  <th>有效活跃会员</th>
+                  <th>佣金比例</th>
+                </tr>
+                <tr>
+                  <td>铜牌</td>
+                  <td>＜10W</td>
+                  <td>5</td>
+                  <td>35%</td>
+                </tr>
+                <tr>
+                  <td>银牌</td>
+                  <td>10W-30W</td>
+                  <td>10</td>
+                  <td>40%</td>
+                </tr>
+                <tr>
+                  <td>金牌</td>
+                  <td>30W-60W</td>
+                  <td>25</td>
+                  <td>45%</td>
+                </tr>
+                <tr>
+                  <td>钻石</td>
+                  <td>60W-100W</td>
+                  <td>50</td>
+                  <td>50%</td>
+                </tr>
+                <tr>
+                  <td>皇冠</td>
+                  <td>>100W</td>
+                  <td>80</td>
+                  <td>55%</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+        </div>
+      </div>
     </div>
     <div class="affiliate-subgroup agent-content-item">
-      <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%;">
-            <img style="width: 120px; height: 30px;" src="../assets/images/affiliate/bonus-title.png" alt="" />
-            <div class="affiliate-sub">
-              <div class="affiliate-subtitle">以下为佣金计算示例</div>
-              <div class="affiliate-inner">
-                <table>
-                  <tr>
-                    <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
-                      平台输赢
-                    </td>
-                    <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
-                      10000
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">-平台费</td>
-                    <td class="highlight">-800</td>
-                  </tr>
-                  <tr>
-                    <td :colspan="2">平台费=游戏总输赢*15%</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">-红利</td>
-                    <td class="highlight">-200</td>
-                  </tr>
-                  <tr>
-                    <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">=净利润</td>
-                    <td class="highlight">9000</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">*佣金比例</td>
-                    <td class="highlight">*35%</td>
-                  </tr>
-                  <tr>
-                    <td class="result">总佣金</td>
-                    <td class="result">2798.4</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
+      <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
+        <img style="width: 120px; height: 30px" src="../assets/images/affiliate/bonus-title.png" alt="" />
+        <div class="affiliate-sub">
+          <div class="affiliate-subtitle">以下为佣金计算示例</div>
+          <div class="affiliate-inner">
+            <table>
+              <tr>
+                <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                  平台输赢
+                </td>
+                <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                  10000
+                </td>
+              </tr>
+              <tr>
+                <td class="highlight">-平台费</td>
+                <td class="highlight">-800</td>
+              </tr>
+              <tr>
+                <td :colspan="2">平台费=游戏总输赢*15%</td>
+              </tr>
+              <tr>
+                <td class="highlight">-红利</td>
+                <td class="highlight">-200</td>
+              </tr>
+              <tr>
+                <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
+              </tr>
+              <tr>
+                <td class="highlight">=净利润</td>
+                <td class="highlight">9000</td>
+              </tr>
+              <tr>
+                <td class="highlight">*佣金比例</td>
+                <td class="highlight">*35%</td>
+              </tr>
+              <tr>
+                <td class="result">总佣金</td>
+                <td class="result">2798.4</td>
+              </tr>
+            </table>
           </div>
+        </div>
+      </div>
     </div>
     <div class="affiliate-subgroup agent-content-item">
-      <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%;">
-            <img style="width: 120px; height: 30px;" src="../assets/images/affiliate/rule-title.png" alt="" />
-            
-            <div class="affiliate-sub">
-              <img class="bonus-rabbit" src="../assets/images/affiliate/bonus-rabbit.png" alt="" />
-              <div class="affiliate-inner">
-                <ul>
-                  <li>1.佣金派发时间：每月 1 号至 10 号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
-                  <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000 为一个活跃玩家。</li>
-                  <li>
-                    3.代理推广每月至少需要新注册活跃会员达到 3 名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
-                  </li>
-                </ul>
-              </div>
-            </div>
+      <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
+        <img style="width: 120px; height: 30px" src="../assets/images/affiliate/rule-title.png" alt="" />
+
+        <div class="affiliate-sub">
+          <img class="bonus-rabbit" src="../assets/images/affiliate/bonus-rabbit.png" alt="" />
+          <div class="affiliate-inner">
+            <ul>
+              <li>1.佣金派发时间：每月 1 号至 10 号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
+              <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000 为一个活跃玩家。</li>
+              <li>
+                3.代理推广每月至少需要新注册活跃会员达到 3
+                名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
+              </li>
+            </ul>
           </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -206,7 +209,7 @@ import { useNotify } from "src/hooks/notify.js";
 import { ref } from "vue";
 
 const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
-const notify = useNotify()
+const notify = useNotify();
 const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   const left = (screen.width - popupWinWidth) * 2;
   const top = (screen.height - popupWinHeight) / 4;
@@ -218,25 +221,25 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
 };
 const text_copied = ref("");
 const copyinput = ref(null);
-const $q= useQuasar();
+const $q = useQuasar();
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const copyText = (text, msgTitle) => {
-    text_copied.value = text;
-      console.log(text_copied.value);
-      setTimeout(() => {
-        const copyText = copyinput.value;
-        console.log(copyText);
+  text_copied.value = text;
+  console.log(text_copied.value);
+  setTimeout(() => {
+    const copyText = copyinput.value;
+    console.log(copyText);
 
-        copyText.select();
-        document.execCommand("copy");
-        console.log("Copied");
+    copyText.select();
+    document.execCommand("copy");
+    console.log("Copied");
 
-        notify({
-          type: "success",
-          message: `${msgTitle?msgTitle:''}复制成功！`
-        });
-      }, 100);
-    };
+    notify({
+      type: "success",
+      message: `${msgTitle ? msgTitle : ""}复制成功！`
+    });
+  }, 100);
+};
 </script>
 
 <style lang="scss">
@@ -269,10 +272,9 @@ const copyText = (text, msgTitle) => {
     width: 90%;
     margin: 0 auto;
 
-    img{
+    img {
       width: 100%;
     }
-
   }
 
   .branding {
@@ -547,67 +549,67 @@ const copyText = (text, msgTitle) => {
 }
 
 .contact-list {
-    background-color: rgba(227, 238, 255, 1);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
+  background-color: rgba(227, 238, 255, 1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
 }
 
 .contact-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
 }
 
 .contact-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .contact-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .contact-icon {
-    width: 32px;
-    height: 32px;
-    margin-right: 10px;
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
 }
 
 .contact-details {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .contact-name {
-    font-weight: bold;
-    color: rgba(155, 161, 188, 1);
+  font-weight: bold;
+  color: rgba(155, 161, 188, 1);
 }
 
 .contact-id {
-    color: rgba(48, 52, 66, 1);
-    font-size: 0.9em;
-    overflow: auto; 
-    max-width: 120px;
+  color: rgba(48, 52, 66, 1);
+  font-size: 0.9em;
+  overflow: auto;
+  max-width: 120px;
 }
 
 .contact-actions {
-    display: flex;
-    gap: 10px;
-    width: 108px;
+  display: flex;
+  gap: 10px;
+  width: 108px;
 }
 
 .copy-button {
-    background-color: rgba(219, 232, 255, 1);
-    color: rgba(132, 143, 177, 1);
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: rgba(219, 232, 255, 1);
+  color: rgba(132, 143, 177, 1);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 .download-button {
   background-color: rgba(8, 181, 255, 1);
@@ -619,12 +621,14 @@ const copyText = (text, msgTitle) => {
   transition: background-color 0.3s;
 }
 
-.copy-button:hover, .download-button:hover {
-    background-color: rgba(219, 232, 255, 1);
+.copy-button:hover,
+.download-button:hover {
+  background-color: rgba(219, 232, 255, 1);
 }
 
-.copy-button:active, .download-button:active {
-    background-color: #006a9c;
+.copy-button:active,
+.download-button:active {
+  background-color: #006a9c;
 }
 
 .button-group {
@@ -633,45 +637,45 @@ const copyText = (text, msgTitle) => {
   display: flex;
   flex-direction: row;
 }
-a{
+a {
   flex: 1;
 }
-.login-button, .join-us-button { 
-    width: 95%;
-    border: none;
-    justify-content: space-between;
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.3s;
+.login-button,
+.join-us-button {
+  width: 95%;
+  border: none;
+  justify-content: space-between;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 .login-button {
-    box-shadow: 0px -1.52px 3.48px 0px rgba(177, 215, 255, 1) inset; box-shadow: 0px -0.76px 2.79px 0px rgba(88, 148, 255, 1) inset;
-    background: linear-gradient(180deg, #F7F7F7 0%, #F5F9FF 100%);
+  box-shadow: 0px -1.52px 3.48px 0px rgba(177, 215, 255, 1) inset;
+  box-shadow: 0px -0.76px 2.79px 0px rgba(88, 148, 255, 1) inset;
+  background: linear-gradient(180deg, #f7f7f7 0%, #f5f9ff 100%);
 
-    color: #6a7ba2;
+  color: #6a7ba2;
 }
 
 .login-button:hover {
-    
 }
 
 .join-us-button {
-    // background-color: #008cdd;
-    color: #ffffff;
-    background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  // background-color: #008cdd;
+  color: #ffffff;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
 
-    box-shadow: 0px -1.52px 3.48px 0px rgba(177, 215, 255, 1) inset;
+  box-shadow: 0px -1.52px 3.48px 0px rgba(177, 215, 255, 1) inset;
 
-    box-shadow: 0px -0.76px 2.79px 0px rgba(88, 148, 255, 1) inset;
-
+  box-shadow: 0px -0.76px 2.79px 0px rgba(88, 148, 255, 1) inset;
 }
 
 .join-us-button:hover {
-    // background-color: #007bbd;
-    // box-shadow: 0 6px 12px rgba(0, 123, 189, 0.7);
+  // background-color: #007bbd;
+  // box-shadow: 0 6px 12px rgba(0, 123, 189, 0.7);
 }
 .affiliate-subgroup {
   margin: 24px 0px;
@@ -783,15 +787,15 @@ a{
       .btn-wrapper {
         .join-btn,
         .login-btn {
-          background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+          background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
           background-size: cover;
           box-shadow: none;
           border-radius: 4px;
-          border: 1px solid #3A93CE;
+          border: 1px solid #3a93ce;
           color: $white;
         }
         .contact-btn {
-          background: url('../assets/images/account/secondary-btn.svg') no-repeat center center;
+          background: url("../assets/images/account/secondary-btn.svg") no-repeat center center;
           background-size: cover;
           box-shadow: none;
           border-radius: 4px;
@@ -809,11 +813,11 @@ a{
     .contact-us {
       .register-btn-wrapper {
         .register-btn {
-          background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+          background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
           background-size: cover;
           box-shadow: none;
           border-radius: 4px;
-          border: 1px solid #3A93CE;
+          border: 1px solid #3a93ce;
           color: $white;
         }
       }
