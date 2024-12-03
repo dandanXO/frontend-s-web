@@ -1497,6 +1497,7 @@ export default {
     registrationDate: 'Registration Date',
     referredFriends: 'Referred Friends',
     referFriendRecord: 'Refer Friend Record',
+    refreshWithdrawable: 'Refresh Withdrawable',
     remark: 'Remark',
     remove: 'Remove',
     reply: 'Reply',
