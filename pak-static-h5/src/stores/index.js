@@ -5,6 +5,7 @@ import LocalStorage from "boot/local-storage";
 import { isAndroid, isInPwa } from "boot/utils";
 import { useUI } from "stores/ui";
 import OneSignal from "onesignal-cordova-plugin";
+import { useOneSignalWrapper } from "src/hooks/oneSignalWrapper";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -205,6 +206,7 @@ export const userStore = defineStore("userStore", {
       //   req.headers.token = token;
       //   return req;
       // });
+      const { loginOneSignal } = useOneSignalWrapper();
       this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
@@ -243,12 +245,7 @@ export const userStore = defineStore("userStore", {
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.guest = guest;
 
-          if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
-            OneSignal.login(this.nickName);
-            OneSignal.User.addTag("user_name", this.nickName);
-            OneSignal.User.addTag("VIP", this.vip);
-            this.hasUpdatedOneSignal = true;
-          }
+          loginOneSignal();
 
           if (evip) {
             var exclusive = JSON.parse(evip);
@@ -310,15 +307,15 @@ export const userStore = defineStore("userStore", {
       }
     },
     memberLogout() {
+      const { logoutOneSignal } = useOneSignalWrapper();
+
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
 
         this.hasUpdatedOneSignal = false;
 
-        if (isAndroid() && OneSignal !== undefined) {
-          OneSignal.logout();
-        }
+        logoutOneSignal();
 
         location.href = "/";
       });

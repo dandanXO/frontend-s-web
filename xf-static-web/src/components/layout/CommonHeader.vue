@@ -24,9 +24,9 @@
             </div>
             <template v-if="store.token">
               <div class="mailbox-notify">
-                <router-link to="/center/message">
+                <router-link to="/center/mailbox">
                   <RiMailFill style="fill: #2db9e2; width: 20px" />
-                  <div v-if="store.unreadTotal" class="notify-red"></div>
+                  <div v-if="isMailboxUnread" class="notify-red"></div>
                 </router-link>
               </div>
             </template>
