@@ -522,7 +522,7 @@ async function loadMemberEditLog() {
     )
     query.createTime = query.createTime.join(',')
   }
-  if (hasPermission(['sys:member:editlog:check'])) {
+  if (hasPermission(['sys:member:editlog:unmask'])) {
     const { data: ret } = await getMemberEditLogList(query)
     page.pages = ret.pages
     page.records = ret.records
