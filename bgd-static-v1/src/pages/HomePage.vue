@@ -397,7 +397,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <div class="platform-game-container live-casino">
               <div
-                v-for="(item, index) in livecasino"
+                v-for="(item, index) in livecasino.slice(0,3)"
                 :key="index"
                 data-aos="zoom-in"
                 :data-aos-delay="100 * index"
@@ -4750,11 +4750,23 @@ const showCongratsModal = () => {
     padding-top: 8px;
     margin-bottom: 0px;
     display: grid;
+    grid-template-columns: 51fr 54fr;
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
-    overflow: auto;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 100px;
+    column-gap: 6px;
+    row-gap: 8px;
+
+    .platform-live-item--img {
+      background-size: 100% 100%;
+    }
+
     img {
-      max-width: 305px;
+      max-width: 140px;
+      border-radius: 8px;
     }
     .burning-hot {
       img {
@@ -4762,9 +4774,15 @@ const showCongratsModal = () => {
       }
     }
     > :first-child {
+      width: 100%;
+      border-radius:  10px;
       grid-row: span 2;
+      aspect-ratio: 500/540;
+
       .platform-live-item--img {
+        border-radius: 12px;
         background-position: right center;
+        background-size: 100% 100%;
       }
     }
   }
