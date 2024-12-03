@@ -86,7 +86,7 @@ const amicoLink = () => {
   } else if (props.siteId === '1') {
     return 'vip444'
   } else {
-    return 'vip777'
+    return 'vip333'
   }
 }
 
@@ -262,10 +262,10 @@ const initContactList = () => {
       }
     ]
   }
-  if (props.siteId === '7' || props.siteId === '6' || props.siteId === '1') {
+  if (props.siteId === '6' || props.siteId === '1') {
     contactlist.value.shift()
   }
-  if (props.siteId === '6' || props.siteId === '1') {
+  if (props.siteId === '6' || props.siteId === '1' || props.siteId === '7') {
     contactlist.value.push({
       icon: 'amico-logo',
       type: "AMICO",
