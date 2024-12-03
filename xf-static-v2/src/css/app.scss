@@ -177,10 +177,14 @@ svg {
 .q-footer {
   background-color: transparent;
 
+  .q-focus-helper {
+    visibility: hidden !important;
+    display: none !important;
+  }
+
   .q-tab {
     color: #7a899e;
     opacity: 1 !important;
-    border-radius: 50%;
 
     .menu-icon {
       &.account {
