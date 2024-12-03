@@ -77,10 +77,8 @@
       </div>
     </div>
     <div class="button-group">
-      <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"><button class="login-button">登录</button></a>
-      <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">
-        <button class="join-us-button">加入我们</button>
-      </a>
+        <a :href="affiliateUrl + 'login'"><button class="login-button">登陆</button></a>
+        <a :href="affiliateUrl + 'register?agent=' + (affCode ? affCode : '')"><button class="join-us-button">加入我们</button></a>
     </div>
     <div class="affiliate-subgroup agent-content-item">
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
@@ -200,7 +198,7 @@
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 
-const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
+const affiliateUrl = ref("https://xf1-affiliate.gwd4jptunz.com/xf/");
 const text_copied = ref("");
 const copyinput = ref(null);
 const $q = useQuasar();
