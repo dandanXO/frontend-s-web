@@ -205,14 +205,20 @@
         :label="t('fields.depositCount')"
         width="120"
       />
+      <el-table-column prop="oldMemberDepositAmount" :label="t('fields.oldMemberDepositAmount')" width="100">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.oldMemberDepositAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
-        prop="oldMemberDepositAmount"
-        :label="t('fields.oldMemberDepositAmount')"
-        width="120"
-      />
-      <el-table-column
-        prop="oldMemberDepositCount"
-        :label="t('fields.oldMemberDepositCount')"
+        prop="oldMemberDepositMemberCount"
+        :label="t('fields.oldMemberDepositMemberCount')"
         width="120"
       />
       <el-table-column
@@ -243,11 +249,17 @@
         :label="t('fields.withdrawCount')"
         width="120"
       />
-      <el-table-column
-        prop="oldMemberWithdrawAmount"
-        :label="t('fields.oldMemberWithdrawAmount')"
-        width="120"
-      />
+      <el-table-column prop="oldMemberWithdrawAmount" :label="t('fields.oldMemberWithdrawAmount')" width="100">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.oldMemberWithdrawAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="oldMemberWithdrawCount"
         :label="t('fields.oldMemberWithdrawCount')"
@@ -504,7 +516,7 @@ function getSummaries(param) {
       columns.forEach((column, index) => {
         if (index === 0) {
           sums[index] = t('fields.total')
-        } else if (index === 3) {
+        } else if (index === 3 || index === 4) {
         } else {
           var prop = column.property
           if (
@@ -513,7 +525,9 @@ function getSummaries(param) {
             index === 7 ||
             index === 9 ||
             index === 11 ||
-            index === 13
+            index === 13 ||
+            index === 15 ||
+            index === 17
           ) {
             sums[index] = totalPage.records[0][prop]
           } else {
@@ -527,7 +541,6 @@ function getSummaries(param) {
         }
       })
     }
-    console.log(sums)
     return sums
   } else {
     return '-'

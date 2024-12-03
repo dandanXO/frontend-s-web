@@ -1332,6 +1332,7 @@ export default {
     number: '数字',
     oldMemberDepositAmount: '老用户存款金额',
     oldMemberDepositCount: '老用户存款次数',
+    oldMemberDepositMemberCount: '老用户存款人数',
     oldMemberWithdrawAmount: '老用户提款金额',
     oldMemberWithdrawCount: '老用户提款次数',
     oneTimeSpin: '单次转盘',
