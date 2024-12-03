@@ -93,7 +93,7 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
           </a>
-          <a v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST' )" target="_blank" @click="handleExchangeClick">
+          <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
             <div class="acct-nav-item">
               <img src="../assets/images/account/exchange-svg.svg" />
             </div>
