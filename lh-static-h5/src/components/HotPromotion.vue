@@ -25,8 +25,6 @@
       "
     />
 
-    <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery'" />
-
     <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz'" />
 
     <LoginRewardPromo v-if="list.redirectUrl === 'lh1-login-reward'" />
@@ -62,7 +60,6 @@
     <LoLS14 v-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <lh1Vip v-if="list.redirectUrl === 'lh1-vip'" />
-    <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
     <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
     <ValorantChampionTour2024
       v-if="list.redirectUrl === 'lh1-valorant-champion-tour-2024'"
@@ -105,7 +102,6 @@ const PrivilegeInvitePromo = defineAsyncComponent(() =>
   import("../components/hotpromo/privilegeinvite/privilegeInvitePromo.vue")
 );
 const EsportQuiz = defineAsyncComponent(() => import("../components/hotpromo/esportquiz/EsportQuiz.vue"));
-const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
 const LoginRewardPromo = defineAsyncComponent(() => import("../components/hotpromo/loginreward/loginRewardPromo.vue"));
 const FootballFightPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/footballfight/footballFightPromo.vue")
@@ -146,7 +142,6 @@ const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14
 const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
 const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/daili/DailiPromo.vue"));
 const lh1Vip = defineAsyncComponent(() => import("./hotpromo/lh1-vip/lh1Vip.vue"));
-const PokerWinningPromo = defineAsyncComponent(() => import("./hotpromo/poker-winning/PokerWinningPromo.vue"));
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
 const ValorantChampionTour2024 = defineAsyncComponent(() =>
   import("./hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue")
@@ -166,7 +161,6 @@ export default defineComponent({
     FeedbackAwardPromo,
     PrivilegeInvitePromo,
     EsportQuiz,
-    LotteryPromo,
     LoginRewardPromo,
     FootballFightPromo,
     UpgradeHongBaoPromo,
@@ -192,7 +186,6 @@ export default defineComponent({
     SubmitClaimPromo,
     DailiPromo,
     lh1Vip,
-    PokerWinningPromo,
     SlotLossBonusPromo,
     ValorantChampionTour2024
   },
