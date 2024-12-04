@@ -137,7 +137,7 @@
 </template>
 
 <script setup>
-import { claimCompetitionBonus, getCompetitionBetYesterday } from "@/api/index/promo";
+import { claimCompetitionBetBonus, getCompetitionBetYesterday } from "@/api/index/promo";
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
 import { ElMessageBox, ElMessage } from "element-plus";
@@ -163,7 +163,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBonus(promoCode.value)
+  claimCompetitionBetBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         ElMessage.success("成功领取");
