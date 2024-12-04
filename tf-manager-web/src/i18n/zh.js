@@ -1335,6 +1335,7 @@ export default {
     oldMemberDepositMemberCount: '老用户存款人数',
     oldMemberWithdrawAmount: '老用户提款金额',
     oldMemberWithdrawCount: '老用户提款次数',
+    oldMemberWithdrawMemberCount: '老用户提款人数',
     oneTimeSpin: '单次转盘',
     onlyDeposit: '只显示存款会员',
     onlyFake: '只显示非玩家资料',

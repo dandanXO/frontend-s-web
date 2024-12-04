@@ -287,7 +287,7 @@
         </el-table-column>
         <el-table-column
           prop="oldMemberWithdrawMemberCount"
-          :label="t('fields.oldMemberWithdrawCount')"
+          :label="t('fields.oldMemberWithdrawMemberCount')"
           width="120"
         />
       </el-table>
