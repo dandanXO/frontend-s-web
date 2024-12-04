@@ -1,7 +1,7 @@
 <template>
   <div class="forgot-password-container">
-    <div class="forgot-password-form-logo-img">
-      <img src="../assets/images/auth/login-logo.png" />
+    <div class="forgot-password-form-logo">
+      <img src="../assets/images/auth/win-7-logo.png" />
     </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
@@ -557,33 +557,24 @@ onMounted(() => {
   left: 16px;
 }
 
-.forgot-password-form-logo-img {
+.forgot-password-form-logo {
   padding: 0 16px;
   display: flex;
   justify-content: center;
+  align-items: center;
   img {
     display: block;
     width: 100%;
-    max-width: 100px;
+    max-width: 130px;
     margin-bottom: 10px;
   }
 }
 
-// .forgot-password-form-logo-img {
-//   padding: 0 16px;
-//   display: flex;
-//   justify-content: center;
-//   img {
-//     display: block;
-//     width: 100%;
-//     max-width: 300px;
-//   }
-// }
 .forgot-password-form-grid {
   display: grid;
   grid-auto-flow: row;
   gap: 7px;
-  margin-top: 20px;
+  margin-top: 30px;
 
   .forgot-password-form-title {
     font-size: 22px;

@@ -18,7 +18,7 @@
     </div> -->
 
     <div class="register-form-logo-img">
-      <img src="../assets/images/auth/b9-logo.png" />
+      <img src="../assets/images/auth/win-7-logo.png" />
     </div>
 
     <!-- <div class="auth-tab-wrapper">
@@ -933,10 +933,11 @@ function charType(num) {
   padding: 0 16px;
   display: flex;
   justify-content: center;
+  align-items: center;
   img {
     display: block;
     width: 100%;
-    max-width: 180px;
+    max-width: 200px;
     margin-bottom: 10px;
   }
 }
