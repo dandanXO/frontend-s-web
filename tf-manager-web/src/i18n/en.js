@@ -1335,6 +1335,7 @@ export default {
     oldMemberDepositMemberCount: 'Old Member Deposit Member Count',
     oldMemberWithdrawAmount: 'Old Member Withdraw Amount',
     oldMemberWithdrawCount: 'Old Member Withdraw Count',
+    oldMemberWithdrawMemberCount: 'Old Member Withdraw Member Count',
     oneTimeSpin: 'One Time Spin',
     onlyDeposit: 'Show Member With Deposit',
     onlyFake: 'Only show non Member Record',
