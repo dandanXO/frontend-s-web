@@ -294,7 +294,11 @@ const isValidCardAccount = () => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber ? "Please Enter Account Number" : true;
+  const result = !cardNumber
+    ? "Please Enter Card Number"
+    : !cardNumber.includes(".")
+    ? true
+    : "Account number must not contain a decimal point";
 
   if (
     cardNumber &&

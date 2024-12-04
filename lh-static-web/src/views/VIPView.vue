@@ -854,7 +854,6 @@ import { ref, reactive, computed, onMounted, watch } from "vue";
 import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
-// import { message } from "ant-design-vue";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 

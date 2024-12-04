@@ -79,6 +79,24 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="oldMemberDepositAmount"
+          :label="t('fields.oldMemberDepositAmount')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.oldMemberDepositAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="oldMemberDepositMemberCount"
+          :label="t('fields.oldMemberDepositMemberCount')"
+          width="120"
+        />
+        <el-table-column
           prop="withdrawAmount"
           :label="t('fields.withdrawAmount')"
           align="center"
@@ -101,6 +119,24 @@
           prop="withdrawCount"
           :label="t('fields.withdrawCount')"
           align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="oldMemberWithdrawAmount"
+          :label="t('fields.oldMemberWithdrawAmount')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.oldMemberWithdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="oldMemberWithdrawCount"
+          :label="t('fields.oldMemberWithdrawCount')"
           width="120"
         />
         <el-table-column
@@ -405,23 +441,17 @@ function getSummaries(param) {
         var prop = column.property
         if (
           index === 3 ||
-          index === 4 ||
+          index === 5 ||
           index === 6 ||
-          index === 12
+          index === 8 ||
+          index === 10 ||
+          index === 11 ||
+          index === 16 ||
+          index === 17 ||
+          index === 18
         ) {
           sums[index] = total.data[prop]
-        } else if (index === 7 || index === 13 || index === 14) {
-          // const pageRowCount = Number(page.records.reduce((sum, row) => {
-          //   return sum + Number(row[prop])
-          // }, 0))
-          // const totalPageCount = Number(total.data[prop])
-          // if (pageRowCount !== totalPageCount) {
-          //   sums[index] = `${total.data[prop]} (${pageRowCount})`
-          // } else {
-          //   sums[index] = total.data[prop]
-          // }
-          sums[index] = total.data[prop]
-        } else if (index === 5) {
+        } else if (index === 9) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +

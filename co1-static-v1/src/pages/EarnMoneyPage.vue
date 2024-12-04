@@ -138,6 +138,8 @@ const swipeRight = () => {
       font-size: 12px;
       font-weight: 500;
       border: 2px solid #303030;
+      padding-left:3px;
+      padding-right:3px;
     }
 
     :deep(.q-tab__content) {

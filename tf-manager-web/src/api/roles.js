@@ -33,6 +33,14 @@ export const createRole = async (role) => {
   return https().request("/authority/roles", Method.POST, role, ContentType.form);
 };
 
+export const createRoleWithPermission = async (role) => {
+  return https().request("/authority/roles/createRoleWithPermission", Method.POST, role, ContentType.form);
+};
+
+export const copyRole = async (role) => {
+  return https().request("/authority/roles/copyRole", Method.POST, role, ContentType.form);
+};
+
 export const updateRolePermission = async (role) => {
   await https().request(`/authority/roles/${role.id}/permission?_method=PUT`, Method.POST, {
     menuIds: role.menuIds.join(",")

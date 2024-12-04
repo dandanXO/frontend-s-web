@@ -47,10 +47,10 @@ const handleConfirmBtnClick = (mission) => {
   const isCompleted = mission.current / mission.total >= 1;
   if (!isCompleted) {
     switch (mission.title) {
-      case t("hotPromo.megaSharingWheel.invitedUsersDeposit"):
+      case t("hotPromo.megaSharingWheel.invitersUsersDeposit"):
         router.push("/deposit");
         break;
-      case t("hotPromo.megaSharingWheel.invitedUsersValidBet"):
+      case t("hotPromo.megaSharingWheel.invitersUsersValidBet"):
         if (route.path !== "/home") {
           router.push("/home");
         } else if (closeMegaSharingWheelDialog) {

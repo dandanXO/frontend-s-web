@@ -6,7 +6,6 @@
     outlined
     :label="$t('form.uploadImage')"
     color="green"
-    bg-color="black"
     clearable
   >
     <template v-slot:prepend>

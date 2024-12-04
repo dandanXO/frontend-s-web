@@ -5,7 +5,7 @@
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span style="margin-left: 5px">
           官网客服
-          <Ri24HoursLine class="icon-24h" />
+          <img width="20px" height="20px" src="../../assets/home/24-hours-line.svg" class="icon-24h" />
         </span>
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
@@ -146,12 +146,11 @@ import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
-import { Ri24HoursLine } from "vue-remix-icons";
+
 import { storeToRefs } from "pinia";
 export default defineComponent({
   components: {
-    GameModal,
-    Ri24HoursLine
+    GameModal
   },
   setup() {
     const notify = useNotify();

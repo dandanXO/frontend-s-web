@@ -38,7 +38,7 @@
             rounded
             style="width: 100%"
           >
-            邮箱找回
+          联系我们
           </q-btn>
         </div>
       </div>

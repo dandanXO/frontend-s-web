@@ -166,7 +166,7 @@
         ></BankComponent>
 
         <q-select
-          style="width: 100%"
+          style="width: 100%; margin-top: 25px"
           ref="offerRef"
           class="deposit-selection q-mt-xs"
           :label="$t('deposit.select_privilege')"
@@ -439,9 +439,6 @@ const verifyDepositAmount = ref([
   (val) =>
     val < calculatedMaxDeposit.value + 1 ||
     t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value
-  // (val) =>
-  //   val < activeMethod.value.depositMax + 1 ||
-  //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -1128,7 +1125,7 @@ onMounted(() => {
     width: 100%;
 
     .deposit-enter-amt {
-      margin: 20px auto 0 auto;
+      margin: 20px auto 0px auto;
 
       .deposit-input {
         background-color: #0b0e0d;

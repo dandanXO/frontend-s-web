@@ -199,6 +199,7 @@ export default {
     accountNumber_placeholder: "Introduzca el número de cuenta",
     accountNumber_rules_01: "Introduzca el número de cuenta",
     accountNumber_rules_02: "Introduzca un número de cuenta válido",
+    accountNumber_rules_03: "El número de cuenta no debe contener un punto decimal",
     accountType_selectionTitle: "Tipo de Cuenta",
     accountType_select: "Seleccionar Tipo de Cuenta",
     accountType_rules_01: "Introduzca el tipo de cuenta",

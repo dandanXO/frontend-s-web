@@ -76,12 +76,110 @@
       </div>
     </div>
     <el-dialog
+      v-if="uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
       width="600px"
     >
+      <div v-if="uiControl.dialogType === 'CREATE'">
+        <el-steps
+          class="steps"
+          :space="200"
+          :active="active"
+          finish-status="success"
+          align-center
+        >
+          <el-step :title="t('fields.roleDetails')" />
+          <el-step v-if="hasPermission(['sys:roles:update:permission'])" :title="t('fields.permissionAssignment')" />
+        </el-steps>
+        <el-form
+          v-if="active === 0"
+          ref="rolesForm"
+          :model="form"
+          :rules="formRules"
+          :inline="true"
+          size="small"
+          label-width="100px"
+        >
+          <el-form-item :label="t('fields.roleName')" prop="name">
+            <el-input v-model="form.name" style="width: 450px" />
+          </el-form-item>
+          <el-form-item
+            v-if="uiControl.siteVisible"
+            :label="t('fields.site')"
+            prop="siteId"
+          >
+            <el-select
+              v-model="form.siteId"
+              size="small"
+              :placeholder="t('fields.site')"
+              class="filter-item"
+              style="width: 450px"
+              default-first-option
+              @focus="loadSites"
+            >
+              <el-option
+                v-for="item in siteList.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="t('fields.describe')" prop="remark">
+            <el-input
+              type="textarea"
+              :rows="5"
+              v-model="form.remark"
+              style="width: 450px"
+              :placeholder="t('fields.describe')"
+            />
+          </el-form-item>
+          <div class="dialog-footer">
+            <el-button @click="uiControl.dialogVisible = false">
+              {{ t('fields.cancel') }}
+            </el-button>
+            <el-button v-if="hasPermission(['sys:roles:update:permission'])" type="primary" @click="next">
+              {{ t('fields.nextStep') }}
+            </el-button>
+            <el-button v-else type="primary" @click="submit">
+              {{ t('fields.confirm') }}
+            </el-button>
+          </div>
+        </el-form>
+        <div v-else-if="active === 1">
+          <el-card style="margin-top: 20px; margin-bottom: 20px">
+            <el-tree
+              ref="tree"
+              show-checkbox
+              accordion
+              node-key="id"
+              :data="menus.list"
+              highlight-current
+              :filter-node-method="filterNode"
+            >
+              <!-- eslint-disable -->
+              <template #default="{node, data}">
+                <div>
+                  <span>{{ data.name }}</span>
+                  <span v-if="data.remark" class="tree-node">{{ data.remark }}</span>
+                </div>
+              </template>
+            </el-tree>
+          </el-card>
+          <div class="dialog-footer">
+            <el-button @click="active = 0">
+              {{ t('fields.back') }}
+            </el-button>
+            <el-button type="primary" @click="submit" :loading="uiControl.createLoading">
+              {{ t('fields.confirm') }}
+            </el-button>
+          </div>
+        </div>
+      </div>
       <el-form
+        v-else-if="uiControl.dialogType === 'EDIT'"
         ref="rolesForm"
         :model="form"
         :rules="formRules"
@@ -133,6 +231,103 @@
         </div>
       </el-form>
     </el-dialog>
+    <el-dialog
+      v-else-if="uiControl.dialogType === 'PERMISSION' || uiControl.dialogType === 'COPY'"
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="600px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-form
+        v-if="uiControl.dialogType === 'COPY'"
+        ref="rolesForm"
+        :model="form"
+        :rules="formRules"
+        :inline="true"
+        size="small"
+        label-width="100px"
+      >
+        <el-form-item :label="t('fields.roleToCopy')" prop="roleToCopy">
+          <span style="width: 450px">{{ roleToCopy.name }}</span>
+        </el-form-item>
+        <el-form-item :label="t('fields.roleName')" prop="name">
+          <el-input v-model="form.name" style="width: 450px" />
+        </el-form-item>
+        <el-form-item
+          v-if="uiControl.siteVisible"
+          :label="t('fields.site')"
+          prop="siteId"
+        >
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 450px"
+            default-first-option
+            disabled
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.describe')" prop="remark">
+          <el-input
+            type="textarea"
+            :rows="5"
+            v-model="form.remark"
+            style="width: 450px"
+            :placeholder="t('fields.describe')"
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false" :disabled=uiControl.copyLoading>
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit" :loading="uiControl.copyLoading">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+      <div v-else-if="uiControl.dialogType === 'PERMISSION'">
+        <el-tree
+          ref="tree"
+          show-checkbox
+          accordion
+          node-key="id"
+          :data="menus.list"
+          highlight-current
+          :filter-node-method="filterNode"
+        >
+          <!-- eslint-disable -->
+          <template #default="{node, data}">
+            <div>
+              <span>{{ data.name }}</span>
+              <span v-if="data.remark" class="tree-node">{{ data.remark }}</span>
+            </div>
+          </template>
+        </el-tree>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false" :disabled=uiControl.permissionLoading>
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button
+            type="primary"
+            v-permission="['sys:roles:update:permission']"
+            :loading="uiControl.permissionLoading"
+            @click="updatePermission"
+          >
+            {{ t('fields.assignment') }}
+          </el-button>
+        </div>
+      </div>
+    </el-dialog>
     <div class="body-container">
       <el-card class="roles" shadow="never">
         <template #header>
@@ -146,7 +341,7 @@
           row-key="id"
           size="small"
           highlight-current-row
-          @select="selectRoles"
+          @selection-change="handleSelectionChange"
           :empty-text="t('fields.noData')"
         >
           <el-table-column type="selection" width="55" />
@@ -158,7 +353,7 @@
           <el-table-column
             prop="siteName"
             :label="t('fields.siteName')"
-            width="200"
+            width="120"
           />
           <el-table-column
             prop="remark"
@@ -168,7 +363,7 @@
           <el-table-column
             prop="createTime"
             :label="t('fields.createTime')"
-            width="200"
+            width="180"
           >
             <template #default="scope">
               <span v-if="scope.row.createTime === null">-</span>
@@ -185,12 +380,12 @@
           <el-table-column
             prop="createBy"
             :label="t('fields.createBy')"
-            width="200"
+            width="120"
           />
           <el-table-column
             prop="updateTime"
             :label="t('fields.updateTime')"
-            width="200"
+            width="180"
           >
             <template #default="scope">
               <span v-if="scope.row.updateTime === null">-</span>
@@ -207,17 +402,28 @@
           <el-table-column
             prop="updateBy"
             :label="t('fields.updateBy')"
-            width="200"
+            width="120"
           />
           <el-table-column
             :label="t('fields.operate')"
             align="right"
+            fixed="right"
             v-if="
-              hasPermission(['sys:roles:update']) ||
+              hasPermission(['sys:roles:copy']) ||
+                hasPermission(['sys:roles:update']) ||
+                hasPermission(['sys:roles:update:permission']) ||
                 hasPermission(['sys:roles:delete'])
             "
+            width="300"
           >
             <template #default="scope">
+              <el-button
+                icon="el-icon-copy-document"
+                size="mini"
+                type="primary"
+                v-permission="['sys:roles:copy']"
+                @click="showCopyDialog(scope.row)"
+              />
               <el-button
                 icon="el-icon-edit"
                 size="mini"
@@ -225,6 +431,21 @@
                 v-permission="['sys:roles:update']"
                 @click="showEdit(scope.row)"
               />
+              <el-button
+                v-if="hasPermission(['sys:roles:update:permission'])"
+                size="mini"
+                type="warning"
+                v-permission="['sys:roles:update:permission']"
+                @click="showPermission(scope.row)"
+              >{{ t('fields.permissionAssignment') }}
+              </el-button>
+              <el-button
+                v-else
+                size="mini"
+                type="warning"
+                @click="showPermission(scope.row)"
+              >{{ t('fields.viewPermission') }}
+              </el-button>
               <el-button
                 icon="el-icon-remove"
                 size="mini"
@@ -244,7 +465,7 @@
           :current-page="request.current"
         />
       </el-card>
-      <el-card class="menu" shadow="never">
+      <!-- <el-card class="menu" shadow="never">
         <template #header>
           <div class="card-header">
             <span>{{ t('fields.permissionAssignment') }}</span>
@@ -273,7 +494,7 @@
           highlight-current
           :filter-node-method="filterNode"
         />
-      </el-card>
+      </el-card> -->
     </div>
   </div>
 </template>
@@ -283,7 +504,9 @@ import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { required } from '../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
-  createRole,
+  // createRole,
+  createRoleWithPermission,
+  copyRole,
   delBatchRoles,
   delRoles,
   getRoles,
@@ -301,6 +524,7 @@ const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
+const active = ref(0)
 const uiControl = reactive({
   dialogVisible: false,
   siteVisible: false,
@@ -309,6 +533,13 @@ const uiControl = reactive({
   updatePermissionBtn: true,
   editBtn: true,
   removeBtn: true,
+  createLoading: false,
+  copyLoading: false,
+  permissionLoading: false
+})
+const roleToCopy = reactive({
+  id: null,
+  name: null
 })
 
 const siteList = reactive({ list: [] })
@@ -347,12 +578,25 @@ const menus = reactive({
 })
 
 function showDialog(type) {
-  form.siteId = null
-  if (type === 'CREATE') {
+  uiControl.createLoading = false;
+  uiControl.copyLoading = false;
+  uiControl.permissionLoading = false;
+  if (type === 'CREATE' || type === 'COPY') {
+    active.value = 0;
     if (rolesForm.value) {
       rolesForm.value.resetFields()
     }
+    form.id = null;
+    form.name = null
+    form.remark = null
+    form.idToCopy = null
     uiControl.dialogTitle = t('fields.addRole')
+  } else if (type === 'PERMISSION') {
+    if (hasPermission(['sys:roles:update:permission'])) {
+      uiControl.dialogTitle = t('fields.permissionAssignment')
+    } else {
+      uiControl.dialogTitle = t('fields.viewPermission')
+    }
   } else {
     uiControl.dialogTitle = t('fields.editRole')
   }
@@ -393,15 +637,16 @@ function resetQuery() {
 /**
  * 新增校色
  */
-function create() {
-  rolesForm.value.validate(async valid => {
-    if (valid) {
-      await createRole(form)
-      uiControl.dialogVisible = false
-      await loadData()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
-    }
-  })
+async function create() {
+  uiControl.createLoading = true;
+  if (tree.value) {
+    form.menuIds = tree.value.getCheckedNodes(false, true).map(c => c.id).join(",");
+  }
+  await createRoleWithPermission(form)
+  uiControl.dialogVisible = false
+  uiControl.createLoading = false;
+  await loadData()
+  ElMessage({ message: t('message.addSuccess'), type: 'success' })
 }
 
 function showEdit(roles) {
@@ -455,9 +700,25 @@ function changePage(page) {
   loadData()
 }
 
+function handleSelectionChange(val) {
+  rolesID = val
+  if (rolesID.length === 0) {
+    uiControl.editBtn = true
+    uiControl.removeBtn = true
+  } else if (rolesID.length === 1) {
+    uiControl.editBtn = false
+    uiControl.removeBtn = false
+  } else {
+    uiControl.editBtn = true
+    uiControl.removeBtn = false
+  }
+}
+
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create()
+  } else if (uiControl.dialogType === 'COPY') {
+    createAndCopyRole()
   } else {
     edit()
   }
@@ -473,70 +734,45 @@ async function loadTreeMenu() {
   menus.cloneList = [...menus.list]
 }
 
-async function selectRoles(selection, val) {
-  if (!selection.length) {
-    return;
-  }
-  rolesID = selection;
-  if (rolesID.length === 0) {
-    selectRolesId = 0
-    tree.value.setCheckedKeys([], false)
-    uiControl.editBtn = true
-    uiControl.removeBtn = true
-    uiControl.updatePermissionBtn = true
-    for (let i = 0; i < menus.cloneList.length; i++) {
-      tree.value.remove(menus.cloneList[i])
-    }
-
-    for (let i = 0; i < menus.cloneList.length; i++) {
-      tree.value.append(menus.cloneList[i])
-    }
-  } else if (rolesID.length === 1) {
-    selectRolesId = selection[0].id
-    uiControl.editBtn = false
-    uiControl.removeBtn = false
-    uiControl.updatePermissionBtn = false
-    const site = siteList.list.find(e => e.siteName === rolesID[0].siteName)
-    let siteMenu;
-    if (site) {
-      const { data: children } = await fetchSimpleMenu(site.id)
-      siteMenu = children
-    } else {
-      const { data: children } = await fetchSimpleMenu(0)
-      siteMenu = children
-    }
-    tree.value.setCheckedKeys([], false)
-
-    for (let i = 0; i < menus.cloneList.length; i++) {
-      tree.value.remove(menus.cloneList[i])
-    }
-
-    for (let i = 0; i < siteMenu.length; i++) {
-      tree.value.append(siteMenu[i])
-    }
-
-    rolesID[0].menus.forEach(e => {
-      const node = tree.value.getNode(e)
-      if (node && node.isLeaf) {
-        tree.value.setChecked(e, true)
-      }
-    })
+async function selectRoles(roles) {
+  selectRolesId = roles.id
+  const site = siteList.list.find(e => e.siteName === roles.siteName)
+  let siteMenu;
+  if (site) {
+    const { data: children } = await fetchSimpleMenu(site.id)
+    siteMenu = children
   } else {
-    selectRolesId = 0
-    tree.value.setCheckedKeys([], false)
-    uiControl.editBtn = true
-    uiControl.removeBtn = false
-    uiControl.updatePermissionBtn = false
+    const { data: children } = await fetchSimpleMenu(0)
+    siteMenu = children
   }
+  tree.value.setCheckedKeys([], false)
+
+  for (let i = 0; i < menus.cloneList.length; i++) {
+    tree.value.remove(menus.cloneList[i])
+  }
+
+  for (let i = 0; i < siteMenu.length; i++) {
+    tree.value.append(siteMenu[i])
+  }
+
+  roles.menus.forEach(e => {
+    const node = tree.value.getNode(e)
+    if (node && node.isLeaf) {
+      tree.value.setChecked(e, true)
+    }
+  })
 }
 
 async function updatePermission() {
+  uiControl.permissionLoading = true
   if (!selectRolesId) {
     ElMessage({ message: t('message.roleMustOnlyOne'), type: 'error' })
     return;
   }
   const selectedMenus = tree.value.getCheckedNodes(false, true).map(c => c.id)
   await updateRolePermission({ id: selectRolesId, menuIds: selectedMenus })
+  uiControl.dialogVisible = false
+  uiControl.permissionLoading = false
   await loadData()
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
 }
@@ -579,15 +815,52 @@ async function removeBatchRole() {
 //
 // }
 
+/**
+ * 新增角色并复制所选择角色的权限
+ */
+function showCopyDialog(roles) {
+  showDialog('COPY')
+  roleToCopy.id = roles.id
+  roleToCopy.name = roles.name
+  form.siteId = roles.siteId
+}
+
+function createAndCopyRole() {
+  rolesForm.value.validate(async valid => {
+    if (valid) {
+      uiControl.copyLoading = true;
+      form.idToCopy = roleToCopy.id
+      await copyRole(form)
+      uiControl.dialogVisible = false
+      uiControl.copyLoading = false;
+      await loadData()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
+}
+
+async function showPermission(roles) {
+  showDialog('PERMISSION')
+  await selectRoles(roles)
+}
+
+function next() {
+  rolesForm.value.validate(async valid => {
+    if (valid) {
+      active.value = 1;
+    }
+  })
+}
+
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     request.siteId = store.state.user.siteId
-    form.siteId = store.state.user.siteId
   } else {
     request.siteId = LOGIN_USER_TYPE.value === ADMIN.value ? siteList.list[1].id : siteList.list[0].id
     uiControl.siteVisible = true
   }
+  form.siteId = request.siteId
   await loadData()
   await loadTreeMenu()
 })
@@ -605,7 +878,7 @@ onMounted(async () => {
   justify-content: space-between;
 
   .roles {
-    width: 75%;
+    // width: 75%;
 
     .pagination {
       margin-top: 10px;
@@ -621,6 +894,17 @@ onMounted(async () => {
       align-items: center;
     }
   }
+}
+
+.steps {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.tree-node {
+  position: absolute;
+  right: 50px
 }
 
 .dialog-footer {

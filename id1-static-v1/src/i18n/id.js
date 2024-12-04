@@ -184,6 +184,7 @@ export default {
     accountNumber_placeholder: "Masukkan Nomor Akun",
     accountNumber_rules_01: "Masukkan Nomor Akun",
     accountNumber_rules_02: "Masukkan Nomor Akun yang Benar",
+    accountNumber_rules_03: "Nomor akun tidak boleh mengandung titik desimal",
     holderName: "Nama Pemegang",
     holderName_placeholder: "Masukkan Nama Pemegang",
     holderName_rules_01: "Masukkan Nama Pemegang",

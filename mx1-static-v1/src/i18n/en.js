@@ -183,6 +183,7 @@ export default {
     accountNumber_placeholder: "Introduzca el número de cuenta",
     accountNumber_rules_01: "Introduzca el número de cuenta",
     accountNumber_rules_02: "Introduzca un número de cuenta válido",
+    accountNumber_rules_03: "El número de cuenta no debe contener un punto decimal",
     holderName: "Nombre del Titular",
     holderName_placeholder: "Introduzca el Nombre del Titular",
     holderName_rules_01: "Introduzca el Nombre del Titular",

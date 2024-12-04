@@ -163,6 +163,10 @@ const isValidCardNumber = () => {
     return t("form.phone_rules_02");
   }
 
+  if (!/^[0-9]*$/.test(cardNumber)) {
+    return t("form.phone_rules_04");
+  }
+
   return result;
 };
 

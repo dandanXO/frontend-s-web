@@ -21,7 +21,7 @@
       </div> -->
       <div class="additional-info-item" v-if="store.token">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
-        <a href="https://t.me/dia88help" target="_blank">@dia88help</a>
+        <a href="https://t.me/Dia88help1" target="_blank">@Dia88help1</a>
         <!-- <span style="margin-left: 5px">@Diahelp7</span> -->
       </div>
     </div>

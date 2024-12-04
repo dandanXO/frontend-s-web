@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div ref="drawBtnRef" :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
+      <div
+        ref="drawBtnRef"
+        :class="`draw-btn click-pointer ${isWheelSpinning || isDisableClaimBtn ? 'disabled' : ''}`"
+        @click="spinWheel"
+      >
         <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/click-spin-btn.png" />
       </div>
       <div class="spin-wheel-board">
@@ -23,7 +27,7 @@
     </div>
 
     <div class="claim-btn-wrapper">
-      <button class="claim-btn" @click="spinWheel">
+      <button class="claim-btn" @click="spinWheel" :disabled="isDisableClaimBtn">
         {{ $t("btn.claim") }}
       </button>
     </div>
@@ -78,7 +82,7 @@ const spinBoardRef = ref();
 const spinNumRef = ref();
 const drawBtnRef = ref();
 
-const spinButtonDisable = ref(false);
+const isWheelSpinning = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref();
@@ -90,7 +94,7 @@ let speed = 1;
 var spinSchedule;
 var degree;
 
-const props = defineProps(["canSpinWheel", "showMission", "stage", "hasClaimed"]);
+const props = defineProps(["canSpinWheel", "showMission", "stage", "hasClaimed", "isDisableClaimBtn"]);
 const emit = defineEmits(["update:showMission", "getReferFriendInfo"]);
 
 const handleReceiveBtnClick = () => {
@@ -99,7 +103,7 @@ const handleReceiveBtnClick = () => {
 };
 
 const spin = (prizeIndex, stopCallback) => {
-  spinButtonDisable.value = true;
+  isWheelSpinning.value = true;
   // drawBtnRef.value.style.filter = "brightness(0.85)";
 
   reset();
@@ -167,7 +171,7 @@ const stopSpin = (prizeIndex, stopCallback) => {
       spinNumRefStyle.transform = transformValue;
 
       setTimeout(() => {
-        spinButtonDisable.value = false;
+        isWheelSpinning.value = false;
 
         setTimeout(() => {
           // drawBtnRef.value.style.filter = "none";
@@ -208,7 +212,7 @@ const spinWheel = () => {
   // return;
   //FOr TesTING END
 
-  if (spinButtonDisable.value === true) {
+  if (isWheelSpinning.value || props.isDisableClaimBtn) {
     return;
   }
 
