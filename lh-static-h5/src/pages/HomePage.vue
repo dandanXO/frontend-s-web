@@ -2559,6 +2559,7 @@ export default defineComponent({
           background-color: transparent;
           aspect-ratio: 684/244;
           background-size: 100% 100%;
+          max-height: 122px;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
             top: 1px;
@@ -2566,8 +2567,22 @@ export default defineComponent({
             border-top-left-radius: 8px;
             display: none;
           }
+          .platform-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 400;
+          }
           .platform-subtitle {
-            color: $font-1-dark;
+            color: #a98f7c;
+            font-size: .975rem;
+          }
+          .platform-logo {
+            display: none;
+          }
+          .platform-content {
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 1.5rem;
           }
         }
       }
