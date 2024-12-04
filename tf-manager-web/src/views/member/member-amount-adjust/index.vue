@@ -538,7 +538,7 @@
             @keypress="restrictDecimalInput($event)"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.cause')" prop="cause">
+        <el-form-item v-if="uiControl.dialogType === 'CREATE_ADD'" :label="t('fields.cause')" prop="cause">
           <el-select
             v-model="form.cause"
             :placeholder="t('fields.cause')"
@@ -556,6 +556,31 @@
               :value="item.reason"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item v-if="uiControl.dialogType === 'CREATE_DEDUCT'" :label="t('fields.cause')" prop="cause">
+          <el-select
+            v-model="form.cause"
+            :placeholder="t('fields.cause')"
+            style="width: 220px;"
+            filterable
+            default-first-option
+            @focus="loadCauseBySiteId"
+            :disabled="!form.siteId"
+            @change="handleCauseChange"
+          >
+            <el-option
+              v-for="item in adjustTypeList.formList"
+              :key="item.reason"
+              :label="item.reason"
+              :value="item.reason"
+            />
+          </el-select>
+          &nbsp; {{ t('fields.summary') }} &nbsp;
+          <el-switch
+            v-model="form.sendSummary"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+          />
         </el-form-item>
         <!-- <el-form-item :label="t('fields.rollover')" prop="rollover">
           <el-input-number
@@ -1030,7 +1055,8 @@ const request = reactive({
   operationType: null,
   cause: null,
   createBy: null,
-  reimburseAmount: null
+  reimburseAmount: null,
+  sendSummary: null
 })
 
 const form = reactive({
@@ -1042,7 +1068,8 @@ const form = reactive({
   rollover: null,
   cause: null,
   remark: null,
-  currency: null
+  currency: null,
+  sendSummary: null
 })
 
 const importForm = reactive({
@@ -1434,6 +1461,7 @@ function resetQuery() {
   request.cause = null
   request.createBy = null
   request.reimburseAmount = null
+  request.sendSummary = null
 }
 
 function checkQuery() {
@@ -1509,7 +1537,8 @@ async function showDialog(type) {
       adjustRollover.selectedItem = null
       form.rollover = undefined
     }
-      form.rollover = undefined
+    form.rollover = undefined
+    form.sendSummary = null
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
@@ -1519,6 +1548,7 @@ async function showDialog(type) {
     }
     form.rollover= 0;
     uiControl.balance = null
+    form.sendSummary = null
     uiControl.dialogTitle = t('fields.deductMemberAmountAdjust')
   }
   await loadFormSelect()

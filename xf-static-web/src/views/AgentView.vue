@@ -78,49 +78,45 @@
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
             <div class="affiliate-sub">
-              <div class="affiliate-subtitle">以下为佣金占比示例</div>
+              <div class="affiliate-subtitle">佣金如何计划</div>
               <div class="affiliate-inner">
                 <table>
                   <tbody>
                     <tr>
+                      <th>代理</th>
                       <th>盈利</th>
-                      <th>活跃玩家</th>
-                      <th>佣金比</th>
-                      <th>二次充值会员</th>
-                      <th>奖励佣金比</th>
-                      <th>奖励后佣金比</th>
+                      <th>有效活跃会员</th>
+                      <th>佣金比例</th>
                     </tr>
                     <tr>
-                      <td>8000 以上</td>
+                      <td>铜牌</td>
                       <td>＜10W</td>
                       <td>5</td>
                       <td>35%</td>
-                      <td>35%</td>
-                      <td>35%</td>
                     </tr>
                     <tr>
-                      <td>500,001-800,000</td>
+                      <td>银牌</td>
                       <td>10W-30W</td>
                       <td>10</td>
                       <td>40%</td>
-                      <td>40%</td>
-                      <td>40%</td>
                     </tr>
                     <tr>
-                      <td>300,001-500,000</td>
+                      <td>金牌</td>
                       <td>30W-60W</td>
                       <td>25</td>
                       <td>45%</td>
-                      <td>45%</td>
-                      <td>45%</td>
                     </tr>
                     <tr>
-                      <td>80,001-300,000</td>
+                      <td>钻石</td>
                       <td>60W-100W</td>
                       <td>50</td>
                       <td>50%</td>
-                      <td>50%</td>
-                      <td>50%</td>
+                    </tr>
+                    <tr>
+                      <td>皇冠</td>
+                      <td>>100W</td>
+                      <td>80</td>
+                      <td>55%</td>
                     </tr>
                   </tbody>
                 </table>
@@ -135,38 +131,42 @@
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/bonus-calculation-title.png`)" alt="" />
             <div class="affiliate-sub" style="height: 515px; width: 450px">
-              <div class="affiliate-subtitle">以下为佣金计算示例</div>
+              <div class="affiliate-subtitle">佣金计算(以下为示例)</div>
               <div class="affiliate-inner">
                 <table>
                   <tr>
-                    <td style="background: #339ebc; color: white">游戏总输赢</td>
-                    <td style="background: #339ebc; color: white">10000</td>
+                    <td style="background:  #339ebc; color: white">
+                      平台输赢
+                    </td>
+                    <td style="background:  #339ebc; color: white">
+                      10,000
+                    </td>
                   </tr>
                   <tr>
-                    <td class="highlight">-平台费</td>
-                    <td class="highlight">-1500</td>
+                    <td class="highlight">平台费</td>
+                    <td class="highlight">-800</td>
                   </tr>
                   <tr>
-                    <td :colspan="2">平台费=游戏总输赢*15%</td>
+                    <td :colspan="2">平台费=游戏总输赢x8%</td>
                   </tr>
                   <tr>
-                    <td class="highlight">-红利</td>
-                    <td class="highlight">-20</td>
+                    <td class="highlight">红利</td>
+                    <td class="highlight">-200</td>
                   </tr>
                   <tr>
                     <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
                   </tr>
                   <tr>
-                    <td class="highlight">=净利润</td>
-                    <td class="highlight">8480</td>
+                    <td class="highlight">净利润</td>
+                    <td class="highlight">9,000</td>
                   </tr>
                   <tr>
-                    <td class="highlight">*佣金比例</td>
-                    <td class="highlight">*33%</td>
+                    <td class="highlight">佣金比例</td>
+                    <td class="highlight">x35%</td>
                   </tr>
                   <tr>
-                    <td class="result">总佣金</td>
-                    <td class="result">2798.4</td>
+                    <td class="result">代理佣金</td>
+                    <td class="result">3,150</td>
                   </tr>
                 </table>
               </div>
@@ -178,11 +178,9 @@
               <img :src="require(`../assets/images/affiliate/bonus-rabbit.png`)" alt="" class="bonus-rabbit" />
               <div class="affiliate-inner" style="height: 80%">
                 <ul>
-                  <li>1.佣金派发时间：每月5号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款</li>
+                  <li>1.佣金派发时间：每月5号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
                   <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥200为一个活跃玩家。</li>
-                  <li>
-                    3.代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
-                  </li>
+                  <li>3.代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。</li>
                 </ul>
               </div>
             </div>
@@ -481,7 +479,7 @@ export default defineComponent({
         padding: 0;
 
         li {
-          padding: 20px 0;
+          padding: 10px 0;
         }
       }
 
@@ -535,7 +533,7 @@ export default defineComponent({
   text-align: center;
   color: #dde8f7;
   background: #339ebc;
-  padding: 5px 12px;
+  padding: 5px 25px;
 }
 .agent-content-item table td {
   height: 35px;

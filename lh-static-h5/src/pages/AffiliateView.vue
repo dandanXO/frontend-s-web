@@ -13,11 +13,11 @@
           <img src="../assets/images/affiliate/qqlogo.png" alt="QQ Icon" class="contact-icon" />
           <div class="contact-details">
             <span class="contact-name">雷火 QQ</span>
-            <span class="contact-id">1903687863</span>
+            <span class="contact-id">2115894008</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button @click="copyText('1903687863')" class="copy-button">复制</button>
+          <button @click="copyText('2115894008')" class="copy-button">复制</button>
           <a target="_blank" href="https://im.qq.com/index/" class="download-button">下载</a>
         </div>
       </div>
@@ -27,11 +27,11 @@
           <img src="../assets/images/affiliate/tglogo.png" alt="Telegram Icon" class="contact-icon" />
           <div class="contact-details">
             <span class="contact-name">Telegram</span>
-            <span class="contact-id">@LH18668</span>
+            <span class="contact-id">@leihuo686</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button class="copy-button" @click="copyText('@LH18668')">复制</button>
+          <button class="copy-button" @click="copyText('@leihuo686')">复制</button>
           <a target="_blank" class="download-button" href="https://telegram.org/download">下载</a>
         </div>
       </div>
@@ -41,11 +41,11 @@
           <img src="../assets/images/affiliate/skypelogo.png" alt="Skype Icon" class="contact-icon" />
           <div class="contact-details">
             <span class="contact-name">Skype</span>
-            <span class="contact-id">live:.cid.1a1ab9b6b5b0721f</span>
+            <span class="contact-id">live:.cid.8099acb97a5ea41</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button class="copy-button" @click="copyText('live:.cid.1a1ab9b6b5b0721f')">复制</button>
+          <button class="copy-button" @click="copyText('live:.cid.8099acb97a5ea41')">复制</button>
           <a target="_blank" class="download-button" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
         </div>
       </div>
@@ -55,11 +55,11 @@
           <img src="../assets/images/affiliate/mmlogo.png" alt="丝瓜 Icon" class="contact-icon" />
           <div class="contact-details">
             <span class="contact-name">丝瓜</span>
-            <span class="contact-id">LH1008666</span>
+            <span class="contact-id">Lh080688</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button class="copy-button" @click="copyText('LH1008666')">复制</button>
+          <button class="copy-button" @click="copyText('Lh080688')">复制</button>
           <a target="_blank" class="download-button" href="https://ya.cn/index.html">下载</a>
         </div>
       </div>
@@ -69,11 +69,11 @@
           <img src="../assets/images/affiliate/servicelogo.png" alt="Amico Icon" class="contact-icon" />
           <div class="contact-details">
             <span class="contact-name">Amico</span>
-            <span class="contact-id">Vip333</span>
+            <span class="contact-id">vip333</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button class="copy-button" @click="copyText('Vip333')">复制</button>
+          <button class="copy-button" @click="copyText('vip333')">复制</button>
           <a target="_blank" class="download-button" href="https://am35.cc">下载</a>
         </div>
       </div>

@@ -23,7 +23,7 @@
         >
           {{ $t("maintenance.customerService") }}
         </a>
-        <a href="https://t.me/dia88help" class="email" target="_blank">Telegram: @dia88help</a>
+        <a href="https://t.me/Dia88help1" class="email" target="_blank">Telegram: @Dia88help1</a>
       </div>
     </div>
     <div class="maintenance-img">

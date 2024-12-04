@@ -293,6 +293,9 @@ export default defineComponent({
           ui.youtubeUrl = data.youtube;
           ui.charityUrl = data.charity_url;
           ui.footerIcon = data.footer_icon;
+
+          ui.promo_exchange = data.promo_exchange;
+          ui.promo_megaspin = data.promo_megaspin;
         });
     };
 

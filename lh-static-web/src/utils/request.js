@@ -290,7 +290,8 @@ const globalAndCNLinks = [
   "lh908.cc",
   "lh942.cc",
   "lh943.cc",
-  "lh953.cc"
+  "lh953.cc",
+  "lh04157.com"
 ];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 

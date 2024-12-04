@@ -657,11 +657,13 @@ function showDialog(type) {
     form.vcallId = null;
     uiControl.dialogTitle = t('fields.addUser')
     uiControl.userTypeSelect = false
-    uiControl.siteSelectVisible = false
-    uiControl.rolesSelect = true
+    uiControl.siteSelectVisible = true
+    uiControl.rolesSelect = false
   } else if (type === 'EDIT') {
     form.siteId = null
     form.siteIdArray = null
+    uiControl.siteSelectVisible = true
+    uiControl.rolesSelect = false
     uiControl.dialogTitle = t('fields.editUser')
   } else {
     uiControl.dialogTitle = t('fields.updatePassword')
