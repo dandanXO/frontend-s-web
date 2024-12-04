@@ -611,7 +611,7 @@ onMounted(() => {
       display: flex;
 
       img {
-        max-width: 75px;
+        max-width: 150px;
         width: 100%;
         text-align: center;
       }
