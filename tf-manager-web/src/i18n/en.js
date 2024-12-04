@@ -935,6 +935,7 @@ export default {
     deliverGift: 'Deliver Gift',
     deposit: 'Deposit',
     depositAmount: 'Deposit Amount',
+    depositAmountList: 'Deposit Amount List',
     depositAverage: 'Deposit Averate',
     depositBettingAmount: 'Deposit/Betting Amount',
     depositCount: 'Deposit Count',

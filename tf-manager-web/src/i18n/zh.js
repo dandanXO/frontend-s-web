@@ -880,6 +880,7 @@ export default {
     dailyActiveMemberCount: '当日活跃会员数',
     dailyDeposit: '每日存款数量',
     dailyDepositAmount: '每日存款金额',
+    depositAmountList: '存款金额列表',
     dailyMin: '每日最低转盘次数',
     dailyMinRegLimit: '每日最小注册限制',
     dailyWithdraw: '每日提款数量',
