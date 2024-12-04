@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-form-logo">
-      <img src="../assets/images/auth/win-7-logo.png" />
+      <img src="../assets/images/auth/win-7-txt-logo.png" />
     </div>
 
     <div class="verification-code-form-grid">

@@ -5,7 +5,7 @@
         <div class="topActions">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-container">
-            <img src="../../assets/images/auth/win-7-logo.png" />
+            <img src="../../assets/images/auth/win-7-txt-logo.png" />
             <!-- <img src="../../assets/logo.png" /> -->
             <!-- <div
               class="game-logo"
@@ -528,7 +528,7 @@ defineExpose({
 
       img {
         display: block;
-        height: 100%;
+        height: 95%;
         width: auto;
       }
     }
