@@ -117,23 +117,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="oldMemberDepositAmount"
-          :label="t('fields.oldMemberDepositAmount')"
-          width="120"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.oldMemberDepositAmount, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="oldMemberDepositMemberCount"
-          :label="t('fields.oldMemberDepositMemberCount')"
-          width="120"
-        />
-        <el-table-column
           prop="withdrawAmount"
           :label="t('fields.withdrawAmount')"
           align="center"
@@ -151,23 +134,6 @@
           :label="t('fields.withdrawCount')"
           align="center"
           width="150"
-        />
-        <el-table-column
-          prop="oldMemberWithdrawAmount"
-          :label="t('fields.oldMemberWithdrawAmount')"
-          width="120"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.oldMemberWithdrawAmount, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="oldMemberWithdrawCount"
-          :label="t('fields.oldMemberWithdrawCount')"
-          width="120"
         />
         <el-table-column
           prop="withdrawMembersCount"
@@ -326,6 +292,40 @@
             <span v-formatter="{data: scope.row.netProfit, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="oldMemberDepositAmount"
+          :label="t('fields.oldMemberDepositAmount')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.oldMemberDepositAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="oldMemberDepositMemberCount"
+          :label="t('fields.oldMemberDepositMemberCount')"
+          width="120"
+        />
+        <el-table-column
+          prop="oldMemberWithdrawAmount"
+          :label="t('fields.oldMemberWithdrawAmount')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.oldMemberWithdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="oldMemberWithdrawMemberCount"
+          :label="t('fields.oldMemberWithdrawCount')"
+          width="120"
+        />
       </el-table>
       <el-pagination
         class="pagination"
@@ -526,12 +526,12 @@ function getSummaries(param) {
       } else if (index > 1) {
         var prop = column.property
         if (
+          index === 21 ||
           index === 4 ||
-          index === 6 ||
-          index === 19 || index === 18 || index === 17 ||
-          index === 9 || index === 8 || index === 11 || index === 12) {
+          index === 15 || index === 14 || index === 13 ||
+          index === 5 || index === 23 || index === 7 || index === 8) {
           sums[index] = total.data[prop]
-        } else if (index === 10) {
+        } else if (index === 6) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +
