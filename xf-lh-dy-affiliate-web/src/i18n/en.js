@@ -537,6 +537,7 @@ export default {
     recommenderCode: 'Recommender Code',
     memberShareRatio: 'Member Share Ratio',
     editShareRatio: 'Edit Share Ratio',
+    alipay: 'Alipay',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
