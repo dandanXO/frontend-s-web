@@ -32,13 +32,13 @@ export default defineComponent({
       {
         code: "inbox",
         icon: "inbox",
-        name: "我的反馈 "
+        name: "收件箱"
       },
-      // {
-      //   code: "outbox",
-      //   icon: "outbox",
-      //   name: "发件箱"
-      // },
+      {
+        code: "outbox",
+        icon: "outbox",
+        name: "发件箱"
+      },
       {
         code: "write",
         icon: "write",

@@ -4,10 +4,9 @@ import SvgIcon from "@/components/SvgIcon/index.vue";
 import { useStore } from "@/store";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import { WebSocketActionTypes } from "@/store/modules/socket/action-types";
-import { CircleCloseFilled } from '@element-plus/icons-vue';
+import { CircleCloseFilled, Right } from '@element-plus/icons-vue';
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
-import { useI18n } from "vue-i18n";
 
 const store = useStore()
 const socket = getCurrentInstance().appContext.config.globalProperties.$socket;
@@ -20,7 +19,6 @@ const isNotificationDialogVisible = ref(false);
 const toggleNotificationDialog = () => {
   isNotificationDialogVisible.value = !isNotificationDialogVisible.value;
 };
-const { t } = useI18n()
 
 const handleReceivedWsEvent = (event) => {
   switch (event.event) {
@@ -35,7 +33,7 @@ const handleReceivedWsEvent = (event) => {
         store.dispatch(UserActionTypes.ACTION_REFRESH_NOTIFICATIONS, updatedNotificationRecords);
         store.dispatch(WebSocketActionTypes.REMOVE_SOCKET_EVENTS, event);
         ElMessage({
-          message: t('transfer.status.success'),
+          message: 'success',
           type: 'success',
         })
       }
@@ -102,22 +100,34 @@ function formatTimestamp(timestamp) {
     >
       <div class="notification-body">
         <div v-for="notification in storeNotifications" :key="notification.id" class="notification-content">
-          <div class="notification-item">
-            <el-icon :size="25" title="不再显示" class="notification-item-close">
-              <CircleCloseFilled v-if="notification.id" @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
-            </el-icon>
-
-            <div class="notification-item-header">
-              <div class="notification-item-title">{{ notification.siteId ? `[${getSiteNameBySiteId(notification.siteId)}]` : '' }} {{ $te(`monitorTitle.${notification.title}`) ? $t(`monitorTitle.${notification.title}`) : "Alert" }}</div>
-              <div class="notification-item-datetime">{{ formatTimestamp(notification.createTime) }}</div>
-            </div>
-            <div class="notification-item-body">
-              <div class="notification-item-content">{{ $te(`fields.${notification.content}`) ? $t(`fields.${notification.content}`) : notification.content }}</div>
-            </div>
-            <button title="跳转页面" v-if="notification.redirectionPath" @click="closeDialogAndRedirectTo(notification.redirectionPath)" class="notification-item-redirection">
-              {{ $t('fields.redirect') }}
-            </button>
-          </div>
+          <el-row>
+            <el-col :span="2" class="notification-content-left">
+              <el-icon :size="25" title="不再显示">
+                <CircleCloseFilled @click="markNotificationRead(notification.id)" style="cursor: pointer;" />
+              </el-icon>
+            </el-col>
+            <el-col :span="20" class="notification-content-middle">
+              <div class="notification-content-right-header">
+                {{ $t(`monitorTitle.${notification.title}`) }}
+              </div>
+              <div class="notification-content-right-body">
+                {{ notification.content }}
+              </div>
+              <el-row :justify=" 'space-between' " class="notification-content-right-footer">
+                <el-col :span="12">
+                  {{ getSiteNameBySiteId(notification.siteId) }}
+                </el-col>
+                <el-col :span="12" class="notification-content-right-footer-right">
+                  {{ formatTimestamp(notification.createTime) }}
+                </el-col>
+              </el-row>
+            </el-col>
+            <el-col :span="2" class="notification-content-left">
+              <el-icon :size="25" title="跳转页面">
+                <Right v-if="notification.redirectionPath" @click="closeDialogAndRedirectTo(notification.redirectionPath)" style="cursor: pointer;" />
+              </el-icon>
+            </el-col>
+          </el-row>
         </div>
       </div>
     </el-dialog>
@@ -139,9 +149,6 @@ function formatTimestamp(timestamp) {
     background-color: #516e92; /* Color of the scrollbar track */
 }
 #notification-dialog-wrapper {
-  :deep(.el-dialog){
-    border-radius: 10px;
-  }
   :deep(.el-dialog__header) {
     border-radius: 10px 10px 0px 0px;
     padding: 0 16px;
@@ -173,7 +180,7 @@ function formatTimestamp(timestamp) {
 }
 
 .notification-content {
-  margin: 5px 5px 8px 5px;
+  margin: 0 5px 10px 5px;
 }
 
 .notification-content-left {

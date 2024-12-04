@@ -423,14 +423,14 @@ export default defineComponent({
               if (res.code === 0) {
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();
-                
+
                 $q.notify({
                   color: "positive",
                   position: "top",
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-                
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
