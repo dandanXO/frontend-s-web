@@ -76,20 +76,18 @@
           v-if="$q.dark.isActive"
           src="../assets/images/footer/home-icon-dark.svg"
         />
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon home"
           v-else
-          src="../assets/images/footer/home-icon.png"
         />
         <img
           class="hover"
           v-if="$q.dark.isActive"
           src="../assets/images/footer/home-icon-active-dark.svg"
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon home"
           v-else
-          src="../assets/images/footer/home-icon-active.png"
         />
         <span>首页</span>
       </q-route-tab>
@@ -111,20 +109,18 @@
           v-if="$q.dark.isActive"
           src="../assets/images/footer/withdraw-icon-dark.png"
         />
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon wallet"
           v-else
-          src="../assets/images/footer/withdraw-icon.png"
         />
         <img
           class="hover"
           v-if="$q.dark.isActive"
           src="../assets/images/footer/withdraw-icon-active-dark.png"
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon wallet"
           v-else
-          src="../assets/images/footer/withdraw-icon-active.png"
         />
         <span>账户</span>
       </q-route-tab>
@@ -135,20 +131,18 @@
           v-if="$q.dark.isActive"
           src="../assets/images/footer/promo-icon-dark.svg"
         />
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon promo"
           v-else
-          src="../assets/images/footer/promo-icon.png"
         />
         <img
           class="hover"
           v-if="$q.dark.isActive"
           src="../assets/images/footer/promo-icon-active-dark.svg"
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon promo"
           v-else
-          src="../assets/images/footer/promo-icon-active.png"
         />
         <span class="footer-icon-promotion">优惠</span>
       </q-route-tab>
@@ -159,20 +153,18 @@
           v-if="$q.dark.isActive"
           src="../assets/images/footer/chat-icon-dark.svg"
         />
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon headphone"
           v-else
-          src="../assets/images/footer/chat-icon.png"
         />
         <img
           class="hover"
           v-if="$q.dark.isActive"
           src="../assets/images/footer/chat-icon-active-dark.svg"
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon headphone"
           v-else
-          src="../assets/images/footer/chat-icon-active.png"
         />
         <span>客服</span>
       </q-route-tab>
@@ -183,20 +175,18 @@
           v-if="$q.dark.isActive"
           src="../assets/images/footer/account-icon-dark.svg"
         />
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon user"
           v-else
-          src="../assets/images/footer/account-icon.png"
         />
         <img
           class="hover"
           v-if="$q.dark.isActive"
           src="../assets/images/footer/account-icon-active-dark.svg"
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon user"
           v-else
-          src="../assets/images/footer/account-icon-active.png"
         />
         <span class="footer-icon-personal">我的</span>
       </q-route-tab>
@@ -648,6 +638,63 @@ svg path {
 
   img {
     width: 100%;
+  }
+}
+
+.footer-icon {
+  width: 30px;
+  height: 28px;
+
+  &.home {
+    background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
+    background-size: auto;
+    background-position: 0.5% 0%;
+
+    &.inactive {
+      background-position: 0.5% 100%;
+    }
+  }
+
+  &.wallet {
+    background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
+    background-size: auto;
+    background-position: 98.5% 0%;
+
+    &.inactive {
+      background-position: 98.5% 100%;
+    }
+  }
+
+  &.promo {
+    background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
+    background-size: auto;
+    background-position: 41% 0%;
+
+    &.inactive {
+      background-position: 41% 100%;
+    }
+  }
+
+  &.headphone {
+    width: 28px;
+    height: 28px;
+    background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
+    background-size: auto;
+    background-position: 59.5% 0%;
+
+    &.inactive {
+      background-position: 59.5% 100%;
+    }
+  }
+
+  &.user {
+    background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
+    background-size: auto;
+    background-position: 79% 0%;
+
+    &.inactive {
+      background-position: 79% 100%;
+    }
   }
 }
 </style>
