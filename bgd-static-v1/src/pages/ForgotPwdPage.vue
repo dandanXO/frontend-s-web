@@ -1,7 +1,7 @@
 <template>
   <div class="forgot-password-container">
     <div class="forgot-password-form-logo">
-      <img src="../assets/images/auth/win-7-logo.png" />
+      <img src="../assets/images/auth/win-7-txt-logo.png" />
     </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">

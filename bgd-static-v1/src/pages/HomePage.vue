@@ -397,7 +397,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <div class="platform-game-container live-casino">
               <div
-                v-for="(item, index) in livecasino.slice(0,3)"
+                v-for="(item, index) in livecasino.slice(0, 3)"
                 :key="index"
                 data-aos="zoom-in"
                 :data-aos-delay="100 * index"
@@ -4775,7 +4775,7 @@ const showCongratsModal = () => {
     }
     > :first-child {
       width: 100%;
-      border-radius:  10px;
+      border-radius: 10px;
       grid-row: span 2;
       aspect-ratio: 500/540;
 
