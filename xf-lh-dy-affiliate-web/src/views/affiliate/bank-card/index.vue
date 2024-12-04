@@ -160,7 +160,7 @@
             <el-col :span="8">
               <el-select value-key="bankType" v-model="selectedBankType" :placeholder="t('fields.select')" size="large" @change="selectBankType">
                 <el-option
-                  v-for="item in bankTypes"
+                  v-for="item in bankTypes.list"
                   :key="item.key"
                   :label="item.displayName"
                   :value="item.value"
@@ -191,7 +191,9 @@
         <el-form-item ref="cardNumber" prop="cardNumber">
           <el-input
             v-model="bankCardInfo.cardNumber"
-            :placeholder="selectedBankType === 'Bank' ? t('fields.cardNumber') : (selectedBankType === 'Crypto' ? t('fields.usdtWalletAddress') : t('fields.ewallet'))"
+            :placeholder="selectedBankType === 'Bank' ? t('fields.cardNumber') :
+              (selectedBankType === 'Crypto' ? t('fields.usdtWalletAddress') :
+                (selectedBankType === 'e-Wallet' ? t('fields.ewallet') : t('fields.alipay')))"
           />
         </el-form-item>
         <el-form-item ref="cardNumber" prop="cardAddress" v-if="selectedBankType === 'Bank'">
@@ -222,16 +224,22 @@ import emptyComp from "@/components/empty"
 
 onMounted(() => {
   loadCards();
+  if (parseInt(store.state.user.siteId === 1) || parseInt(store.state.user.siteId) === 6 || parseInt(store.state.user.siteId) === 7) {
+    bankTypes.list.push({ key: 4, displayName: t('fields.alipay'), value: "alipay" })
+  }
 });
 const store = useStore();
 const { t } = useI18n();
 const selectedBankType = ref("Bank")
 
-const bankTypes = [
-  { key: 1, displayName: t('fields.bank'), value: 'Bank' },
-  { key: 2, displayName: t('fields.crypto'), value: 'Crypto' },
-  { key: 3, displayName: t('fields.ewallet'), value: 'e-Wallet' }
-]
+const bankTypes = reactive({
+  list: [
+    { key: 1, displayName: t('fields.bank'), value: 'Bank' },
+    { key: 2, displayName: t('fields.crypto'), value: 'Crypto' },
+    { key: 3, displayName: t('fields.ewallet'), value: 'e-Wallet' }
+  ]
+})
+
 const personalState = reactive({
   bankCardList: [],
   bankList: [],
@@ -271,7 +279,7 @@ const bankCardInfo = reactive({
 const centerDialogVisible = ref(false)
 
 const validateEmptyCardNo = async (r, v) => {
-  if (selectedBankType.value === 'Bank') {
+  if (selectedBankType.value === 'Bank' || selectedBankType.value === 'alipay') {
     if (v === '') {
       return Promise.reject(new Error(t('message.requiredCardNumber')));
     } else if (/^\d+$/.test(v) === false) {
@@ -461,13 +469,16 @@ const selectBankType = () => {
   banksList.value = []
   bankCardInfo.bankId = null
   bankCardModalState.banks.forEach(element => {
-    if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
+    if (selectedBankType.value === "Bank" && element.bankType === 'BANK' && element.code !== 'alipay') {
       banksList.value.push(element);
     }
     if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
       banksList.value.push(element);
     }
     if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
+      banksList.value.push(element);
+    }
+    if (selectedBankType.value === "alipay" && element.bankType === 'BANK' && element.code === 'alipay') {
       banksList.value.push(element);
     }
   })
