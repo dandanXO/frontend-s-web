@@ -589,6 +589,7 @@ function showDialog(type) {
     form.id = null;
     form.name = null
     form.remark = null
+    form.idToCopy = null
     uiControl.dialogTitle = t('fields.addRole')
   } else if (type === 'PERMISSION') {
     if (hasPermission(['sys:roles:update:permission'])) {
@@ -639,7 +640,7 @@ function resetQuery() {
 async function create() {
   uiControl.createLoading = true;
   if (tree.value) {
-    form.menuIds = tree.value.getCheckedNodes(false, true).map(c => c.id);
+    form.menuIds = tree.value.getCheckedNodes(false, true).map(c => c.id).join(",");
   }
   await createRoleWithPermission(form)
   uiControl.dialogVisible = false
