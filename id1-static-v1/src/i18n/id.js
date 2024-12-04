@@ -328,7 +328,8 @@ export default {
     amount: "Jumlah",
     depositAmountMustInBetween: "Jumlah Deposit Harus Di Antara",
     extra: "Ekstra",
-    understood: "Dipahami"
+    understood: "Dipahami",
+    noMatchingFound: "Tidak ditemukan saluran yang cocok untuk jumlah:"
   },
   withdraw: {
     withdrawCurrency: "Mata Uang Penarikan",

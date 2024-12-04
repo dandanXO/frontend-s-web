@@ -24,17 +24,42 @@
         </template>
       </div>
 
-      <div class="method-title q-mb-sm q-mt-md">{{ $t("deposit.paymentChannels") }}</div>
-      <div class="deposit-methods-container col-three">
-        <template v-for="(item, index) in selectedItemChannel" :key="index">
-          <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
-            <!-- <div class="item-img">
+      <template v-if="mainAmountList.length > 0">
+        <div class="method-title q-mb-sm q-mt-md">{{ $t("form.depositAmount") }}</div>
+        <div class="deposit-methods-container col-three">
+          <template v-for="(amount, index) in mainAmountList" :key="index">
+            <!-- <div @click="handleDepositItemClick(amount)" :class="'deposit-item '"> -->
+            <div @click="goSelectMainAmount(amount)" class="deposit-item">
+              <q-badge
+                v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
+                color="orange"
+                floating
+                rounded
+              >
+                +{{ convertToCommaAmount(amount * 0.05) }}
+              </q-badge>
+              <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge>
+              <div :class="['deposit-amt', form.localAmount === amount && 'active']">
+                {{ convertToCommaAmount(amount) }}
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <template v-if="selectedItemChannel">
+        <div class="method-title q-mb-sm q-mt-md">{{ $t("deposit.paymentChannels") }}</div>
+        <div class="deposit-methods-container col-three">
+          <template v-for="(item, index) in selectedItemChannel" :key="index">
+            <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
+              <!-- <div class="item-img">
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div> -->
-            <div class="item-title">{{ item.nodeName }}</div>
-          </div>
-        </template>
-      </div>
+              <div class="item-title">{{ item.nodeName }}</div>
+            </div>
+          </template>
+        </div>
+      </template>
 
       <template v-if="selectedChanelExtra.length > 0">
         <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.bank") }}</div>
@@ -52,13 +77,17 @@
       </template>
     </template>
 
+    <!-- <div class="q-mt-md">
+      <q-checkbox v-model="isShowSpecialAmount">Show minimum amount of 10k</q-checkbox>
+    </div> -->
+
     <div class="slot-ftd-section" v-if="isFtdPrivilege">
       <img src="@/assets/images/bonus/slot-ftd-img.png" />
     </div>
 
     <!-- select amount -->
     <template v-if="isSelectedMethod">
-      <div class="method-title q-mt-md q-mb-sm">{{ $t("form.depositAmount") }}</div>
+      <!-- <div class="method-title q-mt-md q-mb-sm">{{ $t("form.depositAmount") }}</div>
       <div class="deposit-methods-container col-three">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
@@ -76,7 +105,7 @@
             </div>
           </div>
         </template>
-      </div>
+      </div> -->
 
       <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
         <div class="submit-message">
@@ -112,7 +141,7 @@
       </div>
 
       <div class="deposit-container" v-else>
-        <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
+        <q-form ref="depositForm" class="q-gutter-y-xs deposit-form" v-if="selectedItemChannel.length > 0">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
             <q-checkbox
               style="margin-left: -5px"
@@ -215,7 +244,7 @@
       </div>
 
       <div class="q-mt-lg">
-        <div :class="`btn-submit`" @click="confirmDeposit">
+        <div :class="`btn-submit`" @click="confirmDeposit" v-if="form.localAmount > 0">
           <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
           <template v-else>{{ $t("btn.submit") }}</template>
         </div>
@@ -362,6 +391,7 @@ const selectedItemPrivilegeId = ref();
 const extraPrivilegeId = ref();
 const selectedItemChannel = ref();
 const selectedItemAmount = ref();
+const mainAmountList = ref([]);
 const selectedChannel = ref();
 const selectedChanelExtra = ref([]);
 const isPrivilege = ref(false);
@@ -378,10 +408,38 @@ const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
   selectedChanelExtra.value = [];
 
-  selectedItemChannel.value = item.children;
+  const amounts = item.amountList ? item.amountList.split("|") : [];
+
+  mainAmountList.value = amounts;
+
   goSelectedChannel(item.children[0]);
+  selectedItemChannel.value = "";
+  form.localAmount = "";
   // goSelectedChannel(item);
 };
+
+const goSelectMainAmount = (amount) => {
+  let matchedChannels = activeMethod.value.children.filter((child) => child.extra.amountArr?.includes(amount));
+
+  if (matchedChannels.length > 0) {
+    // Assign the matched channels and select the first one
+    selectedItemChannel.value = matchedChannels;
+    goSelectedChannel(matchedChannels[0]);
+  } else {
+    // Show error notification if no match is found
+    $q.notify({
+      type: "negative",
+      message: `${t("deposit.noMatchingFound")} ${amount}`,
+      position: "top"
+    });
+    selectedItemChannel.value = "";
+    amount = 0;
+    form.localAmount = "";
+  }
+
+  form.localAmount = amount;
+};
+
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
   selectedChanelExtra.value = item.extra.banks;
@@ -416,8 +474,12 @@ function initPay() {
     $q.loading.hide();
     isLoadingInitPay.value = false;
     if (res.code === 0) {
-      paymentMethodsItems.value = res.data.payments;
-      goSelectedMethod(res.data.payments[0]);
+      let filteredPayments = res.data.payments;
+      paymentMethodsItems.value = filteredPayments;
+      // select first children by default
+      // if (filteredPayments.length > 0) {
+      //   goSelectedMethod(filteredPayments[0]);
+      // }
     }
     if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
@@ -782,6 +844,13 @@ const scrollToInput = () => {
     });
   }
 };
+
+const isShowSpecialAmount = ref(false);
+
+watch(isShowSpecialAmount, (newVal) => {
+  console.log("isShowSpecialAmount changed to:", newVal);
+  initPay();
+});
 
 watch(
   isFromFtdPromo,
