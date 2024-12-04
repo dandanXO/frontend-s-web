@@ -688,12 +688,13 @@ svg path {
   }
 
   &.user {
+    width: 28px;
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
     background-size: auto;
     background-position: 79% 0%;
 
     &.inactive {
-      background-position: 79% 100%;
+      background-position: 78% 100%;
     }
   }
 }
