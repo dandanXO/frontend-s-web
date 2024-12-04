@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
-    <div class="login-form-logo-img">
-      <img src="../assets/images/auth/auth-logo-text-only.png" />
+    <div class="login-form-logo">
+      <img src="../assets/images/auth/win-7-logo.png" />
     </div>
 
     <div class="verification-code-form-grid">
@@ -99,7 +99,7 @@ const onSubmit = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5F6061;
+    color: #5f6061;
     font-weight: 400;
     width: 50%;
   }
@@ -146,14 +146,15 @@ const onSubmit = () => {
   left: 16px;
 }
 
-.login-form-logo-img {
+.login-form-logo {
   padding: 0 16px;
   display: flex;
   justify-content: center;
+  align-items: center;
   img {
     display: block;
     width: 100%;
-    max-width: 200px;
+    max-width: 180px;
   }
 }
 
@@ -207,7 +208,7 @@ const onSubmit = () => {
   display: grid;
   grid-auto-flow: row;
   gap: 7px;
-  margin-top: 20px;
+  margin-top: 30px;
   padding-left: 20px;
   padding-right: 20px;
 
