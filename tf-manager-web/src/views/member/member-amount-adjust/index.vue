@@ -1377,9 +1377,9 @@ function constructRollover() {
   }
 
   if (addAmountAdjustmentType.value === 'CALCULATE' && uiControl.dialogType === 'CREATE_ADD') {
-    form.rollover = form.rollover ? calculateRollover() : 1
+    form.rollover = typeof form.rollover === 'number' ? calculateRollover() : 1
   } else {
-    form.rollover = form.rollover ? form.rollover : 1;
+    form.rollover = typeof form.rollover === 'number' ? form.rollover : 1;
   }
   return JSON.stringify(json)
 }
