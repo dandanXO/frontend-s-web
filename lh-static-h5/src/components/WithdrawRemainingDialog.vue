@@ -312,10 +312,6 @@ onMounted(() => {
         background-size: 100% 100%;
         color: #7a80a1;
       }
-      &:hover {
-        opacity: 1;
-        // filter: brightness(1.2);
-      }
     }
   }
 
@@ -337,6 +333,74 @@ onMounted(() => {
     }
   }
 }
+
+.body--dark {
+  .withdraw-remaining-dialog {
+
+    .withdraw-remaining-dialog-inner {
+
+      .withdraw-remaining-dialog__header {
+        background: url(../assets/images/finance/withdraw/withdraw-remaining-bg-dark.png) no-repeat;
+        background-size: 100%;
+      }
+      
+      .withdraw-remaining-dialog__header-title {
+        color: #fff;
+      }
+
+      .withdraw-remaining-dialog__body {
+        background-color: #2d3e63;
+        box-shadow: none;
+
+        .withdraw-remaining-dialog__body-title {
+          color: #fff;
+        }
+
+        .withdraw-remaining-dialog__body-table {
+          thead {
+            background: linear-gradient(180deg,#007673,#055B77);
+            th {
+              color: #fff;
+            }
+          }
+
+          tbody {
+            tr {
+              background-color: transparent;
+
+              td {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+
+      .withdraw-remaining-dialog__action {
+        background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+        background-size: cover;
+        box-shadow: none;
+        border-radius: 4px;
+        border: 1px solid #3a93ce;
+        color: $white;
+
+        &:first-of-type {
+          background: url("../assets/images/account/secondary-btn.svg") no-repeat center center;
+          background-size: cover;
+          box-shadow: none;
+          border-radius: 4px;
+          border: 1px solid #ffffff4d;
+          color: $white;
+        }
+        &:hover {
+          opacity: 1;
+          // filter: brightness(1.2);
+        }
+      }
+    }
+  }
+}
+
 
 @media (max-width: 450px) {
   .withdraw-remaining-dialog {
