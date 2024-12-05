@@ -668,6 +668,7 @@ export default defineComponent({
     onMounted(() => {
       getBalance();
       store.getBalance();
+      store.getVIPInfo();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
