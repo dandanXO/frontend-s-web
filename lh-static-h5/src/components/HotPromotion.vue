@@ -122,6 +122,12 @@
       v-if="list.redirectUrl === 'lh1-valorant-champion-tour-2024'"
       :promo-code="list.promoCode"
     />
+    <ChristmasGachapon
+      v-if="list.redirectUrl === 'lh1-christmas-gashapon'"
+      :promo-code="list.promoCode"
+      :promo-rules="list.pageContent"
+    />
+    
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -263,6 +269,9 @@ const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-lo
 const ValorantChampionTour2024 = defineAsyncComponent(() =>
   import("./hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue")
 );
+const ChristmasGachapon = defineAsyncComponent(() =>
+  import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -350,7 +359,8 @@ export default defineComponent({
     ElisaGift,
     PokerWinningPromo,
     SlotLossBonusPromo,
-    ValorantChampionTour2024
+    ValorantChampionTour2024,
+    ChristmasGachapon
   },
   props: {
     list: {

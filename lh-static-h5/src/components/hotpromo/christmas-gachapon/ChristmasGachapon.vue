@@ -1,0 +1,573 @@
+<template>
+    <div class="christmas-gachapon-container">
+        <div class="q-loading-mask" v-if="isLoading">
+            <p class="spinner"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/spinner.png"></p>
+            <p class="loading-text">加载中... </p>
+        </div>
+        <div class="snow-container">
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        </div>
+        <div class="promorule" @click="openModal('rule')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/rules.png"></div>
+        <div class="promorecord" @click="openModal('record')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/record.png"></div>
+        <div class="once" @click="getGachapon('once')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/once.png"></div>
+        <div class="fivex" @click="getGachapon('five')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/fivex.png"></div>
+        <div class="amtleft">抽奖次数剩余: <span>{{ availableDraw }}次</span></div>
+    </div>
+    <q-dialog class="christmas-modal" v-model="isModal" align-center> 
+            <div class="title">
+                {{ modalContent.title }}
+            </div>
+        <div class="inner-contents">
+            <div v-if="isRules" class="rules" v-html="rules"></div>
+            <div class="table-scroll" v-if="!isRules">
+                
+            <q-table
+            flat bordered
+            dense
+            grid
+            row-key="index"
+            :rows="tableData"
+            :columns="columns"
+            :rows-per-page="tableData.length"
+            />
+            </div>
+        </div>
+    </q-dialog>
+    
+    <q-dialog persistent class="prize-modal" :class="{ 'five': prizes.length > 1, 'once': prizes.length <= 1 }" v-model="isPrizeModal" align-center>
+        <div class="prizes">
+            <div class="prize" v-for="(prize, i) in prizes" :key="i">
+                <div class="imgball"><img :src="require(`../christmas-gachapon/../../../assets/promo/christmas-gachapon/${prize.img}.png`)"></div>
+                <div class="redbar">{{ prize.type }}</div>
+            </div>
+        </div>
+        <div class="claimbtn" @click="getBalance()">
+            <img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/claim.png">
+        </div>
+    </q-dialog>
+</template>
+<script setup>
+import { onMounted, ref, defineProps } from "vue";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
+import { Pagination } from "vue3-carousel";
+import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/promotion/christmasGachapon";
+    const store = userStore();
+    const isLoading = ref(false);
+    const props = defineProps(["promoCode","promoRules"]);
+    const promoCode = ref(props.promoCode);
+    const rules = ref(props.promoRules);
+    const notify = useNotify();
+    const isModal = ref(false);
+    const isRules = ref(false);
+    const isPrizeModal = ref(false)
+    const modalContent = {
+        title: ''
+    }
+    const prizes = ref([]);
+    const availableDraw = ref(0);
+    const openModal = (type) => {
+        if (type === 'rule') {
+            modalContent.title = '活动规则'
+            isRules.value = true
+        } else if (type === 'record') {
+            modalContent.title = '活动记录'
+            isRules.value = false
+        } else {}
+        isModal.value = true
+    }
+    const getGachapon = (t) => {
+    // if (availableDraw.value === 0) {
+    //     notify({
+    //     type: "warning",
+    //     message: `抽奖次数不足`
+    //     });
+    //     return
+    // }
+    isLoading.value = true;
+    var times = 1
+    if (t === 'five') {
+        times = 5
+    }
+    // Simulating an async operation (e.g., an API call) with a Promise.
+    getDrawPrizes(promoCode.value, times) // Replace this with your actual async operation (e.g., an API call)
+        .then((data) => {
+            // Handle success
+            prizes.value = data;
+            isPrizeModal.value = true;
+            console.log('Prizes fetched successfully:', data);
+        })
+        .catch((error) => {
+            // Handle error
+            // notify({
+            //     type: "error",
+            //     message: `Error fetching prizes: ${error.message}`
+            // });
+            console.error('Error fetching prizes:', error);
+        })
+        .finally(() => {
+            // Always run (after success or error)
+            isLoading.value = false;
+            console.log('Loading state finished');
+        });
+};
+
+    // Simulating an asynchronous function (replace with your actual async code)
+    // const fetchPrizes = (t) => {
+    //     return new Promise((resolve, reject) => {
+    //         setTimeout(() => {
+    //             if (t === 'once') {
+    //                 resolve([{
+    //                     img: 'iphone',
+    //                     type: 'Iphone16: 256g一台'
+    //                 }]);
+    //             } else if (t === 'five') {
+    //                 resolve([{
+    //                         img: 'iphone',
+    //                         type: 'Iphone16: 256g一台'
+    //                     },
+    //                     {
+    //                         img: 'ipods',
+    //                         type: '苹果耳机一副'
+    //                     },
+    //                     {
+    //                         img: 'big',
+    //                         type: '大红包：88元彩金'
+    //                     },
+    //                     {
+    //                         img: 'med',
+    //                         type: '中红包：38元彩金'
+    //                     },
+    //                     {
+    //                         img: 'small',
+    //                         type: '小红包：10元彩金'
+    //                     }
+    //                 ]);
+    //             } else {
+    //                 reject(new Error('Invalid prize type'));
+    //             }
+    //         }, 1000); // Simulating network delay
+    //     });
+    // };
+    const getBalance = () => {
+        store.getBalance();
+        isPrizeModal.value = false;
+    }
+    const columns = [
+      { name: "content", label: "内容", align: "left", field: "content" },
+      { name: "date", label: "时间", align: "left", field: "date" },
+      { name: "status", label: "状态", align: "left", field: "status" },
+    ];
+    const tableData = ref([
+    { id: 1, content: '恭喜获得手机一台', date: '2024年8月13日', status: '已领取' },
+    { id: 2, content: '恭喜获得苹果耳机一副', date: '2024年8月14日', status: '未领取' },
+    { id: 3, content: '恭喜获得大红包88元', date: '2024年8月15日', status: '已领取' },
+    { id: 4, content: '恭喜获得中红包38元', date: '2024年8月16日', status: '未领取' },
+    { id: 5, content: '恭喜获得小红包10元', date: '2024年8月17日', status: '已领取' },
+    { id: 6, content: '恭喜获得购物券100元', date: '2024年8月18日', status: '未领取' },
+    { id: 7, content: '恭喜获得游戏币5000个', date: '2024年8月19日', status: '已领取' },
+    { id: 8, content: '恭喜获得优惠券50元', date: '2024年8月20日', status: '未领取' }
+    ]);
+    const init = () => {
+        initDrawEvent(promoCode.value).then((res) => {
+            if (res.code === 0) {
+                availableDraw.value = res.data.availableDraw
+            }
+        })
+    }
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+  init();
+});
+</script>
+<style lang="scss">
+
+.snow-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  .snowflake {
+    position: absolute;
+    top: -10px; // Start slightly above the visible area
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall linear infinite;
+
+    // Randomly generate animation values for variety
+    &:nth-child(1) {
+      left: 5%;
+      animation-duration: 10s;
+      animation-delay: 0s;
+      animation-timing-function: ease-in;
+    }
+    &:nth-child(2) {
+      left: 15%;
+      animation-duration: 12s;
+      animation-delay: 2s;
+    }
+    &:nth-child(3) {
+      left: 25%;
+      animation-duration: 8s;
+      animation-delay: 1s;
+    }
+    &:nth-child(4) {
+      left: 50%;
+      animation-duration: 15s;
+      animation-delay: 3s;
+    }
+    &:nth-child(5) {
+      left: 75%;
+      animation-duration: 11s;
+      animation-delay: 0.5s;
+    }
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh); // Fall beyond the bottom edge
+    opacity: 0; // Fade out at the end
+  }
+}
+.spinner {
+  display: inline-block;
+  width: 150px; /* Set the width of your PNG */
+  height: 150px; /* Set the height of your PNG */
+  overflow: hidden; /* Optional: Ensures content stays within the div */
+}
+.q-loading-mask {
+    position:fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffffff;
+    z-index: 9999;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+}
+.loading-text {
+    font-size: 24px; /* Adjust size as needed */
+    color: #ffffff; /* Text color */
+    background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Gradient text */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Make gradient visible in text */
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3); /* Add a soft shadow */
+    animation: bounce 2s linear infinite; /* Apply spinning animation */
+}
+.spinner img {
+  width: 88%; /* Ensures the image scales properly */
+  height: 88%;
+  animation: spin 1.5s ease-in-out infinite; 
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateX(0); /* Start at the center, no rotation */
+  }
+  25% {
+    transform: translateX(-15px); /* Move up and rotate 90 degrees */
+  }
+  50% {
+    transform: translateX(0); /* Return to center and rotate 180 degrees */
+  }
+  75% {
+    transform: translateX(15px); /* Move down and rotate 270 degrees */
+  }
+  100% {
+    transform: translateX(0); /* Return to center and complete rotation */
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg); /* Start with no rotation */
+  }
+  to {
+    transform: rotate(360deg); /* Complete a full rotation */
+  }
+}
+.christmas-gachapon-container {
+    position: relative;
+    background: url(../../../assets/promo/christmas-gachapon/christmas-bg.png)no-repeat top left; 
+    background-size: 100%;
+    width: 100%;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 20vw;
+    .promorule {
+        top: 136vw;
+        cursor: pointer;
+        left: 33vw;
+        position: absolute;
+        transform: rotate(5deg);
+        width: 35vw;
+        &:hover {
+            filter: hue-rotate(340deg) saturate(2.5);
+        }
+    }
+    .promorecord {
+        top: 155vw;
+        cursor: pointer;
+        left: 33vw;
+        position: absolute;
+        width: 35vw;
+        &:hover {
+            filter: hue-rotate(340deg) saturate(2.5);
+        }
+    }
+    .once {
+    top: 97vw;
+    cursor: pointer;
+    left: 15vw;
+    position: absolute;
+    width: 35vw;
+        img {
+            width: 100%;
+        }
+    }
+    .fivex {
+        top: 97vw;
+    cursor: pointer;
+    left: 50vw;
+    position: absolute;
+    width: 35vw;
+        img {
+            width: 100%;
+        }
+    }
+    .amtleft {
+        // bottom: 227px;
+    top: 113vw;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        left: 0;
+        position: absolute;
+        text-align: center;
+        text-shadow: 1px 1px 3px #000000b3;
+        width: 100%;
+        span {
+            color: #FFD900;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+
+        }
+        background: linear-gradient(90deg, rgba(255, 217, 0, 0) 0%, rgba(255, 217, 0, 0.6) 52.5%, rgba(255, 217, 0, 0) 93.5%);
+    }
+}
+
+.christmas-modal {
+    .title {
+        text-align: center;
+        margin: 10px auto;
+        color: #1F774C;
+        font-family: PingFang;
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 44px;
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 80px;
+        }
+    }
+    .christmas-side {
+        position: absolute;
+        right: 20px;
+        bottom: 0px;
+    }
+}
+.prize-modal {
+    .prizes {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1%;
+        .prize {
+            width: 30%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: flex-start;
+            .imgball {
+                width: 80px;
+                img {
+                    width: 100%;
+                }
+            }
+            .redbar {
+                color: #f82f06;
+                font-size: 12px;
+                font-weight: 700;
+                padding: 0;
+                text-align: center;
+                width: 100%;
+                
+            }
+        }
+    }
+    .claimbtn {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 160px;
+        margin: 10px auto 0;
+        cursor: pointer;
+        img { 
+            width: 100%;
+        }
+    }
+}
+.q-dialog__inner {
+    background: url(../../../assets/promo/christmas-gachapon/modal-bg.png)no-repeat center center;
+    background-size: cover;
+    padding: 80px 0 80px;
+    max-height: 70vh;
+    width: 95%;
+    margin: 0 auto;
+    align-self: center;
+    display: flex;
+    overflow: hidden;
+    * {
+        scrollbar-width: thin; /* Simplified width */
+        scrollbar-color: #e6374a transparent; /* Thumb color, no track background */
+    }
+    > div {
+        width: 80%;
+        margin: 0 auto;
+        overflow: auto;
+    }
+}
+.prize-modal.once .q-dialog__inner {
+    padding: 140px 0 40px;
+    background: url(../../../assets/promo/christmas-gachapon/modal-one.png)no-repeat center center;
+    background-size: contain;
+    .prizes {
+        .prize {
+            width: unset;
+            .imgball {
+                width: 160px;
+            }
+        }
+    }
+    .redbar {
+        font-size: 16px;
+    }
+    > div {
+        overflow: unset;
+    }
+}
+.prize-modal.five .q-dialog__inner {
+    padding: 140px 0 40px;
+    background: url(../../../assets/promo/christmas-gachapon/modal-one.png)no-repeat center center;
+    background-size: contain;
+    .prizes {
+        align-items: flex-start;
+    }
+    > div {
+        overflow: unset;
+    }
+}
+.rules {
+    height: 45vh;
+    width: 95%;
+    margin: auto;
+    font-size: 14px;
+    color: #333; // Default text color
+    line-height: 1.6;
+    padding: 10px 0;
+    border-radius: 8px; // Optional: Rounded corners for the rules container
+
+ul {
+list-style: none;
+padding: 0;
+margin: 0;
+counter-reset: item; // Initialize counter
+
+li {
+    position: relative;
+    padding-left: 30px; // Space for numbered circle
+    margin-bottom: 15px;
+
+    &::before {
+    content: counter(item); // Display the index
+    counter-increment: item; // Increment counter
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #E6374A, #AC1828);
+    color: #FFFFFF;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    }
+}
+}
+
+font {
+color: #c24f4a;
+font-weight: bold; // Optional: Emphasize important notes
+}
+}
+.q-table thead {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* Ensure the header background is white */
+  z-index: 1; /* Ensure it stays above the table body */
+}
+.q-table__grid-item-row {
+    display: flex;
+    gap: 15px;
+    .q-table__grid-item-title {
+        color: #e6374a;
+        opacity: 1;
+    }
+}
+/* Table header color */
+.custom-table .q-table__head {
+  background: #F34E38;
+  color: white;
+}
+
+/* Even rows color */
+.custom-table .q-table__row:nth-child(even) {
+  background: #F34E3855; /* Light transparent red for even rows */
+}
+
+/* Optional: Style odd rows differently if needed */
+.custom-table .q-table__row:nth-child(odd) {
+  background: white; /* or any other background color */
+}
+.table-scroll {
+    height: 40vh;
+    overflow: auto;
+    position: relative;
+}
+</style>
