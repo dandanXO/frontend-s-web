@@ -241,12 +241,14 @@
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <a href="https://dy2-affiliate.mndofithly.com/" target="_blank">
+        <router-link to="/affiliate">
+          <!--        <a href="https://dy2-affiliate.mndofithly.com/" target="_blank">-->
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_affiliate.svg" />
             <div class="acct-nav-label">加盟</div>
           </div>
-        </a>
+        </router-link>
+        <!--        </a>-->
         <!--        <a @click="logout">-->
         <!--          <div class="acct-nav-item">-->
         <!--            <img src="../assets/account/btn-logout.png"/>-->
