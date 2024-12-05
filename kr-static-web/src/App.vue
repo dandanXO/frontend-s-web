@@ -90,6 +90,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("KR web")
       checkSID();
       checkServerStatus();
 

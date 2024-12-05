@@ -321,6 +321,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("KR web")
       checkServerStatus();
       checkSID();
       // initCsWeb();
