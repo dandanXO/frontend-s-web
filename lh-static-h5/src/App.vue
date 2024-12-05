@@ -7,7 +7,6 @@
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
 import { userStore } from "src/stores";
 import axios from "axios";
 import { cached } from "boot/cache";
@@ -16,6 +15,8 @@ import { useUI } from "stores/ui";
 import { useLocalStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
+import { useH5Only } from 'src/hooks/h5Only.js'
+let CsClient;
 
 export default defineComponent({
   name: "App",
@@ -28,6 +29,7 @@ export default defineComponent({
     const router = useRouter();
     const ui = useUI();
     const $q = useQuasar(); // calling here; equivalent to when component
+    const { h5Only } = useH5Only();
 
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
@@ -43,58 +45,57 @@ export default defineComponent({
         const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
         store.visitorId = visitorId;
 
-        if (store.isNotAppPromo()) {
-          console.log("SID");
-          console.log(visitorId);
+        console.log("SID");
+        console.log(visitorId);
 
-          const obj = {
-            identifier: store.visitorId,
-            affiliateCode: affiliateItem
-          };
+        const obj = {
+          identifier: store.visitorId,
+          affiliateCode: affiliateItem
+        };
 
-          api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-            if (res.code === 0) {
-            }
-          });
-        }
+        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+          if (res.code === 0) {
+          }
+        });
       })();
     };
     let csclient;
     let CSAUrl;
 
     const getCSA = () => {
-      if (store.isNotAppPromo()) {
-        cached
-          .get("customerAddress", () =>
-            api.get("/config/customerAddress/v2").then((res) => {
-              return res;
-            })
-          )
-          .then((data) => {
-            var url;
-            const randNum = Math.floor(Math.random() * 2) + 1;
-            if (randNum === 1) {
-              url = data.liveUrl1;
-            } else {
-              url = data.liveUrl2;
-            }
-            const urlData = new URL(url);
-
-            // debugger;
-            CSAUrl = urlData.hostname;
-            ui.CSAUrl = urlData.hostname;
-
-            initCsWeb();
-            console.log(CSAUrl);
+      cached
+        .get("customerAddress", () =>
+          api.get("/config/customerAddress/v2").then((res) => {
+            return res;
           })
-          .catch((err) => {
-            console.log(err);
-            CSAUrl = "csweb01.c8nhwrqx4.com";
-          });
-      }
+        )
+        .then((data) => {
+          var url;
+          const randNum = Math.floor(Math.random() * 2) + 1;
+          if (randNum === 1) {
+            url = data.liveUrl1;
+          } else {
+            url = data.liveUrl2;
+          }
+          const urlData = new URL(url);
+
+          // debugger;
+          CSAUrl = urlData.hostname;
+          ui.CSAUrl = urlData.hostname;
+
+          initCsWeb();
+          console.log(CSAUrl);
+        })
+        .catch((err) => {
+          console.log(err);
+          CSAUrl = "csweb01.c8nhwrqx4.com";
+        });
     };
 
-    const initCsWeb = () => {
+    const initCsWeb = async () => {
+      if(!CsClient) {
+        CsClient = (await import("csweb-client")).default;
+      }
       var regDevice = store.getDeviceType();
       // console.log("Footer OnMounted");
 
@@ -139,7 +140,7 @@ export default defineComponent({
       store.visitorId = sidParam;
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
-      if (sidParam && store.isNotAppPromo()) {
+      if (sidParam) {
         const res = await api.post(
           "/memberStatistics/submit",
           qs.stringify({
@@ -167,16 +168,14 @@ export default defineComponent({
     const getAffiliateByDomain = () => {
       var host = window.location.host;
       // host = "www.lh56917.com";
-      if (store.isNotAppPromo()) {
-        api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
-          console.log(res);
-          if (res.code === 0 && res.data !== "") {
-            // alert(res.data)
-            var agentCode = res.data;
-            sessionStorage.setItem("AFFILIATE_CODE", agentCode);
-          }
-        });
-      }
+      api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
+        console.log(res);
+        if (res.code === 0 && res.data !== "") {
+          // alert(res.data)
+          var agentCode = res.data;
+          sessionStorage.setItem("AFFILIATE_CODE", agentCode);
+        }
+      });
     };
 
     const checkSessStorageItem = () => {
@@ -192,16 +191,18 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      checkServerStatus();
-      checkSID();
       // initCsWeb();
-      getCSA();
 
-      getAffiliateByDomain();
       checkSessStorageItem();
 
-      onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
-      onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
+      h5Only(() => {
+        checkServerStatus();
+        checkSID();
+        getCSA();
+        getAffiliateByDomain();
+        onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
+        onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
+      })
     });
 
     onUnmounted(() => {

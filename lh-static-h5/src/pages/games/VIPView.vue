@@ -1191,7 +1191,7 @@ const initVIPTable = async (wLoad) => {
   //   });
   //   runVipAPI(res);
   // }
-  var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
+  var res = await store.getVIPInfo();
   runVipAPI(res);
 };
 const runVipAPI = (res) => {

@@ -68,8 +68,10 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/affiliatepage"
     ) {
       ui.hiddenFooter();
+      ui.currentRuntime = "IN_APP_BROWSER";
     } else {
       ui.showFooter();
+      ui.currentRuntime = "H5";
     }
 
     // if (to.name === "referCode") {

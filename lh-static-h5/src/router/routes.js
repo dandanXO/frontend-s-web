@@ -124,17 +124,6 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
-  // {
-  //   path: "/account/download",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/account/DownloadView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
   {
     path: "/account/invite",
     component: () => import("layouts/MainLayout.vue"),
@@ -157,17 +146,6 @@ const routes = [
     ],
     meta: { requiresAuth: true, isApp: true }
   },
-  // {
-  //   path: "/account/announcement",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/account/AnnouncementView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
   {
     path: "/account/records/deposit",
     component: () => import("layouts/MainLayout.vue"),

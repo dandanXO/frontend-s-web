@@ -38,6 +38,9 @@
     </script>
 
     <script type="text/javascript">
+      if(localStorage.getItem('DARK_MODE') === 'true') {
+        document.body.style.background = 'black';
+      }
       //Call a Message to Parent (If App.)
       console.log("0411-11");
 
@@ -156,37 +159,44 @@
     </script>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-    <script type="text/javascript">
-      var hostname = window.location.hostname;
-      // console.log(hostname);
-      if (hostname.indexOf("lh99966.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KTtv5inKGfP1Jw2q", ck: "KTtv5inKGfP1Jw2q" });
-      } else if (hostname.indexOf("lh59799.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuG5CF21aRbjlTk", ck: "KUuG5CF21aRbjlTk" });
-      } else if (hostname.indexOf("lh81097.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuGmPWdYgRIM8ud", ck: "KUuGmPWdYgRIM8ud" });
-      } else if (hostname.indexOf("lh50891.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuGqH3PR39zTbTM", ck: "KUuGqH3PR39zTbTM" });
-      } else if (hostname.indexOf("lh89186.com") > -1) {
-        console.log("Track");
-        LA.init({ id: "KUuGtTl6ivPktez9", ck: "KUuGtTl6ivPktez9" });
-      }
-    </script>
-
     <script>
       var CWRUMLICENCE = "wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9";
     </script>
-    <script
-      src="https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9"
-      async
-    ></script>
+    <script type="text/javascript">
+      (function initTracking() {
+        const pathname = window.location.pathname;
+        const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite"]
+        if(appPaths.includes(pathname)) return
+
+        var hostname = window.location.hostname;
+        // console.log(hostname);
+        if (hostname.indexOf("lh99966.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KTtv5inKGfP1Jw2q", ck: "KTtv5inKGfP1Jw2q" });
+        } else if (hostname.indexOf("lh59799.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuG5CF21aRbjlTk", ck: "KUuG5CF21aRbjlTk" });
+        } else if (hostname.indexOf("lh81097.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGmPWdYgRIM8ud", ck: "KUuGmPWdYgRIM8ud" });
+        } else if (hostname.indexOf("lh50891.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGqH3PR39zTbTM", ck: "KUuGqH3PR39zTbTM" });
+        } else if (hostname.indexOf("lh89186.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGtTl6ivPktez9", ck: "KUuGtTl6ivPktez9" });
+        }
+
+        const cloudWiseScript = document.createElement("script");
+        cloudWiseScript.src = 'https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9';
+        cloudWiseScript.async = true;
+        document.head.appendChild(cloudWiseScript);
+      })();
+    </script>
   </head>
-  <body>
+  <body style="margin:0;">
     <!-- DO NOT touch the following DIV -->
-    <div id="q-app"></div>
+     <div id="q-app" style="height:100dvh;background:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzEyMyIgaGVpZ2h0PSI1MDY1IiB2aWV3Qm94PSIwIDAgMzEyMyA1MDY1IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMzEyMyIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNEOUQ5RDkiIGZpbGwtb3BhY2l0eT0iMC4zMyIvPgo8cmVjdCB5PSI0NTUzIiB3aWR0aD0iMzEyMyIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNEOUQ5RDkiIGZpbGwtb3BhY2l0eT0iMC4zMyIvPgo8cmVjdCB4PSIxODciIHk9IjE4MjUiIHdpZHRoPSIxMTM5IiBoZWlnaHQ9IjI5NyIgZmlsbD0iI0Q5RDlEOSIgZmlsbC1vcGFjaXR5PSIwLjMzIi8+CjxyZWN0IHg9Ijc1NyIgeT0iMjM1MyIgd2lkdGg9IjIxODAiIGhlaWdodD0iNTg1IiBmaWxsPSIjRDlEOUQ5IiBmaWxsLW9wYWNpdHk9IjAuMzMiLz4KPHJlY3QgeD0iNzU3IiB5PSIzNzYzIiB3aWR0aD0iMjE4MCIgaGVpZ2h0PSI1ODUiIGZpbGw9IiNEOUQ5RDkiIGZpbGwtb3BhY2l0eT0iMC4zMyIvPgo8cmVjdCB4PSI3NTciIHk9IjMwNTgiIHdpZHRoPSIyMTgwIiBoZWlnaHQ9IjU4NSIgZmlsbD0iI0Q5RDlEOSIgZmlsbC1vcGFjaXR5PSIwLjMzIi8+CjxyZWN0IHg9IjE0NjkiIHk9IjE4MjUiIHdpZHRoPSIzMjYiIGhlaWdodD0iMjk3IiBmaWxsPSIjRDlEOUQ5IiBmaWxsLW9wYWNpdHk9IjAuMzMiLz4KPHJlY3QgeD0iMTg3IiB5PSIzNDc3IiB3aWR0aD0iMzI2IiBoZWlnaHQ9IjI5NyIgZmlsbD0iI0Q5RDlEOSIgZmlsbC1vcGFjaXR5PSIwLjMzIi8+CjxyZWN0IHg9IjE4NyIgeT0iNDAwNSIgd2lkdGg9IjMyNiIgaGVpZ2h0PSIyOTciIGZpbGw9IiNEOUQ5RDkiIGZpbGwtb3BhY2l0eT0iMC4zMyIvPgo8cmVjdCB4PSIxODciIHk9IjI5MDkiIHdpZHRoPSIzMjYiIGhlaWdodD0iMjk3IiBmaWxsPSIjRDlEOUQ5IiBmaWxsLW9wYWNpdHk9IjAuMzMiLz4KPHJlY3QgeD0iMTg3IiB5PSIyMzUzIiB3aWR0aD0iMzI2IiBoZWlnaHQ9IjI5NyIgZmlsbD0iI0Q5RDlEOSIgZmlsbC1vcGFjaXR5PSIwLjMzIi8+CjxyZWN0IHg9IjI2MTEiIHk9IjE4MjUiIHdpZHRoPSIzMjYiIGhlaWdodD0iMjk3IiBmaWxsPSIjRDlEOUQ5IiBmaWxsLW9wYWNpdHk9IjAuMzMiLz4KPHJlY3QgeD0iMjA0MCIgeT0iMTgyNSIgd2lkdGg9IjMyNiIgaGVpZ2h0PSIyOTciIGZpbGw9IiNEOUQ5RDkiIGZpbGwtb3BhY2l0eT0iMC4zMyIvPgo8cmVjdCB4PSIxODciIHk9IjY3NyIgd2lkdGg9IjI3NTAiIGhlaWdodD0iOTQzIiByeD0iMTAwIiBmaWxsPSIjRDlEOUQ5IiBmaWxsLW9wYWNpdHk9IjAuMzMiLz4KPC9zdmc+Cg==') no-repeat center center;background-size: 100% 100%;">
+     </div>
   </body>
 </html>
