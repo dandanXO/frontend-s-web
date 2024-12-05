@@ -87,13 +87,6 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
-      <!--        <div class="item-icon">-->
-      <!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
-      <!--        </div>-->
-      <!--        Tik Tok-->
-      <!--      </a>-->
-
       <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/index/youtube-web-icon.png" />
@@ -389,7 +382,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://m.b9mega1.com/", "_blank");
+    window.open(store.h5Url, "_blank");
     return;
   }
 

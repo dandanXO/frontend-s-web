@@ -32,7 +32,7 @@
         </div>
 
         <div class="loader-container">
-          <img class="loader-logo" src="../../assets/images/auth/win-7-logo.png" alt="B9.GAME" />
+          <img class="loader-logo" src="../../assets/images/auth/win-7-logo.png" alt="WIN7.GAME" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
