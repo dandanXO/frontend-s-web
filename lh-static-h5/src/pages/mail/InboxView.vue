@@ -4,10 +4,9 @@
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onActivated, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import {api} from "boot/axios";
 import MailComponent from "../../components/MailComponent.vue";
-import { userStore } from "stores/index";
 
 
 export default defineComponent({
@@ -15,7 +14,6 @@ export default defineComponent({
     MailComponent
   },
   setup() {
-    const store = userStore();
     const visible = ref(true);
     const mailData = ref([]);
     const mailboxData = ref({
@@ -23,7 +21,7 @@ export default defineComponent({
       orderBy: "sendTime"
     })
     const loadInbox = () => {
-      api.get("/session/pm/inbox", {
+      api.get("/session/inbox", {
         params: {
           type: mailboxData.value.type,
           orderBy: mailboxData.value.orderBy
@@ -51,9 +49,6 @@ export default defineComponent({
       loadInbox()
     })
 
-    onActivated(() => {
-      store.getUnreadTotal();
-    })
     return {
       visible,
       mailData,
