@@ -64,8 +64,8 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
       },
       {
-        path: "/agent",
-        name: "agent",
+        path: "/affiliate",
+        name: "affiliate",
         component: () => import(/* webpackChunkName: "Game" */ "../views/AgentView.vue")
       },
       {
@@ -136,7 +136,7 @@ const routes = [
       {
         path: "/promo",
         redirect: "/promotion"
-      },
+      }
       // {
       //   path: "/test",
       //   name: "test",

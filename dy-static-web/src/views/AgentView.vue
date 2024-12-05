@@ -8,7 +8,6 @@
             <div class="contact-left">
               <div class="contact-box mail-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
                 <div class="contact-name">合营 QQ</div>
@@ -20,7 +19,6 @@
               </div>
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-skype.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
@@ -32,7 +30,6 @@
               </div>
               <div class="contact-box skype-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">合营部 Skype</div>
@@ -44,7 +41,6 @@
               </div>
               <div class="contact-box telegram-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
                 <div class="contact-name">丝瓜</div>
@@ -78,7 +74,7 @@
       <div class="affiliate-program-first">
         <img src="@/assets/images/affiliate/contact-phone.png" />
 
-        <div class="affiliate-subgroup agent-content-item" style="width: 60%;">
+        <div class="affiliate-subgroup agent-content-item" style="width: 60%">
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <img :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
             <div class="affiliate-sub">
@@ -186,7 +182,8 @@
                   <li>1.佣金派发时间：每月 1 号至 10 号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
                   <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000 为一个活跃玩家。</li>
                   <li>
-                    3.代理推广每月至少需要新注册活跃会员达到 3 名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
+                    3.代理推广每月至少需要新注册活跃会员达到 3
+                    名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
                   </li>
                 </ul>
               </div>
@@ -205,7 +202,7 @@ import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   setup() {
-    const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
+    const affiliateUrl = ref("https://dy2-affiliate.mndofithly.com/dy/");
 
     const isDark = useDark();
 
@@ -338,7 +335,7 @@ export default defineComponent({
       max-width: 1400px;
       width: 100%;
     }
-    .affiliate-program-last{
+    .affiliate-program-last {
       margin-top: -150px;
     }
 
