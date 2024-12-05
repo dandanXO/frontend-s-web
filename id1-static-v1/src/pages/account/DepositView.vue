@@ -13,10 +13,14 @@
       <div class="deposit-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
           <div class="content-item" @click="goSelectedMethod(item)" :class="{ active: selectedItem === item }">
+            <div class="item-ribbon" v-if="item.promotionIcon">
+              <img :src="imgURL + '/payment/' + item.promotionIcon" />
+            </div>
             <div class="item-img">
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div>
             <div class="item-title">{{ item.nodeName }}</div>
+            <div class="item-amount">{{ getAmountRange(item) }}</div>
             <div class="item-ribbon" v-if="isPrivilege && paytypeWithPrivilege.includes(item.code)">
               <img src="@/assets/images/account/ribbon-five-percent.png" />
             </div>
@@ -845,6 +849,29 @@ const scrollToInput = () => {
   }
 };
 
+const getAmountRange = (item) => {
+  // Extract amount arrays from children
+  const allAmounts = item.children
+    .flatMap((child) => child.extra.amountArr || []) // Collect all `amountArr`
+    .map(Number); // Convert to numbers for comparison
+
+  if (allAmounts.length === 0) return ""; // Return empty if no amounts
+
+  // Find the lowest and highest amounts
+  const minAmount = Math.min(...allAmounts);
+  const maxAmount = Math.max(...allAmounts);
+
+  // Helper function to format numbers
+  const formatAmount = (amount) => {
+    if (amount >= 1_000_000) return `${amount / 1_000_000}M`;
+    if (amount >= 1_000) return `${amount / 1_000}k`;
+    return amount.toString();
+  };
+
+  // Format the range
+  return `(${formatAmount(minAmount)}-${formatAmount(maxAmount)})`;
+};
+
 const isShowSpecialAmount = ref(false);
 
 watch(isShowSpecialAmount, (newVal) => {
@@ -1266,6 +1293,20 @@ onMounted(() => {
       }
     }
 
+    .item-ribbon {
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      img {
+        display: block;
+        width: 100%;
+        max-width: max-content;
+        max-width: 30px;
+      }
+    }
+
     .item-img {
       margin: auto;
       padding-bottom: 6px;
@@ -1281,6 +1322,12 @@ onMounted(() => {
       color: rgba(255, 255, 255, 0.7);
       text-align: center;
       margin-top: auto;
+    }
+
+    .item-amount {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      text-align: center;
     }
   }
 
