@@ -90,7 +90,7 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
-            <div class="bank-type">银行卡</div>
+            <div v-if="$q.dark.isActive" class="bank-type">银行卡</div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">
             <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
@@ -123,7 +123,7 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
-            <div class="bank-type">虚拟账户</div>
+            <div v-if="$q.dark.isActive" class="bank-type">虚拟账户</div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">
             <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
@@ -156,7 +156,7 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
-            <div class="bank-type">电子钱包</div>
+            <div v-if="$q.dark.isActive" class="bank-type">电子钱包</div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">
             <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
@@ -189,7 +189,7 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
-            <div class="bank-type">支付宝</div>
+            <div v-if="$q.dark.isActive" class="bank-type">支付宝</div>
           </div>
           <div class="right-container" @click="onUnbindClick(bankCard)">
             <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
