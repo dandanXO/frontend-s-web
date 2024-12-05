@@ -254,6 +254,42 @@
             <span v-formatter="{data: scope.row.netProfit, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="oldMemberDepositAmount"
+          :label="t('fields.oldMemberDepositAmount')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.oldMemberDepositAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="oldMemberDepositMemberCount"
+          :label="t('fields.oldMemberDepositMemberCount')"
+          width="120"
+        />
+        <el-table-column
+          prop="oldMemberWithdrawAmount"
+          :label="t('fields.oldMemberWithdrawAmount')"
+          align="center"
+          width="150"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.oldMemberWithdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="oldMemberWithdrawMemberCount"
+          :label="t('fields.oldMemberWithdrawMemberCount')"
+          width="120"
+        />
       </el-table>
       <el-pagination
         class="pagination"
@@ -404,22 +440,16 @@ function getSummaries(param) {
       } else {
         var prop = column.property
         if (
+          index === 20 ||
           index === 3 ||
           index === 4 ||
+          index === 22 ||
           index === 6 ||
-          index === 12
+          index === 7 ||
+          index === 12 ||
+          index === 13 ||
+          index === 14
         ) {
-          sums[index] = total.data[prop]
-        } else if (index === 7 || index === 13 || index === 14) {
-          // const pageRowCount = Number(page.records.reduce((sum, row) => {
-          //   return sum + Number(row[prop])
-          // }, 0))
-          // const totalPageCount = Number(total.data[prop])
-          // if (pageRowCount !== totalPageCount) {
-          //   sums[index] = `${total.data[prop]} (${pageRowCount})`
-          // } else {
-          //   sums[index] = total.data[prop]
-          // }
           sums[index] = total.data[prop]
         } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal

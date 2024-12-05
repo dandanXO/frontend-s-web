@@ -564,8 +564,8 @@ export default {
     megaSharingWheel: {
       wheelTitle: "Mega Sharing Roulette",
       missionTitle: "Rewards",
-      invitedUsersDeposit: "Invited Users' Deposit Count ≥ ",
-      invitedUsersValidBet: "Invited Users' Valid Bet ≥ ",
+      invitersUsersDeposit: "Inviter's Deposit Count ≥ ",
+      invitersUsersValidBet: "Inviter's Valid Bet ≥ ",
       EligibleInvitedUsers: "Eligible Invited Users ≥ ",
       missionDescription: "Finish the task to claim your ticket",
       timeLimited: "Time-limited",
@@ -655,6 +655,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
+    11000: "Deposit submission failed.",
     11003: "Deposit failed",
     11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
@@ -706,6 +707,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    35013: "Has already been redeemed by the same IP address",
     35015: "The same device has already claimed this discount.",
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
@@ -735,6 +737,8 @@ export default {
     58000: "System Stage Error",
     58001: "System Stage Settings Error",
     58002: "Event haven't start",
-    58003: "Event have ended"
+    58003: "Event have expired",
+    58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
+    58005: "Congrats, You have Completed All Tasks"
   }
 };

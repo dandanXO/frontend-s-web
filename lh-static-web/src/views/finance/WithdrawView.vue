@@ -22,11 +22,11 @@
         <div class="flex-box">
           <span class="">提款流程：</span>
           <div class="step-item active">申请中</div>
-          <RiArrowRightSLine />
+          <img width="20" height="20" src="../../assets/home/arrow-right-s-line.svg" />
           <div class="step-item">审核中</div>
-          <RiArrowRightSLine />
+          <img width="20" height="20" src="../../assets/home/arrow-right-s-line.svg" />
           <div class="step-item">支付中</div>
-          <RiArrowRightSLine />
+          <img width="20" height="20" src="../../assets/home/arrow-right-s-line.svg" />
           <div class="step-item">出款成功</div>
         </div>
         <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
@@ -204,17 +204,20 @@
       </el-form>
     </div>
     <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
-    <el-dialog 
+    <el-dialog
       align-center
       width="530"
       :show-close="false"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
-      v-model="isShowWithdrawErrorBlock">
+      v-model="isShowWithdrawErrorBlock"
+    >
       您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
       <div class="withdraw-remaining-dialog__buttons">
         <el-button class="common-btn" @click="isShowWithdrawErrorBlock = false">返回</el-button>
-        <router-link to="/center/transit-record?type=withdraw"><el-button class="common-btn">前往确认</el-button></router-link>
+        <router-link to="/center/transit-record?type=withdraw">
+          <el-button class="common-btn">前往确认</el-button>
+        </router-link>
       </div>
     </el-dialog>
   </div>
@@ -225,7 +228,6 @@ import { defineComponent, reactive, ref, onMounted, computed, watch } from "vue"
 import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
-import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
@@ -234,7 +236,6 @@ import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialo
 export default defineComponent({
   name: "WithdrawView",
   components: {
-    RiArrowRightSLine,
     WithdrawRemainingDialog
   },
   setup() {

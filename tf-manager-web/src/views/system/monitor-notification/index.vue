@@ -86,6 +86,8 @@ import MQTopicLastConsumeTimeCheckComponent from './dialog-custom-content/mqTopi
 import DomainValidComponent from './dialog-custom-content/domainValid.vue';
 import WithdrawErrorComponent from './dialog-custom-content/withdrawError.vue';
 import GameBetRecordFetchJobIdleCheck from './dialog-custom-content/gameBetRecordFetchJobIdleCheck.vue';
+import DepositErrorComponent from './dialog-custom-content/depositError.vue';
+
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n()
@@ -180,6 +182,7 @@ const componentMapping = {
   MQ_LAST_CONSUME_TIME_CHECK: MQTopicLastConsumeTimeCheckComponent,
   DOMAIN_VALID: DomainValidComponent,
   WITHDRAW_ERROR: WithdrawErrorComponent,
+  DEPOSIT_ERROR: DepositErrorComponent,
   JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: GameBetRecordFetchJobIdleCheck,
 };
 

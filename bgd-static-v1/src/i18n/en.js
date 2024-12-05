@@ -236,7 +236,8 @@ export default {
     popup: {
       getFreeLuckyDraw: "Get a free lucky draw ticket",
       downloadAppLoginAcc: "Download the app and log in to your account to get it"
-    }
+    },
+    viewAll: "View All"
   },
   settings: {
     totalScore: "Total Score",
@@ -255,7 +256,8 @@ export default {
     charity: "Charity",
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
-    interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    viewDetails: "View Details"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -363,9 +365,9 @@ export default {
     It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Bangladesh time on the next day. The rewards will be credited to the account during this time frame.
     `,
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "WIN7.GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "WIN7.GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
     },
     teamManagement: {
       searchField: {
@@ -626,6 +628,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
+    11000: "Deposit submission failed.",
     11003: "Deposit failed",
     11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
@@ -677,6 +680,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    35013: "Has already been redeemed by the same IP address",
     35015: "The same device has already claimed this discount.",
     37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",

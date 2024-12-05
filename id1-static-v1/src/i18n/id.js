@@ -119,6 +119,7 @@ export default {
     withdrawalAmount_rules_02: "Jumlah penarikan harus lebih dari 0",
     withdrawalAmount_rules_03: "Jumlah penarikan tidak mencukupi",
     withdrawalAmount_rules_04: "Jumlah penarikan harus di antara",
+    withdrawalAmount_rules_05: "Jumlah penarikan tidak boleh mengandung titik desimal",
     realTimeExchangeRates: "Kurs Tukar Real-Time",
     estimatedArrival: "Perkiraan kedatangan",
     usdtSpecialNote:
@@ -184,6 +185,7 @@ export default {
     accountNumber_placeholder: "Masukkan Nomor Akun",
     accountNumber_rules_01: "Masukkan Nomor Akun",
     accountNumber_rules_02: "Masukkan Nomor Akun yang Benar",
+    accountNumber_rules_03: "Nomor akun tidak boleh mengandung titik desimal",
     holderName: "Nama Pemegang",
     holderName_placeholder: "Masukkan Nama Pemegang",
     holderName_rules_01: "Masukkan Nama Pemegang",
@@ -327,7 +329,8 @@ export default {
     amount: "Jumlah",
     depositAmountMustInBetween: "Jumlah Deposit Harus Di Antara",
     extra: "Ekstra",
-    understood: "Dipahami"
+    understood: "Dipahami",
+    noMatchingFound: "Tidak ditemukan saluran yang cocok untuk jumlah:"
   },
   withdraw: {
     withdrawCurrency: "Mata Uang Penarikan",

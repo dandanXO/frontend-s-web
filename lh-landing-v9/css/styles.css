@@ -93,6 +93,7 @@ html {
   padding: 10px 45px;
   min-width: 100px;
   cursor: pointer;
+  justify-content: center;
 }
 .contact-us-btn:active,
 .contact-us-btn:hover {
@@ -294,7 +295,6 @@ html {
   color: #666666;
 }
 .duration-mth {
-  cursor: pointer;
   color: #4a80f7;
 }
 
@@ -412,10 +412,8 @@ html {
 
 @media (max-width: 768px) {
   .contact-us-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .contact-us-btn {
-    padding: 6px 12px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .nav-links {
@@ -458,8 +456,7 @@ html {
 }
 
 @media (max-width: 350px) {
-  .register-container,
-  .contact-us-container {
+  .register-container {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
   }

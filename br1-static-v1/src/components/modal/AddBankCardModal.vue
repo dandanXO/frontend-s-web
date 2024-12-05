@@ -370,28 +370,16 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
   let result = true;
 
-  // if (selectedOption.value === "phone") {
   result = !cardNumber ? t("form.phone_rules_01") : true;
-  // if (cardNumber.startsWith("0")) {
-  //   return t("form.phone_rules_03");
-  // }
+
   const digitCount = cardNumber.match(/\d/g)?.length || 0;
   if (digitCount < 8 || digitCount > 11) {
     return t("form.phone_rules_02");
   }
-  // } else if (selectedOption.value === "email") {
-  //   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   result = emailPattern.test(cardNumber) ? true : t("form.email_rules_02");
-  // } else if (selectedOption.value === "cpf") {
-  //   const cpfPattern = /^\d{11}$/;
-  //   result = cpfPattern.test(cardNumber) ? true : t("form.cpf_rules_02");
-  // } else if (selectedOption.value === "cnpj") {
-  //   const cnpjPattern = /^\d{14}$/;
-  //   result = cnpjPattern.test(cardNumber) ? true : t("form.cnpj_rules_02");
-  // } else if (selectedOption.value === "evp") {
-  //   const evpPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  //   result = evpPattern.test(cardNumber) ? true : t("form.evp_rules_02");
-  // }
+
+  if (!/^[0-9]*$/.test(cardNumber)) {
+    return t("form.phone_rules_04");
+  }
 
   return result;
 };

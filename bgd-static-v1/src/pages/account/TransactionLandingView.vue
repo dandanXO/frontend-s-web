@@ -48,7 +48,7 @@ watch(
 
     border-radius: 0.5rem;
     margin: 20px 16px 0px;
-    // background: #1b2232;
+    background: #1b2232;
 
     background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
     background-size: 100% 100%;
@@ -67,33 +67,16 @@ watch(
     }
 
     :deep(.q-tab) {
-      color: #5F6061;
+      color: #767778;
       // background: #101114;
       border-radius: 0.375rem;
       // margin: 2.5px;
     }
 
     :deep(.q-tab--active) {
-      color: white;
-      background: linear-gradient(
-        180deg,
-        rgba(97, 255, 0, 0) 0%,
-        rgba(97, 255, 0, 0.25) 50.5%,
-        rgba(97, 255, 0, 0) 100%
-      );
+      color: #000a01;
+      background: url(../../assets/images/account/deposit-withdraw-tab-active.png) no-repeat center center;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-
-      &:before {
-        content: "";
-        background-color: #70bc62;
-        height: 3px;
-        border-radius: 4px;
-        width: 30%;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-      }
 
       .q-tab__label {
         font-weight: bold;

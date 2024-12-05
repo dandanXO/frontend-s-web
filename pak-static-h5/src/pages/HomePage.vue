@@ -3455,9 +3455,7 @@ const checkHbPromo = () => {
       hbPromo.value = data.data.filter(
         (redirectList) =>
           redirectList.code !== "pak-mega-sharing-wheel" ||
-          (redirectList.code === "pak-mega-sharing-wheel" &&
-            store.token &&
-            (store.memberType === "TEST" || store.memberType === "PROMO_TEST"))
+          (redirectList.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
       );
     });
 };
@@ -3613,16 +3611,16 @@ onActivated(() => {
     popupPromo.value = "money-rain";
   }
 
-  if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
-    checkInviteWheel();
+  if (store.hasToken() && ui.promo_megaspin === "1") {
+    hasInviteWheelPromo.value = true;
   }
 
   if (route.query.token) {
     store.autoLogin(route.query.token);
     checkSpinWheel();
 
-    if ((store.hasToken() && store.memberType === "TEST") || store.memberType === "PROMO_TEST") {
-      checkInviteWheel();
+    if (store.hasToken() && ui.promo_megaspin === "1") {
+      hasInviteWheelPromo.value = true;
     }
   }
   afterActivated();
@@ -3670,14 +3668,6 @@ watch(
 // );
 
 const hasInviteWheelPromo = ref(false);
-const checkInviteWheel = () => {
-  eventapi.get("/session/lucky-spin-refer-friend/init").then((res) => {
-    const stageResData = res.data.stageStatusVOList;
-    if (stageResData.length > 0) {
-      hasInviteWheelPromo.value = true;
-    }
-  });
-};
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {

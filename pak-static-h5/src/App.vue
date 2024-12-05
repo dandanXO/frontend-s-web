@@ -288,6 +288,9 @@ export default defineComponent({
           ui.youtubeUrl = data.youtube;
           ui.charityUrl = data.charity_url;
           ui.footerIcon = data.footer_icon;
+
+          ui.promo_exchange = data.promo_exchange;
+          ui.promo_megaspin = data.promo_megaspin;
         });
     };
 
@@ -351,8 +354,8 @@ export default defineComponent({
           route.name === "referCode" && route.params.referralCode
             ? route.params.referralCode
             : sessionStorage.getItem("REFERRAL_CODE")
-              ? sessionStorage.getItem("REFERRAL_CODE")
-              : localStorage.getItem("REG_REFERRAL_CODE");
+            ? sessionStorage.getItem("REFERRAL_CODE")
+            : localStorage.getItem("REG_REFERRAL_CODE");
         const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
         if (!_fbId) return;
         fbq("init", _fbId);

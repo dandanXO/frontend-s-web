@@ -16,7 +16,7 @@
           <span v-else>￥{{ mainWallet }}</span>
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon>
-              <Refresh />
+              <img class="fill-black" src="../../assets/home/refresh-line.svg" />
             </el-icon>
           </div>
         </div>
@@ -52,15 +52,15 @@
         <div class="transfer-balance-box">
           <div class="platform-details">
             <div class="plat-name" v-if="p.code === 'FlashTech'">
-              <RiWirelessChargingLine />
+              <img width="15px" height="15px" src="../../assets/home/wireless-charging-line.svg" />
               Sport
             </div>
             <div class="plat-name" v-else>
-              <RiWirelessChargingLine />
+              <img width="15px" height="15px" src="../../assets/home/wireless-charging-line.svg" />
               {{ platNames[p.code] || p.name }}
               <div class="balance-refresh" @click="refreshBalance(p.code)">
                 <el-icon>
-                  <Refresh />
+                  <img class="fill-black" src="../../assets/home/refresh-line.svg" />
                 </el-icon>
               </div>
             </div>
@@ -151,18 +151,9 @@ import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList, updateAut
 import { useNotify } from "@/hooks/notify";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
-import { Refresh, Right } from "@element-plus/icons-vue"
-import { RiWirelessChargingLine } from "vue-remix-icons";
-// import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "TransferView",
-  components: {
-    // RiSpamLine, RiRestartLine
-    Refresh,
-    Right,
-    RiWirelessChargingLine
-},
   setup() {
     const notify = useNotify();
     const store = userStore();

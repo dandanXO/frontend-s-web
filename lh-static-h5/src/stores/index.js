@@ -225,7 +225,6 @@ export const userStore = defineStore("userStore", {
           this.withdrawType = response.data.withdrawType;
           // this.unreadInboxMail = 16;
           this.getBalance();
-          this.getVIPInfo();
         } else {
           this.memberLogout();
         }
@@ -238,6 +237,7 @@ export const userStore = defineStore("userStore", {
             sessionStorage.setItem("vipData", JSON.stringify(res)); // Update the stored data
             this.handleVIPData(res);
           }
+          return res;
         });
       } else {
         return getVIPDetailsNotLoggedIn().then((res) => {
@@ -245,6 +245,7 @@ export const userStore = defineStore("userStore", {
             sessionStorage.setItem("vipData", JSON.stringify(res)); // Update the stored data
             this.handleVIPData(res);
           }
+          return res;
         });
       }
     },

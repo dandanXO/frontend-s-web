@@ -280,6 +280,42 @@
           <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
         </template>
       </el-table-column>
+      <el-table-column
+        prop="oldMemberDepositAmount"
+        :label="t('fields.oldMemberDepositAmount')"
+        width="120"
+      >
+        <template #default="scope">
+          $
+          <!-- eslint-disable -->
+          <span
+            v-formatter="{ data: scope.row.oldMemberDepositAmount, type: 'money' }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="oldMemberDepositMemberCount"
+        :label="t('fields.oldMemberDepositMemberCount')"
+        width="120"
+      />
+      <el-table-column
+        prop="oldMemberWithdrawAmount"
+        :label="t('fields.oldMemberWithdrawAmount')"
+        width="120"
+      >
+        <template #default="scope">
+          $
+          <!-- eslint-disable -->
+          <span
+            v-formatter="{ data: scope.row.oldMemberWithdrawAmount, type: 'money' }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="oldMemberWithdrawMemberCount"
+        :label="t('fields.oldMemberWithdrawMemberCount')"
+        width="120"
+      />
     </el-table>
 
     <el-pagination
@@ -611,36 +647,13 @@ function getSummaries(param) {
       } else {
         var prop = column.property
         if (
-          index === 4 ||
-          index === 12
-        ) {
-          // WithdrawCount, FtdCount, totalMemberDepositCount, totalMemberUsdtDepositCount, totalMemberBetCount
+          index === 21 ||
+          index === 7 ||
+          index === 23 ||
+          index === 6 ||
+          index === 4 || index === 12 ||
+          index === 13 || index === 14 || index === 15) {
           sums[index] = totalPage.records[0][prop]
-        } else if (index === 7 || index === 13 || index === 15) {
-          // const pageRowCount = Number(page.records.reduce((sum, row) => {
-          //   return sum + Number(row[prop])
-          // }, 0))
-          // const totalPageCount = Number(totalPage.records[0][prop])
-          // if (pageRowCount !== totalPageCount) {
-          //   sums[index] = `${totalPage.records[0][prop]} (${pageRowCount})`
-          // } else {
-          //   sums[index] = totalPage.records[0][prop]
-          // }
-          sums[index] = totalPage.records[0][prop]
-        } else if (index === 6) {
-          // registerCount
-          sums[index] = totalPage.records[0].registerCount
-        } else if (index === 10) {
-          // payoutAmount
-          sums[index] =
-            '$' +
-            parseFloat(
-              totalPage.records[0].validBet -
-                totalPage.records[0].companyWinLoss
-            ).toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
         } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =

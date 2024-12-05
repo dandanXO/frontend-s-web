@@ -101,12 +101,12 @@ onMounted(() => {
 }
 
 .post-dialog-card {
-  background: #131313;
+  background: #232524;
   width: calc(100% - 32px);
 }
 
 .post-dialog-toolbar {
-  background: #131313;
+  background: #232524;
 
   .q-toolbar__title {
     text-align: center;

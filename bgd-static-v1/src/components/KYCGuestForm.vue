@@ -287,16 +287,29 @@ const updateNewGuestState = () => {
 }
 
 .btn-cancel {
-  background: rgba(21, 0, 37, 0.5);
+  background: url(../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
+  background-size: contain;
   font-weight: 700;
-  color: #ffffff;
-  border-radius: 8px;
+  color: #fff;
+  width: 140px;
+  height: 42px;
+  border: none;
+  &::before {
+    display: none;
+  }
 }
+
 .btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  background: url(../assets/images/index/btn-bg-green-small.png) no-repeat center center;
+  background-size: contain;
   font-weight: 700;
-  color: #150025;
-  border-radius: 8px;
+  width: 140px;
+  height: 42px;
+  color: #000a01;
+  border: none;
+  &::before {
+    display: none;
+  }
 }
 
 .style-btn-confirm {

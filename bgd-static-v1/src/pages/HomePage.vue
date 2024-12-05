@@ -76,12 +76,9 @@
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
             <img src="../assets/images/index/youtube-icon.png" />
           </a>
-          <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
+          <a class="cs-icon instagram" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
-          <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
-          <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
-          <!--          </a>-->
           <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
@@ -170,7 +167,6 @@
       :scrollbar="{
         hide: true
       }"
-      :navigation="true"
       :modules="modules"
       class="cat-selection-wrapper"
       :data-aos-delay="200"
@@ -180,17 +176,14 @@
       <template v-for="(item, index) in translatedCategoriesList" :key="index">
         <swiper-slide>
           <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
-            <div class="cat-icon">
-              <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
-            </div>
             <div class="cat-title">{{ item.label }}</div>
           </div>
         </swiper-slide>
       </template>
 
-      <swiper-slide>
-        <!-- <div class="cat-selection-item"></div> -->
-      </swiper-slide>
+      <!-- <swiper-slide>
+        <div class="cat-selection-item"></div>
+      </swiper-slide> -->
     </swiper>
 
     <!-- <pre>hotGameList{{ hotGameList }}</pre> -->
@@ -200,9 +193,13 @@
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-hotgames.png" class="label-img" /> -->
-            <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
+            <div class="title-game-inner">
+              <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
+            </div>
+            <RouterLink class="title-game-action" to="#Hot">
+              {{ $t("home.viewAll") }}
+            </RouterLink>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -233,7 +230,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -276,7 +273,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -317,7 +314,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -359,7 +356,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -385,26 +382,68 @@
       >
         <div class="games-selection-wrapper" id="Live">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" /> -->
-            <!-- <span class="txt-style">Live Casino</span> -->
-            <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
+            <div class="title-game-inner">
+              <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
+            </div>
+            <RouterLink class="title-game-action" to="#Live">
+              {{ $t("home.viewAll") }}
+            </RouterLink>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <swiper
+            <div class="platform-game-container live-casino">
+              <div
+                v-for="(item, index) in livecasino.slice(0, 3)"
+                :key="index"
+                data-aos="zoom-in"
+                :data-aos-delay="100 * index"
+                data-aos-duration="1200"
+                data-aos-once="true"
+                data-aos-anchor="#hotgames"
+                @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+              >
+                <img src="../assets/images/index/live/item-game-maintenance.png" />
+                <div
+                  class="platform-live-item--img"
+                  :style="{
+                    backgroundImage: (() => {
+                      try {
+                        return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                      } catch (e) {
+                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                      }
+                    })()
+                  }"
+                >
+                  <div
+                    v-if="item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'"
+                    class="burning-hot"
+                  >
+                    <img src="../assets/images/index/hot.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <swiper
               :slidesPerView="1.5"
               :spaceBetween="15"
               :scrollbar="{
                 hide: true
               }"
-              :modules="gameModules"
+              :grid="{
+                rows: 2,
+                fill: 'row'
+              }"
+              :modules="[...gameModules, Grid]"
               class="platform-game-container live-casino"
+              :style="{ height: '295px' }"
             >
               <template v-for="(item, index) in livecasino" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                  :style="{ height: '140px' }"
                 >
                   <div
                     data-aos="zoom-in"
@@ -421,7 +460,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -438,7 +477,7 @@
                   </div>
                 </swiper-slide>
               </template>
-            </swiper>
+            </swiper> -->
           </div>
 
           <div class="platform-game-wrapper" v-else>
@@ -455,9 +494,11 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                            return `url(${require(`../assets/images/index/live/item-game-${
+                              item.name.toLowerCase() === 'evo' ? 'wc' : ''
+                            }${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -484,11 +525,13 @@
       >
         <div class="games-selection-wrapper" id="Slot">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" /> -->
-            <!-- <img src="../assets/images/index/slots-games-icon-label.png" /> -->
-            <!-- <span class="txt-style">Slots Games</span> -->
-            <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
+            <div class="title-game-inner">
+              <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
+            </div>
+            <RouterLink class="title-game-action" to="#Slot">
+              {{ $t("home.viewAll") }}
+            </RouterLink>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -530,7 +573,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -580,7 +623,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -604,9 +647,13 @@
       >
         <div class="games-selection-wrapper" id="Poker">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-poker.png" class="label-img" /> -->
-            <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_poker") }}</div>
+            <div class="title-game-inner">
+              <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_poker") }}</div>
+            </div>
+            <RouterLink class="title-game-action" to="#Poker">
+              {{ $t("home.viewAll") }}
+            </RouterLink>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -643,7 +690,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -690,7 +737,7 @@
                             try {
                               return `url(${imgURLGame}${item.icon})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${h5Url}static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           }
                         })()
@@ -716,11 +763,13 @@
       >
         <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
-            <!-- <img src="../assets/images/index/fishing-icon-label.png" /> -->
-            <!-- <span class="txt-style">Fishing</span> -->
-            <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
+            <div class="title-game-inner">
+              <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
+            </div>
+            <RouterLink class="title-game-action" to="#Fish">
+              {{ $t("home.viewAll") }}
+            </RouterLink>
           </div>
 
           <div class="platform-game-wrapper">
@@ -756,7 +805,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -795,7 +844,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -920,9 +969,13 @@
 
         <div class="games-selection-wrapper" id="fishing" v-else>
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
-            <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
+            <div class="title-game-inner">
+              <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
+            </div>
+            <RouterLink class="title-game-action" to="#Fish">
+              {{ $t("home.viewAll") }}
+            </RouterLink>
           </div>
 
           <div class="platform-game-container grid-view">
@@ -942,7 +995,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -973,7 +1026,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -992,11 +1045,13 @@
       >
         <div class="games-selection-wrapper" id="Sport">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-sport.png" class="label-img" /> -->
-            <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
-            <!-- <span class="txt-style">Sports</span> -->
-            <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_sport") }}</div>
+            <div class="title-game-inner">
+              <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_sport") }}</div>
+            </div>
+            <RouterLink class="title-game-action" to="#Sport">
+              {{ $t("home.viewAll") }}
+            </RouterLink>
           </div>
           <div class="platform-game-container sport-platform">
             <template v-for="(item, index) in sport" :key="index">
@@ -1012,7 +1067,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.b9mega1.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1408,23 +1463,30 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/grid";
 import "swiper/css/effect-coverflow";
 // Import Swiper modules
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/core";
+// import {Grid} from 'swiper/modules'
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
+
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const store = userStore();
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
 const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
+const h5Url = store.h5Url;
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -2000,10 +2062,6 @@ const returnBannerUrl = (banner) => {
     return imgURLPromo + banner.mobileImageUrl;
   }
 };
-
-const route = useRoute();
-const router = useRouter();
-const store = userStore();
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
@@ -4455,7 +4513,7 @@ const showCongratsModal = () => {
       top: 65px;
     }
 
-    &.tiktok {
+    &.instagram {
       left: -70px;
       top: 13px;
       transition-delay: 0.2s;
@@ -4563,31 +4621,43 @@ const showCongratsModal = () => {
   }
 
   .title-game {
-    margin-left: -8px;
-    margin-right: -8px;
-    padding: 0px 12px 0px;
+    padding: 0px 4px 0px;
     display: flex;
-    gap: 6px;
     align-items: center;
-    // background-image: url("../assets/images/index/title-bg.png");
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // background-position: center center;
+    justify-content: space-between;
 
-    .label-img {
-      display: block;
-      width: auto;
-      height: 20px;
+    .title-game-inner {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+
+      .label-img {
+        display: block;
+        width: auto;
+        height: 20px;
+      }
+
+      .txt-style {
+        // font-family: "Dongle", sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        line-height: 1;
+        text-transform: uppercase;
+        color: #ffffff;
+      }
     }
 
-    .txt-style {
-      // font-family: "Dongle", sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      line-height: 1;
-      text-transform: uppercase;
-      color: #ffffff;
+    .title-game-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url(../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
+      background-size: cover;
+      aspect-ratio: 140 / 44;
+      min-width: 90px;
+      color: #fff;
+      text-decoration: none;
     }
   }
 }
@@ -4667,7 +4737,7 @@ const showCongratsModal = () => {
 
 .platform-game-container {
   display: grid;
-  padding-top: 12px;
+  padding-top: 15px;
   // margin-bottom: 12px;
   column-gap: 8px;
   row-gap: 16px;
@@ -4676,6 +4746,42 @@ const showCongratsModal = () => {
   &.live-casino {
     padding-top: 8px;
     margin-bottom: 0px;
+    display: grid;
+    grid-template-columns: 51fr 54fr;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: column;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 100px;
+    column-gap: 6px;
+    row-gap: 8px;
+
+    .platform-live-item--img {
+      background-size: 100% 100%;
+    }
+
+    img {
+      max-width: 140px;
+      border-radius: 8px;
+    }
+    .burning-hot {
+      img {
+        max-width: 100%;
+      }
+    }
+    > :first-child {
+      width: 100%;
+      border-radius: 10px;
+      grid-row: span 2;
+      aspect-ratio: 500/540;
+
+      .platform-live-item--img {
+        border-radius: 12px;
+        background-position: right center;
+        background-size: 100% 100%;
+      }
+    }
   }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
@@ -4829,58 +4935,21 @@ const showCongratsModal = () => {
   margin-bottom: 10px;
   border-radius: 8px;
   padding: 2px;
-  background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
+  background: url(../assets/images/index/category/cat-bg.png) no-repeat center center;
+  background-size: 100% 100%;
   margin-bottom: 15px;
-
-  &:before {
-    content: "";
-    position: absolute;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-    z-index: -1;
-    top: -1px;
-    bottom: -1px;
-    left: -1px;
-    right: -1px;
-  }
+  aspect-ratio: 343 / 32;
+  padding: 0 36px;
 
   .swiper-wrapper {
-    padding: 0 36px;
-    background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
+    // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
     border-radius: 8px;
   }
 
   .swiper-slide {
-    background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
+    // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
+    height: 100%;
     border-radius: 8px;
-  }
-
-  .swiper-button-next {
-    right: 5px;
-    top: 20px !important;
-    height: 100% !important;
-    &:after {
-      content: "";
-      background-image: url("../assets/images/index/nav-icon-right.png");
-      background-size: cover;
-      height: 12px;
-      width: 14px;
-      font-size: 0;
-      background-repeat: no-repeat;
-    }
-  }
-  .swiper-button-prev {
-    left: 5px;
-    top: 20px !important;
-    height: 100% !important;
-    &:after {
-      content: "";
-      background-image: url("../assets/images/index/nav-icon-left.png");
-      background-size: cover;
-      height: 12px;
-      width: 14px;
-      font-size: 0;
-      background-repeat: no-repeat;
-    }
   }
 
   // .swiper-scrollbar.swiper-scrollbar-horizontal {
@@ -4960,44 +5029,33 @@ const showCongratsModal = () => {
 }
 
 .cat-selection-item {
-  padding-top: 4px;
-  padding-bottom: 8px;
+  // padding-top: 4px;
+  // padding-bottom: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   transition: 0.3s all;
   width: 100%;
+  height: 100%;
   position: relative;
-  background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
-
-  &:after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 10%;
-    height: 80%;
-    width: 2px;
-    // background: salmon;
-    background: linear-gradient(
-      180deg,
-      rgba(115, 115, 115, 0) 0%,
-      rgba(153, 153, 153, 0.4) 48.5%,
-      rgba(115, 115, 115, 0) 100%
-    );
-  }
 
   &.active {
-    background: linear-gradient(180deg, rgba(97, 255, 0, 0) 0%, rgba(97, 255, 0, 0.25) 50.5%, rgba(97, 255, 0, 0) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(36, 238, 137, 0) 0%,
+      rgba(36, 238, 137, 0.525) 73.85%,
+      rgba(36, 238, 137, 0.7) 95.05%
+    );
 
     &:before {
       content: "";
       position: absolute;
       bottom: 0;
       left: 0;
-      height: 3px;
+      height: 2px;
       width: 100%;
-      background: #61ff00;
+      background: #24ee89;
       border-radius: 4px;
     }
 
@@ -5024,8 +5082,8 @@ const showCongratsModal = () => {
 
   .cat-title {
     font-size: 12px;
-    font-weight: 400;
-    color: #bfc3c9;
+    font-weight: 500;
+    color: #ffffff80;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
     text-transform: uppercase;

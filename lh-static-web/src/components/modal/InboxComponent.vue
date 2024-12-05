@@ -1,9 +1,12 @@
 <template>
   <div class="announcement-component">
-    <el-carousel height="auto" class="banner-slider" :autoplay="false" :interval="5000">
+    <el-carousel class="banner-slider" :autoplay="false" :interval="5000">
       <el-carousel-item class="banner-container" v-for="item in mailData" :key="item.id">
         <div class="announcement-title" v-html="item.title"></div>
-        <div class="announcement-content" v-html="item.content"></div>
+        <template v-if="item.content">
+          <div class="announcement-content" v-html="item.content"></div>
+        </template>
+
         <div class="announcement-footer">
           <div class="footer-button" @click="store.openLiveChat()">
             联系客服
@@ -13,7 +16,7 @@
           <div class="footer-button detail" @click="goToMailDetail(item)">
             查看详情
             <el-icon :size="20">
-              <RiArrowDropRightLine />
+              <img src="../../assets/home/arrow-drop-right-line.svg" />
             </el-icon>
           </div>
         </div>
@@ -24,7 +27,6 @@
 
 <script setup>
 import { userStore } from "@/store";
-import { RiArrowDropRightLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

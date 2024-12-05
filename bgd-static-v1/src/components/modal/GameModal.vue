@@ -4,8 +4,8 @@
       <q-toolbar>
         <div class="topActions">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
-          <div class="game-logo-img">
-            <img src="../../assets/images/auth/auth-logo-text-only.png" />
+          <div class="game-logo-container">
+            <img src="../../assets/images/auth/win-7-txt-logo.png" />
             <!-- <img src="../../assets/logo.png" /> -->
             <!-- <div
               class="game-logo"
@@ -32,7 +32,7 @@
         </div>
 
         <div class="loader-container">
-          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
+          <img class="loader-logo" src="../../assets/images/auth/win-7-logo.png" alt="WIN7.GAME" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
@@ -366,7 +366,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               setTimeout(function () {
                 src.value = srcDoc.substring(0, srcDoc.indexOf("?"));
               }, 1000);
-            }else if (platformCode === "LuckySport") {
+            } else if (platformCode === "LuckySport") {
               window.open(srcDoc, "_blank", "location=no,zoom=no");
             } else {
               src.value = srcDoc;
@@ -511,11 +511,13 @@ defineExpose({
     padding: 16px;
     align-items: center;
 
-    .game-logo-img {
+    .game-logo-container {
+      display: flex;
       height: 50px;
       position: absolute;
       top: 10px;
       left: 45px;
+      align-items: center;
       .game-logo {
         width: 30vw;
         background-position: center;
@@ -526,7 +528,7 @@ defineExpose({
 
       img {
         display: block;
-        height: 100%;
+        height: 95%;
         width: auto;
       }
     }
@@ -867,19 +869,29 @@ defineExpose({
   }
 
   .btn-cancel {
-    background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-    border: 1px solid #5d8956;
+    background: url(../../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
+    background-size: contain;
     font-weight: 700;
-    color: #ffffff;
-    border-radius: 12px;
+    color: #fff;
+    width: 140px;
+    height: 42px;
+    border: none;
+    &::before {
+      display: none;
+    }
   }
 
   .btn-confirm {
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    border: 1px solid #5d8956;
+    background: url(../../assets/images/index/btn-bg-green-small.png) no-repeat center center;
+    background-size: contain;
     font-weight: 700;
-    color: #fff;
-    border-radius: 12px;
+    width: 140px;
+    height: 42px;
+    color: #000a01;
+    border: none;
+    &::before {
+      display: none;
+    }
   }
 }
 .loader-container {

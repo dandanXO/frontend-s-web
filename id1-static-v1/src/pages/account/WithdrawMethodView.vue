@@ -2,7 +2,7 @@
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="withdrawal-summary" v-if="selectedMethodItem">
       <div class="balance">
-        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px;"/>
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
         <span v-else class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
@@ -10,7 +10,7 @@
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px;"/>
+        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
         <span v-else class="amount">
           {{
             selectedMethodItem.withdrawableBalance >= 0
@@ -223,7 +223,8 @@
                   (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
                   `${$t('form.withdrawalAmount_rules_04')} ${selectedMethodItem.withdrawMin} - ${
                     selectedMethodItem.withdrawMax
-                  }`
+                  }`,
+                (val) => Number.isInteger(Number(val)) || $t('form.withdrawalAmount_rules_05') // Ensure value is an integer
               ]"
               hide-bottom-space
               @focus="scrollToInput"
@@ -802,7 +803,13 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-  const result = !cardNumber ? t("form.accountNumber_rules_01") : true;
+
+  const result = !cardNumber
+    ? t("form.accountNumber_rules_01")
+    : !cardNumber.includes(".")
+    ? true
+    : t("form.accountNumber_rules_03");
+
   return result;
 };
 
