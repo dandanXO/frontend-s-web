@@ -28,7 +28,11 @@
         <q-card-section class="acct-section">
           <div class="left-sect">
             <div class="label">
-              <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.png" style="display:none;" />
+              <img
+                v-if="$q.dark.isActive"
+                src="../assets/images/account/account-wallet-icon-dark.png"
+                style="display: none"
+              />
               <img v-else src="../assets/images/account/account-wallet-icon.png" />
               <span>中心钱包</span>
               <div class="refresh-btn" @click="getBalance">
@@ -47,13 +51,13 @@
             <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" />
           </div>
         </q-card-section>
-        <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385;    margin: 5px 0 15px 0;" />
+        <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385; margin: 5px 0 15px 0" />
         <q-card-section class="acct-btm-section">
           <div class="vip-level-detail">
             <div class="vip-link">{{ store.vip }}</div>
 
             <div class="vip-progress">
-              <q-linear-progress size="10px" :value="vipProgress" />
+              <q-linear-progress size="10px" :value="store.vipProgress" />
             </div>
 
             <div class="vip-link">{{ updatedVip() }}</div>
@@ -674,7 +678,7 @@ export default defineComponent({
         var btmSwiper = document.getElementById("id-acct-menu");
         btmSwiper.classList.add("shorter-menu");
       }
-      getVipProgress();
+      // getVipProgress();
       if (store.profilePhoto && store.profilePhoto.includes("default")) {
         selectedImage.value = store.profilePhoto;
       }
@@ -728,8 +732,6 @@ export default defineComponent({
       }, 20000);
     };
 
-    const vipProgress = ref(0);
-
     const formatNumber = (numberString) => {
       const number = parseFloat(numberString);
       if (!isNaN(number)) {
@@ -745,18 +747,18 @@ export default defineComponent({
       if (currentVip < 12) {
         return "VIP" + updatedVip.toString();
       } else {
-        getVipProgress(true);
+        // getVipProgress(true);
         isHideLevelUp.value = true;
         return "已满级";
       }
     };
 
     const getVipProgress = (max) => {
-      if (max) {
-        vipProgress.value = parseFloat(store.currentUpgradeBetAmt) / parseFloat(store.currentUpgradeBetAmt);
-      } else {
-        vipProgress.value = parseFloat(store.currentBetAmt) / parseFloat(store.currentUpgradeBetAmt);
-      }
+      // if (max) {
+      //   store.vipProgress = parseFloat(store.currentUpgradeBetAmt) / parseFloat(store.currentUpgradeBetAmt);
+      // } else {
+      //   store.vipProgress = parseFloat(store.currentBetAmt) / parseFloat(store.currentUpgradeBetAmt);
+      // }
     };
     const submitPhotoLoading = ref(false);
     var qs = require("qs");
@@ -941,7 +943,6 @@ export default defineComponent({
       slide: ref(0),
       isLogoutModal,
       copyLink,
-      vipProgress,
       getVipProgress,
       formatNumber,
       updatedVip,
@@ -1522,7 +1523,7 @@ export default defineComponent({
     .left-sect {
       .label {
         color: #fff;
-        font-family: 'PingFang';
+        font-family: "PingFang";
       }
 
       .amt {

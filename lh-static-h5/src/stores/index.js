@@ -42,6 +42,7 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "",
       levelUpDeposit: "",
       currentBetAmt: "",
+      vipProgress: 0,
       currentUpgradeBetAmt: "",
       visitorId: "",
       profilePhoto: "",
@@ -251,8 +252,15 @@ export const userStore = defineStore("userStore", {
     handleVIPData(res) {
       this.currentBetAmt = res.data.currentBetAmount;
       const vipLevel = this.vip.replace("VIP", "");
+      const currentVip = parseInt(this.vip.match(/\d+/)[0]);
       if (res.data.vipBonusVOList && res.data.vipBonusVOList[vipLevel]) {
         this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
+      }
+
+      if (currentVip === 12) {
+        this.vipProgress = parseFloat(this.currentUpgradeBetAmt) / parseFloat(this.currentUpgradeBetAmt);
+      } else {
+        this.vipProgress = parseFloat(this.currentBetAmt) / parseFloat(this.currentUpgradeBetAmt);
       }
     },
     getBalance() {
