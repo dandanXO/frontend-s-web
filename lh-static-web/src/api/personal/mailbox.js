@@ -1,11 +1,11 @@
 import { server } from "@/utils/request";
 
 export function loadMailbox() {
-  return server.REST.get("/session/pm/inbox", {});
+  return server.REST.get("/session/inbox", {});
 }
 
 export function mailInbox(mailQuery) {
-  return server.REST.get("/session/pm/inbox", {
+  return server.REST.get("/session/inbox", {
     params: {
       type: mailQuery.type,
       current: mailQuery.current,
@@ -29,35 +29,35 @@ export function wirteMail(mail) {
 }
 
 export function getUnreadTotal() {
-  return server.REST.get("/session/pm/inbox/getUnreadTotal");
+  return server.REST.get("/session/inbox/getUnreadTotal");
 }
 
 export function readAllMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/readAll", {
+  return server.REST.post("/session/inbox/readAll", {
     type: mailQuery !== null ? mailQuery : undefined
   });
 }
 
 export function deleteAllMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/deleteAll", {
+  return server.REST.post("/session/inbox/deleteAll", {
     type: mailQuery !== null ? mailQuery : undefined
   });
 }
 
 export function readMultipleMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/readMultiple", {
+  return server.REST.post("/session/inbox/readMultiple", {
     ids: mailQuery
   });
 }
 
 export function deleteMultipleMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/deleteMultiple", {
+  return server.REST.post("/session/inbox/deleteMultiple", {
     ids: mailQuery
   });
 }
 
 export function readMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/read", {
+  return server.REST.post("/session/inbox/read", {
     id: mailQuery.id
   });
 }
