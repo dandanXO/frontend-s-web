@@ -91,7 +91,7 @@
           <li><router-link to="/about?id=rule">规则与条款</router-link></li>
           <li><router-link to="/about?id=privacy">隐私保护规则</router-link></li>
           <li><router-link to="/about?id=contact">联系我们</router-link></li>
-          <li><a href="/agent">加盟代理</a></li>
+          <li><router-link to="/affiliate">加盟代理</router-link></li>
         </ul>
         <div class="tagline">东赢是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div>
       </div>

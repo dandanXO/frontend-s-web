@@ -33,7 +33,7 @@
                   <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">合营部 Skype</div>
-                <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.1b8d9a018a52a8f5</span>
+                <span ref="contact2" class="contact-text" style="font-size: 10px">cid.1b8d9a018a52a8f5</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
                   <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
@@ -320,7 +320,7 @@ export default defineComponent({
     background-size: 100% 100%;
     background-color: #f3f7fd;
     margin: 0 auto;
-    padding: 140px 20px 160px;
+    padding: 70px 20px 160px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
