@@ -244,11 +244,11 @@ const copyText = (text, msgTitle) => {
 
 <style lang="scss">
 .affiliate-container {
-  padding: 1.5rem;
+  padding: 1.2rem 1rem;
   background: url("../assets/images/affiliate/bg-affiliate.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  font-family: 'PingFang';
+  font-family: "PingFang";
 
   .page-title {
     display: flex;
@@ -257,7 +257,6 @@ const copyText = (text, msgTitle) => {
     text-align: center;
     text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
       3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
-    // font-size: 3.46239rem;
     font-weight: 400;
     background: url("../assets/images/affiliate/title-bg.jpeg"), lightgray 50% / cover no-repeat;
     background-clip: text;
@@ -582,7 +581,7 @@ a {
   }
 }
 .agent-content-item ul {
-  font-family: 'PingFang';
+  font-family: "PingFang";
   font-size: 12px;
   font-weight: 400;
   line-height: 28px;
