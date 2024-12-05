@@ -32,6 +32,7 @@ body {
 
 .social-item {
   width: calc(20% - 32px);
+  max-width: 50px;
   flex: 1;
   justify-content: center;
   display: flex;

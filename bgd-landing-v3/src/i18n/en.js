@@ -352,9 +352,9 @@ export default {
     It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Bangladesh time on the next day. The rewards will be credited to the account during this time frame.
     `,
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "WIN7.GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "WIN7.GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
     },
     teamManagement: {
       searchField: {

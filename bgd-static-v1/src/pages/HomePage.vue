@@ -76,12 +76,9 @@
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
             <img src="../assets/images/index/youtube-icon.png" />
           </a>
-          <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
+          <a class="cs-icon instagram" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
-          <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
-          <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
-          <!--          </a>-->
           <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
@@ -233,7 +230,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -276,7 +273,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -317,7 +314,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -359,7 +356,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -397,7 +394,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <div class="platform-game-container live-casino">
               <div
-                v-for="(item, index) in livecasino.slice(0,3)"
+                v-for="(item, index) in livecasino.slice(0, 3)"
                 :key="index"
                 data-aos="zoom-in"
                 :data-aos-delay="100 * index"
@@ -414,7 +411,7 @@
                       try {
                         return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -463,7 +460,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -501,7 +498,7 @@
                               item.name.toLowerCase() === 'evo' ? 'wc' : ''
                             }${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -576,7 +573,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -626,7 +623,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -693,7 +690,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -740,7 +737,7 @@
                             try {
                               return `url(${imgURLGame}${item.icon})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${h5Url}static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           }
                         })()
@@ -808,7 +805,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -847,7 +844,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -998,7 +995,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -1029,7 +1026,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -1070,7 +1067,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.b9mega1.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1480,12 +1477,16 @@ const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const store = userStore();
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
 const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
+const h5Url = store.h5Url;
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -2061,10 +2062,6 @@ const returnBannerUrl = (banner) => {
     return imgURLPromo + banner.mobileImageUrl;
   }
 };
-
-const route = useRoute();
-const router = useRouter();
-const store = userStore();
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
@@ -4516,7 +4513,7 @@ const showCongratsModal = () => {
       top: 65px;
     }
 
-    &.tiktok {
+    &.instagram {
       left: -70px;
       top: 13px;
       transition-delay: 0.2s;
@@ -4775,7 +4772,7 @@ const showCongratsModal = () => {
     }
     > :first-child {
       width: 100%;
-      border-radius:  10px;
+      border-radius: 10px;
       grid-row: span 2;
       aspect-ratio: 500/540;
 
