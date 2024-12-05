@@ -138,7 +138,7 @@
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
         <img style="width: 120px; height: 30px" src="../assets/images/affiliate/bonus-title.png" alt="" />
         <div class="affiliate-sub">
-          <div class="affiliate-subtitle">以下为佣金计算示例</div>
+          <div class="affiliate-subtitle">佣金计算 (以下为示例)</div>
           <div class="affiliate-inner">
             <table>
               <tr>
@@ -146,34 +146,34 @@
                   平台输赢
                 </td>
                 <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
-                  10000
+                  10,000
                 </td>
               </tr>
               <tr>
-                <td class="highlight">-平台费</td>
+                <td class="highlight">平台费</td>
                 <td class="highlight">-800</td>
               </tr>
               <tr>
-                <td :colspan="2">平台费=游戏总输赢*15%</td>
+                <td :colspan="2">平台费=游戏总输赢 x8%</td>
               </tr>
               <tr>
-                <td class="highlight">-红利</td>
+                <td class="highlight">红利</td>
                 <td class="highlight">-200</td>
               </tr>
               <tr>
                 <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
               </tr>
               <tr>
-                <td class="highlight">=净利润</td>
-                <td class="highlight">9000</td>
+                <td class="highlight">净利润</td>
+                <td class="highlight">9,000</td>
               </tr>
               <tr>
-                <td class="highlight">*佣金比例</td>
-                <td class="highlight">*35%</td>
+                <td class="highlight">佣金比例</td>
+                <td class="highlight">x35%</td>
               </tr>
               <tr>
-                <td class="result">总佣金</td>
-                <td class="result">2798.4</td>
+                <td class="result">代理佣金</td>
+                <td class="result">3,150</td>
               </tr>
             </table>
           </div>
@@ -248,6 +248,7 @@ const copyText = (text, msgTitle) => {
   background: url("../assets/images/affiliate/bg-affiliate.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  font-family: 'PingFang';
 
   .page-title {
     display: flex;
@@ -581,7 +582,7 @@ a {
   }
 }
 .agent-content-item ul {
-  font-family: PingFang SC;
+  font-family: 'PingFang';
   font-size: 12px;
   font-weight: 400;
   line-height: 28px;
