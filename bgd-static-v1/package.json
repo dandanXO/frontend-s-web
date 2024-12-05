@@ -1,8 +1,8 @@
 {
   "name": "bgd-project",
   "version": "1.0.1",
-  "description": "B9.GAME",
-  "productName": "B9.GAME",
+  "description": "WIN7.GAME",
+  "productName": "WIN7.GAME",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
   "scripts": {

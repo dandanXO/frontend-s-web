@@ -21,7 +21,7 @@
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
 
-                  <img src="../assets/images/affiliate/icon-skype.png" />
+                  <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
                 <span ref="contact1" class="contact-text">@leihuo686</span>
@@ -33,7 +33,7 @@
               <div class="contact-box skype-buttons">
                 <div class="contact-icon">
 
-                  <img src="../assets/images/affiliate/icon-telegram.png" />
+                  <img src="../assets/images/affiliate/icon-skype.png" />
                 </div>
                 <div class="contact-name">合营部 Skype</div>
                 <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.8099acb97a5ea41</span>

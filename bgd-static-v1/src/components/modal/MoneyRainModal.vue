@@ -13,7 +13,7 @@
 
   <div class="rain-money-tabs-wrapper">
     <div class="rain-money-tabs-container">
-      <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
+      <div class="logo-img"><img src="../../assets/images/auth/win-7-logo.png" /></div>
       <div class="rain-money-header">
         <span class="orange">666,666BDT&nbsp;</span>
         <span class="green">every time maximum surplus</span>
@@ -611,7 +611,7 @@ onMounted(() => {
       display: flex;
 
       img {
-        max-width: 115px;
+        max-width: 120px;
         width: 100%;
         text-align: center;
       }

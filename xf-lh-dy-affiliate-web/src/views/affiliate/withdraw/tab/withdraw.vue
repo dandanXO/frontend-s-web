@@ -505,8 +505,10 @@ function loadCards() {
         response.data.forEach(element => {
           if (element.bankType === 'BANK') {
             if (
-              element.bankType.includes(selectedWithdrawalMethod.value.code)
+              element.bankType.includes(selectedWithdrawalMethod.value.code) && element.bankCode !== 'alipay' && selectedWithdrawalMethod.value.code !== 'ALIPAY'
             ) {
+              withdrawState.bankCardList.push(element)
+            } else if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
               withdrawState.bankCardList.push(element)
             }
           } else {
