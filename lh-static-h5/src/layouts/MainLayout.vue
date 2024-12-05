@@ -71,19 +71,17 @@
         align="justify"
       >
       <q-route-tab to="/" name="home" exact>
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon home"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/home-icon-dark.svg"
         />
         <div
           class="inactive footer-icon home"
           v-else
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon home"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/home-icon-active-dark.svg"
         />
         <div
           class="hover footer-icon home"
@@ -93,13 +91,11 @@
       </q-route-tab>
 
       <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
-        <img
-          class="inactive"
-          src="../assets/images/footer/hotmatch-icon-dark.svg"
+        <div
+          class="inactive footer-icon flag"
         />
-        <img
-          class="hover"
-          src="../assets/images/footer/hotmatch-icon-active-dark.svg"
+        <div
+          class="hover footer-icon flag"
         />
         <span>赛程</span>
       </q-route-tab>
@@ -126,19 +122,17 @@
       </q-route-tab>
 
       <q-route-tab to="/promo" name="promo">
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon promo"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/promo-icon-dark.svg"
         />
         <div
           class="inactive footer-icon promo"
           v-else
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon promo"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/promo-icon-active-dark.svg"
         />
         <div
           class="hover footer-icon promo"
@@ -148,19 +142,17 @@
       </q-route-tab>
 
       <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon headphone"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/chat-icon-dark.svg"
         />
         <div
           class="inactive footer-icon headphone"
           v-else
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon headphone"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/chat-icon-active-dark.svg"
         />
         <div
           class="hover footer-icon headphone"
@@ -170,19 +162,17 @@
       </q-route-tab>
 
       <q-route-tab to="/account" name="account">
-        <img
-          class="inactive"
+        <div
+          class="inactive footer-icon user"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/account-icon-dark.svg"
         />
         <div
           class="inactive footer-icon user"
           v-else
         />
-        <img
-          class="hover"
+        <div
+          class="hover footer-icon user"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/account-icon-active-dark.svg"
         />
         <div
           class="hover footer-icon user"
@@ -648,7 +638,7 @@ svg path {
   &.home {
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
     background-size: auto;
-    background-position: 0.5% 0%;
+    background-position: 0.5% 2px;
 
     &.inactive {
       background-position: 0.5% 100%;
@@ -658,7 +648,7 @@ svg path {
   &.wallet {
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
     background-size: auto;
-    background-position: 98.5% 0%;
+    background-position: 98.5% 2px;
 
     &.inactive {
       background-position: 98.5% 100%;
@@ -668,7 +658,7 @@ svg path {
   &.promo {
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
     background-size: auto;
-    background-position: 41% 0%;
+    background-position: 41% 2px;
 
     &.inactive {
       background-position: 41% 100%;
@@ -680,10 +670,10 @@ svg path {
     height: 28px;
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
     background-size: auto;
-    background-position: 59.5% 0%;
+    background-position: 60% 2px;
 
     &.inactive {
-      background-position: 59.5% 100%;
+      background-position: 60% 100%;
     }
   }
 
@@ -691,10 +681,73 @@ svg path {
     width: 28px;
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
     background-size: auto;
-    background-position: 79% 0%;
+    background-position: 78% 2px;
 
     &.inactive {
       background-position: 78% 100%;
+    }
+  }
+}
+
+.body--dark {
+  .footer-icon {
+    width: 30px;
+    height: 29px;
+
+    &.home {
+      background: url("../assets/images/footer/footer-icons-dark.svg") no-repeat center center;
+      background-size: auto;
+      background-position: 0% 0%;
+
+      &.inactive {
+        height: 28px;
+        background-position: 0% 93%;
+      }
+    }
+
+    &.flag {
+      width: 20px;
+      background: url("../assets/images/footer/footer-icons-dark.svg") no-repeat center center;
+      background-size: auto;
+      background-position: 25.5% 0px;
+
+      &.inactive {
+        background-position: 25.5% 95%;
+      }
+    }
+
+    &.promo {
+      background: url("../assets/images/footer/footer-icons-dark.svg") no-repeat center center;
+      background-size: auto;
+      background-position: 47% 0;
+
+      &.inactive {
+        background-position: 47% 93%;
+      }
+    }
+
+    &.headphone {
+      width: 28px;
+      height: 28px;
+      background: url("../assets/images/footer/footer-icons-dark.svg") no-repeat center center;
+      background-size: auto;
+      background-position: 73% 0;
+
+      &.inactive {
+        background-position: 73% 99%;
+      }
+    }
+
+    &.user {
+      height: 30px;
+      width: 28px;
+      background: url("../assets/images/footer/footer-icons-dark.svg") no-repeat center center;
+      background-size: auto;
+      background-position: 100% 1px;
+
+      &.inactive {
+        background-position: 100% 100%;
+      }
     }
   }
 }
