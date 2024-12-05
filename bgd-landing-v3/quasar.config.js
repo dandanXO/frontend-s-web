@@ -173,8 +173,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `B9.GAME`,
-        short_name: `B9.GAME`,
+        name: `WIN7.GAME`,
+        short_name: `WIN7.GAME`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
@@ -219,7 +219,7 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: "B9.GAME", // string
+      appName: "WIN7.GAME", // string
       backButtonExit: "*"
     },
 
