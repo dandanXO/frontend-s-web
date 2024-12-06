@@ -5,7 +5,7 @@ export function initDrawEvent(promoCode) {
 }
 
 export function getDrawPrizes(promoCode, drawTimes) {
-    return eventapi.post(` /session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes} `);
+    return eventapi.post(`/session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes} `);
 }
 
 export function getDrawRecord(promoCode, params) {

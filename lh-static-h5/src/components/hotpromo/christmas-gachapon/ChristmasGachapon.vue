@@ -1,7 +1,7 @@
 <template>
     <div class="christmas-gachapon-container">
         <div class="q-loading-mask" v-if="isLoading">
-            <p class="spinner"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/spinner.png"></p>
+            <p class="spinner"><img src="../../../assets/promo/christmas-gachapon/spinner.png"></p>
             <p class="loading-text">加载中... </p>
         </div>
         <div class="snow-container">
@@ -11,10 +11,10 @@
         <div class="snowflake"></div>
         <div class="snowflake"></div>
         </div>
-        <div class="promorule" @click="openModal('rule')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/rules.png"></div>
-        <div class="promorecord" @click="openModal('record')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/record.png"></div>
-        <div class="once" @click="getGachapon('once')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/once.png"></div>
-        <div class="fivex" @click="getGachapon('five')"><img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/fivex.png"></div>
+        <div class="promorule" @click="openModal('rule')"><img src="../../../assets/promo/christmas-gachapon/rules.png"></div>
+        <div class="promorecord" @click="openModal('record')"><img src="../../../assets/promo/christmas-gachapon/record.png"></div>
+        <div class="once" @click="getGachapon('once')"><img src="../../../assets/promo/christmas-gachapon/once.png"></div>
+        <div class="fivex" @click="getGachapon('five')"><img src="../../../assets/promo/christmas-gachapon/fivex.png"></div>
         <div class="amtleft">抽奖次数剩余: <span>{{ availableDraw }}次</span></div>
     </div>
     <q-dialog class="christmas-modal" v-model="isModal" align-center> 
@@ -24,37 +24,45 @@
         <div class="inner-contents">
             <div v-if="isRules" class="rules" v-html="rules"></div>
             <div class="table-scroll" v-if="!isRules">
-                
-            <q-table
-            flat bordered
-            dense
-            grid
-            row-key="index"
-            :rows="tableData"
-            :columns="columns"
-            :rows-per-page="tableData.length"
-            />
+                <q-table
+                flat bordered
+                dense
+                grid
+                row-key="prizeNo"
+                :rows="translatedTableData"
+                :columns="columns"
+                v-model:pagination="pagination"
+                style="max-height: 200px;"
+                />
             </div>
+            <!-- <div v-if="!isRules" class="row justify-center q-mt-md">
+            <q-pagination
+                v-model="pagination.page"
+                color="grey-8"
+                :max="pagesNumber"
+                size="sm"
+            />
+            </div> -->
         </div>
     </q-dialog>
     
     <q-dialog persistent class="prize-modal" :class="{ 'five': prizes.length > 1, 'once': prizes.length <= 1 }" v-model="isPrizeModal" align-center>
         <div class="prizes">
             <div class="prize" v-for="(prize, i) in prizes" :key="i">
-                <div class="imgball"><img :src="require(`../christmas-gachapon/../../../assets/promo/christmas-gachapon/${prize.img}.png`)"></div>
+                <div class="imgball"><img :src="require(`../../../assets/promo/christmas-gachapon/${prize.img}.png`)"></div>
                 <div class="redbar">{{ prize.type }}</div>
             </div>
         </div>
         <div class="claimbtn" @click="getBalance()">
-            <img src="../christmas-gachapon/../../../assets/promo/christmas-gachapon/claim.png">
+            <img src="../../../assets/promo/christmas-gachapon/claim.png">
         </div>
     </q-dialog>
 </template>
 <script setup>
-import { onMounted, ref, defineProps } from "vue";
+import { onMounted, ref, defineProps, computed } from "vue";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
-import { Pagination } from "vue3-carousel";
+import moment from "moment";
 import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/promotion/christmasGachapon";
     const store = userStore();
     const isLoading = ref(false);
@@ -70,24 +78,46 @@ import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/promot
     }
     const prizes = ref([]);
     const availableDraw = ref(0);
+    const params = {
+        size: 30,
+        current: 1
+    }
+    // Pagination state
+    const pagination = ref({
+    sortBy: 'desc',
+    descending: false,
+    page: params.current,
+    rowsPerPage: params.size
+    })
+
+    // Compute the number of pages
+    const pagesNumber = computed(() => Math.ceil(totalItems.value / pagination.value.rowsPerPage))
+
+    const totalItems = ref(0);
     const openModal = (type) => {
         if (type === 'rule') {
             modalContent.title = '活动规则'
             isRules.value = true
         } else if (type === 'record') {
+            getDrawRecord(promoCode.value, params).then((res) => {
+                if (res.code === 0) {
+                    totalItems.value = res.data.total
+                    tableData.value = res.data.records
+                }
+            })
             modalContent.title = '活动记录'
             isRules.value = false
         } else {}
         isModal.value = true
     }
     const getGachapon = (t) => {
-    // if (availableDraw.value === 0) {
-    //     notify({
-    //     type: "warning",
-    //     message: `抽奖次数不足`
-    //     });
-    //     return
-    // }
+    if (availableDraw.value === 0) {
+        notify({
+        type: "warning",
+        message: `抽奖次数不足`
+        });
+        return
+    }
     isLoading.value = true;
     var times = 1
     if (t === 'five') {
@@ -95,11 +125,41 @@ import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/promot
     }
     // Simulating an async operation (e.g., an API call) with a Promise.
     getDrawPrizes(promoCode.value, times) // Replace this with your actual async operation (e.g., an API call)
-        .then((data) => {
-            // Handle success
-            prizes.value = data;
-            isPrizeModal.value = true;
-            console.log('Prizes fetched successfully:', data);
+        .then((res) => {
+            if (res.code === 0) {
+            prizes.value = [];
+                res.data.forEach(item => {
+                    if (!item.bonus) {
+                        if (item.bonusName === '苹果16 256GB') {
+                            prizes.value.push({
+                                img: 'iphone',
+                                type: 'IPhone16 256GB'
+                            })
+                        }
+                        if (item.bonusName === '苹果耳机一副') {
+                            prizes.value.push({
+                                img: 'ipods',
+                                type: '苹果耳机一副'
+                            })
+
+                        }
+                    } else {
+                        const bonusMapping = {
+                            大红包: 'big',
+                            中红包: 'med',
+                            小红包: 'small',
+                        };
+
+                        if (bonusMapping[item.bonusName]) {
+                        prizes.value.push({
+                            img: bonusMapping[item.bonusName],
+                            type: `${item.bonusName} ${item.bonus}元彩金`,
+                        });
+                        }
+                    }
+                });
+                isPrizeModal.value = true;
+            }
         })
         .catch((error) => {
             // Handle error
@@ -115,63 +175,33 @@ import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/promot
             console.log('Loading state finished');
         });
 };
-
-    // Simulating an asynchronous function (replace with your actual async code)
-    // const fetchPrizes = (t) => {
-    //     return new Promise((resolve, reject) => {
-    //         setTimeout(() => {
-    //             if (t === 'once') {
-    //                 resolve([{
-    //                     img: 'iphone',
-    //                     type: 'Iphone16: 256g一台'
-    //                 }]);
-    //             } else if (t === 'five') {
-    //                 resolve([{
-    //                         img: 'iphone',
-    //                         type: 'Iphone16: 256g一台'
-    //                     },
-    //                     {
-    //                         img: 'ipods',
-    //                         type: '苹果耳机一副'
-    //                     },
-    //                     {
-    //                         img: 'big',
-    //                         type: '大红包：88元彩金'
-    //                     },
-    //                     {
-    //                         img: 'med',
-    //                         type: '中红包：38元彩金'
-    //                     },
-    //                     {
-    //                         img: 'small',
-    //                         type: '小红包：10元彩金'
-    //                     }
-    //                 ]);
-    //             } else {
-    //                 reject(new Error('Invalid prize type'));
-    //             }
-    //         }, 1000); // Simulating network delay
-    //     });
-    // };
     const getBalance = () => {
         store.getBalance();
         isPrizeModal.value = false;
     }
     const columns = [
-      { name: "content", label: "内容", align: "left", field: "content" },
-      { name: "date", label: "时间", align: "left", field: "date" },
-      { name: "status", label: "状态", align: "left", field: "status" },
+      { name: "prizeNo", label: "编号", align: "left", field: "prizeNo" },
+      { name: "bonusName", label: "内容", align: "left", field: "bonusName" },
+      { name: "recordTime", label: "时间", align: "left", field: "recordTime" },
+    //   { name: "status", label: "状态", align: "left", field: "status" },
     ];
-    const tableData = ref([
-    { id: 1, content: '恭喜获得手机一台', date: '2024年8月13日', status: '已领取' },
-    { id: 2, content: '恭喜获得苹果耳机一副', date: '2024年8月14日', status: '未领取' },
-    { id: 3, content: '恭喜获得大红包88元', date: '2024年8月15日', status: '已领取' },
-    { id: 4, content: '恭喜获得中红包38元', date: '2024年8月16日', status: '未领取' },
-    { id: 5, content: '恭喜获得小红包10元', date: '2024年8月17日', status: '已领取' },
-    { id: 6, content: '恭喜获得购物券100元', date: '2024年8月18日', status: '未领取' },
-    { id: 7, content: '恭喜获得游戏币5000个', date: '2024年8月19日', status: '已领取' },
-    { id: 8, content: '恭喜获得优惠券50元', date: '2024年8月20日', status: '未领取' }
-    ]);
+    const tableData = ref([]);
+    // Status translation mapping
+    const statusTranslations = {
+        PENDING: '待处理',
+        CLAIMED: '已领取'
+    };
+    const translatedTableData = computed(() =>
+    tableData.value.map((row) => ({
+        ...row,
+        bonusName: row.bonusAmount 
+        ? `恭喜获得${row.bonusName}${row.bonusAmount}元彩金` 
+        : `恭喜获得${row.bonusName}`,
+        status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
+        recordTime: moment(row.recordTime).format('YYYY年MM月DD日 HH:mm:ss'), // Format time
+    }))
+    );
+    
     const init = () => {
         initDrawEvent(promoCode.value).then((res) => {
             if (res.code === 0) {
@@ -422,6 +452,9 @@ onMounted(() => {
                 padding: 0;
                 text-align: center;
                 width: 100%;
+                word-break: keep-all;
+                width: 75%;
+                margin: 0 auto;
                 
             }
         }
@@ -569,5 +602,12 @@ font-weight: bold; // Optional: Emphasize important notes
     height: 40vh;
     overflow: auto;
     position: relative;
+}
+.q-table__bottom--nodata {
+    color: #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
 }
 </style>

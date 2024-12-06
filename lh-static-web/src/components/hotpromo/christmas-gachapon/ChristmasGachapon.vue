@@ -15,7 +15,7 @@
         <div class="promorecord" @click="openModal('record')"><img src="../christmas-gachapon/img/record.png"></div>
         <div class="once" @click="getGachapon('once')"><img src="../christmas-gachapon/img/once.png"></div>
         <div class="fivex" @click="getGachapon('five')"><img src="../christmas-gachapon/img/fivex.png"></div>
-        <div class="amtleft">抽奖次数剩余: <span>{{ times }}次</span></div>
+        <div class="amtleft">抽奖次数剩余: <span>{{ availableDraw }}次</span></div>
     </div>
     <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" class="christmas-modal" v-model="isModal" align-center>
         <div class="christmas-side" v-if="isRules">
@@ -29,20 +29,27 @@
             </div>
             <div v-if="isRules" class="rules" v-html="rules"></div>
             <div class="table-scroll" v-if="!isRules">
-            <el-table :data="tableData" style="width: 100%">
-            <!-- First column for index -->
-            <el-table-column label="编号" width="80">
-            <template #default="{ row, $index }">
-                {{ $index + 1 }} <!-- Display the index starting from 1 -->
-            </template>
-            </el-table-column>
+            <el-table :data="paginatedData" style="width: 100%">
 
-            <!-- Other columns -->
-            <el-table-column prop="content" label="内容"></el-table-column>
-            <el-table-column prop="date" label="时间" width="180"></el-table-column>
-            <el-table-column prop="status" label="状态" width="100"></el-table-column>
-        </el-table>
+                <!-- Other columns -->
+                <el-table-column prop="prizeNo" label="编号"></el-table-column>
+                <el-table-column prop="bonusName" label="内容"></el-table-column>
+                <el-table-column prop="recordTime" label="时间" width="300"></el-table-column>
+                <!-- <el-table-column prop="status" label="状态" width="100"></el-table-column> -->
+            </el-table>
     </div>
+
+        <el-pagination v-if="!isRules"
+        style="margin-top: 20px; text-align: right;"
+        background
+        v-model:current-page="params.current"
+        v-model:page-size="params.size"
+        :total="totalItems"
+        layout="prev, pager, next, sizes, jumper"
+        :page-sizes="[5, 10, 20, 30, 50]"
+        @current-change="onPageSizeChange"
+        @update:page-size="onPageSizeChange"
+        />
         </div>
     </el-dialog>
     
@@ -59,9 +66,15 @@
     </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, defineProps } from "vue";
+import { onMounted, ref, reactive, watch, defineProps, computed } from "vue";
 import { useNotify } from "@/hooks/notify"; 
 import { userStore } from "@/store";
+import moment from "moment";
+import {
+    getDrawPrizes,
+    initDrawEvent,
+    getDrawRecord
+} from "@/api/index/promo";
     const store = userStore();
     const isLoading = ref(false);
     const props = defineProps(["promoCode","promoRules"]);
@@ -75,19 +88,41 @@ import { userStore } from "@/store";
         title: ''
     }
     const prizes = ref([]);
-    const times = ref(0);
+    const availableDraw = ref(0);
+    const params = reactive({
+        size: 30,
+        current: 1
+    })
+    const totalItems = ref(0);
+    const onPageSizeChange = async () => {
+        tableData.value = []
+        getDrawRecord(promoCode.value, params).then((res) => {
+            if (res.code === 0) {
+                totalItems.value = res.data.total
+                tableData.value = res.data.records
+            }
+        })
+    }
     const openModal = (type) => {
         if (type === 'rule') {
             modalContent.title = '活动规则'
             isRules.value = true
         } else if (type === 'record') {
+            tableData.value = []
+            getDrawRecord(promoCode.value, params).then((res) => {
+                if (res.code === 0) {
+                    totalItems.value = res.data.total
+                    tableData.value = res.data.records
+                    console.log(tableData.value)
+                }
+            })
             modalContent.title = '活动记录'
             isRules.value = false
         } else {}
         isModal.value = true
     }
     const getGachapon = (t) => {
-    if (times.value === 0) {
+    if (availableDraw.value === 0) {
         notify({
         type: "warning",
         message: `抽奖次数不足`
@@ -96,80 +131,118 @@ import { userStore } from "@/store";
     }
     isLoading.value = true;
 
+    var times = 1
+    if (t === 'five') {
+        times = 5
+    }
     // Simulating an async operation (e.g., an API call) with a Promise.
-    fetchPrizes(t) // Replace this with your actual async operation (e.g., an API call)
-        .then((data) => {
-            // Handle success
-            prizes.value = data;
-            isPrizeModal.value = true;
-            console.log('Prizes fetched successfully:', data);
+    getDrawPrizes(promoCode.value, times) // Replace this with your actual async operation (e.g., an API call)
+        .then((res) => {
+            if (res.code === 0) {
+                prizes.value = [];
+                res.data.forEach(item => {
+                    if (!item.bonus) {
+                        if (item.bonusName === '苹果16 256GB') {
+                            prizes.value.push({
+                                img: 'iphone',
+                                type: 'IPhone16 256GB'
+                            })
+                        }
+                        if (item.bonusName === '苹果耳机一副') {
+                            prizes.value.push({
+                                img: 'ipods',
+                                type: '苹果耳机一副'
+                            })
+
+                        }
+                    } else {
+                        const bonusMapping = {
+                            大红包: 'big',
+                            中红包: 'med',
+                            小红包: 'small',
+                        };
+
+                        if (bonusMapping[item.bonusName]) {
+                        prizes.value.push({
+                            img: bonusMapping[item.bonusName],
+                            type: `${item.bonusName} ${item.bonus}元彩金`,
+                        });
+                        }
+                    }
+                });
+                isPrizeModal.value = true;
+            }            
         })
         .catch((error) => {
             // Handle error
-            notify({
-                type: "error",
-                message: `Error fetching prizes: ${error.message}`
-            });
+            // notify({
+            //     type: "error",
+            //     message: `Error fetching prizes: ${error.message}`
+            // });
             console.error('Error fetching prizes:', error);
         })
         .finally(() => {
             // Always run (after success or error)
             isLoading.value = false;
             console.log('Loading state finished');
-        });
-};
-
-    // Simulating an asynchronous function (replace with your actual async code)
-    const fetchPrizes = (t) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (t === 'once') {
-                    resolve([{
-                        img: 'iphone',
-                        type: 'Iphone16: 256g一台'
-                    }]);
-                } else if (t === 'five') {
-                    resolve([{
-                            img: 'iphone',
-                            type: 'Iphone16: 256g一台'
-                        },
-                        {
-                            img: 'ipods',
-                            type: '苹果耳机一副'
-                        },
-                        {
-                            img: 'big',
-                            type: '大红包：88元彩金'
-                        },
-                        {
-                            img: 'med',
-                            type: '中红包：38元彩金'
-                        },
-                        {
-                            img: 'small',
-                            type: '小红包：10元彩金'
-                        }
-                    ]);
-                } else {
-                    reject(new Error('Invalid prize type'));
-                }
-            }, 1000); // Simulating network delay
+            init();
         });
     };
     const getBalance = () => {
         store.getBalance();
         isPrizeModal.value = false;
     }
-    const tableData = ref([
-    { id: 1, content: '恭喜获得手机一台', date: '2024年8月13日', status: '已领取' },
-    { id: 2, content: '恭喜获得苹果耳机一副', date: '2024年8月14日', status: '未领取' },
-    { id: 3, content: '恭喜获得大红包88元', date: '2024年8月15日', status: '已领取' },
-    { id: 4, content: '恭喜获得中红包38元', date: '2024年8月16日', status: '未领取' },
-    { id: 5, content: '恭喜获得小红包10元', date: '2024年8月17日', status: '已领取' },
-    { id: 6, content: '恭喜获得购物券100元', date: '2024年8月18日', status: '未领取' },
-    { id: 7, content: '恭喜获得游戏币5000个', date: '2024年8月19日', status: '已领取' },
-    { id: 8, content: '恭喜获得优惠券50元', date: '2024年8月20日', status: '未领取' }
-    ]);
+    
+    const tableData = ref([]);
+    
+    const paginatedData = computed(() => {
+    // Translate the data before pagination
+    const translatedData = translateTableData(tableData.value);
+    
+    return translatedData  // Pagination on translated data
+    });
+
+    // Status translation mapping
+    const statusTranslations = {
+        PENDING: '待处理',
+        CLAIMED: '已领取'
+    };
+    // const translatedTableData = computed(() => {
+    //     return tableData.value.map((row) => ({
+    //         ...row,
+    //         bonusName: row.bonusAmount 
+    //         ? `恭喜获得 ${row.bonusName} ${row.bonusAmount}元彩金` 
+    //         : `恭喜获得 ${row.bonusName}`,
+    //         status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
+    //         recordTime: moment(row.recordTime).format('YYYY年MM月DD日HH:mm:ss'), // Format time
+    //     }));
+    // });
+
+    // Translate the table data
+    const translateTableData = (data) => {
+    return data.map((row) => ({
+        ...row,
+        bonusName: row.bonusAmount 
+        ? `恭喜获得${row.bonusName}${row.bonusAmount}元彩金` 
+        : `恭喜获得${row.bonusName}`,
+        status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
+        recordTime: moment(row.recordTime).format('YYYY年MM月DD日HH:mm:ss'), // Format time
+    }));
+    };
+
+    const init = () => {
+        initDrawEvent(promoCode.value).then((res) => {
+            if (res.code === 0) {
+                availableDraw.value = res.data.availableDraw
+            }
+        })
+    }
+    onMounted(() => {
+    if (!store.token) {
+        return;
+    }
+    init();
+    });
 </script>
 <style lang="scss">
 
@@ -188,6 +261,7 @@ import { userStore } from "@/store";
     border-radius: 50%;
     opacity: 0.8;
     animation: fall linear infinite;
+
 
     // Randomly generate animation values for variety
     &:nth-child(1) {
@@ -296,7 +370,7 @@ import { userStore } from "@/store";
     height: 890px;
     .promorule {
         position: absolute;
-        bottom: 245px;
+        bottom: 240px;
         left: 470px;
         cursor: pointer;
         &:hover {
@@ -305,7 +379,7 @@ import { userStore } from "@/store";
     }
     .promorecord {
         position: absolute;
-        bottom: 186px;
+        bottom: 181px;
         left: 480px;
         cursor: pointer;
         &:hover {
@@ -419,7 +493,7 @@ body .el-dialog.prize-modal.five .el-dialog__body {
         justify-content: center;
         align-items: center;
         img {
-            width: 80px;
+            width: 50px;
         }
     }
     .christmas-side {
@@ -475,7 +549,7 @@ body .el-dialog.prize-modal.five .el-dialog__body {
 font-size: 14px;
 color: #333; // Default text color
 line-height: 1.6;
-padding: 10px 0;
+padding: 0;
 border-radius: 8px; // Optional: Rounded corners for the rules container
 
 ul {
@@ -522,7 +596,7 @@ font-weight: bold; // Optional: Emphasize important notes
   z-index: 1; /* Ensure it stays above the table body */
 }
 .table-scroll {
-    height: 355px;
+    height: 305px;
     overflow: auto;
     position: relative;
 }
