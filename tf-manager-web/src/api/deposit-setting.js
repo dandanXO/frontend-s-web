@@ -20,3 +20,7 @@ export const insertOrUpdate = (depositSetting) => {
 export const getDepositRequestErrors = () => {
   return https().request("/depositSetting/requestErrors", Method.GET);
 }
+
+export const updateAmountSetting = (amountList, siteId, type) => {
+  return https().request(`/depositSetting/updateAmountListByType/${siteId}/${type}?_method=PUT`, Method.POST, { amountList: amountList }, ContentType.form);
+}

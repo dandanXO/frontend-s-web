@@ -681,6 +681,19 @@ export default defineComponent({
         }
       }
 
+      &.bg__xf1-daily-check-in {
+        @media (max-width: 420px) {
+          table {
+            font-size: 11px;
+
+            th,
+            td {
+              padding: 2px !important;
+            }
+          }
+        }
+      }
+
       .banner-container {
         width: 100%;
 

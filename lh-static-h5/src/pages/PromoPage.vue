@@ -78,36 +78,6 @@
                       </div>
                     </a>
                   </div>
-
-                  <!--                  <div class="promo-item" v-if="tab.name === 'all'">-->
-                  <!--                    <a @click="showPromoDetails(promo)">-->
-                  <!--                      <div>-->
-                  <!--                        <div class="promo-label">-->
-                  <!--                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">-->
-                  <!--                            {{ getPromoLabel(promo.labelType) }}-->
-                  <!--                          </div>-->
-                  <!--                          <div-->
-                  <!--                            class="promo-item-date"-->
-                  <!--                            v-if="parsedParam(promo.param).date"-->
-                  <!--                            v-html="parsedParam(promo.param).date"-->
-                  <!--                          />-->
-                  <!--                        </div>-->
-                  <!--                        <div class="promo-item-title">{{ promo.title }}</div>-->
-                  <!--                        <div-->
-                  <!--                          class="promo-item-deal"-->
-                  <!--                          v-if="parsedParam(promo.param).sub"-->
-                  <!--                          v-html="parsedParam(promo.param).sub"-->
-                  <!--                        />-->
-                  <!--                        <div>-->
-                  <!--                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />-->
-                  <!--                        </div>-->
-
-                  <!--                        <div class="promo-item-side-img">-->
-                  <!--                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />-->
-                  <!--                        </div>-->
-                  <!--                      </div>-->
-                  <!--                    </a>-->
-                  <!--                  </div>-->
                 </div>
               </div>
             </div>
@@ -116,12 +86,14 @@
             v-else
             class="selected-promo"
             :class="{
-              // euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
               'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
             }"
           >
             <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper" :class="selectedPromoWrapperClass">
+              <!--              <div class="loader" v-if="isFetchingPromo">-->
+              <!--                <img class="loading-img" src="../assets/logo.svg" />-->
+              <!--              </div>-->
               <div
                 @click="showRuleDialog = true"
                 v-if="selectedPromo.promoCode === 'lh1-daily-checkin'"
@@ -148,12 +120,6 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee
-                v-if="
-                  selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
-                  selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure'
-                "
-              />
               <div
                 class="inner"
                 :class="{
@@ -167,10 +133,6 @@
                     selectedPromo.promoCode === 'lh1worldcupdota2' ||
                     selectedPromo.promoCode === 'lh1-football-fight',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
-                  lhduanwu:
-                    selectedPromo.promoCode === 'lh-duanwujie24' ||
-                    selectedPromo.promoCode === 'lh1-deposit-rebates' ||
-                    selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
                   lheuromanual:
                     selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-daily-checkin',
                   meizhoubei:
@@ -215,9 +177,6 @@
                   <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
-                  <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
-                    <YallaCompass :promoCode="selectedPromo.promoCode" />
-                  </div>
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
                 <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
@@ -256,23 +215,6 @@
   </q-dialog>
 
   <q-dialog class="modal-common-div danaaa" v-model="showRuleDialog">
-    <!-- <q-card
-      style="width: 100%; padding: 10px 12px 20px"
-      class="text-center text-black"
-      :class="$q.dark.isActive ? '' : 'bg-white'"
-    >
-      <div class="headers">
-        <div style="width: 2.4em">&nbsp;</div>
-        <div class="titles">系统提示</div>
-        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
-      </div>
-      <q-card-section class="q-mb-lg">
-        <div class="contents">请登录后再操作</div>
-      </q-card-section>
-      <router-link to="/login?redirect=/promo">
-        <q-btn class="common-md-btn" label="确认" />
-      </router-link>
-    </q-card> -->
     <q-card class="text-center text-black" style="background: transparent">
       <q-card-section class="items-center justify-center row">
         <div class="dialog-header-2">
@@ -340,19 +282,15 @@ import { useLocalStorage } from "@vueuse/core";
 import HotPromotion from "components/HotPromotion";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
-import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { cached } from "src/boot/cache";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
-const YallaCompass = defineAsyncComponent(() => import("src/components/hotpromo/yalla-compass/YallaCompass.vue"));
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee,
     NBAWaterBattle,
-    YallaCompass
   },
   setup() {
     const notify = useNotify();
@@ -410,19 +348,6 @@ export default defineComponent({
       }
     );
 
-    const loadBanner = () => {
-      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
-        if (response.code === 0) {
-          banner.value = response.data[0];
-          // console.log(banner.value)
-        } else {
-          // notify({
-          //   type: "error",
-          //          //   message: ret.message,
-          //          // });
-        }
-      });
-    };
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
       if (promo.promoCode === "lh1-game-steps") {
@@ -448,22 +373,6 @@ export default defineComponent({
         }
         store.token = extensionToken.value;
       } else {
-        // non extension
-        // if (!store.token) {
-        //   isDisplayLogin.value = true;
-        // } else {
-        //   if (promo.redirectUrl.includes("page-vip")) {
-        //     router.push("/account/vip?from=promo");
-        //   } else {
-        //     if (route.query.fromAccount) {
-        //       router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
-        //     } else {
-        //       router.push({ path: "/promo", query: { name: promo.redirectUrl } });
-        //     }
-        //     isPromoDetail.value = true;
-        //     selectedPromo.value = promo;
-        //   }
-        // }
         if (promo.redirectUrl.includes("page-vip")) {
             router.push("/account/vip?from=promo");
           } else {
@@ -506,7 +415,7 @@ export default defineComponent({
       })
       const platformApiUrl = "/opt-session/promo/page";
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = window.location.pathname === "/promotion" || window.location.pathname === "/promo";
 
       api
         .get(platformApiUrl)
@@ -597,7 +506,6 @@ export default defineComponent({
       }
 
       checkExtension();
-      // loadBanner();
       loadAll();
     });
 
@@ -1100,19 +1008,6 @@ export default defineComponent({
           }
         }
 
-        &.lhduanwu {
-          margin: 0px;
-          background-image: url("../assets/images/promo/hotpromo/dragonboat/h5bg.jpg");
-          width: 100%;
-          background-position: top center;
-          background-size: 100% auto;
-          background-repeat: no-repeat;
-
-          .hot-promo {
-            padding: 15px;
-          }
-        }
-
         &.lhstepgame {
           margin: 0px;
           width: 100%;
@@ -1479,4 +1374,31 @@ export default defineComponent({
     transform: rotate(360deg);
   }
 }
+
+//.loader {
+//  width: 100%;
+//  height: calc(100vh - 150px);
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//
+//  .loading-img {
+//      animation-name: fade-in-out;
+//      animation-duration: 1s;
+//      animation-iteration-count: infinite;
+//      width: 100px;
+//  }
+//}
+//
+//@keyframes fade-in-out{
+//  0%{
+//    opacity: 1;
+//  }
+//   50%{
+//    opacity: 0;
+//  }
+//  100%{
+//    opacity: 1;
+//  }
+//}
 </style>

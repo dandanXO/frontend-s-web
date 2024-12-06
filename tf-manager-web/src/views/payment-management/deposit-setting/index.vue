@@ -124,6 +124,20 @@
         <el-button v-else type="primary" @click="submit" disabled>{{ t('fields.update') }}</el-button>
       </el-col>
     </el-row>
+    <el-row style="margin-top: 10px;">
+      <el-form
+        ref="amountSettingForm"
+        :model="configForm"
+        :inline="true"
+        size="small"
+        v-if="configForm.setting !== null"
+      >
+        <el-form-item :label="t('fields.depositAmountList')" prop="setting">
+          <el-input v-model="configForm.setting" style="width: 500px;" />
+        </el-form-item>
+        <el-button type="primary" @click="submitSetting">{{ t('fields.confirm') }}</el-button>
+      </el-form>
+    </el-row>
   </div>
 </template>
 
@@ -131,7 +145,7 @@
 
 import { computed, onMounted, reactive, ref } from "vue";
 import { hasRole, hasPermission } from "../../../utils/util";
-import { getDepositSetting, insertOrUpdate } from "../../../api/deposit-setting";
+import { getDepositSetting, insertOrUpdate, updateAmountSetting } from "../../../api/deposit-setting";
 import { getFinancialLevels } from "../../../api/financial-level";
 import { getSiteListSimple } from "../../../api/site";
 import { getActivePaymentTypes } from "../../../api/payment-type";
@@ -141,6 +155,7 @@ import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
 import { isNumeric } from "../../../utils/validate";
+import { getConfigList } from '../../../api/config'
 
 const { t } = useI18n();
 const store = useStore();
@@ -148,6 +163,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const webDepositSettingForm = ref(null);
 const mobileDepositSettingForm = ref(null);
+const amountSettingForm = ref(null);
 const checkAll = ref(false)
 const isIndeterminate = ref(false)
 const checkAllMobile = ref(false)
@@ -191,6 +207,10 @@ const form = reactive({
     financialLevels: []
   }
 });
+
+const configForm = reactive({
+  setting: null
+})
 const request = reactive({
   size: 30,
   current: 1,
@@ -284,6 +304,13 @@ async function loadPayTypes() {
   filterPayTypeByCurrency()
 };
 
+async function loadSetting(payType) {
+  configForm.setting = null
+  var code = "Deposit_amount_list_" + payType;
+  const { data: setting } = await getConfigList(code, request.siteId);
+  configForm.setting = setting[0].value
+}
+
 async function loadDepositSetting() {
   page.loading = true;
   const query = {};
@@ -292,6 +319,7 @@ async function loadDepositSetting() {
   const { data: ret } = await getDepositSetting(query);
   page.records = ret;
   page.loading = false;
+  loadSetting(query.payType);
 }
 
 async function loadCurrency() {
@@ -317,6 +345,11 @@ function payTypeByCurrencyID (record) {
     const currencyIdsList = record.currencyIds.split(',')
     return currencyIdsList.filter(currencyId => siteCurrencyId.list.includes(parseInt(currencyId))).length > 0
   }
+}
+
+async function submitSetting() {
+  await updateAmountSetting(configForm.setting, form.siteId, form.payType)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' });
 }
 
 async function submit() {

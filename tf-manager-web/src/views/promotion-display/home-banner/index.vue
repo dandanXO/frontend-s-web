@@ -1069,6 +1069,8 @@ function submitImage() {
 }
 
 function showImageDialog(type) {
+  imageForm.siteId = request.siteId;
+  
   if (imageFormRef.value) {
     imageFormRef.value.resetFields()
     uploadedImage.url = null
@@ -1131,6 +1133,12 @@ function submitImageUpload() {
       await createSiteImage(imageForm)
       uiControl.imageDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
+
+      if (imageForm.promoType === 'DESKTOP_BANNER') {
+        form.desktopImageUrl = imageForm.siteId + '/' + imageForm.path;
+      } else if (imageForm.promoType === 'MOBILE_BANNER') {
+        form.mobileImageUrl = imageForm.siteId + '/' + imageForm.path;
+      }
     }
   })
 }

@@ -494,6 +494,34 @@ function confirmDeposit() {
   loadingBtn.value = false
 }
 
+function isMobileSafari() {
+  const ua = navigator.userAgent;
+  const vendor = navigator.vendor;
+
+  // 判断是否是 Apple 的设备
+  const isAppleDevice = /iPhone|iPad|iPod/.test(ua);
+
+  // 判断是否是 Safari 浏览器（Apple WebKit 且没有 Chrome 或其他浏览器标识）
+  const isSafari = vendor.includes("Apple") && !ua.includes("CriOS") && !ua.includes("FxiOS");
+
+  return isAppleDevice && isSafari;
+}
+
+function getDeviceType() {
+  var regDevice = "H5";
+  if ("standalone" in window.navigator && window.navigator.standalone) {
+    regDevice = "IOS";
+  }
+  return regDevice;
+}
+
+function isIosOrSafari() {
+  if (getDeviceType() === "IOS" || isMobileSafari()) {
+    return true;
+  }
+  return false;
+}
+
 function doDeposit(data) {
   loadingBtn.value = true
   postDeposit(data)
@@ -509,18 +537,32 @@ function doDeposit(data) {
               submitMessage.value = response.data.split(',')
             }
           } else {
-            const newWin = window.open(`/`)
-            newWin.localStorage.setItem('formDetails', JSON.stringify(form))
-            if (response.payResultType === 'GET_SUBMIT') {
-              // isDeposited.value = true;
-              newWin.location.href = response.requestUrl
-            }
-            if (response.payResultType === 'POST_SUBMIT') {
-              // isDeposited.value = true;
-              if (response.paramKey === null || response.paramKey === '') {
-                newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
-              } else {
-                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+            if (isIosOrSafari()) {
+              const newWin = window.open(`/`, `_self`);
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
+              }
+            } else {
+              const newWin = window.open(`/`);
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                // isDeposited.value = true;
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                // isDeposited.value = true;
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
               }
             }
           }

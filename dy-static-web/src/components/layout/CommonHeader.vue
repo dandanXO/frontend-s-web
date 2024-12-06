@@ -105,19 +105,19 @@
         </router-link>
         <div class="navigations">
           <div class="header-menu-item" v-for="nav in navigations" :key="nav.name">
-            <a v-if="nav.code === 'Agent'" :class="{ icon: nav.hasicon }" :href="nav.path" target="_blank">
-              <div class="nav-affiliate-icon" />
-              <span>{{ nav.name }}</span>
-            </a>
+            <!--            <a v-if="nav.code === 'Agent'" :class="{ icon: nav.hasicon }" :href="nav.path" target="_blank">-->
+            <!--              <div class="nav-affiliate-icon" />-->
+            <!--              <span>{{ nav.name }}</span>-->
+            <!--            </a>-->
             <router-link
               @mouseover="showSubMenu(nav)"
               @mouseup="selectedMenu = ''"
               :to="nav.path"
               :class="{ icon: nav.hasicon }"
-              v-if="nav.code !== 'Agent'"
             >
               <template v-if="nav.hasicon">
                 <span>
+                  <div class="nav-affiliate-icon" v-if="nav.code === 'Agent'" />
                   <div class="nav-promotion-icon" v-if="nav.code === 'Promotion'" />
                   <div class="nav-sponsor-icon" v-if="nav.code === 'Sponsor'" />
                   <div class="nav-app-icon" v-if="nav.code === 'App'" />
@@ -854,7 +854,7 @@ export default defineComponent({
         code: "Agent",
         name: "加盟",
         enName: "Affiliate",
-        path: "https://dy2-affiliate.mndofithly.com/",
+        path: "/affiliate",
         hasicon: true
       },
       { code: "Sponsor", name: "赞助", enName: "Sponsor", path: "/sponsor", hasicon: true },
@@ -1610,7 +1610,7 @@ export default defineComponent({
     watch(activeLoginTab, () => {
       window.captchaObj.reset();
     })
-    
+
     watch(() => store.loginPageVisible, () => {
       if (store.loginPageVisible) {
         loginDialogVisible.value = true;
@@ -2400,7 +2400,7 @@ body {
       color: $light-grey;
 
       .top-bar-inner {
-        font-family: 'PingFang SC';
+        font-family: "PingFang SC";
         max-width: $maxwidth;
         width: 100%;
         margin: 0 auto;
@@ -2504,7 +2504,7 @@ body {
           text-align: center;
 
           .header-menu-item {
-            font-family: 'PingFang SC';
+            font-family: "PingFang SC";
           }
 
           a {
@@ -2852,7 +2852,11 @@ body {
   height: 20px;
 }
 
-.personal-info-icon, .deposit-icon, .transfer-icon, .promotion-icon, .logout-icon {
+.personal-info-icon,
+.deposit-icon,
+.transfer-icon,
+.promotion-icon,
+.logout-icon {
   background: url("../../assets/home/home-icons.png") no-repeat center center;
   background-size: auto 100%;
   width: 20px;
@@ -2879,7 +2883,11 @@ body {
   background-position: 37% 0%;
 }
 
-.nav-promotion-icon, .nav-sponsor-icon, .nav-app-icon, .nav-vip-icon, .nav-affiliate-icon {
+.nav-promotion-icon,
+.nav-sponsor-icon,
+.nav-app-icon,
+.nav-vip-icon,
+.nav-affiliate-icon {
   background: url("../../assets/home/home-icons.png") no-repeat center center;
   background-size: auto 100%;
   width: 25px;
@@ -3419,53 +3427,54 @@ body {
 }
 
 #captchaContainer {
-    width: 100%;
+  width: 100%;
 
-    .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
-    .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
-      background-image: linear-gradient(180deg,#fff,#f4f4f4) !important;
-      border-color: #dcdfe6;
-    }
-
-    .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
-      color: #424f72;
-      font-family: "PingFang SC" !important;
-    }
-
-    .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
-      // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
-    }
-
-    .geetest_captcha.geetest_dark.geetest_lock_success
-      .geetest_content
-      .geetest_tip_container
-      .geetest_tips_wrap
-      .geetest_tip {
-      color: #39c522 !important;
-    }
-
-    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
-    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn {
-      border: 1px solid #dfdfdf;
-      background: #fff;
-    }
-    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
-    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
-      color: #424f72;
-    }
-
-    .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
-    .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
-      background: #fff;
-    }
-
-    .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
-    .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
-      background-color: #ccc;
-    }
-
-    .geetest_captcha.geetest_dark .geetest_holder .geetest_mask, .geetest_popup_wrap.geetest_dark .geetest_holder .geetest_mask {
-      background-color: #fff;
-    }
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content,
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content {
+    background-image: linear-gradient(180deg, #fff, #f4f4f4) !important;
+    border-color: #dcdfe6;
   }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
+    color: #424f72;
+    font-family: "PingFang SC" !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success .geetest_holder .geetest_content {
+    // background-image: linear-gradient(180deg, #4e4e4e, 0%, #4e4e4e 100%) !important;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_lock_success
+    .geetest_content
+    .geetest_tip_container
+    .geetest_tips_wrap
+    .geetest_tip {
+    color: #39c522 !important;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box_layer .geetest_box_btn {
+    border: 1px solid #dfdfdf;
+    background: #fff;
+  }
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
+    color: #424f72;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
+  .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box {
+    background: #fff;
+  }
+
+  .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
+  .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
+    background-color: #ccc;
+  }
+
+  .geetest_captcha.geetest_dark .geetest_holder .geetest_mask,
+  .geetest_popup_wrap.geetest_dark .geetest_holder .geetest_mask {
+    background-color: #fff;
+  }
+}
 </style>

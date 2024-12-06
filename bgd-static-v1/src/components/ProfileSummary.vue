@@ -7,7 +7,9 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo"><img height="30px" src="../assets/images/index/download/download-logo.png" /></div>
+      <div class="download-logo">
+        <img height="30px" src="../assets/images/index/download/win-7-logo.png" />
+      </div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
@@ -85,13 +87,6 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
-      <!--        <div class="item-icon">-->
-      <!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
-      <!--        </div>-->
-      <!--        Tik Tok-->
-      <!--      </a>-->
-
       <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/index/youtube-web-icon.png" />
@@ -159,8 +154,8 @@
         <img src="../assets/images/auth/auth-menu.png" @click="toggleMenuOpen()" />
       </div>
       <div class="profile-wrapper-extra">
-        <div class="logo-img">
-          <img src="../assets/images/auth/b9-logo.png" @click="onClickLogo" />
+        <div class="logo-container">
+          <img src="../assets/images/auth/win-7-logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -387,7 +382,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://m.b9mega1.com/", "_blank");
+    window.open(store.h5Url, "_blank");
     return;
   }
 
@@ -593,6 +588,11 @@ onUnmounted(() => {
       opacity: 1;
       transition: 1s all;
     }
+  }
+
+  .download-logo {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -951,14 +951,15 @@ onUnmounted(() => {
     margin-left: 12px;
   }
 
-  .logo-img {
+  .logo-container {
     width: 100%;
     margin: 0 auto;
     display: flex;
+    align-items: center;
 
     img {
-      max-width: 115px;
-      width: 100%;
+      max-height: 50px;
+      width: auto;
       text-align: center;
     }
   }
