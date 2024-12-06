@@ -61,6 +61,18 @@
         >
           {{ $t("btn.confirm") }}
         </q-btn>
+
+        <div class="error-invalid-text q-mt-lg" v-if="!isInvalidCode">
+          <p class="error-text">
+            {{ $t("form.redemptionBtmText") }}
+          </p>
+          <img
+            class="btn-icon"
+            @click="openWhatsApp()"
+            id="whatapp-icon"
+            src="../../assets/images/auth/whatsapp-icon.png"
+          />
+        </div>
       </div>
     </div>
   </q-dialog>

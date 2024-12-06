@@ -173,7 +173,9 @@ export default {
     redemptionAlreadyRedeemed:
       "You have already participated in this redemption. Please wait for the next free redemption code release on our official WhatsApp channel.",
     redemptionFullyRedeemed:
-      "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time."
+      "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time.",
+    redemptionBtmText:
+      "Redemption Process: If you don't have a redemption code, check the official channel below for the latest promotions. Once you have a code, enter it above to redeem! "
   },
   btn: {
     login: "Login",
