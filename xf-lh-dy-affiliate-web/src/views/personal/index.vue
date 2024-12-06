@@ -296,9 +296,10 @@
     <el-dialog
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
-      width="580px"
+      :width="withdrawPasswordDialogWidth"
       append-to-body
       :close-on-click-modal="false"
+      style="color: red"
     >
       <el-form
         v-if="uiControl.dialogType === 'PASSWORD'"
@@ -625,7 +626,7 @@ import peopleList20Filled from '@iconify-icons/fluent/people-list-20-filled'
 import barCodeScanner20Filled from '@iconify-icons/fluent/barcode-scanner-20-filled'
 import lockClosed20Filled from '@iconify-icons/fluent/lock-closed-20-filled'
 import lockShield20Filled from '@iconify-icons/fluent/lock-shield-20-filled'
-import { onMounted, reactive, ref } from '@vue/runtime-core'
+import { onMounted, reactive, ref, computed, onUnmounted } from '@vue/runtime-core'
 import {
   checkHasWithdrawPw,
   createSecurityQuestion,
@@ -690,6 +691,7 @@ const passwordStep = ref(1)
 const googleAuthFormRef = ref(null)
 const quesAuthFormRef = ref(null)
 const resetFormRef = ref(null)
+const isWithdrawPasswordDialogFull = ref(false)
 const securityQuestion = reactive({
   question: [],
   currentIndex: 0,
@@ -745,6 +747,10 @@ const quesAuthForm = reactive({
 const resetForm = reactive({
   password: '',
   confirmPassword: '',
+})
+
+const withdrawPasswordDialogWidth = computed(() => {
+  return isWithdrawPasswordDialogFull.value ? '100%' : '580px'
 })
 
 const validatePass = (rule, value, callback) => {
@@ -1132,6 +1138,14 @@ function submitResetPassword() {
   })
 }
 
+function handleResize() {
+  if (window.innerWidth < 580) {
+    isWithdrawPasswordDialogFull.value = true
+  } else {
+    isWithdrawPasswordDialogFull.value = false
+  }
+}
+
 onMounted(async () => {
   if (route.query && route.query.name === 'realname') {
     ElMessage({
@@ -1162,6 +1176,13 @@ onMounted(async () => {
   await checkSecurityQuestion()
   await checkAuthenticator()
   await loadAffiliateInfo()
+  handleResize()
+
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 

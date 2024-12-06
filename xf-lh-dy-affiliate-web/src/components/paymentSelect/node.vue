@@ -20,7 +20,7 @@
       >
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon"></div>
-          <div>{{ item.nodeName }}</div>
+          <div class="node-txt-text">{{ item.nodeName }}</div>
           <div
             class="promo"
           >
@@ -38,6 +38,48 @@
             </div>
           </div>
         </div>
+        <!-- <el-icon
+          title="编辑"
+          style="margin: 0 10px"
+          class="pointer"
+          @click.stop="editHandle(item, i, idx)"
+        >
+        <Edit />
+        </el-icon>
+        <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
+      </div>
+      <div
+        class="mobile-node-item payment-method-item"
+        :id="level + '_' + i"
+        @click="clickItem(item)"
+        :class="[
+          item.children ? 'node-group' : '',
+          selectItem === item ? 'active' : ''
+        ]"
+        :style="item.group && item.children.length === 0 ? 'display:none': ''"
+        :key="i"
+        v-for="(item, i) in list"
+      >
+        <div class="node-text">
+          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon"></div>
+          <div
+            class="promo"
+          >
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`">
+          </div>
+          <div class="payment-method-wrapper">
+            <div
+              class="payment-method-item"
+              v-for="pm in payMethods"
+              :key="pm.id"
+              :class="{active: pm.nodeName === activeMethod}"
+            >
+              <img :src="imgURL + pm.nodeIcon">
+              <div>{{ pm.nodeName }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="node-txt-text">{{ item.nodeName }}</div>
         <!-- <el-icon
           title="编辑"
           style="margin: 0 10px"
@@ -359,6 +401,9 @@ $node-color: #458BFF;
         display: none;
       }
     }
+    .mobile-node-item {
+      display: none;
+    }
     .node-text {
       display: flex;
       justify-content: center;
@@ -532,6 +577,62 @@ $node-color: #458BFF;
       // }
     }
   }
+
+  .mobile-node-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &.active {
+      position: relative;
+
+      .node-text {
+        border: 1px solid#409eff;
+      }
+    }
+    .promo {
+      position: absolute;
+      right: 50%;
+      top: 0;
+      transform: translateX(50%);
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: top center;
+      img {
+      padding: 0;
+      border: 0;
+      background-color: transparent;
+      }
+      ::after {
+        position: relative;
+      }
+    }
+
+    .node-text {
+      background: #ecf5ff;
+      border-radius: 6px;
+      padding: 4px;
+      width: fit-content;
+      gap: 0px;
+
+      .node-txt-img {
+        width: 48px;
+        height: 48px;
+        margin: 0;
+
+        img {
+          width: 100%;
+          max-width: none;
+        }
+      }
+    }
+
+    .node-txt-text {
+      margin-top: 4px;
+      font-size: 12px;
+    }
+
+  }
   // .node-item {
   //   &.selected{
   //     border-bottom: 5px solid $node-color;
@@ -554,11 +655,16 @@ $node-color: #458BFF;
   .node {
     .node-content {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 10px;
 
       .node-item {
+        display: none;
         min-width: 70px;
+      }
+
+      .mobile-node-item {
+        display: block;
       }
     }
     .node {
