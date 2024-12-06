@@ -218,6 +218,42 @@
       <el-table-column prop="siteName" :label="t('fields.site')" width="150"/>
       <el-table-column prop="loginName" :label="t('fields.loginName')" min-width="150"/>
       <el-table-column prop="gameCode" :label="t('fields.gameCode')" min-width="180"/>
+      <el-table-column prop="diffDepositWithdraw" :label="t('fields.totalDeposit') + '-' + t('fields.totalWithdraw')" min-width="180">
+        <template #default="scope">
+            <span
+              v-if="scope.row.diffDepositWithdraw < 0"
+              style="color:red"
+            >
+              $
+              <span
+                v-formatter="{
+                  data: scope.row.diffDepositWithdraw,
+                  type: 'money',
+                }"
+              />
+            </span>
+          <span v-else>
+              $
+              <span
+                v-formatter="{
+                  data: scope.row.diffDepositWithdraw,
+                  type: 'money',
+                }"
+              />
+            </span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="balance" :label="t('fields.balance')" min-width="180">
+        <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.balance,
+                type: 'money',
+              }"
+            />
+        </template>
+      </el-table-column>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
