@@ -355,7 +355,7 @@ $node-color: #458BFF;
           color: #000000;
         }
         img {
-          background-color: #2a313e;
+          background-color: transparent;
           max-width: 2.3rem;
           // max-width: 1.5rem;
           margin-bottom: 0;
@@ -630,6 +630,7 @@ $node-color: #458BFF;
     .node-txt-text {
       margin-top: 4px;
       font-size: 12px;
+      white-space: nowrap;
     }
 
   }
@@ -665,6 +666,7 @@ $node-color: #458BFF;
 
       .mobile-node-item {
         display: flex;
+        padding: 10px 2px;
       }
     }
     .node {
