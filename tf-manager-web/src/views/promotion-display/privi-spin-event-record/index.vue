@@ -177,34 +177,38 @@
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input @focus="handleSelect" v-model="form.loginName" style="width: 350px" :readonly="uiControl.dialogType == 'EDIT'" />
         </el-form-item>
-        <el-form-item :label="t('fields.privilegeCode')" prop="code" :readonly="uiControl.dialogType == 'EDIT'">
+        <el-form-item :label="t('fields.privilegeCode')" prop="code">
           <el-input
             v-model="form.code"
             style="width: 350px"
+            :readonly="uiControl.dialogType == 'EDIT'"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.bonus')" prop="bonus" :readonly="uiControl.dialogType == 'EDIT'">
+        <el-form-item :label="t('fields.bonus')" prop="bonus">
           <el-input
             v-model="form.bonus"
             style="width: 350px"
             maxlength="11"
             @keypress="restrictDecimalInput($event)"
+            :readonly="uiControl.dialogType == 'EDIT'"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.giftName')" prop="bonusName"  :readonly="uiControl.dialogType == 'EDIT'">
+        <el-form-item :label="t('fields.giftName')" prop="bonusName">
           <el-input
             v-model="form.bonusName"
             style="width: 350px"
             maxlength="11"
             @keypress="restrictDecimalInput($event)"
+            :readonly="uiControl.dialogType == 'EDIT'"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.spinCount')" prop="spinCount"  :readonly="uiControl.dialogType == 'EDIT'">
+        <el-form-item :label="t('fields.spinCount')" prop="spinCount">
           <el-input
             v-model="form.spinCount"
             style="width: 350px"
             maxlength="11"
             @keypress="restrictDecimalInput($event)"
+            :readonly="uiControl.dialogType == 'EDIT'"
           />
         </el-form-item>
         <el-form-item :label="t('fields.status')" prop="status">
