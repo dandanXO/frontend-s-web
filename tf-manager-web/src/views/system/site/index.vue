@@ -12,7 +12,7 @@
         </el-button>
       </div>
     </div>
-    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
+    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body :width="uiControl.dialogType === 'CREATESITE' ? '880px' : '580px'">
       <div v-if="uiControl.dialogType === 'CREATESITE' || uiControl.dialogType === 'EDITSITE'">
         <el-steps
           class="steps"
@@ -27,7 +27,7 @@
           <el-step v-if="uiControl.dialogType === 'CREATESITE'" :title="t('fields.permissionAssignment')" />
         </el-steps>
         <div v-if="active === 0">
-          <el-form ref="siteFormRef" :model="siteForm" :rules="siteFormRules" :inline="true" size="small" label-width="150px">
+          <el-form ref="siteFormRef" :model="siteForm" :rules="siteFormRules" :inline="true" size="small" :label-width="uiControl.dialogType === 'CREATESITE' ? '250px' : '150px'">
             <el-form-item :label="t('fields.siteName')" prop="siteName">
               <el-input v-model="siteForm.siteName" style="width: 350px;" />
             </el-form-item>
@@ -43,7 +43,7 @@
           </el-form>
         </div>
         <div v-else-if="active === 1">
-          <el-form ref="siteFormRef" :model="siteForm" :rules="siteFormRules" :inline="true" size="small" label-width="150px">
+          <el-form ref="siteFormRef" :model="siteForm" :rules="siteFormRules" :inline="true" size="small" :label-width="uiControl.dialogType === 'CREATESITE' ? '250px' : '150px'">
             <!-- <el-form-item :label="t('fields.parentSite')" prop="parentId">
               <el-select
                 v-model="siteForm.parentId"
