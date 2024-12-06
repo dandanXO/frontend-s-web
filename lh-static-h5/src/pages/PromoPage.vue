@@ -89,10 +89,11 @@
               'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
             }"
           >
+            <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper" :class="selectedPromoWrapperClass">
-              <div class="loader" v-if="isFetchingPromo">
-                <img class="loading-img" src="../assets/logo.svg" />
-              </div>
+              <!--              <div class="loader" v-if="isFetchingPromo">-->
+              <!--                <img class="loading-img" src="../assets/logo.svg" />-->
+              <!--              </div>-->
               <div
                 @click="showRuleDialog = true"
                 v-if="selectedPromo.promoCode === 'lh1-daily-checkin'"
@@ -1345,6 +1346,17 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
@@ -1363,30 +1375,30 @@ export default defineComponent({
   }
 }
 
-.loader {
-  width: 100%;
-  height: calc(100vh - 150px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .loading-img {
-      animation-name: fade-in-out;
-      animation-duration: 1s;
-      animation-iteration-count: infinite;
-      width: 100px;
-  }
-}
-
-@keyframes fade-in-out{
-  0%{
-    opacity: 1;
-  }
-   50%{
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
+//.loader {
+//  width: 100%;
+//  height: calc(100vh - 150px);
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//
+//  .loading-img {
+//      animation-name: fade-in-out;
+//      animation-duration: 1s;
+//      animation-iteration-count: infinite;
+//      width: 100px;
+//  }
+//}
+//
+//@keyframes fade-in-out{
+//  0%{
+//    opacity: 1;
+//  }
+//   50%{
+//    opacity: 0;
+//  }
+//  100%{
+//    opacity: 1;
+//  }
+//}
 </style>
