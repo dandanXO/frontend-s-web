@@ -664,7 +664,7 @@ $node-color: #458BFF;
       }
 
       .mobile-node-item {
-        display: block;
+        display: flex;
       }
     }
     .node {
