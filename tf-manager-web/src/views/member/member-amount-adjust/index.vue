@@ -673,6 +673,7 @@
                     :key="gameType.key"
                     :label="t(`gameType.${gameType.displayName}`)"
                     :value="gameType.value"
+                    :disabled="gameTypes.some(({key}) => key === gameType.value)"
                   />
                 </el-select>
                 <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
