@@ -5,7 +5,7 @@ function checkPermission(el, binding) {
   if (useStore().state.user.userType !== ADMIN.value) {
     const { value } = binding
     const roles = useStore().state.user.permissions
-    console.log(roles, 'dan')
+    // console.log(roles, 'dan')
     if (value && value instanceof Array) {
       if (value.length > 0) {
         const permissionRoles = value
