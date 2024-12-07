@@ -605,6 +605,7 @@ export default {
     addSuccess: '新增成功',
     adjustSuccess: '平账成功',
     bindBankCard: '请先绑定银行卡',
+    bindWalletType: '请先绑定{walletType}',
     bindAlipayAcc: '请先绑定支付宝',
     bindUsdtWallet: '请先绑定虚拟币钱包',
     chineseCharacters: '请输入中文字符',
