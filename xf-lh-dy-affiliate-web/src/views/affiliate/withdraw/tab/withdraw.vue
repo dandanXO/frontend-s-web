@@ -486,6 +486,10 @@ function checkBankCards() {
         return t('message.bindAlipayAcc');
       }
 
+      if (withdrawInfo.withdrawCode === 'BANK') {
+        return t('message.bindBankCard');
+      }
+
       return t('message.bindWalletType', {
         walletType: selectedWithdrawalMethod.value.name
       });
@@ -512,21 +516,21 @@ function loadCards() {
     .then(response => {
       if (response.code === 0) {
         response.data.forEach(element => {
-          if (element.bankType === 'BANK') {
-            if (
-              element.bankType.includes(selectedWithdrawalMethod.value.code) && element.bankCode !== 'alipay' && selectedWithdrawalMethod.value.code !== 'ALIPAY'
-            ) {
-              withdrawState.bankCardList.push(element)
-            } else if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-              withdrawState.bankCardList.push(element)
-            }
-          } else {
-            if (
-              element.bankCode.includes(selectedWithdrawalMethod.value.code)
-            ) {
-              withdrawState.bankCardList.push(element)
-            }
-          }
+          // if (element.bankType === 'BANK') {
+          //   if (
+          //     element.bankType.includes(selectedWithdrawalMethod.value.code) && element.bankCode !== 'alipay' && selectedWithdrawalMethod.value.code !== 'ALIPAY'
+          //   ) {
+          //     withdrawState.bankCardList.push(element)
+          //   } else if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+          //     withdrawState.bankCardList.push(element)
+          //   }
+          // } else {
+          //   if (
+          //     element.bankCode.includes(selectedWithdrawalMethod.value.code)
+          //   ) {
+          //     withdrawState.bankCardList.push(element)
+          //   }
+          // }
         })
       }
     })
