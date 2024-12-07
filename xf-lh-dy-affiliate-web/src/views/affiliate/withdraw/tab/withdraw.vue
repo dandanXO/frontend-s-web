@@ -549,7 +549,7 @@ function getWithdrawalMethods() {
         if (entranceItem.code === 'ALIPAY') {
           return {
             ...entranceItem,
-            name: t('fields.alipayAcc')
+            name: t('fields.alipay')
           }
         }
 
