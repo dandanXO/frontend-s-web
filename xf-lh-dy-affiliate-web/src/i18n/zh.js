@@ -538,6 +538,7 @@ export default {
     editShareRatio: '编辑返水',
     alipay: '支付宝',
     alipayAcc: '支付宝账号',
+    alipayAcc2: '支付宝账户',
     typeWallet: '{walletType}钱包'
   },
   google: {
@@ -604,7 +605,7 @@ export default {
     addSuccess: '新增成功',
     adjustSuccess: '平账成功',
     bindBankCard: '请先绑定银行卡',
-    bindAlipayAcc: '请先绑定支付宝账号',
+    bindAlipayAcc: '请先绑定支付宝',
     bindUsdtWallet: '请先绑定虚拟币钱包',
     chineseCharacters: '请输入中文字符',
     commissionPaySuccess: '佣金发放成功',
