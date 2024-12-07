@@ -537,6 +537,8 @@ export default {
     memberShareRatio: '玩家返水比例',
     editShareRatio: '编辑返水',
     alipay: '支付宝',
+    alipayAcc: '支付宝账号',
+    typeWallet: '{walletType}钱包'
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -602,6 +604,7 @@ export default {
     addSuccess: '新增成功',
     adjustSuccess: '平账成功',
     bindBankCard: '请先绑定银行卡',
+    bindAlipayAcc: '请先绑定支付宝账号',
     bindUsdtWallet: '请先绑定虚拟币钱包',
     chineseCharacters: '请输入中文字符',
     commissionPaySuccess: '佣金发放成功',
@@ -638,6 +641,7 @@ export default {
     requiredCardAccount: '请输入银行卡账号',
     requiredCardAddress: '请输入银行卡地址',
     requiredCardNumber: '请输入银行卡号',
+    requiredAlipayAccNumber: '请输入支付宝账号',
     requiredCommission: '请输入佣金',
     requiredEmail: '请输入邮箱',
     requiredLoginName: '请输入用户名',
@@ -667,6 +671,7 @@ export default {
     validateAdjustReasonRequired: '平账原因必填',
     validateAdjustTypeRequired: '平账类型必填',
     validateBankCardNumber: '银行卡号只能包含数字',
+    validateAlipayAccNumber: '支付宝账号只能包含数字',
     validateCommission: '佣金必须介于 0 至 1 之间',
     validateNumberOnly: '请只输入数字',
     validateNumberMoreThanOne: '请输入大于 1 的整数',
