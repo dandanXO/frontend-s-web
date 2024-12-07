@@ -99,7 +99,7 @@
         </template>
       </div>
       <el-form-item
-        :label="isUSDT === true ? t('fields.usdtWallet') : withdrawInfo.withdrawCode === 'ALIPAY' ? t('fields.alipayAcc') : t('fields.bankCard')"
+        :label="isUSDT === true ? t('fields.usdtWallet') : withdrawInfo.withdrawCode === 'ALIPAY' ? t('fields.alipayAcc2') : t('fields.bankCard')"
         prop="cardId"
       >
         <el-select
