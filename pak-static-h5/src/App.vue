@@ -29,7 +29,18 @@ export default defineComponent({
 
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
-    const allowedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
+    const allowedDomains = [
+      "pkmagr98.cc",
+      "cbrfobx1.cc",
+      "xsu5qyks.cc",
+      "5vh518iw.cc",
+      "9o48ca3p.cc",
+      "b4qn4pb8.cc",
+      "gey4oewd.cc",
+      "3kxkvvuk.cc",
+      "936tk9nn.cc",
+      "jxbma2xq.cc"
+    ];
 
     function shouldRedirect(domain) {
       return allowedDomains.includes(domain);
