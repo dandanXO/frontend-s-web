@@ -539,7 +539,7 @@ export default {
     editShareRatio: 'Edit Share Ratio',
     alipay: 'Alipay',
     alipayAcc: 'Alipay Account',
-    typeWallet: '{walletType}钱包'
+    typeWallet: '{walletType} Wallet'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -607,6 +607,7 @@ export default {
     adjustSuccess: 'Adjust Success',
     addSuccess: 'Add Success',
     bindBankCard: 'Please bind bank card first',
+    bindWalletType: 'Please bind {walletType} first',
     bindUsdtWallet: 'Please bind USDT wallet first',
     chineseCharacters: 'Please input chinese characters',
     commissionPaySuccess: 'Commission Pay Success',
