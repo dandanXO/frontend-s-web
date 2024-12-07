@@ -99,7 +99,7 @@
         </template>
       </div>
       <el-form-item
-        :label="isUSDT === true ? t('fields.usdtWallet') : withdrawInfo.withdrawCode === 'ALIPAY' ? t('fields.alipayAcc2') : selectedWithdrawalMethod.name"
+        :label="isUSDT === true ? t('fields.usdtWallet') : withdrawInfo.withdrawCode === 'ALIPAY' ? t('fields.alipayAcc2') : withdrawInfo.withdrawCode === 'BANK' ? t('fields.bankCard') : selectedWithdrawalMethod.name"
         prop="cardId"
       >
         <el-select
@@ -516,21 +516,21 @@ function loadCards() {
     .then(response => {
       if (response.code === 0) {
         response.data.forEach(element => {
-          // if (element.bankType === 'BANK') {
-          //   if (
-          //     element.bankType.includes(selectedWithdrawalMethod.value.code) && element.bankCode !== 'alipay' && selectedWithdrawalMethod.value.code !== 'ALIPAY'
-          //   ) {
-          //     withdrawState.bankCardList.push(element)
-          //   } else if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-          //     withdrawState.bankCardList.push(element)
-          //   }
-          // } else {
-          //   if (
-          //     element.bankCode.includes(selectedWithdrawalMethod.value.code)
-          //   ) {
-          //     withdrawState.bankCardList.push(element)
-          //   }
-          // }
+          if (element.bankType === 'BANK') {
+            if (
+              element.bankType.includes(selectedWithdrawalMethod.value.code) && element.bankCode !== 'alipay' && selectedWithdrawalMethod.value.code !== 'ALIPAY'
+            ) {
+              withdrawState.bankCardList.push(element)
+            } else if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+              withdrawState.bankCardList.push(element)
+            }
+          } else {
+            if (
+              element.bankCode.includes(selectedWithdrawalMethod.value.code)
+            ) {
+              withdrawState.bankCardList.push(element)
+            }
+          }
         })
       }
     })
