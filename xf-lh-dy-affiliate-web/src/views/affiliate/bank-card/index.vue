@@ -193,7 +193,7 @@
             v-model="bankCardInfo.cardNumber"
             :placeholder="selectedBankType === 'Bank' ? t('fields.cardNumber') :
               (selectedBankType === 'Crypto' ? t('fields.usdtWalletAddress') :
-                (selectedBankType === 'e-Wallet' ? t('fields.ewallet') : t('fields.alipay')))"
+                (selectedBankType === 'e-Wallet' ? t('fields.ewallet') : t('fields.alipayAcc')))"
           />
         </el-form-item>
         <el-form-item ref="cardNumber" prop="cardAddress" v-if="selectedBankType === 'Bank'">
@@ -279,11 +279,19 @@ const bankCardInfo = reactive({
 const centerDialogVisible = ref(false)
 
 const validateEmptyCardNo = async (r, v) => {
-  if (selectedBankType.value === 'Bank' || selectedBankType.value === 'alipay') {
+  if (selectedBankType.value === 'Bank') {
     if (v === '') {
       return Promise.reject(new Error(t('message.requiredCardNumber')));
     } else if (/^\d+$/.test(v) === false) {
       return Promise.reject(new Error(t('message.validateBankCardNumber')));
+    } else {
+      return Promise.resolve();
+    }
+  } else if (selectedBankType.value === 'alipay') {
+    if (v === '') {
+      return Promise.reject(new Error(t('message.requiredAlipayAccNumber')));
+    } else if (/^\d+$/.test(v) === false) {
+      return Promise.reject(new Error(t('message.validateAlipayAccNumber')));
     } else {
       return Promise.resolve();
     }

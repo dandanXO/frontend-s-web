@@ -538,6 +538,8 @@ export default {
     memberShareRatio: 'Member Share Ratio',
     editShareRatio: 'Edit Share Ratio',
     alipay: 'Alipay',
+    alipayAcc: 'Alipay Account',
+    typeWallet: '{walletType}钱包'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
