@@ -99,7 +99,7 @@
         </template>
       </div>
       <el-form-item
-        :label="isUSDT === true ? t('fields.usdtWallet') : withdrawInfo.withdrawCode === 'ALIPAY' ? t('fields.alipayAcc2') : selectedWithdrawalMethod.name"
+        :label="isUSDT === true ? t('fields.usdtWallet') : withdrawInfo.withdrawCode === 'ALIPAY' ? t('fields.alipayAcc2') : withdrawInfo.withdrawCode === 'BANK' ? t('fields.bankCard') : selectedWithdrawalMethod.name"
         prop="cardId"
       >
         <el-select
@@ -484,6 +484,10 @@ function checkBankCards() {
     const alertMsg = (() => {
       if (withdrawInfo.withdrawCode === 'ALIPAY') {
         return t('message.bindAlipayAcc');
+      }
+
+      if (withdrawInfo.withdrawCode === 'BANK') {
+        return t('message.bindBankCard');
       }
 
       return t('message.bindWalletType', {
