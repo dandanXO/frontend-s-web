@@ -1070,7 +1070,6 @@ function submitImage() {
 
 function showImageDialog(type) {
   imageForm.siteId = request.siteId;
-  
   if (imageFormRef.value) {
     imageFormRef.value.resetFields()
     uploadedImage.url = null

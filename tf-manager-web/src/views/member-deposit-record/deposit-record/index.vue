@@ -288,6 +288,7 @@
           :label="t('fields.realName')"
           align="center"
           min-width="110"
+          v-if="!hasPermission(['sys:ind:role:cs'])"
         >
           <template #default="scope">
             <span v-if="scope.row.realName === null">-</span>
@@ -301,6 +302,7 @@
           :label="t('fields.financialLevel')"
           align="center"
           min-width="110"
+          v-if="!hasPermission(['sys:ind:role:cs'])"
         >
           <template #default="scope">
             <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
@@ -393,6 +395,7 @@
           :label="t('fields.vipLevel')"
           align="center"
           min-width="80"
+          v-if="!hasPermission(['sys:ind:role:cs'])"
         >
           <template #default="scope">
             <span v-if="scope.row.vip === null">-</span>
@@ -423,13 +426,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="request.siteId !== 5"
+          v-if="request.siteId !== 5 && !hasPermission(['sys:ind:role:cs'])"
           prop="currencyRate"
           :label="t('fields.currencyRate')"
           align="center"
           min-width="100"
         />
         <el-table-column
+          v-if="!hasPermission(['sys:ind:role:cs'])"
           prop="clientType"
           :label="t('fields.clientType')"
           align="center"
@@ -472,7 +476,7 @@
         @current-change="loadRecord"
         @size-change="loadRecord"
       />
-      <div class="table-footer" v-permission="['sys:deposit:summary']">
+      <div class="table-footer" v-permission="['sys:deposit:summary']" v-if="!hasPermission(['sys:ind:role:cs'])">
         <span>{{ t('fields.noOfDepositTimes') }}</span>
         <span style="margin-left: 10px">{{ page.total }}</span>
         <span style="margin-left: 30px">
