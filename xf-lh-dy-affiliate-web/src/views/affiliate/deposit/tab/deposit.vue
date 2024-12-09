@@ -72,11 +72,19 @@
           label-suffix=":"
         >
           <el-space alignment="flex-start">
-            <el-form-item class="helptxt" :label="$t('fields.depositAmount')" prop="localAmount">
+            <el-form-item
+              class="helptxt"
+              :label="$t('fields.depositAmount')"
+              prop="localAmount"
+            >
               <el-input
                 v-if="amountList.length === 0"
                 v-model="form.localAmount"
-                :placeholder="isUSDT ? $t('message.inputUSDTAmount') : $t('message.inputAmount')"
+                :placeholder="
+                  isUSDT
+                    ? $t('message.inputUSDTAmount')
+                    : $t('message.inputAmount')
+                "
               />
 
               <el-select
@@ -93,15 +101,32 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <div class="account-tip">
-              {{ $t('message.minDepositeAmount') }}: {{ calculatedMinDeposit ? formatMoney(calculatedMinDeposit) : 0 }}
-              {{ isUSDT ? "USDT" : returnCurrency() }}
-              <br>
-              {{ $t('message.maxDepositeAmount') }}:
-              {{
-                activeMethod.depositMax ? formatMoney(activeMethod.depositMax) : "No Limit"
-              }}
-              {{ isUSDT ? "USDT" : returnCurrency() }}
+            <div style="display: flex">
+              <div class="account-tip">
+                {{ $t('message.minDepositeAmount') }}:
+                {{
+                  calculatedMinDeposit ? formatMoney(calculatedMinDeposit) : 0
+                }}
+                {{ isUSDT ? 'USDT' : returnCurrency() }}
+                <br>
+                {{ $t('message.maxDepositeAmount') }}:
+                {{
+                  activeMethod.depositMax
+                    ? formatMoney(activeMethod.depositMax)
+                    : 'No Limit'
+                }}
+                {{ isUSDT ? 'USDT' : returnCurrency() }}
+              </div>
+              <el-button
+                :loading="loadingBtn"
+                size="large"
+                @click="confirmDeposit"
+                class="common-btn"
+                style="margin-left: 50px; margin-bottom: 20px;"
+                type="primary"
+              >
+                {{ $t('fields.confirm') }}
+              </el-button>
             </div>
           </el-space>
 
@@ -158,18 +183,6 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div>
           </el-form-item> -->
-          <div>
-            <el-button
-              :loading="loadingBtn"
-              size="large"
-              @click="confirmDeposit"
-              class="common-btn"
-              style="margin-left: 180px; margin-bottom: 20px;"
-              type="primary"
-            >
-              {{ $t('fields.confirm') }}
-            </el-button>
-          </div>
         </el-form>
       </div>
       <el-dialog
@@ -186,356 +199,402 @@
 
         <br>
         <br>
-        <el-button class="common-btn" @click="clearInfo">{{ $t('message.understand') }}</el-button>
+        <el-button class="common-btn" @click="clearInfo">
+          {{ $t('message.understand') }}
+        </el-button>
       </el-dialog>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef } from 'vue'
 import {
   loadPay,
   verifyAmount,
   postDeposit,
-  loadBankCards
-} from "@/api/deposit";
-import { ElMessage, ElMessageBox } from "element-plus";
-import Node from "@/components/paymentSelect/node";
-import BankComponent from "@/components/finance/BankComponent";
-import TFLoading from "@/components/loading/TFLoading.vue";
-import Jolly88Loading from "@/components/loading/Jolly88Loading.vue";
-import { useRouter } from "vue-router";
-import { doIt } from "@/utils/action";
-import { useStore } from "@/store";
-import { useI18n } from "vue-i18n";
-import { formatMoney } from "@/utils/format-money";
-const { t } = useI18n();
-const router = useRouter();
-const loadingBtn = ref(false);
-const store = useStore();
-const siteId = store.state.user.siteId;
-const formRef = ref();
-const isDeposited = ref(false);
-const isLoading = ref(true);
-const payTypeClass = ref();
-const payMethods = reactive([]);
-const paymentNode = ref([]);
-const activeMethod = ref({});
-const amountList = ref([]);
-const bankCardList = ref([]);
-const selectedPayType = shallowRef("");
-const isUSDT = ref(false);
-const isDisplay = ref(false);
-const submitMessage = ref([]);
-const subMsg0 = ref();
-const subMsg1 = ref();
-const subMsg2 = ref();
-const subMsg3 = ref();
-const copybtntxt0 = ref(t('common.copy'));
-const copybtntxt1 = ref(t('common.copy'));
-const copybtntxt2 = ref(t('common.copy'));
-const copybtntxt3 = ref(t('common.copy'));
+  loadBankCards,
+} from '@/api/deposit'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import Node from '@/components/paymentSelect/node'
+import BankComponent from '@/components/finance/BankComponent'
+import TFLoading from '@/components/loading/TFLoading.vue'
+import Jolly88Loading from '@/components/loading/Jolly88Loading.vue'
+import { useRouter } from 'vue-router'
+import { doIt } from '@/utils/action'
+import { useStore } from '@/store'
+import { useI18n } from 'vue-i18n'
+import { formatMoney } from '@/utils/format-money'
+const { t } = useI18n()
+const router = useRouter()
+const loadingBtn = ref(false)
+const store = useStore()
+const siteId = store.state.user.siteId
+const formRef = ref()
+const isDeposited = ref(false)
+const isLoading = ref(true)
+const payTypeClass = ref()
+const payMethods = reactive([])
+const paymentNode = ref([])
+const activeMethod = ref({})
+const amountList = ref([])
+const bankCardList = ref([])
+const selectedPayType = shallowRef('')
+const isUSDT = ref(false)
+const isDisplay = ref(false)
+const submitMessage = ref([])
+const subMsg0 = ref()
+const subMsg1 = ref()
+const subMsg2 = ref()
+const subMsg3 = ref()
+const copybtntxt0 = ref(t('common.copy'))
+const copybtntxt1 = ref(t('common.copy'))
+const copybtntxt2 = ref(t('common.copy'))
+const copybtntxt3 = ref(t('common.copy'))
 const copyMessage = (position, text) => {
-  let copyText = null;
-  copyText = text;
+  let copyText = null
+  copyText = text
   // Create a temporary textarea element
-  const tempTextarea = document.createElement("textarea");
-  tempTextarea.value = copyText;
-  document.body.appendChild(tempTextarea);
+  const tempTextarea = document.createElement('textarea')
+  tempTextarea.value = copyText
+  document.body.appendChild(tempTextarea)
 
   // Select the text and copy it
-  tempTextarea.select();
-  document.execCommand("copy");
+  tempTextarea.select()
+  document.execCommand('copy')
 
   // Remove the temporary textarea element
-  document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = t('common.copied');
-};
+  document.body.removeChild(tempTextarea)
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3]
+  copybtntxt[position].value = t('common.copied')
+}
 
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt.forEach((element) => {
-    element.value = t('common.copy');
-  });
-};
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3]
+  copybtntxt.forEach(element => {
+    element.value = t('common.copy')
+  })
+}
 const form = reactive({
   paymentId: null,
   localAmount: null,
-  bankId: null
-});
+  bankId: null,
+})
 
 const checkAmount = reactive({
   flag: true,
-  errorMessage: ""
-});
+  errorMessage: '',
+})
 
-const calculatedMinDeposit = ref("");
+const calculatedMinDeposit = ref('')
 const rules = {
   localAmount: [
     {
       required: true,
       message: t('message.requiredAmount'),
-      trigger: "blur"
+      trigger: 'blur',
     },
     {
-      pattern: "^([1-9][0-9]*)$",
+      pattern: '^([1-9][0-9]*)$',
       message: t('message.requiredPositiveInteger'),
-      trigger: "change"
+      trigger: 'change',
     },
     {
       validator: verifyDepositAmount,
-      trigger: "change"
-    }
+      trigger: 'change',
+    },
   ],
   bankId: [
     {
       validator: verifyBank,
-      trigger: "change"
-    }
-  ]
-};
+      trigger: 'change',
+    },
+  ],
+}
 
 const withdrawState = reactive({
-  bankCardList: []
-});
+  bankCardList: [],
+})
 
 const loadCards = () => {
-  withdrawState.bankCardList = [];
+  withdrawState.bankCardList = []
   loadBankCards()
-    .then((response) => {
+    .then(response => {
       if (response.code === 0) {
-        response.data.forEach((element) => {
-          if (element.bankType === "BANK") {
-            withdrawState.bankCardList.push(element);
+        response.data.forEach(element => {
+          if (element.bankType === 'BANK') {
+            withdrawState.bankCardList.push(element)
           } else {
-            withdrawState.bankCardList.push(element);
+            withdrawState.bankCardList.push(element)
           }
-        });
+        })
       }
     })
-    .catch((error) => {
-      console.log(error.message);
-    });
-};
+    .catch(error => {
+      console.log(error.message)
+    })
+}
 
 function initPay() {
-  isLoading.value = true;
-  loadPay().then((d) => {
+  isLoading.value = true
+  loadPay().then(d => {
     if (d.code === 0) {
-      payMethods.value = [];
-      isLoading.value = false;
-      d.data.payments.forEach((element) => {
-        element.promoValue = "";
-        element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        element.hasActive = false;
-        payMethods.push(element);
-      });
+      payMethods.value = []
+      isLoading.value = false
+      d.data.payments.forEach(element => {
+        element.promoValue = ''
+        element.promoStyle = 'right: -5px; top: 0px; padding: 20px;'
+        element.hasActive = false
+        payMethods.push(element)
+      })
       if (payMethods[0].extra && payMethods[0].extra.banks) {
-        bankCardList.value = payMethods[0].extra.banks;
+        bankCardList.value = payMethods[0].extra.banks
       }
     }
-  });
+  })
 }
 
 function selectPayType(value) {
   if (value) {
     if (value.extra && value.extra.amountArr) {
-      amountList.value = value.extra.amountArr;
+      amountList.value = value.extra.amountArr
     } else {
-      amountList.value = [];
+      amountList.value = []
     }
     if (value.extra && value.extra.banks) {
-      bankCardList.value = value.extra.banks;
+      bankCardList.value = value.extra.banks
     } else {
-      bankCardList.value = [];
-      form.bankId = null;
+      bankCardList.value = []
+      form.bankId = null
     }
-    selectedPayType.value = value.payType;
-    if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
-      isUSDT.value = true;
+    selectedPayType.value = value.payType
+    if (selectedPayType.value && selectedPayType.value.includes('USDT')) {
+      isUSDT.value = true
     } else {
-      isUSDT.value = false;
+      isUSDT.value = false
     }
   }
 }
 
 async function onSelect(value) {
-  isDisplay.value = false;
-  clearInfo();
+  isDisplay.value = false
+  clearInfo()
   if (value) {
     if (value.group) {
-      value.children.forEach((element) => {
+      value.children.forEach(element => {
         if (element.hasActive) {
-          activeMethod.value = element;
+          activeMethod.value = element
         }
-      });
+      })
     } else {
-      activeMethod.value = value;
-      selectPayType(value);
+      activeMethod.value = value
+      selectPayType(value)
       if (formRef.value) {
-        formRef.value.resetFields();
+        formRef.value.resetFields()
       }
     }
-    checkMinDepositAmt();
+    checkMinDepositAmt()
   }
 }
 function checkMinDepositAmt(value, option) {
-  calculatedMinDeposit.value = activeMethod.value.depositMin;
+  calculatedMinDeposit.value = activeMethod.value.depositMin
 }
 
 function selectedBank(value) {
-  form.bankId = value.value;
-  console.log(form.bankId);
+  form.bankId = value.value
+  console.log(form.bankId)
 }
 
 function clearInfo() {
-  isDeposited.value = false;
-  form.localAmount = "";
-  form.bankId = "";
-  checkMinDepositAmt();
+  isDeposited.value = false
+  form.localAmount = ''
+  form.bankId = ''
+  checkMinDepositAmt()
 }
 
 function confirmDeposit() {
   if (store.token) {
     if (!store.phone) {
-      ElMessageBox.alert("为保证资金安全，存款前请先验证手机号", "系统提示", {
-        showClose: "false",
-        cancelButtonClass: "cancel-btn",
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning",
+      ElMessageBox.alert('为保证资金安全，存款前请先验证手机号', '系统提示', {
+        showClose: 'false',
+        cancelButtonClass: 'cancel-btn',
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
         draggable: true,
-        buttonSize: "small"
+        buttonSize: 'small',
       })
         .then(() => {
-          router.push("/center/personal");
+          router.push('/center/personal')
         })
-        .catch(() => {});
-      return;
+        .catch(() => {})
+      return
     } else if (withdrawState.bankCardList.length === 0) {
       if (isUSDT.value === true) {
-        ElMessageBox.alert("请先绑定虚拟币钱包", "系统提示", {
+        ElMessageBox.alert('请先绑定虚拟币钱包', '系统提示', {
           showClose: false,
           showCancelButton: false,
-          confirmButtonText: "确认",
+          confirmButtonText: '确认',
           draggable: false,
-          buttonSize: "small",
+          buttonSize: 'small',
           closeOnClickModal: false,
-          center: true
+          center: true,
         })
           .then(() => {
-            router.push("/center/withdrawbank");
+            router.push('/center/withdrawbank')
           })
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       } else {
-        ElMessageBox.alert("请先绑定银行卡", "系统提示", {
+        ElMessageBox.alert('请先绑定银行卡', '系统提示', {
           showClose: false,
           showCancelButton: false,
-          confirmButtonText: "确认",
+          confirmButtonText: '确认',
           draggable: false,
-          buttonSize: "small",
+          buttonSize: 'small',
           closeOnClickModal: false,
-          center: true
+          center: true,
         })
           .then(() => {
-            router.push("/center/withdrawbank");
+            router.push('/center/withdrawbank')
           })
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       }
     }
   }
-  loadingBtn.value = true;
+  loadingBtn.value = true
 
-  form.paymentId = activeMethod.value.paymentId;
+  form.paymentId = activeMethod.value.paymentId
   formRef.value.validate().then(async () => {
     await verifyAmount(activeMethod.value.paymentId, form.localAmount)
-      .then((d) => {
+      .then(d => {
         if (d.code === 11002) {
-          form.localAmount = d.data.suggestion;
+          form.localAmount = d.data.suggestion
           // message.error(d.message, 4);
-          ElMessage.error(d.message);
-          loadingBtn.value = false;
+          ElMessage.error(d.message)
+          loadingBtn.value = false
         } else {
-          const copy = { ...form };
-          const data = {};
+          const copy = { ...form }
+          const data = {}
           Object.entries(copy).forEach(([key, value]) => {
             if (value) {
-              data[key] = value;
+              data[key] = value
             }
-          });
-          data.bankCardId = 0;
+          })
+          data.bankCardId = 0
 
-          doDeposit(data);
+          doDeposit(data)
         }
       })
-      .catch((err) => {
-        console.log(err);
-        loadingBtn.value = false;
-      });
-  });
-  loadingBtn.value = false;
+      .catch(err => {
+        console.log(err)
+        loadingBtn.value = false
+      })
+  })
+  loadingBtn.value = false
+}
+
+function isMobileSafari() {
+  const ua = navigator.userAgent;
+  const vendor = navigator.vendor;
+
+  // 判断是否是 Apple 的设备
+  const isAppleDevice = /iPhone|iPad|iPod/.test(ua);
+
+  // 判断是否是 Safari 浏览器（Apple WebKit 且没有 Chrome 或其他浏览器标识）
+  const isSafari = vendor.includes("Apple") && !ua.includes("CriOS") && !ua.includes("FxiOS");
+
+  return isAppleDevice && isSafari;
+}
+
+function getDeviceType() {
+  var regDevice = "H5";
+  if ("standalone" in window.navigator && window.navigator.standalone) {
+    regDevice = "IOS";
+  }
+  return regDevice;
+}
+
+function isIosOrSafari() {
+  if (getDeviceType() === "IOS" || isMobileSafari()) {
+    return true;
+  }
+  return false;
 }
 
 function doDeposit(data) {
-  loadingBtn.value = true;
+  loadingBtn.value = true
   postDeposit(data)
-    .then((d) => {
+    .then(d => {
       if (d.code === 0) {
-        doIt(d).then((resp) => {
-          const response = resp.data.result;
-          if (response.payResultType === "OFFLINE") {
+        doIt(d).then(resp => {
+          const response = resp.data.result
+          if (response.payResultType === 'OFFLINE') {
           }
-          if (response.payResultType === "RENDER_HTML") {
-            if (response.paramKey === null || response.paramKey === "") {
-              isDisplay.value = true;
-              submitMessage.value = response.data.split(",");
+          if (response.payResultType === 'RENDER_HTML') {
+            if (response.paramKey === null || response.paramKey === '') {
+              isDisplay.value = true
+              submitMessage.value = response.data.split(',')
             }
           } else {
-            const newWin = window.open(`/`);
-            newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-            if (response.payResultType === "GET_SUBMIT") {
-              // isDeposited.value = true;
-              newWin.location.href = response.requestUrl;
-            }
-            if (response.payResultType === "POST_SUBMIT") {
-              // isDeposited.value = true;
-              if (response.paramKey === null || response.paramKey === "") {
-                newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-              } else {
-                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            if (isIosOrSafari()) {
+              const newWin = window.open(`/`, `_self`);
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
+              }
+            } else {
+              const newWin = window.open(`/`);
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                // isDeposited.value = true;
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                // isDeposited.value = true;
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
               }
             }
           }
-        });
-        loadingBtn.value = false;
+        })
+        loadingBtn.value = false
       } else {
-        ElMessage.error("优惠存款金额不符合规则");
+        ElMessage.error('优惠存款金额不符合规则')
       }
     })
-    .catch((err) => {
-      console.log(err);
-      loadingBtn.value = false;
-    });
-  loadingBtn.value = false;
+    .catch(err => {
+      console.log(err)
+      loadingBtn.value = false
+    })
+  loadingBtn.value = false
 }
 
 async function verifyDepositAmount(r, v) {
-  if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
+  if (v !== null && v.trim() !== '' && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
-        new Error(t('message.depositShouldBetween') +
-          calculatedMinDeposit.value +
-          " - " +
-          activeMethod.value.depositMax
-        ));
+        new Error(
+          t('message.depositShouldBetween') +
+            calculatedMinDeposit.value +
+            ' - ' +
+            activeMethod.value.depositMax
+        )
+      )
     } else {
       if (checkAmount.flag) {
-        return Promise.resolve();
+        return Promise.resolve()
       } else {
-        return Promise.reject(checkAmount.errorMessage);
+        return Promise.reject(checkAmount.errorMessage)
       }
     }
   }
@@ -543,38 +602,42 @@ async function verifyDepositAmount(r, v) {
 
 async function verifyBank(r, v) {
   if (bankCardList.value.length) {
-    return payTypeClass.value.validateBank(v).then((d) => {
+    return payTypeClass.value.validateBank(v).then(d => {
       if (d) {
-        return Promise.resolve();
+        return Promise.resolve()
       } else {
-        return Promise.reject(new Error("请输入银行"));
+        return Promise.reject(new Error('请输入银行'))
       }
-    });
+    })
   }
 }
 const returnCurrency = () => {
   if (siteId === 3 || siteId === '3') {
-    return "THB"
+    return 'THB'
   } else if (siteId === 8 || siteId === '8') {
-    return "VNDP"
+    return 'VNDP'
   } else if (siteId === 10 || siteId === '10') {
-    return "₩"
+    return '₩'
   } else {
-    return "RMB"
+    return 'RMB'
   }
 }
 
 function checkRealName() {
-  if (store.state.user.realName === null || store.state.user.realName === "" || store.state.user.realName === "null") {
-    router.push("/personal?name=realname");
+  if (
+    store.state.user.realName === null ||
+    store.state.user.realName === '' ||
+    store.state.user.realName === 'null'
+  ) {
+    router.push('/personal?name=realname')
   }
 }
 
 onMounted(() => {
-  initPay();
-  loadCards();
-  checkRealName();
-});
+  initPay()
+  loadCards()
+  checkRealName()
+})
 </script>
 <style lang="scss" scoped>
 .sm .ant-modal {
@@ -638,7 +701,7 @@ onMounted(() => {
   display: flex;
   align-items: flex-start;
   font-size: 14px;
-  color: #7D8592;
+  color: #7d8592;
 }
 
 .account-content {
@@ -691,11 +754,9 @@ onMounted(() => {
     :deep(.ant-form-item.select .ant-form-item-control-input) {
       max-width: 280px;
     }
-    :deep(
-        .ant-select-single:not(.ant-select-customize-input)
-          .ant-select-selector
-          .ant-select-selection-search-input
-      ) {
+    :deep(.ant-select-single:not(.ant-select-customize-input)
+        .ant-select-selector
+        .ant-select-selection-search-input) {
       height: 40px;
     }
     :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
@@ -723,21 +784,18 @@ onMounted(() => {
   margin-right: 24px;
 }
 
-:deep(
-    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input)
+    .ant-select-selector) {
   height: 42px;
 }
-:deep(
-    .ant-select-single:not(.ant-select-customize-input)
-      .ant-select-selector
-      .ant-select-selection-search-input
-  ) {
+:deep(.ant-select-single:not(.ant-select-customize-input)
+    .ant-select-selector
+    .ant-select-selection-search-input) {
   height: 40px;
 }
-:deep(
-    .ant-select-single .ant-select-selector .ant-select-selection-placeholder
-  ) {
+:deep(.ant-select-single
+    .ant-select-selector
+    .ant-select-selection-placeholder) {
   line-height: 30px;
 }
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
@@ -779,7 +837,7 @@ onMounted(() => {
     }
     span.info {
       flex: 3;
-      color:#000000;
+      color: #000000;
     }
     button {
       width: 80px;

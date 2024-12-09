@@ -99,7 +99,7 @@
         </template>
       </div>
       <el-form-item
-        :label="isUSDT === true ? t('fields.usdtWallet') : t('fields.bankCard')"
+        :label="isUSDT === true ? t('fields.usdtWallet') : withdrawInfo.withdrawCode === 'ALIPAY' ? t('fields.alipayAcc2') : withdrawInfo.withdrawCode === 'BANK' ? t('fields.bankCard') : selectedWithdrawalMethod.name"
         prop="cardId"
       >
         <el-select
@@ -481,7 +481,20 @@ function checkBankCards() {
       })
       .catch(() => {})
   } else {
-    ElMessageBox.alert(t('message.bindBankCard'), t('fields.systemAlert'), {
+    const alertMsg = (() => {
+      if (withdrawInfo.withdrawCode === 'ALIPAY') {
+        return t('message.bindAlipayAcc');
+      }
+
+      if (withdrawInfo.withdrawCode === 'BANK') {
+        return t('message.bindBankCard');
+      }
+
+      return t('message.bindWalletType', {
+        walletType: selectedWithdrawalMethod.value.name
+      });
+    })();
+    ElMessageBox.alert(alertMsg, t('fields.systemAlert'), {
       showClose: false,
       showCancelButton: false,
       confirmButtonText: t('fields.confirm'),
@@ -529,7 +542,26 @@ function loadCards() {
 function getWithdrawalMethods() {
   withdrawEntrance().then(response => {
     if (response.code === 0) {
-      withdrawalMethods.value = response.data
+      withdrawalMethods.value = response.data.map((entranceItem) => {
+        if (entranceItem.code === 'EBPAY' || entranceItem.code === 'KDPAY' || entranceItem.code === 'OKPAY' || entranceItem.code === '808') {
+          return {
+            ...entranceItem,
+            name: t('fields.typeWallet', {
+              walletType: entranceItem.code
+            })
+          }
+        }
+
+        if (entranceItem.code === 'ALIPAY') {
+          return {
+            ...entranceItem,
+            name: t('fields.alipay')
+          }
+        }
+
+        return entranceItem;
+      });
+
       selectMethod(withdrawalMethods.value[0], 0)
     } else {
       ElNotification({

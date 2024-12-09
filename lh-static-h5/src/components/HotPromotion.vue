@@ -8,43 +8,36 @@
       @daily-slot="handleSlot(list.promoCode)"
     />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" />
-    <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
-
-    <SubmitClaimPromo v-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
-
-    <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-award'" />
-
-    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
-
+    <OuZuLianPromo v-else-if="list.redirectUrl === 'ouzulian'" />
+    <SubmitClaimPromo v-else-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
+    <FeedbackAwardPromo v-else-if="list.redirectUrl === 'lh1-feedback-award'" />
+    <AppHongBao v-else-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
     <PrivilegeInvitePromo
-      v-if="
+      v-else-if="
         list.redirectUrl === 'lh1-invite' || list.redirectUrl === 'lh1-invite-2' || list.redirectUrl === 'lh1-invite-3'
       "
     />
-
-    <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz'" />
-    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
-    <SlotLacky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
-    <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
-    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
-    <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu'" />
-    <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
-    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-cycle-loss-refund'" :promo-code="list.promoCode" />
-    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
-    <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
+    <EsportQuiz v-else-if="list.redirectUrl === 'lh1-quiz'" />
+    <SummonerPromo v-else-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
+    <SlotLacky8 v-else-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
+    <fishHongbao v-else-if="list.redirectUrl === 'lh-fish-hongbao'" />
+    <DepositRebate2 v-else-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
+    <AijiasuPromo v-else-if="list.redirectUrl === 'lh1-aijiasu'" />
+    <newplayerGuide v-else-if="list.redirectUrl === 'lh1-newplayer-guide'" />
+    <ChallengeComebackPromo v-else-if="list.redirectUrl === 'lh1-cycle-loss-refund'" :promo-code="list.promoCode" />
+    <OfficialGiftPromo v-else-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
+    <DailyCheckin v-else-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
+    <NewFootball v-else-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
+    <EslOneBkk2024 v-else-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
     
-    <NewFootball v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
-    <EslOneBkk2024 v-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
-    
-    <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
-    <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
-    <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
-    <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
-    
-    <LoLS14 v-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
-    <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
-    <lh1Vip v-if="list.redirectUrl === 'lh1-vip'" />
-    <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
+    <Cba30Dream v-else-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
+    <PerfectWorldMajor2024 v-else-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
+    <LiveDailyRebates v-else-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
+    <NewVipRebate v-else-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
+    <LoLS14 v-else-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
+    <DailiPromo v-else-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
+    <lh1Vip v-else-if="list.redirectUrl === 'lh1-vip'" />
+    <SlotLossBonusPromo v-else-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>

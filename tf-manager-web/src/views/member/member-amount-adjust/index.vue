@@ -319,6 +319,7 @@
                     :key="gameType.key"
                     :label="t(`gameType.${gameType.displayName}`)"
                     :value="gameType.value"
+                    :disabled="gameTypes.some(({key}) => key === gameType.value)"
                   />
                 </el-select>
                 <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
@@ -672,6 +673,7 @@
                     :key="gameType.key"
                     :label="t(`gameType.${gameType.displayName}`)"
                     :value="gameType.value"
+                    :disabled="gameTypes.some(({key}) => key === gameType.value)"
                   />
                 </el-select>
                 <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
@@ -1377,9 +1379,9 @@ function constructRollover() {
   }
 
   if (addAmountAdjustmentType.value === 'CALCULATE' && uiControl.dialogType === 'CREATE_ADD') {
-    form.rollover = form.rollover ? calculateRollover() : 1
+    form.rollover = typeof form.rollover === 'number' ? calculateRollover() : 1
   } else {
-    form.rollover = form.rollover ? form.rollover : 1;
+    form.rollover = typeof form.rollover === 'number' ? form.rollover : 1;
   }
   return JSON.stringify(json)
 }
