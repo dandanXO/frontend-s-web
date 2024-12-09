@@ -19,7 +19,7 @@
         <div class="footer-big-img earn-money">
           <img :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoney.png`)" />
         </div>
-        <span class="footer-label" style="padding-top: 0">{{ $t("bottomNav.earnMoney") }}</span>
+        <span class="footer-label" style="padding-top: 0; margin-bottom: 8px">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>
       <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
@@ -82,12 +82,21 @@ const tab = ref("home");
         background-size: contain;
       }
     }
+
+    :deep(.q-tab__content) {
+      align-content: center;
+    }
   }
 }
 
-.earn-money {
-  height: 80px;
-  // animation: blink 1.5s infinite;
+@media (max-width: 500px) {
+  .center-menu .footer-label {
+    width: 100%;
+    min-width: 90px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1;
+  }
 }
 
 @keyframes blink {
