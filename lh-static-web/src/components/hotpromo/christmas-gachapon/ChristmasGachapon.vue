@@ -20,7 +20,7 @@
     <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" class="christmas-modal" v-model="isModal" align-center>
         <div class="christmas-side" v-if="isRules">
             <img src="../christmas-gachapon/img/tiny.png">
-        </div>  
+        </div>
         <div class="inner-contents">
             <div class="title">
                 <img src="../christmas-gachapon/img/side.png">
@@ -52,7 +52,7 @@
         />
         </div>
     </el-dialog>
-    
+
     <el-dialog :show-close="false" :close-on-click-modal="false" :close-on-press-escape="false" class="prize-modal" :class="{ 'five': prizes.length > 1, 'once': prizes.length <= 1 }" v-model="isPrizeModal" align-center>
         <div class="prizes">
             <div class="prize" v-for="prize in prizes">
@@ -67,7 +67,7 @@
 </template>
 <script setup>
 import { onMounted, ref, reactive, watch, defineProps, computed } from "vue";
-import { useNotify } from "@/hooks/notify"; 
+import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import moment from "moment";
 import {
@@ -171,7 +171,7 @@ import {
                     }
                 });
                 isPrizeModal.value = true;
-            }            
+            }
         })
         .catch((error) => {
             // Handle error
@@ -192,13 +192,13 @@ import {
         store.getBalance();
         isPrizeModal.value = false;
     }
-    
+
     const tableData = ref([]);
-    
+
     const paginatedData = computed(() => {
     // Translate the data before pagination
     const translatedData = translateTableData(tableData.value);
-    
+
     return translatedData  // Pagination on translated data
     });
 
@@ -210,8 +210,8 @@ import {
     // const translatedTableData = computed(() => {
     //     return tableData.value.map((row) => ({
     //         ...row,
-    //         bonusName: row.bonusAmount 
-    //         ? `恭喜获得 ${row.bonusName} ${row.bonusAmount}元彩金` 
+    //         bonusName: row.bonusAmount
+    //         ? `恭喜获得 ${row.bonusName} ${row.bonusAmount}元彩金`
     //         : `恭喜获得 ${row.bonusName}`,
     //         status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
     //         recordTime: moment(row.recordTime).format('YYYY年MM月DD日HH:mm:ss'), // Format time
@@ -222,8 +222,8 @@ import {
     const translateTableData = (data) => {
     return data.map((row) => ({
         ...row,
-        bonusName: row.bonusAmount 
-        ? `恭喜获得${row.bonusName}${row.bonusAmount}元彩金` 
+        bonusName: row.bonusAmount
+        ? `恭喜获得${row.bonusName}${row.bonusAmount}元彩金`
         : `恭喜获得${row.bonusName}`,
         status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
         recordTime: moment(row.recordTime).format('YYYY年MM月DD日HH:mm:ss'), // Format time
@@ -333,7 +333,7 @@ import {
 .spinner img {
   width: 88%; /* Ensures the image scales properly */
   height: 88%;
-  animation: spin 1.5s ease-in-out infinite; 
+  animation: spin 1.5s ease-in-out infinite;
 }
 
 @keyframes bounce {
@@ -363,11 +363,12 @@ import {
 }
 .christmas-gachapon-container {
     position: relative;
-    background: url(img/christmas-bg.png)no-repeat top left; 
+    background: url(img/christmas-bg.png)no-repeat top left;
     background-size: cover;
     width: 100%;
     max-width: 1920px;
     height: 890px;
+    margin: 0 auto;
     .promorule {
         position: absolute;
         bottom: 240px;
@@ -527,7 +528,7 @@ body .el-dialog.prize-modal.five .el-dialog__body {
                 text-align: center;
                 color: #F82F06;
                 font-weight: bold;
-                
+
             }
         }
     }
@@ -539,13 +540,13 @@ body .el-dialog.prize-modal.five .el-dialog__body {
         width: 200px;
         margin: 10px auto 0;
         cursor: pointer;
-        img { 
+        img {
             width: 100%;
         }
     }
 }
 .rules {
-    
+
 font-size: 14px;
 color: #333; // Default text color
 line-height: 1.6;
