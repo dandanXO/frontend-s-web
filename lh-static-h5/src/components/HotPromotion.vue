@@ -97,7 +97,9 @@ const OfficialGiftPromo = defineAsyncComponent(() =>
 const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"));
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
-const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
+const PerfectWorldMajor2024 = defineAsyncComponent(() =>
+  import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue")
+);
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
 const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
@@ -105,12 +107,7 @@ const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpro
 const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/daili/DailiPromo.vue"));
 const lh1Vip = defineAsyncComponent(() => import("./hotpromo/lh1-vip/lh1Vip.vue"));
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
-const ValorantChampionTour2024 = defineAsyncComponent(() =>
-  import("./hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue")
-);
-const ChristmasGachapon = defineAsyncComponent(() =>
-  import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue")
-);
+const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
 
 export default defineComponent({
   name: "HotPromo",
