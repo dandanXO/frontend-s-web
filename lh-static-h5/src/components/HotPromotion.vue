@@ -29,7 +29,7 @@
     <DailyCheckin v-else-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
     <NewFootball v-else-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <EslOneBkk2024 v-else-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
-    
+
     <Cba30Dream v-else-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-else-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
     <LiveDailyRebates v-else-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
@@ -38,6 +38,11 @@
     <DailiPromo v-else-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <lh1Vip v-else-if="list.redirectUrl === 'lh1-vip'" />
     <SlotLossBonusPromo v-else-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
+    <ChristmasGachapon
+      v-if="list.redirectUrl === 'lh1-christmas-gashapon'"
+      :promo-code="list.promoCode"
+      :promo-rules="list.pageContent"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -92,7 +97,9 @@ const OfficialGiftPromo = defineAsyncComponent(() =>
 const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"));
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
-const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
+const PerfectWorldMajor2024 = defineAsyncComponent(() =>
+  import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue")
+);
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
 const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
@@ -100,6 +107,7 @@ const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpro
 const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/daili/DailiPromo.vue"));
 const lh1Vip = defineAsyncComponent(() => import("./hotpromo/lh1-vip/lh1Vip.vue"));
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
+const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -132,7 +140,8 @@ export default defineComponent({
     SubmitClaimPromo,
     DailiPromo,
     lh1Vip,
-    SlotLossBonusPromo
+    SlotLossBonusPromo,
+    ChristmasGachapon
   },
   props: {
     list: {
