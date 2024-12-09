@@ -11,6 +11,9 @@
       <div class="snowflake"></div>
       <div class="snowflake"></div>
     </div>
+    <div class="promodetail" @click="openModal('detail')">
+      <img src="../../../assets/promo/christmas-gachapon/details.png" />
+    </div>
     <div class="promorule" @click="openModal('rule')">
       <img src="../../../assets/promo/christmas-gachapon/rules.png" />
     </div>
@@ -28,11 +31,13 @@
   </div>
   <q-dialog class="christmas-modal" v-model="isModal" align-center>
     <div class="title">
+      <img src="../../../assets/promo/christmas-gachapon/side.png">
       {{ modalContent.title }}
+      <img src="../../../assets/promo/christmas-gachapon/side.png">
     </div>
     <div class="inner-contents">
-      <div v-if="isRules" class="rules" v-html="rules"></div>
-      <div class="table-scroll" v-if="!isRules">
+      <div v-if="modalContent.type === 'rule'" class="rules" v-html="rules"></div>
+      <div class="table-scroll" v-if="modalContent.type === 'record'">
         <q-table
           flat
           bordered
@@ -53,6 +58,90 @@
                 size="sm"
             />
             </div> -->
+            <div class="details" v-if="modalContent.type === 'detail'">
+            
+            <div class="detailed-info">
+                <div class="little-title">
+                <div class="left">活动时间</div>
+                <div class="right">2024.12.24-2025.1.1</div>
+                </div>
+                <div class="little-title">
+                <div class="left">活动对象</div>
+                <div class="right">全网会员</div>
+                </div>
+                <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
+                <div class="left">优惠详情</div>
+                <div class="right" style="max-width: 73%;">
+                    在2024.12.24-2025.1.1活动期间，每日投注额≥1000元及以上次日即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
+                </div>
+                </div>
+                <table class="detailed-info-table">
+                <tbody>
+                    <tr>
+                    <th>当日有效投注</th>
+                    <th>抽奖机会</th>
+                    <th>流水倍数</th>
+                    </tr>
+                    <tr>
+                    <td>≥1,000元</td>
+                    <td>1次</td>
+                    <td rowspan="11">5倍流水</td>
+                    </tr>
+                    <tr>
+                    <td>≥5,000元</td>
+                    <td>2次</td>
+                    </tr>
+                    <tr>
+                    <td>≥8,000元</td>
+                    <td>3次</td>
+                    </tr>
+                    <tr>
+                    <td>≥15,000元</td>
+                    <td>5次</td>
+                    </tr>
+                    <tr>
+                    <td>≥30,000元</td>
+                    <td>10次</td>
+                    </tr>
+                    <tr>
+                    <td>≥80,000元</td>
+                    <td>15次</td>
+                    </tr>
+                    <tr>
+                    <td>≥100,000元</td>
+                    <td>20次</td>
+                    </tr>
+                    <tr>
+                    <td>≥300,000元</td>
+                    <td>25次</td>
+                    </tr>
+                    <tr>
+                    <td>≥800,000元</td>
+                    <td>30次</td>
+                    </tr>
+                    <tr>
+                    <td>≥1,000,000元</td>
+                    <td>40次</td>
+                    </tr>
+                    <tr>
+                    <td>≥3,000,000元</td>
+                    <td>50次</td>
+                    </tr>
+                </tbody>
+                </table>
+
+                <div class="detailed-info-bottom">
+                <div class="detailed-info-bottom-left-title">
+                    <div class="detailed-info-bottom-left-btn">
+                    <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png" alt="" width="22px" />
+                    <span>示例</span>
+                    </div>
+                    会员A在2024年12月25日累计有效投注为20000元, 2024年12月26日即可在优惠页面点击【立即抽奖】获得财富金,
+                    根据规则会员可获得5次抽奖机会, 奖金仅需5倍水即可出款
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
   </q-dialog>
 
@@ -87,10 +176,10 @@ const promoCode = ref(props.promoCode);
 const rules = ref(props.promoRules);
 const notify = useNotify();
 const isModal = ref(false);
-const isRules = ref(false);
 const isPrizeModal = ref(false);
 const modalContent = {
-  title: ""
+  title: "",
+  type: "",
 };
 const prizes = ref([]);
 const availableDraw = ref(0);
@@ -111,9 +200,12 @@ const pagesNumber = computed(() => Math.ceil(totalItems.value / pagination.value
 
 const totalItems = ref(0);
 const openModal = (type) => {
-  if (type === "rule") {
+  modalContent.type = type
+  if (type === "detail") {
+    modalContent.title = "活动内容";
+  }
+  else if (type === "rule") {
     modalContent.title = "活动规则";
-    isRules.value = true;
   } else if (type === "record") {
     getDrawRecord(promoCode.value, params).then((res) => {
       if (res.code === 0) {
@@ -122,19 +214,18 @@ const openModal = (type) => {
       }
     });
     modalContent.title = "活动记录";
-    isRules.value = false;
   } else {
   }
   isModal.value = true;
 };
 const getGachapon = (t) => {
-  if (availableDraw.value === 0) {
-    notify({
-      type: "warning",
-      message: `抽奖次数不足`
-    });
-    return;
-  }
+  // if (availableDraw.value === 0) {
+  //   notify({
+  //     type: "warning",
+  //     message: `抽奖次数不足`
+  //   });
+  //   return;
+  // }
   isLoading.value = true;
   var times = 1;
   if (t === "five") {
@@ -153,7 +244,7 @@ const getGachapon = (t) => {
                 type: "IPhone16 256GB"
               });
             }
-            if (item.bonusName === "苹果耳机一副") {
+            if (item.bonusName === "苹果耳机") {
               prizes.value.push({
                 img: "ipods",
                 type: "苹果耳机一副"
@@ -230,7 +321,7 @@ onMounted(() => {
   init();
 });
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .snow-container {
   position: relative;
   width: 100%;
@@ -355,23 +446,35 @@ onMounted(() => {
   width: 100%;
   min-height: 100vh;
   padding-bottom: 20vw;
-  .promorule {
+  .promodetail {
     top: 136vw;
     cursor: pointer;
     left: 33vw;
     position: absolute;
-    transform: rotate(5deg);
-    width: 35vw;
+    // width: 35vw;
+    width: 30vw;
+    &:hover {
+      filter: hue-rotate(340deg) saturate(2.5);
+    }
+  }
+  .promorule {
+    top: 155vw;
+    cursor: pointer;
+    left: 33vw;
+    position: absolute;
+    // width: 35vw;
+    width: 30vw;
     &:hover {
       filter: hue-rotate(340deg) saturate(2.5);
     }
   }
   .promorecord {
-    top: 155vw;
+    top: 171vw;
     cursor: pointer;
     left: 33vw;
     position: absolute;
-    width: 35vw;
+    // width: 35vw;
+    width: 30vw;
     &:hover {
       filter: hue-rotate(340deg) saturate(2.5);
     }
@@ -426,7 +529,7 @@ onMounted(() => {
     margin: 10px auto;
     color: #1f774c;
     font-family: PingFang;
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 600;
     line-height: 44px;
     display: flex;
@@ -434,7 +537,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     img {
-      width: 80px;
+      width: 40px;
     }
   }
   .christmas-side {
@@ -442,6 +545,127 @@ onMounted(() => {
     right: 20px;
     bottom: 0px;
   }
+  
+
+.detailed-info-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .detailed-info-bottom-left-title {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff0000;
+  }
+  .detailed-info-bottom-left-btn {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff0000;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+  }
+}
+.details {
+  max-height: 60vh;
+}
+
+.detailed-info {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .title {
+    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 240px;
+    height: 26px;
+    margin: 0 auto;
+  }
+  .little-title {
+    .left {
+      filter: hue-rotate(150deg) saturate(3.5);
+      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 64px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 23.33px;
+      color: #ffffff;
+      margin-right: 16px;
+      display: inline-flex;
+    }
+    .right {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 28px;
+      color: #000000;
+      display: inline;
+    }
+  }
+}
+
+.detailed-info-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+  vertical-align: middle;
+  th {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #fff;
+    background: #F34E38;
+  }
+  tr {
+    &:first-child {
+        td {
+            &:last-child {
+                background: #ffffff;
+            }
+        }
+    }
+    &:last-child {
+      td {
+        &:first-child {
+          // border-bottom-left-radius: 12px;
+        }
+      }
+    }
+    &:nth-child(2) {
+      td {
+        &:last-child {
+          // border-bottom-right-radius: 12px;
+        }
+      }
+    }
+    &:nth-child(odd) {
+        background: #F34E3820;
+    }
+  }
+  td {
+    border: 1px solid #F34E3832;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #000000;
+  }
+}
+
 }
 .prize-modal {
   .prizes {
@@ -483,16 +707,17 @@ onMounted(() => {
     width: 160px;
     margin: 10px auto 0;
     cursor: pointer;
+    max-width: 160px;
     img {
       width: 100%;
     }
   }
 }
-.q-dialog__inner {
+.christmas-modal .q-dialog__inner, .prize-modal .q-dialog__inner {
   background: url(../../../assets/promo/christmas-gachapon/modal-bg.png) no-repeat center center;
-  background-size: cover;
-  padding: 80px 0 80px;
-  max-height: 70vh;
+  background-size: 100% 100%;
+  padding: 120px 0 80px;
+  max-height: 95vh;
   width: 95%;
   margin: 0 auto;
   align-self: center;
@@ -507,38 +732,7 @@ onMounted(() => {
     margin: 0 auto;
     overflow: auto;
   }
-}
-.prize-modal.once .q-dialog__inner {
-  padding: 140px 0 40px;
-  background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
-  background-size: contain;
-  .prizes {
-    .prize {
-      width: unset;
-      .imgball {
-        width: 160px;
-      }
-    }
-  }
-  .redbar {
-    font-size: 16px;
-  }
-  > div {
-    overflow: unset;
-  }
-}
-.prize-modal.five .q-dialog__inner {
-  padding: 140px 0 40px;
-  background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
-  background-size: contain;
-  .prizes {
-    align-items: flex-start;
-  }
-  > div {
-    overflow: unset;
-  }
-}
-.rules {
+  .rules {
   height: 45vh;
   width: 95%;
   margin: auto;
@@ -625,5 +819,43 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   height: 30vh;
+}
+}
+.prize-modal.once .q-dialog__inner {
+  padding: 140px 0 40px;
+  background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
+  background-size: contain;
+  .prizes {
+    .prize {
+      width: unset;
+      .imgball {
+        width: 200px;
+      }
+    }
+  }
+  .redbar {
+    font-size: 16px;
+  }
+  > div {
+    overflow: unset;
+  }
+}
+.prize-modal.five .q-dialog__inner {
+  padding: 140px 0 40px;
+  background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
+  background-size: contain;
+  .prizes {
+    align-items: flex-start;
+    .prize {
+      width: 30%;
+      align-items: center;
+      .imgball {
+        width: 100%;
+      }
+    }
+  }
+  > div {
+    overflow: unset;
+  }
 }
 </style>
