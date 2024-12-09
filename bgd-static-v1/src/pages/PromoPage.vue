@@ -18,7 +18,12 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+        <q-tab
+          v-for="(tab, i) in tabItems"
+          :key="i"
+          :name="tab.name"
+          :label="langVal === 'bn' ? tab.label_bn : tab.label"
+        />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -209,6 +214,7 @@ import { cached } from "src/boot/cache";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
+import { i18nStore } from "src/router/language";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
@@ -232,6 +238,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
+    const i18nStoreLanguage = i18nStore();
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
@@ -484,7 +491,8 @@ export default defineComponent({
           res.forEach(element => {
             const obj = {
               name: element.value.toLowerCase(),
-              label: JSON.parse(element.name).H5_ur
+              label: JSON.parse(element.name).en,
+              label_bn: JSON.parse(element.name).H5_ur
             };
             tabItems.value.push(obj);
           });
@@ -658,6 +666,8 @@ export default defineComponent({
     const tab = ref("all");
     const tabItems = ref([]);
 
+    const langVal = computed(() => i18nStoreLanguage.languageVal);
+
     // promo param split.
     const parsedParam = computed(() => {
       try {
@@ -682,6 +692,7 @@ export default defineComponent({
     });
 
     return {
+      langVal,
       promoState,
       promoTypes,
       promoTabActive,
