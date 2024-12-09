@@ -18,7 +18,12 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="$t(tab.label)" />
+        <q-tab
+          v-for="(tab, i) in tabItems"
+          :key="i"
+          :name="tab.name"
+          :label="langVal === 'ur' ? tab.label_ur : tab.label"
+        />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -210,9 +215,11 @@
 import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
+import { cached } from "src/boot/cache";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
+import { i18nStore } from "src/router/language";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
@@ -238,6 +245,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
+    const i18nStoreLanguage = i18nStore();
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
@@ -489,6 +497,24 @@ export default defineComponent({
     };
 
     const loadAll = () => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
+          tabItems.value = [];
+          res.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).en,
+              label_ur: JSON.parse(element.name).H5_ur
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
+
       const platformApiUrl = "/opt-session/promo/page";
 
       // isFetchingPromo.value = window.location.pathname === "/promotion";
@@ -650,7 +676,7 @@ export default defineComponent({
     };
 
     const tab = ref("all");
-    const tabItems = [
+    const tabItems = ref([
       { name: "all", label: "promo.all" },
       { name: "earn", label: "promo.earn" },
       { name: "hot", label: "promo.hot" },
@@ -659,7 +685,9 @@ export default defineComponent({
       { name: "live", label: "promo.live" },
       { name: "slot", label: "promo.slot" },
       { name: "vip", label: "promo.vip" }
-    ];
+    ]);
+
+    const langVal = computed(() => i18nStoreLanguage.languageVal);
 
     // promo param split.
     const parsedParam = computed(() => {
@@ -685,6 +713,7 @@ export default defineComponent({
     });
 
     return {
+      langVal,
       promoState,
       promoTypes,
       promoTabActive,
