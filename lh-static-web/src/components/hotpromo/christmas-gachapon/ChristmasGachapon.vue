@@ -17,7 +17,7 @@
         <div class="fivex" @click="getGachapon('five')"><img src="../christmas-gachapon/img/fivex.png"></div>
         <div class="amtleft">抽奖次数剩余: <span>{{ availableDraw }}次</span></div>
     </div>
-    <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" class="christmas-modal" v-model="isModal" align-center>
+    <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" class="christmas-modal" v-model="isModal">
         <div class="christmas-side" v-if="isRules">
             <img src="../christmas-gachapon/img/tiny.png">
         </div>
@@ -40,7 +40,7 @@
     </div>
 
         <el-pagination v-if="!isRules"
-        style="margin-top: 20px; text-align: right;"
+        style="margin-top: 20px; justify-content: center; text-align: right;"
         background
         v-model:current-page="params.current"
         v-model:page-size="params.size"
@@ -434,6 +434,9 @@ body .el-dialog.christmas-modal{
     * {
         scrollbar-color: #fb7070 transparent;
     }
+    .el-dialog__header .el-dialog__headerbtn {
+        top: 100px;
+    }
 }
 body .el-dialog.prize-modal {
     * {
@@ -453,12 +456,21 @@ body .el-dialog.christmas-modal .el-dialog__body {
     background-size: cover;
     min-height: 720px;
     padding: 210px 80px 0;
+    margin-top: -120px;
+    .el-pagination.is-background .btn-next.is-active, .el-pagination.is-background .btn-prev.is-active, .el-pagination.is-background .el-pager li.is-active {
+        background-color: #ff0000;
+        color: #ffffff;
+    }
+    .el-pager li.is-active, .el-pager li:hover {
+        color: #ff0000;
+    }
 }
 body .el-dialog.prize-modal.once .el-dialog__body {
     background: url(img/modal-one.png)no-repeat center center;
     background-size: contain;
     min-height: 703px;
     padding: 200px 80px 0;
+    margin-top: -120px;
     .prizes {
         .prize {
             .imgball {
