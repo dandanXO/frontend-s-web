@@ -2786,6 +2786,9 @@ export default {
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '작업 유휴 (베팅 기록 가져오기)',
   },
+  monitorTitle: {
+    MEMBER_STATISTICS: '온라인 사용자'
+  },
   error: {
     400: '잘못된 요청',
     401: '인증되지 않은 요청',

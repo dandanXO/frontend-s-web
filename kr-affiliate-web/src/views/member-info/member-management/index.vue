@@ -219,7 +219,7 @@
           </el-row>
         </div>
         <div class="inputs-wrap">
-          <!-- <el-button
+          <el-button
             v-if="store.state.user.siteCode === 'KRW'"
             icon="el-icon-plus"
             size="normal"
@@ -227,7 +227,7 @@
             @click="showCreateMember()"
           >
             {{ $t('fields.createMember') }}
-          </el-button> -->
+          </el-button>
           <el-button
             v-if="store.state.user.siteCode !== 'VNM'"
             size="normal"
