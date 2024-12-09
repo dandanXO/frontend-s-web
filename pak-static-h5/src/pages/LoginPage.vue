@@ -698,7 +698,7 @@ export default defineComponent({
 
     //Put this when u need to test on localhost.
     // "localhost",
-    const restrictedDomains = ["pkmagr98.cc", "cbrfobx1.cc", "xsu5qyks.cc", "5vh518iw.cc", "9o48ca3p.cc"];
+    const restrictedDomains = [];
     const isRestrictedDomain = computed(() => {
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);

@@ -8,7 +8,7 @@
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
       <div class="download-logo">
-        <img height="30px" src="../assets/images/index/download/win-7-logo.png" />
+        <img height="30px" src="../assets/images/index/download/win-7-txt-logo.png" />
       </div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
@@ -87,13 +87,6 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
-      <!--        <div class="item-icon">-->
-      <!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
-      <!--        </div>-->
-      <!--        Tik Tok-->
-      <!--      </a>-->
-
       <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/index/youtube-web-icon.png" />
@@ -162,7 +155,7 @@
       </div>
       <div class="profile-wrapper-extra">
         <div class="logo-container">
-          <img src="../assets/images/auth/win-7-logo.png" @click="onClickLogo" />
+          <img src="../assets/images/auth/win-7-txt-logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -389,7 +382,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://m.b9mega1.com/", "_blank");
+    window.open(store.h5Url, "_blank");
     return;
   }
 

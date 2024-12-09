@@ -8,7 +8,7 @@
             <div class="contact-left">
               <div class="contact-box mail-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-mail.png" />
+                  <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
                 <div class="contact-name">兴发QQ</div>
                 <span ref="contact0" class="contact-text">1600337511</span>
@@ -19,7 +19,7 @@
               </div>
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-qq.png" />
+                  <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
                 <span ref="contact1" class="contact-text">@xf100200</span>
@@ -41,7 +41,7 @@
               </div>
               <div class="contact-box telegram-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-telegram.png" />
+                  <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
                 <div class="contact-name">丝瓜</div>
                 <span ref="contact3" class="contact-text">xfdlkf001</span>
@@ -52,7 +52,7 @@
               </div>
               <div class="contact-box bubble-buttons">
                 <div class="contact-icon">
-                  <img src="../assets/images/affiliate/icon-bubble.png" />
+                  <img src="../assets/images/affiliate/amico-icon.png" />
                 </div>
                 <div class="contact-name">Amico</div>
                 <span ref="contact4" class="contact-text">vip444</span>

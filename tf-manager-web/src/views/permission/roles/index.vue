@@ -295,7 +295,7 @@
           </el-button>
         </div>
       </el-form>
-      <div v-else-if="uiControl.dialogType === 'PERMISSION'">
+      <div v-else-if="uiControl.dialogType === 'PERMISSION'" v-loading="uiControl.treeLoading">
         <el-tree
           ref="tree"
           show-checkbox
@@ -414,7 +414,7 @@
                 hasPermission(['sys:roles:update:permission']) ||
                 hasPermission(['sys:roles:delete'])
             "
-            width="300"
+            width="350"
           >
             <template #default="scope">
               <el-button
@@ -535,7 +535,8 @@ const uiControl = reactive({
   removeBtn: true,
   createLoading: false,
   copyLoading: false,
-  permissionLoading: false
+  permissionLoading: false,
+  treeLoading: false
 })
 const roleToCopy = reactive({
   id: null,
@@ -735,6 +736,7 @@ async function loadTreeMenu() {
 }
 
 async function selectRoles(roles) {
+  uiControl.treeLoading = true
   selectRolesId = roles.id
   const site = siteList.list.find(e => e.siteName === roles.siteName)
   let siteMenu;
@@ -750,7 +752,6 @@ async function selectRoles(roles) {
   for (let i = 0; i < menus.cloneList.length; i++) {
     tree.value.remove(menus.cloneList[i])
   }
-
   for (let i = 0; i < siteMenu.length; i++) {
     tree.value.append(siteMenu[i])
   }
@@ -761,6 +762,7 @@ async function selectRoles(roles) {
       tree.value.setChecked(e, true)
     }
   })
+  uiControl.treeLoading = false
 }
 
 async function updatePermission() {

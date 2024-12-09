@@ -1,6 +1,6 @@
-# B9.GAME App (BGD-h5-project)
+# WIN7.GAME App (BGD-h5-project)
 
-B9.GAME (**bgd**) H5 APP
+WIN7.GAME (**bgd**) H5 APP
 
 - Node Version >= 16.17.0
 - H5 + Android APP
