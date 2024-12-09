@@ -115,7 +115,7 @@ export const getSiteTitle = (siteId) => {
       siteTitle = "TF88 "
       break;
     case IND2_SITE_ID :
-      siteTitle = "55Ace "
+      siteTitle = "789F "
       break;
     case KRW_SITE_ID :
       siteTitle = "DIAMOND "
@@ -127,28 +127,28 @@ export const getSiteTitle = (siteId) => {
       siteTitle = "后台 "
       break;
     case NGA_SITE_ID :
-      siteTitle = "55Ace "
+      siteTitle = "Nigeria "
       break;
     case KAKA_SITE_ID :
       siteTitle = "KAKA GAME "
       break;
     case PH1_SITE_ID :
-      siteTitle = "55Ace "
+      siteTitle = "Philippines "
       break;
     case ID1_SITE_ID :
-      siteTitle = "后台 "
+      siteTitle = "Indonesia "
       break;
     case BR1_SITE_ID :
-      siteTitle = "55Ace "
+      siteTitle = "Brazil "
       break;
     case MX1_SITE_ID :
-      siteTitle = "55Ace "
+      siteTitle = "Mexico "
       break;
     case PAK2_SITE_ID :
       siteTitle = "后台 "
       break;
     case PK3_SITE_ID :
-      siteTitle = "55Ace "
+      siteTitle = "Pakistan "
       break;
     default:
       siteTitle = "后台"
