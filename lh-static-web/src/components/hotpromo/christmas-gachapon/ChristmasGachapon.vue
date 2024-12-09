@@ -244,7 +244,7 @@ import {
     init();
     });
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 
 .snow-container {
   position: relative;
