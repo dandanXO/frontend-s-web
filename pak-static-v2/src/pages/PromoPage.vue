@@ -658,16 +658,7 @@ export default defineComponent({
     };
 
     const tab = ref("all");
-    const tabItems = ref([
-      { name: "all", label: 'promo.all' },
-      { name: "earn", label: 'promo.earn' },
-      { name: "hot", label: 'promo.hot' },
-      { name: "new user", label: 'promo.new_user' },
-      { name: "sports", label: 'promo.sports' },
-      { name: "live", label: "promo.live" },
-      { name: "slot", label: "promo.slot" },
-      { name: "vip", label: "promo.vip" },
-    ]);
+    const tabItems = ref([]);
 
     const langVal = computed(() => i18nStoreLanguage.languageVal);
 
