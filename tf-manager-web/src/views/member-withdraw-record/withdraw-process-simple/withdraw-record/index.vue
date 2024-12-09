@@ -293,6 +293,7 @@
           :label="t('fields.accountHolder')"
           align="center"
           min-width="120"
+          v-if="!hasPermission(['sys:ind:role:cs'])"
         />
         <el-table-column
           prop="bankName"
@@ -311,6 +312,7 @@
           :label="t('fields.cardAddress')"
           align="center"
           min-width="120"
+          v-if="!hasPermission(['sys:ind:role:cs'])"
         />
         <el-table-column
           prop="paymentCard"

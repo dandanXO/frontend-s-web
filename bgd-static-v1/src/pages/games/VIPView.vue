@@ -827,7 +827,7 @@ const getMonthlyVip = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5f6061;
+    color: #fff;
     width: 50%;
   }
 

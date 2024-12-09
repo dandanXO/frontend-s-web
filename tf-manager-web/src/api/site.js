@@ -12,6 +12,10 @@ export const createSite = site => {
   return https().request('/site', Method.POST, site, ContentType.form)
 }
 
+export const createSiteSteps = site => {
+  return https().request('/site/steps', Method.POST, site, ContentType.form)
+}
+
 export const updateSite = async site => {
   await https().request(
     `/site/${site.id}?_method=PUT`,

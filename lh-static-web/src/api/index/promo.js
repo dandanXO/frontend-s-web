@@ -648,3 +648,34 @@ export function getWeeklySlotLossBonusInit() {
 export function claimWeeklySlotLossBonusInit() {
   return server.EVENT.put("/bonus/claim/lh1-weekly-slot-loss-bonus")
 }
+
+export function initDrawEvent(promoCode) {
+  return server.EVENT.get(`/session/draw-event/init?promoCode=${promoCode}`);
+}
+
+export function getDrawPrizes(promoCode, drawTimes) {
+    return server.EVENT.post(`/session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes}`);
+}
+
+// export const getDrawPrizes = (promoCode, drawTimes) => {
+//   const requestOptions = {
+//     method: "POST",
+//     headers: {
+//       token: `${userStore().token}`,
+//       "Content-Type": "application/json"
+//     }
+//   };
+//   var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
+
+//   return fetch(evtUrl + `/session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes}`, requestOptions)
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .catch((error) => {
+//       return Promise.reject(error);
+//     });
+// };
+export function getDrawRecord(promoCode, params) {
+  return server.EVENT.get(`/session/draw-event/record?promoCode=${promoCode}&size=${params.size}&current=${params.current}`);
+}
+

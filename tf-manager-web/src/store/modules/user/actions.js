@@ -8,10 +8,11 @@ import {
   pakLoginRequest,
   loginRequest,
   updatePasswordRequest,
-  userInfoRequest,
-} from '../../../api/user'
-import { ElMessage } from 'element-plus'
-import i18n from '../../../i18n/index'
+  userInfoRequest
+} from "../../../api/user";
+import { ElMessage } from "element-plus";
+import i18n from "../../../i18n/index";
+import { getSiteTitle } from "../../../utils/site";
 
 export const actions = {
   async [UserActionTypes.ACTION_LOGIN]({ commit }, userInfo) {
@@ -54,9 +55,9 @@ export const actions = {
     if (state.token === '') {
       throw Error('token is undefined!')
     }
-    const { data: loginInfo } = await userInfoRequest()
-    console.log('loginInfo : ', loginInfo)
-    commit(UserMutationTypes.SET_LOGIN_USER, loginInfo)
+    const { data: loginInfo } = await userInfoRequest();
+    document.title = getSiteTitle(loginInfo.siteId);
+    commit(UserMutationTypes.SET_LOGIN_USER, loginInfo);
   },
 
   async [UserActionTypes.ACTION_LOGOUT]({ dispatch }) {

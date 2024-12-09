@@ -564,6 +564,12 @@ export default {
     CS: 'CS Treasure',
     DRAGON: 'Dragon Treasure'
   },
+  spinEventStatus: {
+    SYSTEM: 'System',
+    USER_EXCHANGE: 'User Exchange',
+    CLAIMED: 'Claimed',
+    PENDING: 'Pending'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -627,6 +633,7 @@ export default {
     addPlatform: 'Add Platform',
     addPlatformAccount: 'Add Platform Account',
     addPrivilegeInfo: 'Add Privilege Info',
+    addPriviSpinEventRecord: 'Add Privilege Spin/Draw Event Record',
     addPromoType: 'Add Promo Type',
     addPromoConfig: 'Add Promo Config',
     addQuestionnaire: 'Add Questionnaire',
@@ -1018,6 +1025,7 @@ export default {
     editPlatform: 'Edit Platform',
     editPlatformAccount: 'Edit Platform Account',
     editPrivilegeInfo: 'Edit Privilege Info',
+    editPriviSpinEventRecord: 'Edit Privilege Spin/Draw Event Record',
     editPromoType: 'Edit Promo Type',
     editPromoConfig: 'Edit Promo Config',
     editQuestionnaire: 'Edit Questionnaire',
@@ -1591,6 +1599,8 @@ export default {
     showAll: 'Show All',
     sid: 'SID',
     site: 'Site',
+    siteDetail: 'Site Detail',
+    siteInfo: 'Site Info',
     siteCode: 'Site Code',
     siteList: 'Site List',
     siteName: 'Site Name',
@@ -1604,6 +1614,7 @@ export default {
     sorting: 'Sorting',
     sortType: 'Sort Type',
     sourceType: 'Source Type',
+    spinCount: 'Spin/Draw Count',
     sportBetResult: 'Sport Bet Result',
     sportMatchRecord: 'Sport Match Record',
     sportMatchSetting: 'Sport Match Setting',
@@ -2597,6 +2608,7 @@ export default {
     validateThreeDigitsNumbeRequired: '3 digits number is required',
     validateTitleRequired: 'Title is required',
     validateTimeTypeRequired: 'Time Type is required',
+    validateTimeZoneRequired: 'Time Zone is required',
     validateTransactionIdRequired: 'Transaction ID is required',
     validateTransactionStatusRequired: 'Transaction Status is required',
     validateTriggerTypeRequired: 'Trigger Type is required',
