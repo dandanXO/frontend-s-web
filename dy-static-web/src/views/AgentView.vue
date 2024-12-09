@@ -3,7 +3,11 @@
     <div class="affiliate">
       <div class="affiliate-title">
         <div>
-          <img :src="require(`../assets/images/affiliate/agent-title.png`)" alt="" />
+          <img
+            style="max-width: 630px; width: 630px"
+            :src="require(`../assets/images/affiliate/agent-title.png`)"
+            alt=""
+          />
           <div>
             <div class="contact-left">
               <div class="contact-box mail-buttons">
