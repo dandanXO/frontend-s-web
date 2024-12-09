@@ -16,6 +16,7 @@ const BR1_SITE_ID = 18;
 const PAK2_SITE_ID = 19;
 const PK3_SITE_ID = 20;
 const MX1_SITE_ID = 21;
+const CO1_SITE_ID = 22;
 
 export const isIndiaSite = (siteId) => {
   return parseInt(siteId) === IND_SITE_ID || parseInt(siteId) === IND2_SITE_ID;
@@ -121,10 +122,10 @@ export const getSiteTitle = (siteId) => {
       siteTitle = "DIAMOND "
       break;
     case PAK_SITE_ID :
-      siteTitle = "后台 "
+      siteTitle = "B9.GAME "
       break;
     case BGD_SITE_ID :
-      siteTitle = "后台 "
+      siteTitle = "WIN7.GAME "
       break;
     case NGA_SITE_ID :
       siteTitle = "Nigeria "
@@ -145,13 +146,16 @@ export const getSiteTitle = (siteId) => {
       siteTitle = "Mexico "
       break;
     case PAK2_SITE_ID :
-      siteTitle = "后台 "
+      siteTitle = "97PKR "
       break;
     case PK3_SITE_ID :
       siteTitle = "Pakistan "
       break;
+    case CO1_SITE_ID :
+      siteTitle = "Columbia "
+      break;
     default:
-      siteTitle = "后台"
+      siteTitle = "后台 "
       break;
   }
 
