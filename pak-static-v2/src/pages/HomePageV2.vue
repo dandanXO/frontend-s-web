@@ -59,6 +59,9 @@
     </template>
   </q-carousel>
 
+  <button v-if="auth.currentUser" @click="handleGoogleSignOut">Sign Out</button>
+  <button v-else @click="handleGoogleSignIn">Google Sign In</button>
+
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
@@ -527,12 +530,47 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import InfoCenter from "src/components/home/v2/InfoCenter.vue";
 import GameList from "src/components/home/v2/GameList.vue";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
+
+const handleGoogleSignIn = async () => {
+  const provider = await new GoogleAuthProvider();
+  return signInWithPopup(auth, provider).then((result) => {
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+    console.log('here', token, user)
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+}
+
+const handleGoogleSignOut = () => {
+  signOut(auth).then(() => {
+    console.log('here', 'signed out')
+    // Sign-out successful.
+  }).catch((error) => {
+    // An error happened.
+  });
+}
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
@@ -2671,6 +2709,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  console.log('here', auth.currentUser)
   getPlatList();
   loadData();
   loadAnnouncement();
