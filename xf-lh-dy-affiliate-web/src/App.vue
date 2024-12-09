@@ -5,6 +5,7 @@
 <script setup>
 /* eslint-disable */
 import {onMounted} from "vue";
+import { getMobileOS } from "./utils/utils";
 
 onMounted(() => {
   if(window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
@@ -65,6 +66,16 @@ onMounted(() => {
     } else {
       window.location.pathname = '/dy/login'
     }
+  }
+
+  if(getMobileOS() === 'IOS') {
+    let existViewportTag = document.querySelector('meta[name="viewport"]');
+    if(!existViewportTag) {
+      existViewportTag = document.createElement('meta');
+      existViewportTag.name = 'viewport';
+      document.head.appendChild(existViewportTag);
+    }
+    existViewportTag.content = 'width=device-width,initial-scale=1.0,maximum-scale=1'
   }
 });
 </script>
