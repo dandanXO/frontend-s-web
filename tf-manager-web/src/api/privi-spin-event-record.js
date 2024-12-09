@@ -9,6 +9,6 @@ export const addPriviSpinEventRecord = (form) => {
   return https().request("/privi-spin-event-record", Method.POST, form, ContentType.form);
 };
 
-export const updatePriviSpinEventRecord = (id, record) => {
-  return https().request(`/privi-spin-event-record?_method=PUT`, Method.POST, record, ContentType.form);
+export const updatePriviSpinEventRecord = (record) => {
+  return https().request('/privi-spin-event-record/update?_method=PUT', Method.POST, record, ContentType.form);
 };
