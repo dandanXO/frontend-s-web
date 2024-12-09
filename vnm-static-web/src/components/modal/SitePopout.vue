@@ -118,6 +118,7 @@ onMounted(() => {
     max-height: 400px;
     gap: 10px;
     display: flex;
+    overflow: auto;
 
     .left {
       flex: 2;

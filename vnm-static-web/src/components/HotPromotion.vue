@@ -12,7 +12,7 @@
       :promo-code="list.promoCode"
       :params="list.param"
     />
-
+      <Asean2024 v-if="list.redirectUrl === 'dudoan-asean2024' || list.redirectUrl === 'trotaidudoan-asean2024' || list.redirectUrl === 'baohiemvon-20%asean'" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -36,6 +36,7 @@ import PennyBank from "../components/hotpromo/penny-bank/PennyBank.vue";
 import SlotNetloss from "../components/hotpromo/slot-netloss/SlotNetloss.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
+import Asean2024 from "../components/hotpromo/asean2024/Asean2024.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -51,7 +52,8 @@ export default defineComponent({
     SlotNetloss,
     PokerCashback,
     HongBaoYu2024,
-    NewPlayerPromo
+    NewPlayerPromo,
+    Asean2024
   },
   props: {
     list: {

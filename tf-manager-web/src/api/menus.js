@@ -56,3 +56,7 @@ export const deleteMenu = (menuId) => {
 export const fetchChildren = (menuId) => {
   return https().request(`/authority/menu/${menuId}/child-ids`, Method.GET);
 };
+
+export const fetchAllSitesMenu = () => {
+  return https().request("/authority/menu/allSitesMenu", Method.GET);
+};

@@ -567,6 +567,13 @@ export default {
     CS: 'CS 宝箱',
     DRAGON: '龙宝箱'
   },
+  spinEventStatus: {
+    SYSTEM: '系统发',
+    USER_EXCHANGE: '用户兑换',
+    CLAIMED: '已领取',
+    PENDING: '处理中'
+
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -630,6 +637,7 @@ export default {
     addPlatform: '新增平台',
     addPlatformAccount: '新增平台账号',
     addPrivilegeInfo: '新增优惠信息',
+    addPriviSpinEventRecord: '新增抽奖/轮盘记录信息',
     addPromoType: '新增优惠类型',
     addPromoConfig: '新增优惠码设置',
     addQuestionnaire: '新增问答',
@@ -1020,6 +1028,7 @@ export default {
     editPlatform: '编辑平台',
     editPlatformAccount: '编辑平台账号',
     editPrivilegeInfo: '编辑优惠信息',
+    editPriviSpinEventRecord: '编辑抽奖/轮盘记录信息',
     editPromoType: '编辑优惠类型',
     editPromoConfig: '编辑优惠码设置',
     editQuestionnaire: '编辑问答',
@@ -1591,6 +1600,8 @@ export default {
     showAll: '显示所有',
     sid: 'SID',
     site: '站点',
+    siteDetail: '站点详情',
+    siteInfo: '站点信息',
     siteCode: '站点代码',
     siteList: '站点列表',
     siteName: '站点名称',
@@ -1604,6 +1615,7 @@ export default {
     sorting: '排序',
     sortType: '排序类型',
     sourceType: '来源类型',
+    spinCount: '抽奖/转盘次数',
     sportBetResult: '体育投注结果',
     sportMatchRecord: '中超角逐记录',
     sportMatchSetting: '中超角逐配置',
@@ -2550,6 +2562,7 @@ export default {
     validateThirdSerialNumberRequired: '第三方流水号必填',
     validateThreeDigitsNumbeRequired: '三位数字必填',
     validateTimeTypeRequired: '时间类型必填',
+    validateTimeZoneRequired: '时区必填',
     validateTitleRequired: '标题必填',
     validateTransactionIdRequired: '注单号必填',
     validateTransactionStatusRequired: '注单状态必填',
@@ -2916,6 +2929,7 @@ export default {
     'Telegram User': 'Telegram 用户管理',
     'Affiliate Deposit Withdraw Summary': '代理存提汇总',
     'Site Domain': '站点域名管理',
+    'Privi Spin Event Record': '优惠抽奖/轮盘记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
