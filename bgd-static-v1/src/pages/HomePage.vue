@@ -206,7 +206,6 @@
             <swiper
               :slidesPerView="3.5"
               :grid="{ rows: 2, fill: 'row' }"
-              slidesPerColumnFill="column"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -1061,7 +1060,7 @@
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img  src="../assets/images/index/sport/item-game-maintenance.png" />
+                <img src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div
                   class="platform-game-item--img"
                   :style="{
@@ -4786,7 +4785,7 @@ const showCongratsModal = () => {
     }
   }
 
-  .img-maintenance{
+  .img-maintenance {
     border-radius: 12px;
   }
 
