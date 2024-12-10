@@ -151,6 +151,9 @@ export default defineComponent({
         }
     );
 
+    var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+    var platformGamesApiKey = store.hasToken() ? "LOGGEDPLATFORMGAMES" : "PLATFORMGAMES";
+
     const getPlatList = () => {
       var platformApiUrl = (store.hasToken()) ? '/session/loggedInPlatform' : "/platform";
       var platformKey= (store.hasToken()) ? 'LOGGEDINPLATFORMS' : "PLATFORMS";
@@ -198,11 +201,11 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB"
       const code = selectedPlatId.value;
       const gameType = "SLOT";
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = `${platformGamesApiKey}_GAMES_${code}_${gameType}_${regDevice}`;
       var way = store.getDeviceType();
 
       isLoading.value = true;
-      cached.get(key, () => api.get("/platformGames", {
+      cached.get(key, () => api.get(platformGamesApiUrl, {
         params: {platformId: code, gameType: gameType, device: regDevice, way: way},
       }).then((res) => {
         if (res.code === 0) {
