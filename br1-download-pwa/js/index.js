@@ -30,6 +30,10 @@ installBtn.addEventListener("click", async () => {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
           const redirectUrl = getAdjustUrl();
+
+          alert(redirectUrl);
+
+          
           const iframeTag = document.createElement("iframe");
           iframeTag.classList.add("blank-iframe");
           iframeTag.src = redirectUrl;
