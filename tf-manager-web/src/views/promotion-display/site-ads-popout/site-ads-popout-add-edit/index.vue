@@ -468,7 +468,7 @@
         />
       </el-form-item>
       <div class="dialog-footer">
-        <el-button @click="uiControl.dialogVisible = false">
+        <el-button @click="uiControl.imageDialogVisible = false">
           {{ t('fields.cancel') }}
         </el-button>
         <el-button type="primary" @click="submitImageUpload">
@@ -815,6 +815,7 @@ function showImageDialog(type) {
   }
   imageForm.category = 'PROMO'
   imageForm.promoType = type
+  imageForm.siteId = imageRequest.siteId
   uiControl.imageDialogTitle = t('fields.addImage')
   uiControl.imageDialogVisible = true
 }
@@ -863,6 +864,15 @@ function submitImageUpload() {
       await createSiteImage(imageForm)
       uiControl.imageDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
+
+      selectImage({
+        id: imageForm.id,
+        name: imageForm.name,
+        path: `${imageForm.siteId}/${imageForm.path}`,
+        remark: imageForm.remark,
+        siteName: ''
+      })
+      submitImage()
     }
   })
 }
