@@ -54,7 +54,7 @@ export const userStore = defineStore("userStore", {
   },
   actions: {
     hasToken() {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
         } else {
@@ -196,7 +196,7 @@ export const userStore = defineStore("userStore", {
       //   req.headers.token = token;
       //   return req;
       // });
-      // this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
+      this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
