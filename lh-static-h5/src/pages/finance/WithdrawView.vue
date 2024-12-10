@@ -581,6 +581,8 @@ const chooseLabel = () => {
     // return '虚拟币'
   } else if (isEWALLET.value) {
     return "电子钱包";
+  } else if (isALIPAY.value) {
+    return '支付宝'
   } else {
     return "银行卡";
   }
@@ -599,6 +601,8 @@ const chooseCard = () => {
     return "虚拟钱包";
   } else if (isEWALLET.value) {
     return "电子钱包";
+  } else if (isALIPAY.value) {
+    return '支付宝卡'
   } else {
     return "银行卡片";
   }
