@@ -118,11 +118,51 @@
       </table>
 
       <div class="table-hint q-pa-md">
+        <div class="q-mt-sm">
+          <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+            <tbody>
+              <tr>
+                <td style="color: #8c968f; font-size: 120%">
+                  {{ $t("earnMoney.reward.betting_table.header.description") }}
+                </td>
+                <td style="color: #8c968f; font-size: 120%">
+                  {{ $t("earnMoney.reward.betting_table.header.commission") }}
+                </td>
+              </tr>
+
+              <template v-for="index in 4" :key="index">
+                <tr>
+                  <td>{{ $t(`earnMoney.reward.betting_table.row${index}.description`) }}</td>
+                  <td>{{ $t(`earnMoney.reward.betting_table.row${index}.commission`) }}</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="q-mt-sm">
+          <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+            <tbody>
+              <tr>
+                <td style="color: #8c968f; font-size: 120%">
+                  {{ $t("earnMoney.reward.deposit_table.header.description") }}
+                </td>
+                <td style="color: #8c968f; font-size: 120%">
+                  {{ $t("earnMoney.reward.deposit_table.header.commission") }}
+                </td>
+              </tr>
+
+              <template v-for="index in 1" :key="index">
+                <tr>
+                  <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+                  <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+
         <div class="q-mt-sm" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
-
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
-
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
 
         <div class="q-mt-sm high-light" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
       </div>

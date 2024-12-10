@@ -358,16 +358,45 @@ export default {
       player: "Player",
       money: "Money",
       eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
-      betting_tips:
-        "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
-      deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
       multiple_acc_hint: `Notice:
     It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Bangladesh time on the next day. The rewards will be credited to the account during this time frame.
     `,
       shareTitle: "WIN7.GAME Share and Earn",
       shareText:
-        "WIN7.GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "WIN7.GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+      betting_table: {
+        header: {
+          description: "Description",
+          commission: "Three-Level Commission"
+        },
+        row1: {
+          description: "Invite players to place bets (win or lose) to earn rewards",
+          commission: "0.6%"
+        },
+        row2: {
+          description: "First-Level Commission",
+          commission: "0.3%"
+        },
+        row3: {
+          description: "Second-Level Commission",
+          commission: "0.2%"
+        },
+        row4: {
+          description: "Third-Level Commission",
+          commission: "0.1%"
+        }
+      },
+      deposit_table: {
+        header: {
+          description: "Description",
+          commission: "Deposit Commission"
+        },
+        row1: {
+          description: "Invite players to make their first deposit and receive a reward.",
+          commission: "5%"
+        }
+      }
     },
     teamManagement: {
       searchField: {
