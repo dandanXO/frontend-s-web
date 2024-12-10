@@ -405,7 +405,7 @@
                 data-aos-anchor="#hotgames"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/live/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.png" />
                 <div
                   class="platform-live-item--img"
                   :style="{
@@ -490,7 +490,7 @@
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
                       :style="{
@@ -1061,7 +1061,7 @@
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/sport/item-game-maintenance.png" />
+                <img  src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div
                   class="platform-game-item--img"
                   :style="{
@@ -4784,6 +4784,10 @@ const showCongratsModal = () => {
         background-size: 100% 100%;
       }
     }
+  }
+
+  .img-maintenance{
+    border-radius: 12px;
   }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
