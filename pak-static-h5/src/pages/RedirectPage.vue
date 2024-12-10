@@ -12,9 +12,9 @@ import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 
 const countdown = ref(5);
-const allowedDomains = ["localhost", "pkmagr98.cc", "cbrfobx1.cc"];
+const allowedDomains = ["pkmagr98.cc", "cbrfobx1.cc"];
 
-const domains2Seconds = ["b4qn4pb8.cc", "gey4oewd.cc", "3kxkvvuk.cc", "936tk9nn.cc", "jxbma2xq.cc"];
+const domains2Seconds = ["localhost", "b4qn4pb8.cc", "gey4oewd.cc", "3kxkvvuk.cc", "936tk9nn.cc", "jxbma2xq.cc"];
 
 const router = useRouter();
 const redirected = ref(false);
@@ -81,11 +81,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 500px;
+  margin: auto;
 
   @for $i from 1 through 10 {
     &.special-bg-#{$i} {
       background: url("../assets/images/redirect/#{$i}.png") no-repeat center center;
-      background-size: cover;
+      background-size: 100% 100%;
     }
   }
 }
