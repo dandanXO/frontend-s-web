@@ -4,7 +4,7 @@ import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
-import { getRndInteger, isAndroid } from "boot/utils";
+import { getRndInteger, isAndroid, isInPwa } from "boot/utils";
 import { t } from "./lang";
 import { errorMessages } from "./error-messages";
 import { userStore } from "src/stores";
@@ -76,7 +76,7 @@ export default boot(({ app, router }) => {
     }
 
     let token;
-    if (isAndroid()) {
+    if (isAndroid() || isInPwa()) {
       token = LocalStorage.getItem("TOKEN");
     } else {
       token = SessionStorage.getItem("TOKEN");
