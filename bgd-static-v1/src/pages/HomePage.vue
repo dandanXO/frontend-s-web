@@ -206,7 +206,6 @@
             <swiper
               :slidesPerView="3.5"
               :grid="{ rows: 2, fill: 'row' }"
-              slidesPerColumnFill="column"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -1061,7 +1060,7 @@
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img  src="../assets/images/index/sport/item-game-maintenance.png" />
+                <img src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div
                   class="platform-game-item--img"
                   :style="{
@@ -1407,7 +1406,7 @@
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-money.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
       <div class="congrats-highlight">{{ store.currency.label }}28</div>
 
@@ -4786,7 +4785,7 @@ const showCongratsModal = () => {
     }
   }
 
-  .img-maintenance{
+  .img-maintenance {
     border-radius: 12px;
   }
 
@@ -5222,7 +5221,9 @@ const showCongratsModal = () => {
 }
 
 .congrats-container {
-  background-color: #113413;
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
   max-width: 400px;
   width: 100%;
   padding: 16px;
