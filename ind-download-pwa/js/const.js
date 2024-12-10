@@ -1,2 +1,2 @@
-export const PWA_DATA_KEY = "pwaData";
-export const INSTALLATION_STATUS_KEY = "status";
+export const PWA_DATA_KEY = "IND_PWA_DATA";
+export const INSTALLATION_STATUS_KEY = "IND_INSTALLATION_STATUS";
