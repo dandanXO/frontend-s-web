@@ -19,7 +19,7 @@
         <div class="footer-big-img earn-money">
           <img :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoney.png`)" />
         </div>
-        <span class="footer-label" style="padding-top: 0; margin-bottom: 8px">{{ $t("bottomNav.earnMoney") }}</span>
+        <span class="footer-label" style="padding-top: 0; margin-bottom: 10px">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>
       <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
