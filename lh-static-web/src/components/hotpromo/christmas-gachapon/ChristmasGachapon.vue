@@ -192,6 +192,11 @@ const onPageSizeChange = async () => {
     if (res.code === 0) {
       totalItems.value = res.data.total;
       tableData.value = res.data.records;
+    } else {
+        notify({
+            type: "error",
+            message: `${res.message}`
+        });
     }
   });
 };

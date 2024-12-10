@@ -500,7 +500,13 @@ export default defineComponent({
           if(isAutoWithdrawal.value) {
             isShowRemainingDialog.value = !response.data.withdrawStatus
           }
-          withdrawalMethods.value = response.data.withdrawShowList;
+          const withdrawShowList = []
+          response.data.withdrawShowList.forEach(element => {
+            if (element.status) {
+              withdrawShowList.push(element)
+            }
+          });
+          withdrawalMethods.value = withdrawShowList;
           if (withdrawalMethods.value.length) {
             selectMethod(withdrawalMethods.value[0], 0);
           }
