@@ -202,9 +202,11 @@
             </RouterLink>
           </div>
 
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+          <div class="platform-game-wrapper lobby-platform-game" v-if="category.title === 'Lobby' && category.active">
             <swiper
               :slidesPerView="3.5"
+              :grid="{ rows: 2, fill: 'row' }"
+              slidesPerColumnFill="column"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -1474,7 +1476,7 @@ import { useCustomerTrigger } from "src/hooks/trigger";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
-const gameModules = ref([Scrollbar, Navigation, Pagination]);
+const gameModules = ref([Grid, Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 const route = useRoute();
@@ -5344,5 +5346,9 @@ const showCongratsModal = () => {
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+.lobby-platform-game .swiper-wrapper {
+  height: fit-content;
 }
 </style>
