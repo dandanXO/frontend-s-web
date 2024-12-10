@@ -31,9 +31,7 @@ installBtn.addEventListener("click", async () => {
         if (outcome === "accepted") {
           const redirectUrl = getAdjustUrl();
 
-          alert(redirectUrl);
-
-          
+          // alert(redirectUrl);
           const iframeTag = document.createElement("iframe");
           iframeTag.classList.add("blank-iframe");
           iframeTag.src = redirectUrl;
