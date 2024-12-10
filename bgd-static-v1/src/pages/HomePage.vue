@@ -202,9 +202,11 @@
             </RouterLink>
           </div>
 
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+          <div class="platform-game-wrapper lobby-platform-game" v-if="category.title === 'Lobby' && category.active">
             <swiper
               :slidesPerView="3.5"
+              :grid="{ rows: 2, fill: 'row' }"
+              slidesPerColumnFill="column"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -403,7 +405,7 @@
                 data-aos-anchor="#hotgames"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/live/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.png" />
                 <div
                   class="platform-live-item--img"
                   :style="{
@@ -488,7 +490,7 @@
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
                       :style="{
@@ -1059,7 +1061,7 @@
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/sport/item-game-maintenance.png" />
+                <img  src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div
                   class="platform-game-item--img"
                   :style="{
@@ -1474,7 +1476,7 @@ import { useCustomerTrigger } from "src/hooks/trigger";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
-const gameModules = ref([Scrollbar, Navigation, Pagination]);
+const gameModules = ref([Grid, Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 const route = useRoute();
@@ -4784,6 +4786,10 @@ const showCongratsModal = () => {
     }
   }
 
+  .img-maintenance{
+    border-radius: 12px;
+  }
+
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
     background: rgba(43, 55, 74, 0.6);
@@ -5344,5 +5350,9 @@ const showCongratsModal = () => {
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+.lobby-platform-game .swiper-wrapper {
+  height: fit-content;
 }
 </style>
