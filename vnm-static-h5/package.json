@@ -78,8 +78,7 @@
     "quasar-cli": "^0.17.26",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "workbox-webpack-plugin": "^7.1.0",
-    "@jridgewell/gen-mapping": "0.3.5"
+    "workbox-webpack-plugin": "^7.1.0"
   },
   "browserslist": [
     "last 10 Chrome versions",
