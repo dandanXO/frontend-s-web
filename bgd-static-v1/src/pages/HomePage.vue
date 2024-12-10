@@ -197,7 +197,7 @@
               <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Hot">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Hot">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -387,7 +387,7 @@
               <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Live">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Live">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -530,7 +530,7 @@
               <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Slot">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Slot">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -652,7 +652,7 @@
               <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_poker") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Poker">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Poker">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -974,7 +974,7 @@
               <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Fish">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Fish">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -1050,7 +1050,7 @@
               <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_sport") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Sport">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Sport">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -1529,6 +1529,10 @@ const activeCategoryLabel = computed(() => {
 // };
 
 const activateSlide = (item) => {
+  if (item.title === "Lobby") {
+    router.push("/home");
+    window.history.replaceState({}, document.title, "/home");
+  }
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
   if (category) {
