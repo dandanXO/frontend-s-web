@@ -1,7 +1,7 @@
 <template>
-  <div class="redirect-page" v-if="!redirected">
+  <div class="redirect-page" :class="wrapperClass" v-if="!redirected">
     <!--    <h1>Redirecting Soon...</h1>-->
-    <h1 id="countdown">Waiting time : {{ countdown }} seconds;</h1>
+    <h1 v-if="!wrapperClass" id="countdown">Waiting time : {{ countdown }} seconds;</h1>
     <!--    <p class="redirect-info">Please wait while we take you to your destination.</p>-->
   </div>
 </template>
@@ -18,6 +18,7 @@ const domains2Seconds = ["b4qn4pb8.cc", "gey4oewd.cc", "3kxkvvuk.cc", "936tk9nn.
 
 const router = useRouter();
 const redirected = ref(false);
+const wrapperClass = ref("");
 
 onMounted(() => {
   const currentDomain = window.location.hostname;
@@ -25,6 +26,8 @@ onMounted(() => {
     countdown.value = 3;
   } else if (domains2Seconds.includes(currentDomain)) {
     countdown.value = 2;
+    const index = domains2Seconds.indexOf(currentDomain);
+    wrapperClass.value = `special-bg-${(index + 1) * 2 - (Date.now() % 2)}`;
   }
 
   const redirectKey = `redirected-${currentDomain}`;
@@ -49,7 +52,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 * {
   margin: 0;
   padding: 0;
@@ -78,6 +81,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @for $i from 1 through 10 {
+    &.special-bg-#{$i} {
+      background: url("../assets/images/redirect/#{$i}.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
 }
 
 h1 {
