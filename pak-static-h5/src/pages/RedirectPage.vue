@@ -1,7 +1,7 @@
 <template>
   <div class="redirect-page" :class="wrapperClass" v-if="!redirected">
     <!--    <h1>Redirecting Soon...</h1>-->
-    <h1 v-if="!wrapperClass" id="countdown">Waiting time : {{ countdown }} seconds;</h1>
+    <!-- <h1 id="countdown">Waiting time : {{ countdown }} seconds;</h1> -->
     <!--    <p class="redirect-info">Please wait while we take you to your destination.</p>-->
   </div>
 </template>
@@ -16,6 +16,19 @@ const allowedDomains = ["pkmagr98.cc", "cbrfobx1.cc"];
 
 const domains2Seconds = ["localhost", "b4qn4pb8.cc", "gey4oewd.cc", "3kxkvvuk.cc", "936tk9nn.cc", "jxbma2xq.cc"];
 
+const allDomains = [
+  "pkmagr98.cc",
+  "cbrfobx1.cc",
+  "xsu5qyks.cc",
+  "5vh518iw.cc",
+  "9o48ca3p.cc",
+  "b4qn4pb8.cc",
+  "gey4oewd.cc",
+  "3kxkvvuk.cc",
+  "936tk9nn.cc",
+  "jxbma2xq.cc"
+];
+
 const router = useRouter();
 const redirected = ref(false);
 const wrapperClass = ref("");
@@ -26,9 +39,9 @@ onMounted(() => {
     countdown.value = 3;
   } else if (domains2Seconds.includes(currentDomain)) {
     countdown.value = 2;
-    const index = domains2Seconds.indexOf(currentDomain);
-    wrapperClass.value = `special-bg-${(index + 1) * 2 - (Date.now() % 2)}`;
   }
+  const index = allDomains.indexOf(currentDomain);
+  wrapperClass.value = `special-bg-${(index % 10) + 1}`;
 
   const redirectKey = `redirected-${currentDomain}`;
   let redirectPath = SessionStorage.getItem("REDIRECT_PATH");
