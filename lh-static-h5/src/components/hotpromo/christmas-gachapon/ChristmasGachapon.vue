@@ -213,6 +213,11 @@ const openModal = (type) => {
       if (res.code === 0) {
         totalItems.value = res.data.total;
         tableData.value = res.data.records;
+      } else {
+          notify({
+              type: "error",
+              message: `${res.message}`
+          });
       }
     });
     modalContent.title = "活动记录";
@@ -268,6 +273,11 @@ const getGachapon = (t) => {
           }
         });
         isPrizeModal.value = true;
+      } else {
+          notify({
+              type: "error",
+              message: `${res.message}`
+          });
       }
     })
     .catch((error) => {
@@ -282,6 +292,7 @@ const getGachapon = (t) => {
       // Always run (after success or error)
       isLoading.value = false;
       console.log("Loading state finished");
+      init();
     });
 };
 const getBalance = () => {
