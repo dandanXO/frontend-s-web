@@ -539,6 +539,11 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
+const guestLoginInfo = reactive({
+  sid: "",
+  way: "ANDROID"
+});
+
 const handleGoogleSignIn = async () => {
   const provider = await new GoogleAuthProvider();
   return signInWithPopup(auth, provider).then((result) => {
@@ -550,7 +555,47 @@ const handleGoogleSignIn = async () => {
     const user = result.user;
     // IdP data available using getAdditionalUserInfo(result)
     // ...
-    console.log('here', token, user)
+
+    (async () => {
+      guestLoginInfo.siteId = 19
+      guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+      guestLoginInfo.idToken = credential.idToken
+
+      api
+        .post("/member/googleLogin", qs.stringify(guestLoginInfo))
+        .then((ret) => {
+          const res = ret;
+          console.log("res:", res);
+
+          if (res.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "Google login successfully",
+              icon: "check_circle_outline"
+            });
+
+            store.autoLogin(res.data);
+            sessionStorage.removeItem("REFERRAL_CODE");
+            if (store.hasToken()) {
+              router.push("/home");
+            }
+          } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: res.message,
+              icon: "report_problem"
+            });
+          }
+          $q.loading.hide();
+        })
+        .catch((error) => {
+          $q.loading.hide();
+        });
+      // getCode();
+    })();
+    console.log('here', token, user, credential)
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
