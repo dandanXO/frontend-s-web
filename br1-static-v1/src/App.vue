@@ -103,9 +103,9 @@ export default defineComponent({
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
-        if (isInPwa()) {
-          alert(affAppToken.value);
-        }
+        // if (isInPwa()) {
+        //   alert(affAppToken.value);
+        // }
 
         // debugger;
         const Adjust = require("@adjustcom/adjust-web-sdk");
@@ -118,10 +118,6 @@ export default defineComponent({
             // attribution: details about the changed attribution
             console.log("CALLBACK");
             console.log(attribution);
-            if (isInPwa()) {
-              alert("CALLBACK");
-              alert(attribution);
-            }
             store.aaid = attribution && attribution.adid ? attribution.adid : "";
           }
         });
@@ -131,10 +127,10 @@ export default defineComponent({
           //   console.log(attribution);
           // });
           Adjust.waitForWebUUID().then((webUuid) => {
-            if (isInPwa()) {
-              alert("Web UUID");
-              alert(webUuid);
-            }
+            // if (isInPwa()) {
+            //   alert("Web UUID");
+            //   alert(webUuid);
+            // }
             console.log("Web UUid");
             console.log(webUuid);
             store.aaid = webUuid ? webUuid : "";
@@ -160,7 +156,6 @@ export default defineComponent({
           }
           affAppToken.value = res.data.adjust_app_token;
           initAdjustEventTrack();
-          // alert(affAppToken.value);
         }
       });
     };
@@ -193,7 +188,6 @@ export default defineComponent({
                         }
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
-                        // alert(affAppToken.value);
                       }
                     });
                   }
