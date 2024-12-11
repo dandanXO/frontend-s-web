@@ -103,13 +103,8 @@ export default defineComponent({
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
-        // if (isInPwa()) {
-        //   alert(affAppToken.value);
-        // }
-
-        // debugger;
-        const Adjust = require("@adjustcom/adjust-web-sdk");
-        Adjust.initSdk({
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
           logLevel: "verbose",
@@ -122,20 +117,12 @@ export default defineComponent({
           }
         });
         setTimeout(() => {
-          // Adjust.waitForAttribution().then((attribution) => {
-          //   console.log("attribution");
-          //   console.log(attribution);
-          // });
-          Adjust.waitForWebUUID().then((webUuid) => {
-            // if (isInPwa()) {
-            //   alert("Web UUID");
-            //   alert(webUuid);
-            // }
+          AdjustWeb.waitForWebUUID().then((webUuid) => {
             console.log("Web UUid");
             console.log(webUuid);
             store.aaid = webUuid ? webUuid : "";
           });
-        }, 500);
+        }, 100);
       }
     };
 

@@ -219,8 +219,8 @@ export default defineComponent({
         Adjust.trackEvent(adjustEvent);
       } else if (ui.adjust_register_event) {
         console.log(ui.adjust_register_event);
-        const Adjust = require("@adjustcom/adjust-web-sdk");
-        Adjust.trackEvent({
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
           eventToken: ui.adjust_register_event
         });
       }
