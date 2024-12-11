@@ -2078,8 +2078,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End Hot");
-          console.log(JSON.stringify(hotGameList.value));
+          // console.log("End Hot");
+          // console.log(JSON.stringify(hotGameList.value));
           isHotGameLoading.value = false;
         });
     });
@@ -2243,8 +2243,8 @@ const loadJDBFishGameList = () => {
     .then((res) => {
       fishGameJDBList.value = res;
 
-      console.log("JSD");
-      console.log(JSON.stringify(fishGameJDBList.value));
+      // console.log("JSD");
+      // console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 
@@ -2424,8 +2424,8 @@ const getPlatList = () => {
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
       isPlatLoading.value = false;
-      console.log("After");
-      console.log(JSON.stringify(livecasino.value));
+      // console.log("After");
+      // console.log(JSON.stringify(livecasino.value));
       loadHotGameList();
     })
     .catch((err) => {});
