@@ -571,7 +571,10 @@ export default {
     SYSTEM: '系统发',
     USER_EXCHANGE: '用户兑换',
     CLAIMED: '已领取',
-    PENDING: '处理中'
+    PENDING: '处理中',
+    TO_BALANCE: '会员拆现',
+    SHIPPING: '发货中',
+    DELIVERED: '已签收'
 
   },
   fields: {
@@ -1140,6 +1143,7 @@ export default {
     gift: '奖品',
     giftCode: '奖品代码',
     giftName: '奖品名称',
+    giftNo: '奖品编号',
     giftRecord: '奖品兑换记录',
     hasPromo: '有优惠',
     hidden: '隐藏',
@@ -1149,6 +1153,7 @@ export default {
     icon: '图标',
     pIcon: '优惠图标',
     id: 'ID',
+    idNumber: 'ID 卡号',
     identifyCode: '识别码',
     imageSize: '图像尺寸',
     import: '导入',
@@ -1833,6 +1838,8 @@ export default {
     validBetPerSpin: '每次转盘所需有效投注',
     value: '值',
     vcallName: '座机号',
+    verifyBy: '验证者',
+    verifyTime: '验证时间',
     view: '查看',
     viewChoice: '查看问答选项',
     viewDetails: '查看详情',
@@ -2930,6 +2937,7 @@ export default {
     'Affiliate Deposit Withdraw Summary': '代理存提汇总',
     'Site Domain': '站点域名管理',
     'Privi Spin Event Record': '优惠抽奖/轮盘记录',
+    'ID Verification': '身份认证',
   },
   google: {
     google_auth_menu: '谷歌验证',

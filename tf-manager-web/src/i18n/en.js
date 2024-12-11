@@ -568,7 +568,10 @@ export default {
     SYSTEM: 'System',
     USER_EXCHANGE: 'User Exchange',
     CLAIMED: 'Claimed',
-    PENDING: 'Pending'
+    PENDING: 'Pending',
+    TO_BALANCE: 'To Balance',
+    SHIPPING: 'Shipping',
+    DELIVERED: 'Delivered'
   },
   fields: {
     account: 'Account',
@@ -1137,6 +1140,7 @@ export default {
     gift: 'Gift',
     giftCode: 'Gift Code',
     giftName: 'Gift Name',
+    giftNo: 'Gift No.',
     giftRecord: 'Gift Record',
     hasPromo: 'Has Promotion',
     hidden: 'Hidden',
@@ -1146,6 +1150,7 @@ export default {
     icon: 'Icon',
     pIcon: 'Privilege Icon',
     id: 'ID',
+    idNumber: 'ID No.',
     identifyCode: 'Identify Code',
     imageSize: 'Image Size',
     import: 'Import',
@@ -1831,6 +1836,8 @@ export default {
     validBetPerSpin: 'Valid Bet Per Spin',
     value: 'Value',
     vcallName: 'Landline phone number',
+    verifyBy: 'Verify By',
+    verifyTime: 'Verify Time',
     view: 'View',
     viewChoice: 'View Questionnaire Choices',
     viewDetails: 'View Details',
@@ -2980,6 +2987,7 @@ export default {
     'Telegram User': 'Telegram User',
     'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
     'Site Domain': 'Site Domain',
+    'ID Verification': 'ID Verification',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
