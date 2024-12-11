@@ -1,74 +1,89 @@
 <template>
-  <el-tabs v-model="activeName" :key="id">
+  <el-tabs v-model="activeName" :key="id" @tab-click="handleTabClick">
     <el-tab-pane :label="t('fields.member')" name="member-info">
-      <MemberInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'member-info'">
+        <MemberInfoTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.login')" name="login-info">
-      <LoginInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'login-info'">
+        <LoginInfoTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.bankCard')" name="member-bank">
-      <MemberBankTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'member-bank'">
+        <MemberBankTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change">
-      <BetMoneyChange :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'bet-money-change'">
+        <BetMoneyChange :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change">
-      <MemberMoneyChange :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'member-money-change'">
+        <MemberMoneyChange :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record">
-      <MemberBetRecordTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'member-bet-record'">
+        <MemberBetRecordTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.deposit')" name="deposit-info">
-      <DepositInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'deposit-info'">
+        <DepositInfoTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info">
-      <WithdrawInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'withdraw-info'">
+        <WithdrawInfoTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.transaction')" name="transaction-info">
-      <TransactionInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'transaction-info'">
+        <TransactionInfoTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.privilege')" name="member-privilege-record">
-      <MemberPrivilegeRecord :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'member-privilege-record'">
+        <MemberPrivilegeRecord :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
-    <el-tab-pane
-      :label="t('fields.rolloverRecord')"
-      name="member-rollover-record"
-    >
-      <MemberRolloverRecord :mbr-id="id" :time-zone="timeZone" />
+    <el-tab-pane :label="t('fields.rolloverRecord')" name="member-rollover-record">
+      <template v-if="activeName === 'member-rollover-record'">
+        <MemberRolloverRecord :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
-    <el-tab-pane
-      :label="t('fields.memberRolloverEvent')"
-      name="member-rollover-event"
-    >
-      <MemberRolloverEventTab :mbr-id="id" :time-zone="timeZone" />
+    <el-tab-pane :label="t('fields.memberRolloverEvent')" name="member-rollover-event">
+      <template v-if="activeName === 'member-rollover-event'">
+        <MemberRolloverEventTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('fields.riskControl')" name="risk-info">
-      <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />
+      <template v-if="activeName === 'risk-info'">
+        <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
-    <el-tab-pane
-      :label="t('fields.referredFriends')"
-      name="member-refer-friend"
-    >
-      <MemberReferFriendTab
-        :mbr-id="id"
-        :site-id="siteId"
-        :time-zone="timeZone"
-      />
+    <el-tab-pane :label="t('fields.referredFriends')" name="member-refer-friend">
+      <template v-if="activeName === 'member-refer-friend'">
+        <MemberReferFriendTab :mbr-id="id" :site-id="siteId" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
-    <el-tab-pane
-      :label="t('fields.memberConsolidateReport')"
-      name="daily-report"
-    >
-      <DailyReportTab :mbr-id="id" :site-id="siteId" />
+    <el-tab-pane :label="t('fields.memberConsolidateReport')" name="daily-report">
+      <template v-if="activeName === 'daily-report'">
+        <DailyReportTab :mbr-id="id" :site-id="siteId" />
+      </template>
     </el-tab-pane>
     <el-tab-pane :label="t('menu.Member Platform')" name="member-platform">
-      <MemberPlatformTab :mbr-id="id" :site-id="siteId" />
+      <template v-if="activeName === 'member-platform'">
+        <MemberPlatformTab :mbr-id="id" :site-id="siteId" />
+      </template>
     </el-tab-pane>
-    <el-tab-pane
-      :label="t('fields.memberBetRecordByPlatform')"
-      name="member-bet-record-by-platform"
-    >
-      <MemberBetRecordByPlatformTab :mbr-id="id" :time-zone="timeZone" />
+    <el-tab-pane :label="t('fields.memberBetRecordByPlatform')" name="member-bet-record-by-platform">
+      <template v-if="activeName === 'member-bet-record-by-platform'">
+        <MemberBetRecordByPlatformTab :mbr-id="id" :time-zone="timeZone" />
+      </template>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -128,12 +143,23 @@ export default defineComponent({
       router.currentRoute.value.query.site
     )
 
+    // Handle tab changes and update the URL query
+    const handleTabClick = (tab) => {
+      router.push({
+        name: router.currentRoute.value.name, // Keep the same route
+        query: {
+          ...router.currentRoute.value.query, // Preserve existing query parameters
+          tab: tab.props.name, // Update the tab query parameter
+        },
+      });
+    };
     return {
       activeName,
       id,
       siteId,
       t,
       timeZone,
+      handleTabClick
     }
   },
 })
