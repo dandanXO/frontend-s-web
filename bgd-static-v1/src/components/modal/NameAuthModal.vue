@@ -203,6 +203,24 @@ const closeDialog = () => {
     }
   }
 
+  .green-btn {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    color: #131313;
+    font-weight: 700;
+    width: 100%;
+    height: 48px;
+    margin-top: 30px;
+  }
+
+  .dark-green-btn {
+    background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+    color: #fff;
+    font-weight: 700;
+    width: 100%;
+    height: 48px;
+    margin-top: 16px;
+  }
+
   .step-1 {
     .step-1-content {
       padding-top: 14px;
@@ -235,6 +253,37 @@ const closeDialog = () => {
       margin-top: 10px;
     }
   }
+
+  .step-2 {
+    .country-region-selection {
+      margin-top: 16px;
+      .country-region-select .q-field__control {
+        height: 20px;
+      }
+
+      .q-field--standout.q-field--highlighted .q-field__native {
+        color: #fff !important;
+      }
+      .q-field--standout.q-field--dark .q-field__control,
+      .q-field--standout.q-field--dark .q-field__control:before,
+      .q-field--standout.q-field--dark.q-field--highlighted .q-field__control {
+        background: #94ffad1a !important;
+      }
+    }
+    .doc-type-selection {
+      margin-top: 16px;
+      .doc-type-radio {
+        flex-direction: row-reverse;
+        width: 100%;
+        justify-content: space-between;
+        background-color: #94ffad1a;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        padding: 4px 2px 4px 14px;
+      }
+    }
+  }
+
   .step-3 {
     .hint-txt {
       text-align: start;
@@ -275,51 +324,6 @@ const closeDialog = () => {
         margin-left: 8px;
       }
     }
-  }
-  .green-btn {
-    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-    color: #131313;
-    font-weight: 700;
-    width: 100%;
-    height: 48px;
-    margin-top: 30px;
-  }
-
-  .dark-green-btn {
-    background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
-    color: #fff;
-    font-weight: 700;
-    width: 100%;
-    height: 48px;
-    margin-top: 16px;
-  }
-}
-
-.country-region-selection {
-  margin-top: 16px;
-  .country-region-select .q-field__control {
-    height: 20px;
-  }
-
-  .q-field--standout.q-field--highlighted .q-field__native {
-    color: #fff !important;
-  }
-  .q-field--standout.q-field--dark .q-field__control,
-  .q-field--standout.q-field--dark .q-field__control:before,
-  .q-field--standout.q-field--dark.q-field--highlighted .q-field__control {
-    background: #94ffad1a !important;
-  }
-}
-.doc-type-selection {
-  margin-top: 16px;
-  .doc-type-radio {
-    flex-direction: row-reverse;
-    width: 100%;
-    justify-content: space-between;
-    background-color: #94ffad1a;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    padding: 4px 2px 4px 14px;
   }
 }
 </style>
