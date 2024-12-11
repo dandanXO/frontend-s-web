@@ -680,7 +680,7 @@ button {
     --el-dropdown-menuItem-hover-color: #{$active-color-dark};
   }
 
-  .standard-button {
+  .standard-button, .el-button--primary {
     // background: $active-color-dark-linear;
     background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center;
     background-size: cover;

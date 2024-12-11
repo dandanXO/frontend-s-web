@@ -328,4 +328,99 @@ onMounted(() => {
     }
   }
 }
+
+.dark {
+  .withdraw-remaining-dialog {
+    .el-dialog__body {
+      .withdraw-remaining-dialog__header {
+        background: url(@/assets/images/finance/withdraw/withdraw-remaining-bg-dark.png) no-repeat;
+        background-size: 100% 100%;
+        aspect-ratio: 530 / 92;
+        padding: 24px 20px 0;
+        box-sizing: border-box;
+
+        .withdraw-remaining-dialog__header-title {
+          color: #fff;
+        }
+        .withdraw-remaining-dialog__header-help-text {
+          color: #7a8eb9;
+        }
+      }
+
+      .withdraw-remaining-dialog__body {
+        background-color: #31446b;
+        box-shadow: none;
+
+        .withdraw-remaining-dialog__body-title {
+          color: #fff;
+        }
+
+        .withdraw-remaining-dialog__body-table {
+          color: #424f72;
+
+          thead {
+            background: linear-gradient(180deg,#007673,#055b77);
+            th {
+              color: #fff;
+            }
+          }
+          tbody {
+            tr:nth-child(even) {
+              background-color: #f2f8fe;
+            }
+            tr:last-child {
+              td {
+                border-bottom: 1px solid #bed9ff80;
+              }
+            }
+            td {
+              color: #fff;
+              padding: 10px 0;
+              border-top: 1px solid #bed9ff80;
+              border-left: 1px solid #bed9ff80;
+
+              &:last-child {
+                border-right: 1px solid #bed9ff80;
+              }
+
+              .action-button {
+                background: url("../../assets/images/home/standard-button-bg.svg") no-repeat center center;
+                background-size: cover;
+                box-shadow: none;
+                border-radius: 8px;
+                border: 1px solid #3a93ce;
+                color: #fff;
+                &:hover {
+                  filter: brightness(1.2);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .withdraw-remaining-dialog__action {
+        background: url("../../assets/images/home/standard-button-bg.svg") no-repeat center center;
+        background-size: cover;
+        box-shadow: none;
+        border-radius: 4px;
+        border: 1px solid #3a93ce;
+        color: #fff;
+
+        &:first-of-type {
+          background: url("../../assets/images/home/secondary-button-bg.svg") no-repeat center center;
+          background-size: cover;
+          box-shadow: none;
+          border-radius: 4px;
+          border: 1px solid #ffffff4d;
+          color: #fff;
+        }
+        &:hover {
+          opacity: 1;
+          // filter: brightness(1.2);
+        }
+      }
+    }
+  }
+}
 </style>
