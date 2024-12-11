@@ -776,10 +776,11 @@ onMounted(() => {
     scrollbar-color: #e6374a transparent; /* Thumb color, no track background */
   }
   > div {
-    width: 80%;
+    // width: 80%;
     margin: 0 auto;
     overflow: auto;
-    max-width: 320px;
+    max-width: 340px;
+    width: 95%;
   }
   .rules {
     height: 45vh;
