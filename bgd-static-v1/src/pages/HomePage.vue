@@ -4770,6 +4770,10 @@ const showCongratsModal = () => {
     .platform-game-item--img {
       border-radius: 8px;
     }
+
+    .burning-hot {
+      right: 8px;
+    }
   }
 
   .platform-live-item {
