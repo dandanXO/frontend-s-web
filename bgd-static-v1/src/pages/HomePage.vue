@@ -395,7 +395,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <div class="platform-game-container live-casino">
               <div
-                v-for="(item, index) in livecasino.slice(0, 3)"
+                v-for="(item, index) in livecasino"
                 :key="index"
                 data-aos="zoom-in"
                 :data-aos-delay="100 * index"
@@ -426,59 +426,6 @@
                 </div>
               </div>
             </div>
-            <!-- <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="15"
-              :scrollbar="{
-                hide: true
-              }"
-              :grid="{
-                rows: 2,
-                fill: 'row'
-              }"
-              :modules="[...gameModules, Grid]"
-              class="platform-game-container live-casino"
-              :style="{ height: '295px' }"
-            >
-              <template v-for="(item, index) in livecasino" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  :style="{ height: '140px' }"
-                >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#hotgames"
-                  >
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </swiper-slide>
-              </template>
-            </swiper> -->
           </div>
 
           <div class="platform-game-wrapper" v-else>
@@ -4752,22 +4699,26 @@ const showCongratsModal = () => {
     padding-top: 8px;
     margin-bottom: 0px;
     display: grid;
-    grid-template-columns: 51fr 54fr;
+    grid-template-columns: 51fr repeat(1,54fr);
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
-    width: 100%;
+    //width: 100%;
     box-sizing: border-box;
-    max-width: 100%;
     min-height: 100px;
     column-gap: 6px;
     row-gap: 8px;
+    overflow-x: scroll;
+
+    > div{
+      min-width: min(250px,calc(50vw - 16px));
+    }
 
     .platform-live-item--img {
       background-size: 100% 100%;
     }
 
     img {
-      max-width: 140px;
+      //max-width: 140px;
       border-radius: 8px;
     }
     .burning-hot {
