@@ -102,6 +102,7 @@
         <!--        </div>-->
         <div>
           <q-carousel
+            v-if="hbPromo.length > 0"
             class="hb-float"
             :navigation="hbPromo.length > 1 ? true : false"
             v-model="hbSlide"
