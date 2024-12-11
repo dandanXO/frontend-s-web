@@ -204,7 +204,7 @@
 
           <div class="platform-game-wrapper lobby-platform-game" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :grid="{ rows: 2, fill: 'row' }"
               :spaceBetween="10"
               :scrollbar="{
@@ -484,7 +484,7 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -541,7 +541,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -606,7 +606,7 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -660,7 +660,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -722,7 +722,7 @@
 
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -4702,7 +4702,7 @@ const showCongratsModal = () => {
     padding-top: 8px;
     margin-bottom: 0px;
     display: grid;
-    grid-template-columns: 51fr repeat(1,54fr);
+    grid-template-columns: 51fr repeat(1, 54fr);
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
     //width: 100%;
@@ -4712,8 +4712,8 @@ const showCongratsModal = () => {
     row-gap: 8px;
     overflow-x: scroll;
 
-    > div{
-      min-width: min(250px,calc(50vw - 16px));
+    > div {
+      min-width: min(250px, calc(50vw - 16px));
     }
 
     .platform-live-item--img {
