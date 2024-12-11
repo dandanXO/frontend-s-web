@@ -191,7 +191,10 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    noRewardYet: "No Reward Yet",
+    received: "Received",
+    receive: "Receive"
   },
   notify: {
     noRecord: "No Record",
@@ -235,7 +238,23 @@ export default {
     cat_sport: "Sport",
     popup: {
       getFreeLuckyDraw: "Get a free lucky draw ticket",
-      downloadAppLoginAcc: "Download the app and log in to your account to get it"
+      downloadAppLoginAcc: "Download the app and log in to your account to get it",
+      free100Bonus: "Congratulations! You have completed Stage 1 and unlocked 100 bonuses.",
+      free100BonusAmount: "100BDT",
+      bonus: {
+        wheelOfFortuneTitle: "Wheel Of Fortune",
+        wheelOfFortuneDescription: "Wheel Of Fortune",
+        cashBackTitle: "Cash Back",
+        cashBackDescription: "Cash Back",
+        activityBonusTitle: "Activity Bonus",
+        activityBonusDescription: "Activity Bonus",
+        giveBackTitle: "Give Back",
+        giveBackDescription: "Give Back",
+        hierarchyTitle: "Hierarchy",
+        hierarchyDescription: "Hierarchy",
+        wheelRewardTitle: "Wheel Rewards",
+        wheelRewardDescription: "Wheel Rewards"
+      }
     },
     viewAll: "View All"
   },

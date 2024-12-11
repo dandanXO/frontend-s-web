@@ -191,6 +191,11 @@
           </template>
         </div>
 
+        <q-btn class="gift-wrapper" flat @click="showBonusModal">
+          <img src="../assets/images/auth/gift.png" />
+          <q-badge class="gift-badge" floating rounded>1</q-badge>
+        </q-btn>
+
         <!-- <div>
           <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
         </div> -->
@@ -277,6 +282,10 @@
         <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
       </div>
     </div>
+
+    <q-dialog v-model="isBonusModal" position="bottom">
+      <BonusModal />
+    </q-dialog>
   </div>
 </template>
 
@@ -291,7 +300,7 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
-
+import BonusModal from "./modal/BonusModal.vue";
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 
@@ -303,6 +312,7 @@ const store = userStore();
 const ui = useUI();
 
 const isScrolled = ref(false);
+const isBonusModal = ref(false);
 
 const loadCustomerAddress = () => {
   cached
@@ -468,6 +478,10 @@ const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
+};
+
+const showBonusModal = () => {
+  isBonusModal.value = true;
 };
 
 onMounted(() => {
@@ -892,6 +906,7 @@ onUnmounted(() => {
       // background: #192633;
       // background: rgba(0, 10, 1, 0.6);
       background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+      box-shadow: 0px 0px 5px 0px #ffffff4a inset;
       border-radius: 25px;
       display: flex;
       align-items: center;
@@ -1111,6 +1126,30 @@ onUnmounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.gift-wrapper {
+  background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+  box-shadow: 0px 0px 5px 0px #ffffff4a inset;
+  border-radius: 50%;
+  position: relative;
+  border: none;
+  padding: 10px;
+  height: 40px;
+  width: 40px;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .gift-badge {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    color: #fff;
+  }
 }
 
 @keyframes hueBlink {

@@ -1402,6 +1402,10 @@
     <CongratsModal />
   </q-dialog>
 
+  <q-dialog v-model="isCongratsModalV2">
+    <CongratsModalV2 />
+  </q-dialog>
+
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
@@ -1449,6 +1453,7 @@ import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
+import CongratsModalV2 from "../components/modal/CongratsModalV2.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
@@ -1484,6 +1489,7 @@ const store = userStore();
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
+const isCongratsModalV2 = ref(false);
 const isShowPrizeModal = ref(false);
 const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
@@ -3714,6 +3720,7 @@ const showCongratsModal = () => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         isCongratsModal.value = true;
+        isCongratsModalV2.value = true;
       }
     }
   });
