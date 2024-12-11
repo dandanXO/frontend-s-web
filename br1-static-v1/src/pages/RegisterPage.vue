@@ -218,9 +218,6 @@ export default defineComponent({
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         Adjust.trackEvent(adjustEvent);
       } else if (ui.adjust_register_event) {
-        if (isInPwa()) {
-          alert("HERE");
-        }
         console.log(ui.adjust_register_event);
         const Adjust = require("@adjustcom/adjust-web-sdk");
         Adjust.trackEvent({
