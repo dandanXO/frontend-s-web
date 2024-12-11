@@ -558,11 +558,13 @@ const handleGoogleSignIn = async () => {
 
     (async () => {
       guestLoginInfo.siteId = 19
+      guestLoginInfo.thirdParty = 'GOOGLE'
       guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+      guestLoginInfo.accessToken = credential.accessToken
       guestLoginInfo.idToken = credential.idToken
 
       api
-        .post("/member/googleLogin", qs.stringify(guestLoginInfo))
+        .post("/member/thirdPartyLogin", qs.stringify(guestLoginInfo))
         .then((ret) => {
           const res = ret;
           console.log("res:", res);
