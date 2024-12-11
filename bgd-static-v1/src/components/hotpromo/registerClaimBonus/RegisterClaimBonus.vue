@@ -29,7 +29,9 @@
               <span class="highlight">1/5</span>
               tasks to receive it
             </div>
-            <div class="bonus-progress-title-right">thirty days</div>
+            <div class="bonus-progress-title-right">
+              <img src="./img/clock.png" alt="">
+              Thirty Days</div>
           </div>
           <div class="bonus-progress-bar">
             <div class="bonus-progress-bar-fill"></div>
@@ -321,6 +323,16 @@ onMounted(() => {
         color: #076300;
         background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
           linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+
+        &::after {
+          content: "";
+          display: inline-block;
+          width: 10px;
+          height: 7px;
+          background-image: url("./img/check-icon.png");
+          margin-left: 4px;
+          background-size: cover;
+        }
       }
 
       &.progress {
@@ -357,6 +369,18 @@ onMounted(() => {
     font-size: 12px;
     color: #ffffff;
     font-weight: bold;
+
+    .bonus-progress-title-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      img {
+        width: 16px !important;
+        height: 16px !important;
+        margin: 0 !important;
+      }
+    }
   }
 
   .bonus-progress-bar {
