@@ -194,7 +194,10 @@ export default {
     getInterestProfit: "সুদের মুনাফা পান",
     noRewardYet: "এখনও কোনো পুরস্কার নেই",
     received: "গৃহীত হয়েছে",
-    receive: "গ্রহণ করুন"
+    receive: "গ্রহণ করুন",
+    startNow: "এখন শুরু করুন",
+    continue: "চালিয়ে যান",
+    continueUsingYourPhone: "আপনার ফোন ব্যবহার করতে থাকুন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
@@ -349,6 +352,27 @@ export default {
     rewards: "পুরস্কার",
     vipTable_txt:
       "একবার আপনার জমা আপগ্রেডের শর্ত পূরণ করলে, আপনার ভিআইপি লেভেল অবিলম্বে আপগ্রেড করা হবে, আপনার উত্তোলনের সংখ্যা বৃদ্ধি পাবে।"
+  },
+  nameAuth: {
+    title: "আসল নাম যাচাই",
+    basicExperience: "মৌলিক অভিজ্ঞতা",
+    humanResources: "মানব সম্পদ",
+    faceVerification: "মুখ শনাক্তকরণ",
+    identityId: "পরিচয় আইডি",
+    browsingTime: "ব্রাউজিং সময়: ২ মিনিট",
+    additionalInfo:
+      "আপনাকে ভালভাবে সেবা দেওয়ার জন্য, আমরা আপনার পরিচয়পত্রের আসল কপির প্রয়োজন। এর মাধ্যমে উপহারগুলি সঠিক স্থানে পাঠানো হবে।",
+    beReadyUploadIdCard: "আপনার আইডি কার্ড আপলোড করার জন্য প্রস্তুত থাকুন",
+    issuingCountryRegion: "জারি করা দেশ/অঞ্চল",
+    documentType: "দলিলের প্রকার",
+    getReadyUploadIdCard: "আপনার আইডি কার্ড আপলোড করার জন্য প্রস্তুত হোন",
+    idCard: "আইডি কার্ড",
+    hint_txt_1: "রঙিন ছবি বা দলিল আপলোড করুন",
+    hint_txt_2: "ভাল আলোতে ছবি তোলুন",
+    hint_txt_3: "ফাইলের ছবি সম্পাদনা করবেন না",
+    checkGuide: "আমাদের গাইড দেখুন",
+    passport: "পাসপোর্ট",
+    visa: "ভিসা"
   },
   earnMoney: {
     title: "বোনাস পট এসেছে",

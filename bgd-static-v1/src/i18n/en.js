@@ -194,7 +194,10 @@ export default {
     getInterestProfit: "Get Interest Profit",
     noRewardYet: "No Reward Yet",
     received: "Received",
-    receive: "Receive"
+    receive: "Receive",
+    startNow: "Start Now",
+    continue: "Continue",
+    continueUsingYourPhone: "Continue using your phone"
   },
   notify: {
     noRecord: "No Record",
@@ -349,6 +352,27 @@ export default {
     rewards: "Rewards",
     vipTable_txt:
       "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
+  },
+  nameAuth: {
+    title: "Real Name Authentication",
+    basicExperience: "Basic Experience",
+    humanResources: "Human Resources",
+    faceVerification: "Face Verification",
+    identityId: "Identity Id",
+    browsingTime: "Browsing time: 2 minutes",
+    additionalInfo:
+      "In order to better serve you, we require you to provide original copies of your identification documents. this will Gifts will be sent to the correct location.",
+    beReadyUploadIdCard: "Be ready to upload your ID card",
+    issuingCountryRegion: "Issuing country/region",
+    documentType: "Document Type",
+    getReadyUploadIdCard: "Get ready to upload your ID card",
+    idCard: "ID Card",
+    hint_txt_1: "Upload color photos or documents",
+    hint_txt_2: "Take photos in a well-lit room",
+    hint_txt_3: "Do not edit images of files",
+    checkGuide: "Check out our guide",
+    passport: "Passport",
+    visa: "Visa"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
