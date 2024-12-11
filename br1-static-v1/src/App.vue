@@ -17,6 +17,7 @@ import axios from "axios";
 import AOS from "aos";
 import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
+import Adjust, { getAttribution, waitForAttribution } from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "App",
@@ -102,23 +103,42 @@ export default defineComponent({
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
-        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-        AdjustWeb.initSdk({
+        if (isInPwa()) {
+          alert(affAppToken.value);
+        }
+
+        // debugger;
+        const Adjust = require("@adjustcom/adjust-web-sdk");
+        Adjust.initSdk({
           appToken: affAppToken.value,
           environment: "production",
+          logLevel: "verbose",
           attributionCallback: function (e, attribution) {
             // e: internal event name, can be ignored
             // attribution: details about the changed attribution
             console.log("CALLBACK");
             console.log(attribution);
+            if (isInPwa()) {
+              alert("CALLBACK");
+              alert(attribution);
+            }
             store.aaid = attribution && attribution.adid ? attribution.adid : "";
           }
         });
         setTimeout(() => {
-          const attribution = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          console.log(attribution);
-          store.aaid = attribution ? attribution.adid : "";
+          // Adjust.waitForAttribution().then((attribution) => {
+          //   console.log("attribution");
+          //   console.log(attribution);
+          // });
+          Adjust.waitForWebUUID().then((webUuid) => {
+            if (isInPwa()) {
+              alert("Web UUID");
+              alert(webUuid);
+            }
+            console.log("Web UUid");
+            console.log(webUuid);
+            store.aaid = webUuid ? webUuid : "";
+          });
         }, 500);
       }
     };
