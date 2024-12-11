@@ -723,6 +723,8 @@ onMounted(() => {
     max-width: 160px;
     img {
       width: 100%;
+      max-width: 200px;
+      margin-top: 20px;
     }
   }
 }
@@ -737,6 +739,7 @@ onMounted(() => {
   align-self: center;
   display: flex;
   overflow: hidden;
+  max-width: 350px;
   * {
     scrollbar-width: thin; /* Simplified width */
     scrollbar-color: #e6374a transparent; /* Thumb color, no track background */
@@ -745,6 +748,7 @@ onMounted(() => {
     width: 80%;
     margin: 0 auto;
     overflow: auto;
+    max-width: 320px;
   }
   .rules {
     height: 45vh;
@@ -858,6 +862,9 @@ onMounted(() => {
   padding: 140px 0 40px;
   background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
   background-size: contain;
+  flex-direction: column;
+  height: 65vh;
+  max-height: 550px;
   .prizes {
     align-items: flex-start;
     .prize {
