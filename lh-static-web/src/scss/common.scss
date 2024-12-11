@@ -689,6 +689,17 @@ button {
     border: 1px solid #3a93ce;
   }
 
+  .cancel-btn {
+    background: url("../assets/images/home/secondary-button-bg.svg") no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 8px;
+    border: 1px solid #ffffff4d;
+    span {
+      color: #fff;
+    }
+  }
+
   .common-btn,
   .common-btn.el-button {
     background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center;
