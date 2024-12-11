@@ -286,7 +286,37 @@ const getGachapon = (t) => {
       //     type: "error",
       //     message: `Error fetching prizes: ${error.message}`
       // });
-      console.error("Error fetching prizes:", error);
+      // console.error("Error fetching prizes:", error);
+      // prizes.value = []
+      // if (t === "five") {
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // } else {
+
+      //   prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // }
+      // isPrizeModal.value = true
     })
     .finally(() => {
       // Always run (after success or error)
@@ -297,6 +327,7 @@ const getGachapon = (t) => {
 };
 const getBalance = () => {
   store.getBalance();
+  init();
   isPrizeModal.value = false;
 };
 const columns = [
@@ -843,6 +874,9 @@ onMounted(() => {
   padding: 140px 0 40px;
   background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
   background-size: contain;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
   .prizes {
     .prize {
       width: unset;
@@ -862,9 +896,9 @@ onMounted(() => {
   padding: 140px 0 40px;
   background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
   background-size: contain;
-  flex-direction: column;
-  height: 65vh;
-  max-height: 550px;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
   .prizes {
     align-items: flex-start;
     .prize {

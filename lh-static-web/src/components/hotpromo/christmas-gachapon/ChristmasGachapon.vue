@@ -294,6 +294,7 @@ const getGachapon = (t) => {
 };
 const getBalance = () => {
   store.getBalance();
+  init();
   isPrizeModal.value = false;
 };
 
