@@ -876,7 +876,7 @@ onMounted(() => {
   background-size: contain;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 540px;
   .prizes {
     .prize {
       width: unset;
@@ -898,7 +898,7 @@ onMounted(() => {
   background-size: contain;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 540px;
   .prizes {
     align-items: flex-start;
     .prize {
