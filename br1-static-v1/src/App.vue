@@ -17,7 +17,6 @@ import axios from "axios";
 import AOS from "aos";
 import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
-import Adjust, { getAttribution, waitForAttribution } from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "App",
