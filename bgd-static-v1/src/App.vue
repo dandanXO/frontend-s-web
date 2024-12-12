@@ -343,6 +343,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      console.log("bgd-static-v1 test")
       handleRedirect();
       // const info = await App.getInfo();
       // console.log("APP Info");
