@@ -2534,7 +2534,28 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
+          // hotGameList rearrange such that
+          // 1  2  3
+          // 4  5  6
+          // becomes
+          // 1  3  5
+          // 2  4  6
+          const row = 2;
+          const cols = Math.ceil(hotGameList.value.length / row);
+          const temp = [...hotGameList.value];
+
+          let index = 0;
+          for (let r = 0; r < row; r++) {
+            for (let c = 0; c < cols; c++) {
+              const originalIndex = c * row + r;
+              if (originalIndex < temp.length) {
+                hotGameList.value[index] = temp[originalIndex];
+                index++;
+              }
+            }
+          }
+
+          console.log("End", hotGameList.value);
           // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
