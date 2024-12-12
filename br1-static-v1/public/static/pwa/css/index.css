@@ -1220,6 +1220,143 @@ main {
   inset: 0;
 }
 
+/** popup modal - browser detect **/
+.modal-open {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+}
+
+.modal-div {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal-inner {
+  width: calc(100% - 80px);
+  min-width: 330px;
+  /* height: 200px; */
+  background: #fff;
+  border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-header {
+  border-radius: 10px 10px 0px 0px;
+  /* background: #40B6FC; */
+  /* background: #0da66b; */
+  /* height: 80px; */
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  /* color: #fff; */
+  color: #000000;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  padding: 16px 12px;
+}
+
+.modal-content {
+  color: #737373;
+  font-size: 14px;
+  padding: 0 12px 16px;
+}
+
+.modal-content .content-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.modal-content .content-logo img {
+  display: block;
+  width: 100%;
+  max-width: 48px;
+}
+
+.modal-input {
+  background: #f2f2f2;
+  /* height: 38px; */
+  border-radius: 10px;
+  width: calc(100% - 20px);
+  margin: 0 auto;
+  padding-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.url-input {
+  padding: 10px 12px;
+  box-sizing: border-box;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(100% - 60px);
+  text-overflow: ellipsis;
+  color: #31a46d;
+  font-weight: bold;
+}
+
+.copy-btn-input {
+  /* background: #40b6fc; */
+  background: #0da66b;
+  /* height: 100%; */
+  border-radius: 4px;
+  width: 120px;
+  padding: 10px 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  /* margin: 16px auto; */
+}
+
+.copy-btn-input:active {
+  filter: brightness(0.86);
+  transform: translate(0.5px, 1px);
+}
+
+.open-btn {
+  /* background: #40b6fc; */
+  background: #0da66b;
+  /* height: 100%; */
+  border-radius: 4px;
+  width: 260px;
+  padding: 10px 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 16px auto 16px;
+}
+
+.open-btn:active {
+  filter: brightness(0.86);
+  transform: translate(0.5px, 1px);
+}
+
 @keyframes loading-rotate {
   0% {
     transform: rotate(0);
