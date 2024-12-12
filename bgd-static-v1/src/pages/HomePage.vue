@@ -2555,7 +2555,7 @@ const loadHotGameList = () => {
             }
           }
 
-          console.log("End", hotGameList.value);
+          console.log("End");
           // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
