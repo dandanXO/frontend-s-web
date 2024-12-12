@@ -156,10 +156,24 @@ function detectDeviceAndBrowser() {
     unsupportedBrowsers.some((regex) => regex.test(userAgent)) ||
     (/samsungbrowser/.test(userAgent) && !/samsungbrowser\/(6|7|8|9|10|11|12|13|14)/.test(userAgent));
 
+  // const supportsServiceWorker = "serviceWorker" in navigator;
+  // const supportsCacheAPI = "caches" in window;
+  // const supportsPushManager = "PushManager" in window;
+
+  // alert(
+  //   `Service Worker: ${supportsServiceWorker}\nCache API: ${supportsCacheAPI}\nPush Manager: ${supportsPushManager}`
+  // );
+
+  document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
+  document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
+
   if (isIphone && !isSafari) {
     console.log("User is on iPhone but not using Safari.");
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-    document.querySelector(".modal-header span").textContent = "Please copy the following URL and paste it into Safari";
+    document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
+    document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
+    document.querySelector(".modal-open .content-text").textContent =
+      "Please copy the following URL and paste it into Safari";
   } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
     console.log("User is on Android but using an unsupported browser.");
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
