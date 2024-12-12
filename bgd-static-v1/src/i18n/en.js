@@ -191,7 +191,8 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    signinWithGoogle: "Sign-in with Google"
   },
   notify: {
     noRecord: "No Record",
