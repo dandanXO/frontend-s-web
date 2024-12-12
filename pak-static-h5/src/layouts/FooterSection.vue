@@ -53,6 +53,10 @@ const tab = ref("home");
 :deep(.q-tab--active) {
   position: relative;
 
+  .q-tab__indicator {
+    display: none;
+  }
+
   &::after {
     content: "";
     display: block;

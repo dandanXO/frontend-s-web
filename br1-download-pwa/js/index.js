@@ -117,4 +117,115 @@ window.addEventListener("load", () => {
     }
     loading.classList.remove("loading--show");
   }, 3000);
+
+  detectDeviceAndBrowser();
 });
+
+/** browser detect **/
+document.getElementById("id-url-input").textContent = window.location.href;
+
+function canInstallPWA() {
+  const isSecureContext = window.isSecureContext; // Check if the page is served over HTTPS
+  const supportsServiceWorker = "serviceWorker" in navigator; // Check Service Worker support
+  const supportsManifest =
+    document.head.querySelector('link[rel="manifest"]') !== null ||
+    document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content === "yes"; // Check for manifest or iOS web app capability
+  const isIosSafari =
+    /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase()) &&
+    /safari/.test(navigator.userAgent.toLowerCase()) &&
+    !/crios|fxios|chrome/.test(navigator.userAgent.toLowerCase()); // iOS Safari detection
+
+  // iOS Safari can install PWA without "BeforeInstallPromptEvent"
+  const supportsAddToHomeScreen = "BeforeInstallPromptEvent" in window || isIosSafari;
+
+  alert(`
+    isSecureContext: ${isSecureContext},
+supportsServiceWorker: ${supportsServiceWorker},
+supportsManifest: ${supportsManifest},
+isIosSafari: ${isIosSafari},
+supportsAddToHomeScreen: ${supportsAddToHomeScreen}
+    `);
+
+  return isSecureContext && supportsServiceWorker && supportsManifest && supportsAddToHomeScreen;
+}
+
+// Display logic
+function detectDeviceAndBrowser() {
+  // alert(canInstallPWA());
+  if (canInstallPWA()) {
+    console.log("Device and browser support PWA installation.");
+  } else {
+    console.log("Device or browser does not support PWA installation.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  }
+}
+
+// function detectDeviceAndBrowser() {
+//   const userAgent = navigator.userAgent.toLowerCase();
+
+//   // Device detection
+//   const isIphone = /iphone/.test(userAgent);
+//   const isAndroid = /android/.test(userAgent);
+//   const isPC = !isIphone && !isAndroid;
+
+//   // Browser detection
+//   const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
+//   const isChrome =
+//     (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
+//   const isFirefox = /firefox/.test(userAgent);
+//   const isEdge = /edg/.test(userAgent);
+
+//   // Unsupported browsers
+//   const unsupportedBrowsers = [
+//     /heytapbrowser/,
+//     /mibrowser/,
+//     /vivobrowser/,
+//     /miuibrowser/,
+//     /ucbrowser/,
+//     /qqbrowser/,
+//     /baidubrowser/,
+//     /opera mini/,
+//     /msie|trident/,
+//     /silk/
+//   ];
+//   const isUnsupportedBrowser =
+//     unsupportedBrowsers.some((regex) => regex.test(userAgent)) ||
+//     (/samsungbrowser/.test(userAgent) && !/samsungbrowser\/(6|7|8|9|10|11|12|13|14)/.test(userAgent));
+
+//   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
+//   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
+
+//   if (isIphone && !isSafari) {
+//     console.log("User is on iPhone but not using Safari.");
+//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+//     document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
+//     document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
+//     document.querySelector(".modal-open .content-text").textContent =
+//       "Please copy the following URL and paste it into Safari";
+//   } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
+//     console.log("User is on Android but using an unsupported browser.");
+//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+//   } else if (isPC && !isChrome && !isFirefox && !isEdge) {
+//     console.log("User is on PC but not using Chrome/Firefox/Edge.");
+//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+//   } else {
+//     console.log("No conditions met for displaying the modal.");
+//   }
+// }
+
+// Add click event listener to the element with id "id-copy-btn"
+document.getElementById("id-copy-btn").addEventListener("click", function () {
+  var textToCopy = document.getElementById("id-url-input").textContent;
+  copyTextToClipboard(textToCopy);
+  alert("URL copied successfully");
+});
+
+// Function to copy text to clipboard
+function copyTextToClipboard(text) {
+  var textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+}
