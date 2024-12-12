@@ -84,6 +84,7 @@ const tab = ref("home");
     }
 
     :deep(.q-tab__content) {
+      margin-top: 10px;
       align-content: center;
     }
   }
