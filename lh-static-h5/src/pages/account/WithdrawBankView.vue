@@ -259,7 +259,7 @@ const onUnbindClick = (card) => {
 };
 
 const getTitleText = () => {
-  const { bankType, bankCode } = selectedUnbindBankCard.value;
+  const { bankType, bankCode } = selectedUnbindBankCard.value || {};
 
   if (isAlipay(bankCode)) return "请输入解绑支付宝号";
   else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
@@ -289,7 +289,7 @@ const isAlipay = (bankID) => {
 };
 
 const unbindCardLabel = () => {
-  const { bankType, bankCode } = selectedUnbindBankCard.value;
+  const { bankType, bankCode } = selectedUnbindBankCard.value || {};
   if (isAlipay(bankCode)) return "支付宝号";
   else if (bankType === BANK_CARD) return "银行卡号";
   else if (bankType === CRYPTO) return "钱包地址";
