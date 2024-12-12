@@ -169,6 +169,29 @@ document.getElementById("id-url-input").textContent = window.location.href;
 //   }
 // }
 
+function isChromeInstalled() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isAndroid = /android/.test(userAgent);
+  const isHuawei = /huawei/.test(userAgent);
+
+  if (isAndroid && !isHuawei) {
+    const chromeIntentUrl = `intent://#Intent;scheme=https;package=com.android.chrome;end`;
+
+    // Attempt to open Chrome
+    window.location.href = chromeIntentUrl;
+
+    // Use a small timeout to determine if Chrome was launched
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // If window has not redirected, assume Chrome is not installed
+        resolve(!document.hidden);
+      }, 500); // Timeout of 500ms
+    });
+  }
+
+  return false;
+}
+
 function detectDeviceAndBrowser() {
   const userAgent = navigator.userAgent.toLowerCase();
 
@@ -183,6 +206,8 @@ function detectDeviceAndBrowser() {
     (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
   const isFirefox = /firefox/.test(userAgent);
   const isEdge = /edg/.test(userAgent);
+
+  // alert(userAgent);
 
   // Unsupported browsers
   const unsupportedBrowsers = [
@@ -204,21 +229,27 @@ function detectDeviceAndBrowser() {
   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
 
-  if (isIphone && !isSafari) {
-    console.log("User is on iPhone but not using Safari.");
-    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-    document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
-    document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
-    document.querySelector(".modal-open .content-text").textContent =
-      "Please copy the following URL and paste it into Safari";
-  } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
-    console.log("User is on Android but using an unsupported browser.");
-    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-  } else if (isPC && !isChrome && !isFirefox && !isEdge) {
-    console.log("User is on PC but not using Chrome/Firefox/Edge.");
-    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  // check this device got installed chrome app or not
+  if (isChromeInstalled() || isIphone || isPC) {
+    if (isIphone && !isSafari) {
+      console.log("User is on iPhone but not using Safari.");
+      document.getElementById("id-open-btn").style.display = "none";
+      document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+      document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
+      document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
+      document.querySelector(".modal-open .content-text").textContent =
+        "Please copy the following URL and paste it into Safari";
+    } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
+      console.log("User is on Android but using an unsupported browser.");
+      document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    } else if (isPC && !isChrome && !isFirefox && !isEdge) {
+      console.log("User is on PC but not using Chrome/Firefox/Edge.");
+      document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    } else {
+      console.log("No conditions met for displaying the modal.");
+    }
   } else {
-    console.log("No conditions met for displaying the modal.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
   }
 }
 
@@ -255,7 +286,7 @@ function openLinkInPreferredBrowser(url, newLink) {
   const isAndroid = /android/.test(userAgent);
 
   if (isIos) {
-    // For iOS, open the link in Safari (default browser)
+    // For iOS, open the link in Safari (default browser) // this will be now located in google chrome or firefox or ... just not in safari for here
     window.location.href = url;
   } else if (isAndroid) {
     // For Android, check if Chrome is installed using the intent:// scheme
