@@ -345,25 +345,20 @@
       </template>
       <div v-if="selectedWithdrawalMethod.tips" class="q-mt-md q-mb-sm" v-html="selectedWithdrawalMethod.tips"></div>
 
-      <div class="q-mt-lg step-desc-div q-mb-lg">
-        <!-- <p>
+      <div class="q-mt-sm step-desc-div q-mb-lg">
+        <p>
           {{ $t("withdraw.withdrawTutorial") }}
           <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
           /
           <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
-        </p> -->
-        <p>
-          1.Recharge Tutorial:
-          <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
-          /
-          <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
         </p>
-        <p>2.Fill in the correct payment wallet account number.</p>
-        <p>3.The submitted amount must match the payment amount; otherwise, it will not be automatically credited.</p>
+        <p>1.Bind your wallet/bank card using the correct format.</p>
+        <p>2.Daily wallet limit: BDT 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
         <p>
-          4.Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not
-          allowed.
+          3.Daily bank card limit: BDT 500,000. Do not exceed this limit. You can add multiple bank cards for
+          withdrawals.
         </p>
+        <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
       </div>
     </template>
 
@@ -854,23 +849,7 @@ const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialVideo = () => {
-  const code = selectedWithdrawalMethod.value.code;
-  console.log(code);
-  switch (code) {
-    case "BKASH":
-      window.open("https://drive.google.com/file/d/1haAPLN5eEiHYJ8XtxsuNjF1vTkQOw_VJ/view?usp=sharing", "_blank");
-      break;
-    case "NAGAD":
-      window.open("https://drive.google.com/file/d/1vOP9wv26V1Lizy8YfHFGwJ4nDYSkBxsW/view?usp=sharing", "_blank");
-      break;
-    case "ROCKET":
-      window.open("https://drive.google.com/file/d/1fatbGp3rvXLPb69NwNzrt0pwEI3FhOn_/view?usp=sharing", "_blank");
-      break;
-    case "UPAY":
-      window.open("https://drive.google.com/file/d/1Be1HauoKBExbjwxEf1ysrDFwmf93_vIu/view?usp=sharing", "_blank");
-      break;
-  }
-
+  window.open("https://drive.google.com/file/d/1yOJgpa4C9y7XFDacL52f4MoQ1lLw3Pm-/view?usp=drivesdk", "_blank");
   // if (langSelect === "ur") {
   //   window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
   // } else {
