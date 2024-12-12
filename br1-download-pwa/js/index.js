@@ -124,100 +124,118 @@ window.addEventListener("load", () => {
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
 
-function canInstallPWA() {
-  const isSecureContext = window.isSecureContext; // Check if the page is served over HTTPS
-  const supportsServiceWorker = "serviceWorker" in navigator; // Check Service Worker support
-  const supportsManifest =
-    document.head.querySelector('link[rel="manifest"]') !== null ||
-    document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content === "yes"; // Check for manifest or iOS web app capability
-  const isIosSafari =
-    /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase()) &&
-    /safari/.test(navigator.userAgent.toLowerCase()) &&
-    !/crios|fxios|chrome/.test(navigator.userAgent.toLowerCase()); // iOS Safari detection
-
-  // iOS Safari can install PWA without "BeforeInstallPromptEvent"
-  const supportsAddToHomeScreen = "BeforeInstallPromptEvent" in window || isIosSafari;
-
-  alert(`
-    isSecureContext: ${isSecureContext},
-supportsServiceWorker: ${supportsServiceWorker},
-supportsManifest: ${supportsManifest},
-isIosSafari: ${isIosSafari},
-supportsAddToHomeScreen: ${supportsAddToHomeScreen}
-    `);
-
-  return isSecureContext && supportsServiceWorker && supportsManifest && supportsAddToHomeScreen;
-}
-
-// Display logic
-function detectDeviceAndBrowser() {
-  // alert(canInstallPWA());
-  if (canInstallPWA()) {
-    console.log("Device and browser support PWA installation.");
-  } else {
-    console.log("Device or browser does not support PWA installation.");
-    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-  }
-}
-
-// function detectDeviceAndBrowser() {
-//   const userAgent = navigator.userAgent.toLowerCase();
-
-//   // Device detection
-//   const isIphone = /iphone/.test(userAgent);
-//   const isAndroid = /android/.test(userAgent);
-//   const isPC = !isIphone && !isAndroid;
-
-//   // Browser detection
-//   const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
-//   const isChrome =
-//     (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
-//   const isFirefox = /firefox/.test(userAgent);
-//   const isEdge = /edg/.test(userAgent);
-
-//   // Unsupported browsers
-//   const unsupportedBrowsers = [
-//     /heytapbrowser/,
-//     /mibrowser/,
-//     /vivobrowser/,
-//     /miuibrowser/,
-//     /ucbrowser/,
-//     /qqbrowser/,
-//     /baidubrowser/,
-//     /opera mini/,
-//     /msie|trident/,
-//     /silk/
-//   ];
-//   const isUnsupportedBrowser =
-//     unsupportedBrowsers.some((regex) => regex.test(userAgent)) ||
-//     (/samsungbrowser/.test(userAgent) && !/samsungbrowser\/(6|7|8|9|10|11|12|13|14)/.test(userAgent));
-
+// function canInstallPWA() {
 //   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
 //   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
 
-//   if (isIphone && !isSafari) {
-//     console.log("User is on iPhone but not using Safari.");
-//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+//   const isSecureContext = window.isSecureContext; // Check if the page is served over HTTPS
+//   const supportsServiceWorker = "serviceWorker" in navigator; // Check Service Worker support
+//   const supportsManifest =
+//     document.head.querySelector('link[rel="manifest"]') !== null ||
+//     document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content === "yes"; // Check for manifest or iOS web app capability
+//   const isIosSafari =
+//     /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase()) &&
+//     /safari/.test(navigator.userAgent.toLowerCase()) &&
+//     !/crios|fxios|chrome/.test(navigator.userAgent.toLowerCase()); // iOS Safari detection
+
+//   // iOS Safari can install PWA without "BeforeInstallPromptEvent"
+//   const supportsAddToHomeScreen = "BeforeInstallPromptEvent" in window || isIosSafari;
+
+//   alert(`
+//     isSecureContext: ${isSecureContext},
+//     supportsServiceWorker: ${supportsServiceWorker},
+//     supportsManifest: ${supportsManifest},
+//     isIosSafari: ${isIosSafari},
+//     supportsAddToHomeScreen: ${supportsAddToHomeScreen}
+//     `);
+
+//   if (isIosSafari) {
 //     document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
 //     document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
 //     document.querySelector(".modal-open .content-text").textContent =
 //       "Please copy the following URL and paste it into Safari";
-//   } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
-//     console.log("User is on Android but using an unsupported browser.");
-//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-//   } else if (isPC && !isChrome && !isFirefox && !isEdge) {
-//     console.log("User is on PC but not using Chrome/Firefox/Edge.");
-//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+//   }
+
+//   return isSecureContext && supportsServiceWorker && supportsManifest && supportsAddToHomeScreen;
+// }
+
+// Display logic
+// function detectDeviceAndBrowser() {
+//   if (canInstallPWA()) {
+//     console.log("Device and browser support PWA installation.");
 //   } else {
-//     console.log("No conditions met for displaying the modal.");
+//     console.log("Device or browser does not support PWA installation.");
+//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
 //   }
 // }
+
+function detectDeviceAndBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+
+  // Device detection
+  const isIphone = /iphone/.test(userAgent);
+  const isAndroid = /android/.test(userAgent);
+  const isPC = !isIphone && !isAndroid;
+
+  // Browser detection
+  const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
+  const isChrome =
+    (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
+  const isFirefox = /firefox/.test(userAgent);
+  const isEdge = /edg/.test(userAgent);
+
+  // Unsupported browsers
+  const unsupportedBrowsers = [
+    /heytapbrowser/,
+    /mibrowser/,
+    /vivobrowser/,
+    /miuibrowser/,
+    /ucbrowser/,
+    /qqbrowser/,
+    /baidubrowser/,
+    /opera mini/,
+    /msie|trident/,
+    /silk/
+  ];
+  const isUnsupportedBrowser =
+    unsupportedBrowsers.some((regex) => regex.test(userAgent)) ||
+    (/samsungbrowser/.test(userAgent) && !/samsungbrowser\/(6|7|8|9|10|11|12|13|14)/.test(userAgent));
+
+  document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
+  document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
+
+  if (isIphone && !isSafari) {
+    console.log("User is on iPhone but not using Safari.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
+    document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
+    document.querySelector(".modal-open .content-text").textContent =
+      "Please copy the following URL and paste it into Safari";
+  } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
+    console.log("User is on Android but using an unsupported browser.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  } else if (isPC && !isChrome && !isFirefox && !isEdge) {
+    console.log("User is on PC but not using Chrome/Firefox/Edge.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  } else {
+    console.log("No conditions met for displaying the modal.");
+  }
+}
 
 // Add click event listener to the element with id "id-copy-btn"
 document.getElementById("id-copy-btn").addEventListener("click", function () {
   var textToCopy = document.getElementById("id-url-input").textContent;
   copyTextToClipboard(textToCopy);
   alert("URL copied successfully");
+});
+
+// Add button trigger to PWA supported browser
+document.getElementById("id-open-btn").addEventListener("click", function () {
+  var textURL = document.getElementById("id-url-input").textContent;
+  openLinkInPreferredBrowser(
+    textURL,
+    "https://files.j9zwvu1ogrg.com/app/18/affiliate/1866429275899731969/android/apk/1.0.1_20241210184000.apk"
+  );
 });
 
 // Function to copy text to clipboard
@@ -228,4 +246,41 @@ function copyTextToClipboard(text) {
   textarea.select();
   document.execCommand("copy");
   document.body.removeChild(textarea);
+}
+
+// Function to openLink in Chrome / Safari
+function openLinkInPreferredBrowser(url, newLink) {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isIos = /iphone|ipad|ipod/.test(userAgent);
+  const isAndroid = /android/.test(userAgent);
+
+  if (isIos) {
+    // For iOS, open the link in Safari (default browser)
+    window.location.href = url;
+  } else if (isAndroid) {
+    // For Android, check if Chrome is installed using the intent:// scheme
+    const chromeIntentUrl = `intent://${url.replace(
+      /^https?:\/\//,
+      ""
+    )}#Intent;scheme=https;package=com.android.chrome;end`;
+
+    const fallbackTimer = setTimeout(() => {
+      // If Chrome is not installed, open the external link
+      window.open(newLink, "_blank");
+    }, 1500);
+
+    // Attempt to open in Chrome
+    window.location.href = chromeIntentUrl;
+
+    // Clear fallback if Chrome is detected
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        clearTimeout(fallbackTimer);
+      }
+    });
+  } else {
+    // For other platforms, open the link in the default browser
+    window.open(url, "_self");
+    alert("No supported browser found. App downloaded in apk format");
+  }
 }
