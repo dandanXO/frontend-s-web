@@ -125,6 +125,9 @@ window.addEventListener("load", () => {
 document.getElementById("id-url-input").textContent = window.location.href;
 
 function canInstallPWA() {
+  document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
+  document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
+
   const isSecureContext = window.isSecureContext; // Check if the page is served over HTTPS
   const supportsServiceWorker = "serviceWorker" in navigator; // Check Service Worker support
   const supportsManifest =
@@ -140,18 +143,22 @@ function canInstallPWA() {
 
   alert(`
     isSecureContext: ${isSecureContext},
-supportsServiceWorker: ${supportsServiceWorker},
-supportsManifest: ${supportsManifest},
-isIosSafari: ${isIosSafari},
-supportsAddToHomeScreen: ${supportsAddToHomeScreen}
+    supportsServiceWorker: ${supportsServiceWorker},
+    supportsManifest: ${supportsManifest},
+    isIosSafari: ${isIosSafari},
+    supportsAddToHomeScreen: ${supportsAddToHomeScreen}
     `);
+
+  if (isIosSafari) {
+    document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
+    document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
+  }
 
   return isSecureContext && supportsServiceWorker && supportsManifest && supportsAddToHomeScreen;
 }
 
 // Display logic
 function detectDeviceAndBrowser() {
-  // alert(canInstallPWA());
   if (canInstallPWA()) {
     console.log("Device and browser support PWA installation.");
   } else {
