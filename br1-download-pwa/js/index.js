@@ -199,7 +199,7 @@ function detectDeviceAndBrowser() {
   const isIphone = /iphone/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
   const isHuawei = /huawei/.test(userAgent);
-  const isPC = !isIphone && !isAndroid;
+  const isPC = !isIphone && !isAndroid && !isHuawei;
 
   // Browser detection
   const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
@@ -286,7 +286,6 @@ function openLinkInPreferredBrowser(url, newLink) {
   const isAndroid = /android/.test(userAgent);
 
   if (isIos) {
-    // For iOS, open the link in Safari (default browser) // this will be now located in google chrome or firefox or ... just not in safari for here
     window.location.href = url;
   } else if (isAndroid) {
     // For Android, check if Chrome is installed using the intent:// scheme
