@@ -117,4 +117,72 @@ window.addEventListener("load", () => {
     }
     loading.classList.remove("loading--show");
   }, 3000);
+
+  detectDeviceAndBrowser();
 });
+
+/** browser detect **/
+document.getElementById("id-url-input").textContent = window.location.href;
+
+function detectDeviceAndBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+
+  // Device detection
+  const isIphone = /iphone/.test(userAgent);
+  const isAndroid = /android/.test(userAgent);
+  const isPC = !isIphone && !isAndroid;
+
+  // Browser detection
+  const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
+  const isChrome =
+    (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
+  const isFirefox = /firefox/.test(userAgent);
+  const isEdge = /edg/.test(userAgent);
+
+  // Unsupported browsers
+  const unsupportedBrowsers = [
+    /heytapbrowser/,
+    /mibrowser/,
+    /vivobrowser/,
+    /ucbrowser/,
+    /qqbrowser/,
+    /baidubrowser/,
+    /opera mini/,
+    /msie|trident/,
+    /silk/
+  ];
+  const isUnsupportedBrowser =
+    unsupportedBrowsers.some((regex) => regex.test(userAgent)) ||
+    (/samsungbrowser/.test(userAgent) && !/samsungbrowser\/(6|7|8|9|10|11|12|13|14)/.test(userAgent));
+
+  if (isIphone && !isSafari) {
+    console.log("User is on iPhone but not using Safari.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    document.querySelector(".modal-header span").textContent = "Please copy the following URL and paste it into Safari";
+  } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
+    console.log("User is on Android but using an unsupported browser.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  } else if (isPC && !isChrome && !isFirefox && !isEdge) {
+    console.log("User is on PC but not using Chrome/Firefox/Edge.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  } else {
+    console.log("No conditions met for displaying the modal.");
+  }
+}
+
+// Add click event listener to the element with id "id-copy-btn"
+document.getElementById("id-copy-btn").addEventListener("click", function () {
+  var textToCopy = document.getElementById("id-url-input").textContent;
+  copyTextToClipboard(textToCopy);
+  alert("URL copied successfully");
+});
+
+// Function to copy text to clipboard
+function copyTextToClipboard(text) {
+  var textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+}
