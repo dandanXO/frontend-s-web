@@ -727,6 +727,9 @@ a {
       justify-content: flex-start;
       align-items: center;
       margin-bottom: 15px;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 700;
       &:before {
         background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
         content: "";
@@ -735,9 +738,6 @@ a {
         display: inline-block;
         margin-right: 10px;
       }
-      color: #ffffff;
-      font-size: 20px;
-      font-weight: 700;
     }
   }
 }

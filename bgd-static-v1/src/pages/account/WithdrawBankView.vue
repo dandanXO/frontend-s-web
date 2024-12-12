@@ -73,7 +73,7 @@
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
           <span>+ {{ $t("btn.addVirtualWallet") }}</span>
         </div>
-        <div style="display: none" class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
           <span>+ {{ $t("btn.addCrypto") }}</span>
         </div>

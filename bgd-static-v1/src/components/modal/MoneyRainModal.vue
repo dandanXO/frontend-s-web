@@ -3,11 +3,8 @@
     <span v-for="n in 190" :key="n"></span>
   </div>
 
-  <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
-    <img src="../../assets/images/index/money-rain/money-content-events.png" />
-  </div>
-  <div class="rain-money-bg" v-if="moneyRainTab === 'records'">
-    <img src="../../assets/images/index/money-rain/money-content-records.png" />
+  <div class="rain-money-bg">
+    <img src="../../assets/images/index/money-rain/money-content.png" />
   </div>
   <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
 
@@ -438,14 +435,19 @@ onMounted(() => {
   }
 }
 
+.rain-money-tab-content::-webkit-scrollbar {
+  display: none;
+}
+
 .rain-money-tab-content {
-  background: #00d461;
+  background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
   min-height: 30dvh;
   height: calc(100dvh - 450px);
   overflow-y: auto;
   padding: 16px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  scrollbar-width: none;
 
   .content-footer {
     margin-top: 12px;

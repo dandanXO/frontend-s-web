@@ -108,6 +108,11 @@
       v-if="list.redirectUrl === 'lh1-valorant-champion-tour-2024'"
       :promo-code="list.promoCode"
     />
+    <ChristmasGachapon
+      v-if="list.redirectUrl === 'lh1-christmas-gashapon'"
+      :promo-code="list.promoCode"
+      :promo-rules="list.pageContent"
+    />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -221,6 +226,7 @@ import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import PokerWinningPromo from "@/components/hotpromo/poker-winning/PokerWinningPromo.vue";
 import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue";
 import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue";
+import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 
 export default defineComponent({
@@ -318,7 +324,8 @@ export default defineComponent({
     ElisaGift,
     PokerWinningPromo,
     SlotLossBonusPromo,
-    ValorantChampionTour2024
+    ValorantChampionTour2024,
+    ChristmasGachapon
   },
   props: {
     list: {

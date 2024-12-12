@@ -134,7 +134,7 @@
         v-if="form.type === 'IMG'"
       >
         <el-row :gutter="5">
-          <el-col v-if="form.desktopImgUrl" :span="18" style="width: 250px">
+          <el-col v-if="form.desktopImgUrl" :span="12" style="width: 250px">
             <el-image
               v-if="form.desktopImgUrl"
               :src="promoDir + form.desktopImgUrl"
@@ -143,7 +143,7 @@
               :preview-src-list="[promoDir + form.desktopImgUrl]"
             />
           </el-col>
-          <el-col :span="form.desktopImgUrl ? 6 : 24">
+          <el-col :span="form.desktopImgUrl ? 12 : 24" style="display: flex;justify-content: center;align-items: center;">
             <el-button
               icon="el-icon-plus"
               size="mini"
@@ -171,7 +171,7 @@
         v-if="form.type === 'IMG'"
       >
         <el-row :gutter="5">
-          <el-col v-if="form.mobileImgUrl" :span="18" style="width: 250px">
+          <el-col v-if="form.mobileImgUrl" :span="12" style="width: 250px">
             <el-image
               v-if="form.mobileImgUrl"
               :src="promoDir + form.mobileImgUrl"
@@ -180,7 +180,7 @@
               :preview-src-list="[promoDir + form.mobileImgUrl]"
             />
           </el-col>
-          <el-col :span="form.desktopImgUrl ? 6 : 24">
+          <el-col :span="form.desktopImgUrl ? 12 : 24" style="display: flex;justify-content: center;align-items: center;">
             <el-button
               icon="el-icon-plus"
               size="mini"
@@ -468,7 +468,7 @@
         />
       </el-form-item>
       <div class="dialog-footer">
-        <el-button @click="uiControl.dialogVisible = false">
+        <el-button @click="uiControl.imageDialogVisible = false">
           {{ t('fields.cancel') }}
         </el-button>
         <el-button type="primary" @click="submitImageUpload">
@@ -814,7 +814,14 @@ function showImageDialog(type) {
     imageForm.id = null
   }
   imageForm.category = 'PROMO'
+  if (type === 'DESKTOP_IMAGE') {
+    uiControl.imageSelectionType = 'DESKTOP'
+  } else {
+    uiControl.imageSelectionType = 'MOBILE'
+  }
+
   imageForm.promoType = type
+  imageForm.siteId = imageRequest.siteId
   uiControl.imageDialogTitle = t('fields.addImage')
   uiControl.imageDialogVisible = true
 }
@@ -863,6 +870,15 @@ function submitImageUpload() {
       await createSiteImage(imageForm)
       uiControl.imageDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
+
+      selectImage({
+        id: imageForm.id,
+        name: imageForm.name,
+        path: `${imageForm.siteId}/${imageForm.path}`,
+        remark: imageForm.remark,
+        siteName: ''
+      })
+      submitImage()
     }
   })
 }
@@ -897,7 +913,8 @@ watch(
 )
 onMounted(async () => {
   await loadSites()
-  imageRequest.siteId = siteList.list[0].id
+  imageRequest.siteId = store.state.user.siteId
+  form.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
   }

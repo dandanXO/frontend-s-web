@@ -245,11 +245,15 @@
           /
           <span class="tutorial-link" @click="openDepositVideo">Video</span>
         </p>
-        <p>2. Fill in the correct wallet account number</p>
-        <p>3. Fill in the correct CNIC number</p>
+        <p>2. Fill in the correct payment wallet account number.</p>
         <p>
-          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-          credited.
+          3. The submitted amount must match the payment amount; otherwise, it will not be automatically credited.
+          <br />
+          After completing the payment, please fill in the TrxID to avoid automatic credit failures.
+        </p>
+        <p>
+          4. Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not
+          allowed.
         </p>
 
         <!--        <p>-->
@@ -930,11 +934,26 @@ const openDepositPage = () => {
 };
 
 const openDepositVideo = () => {
-  if (langSelect === "ur") {
-    window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
-  } else {
-    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+  const code = selectedPayType.value;
+  switch (code) {
+    case "BKASH":
+      window.open("https://drive.google.com/file/d/1haAPLN5eEiHYJ8XtxsuNjF1vTkQOw_VJ/view?usp=sharing", "_blank");
+      break;
+    case "NAGAD":
+      window.open("https://drive.google.com/file/d/1vOP9wv26V1Lizy8YfHFGwJ4nDYSkBxsW/view?usp=sharing", "_blank");
+      break;
+    case "ROCKET":
+      window.open("https://drive.google.com/file/d/1fatbGp3rvXLPb69NwNzrt0pwEI3FhOn_/view?usp=sharing", "_blank");
+      break;
+    case "UPAY":
+      window.open("https://drive.google.com/file/d/1Be1HauoKBExbjwxEf1ysrDFwmf93_vIu/view?usp=sharing", "_blank");
+      break;
   }
+  // if (langSelect === "ur") {
+  //   window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  // } else {
+  //   window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+  // }
   // if (selectedPayType.value === "EASYPAISA") {
   //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
   // } else if (selectedPayType.value === "JAZZCASH") {

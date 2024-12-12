@@ -9,7 +9,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { useUI } from "src/stores/ui";
@@ -106,6 +106,7 @@ export default defineComponent({
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
+          logLevel: "verbose",
           attributionCallback: function (e, attribution) {
             // e: internal event name, can be ignored
             // attribution: details about the changed attribution
@@ -115,16 +116,20 @@ export default defineComponent({
           }
         });
         setTimeout(() => {
-          const attribution = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          console.log(attribution);
-          store.aaid = attribution ? attribution.adid : "";
-        }, 500);
+          AdjustWeb.waitForWebUUID().then((webUuid) => {
+            console.log("Web UUid");
+            console.log(webUuid);
+            store.aaid = webUuid ? webUuid : "";
+          });
+        }, 100);
       }
     };
 
     const trackH5Affiliate = () => {
       var affiliateCode = "C402D4";
+      if (isInPwa()) {
+        affiliateCode = "6805B0";
+      }
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
@@ -137,7 +142,6 @@ export default defineComponent({
           }
           affAppToken.value = res.data.adjust_app_token;
           initAdjustEventTrack();
-          // alert(affAppToken.value);
         }
       });
     };
@@ -170,7 +174,6 @@ export default defineComponent({
                         }
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
-                        // alert(affAppToken.value);
                       }
                     });
                   }
