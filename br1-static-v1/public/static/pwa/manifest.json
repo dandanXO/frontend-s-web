@@ -94,7 +94,7 @@
   "orientation": "portrait",
   "background_color": "#131313",
   "theme_color": "#131313",
-  "scope": "./",
+  "scope": "/",
   "screenshots": [
     {
       "src": "images/screenshot1.png",
