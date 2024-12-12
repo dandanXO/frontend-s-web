@@ -93,11 +93,15 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "SETTLED") {
     return "已结算"; // Settled
   } else if (rec === 1) {
+    console.log(rec);
+    console.log(type);
     if (type == "reminder") {
       return "进行中";
     }
     return "存款"; // 存款
   } else if (rec === 2) {
+    console.log(rec);
+    console.log(type);
     if (type == "reminder") {
       return "完成";
     }
