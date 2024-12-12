@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="nickname">{{ store.realName ? store.realName : (store.displayName ? store.displayName : store.nickName) }}</div>
+      <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
     </div>
 
     <div class="right-container">
@@ -74,9 +74,6 @@ const randomProfileImg = computed(() => {
 });
 
 const profileImagePath = computed(() => {
-  if (store.profilePicture) {
-    return store.profilePicture
-  }
   return require(`../assets/images/account/${randomProfileImg.value}.png`);
 });
 </script>

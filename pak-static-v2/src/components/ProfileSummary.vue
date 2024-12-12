@@ -376,9 +376,6 @@ const randomProfileImg = computed(() => {
 });
 
 const profileImagePath = computed(() => {
-  if (store.profilePicture) {
-    return store.profilePicture
-  }
   return require(`../assets/images/account/${randomProfileImg.value}.png`);
 });
 

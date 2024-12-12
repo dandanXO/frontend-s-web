@@ -534,11 +534,6 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
-const guestLoginInfo = reactive({
-  sid: "",
-  way: "ANDROID"
-});
-
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
