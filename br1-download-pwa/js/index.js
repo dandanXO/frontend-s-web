@@ -144,6 +144,7 @@ function detectDeviceAndBrowser() {
     /heytapbrowser/,
     /mibrowser/,
     /vivobrowser/,
+    /miuibrowser/,
     /ucbrowser/,
     /qqbrowser/,
     /baidubrowser/,
