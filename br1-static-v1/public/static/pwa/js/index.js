@@ -198,6 +198,7 @@ function detectDeviceAndBrowser() {
   // Device detection
   const isIphone = /iphone/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
+  const isHuawei = /huawei/.test(userAgent);
   const isPC = !isIphone && !isAndroid;
 
   // Browser detection
@@ -230,26 +231,25 @@ function detectDeviceAndBrowser() {
   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
 
   // check this device got installed chrome app or not
-  if (isChromeInstalled() || isIphone || isPC) {
-    if (isIphone && !isSafari) {
-      console.log("User is on iPhone but not using Safari.");
-      document.getElementById("id-open-btn").style.display = "none";
-      document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-      document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
-      document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
-      document.querySelector(".modal-open .content-text").textContent =
-        "Please copy the following URL and paste it into Safari";
-    } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
-      console.log("User is on Android but using an unsupported browser.");
-      document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-    } else if (isPC && !isChrome && !isFirefox && !isEdge) {
-      console.log("User is on PC but not using Chrome/Firefox/Edge.");
-      document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-    } else {
-      console.log("No conditions met for displaying the modal.");
-    }
-  } else {
+  if (isIphone && !isSafari) {
+    console.log("User is on iPhone but not using Safari.");
+    document.getElementById("id-open-btn").style.display = "none";
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
+    document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
+    document.querySelector(".modal-open .content-text").textContent =
+      "Please copy the following URL and paste it into Safari";
+  } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
+    console.log("User is on Android but using an unsupported browser.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  } else if (isPC && !isChrome && !isFirefox && !isEdge) {
+    console.log("User is on PC but not using Chrome/Firefox/Edge.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  } else if (isHuawei) {
+    console.log("User is on Huawei.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+  } else {
+    console.log("No conditions met for displaying the modal.");
   }
 }
 
