@@ -1402,6 +1402,10 @@
     <CongratsModal />
   </q-dialog>
 
+  <q-dialog v-model="isCongratsModalV2">
+    <CongratsModalV2 />
+  </q-dialog>
+
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
@@ -1421,6 +1425,10 @@
   <q-dialog v-model="isMoneyRainModal">
     <MoneyRainModal />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
+
+  <q-dialog v-model="isNameAuthModal">
+    <NameAuthModal @closeDialog="isNameAuthModal = false" />
   </q-dialog>
 
   <q-dialog v-model="isMediaSettingsModal">
@@ -1449,6 +1457,7 @@ import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
+import CongratsModalV2 from "../components/modal/CongratsModalV2.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
@@ -1471,6 +1480,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swipe
 // import {Grid} from 'swiper/modules'
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import NameAuthModal from "src/components/modal/NameAuthModal.vue";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -1484,8 +1494,10 @@ const store = userStore();
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
+const isCongratsModalV2 = ref(false);
 const isShowPrizeModal = ref(false);
 const isMoneyRainModal = ref(false);
+const isNameAuthModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const h5Url = store.h5Url;
 
@@ -3714,6 +3726,7 @@ const showCongratsModal = () => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         isCongratsModal.value = true;
+        isCongratsModalV2.value = true;
       }
     }
   });
