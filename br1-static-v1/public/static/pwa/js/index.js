@@ -295,20 +295,20 @@ function openLinkInPreferredBrowser(url, newLink) {
       ""
     )}#Intent;scheme=https;package=com.android.chrome;end`;
 
-    const fallbackTimer = setTimeout(() => {
-      // If Chrome is not installed, open the external link
-      window.open(newLink, "_blank");
-    }, 1500);
+    // const fallbackTimer = setTimeout(() => {
+    //   // If Chrome is not installed, open the external link
+    //   window.open(newLink, "_blank");
+    // }, 1500);
 
     // Attempt to open in Chrome
     window.location.href = chromeIntentUrl;
 
     // Clear fallback if Chrome is detected
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") {
-        clearTimeout(fallbackTimer);
-      }
-    });
+    // document.addEventListener("visibilitychange", () => {
+    //   if (document.visibilityState === "hidden") {
+    //     clearTimeout(fallbackTimer);
+    //   }
+    // });
   } else {
     // For other platforms, open the link in the default browser
     alert("No supported browser found. App downloaded in apk format");
