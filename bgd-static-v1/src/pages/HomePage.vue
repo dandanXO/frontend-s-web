@@ -102,6 +102,7 @@
         <!--        </div>-->
         <div>
           <q-carousel
+            v-if="hbPromo.length > 0"
             class="hb-float"
             :navigation="hbPromo.length > 1 ? true : false"
             v-model="hbSlide"
@@ -197,14 +198,15 @@
               <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Hot">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Hot">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
 
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+          <div class="platform-game-wrapper lobby-platform-game" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
+              :grid="{ rows: 2, fill: 'row' }"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -386,7 +388,7 @@
               <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Live">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Live">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -394,7 +396,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <div class="platform-game-container live-casino">
               <div
-                v-for="(item, index) in livecasino.slice(0, 3)"
+                v-for="(item, index) in livecasino"
                 :key="index"
                 data-aos="zoom-in"
                 :data-aos-delay="100 * index"
@@ -403,7 +405,7 @@
                 data-aos-anchor="#hotgames"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/live/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.png" />
                 <div
                   class="platform-live-item--img"
                   :style="{
@@ -425,59 +427,6 @@
                 </div>
               </div>
             </div>
-            <!-- <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="15"
-              :scrollbar="{
-                hide: true
-              }"
-              :grid="{
-                rows: 2,
-                fill: 'row'
-              }"
-              :modules="[...gameModules, Grid]"
-              class="platform-game-container live-casino"
-              :style="{ height: '295px' }"
-            >
-              <template v-for="(item, index) in livecasino" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  :style="{ height: '140px' }"
-                >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#hotgames"
-                  >
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </swiper-slide>
-              </template>
-            </swiper> -->
           </div>
 
           <div class="platform-game-wrapper" v-else>
@@ -488,7 +437,7 @@
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
                       :style="{
@@ -529,14 +478,14 @@
               <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Slot">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Slot">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -593,7 +542,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -651,14 +600,14 @@
               <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_poker") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Poker">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Poker">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -712,7 +661,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -774,7 +723,7 @@
 
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -973,7 +922,7 @@
               <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Fish">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Fish">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -1049,7 +998,7 @@
               <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_sport") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Sport">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Sport">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -1405,7 +1354,7 @@
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-money.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
       <div class="congrats-highlight">{{ store.currency.label }}28</div>
 
@@ -1474,7 +1423,7 @@ import { useCustomerTrigger } from "src/hooks/trigger";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
-const gameModules = ref([Scrollbar, Navigation, Pagination]);
+const gameModules = ref([Grid, Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 const route = useRoute();
@@ -1528,6 +1477,10 @@ const activeCategoryLabel = computed(() => {
 // };
 
 const activateSlide = (item) => {
+  if (item.title === "Lobby") {
+    router.push("/home");
+    window.history.replaceState({}, document.title, "/home");
+  }
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
   if (category) {
@@ -2867,12 +2820,12 @@ const pokerGameJILIList = ref([
 
 const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JILI_FISH_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JILI_FISH_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 8,
             gameType: "FISH",
@@ -2895,12 +2848,12 @@ const loadJILIFishGameList = () => {
 
 const loadJILIPokerhGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JILI_POKER_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JILI_POKER_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 8,
             gameType: "POKER",
@@ -2994,12 +2947,12 @@ const fishGameJDBList = ref([
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JDB_FISH_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JDB_FISH_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 31,
             gameType: "FISH",
@@ -3042,13 +2995,13 @@ const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const code = id;
   const gameType = type;
-  const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+  const key = `${platformGamesApiKey}_GAMES_${code}_${gameType}_${regDevice}`;
 
   // cached
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: code,
             gameType: gameType,
@@ -3126,6 +3079,9 @@ function loadData() {
 
 var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
 var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+var platformGamesApiKey = store.hasToken() ? "LOGGEDPLATFORMGAMES" : "PLATFORMGAMES";
 
 const getPlatList = () => {
   cached
@@ -4747,22 +4703,26 @@ const showCongratsModal = () => {
     padding-top: 8px;
     margin-bottom: 0px;
     display: grid;
-    grid-template-columns: 51fr 54fr;
+    grid-template-columns: 51fr repeat(1, 54fr);
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
-    width: 100%;
+    //width: 100%;
     box-sizing: border-box;
-    max-width: 100%;
     min-height: 100px;
     column-gap: 6px;
     row-gap: 8px;
+    overflow-x: scroll;
+
+    > div {
+      min-width: min(250px, calc(50vw - 16px));
+    }
 
     .platform-live-item--img {
       background-size: 100% 100%;
     }
 
     img {
-      max-width: 140px;
+      //max-width: 140px;
       border-radius: 8px;
     }
     .burning-hot {
@@ -4782,6 +4742,10 @@ const showCongratsModal = () => {
         background-size: 100% 100%;
       }
     }
+  }
+
+  .img-maintenance {
+    border-radius: 12px;
   }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
@@ -4808,6 +4772,10 @@ const showCongratsModal = () => {
 
     .platform-game-item--img {
       border-radius: 8px;
+    }
+
+    .burning-hot {
+      right: 8px;
     }
   }
 
@@ -5216,7 +5184,9 @@ const showCongratsModal = () => {
 }
 
 .congrats-container {
-  background-color: #113413;
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -5344,5 +5314,9 @@ const showCongratsModal = () => {
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+.lobby-platform-game .swiper-wrapper {
+  height: fit-content;
 }
 </style>

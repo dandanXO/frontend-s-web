@@ -5,12 +5,14 @@ html {
   width: 100%;
   margin: 0 auto;
   font-size: calc(100vw / 31.25); // 500 / 16 = 31.25
+  overscroll-behavior-x: none;
 }
 // app global css in SCSS form
 body {
   font-family: "Manrope", sans-serif;
   background: #ffffff;
   letter-spacing: 1px;
+  overscroll-behavior-x: none;
 }
 #q-app {
   background-color: #131313;
@@ -280,6 +282,7 @@ body.body--dark .q-footer {
     aspect-ratio: 1077 / 255;
     // padding-bottom: 10px;
     // padding-top: 16px;
+    height: 100px;
   }
 }
 .q-footer .q-tab {
@@ -323,8 +326,8 @@ body.body--dark .q-footer {
     }
 
     img {
-      height: 70px;
-      width: 70px;
+      height: 64px;
+      width: 64px;
     }
 
     &:before {
@@ -344,7 +347,7 @@ body.body--dark .q-footer {
   .footer-big-img {
     // box-shadow: 0px 0px 25px #00ff7563;
     border-radius: 50%;
-    margin-top: 8px;
+    height: 65px;
 
     img {
       // transform: scale(2);
@@ -394,11 +397,6 @@ body.body--dark .q-footer {
         display: block;
       }
     }
-  }
-
-  .footer-label {
-    padding-top: 10px;
-    display: none;
   }
 }
 .q-splitter--dark .q-splitter__separator {

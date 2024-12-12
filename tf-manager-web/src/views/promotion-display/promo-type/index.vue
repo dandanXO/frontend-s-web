@@ -966,6 +966,15 @@ function submitImageUpload() {
       await createSiteImage(imageForm)
       uiControl.uploadDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
+
+      selectImage({
+        id: imageForm.id,
+        name: imageForm.name,
+        path: `${imageForm.siteId}/${imageForm.path}`,
+        remark: imageForm.remark,
+        siteName: ''
+      })
+      submitImage()
     }
   })
 }

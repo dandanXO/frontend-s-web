@@ -431,6 +431,24 @@ export default defineComponent({
           })
           .catch(() => {
           })
+      } else if(isALIPAY.value){
+      ElMessageBox.alert(
+        '请先绑定支付宝卡', "系统提示",
+        {
+          showClose: false,
+          showCancelButton: false,
+          confirmButtonText: '确认',
+          draggable: false,
+          buttonSize: 'small',
+          closeOnClickModal: false,
+          center: true,
+        }
+      )
+        .then(() => {
+          router.push('/center/withdrawbank')
+        })
+        .catch(() => {
+        })
       } else{
         ElMessageBox.alert(
           '请先绑定银行卡', "系统提示",
@@ -514,7 +532,13 @@ export default defineComponent({
           if(isAutoWithdrawal.value) {
             isShowRemainingDialog.value = !response.data.withdrawStatus
           }
-          withdrawalMethods.value = response.data.withdrawShowList;
+          const withdrawShowList = []
+          response.data.withdrawShowList.forEach(element => {
+            if (element.status) {
+              withdrawShowList.push(element)
+            }
+          });
+          withdrawalMethods.value = withdrawShowList;
           if (withdrawalMethods.value.length) {
             selectMethod(withdrawalMethods.value[0], 0)
           }
@@ -528,6 +552,8 @@ export default defineComponent({
         return '钱包地址'
       } else if (isEWALLET.value) {
         return '电子钱包'
+      } else if (isALIPAY.value) {
+        return '支付宝'  
       } else {
         return '银行卡'
       }

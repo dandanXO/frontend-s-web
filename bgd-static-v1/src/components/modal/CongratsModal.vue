@@ -3,7 +3,7 @@
   <div class="congrats-container">
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
     <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
-    <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-coupons.png" /></div>
+    <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-money.png" /></div>
     <div class="congrats-title">{{ $t("home.popup.getFreeLuckyDraw") }}</div>
     <div class="congrats-highlight">{{ $t("home.popup.downloadAppLoginAcc") }}</div>
 
@@ -37,7 +37,9 @@ const ui = useUI();
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
   max-width: 400px;
   width: 100%;
   padding: 16px;

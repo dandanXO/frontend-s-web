@@ -12,6 +12,7 @@ import {
 } from "../../../api/user";
 import { ElMessage } from "element-plus";
 import i18n from "../../../i18n/index";
+import { getSiteTitle } from "../../../utils/site";
 
 export const actions = {
   async [UserActionTypes.ACTION_LOGIN](
@@ -57,6 +58,7 @@ export const actions = {
       throw Error("token is undefined!");
     }
     const { data: loginInfo } = await userInfoRequest();
+    document.title = getSiteTitle(loginInfo.siteId);
     commit(UserMutationTypes.SET_LOGIN_USER, loginInfo);
   },
 

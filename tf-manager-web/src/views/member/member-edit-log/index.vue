@@ -390,6 +390,7 @@ const uiControl = reactive({
     { key: 9, displayName: 'Member Type', value: 'MEMBER_TYPE' },
     { key: 10, displayName: 'Financial Level', value: 'FINANCIAL_LEVEL' },
     { key: 11, displayName: 'Withdraw Password', value: 'WITHDRAW_PASSWORD' },
+    { key: 12, displayName: 'Withdraw Type', value: 'WITHDRAW_TYPE' }
   ],
 })
 const request = reactive({

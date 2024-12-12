@@ -74,7 +74,8 @@
             selectedPromo.promoCode !== 'lh1-game-steps' &&
             selectedPromo.promoCode !== 'lh1-ftd-promo' &&
             selectedPromo.promoCode !== 'lh1-aijiasu' &&
-            selectedPromo.promoCode !== 'lh1-eurocup-regen'
+            selectedPromo.promoCode !== 'lh1-eurocup-regen' &&
+            selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'
           "
         >
           <div class="promo-bg isDesktop">
@@ -140,7 +141,8 @@
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
               selectedPromo.promoCode === 'lh1-intel-esl' ||
               selectedPromo.promoCode === 'lh1-aijiasu' ||
-              selectedPromo.promoCode === 'lh1-eurocup-regen',
+              selectedPromo.promoCode === 'lh1-eurocup-regen' ||
+              selectedPromo.redirectUrl === 'lh1-christmas-gashapon',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024',
@@ -170,7 +172,7 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
               <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
-            <div v-html="selectedPromo.pageContent"></div>
+            <div v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'" v-html="selectedPromo.pageContent"></div>
           </div>
           <div
             v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"

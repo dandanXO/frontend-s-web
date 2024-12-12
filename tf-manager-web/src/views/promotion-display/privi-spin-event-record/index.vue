@@ -41,13 +41,13 @@
           v-model="request.bonusName"
           size="small"
           style="width: 200px"
-          :placeholder="t('fields.name')"
+          :placeholder="t('fields.giftName')"
         />
         <el-input
-          v-model="request.code"
+          v-model="request.privilegeName"
           size="small"
           style="width: 200px"
-          :placeholder="t('fields.code')"
+          :placeholder="t('fields.privilegeName')"
         />
         <el-select
           v-model="request.status"
@@ -93,15 +93,25 @@
       >
         <el-table-column prop="loginName" :label="t('fields.loginName')" min-width="150">
           <template #default="scope">
-            <span v-if="scope.row.loginName === null">-</span>
-            <span v-if="scope.row.loginName !== null">{{ scope.row.loginName }}</span>
+            <router-link
+              :to="`/member/details/${scope.row.memberId}?site=${scope.row.siteId}`"
+              v-if="hasPermission(['sys:member:detail'])"
+            >
+              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+            </router-link>
+            <span v-else> {{ scope.row.loginName }} </span>
           </template>
         </el-table-column>
+        <el-table-column prop="privilegeName" :label="t('fields.privilegeName')" min-width="100" />
         <el-table-column prop="bonus" :label="t('fields.bonus')" min-width="100" />
-        <el-table-column prop="bonusName" :label="t('fields.name')" min-width="100" />
+        <el-table-column prop="bonusName" :label="t('fields.giftName')" min-width="100" />
         <el-table-column prop="status" :label="t('fields.status')" min-width="100">
           <template #default="scope">
-            {{ t('spinEventStatus.'+scope.row.status) }}
+            <el-tag v-if="scope.row.status === 'SYSTEM'" type="warning" size="mini">{{ t('spinEventStatus.'+scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'USER_EXCHANGE'" type="primary" size="mini">{{ t('spinEventStatus.'+scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'CLAIMED'" type="success" size="mini">{{ t('spinEventStatus.'+scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'PENDING'" type="danger" size="mini">{{ t('spinEventStatus.'+scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === null" type="info" size="mini">-</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="recordTime" :label="t('fields.recordTime')" min-width="200">
@@ -123,6 +133,7 @@
         align="right"
         fixed="right"
         width="200"
+        v-permission="['sys:privi:spin-event-record:edit']"
       >
         <template #default="scope">
           <el-button
@@ -253,6 +264,7 @@ import moment from "moment";
 import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { addPriviSpinEventRecord, getPriviSpinEventRecordList, updatePriviSpinEventRecord } from "../../../api/privi-spin-event-record";
 import { ElMessage } from "element-plus";
+import { hasPermission } from '../../../utils/util'
 let timeZone = null
 
 const { t } = useI18n();

@@ -8,8 +8,8 @@
       <div v-html="mail.content.replace(/\n/g, '<br/>')" />
     </div>
     <div class="mail-detail-action-wrapper">
-      <q-btn v-if="mail.redirectType !== 'NONE'" class="common-large-btn" @click="handleRedirectClick">
-        {{ mail?.redirectButton ?? "立即前往" }}
+      <q-btn v-if="mail?.redirectType && mail.redirectType !== 'NONE'"  class="common-large-btn" @click="handleRedirectClick">
+        {{ mail?.redirectButton || "立即前往" }}
       </q-btn>
     </div>
     <GameModal ref="gameRef" />

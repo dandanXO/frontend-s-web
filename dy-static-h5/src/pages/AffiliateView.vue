@@ -18,7 +18,7 @@
         </div>
         <div class="contact-actions">
           <button @click="copyText('1827985941')" class="copy-button">复制</button>
-          <a target="_blank" href="https://im.qq.com/index/" class="download-button">下载</a>
+          <a target="_blank" href="https://im.qq.com/index/" class="download-button" rel="noopener">下载</a>
         </div>
       </div>
 
@@ -32,7 +32,7 @@
         </div>
         <div class="contact-actions">
           <button class="copy-button" @click="copyText('@dyhykf001')">复制</button>
-          <a target="_blank" class="download-button" href="https://telegram.org/">下载</a>
+          <a target="_blank" class="download-button" href="https://telegram.org/" rel="noopener">下载</a>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
         </div>
         <div class="contact-actions">
           <button class="copy-button" @click="copyText('live:.cid.1b8d9a018a52a8f5')">复制</button>
-          <a target="_blank" class="download-button" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
+          <a target="_blank" class="download-button" href="https://www.skype.com/zh-Hans/get-skype/" rel="noopener">下载</a>
         </div>
       </div>
 
@@ -60,7 +60,7 @@
         </div>
         <div class="contact-actions">
           <button class="copy-button" @click="copyText('LH1008666')">复制</button>
-          <a target="_blank" class="download-button" href="https://ya.cn/index.html">下载</a>
+          <a target="_blank" class="download-button" href="https://ya.cn/index.html" rel="noopener">下载</a>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
         </div>
         <div class="contact-actions">
           <button class="copy-button" @click="copyText('vip777')">复制</button>
-          <a target="_blank" class="download-button" href="https://am35.cc">下载</a>
+          <a target="_blank" class="download-button" href="https://am35.cc" rel="noopener">下载</a>
         </div>
       </div>
     </div>
