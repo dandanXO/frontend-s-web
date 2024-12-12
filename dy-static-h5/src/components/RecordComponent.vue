@@ -94,8 +94,11 @@
                     </div>
                   </div>
                 </div>
-                <div v-else-if="obj === 'gameType' || obj === 'platform'">
+                <div v-else-if="obj === 'gameType'">
                   {{ checkRecord(det[obj]) }}
+                </div>
+                <div v-else-if="obj === 'platform'">
+                  {{ det['alias'] ?? det['obj'] }}
                 </div>
                 <div
                   v-else-if="

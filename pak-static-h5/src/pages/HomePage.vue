@@ -2845,12 +2845,12 @@ const pokerGameJILIList = ref([
 
 const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JILI_FISH_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JILI_FISH_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 8,
             gameType: "FISH",
@@ -2873,12 +2873,12 @@ const loadJILIFishGameList = () => {
 
 const loadJILIPokerhGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JILI_POKER_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JILI_POKER_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 8,
             gameType: "POKER",
@@ -2972,12 +2972,12 @@ const fishGameJDBList = ref([
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JDB_FISH_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JDB_FISH_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 31,
             gameType: "FISH",
@@ -3020,13 +3020,13 @@ const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const code = id;
   const gameType = type;
-  const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+  const key = `${platformGamesApiKey}_GAMES_${code}_${gameType}_${regDevice}`;
 
   // cached
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: code,
             gameType: gameType,
@@ -3104,6 +3104,9 @@ function loadData() {
 
 var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
 var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+var platformGamesApiKey = store.hasToken() ? "LOGGEDPLATFORMGAMES" : "PLATFORMGAMES";
 
 const getPlatList = () => {
   cached

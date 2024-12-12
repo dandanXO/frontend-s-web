@@ -17,7 +17,7 @@
   </q-inner-loading>
 
   <div class="reward-wrapper">
-    <div class="earn-money-pots">
+    <!-- <div class="earn-money-pots">
       <div class="pot-item">
         <div class="item-amount">
           {{ store.currency.label }}
@@ -25,67 +25,26 @@
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-img with-btn">
-          <div class="flex-item">
-            <!-- <img src="../../assets/images/earn-money/pot-item-01.png" /> -->
-          </div>
+          <div class="flex-item"></div>
         </div>
       </div>
       <div class="pot-item pot-item__2">
         <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalNumberOfInvites") }}</div>
-        <!--        <div class="item-img"><img src="../../assets/images/earn-money/pot-item-02.png" /></div>-->
       </div>
-    </div>
-    <!-- banner.redirectUrl.includes("https://") -->
+    </div> -->
+
     <div class="earn-money-details-grid">
-      <!-- <div class="details-item" v-if="isShowOnetime"> -->
-      <div class="details-item">
+      <div v-for="(detail, index) in details" :key="index" class="details-item" :class="`item-${index}`">
         <div class="item-amount">
-          {{ store.currency.label }}
-          <span>{{ getRewardAmount("ONE_TIME") }}</span>
-        </div>
-        <div class="item-title">{{ $t("earnMoney.reward.invite") }}</div>
-        <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-01.png" /></div>
-      </div>
-
-      <!-- <div class="details-item" v-if="isShowDeposit"> -->
-      <div class="details-item">
-        <div class="item-amount">
-          {{ store.currency.label }}
-          <span>{{ getRewardAmount("DEPOSIT") }}</span>
-        </div>
-        <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
-        <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-02.png" /></div>
-      </div>
-
-      <!-- <div class="details-item details-item" v-if="isShowBet"> -->
-      <div class="details-item details-item">
-        <div class="item-amount">
-          {{ store.currency.label }}
-          <span>{{ getRewardAmount("BET") }}</span>
-        </div>
-        <div class="item-title">{{ $t("earnMoney.reward.bet") }}</div>
-        <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-03.png" /></div>
-      </div>
-
-      <div class="details-item details-item">
-        <div class="item-amount">
-          <span>{{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}</span>
-        </div>
-        <div class="item-title">{{ $t("earnMoney.reward.eligibleRefer") }}</div>
-        <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-04.png" /></div>
-      </div>
-
-      <!-- <pre>memberDetail{{ memberDetail }}</pre> -->
-
-      <!-- <div class="details-item">
-          <div class="item-amount">
+          <template v-if="detail.isCurrency">
             {{ store.currency.label }}
-            <span>0</span>
-          </div>
-          <div class="item-title">Achievement</div>
-          <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-04.png" /></div>
-        </div> -->
+          </template>
+          <span>{{ detail.amount }}</span>
+        </div>
+        <div class="item-title">{{ detail.title }}</div>
+        <div class="item-icon"><img :src="detail.img" /></div>
+      </div>
     </div>
 
     <div class="earn-money-invite">
@@ -141,32 +100,80 @@
       </div>
     </div>
 
-    <div class="earn-money-friendcount">
-      <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-        <tbody>
+    <div class="earn-money-invitation-rewards earn-money-card">
+      <div class="earn-money-card-title">
+        <img src="../../assets/images/earn-money/invitation-rewards-title.png" />
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
           <tr>
-            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.friendCount") }}</td>
-            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.inviteBonus") }}</td>
+            <th>{{ $t("earnMoney.reward.grade") }}</th>
+            <th>{{ $t("earnMoney.reward.totalNoOfValidPlayersInvited") }}</th>
+            <th>{{ $t("earnMoney.reward.invitationRewards") }}</th>
           </tr>
-
-          <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
-            <tr>
-              <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
-              <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
-            </tr>
-          </template>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+            <td>LEVEL {{ index + 1 }}</td>
+            <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+            <td>
+              <div class="reward-coin-container">
+                <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" />
+                {{ item.bonusAmount }}
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
+    </div>
 
-      <div class="table-hint q-pa-md">
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
-
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
-
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
-
-        <div class="q-mt-sm high-light" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+    <div class="earn-money-betting-commission earn-money-card">
+      <div class="earn-money-card-title">
+        <img src="../../assets/images/earn-money/betting-commission-title.png" />
       </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th>{{ $t("earnMoney.reward.betting_table.header.description") }}</th>
+            <th>{{ $t("earnMoney.reward.betting_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
+          </tr>
+          <tr v-for="index in 3" :key="index">
+            <td colspan="2">
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="earn-money-deposit-commission earn-money-card">
+      <div class="earn-money-card-title">
+        <img src="../../assets/images/earn-money/deposit-commission-title.png" />
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th>{{ $t("earnMoney.reward.deposit_table.header.description") }}</th>
+            <th>{{ $t("earnMoney.reward.deposit_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="index in 1" :key="index">
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
+      <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+      <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
     </div>
 
     <div class="earn-money-sent-ytd">
@@ -313,6 +320,44 @@ let currentIndex = 0;
 let intervalId = null;
 
 const displayClaimableAmount = computed(() => convertToCommaAmount(claimableAmount.value));
+const details = computed(() => [
+  {
+    title: t("earnMoney.reward.myTotalIncome"),
+    amount: getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET"),
+    isCurrency: true,
+    img: require("../../assets/images/earn-money/details-icon-03.png")
+  },
+  {
+    title: t("earnMoney.reward.myTotalNumberOfInvites"),
+    amount: memberDetail.value.totalRefer ? memberDetail.value.totalRefer : "0",
+    isCurrency: false,
+    img: require("../../assets/images/earn-money/details-icon-01.png")
+  },
+  {
+    title: t("earnMoney.reward.invite"),
+    amount: getRewardAmount("ONE_TIME"),
+    isCurrency: true,
+    img: require("../../assets/images/earn-money/details-icon-01.png")
+  },
+  {
+    title: t("earnMoney.reward.topUp"),
+    amount: getRewardAmount("DEPOSIT"),
+    isCurrency: true,
+    img: require("../../assets/images/earn-money/details-icon-02.png")
+  },
+  {
+    title: t("earnMoney.reward.bet"),
+    amount: getRewardAmount("BET"),
+    isCurrency: true,
+    img: require("../../assets/images/earn-money/details-icon-03.png")
+  },
+  {
+    title: t("earnMoney.reward.eligibleRefer"),
+    amount: memberDetail.value.eligibleRefer ? memberDetail.value.eligibleRefer : "0",
+    isCurrency: false,
+    img: require("../../assets/images/earn-money/details-icon-04.png")
+  }
+]);
 
 const getOneTimeBonusSetting = () => {
   api
@@ -526,6 +571,45 @@ watch(activeSetting, checkIsShowDetail);
 // });
 </script>
 <style scoped lang="scss">
+$detail-items: (
+  item-0: (
+    box-shadow: #fce87b4a,
+    bg-base: linear-gradient(90deg, rgba(238, 147, 36, 0.156) 0%, rgba(225, 238, 36, 0.078) 100%),
+    bg-gradient: linear-gradient(180deg, rgba(10, 11, 14, 0.253854) 24.76%, #fa6134 100%),
+    border: #897b59
+  ),
+  item-1: (
+    box-shadow: #7bcffc4a,
+    bg-base: linear-gradient(90deg, rgba(36, 191, 238, 0.156) 0%, rgba(36, 204, 238, 0.078) 100%),
+    bg-gradient: linear-gradient(180deg, rgba(40, 51, 60, 0.25) 23.06%, #145acb 99.89%),
+    border: #598989
+  ),
+  item-2: (
+    box-shadow: #7bfc934a,
+    bg-base: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%),
+    bg-gradient: linear-gradient(180deg, rgba(10, 11, 14, 0.25) 22.07%, #109a4c 100%),
+    border: #59895d
+  ),
+  item-3: (
+    box-shadow: #de7bfc4a,
+    bg-base: linear-gradient(90deg, rgba(201, 36, 238, 0.156) 0%, rgba(191, 36, 238, 0.078) 100%),
+    bg-gradient: linear-gradient(180deg, rgba(10, 11, 14, 0.25) 23.06%, #5a3488 99.89%),
+    border: #895985
+  ),
+  item-4: (
+    box-shadow: #7bcffc4a,
+    bg-base: linear-gradient(90deg, rgba(201, 36, 238, 0.156) 0%, rgba(191, 36, 238, 0.078) 100%),
+    bg-gradient: linear-gradient(180deg, rgba(10, 11, 14, 0.25) 22.07%, #a0406d 100%),
+    border: #895985
+  ),
+  item-5: (
+    box-shadow: #7bcffc4a,
+    bg-base: linear-gradient(90deg, rgba(36, 214, 238, 0.156) 0%, rgba(36, 225, 238, 0.078) 100%),
+    bg-gradient: linear-gradient(180deg, rgba(10, 11, 14, 0.25) 23.06%, #149acb 99.89%),
+    border: #596b89
+  )
+);
+
 .reward-wrapper {
   .earn-money-pots {
     margin-top: 12px;
@@ -676,22 +760,51 @@ watch(activeSetting, checkIsShowDetail);
       background-color: rgba(255, 255, 255, 0.05);
       border-radius: 10px;
       position: relative;
+      box-shadow: 0px 0px 10px 0px #fce87b4a inset;
+      border: 1px solid #897b59;
+      font-size: 16px;
+      font-weight: 500;
 
       &__full {
         width: 100%;
       }
 
+      @for $i from 0 through 5 {
+        $item-key: item-#{$i};
+
+        @if map-has-key($detail-items, $item-key) {
+          &.#{$item-key} {
+            box-shadow: 0px 0px 10px 0px map-get(map-get($detail-items, $item-key), box-shadow) inset;
+            background: map-get(map-get($detail-items, $item-key), bg-base),
+              map-get(map-get($detail-items, $item-key), bg-gradient);
+            border-color: map-get(map-get($detail-items, $item-key), border);
+            background-clip: content-box;
+          }
+        }
+      }
+
+      &.item-0 {
+        .item-title {
+          color: #ffffff99;
+        }
+      }
+
       .item-amount {
+        flex: 1;
+        align-content: flex-end;
         span {
           font-size: 24px;
           font-weight: bold;
-          color: #24ee89;
+          color: #ffa218;
         }
       }
 
       .item-title {
+        flex: 1;
+        align-content: flex-start;
         font-size: 16px;
         color: #8c968f;
+        text-align: center;
       }
 
       .item-icon {
@@ -708,7 +821,8 @@ watch(activeSetting, checkIsShowDetail);
   }
 
   .earn-money-invite {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: #1e371f;
+    border: 1px solid #337e3a;
     margin-top: 16px;
     border-radius: 10px;
     padding: 16px;
@@ -792,6 +906,94 @@ watch(activeSetting, checkIsShowDetail);
           margin: auto;
         }
       }
+    }
+  }
+
+  .earn-money-card {
+    background-color: #1e371f;
+    border: 1px solid #337e3a;
+    border-radius: 10px;
+    padding: 0 16px 16px;
+    margin-top: calc(2% + 16px);
+    width: 100%;
+
+    .earn-money-card-title {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      img {
+        width: 80%;
+        margin-top: -2%;
+      }
+    }
+
+    .card-table {
+      text-align: center;
+      font-family: "Manrope", sans-serif;
+      font-size: 10px;
+      color: #000;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+
+      thead {
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+
+        th {
+          color: #076b2c;
+          font-weight: 700;
+          font-size: 12px;
+          min-width: 100px;
+        }
+      }
+
+      tbody {
+        td {
+          color: #fff;
+          padding: 10px 4px;
+          font-size: 12px;
+          border: 1px solid #ffffff1a;
+        }
+
+        tr {
+          &:nth-child(odd) {
+            background: #ffffff0d;
+          }
+
+          .player-details {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .earn-money-invitation-rewards {
+    .reward-coin-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .reward-coin {
+        height: 16px;
+        width: 24px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .earn-money-deposit-commission {
+    .grey-txt {
+      color: #9f9f9f;
+    }
+    .red-txt {
+      color: red;
     }
   }
 
@@ -962,6 +1164,7 @@ watch(activeSetting, checkIsShowDetail);
     align-items: center;
 
     &.active {
+      color: #000a01;
       font-weight: bold;
       background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
     }

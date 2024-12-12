@@ -955,6 +955,24 @@ onUnmounted(() => {
     margin-left: 12px;
   }
 
+  @media (max-width: 350px) {
+    .profile-wrapper .q-btn {
+      padding: 4px;
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 400px) {
+    .profile-wrapper .q-btn {
+      padding: 4px 8px;
+    }
+  }
+  @media (max-width: 480px) {
+    .logo-container img {
+      max-height: 9vw !important;
+      margin-right: 10px;
+    }
+  }
+
   .logo-container {
     width: 100%;
     margin: 0 auto;
