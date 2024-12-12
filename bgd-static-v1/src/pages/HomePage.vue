@@ -102,6 +102,7 @@
         <!--        </div>-->
         <div>
           <q-carousel
+            v-if="hbPromo.length > 0"
             class="hb-float"
             :navigation="hbPromo.length > 1 ? true : false"
             v-model="hbSlide"
@@ -204,7 +205,7 @@
 
           <div class="platform-game-wrapper lobby-platform-game" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :grid="{ rows: 2, fill: 'row' }"
               :spaceBetween="10"
               :scrollbar="{
@@ -213,7 +214,7 @@
               :modules="gameModules"
               class="platform-game-container"
             >
-              <template v-for="(item, index) in hotGameList" :key="index">
+              <template v-for="(item, index) in lobbyHotGameLists" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
                     class="platform-game-item btn-effect"
@@ -395,7 +396,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <div class="platform-game-container live-casino">
               <div
-                v-for="(item, index) in livecasino.slice(0, 3)"
+                v-for="(item, index) in livecasino"
                 :key="index"
                 data-aos="zoom-in"
                 :data-aos-delay="100 * index"
@@ -426,59 +427,6 @@
                 </div>
               </div>
             </div>
-            <!-- <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="15"
-              :scrollbar="{
-                hide: true
-              }"
-              :grid="{
-                rows: 2,
-                fill: 'row'
-              }"
-              :modules="[...gameModules, Grid]"
-              class="platform-game-container live-casino"
-              :style="{ height: '295px' }"
-            >
-              <template v-for="(item, index) in livecasino" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  :style="{ height: '140px' }"
-                >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#hotgames"
-                  >
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </swiper-slide>
-              </template>
-            </swiper> -->
           </div>
 
           <div class="platform-game-wrapper" v-else>
@@ -537,7 +485,7 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -594,7 +542,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -659,7 +607,7 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -713,7 +661,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -775,7 +723,7 @@
 
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -2127,6 +2075,10 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
+const lobbyHotGameLists= ref([
+
+]);
+
 const hotGameList = ref([
   {
     id: 23,
@@ -2547,6 +2499,7 @@ const loadHotGameList = () => {
     )
     .then((res) => {
       hotGameList.value = [];
+      lobbyHotGameLists.value= [];
       hotlists = res;
 
       // cached
@@ -2598,12 +2551,54 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
+          // hotGameList rearrange such that
+          // 1  2  3
+          // 4  5  6
+          // becomes
+          // 1  3  5
+          // 2  4  6
+
+          const row = 2;
+          const cols = Math.ceil(hotGameList.value.length / row);
+          const temp = [...hotGameList.value];
+          lobbyHotGameLists.value = [...temp];
+
+          let index = 0;
+          for (let r = 0; r < row; r++) {
+            for (let c = 0; c < cols; c++) {
+              const originalIndex = c * row + r;
+              if (originalIndex < temp.length) {
+                lobbyHotGameLists.value[index] = temp[originalIndex];
+                index++;
+              }
+            }
+          }
+
+          // console.log("End");
           // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
     });
-};
+}
+
+// const alignedHotGameLists= (hotgame) => {
+//   const alignLists= hotgame;
+//   const row = 2;
+//   const cols = Math.ceil(alignLists.length / row);
+//   const temp = [...alignLists];
+//
+//   let index = 0;
+//   for (let r = 0; r < row; r++) {
+//     for (let c = 0; c < cols; c++) {
+//       const originalIndex = c * row + r;
+//       if (originalIndex < temp.length) {
+//         alignLists[index] = temp[originalIndex];
+//         index++;
+//       }
+//     }
+//   }
+//   return alignLists;
+// }
 
 const fishGameJILIList = ref([
   {
@@ -4768,22 +4763,26 @@ const showCongratsModal = () => {
     padding-top: 8px;
     margin-bottom: 0px;
     display: grid;
-    grid-template-columns: 51fr 54fr;
+    grid-template-columns: 51fr repeat(1, 54fr);
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
-    width: 100%;
+    //width: 100%;
     box-sizing: border-box;
-    max-width: 100%;
     min-height: 100px;
     column-gap: 6px;
     row-gap: 8px;
+    overflow-x: scroll;
+
+    > div {
+      min-width: min(250px, calc(50vw - 16px));
+    }
 
     .platform-live-item--img {
       background-size: 100% 100%;
     }
 
     img {
-      max-width: 140px;
+      //max-width: 140px;
       border-radius: 8px;
     }
     .burning-hot {
@@ -4833,6 +4832,10 @@ const showCongratsModal = () => {
 
     .platform-game-item--img {
       border-radius: 8px;
+    }
+
+    .burning-hot {
+      right: 8px;
     }
   }
 

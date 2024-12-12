@@ -164,6 +164,7 @@ import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import moment from "moment";
 import { getDrawPrizes, initDrawEvent, getDrawRecord } from "@/api/index/promo";
+import { ResponseCode } from "@/api/response";
 const store = userStore();
 const isLoading = ref(false);
 const props = defineProps(["promoCode", "promoRules"]);
@@ -270,10 +271,18 @@ const getGachapon = (t) => {
           }
         });
         isPrizeModal.value = true;
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         notify({
           type: "error",
-          message: `${res.message}`
+          message: res.message
         });
       }
     })
@@ -294,6 +303,7 @@ const getGachapon = (t) => {
 };
 const getBalance = () => {
   store.getBalance();
+  init();
   isPrizeModal.value = false;
 };
 

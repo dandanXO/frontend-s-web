@@ -106,6 +106,7 @@ export default defineComponent({
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
+          logLevel: "verbose",
           attributionCallback: function (e, attribution) {
             // e: internal event name, can be ignored
             // attribution: details about the changed attribution
@@ -115,11 +116,12 @@ export default defineComponent({
           }
         });
         setTimeout(() => {
-          const attribution = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          console.log(attribution);
-          store.aaid = attribution ? attribution.adid : "";
-        }, 500);
+          AdjustWeb.waitForWebUUID().then((webUuid) => {
+            console.log("Web UUid");
+            console.log(webUuid);
+            store.aaid = webUuid ? webUuid : "";
+          });
+        }, 100);
       }
     };
 
@@ -140,7 +142,6 @@ export default defineComponent({
           }
           affAppToken.value = res.data.adjust_app_token;
           initAdjustEventTrack();
-          // alert(affAppToken.value);
         }
       });
     };
@@ -173,7 +174,6 @@ export default defineComponent({
                         }
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
-                        // alert(affAppToken.value);
                       }
                     });
                   }

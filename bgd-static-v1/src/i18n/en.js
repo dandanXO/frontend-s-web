@@ -395,12 +395,14 @@ export default {
       inviteList_02: "Register via link",
       inviteList_03: "Complete deposit after registration",
       copyLink: "Copy Link",
-      friendCount: "Friend Count",
-      inviteBonus: "Invite Bonus",
+      grade: "Grade",
+      totalNoOfValidPlayersInvited: "Total number of valid players invited",
+      invitationRewards: "Invitation rewards",
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
+      note: "Note:",
+      eligibility_tips: "Invitee's deposit must be ≥ 300.",
       multiple_acc_hint: `Notice:
     It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Bangladesh time on the next day. The rewards will be credited to the account during this time frame.

@@ -100,72 +100,80 @@
       </div>
     </div>
 
-    <div class="earn-money-friendcount">
-      <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-        <tbody>
+    <div class="earn-money-invitation-rewards earn-money-card">
+      <div class="earn-money-card-title">
+        <img src="../../assets/images/earn-money/invitation-rewards-title.png" />
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
           <tr>
-            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.friendCount") }}</td>
-            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.inviteBonus") }}</td>
+            <th>{{ $t("earnMoney.reward.grade") }}</th>
+            <th>{{ $t("earnMoney.reward.totalNoOfValidPlayersInvited") }}</th>
+            <th>{{ $t("earnMoney.reward.invitationRewards") }}</th>
           </tr>
-
-          <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
-            <tr>
-              <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
-              <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
-            </tr>
-          </template>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+            <td>LEVEL {{ index + 1 }}</td>
+            <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+            <td>
+              <div class="reward-coin-container">
+                <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" />
+                {{ item.bonusAmount }}
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
+    </div>
 
-      <div class="table-hint q-pa-md">
-        <div class="q-mt-sm">
-          <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-            <tbody>
-              <tr>
-                <td style="color: #8c968f; font-size: 120%">
-                  {{ $t("earnMoney.reward.betting_table.header.description") }}
-                </td>
-                <td style="color: #8c968f; font-size: 120%">
-                  {{ $t("earnMoney.reward.betting_table.header.commission") }}
-                </td>
-              </tr>
-
-              <template v-for="index in 4" :key="index">
-                <tr>
-                  <td>{{ $t(`earnMoney.reward.betting_table.row${index}.description`) }}</td>
-                  <td>{{ $t(`earnMoney.reward.betting_table.row${index}.commission`) }}</td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="q-mt-sm">
-          <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-            <tbody>
-              <tr>
-                <td style="color: #8c968f; font-size: 120%">
-                  {{ $t("earnMoney.reward.deposit_table.header.description") }}
-                </td>
-                <td style="color: #8c968f; font-size: 120%">
-                  {{ $t("earnMoney.reward.deposit_table.header.commission") }}
-                </td>
-              </tr>
-
-              <template v-for="index in 1" :key="index">
-                <tr>
-                  <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
-                  <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
-
-        <div class="q-mt-sm high-light" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+    <div class="earn-money-betting-commission earn-money-card">
+      <div class="earn-money-card-title">
+        <img src="../../assets/images/earn-money/betting-commission-title.png" />
       </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th>{{ $t("earnMoney.reward.betting_table.header.description") }}</th>
+            <th>{{ $t("earnMoney.reward.betting_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
+          </tr>
+          <tr v-for="index in 3" :key="index">
+            <td colspan="2">
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="earn-money-deposit-commission earn-money-card">
+      <div class="earn-money-card-title">
+        <img src="../../assets/images/earn-money/deposit-commission-title.png" />
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th>{{ $t("earnMoney.reward.deposit_table.header.description") }}</th>
+            <th>{{ $t("earnMoney.reward.deposit_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="index in 1" :key="index">
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
+      <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+      <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
     </div>
 
     <div class="earn-money-sent-ytd">
@@ -813,7 +821,8 @@ $detail-items: (
   }
 
   .earn-money-invite {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: #1e371f;
+    border: 1px solid #337e3a;
     margin-top: 16px;
     border-radius: 10px;
     padding: 16px;
@@ -897,6 +906,94 @@ $detail-items: (
           margin: auto;
         }
       }
+    }
+  }
+
+  .earn-money-card {
+    background-color: #1e371f;
+    border: 1px solid #337e3a;
+    border-radius: 10px;
+    padding: 0 16px 16px;
+    margin-top: calc(2% + 16px);
+    width: 100%;
+
+    .earn-money-card-title {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      img {
+        width: 80%;
+        margin-top: -2%;
+      }
+    }
+
+    .card-table {
+      text-align: center;
+      font-family: "Manrope", sans-serif;
+      font-size: 10px;
+      color: #000;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+
+      thead {
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+
+        th {
+          color: #076b2c;
+          font-weight: 700;
+          font-size: 12px;
+          min-width: 100px;
+        }
+      }
+
+      tbody {
+        td {
+          color: #fff;
+          padding: 10px 4px;
+          font-size: 12px;
+          border: 1px solid #ffffff1a;
+        }
+
+        tr {
+          &:nth-child(odd) {
+            background: #ffffff0d;
+          }
+
+          .player-details {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .earn-money-invitation-rewards {
+    .reward-coin-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .reward-coin {
+        height: 16px;
+        width: 24px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .earn-money-deposit-commission {
+    .grey-txt {
+      color: #9f9f9f;
+    }
+    .red-txt {
+      color: red;
     }
   }
 

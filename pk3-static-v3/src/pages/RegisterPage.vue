@@ -231,6 +231,12 @@ export default defineComponent({
       if (ui.adjust_register_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         Adjust.trackEvent(adjustEvent);
+      } else if (ui.adjust_register_event) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
       }
     };
 

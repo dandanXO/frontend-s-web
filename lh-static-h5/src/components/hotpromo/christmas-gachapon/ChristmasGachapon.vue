@@ -286,7 +286,37 @@ const getGachapon = (t) => {
       //     type: "error",
       //     message: `Error fetching prizes: ${error.message}`
       // });
-      console.error("Error fetching prizes:", error);
+      // console.error("Error fetching prizes:", error);
+      // prizes.value = []
+      // if (t === "five") {
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // } else {
+
+      //   prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // }
+      // isPrizeModal.value = true
     })
     .finally(() => {
       // Always run (after success or error)
@@ -297,6 +327,7 @@ const getGachapon = (t) => {
 };
 const getBalance = () => {
   store.getBalance();
+  init();
   isPrizeModal.value = false;
 };
 const columns = [
@@ -723,6 +754,8 @@ onMounted(() => {
     max-width: 160px;
     img {
       width: 100%;
+      max-width: 200px;
+      margin-top: 20px;
     }
   }
 }
@@ -737,14 +770,17 @@ onMounted(() => {
   align-self: center;
   display: flex;
   overflow: hidden;
+  max-width: 350px;
   * {
     scrollbar-width: thin; /* Simplified width */
     scrollbar-color: #e6374a transparent; /* Thumb color, no track background */
   }
   > div {
-    width: 80%;
+    // width: 80%;
     margin: 0 auto;
     overflow: auto;
+    max-width: 340px;
+    width: 95%;
   }
   .rules {
     height: 45vh;
@@ -839,6 +875,9 @@ onMounted(() => {
   padding: 140px 0 40px;
   background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
   background-size: contain;
+  justify-content: center;
+  align-items: center;
+  height: 540px;
   .prizes {
     .prize {
       width: unset;
@@ -858,6 +897,9 @@ onMounted(() => {
   padding: 140px 0 40px;
   background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
   background-size: contain;
+  justify-content: center;
+  align-items: center;
+  height: 540px;
   .prizes {
     align-items: flex-start;
     .prize {
