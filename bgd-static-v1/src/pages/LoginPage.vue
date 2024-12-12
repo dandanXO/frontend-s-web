@@ -407,7 +407,7 @@ export default defineComponent({
         // ...
 
         (async () => {
-          guestLoginInfo.siteId = 19
+          guestLoginInfo.siteId = process.env.SITEID
           guestLoginInfo.thirdParty = 'GOOGLE'
           guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
           guestLoginInfo.accessToken = credential.accessToken
