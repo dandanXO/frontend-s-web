@@ -1242,7 +1242,7 @@ main {
 .modal-inner {
   width: calc(100% - 80px);
   min-width: 330px;
-  height: 200px;
+  /* height: 200px; */
   background: #fff;
   border-radius: 10px;
   position: absolute;
@@ -1254,48 +1254,71 @@ main {
 .modal-header {
   border-radius: 10px 10px 0px 0px;
   /* background: #40B6FC; */
-  background: #0da66b;
-  height: 80px;
+  /* background: #0da66b; */
+  /* height: 80px; */
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #fff;
+  /* color: #fff; */
+  color: #000000;
   font-weight: bold;
-  font-size: 19px;
+  font-size: 16px;
   text-align: center;
-  padding: 12px;
+  padding: 16px 12px;
+}
+
+.modal-content {
+  color: #737373;
+  font-size: 14px;
+  padding: 0 12px 16px;
+}
+
+.modal-content .content-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.modal-content .content-logo img {
+  display: block;
+  width: 100%;
+  max-width: 48px;
 }
 
 .modal-input {
-  background: #b3b3b3;
-  height: 38px;
-  border-radius: 20px;
+  background: #f2f2f2;
+  /* height: 38px; */
+  border-radius: 10px;
   width: calc(100% - 20px);
-  margin: 25px auto 10px;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .url-input {
-  padding: 4px 10px;
+  padding: 10px 12px;
   box-sizing: border-box;
-  font-size: 17px;
+  font-size: 16px;
   white-space: nowrap;
   overflow: hidden;
   width: calc(100% - 60px);
   text-overflow: ellipsis;
+  color: #31a46d;
+  font-weight: bold;
 }
 
 .copy-btn {
   /* background: #40b6fc; */
   background: #0da66b;
-  height: 100%;
-  border-radius: 0px 24px 24px 0px;
-  width: 60px;
-  padding: 4px 8px;
+  /* height: 100%; */
+  border-radius: 4px;
+  width: 120px;
+  padding: 10px 18px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -1303,6 +1326,7 @@ main {
   color: #fff;
   font-size: 16px;
   font-weight: bold;
+  margin: 16px auto;
 }
 
 .copy-btn:active {
