@@ -152,6 +152,8 @@ function canInstallPWA() {
   if (isIosSafari) {
     document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
     document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
+    document.querySelector(".modal-open .content-text").textContent =
+      "Please copy the following URL and paste it into Safari";
   }
 
   return isSecureContext && supportsServiceWorker && supportsManifest && supportsAddToHomeScreen;
