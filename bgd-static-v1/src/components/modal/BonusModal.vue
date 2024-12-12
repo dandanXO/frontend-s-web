@@ -1,8 +1,6 @@
 <template>
-  <div class="bonus-container">
-    <q-btn icon="close" round dense v-close-popup class="bonus-close" />
-    <div class="bonus-header"><img src="../../assets/images/index/modal/bonus-header.png" /></div>
-
+  <div class="bonus-container" :class="{ 'has-top-download': hasTopDownload }">
+    <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
       <div v-for="(mission, index) in missions" :key="index" class="mission-item">
         <img class="mission-icon" :src="mission.icon" />
@@ -30,12 +28,17 @@
         </q-btn>
       </div>
     </div>
+    <div class="bonus-header"><img src="../../assets/images/index/modal/bonus-header.png" /></div>
   </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+
+const props = defineProps({
+  hasTopDownload: Boolean
+});
 
 const { t } = useI18n();
 
@@ -97,6 +100,7 @@ const missions = computed(() => [
   overflow: visible;
   border-radius: 12px;
   margin-bottom: -100px;
+  margin-top: 60px;
 
   &:before {
     content: "";
@@ -108,7 +112,13 @@ const missions = computed(() => [
     height: 150px;
     position: absolute;
     left: 0;
-    top: -150px;
+    bottom: 0;
+    transform: rotate(180deg) translateY(-100%) scaleX(-1);
+    z-index: -1;
+  }
+
+  &.has-top-download {
+    margin-top: 116px;
   }
 
   .bonus-header {
@@ -120,12 +130,13 @@ const missions = computed(() => [
     img {
       display: block;
       width: 100%;
-      max-width: 320px;
+      max-width: 248px;
+      margin-bottom: -24px;
     }
   }
 
   .bonus-content-wrapper {
-    margin: 16px auto 138px;
+    margin: 0 auto 29px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -184,8 +195,7 @@ const missions = computed(() => [
 
 .bonus-close {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
-  background: rgba(255, 255, 255, 0.1);
 }
 </style>

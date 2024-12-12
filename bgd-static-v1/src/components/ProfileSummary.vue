@@ -145,7 +145,8 @@
     :class="{
       'q-pa-md': !homeProfile,
       'with-top-download': topDownload && !ui.hideDownload,
-      'with-background': isScrolled
+      'with-background': isScrolled,
+      'with-gradient-background': isBonusModal
     }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
@@ -283,8 +284,8 @@
       </div>
     </div>
 
-    <q-dialog v-model="isBonusModal" position="bottom">
-      <BonusModal />
+    <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
+      <BonusModal :has-top-download="topDownload && !ui.hideDownload" />
     </q-dialog>
   </div>
 </template>
@@ -785,6 +786,10 @@ onUnmounted(() => {
 
   &.with-background {
     background: #150a08;
+  }
+
+  &.with-gradient-background {
+    background: linear-gradient(180deg, rgba(46, 112, 81, 0.39) 0%, rgba(46, 112, 81, 0.286) 100%);
   }
 
   .infoboard-wrapper {
