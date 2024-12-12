@@ -1,7 +1,7 @@
 window.OneSignalDeferred = window.OneSignalDeferred || [];
 OneSignalDeferred.push(async function (OneSignal) {
   await OneSignal.init({
-    appId: "db54d6ef-c432-43ba-9e1b-c58464ae0283"
+    appId: "8f4e0e98-165c-4edf-8674-56a3889f9e02"
   });
   OneSignal.Slidedown.promptPush();
 });
