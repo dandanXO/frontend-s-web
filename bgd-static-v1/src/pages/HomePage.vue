@@ -214,7 +214,7 @@
               :modules="gameModules"
               class="platform-game-container"
             >
-              <template v-for="(item, index) in hotGameList" :key="index">
+              <template v-for="(item, index) in lobbyHotGameLists" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
                     class="platform-game-item btn-effect"
@@ -2063,6 +2063,10 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
+const lobbyHotGameLists= ref([
+
+]);
+
 const hotGameList = ref([
   {
     id: 23,
@@ -2483,6 +2487,7 @@ const loadHotGameList = () => {
     )
     .then((res) => {
       hotGameList.value = [];
+      lobbyHotGameLists.value= [];
       hotlists = res;
 
       // cached
@@ -2540,27 +2545,48 @@ const loadHotGameList = () => {
           // becomes
           // 1  3  5
           // 2  4  6
+
           const row = 2;
           const cols = Math.ceil(hotGameList.value.length / row);
           const temp = [...hotGameList.value];
+          lobbyHotGameLists.value = [...temp];
 
           let index = 0;
           for (let r = 0; r < row; r++) {
             for (let c = 0; c < cols; c++) {
               const originalIndex = c * row + r;
               if (originalIndex < temp.length) {
-                hotGameList.value[index] = temp[originalIndex];
+                lobbyHotGameLists.value[index] = temp[originalIndex];
                 index++;
               }
             }
           }
 
-          console.log("End");
+          // console.log("End");
           // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
     });
-};
+}
+
+// const alignedHotGameLists= (hotgame) => {
+//   const alignLists= hotgame;
+//   const row = 2;
+//   const cols = Math.ceil(alignLists.length / row);
+//   const temp = [...alignLists];
+//
+//   let index = 0;
+//   for (let r = 0; r < row; r++) {
+//     for (let c = 0; c < cols; c++) {
+//       const originalIndex = c * row + r;
+//       if (originalIndex < temp.length) {
+//         alignLists[index] = temp[originalIndex];
+//         index++;
+//       }
+//     }
+//   }
+//   return alignLists;
+// }
 
 const fishGameJILIList = ref([
   {
