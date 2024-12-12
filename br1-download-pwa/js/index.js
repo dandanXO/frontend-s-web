@@ -311,7 +311,7 @@ function openLinkInPreferredBrowser(url, newLink) {
     });
   } else {
     // For other platforms, open the link in the default browser
-    window.open(url, "_self");
     alert("No supported browser found. App downloaded in apk format");
+    window.open(url, "_self");
   }
 }
