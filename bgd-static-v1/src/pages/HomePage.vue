@@ -465,6 +465,7 @@
                               item.name.toLowerCase() === 'evo' ? 'wc' : ''
                             }${item.name.toLowerCase()}.jpg`)})`;
                           } catch (e) {
+                            console.log(e);
                             return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                           }
                         })()
@@ -794,12 +795,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -833,12 +834,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -984,12 +985,12 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         }
                       })()
@@ -1015,12 +1016,12 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         }
                       })()
@@ -1059,9 +1060,9 @@
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
+                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.jpg`)})`;
                       } catch (e) {
-                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.jpg)`;
                       }
                     })()
                   }"
