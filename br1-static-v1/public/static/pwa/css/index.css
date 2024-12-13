@@ -1060,7 +1060,7 @@ main {
   padding-top: 14px;
 }
 .footer__section-item:first-of-type {
-  
+
   padding-top: 0;
 }
 
@@ -1301,7 +1301,7 @@ main {
   border-radius: 10px;
   width: calc(100% - 20px);
   margin: 0 auto;
-  padding-bottom: 16px;
+  /* padding-bottom: 16px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
