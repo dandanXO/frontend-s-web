@@ -25,7 +25,7 @@ installBtn.addEventListener("click", async () => {
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       if (!deferredPrompt) {
-        window.open("https://bra.55ace.com/register", "_blank");
+        window.open(`${window.location.origin}/register`, "_blank");
       } else {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
@@ -54,7 +54,7 @@ installBtn.addEventListener("click", async () => {
       }
       break;
     case "PLAY":
-      window.open("/pwa-index.html", "_blank");
+      window.open("/static/pwa/pwa-index.html", "_blank");
       break;
   }
 });
