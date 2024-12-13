@@ -1,18 +1,17 @@
 import { PWA_DATA_KEY } from "./const.js";
 
-export const REDIRECT_INFO = {};
-export const DEFAULT_REDIRECT_INFO = {
-  url: "https://bra.55ace.com"
-};
-
 export function getRedirectInfo() {
-  const hostname = window.location.hostname.replace("www.", "");
+  const origin = window.location.origin;
+  const searchParams = new URLSearchParams(window.location.search);
+  const agent = searchParams.get("id") || "6805B0";
   try {
     const savedRedirectInfo = JSON.parse(localStorage.getItem(PWA_DATA_KEY));
     if (!savedRedirectInfo) throw new Error();
     return savedRedirectInfo;
   } catch (e) {
-    return REDIRECT_INFO[hostname] || DEFAULT_REDIRECT_INFO;
+    return {
+      url: `${origin}/agent/${agent}`
+    };
   }
 }
 

@@ -6,7 +6,7 @@ import { createRouter, createMemoryHistory, createWebHistory, createWebHashHisto
 import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
 import { Platform } from "quasar";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import { SessionStorage } from "quasar";
 
 /*
@@ -80,6 +80,10 @@ export default route(function (/* { store, ssrContext } */) {
     // }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+      if (isInPwa()) {
+        const pwaEvent = new CustomEvent("pwaEvent");
+        document.dispatchEvent(pwaEvent);
+      }
       if (to.query.reg) {
         next(`/register`);
       } else {
