@@ -21,11 +21,10 @@ const qrcode = new QRCode(qrcodeCanvas, {
   text: window.location.href,
   width: 256,
   height: 256,
-  correctLevel: QRCode.CorrectLevel.H, // Higher error correction
-  version: 10 // Increase version (default is auto)
+  correctLevel: QRCode.CorrectLevel.M, // Higher error correction
+  version: 20 // Increase version (default is auto)
 });
 qrcode.makeCode(window.location.href);
-console.log("QR");
 
 installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
