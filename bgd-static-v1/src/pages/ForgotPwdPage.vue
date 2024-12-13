@@ -259,9 +259,9 @@
       </InputRowGrid>
     </q-form>
 
-    <div class="bottom-img">
+    <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 </template>
 
