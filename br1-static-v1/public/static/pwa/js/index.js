@@ -209,7 +209,7 @@ function detectDeviceAndBrowser() {
 document.getElementById("id-copy-btn").addEventListener("click", function () {
   var textToCopy = document.getElementById("id-url-input").textContent;
   copyTextToClipboard(textToCopy);
-  alert("URL copied successfully");
+  alert("URL copiada com sucesso");
 });
 
 document.getElementById("id-open-btn").addEventListener("click", function () {
@@ -245,7 +245,18 @@ function openLinkInPreferredBrowser(url, newLink) {
       /^https?:\/\//,
       ""
     )}#Intent;scheme=https;package=com.android.chrome;end`;
+
+    const fallbackTimer = setTimeout(() => {
+      alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+      window.open(newLink, "_self");
+    }, 1500);
+
     window.location.href = chromeIntentUrl;
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        clearTimeout(fallbackTimer);
+      }
+    });
   } else {
     window.open(url, "_blank");
   }
