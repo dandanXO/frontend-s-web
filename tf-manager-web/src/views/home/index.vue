@@ -412,6 +412,7 @@
         <Chart :options="depositSummaryBarchatOptions" />
       </el-card>
     </el-row>
+    <FloatingButton />
   </div>
 </template>
 
@@ -432,6 +433,7 @@ import Chart from '@/components/charts/Charts'
 import moment from 'moment'
 import { getSiteListSimple } from '../../api/site'
 import { useI18n } from 'vue-i18n'
+import FloatingButton from '@/components/floating-button/index.vue'
 
 const currentDate = new Date()
 const defaultStartDate = convertDate(currentDate, true)
