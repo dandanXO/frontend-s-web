@@ -221,7 +221,8 @@ function detectDeviceAndBrowser() {
     /baidubrowser/,
     /opera mini/,
     /msie|trident/,
-    /silk/
+    /silk/,
+    /opr/
   ];
   const isUnsupportedBrowser =
     unsupportedBrowsers.some((regex) => regex.test(userAgent)) ||
@@ -289,29 +290,17 @@ function openLinkInPreferredBrowser(url, newLink) {
     // For iOS, open the link in Safari (default browser) // this will be now located in google chrome or firefox or ... just not in safari for here
     window.location.href = url;
   } else if (isAndroid) {
-    // For Android, check if Chrome is installed using the intent:// scheme
+    // Directly open the link in Chrome using intent
     const chromeIntentUrl = `intent://${url.replace(
       /^https?:\/\//,
       ""
     )}#Intent;scheme=https;package=com.android.chrome;end`;
 
-    const fallbackTimer = setTimeout(() => {
-      // If Chrome is not installed, open the external link
-      alert("No supported browser found. App downloaded in apk format");
-      window.open(newLink, "_self");
-    }, 1500);
-
-    // Attempt to open in Chrome
+    // Open the URL with Chrome
     window.location.href = chromeIntentUrl;
-
-    // Clear fallback if Chrome is detected
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") {
-        clearTimeout(fallbackTimer);
-      }
-    });
   } else {
     // For other platforms, open the link in the default browser
-    window.open(url, "_self");
+
+    window.open(url, "_blank");
   }
 }
