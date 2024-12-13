@@ -222,7 +222,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
-              @swiper="swiper => onSwiper('hot', swiper)"
+              @swiper="(swiper) => onSwiper('hot', swiper)"
             >
               <template v-for="(item, index) in lobbyHotGameLists" :key="index">
                 <template v-if="item.type && item.type === 'game'">
@@ -237,12 +237,12 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg`)})`;
                               } catch (e) {
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg)`;
                                 }
                               }
                             })()
@@ -280,12 +280,12 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                               } catch (e) {
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.jpg)`;
                                 }
                               }
                             })()
@@ -321,12 +321,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -363,12 +363,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -465,7 +465,6 @@
                               item.name.toLowerCase() === 'evo' ? 'wc' : ''
                             }${item.name.toLowerCase()}.jpg`)})`;
                           } catch (e) {
-                            console.log(e);
                             return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                           }
                         })()
@@ -519,7 +518,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
-              @swiper="swiper => onSwiper('slot', swiper)"
+              @swiper="(swiper) => onSwiper('slot', swiper)"
             >
               <template v-for="(item, index) in slot" :key="index">
                 <swiper-slide
@@ -548,9 +547,9 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
-                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.jpg)`;
                             }
                           })()
                         }"
@@ -598,9 +597,9 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         })()
                       }"
@@ -650,7 +649,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
-              @swiper="swiper => onSwiper('poker', swiper)"
+              @swiper="(swiper) => onSwiper('poker', swiper)"
             >
               <template v-for="(item, index) in pokerGameJILIList" :key="index">
                 <!-- <template v-if="item.code === 'JILI'"> -->
@@ -775,7 +774,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
-              @swiper="swiper => onSwiper('fish', swiper)"
+              @swiper="(swiper) => onSwiper('fish', swiper)"
             >
               <template v-for="(item, index) in fishGameJILIList" :key="index">
                 <swiper-slide
@@ -1473,33 +1472,33 @@ const gameModules = ref([Grid, Scrollbar, Navigation, Pagination]);
 const swiperRef = ref({});
 const onSwiper = (category, swiper) => {
   swiperRef.value[category] = swiper;
-  console.log('here', swiper)
+  console.log("here", swiper);
 };
 
 const prevSlide = (category) => {
-  if(category === 'live') {
-    const target = document.querySelector('.live-casino');
+  if (category === "live") {
+    const target = document.querySelector(".live-casino");
 
     target.scrollTo({
-      left: document.querySelector('.live-casino').getBoundingClientRect().left - 400,
-      behavior: 'smooth',
+      left: document.querySelector(".live-casino").getBoundingClientRect().left - 400,
+      behavior: "smooth"
     });
   } else {
     swiperRef.value[category].slidePrev();
   }
-}
+};
 const nextSlide = (category) => {
-  if(category === 'live') {
-    const target = document.querySelector('.live-casino');
+  if (category === "live") {
+    const target = document.querySelector(".live-casino");
 
     target.scrollTo({
-      left: document.querySelector('.live-casino').getBoundingClientRect().left + 400,
-      behavior: 'smooth',
+      left: document.querySelector(".live-casino").getBoundingClientRect().left + 400,
+      behavior: "smooth"
     });
   } else {
     swiperRef.value[category].slideNext();
   }
-}
+};
 
 const { t } = useI18n();
 const route = useRoute();
@@ -4752,7 +4751,7 @@ const showCongratsModal = () => {
         justify-content: center;
 
         .left-btn {
-          background: url('../assets/images/index/swiper-nav-btns.svg') no-repeat center center;
+          background: url("../assets/images/index/swiper-nav-btns.svg") no-repeat center center;
           background-size: auto 100%;
           background-position: 1px 0px;
           width: 10px;
@@ -4760,7 +4759,7 @@ const showCongratsModal = () => {
         }
 
         .right-btn {
-          background: url('../assets/images/index/swiper-nav-btns.svg') no-repeat center center;
+          background: url("../assets/images/index/swiper-nav-btns.svg") no-repeat center center;
           background-size: auto 100%;
           background-position: -6px 0px;
           width: 10px;
@@ -5203,43 +5202,43 @@ const showCongratsModal = () => {
     }
 
     &.lobby {
-      background: url('../assets/images/index/menu/cat-selection-icons.svg') no-repeat center center;
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
       background-size: auto 100%;
       background-position: 0px 0px;
     }
 
     &.hot {
-      background: url('../assets/images/index/menu/cat-selection-icons.svg') no-repeat center center;
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
       background-size: auto 100%;
       background-position: -20px 0px;
     }
 
     &.slot {
-      background: url('../assets/images/index/menu/cat-selection-icons.svg') no-repeat center center;
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
       background-size: auto 100%;
       background-position: -81px 0px;
     }
 
     &.live {
-      background: url('../assets/images/index/menu/cat-selection-icons.svg') no-repeat center center;
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
       background-size: auto 100%;
       background-position: -41px 0px;
     }
 
     &.sport {
-      background: url('../assets/images/index/menu/cat-selection-icons.svg') no-repeat center center;
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
       background-size: auto 100%;
       background-position: -122px 0px;
     }
 
     &.fish {
-      background: url('../assets/images/index/menu/cat-selection-icons.svg') no-repeat center center;
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
       background-size: auto 100%;
       background-position: -61 0px;
     }
 
     &.poker {
-      background: url('../assets/images/index/menu/cat-selection-icons.svg') no-repeat center center;
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
       background-size: auto 100%;
       background-position: -102px 0px;
     }
@@ -5251,29 +5250,7 @@ const showCongratsModal = () => {
     color: #ffffff80;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
-  }
-}
-
-.platform-game-img {
-  // background-color: #cccccc;
-  width: 100%;
-  aspect-ratio: 1/1.2;
-  background-size: cover;
-  background-position: center center;
-  position: relative;
-  background-image: url("../assets/images/index/mini-game-bg.png");
-  background: transparent;
-  // background-image: url("../assets/images/index/item-game-maintenance.png");
-  border-radius: 8px;
-
-  .game--bg {
-    background-size: 100% 100%;
-    background-position: center center;
-    height: 100%;
-    width: 100%;
-    border-radius: 8px;
-    background-repeat: no-repeat;
-    // background-image: url("../assets/images/index/mini-game-bg.png");
+    d-image: url("../assets/images/index/mini-game-bg.png");
   }
 }
 
