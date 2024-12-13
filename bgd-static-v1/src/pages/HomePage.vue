@@ -5250,7 +5250,30 @@ const showCongratsModal = () => {
     color: #ffffff80;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
-    d-image: url("../assets/images/index/mini-game-bg.png");
+  }
+}
+
+.platform-game-img {
+  // background-color: #cccccc;
+  width: 100%;
+  aspect-ratio: 1/1.2;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  background-image: url("../assets/images/index/mini-game-bg.png");
+  background: transparent;
+  // background-image: url("../assets/images/index/item-game-maintenance.png");
+  border-radius: 8px;
+
+  .game--bg {
+    background-size: 100% 100%;
+    background-position: center center;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    // background-image: url("../assets/images/index/mini-game-bg.png");
+    background-image: url("../assets/images/index/mini-game-bg.png");
   }
 }
 
