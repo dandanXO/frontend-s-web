@@ -237,10 +237,11 @@ function openLinkInPreferredBrowser(url, newLink) {
   const userAgent = navigator.userAgent.toLowerCase();
   const isIos = /iphone|ipad|ipod/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
+  const isHuawei = /huawei/.test(userAgent);
 
   if (isIos) {
     window.location.href = url;
-  } else if (isAndroid) {
+  } else if (isAndroid && !isHuawei) {
     const chromeIntentUrl = `intent://${url.replace(
       /^https?:\/\//,
       ""
@@ -257,6 +258,9 @@ function openLinkInPreferredBrowser(url, newLink) {
         clearTimeout(fallbackTimer);
       }
     });
+  } else if (isHuawei) {
+    alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+    window.open(newLink, "_self");
   } else {
     window.open(url, "_blank");
   }
