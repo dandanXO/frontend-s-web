@@ -236,7 +236,11 @@ function openLinkInPreferredBrowser(url) {
   const isAndroid = /android/.test(userAgent);
   const isHuawei = /huawei/.test(userAgent);
 
-  const affiliateCodePwa = "123456789";
+  // const affiliateCodePwa = "6805B0";
+  const redirectInfo = JSON.stringify(getRedirectInfo());
+  const codeMatch = redirectInfo.match(/\/([^\/"]+)"\}$/);
+  const affiliateCodePwa = codeMatch ? codeMatch[1] : null;
+  // console.log(affiliateCodePwa);
 
   if (isIos) {
     window.location.href = url;
