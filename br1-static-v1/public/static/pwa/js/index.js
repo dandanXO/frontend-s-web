@@ -129,7 +129,7 @@ window.addEventListener("load", () => {
 
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
-document.getElementById("id-url-install").textContent = window.location.href.replace(/\/+$/, "");
+document.getElementById("id-url-install").textContent = window.location.origin;
 
 function isChromeInstalled() {
   const userAgent = navigator.userAgent.toLowerCase();
