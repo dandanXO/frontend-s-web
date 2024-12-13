@@ -25,7 +25,13 @@ installBtn.addEventListener("click", async () => {
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       if (!deferredPrompt) {
-        window.open(`${window.location.origin}/register`, "_blank");
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isIos = /iphone|ipad|ipod/.test(userAgent);
+        if (isIos) {
+          document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
+        } else {
+          window.open("https://bra.55ace.com/register", "_blank");
+        }
       } else {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
@@ -123,51 +129,7 @@ window.addEventListener("load", () => {
 
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
-
-// function canInstallPWA() {
-//   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
-//   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
-
-//   const isSecureContext = window.isSecureContext; // Check if the page is served over HTTPS
-//   const supportsServiceWorker = "serviceWorker" in navigator; // Check Service Worker support
-//   const supportsManifest =
-//     document.head.querySelector('link[rel="manifest"]') !== null ||
-//     document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content === "yes"; // Check for manifest or iOS web app capability
-//   const isIosSafari =
-//     /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase()) &&
-//     /safari/.test(navigator.userAgent.toLowerCase()) &&
-//     !/crios|fxios|chrome/.test(navigator.userAgent.toLowerCase()); // iOS Safari detection
-
-//   // iOS Safari can install PWA without "BeforeInstallPromptEvent"
-//   const supportsAddToHomeScreen = "BeforeInstallPromptEvent" in window || isIosSafari;
-
-//   alert(`
-//     isSecureContext: ${isSecureContext},
-//     supportsServiceWorker: ${supportsServiceWorker},
-//     supportsManifest: ${supportsManifest},
-//     isIosSafari: ${isIosSafari},
-//     supportsAddToHomeScreen: ${supportsAddToHomeScreen}
-//     `);
-
-//   if (isIosSafari) {
-//     document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
-//     document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
-//     document.querySelector(".modal-open .content-text").textContent =
-//       "Please copy the following URL and paste it into Safari";
-//   }
-
-//   return isSecureContext && supportsServiceWorker && supportsManifest && supportsAddToHomeScreen;
-// }
-
-// Display logic
-// function detectDeviceAndBrowser() {
-//   if (canInstallPWA()) {
-//     console.log("Device and browser support PWA installation.");
-//   } else {
-//     console.log("Device or browser does not support PWA installation.");
-//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-//   }
-// }
+document.getElementById("id-url-install").textContent = window.location.href.replace(/\/+$/, "");
 
 function isChromeInstalled() {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -176,16 +138,11 @@ function isChromeInstalled() {
 
   if (isAndroid && !isHuawei) {
     const chromeIntentUrl = `intent://#Intent;scheme=https;package=com.android.chrome;end`;
-
-    // Attempt to open Chrome
     window.location.href = chromeIntentUrl;
-
-    // Use a small timeout to determine if Chrome was launched
     return new Promise((resolve) => {
       setTimeout(() => {
-        // If window has not redirected, assume Chrome is not installed
         resolve(!document.hidden);
-      }, 500); // Timeout of 500ms
+      }, 500);
     });
   }
 
@@ -194,24 +151,17 @@ function isChromeInstalled() {
 
 function detectDeviceAndBrowser() {
   const userAgent = navigator.userAgent.toLowerCase();
-
-  // Device detection
   const isIphone = /iphone/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
   const isHuawei = /huawei/.test(userAgent);
   const isPC = !isIphone && !isAndroid;
 
-  // Browser detection
   const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
   const isChrome =
     (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
   const isFirefox = /firefox/.test(userAgent);
   const isEdge = /edg/.test(userAgent);
   const isHeytap = /heytapbrowser/.test(userAgent);
-
-  // alert(userAgent);
-
-  // Unsupported browsers
   const unsupportedBrowsers = [
     /heytapbrowser/,
     /mibrowser/,
@@ -231,8 +181,6 @@ function detectDeviceAndBrowser() {
 
   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
-
-  // check this device got installed chrome app or not
   if (isIphone && !isSafari) {
     console.log("User is on iPhone but not using Safari.");
     document.getElementById("id-open-btn").style.display = "none";
@@ -258,14 +206,12 @@ function detectDeviceAndBrowser() {
   }
 }
 
-// Add click event listener to the element with id "id-copy-btn"
 document.getElementById("id-copy-btn").addEventListener("click", function () {
   var textToCopy = document.getElementById("id-url-input").textContent;
   copyTextToClipboard(textToCopy);
   alert("URL copied successfully");
 });
 
-// Add button trigger to PWA supported browser
 document.getElementById("id-open-btn").addEventListener("click", function () {
   var textURL = document.getElementById("id-url-input").textContent;
   openLinkInPreferredBrowser(
@@ -274,7 +220,10 @@ document.getElementById("id-open-btn").addEventListener("click", function () {
   );
 });
 
-// Function to copy text to clipboard
+document.getElementById("id-ios-close").addEventListener("click", function () {
+  document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "none"));
+});
+
 function copyTextToClipboard(text) {
   var textarea = document.createElement("textarea");
   textarea.value = text;
@@ -284,27 +233,20 @@ function copyTextToClipboard(text) {
   document.body.removeChild(textarea);
 }
 
-// Function to openLink in Chrome / Safari
 function openLinkInPreferredBrowser(url, newLink) {
   const userAgent = navigator.userAgent.toLowerCase();
   const isIos = /iphone|ipad|ipod/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
 
   if (isIos) {
-    // For iOS, open the link in Safari (default browser) // this will be now located in google chrome or firefox or ... just not in safari for here
     window.location.href = url;
   } else if (isAndroid) {
-    // Directly open the link in Chrome using intent
     const chromeIntentUrl = `intent://${url.replace(
       /^https?:\/\//,
       ""
     )}#Intent;scheme=https;package=com.android.chrome;end`;
-
-    // Open the URL with Chrome
     window.location.href = chromeIntentUrl;
   } else {
-    // For other platforms, open the link in the default browser
-
     window.open(url, "_blank");
   }
 }
