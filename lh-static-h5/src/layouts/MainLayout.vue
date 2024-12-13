@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <NewMemberGuide v-if="store.regSuccessGuideVisible"/>
+    <NewMemberGuide v-if="store.regSuccessGuideVisible" />
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
@@ -70,116 +70,74 @@
         :class="$q.dark.isActive ? '' : 'bg-white'"
         align="justify"
       >
-      <q-route-tab to="/" name="home" exact>
-        <div
-          class="inactive footer-icon home"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="inactive footer-icon home"
-          v-else
-        />
-        <div
-          class="hover footer-icon home"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="hover footer-icon home"
-          v-else
-        />
-        <span>首页</span>
-      </q-route-tab>
+        <q-route-tab to="/" name="home" exact>
+          <div class="inactive footer-icon home" v-if="$q.dark.isActive" />
+          <div class="inactive footer-icon home" v-else />
+          <div class="hover footer-icon home" v-if="$q.dark.isActive" />
+          <div class="hover footer-icon home" v-else />
+          <span>首页</span>
+        </q-route-tab>
 
-      <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
-        <div
-          class="inactive footer-icon flag"
-        />
-        <div
-          class="hover footer-icon flag"
-        />
-        <span>赛程</span>
-      </q-route-tab>
-      <q-route-tab v-else to="/account/transfer" name="transfer">
-        <img
-          class="inactive"
-          v-if="$q.dark.isActive"
-          src="../assets/images/footer/withdraw-icon-dark.png"
-        />
-        <div
-          class="inactive footer-icon wallet"
-          v-else
-        />
-        <img
-          class="hover"
-          v-if="$q.dark.isActive"
-          src="../assets/images/footer/withdraw-icon-active-dark.png"
-        />
-        <div
-          class="hover footer-icon wallet"
-          v-else
-        />
-        <span>账户</span>
-      </q-route-tab>
+        <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
+          <div class="inactive footer-icon flag" />
+          <div class="hover footer-icon flag" />
+          <span>赛程</span>
+        </q-route-tab>
+        <q-route-tab v-else to="/account/transfer" name="transfer">
+          <img class="inactive" v-if="$q.dark.isActive" src="../assets/images/footer/withdraw-icon-dark.png" />
+          <div class="inactive footer-icon wallet" v-else />
+          <img class="hover" v-if="$q.dark.isActive" src="../assets/images/footer/withdraw-icon-active-dark.png" />
+          <div class="hover footer-icon wallet" v-else />
+          <span>账户</span>
+        </q-route-tab>
 
-      <q-route-tab to="/promo" name="promo">
-        <div
-          class="inactive footer-icon promo"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="inactive footer-icon promo"
-          v-else
-        />
-        <div
-          class="hover footer-icon promo"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="hover footer-icon promo"
-          v-else
-        />
-        <span class="footer-icon-promotion">优惠</span>
-      </q-route-tab>
+        <q-route-tab to="/promo" name="promo">
+          <template v-if="!$q.dark.isActive">
+            <div class="inactive footer-icon promo" />
+            <div class="hover footer-icon promo" />
+          </template>
+          <template v-else>
+            <div
+              class="inactive"
+              style="
+                padding: 0.8rem 1rem;
+                border-radius: 100px;
+                background: radial-gradient(#213057 0%, #213057 50%, #0f182e 50%, #0f182f 100%);
+              "
+            >
+              <img style="width: 1.8rem" class="inactive" src="../assets/images/footer/promo-icon-dark.svg" />
+            </div>
+            <div
+              v-if="tab === 'promo'"
+              class="hover"
+              style="
+                padding: 0.8rem 1rem;
+                border-radius: 100px;
+                background: radial-gradient(#213057 0%, #213057 50%, #0f182e 50%, #0f182f 100%);
+              "
+            >
+              <img style="width: 1.8rem" class="hover" src="../assets/images/footer/promo-icon-active-dark.svg" />
+            </div>
+          </template>
 
-      <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
-        <div
-          class="inactive footer-icon headphone"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="inactive footer-icon headphone"
-          v-else
-        />
-        <div
-          class="hover footer-icon headphone"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="hover footer-icon headphone"
-          v-else
-        />
-        <span>客服</span>
-      </q-route-tab>
+          <span class="footer-icon-promotion">优惠</span>
+        </q-route-tab>
 
-      <q-route-tab to="/account" name="account">
-        <div
-          class="inactive footer-icon user"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="inactive footer-icon user"
-          v-else
-        />
-        <div
-          class="hover footer-icon user"
-          v-if="$q.dark.isActive"
-        />
-        <div
-          class="hover footer-icon user"
-          v-else
-        />
-        <span class="footer-icon-personal">我的</span>
-      </q-route-tab>
+        <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
+          <div class="inactive footer-icon headphone" v-if="$q.dark.isActive" />
+          <div class="inactive footer-icon headphone" v-else />
+          <div class="hover footer-icon headphone" v-if="$q.dark.isActive" />
+          <div class="hover footer-icon headphone" v-else />
+          <span>客服</span>
+        </q-route-tab>
+
+        <q-route-tab to="/account" name="account">
+          <div class="inactive footer-icon user" v-if="$q.dark.isActive" />
+          <div class="inactive footer-icon user" v-else />
+          <div class="hover footer-icon user" v-if="$q.dark.isActive" />
+          <div class="hover footer-icon user" v-else />
+          <span class="footer-icon-personal">我的</span>
+        </q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>
@@ -194,7 +152,7 @@ import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
 import { MAILBOX_TYPES } from "src/constant/mailbox";
 
-const NewMemberGuide = defineAsyncComponent(() => import('components/home/NewMemberGuide.vue'))
+const NewMemberGuide = defineAsyncComponent(() => import("components/home/NewMemberGuide.vue"));
 
 export default defineComponent({
   name: "MainLayout",
@@ -377,10 +335,10 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "消息提醒";
 
-          if(route.query.type && route.query.id) {
-            const currentTab = MAILBOX_TYPES.find(type => type.type === route.query.type)
-            prevPage.value = 'account/inbox'
-            if(currentTab) pageName.value = `${currentTab.name}详情`
+          if (route.query.type && route.query.id) {
+            const currentTab = MAILBOX_TYPES.find((type) => type.type === route.query.type);
+            prevPage.value = "account/inbox";
+            if (currentTab) pageName.value = `${currentTab.name}详情`;
           }
         } else if (route.path === "/account/outbox") {
           prevPage.value = "account/letters";
