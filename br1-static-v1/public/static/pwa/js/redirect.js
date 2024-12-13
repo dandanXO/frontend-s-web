@@ -3,7 +3,7 @@ import { PWA_DATA_KEY } from "./const.js";
 export function getRedirectInfo() {
   const origin = window.location.origin;
   const searchParams = new URLSearchParams(window.location.search);
-  const agent = searchParams.get("id") || "6805B0";
+  const agent = searchParams.get("p0") || searchParams.get("id") || "6805B0";
   try {
     const savedRedirectInfo = JSON.parse(localStorage.getItem(PWA_DATA_KEY));
     if (!savedRedirectInfo) throw new Error();
