@@ -317,7 +317,7 @@ function insertRandomImages() {
     extraStyle = `style="height:300px;"`;
     defaultScrollList.style.height= "300px"
   } else {
-    extraStyle = `style="width:65vw;"`;
+    extraStyle = `style="width:65vw;max-width: 300px;"`;
     defaultScrollList.style.height= "auto"
   }
 
