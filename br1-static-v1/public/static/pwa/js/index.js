@@ -214,10 +214,7 @@ document.getElementById("id-copy-btn").addEventListener("click", function () {
 
 document.getElementById("id-open-btn").addEventListener("click", function () {
   var textURL = document.getElementById("id-url-input").textContent;
-  openLinkInPreferredBrowser(
-    textURL,
-    "https://files.j9zwvu1ogrg.com/app/18/affiliate/1866429275899731969/android/apk/1.0.1_20241210184000.apk"
-  );
+  openLinkInPreferredBrowser(textURL);
 });
 
 document.getElementById("id-ios-close").addEventListener("click", function () {
@@ -233,11 +230,13 @@ function copyTextToClipboard(text) {
   document.body.removeChild(textarea);
 }
 
-function openLinkInPreferredBrowser(url, newLink) {
+function openLinkInPreferredBrowser(url) {
   const userAgent = navigator.userAgent.toLowerCase();
   const isIos = /iphone|ipad|ipod/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
   const isHuawei = /huawei/.test(userAgent);
+
+  const affiliateCodePwa = "123456789";
 
   if (isIos) {
     window.location.href = url;
@@ -248,8 +247,12 @@ function openLinkInPreferredBrowser(url, newLink) {
     )}#Intent;scheme=https;package=com.android.chrome;end`;
 
     const fallbackTimer = setTimeout(() => {
-      alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
-      window.open(newLink, "_self");
+      // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+      // window.open(newLink, "_self");
+      window.open(
+        `https://ynxjf.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+        "_self"
+      );
     }, 1500);
 
     window.location.href = chromeIntentUrl;
@@ -259,8 +262,12 @@ function openLinkInPreferredBrowser(url, newLink) {
       }
     });
   } else if (isHuawei) {
-    alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
-    window.open(newLink, "_self");
+    // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+    // window.open(newLink, "_self");
+    window.open(
+      `https://ynxjf.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+      "_self"
+    );
   } else {
     window.open(url, "_blank");
   }
