@@ -405,15 +405,15 @@
                 data-aos-anchor="#hotgames"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.jpg" />
                 <div
                   class="platform-live-item--img"
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                        return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.jpg`)})`;
                       } catch (e) {
-                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                       }
                     })()
                   }"
@@ -437,7 +437,7 @@
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div>
-                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.png" />
+                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.jpg" />
                     <div
                       class="platform-live-item--img"
                       :style="{
@@ -445,9 +445,9 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${
                               item.name.toLowerCase() === 'evo' ? 'wc' : ''
-                            }${item.name.toLowerCase()}.png`)})`;
+                            }${item.name.toLowerCase()}.jpg`)})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                           }
                         })()
                       }"
@@ -2063,9 +2063,7 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const lobbyHotGameLists= ref([
-
-]);
+const lobbyHotGameLists = ref([]);
 
 const hotGameList = ref([
   {
@@ -2487,7 +2485,7 @@ const loadHotGameList = () => {
     )
     .then((res) => {
       hotGameList.value = [];
-      lobbyHotGameLists.value= [];
+      lobbyHotGameLists.value = [];
       hotlists = res;
 
       // cached
@@ -2566,7 +2564,7 @@ const loadHotGameList = () => {
           // console.log(livecasino.value);
         });
     });
-}
+};
 
 // const alignedHotGameLists= (hotgame) => {
 //   const alignLists= hotgame;
@@ -4765,6 +4763,7 @@ const showCongratsModal = () => {
 
     .platform-live-item--img {
       background-size: 100% 100%;
+      border-radius: 10px;
     }
 
     img {
@@ -4836,6 +4835,7 @@ const showCongratsModal = () => {
       position: absolute;
       top: 0;
       left: 0;
+      border-radius: 10px;
 
       .platform-live-title {
         position: absolute;
