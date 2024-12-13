@@ -12,9 +12,9 @@
     <div class="rain-money-tabs-container">
       <div class="logo-img"><img src="../../assets/images/auth/win-7-logo.png" /></div>
       <div class="rain-money-header">
-        <span class="orange">666,666BDT&nbsp;</span>
+        <span class="orange">700,000BDT&nbsp;</span>
         <span class="green">every time maximum surplus</span>
-        <span class="orange">&nbsp;66,666BDT</span>
+        <span class="orange">&nbsp;70,000BDT</span>
       </div>
 
       <div class="rain-money-tabs">
@@ -77,13 +77,13 @@
           </div> -->
           <div class="footer-title q-mt-sm">Terms and Conditions:</div>
           <div class="footer-content">
-            Each round of cash rain freely distributes 666,666 BDT.
+            Each round of cash rain freely distributes 700,000 BDT.
             <br />
-            Maximum cashback amount per round: 66,666 BDT.
+            Maximum cashback amount per round: 70,000 BDT.
             <br />
             Each round freely distributes cashback.
             <br />
-            Maintain a historical deposit of ≥300 BDT and complete daily bets of ≥100+ BDT to claim your reward for
+            Maintain a historical deposit of ≥200 BDT and complete daily bets of ≥100+ BDT to claim your reward for
             free.
             <br />
             The received money can be directly used for playing games or withdrawing.
