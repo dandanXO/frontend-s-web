@@ -19,64 +19,64 @@ const affiliateLists = {
   "6805B0": {
     adCode: "1jbcv746"
   },
-  "3E5E71": {
+  "4059DF": {
     adCode: "1jo14aqf"
   },
-  "5DE816": {
+  "773A06": {
     adCode: "1jubhy46"
   },
-  "177183": {
+  "E92EF9": {
     adCode: "1j42dvtz"
   },
-  "3A6987": {
+  "0D5F18": {
     adCode: "1jmuatvy"
   },
-  "9E8F63": {
+  "B14C1A": {
     adCode: "1jaiy8ka"
   },
-  "64C9D0": {
+  "C8B4A4": {
     adCode: "1j5oiyte"
   },
-  "FA1365": {
+  "53246F": {
     adCode: "1j4ka3qm"
   },
-  "FC33FB": {
+  "DC49A4": {
     adCode: "1jhwqrie"
   },
-  "2A7CDB": {
+  "AA97F0": {
     adCode: "1j281k2x"
   },
-  "D3827F": {
+  "697F04": {
     adCode: "1jmlxn4s"
   },
   "9FBFEA": {
     adCode: "1jfbq4li"
   },
-  "697F04": {
+  "D3827F": {
     adCode: "1jeszen4"
   },
-  "AA97F0": {
+  "2A7CDB": {
     adCode: "1japf1ft"
   },
-  "DC49A4": {
+  "FC33FB": {
     adCode: "1j13zm26"
   },
-  "53246F": {
+  "FA1365": {
     adCode: "1j714ba4"
   },
-  "C8B4A4": {
+  "64C9D0": {
     adCode: "1j3gm5sl"
   },
-  "B14C1A": {
+  "9E8F63": {
     adCode: "1j4o14xq"
   },
-  "0D5F18": {
+  "3A6987": {
     adCode: "1j6px6oz"
   },
-  "E92EF9": {
+  "177183": {
     adCode: "1j1u1pjq"
   },
-  "773A06": {
+  "5DE816": {
     adCode: "1jm2f4nf"
   },
 };
