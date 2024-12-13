@@ -207,6 +207,7 @@ function detectDeviceAndBrowser() {
     (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
   const isFirefox = /firefox/.test(userAgent);
   const isEdge = /edg/.test(userAgent);
+  const isHeytap = /heytapbrowser/.test(userAgent);
 
   // alert(userAgent);
 
@@ -243,6 +244,9 @@ function detectDeviceAndBrowser() {
   } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
     console.log("User is on Android but using an unsupported browser.");
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    if (isHeytap) {
+      document.getElementById("id-open-btn").style.display = "none";
+    }
   } else if (isPC && !isChrome && !isFirefox && !isEdge) {
     console.log("User is on PC but not using Chrome/Firefox/Edge.");
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
