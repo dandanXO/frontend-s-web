@@ -662,7 +662,7 @@ onMounted(async() => {
     request.siteId = site.value.id;
   } else {
     site.value = store.state.user.siteId;
-    request.siteId = site.value.id;
+    request.siteId = site.value;
   }
   await loadBankCard()
   await loadCurrency()
