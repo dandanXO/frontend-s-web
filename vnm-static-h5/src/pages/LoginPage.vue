@@ -8,7 +8,7 @@
       </div>
 
       <div class="header-left" @click="router.push('/')">
-        <img alt="logo" src="../assets/logo-web.svg" />
+        <img alt="logo" src="../assets/logo-xmas.png" />
       </div>
 
       <div class="header-lang">
