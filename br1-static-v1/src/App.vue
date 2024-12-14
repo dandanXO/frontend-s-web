@@ -126,7 +126,10 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      var affiliateCode = "C402D4";
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+      if (!affiliateCode) {
+        affiliateCode = "C402D4";
+      }
 
       const track = () => {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -144,7 +147,8 @@ export default defineComponent({
         });
       };
 
-      if (isInPwa()) {
+      const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
+      if (isInPwa() && !isRefreshed) {
         document.addEventListener(
           "pwaEvent",
           () => {
