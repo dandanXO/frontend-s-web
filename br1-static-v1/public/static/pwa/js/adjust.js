@@ -1,6 +1,11 @@
+import { domainLists, affiliateLists } from "./const.js";
+
 export const getAdjustUrl = () => {
   const searchParams = new URLSearchParams(window.location.search);
-  const affidValue = searchParams.get("p0") || searchParams.get("id") || "6805B0";
+  const hostname = window.location.hostname.replace("www.", "");
+  const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
+
+  const affidValue = searchParams.get("p0") || searchParams.get("id") || affiliateCodeFromDomain || "6805B0";
   const campaignname = searchParams.get("p1") || searchParams.get("campaignname");
   const campaignid = searchParams.get("p2") || searchParams.get("campaignid");
   const adsetname = searchParams.get("p4") || searchParams.get("adsetname");
@@ -15,68 +20,4 @@ export const getAdjustUrl = () => {
   return `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=${date}`;
 };
 
-const affiliateLists = {
-  "6805B0": {
-    adCode: "1jbcv746"
-  },
-  "4059DF": {
-    adCode: "1jo14aqf"
-  },
-  "773A06": {
-    adCode: "1jubhy46"
-  },
-  "E92EF9": {
-    adCode: "1j42dvtz"
-  },
-  "0D5F18": {
-    adCode: "1jmuatvy"
-  },
-  "B14C1A": {
-    adCode: "1jaiy8ka"
-  },
-  "C8B4A4": {
-    adCode: "1j5oiyte"
-  },
-  "53246F": {
-    adCode: "1j4ka3qm"
-  },
-  "DC49A4": {
-    adCode: "1jhwqrie"
-  },
-  "AA97F0": {
-    adCode: "1j281k2x"
-  },
-  "697F04": {
-    adCode: "1jmlxn4s"
-  },
-  "9FBFEA": {
-    adCode: "1jfbq4li"
-  },
-  "D3827F": {
-    adCode: "1jeszen4"
-  },
-  "2A7CDB": {
-    adCode: "1japf1ft"
-  },
-  "FC33FB": {
-    adCode: "1j13zm26"
-  },
-  "FA1365": {
-    adCode: "1j714ba4"
-  },
-  "64C9D0": {
-    adCode: "1j3gm5sl"
-  },
-  "9E8F63": {
-    adCode: "1j4o14xq"
-  },
-  "3A6987": {
-    adCode: "1j6px6oz"
-  },
-  "177183": {
-    adCode: "1j1u1pjq"
-  },
-  "5DE816": {
-    adCode: "1jm2f4nf"
-  },
-};
+
