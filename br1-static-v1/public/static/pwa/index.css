@@ -641,6 +641,8 @@ main {
   height: 224px;
   width: -moz-max-content;
   width: max-content;
+  overflow-x: auto;
+  gap: 10px;
 }
 
 .img-scroll__view {

@@ -126,24 +126,40 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      var affiliateCode = "C402D4";
-      if (isInPwa()) {
-        affiliateCode = "6805B0";
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+      if (!affiliateCode) {
+        affiliateCode = "C402D4";
       }
 
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-        if (res.code === 0) {
-          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-          if (res.data.adjust_register_event) {
-            ui.adjust_register_event = res.data.adjust_register_event;
+      const track = () => {
+        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+            // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
           }
-          affAppToken.value = res.data.adjust_app_token;
-          initAdjustEventTrack();
-        }
-      });
+        });
+      };
+
+      const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
+      if (isInPwa() && !isRefreshed) {
+        document.addEventListener(
+          "pwaEvent",
+          () => {
+            affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+            track();
+          },
+          { once: true }
+        );
+      } else {
+        track();
+      }
     };
 
     const onDeviceReady = () => {

@@ -213,12 +213,15 @@
       >
         {{ $t("btn.register") }}
       </q-btn>
+      <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" :to="'/login'">
+        {{ $t("btn.login") }}
+      </q-btn>
     </div>
 
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-phone.png" />
-        <div>Service</div>
+        <div>WhatsApp</div>
       </div>
       <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
@@ -1065,10 +1068,13 @@ function charType(num) {
 .bottom-btn {
   // margin-top: auto;
   padding: 3px 20px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .btn-lists {
-  display: none;
+  display: flex;
   justify-content: space-evenly;
   gap: 0px;
   width: 100%;

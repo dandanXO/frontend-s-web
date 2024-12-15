@@ -17,7 +17,13 @@ const loading = document.getElementById("loading");
 const iframeContainer = document.getElementById("iframe-container");
 
 const qrcodeCanvas = document.getElementById("qrcode");
-const qrcode = new QRCode(qrcodeCanvas, window.location.href);
+const qrcode = new QRCode(qrcodeCanvas, {
+  text: window.location.href,
+  width: 256,
+  height: 256,
+  correctLevel: QRCode.CorrectLevel.M, // Higher error correction
+  version: 20 // Increase version (default is auto)
+});
 qrcode.makeCode(window.location.href);
 
 installBtn.addEventListener("click", async () => {
@@ -25,11 +31,20 @@ installBtn.addEventListener("click", async () => {
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       if (!deferredPrompt) {
-        window.open("https://bra.55ace.com/register", "_blank");
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isIos = /iphone|ipad|ipod/.test(userAgent);
+        if (isIos) {
+          document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
+        } else {
+          window.open("https://bra.55ace.com/register", "_blank");
+        }
       } else {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
           const redirectUrl = getAdjustUrl();
+
+          console.log("REd Url");
+          console.log(redirectUrl)
 
           // alert(redirectUrl);
           const iframeTag = document.createElement("iframe");
@@ -54,7 +69,7 @@ installBtn.addEventListener("click", async () => {
       }
       break;
     case "PLAY":
-      window.open("/pwa-index.html", "_blank");
+      window.open("/static/pwa/pwa-index.html", "_blank");
       break;
   }
 });
@@ -123,51 +138,7 @@ window.addEventListener("load", () => {
 
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
-
-// function canInstallPWA() {
-//   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
-//   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
-
-//   const isSecureContext = window.isSecureContext; // Check if the page is served over HTTPS
-//   const supportsServiceWorker = "serviceWorker" in navigator; // Check Service Worker support
-//   const supportsManifest =
-//     document.head.querySelector('link[rel="manifest"]') !== null ||
-//     document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content === "yes"; // Check for manifest or iOS web app capability
-//   const isIosSafari =
-//     /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase()) &&
-//     /safari/.test(navigator.userAgent.toLowerCase()) &&
-//     !/crios|fxios|chrome/.test(navigator.userAgent.toLowerCase()); // iOS Safari detection
-
-//   // iOS Safari can install PWA without "BeforeInstallPromptEvent"
-//   const supportsAddToHomeScreen = "BeforeInstallPromptEvent" in window || isIosSafari;
-
-//   alert(`
-//     isSecureContext: ${isSecureContext},
-//     supportsServiceWorker: ${supportsServiceWorker},
-//     supportsManifest: ${supportsManifest},
-//     isIosSafari: ${isIosSafari},
-//     supportsAddToHomeScreen: ${supportsAddToHomeScreen}
-//     `);
-
-//   if (isIosSafari) {
-//     document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "block"));
-//     document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "none"));
-//     document.querySelector(".modal-open .content-text").textContent =
-//       "Please copy the following URL and paste it into Safari";
-//   }
-
-//   return isSecureContext && supportsServiceWorker && supportsManifest && supportsAddToHomeScreen;
-// }
-
-// Display logic
-// function detectDeviceAndBrowser() {
-//   if (canInstallPWA()) {
-//     console.log("Device and browser support PWA installation.");
-//   } else {
-//     console.log("Device or browser does not support PWA installation.");
-//     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
-//   }
-// }
+document.getElementById("id-url-install").textContent = window.location.origin;
 
 function isChromeInstalled() {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -176,16 +147,11 @@ function isChromeInstalled() {
 
   if (isAndroid && !isHuawei) {
     const chromeIntentUrl = `intent://#Intent;scheme=https;package=com.android.chrome;end`;
-
-    // Attempt to open Chrome
     window.location.href = chromeIntentUrl;
-
-    // Use a small timeout to determine if Chrome was launched
     return new Promise((resolve) => {
       setTimeout(() => {
-        // If window has not redirected, assume Chrome is not installed
         resolve(!document.hidden);
-      }, 500); // Timeout of 500ms
+      }, 500);
     });
   }
 
@@ -194,23 +160,17 @@ function isChromeInstalled() {
 
 function detectDeviceAndBrowser() {
   const userAgent = navigator.userAgent.toLowerCase();
-
-  // Device detection
   const isIphone = /iphone/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
   const isHuawei = /huawei/.test(userAgent);
   const isPC = !isIphone && !isAndroid;
 
-  // Browser detection
   const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
   const isChrome =
     (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
   const isFirefox = /firefox/.test(userAgent);
   const isEdge = /edg/.test(userAgent);
-
-  // alert(userAgent);
-
-  // Unsupported browsers
+  const isHeytap = /heytapbrowser/.test(userAgent);
   const unsupportedBrowsers = [
     /heytapbrowser/,
     /mibrowser/,
@@ -221,7 +181,8 @@ function detectDeviceAndBrowser() {
     /baidubrowser/,
     /opera mini/,
     /msie|trident/,
-    /silk/
+    /silk/,
+    /opr/
   ];
   const isUnsupportedBrowser =
     unsupportedBrowsers.some((regex) => regex.test(userAgent)) ||
@@ -229,8 +190,6 @@ function detectDeviceAndBrowser() {
 
   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
-
-  // check this device got installed chrome app or not
   if (isIphone && !isSafari) {
     console.log("User is on iPhone but not using Safari.");
     document.getElementById("id-open-btn").style.display = "none";
@@ -242,6 +201,9 @@ function detectDeviceAndBrowser() {
   } else if (isAndroid && (!isChrome || isUnsupportedBrowser)) {
     console.log("User is on Android but using an unsupported browser.");
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    if (isHeytap) {
+      document.getElementById("id-open-btn").style.display = "none";
+    }
   } else if (isPC && !isChrome && !isFirefox && !isEdge) {
     console.log("User is on PC but not using Chrome/Firefox/Edge.");
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
@@ -253,23 +215,21 @@ function detectDeviceAndBrowser() {
   }
 }
 
-// Add click event listener to the element with id "id-copy-btn"
 document.getElementById("id-copy-btn").addEventListener("click", function () {
   var textToCopy = document.getElementById("id-url-input").textContent;
   copyTextToClipboard(textToCopy);
-  alert("URL copied successfully");
+  alert("URL copiada com sucesso");
 });
 
-// Add button trigger to PWA supported browser
 document.getElementById("id-open-btn").addEventListener("click", function () {
   var textURL = document.getElementById("id-url-input").textContent;
-  openLinkInPreferredBrowser(
-    textURL,
-    "https://files.j9zwvu1ogrg.com/app/18/affiliate/1866429275899731969/android/apk/1.0.1_20241210184000.apk"
-  );
+  openLinkInPreferredBrowser(textURL);
 });
 
-// Function to copy text to clipboard
+document.getElementById("id-ios-close").addEventListener("click", function () {
+  document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "none"));
+});
+
 function copyTextToClipboard(text) {
   var textarea = document.createElement("textarea");
   textarea.value = text;
@@ -279,39 +239,110 @@ function copyTextToClipboard(text) {
   document.body.removeChild(textarea);
 }
 
-// Function to openLink in Chrome / Safari
-function openLinkInPreferredBrowser(url, newLink) {
+function openLinkInPreferredBrowser(url) {
   const userAgent = navigator.userAgent.toLowerCase();
   const isIos = /iphone|ipad|ipod/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
+  const isHuawei = /huawei/.test(userAgent);
+
+  // const affiliateCodePwa = "6805B0";
+  const redirectInfo = JSON.stringify(getRedirectInfo());
+  const codeMatch = redirectInfo.match(/\/([^\/"]+)"\}$/);
+  const affiliateCodePwa = codeMatch ? codeMatch[1] : null;
+  // console.log(affiliateCodePwa);
 
   if (isIos) {
-    // For iOS, open the link in Safari (default browser) // this will be now located in google chrome or firefox or ... just not in safari for here
     window.location.href = url;
-  } else if (isAndroid) {
-    // For Android, check if Chrome is installed using the intent:// scheme
+  } else if (isAndroid && !isHuawei) {
     const chromeIntentUrl = `intent://${url.replace(
       /^https?:\/\//,
       ""
     )}#Intent;scheme=https;package=com.android.chrome;end`;
 
-    // const fallbackTimer = setTimeout(() => {
-    //   // If Chrome is not installed, open the external link
-    //   window.open(newLink, "_blank");
-    // }, 1500);
+    const fallbackTimer = setTimeout(() => {
+      // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+      // window.open(newLink, "_self");
+      window.open(
+        `https://ynxjf.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+        "_self"
+      );
+    }, 1500);
 
-    // Attempt to open in Chrome
     window.location.href = chromeIntentUrl;
-
-    // Clear fallback if Chrome is detected
-    // document.addEventListener("visibilitychange", () => {
-    //   if (document.visibilityState === "hidden") {
-    //     clearTimeout(fallbackTimer);
-    //   }
-    // });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        clearTimeout(fallbackTimer);
+      }
+    });
+  } else if (isHuawei) {
+    // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+    // window.open(newLink, "_self");
+    window.open(
+      `https://ynxjf.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+      "_self"
+    );
   } else {
-    // For other platforms, open the link in the default browser
-    alert("No supported browser found. App downloaded in apk format");
-    window.open(url, "_self");
+    window.open(url, "_blank");
   }
+}
+
+insertRandomImages();
+
+function insertRandomImages() {
+  const defaultScrollList = document.querySelector("#scroll-lists");
+
+  var imageUrls = [];
+  var extraStyle = "";
+
+  var fileCountLists = [12, 13, 16, 16, 6];
+  var fileNum = Math.floor(Math.random() * 5) + 1;
+  // var fileNum= 1;
+  var fileDirec = "img" + fileNum;
+
+  var fileLength = fileCountLists[fileNum - 1];
+  console.log(fileDirec);
+  var fileArray = [];
+  for (var i = 0; i < fileLength; i++) {
+    fileArray.push(i + 1);
+  }
+  shuffleArray(fileArray);
+// console.log(fileArray);
+
+  var fileLists = fileArray.slice(0, 5);
+  console.log(fileLists);
+
+  fileLists.forEach((file) => {
+    var fileName = `images/${fileDirec}/${file}.jpg`;
+    imageUrls.push(fileName);
+  });
+
+  if (fileNum === 2 || fileNum === 4) {
+    extraStyle = `style="height:300px;"`;
+    defaultScrollList.style.height= "300px"
+  } else {
+    extraStyle = `style="width:65vw;max-width: 300px;"`;
+    defaultScrollList.style.height= "auto"
+  }
+
+  imageUrls.forEach((imageUrl) => {
+    var innerHtml = `
+<div class="ULeU3b Utde2e" role="listitem">
+                                        <div class="Atcj9b"><img src="${imageUrl}" class="T75of B5GQxf"
+                                        ${extraStyle}
+                                                                 alt="55Ace" loading="lazy"></div>
+</div>
+`;
+    // Append the image to the container
+    defaultScrollList.innerHTML += innerHtml;
+  });
+
+  defaultScrollList.style.display = "flex";
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }

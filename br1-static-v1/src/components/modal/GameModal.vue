@@ -23,7 +23,7 @@
           </div>
 
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
-            Add Cash &nbsp;
+            {{ $t("btn.addCash") }} &nbsp;
             <q-btn dense rounded class="wallet-btn">
               <img src="../../assets/images/index/icon-wallet.png" />
             </q-btn>
@@ -66,7 +66,9 @@
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
             <div class="popout-dialog-container-gold">
               <div class="popout-main-title">
-                <div class="txt-title">Deposit</div>
+                <div class="txt-title">
+                  {{ $t("header.deposit") }}
+                </div>
               </div>
               <DepositComponent />
             </div>
@@ -82,10 +84,12 @@
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
-          <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
+          <div class="txt-content q-mt-md text-center">
+            {{ $t("notify.quitGameMessage") }}
+          </div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup @click="cancelCloseDialog" />
-            <q-btn label="Confirm" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
+            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="cancelCloseDialog" />
+            <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
         </div>
       </div>
@@ -102,7 +106,7 @@
       <q-card class="full-deposit-card" id="fulldeposit">
         <div class="back-bar" @click="closeFullDepositDialog">
           <q-icon name="chevron_left" size="28px" />
-          Back
+          {{ $t("btn.back") }}
         </div>
 
         <q-card-section>
@@ -343,7 +347,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      if(platformCode !== 'LuckySport'){
+      if (platformCode !== "LuckySport") {
         visible.value = true;
       }
 
@@ -371,9 +375,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if(platformCode === 'LuckySport'){
-            window.open(srcDoc ,"_blank");
-          }else if (firstFourChars === "http") {
+          if (platformCode === "LuckySport") {
+            window.open(srcDoc, "_blank");
+          } else if (firstFourChars === "http") {
             src.value = srcDoc;
           } else {
             isInnerHtmlSrc.value = true;
@@ -416,7 +420,6 @@ const close = () => {
   logoShow.value = true;
   payMethods = [];
 };
-
 
 const handleBackButtonClick = async () => {
   if (!visible.value) return;
