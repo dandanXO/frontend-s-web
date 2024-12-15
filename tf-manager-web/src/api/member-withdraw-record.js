@@ -137,6 +137,10 @@ export const fromToFail = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/toFail?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
+export const fromToSuccess = async (ids) => {
+  await https().httpClient.post('/memberWithdrawRecord/toSuccess?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
+};
+
 export const fromToConfirm = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/toConfirm?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };

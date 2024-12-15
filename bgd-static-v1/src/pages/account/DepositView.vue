@@ -923,7 +923,14 @@ const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
-  if (selectedPayType.value === "EASYPAISA") {
+  if (
+    selectedPayType.value === "BKASH" ||
+    selectedPayType.value === "NAGAD" ||
+    selectedPayType.value === "ROCKET" ||
+    selectedPayType.value === "UPAY"
+  ) {
+    openDepositVideo();
+  } else if (selectedPayType.value === "EASYPAISA") {
     window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank");
   } else if (selectedPayType.value === "JAZZCASH") {
     // isDepositTutorial.value= true;

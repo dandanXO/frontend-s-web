@@ -15,7 +15,7 @@
             <template v-for="obj in Object.keys(det)" :key="obj">
               <div v-if="obj === head.key" class="desc">
                 <div v-if="obj === 'type'">
-                  {{ translateRecord(det[obj], recordType) }}
+                  {{ translateRecord(det[obj], obj) }}
                 </div>
                 <div v-else-if="obj === 'betId'">
                   <q-link @click="copyText(det[obj], '注单号')">

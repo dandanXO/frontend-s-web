@@ -360,7 +360,7 @@ export default {
       player: "Player",
       money: "Money",
       note: "Note:",
-      eligibility_tips: "Invitee's deposit must be ≥ 300.",
+      eligibility_tips: "Invitee's deposit must be ≥ 200.",
       multiple_acc_hint: `Notice:
     It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Bangladesh time on the next day. The rewards will be credited to the account during this time frame.

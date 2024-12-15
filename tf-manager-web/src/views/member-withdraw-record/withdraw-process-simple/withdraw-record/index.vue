@@ -363,6 +363,14 @@
             >
               {{ t('fields.success') }}
             </el-button>
+            <el-button
+              v-if="scope.row.status === 'FAIL' && hasPermission(['sys:withdraw:simple:fail'])"
+              size="mini"
+              type="success"
+              @click="updateToSuccess(scope.row)"
+            >
+              {{ t('fields.success') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -808,7 +816,8 @@ import {
   getExportWithdrawRecord,
   autoWithdrawToSuccess,
   getUnsuccessfulIn10time,
-  getqueryUnsuccessIn30min
+  getqueryUnsuccessIn30min,
+  fromToSuccess
 } from '../../../../api/member-withdraw-record'
 import { getMemberWithdrawLog } from '../../../../api/member-withdraw-log'
 import { getAllWithdrawBankCard } from '../../../../api/bank-card'
@@ -1144,6 +1153,13 @@ async function toSuccess(val) {
   await loadRecordByRequestType()
   ElMessage({ message: t('message.success'), type: 'success' })
   page.loading = false
+}
+
+async function updateToSuccess(val) {
+  const chooseRecord = []
+  chooseRecord.push(val)
+  await fromToSuccess(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
+  await loadRecord()
 }
 
 function checkQuery() {
