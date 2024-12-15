@@ -81,6 +81,7 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       if (isInPwa()) {
+        sessionStorage.setItem("PWA_REFRESH_PAGE", "1");
         const pwaEvent = new CustomEvent("pwaEvent");
         document.dispatchEvent(pwaEvent);
       }

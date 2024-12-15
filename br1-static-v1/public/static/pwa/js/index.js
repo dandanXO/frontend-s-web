@@ -17,7 +17,13 @@ const loading = document.getElementById("loading");
 const iframeContainer = document.getElementById("iframe-container");
 
 const qrcodeCanvas = document.getElementById("qrcode");
-const qrcode = new QRCode(qrcodeCanvas, window.location.href);
+const qrcode = new QRCode(qrcodeCanvas, {
+  text: window.location.href,
+  width: 256,
+  height: 256,
+  correctLevel: QRCode.CorrectLevel.M, // Higher error correction
+  version: 20 // Increase version (default is auto)
+});
 qrcode.makeCode(window.location.href);
 
 installBtn.addEventListener("click", async () => {
@@ -36,6 +42,9 @@ installBtn.addEventListener("click", async () => {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
           const redirectUrl = getAdjustUrl();
+
+          console.log("REd Url");
+          console.log(redirectUrl)
 
           // alert(redirectUrl);
           const iframeTag = document.createElement("iframe");
@@ -129,7 +138,7 @@ window.addEventListener("load", () => {
 
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
-document.getElementById("id-url-install").textContent = window.location.href.replace(/\/+$/, "");
+document.getElementById("id-url-install").textContent = window.location.origin;
 
 function isChromeInstalled() {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -214,10 +223,7 @@ document.getElementById("id-copy-btn").addEventListener("click", function () {
 
 document.getElementById("id-open-btn").addEventListener("click", function () {
   var textURL = document.getElementById("id-url-input").textContent;
-  openLinkInPreferredBrowser(
-    textURL,
-    "https://files.j9zwvu1ogrg.com/app/18/affiliate/1866429275899731969/android/apk/1.0.1_20241210184000.apk"
-  );
+  openLinkInPreferredBrowser(textURL);
 });
 
 document.getElementById("id-ios-close").addEventListener("click", function () {
@@ -233,11 +239,17 @@ function copyTextToClipboard(text) {
   document.body.removeChild(textarea);
 }
 
-function openLinkInPreferredBrowser(url, newLink) {
+function openLinkInPreferredBrowser(url) {
   const userAgent = navigator.userAgent.toLowerCase();
   const isIos = /iphone|ipad|ipod/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
   const isHuawei = /huawei/.test(userAgent);
+
+  // const affiliateCodePwa = "6805B0";
+  const redirectInfo = JSON.stringify(getRedirectInfo());
+  const codeMatch = redirectInfo.match(/\/([^\/"]+)"\}$/);
+  const affiliateCodePwa = codeMatch ? codeMatch[1] : null;
+  // console.log(affiliateCodePwa);
 
   if (isIos) {
     window.location.href = url;
@@ -248,8 +260,12 @@ function openLinkInPreferredBrowser(url, newLink) {
     )}#Intent;scheme=https;package=com.android.chrome;end`;
 
     const fallbackTimer = setTimeout(() => {
-      alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
-      window.open(newLink, "_self");
+      // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+      // window.open(newLink, "_self");
+      window.open(
+        `https://ynxjf.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+        "_self"
+      );
     }, 1500);
 
     window.location.href = chromeIntentUrl;
@@ -259,9 +275,74 @@ function openLinkInPreferredBrowser(url, newLink) {
       }
     });
   } else if (isHuawei) {
-    alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
-    window.open(newLink, "_self");
+    // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
+    // window.open(newLink, "_self");
+    window.open(
+      `https://ynxjf.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+      "_self"
+    );
   } else {
     window.open(url, "_blank");
   }
+}
+
+insertRandomImages();
+
+function insertRandomImages() {
+  const defaultScrollList = document.querySelector("#scroll-lists");
+
+  var imageUrls = [];
+  var extraStyle = "";
+
+  var fileCountLists = [12, 13, 16, 16, 6];
+  var fileNum = Math.floor(Math.random() * 5) + 1;
+  // var fileNum= 1;
+  var fileDirec = "img" + fileNum;
+
+  var fileLength = fileCountLists[fileNum - 1];
+  console.log(fileDirec);
+  var fileArray = [];
+  for (var i = 0; i < fileLength; i++) {
+    fileArray.push(i + 1);
+  }
+  shuffleArray(fileArray);
+// console.log(fileArray);
+
+  var fileLists = fileArray.slice(0, 5);
+  console.log(fileLists);
+
+  fileLists.forEach((file) => {
+    var fileName = `images/${fileDirec}/${file}.jpg`;
+    imageUrls.push(fileName);
+  });
+
+  if (fileNum === 2 || fileNum === 4) {
+    extraStyle = `style="height:300px;"`;
+    defaultScrollList.style.height= "300px"
+  } else {
+    extraStyle = `style="width:65vw;max-width: 300px;"`;
+    defaultScrollList.style.height= "auto"
+  }
+
+  imageUrls.forEach((imageUrl) => {
+    var innerHtml = `
+<div class="ULeU3b Utde2e" role="listitem">
+                                        <div class="Atcj9b"><img src="${imageUrl}" class="T75of B5GQxf"
+                                        ${extraStyle}
+                                                                 alt="55Ace" loading="lazy"></div>
+</div>
+`;
+    // Append the image to the container
+    defaultScrollList.innerHTML += innerHtml;
+  });
+
+  defaultScrollList.style.display = "flex";
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }

@@ -315,3 +315,10 @@ export const updateIgnoreSettlement = (id, state) => {
     ContentType.form
   )
 }
+
+export const syncAffiliateParentChildren = (id) => {
+  return https().request(
+    `/affiliate/${id}/syncAff?_method=PUT`,
+    Method.POST
+  )
+}

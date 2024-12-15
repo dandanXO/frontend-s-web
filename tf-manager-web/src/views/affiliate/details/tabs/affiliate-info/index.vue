@@ -1552,7 +1552,7 @@ import {
   getMemberRealName,
   getMemberTelephone,
   getMemberStatus,
-  freezeMember, unfreezeMember, updateRisk, syncMemberDetail
+  freezeMember, unfreezeMember, updateRisk
 } from '../../../../../api/member'
 import { getFinancialLevels } from '../../../../../api/financial-level'
 import { getAffiliateRecord, getCommissionBalance } from '../../../../../api/affiliate-record'
@@ -1580,6 +1580,7 @@ import {
   getDownlineShareRatio,
   reactivateAffiliate,
   updateAffiliateWithdrawPassword,
+  syncAffiliateParentChildren
   // updateIgnoreSettlement
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
@@ -2179,7 +2180,7 @@ async function reactivate() {
 }
 
 async function syncMember() {
-  await syncMemberDetail(props.affId, memberDetail.siteId);
+  await syncAffiliateParentChildren(props.affId, memberDetail.siteId);
   ElMessage({ message: t('message.syncMemberDetailSuccess'), type: "success" });
 }
 
