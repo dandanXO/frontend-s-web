@@ -177,6 +177,7 @@
       <template v-for="(item, index) in translatedCategoriesList" :key="index">
         <swiper-slide>
           <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+            <div :class="`cat-icon ${item.icon}`" />
             <div class="cat-title">{{ item.label }}</div>
           </div>
         </swiper-slide>
@@ -198,9 +199,17 @@
               <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
             </div>
-            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Hot">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Hot">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('hot')" title="hot prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('hot')" title="hot next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper lobby-platform-game" v-if="category.title === 'Lobby' && category.active">
@@ -213,6 +222,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('hot', swiper)"
             >
               <template v-for="(item, index) in lobbyHotGameLists" :key="index">
                 <template v-if="item.type && item.type === 'game'">
@@ -227,12 +237,12 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg`)})`;
                               } catch (e) {
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg)`;
                                 }
                               }
                             })()
@@ -270,12 +280,12 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                               } catch (e) {
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.jpg)`;
                                 }
                               }
                             })()
@@ -311,12 +321,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -353,12 +363,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -388,9 +398,17 @@
               <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
             </div>
-            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Live">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Live">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('live')" title="live prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('live')" title="live next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -405,15 +423,15 @@
                 data-aos-anchor="#hotgames"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.jpg" />
                 <div
                   class="platform-live-item--img"
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                        return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.jpg`)})`;
                       } catch (e) {
-                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                       }
                     })()
                   }"
@@ -437,7 +455,7 @@
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
                   <div>
-                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.png" />
+                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.jpg" />
                     <div
                       class="platform-live-item--img"
                       :style="{
@@ -445,9 +463,9 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${
                               item.name.toLowerCase() === 'evo' ? 'wc' : ''
-                            }${item.name.toLowerCase()}.png`)})`;
+                            }${item.name.toLowerCase()}.jpg`)})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                           }
                         })()
                       }"
@@ -478,9 +496,17 @@
               <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
             </div>
-            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Slot">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Slot">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('slot')" title="slot prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('slot')" title="slot next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -492,6 +518,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('slot', swiper)"
             >
               <template v-for="(item, index) in slot" :key="index">
                 <swiper-slide
@@ -520,9 +547,9 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
-                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.jpg)`;
                             }
                           })()
                         }"
@@ -570,9 +597,9 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         })()
                       }"
@@ -600,9 +627,17 @@
               <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_poker") }}</div>
             </div>
-            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Poker">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Poker">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('poker')" title="poker prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('poker')" title="poker next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -614,6 +649,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('poker', swiper)"
             >
               <template v-for="(item, index) in pokerGameJILIList" :key="index">
                 <!-- <template v-if="item.code === 'JILI'"> -->
@@ -716,9 +752,17 @@
               <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Fish">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink class="title-game-action" to="#Fish">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('fish')" title="fish prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('fish')" title="fish next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper">
@@ -730,6 +774,7 @@
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('fish', swiper)"
             >
               <template v-for="(item, index) in fishGameJILIList" :key="index">
                 <swiper-slide
@@ -749,12 +794,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -788,12 +833,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -939,12 +984,12 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         }
                       })()
@@ -970,12 +1015,12 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         }
                       })()
@@ -1014,9 +1059,9 @@
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
+                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.jpg`)})`;
                       } catch (e) {
-                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.jpg)`;
                       }
                     })()
                   }"
@@ -1434,6 +1479,36 @@ import NameAuthModal from "src/components/modal/NameAuthModal.vue";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Grid, Scrollbar, Navigation, Pagination]);
+const swiperRef = ref({});
+const onSwiper = (category, swiper) => {
+  swiperRef.value[category] = swiper;
+  console.log("here", swiper);
+};
+
+const prevSlide = (category) => {
+  if (category === "live") {
+    const target = document.querySelector(".live-casino");
+
+    target.scrollTo({
+      left: document.querySelector(".live-casino").getBoundingClientRect().left - 400,
+      behavior: "smooth"
+    });
+  } else {
+    swiperRef.value[category].slidePrev();
+  }
+};
+const nextSlide = (category) => {
+  if (category === "live") {
+    const target = document.querySelector(".live-casino");
+
+    target.scrollTo({
+      left: document.querySelector(".live-casino").getBoundingClientRect().left + 400,
+      behavior: "smooth"
+    });
+  } else {
+    swiperRef.value[category].slideNext();
+  }
+};
 
 const { t } = useI18n();
 const route = useRoute();
@@ -2075,9 +2150,7 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const lobbyHotGameLists= ref([
-
-]);
+const lobbyHotGameLists = ref([]);
 
 const hotGameList = ref([
   {
@@ -2499,7 +2572,7 @@ const loadHotGameList = () => {
     )
     .then((res) => {
       hotGameList.value = [];
-      lobbyHotGameLists.value= [];
+      lobbyHotGameLists.value = [];
       hotlists = res;
 
       // cached
@@ -2551,13 +2624,12 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          // hotGameList rearrange such that
+          // lobbyHotGameLists rearrange such that
           // 1  2  3
           // 4  5  6
           // becomes
           // 1  3  5
           // 2  4  6
-
           const row = 2;
           const cols = Math.ceil(hotGameList.value.length / row);
           const temp = [...hotGameList.value];
@@ -2579,7 +2651,7 @@ const loadHotGameList = () => {
           // console.log(livecasino.value);
         });
     });
-}
+};
 
 // const alignedHotGameLists= (hotgame) => {
 //   const alignLists= hotgame;
@@ -4648,7 +4720,7 @@ const showCongratsModal = () => {
       align-items: center;
 
       .label-img {
-        display: block;
+        display: none;
         width: auto;
         height: 20px;
       }
@@ -4668,12 +4740,45 @@ const showCongratsModal = () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: url(../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
-      background-size: cover;
-      aspect-ratio: 140 / 44;
+      background: #394144;
       min-width: 90px;
       color: #fff;
       text-decoration: none;
+      border-radius: 4px;
+      padding: 5px 15px;
+    }
+
+    .swiper-nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .swiper-nav-btn {
+        background: #394144;
+        border-radius: 4px;
+        padding: 5px;
+        width: 31px;
+        height: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .left-btn {
+          background: url("../assets/images/index/swiper-nav-btns.svg") no-repeat center center;
+          background-size: auto 100%;
+          background-position: 1px 0px;
+          width: 10px;
+          height: 10px;
+        }
+
+        .right-btn {
+          background: url("../assets/images/index/swiper-nav-btns.svg") no-repeat center center;
+          background-size: auto 100%;
+          background-position: -6px 0px;
+          width: 10px;
+          height: 10px;
+        }
+      }
     }
   }
 }
@@ -4779,6 +4884,7 @@ const showCongratsModal = () => {
 
     .platform-live-item--img {
       background-size: 100% 100%;
+      border-radius: 10px;
     }
 
     img {
@@ -4850,6 +4956,7 @@ const showCongratsModal = () => {
       position: absolute;
       top: 0;
       left: 0;
+      border-radius: 10px;
 
       .platform-live-title {
         position: absolute;
@@ -4961,13 +5068,11 @@ const showCongratsModal = () => {
 
 .cat-selection-wrapper {
   margin-bottom: 10px;
-  border-radius: 8px;
   padding: 2px;
-  background: url(../assets/images/index/category/cat-bg.png) no-repeat center center;
-  background-size: 100% 100%;
+  background: transparent;
   margin-bottom: 15px;
   aspect-ratio: 343 / 32;
-  padding: 0 36px;
+  padding: 0;
 
   .swiper-wrapper {
     // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
@@ -5060,32 +5165,32 @@ const showCongratsModal = () => {
   // padding-top: 4px;
   // padding-bottom: 8px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   transition: 0.3s all;
   width: 100%;
   height: 100%;
   position: relative;
 
   &.active {
-    background: linear-gradient(
-      180deg,
-      rgba(36, 238, 137, 0) 0%,
-      rgba(36, 238, 137, 0.525) 73.85%,
-      rgba(36, 238, 137, 0.7) 95.05%
-    );
+    background: #394144;
+    border-radius: 4px;
 
-    &:before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 2px;
-      width: 100%;
-      background: #24ee89;
-      border-radius: 4px;
+    .cat-icon {
+      filter: none;
     }
+
+    // &:before {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   height: 2px;
+    //   width: 100%;
+    //   background: #24ee89;
+    //   border-radius: 4px;
+    // }
 
     .cat-title {
       color: #ffffff;
@@ -5097,14 +5202,58 @@ const showCongratsModal = () => {
   }
 
   .cat-icon {
-    height: 28px;
+    height: 17px;
+    width: 17px;
     display: flex;
     align-items: center;
+    filter: grayscale(1) contrast(0.5) brightness(0.5);
 
     img {
       display: block;
       width: 100%;
       max-width: 28px;
+    }
+
+    &.lobby {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: 0px 0px;
+    }
+
+    &.hot {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -20px 0px;
+    }
+
+    &.slot {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -81px 0px;
+    }
+
+    &.live {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -41px 0px;
+    }
+
+    &.sport {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -122px 0px;
+    }
+
+    &.fish {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -61 0px;
+    }
+
+    &.poker {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -102px 0px;
     }
   }
 
@@ -5114,7 +5263,6 @@ const showCongratsModal = () => {
     color: #ffffff80;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
   }
 }
 
@@ -5138,6 +5286,7 @@ const showCongratsModal = () => {
     border-radius: 8px;
     background-repeat: no-repeat;
     // background-image: url("../assets/images/index/mini-game-bg.png");
+    background-image: url("../assets/images/index/mini-game-bg.png");
   }
 }
 

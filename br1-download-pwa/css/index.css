@@ -1040,10 +1040,12 @@ main {
   border-radius: 5px;
   height: 100%;
 }
-
-.footer__section {
-  padding-top: 15px;
+.footer {
+  padding: 20px;
 }
+/* .footer__section {
+  padding-top: 15px;
+} */
 
 .footer__section-title {
   color: #5f6368;
@@ -1056,6 +1058,10 @@ main {
   color: #606468;
   font-size: 14px;
   padding-top: 14px;
+}
+.footer__section-item:first-of-type {
+  
+  padding-top: 0;
 }
 
 .footer__bottom {
