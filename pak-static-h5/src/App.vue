@@ -381,9 +381,10 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      console.log("pak-static-h5");
+
       handleRedirect();
       // const info = await App.getInfo();
-      // console.log("APP Info");
       // console.log(info);
       checkIfVirtualMachine();
       checkServerStatus();

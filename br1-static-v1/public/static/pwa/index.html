@@ -22,7 +22,9 @@
           <div class="header__icon">
             <img alt="55ACE" loading="lazy" src="./images/logo.png" class="header__icon--img" />
             <div class="header__icon--loading" id="iconLoading">
-              <svg viewBox="25 25 50 50"><circle cx="50" cy="50" fill="none" r="20"></circle></svg>
+              <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" fill="none" r="20"></circle>
+              </svg>
             </div>
           </div>
           <div class="header__info">
@@ -33,52 +35,55 @@
             <p class="header__info-description">55ACE</p>
             <p class="header__info-progress" id="installProgress">0%</p>
             <p class="header__info-play">
-              <img class="ic_dun" alt="verified" loading="lazy" src="./images/ic-dun.png" />
-              Verified by Play Protect
+              <img class="ic_dun" alt="verificado" loading="lazy" src="./images/ic-dun.png" />
+              Verificado pelo Play Protect
             </p>
           </div>
         </div>
-
         <div class="info">
           <div class="info__view__wrap">
             <div class="info__view">
               <div class="info__view-value">
                 <span>4.8</span>
-                <img alt="star" class="ic_x" loading="lazy" src="./images/star.png" />
+                <img alt="estrela" class="ic_x" loading="lazy" src="./images/star.png" />
               </div>
-              <div class="info__view-label">15K reviews</div>
+              <div class="info__view-label">15 mil avaliações</div>
             </div>
             <div class="info__view">
-              <div class="info__view-value">100K +</div>
+              <div class="info__view-value">100 mil +</div>
               <div class="info__view-label">Downloads</div>
             </div>
             <div class="info__view">
-              <img alt="best choice" class="info__view-choice" loading="lazy" src="./images/check.png" />
-              <div class="info__view-label">Editors' Choice</div>
+              <img alt="melhor escolha" class="info__view-choice" loading="lazy" src="./images/check.png" />
+              <div class="info__view-label">Escolha dos Editores</div>
             </div>
           </div>
         </div>
-
         <div class="qrcode-wrapper">
           <div class="qrcode">
             <div class="qrcode__hand">
-              <img alt="qrcode example" class="qrcode__hand-bg" loading="lazy" src="./images/qrcode-in-phone.png" />
-              <img alt="qrcode scan line" class="qrcode__hand-light" loading="lazy" src="./images/scan-line.png" />
+              <img alt="exemplo de QR code" class="qrcode__hand-bg" loading="lazy" src="./images/qrcode-in-phone.png" />
+              <img
+                alt="linha de escaneamento do QR code"
+                class="qrcode__hand-light"
+                loading="lazy"
+                src="./images/scan-line.png"
+              />
             </div>
             <div class="qrcode__prop">
               <div class="qrcode__prop-code">
                 <div class="qrcode__code" id="qrcode"></div>
-                <img alt="qrcode aim" class="qrcode__prop-bg" loading="lazy" src="./images/qrcode-aim.png" />
+                <img alt="mirar no QR code" class="qrcode__prop-bg" loading="lazy" src="./images/qrcode-aim.png" />
               </div>
-              <div class="qrcode__prop-title">Scan QR code to install</div>
+              <div class="qrcode__prop-title">Escaneie o QR code para instalar</div>
             </div>
 
-            <img alt="next step arrow" class="qrcode__arrowhead" loading="lazy" src="./images/arrow.png" />
+            <img alt="seta para o próximo passo" class="qrcode__arrowhead" loading="lazy" src="./images/arrow.png" />
 
             <div class="qrcode__phone">
               <img alt="55ACE" class="qrcode__phone-icon" loading="lazy" src="./images/logo.png" />
               <div class="qrcode__phone-name">55ACE</div>
-              <div class="qrcode__phone-btn">Rapid Install</div>
+              <div class="qrcode__phone-btn">Instalação Rápida</div>
             </div>
           </div>
         </div>
@@ -86,136 +91,135 @@
         <div class="install-btn shiny-btn" id="install-btn">
           <div class="install-btn__ing">
             <div class="install-btn__ing__rapid">
-              <img alt="thunder" class="ic_x" loading="lazy" src="./images/thunder.png" />
-              <span>Rapid Install</span>
+              <img alt="raio" class="ic_x" loading="lazy" src="./images/thunder.png" />
+              <span>Instalação Rápida</span>
             </div>
             <div class="install-btn__ing__countdown">
-              <span>Download Within</span>
+              <span>Baixar em</span>
               <span class="countdown-num" id="countdown">10</span>
               s
             </div>
           </div>
-          <div class="install-btn__play install-btn__view">Play</div>
-          <div class="install-btn__install install-btn__view">Install</div>
+          <div class="install-btn__play install-btn__view">Jogar</div>
+          <div class="install-btn__install install-btn__view">Instalar</div>
         </div>
-
         <div class="share-row">
           <div class="share-row__item">
-            <img alt="share" loading="lazy" src="./images/share.png" />
-            <div>Share</div>
+            <img alt="compartilhar" loading="lazy" src="./images/share.png" />
+            <div>Compartilhar</div>
           </div>
           <div class="share-row__item">
-            <img alt="Add to bookmark" loading="lazy" src="./images/bookmark.png" />
-            <div>Add to wishlist</div>
+            <img alt="adicionar aos favoritos" loading="lazy" src="./images/bookmark.png" />
+            <div>Adicionar à lista de desejos</div>
           </div>
         </div>
 
         <div class="img-scroll">
-          <div class="img-scroll__list">
-            <div class="img-scroll__view">
-              <img loading="lazy" src="./images/screenshot1.png" />
-            </div>
-            <div class="img-scroll__view">
-              <img loading="lazy" src="./images/screenshot2.png" />
-            </div>
-            <!-- <div class="img-scroll__view">
-              <img loading="lazy" src="./images/screenshot3.jpg" />
-            </div> -->
+          <div class="img-scroll__list" id="scroll-lists">
+<!--            <div class="img-scroll__view">-->
+<!--              <img loading="lazy" src="./images/screenshot1.png" />-->
+<!--            </div>-->
+<!--            <div class="img-scroll__view">-->
+<!--              <img loading="lazy" src="./images/screenshot2.png" />-->
+<!--            </div>-->
           </div>
         </div>
 
         <div class="description">
-          <div class="description__title">About this app</div>
+          <div class="description__title">Sobre este aplicativo</div>
           <img class="description__right-arrow" loading="lazy" src="./images/description-arrow.png" />
           <pre class="description__content">
-            55ACE - An Online Gaming Platform Offering Rich Experiences and Generous Rewards
-            55ACE is an online gaming platform dedicated to providing users with a wide range of gaming experiences and lucrative rewards. Beyond entertainment, it offers a unique opportunity to earn money through gaming, allowing users to enjoy themselves while making a profit.
+            55ACE - Uma Plataforma de Jogos Online Oferecendo Experiências Ricas e Recompensas Generosas
+            55ACE é uma plataforma de jogos online dedicada a proporcionar aos usuários uma ampla gama de experiências de jogos e recompensas lucrativas. Além do entretenimento, oferece uma oportunidade única de ganhar dinheiro jogando, permitindo que os usuários se divirtam enquanto lucram.
 
-            Key Features:
-            Diverse Game Content:
-            55ACE offers a variety of games, including sports betting, e-sports, fishing games, card games, and casino games to cater to different entertainment preferences. Whether you enjoy challenging strategy games or prefer the fast-paced action of e-sports, 55ACE has the perfect game for you.
+            Principais Recursos:
+            Conteúdo Diversificado de Jogos:
+            55ACE oferece uma variedade de jogos, incluindo apostas esportivas, e-sports, jogos de pesca, jogos de cartas e jogos de cassino para atender a diferentes preferências de entretenimento. Se você gosta de jogos de estratégia desafiadores ou prefere a ação rápida dos e-sports, 55ACE tem o jogo perfeito para você.
 
-            Innovative Reward System: The platform emphasizes the concept of "the more you play, the more you earn." Users can win in-game rewards and convert them into real earnings. Every bet and competition could be your chance to make money, making gaming more than just entertainment.
+            Sistema Inovador de Recompensas: A plataforma enfatiza o conceito de "quanto mais você joga, mais você ganha". Os usuários podem ganhar recompensas nos jogos e convertê-las em ganhos reais. Cada aposta e competição pode ser sua chance de ganhar dinheiro, tornando os jogos mais do que apenas entretenimento.
 
-            Earn Commissions by Inviting Friends: 55ACE offers a special referral reward system where users can earn generous commissions and bonuses by inviting friends to join the platform. The more you refer, the more you earn, making it easy to build your gaming team and source of income.
+            Ganhe Comissões ao Convidar Amigos: 55ACE oferece um sistema especial de recompensas por indicação, onde os usuários podem ganhar comissões generosas e bônus ao convidar amigos para se juntarem à plataforma. Quanto mais você indicar, mais você ganha, facilitando a construção de sua equipe de jogos e fonte de renda.
 
-            Safe and Reliable Services: The platform utilizes advanced security technology to ensure the safety of user accounts and data, while offering multiple payment methods for convenient and secure transactions. Users can enjoy gaming with peace of mind and easily withdraw their earnings through a reliable payment system.
+            Serviços Seguros e Confiáveis: A plataforma utiliza tecnologia de segurança avançada para garantir a segurança das contas e dados dos usuários, além de oferecer múltiplos métodos de pagamento para transações convenientes e seguras. Os usuários podem jogar com tranquilidade e retirar seus ganhos facilmente por meio de um sistema de pagamento confiável.
 
-            Join 55ACE and Start Earning through Gaming! At 55ACE, you are not just a player but a skilled gamer who can earn money through games. Register now to experience the thrill of gaming and the satisfaction of earning. Make your entertainment time more valuable!
+            Junte-se ao 55ACE e Comece a Ganhar com Jogos! No 55ACE, você não é apenas um jogador, mas um gamer habilidoso que pode ganhar dinheiro jogando. Registre-se agora para experimentar a emoção dos jogos e a satisfação de ganhar. Torne seu tempo de entretenimento mais valioso!
           </pre>
         </div>
 
         <div class="description">
-          <div class="descripiton__title" style="margin-bottom: 5px; font-size: 14px">Updated on</div>
+          <div class="description__title" style="margin-bottom: 5px; font-size: 14px">Atualizado em</div>
           <div class="description__content"></div>
           <div class="description__label">
-            <div class="description__label-item">Game</div>
-            <div class="description__label-item">Bonus</div>
-            <div class="description__label-item">Casino</div>
+            <div class="description__label-item">Jogo</div>
+            <div class="description__label-item">Bônus</div>
+            <div class="description__label-item">Cassino</div>
           </div>
         </div>
 
         <div class="description">
-          <div class="description__title">Data safety</div>
+          <div class="description__title">Segurança de Dados</div>
           <img class="description__right-arrow" loading="lazy" src="./images/description-arrow.png" />
           <pre class="description__content">
-            Safety starts with understanding how developers collect and share your data. Data privacy and security practices may vary based on your use, region, and age. The developer provided this information and may update it over time.
+            A segurança começa com a compreensão de como os desenvolvedores coletam e compartilham seus dados. As práticas de privacidade e segurança de dados podem variar com base no seu uso, região e idade. O desenvolvedor forneceu estas informações e pode atualizá-las ao longo do tempo.
           </pre>
           <div class="description__data-safety">
             <div class="description__data-safety__item">
               <div class="item-icon">
-                <img alt="data safety" loading="lazy" src="./images/data-safety-icon-1.png" />
+                <img alt="segurança de dados" loading="lazy" src="./images/data-safety-icon-1.png" />
               </div>
               <div class="item-content">
-                <p>No data shared with third parties</p>
+                <p>Sem dados compartilhados com terceiros</p>
                 <p>
-                  <ins>Learn more</ins>
-                  <span>about how developers declare sharing</span>
+                  <ins>Saiba mais</ins>
+                  <span>sobre como os desenvolvedores declaram o compartilhamento</span>
                 </p>
               </div>
             </div>
             <div class="description__data-safety__item">
               <div class="item-icon">
-                <img alt="data safety" loading="lazy" src="./images/data-safety-icon-2.png" />
+                <img alt="segurança de dados" loading="lazy" src="./images/data-safety-icon-2.png" />
               </div>
               <div class="item-content">
-                <p>This app may collect these data types Location, App activity and 2 others</p>
+                <p>
+                  Este aplicativo pode coletar estes tipos de dados: Localização, Atividade do aplicativo e 2 outros
+                </p>
               </div>
             </div>
             <div class="description__data-safety__item">
               <div class="item-icon">
-                <img alt="data safety" loading="lazy" src="./images/data-safety-icon-3.png" />
+                <img alt="segurança de dados" loading="lazy" src="./images/data-safety-icon-3.png" />
               </div>
               <div class="item-content">
-                <p>Data is encrypted in transit</p>
+                <p>Os dados são criptografados durante a transmissão</p>
               </div>
             </div>
             <div class="description__data-safety__item">
               <div class="item-icon">
-                <img alt="data safety" loading="lazy" src="./images/data-safety-icon-4.png" />
+                <img alt="segurança de dados" loading="lazy" src="./images/data-safety-icon-4.png" />
               </div>
               <div class="item-content">
-                <p>You can request that data be deleted</p>
+                <p>Você pode solicitar que os dados sejam excluídos</p>
               </div>
             </div>
           </div>
         </div>
 
         <div class="comments">
-          <div class="comments__title">Ratings and reviews</div>
+          <div class="comments__title">Avaliações e comentários</div>
           <div class="comments__tips">
-            Ratings and reviews are verified and from people who use the same type of device that you use
+            As avaliações e comentários são verificados e feitos por pessoas que usam o mesmo tipo de dispositivo que
+            você usa
           </div>
 
           <div class="comments__scoring">
             <div class="comments__scoring-num">
               <div class="comments__scoring-points">4.8</div>
               <div class="comments__scoring-star">
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-half.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-half.png" />
               </div>
               <div class="comments__scoring-people">15463</div>
             </div>
@@ -261,14 +265,14 @@
                 <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
               </div>
               <div class="comments__list-stars">
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <span>October 24, 2024</span>
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <span>24 de outubro de 2024</span>
               </div>
-              <div class="comments__list-detail">hot</div>
+              <div class="comments__list-detail">quente</div>
             </div>
             <div class="comments__list-item">
               <div class="comments__list-header">
@@ -277,168 +281,170 @@
                 <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
               </div>
               <div class="comments__list-stars">
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <span>October 25, 2024</span>
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <span>25 de outubro de 2024</span>
               </div>
               <div class="comments__list-detail">
-                The referral rewards are amazing! Inviting friends gets you real cashback, and there are bonus events
-                like red packet rain too!
-              </div>
-            </div>
-
-            <div class="comments__list-item">
-              <div class="comments__list-header">
-                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-3.png" />
-                <div class="comments__list-name">Jason</div>
-                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
-              </div>
-              <div class="comments__list-stars">
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-half.png" />
-                <span>October 23, 2024</span>
-              </div>
-              <div class="comments__list-detail">
-                Perfect game for slot lovers! Easy to use for beginners, and full of fun for experienced players too.
-              </div>
-            </div>
-
-            <div class="comments__list-item">
-              <div class="comments__list-header">
-                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-4.png" />
-                <div class="comments__list-name">Emma</div>
-                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
-              </div>
-              <div class="comments__list-stars">
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <span>October 20, 2024</span>
-              </div>
-              <div class="comments__list-detail">
-                Love the red packet rain events! The more friends I invite, the more rewards I can earn. Highly
-                recommend!
-              </div>
-            </div>
-
-            <div class="comments__list-item">
-              <div class="comments__list-header">
-                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-5.png" />
-                <div class="comments__list-name">Lucas</div>
-                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
-              </div>
-              <div class="comments__list-stars">
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-half.png" />
-                <span>October 18, 2024</span>
-              </div>
-              <div class="comments__list-detail">
-                Really impressed with the partnerships they have! Exclusive collaborations make it even more rewarding
-                daily.
-              </div>
-            </div>
-
-            <div class="comments__list-item">
-              <div class="comments__list-header">
-                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-1.png" />
-                <div class="comments__list-name">Mia</div>
-                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
-              </div>
-              <div class="comments__list-stars">
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-full.png" />
-                <img alt="score" loading="lazy" class="star" src="./images/score-star-half.png" />
-                <span>October 15, 2024</span>
-              </div>
-              <div class="comments__list-detail">
-                Super user-friendly and a great fit for slots enthusiasts! It’s perfect for anyone new or experienced in
-                the game.
+                As recompensas de indicação são incríveis! Convidar amigos te dá cashback real, e também há eventos
+                bônus como a chuva de pacotes vermelhos!
               </div>
             </div>
           </div>
-          <div class="comments__br"></div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-3.png" />
+              <div class="comments__list-name">Jason</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-half.png" />
+              <span>23 de outubro de 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Jogo perfeito para os amantes de caça-níqueis! Fácil de usar para iniciantes e cheio de diversão para
+              jogadores experientes também.
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-4.png" />
+              <div class="comments__list-name">Emma</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <span>20 de outubro de 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Adoro os eventos de chuva de pacotes vermelhos! Quanto mais amigos eu convido, mais recompensas posso
+              ganhar. Recomendo muito!
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-5.png" />
+              <div class="comments__list-name">Lucas</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-half.png" />
+              <span>18 de outubro de 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Fiquei realmente impressionado com as parcerias que eles têm! Colaborações exclusivas tornam ainda mais
+              recompensador diariamente.
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-1.png" />
+              <div class="comments__list-name">Mia</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="pontuação" loading="lazy" class="star" src="./images/score-star-half.png" />
+              <span>15 de outubro de 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Super fácil de usar e uma ótima opção para os entusiastas de caça-níqueis! É perfeito para quem é novo ou
+              experiente no jogo.
+            </div>
+          </div>
         </div>
 
-        <footer class="footer">
-          <div class="footer__section">
-            <div class="footer__section-item">Play Pass</div>
-            <div class="footer__section-item">Play Points</div>
-            <div class="footer__section-item">Gift cards</div>
-            <div class="footer__section-item">Redeem</div>
-            <div class="footer__section-item">Refund Policy</div>
-          </div>
-          <div class="footer__section">
-            <div class="footer__section-title">Kids & family</div>
-            <div class="footer__section-item">Parent Guide</div>
-            <div class="footer__section-item">Family Sharing</div>
-          </div>
-          <div class="footer__bottom flex items-center">
-            <div class="mr-22">Terms of Service</div>
-            <div class="mr-22">Privacy</div>
-          </div>
-          <div class="footer__bottom flex items-center">
-            <div class="mr-22">Developers</div>
-            <div class="mr-22">English</div>
-          </div>
-          <div class="footer__tips">
-            <p class="contact_each_other">Contact developer</p>
-          </div>
-        </footer>
+        <div class="comments__br"></div>
       </main>
+      <footer class="footer">
+        <div class="footer__section">
+          <div class="footer__section-item">Passaporte de Jogo</div>
+          <div class="footer__section-item">Pontos de Jogo</div>
+          <div class="footer__section-item">Cartões de presente</div>
+          <div class="footer__section-item">Resgatar</div>
+          <div class="footer__section-item">Política de Reembolso</div>
+        </div>
+        <div class="footer__section">
+          <div class="footer__section-title">Crianças & Família</div>
+          <div class="footer__section-item">Guia para Pais</div>
+          <div class="footer__section-item">Compartilhamento Familiar</div>
+        </div>
+        <div class="footer__bottom flex items-center">
+          <div class="mr-22">Termos de Serviço</div>
+          <div class="mr-22">Privacidade</div>
+        </div>
+        <div class="footer__bottom flex items-center">
+          <div class="mr-22">Desenvolvedores</div>
+          <div class="mr-22">Inglês</div>
+        </div>
+        <div class="footer__tips">
+          <p class="contact_each_other">Contatar desenvolvedor</p>
+        </div>
+      </footer>
 
       <div class="menus">
         <div class="menus__placeholder"></div>
         <div class="menus__body">
           <div class="menus__item active">
-            <img alt="game" loading="lazy" src="./images/game.png" />
-            <div class="title">Games</div>
+            <img alt="jogo" loading="lazy" src="./images/game.png" />
+            <div class="title">Jogos</div>
           </div>
           <div class="menus__item">
-            <img alt="game" loading="lazy" src="./images/app.png" />
-            <div class="title">Apps</div>
+            <img alt="aplicativo" loading="lazy" src="./images/app.png" />
+            <div class="title">Aplicativos</div>
           </div>
           <div class="menus__item">
-            <img alt="game" loading="lazy" src="./images/media.png" />
-            <div class="title">Movies & TV</div>
+            <img alt="mídia" loading="lazy" src="./images/media.png" />
+            <div class="title">Filmes & TV</div>
           </div>
           <div class="menus__item">
-            <img alt="game" loading="lazy" src="./images/book.png" />
-            <div class="title">Books</div>
+            <img alt="livro" loading="lazy" src="./images/book.png" />
+            <div class="title">Livros</div>
           </div>
           <div class="menus__item">
-            <img alt="game" loading="lazy" src="./images/kid.png" />
-            <div class="title">Kids</div>
+            <img alt="criança" loading="lazy" src="./images/kid.png" />
+            <div class="title">Crianças</div>
           </div>
         </div>
       </div>
 
       <div class="loading loading--show" id="loading">
         <div class="loading__icon">
-          <svg viewBox="25 25 50 50"><circle cx="50" cy="50" fill="none" r="20"></circle></svg>
+          <svg viewBox="25 25 50 50">
+            <circle cx="50" cy="50" fill="none" r="20"></circle>
+          </svg>
         </div>
-        <div class="loading__text">Loading</div>
+        <div class="loading__text">Carregando</div>
       </div>
-
       <div class="blank-iframe" id="iframe-container"></div>
     </div>
 
     <div class="modal-open" style="display: none">
       <div class="modal-div">
         <div class="modal-inner">
-          <div class="modal-header">Please attention!</div>
+          <div class="modal-header">Atenção!</div>
 
           <div class="modal-content">
-            <div class="content-text">Please copy the following URL and paste it into Chrome/Firefox</div>
+            <div class="content-text">Por favor, copie o seguinte URL e cole-o no Chrome/Firefox</div>
             <div class="content-logo">
               <img src="images/browser-chrome.png" alt="" class="logo-android" />
               <img src="images/browser-firefox.png" alt="" class="logo-android" />
@@ -448,11 +454,42 @@
           <div class="modal-body">
             <div class="modal-input">
               <div id="id-url-input" class="url-input"></div>
-              <div class="copy-btn-input" id="id-copy-btn">Copy</div>
+              <div class="copy-btn-input" id="id-copy-btn">Copiar</div>
             </div>
+            <div class="open-btn" id="id-open-btn">Abrir no navegador compatível</div>
           </div>
-          <div class="open-btn" id="id-open-btn">Open in supported browser</div>
         </div>
+      </div>
+    </div>
+
+    <div class="ios-modal" style="display: none">
+      <div class="ios-modal-content">
+        <button class="ios-close-btn" id="id-ios-close">✕</button>
+        <div class="ios-modal-title">Instalar o aplicativo</div>
+        <div class="app-info">
+          <!-- <img src="https://via.placeholder.com/50" alt="App Logo" class="app-logo" /> -->
+          <img alt="55ACE" loading="lazy" src="./images/logo.png" class="app-logo" />
+          <div>
+            <p class="app-title">55ACE</p>
+            <p class="app-url" id="id-url-install">55ACE.com</p>
+          </div>
+        </div>
+        <ol class="instruction-list">
+          <li>
+            Toque emTap on
+            <span class="ios-share-icon"><img alt="share" src="./images/ios-share.svg" /></span>
+            no menu do navegador
+          </li>
+          <li>
+            Role para baixo e selecione
+            <b>Adicionar à tela inicial</b>
+          </li>
+          <li>
+            Role para baixo e selecione o
+            <span class="ios-share-icon"><img alt="share" src="./images/logo.png" /></span>
+            ícone na sua tela inicial
+          </li>
+        </ol>
       </div>
     </div>
   </body>

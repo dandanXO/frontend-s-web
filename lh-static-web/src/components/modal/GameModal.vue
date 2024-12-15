@@ -530,16 +530,9 @@ defineExpose({
 .additional-buttons {
   position: absolute;
   top: 8px;
-  right: 50px;
+  right: 62px;
   gap: 10px;
-  // right: -60px;
-  // width: 60px;
-  // display: flex;
-  // height: 100%;
-  // flex-direction: column;
-  // justify-content: space-between;
-  // top: 0;
-  // background: #d48eff;
+
   display: flex;
   .bottom-button,
   .copy-button {

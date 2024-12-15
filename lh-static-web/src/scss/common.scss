@@ -358,9 +358,7 @@ body {
 .full-modal {
   &.el-dialog {
     margin-top: 0;
-    // width: 90%;
     margin: 0;
-    // width: calc(100% - 60px);
     height: 100vh;
   }
   .el-dialog__body {
@@ -370,6 +368,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .el-dialog__headerbtn{
+    right: 12px;
   }
 }
 .hot-promo .el-overlay {

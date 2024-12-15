@@ -584,7 +584,6 @@ const submitWithdraw = async () => {
   if (cardRef.value.hasError || amountRef.value.hasError) {
     $q.loading.hide();
   } else {
-    console.log("");
     api
       .post("/session/withdraw/", qs.stringify(withdrawInfo))
       .then((response) => {
