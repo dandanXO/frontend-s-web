@@ -156,7 +156,7 @@ import { api } from "boot/axios";
 
 const emit = defineEmits(["closeDialog"]);
 
-const step = ref(2);
+const step = ref(0);
 const selectedCountryRegion = ref("");
 const selectedDocType = ref("PASSPORT");
 const uploadStatus = ref("NOT_EXIST");
@@ -212,16 +212,16 @@ const submit = async () => {
       formData.append("idType", selectedDocType.value);
       formData.append("idPhoto", file);
 
-      // api
-      //   .post("/session/idVerify", formData)
-      //   .then(() => {})
-      //   .catch(() => {
-      //     uploadStatus.value = "FAILED";
-      //   })
-      //   .finally(() => {
-      //     isLoadingUpload.value = false;
-      //     cropDialogVisible.value = false;
-      //   });
+      api
+        .post("/session/idVerify", formData)
+        .then(() => {})
+        .catch(() => {
+          uploadStatus.value = "FAILED";
+        })
+        .finally(() => {
+          isLoadingUpload.value = false;
+          cropDialogVisible.value = false;
+        });
     }
   }
 };
