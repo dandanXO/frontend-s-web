@@ -197,7 +197,7 @@ export default {
     receive: "Receive",
     startNow: "Start Now",
     continue: "Continue",
-    continueUsingYourPhone: "Continue using your phone"
+    uploadAgain: "Upload Again"
   },
   notify: {
     noRecord: "No Record",
@@ -366,13 +366,19 @@ export default {
     issuingCountryRegion: "Issuing country/region",
     documentType: "Document Type",
     getReadyUploadIdCard: "Get ready to upload your ID card",
-    idCard: "ID Card",
+    ic: "IC",
     hint_txt_1: "Upload color photos or documents",
     hint_txt_2: "Take photos in a well-lit room",
     hint_txt_3: "Do not edit images of files",
     checkGuide: "Check out our guide",
     passport: "Passport",
-    visa: "Visa"
+    drivingLicense: "Driving License",
+    hint: "Hint",
+    uploadDoc: "Upload Documents",
+    uploadFailed: "Upload Failed",
+    uploadSuccessful: "Upload Successful",
+    uploaded: "Uploaded",
+    pendingAuth: "Pending Authentication"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",

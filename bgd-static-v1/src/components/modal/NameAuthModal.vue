@@ -42,7 +42,7 @@
         <q-select
           class="country-region-select"
           standout
-          v-model="languageVal"
+          v-model="selectedCountryRegion"
           :options="countryRegion"
           option-label="label"
           option-value="value"
@@ -60,9 +60,14 @@
           />
         </div>
       </div>
-      <q-btn no-caps unelevated class="green-btn" @click="step = 2">{{ $t("btn.continue") }}</q-btn>
-      <q-btn no-caps unelevated class="dark-green-btn">
-        {{ $t("btn.continueUsingYourPhone") }}
+      <q-btn
+        no-caps
+        unelevated
+        class="green-btn"
+        :class="{ disabled: !selectedCountryRegion || !selectedDocType }"
+        @click="step = 2"
+      >
+        {{ $t("btn.continue") }}
       </q-btn>
     </div>
     <div v-if="step === 2" class="name-auth-step step-3">
@@ -76,13 +81,32 @@
         </div>
 
         <div class="name-auth-subtitle">{{ $t("nameAuth.getReadyUploadIdCard") }}</div>
+        <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
+        <div v-if="uploadStatus === 'NOT_EXIST'" class="name-auth-upload-container upload" @click="handleUploadDoc">
+          <img src="../../assets/images/index/name-auth/upload-doc.png" />
+          <span>{{ $t("nameAuth.uploadDoc") }}</span>
+        </div>
+        <div v-else-if="uploadStatus === 'FAILED'" class="name-auth-upload-container upload-fail">
+          <img src="../../assets/images/index/name-auth/upload-fail.png" />
+          <span>{{ $t("nameAuth.uploadFailed") }}</span>
+          <q-btn no-caps unelevated class="green-btn" @click="handleUploadDoc">{{ $t("btn.uploadAgain") }}</q-btn>
+        </div>
+        <div v-else-if="uploadStatus === 'SUCCESS'" class="name-auth-upload-container upload">
+          <img src="../../assets/images/index/name-auth/upload-success.png" />
+          <span>{{ $t("nameAuth.uploadSuccessful") }}</span>
+        </div>
+        <div v-else class="name-auth-upload-container upload-pending-auth">
+          <img src="../../assets/images/index/name-auth/upload-pending-auth.png" />
+          <span>Uploaded</span>
+          <span>Pending Authentication</span>
+        </div>
         <div class="edit-id-container">
-          <div>{{ $t("nameAuth.idCard") }}</div>
-          <img src="../../assets/images/index/name-auth/edit-icon.png" />
+          <div>{{ docType.find((doc) => doc.value === selectedDocType).label }}</div>
+          <!-- <img src="../../assets/images/index/name-auth/edit-icon.png" /> -->
         </div>
       </div>
       <div>
-        <div class="hint-txt">Hint</div>
+        <div class="hint-txt">{{ $t("nameAuth.hint") }}</div>
         <div class="hint-content">
           <div class="hint-content-item">
             <img src="../../assets/images/index/name-auth/tick-icon.png" />
@@ -101,27 +125,175 @@
       <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>
     </div>
   </div>
+  <q-dialog v-model="cropDialogVisible" persistent class="crop-id-dialog">
+    <q-card class="crop-id-dialog-card">
+      <q-btn class="close-btn" dense flat icon="close" v-close-popup />
+
+      <cropper
+        v-if="imageSrc"
+        background-class="cropper-background"
+        ref="cropperRef"
+        class="cropper"
+        :src="
+          imageSrc
+            ? imageSrc
+            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'
+        "
+        @change="cropperChange"
+      />
+
+      <q-btn :loading="isLoadingUpload" no-caps unelevated class="green-btn crop-btn" @click="submit">Done</q-btn>
+    </q-card>
+  </q-dialog>
 </template>
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits, onMounted } from "vue";
 import { t } from "src/boot/lang";
+import { Cropper } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
+import "vue-advanced-cropper/dist/theme.compact.css";
+import { api } from "boot/axios";
 
 const emit = defineEmits(["closeDialog"]);
 
-const step = ref(0);
-const languageVal = ref("");
-const selectedDocType = ref("passport");
+const step = ref(2);
+const selectedCountryRegion = ref("");
+const selectedDocType = ref("PASSPORT");
+const uploadStatus = ref("NOT_EXIST");
+const cropDialogVisible = ref(false);
+
+const fileInput = ref(null);
+const imageSrc = ref("");
 
 const countryRegion = [{ label: "Bangladesh", value: "bgd" }];
 const docType = [
-  { label: t("nameAuth.passport"), value: "passport" },
-  { label: t("nameAuth.idCard"), value: "id" },
-  { label: t("nameAuth.visa"), value: "visa" }
+  { label: t("nameAuth.passport"), value: "PASSPORT" },
+  { label: t("nameAuth.ic"), value: "IC" },
+  { label: t("nameAuth.drivingLicense"), value: "DRIVING_LICENSE" }
 ];
+
+const handleUploadDoc = () => {
+  if (fileInput.value) {
+    fileInput.value.value = null;
+    fileInput.value.click();
+  }
+};
+
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    imageSrc.value = URL.createObjectURL(file);
+    cropDialogVisible.value = true;
+  }
+};
+
+const cropperRef = ref(null);
+const croppedImg = ref(null);
+const isLoadingUpload = ref(false);
+
+const getImageFromCropper = () => {
+  if (cropperRef.value) {
+    const { coordinates, canvas } = cropperRef.value.getResult();
+    croppedImg.value = canvas.toDataURL("image/jpeg", 0.6);
+  }
+};
+
+const cropperChange = () => {
+  getImageFromCropper();
+};
+
+const submit = async () => {
+  isLoadingUpload.value = true;
+  if (croppedImg.value) {
+    const file = await attachPhoto(croppedImg.value);
+
+    if (file) {
+      var formData = new FormData();
+      formData.append("idType", selectedDocType.value);
+      formData.append("idPhoto", file);
+
+      // api
+      //   .post("/session/idVerify", formData)
+      //   .then(() => {})
+      //   .catch(() => {
+      //     uploadStatus.value = "FAILED";
+      //   })
+      //   .finally(() => {
+      //     isLoadingUpload.value = false;
+      //     cropDialogVisible.value = false;
+      //   });
+    }
+  }
+};
+
+function isBase64(str) {
+  const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
+  return base64Regex.test(str);
+}
+
+async function attachPhoto(fileImg) {
+  var file = null;
+  if (typeof fileImg === "string" && isBase64(fileImg)) {
+    // Extract the MIME type from the base64 string
+    const mimeType = fileImg.split(";")[0].split(":")[1];
+    var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
+    // Decode the Base64 string
+    const byteCharacters = atob(data);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    // Convert to an ArrayBuffer
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Create a Blob from the ArrayBuffer
+    const blob = new Blob([byteArray], { type: mimeType });
+
+    // Create a File object from the Blob
+    file = new File([blob], "image." + mimeType.split("/")[1], { type: mimeType });
+  } else {
+    file = fileImg;
+  }
+  // Use the File object for further processing
+  const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
+
+  if (!file || !allowFileTypes.includes(file.type)) {
+    notify({
+      type: "error",
+      message: "Image format error"
+    });
+
+    isLoadingUpload.value = false;
+    return null;
+  }
+  if (file && file.size > 1000000) {
+    notify({
+      type: "error",
+      message: "The uploaded image cannot be larger than 1MB"
+    });
+    isLoadingUpload.value = false;
+    return null;
+  }
+
+  return file;
+}
 
 const closeDialog = () => {
   emit("closeDialog");
 };
+
+onMounted(() => {
+  // api.get("/session/idVerifyStatus").then((res) => {
+  //   if (res.code === 0) {
+  //     uploadStatus.value = res.data.status;
+  //     if (uploadStatus.value !== "NOT_EXIST") {
+  //       step.value = 2;
+  //     }
+  //   } else {
+  //   }
+  // });
+});
 </script>
 <style scoped lang="scss">
 .name-auth-modal {
@@ -176,6 +348,7 @@ const closeDialog = () => {
     img {
       height: 10px;
       width: 6px;
+      cursor: pointer;
     }
     .stepper {
       margin-top: 0;
@@ -201,24 +374,6 @@ const closeDialog = () => {
         background-color: #00d24d;
       }
     }
-  }
-
-  .green-btn {
-    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-    color: #131313;
-    font-weight: 700;
-    width: 100%;
-    height: 48px;
-    margin-top: 30px;
-  }
-
-  .dark-green-btn {
-    background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
-    color: #fff;
-    font-weight: 700;
-    width: 100%;
-    height: 48px;
-    margin-top: 16px;
   }
 
   .step-1 {
@@ -302,7 +457,7 @@ const closeDialog = () => {
         img {
           width: 16px;
           height: 16px;
-          margin-right: 4px;
+          margin-right: 6px;
         }
         span {
           font-size: 12px;
@@ -312,6 +467,38 @@ const closeDialog = () => {
     }
     .check-guide-txt {
       margin-top: 20px;
+      opacity: 0.8;
+    }
+    .name-auth-upload-container {
+      width: 100%;
+      padding: 36px;
+      background-color: #0000004c;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: #00ff37;
+      display: grid;
+      justify-items: center;
+      img {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 8px;
+      }
+    }
+    .upload {
+      cursor: pointer;
+    }
+    .upload-fail {
+      color: #ff0000;
+      .q-btn {
+        height: 20px;
+        width: auto;
+        font-size: 10px;
+        margin-top: 8px;
+        border-radius: 4px;
+      }
+    }
+    .upload-pending-auth {
+      color: #ffbb00;
     }
     .edit-id-container {
       display: flex;
@@ -324,6 +511,52 @@ const closeDialog = () => {
         margin-left: 8px;
       }
     }
+  }
+}
+
+.crop-id-dialog-card {
+  padding: 40px 20px;
+  padding-top: 60px;
+  position: relative;
+  text-align: center;
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .crop-btn {
+    width: auto;
+    height: 20px;
+    margin-top: 20px;
+  }
+}
+.cropper {
+  height: 360px;
+  width: 360px;
+  border-radius: 10px;
+}
+.vue-preview__wrapper {
+  border-radius: 20px;
+}
+.vue-bounding-box {
+  border-radius: 50%;
+}
+
+.green-btn {
+  background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+  color: #131313;
+  font-weight: 700;
+  width: 100%;
+  height: 48px;
+  margin-top: 30px;
+  &.disabled {
+    background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+    color: #fff;
+    font-weight: 700;
+    width: 100%;
+    height: 48px;
+    margin-top: 16px;
+    pointer-events: none;
   }
 }
 </style>

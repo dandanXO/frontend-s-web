@@ -197,7 +197,7 @@ export default {
     receive: "গ্রহণ করুন",
     startNow: "এখন শুরু করুন",
     continue: "চালিয়ে যান",
-    continueUsingYourPhone: "আপনার ফোন ব্যবহার করতে থাকুন"
+    uploadAgain: "পুনরায় আপলোড করুন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
@@ -366,13 +366,19 @@ export default {
     issuingCountryRegion: "জারি করা দেশ/অঞ্চল",
     documentType: "দলিলের প্রকার",
     getReadyUploadIdCard: "আপনার আইডি কার্ড আপলোড করার জন্য প্রস্তুত হোন",
-    idCard: "আইডি কার্ড",
+    ic: "পরিচয় পত্র",
     hint_txt_1: "রঙিন ছবি বা দলিল আপলোড করুন",
     hint_txt_2: "ভাল আলোতে ছবি তোলুন",
     hint_txt_3: "ফাইলের ছবি সম্পাদনা করবেন না",
     checkGuide: "আমাদের গাইড দেখুন",
     passport: "পাসপোর্ট",
-    visa: "ভিসা"
+    drivingLicense: "ড্রাইভিং লাইসেন্স",
+    hint: "সাহায্য",
+    uploadDoc: "ডকুমেন্ট আপলোড করুন",
+    uploadFailed: "আপলোড ব্যর্থ",
+    uploadSuccessful: "আপলোড সফল",
+    uploaded: "আপলোড হয়েছে",
+    pendingAuth: "প্রমাণীকরণ অপেক্ষমাণ"
   },
   earnMoney: {
     title: "বোনাস পট এসেছে",
