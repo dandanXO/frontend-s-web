@@ -1261,6 +1261,9 @@ export default {
     batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
     showLogo: 'แสดงไอคอน',
     isSeamlessTransfer: 'ไม่มีการโอน',
+    fromPlatform: 'จากแพลตฟอร์ม',
+    fromGameCode: 'จากโค้ดเกม',
+    toGameCode: 'สู่รหัสเกม',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
