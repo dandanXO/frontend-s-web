@@ -484,6 +484,15 @@ export default {
     CS: 'CS 보물',
     DRAGON: '드래곤 보물'
   },
+  taskStatus: {
+    ACTIVE: '활성',
+    EXPIRED: '만료'
+  },
+  taskProgressStatus: {
+    ONGOING: '진행 중',
+    COMPLETED: '완료',
+    EXPIRED: '만료'
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -555,6 +564,7 @@ export default {
     addStage: '단계 추가',
     addSystemMessage: '시스템 메시지 추가',
     addSyncDefault: '3 일 이내 동기화 경쟁',
+    addTask: '작업 추가',
     addTelephone: '전화번호 추가',
     addTicket: '티켓 추가',
     addUser: '사용자 추가',
@@ -926,6 +936,7 @@ export default {
     editSite: '사이트 편집',
     editSitePlatform: '사이트 플랫폼 편집',
     editStage: '단계 편집',
+    editTask: '작업 수정',
     editTelephone: '전화 번호 편집',
     editTimeType: '시간 유형 편집',
     editType: '유형 편집',
@@ -1486,6 +1497,11 @@ export default {
     targetType: '대상 유형',
     targetId: '대상 ID',
     targetName: '대상 이름',
+    task: '작업 목록',
+    taskCode: '작업 코드',
+    taskName: '작업 이름',
+    taskProgress: '회원 작업 진행 상황',
+    taskRules: '작업 규칙',
     teamA: '팀 A',
     teamB: '팀 B',
     teamC: '팀 C',
@@ -2283,6 +2299,9 @@ export default {
     validateSupportTypeRequired: '지원 유형이 필요합니다',
     validateSureWinBonusRequired: '확실한 승리 보너스가 필요합니다',
     validateSureWinMinSpinRequired: '확실한 승리 최소 회전이 필요합니다',
+    validateTaskCodeRequired: '작업 코드는 필수입니다',
+    validateTaskNameRequired: '작업 이름은 필수입니다',
+    validateTaskRulesRequired: '작업 규칙은 필수입니다',
     validateTeamGroupRequired: '팀 그룹이 필요합니다',
     validateTeamIconRequired: '팀 아이콘이 필요합니다',
     validateTeamNameRequired: '팀 이름이 필요합니다',
@@ -2500,6 +2519,7 @@ export default {
     'VIP Wheel': 'VIP 휠',
     'Bet Wheel': '베팅 휠',
     'Piggy Bank': '돼지 저금통',
+    Task: '작업 관리',
     'Site Management': '사이트 관리',
     Message: '메시지',
     Announcement: '공지',

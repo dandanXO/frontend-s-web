@@ -573,6 +573,15 @@ export default {
     SHIPPING: 'Shipping',
     DELIVERED: 'Delivered'
   },
+  taskStatus: {
+    ACTIVE: 'Active',
+    EXPIRED: 'Expired'
+  },
+  taskProgressStatus: {
+    ONGOING: 'Ongoing',
+    COMPLETED: 'Completed',
+    EXPIRED: 'Expired'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -651,6 +660,7 @@ export default {
     addStage: 'Add Stage',
     addSystemMessage: 'Add System Message',
     addSyncDefault: 'Sync Competition List Within 3 Days',
+    addTask: 'Add Task',
     addTelephone: 'Add Telephone Number',
     addTicket: 'Add Ticket',
     addUser: 'Add User',
@@ -1042,6 +1052,7 @@ export default {
     editSite: 'Edit Site',
     editSitePlatform: 'Edit Site Platform',
     editStage: 'Edit Stage',
+    editTask: 'Edit Task',
     editTelephone: 'Edit Telephone Number',
     editTimeType: 'Edit Time Type',
     editType: 'Edit Type',
@@ -1670,6 +1681,11 @@ export default {
     targetType: 'Target Type',
     targetId: 'Target ID',
     targetName: 'Target Name',
+    task: 'Task',
+    taskCode: 'Task Code',
+    taskName: 'Task Name',
+    taskProgress: 'Task Progress',
+    taskRules: 'Task Rules',
     teamA: 'Team A',
     teamB: 'Team B',
     teamC: 'Team C',
@@ -2600,6 +2616,9 @@ export default {
     validateSupportTypeRequired: 'Support Type is required',
     validateSureWinBonusRequired: 'Sure Win Bonus is required',
     validateSureWinMinSpinRequired: 'Sure Win Min Spin is required',
+    validateTaskCodeRequired: 'Task Code is required',
+    validateTaskNameRequired: 'Task Name is required',
+    validateTaskRulesRequired: 'Task Rules is required',
     validateTeamGroupRequired: 'Team Group is required',
     validateTeamIconRequired: 'Team Icon is required',
     validateTeamNameRequired: 'Team Name is required',
@@ -2843,6 +2862,7 @@ export default {
     'Interest Plan Order Record': 'Interest Plan Order Record',
     'Promo Type': 'Promo Type',
     Treasure: 'Treasure Bonus',
+    Task: 'Task',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',

@@ -575,7 +575,15 @@ export default {
     TO_BALANCE: '会员拆现',
     SHIPPING: '发货中',
     DELIVERED: '已签收'
-
+  },
+  taskStatus: {
+    ACTIVE: '进行中',
+    EXPIRED: '已过期'
+  },
+  taskProgressStatus: {
+    ONGOING: '进行中',
+    COMPLETED: '已完成',
+    EXPIRED: '已过期'
   },
   fields: {
     account: '账号',
@@ -655,6 +663,7 @@ export default {
     addStage: '新增关卡',
     addSystemMessage: '新增系统信息',
     addSyncDefault: '同步三天内的赛事',
+    addTask: '新增任务',
     addTelephone: '新增手机号码',
     addTicket: '加票',
     addUser: '新增用户',
@@ -1045,6 +1054,7 @@ export default {
     editSite: '编辑站点',
     editSitePlatform: '编辑平台站点',
     editStage: '编辑关卡',
+    editTask: '编辑任务',
     editTelephone: '编辑手机号码',
     editTimeType: '编辑时间类型',
     editType: '编辑类型',
@@ -1671,6 +1681,11 @@ export default {
     targetType: '操作目标类型',
     targetId: '操作编号',
     targetName: '操作名称',
+    task: '任务列表',
+    taskCode: '任务代码',
+    taskName: '任务名称',
+    taskProgress: '会员任务进度',
+    taskRules: '任务规则',
     teamA: 'A 组',
     teamB: 'B 组',
     teamC: 'C 组',
@@ -2555,6 +2570,9 @@ export default {
     validateSupportTypeRequired: '支持类型必填',
     validateSureWinBonusRequired: '必中奖金必填',
     validateSureWinMinSpinRequired: '必中奖最低转盘次数必填',
+    validateTaskCodeRequired: '任务代码必填',
+    validateTaskNameRequired: '任务名称必填',
+    validateTaskRulesRequired: '任务规则必填',
     validateTeamGroupRequired: '队伍组别必填',
     validateTeamIconRequired: '队伍图标必须上传',
     validateTeamNameRequired: '队伍名称必填',
@@ -2792,6 +2810,7 @@ export default {
     'Interest Plan Order Record': '利息宝投资记录',
     'Promo Type': '优惠类型管理',
     Treasure: '宝箱记录',
+    Task: '任务管理',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
