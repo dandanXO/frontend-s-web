@@ -14,9 +14,8 @@
         class="floating-button"
         :class="{'is-dragging': isDragging}"
       >
-        <button class="floating-button-content">
-          {{ buttonText }}
-        </button>
+        <el-button v-if="!isShow" icon="el-icon-document-add" class="floating-button-content" />
+        <el-button v-else icon="el-icon-arrow-left" class="floating-button-content" />
       </div>
 
       <div class="floating-button-list" v-show="isShow">
@@ -30,14 +29,15 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, defineProps } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
+// defineProps
 
-defineProps({
-  buttonText: {
-    type: String,
-    default: '+',
-  },
-})
+// defineProps({
+//   buttonText: {
+//     type: String,
+//     default: '+',
+//   },
+// })
 
 const buttonRef = ref(null)
 const isDragging = ref(false)
@@ -48,6 +48,8 @@ const position = reactive({
   x: 0,
   y: 0,
 })
+
+const buttonText = ref("+");
 
 const startDrag = e => {
   isDragging.value = true
@@ -97,12 +99,20 @@ const stopDrag = () => {
   window.removeEventListener('mousemove', drag)
   window.removeEventListener('mouseup', stopDrag)
 }
+//
+// watch(isShow, (val) => {
+//   if (val === true) {
+//     buttonText.value = "&lt;"
+//   } else {
+//     buttonText.value = "+"
+//   }
+// })
 
 const handleToggle = () => {
   // 如果在拖曳過程中移動了，則不觸發點擊事件
   if (!isMoving.value) {
     console.log('Button clicked!')
-    isShow.value = !isShow.value
+    isShow.value = !isShow.value;
   }
 
   // 重置移動狀態
@@ -188,10 +198,17 @@ onUnmounted(() => {
 
 .floating-button-content {
   border-radius: 50%;
-  background: none;
   border: none;
   color: inherit;
-  cursor: inherit;
   outline: none;
+  background: none;
+  cursor: pointer;
+  font-size: 24px;
+
+  &:hover{
+    background: none;
+    filter: brightness(90%);
+    color: #fff;
+  }
 }
 </style>
