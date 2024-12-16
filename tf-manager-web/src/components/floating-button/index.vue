@@ -20,9 +20,10 @@
       </div>
 
       <div class="floating-button-list" v-show="isShow">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button">3</button>
+        <div class="float-button" type="button">1: 跳转页面</div>
+        <div class="float-button" type="button">2: 复制页面</div>
+        <div class="float-button" type="button">3: 请无视这个按钮。</div>
+        <div class="float-button" type="button">4: 按钮功能还在制作中。</div>
       </div>
     </div>
   </div>
@@ -59,7 +60,13 @@ const startDrag = e => {
 
   // 添加事件監聽器
   window.addEventListener('mousemove', drag)
-  window.addEventListener('mouseup', stopDrag)
+  window.addEventListener('mouseup', stopDrag);
+
+  const floatingButtonList = document.querySelector('.floating-button-list');
+  if (floatingButtonList) {
+    const divCount = floatingButtonList.querySelectorAll('div').length;
+    floatingButtonList.style.top = `${(divCount - 2) * -50}%`;
+  }
 }
 
 const drag = e => {
@@ -129,14 +136,37 @@ onUnmounted(() => {
   z-index: 1000;
   width: 50px;
   height: 50px;
+  font-size: 24px;
 }
 .floating-button-container {
   position: relative;
 }
 .floating-button-list {
   position: absolute;
-  top: -30px;
+  right: 60px;
+  top: -100%;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+}
+.floating-button-list .float-button{
+  min-width: 210px;
+  padding: 6px 8px;
+  background: rgb(38, 52, 69);
+  border-radius: 6px;
+  border: 2px solid #304156;
+  cursor: pointer;
+  color: #fff;
+
+  &:hover{
+    opacity: 0.9;
+    font-weight: bold;
+  }
+  &:active{
+    filter: brightness(90%);
+    transform: translate(0px, 1px);
+  }
 }
 .floating-button {
   cursor: move;
