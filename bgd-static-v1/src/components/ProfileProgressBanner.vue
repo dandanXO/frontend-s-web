@@ -3,7 +3,7 @@
     <div class="left-container">
       <div class="profile-pic">
         <q-avatar size="50px">
-          <img :src="profileImagePath" />
+          <img :src="profileImagePath" referrerpolicy="no-referrer" />
         </q-avatar>
 
         <div class="vip-details" @click="onVipClick">
@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
+      <div class="nickname">{{ store.realName ? store.realName : (store.displayName ? store.displayName : store.nickName) }}</div>
     </div>
 
     <div class="right-container">
@@ -74,6 +74,10 @@ const randomProfileImg = computed(() => {
 });
 
 const profileImagePath = computed(() => {
+  if (store.profilePicture) {
+    return store.profilePicture
+  }
+
   return require(`../assets/images/account/${randomProfileImg.value}.png`);
 });
 </script>

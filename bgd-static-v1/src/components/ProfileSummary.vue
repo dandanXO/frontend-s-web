@@ -203,7 +203,7 @@
             <div class="profile-pic">
               <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
               <q-avatar size="50px">
-                <img :src="profileImagePath" />
+                <img :src="profileImagePath" referrerpolicy="no-referrer" />
               </q-avatar>
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
@@ -367,6 +367,10 @@ const randomProfileImg = computed(() => {
 });
 
 const profileImagePath = computed(() => {
+  if (store.profilePicture) {
+    return store.profilePicture
+  }
+
   return require(`../assets/images/account/${randomProfileImg.value}.png`);
 });
 

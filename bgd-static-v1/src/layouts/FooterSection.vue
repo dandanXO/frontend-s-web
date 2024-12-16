@@ -127,7 +127,7 @@ const tab = ref("home");
 }
 
 .earn-money-logo {
-  background: radial-gradient(#16A101 0%, #00763B 100%);
+  background: linear-gradient(to bottom, #16A101 0%, #00763B 100%);
   border-radius: 100px;
   aspect-ratio: 1 / 1;
   height: 60px;
