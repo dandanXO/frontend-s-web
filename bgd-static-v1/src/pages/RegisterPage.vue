@@ -913,8 +913,6 @@ function charType(num) {
 
 .register-container {
   min-height: 100dvh;
-  // padding: 16px;
-  padding-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
