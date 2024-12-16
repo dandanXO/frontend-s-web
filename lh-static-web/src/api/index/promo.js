@@ -22,6 +22,10 @@ export function loadHomePopup() {
   return server.REST.get("/member/ads-popout");
 }
 
+export function loadHomePopups() {
+  return server.REST.get('/member/site-popout-list');
+}
+
 export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }
