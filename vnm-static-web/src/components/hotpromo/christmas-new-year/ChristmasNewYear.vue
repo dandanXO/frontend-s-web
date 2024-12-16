@@ -37,9 +37,10 @@
       </div>
       <div v-if="modalContent.type === 'rule'" class="rules" v-html="rules"></div>
       <div class="table-scroll" v-if="modalContent.type === 'record'">
-        <el-table :data="paginatedData" style="width: 100%">
+        <el-table :data="paginatedData" style="width: 100%;">
           <el-table-column prop="prizeNo" label="Mã số"></el-table-column>
-          <el-table-column prop="bonusName" label="Nội dung"></el-table-column>
+          <el-table-column prop="bonusAmount" label="So Tien Thuong"></el-table-column>
+          <el-table-column prop="loginName" label="Ten Dang Nhap"></el-table-column>
           <el-table-column prop="recordTime" label="Thời gian"></el-table-column>
           <!-- <el-table-column prop="status" label="状态" width="100"></el-table-column> -->
         </el-table>
@@ -201,10 +202,12 @@ const params = reactive({
 // Translate the table data
 const translateTableData = (data) => {
   return data.map((row) => ({
-    ...row,
-    bonusName: row.bonusAmount ? `Chúc mừng bạn đã nhận được ${row.bonusName} ${row.bonusAmount} tiền thưởng` : `Chúc mừng bạn đã nhận được ${row.bonusName}`,
-    status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
-    recordTime: moment(row.recordTime).format("YYYY-MM-DD HH:mm:ss") // Format time
+    'prizeNo': row.prizeNo,          // Mã số
+    'bonusAmount': row.bonusAmount, // Số tiền thưởng
+    'loginName': row.loginName,   // Tên đăng nhập
+    // bonusName: row.bonusAmount ? `Chúc mừng bạn đã nhận được ${row.bonusName} ${row.bonusAmount} tiền thưởng` : `Chúc mừng bạn đã nhận được ${row.bonusName}`,
+    // status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
+    'recordTime': moment(row.recordTime).format("YYYY-MM-DD HH:mm:ss") // Format time
   }));
 };
 
@@ -425,6 +428,13 @@ onMounted(() => {
 body .el-dialog.christmas-modal .el-dialog__header .el-dialog__headerbtn .el-dialog__close, 
 body .el-dialog.prize-modal.once .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
   color: #ff0000;
+}
+
+body .el-dialog.christmas-modal {
+  .el-table th.el-table__cell.is-leaf,
+  .el-table--enable-row-transition .el-table__body td.el-table__cell {
+    text-align: center;
+  }
 }
 body .el-dialog.prize-modal.once {
   background: none;

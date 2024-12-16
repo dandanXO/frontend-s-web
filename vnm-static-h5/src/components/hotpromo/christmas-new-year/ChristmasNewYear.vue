@@ -208,10 +208,13 @@ const statusTranslations = {
 
 const translatedTableData = computed(() =>
   tableData.value.map((row) => ({
-    ...row,
-    bonusName: row.bonusAmount ? `Chúc mừng bạn đã nhận được ${row.bonusName} ${row.bonusAmount} tiền thưởng` : `Chúc mừng bạn đã nhận được ${row.bonusName}`,
-    status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
-    recordTime: moment(row.recordTime).format("YYYY-MM-DD HH:mm:ss") // Format time
+    // ...row,
+    'Ma So': row.prizeNo,          // Mã số
+    'So Tien Thuong': row.bonusAmount, // Số tiền thưởng
+    'Ten Dang Nhap': row.loginName,   // Tên đăng nhập
+    // bonusName: row.bonusAmount ? `Chúc mừng bạn đã nhận được ${row.bonusName} ${row.bonusAmount} tiền thưởng` : `Chúc mừng bạn đã nhận được ${row.bonusName}`,
+    // status: statusTranslations[row.status] || row.status, // Use translation or fallback to original
+    'Thời gian ghi nhận': moment(row.recordTime).format("YYYY-MM-DD HH:mm:ss") // Format time
   }))
 );
 
