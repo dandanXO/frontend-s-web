@@ -192,7 +192,7 @@
         <div class="inner-slide">
           <Carousel v-model="currentCarousel" :items-to-show="1">
             <Slide v-for="(item, i) in banners" :key="i">
-              <a style="display: block" :href="item.redirectUrl" target="_blank">
+              <a style="display: block" target="_blank" @click="handleBannerClick(item.redirectUrl)">
                 <img :src="imgURL + item.mobileImageUrl" />
               </a>
             </Slide>
@@ -715,6 +715,7 @@
         </ol>
       </div>
     </div>
+    <GameModal ref="gameModalRef"/>
   </div>
   <q-dialog class="newTable" v-model="isShowTable">
     <!-- <table border="0" cellspacing="0" cellpadding="0">
@@ -895,7 +896,7 @@
 
 <script setup>
 import "vue3-carousel/dist/carousel.css";
-import { ref, onActivated, computed, reactive, watch } from "vue";
+import { ref, onActivated, computed, reactive, watch, h } from "vue";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
@@ -903,12 +904,15 @@ import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } 
 import { useNotify } from "src/hooks/notify";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
 import { useLocalStorage } from "@vueuse/core";
+import GameModal from "src/components/modal/GameModal.vue";
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
+const router = useRouter();
 const notify = useNotify();
 const store = userStore();
 const amount = ref("$0");
+const gameModalRef = ref();
 const privilegeClaimedModalVisible = ref(false);
 const vipLevel = computed(() => {
   return +store.vip.replace("VIP", "");
@@ -1397,6 +1401,24 @@ const rebateActive = computed(() => tabActive.value === 2);
 //   },
 //   { immediate: true }
 // );
+
+const openGame = (gameName, code, gameCode) => {
+  gameModalRef.value.open(gameName, code, gameCode);
+};
+
+const handleBannerClick = (url) => {
+  const openPattern = /^open\/(.*)/;
+  if (url.match(openPattern)) {
+    const extractedUrl = url.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+    openGame(gameName, platformCode, gameCode);
+  } else if (url.startsWith("/")) {
+    router.push(url);
+  } else {
+    router.push({ path: "/promo", query: { name: url } });
+  }
+}
+
 onActivated(() => {
   initVIPTable();
 });

@@ -354,8 +354,8 @@
         <div class="inner-slide">
           <el-carousel height="440px">
             <el-carousel-item v-for="item in banners" :key="item">
-              <h3 :href="redirectUrl" class="small justify-center" text="2xl">
-                <a :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.desktopImageUrl" /></a>
+              <h3 class="small justify-center" text="2xl">
+                <a target="_blank" @click="handleBannerClick(item.redirectUrl)"><img :src="imgURL + item.desktopImageUrl" /></a>
               </h3>
             </el-carousel-item>
           </el-carousel>
@@ -844,6 +844,7 @@
         </ol>
       </div>
     </div>
+    <GameModal ref="gameModalRef"/>
   </div>
 </template>
 
@@ -854,12 +855,17 @@ import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
+import { useRouter } from "vue-router";
+import GameModal from "@/components/modal/GameModal.vue";
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
+const router = useRouter();
 const notify = useNotify();
 const store = userStore();
 const amount = ref("$0");
+const gameModalRef = ref();
+
 const privilegeClaimedModalVisible = ref(false);
 const vipLevel = computed(() => {
   return +store.vip.replace("VIP", "");
@@ -929,6 +935,23 @@ const getVipLevelProgress = (lvl, status) => {
 
   return 0; // Default return value if status doesn't match
 };
+
+const openGame = (gameName, code, gameCode) => {
+  gameModalRef.value.open(gameName, code, gameCode);
+};
+
+const handleBannerClick = (url) => {
+  const openPattern = /^open\/(.*)/;
+  if (url.match(openPattern)) {
+    const extractedUrl = url.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+    openGame(gameName, platformCode, gameCode);
+  } else if (url.startsWith("/")) {
+    router.push(url);
+  } else {
+    router.push({ path: "/promotion", query: { name: url } });
+  }
+}
 // const storeToken = computed(() => {
 //   return store.token;
 // });
