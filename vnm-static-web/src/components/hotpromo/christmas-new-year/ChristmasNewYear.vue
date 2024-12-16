@@ -199,6 +199,20 @@ const params = reactive({
   size: 30,
   current: 1
 });
+const onPageSizeChange = async () => {
+  tableData.value = [];
+  getDrawRecord(promoCode.value, params).then((res) => {
+    if (res.code === 0) {
+      totalItems.value = res.data.total;
+      tableData.value = res.data.records;
+    } else {
+        notify({
+            type: "error",
+            message: `${res.message}`
+        });
+    }
+  });
+};
 // Translate the table data
 const translateTableData = (data) => {
   return data.map((row) => ({
