@@ -855,6 +855,7 @@ export default defineComponent({
             display: block;
             img {
               width: 100%;
+              display: block;
             }
           }
           &.isMobile {

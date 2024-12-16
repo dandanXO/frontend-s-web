@@ -23,10 +23,22 @@
           :placeholder="t('fields.loginName')"
         />
         <el-input
+          v-model="request.fromPlatform"
+          size="small"
+          style="width: 200px; margin-left: 5px"
+          :placeholder="t('fields.fromPlatform')"
+        />
+        <el-input
+          v-model="request.fromGameCode"
+          size="small"
+          style="width: 200px; margin-left: 5px"
+          :placeholder="t('fields.fromGameCode')"
+        />
+        <el-input
           v-model="request.gameCode"
           size="small"
           style="width: 200px; margin-left: 5px"
-          :placeholder="t('fields.gameCode')"
+          :placeholder="t('fields.toGameCode')"
         />
         <el-button
           style="margin-left: 20px"
@@ -133,7 +145,9 @@
       >
         <el-table-column prop="siteId" :label="t('fields.site')" width="100"/>
         <el-table-column prop="loginName" :label="t('fields.loginName')" width="150"/>
-        <el-table-column prop="gameCode" :label="t('fields.gameCode')" width="150"/>
+        <el-table-column prop="fromPlatform" :label="t('fields.fromPlatform')" width="150"/>
+        <el-table-column prop="fromGameCode" :label="t('fields.fromGameCode')" width="150"/>
+        <el-table-column prop="gameCode" :label="t('fields.toGameCode')" width="150"/>
       </el-table>
       <el-pagination
         class="pagination"
@@ -191,7 +205,13 @@
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="form.loginName" style="width: 350px" :disabled="uiControl.dialogType === 'EDIT'"/>
         </el-form-item>
-        <el-form-item :label="t('fields.gameCode')" prop="gameCode">
+        <el-form-item :label="t('fields.fromPlatform')" prop="fromPlatform">
+          <el-input v-model="form.fromPlatform" style="width: 350px"/>
+        </el-form-item>
+        <el-form-item :label="t('fields.fromGameCode')" prop="fromGameCode">
+          <el-input v-model="form.fromGameCode" style="width: 350px"/>
+        </el-form-item>
+        <el-form-item :label="t('fields.toGameCode')" prop="gameCode">
           <el-input v-model="form.gameCode" style="width: 350px"/>
         </el-form-item>
         <div class="dialog-footer">
@@ -254,6 +274,9 @@
             />
         </template>
       </el-table-column>
+      <el-table-column prop="fromPlatform" :label="t('fields.fromPlatform')" min-width="180"/>
+      <el-table-column prop="fromGameCode" :label="t('fields.fromGameCode')" min-width="180"/>
+      <el-table-column prop="gameCode" :label="t('fields.toGameCode')" min-width="180"/>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
@@ -339,12 +362,16 @@ const gameForm = ref(null)
 const EXPORT_GAME_LIST_HEADER = [
   'Site ID (Refer Mapping Sheet)',
   'Login Name',
-  'Game Code',
+  'From Platform',
+  'From Game Code',
+  'To Game Code',
 ]
 
 const IMPORT_GAME_LIST_JSON = [
   'siteId',
   'loginName',
+  'fromPlatform',
+  'fromGameCode',
   'gameCode',
 ]
 
@@ -385,6 +412,8 @@ const request = reactive({
   size: 30,
   current: 1,
   loginName: null,
+  fromPlatform: null,
+  fromGameCode: null,
   gameCode: null,
   siteId: null,
   requestBy: null,
@@ -395,11 +424,15 @@ const form = reactive({
   siteId: null,
   siteName: null,
   loginName: null,
+  fromPlatform: null,
+  fromGameCode: null,
   gameCode: null,
 })
 
 const formRules = reactive({
   loginName: [required(t('message.validateLoginNameRequired'))],
+  fromPlatform: [required(t('message.validateGameCodeRequired'))],
+  fromGameCode: [required(t('message.validateGameCodeRequired'))],
   gameCode: [required(t('message.validateGameCodeRequired'))],
 })
 
@@ -409,6 +442,8 @@ const sites = reactive({
 function resetQuery() {
   request.siteId = site.value ? site.value.id : sites.list[0].id;
   request.loginName = null
+  request.fromPlatform = null;
+  request.fromGameCode = null;
   request.gameCode = null;
 }
 
