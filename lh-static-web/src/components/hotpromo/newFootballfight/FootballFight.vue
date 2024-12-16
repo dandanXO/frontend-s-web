@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
             <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -245,6 +245,11 @@ onMounted(() => {
       &:active {
         transform: translate(0px, 1px);
         opacity: 0.9;
+      }
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
   }
