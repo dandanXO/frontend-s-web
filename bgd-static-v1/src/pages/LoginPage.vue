@@ -18,7 +18,7 @@
     </div> -->
 
     <div class="login-form-logo-img">
-      <img src="../assets/images/auth/win-7-txt-logo.png" />
+      <img src="../assets/images/auth/auth-form-logo-img.png" />
     </div>
 
     <div class="auth-tab-wrapper">
@@ -143,7 +143,11 @@
         <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" :to="'/register'">
           {{ $t("btn.register") }}
         </q-btn>
-        <q-btn no-caps unelevated class="btn-google-signin btn-google-signin__full" @click="onClickGoogleSignin">
+
+        <img src="../assets/images/index/login-directly.svg"/>
+
+
+        <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
           <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC" />&nbsp;
           {{ $t("btn.signinWithGoogle") }}
         </q-btn>
@@ -778,8 +782,8 @@ export default defineComponent({
   color: #000a01;
   height: 34px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  background: url("../assets/images/common/btn-primary.svg") no-repeat center center;
-  background-size: 100%;
+  background: url("../assets/images/common/auth-page-btn-primary.png") no-repeat center center;
+  background-size: 100% 100%;
   font-weight: 600;
   border-radius: 6px;
   text-transform: uppercase;
@@ -811,8 +815,8 @@ export default defineComponent({
   border-radius: 6px;
   position: relative;
   text-transform: uppercase;
-  background: url("../assets/images/common/btn-secondary.svg") no-repeat center center;
-  background-size: 100%;
+  background: url("../assets/images/common/auth-page-btn-secondary.png") no-repeat center center;
+  background-size: 100% 100%;
   &__full {
     width: 100%;
     height: 40px;
@@ -876,7 +880,6 @@ export default defineComponent({
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding-top: 20%;
 }
 
 .back-left {
@@ -887,15 +890,14 @@ export default defineComponent({
 
 .login-form-logo-img {
   margin-top: -10px;
-  padding: 0 16px;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   img {
     display: block;
     width: 100%;
-    max-width: 200px;
-    margin-bottom: 10px;
+    max-width: 100%;
   }
 }
 
@@ -1074,24 +1076,6 @@ export default defineComponent({
   70% {
     -webkit-transform: scale(1);
     transform: scale(1);
-  }
-}
-
-
-.btn-google-signin {
-  color: #333;
-  height: 34px;
-  background: url(../assets/images/index/btn-bg-white-small.png) no-repeat center center;
-  background-size: cover;
-  font-weight: 600;
-  border-radius: 6px;
-  text-transform: uppercase;
-
-  &__full {
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
-    background-image: url(../assets/images/index/btn-bg-white-large.png);
   }
 }
 </style>

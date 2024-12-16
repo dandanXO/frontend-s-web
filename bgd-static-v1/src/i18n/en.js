@@ -192,7 +192,7 @@ export default {
     downloadNow: "Download Now",
     recharge: "Recharge",
     getInterestProfit: "Get Interest Profit",
-    signinWithGoogle: "Sign-in with Google"
+    signinWithGoogle: "Google"
   },
   notify: {
     noRecord: "No Record",
