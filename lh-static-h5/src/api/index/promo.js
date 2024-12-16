@@ -249,6 +249,7 @@ export function getVIPDetails() {
 }
 
 export function getVIPDetailsNotLoggedIn() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/get-vip-bonus-detail?siteId=7&v=${randNum}`);
 }
 
