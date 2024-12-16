@@ -17,7 +17,13 @@
       </q-route-tab>
       <q-route-tab to="/earn-money" name="earn-money" class="center-menu" :ripple="false">
         <div class="footer-big-img earn-money">
-          <img :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoney.png`)" />
+          <div class="earn-money-logo-wrapper">
+            <img class="comet-glow" :src="require(`../assets/images/auth/comet-glow.png`)" />
+            <div class="earn-money-logo">
+              <img style="aspect-ratio: 142/121;" :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/auth/win7-logo-round.png`)" />
+              <div class='shine' />
+            </div>
+          </div>
         </div>
         <span class="footer-label" style="padding-top: 0; margin-bottom: 10px">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>
@@ -112,5 +118,24 @@ const tab = ref("home");
   100% {
     filter: brightness(0.8) saturate(0.8) contrast(0.8);
   }
+}
+
+.earn-money-logo-wrapper {
+  aspect-ratio: 1 / 1;
+  height: 60px;
+  position: relative;
+}
+
+.earn-money-logo {
+  background: radial-gradient(#16A101 0%, #00763B 100%);
+  border-radius: 100px;
+  aspect-ratio: 1 / 1;
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #24EE89;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
