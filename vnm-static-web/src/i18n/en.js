@@ -1049,6 +1049,10 @@ export default {
     37001: "Time to receive Lucky Money has expired",
     12100: "Old Withdraw password does not match.",
     45000: "Minimum withdrawal amount not reached",
-    45001: "Random bonus has been claimed today."
+    45001: "Random bonus has been claimed today.",
+    58100: "Insufficient lottery attempts",
+    58101: "The daily lottery limit has been reached",
+    58102: "Daily bonus has been fully redeemed, please try again tomorrow.",
+    58103: "VIP0 cannot participate.",
   }
 };

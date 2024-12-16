@@ -131,7 +131,7 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-html="selectedPromo.pageContent"></div>
+                  <div v-if="selectedPromo.redirectUrl !== 'vnm-xmas-new-year-lucky-draw'" v-html="selectedPromo.pageContent"></div>
                 </div>
               </div>
             </div>
