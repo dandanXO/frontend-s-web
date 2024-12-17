@@ -58,11 +58,6 @@
                     <!-- <q-icon name="smartphone" /> -->
                     <!-- <div class="prepend-number">+880</div> -->
                   </template>
-                  <template v-slot:append>
-                    <div class="forgot-password">
-                      <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
-                    </div>
-                  </template>
                 </q-input>
               </template>
             </InputField>
@@ -91,6 +86,9 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     />
+                    <div class="forgot-password">
+                      <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
+                    </div>
                   </template>
                 </q-input>
               </template>
@@ -985,7 +983,7 @@ export default defineComponent({
 .forgot-password {
   text-align: right;
   position: absolute;
-  bottom: -20px;
+  top: -32px;
   right: 0px;
 
   .form-text {
