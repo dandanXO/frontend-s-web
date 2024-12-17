@@ -409,6 +409,10 @@ export function footballHistroy() {
   return server.EVENT.get("/lh1-football/history");
 }
 
+export function footballEligibility() {
+  return server.EVENT.get("/session/lh1-football/eligibility");
+}
+
 export function getCompetitionBetToday(promoCode) {
   return server.EVENT.get(`/competition-bet/yesterday`, {
     params: {
@@ -642,11 +646,11 @@ export function claimCompetitionLoss(promoCode) {
 }
 
 export function getWeeklySlotLossBonusInit() {
-  return server.EVENT.get("/session/weeklySlotLossBonus/init")
+  return server.EVENT.get("/session/weeklySlotLossBonus/init");
 }
 
 export function claimWeeklySlotLossBonusInit() {
-  return server.EVENT.put("/bonus/claim/lh1-weekly-slot-loss-bonus")
+  return server.EVENT.put("/bonus/claim/lh1-weekly-slot-loss-bonus");
 }
 
 export function initDrawEvent(promoCode) {
@@ -654,7 +658,7 @@ export function initDrawEvent(promoCode) {
 }
 
 export function getDrawPrizes(promoCode, drawTimes) {
-    return server.EVENT.post(`/session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes}`);
+  return server.EVENT.post(`/session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes}`);
 }
 
 // export const getDrawPrizes = (promoCode, drawTimes) => {
@@ -676,6 +680,7 @@ export function getDrawPrizes(promoCode, drawTimes) {
 //     });
 // };
 export function getDrawRecord(promoCode, params) {
-  return server.EVENT.get(`/session/draw-event/record?promoCode=${promoCode}&size=${params.size}&current=${params.current}`);
+  return server.EVENT.get(
+    `/session/draw-event/record?promoCode=${promoCode}&size=${params.size}&current=${params.current}`
+  );
 }
-
