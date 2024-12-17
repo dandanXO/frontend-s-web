@@ -21,12 +21,17 @@
       <img src="../assets/images/auth/auth-form-logo-img.png" />
     </div>
 
-    <div class="auth-tab-wrapper">
+    <!-- <div class="auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
-    </div>
+    </div> -->
+
+    <q-tabs v-model="loginNameType" dense no-caps class="login-type-toggle" narrow-indicator align="justify">
+      <q-tab name="phone" :label="$t('form.phone')" />
+      <q-tab name="email" :label="$t('form.email')" />
+    </q-tabs>
 
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
@@ -36,6 +41,7 @@
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input
+                  v-if="loginNameType === 'phone'"
                   type="tel"
                   pattern="\d*"
                   maxlength="11"
@@ -57,6 +63,22 @@
                     <FancyIcon name="smartphone" />
                     <!-- <q-icon name="smartphone" /> -->
                     <!-- <div class="prepend-number">+880</div> -->
+                  </template>
+                </q-input>
+                <q-input
+                  v-else
+                  type="text"
+                  hide-bottom-space
+                  ref="loginNameRef"
+                  v-model="loginForm.loginName"
+                  :rules="[(val) => (val && val.length > 0) || $t('form.email_rules_01'), isValidEmail]"
+                  label-color="brand"
+                  outlined
+                  color="green"
+                  :placeholder="$t('form.email_placeholder')"
+                >
+                  <template v-slot:prepend>
+                    <FancyIcon name="email" />
                   </template>
                 </q-input>
               </template>
@@ -232,6 +254,7 @@ import { App } from "@capacitor/app";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -244,11 +267,13 @@ export default defineComponent({
     // RiArrowDropLeftLine
   },
   setup() {
+    const { t } = useI18n();
     const ui = useUI();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
     const verificationImg = ref("");
+    const loginNameType = ref("phone");
     const loginForm = reactive({
       loginName: "",
       password: "",
@@ -301,6 +326,12 @@ export default defineComponent({
         showCaptchaDialog.value = true;
         getInnerCode();
       }
+    };
+
+    const isValidEmail = () => {
+      const emailPattern =
+        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+      return emailPattern.test(loginForm.loginName) || t("form.email_rules_02");
     };
 
     const isValidCnPhone = () => {
@@ -774,7 +805,9 @@ export default defineComponent({
       openTiktok,
       openYoutube,
       openCharity,
-      onClickGoogleSignin
+      onClickGoogleSignin,
+      loginNameType,
+      isValidEmail
     };
   }
 });
@@ -834,6 +867,20 @@ export default defineComponent({
     bottom: -1px;
     left: -1px;
     right: -1px;
+  }
+}
+
+.login-type-toggle {
+  max-width: 70%;
+  display: flex;
+  margin: 0 auto;
+
+  :deep(.q-tab--active) {
+    color: #24EE89;
+
+    .q-tab__label {
+      color: #24EE89;
+    }
   }
 }
 
@@ -1081,5 +1128,9 @@ export default defineComponent({
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+}
+
+.form-fields {
+  gap: 2px;
 }
 </style>
