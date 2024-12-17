@@ -37,7 +37,7 @@
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="loginNameType === 'phone' ? $t('form.phone') : $t('form.email')" fancy>
+            <InputField fancy>
               <template #input>
                 <q-input
                   v-if="loginNameType === 'phone'"
@@ -55,7 +55,7 @@
                   color="green"
                   outlined
                   label-color="brand"
-                  :placeholder="$t('form.phone_placeholder')"
+                  :placeholder="$t('form.phone')"
                 >
                   <template v-slot:prepend>
                     <FancyIcon name="smartphone" />
@@ -72,7 +72,7 @@
                   label-color="brand"
                   outlined
                   color="green"
-                  :placeholder="$t('form.email_placeholder')"
+                  :placeholder="$t('form.email')"
                 >
                   <template v-slot:prepend>
                     <FancyIcon name="email" />

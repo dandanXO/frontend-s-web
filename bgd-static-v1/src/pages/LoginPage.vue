@@ -37,7 +37,7 @@
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="loginNameType === 'phone' ? $t('form.phone') : $t('form.email')" fancy>
+            <InputField fancy>
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input
@@ -57,7 +57,7 @@
                   autocomplete="username"
                   outlined
                   color="green"
-                  :placeholder="$t('form.phone_placeholder')"
+                  :placeholder="$t('form.phone')"
                 >
                   <template v-slot:prepend>
                     <FancyIcon name="smartphone" />
@@ -75,7 +75,7 @@
                   label-color="brand"
                   outlined
                   color="green"
-                  :placeholder="$t('form.email_placeholder')"
+                  :placeholder="$t('form.email')"
                 >
                   <template v-slot:prepend>
                     <FancyIcon name="email" />
