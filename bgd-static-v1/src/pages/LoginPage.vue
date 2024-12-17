@@ -37,7 +37,7 @@
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="$t('form.phone')" fancy>
+            <InputField :label="loginNameType === 'phone' ? $t('form.phone') : $t('form.email')" fancy>
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input

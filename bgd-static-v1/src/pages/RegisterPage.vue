@@ -37,7 +37,7 @@
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('form.phone')" fancy>
+            <InputField :label="loginNameType === 'phone' ? $t('form.phone') : $t('form.email')" fancy>
               <template #input>
                 <q-input
                   v-if="loginNameType === 'phone'"
