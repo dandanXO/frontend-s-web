@@ -152,8 +152,8 @@ export default defineComponent({
         document.addEventListener(
           "pwaEvent",
           () => {
-            affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
-            track();
+            // affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+            // track();
           },
           { once: true }
         );
