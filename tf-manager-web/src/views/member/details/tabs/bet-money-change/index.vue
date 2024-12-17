@@ -282,6 +282,20 @@
           align="center"
           min-width="120"
         />
+        <el-table-column>
+          <template #default="scope">
+            <el-button
+              type="info"
+              size="mini"
+              style="float: right;"
+              v-permission="['sys:member:detail:updateBetStatus']"
+              @click="showDialog(scope.row.transactionId)"
+              v-if="scope.row.betStatus === 'BET'"
+            >
+              {{ t('fields.update') }}
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="table-footer" v-if="site.id === '3'">
         <span>{{ t('fields.totalBetRecords') }}</span>
@@ -327,6 +341,56 @@
       </router-link>
       <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
+
+    <el-dialog
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="550px"
+    >
+      <el-form
+        ref="updateBetStatusForm"
+        :model="betStatusTypeForm"
+        :rules="betStatusTypeFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.transactionId')" prop="transactionId">
+          <el-input
+            v-model="betStatusTypeForm.transactionId"
+            type="input"
+            style="width: 350px;"
+            maxlength="11"
+            disabled
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.betStatus')" prop="betStatus">
+          <el-select
+            v-model="betStatusTypeForm.betStatus"
+            size="small"
+            :placeholder="t('fields.betStatus')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in betStatusType.list"
+              :key="item.key"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="editBetStatusType">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -336,7 +400,7 @@ import moment from 'moment'
 import {
   getBetMoneyChange,
   getBetMoneyChangeTotal,
-  requestBetMoneyChangeExport,
+  requestBetMoneyChangeExport, updateBetStatusType,
 } from '../../../../../api/member-bet-record'
 import { getMemberDetails } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
@@ -346,6 +410,7 @@ import { getShortcuts } from '@/utils/datetime'
 import { useStore } from '@/store'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { ElMessage } from 'element-plus'
+import { required } from "../../../../../utils/validate";
 
 const store = useStore()
 const { t } = useI18n()
@@ -367,7 +432,14 @@ const site = reactive({
 
 let duplicateTransactionIds = reactive([])
 
+const updateBetStatusForm = ref(null)
+const betStatusTypeForm = reactive({
+  transactionId: null,
+  betStatus: null,
+})
+
 const uiControl = reactive({
+  dialogVisible: false,
   messageVisible: false,
   colors: [
     { color: '#f56c6c', percentage: 30 },
@@ -435,6 +507,20 @@ const page = reactive({
   records: [],
   pagingState: '',
   loading: false,
+})
+
+const betStatusType = reactive({
+  list: [
+    // { key: 1, name: 'BET', value: 'BET' },
+    { key: 2, name: 'SETTLE', value: 'SETTLE' },
+    // { key: 3, name: 'BET_N_SETTLE', value: 'BET_N_SETTLE' },
+    { key: 4, name: 'CANCEL', value: 'CANCEL' },
+  ],
+})
+
+const betStatusTypeFormRules = reactive({
+  transactionId: [required(t('message.validateTransactionIdRequired'))],
+  betStatus: [required(t('message.validateTypeRequired'))],
 })
 
 function convertDate(date) {
@@ -564,6 +650,24 @@ function setRowClass({ row }) {
     : ''
 }
 
+const showDialog = async transactionId => {
+  betStatusTypeForm.transactionId = transactionId
+  betStatusTypeForm.betStatus = betStatusType.list[0].value
+  uiControl.dialogTitle = t('fields.betStatus')
+  uiControl.dialogVisible = true
+}
+
+async function editBetStatusType() {
+  await updateBetStatusType(betStatusTypeForm.transactionId, betStatusTypeForm.betStatus);
+  uiControl.dialogVisible = false
+
+  ElMessage({
+    message: t('message.updateSuccess'),
+    type: 'success',
+  })
+  await loadMemberBetMoneyChange();
+}
+
 onMounted(async () => {
   const { data: ret } = await getMemberDetails(props.mbrId, site.id)
   memberDetail.value = ret
@@ -602,5 +706,10 @@ watch(
 
 .duplicate-row {
   background-color: #fff0db !important; /* Customize the color */
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
