@@ -191,7 +191,13 @@ export default {
     downloadApp: "অ্যাপ ডাউনলোড করুন",
     downloadNow: "এখনই ডাউনলোড করুন",
     recharge: "রিচার্জ করুন",
-    getInterestProfit: "সুদের মুনাফা পান"
+    getInterestProfit: "সুদের মুনাফা পান",
+    noRewardYet: "এখনও কোনো পুরস্কার নেই",
+    received: "গৃহীত হয়েছে",
+    receive: "গ্রহণ করুন",
+    startNow: "এখন শুরু করুন",
+    continue: "চালিয়ে যান",
+    uploadAgain: "পুনরায় আপলোড করুন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
@@ -235,7 +241,23 @@ export default {
     cat_sport: "স্পোর্ট",
     popup: {
       getFreeLuckyDraw: "একটি বিনামূল্যের লাকি ড্র টিকিট পান",
-      downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন"
+      downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন",
+      free100Bonus: "অভিনন্দন! আপনি স্টেজ ১ সম্পন্ন করেছেন এবং ১০০ বোনাস আনলক করেছেন।",
+      free100BonusAmount: "100BDT",
+      bonus: {
+        wheelOfFortuneTitle: "উইল অফ ফর্চুন",
+        wheelOfFortuneDescription: "উইল অফ ফর্চুন",
+        cashBackTitle: "ক্যাশ ব্যাক",
+        cashBackDescription: "ক্যাশ ব্যাক",
+        activityBonusTitle: "অ্যাক্টিভিটি বোনাস",
+        activityBonusDescription: "অ্যাক্টিভিটি বোনাস",
+        giveBackTitle: "গিভ ব্যাক",
+        giveBackDescription: "গিভ ব্যাক",
+        hierarchyTitle: "হায়ারার্কি",
+        hierarchyDescription: "হায়ারার্কি",
+        wheelRewardTitle: "উইল রিওয়ার্ডস",
+        wheelRewardDescription: "উইল রিওয়ার্ডস"
+      }
     },
     viewAll: "সব দেখুন"
   },
@@ -330,6 +352,33 @@ export default {
     rewards: "পুরস্কার",
     vipTable_txt:
       "একবার আপনার জমা আপগ্রেডের শর্ত পূরণ করলে, আপনার ভিআইপি লেভেল অবিলম্বে আপগ্রেড করা হবে, আপনার উত্তোলনের সংখ্যা বৃদ্ধি পাবে।"
+  },
+  nameAuth: {
+    title: "আসল নাম যাচাই",
+    basicExperience: "মৌলিক অভিজ্ঞতা",
+    humanResources: "মানব সম্পদ",
+    faceVerification: "মুখ শনাক্তকরণ",
+    identityId: "পরিচয় আইডি",
+    browsingTime: "ব্রাউজিং সময়: ২ মিনিট",
+    additionalInfo:
+      "আপনাকে ভালভাবে সেবা দেওয়ার জন্য, আমরা আপনার পরিচয়পত্রের আসল কপির প্রয়োজন। এর মাধ্যমে উপহারগুলি সঠিক স্থানে পাঠানো হবে।",
+    beReadyUploadIdCard: "আপনার আইডি কার্ড আপলোড করার জন্য প্রস্তুত থাকুন",
+    issuingCountryRegion: "জারি করা দেশ/অঞ্চল",
+    documentType: "দলিলের প্রকার",
+    getReadyUploadIdCard: "আপনার আইডি কার্ড আপলোড করার জন্য প্রস্তুত হোন",
+    ic: "পরিচয় পত্র",
+    hint_txt_1: "রঙিন ছবি বা দলিল আপলোড করুন",
+    hint_txt_2: "ভাল আলোতে ছবি তোলুন",
+    hint_txt_3: "ফাইলের ছবি সম্পাদনা করবেন না",
+    checkGuide: "আমাদের গাইড দেখুন",
+    passport: "পাসপোর্ট",
+    drivingLicense: "ড্রাইভিং লাইসেন্স",
+    hint: "সাহায্য",
+    uploadDoc: "ডকুমেন্ট আপলোড করুন",
+    uploadFailed: "আপলোড ব্যর্থ",
+    uploadSuccessful: "আপলোড সফল",
+    uploaded: "আপলোড হয়েছে",
+    pendingAuth: "প্রমাণীকরণ অপেক্ষমাণ"
   },
   earnMoney: {
     title: "বোনাস পট এসেছে",
