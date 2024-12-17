@@ -1038,6 +1038,10 @@ export default {
     37001: "Đã hết thời gian nhận Lì Xì",
     12100: "Mật khẩu rút tiền cũ chưa chính xác.",
     45000: "Chưa đạt đến số tiền tối thiểu để rút",
-    45001: "Hôm nay đã nhận được tiền thưởng ngẫu nhiên."
+    45001: "Hôm nay đã nhận được tiền thưởng ngẫu nhiên.",
+    58100: "Số lần quay thưởng không đủ",
+    58101: "Số lần quay thưởng hôm nay đã đạt giới hạn",
+    58102: "Tiền thưởng hàng ngày đã được đổi hết, vui lòng thử lại vào ngày mai.",
+    58103: "VIP0 không thể tham gia.",
   }
 };
