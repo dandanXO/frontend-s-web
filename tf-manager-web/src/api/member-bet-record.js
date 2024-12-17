@@ -98,3 +98,12 @@ export const getMemberBetRecordByPlatformListTotal = query => {
     ContentType.form
   )
 }
+
+export const updateBetStatusType = async (transactionId, betStatus) => {
+  await https().request(
+    `/memberBetRecord/money-change/update?_method=PUT`,
+    Method.POST,
+    { transactionId: transactionId, betStatus: betStatus },
+    ContentType.form
+  )
+}
