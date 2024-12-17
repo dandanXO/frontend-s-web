@@ -152,7 +152,9 @@
         @change="cropperChange"
       />
 
-      <q-btn :loading="isLoadingUpload" no-caps unelevated class="green-btn crop-btn" @click="submit">Submit</q-btn>
+      <q-btn :loading="isLoadingUpload" no-caps unelevated class="green-btn crop-btn" @click="submit">
+        {{ $t("btn.submit") }}
+      </q-btn>
     </q-card>
   </q-dialog>
 </template>
@@ -246,7 +248,7 @@ const submit = async () => {
           $q.notify({
             type: "negative",
             position: "top",
-            message: `${selectedDocType.value} upload failed. Please try again`,
+            message: `${selectedDocType.value} ${t("notify.uploadFailedPleaseTryAgain")}`,
             icon: "report_problem"
           });
         }
@@ -295,7 +297,7 @@ async function attachPhoto(fileImg) {
     $q.notify({
       type: "negative",
       position: "top",
-      message: `Image format error`,
+      message: `${t("notify.imageFormatError")}`,
       icon: "report_problem"
     });
 
@@ -306,7 +308,7 @@ async function attachPhoto(fileImg) {
     $q.notify({
       type: "negative",
       position: "top",
-      message: `The uploaded image cannot be larger than 1MB`,
+      message: `${t("notify.uploadImageLargerThan1MbError")}`,
       icon: "report_problem"
     });
     isLoadingUpload.value = false;
