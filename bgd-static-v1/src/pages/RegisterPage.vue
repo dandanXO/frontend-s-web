@@ -18,7 +18,7 @@
     </div> -->
 
     <div class="register-form-logo-img">
-      <img src="../assets/images/auth/win-7-txt-logo.png" />
+      <img src="../assets/images/auth/auth-form-logo-img.png" />
     </div>
 
     <!-- <div class="auth-tab-wrapper">
@@ -822,8 +822,8 @@ function charType(num) {
   color: #000a01;
   height: 34px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  background: url("../assets/images/common/btn-primary.svg") no-repeat center center;
-  background-size: 100%;
+  background: url("../assets/images/common/auth-page-btn-primary.png") no-repeat center center;
+  background-size: 100% 100%;
   font-weight: 600;
   border-radius: 6px;
   text-transform: uppercase;
@@ -855,8 +855,8 @@ function charType(num) {
   border-radius: 6px;
   position: relative;
   text-transform: uppercase;
-  background: url("../assets/images/common/btn-secondary.svg") no-repeat center center;
-  background-size: 100%;
+  background: url("../assets/images/common/auth-page-btn-secondary.png") no-repeat center center;
+  background-size: 100% 100%;
   &__full {
     width: 100%;
     height: 40px;
@@ -913,8 +913,6 @@ function charType(num) {
 
 .register-container {
   min-height: 100dvh;
-  // padding: 16px;
-  padding-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -922,7 +920,6 @@ function charType(num) {
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding-top: 20%;
 }
 
 .back-left {
@@ -933,14 +930,14 @@ function charType(num) {
 
 .register-form-logo-img {
   margin-top: -10px;
-  padding: 0 16px;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   img {
     display: block;
     width: 100%;
-    max-width: 200px;
+    max-width: 100%;
     margin-bottom: 10px;
   }
 }

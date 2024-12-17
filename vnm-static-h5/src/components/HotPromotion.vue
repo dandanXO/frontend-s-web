@@ -19,6 +19,7 @@
     <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" />
     <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" />
     <AseanM2024 v-if="list.redirectUrl === 'dudoan-asean2024' || list.redirectUrl === 'trotaidudoan-asean2024' || list.redirectUrl === 'baohiemvon-20%asean'" />
+    <ChristmasNewYear v-if="list.redirectUrl === 'vnm-xmas-new-year-lucky-draw'" :promo-code="list.promoCode" :promo-rules="list.pageContent" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -57,6 +58,7 @@ import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
 import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue";
 import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 import AseanM2024 from "@/components/hotpromo/aseanM2024/AseanM2024.vue";
+import ChristmasNewYear from "@/components/hotpromo/christmas-new-year/ChristmasNewYear.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -75,7 +77,8 @@ export default defineComponent({
     EurocupLuckyDraw,
     olympicClaim,
     NewPlayerPromo,
-    AseanM2024
+    AseanM2024,
+    ChristmasNewYear
     // CnyStepGame2024Promo
   },
   props: {
