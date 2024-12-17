@@ -1,4 +1,4 @@
-import { getAdjustUrl } from "./adjust.js";
+// import { getAdjustUrl } from "./adjust.js";
 import { INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
@@ -41,18 +41,18 @@ installBtn.addEventListener("click", async () => {
       } else {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
-          const redirectUrl = getAdjustUrl();
+          // const redirectUrl = getAdjustUrl();
 
-          console.log("REd Url");
-          console.log(redirectUrl)
+          // console.log("REd Url");
+          // console.log(redirectUrl)
 
-          // alert(redirectUrl);
-          const iframeTag = document.createElement("iframe");
-          iframeTag.classList.add("blank-iframe");
-          iframeTag.src = redirectUrl;
-          iframeTag.addEventListener(
-            "load",
-            () => {
+          // // alert(redirectUrl);
+          // const iframeTag = document.createElement("iframe");
+          // iframeTag.classList.add("blank-iframe");
+          // iframeTag.src = redirectUrl;
+          // iframeTag.addEventListener(
+          //   "load",
+          //   () => {
               const redirectInfo = getRedirectInfo();
               localStorage.setItem(PWA_DATA_KEY, JSON.stringify(redirectInfo));
               localStorage.setItem(INSTALLATION_STATUS_KEY, "INSTALLING");
@@ -61,10 +61,10 @@ installBtn.addEventListener("click", async () => {
               installationCountdown();
               handleInstallationProgress();
               console.log("user accepted");
-            },
-            { once: true }
-          );
-          iframeContainer.appendChild(iframeTag);
+          //   },
+          //   { once: true }
+          // );
+          // iframeContainer.appendChild(iframeTag);
         }
       }
       break;
