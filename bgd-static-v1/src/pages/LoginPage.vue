@@ -11,11 +11,11 @@
   <!--  </q-page-sticky>-->
 
   <div class="login-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
+    <div class="back-left">
+      <router-link :to="'/home'">
+        <q-btn dense rounded icon="close" class="text-white" />
       </router-link>
-    </div> -->
+    </div>
 
     <div class="login-form-logo-img">
       <img src="../assets/images/auth/auth-form-logo-img.png" />
@@ -56,7 +56,7 @@
                   <template v-slot:prepend>
                     <FancyIcon name="smartphone" />
                     <!-- <q-icon name="smartphone" /> -->
-                    <div class="prepend-number">+880</div>
+                    <!-- <div class="prepend-number">+880</div> -->
                   </template>
                 </q-input>
               </template>
@@ -86,6 +86,9 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     />
+                    <div class="forgot-password">
+                      <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
+                    </div>
                   </template>
                 </q-input>
               </template>
@@ -180,9 +183,9 @@
     <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
-    <div class="forgot-password">
+    <!-- <div class="forgot-password">
       <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -451,7 +454,6 @@ export default defineComponent({
             });
           // getCode();
         })();
-        console.log('here', token, user, credential)
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -885,11 +887,10 @@ export default defineComponent({
 .back-left {
   position: fixed;
   top: 16px;
-  left: 16px;
+  right: 16px;
 }
 
 .login-form-logo-img {
-  margin-top: -10px;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -980,12 +981,15 @@ export default defineComponent({
 }
 
 .forgot-password {
-  margin: 30px 0px 0px;
-  text-align: center;
+  text-align: right;
+  position: absolute;
+  top: -32px;
+  right: 0px;
 
   .form-text {
     color: #9f9f9f;
     text-decoration: underline;
+    font-size: 10px;
   }
 }
 
