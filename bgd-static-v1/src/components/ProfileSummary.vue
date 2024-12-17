@@ -7,9 +7,7 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo">
-        <img height="30px" src="../assets/images/index/download/win-7-txt-logo.png" />
-      </div>
+      <div class="download-logo"><img height="30px" src="../assets/images/index/download/win7-text-log.png" /></div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
