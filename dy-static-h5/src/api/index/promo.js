@@ -251,7 +251,8 @@ export function getCompetitionToday() {
 }
 
 export function getCompetitionYesterday(promoCode) {
-  return eventapi.get("/session/competition/yesterday", {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition/yesterday?v=${randNum}`, {
     params: {
       promoCode
     }
@@ -279,7 +280,8 @@ export function getNationalDayinit() {
 }
 
 export function getCompetitionBetYesterday(promoCode) {
-  return eventapi.get("/session/competition-bet/yesterday", {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet/yesterday?v=${randNum}`, {
     params: {
       promoCode
     }

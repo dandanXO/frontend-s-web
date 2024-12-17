@@ -1233,6 +1233,9 @@
     "copy_success": "Liên kết đã được sao chép thành công!",
     "enter_transfer_amount": "Nhập số tiền chuyển",
     "choose_later": "Tham Gia Sau",
+    "promo_available_draw": "Tổng số lần rút thăm",
+    "promo_tnc": "Điều khoản và điều kiện",
+    "promo_view_records": "Xem hồ sơ",
     "about": {
       "affiliate": "Đại Lý",
       "aboutus": "Về TFGaming",
@@ -1456,6 +1459,10 @@
     "35010": "35010 Thành viên không thể nhận quy",
     "37001": "Đã hết thời gian nhận Lì Xì",
     "45000": "Không đạt số tiền rút tối thiểu",
-    "45001": "Nhận được tiền thưởng ngẫu nhiên ngày hôm nay"
+    "45001": "Nhận được tiền thưởng ngẫu nhiên ngày hôm nay",
+    "58100": "Số lần quay thưởng không đủ",
+    "58101": "Số lần quay thưởng hôm nay đã đạt giới hạn",
+    "58102": "Tiền thưởng hàng ngày đã được đổi hết, vui lòng thử lại vào ngày mai.",
+    "58103": "VIP0 không thể tham gia."
   }
 }

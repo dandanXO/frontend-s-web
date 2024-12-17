@@ -451,6 +451,11 @@ export default defineComponent({
           guestLoginInfo.accessToken = credential.accessToken
           guestLoginInfo.idToken = credential.idToken
 
+          const refCode = sessionStorage.getItem("REFERRAL_CODE");
+          if (refCode) {
+            guestLoginInfo.referrer = refCode;
+          }
+
           api
             .post("/member/thirdPartyLogin", qs.stringify(guestLoginInfo))
             .then((ret) => {

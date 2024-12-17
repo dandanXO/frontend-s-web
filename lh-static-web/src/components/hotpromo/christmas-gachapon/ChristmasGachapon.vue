@@ -486,8 +486,12 @@ onMounted(() => {
     top: 63%;
     left: 30%;
     @media screen and (max-width: 1700px) {
-      top: 63%;
-      left: 24%;
+      top: 61%;
+      left: 29%;
+    }
+    @media screen and (max-width: 1500px) {
+      top: 61%;
+        left: 25%;
     }
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -501,10 +505,14 @@ onMounted(() => {
   .promorule {
     position: absolute;
     top: 69.7%;
-    left: 30.5%;
+    left: 30.5%;    
     @media screen and (max-width: 1700px) {
-      top: 70%;
-      left: 24%;
+      top: 68%;
+      left: 29%;
+    }
+    @media screen and (max-width: 1500px) {
+      top: 68%;
+        left: 25%;
     }
     transform: translate(-50%, -50%); /* Center the element */
     cursor: pointer;
@@ -520,8 +528,12 @@ onMounted(() => {
     top: 77.5%;
     left: 30.5%;
     @media screen and (max-width: 1700px) {
-      top: 77%;
-      left: 24%;
+      top: 75%;
+      left: 29%;
+    }
+    @media screen and (max-width: 1500px) {
+      top: 75%;
+        left: 25%;
     }
     transform: translate(-50%, -50%);
     cursor: pointer;
