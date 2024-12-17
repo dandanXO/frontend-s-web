@@ -11,11 +11,11 @@
   <!--  </q-page-sticky>-->
 
   <div class="register-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
+    <div class="back-left">
+      <router-link :to="'/home'">
+        <q-btn dense rounded icon="close" class="text-white" />
       </router-link>
-    </div> -->
+    </div>
 
     <div class="register-form-logo-img">
       <img src="../assets/images/auth/auth-form-logo-img.png" />
@@ -53,7 +53,7 @@
                 >
                   <template v-slot:prepend>
                     <FancyIcon name="smartphone" />
-                    <div class="prepend-number">+880</div>
+                    <!-- <div class="prepend-number">+880</div> -->
                   </template>
                 </q-input>
               </template>
@@ -216,6 +216,14 @@
       <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" :to="'/login'">
         {{ $t("btn.login") }}
       </q-btn>
+
+      <img src="../assets/images/index/login-directly.svg"/>
+
+
+        <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC" />&nbsp;
+          {{ $t("btn.signinWithGoogle") }}
+        </q-btn>
     </div>
 
     <div class="btn-lists">
@@ -261,6 +269,8 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -398,11 +408,82 @@ export default defineComponent({
     const router = useRouter();
 
     const affRegEvent = ref("");
+
+    const guestLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
+    
     onActivated(() => {
       getCode();
       getReferralCode();
       getAffiliateCode();
     });
+
+    const onClickGoogleSignin = async () => {
+      const provider = await new GoogleAuthProvider();
+      return signInWithPopup(auth, provider).then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+
+        (async () => {
+          guestLoginInfo.siteId = process.env.SITEID
+          guestLoginInfo.thirdParty = 'GOOGLE'
+          guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          guestLoginInfo.accessToken = credential.accessToken
+          guestLoginInfo.idToken = credential.idToken
+
+          api
+            .post("/member/thirdPartyLogin", qs.stringify(guestLoginInfo))
+            .then((ret) => {
+              const res = ret;
+              console.log("res:", res);
+
+              if (res.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Google login successfully",
+                  icon: "check_circle_outline"
+                });
+
+                store.autoLogin(res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  router.push("/home");
+                }
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: res.message,
+                  icon: "report_problem"
+                });
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          // getCode();
+        })();
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+    }
 
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -798,7 +879,8 @@ export default defineComponent({
       openTiktok,
       openYoutube,
       openCharity,
-      downloadApp
+      downloadApp,
+      onClickGoogleSignin
     };
   }
 });
@@ -925,11 +1007,10 @@ function charType(num) {
 .back-left {
   position: fixed;
   top: 16px;
-  left: 16px;
+  right: 16px;
 }
 
 .register-form-logo-img {
-  margin-top: -10px;
   padding: 0;
   display: flex;
   justify-content: center;
