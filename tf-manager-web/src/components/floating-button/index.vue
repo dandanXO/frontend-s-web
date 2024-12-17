@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 // defineProps
 
 // defineProps({
@@ -49,7 +49,7 @@ const position = reactive({
   y: 0,
 })
 
-const buttonText = ref("+");
+// const buttonText = ref("+");
 
 const startDrag = e => {
   isDragging.value = true

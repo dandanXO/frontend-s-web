@@ -1,11 +1,10 @@
 <template>
   <router-view v-if="isRouterActive" />
-  <FloatingButton />
+
 </template>
 
 <script setup>
 import { ref, provide, nextTick } from 'vue-demi'
-import FloatingButton from '@/components/floating-button/index.vue'
 
 const isRouterActive = ref(true)
 provide('reload', () => {
