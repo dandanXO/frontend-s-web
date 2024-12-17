@@ -2,7 +2,11 @@
   <div class="name-auth-modal">
     <img class="close-icon" src="../../assets/images/index/name-auth/dialog-close-icon.png" @click="closeDialog" />
     <div class="name-auth-title">{{ $t("nameAuth.title") }}</div>
-    <div v-if="step === 0" class="name-auth-step step-1">
+    <div v-if="step === 0" class="name-auth-step step-loading">
+      <div class="name-auth-step-content"></div>
+      <div class="additional-info-loading"></div>
+    </div>
+    <div v-if="step === 1" class="name-auth-step step-1">
       <div class="name-auth-step-content">
         <div class="name-auth-subtitle">{{ $t("nameAuth.basicExperience") }}</div>
         <div class="step-1-content">
@@ -20,7 +24,7 @@
               <span>{{ $t("nameAuth.identityId") }}</span>
             </div>
           </div>
-          <q-btn no-caps unelevated class="green-btn" @click="step = 1">{{ $t("btn.startNow") }}</q-btn>
+          <q-btn no-caps unelevated class="green-btn" @click="step = 2">{{ $t("btn.startNow") }}</q-btn>
           <div class="browsing-time-txt">{{ $t("nameAuth.browsingTime") }}</div>
         </div>
       </div>
@@ -28,7 +32,7 @@
         {{ $t("nameAuth.additionalInfo") }}
       </div>
     </div>
-    <div v-if="step === 1" class="name-auth-step step-2">
+    <div v-if="step === 2" class="name-auth-step step-2">
       <div class="name-auth-step-content">
         <div class="stepper">
           <div class="stepper-item active"></div>
@@ -46,6 +50,8 @@
           :options="countryRegion"
           option-label="label"
           option-value="value"
+          emit-value
+          map-options
         ></q-select>
 
         <div class="doc-type-selection">
@@ -65,15 +71,19 @@
         unelevated
         class="green-btn"
         :class="{ disabled: !selectedCountryRegion || !selectedDocType }"
-        @click="step = 2"
+        @click="step = 3"
       >
         {{ $t("btn.continue") }}
       </q-btn>
     </div>
-    <div v-if="step === 2" class="name-auth-step step-3">
+    <div v-if="step === 3" class="name-auth-step step-3">
       <div class="name-auth-step-content">
         <div class="stepper-container">
-          <img src="../../assets/images/index/name-auth/step-back-icon.png" @click="step = 1" />
+          <img
+            v-if="uploadStatus === 'NOT_EXIST' || uploadStatus === 'FAILED'"
+            src="../../assets/images/index/name-auth/step-back-icon.png"
+            @click="step = 2"
+          />
           <div class="stepper">
             <div class="stepper-item"></div>
             <div class="stepper-item active"></div>
@@ -97,11 +107,11 @@
         </div>
         <div v-else class="name-auth-upload-container upload-pending-auth">
           <img src="../../assets/images/index/name-auth/upload-pending-auth.png" />
-          <span>Uploaded</span>
-          <span>Pending Authentication</span>
+          <span>{{ $t("nameAuth.uploaded") }}</span>
+          <span>{{ $t("nameAuth.pendingAuth") }}</span>
         </div>
         <div class="edit-id-container">
-          <div>{{ docType.find((doc) => doc.value === selectedDocType).label }}</div>
+          <div>{{ docType.find((doc) => doc.value === selectedDocType)?.label ?? "" }}</div>
           <!-- <img src="../../assets/images/index/name-auth/edit-icon.png" /> -->
         </div>
       </div>
@@ -142,18 +152,21 @@
         @change="cropperChange"
       />
 
-      <q-btn :loading="isLoadingUpload" no-caps unelevated class="green-btn crop-btn" @click="submit">Done</q-btn>
+      <q-btn :loading="isLoadingUpload" no-caps unelevated class="green-btn crop-btn" @click="submit">Submit</q-btn>
     </q-card>
   </q-dialog>
 </template>
 <script setup>
 import { ref, defineEmits, onMounted } from "vue";
+import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import "vue-advanced-cropper/dist/theme.compact.css";
 import { api } from "boot/axios";
+import { getRndInteger } from "boot/utils";
 
+const store = userStore();
 const emit = defineEmits(["closeDialog"]);
 
 const step = ref(0);
@@ -165,7 +178,8 @@ const cropDialogVisible = ref(false);
 const fileInput = ref(null);
 const imageSrc = ref("");
 
-const countryRegion = [{ label: "Bangladesh", value: "bgd" }];
+const countryRegion = ref([]);
+
 const docType = [
   { label: t("nameAuth.passport"), value: "PASSPORT" },
   { label: t("nameAuth.ic"), value: "IC" },
@@ -209,19 +223,38 @@ const submit = async () => {
 
     if (file) {
       var formData = new FormData();
+      formData.append("country", selectedCountryRegion.value);
       formData.append("idType", selectedDocType.value);
       formData.append("idPhoto", file);
 
-      api
-        .post("/session/idVerify", formData)
-        .then(() => {})
-        .catch(() => {
-          uploadStatus.value = "FAILED";
-        })
-        .finally(() => {
-          isLoadingUpload.value = false;
-          cropDialogVisible.value = false;
+      const rstArray = Object.values(process.env.RST_API);
+      const rstApi = rstArray[getRndInteger(0, rstArray.length)];
+
+      try {
+        const response = await fetch(`${rstApi}/session/idVerify`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            authorization: "BGD",
+            token: `${store.token}`
+          }
         });
+        const data = await response.json();
+        if (data.code === 0) {
+          getIdVerifyStatus();
+        } else {
+          $q.notify({
+            type: "negative",
+            position: "top",
+            message: `${selectedDocType.value} upload failed. Please try again`,
+            icon: "report_problem"
+          });
+        }
+      } catch (e) {
+      } finally {
+        isLoadingUpload.value = false;
+        cropDialogVisible.value = false;
+      }
     }
   }
 };
@@ -259,18 +292,22 @@ async function attachPhoto(fileImg) {
   const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
 
   if (!file || !allowFileTypes.includes(file.type)) {
-    notify({
-      type: "error",
-      message: "Image format error"
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: `Image format error`,
+      icon: "report_problem"
     });
 
     isLoadingUpload.value = false;
     return null;
   }
   if (file && file.size > 1000000) {
-    notify({
-      type: "error",
-      message: "The uploaded image cannot be larger than 1MB"
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: `The uploaded image cannot be larger than 1MB`,
+      icon: "report_problem"
     });
     isLoadingUpload.value = false;
     return null;
@@ -283,16 +320,28 @@ const closeDialog = () => {
   emit("closeDialog");
 };
 
+const getIdVerifyStatus = () => {
+  step.value = 0;
+  api
+    .get("/session/idVerifyStatus")
+    .then((res) => {
+      if (res.code === 0) {
+        uploadStatus.value = res.data.status;
+        if (uploadStatus.value !== "NOT_EXIST") {
+          step.value = 3;
+        } else {
+          step.value = 1;
+        }
+        countryRegion.value = res.data.countryList.map((country) => ({
+          label: country,
+          value: country
+        }));
+      }
+    })
+    .catch(() => {});
+};
 onMounted(() => {
-  // api.get("/session/idVerifyStatus").then((res) => {
-  //   if (res.code === 0) {
-  //     uploadStatus.value = res.data.status;
-  //     if (uploadStatus.value !== "NOT_EXIST") {
-  //       step.value = 2;
-  //     }
-  //   } else {
-  //   }
-  // });
+  getIdVerifyStatus();
 });
 </script>
 <style scoped lang="scss">
@@ -312,8 +361,8 @@ onMounted(() => {
     width: 20px;
     height: 20px;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 14px;
+    right: 14px;
   }
   .name-auth-title {
     font-weight: 700;
@@ -372,6 +421,57 @@ onMounted(() => {
       &.active {
         opacity: 1;
         background-color: #00d24d;
+      }
+    }
+  }
+
+  .step-loading {
+    .name-auth-step-content,
+    .additional-info-loading {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .name-auth-step-content {
+      background-color: #81ff9e1a;
+      height: 200px;
+      border-radius: 4px;
+    }
+
+    .additional-info-loading {
+      background-color: #81ff9e1a;
+      height: 64px;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-top: 10px;
+    }
+
+    /* Add shimmer effect */
+    .name-auth-step-content::before,
+    .additional-info-loading::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(74, 145, 90, 0.05) 0%,
+        rgba(74, 145, 90, 0.25) 50%,
+        rgba(74, 145, 90, 0.05) 100%
+      );
+
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -150%;
+      }
+      100% {
+        left: 150%;
       }
     }
   }
