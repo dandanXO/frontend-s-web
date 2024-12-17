@@ -2,13 +2,13 @@
   <div class="christmas-new-year-container">
     <div class="el-loading-mask el-loading-mask-h" v-if="isLoading">
       <p class="spinner"><img src="@/components/hotpromo/christmas-new-year/img/spinner.png" /></p>
-      <p class="loading-text">Đang tải...</p>
+      <p class="loading-text">{{ $t('common.loading') }}...</p>
     </div>
     <div class="record-btn" @click="openModal('record')">
-      Xem hồ sơ
+      {{ $t('promo.view_records') }}
     </div>
     <div class="title">
-      Tổng số lần rút thăm：{{ availableDraw }}
+      {{ $t('promo.available_draw') }}: {{ availableDraw }}
     </div>
     <div class="prizes">
       <div @click="getGachapon" class="prize" v-for="prize in 6">
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="terms">
-      <div class="termtitle">Điều khoản và điều kiện</div>
+      <div class="termtitle">{{ $t('promo.tnc') }}</div>
       <div class="termcontent" v-html="promoRules"></div>
     </div>
     <!-- <router-link to="/promotion?name=trotaidudoan-asean2024"  @click="handlePromoClick('trotaidudoan-asean2024')">
@@ -171,6 +171,8 @@ import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/index/
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const props = defineProps(["promoCode", "promoRules"]);
 const promoCode = ref(props.promoCode);
 const promoRules = ref(props.promoRules);
@@ -439,6 +441,34 @@ onMounted(() => {
   }
 </style>
 <style lang="scss">
+.christmas-new-year-container .terms {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  th {
+    background-color: #b22222;
+    color: #fff;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9; 
+  }
+
+  tr:hover {
+    background-color: #f1f1f1; 
+    transition: background-color 0.3s ease;
+  }
+}
 body .el-dialog.christmas-modal .el-dialog__header .el-dialog__headerbtn .el-dialog__close, 
 body .el-dialog.prize-modal.once .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
   color: #ff0000;

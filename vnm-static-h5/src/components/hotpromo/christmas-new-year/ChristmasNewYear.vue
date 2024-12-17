@@ -2,13 +2,13 @@
   <div class="christmas-new-year-container">
     <div class="el-loading-mask el-loading-mask-h" v-if="isLoading">
       <p class="spinner"><img src="@/components/hotpromo/christmas-new-year/img/spinner.png" /></p>
-      <p class="loading-text">Đang tải...</p>
+      <p class="loading-text">{{ $t('lang.loading') }}...</p>
     </div>
     <div class="record-btn" @click="openModal('record')">
-      Xem hồ sơ
+      {{ $t('lang.promo_view_records') }}
     </div>
     <div class="title">
-      Tổng số lần rút thăm：{{ availableDraw }}
+      {{ $t('lang.promo_available_draw') }}: {{ availableDraw }}
     </div>
     <div class="prizes">
       <div @click="getGachapon" class="prize" v-for="prize in 6" :key="prize">
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="terms">
-      <div class="termtitle">Điều khoản và điều kiện</div>
+      <div class="termtitle">{{ $t('lang.promo_tnc') }}</div>
       <div class="termcontent" v-html="promoRules"></div>
     </div>
     <!-- <router-link to="/promotion?name=trotaidudoan-asean2024"  @click="handlePromoClick('trotaidudoan-asean2024')">
@@ -661,5 +661,26 @@ onMounted(() => {
   > div {
     overflow: unset;
   }
+}
+.promo-container .selected-promo .selected-promo-wrapper .inner .christmas-new-year-container .terms {
+  
+  table {
+      th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+      }
+        th {
+          background-color: #b22222;
+          color: #ffffff;
+        }
+        tr:nth-child(even) {
+          background-color: #f9f9f9; 
+        }
+
+        tr:hover {
+          background-color: #f1f1f1; 
+          transition: background-color 0.3s ease;
+        }
+      }
 }
 </style>
