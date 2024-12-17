@@ -28,6 +28,11 @@
       </q-tabs>
     </div> -->
 
+    <q-tabs v-model="loginNameType" dense no-caps class="login-type-toggle" narrow-indicator align="justify">
+      <q-tab name="phone" :label="$t('form.phone')" />
+      <q-tab name="email" :label="$t('form.email')" />
+    </q-tabs>
+
     <div class="register-form-wrapper">
       <q-form class="rounded-borders">
         <InputRowGrid>
@@ -35,6 +40,7 @@
             <InputField :label="$t('form.phone')" fancy>
               <template #input>
                 <q-input
+                  v-if="loginNameType === 'phone'"
                   type="tel"
                   pattern="\d*"
                   maxlength="11"
@@ -54,6 +60,22 @@
                   <template v-slot:prepend>
                     <FancyIcon name="smartphone" />
                     <!-- <div class="prepend-number">+880</div> -->
+                  </template>
+                </q-input>
+                <q-input
+                  v-else
+                  type="text"
+                  hide-bottom-space
+                  ref="loginNameRef"
+                  v-model="regForm.loginName"
+                  :rules="[(val) => (val && val.length > 0) || $t('form.email_rules_01'), isValidEmail]"
+                  label-color="brand"
+                  outlined
+                  color="green"
+                  :placeholder="$t('form.email_placeholder')"
+                >
+                  <template v-slot:prepend>
+                    <FancyIcon name="email" />
                   </template>
                 </q-input>
               </template>
@@ -271,6 +293,7 @@ import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -282,6 +305,7 @@ export default defineComponent({
     // PrimaryButton
   },
   setup() {
+    const { t } = useI18n();
     const ui = useUI();
     const store = userStore();
     const verificationImg = ref("");
@@ -295,7 +319,7 @@ export default defineComponent({
 
     const affCode = ref("");
     const isLoading = ref(false);
-
+    const loginNameType = ref("phone");
     const regForm = reactive({
       loginName: "",
       password: "",
@@ -380,7 +404,7 @@ export default defineComponent({
     const isValidEmail = () => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(regForm.email) || "请输入有效电子邮件";
+      return emailPattern.test(regForm.loginName) || t("form.email_rules_02");
     };
 
     const isValidCnPhone = () => {
@@ -880,7 +904,8 @@ export default defineComponent({
       openYoutube,
       openCharity,
       downloadApp,
-      onClickGoogleSignin
+      onClickGoogleSignin,
+      loginNameType
     };
   }
 });
@@ -954,6 +979,20 @@ function charType(num) {
     bottom: -1px;
     left: -1px;
     right: -1px;
+  }
+}
+
+.login-type-toggle {
+  max-width: 70%;
+  display: flex;
+  margin: 0 auto;
+
+  :deep(.q-tab--active) {
+    color: #24EE89;
+
+    .q-tab__label {
+      color: #24EE89;
+    }
   }
 }
 
