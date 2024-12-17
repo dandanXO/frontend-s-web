@@ -209,7 +209,10 @@ export default {
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
-    plsLoginToContinue: "Please login to continue"
+    plsLoginToContinue: "Please login to continue",
+    uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
+    imageFormatError: "Image format error",
+    uploadFailedPleaseTryAgain: "upload failed. Please try again"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

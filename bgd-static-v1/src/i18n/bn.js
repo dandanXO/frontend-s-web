@@ -208,7 +208,10 @@ export default {
     feedbackSentSuccess: "আপনার প্রতিক্রিয়া সফলভাবে পাঠানো হয়েছে!",
     quitGameMessage: "আপনি কি নিশ্চিতভাবে প্রস্থান করতে চান? গেমটি ছেড়ে দিতে নিশ্চিত করুন-এ ক্লিক করুন।",
     signOutMessage: "আপনি কি নিশ্চিত আপনি সাইন আউট করতে চান?",
-    plsLoginToContinue: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন"
+    plsLoginToContinue: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন",
+    uploadImageLargerThan1MbError: "আপলোড করা ছবি 1MB এর বেশি হতে পারে না",
+    imageFormatError: "ছবি ফরম্যাট ত্রুটি",
+    uploadFailedPleaseTryAgain: "আপলোড ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন"
   },
   sideNav: {
     inviteToEarn: "আয় করার জন্য আমন্ত্রণ জানান",
