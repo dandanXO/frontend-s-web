@@ -52,7 +52,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:bank-card:add']"
+          v-permission="['sys:payment:bank-card:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -61,7 +61,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:bank-card:del']"
+          v-permission="['sys:payment:bank-card:del']"
           @click="removeCard()"
           :disabled="uiControl.removeBtn"
         >
@@ -238,7 +238,7 @@
       <el-table-column prop="cardNumber" :label="t('fields.cardNumber')" />
       <el-table-column prop="cardAccount" :label="t('fields.cardAccount')" />
       <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:bank-card:update:state'])">
+      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:payment:bank-card:update:state'])">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
@@ -248,7 +248,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:bank-card:update'])">
+      <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:payment:bank-card:update'])">
         <template #default="scope">
           <el-button
             icon="el-icon-edit"

@@ -38,7 +38,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:withdraw-bank:add']"
+          v-permission="['sys:payment:withdraw-bank:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -167,7 +167,7 @@
                 <el-button icon="el-icon-delete"
                            size="mini"
                            type="danger"
-                           v-permission="['sys:withdraw-bank:del']"
+                           v-permission="['sys:payment:withdraw-bank:del']"
                            @click="removeWithdrawBank(scope.row)"
                 />
               </template>

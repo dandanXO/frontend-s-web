@@ -47,19 +47,19 @@
               label-position="top"
             >
               <el-form-item :label="t('fields.minWithdrawAmount')" prop="withdrawMin">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMin" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.web.withdrawMin" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.web.withdrawMin" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawMax">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMax" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.web.withdrawMax" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.web.withdrawMax" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxDailyWithdrawTimes')" prop="withdrawMaxTimes">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMaxTimes" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.web.withdrawMaxTimes" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.web.withdrawMaxTimes" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxDailyWithdraw')" prop="withdrawMaxAmount">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.web.withdrawMaxAmount" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.web.withdrawMaxAmount" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.web.withdrawMaxAmount" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
             </el-form>
@@ -80,19 +80,19 @@
               label-position="top"
             >
               <el-form-item :label="t('fields.minWithdrawAmount')" prop="withdrawMin">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMin" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.mobile.withdrawMin" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.mobile.withdrawMin" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxWithdrawAmount')" prop="withdrawMax">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMax" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.mobile.withdrawMax" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.mobile.withdrawMax" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxDailyWithdrawTimes')" prop="withdrawMaxTimes">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMaxTimes" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.mobile.withdrawMaxTimes" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.mobile.withdrawMaxTimes" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
               <el-form-item :label="t('fields.maxDailyWithdraw')" prop="withdrawMaxAmount">
-                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" v-model="form.mobile.withdrawMaxAmount" style="width: 200px" maxlength="10" />
+                <el-input v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" v-model="form.mobile.withdrawMaxAmount" style="width: 200px" maxlength="10" />
                 <el-input v-else v-model="form.mobile.withdrawMaxAmount" style="width: 200px" maxlength="10" disabled />
               </el-form-item>
             </el-form>
@@ -136,7 +136,7 @@
         </div>
       </el-col>
       <el-col :span="1" style="margin-left: 10px;">
-        <el-button v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:withdraw:set:update'])" type="primary" @click="submit">{{ t('fields.update') }}</el-button>
+        <el-button v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:payment:withdraw-set:update'])" type="primary" @click="submit">{{ t('fields.update') }}</el-button>
         <el-button v-else type="primary" @click="submit" disabled>{{ t('fields.update') }}</el-button>
       </el-col>
     </el-row>
