@@ -1838,6 +1838,9 @@ export default {
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
     showLogo: 'hiển thị biểu tượng',
     isSeamlessTransfer: 'Không cần chuyển nhượng',
+    fromPlatform: 'Từ Nền tảng',
+    fromGameCode: 'Từ Game Code',
+    toGameCode: 'Để chơi mã',
   },
   message: {
     startenddatemore3months:
