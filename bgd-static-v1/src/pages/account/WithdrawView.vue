@@ -517,16 +517,17 @@ const hasWithdrawCard = computed(() => {
 const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 
-const checkNewUser = () => {
-  if (store.phone == "") {
-    isNewUser.value = true;
-  } else {
-    getWithdrawalMethods();
-  }
-};
+// const checkNewUser = () => {
+//   if (store.phone == "") {
+//     isNewUser.value = true;
+//   } else {
+//     getWithdrawalMethods();
+//   }
+// };
 
 onMounted(() => {
-  checkNewUser();
+  // checkNewUser();
+  getWithdrawalMethods();
   store.getBalance();
   // loadPlatform()
 });
