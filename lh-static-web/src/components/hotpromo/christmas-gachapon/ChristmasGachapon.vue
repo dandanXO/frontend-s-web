@@ -22,11 +22,11 @@
     <div class="marquee-container">
       <!-- Top Row -->
       <div class="marquee-row top-row" :style="{ animationDuration: topAnimationDuration + 's' }" ref="topRow">
-        <div class="marquee-item" v-for="(item, index) in topRecords" :key="'top-' + index">
+        <div class="marquee-item" v-for="(item, index) in topRecords.slice(0, 20)" :key="'top-' + index">
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
           <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
         </div>
-        <div class="marquee-item" v-for="(item, index) in topRecords" :key="'top-' + index">
+        <div class="marquee-item" v-for="(item, index) in topRecords.slice(20, topRecords.length)" :key="'top-' + index">
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
           <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
         </div>
@@ -383,27 +383,39 @@ const init = () => {
   });
   getLatestClaimedBonusList(promoCode.value).then((res) => {
     if (res.code === 0) {
-      const response = res.data
-      response.forEach((item) => {
-            if (item.bonusName === "苹果16 256GB") {
-              item.img = "iphone"
-              item.type = "IPhone16 256GB"
-            }
-            if (item.bonusName === "苹果耳机") {
-                item.img = "ipods",
-                item.type = "苹果耳机一副"
-            }
-            const bonusMapping = {
-              '大红包': "big",
-              '中红包': "med",
-              '小红包': "small"
-            };
-            console.log(item.bonusName)
-            if (bonusMapping[item.bonusName]) {
-              item.img = bonusMapping[item.bonusName],
-              item.type = `${item.bonusName} ${item.bonusAmount}元彩金`
-            }
-          });
+      const response = res.data.filter((item) => {
+        // If item doesn't have a bonusName, return false to exclude it
+        if (!item.bonusName) {
+          return false; // Item will be removed from the array
+        }
+
+        // Handling specific bonus names with custom img and type
+        if (item.bonusName === "苹果16 256GB") {
+          item.img = "iphone";
+          item.type = "IPhone16 256GB";
+        }
+
+        if (item.bonusName === "苹果耳机") {
+          item.img = "ipods";
+          item.type = "苹果耳机一副";
+        }
+
+        // Define bonus types for other bonuses
+        const bonusMapping = {
+          '大红包': "big",
+          '中红包': "med",
+          '小红包': "small"
+        };
+
+        // If the bonusName exists in the bonusMapping, update the img and type accordingly
+        if (bonusMapping[item.bonusName]) {
+          item.img = bonusMapping[item.bonusName];
+          item.type = `${item.bonusName} ${item.bonusAmount}元彩金`;
+        }
+
+        // Return true to keep the item
+        return true;
+      });
       allRecords.value = response;
       middleIndex.value = Math.floor(allRecords.value.length / 2);
     }
@@ -421,7 +433,17 @@ const adjustMarqueeSpeed = () => {
   // Top Row Speed Calculation
   const topRowWidth = topRow.value.scrollWidth; // Get total width of top row
   const containerWidth = topRow.value.offsetWidth; // Get container width
-  const topSpeed = (topRowWidth / containerWidth) * 20; // Adjust factor as needed
+  const numberOfTopRecords = allRecords.value.length;
+
+  // Adjust speed based on the number of records
+  // You can experiment with the factor value (e.g., 1000) to fine-tune the speed
+  const speedFactor = 1500; // Base speed factor
+  const speedAdjustment = numberOfTopRecords < 5 ? 5 : numberOfTopRecords; // Slower for fewer items, faster for more
+  const topSpeed = (topRowWidth / containerWidth) * speedFactor / speedAdjustment;
+
+  // Set the animation duration dynamically
+  // topAnimationDuration.value = topSpeed;
+  // const topSpeed = (topRowWidth / containerWidth) * 20; // Adjust factor as needed
   topAnimationDuration.value = topSpeed;
 
   // Bottom Row Speed Calculation
