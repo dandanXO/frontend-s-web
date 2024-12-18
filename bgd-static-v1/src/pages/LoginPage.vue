@@ -62,7 +62,7 @@
                   <template v-slot:prepend>
                     <FancyIcon name="smartphone" />
                     <!-- <q-icon name="smartphone" /> -->
-                    <!-- <div class="prepend-number">+880</div> -->
+                    <div class="prepend-number">+880</div>
                   </template>
                 </q-input>
                 <q-input
