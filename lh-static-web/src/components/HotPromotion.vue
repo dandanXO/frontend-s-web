@@ -1020,6 +1020,7 @@ export default defineComponent({
     font-size: 16px;
     width:fit-content;
     padding: 0px 20px 0px 10px;
+    aspect-ratio: 94/30;
   }
 
   .title-img {
