@@ -89,6 +89,7 @@
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
+    <DemaciaCup1 v-if="list.redirectUrl === 'dy2-demacia-cup-2024'" :promo-param="listParam" />
 
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
@@ -173,6 +174,7 @@ import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
 import PerfectWorldMajor2024 from "@/components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
+import DemaciaCup1 from "@/components/hotpromo//demacia-cup-1/DemaciaCup1.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -256,7 +258,8 @@ export default defineComponent({
     Cba30Dream,
     ElisaGift,
     ChallengeComebackPromo,
-    PerfectWorldMajor2024
+    PerfectWorldMajor2024,
+    DemaciaCup1
   },
   props: {
     list: {

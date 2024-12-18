@@ -214,10 +214,10 @@ const openModal = (type) => {
         totalItems.value = res.data.total;
         tableData.value = res.data.records;
       } else {
-          notify({
-              type: "error",
-              message: `${res.message}`
-          });
+        notify({
+          type: "error",
+          message: `${res.message}`
+        });
       }
     });
     modalContent.title = "活动记录";
@@ -274,10 +274,10 @@ const getGachapon = (t) => {
         });
         isPrizeModal.value = true;
       } else {
-          notify({
-              type: "error",
-              message: `${res.message}`
-          });
+        notify({
+          type: "error",
+          message: `${res.message}`
+        });
       }
     })
     .catch((error) => {
@@ -310,7 +310,6 @@ const getGachapon = (t) => {
       //   type: "IPhone16 256GB"
       // });
       // } else {
-
       //   prizes.value.push({
       //   img: "iphone",
       //   type: "IPhone16 256GB"
@@ -556,16 +555,17 @@ onMounted(() => {
     text-align: center;
     text-shadow: 1px 1px 3px #000000b3;
     width: 100%;
-    span {
-      color: #ffd900;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
     background: linear-gradient(
       90deg,
       rgba(255, 217, 0, 0) 0%,
       rgba(255, 217, 0, 0.6) 52.5%,
       rgba(255, 217, 0, 0) 93.5%
     );
+
+    span {
+      color: #ffd900;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
   }
 }
 
@@ -776,11 +776,10 @@ onMounted(() => {
     scrollbar-color: #e6374a transparent; /* Thumb color, no track background */
   }
   > div {
-    // width: 80%;
     margin: 0 auto;
     overflow: auto;
     max-width: 340px;
-    width: 95%;
+    width: 80%;
   }
   .rules {
     height: 45vh;

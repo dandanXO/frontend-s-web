@@ -24,7 +24,7 @@ const props = defineProps({
   :deep(.q-field__control) {
     padding-left: 20px;
     padding-right: 20px;
-    border-radius: 10px;
+    // border-radius: 10px;
     background-color: #ffffff1a;
     // border: 2px solid transparent;
   }
@@ -60,6 +60,7 @@ const props = defineProps({
       }
       .q-field__marginal {
         height: $input-height;
+        color: #fff;
       }
     }
   }

@@ -310,3 +310,16 @@ export function getPrizeAmount(promoCode) {
 export function loadPromoTypes(siteType) {
   return cached.get("PROMOTION_TYPES", () => server.REST.get(`/promo/type`));
 }
+
+export function initDrawEvent(promoCode) {
+  return server.EVENT.get(`/session/draw-event/init?promoCode=${promoCode}`);
+}
+
+export function getDrawPrizes(promoCode, drawTimes) {
+    return server.EVENT.post(`/session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes}`);
+}
+
+export function getDrawRecord(promoCode, params) {
+  return server.EVENT.get(`/session/draw-event/record?promoCode=${promoCode}&size=${params.size}&current=${params.current}`);
+}
+

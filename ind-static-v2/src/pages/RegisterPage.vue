@@ -412,7 +412,7 @@ export default defineComponent({
             }
           }
 
-          if (regForm.regDevice !== "ANDROID" || !affCode.value) {
+          if (!regForm.sid && (regForm.regDevice !== "ANDROID" || !affCode.value)) {
             regForm.sid = sidParam;
           }
 

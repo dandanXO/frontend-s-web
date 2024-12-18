@@ -32,6 +32,7 @@
 
     <Cba30Dream v-else-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-else-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
+    <DemaciaCup1 v-else-if="list.redirectUrl === 'lh-demacia-cup-1'" :promo-param="listParam" />
     <LiveDailyRebates v-else-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <NewVipRebate v-else-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
     <LoLS14 v-else-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
@@ -100,6 +101,7 @@ const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba
 const PerfectWorldMajor2024 = defineAsyncComponent(() =>
   import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue")
 );
+const DemaciaCup1 = defineAsyncComponent(() => import("./hotpromo/demacia-cup-1/DemaciaCup1.vue"));
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
 const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
@@ -134,6 +136,7 @@ export default defineComponent({
     EslOneBkk2024,
     Cba30Dream,
     PerfectWorldMajor2024,
+    DemaciaCup1,
     LiveDailyRebates,
     NewVipRebate,
     LoLS14,

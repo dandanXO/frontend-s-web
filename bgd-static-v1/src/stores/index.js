@@ -115,7 +115,7 @@ export const userStore = defineStore("userStore", {
       }
       loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
-      return api.post("/member/pakLogin", string).then((ret) => {
+      return api.post("/member/bgdLogin", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);

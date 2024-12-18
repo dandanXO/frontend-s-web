@@ -7,9 +7,7 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo">
-        <img height="30px" src="../assets/images/index/download/win-7-txt-logo.png" />
-      </div>
+      <div class="download-logo"><img height="30px" src="../assets/images/index/download/win7-text-log.png" /></div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
@@ -145,7 +143,8 @@
     :class="{
       'q-pa-md': !homeProfile,
       'with-top-download': topDownload && !ui.hideDownload,
-      'with-background': isScrolled
+      'with-background': isScrolled,
+      'with-gradient-background': isBonusModal
     }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
@@ -191,6 +190,11 @@
           </template>
         </div>
 
+        <q-btn class="gift-wrapper" flat @click="showBonusModal">
+          <img src="../assets/images/auth/gift.png" />
+          <q-badge class="gift-badge" floating rounded>1</q-badge>
+        </q-btn>
+
         <!-- <div>
           <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
         </div> -->
@@ -203,7 +207,7 @@
             <div class="profile-pic">
               <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
               <q-avatar size="50px">
-                <img :src="profileImagePath" />
+                <img :src="profileImagePath" referrerpolicy="no-referrer" />
               </q-avatar>
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
@@ -277,6 +281,10 @@
         <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
       </div>
     </div>
+
+    <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
+      <BonusModal :has-top-download="topDownload && !ui.hideDownload" />
+    </q-dialog>
   </div>
 </template>
 
@@ -291,7 +299,7 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
-
+import BonusModal from "./modal/BonusModal.vue";
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 
@@ -303,6 +311,7 @@ const store = userStore();
 const ui = useUI();
 
 const isScrolled = ref(false);
+const isBonusModal = ref(false);
 
 const loadCustomerAddress = () => {
   cached
@@ -367,6 +376,10 @@ const randomProfileImg = computed(() => {
 });
 
 const profileImagePath = computed(() => {
+  if (store.profilePicture) {
+    return store.profilePicture
+  }
+
   return require(`../assets/images/account/${randomProfileImg.value}.png`);
 });
 
@@ -468,6 +481,10 @@ const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
+};
+
+const showBonusModal = () => {
+  isBonusModal.value = true;
 };
 
 onMounted(() => {
@@ -773,6 +790,10 @@ onUnmounted(() => {
     background: #150a08;
   }
 
+  &.with-gradient-background {
+    background: linear-gradient(180deg, rgba(46, 112, 81, 0.39) 0%, rgba(46, 112, 81, 0.286) 100%);
+  }
+
   .infoboard-wrapper {
     position: absolute;
     display: flex;
@@ -892,6 +913,7 @@ onUnmounted(() => {
       // background: #192633;
       // background: rgba(0, 10, 1, 0.6);
       background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+      box-shadow: 0px 0px 5px 0px #ffffff4a inset;
       border-radius: 25px;
       display: flex;
       align-items: center;
@@ -1111,6 +1133,30 @@ onUnmounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.gift-wrapper {
+  background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+  box-shadow: 0px 0px 5px 0px #ffffff4a inset;
+  border-radius: 50%;
+  position: relative;
+  border: none;
+  padding: 10px;
+  height: 40px;
+  width: 40px;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .gift-badge {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    color: #fff;
+  }
 }
 
 @keyframes hueBlink {
