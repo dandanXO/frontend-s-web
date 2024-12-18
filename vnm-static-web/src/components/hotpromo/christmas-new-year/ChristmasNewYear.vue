@@ -4,9 +4,9 @@
       <p class="spinner"><img src="@/components/hotpromo/christmas-new-year/img/spinner.png" /></p>
       <p class="loading-text">{{ $t('common.loading') }}...</p>
     </div>
-    <div class="record-btn" @click="openModal('record')">
+    <!-- <div class="record-btn" @click="openModal('record')">
       {{ $t('promo.view_records') }}
-    </div>
+    </div> -->
     <div class="title">
       {{ $t('promo.available_draw') }}: {{ availableDraw }}
     </div>
@@ -16,18 +16,9 @@
       </div>
     </div>
     <div class="terms">
-      <div class="termtitle">{{ $t('promo.tnc') }}</div>
+      <!-- <div class="termtitle">{{ $t('promo.tnc') }}</div> -->
       <div class="termcontent" v-html="promoRules"></div>
     </div>
-    <!-- <router-link to="/promotion?name=trotaidudoan-asean2024"  @click="handlePromoClick('trotaidudoan-asean2024')">
-      <img src="@/components/hotpromo/asean2024/img/1.png">
-    </router-link>
-    <router-link to="/promotion?name=dudoan-asean2024">
-      <img src="@/components/hotpromo/asean2024/img/2.png"  @click="handlePromoClick('dudoan-asean2024')">
-    </router-link>
-    <router-link to="/promotion?name=baohiemvon-20%asean"  @click="handlePromoClick('baohiemvon-20%asean')">
-      <img src="@/components/hotpromo/asean2024/img/3.png">
-    </router-link> -->
     <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" class="christmas-modal" v-model="isModal">
     <div class="inner-contents">
       <div class="modaltitle">
@@ -154,7 +145,7 @@
     <div class="items">
       <div class="item" v-for="item in prizes">
         <!-- <div class="imgball"><img :src="require(`@/components/hotpromo/christmas-new-year/img/${prize.img}.png`)" /></div> -->
-        <div class="redbar">Chúc mừng, bạn đã nhận được {{ item.type }} tiền thưởng</div>
+        <div class="redbar">{{ item.type }}</div>
       </div>
     </div>
     <div class="claimbtn" @click="getBalance()">
@@ -208,10 +199,7 @@ const onPageSizeChange = async () => {
       totalItems.value = res.data.total;
       tableData.value = res.data.records;
     } else {
-        notify({
-            type: "error",
-            message: `${res.message}`
-        });
+      ElMessage.error(res.message)
     }
   });
 };
@@ -275,13 +263,26 @@ const getGachapon = (t) => {
         prizes.value = [];
         res.data.forEach((item) => {
           const obj = {
-            type: item.bonus
+            type: `Chúc mừng, bạn đã nhận được ${item.bonus} VNDP`
           }
           prizes.value.push(obj)
         });
         isPrizeModal.value = true;
       } else {
-        ElMessage.error(res.message)
+        prizes.value = [];
+        var viMessage = '';
+        if (res.code === 58100) { // 抽奖次数不足
+          viMessage = 'Vui lòng đăng nhập tài khoản để mở quà'
+        } else if (res.code === 58101) { // 今日可抽奖次已达上限
+          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 58102) {
+          viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
+        }
+        const obj = {
+          type: viMessage
+        }
+        prizes.value.push(obj)
+        isPrizeModal.value = true;
       }
     })
     .catch((error) => {
@@ -487,10 +488,9 @@ body .el-dialog.prize-modal.once {
 body .el-dialog.prize-modal.once .el-dialog__body {
   background: url(img/modalbg.png) no-repeat center center;
   background-size: contain;
-  min-height: 703px;
-  /* padding: 200px 80px 0;
-    margin-top: -120px; */
-  padding: 200px 80px 0;
+    min-height: 350px;
+    padding: 0 10px;
+
   .items {
     .item {
       .imgball {
@@ -499,15 +499,20 @@ body .el-dialog.prize-modal.once .el-dialog__body {
     }
   }
   .redbar {
-    font-size: 38px;
+    font-size: 18px;
     width: 70%;
-    max-width: 400px;
+    max-width: 280px;
     color: #FBE696;
     text-align: center;
-    margin: -25px auto 0;
+    margin: 0px auto;
+    padding: 60px 35px 0;
+    min-height: 165px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .claimbtn {
-    width: 320px;
+    width: 150px;
     position: absolute;
     bottom: 15px;
     margin: auto;

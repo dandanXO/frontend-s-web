@@ -4,9 +4,9 @@
       <p class="spinner"><img src="@/components/hotpromo/christmas-new-year/img/spinner.png" /></p>
       <p class="loading-text">{{ $t('lang.loading') }}...</p>
     </div>
-    <div class="record-btn" @click="openModal('record')">
+    <!-- <div class="record-btn" @click="openModal('record')">
       {{ $t('lang.promo_view_records') }}
-    </div>
+    </div> -->
     <div class="title">
       {{ $t('lang.promo_available_draw') }}: {{ availableDraw }}
     </div>
@@ -16,18 +16,9 @@
       </div>
     </div>
     <div class="terms">
-      <div class="termtitle">{{ $t('lang.promo_tnc') }}</div>
+      <!-- <div class="termtitle">{{ $t('lang.promo_tnc') }}</div> -->
       <div class="termcontent" v-html="promoRules"></div>
     </div>
-    <!-- <router-link to="/promotion?name=trotaidudoan-asean2024"  @click="handlePromoClick('trotaidudoan-asean2024')">
-      <img src="@/components/hotpromo/asean2024/img/1.png">
-    </router-link>
-    <router-link to="/promotion?name=dudoan-asean2024">
-      <img src="@/components/hotpromo/asean2024/img/2.png"  @click="handlePromoClick('dudoan-asean2024')">
-    </router-link>
-    <router-link to="/promotion?name=baohiemvon-20%asean"  @click="handlePromoClick('baohiemvon-20%asean')">
-      <img src="@/components/hotpromo/asean2024/img/3.png">
-    </router-link> -->
     
   <q-dialog class="christmas-modal" v-model="isModal" align-center>
     <div class="inner-contents">
@@ -146,7 +137,7 @@
     <div class="items">
       <div class="item" v-for="item in prizes" :key="item">
         <!-- <div class="imgball"><img :src="require(`@/components/hotpromo/christmas-new-year/img/${prize.img}.png`)" /></div> -->
-        <div class="redbar">Chúc mừng, bạn đã nhận được {{ item.type }} tiền thưởng</div>
+        <div class="redbar">{{ item.type }}</div>
       </div>
     </div>
     <div class="claimbtn" @click="getBalance()">
@@ -255,16 +246,26 @@ const getGachapon = (t) => {
         prizes.value = [];
         res.data.forEach((item) => {
           const obj = {
-            type: item.bonus
+            type: `Chúc mừng, bạn đã nhận được ${item.bonus} VNDP`
           }
           prizes.value.push(obj)
         });
         isPrizeModal.value = true;
       } else {
-        $q.notify({
-          type: 'error',
-          message: res.message
-        })
+        prizes.value = [];
+        var viMessage = '';
+        if (res.code === 58100) { // 抽奖次数不足
+          viMessage = 'Vui lòng đăng nhập tài khoản để mở quà'
+        } else if (res.code === 58101) { // 今日可抽奖次已达上限
+          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 58102) {
+          viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
+        }
+        const obj = {
+          type: viMessage
+        }
+        prizes.value.push(obj)
+        isPrizeModal.value = true;
       }
     })
     .catch((error) => {
@@ -304,7 +305,7 @@ onMounted(() => {
     border-radius: 12px;
     width: 100%;
     max-width: 1050px;
-    padding: 50px 20px;
+    padding: 20px 5px;
     margin: 0 auto;
     flex-direction: column;
     border: 1px solid #ACD4F6;
@@ -400,14 +401,14 @@ onMounted(() => {
       background: #FFFFFF;
       width: 95%;
       margin: 10px auto;
-      padding: 20px;
+      padding: 10px;
       .termtitle {
         color: #CB162A;
         font-weight: 600;
-        font-size: 28px;
+        font-size: 20px;
       }
       .termcontent {
-        font-size: 20px;
+        font-size: 16px;
       }
     }
   }
@@ -600,12 +601,15 @@ onMounted(() => {
   }
 }
 .prize-modal.once .q-dialog__inner {
-  padding: 200px 0 40px;
   background: url(../christmas-new-year/img/modalbg.png) no-repeat center center;
   background-size: contain;
   justify-content: center;
   align-items: flex-start;
-  height: 540px;
+  
+  height: 380px;
+    width: 95%;
+    max-width: 200px;
+
   
   .claimbtn {
     text-align: center;
@@ -614,9 +618,9 @@ onMounted(() => {
     align-items: center;
     margin: 10px auto 0;
     cursor: pointer;
-    width: 250px;
+    width: 120px;
     position: absolute;
-    bottom: 40px;
+    bottom: 60px;
     img {
       width: 100%;
     }
@@ -630,12 +634,12 @@ onMounted(() => {
     }
   }
   .redbar {
-    font-size: 26px;
-    width: 100%;
-    max-width: 400px;
+    font-size: 15px;
+    width: 90%;
+    max-width: 140px;
     color: #FBE696;
     text-align: center;
-    margin: -50px auto 0;
+    margin: 0 auto;
   }
   > div {
     overflow: unset;
@@ -672,6 +676,7 @@ onMounted(() => {
         th {
           background-color: #b22222;
           color: #ffffff;
+          font-size: 13px;
         }
         tr:nth-child(even) {
           background-color: #f9f9f9; 
