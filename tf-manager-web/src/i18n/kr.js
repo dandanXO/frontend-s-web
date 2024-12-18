@@ -1886,6 +1886,9 @@ export default {
     specificAffiliate: '지정 대리인',
     hasPopUp: '팝업창이 있어요',
     isSeamlessTransfer: '환승불가입니다',
+    fromPlatform: '플랫폼에서',
+    fromGameCode: '게임 코드에서',
+    toGameCode: '게임 코드로',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
@@ -2785,9 +2788,6 @@ export default {
     BONUS_FLUCTUATION: '보너스 변동',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '작업 유휴 (베팅 기록 가져오기)',
-  },
-  monitorTitle: {
-    MEMBER_STATISTICS: '온라인 사용자'
   },
   error: {
     400: '잘못된 요청',
