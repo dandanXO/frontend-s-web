@@ -32,7 +32,8 @@
         aspect-ratio: 2776 / 1634;
         position: relative;
         margin: 0 auto;
-        max-width: 60%;
+        width: 1170px;
+        height: auto;
         margin-top: -30px;
 
         .dl-frame {

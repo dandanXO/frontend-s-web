@@ -968,6 +968,7 @@ $transition_timer: 0.5s;
     // background-color:lemonchiffon;
     height: 971px;
     width: 1903px;
+    margin: 0 auto;
 
     .hotgame-tabs {
       height: 700px;
