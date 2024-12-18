@@ -238,7 +238,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
@@ -432,6 +432,22 @@ export default defineComponent({
       window.open(ui.charityUrl, "_blank");
     };
 
+    const thirdPartyLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
+
+    const getReferralCode = () => {
+      const refCode = sessionStorage.getItem("REFERRAL_CODE");
+      if (refCode) {
+        thirdPartyLoginInfo.referrer = refCode;
+      }
+    };
+
+    onActivated(() => {
+      getReferralCode()
+    })
+
     const onClickGoogleSignin = async () => {
       const provider = await new GoogleAuthProvider();
       return signInWithPopup(auth, provider).then((result) => {
@@ -445,19 +461,15 @@ export default defineComponent({
         // ...
 
         (async () => {
-          guestLoginInfo.siteId = process.env.SITEID
-          guestLoginInfo.thirdParty = 'GOOGLE'
-          guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
-          guestLoginInfo.accessToken = credential.accessToken
-          guestLoginInfo.idToken = credential.idToken
 
-          const refCode = sessionStorage.getItem("REFERRAL_CODE");
-          if (refCode) {
-            guestLoginInfo.referrer = refCode;
-          }
+          thirdPartyLoginInfo.siteId = process.env.SITEID
+          thirdPartyLoginInfo.thirdParty = 'GOOGLE'
+          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.accessToken = credential.accessToken
+          thirdPartyLoginInfo.idToken = credential.idToken
 
           api
-            .post("/member/thirdPartyLogin", qs.stringify(guestLoginInfo))
+            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
             .then((ret) => {
               const res = ret;
               console.log("res:", res);
@@ -524,6 +536,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
+                loginType: loginNameType.value,
                 sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
@@ -812,7 +825,8 @@ export default defineComponent({
       openCharity,
       onClickGoogleSignin,
       loginNameType,
-      isValidEmail
+      isValidEmail,
+      thirdPartyLoginInfo
     };
   }
 });

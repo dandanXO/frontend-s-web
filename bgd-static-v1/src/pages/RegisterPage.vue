@@ -380,6 +380,7 @@ export default defineComponent({
       if (refCode) {
         // hasAffiliate.value = true;
         regForm.referrer = refCode;
+        thirdPartyLoginInfo.referrer = refCode;
       }
     };
 
@@ -433,7 +434,7 @@ export default defineComponent({
 
     const affRegEvent = ref("");
 
-    const guestLoginInfo = reactive({
+    const thirdPartyLoginInfo = reactive({
       sid: "",
       way: "ANDROID"
     });
@@ -457,14 +458,14 @@ export default defineComponent({
         // ...
 
         (async () => {
-          guestLoginInfo.siteId = process.env.SITEID
-          guestLoginInfo.thirdParty = 'GOOGLE'
-          guestLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
-          guestLoginInfo.accessToken = credential.accessToken
-          guestLoginInfo.idToken = credential.idToken
+          thirdPartyLoginInfo.siteId = process.env.SITEID
+          thirdPartyLoginInfo.thirdParty = 'GOOGLE'
+          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.accessToken = credential.accessToken
+          thirdPartyLoginInfo.idToken = credential.idToken
 
           api
-            .post("/member/thirdPartyLogin", qs.stringify(guestLoginInfo))
+            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
             .then((ret) => {
               const res = ret;
               console.log("res:", res);
@@ -551,8 +552,10 @@ export default defineComponent({
             regForm.regHost = "app://";
           }
 
+          regForm.registerType = loginNameType.value
+
           api
-            .post("/member/indRegister", qs.stringify(regForm))
+            .post("/member/bgdRegister", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
               if (res.code === 0) {
