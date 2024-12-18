@@ -29,8 +29,8 @@
     </div> -->
 
     <q-tabs v-model="loginNameType" dense no-caps class="login-type-toggle" narrow-indicator align="justify">
-      <q-tab name="phone" :label="$t('form.phone')" />
       <q-tab name="email" :label="$t('form.email')" />
+      <q-tab name="phone" :label="$t('form.phone')" />
     </q-tabs>
 
     <div class="login-form-wrapper">
@@ -273,7 +273,7 @@ export default defineComponent({
     const loginType = ref(false);
     const store = userStore();
     const verificationImg = ref("");
-    const loginNameType = ref("phone");
+    const loginNameType = ref("email");
     const loginForm = reactive({
       loginName: "",
       password: "",
