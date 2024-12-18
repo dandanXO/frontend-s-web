@@ -22,18 +22,35 @@
           style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.loginName')"
         />
-        <el-input
+        <el-select
           v-model="request.fromPlatform"
           size="small"
-          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.fromPlatform')"
-        />
-        <el-input
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="handleFromPlatformChange"
+        >
+          <el-option
+            v-for="item in fromPlatform.list"
+            :key="item.name"
+            :label="item.name"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select
           v-model="request.fromGameCode"
           size="small"
-          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.fromGameCode')"
-        />
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in selectedPlatformGameCode.list"
+            :key="item.name"
+            :label="item.name"
+            :value="item.value"
+          />
+        </el-select>
         <el-input
           v-model="request.gameCode"
           size="small"
@@ -206,10 +223,39 @@
           <el-input v-model="form.loginName" style="width: 350px" :disabled="uiControl.dialogType === 'EDIT'"/>
         </el-form-item>
         <el-form-item :label="t('fields.fromPlatform')" prop="fromPlatform">
-          <el-input v-model="form.fromPlatform" style="width: 350px"/>
+          <el-select
+            v-model="form.fromPlatform"
+            size="small"
+            :placeholder="t('fields.fromPlatform')"
+            class="filter-item"
+            style="width: 350px"
+            @change="handleFromPlatformChange"
+            :disabled="uiControl.dialogType === 'EDIT'"
+          >
+            <el-option
+              v-for="item in fromPlatform.list"
+              :key="item.name"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.fromGameCode')" prop="fromGameCode">
-          <el-input v-model="form.fromGameCode" style="width: 350px"/>
+          <el-select
+            v-model="form.fromGameCode"
+            size="small"
+            :placeholder="t('fields.fromGameCode')"
+            class="filter-item"
+            style="width: 350px"
+            :disabled="uiControl.dialogType === 'EDIT'"
+          >
+            <el-option
+              v-for="item in selectedPlatformGameCode.list"
+              :key="item.name"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.toGameCode')" prop="gameCode">
           <el-input v-model="form.gameCode" style="width: 350px"/>
@@ -237,7 +283,9 @@
       />
       <el-table-column prop="siteName" :label="t('fields.site')" width="150"/>
       <el-table-column prop="loginName" :label="t('fields.loginName')" min-width="150"/>
-      <el-table-column prop="gameCode" :label="t('fields.gameCode')" min-width="180"/>
+      <el-table-column prop="fromPlatform" :label="t('fields.fromPlatform')" min-width="180"/>
+      <el-table-column prop="fromGameCode" :label="t('fields.fromGameCode')" min-width="180"/>
+      <el-table-column prop="gameCode" :label="t('fields.toGameCode')" min-width="180"/>
       <el-table-column prop="diffDepositWithdraw" :label="t('fields.totalDeposit') + '-' + t('fields.totalWithdraw')" min-width="180">
         <template #default="scope">
             <span
@@ -274,9 +322,6 @@
             />
         </template>
       </el-table-column>
-      <el-table-column prop="fromPlatform" :label="t('fields.fromPlatform')" min-width="180"/>
-      <el-table-column prop="fromGameCode" :label="t('fields.fromGameCode')" min-width="180"/>
-      <el-table-column prop="gameCode" :label="t('fields.toGameCode')" min-width="180"/>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
@@ -362,8 +407,8 @@ const gameForm = ref(null)
 const EXPORT_GAME_LIST_HEADER = [
   'Site ID (Refer Mapping Sheet)',
   'Login Name',
-  'From Platform',
-  'From Game Code',
+  'From Platform (Refer Mapping Sheet)',
+  'From Game Code (Refer Mapping Sheet)',
   'To Game Code',
 ]
 
@@ -382,7 +427,30 @@ const EXPORT_MAPPING_SITE_HEADER = [
   'Currency',
 ]
 
+const EXPORT_MAPPING_FROM_PLATFORM_HEADER = [
+  'From Platform',
+  'From Game Code',
+]
+
+const exportGameMappingTemplate = reactive({
+  list: [
+    { platform: 'spribe', gamecode: 'aviator' },
+    { platform: 'jili', gamecode: '229' },
+  ],
+})
+
 let chooseGame = []
+
+const fromPlatform = reactive({
+  list: [
+    { key: 1, name: 'Spribe', value: 'spribe' },
+    { key: 2, name: 'Jili', value: 'jili' },
+  ],
+})
+
+const selectedPlatformGameCode = reactive({
+  list: [],
+})
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -439,6 +507,19 @@ const formRules = reactive({
 const sites = reactive({
   list: [],
 })
+
+function handleFromPlatformChange(val) {
+  if (val === "spribe") {
+    selectedPlatformGameCode.list = [
+      { key: 1, name: 'Avaitor', value: 'aviator' },
+    ]
+  } else if (val === "jili") {
+    selectedPlatformGameCode.list = [
+      { key: 1, name: 'Mines', value: '229' },
+    ]
+  }
+}
+
 function resetQuery() {
   request.siteId = site.value ? site.value.id : sites.list[0].id;
   request.loginName = null
@@ -549,9 +630,12 @@ async function removeGame(game) {
     }
   ).then(async () => {
     if (game) {
-      await deleteGame(game.siteId, [game.loginName])
+      const data = [{ loginName: game.loginName, fromPlatform: game.fromPlatform, fromGameCode: game.fromGameCode }]
+      await deleteGame(game.siteId, data)
     } else {
-      await deleteGame(request.siteId, chooseGame.map(u => u.loginName))
+      const data = []
+      chooseGame.forEach(d => data.push({ loginName: d.loginName, fromPlatform: d.fromPlatform, fromGameCode: d.fromGameCode }))
+      await deleteGame(request.siteId, data)
     }
     await loadGame()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
@@ -582,10 +666,15 @@ async function downloadTemplate() {
   })
   wsGameList['!cols'] = wsGameListCols
 
+  const maxLengthMapping = []
+
   const { data: sitesMapping } = await getSiteExcelMapping()
   const exportMapping = [EXPORT_MAPPING_SITE_HEADER]
-  const maxLengthMapping = []
   pushRecordToData(sitesMapping, exportMapping)
+
+  exportMapping.push([], [], EXPORT_MAPPING_FROM_PLATFORM_HEADER)
+  pushRecordToData(exportGameMappingTemplate.list, exportMapping)
+
   const wsMapping = XLSX.utils.aoa_to_sheet(exportMapping)
   setWidth(exportMapping, maxLengthMapping)
   const wsMappingCols = maxLengthMapping.map(w => {
