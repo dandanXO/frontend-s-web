@@ -57,7 +57,7 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
       <div class="btn-group" v-if="!hasRole(['SUB_TENANT'])">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:task:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:task:create']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
         <el-button
           icon="el-icon-edit"
           size="mini"
@@ -181,12 +181,17 @@
       <el-table-column prop="status" :label="t('fields.state')" width="180">
         <template #default="scope">
           <el-radio-group
+            v-if="hasPermission(['sys:task:update:state'])"
             v-model="scope.row.status"
             size="mini"
             @change="changestatus(scope.row.id, scope.row.siteId, scope.row.status)"
           >
             <el-radio-button :value-key="item.value" v-for="item in uiControl.status" :label="item.value" :key="item.key">{{ t('taskStatus.' + item.displayName) }}</el-radio-button>
           </el-radio-group>
+          <div v-else>
+            <el-tag v-if="scope.row.status === 'ACTIVE'" size="mini" type="warning">{{ t('taskStatus.' + scope.row.status) }}</el-tag>
+            <el-tag v-else size="mini" type="danger">{{ t('taskStatus.' + scope.row.status) }}</el-tag>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="rules" :label="t('fields.taskRules')" width="300">
