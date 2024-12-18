@@ -17,6 +17,7 @@ import axios from "axios";
 import AOS from "aos";
 import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
+import { domainLists } from "./constant";
 
 export default defineComponent({
   name: "App",
@@ -126,10 +127,9 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
-      if (!affiliateCode) {
-        affiliateCode = "C402D4";
-      }
+      const hostname = window.location.hostname.replace("www.", "");
+      const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "C402D4";
 
       const track = () => {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
