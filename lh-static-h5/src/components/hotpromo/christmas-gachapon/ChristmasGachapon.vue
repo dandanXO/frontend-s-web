@@ -27,7 +27,7 @@
     <div class="amtleft">
       抽奖次数剩余:
       <span>{{ availableDraw }}次</span>
-    </div>
+    </div><div class="tips">温馨提示：由于场馆人数火爆，投注记录会在10-20分钟内全部更新，请稍等片刻</div>
   </div>
   <q-dialog class="christmas-modal" v-model="isModal" align-center>
     <div class="title">
@@ -562,6 +562,22 @@ onMounted(() => {
       rgba(255, 217, 0, 0) 93.5%
     );
 
+    span {
+      color: #ffd900;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+  }
+  .tips {
+    // bottom: 227px;
+    top: 120vw;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    text-shadow: 1px 1px 3px #000000b3;
+    width: 100%;
     span {
       color: #ffd900;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);

@@ -32,7 +32,7 @@
         </div>
       </div>
       <!-- Bottom Row -->
-      <div class="marquee-row bottom-row" :style="{ animationDuration: bottomAnimationDuration + 's' }"
+      <!-- <div class="marquee-row bottom-row" :style="{ animationDuration: bottomAnimationDuration + 's' }"
       ref="bottomRow">
         <div class="marquee-item" v-for="(item, index) in bottomRecords" :key="'bottom-' + index">
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
@@ -42,7 +42,7 @@
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
           <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="promodetails" @click="openModal('detail')"><img src="../christmas-gachapon/img/details.png" /></div>
     <div class="promorule" @click="openModal('rule')"><img src="../christmas-gachapon/img/rules.png" /></div>
@@ -53,6 +53,7 @@
       抽奖次数剩余:
       <span>{{ availableDraw }}次</span>
     </div>
+    <div class="tips">温馨提示：由于场馆人数火爆，投注记录会在10-20分钟内全部更新，请稍等片刻</div>
   </div>
   <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" class="christmas-modal" v-model="isModal">
     <div class="christmas-side" v-if="modalContent.type === 'rule'">
@@ -766,6 +767,22 @@ onMounted(() => {
       rgba(255, 217, 0, 0.6) 52.5%,
       rgba(255, 217, 0, 0) 93.5%
     );
+  }
+  .tips {
+    position: absolute;
+    top: 96.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 800px;
+    // font-weight: bold;
+    font-size: 14px;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    span {
+      color: #ffd900;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
   }
 }
 
