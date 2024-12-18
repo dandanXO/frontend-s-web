@@ -81,7 +81,7 @@ function handleInstallationProgress() {
     installationProgress.innerText = `${installationProgressNumber}%`;
     setTimeout(() => {
       requestAnimationFrame(handleInstallationProgress);
-    }, 100);
+    }, 20);
   }
   installationProgress;
 }
