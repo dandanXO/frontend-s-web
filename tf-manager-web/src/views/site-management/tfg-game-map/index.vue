@@ -80,7 +80,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:tfgmap:add']"
+          v-permission="['sys:site:tfgmap:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -89,7 +89,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:tfgmap:del']"
+          v-permission="['sys:site:tfgmap:del']"
           @click="removeGame()"
           :disabled="uiControl.removeBtn"
         >
@@ -99,7 +99,7 @@
           icon="el-icon-upload"
           size="mini"
           type="primary"
-          v-permission="['sys:tfgmap:add']"
+          v-permission="['sys:site:tfgmap:add']"
           @click="uiControl.importDialogVisible = true"
         >
           {{ t('fields.massImport') }}
@@ -107,7 +107,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:tfgmap:export']"
+          v-permission="['sys:site:tfgmap:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
@@ -335,21 +335,21 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:tfgmap:update']) || hasPermission(['sys:tfgmap:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:tfgmap:update']) || hasPermission(['sys:site:tfgmap:del']) )"
       >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:tfgmap:update']"
+            v-permission="['sys:site:tfgmap:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:tfgmap:del']"
+            v-permission="['sys:site:tfgmap:del']"
             @click="removeGame(scope.row)"
           />
         </template>

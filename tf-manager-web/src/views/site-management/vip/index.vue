@@ -25,7 +25,7 @@
         </el-button> -->
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:vip:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:site:vip:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
       </div>
     </div>
     <el-dialog
@@ -213,9 +213,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip:update']) || hasPermission(['sys:vip:del']))">
+      <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:vip:update']) || hasPermission(['sys:vip:del']))">
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:vip:update']" @click="showEdit(scope.row)" />
           <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:vip:del']" @click="removeVip(scope.row)" />
         </template>
       </el-table-column>

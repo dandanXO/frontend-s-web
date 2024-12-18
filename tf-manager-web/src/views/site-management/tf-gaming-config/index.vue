@@ -85,7 +85,7 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="hasPermission(['sys:tf-gaming-config:edit'])"
+        v-if="hasPermission(['sys:site:tf-gaming-config:edit'])"
       >
         <template #default="scope">
           <el-button

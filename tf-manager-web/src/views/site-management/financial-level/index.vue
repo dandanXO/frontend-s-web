@@ -29,7 +29,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:financial:add']"
+          v-permission="['sys:site:financial:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -38,7 +38,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:financial:del']"
+          v-permission="['sys:site:financial:del']"
           @click="removeFinancial()"
           :disabled="uiControl.removeBtn"
         >
@@ -212,10 +212,10 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:financial:update']) || hasPermission(['sys:financial:del']))">
+      <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:financial:update']) || hasPermission(['sys:site:financial:del']))">
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:financial:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:financial:del']" @click="removeFinancial(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:financial:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:financial:del']" @click="removeFinancial(scope.row)" />
         </template>
       </el-table-column>
     </el-table>

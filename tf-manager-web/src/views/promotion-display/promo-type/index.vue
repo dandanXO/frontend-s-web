@@ -218,7 +218,7 @@
               icon="el-icon-plus"
               size="mini"
               type="primary"
-              v-permission="['sys:siteimage:add']"
+              v-permission="['sys:site:image:add']"
               @click="showImageDialog()"
             >
               {{ t('fields.upload') }}
