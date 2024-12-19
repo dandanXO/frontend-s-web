@@ -72,6 +72,7 @@
 <script setup>
 import { reactive, ref, defineEmits } from "vue";
 import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 
