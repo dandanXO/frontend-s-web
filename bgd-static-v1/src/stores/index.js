@@ -56,7 +56,9 @@ export const userStore = defineStore("userStore", {
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
       ftd: "CLOSE",
-      isTkPixel: false
+      isTkPixel: false,
+      isGoogleLogin: false,
+      isFirstLandOnHomePage: true
     };
   },
   actions: {
