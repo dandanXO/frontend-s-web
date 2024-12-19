@@ -2,7 +2,7 @@
 import { FBQ_INITIALIZED, fbqLists, INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
-const INSTALL_COUNTDOWN = 10;
+const INSTALL_COUNTDOWN = 3;
 let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
 let deferredPrompt;
@@ -84,7 +84,7 @@ function handleInstallationProgress() {
     installationProgress.innerText = `${installationProgressNumber}%`;
     setTimeout(() => {
       requestAnimationFrame(handleInstallationProgress);
-    }, 20);
+    }, 1000 * INSTALL_COUNTDOWN / 100);
   }
   installationProgress;
 }
@@ -145,6 +145,7 @@ window.addEventListener("load", () => {
   }, 3000);
 
   detectDeviceAndBrowser();
+  countdown.innerHTML = `${INSTALL_COUNTDOWN}`;
 });
 
 /** browser detect **/
