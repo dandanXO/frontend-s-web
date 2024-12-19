@@ -688,3 +688,7 @@ export function getDrawRecord(promoCode, params) {
     `/session/draw-event/record?promoCode=${promoCode}&size=${params.size}&current=${params.current}`
   );
 }
+
+export function getLatestClaimedBonusList(promoCode) {
+  return server.EVENT.get(`/session/draw-event/getLatestClaimedBonusList?promoCode=${promoCode}`)
+}

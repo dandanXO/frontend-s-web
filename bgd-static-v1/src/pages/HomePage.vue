@@ -1443,11 +1443,15 @@
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
+
+  <q-dialog v-model="isShowSetFirstPw">
+    <SetFirstPasswordModal @closeDialog="isShowSetFirstPw = false" />
+  </q-dialog>
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1490,6 +1494,7 @@ import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import NameAuthModal from "src/components/modal/NameAuthModal.vue";
 import chroma from "chroma-js";
+import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -1500,6 +1505,8 @@ const onSwiper = (category, swiper) => {
   swiperRef.value[category] = swiper;
   console.log("here", swiper);
 };
+
+const isShowSetFirstPw = ref(false);
 
 const prevSlide = (category) => {
   if (category === "live") {
@@ -3779,6 +3786,7 @@ onActivated(() => {
   checkHash();
 
   checkSpinWheel();
+  checkGoogleLoginSetPwd();
 
   // if (store.hasToken()) {
   // }
@@ -3815,6 +3823,10 @@ onMounted(() => {
   }
 });
 
+onUnmounted(() => {
+  store.isFirstLandOnHomePage = false;
+});
+
 watch(
   () => route.hash,
   (newHash) => {
@@ -3834,6 +3846,15 @@ watch(
 //     }
 //   }
 // );
+const checkGoogleLoginSetPwd = () => {
+  if (store.isGoogleLogin && store.isFirstLandOnHomePage) {
+    api.get("/session/first-password").then((res) => {
+      if (res.code === 0 && !res.data) {
+        isShowSetFirstPw.value = true;
+      }
+    });
+  }
+};
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {

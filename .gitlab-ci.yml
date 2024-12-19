@@ -683,6 +683,13 @@ deploy-lh-landing-v9:
 
 #===============================================================================================
 
+deploy-lh-landing-v10:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v10
+
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:

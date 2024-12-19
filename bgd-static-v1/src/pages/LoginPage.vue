@@ -450,69 +450,72 @@ export default defineComponent({
 
     const onClickGoogleSignin = async () => {
       const provider = await new GoogleAuthProvider();
-      return signInWithPopup(auth, provider).then((result) => {
-        // This gives you a Google Access Token. You can use it to access Google APIs.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+      return signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access Google APIs.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
 
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+          // The signed-in user info.
+          const user = result.user;
+          // IdP data available using getAdditionalUserInfo(result)
+          // ...
 
-        (async () => {
+          (async () => {
+            thirdPartyLoginInfo.siteId = process.env.SITEID;
+            thirdPartyLoginInfo.thirdParty = "GOOGLE";
+            thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+            thirdPartyLoginInfo.accessToken = credential.accessToken;
+            thirdPartyLoginInfo.idToken = credential.idToken;
 
-          thirdPartyLoginInfo.siteId = process.env.SITEID
-          thirdPartyLoginInfo.thirdParty = 'GOOGLE'
-          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
-          thirdPartyLoginInfo.accessToken = credential.accessToken
-          thirdPartyLoginInfo.idToken = credential.idToken
+            api
+              .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+              .then((ret) => {
+                const res = ret;
 
-          api
-            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
-            .then((ret) => {
-              const res = ret;
-              console.log("res:", res);
+                if (res.code === 0) {
+                  store.isGoogleLogin = true;
+                  store.isFirstLandOnHomePage = true;
 
-              if (res.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "Google login successfully",
-                  icon: "check_circle_outline"
-                });
+                  $q.notify({
+                    color: "positive",
+                    position: "top",
+                    message: "Google login successfully",
+                    icon: "check_circle_outline"
+                  });
 
-                store.autoLogin(res.data);
-                sessionStorage.removeItem("REFERRAL_CODE");
-                if (store.hasToken()) {
-                  router.push("/home");
+                  store.autoLogin(res.data);
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  if (store.hasToken()) {
+                    router.push("/home");
+                  }
+                } else {
+                  $q.notify({
+                    color: "negative",
+                    position: "top",
+                    message: res.message,
+                    icon: "report_problem"
+                  });
                 }
-              } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message: res.message,
-                  icon: "report_problem"
-                });
-              }
-              $q.loading.hide();
-            })
-            .catch((error) => {
-              $q.loading.hide();
-            });
-          // getCode();
-        })();
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-    }
+                $q.loading.hide();
+              })
+              .catch((error) => {
+                $q.loading.hide();
+              });
+            // getCode();
+          })();
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        });
+    };
 
     const onSubmit = () => {
       $q.loading.show({
@@ -562,6 +565,7 @@ export default defineComponent({
                 loginFormRef.value.reset();
 
                 if (store.hasToken()) {
+                  store.isFirstLandOnHomePage = true;
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
                   ui.showLoggedIn();
                   // router.push(jumpUrl);
