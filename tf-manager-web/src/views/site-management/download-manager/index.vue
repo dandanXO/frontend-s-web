@@ -93,13 +93,13 @@
             <a v-if="scope.row.progress === 100" class="el-button el-button--primary" :href="downloadLinkPrefix + '/' + scope.row.downloadUrl">{{ t('fields.download') }}</a>
           </template>
         </el-table-column>
-        <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:download-manager:del'])" fixed="right" width="180">
+        <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:site:download-manager:del'])" fixed="right" width="180">
           <template #default="scope">
             <el-button
               icon="el-icon-remove"
               size="small"
               type="danger"
-              v-permission="['sys:download-manager:del']"
+              v-permission="['sys:site:download-manager:del']"
               @click="removeDownloadUrl(scope.row.id)"
             />
           </template>

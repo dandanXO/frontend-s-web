@@ -36,7 +36,7 @@
           size="mini"
           type="success"
           @click="loadCurrencyrate"
-          v-permission="['sys:currencyrate:list']"
+          v-permission="['sys:payment:currencyrate:list']"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -55,7 +55,7 @@
           size="mini"
           type="primary"
           @click="showDialog('CREATE')"
-          v-permission="['sys:currencyrate:add']"
+          v-permission="['sys:payment:currencyrate:add']"
         >
           {{ t('fields.add') }}
         </el-button>
@@ -164,7 +164,7 @@
             size="mini"
             type="success"
             @click="showEdit(scope.row)"
-            v-permission="['sys:currencyrate:update']"
+            v-permission="['sys:payment:currencyrate:update']"
           />
         </template>
       </el-table-column>

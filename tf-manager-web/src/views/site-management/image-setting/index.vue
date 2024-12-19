@@ -60,7 +60,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:siteimage:add']"
+          v-permission="['sys:site:image:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -69,7 +69,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:siteimage:del']"
+          v-permission="['sys:site:image:del']"
           @click="removeImage()"
           :disabled="uiControl.removeBtn"
         >
@@ -331,8 +331,8 @@
         type="title"
         :label="t('fields.action')"
         v-if="
-          hasPermission(['sys:siteimage:update']) ||
-            hasPermission(['sys:siteimage:del'])
+          hasPermission(['sys:site:image:update']) ||
+            hasPermission(['sys:site:image:del'])
         "
       >
         <template #default="scope">
@@ -340,14 +340,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:siteimage:update']"
+            v-permission="['sys:site:image:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:siteimage:del']"
+            v-permission="['sys:site:image:del']"
             @click="removeImage(scope.row)"
           />
         </template>

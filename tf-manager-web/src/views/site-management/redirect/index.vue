@@ -25,7 +25,7 @@
       </div>
       <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:redirect:create']"
+                   v-permission="['sys:site:redirect:create']"
         >
           {{ t('fields.add') }}
         </el-button>
@@ -60,7 +60,7 @@
         prop="status"
         :label="t('fields.status')"
         width="150"
-        v-if="hasPermission(['sys:redirect:update'])"
+        v-if="hasPermission(['sys:site:redirect:update'])"
       >
         <template #default="scope">
           <el-switch
@@ -78,8 +78,8 @@
         width="200"
       >
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:redirect:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:redirect:del']" @click="removeRedirect(scope.row.id)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:redirect:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:redirect:del']" @click="removeRedirect(scope.row.id)" />
         </template>
       </el-table-column>
     </el-table>

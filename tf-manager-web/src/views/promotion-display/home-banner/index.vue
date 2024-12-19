@@ -155,7 +155,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('DESKTOP_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -187,7 +187,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('DESKTOP_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -221,7 +221,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('MOBILE_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -253,7 +253,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('MOBILE_BANNER')"
                 >
                   {{ t('fields.upload') }}

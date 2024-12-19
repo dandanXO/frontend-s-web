@@ -84,7 +84,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:platform-competition:add']"
+          v-permission="['sys:site:platform-competition:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -93,7 +93,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:platform-competition:update']"
+          v-permission="['sys:site:platform-competition:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -103,7 +103,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:platform-competition:del']"
+          v-permission="['sys:site:platform-competition:del']"
           @click="removeCompetition()"
           :disabled="uiControl.removeBtn"
         >
@@ -236,7 +236,7 @@
               icon="el-icon-plus"
               size="mini"
               type="primary"
-              v-permission="['sys:siteimage:add']"
+              v-permission="['sys:site:image:add']"
               @click="showImageDialog('TEAM_ICON')"
             >
               {{ t('fields.upload') }}
@@ -271,7 +271,7 @@
               icon="el-icon-plus"
               size="mini"
               type="primary"
-              v-permission="['sys:siteimage:add']"
+              v-permission="['sys:site:image:add']"
               @click="showImageDialog('TEAM_ICON')"
             >
               {{ t('fields.upload') }}
@@ -303,7 +303,7 @@
               icon="el-icon-plus"
               size="mini"
               type="primary"
-              v-permission="['sys:siteimage:add']"
+              v-permission="['sys:site:image:add']"
               @click="showImageDialog('TEAM_BACKGROUND_IMAGE')"
             >
               {{ t('fields.upload') }}
@@ -335,7 +335,7 @@
               icon="el-icon-plus"
               size="mini"
               type="primary"
-              v-permission="['sys:siteimage:add']"
+              v-permission="['sys:site:image:add']"
               @click="showImageDialog('TEAM_BACKGROUND_IMAGE')"
             >
               {{ t('fields.upload') }}
@@ -652,8 +652,8 @@
         :label="t('fields.operate')"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-            (hasPermission(['sys:platform-competition:update']) ||
-              hasPermission(['sys:platform-competition:del']))
+            (hasPermission(['sys:site:platform-competition:update']) ||
+              hasPermission(['sys:site:platform-competition:del']))
         "
       >
         <template #default="scope">
@@ -661,14 +661,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:platform-competition:update']"
+            v-permission="['sys:site:platform-competition:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:platform-competition:del']"
+            v-permission="['sys:site:platform-competition:del']"
             @click="removeCompetition(scope.row)"
           />
         </template>

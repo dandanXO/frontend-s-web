@@ -76,7 +76,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:sitePlatformBlacklist:add']"
+          v-permission="['sys:site:site-platform-blacklist:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -85,7 +85,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:sitePlatformBlacklist:del']"
+          v-permission="['sys:site:site-platform-blacklist:del']"
           @click="removeSitePlatformBlacklist()"
           :disabled="uiControl.removeBtn"
         >
@@ -94,7 +94,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:sitePlatformBlacklist:export']"
+          v-permission="['sys:site:site-platform-blacklist:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
@@ -210,21 +210,21 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:sitePlatformBlacklist:update']) || hasPermission(['sys:sitePlatformBlacklist:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:site-platform-blacklist:update']) || hasPermission(['sys:site:site-platform-blacklist:del']) )"
       >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:sitePlatformBlacklist:update']"
+            v-permission="['sys:site:site-platform-blacklist:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:sitePlatformBlacklist:del']"
+            v-permission="['sys:site:site-platform-blacklist:del']"
             @click="removeSitePlatformBlacklist(scope.row)"
           />
         </template>
