@@ -1044,6 +1044,7 @@ export default defineComponent({
     display: flex;
     gap: 10px;
     font-size: 1rem;
+    padding: 3px 0;
 
     .item-num {
       color: #ffffff;
