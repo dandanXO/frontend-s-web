@@ -273,7 +273,10 @@
     "bonus": "Bonus",
     "congrats": "Congratulations",
     "claim": "Claim",
-    "new_player_success": "Claimed successfully"
+    "new_player_success": "Claimed successfully",
+    "available_draw": "Draw available",
+    "tnc": "Terms & Conditions",
+    "view_records": "View Records"
   },
   "mail": {
     "inbox": "Inbox",
@@ -875,6 +878,10 @@
     "35011": "35011 Member cannot receive this privilege.",
     "37001": "Time to receive Lucky Money has expired",
     "45000": "Minimum withdrawal amount not reached",
-    "45001": "Random bonus has been claimed today."
+    "45001": "Random bonus has been claimed today.",
+    "58100": "Insufficient lottery attempts",
+    "58101": "The daily lottery limit has been reached",
+    "58102": "Daily bonus has been fully redeemed, please try again tomorrow.",
+    "58103": "VIP0 cannot participate."
   }
 }

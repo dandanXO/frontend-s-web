@@ -2198,6 +2198,9 @@ export default {
     active: '已启用',
     inactive: '未启用',
     isSeamlessTransfer: '免转',
+    fromPlatform: '从平台',
+    fromGameCode: '从游戏码',
+    toGameCode: '至游戏码',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于 3 个月',

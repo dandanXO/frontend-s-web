@@ -2198,6 +2198,9 @@ export default {
     active: 'Active',
     inactive: 'Inactive',
     isSeamlessTransfer: 'Seamless Transfer',
+    fromPlatform: 'From Platform',
+    fromGameCode: 'From Game Code',
+    toGameCode: 'To Game Code',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

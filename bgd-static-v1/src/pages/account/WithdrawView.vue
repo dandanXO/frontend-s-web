@@ -517,16 +517,17 @@ const hasWithdrawCard = computed(() => {
 const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 
-const checkNewUser = () => {
-  if (store.phone == "") {
-    isNewUser.value = true;
-  } else {
-    getWithdrawalMethods();
-  }
-};
+// const checkNewUser = () => {
+//   if (store.phone == "") {
+//     isNewUser.value = true;
+//   } else {
+//     getWithdrawalMethods();
+//   }
+// };
 
 onMounted(() => {
-  checkNewUser();
+  // checkNewUser();
+  getWithdrawalMethods();
   store.getBalance();
   // loadPlatform()
 });
@@ -584,7 +585,6 @@ const submitWithdraw = async () => {
   if (cardRef.value.hasError || amountRef.value.hasError) {
     $q.loading.hide();
   } else {
-    console.log("");
     api
       .post("/session/withdraw/", qs.stringify(withdrawInfo))
       .then((response) => {

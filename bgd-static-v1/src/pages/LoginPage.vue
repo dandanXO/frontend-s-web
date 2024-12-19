@@ -11,31 +11,37 @@
   <!--  </q-page-sticky>-->
 
   <div class="login-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
+    <div class="back-left">
+      <router-link :to="'/home'">
+        <q-btn dense rounded icon="close" class="text-white" />
       </router-link>
-    </div> -->
-
-    <div class="login-form-logo-img">
-      <img src="../assets/images/auth/win-7-txt-logo.png" />
     </div>
 
-    <div class="auth-tab-wrapper">
+    <div class="login-form-logo-img">
+      <img src="../assets/images/auth/auth-form-logo-img.png" />
+    </div>
+
+    <!-- <div class="auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
-    </div>
+    </div> -->
+
+    <q-tabs v-model="loginNameType" dense no-caps class="login-type-toggle" narrow-indicator align="justify">
+      <q-tab name="email" :label="$t('form.email')" />
+      <q-tab name="phone" :label="$t('form.phone')" />
+    </q-tabs>
 
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="$t('form.phone')" fancy>
+            <InputField fancy>
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input
+                  v-if="loginNameType === 'phone'"
                   type="tel"
                   pattern="\d*"
                   maxlength="11"
@@ -51,12 +57,28 @@
                   autocomplete="username"
                   outlined
                   color="green"
-                  :placeholder="$t('form.phone_placeholder')"
+                  :placeholder="$t('form.phone')"
                 >
                   <template v-slot:prepend>
                     <FancyIcon name="smartphone" />
                     <!-- <q-icon name="smartphone" /> -->
                     <div class="prepend-number">+880</div>
+                  </template>
+                </q-input>
+                <q-input
+                  v-else
+                  type="text"
+                  hide-bottom-space
+                  ref="loginNameRef"
+                  v-model="loginForm.loginName"
+                  :rules="[(val) => (val && val.length > 0) || $t('form.email_rules_01'), isValidEmail]"
+                  label-color="brand"
+                  outlined
+                  color="green"
+                  :placeholder="$t('form.email')"
+                >
+                  <template v-slot:prepend>
+                    <FancyIcon name="email" />
                   </template>
                 </q-input>
               </template>
@@ -86,6 +108,9 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     />
+                    <div class="forgot-password">
+                      <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
+                    </div>
                   </template>
                 </q-input>
               </template>
@@ -143,13 +168,21 @@
         <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" :to="'/register'">
           {{ $t("btn.register") }}
         </q-btn>
+
+        <img src="../assets/images/index/login-directly.svg"/>
+
+
+        <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC" />&nbsp;
+          {{ $t("btn.signinWithGoogle") }}
+        </q-btn>
       </div>
     </div>
 
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-phone.png" />
-        <div>Service</div>
+        <div>WhatsApp</div>
       </div>
       <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
@@ -172,9 +205,9 @@
     <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
-    <div class="forgot-password">
+    <!-- <div class="forgot-password">
       <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -205,7 +238,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
@@ -219,6 +252,9 @@ import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, trackNewUserFtd } from "boot/utils";
 import { App } from "@capacitor/app";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -231,11 +267,13 @@ export default defineComponent({
     // RiArrowDropLeftLine
   },
   setup() {
+    const { t } = useI18n();
     const ui = useUI();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
     const verificationImg = ref("");
+    const loginNameType = ref("email");
     const loginForm = reactive({
       loginName: "",
       password: "",
@@ -288,6 +326,12 @@ export default defineComponent({
         showCaptchaDialog.value = true;
         getInnerCode();
       }
+    };
+
+    const isValidEmail = () => {
+      const emailPattern =
+        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+      return emailPattern.test(loginForm.loginName) || t("form.email_rules_02");
     };
 
     const isValidCnPhone = () => {
@@ -388,6 +432,88 @@ export default defineComponent({
       window.open(ui.charityUrl, "_blank");
     };
 
+    const thirdPartyLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
+
+    const getReferralCode = () => {
+      const refCode = sessionStorage.getItem("REFERRAL_CODE");
+      if (refCode) {
+        thirdPartyLoginInfo.referrer = refCode;
+      }
+    };
+
+    onActivated(() => {
+      getReferralCode()
+    })
+
+    const onClickGoogleSignin = async () => {
+      const provider = await new GoogleAuthProvider();
+      return signInWithPopup(auth, provider).then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+
+        (async () => {
+
+          thirdPartyLoginInfo.siteId = process.env.SITEID
+          thirdPartyLoginInfo.thirdParty = 'GOOGLE'
+          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.accessToken = credential.accessToken
+          thirdPartyLoginInfo.idToken = credential.idToken
+
+          api
+            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+            .then((ret) => {
+              const res = ret;
+              console.log("res:", res);
+
+              if (res.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Google login successfully",
+                  icon: "check_circle_outline"
+                });
+
+                store.autoLogin(res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  router.push("/home");
+                }
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: res.message,
+                  icon: "report_problem"
+                });
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          // getCode();
+        })();
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+    }
+
     const onSubmit = () => {
       $q.loading.show({
         message: "Logging in"
@@ -410,6 +536,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
+                loginType: loginNameType.value,
                 sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
@@ -695,7 +822,11 @@ export default defineComponent({
       openInsta,
       openTiktok,
       openYoutube,
-      openCharity
+      openCharity,
+      onClickGoogleSignin,
+      loginNameType,
+      isValidEmail,
+      thirdPartyLoginInfo
     };
   }
 });
@@ -705,8 +836,8 @@ export default defineComponent({
   color: #000a01;
   height: 34px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  background: url("../assets/images/common/btn-primary.svg") no-repeat center center;
-  background-size: 100%;
+  background: url("../assets/images/common/auth-page-btn-primary.png") no-repeat center center;
+  background-size: 100% 100%;
   font-weight: 600;
   border-radius: 6px;
   text-transform: uppercase;
@@ -738,8 +869,8 @@ export default defineComponent({
   border-radius: 6px;
   position: relative;
   text-transform: uppercase;
-  background: url("../assets/images/common/btn-secondary.svg") no-repeat center center;
-  background-size: 100%;
+  background: url("../assets/images/common/auth-page-btn-secondary.png") no-repeat center center;
+  background-size: 100% 100%;
   &__full {
     width: 100%;
     height: 40px;
@@ -755,6 +886,20 @@ export default defineComponent({
     bottom: -1px;
     left: -1px;
     right: -1px;
+  }
+}
+
+.login-type-toggle {
+  max-width: 70%;
+  display: flex;
+  margin: 0 auto;
+
+  :deep(.q-tab--active) {
+    color: #24EE89;
+
+    .q-tab__label {
+      color: #24EE89;
+    }
   }
 }
 
@@ -803,26 +948,23 @@ export default defineComponent({
   background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding-top: 20%;
 }
 
 .back-left {
   position: fixed;
   top: 16px;
-  left: 16px;
+  right: 16px;
 }
 
 .login-form-logo-img {
-  margin-top: -10px;
-  padding: 0 16px;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   img {
     display: block;
     width: 100%;
-    max-width: 200px;
-    margin-bottom: 10px;
+    max-width: 100%;
   }
 }
 
@@ -905,12 +1047,15 @@ export default defineComponent({
 }
 
 .forgot-password {
-  margin: 30px 0px 0px;
-  text-align: center;
+  text-align: right;
+  position: absolute;
+  top: -32px;
+  right: 0px;
 
   .form-text {
     color: #9f9f9f;
     text-decoration: underline;
+    font-size: 10px;
   }
 }
 
@@ -1002,5 +1147,9 @@ export default defineComponent({
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+}
+
+.form-fields {
+  gap: 2px;
 }
 </style>

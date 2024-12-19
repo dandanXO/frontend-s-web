@@ -11,6 +11,39 @@
       <div class="snowflake"></div>
       <div class="snowflake"></div>
     </div>
+    <!-- <div class="marquee">
+      <div class="floating-records">
+        <div class="record" v-for="(rec, index) in allRecords" :key="index"
+  :style="{ animationDuration: `${10 + index}s` }">
+          {{ rec }}
+        </div>
+      </div>
+    </div> -->
+    <div class="marquee-container">
+      <!-- Top Row -->
+      <div class="marquee-row top-row" :style="{ animationDuration: topAnimationDuration + 's' }" ref="topRow">
+        <div class="marquee-item" v-for="(item, index) in topRecords.slice(0, 20)" :key="'top-' + index">
+          <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
+          <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
+        </div>
+        <div class="marquee-item" v-for="(item, index) in topRecords.slice(20, topRecords.length)" :key="'top-' + index">
+          <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
+          <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
+        </div>
+      </div>
+      <!-- Bottom Row -->
+      <!-- <div class="marquee-row bottom-row" :style="{ animationDuration: bottomAnimationDuration + 's' }"
+      ref="bottomRow">
+        <div class="marquee-item" v-for="(item, index) in bottomRecords" :key="'bottom-' + index">
+          <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
+          <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
+        </div>
+        <div class="marquee-item" v-for="(item, index) in bottomRecords" :key="'bottom-' + index">
+          <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
+          <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
+        </div>
+      </div> -->
+    </div>
     <div class="promodetails" @click="openModal('detail')"><img src="../christmas-gachapon/img/details.png" /></div>
     <div class="promorule" @click="openModal('rule')"><img src="../christmas-gachapon/img/rules.png" /></div>
     <div class="promorecord" @click="openModal('record')"><img src="../christmas-gachapon/img/record.png" /></div>
@@ -20,6 +53,7 @@
       抽奖次数剩余:
       <span>{{ availableDraw }}次</span>
     </div>
+    <div class="tips">温馨提示：由于场馆人数火爆，投注记录会在10-20分钟内全部更新，请稍等片刻</div>
   </div>
   <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" class="christmas-modal" v-model="isModal">
     <div class="christmas-side" v-if="modalContent.type === 'rule'">
@@ -159,11 +193,12 @@
   </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, reactive, watch, defineProps, computed } from "vue";
+import { onMounted, ref, reactive, watch, defineProps, computed, onUpdated, nextTick } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import moment from "moment";
-import { getDrawPrizes, initDrawEvent, getDrawRecord } from "@/api/index/promo";
+import { getDrawPrizes, initDrawEvent, getLatestClaimedBonusList, getDrawRecord } from "@/api/index/promo";
+import { ResponseCode } from "@/api/response";
 const store = userStore();
 const isLoading = ref(false);
 const props = defineProps(["promoCode", "promoRules"]);
@@ -172,8 +207,7 @@ const rules = ref(props.promoRules);
 const notify = useNotify();
 const isModal = ref(false);
 const isRules = ref(false);
-const isRecord = ref(false);
-const isDetails = ref(false);
+const allRecords = ref([])
 const isPrizeModal = ref(false);
 const modalContent = {
   title: "",
@@ -270,10 +304,18 @@ const getGachapon = (t) => {
           }
         });
         isPrizeModal.value = true;
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         notify({
           type: "error",
-          message: `${res.message}`
+          message: res.message
         });
       }
     })
@@ -294,6 +336,7 @@ const getGachapon = (t) => {
 };
 const getBalance = () => {
   store.getBalance();
+  init();
   isPrizeModal.value = false;
 };
 
@@ -331,22 +374,183 @@ const translateTableData = (data) => {
     recordTime: moment(row.recordTime).format("YYYY年MM月DD日HH:mm:ss") // Format time
   }));
 };
-
+const middleIndex = ref(0);
 const init = () => {
   initDrawEvent(promoCode.value).then((res) => {
     if (res.code === 0) {
       availableDraw.value = res.data.availableDraw;
     }
   });
+  getLatestClaimedBonusList(promoCode.value).then((res) => {
+    if (res.code === 0) {
+      const response = res.data.filter((item) => {
+        // If item doesn't have a bonusName, return false to exclude it
+        if (!item.bonusName) {
+          return false; // Item will be removed from the array
+        }
+
+        // Handling specific bonus names with custom img and type
+        if (item.bonusName === "苹果16 256GB") {
+          item.img = "iphone";
+          item.type = "IPhone16 256GB";
+        }
+
+        if (item.bonusName === "苹果耳机") {
+          item.img = "ipods";
+          item.type = "苹果耳机一副";
+        }
+
+        // Define bonus types for other bonuses
+        const bonusMapping = {
+          '大红包': "big",
+          '中红包': "med",
+          '小红包': "small"
+        };
+
+        // If the bonusName exists in the bonusMapping, update the img and type accordingly
+        if (bonusMapping[item.bonusName]) {
+          item.img = bonusMapping[item.bonusName];
+          item.type = `${item.bonusName} ${item.bonusAmount}元彩金`;
+        }
+
+        // Return true to keep the item
+        return true;
+      });
+      allRecords.value = response;
+      middleIndex.value = Math.floor(allRecords.value.length / 2);
+    }
+  })
 };
+const topRecords = computed(() => allRecords.value.slice(0, middleIndex.value));
+const bottomRecords = computed(() => allRecords.value.slice(middleIndex.value));
+const topRow = ref(null);
+const bottomRow = ref(null);
+const topAnimationDuration = ref(0);
+const bottomAnimationDuration = ref(0);
+
+// Function to adjust the speed based on the content width
+const adjustMarqueeSpeed = () => {
+  // Top Row Speed Calculation
+  const topRowWidth = topRow.value.scrollWidth; // Get total width of top row
+  const containerWidth = topRow.value.offsetWidth; // Get container width
+  const numberOfTopRecords = allRecords.value.length;
+
+  // Adjust speed based on the number of records
+  // You can experiment with the factor value (e.g., 1000) to fine-tune the speed
+  const speedFactor = 1500; // Base speed factor
+  const speedAdjustment = numberOfTopRecords < 5 ? 5 : numberOfTopRecords; // Slower for fewer items, faster for more
+  const topSpeed = (topRowWidth / containerWidth) * speedFactor / speedAdjustment;
+
+  // Set the animation duration dynamically
+  // topAnimationDuration.value = topSpeed;
+  // const topSpeed = (topRowWidth / containerWidth) * 20; // Adjust factor as needed
+  topAnimationDuration.value = topSpeed;
+
+  // Bottom Row Speed Calculation
+  const bottomRowWidth = bottomRow.value.scrollWidth; // Get total width of bottom row
+  const bottomSpeed = (bottomRowWidth / containerWidth) * 22; // Adjust factor as needed
+  bottomAnimationDuration.value = bottomSpeed;
+};
+
+onUpdated(() => {
+  nextTick(adjustMarqueeSpeed);  // Recalculate speed if content or layout changes
+});
+
 onMounted(() => {
   if (!store.token) {
     return;
   }
   init();
+  nextTick(adjustMarqueeSpeed);
 });
 </script>
 <style scoped lang="scss">
+.marquee-container {
+  position: relative;
+  overflow: hidden;
+  height: 120px; /* Adjust container height */
+  position: absolute;
+  top: 300px;
+}
+
+.marquee-row {
+  display: flex;
+  gap: 20px; /* Space between items */
+  width: max-content;
+  white-space: nowrap;
+  animation: scroll 100s linear infinite;
+}
+
+.bottom-row {
+  margin-top: 10px;
+  animation-duration: 120s; 
+}
+
+.top-row {
+  transform: translateX(-5%); /* Offset to the left */
+  animation-delay: 1s;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 50px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Duplicate the content for seamless scrolling */
+.top-row, .bottom-row {
+  transform: translateX(0%);
+}
+.top-row {
+  .marquee-item {
+    
+    &:nth-child(even) {
+      background: url(img/even.png)no-repeat center center;
+      background-size: cover;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    &:nth-child(odd) {
+      background: url(img/odd.png)no-repeat center center;
+      background-size: cover;
+      color: #ff0000;
+      font-weight: 600;
+    }
+  }
+}
+.bottom-row {
+  .marquee-item {
+    
+  &:nth-child(even) {
+    background: url(img/odd.png)no-repeat center center;
+    background-size: cover;
+    color: #ff0000;
+    font-weight: 600;
+  }
+  &:nth-child(odd) {
+    background: url(img/even.png)no-repeat center center;
+    background-size: cover;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  }
+}
+.icon {
+  width: 35px;
+  height: 35px;
+}
+
+/* Keyframes for scrolling */
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 .snow-container {
   position: relative;
   width: 100%;
@@ -476,8 +680,12 @@ onMounted(() => {
     top: 63%;
     left: 30%;
     @media screen and (max-width: 1700px) {
-      top: 63%;
-      left: 24%;
+      top: 61%;
+      left: 29%;
+    }
+    @media screen and (max-width: 1500px) {
+      top: 61%;
+        left: 25%;
     }
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -491,10 +699,14 @@ onMounted(() => {
   .promorule {
     position: absolute;
     top: 69.7%;
-    left: 30.5%;
+    left: 30.5%;    
     @media screen and (max-width: 1700px) {
-      top: 70%;
-      left: 24%;
+      top: 68%;
+      left: 29%;
+    }
+    @media screen and (max-width: 1500px) {
+      top: 68%;
+        left: 25%;
     }
     transform: translate(-50%, -50%); /* Center the element */
     cursor: pointer;
@@ -510,8 +722,12 @@ onMounted(() => {
     top: 77.5%;
     left: 30.5%;
     @media screen and (max-width: 1700px) {
-      top: 77%;
-      left: 24%;
+      top: 75%;
+      left: 29%;
+    }
+    @media screen and (max-width: 1500px) {
+      top: 75%;
+        left: 25%;
     }
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -573,6 +789,22 @@ onMounted(() => {
       rgba(255, 217, 0, 0.6) 52.5%,
       rgba(255, 217, 0, 0) 93.5%
     );
+  }
+  .tips {
+    position: absolute;
+    top: 96.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 800px;
+    // font-weight: bold;
+    font-size: 14px;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    span {
+      color: #ffd900;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
   }
 }
 

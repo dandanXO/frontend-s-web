@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: isGrey }">
             <img
               src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png"
               alt=""
@@ -163,7 +163,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { footballHistroy, claimBonusItem2 } from "../../../api/index/promo";
+import { footballHistroy, claimBonusItem2, footballEligibility } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 
@@ -175,6 +175,7 @@ const store = userStore();
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
+const isGrey = ref(true);
 
 const handleClaimBonus = () => {
   claimBonusItem2(promoCode.value)
@@ -193,8 +194,10 @@ const handleClaimBonus = () => {
 const fetchData = async () => {
   try {
     const res = await footballHistroy();
+    const res2 = await footballEligibility();
     totalValidBet.value = res.data.lastDayBet;
     bonus.value = res.data.bonus;
+    isGrey.value = res2.data.bonus === 0;
   } catch (error) {
     console.log(error);
   }
@@ -254,6 +257,12 @@ onMounted(() => {
       &:active {
         filter: brightness(0.85);
         transform: translate(0px, 1px);
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
   }

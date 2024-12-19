@@ -17,6 +17,7 @@ import axios from "axios";
 import AOS from "aos";
 import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
+import { domainLists } from "./constant";
 
 export default defineComponent({
   name: "App",
@@ -106,6 +107,7 @@ export default defineComponent({
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
+          logLevel: "verbose",
           attributionCallback: function (e, attribution) {
             // e: internal event name, can be ignored
             // attribution: details about the changed attribution
@@ -115,34 +117,49 @@ export default defineComponent({
           }
         });
         setTimeout(() => {
-          const attribution = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          console.log(attribution);
-          store.aaid = attribution ? attribution.adid : "";
-        }, 500);
+          AdjustWeb.waitForWebUUID().then((webUuid) => {
+            console.log("Web UUid");
+            console.log(webUuid);
+            store.aaid = webUuid ? webUuid : "";
+          });
+        }, 100);
       }
     };
 
     const trackH5Affiliate = () => {
-      var affiliateCode = "C402D4";
-      if (isInPwa()) {
-        affiliateCode = "6805B0";
-      }
+      const hostname = window.location.hostname.replace("www.", "");
+      const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "C402D4";
 
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-        if (res.code === 0) {
-          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-          if (res.data.adjust_register_event) {
-            ui.adjust_register_event = res.data.adjust_register_event;
+      const track = () => {
+        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+            // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
           }
-          affAppToken.value = res.data.adjust_app_token;
-          initAdjustEventTrack();
-          // alert(affAppToken.value);
-        }
-      });
+        });
+      };
+
+      const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
+      if (isInPwa() && !isRefreshed) {
+        document.addEventListener(
+          "pwaEvent",
+          () => {
+            // affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+            // track();
+          },
+          { once: true }
+        );
+      } else {
+        track();
+      }
     };
 
     const onDeviceReady = () => {
@@ -173,7 +190,6 @@ export default defineComponent({
                         }
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
-                        // alert(affAppToken.value);
                       }
                     });
                   }

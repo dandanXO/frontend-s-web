@@ -27,7 +27,7 @@
     <div class="amtleft">
       抽奖次数剩余:
       <span>{{ availableDraw }}次</span>
-    </div>
+    </div><div class="tips">温馨提示：由于场馆人数火爆，投注记录会在10-20分钟内全部更新，请稍等片刻</div>
   </div>
   <q-dialog class="christmas-modal" v-model="isModal" align-center>
     <div class="title">
@@ -214,10 +214,10 @@ const openModal = (type) => {
         totalItems.value = res.data.total;
         tableData.value = res.data.records;
       } else {
-          notify({
-              type: "error",
-              message: `${res.message}`
-          });
+        notify({
+          type: "error",
+          message: `${res.message}`
+        });
       }
     });
     modalContent.title = "活动记录";
@@ -274,10 +274,10 @@ const getGachapon = (t) => {
         });
         isPrizeModal.value = true;
       } else {
-          notify({
-              type: "error",
-              message: `${res.message}`
-          });
+        notify({
+          type: "error",
+          message: `${res.message}`
+        });
       }
     })
     .catch((error) => {
@@ -286,7 +286,36 @@ const getGachapon = (t) => {
       //     type: "error",
       //     message: `Error fetching prizes: ${error.message}`
       // });
-      console.error("Error fetching prizes:", error);
+      // console.error("Error fetching prizes:", error);
+      // prizes.value = []
+      // if (t === "five") {
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // } else {
+      //   prizes.value.push({
+      //   img: "iphone",
+      //   type: "IPhone16 256GB"
+      // });
+      // }
+      // isPrizeModal.value = true
     })
     .finally(() => {
       // Always run (after success or error)
@@ -297,6 +326,7 @@ const getGachapon = (t) => {
 };
 const getBalance = () => {
   store.getBalance();
+  init();
   isPrizeModal.value = false;
 };
 const columns = [
@@ -525,16 +555,33 @@ onMounted(() => {
     text-align: center;
     text-shadow: 1px 1px 3px #000000b3;
     width: 100%;
-    span {
-      color: #ffd900;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
     background: linear-gradient(
       90deg,
       rgba(255, 217, 0, 0) 0%,
       rgba(255, 217, 0, 0.6) 52.5%,
       rgba(255, 217, 0, 0) 93.5%
     );
+
+    span {
+      color: #ffd900;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+  }
+  .tips {
+    // bottom: 227px;
+    top: 120vw;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    text-shadow: 1px 1px 3px #000000b3;
+    width: 100%;
+    span {
+      color: #ffd900;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
   }
 }
 
@@ -723,6 +770,8 @@ onMounted(() => {
     max-width: 160px;
     img {
       width: 100%;
+      max-width: 200px;
+      margin-top: 20px;
     }
   }
 }
@@ -737,14 +786,16 @@ onMounted(() => {
   align-self: center;
   display: flex;
   overflow: hidden;
+  max-width: 350px;
   * {
     scrollbar-width: thin; /* Simplified width */
     scrollbar-color: #e6374a transparent; /* Thumb color, no track background */
   }
   > div {
-    width: 80%;
     margin: 0 auto;
     overflow: auto;
+    max-width: 340px;
+    width: 80%;
   }
   .rules {
     height: 45vh;
@@ -839,6 +890,9 @@ onMounted(() => {
   padding: 140px 0 40px;
   background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
   background-size: contain;
+  justify-content: center;
+  align-items: center;
+  height: 540px;
   .prizes {
     .prize {
       width: unset;
@@ -858,6 +912,9 @@ onMounted(() => {
   padding: 140px 0 40px;
   background: url(../../../assets/promo/christmas-gachapon/modal-one.png) no-repeat center center;
   background-size: contain;
+  justify-content: center;
+  align-items: center;
+  height: 540px;
   .prizes {
     align-items: flex-start;
     .prize {

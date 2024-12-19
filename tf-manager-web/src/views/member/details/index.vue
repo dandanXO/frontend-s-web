@@ -1,53 +1,56 @@
 <template>
   <el-tabs v-model="activeName" :key="id">
-    <el-tab-pane :label="t('fields.member')" name="member-info">
+    <el-tab-pane :label="t('fields.member')" name="member-info" lazy>
       <MemberInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.login')" name="login-info">
+    <el-tab-pane :label="t('fields.login')" name="login-info" lazy>
       <LoginInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.bankCard')" name="member-bank">
+    <el-tab-pane :label="t('fields.bankCard')" name="member-bank" lazy>
       <MemberBankTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change">
+    <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change" lazy>
       <BetMoneyChange :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change">
+    <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change" lazy>
       <MemberMoneyChange :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record">
+    <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record" lazy>
       <MemberBetRecordTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.deposit')" name="deposit-info">
+    <el-tab-pane :label="t('fields.deposit')" name="deposit-info" lazy>
       <DepositInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info">
+    <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info" lazy>
       <WithdrawInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.transaction')" name="transaction-info">
+    <el-tab-pane :label="t('fields.transaction')" name="transaction-info" lazy>
       <TransactionInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.privilege')" name="member-privilege-record">
+    <el-tab-pane :label="t('fields.privilege')" name="member-privilege-record" lazy>
       <MemberPrivilegeRecord :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.rolloverRecord')"
       name="member-rollover-record"
+      lazy
     >
       <MemberRolloverRecord :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.memberRolloverEvent')"
       name="member-rollover-event"
+      lazy
     >
       <MemberRolloverEventTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.riskControl')" name="risk-info">
+    <el-tab-pane :label="t('fields.riskControl')" name="risk-info" lazy>
       <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.referredFriends')"
       name="member-refer-friend"
+      lazy
     >
       <MemberReferFriendTab
         :mbr-id="id"
@@ -58,15 +61,17 @@
     <el-tab-pane
       :label="t('fields.memberConsolidateReport')"
       name="daily-report"
+      lazy
     >
       <DailyReportTab :mbr-id="id" :site-id="siteId" />
     </el-tab-pane>
-    <el-tab-pane :label="t('menu.Member Platform')" name="member-platform">
+    <el-tab-pane :label="t('menu.Member Platform')" name="member-platform" lazy>
       <MemberPlatformTab :mbr-id="id" :site-id="siteId" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.memberBetRecordByPlatform')"
       name="member-bet-record-by-platform"
+      lazy
     >
       <MemberBetRecordByPlatformTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>

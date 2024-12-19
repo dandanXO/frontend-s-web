@@ -40,7 +40,7 @@
 
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('form.phone')" fancy>
+            <!-- <InputField :label="$t('form.phone')" fancy>
               <template #input>
                 <q-input
                   type="tel"
@@ -65,7 +65,7 @@
                   </template>
                 </q-input>
               </template>
-            </InputField>
+            </InputField> -->
 
             <!-- <InputField :label="'Email'">
               <template #input>
@@ -259,9 +259,9 @@
       </InputRowGrid>
     </q-form>
 
-    <div class="bottom-img">
+    <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -328,8 +328,8 @@ const newConfirmPwdVModel = ref();
 const isRequestSent = ref(false);
 
 const onSubmitForgotPwd = () => {
-  console.log(loginNameRef.value);
-  loginNameRef.value.validate();
+  // console.log(loginNameRef.value);
+  // loginNameRef.value.validate();
   emailRef.value.validate();
   ftCaptchaRef.value.validate();
 
@@ -337,7 +337,7 @@ const onSubmitForgotPwd = () => {
     message: "Sending verification code..."
   });
 
-  if (loginNameRef.value.hasError || emailRef.value.hasError || ftCaptchaRef.value.hasError) {
+  if (emailRef.value.hasError || ftCaptchaRef.value.hasError) {
     $q.loading.hide();
   } else {
     api

@@ -26,7 +26,7 @@ default:
 #    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
 
 .sonarqube-check:
-  stage: code-check
+  stage: code-check-and-build
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
     GIT_DEPTH: "0"
@@ -46,7 +46,7 @@ default:
     - production
 
 .build-projects:
-  stage: build
+  stage: code-check-and-build
   variables:
     NODE_OPTIONS: "--max-old-space-size=2048"
     NODE_VERSION: "16.17.0"
@@ -99,8 +99,7 @@ default:
         - $PROJECT/**/*
 
 stages:
-  - code-check
-  - build
+  - code-check-and-build
   - build-image
   - deploy
 
@@ -681,6 +680,13 @@ deploy-lh-landing-v9:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v9
+
+#===============================================================================================
+
+deploy-lh-landing-v10:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v10
 
 #===============================================================================================
 

@@ -1229,6 +1229,9 @@
     "copy_success": "Link successfully copied!",
     "enter_transfer_amount": "Enter Transfer Amount",
     "choose_later": "Choose Later",
+    "promo_available_draw": "Draw available",
+    "promo_tnc": "Terms & Conditions",
+    "promo_view_records": "View Records",
     "about": {
       "affiliate": "Affiliates",
       "aboutus": "About TFgaming",
@@ -1456,6 +1459,10 @@
     "35011": "35011 Member cannot receive this privilege.",
     "37001": "Time to receive Lucky Money has expired",
     "45000": "Not reaching the minimum withdrawal amount",
-    "45001": "Received random bonus today"
+    "45001": "Received random bonus today",
+    "58100": "Insufficient lottery attempts",
+    "58101": "The daily lottery limit has been reached",
+    "58102": "Daily bonus has been fully redeemed, please try again tomorrow.",
+    "58103": "VIP0 cannot participate."
   }
 }

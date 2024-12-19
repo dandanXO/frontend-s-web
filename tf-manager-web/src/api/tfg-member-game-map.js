@@ -13,8 +13,8 @@ export const updateGame = async (game) => {
   await https().request(`/tfgMemberGameMap/${game.siteId}?_method=PUT`, Method.POST, game, ContentType.form);
 };
 
-export const deleteGame = async (siteId, loginNames) => {
-  await https().request(`/tfgMemberGameMap?_method=DELETE`, Method.POST, { siteId, loginNames: loginNames.join(",") }, ContentType.form);
+export const deleteGame = async (siteId, game) => {
+  await https().request(`/tfgMemberGameMap?_method=DELETE`, Method.POST, { siteId, tfgMemberGameMap: JSON.stringify(game) }, ContentType.form);
 };
 
 export const createBatchGame = (games) => {
