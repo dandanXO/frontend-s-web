@@ -1,8 +1,8 @@
 // import { getAdjustUrl } from "./adjust.js";
-import { INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
+import { FBQ_INITIALIZED, fbqLists, INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
-const INSTALL_COUNTDOWN = 10;
+const INSTALL_COUNTDOWN = 3;
 let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
 let deferredPrompt;
@@ -30,6 +30,9 @@ installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
+      const isFbqInitialized = sessionStorage.getItem(FBQ_INITIALIZED);
+      if(isFbqInitialized) fbq('track', 'SubmitApplication');
+
       if (!deferredPrompt) {
         const userAgent = navigator.userAgent.toLowerCase();
         const isIos = /iphone|ipad|ipod/.test(userAgent);
@@ -81,7 +84,7 @@ function handleInstallationProgress() {
     installationProgress.innerText = `${installationProgressNumber}%`;
     setTimeout(() => {
       requestAnimationFrame(handleInstallationProgress);
-    }, 20);
+    }, 1000 * INSTALL_COUNTDOWN / 100);
   }
   installationProgress;
 }
@@ -115,6 +118,14 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 window.addEventListener("load", () => {
+  const hostname = window.location.hostname.replace("www.", "");
+  const fbqId = fbqLists[hostname]?.id;
+  if(fbqId) {
+    fbq('init', fbqId);
+    fbq('track', 'PageView');
+    sessionStorage.setItem(FBQ_INITIALIZED, '1');
+  }
+
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
     redirectToGame();
   }
@@ -134,6 +145,7 @@ window.addEventListener("load", () => {
   }, 3000);
 
   detectDeviceAndBrowser();
+  countdown.innerHTML = `${INSTALL_COUNTDOWN}`;
 });
 
 /** browser detect **/
