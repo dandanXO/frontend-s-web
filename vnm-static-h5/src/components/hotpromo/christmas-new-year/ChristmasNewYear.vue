@@ -602,19 +602,24 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
 }
 .prize-modal.once .q-dialog__inner {
   background: url(../christmas-new-year/img/modalbg.png) no-repeat center center;
   background-size: contain;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 190px;
   
-  height: 380px;
+  // height: 380px;
+  height: 530px;
     width: 95%;
     max-width: 220px;
     transform: scale(1.1);
 
-  
+  .items {
+    height: 210px;
+  }
   .claimbtn {
     text-align: center;
     display: flex;
@@ -624,7 +629,7 @@ onMounted(() => {
     cursor: pointer;
     width: 140px;
     position: absolute;
-    bottom: 50px;
+    bottom: 120px;
     img {
       width: 100%;
     }
