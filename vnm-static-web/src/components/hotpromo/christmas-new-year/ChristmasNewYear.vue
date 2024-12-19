@@ -492,7 +492,7 @@ body .el-dialog.prize-modal.once {
   box-shadow: none;
 }
 body .el-dialog.prize-modal.once .el-dialog__body {
-  transform: scale(1.10);
+  transform: scale(1.25);
   background: url(img/modalbg.png) no-repeat center center;
   background-size: contain;
     min-height: 350px;
