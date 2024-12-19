@@ -35,6 +35,7 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       profilePhoto: "",
       withdrawType: "",
+      frequency: "",
       regSuccessGuideVisible: false
     };
   },
@@ -146,6 +147,9 @@ export const userStore = defineStore("userStore", {
         this.token = null;
         sessionStorage.removeItem("vipData");
         sessionStorage.removeItem("TOKEN");
+        if (this.frequency === 'EVERYTIME') {
+          localStorage.removeItem("isImpt");
+        }
         // this.vip = 'VIP0'
         // this.currentDeposit = "0.0000"
         location.reload();
