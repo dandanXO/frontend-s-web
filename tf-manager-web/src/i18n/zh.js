@@ -2203,6 +2203,11 @@ export default {
     toGameCode: '至游戏码',
   },
   message: {
+    adsStatusOpen: '开',
+    adsStatusClose: '关',
+    frequencyEveryTime: '每次',
+    frequencyEveryDay: '每天',
+    frequencyEverySession: '每时域',
     startenddatemore3months: '开始与结束时间不能多于 3 个月',
     addRemarkSuccess: '新增备注成功',
     addSuccess: '新增成功',
