@@ -152,7 +152,7 @@
     .hot-match-items {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       gap: 15px;
       height: 100%;
   
@@ -305,6 +305,20 @@
   
   :deep(.el-carousel__indicators) {
     bottom: -8px;
+  }
+
+  :deep(.el-carousel__indicator--horizontal) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  :deep(.el-carousel__button) {
+    width: 12px;
+    height: 12px;
+  }
+
+  :deep(.el-carousel__arrow) {
+    top: 40%;
   }
   </style>
   
