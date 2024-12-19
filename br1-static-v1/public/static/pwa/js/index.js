@@ -1,5 +1,5 @@
 // import { getAdjustUrl } from "./adjust.js";
-import { INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
+import { FBQ_INITIALIZED, fbqLists, INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
 const INSTALL_COUNTDOWN = 10;
@@ -30,6 +30,9 @@ installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
+      const isFbqInitialized = sessionStorage.getItem(FBQ_INITIALIZED);
+      if(isFbqInitialized) fbq('track', 'SubmitApplication');
+
       if (!deferredPrompt) {
         const userAgent = navigator.userAgent.toLowerCase();
         const isIos = /iphone|ipad|ipod/.test(userAgent);
@@ -115,6 +118,14 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 window.addEventListener("load", () => {
+  const hostname = window.location.hostname.replace("www.", "");
+  const fbqId = fbqLists[hostname]?.id;
+  if(fbqId) {
+    fbq('init', fbqId);
+    fbq('track', 'PageView');
+    sessionStorage.setItem(FBQ_INITIALIZED, '1');
+  }
+
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
     redirectToGame();
   }
