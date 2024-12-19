@@ -1,15 +1,15 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div><img src="@/assets/promo/lh-livepoker-rebate/section-title-img.png" /></div>
+            <div class="claim-title-icon"></div>
             每周奖励
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
+              <div class="claim-coin-icon"></div>
             </div>
             <div class="reward-info-content">
               电子周负盈利：
@@ -18,7 +18,7 @@
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
+              <div class="claim-gift-icon"></div>
             </div>
             <div class="reward-info-content">
               可领彩金：
@@ -162,13 +162,12 @@ onMounted(() => {
       }
 
       img {
-        max-width: 216px;
+        max-width: 175px;
       }
     }
   }
 
   .livepoker-rebate-section-title {
-    color: #000000;
     font-size: 24px;
     line-height: 1;
     font-weight: 600;
@@ -233,7 +232,6 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   font-size: 20px;
-  color: #333;
   gap: 24px;
 
   .amount {
