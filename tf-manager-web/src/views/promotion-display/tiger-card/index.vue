@@ -87,13 +87,13 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['promo:tigerCard:export']"
+          v-permission="['sys:privi:tiger-card:export']"
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
       <div class="btn-group">
-        <el-button v-permission="['promo:tigerCard:updateSetting']" icon="el-icon-setting" size="mini" type="primary" @click="uiControl.settingVisible = true">
+        <el-button v-permission="['sys:privi:tiger-card:update-setting']" icon="el-icon-setting" size="mini" type="primary" @click="uiControl.settingVisible = true">
           修改配置
         </el-button>
       </div>

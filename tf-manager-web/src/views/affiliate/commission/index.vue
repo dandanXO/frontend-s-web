@@ -23,18 +23,18 @@
         <el-button size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
 
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:affiliate-commission:create']"
+                   v-permission="['sys:affiliate:commission:create']"
         >
           {{ t('fields.add') }}
         </el-button>
         <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit()" :disabled="uiControl.editBtn"
-                   v-permission="['sys:affiliate-commission:update']"
+                   v-permission="['sys:affiliate:commission:update']"
         >
           {{ t('fields.edit') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeAffiliateCommission()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:affiliate-commission:del']"
+                   v-permission="['sys:affiliate:commission:del']"
         >
           {{ t('fields.delete') }}
         </el-button>
@@ -116,11 +116,11 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate-commission:update'])|| hasPermission(['sys:affiliate-commission:del']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate:commission:update'])|| hasPermission(['sys:affiliate:commission:del']))"
       >
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate-commission:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:affiliate-commission:del']" @click="removeAffiliateCommission(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate:commission:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:affiliate:commission:del']" @click="removeAffiliateCommission(scope.row)" />
         </template>
       </el-table-column>
     </el-table>

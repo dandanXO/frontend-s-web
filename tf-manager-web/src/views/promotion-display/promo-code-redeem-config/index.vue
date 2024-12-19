@@ -60,7 +60,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:promo-code-redeem-config:add']"
+          v-permission="['sys:privi:promo-code-redeem-config:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -536,14 +536,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:promo-code-redeem-config:update']"
+            v-permission="['sys:privi:promo-code-redeem-config:update']"
             @click="showEdit(scope.row)"
           />
           <!-- <el-button
             icon="el-icon-view"
             size="mini"
             type="success"
-            v-permission="['sys:red:packet:rain:list']"
+            v-permission="['sys:privi:red:packet:rain:list']"
             @click="goToList(scope.row)"
           /> -->
         </template>

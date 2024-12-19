@@ -61,7 +61,7 @@
         <el-button
           size="mini"
           type="success"
-          v-permission="['sys:nba-match-preseason-record:update']"
+          v-permission="['sys:privi:nba-match-preseason-record:update']"
           @click="settleAllPending"
         >
           {{ t('fields.settleAllPending') }}
@@ -129,13 +129,13 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:nba-match-preseason-record:update'])" fixed="right" width="280">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:privi:nba-match-preseason-record:update'])" fixed="right" width="280">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'PENDING_SETTLE'"
             size="small"
             type="success"
-            v-permission="['sys:nba-match-preseason-record:update']"
+            v-permission="['sys:privi:nba-match-preseason-record:update']"
             @click="settle(scope.row.id)"
             style="cursor: pointer"
           >
@@ -145,7 +145,7 @@
             v-if="scope.row.status === 'PENDING_SETTLE'"
             size="small"
             type="danger"
-            v-permission="['sys:nba-match-preseason-record:update']"
+            v-permission="['sys:privi:nba-match-preseason-record:update']"
             @click="cancel(scope.row.id)"
             style="cursor: pointer"
           >

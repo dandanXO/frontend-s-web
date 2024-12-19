@@ -61,7 +61,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affannou:type:add']"
+          v-permission="['sys:affiliate:affannou-type:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -70,7 +70,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:affannou:type:update']"
+          v-permission="['sys:affiliate:affannou-type:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -80,7 +80,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:affannou:type:del']"
+          v-permission="['sys:affiliate:affannou-type:del']"
           @click="removeAffAnnouncementType()"
           :disabled="uiControl.removeBtn"
         >
@@ -213,8 +213,8 @@
         align="right"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-            (hasPermission(['sys:affannou:type:update']) ||
-              hasPermission(['sys:affannou:type:del']))
+            (hasPermission(['sys:affiliate:affannou-type:update']) ||
+              hasPermission(['sys:affiliate:affannou-type:del']))
         "
       >
         <template #default="scope">
@@ -222,14 +222,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:affannou:type:update']"
+            v-permission="['sys:affiliate:affannou-type:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:affannou:type:del']"
+            v-permission="['sys:affiliate:affannou-type:del']"
             @click="removeAffAnnouncementType(scope.row)"
           />
         </template>

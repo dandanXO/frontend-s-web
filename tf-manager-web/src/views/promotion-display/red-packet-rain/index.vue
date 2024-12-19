@@ -60,7 +60,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:red-packet-rain:add']"
+          v-permission="['sys:privi:red-packet-rain:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -578,14 +578,14 @@
       </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
       <el-table-column type="title" :label="t('fields.action')"
-                       v-if="hasPermission(['sys:banner:update'])|| hasPermission(['sys:banner:del'])"
+                       v-if="hasPermission(['sys:promo:banner:update'])|| hasPermission(['sys:promo:banner:del'])"
       >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:red-packet-rain:update']"
+            v-permission="['sys:privi:red-packet-rain:update']"
             @click="showEdit(scope.row)"
           />
         </template>

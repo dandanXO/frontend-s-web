@@ -54,7 +54,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-dummy:add']"
+          v-permission="['sys:affiliate:dummy:add']"
           @click="showDialog('CREATE')"
           v-if="!hasRole(['SUB_TENANT'])"
         >
@@ -133,21 +133,21 @@
         :label="t('fields.operate')"
         align="center"
         width="250"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate-dummy:update']) || hasPermission(['sys:affiliate-dummy:del']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate:dummy:update']) || hasPermission(['sys:affiliate:dummy:del']))"
       >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:affiliate-dummy:update']"
+            v-permission="['sys:affiliate:dummy:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:affiliate-dummy:del']"
+            v-permission="['sys:affiliate:dummy:del']"
             @click="removeRecord(scope.row)"
           />
         </template>

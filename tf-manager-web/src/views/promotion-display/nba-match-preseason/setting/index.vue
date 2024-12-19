@@ -63,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:nba-match-preseason:add']"
+          v-permission="['sys:privi:nba-match-preseason:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -251,7 +251,7 @@
         prop="toShow"
         :label="t('fields.show')"
         width="150"
-        v-if="hasPermission(['sys:nba-match-preseason:update'])"
+        v-if="hasPermission(['sys:privi:nba-match-preseason:update'])"
       >
         <template #default="scope">
           <el-switch
@@ -291,13 +291,13 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:nba-match-preseason:update']) || hasPermission(['sys:nba-match-preseason:del']))" fixed="right" width="280">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:nba-match-preseason:update']) || hasPermission(['sys:privi:nba-match-preseason:del']))" fixed="right" width="280">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'ACTIVE'"
             size="small"
             type="success"
-            v-permission="['sys:nba-match-preseason:update']"
+            v-permission="['sys:privi:nba-match-preseason:update']"
             @click="showEnd(scope.row)"
             style="cursor: pointer"
           >
@@ -308,7 +308,7 @@
             icon="el-icon-edit"
             size="small"
             type="warning"
-            v-permission="['sys:nba-match-preseason:update']"
+            v-permission="['sys:privi:nba-match-preseason:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
@@ -316,7 +316,7 @@
             icon="el-icon-remove"
             size="small"
             type="danger"
-            v-permission="['sys:nba-match-preseason:del']"
+            v-permission="['sys:privi:nba-match-preseason:del']"
             @click="removeMatch(scope.row.id)"
           />
         </template>

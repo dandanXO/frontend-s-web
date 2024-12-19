@@ -40,7 +40,7 @@
           <el-input v-model="form.depositPerSpin" style="width: 350px;" />
         </el-form-item>
         <div class="form-footer">
-          <el-button v-permission="['sys:game-steps:update']" type="primary" @click="updateParam">{{ t('fields.confirm') }}</el-button>
+          <el-button v-permission="['sys:privi:game-steps:update']" type="primary" @click="updateParam">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
     </el-card>
@@ -55,8 +55,8 @@
         >
           <template #label>
             <span>{{ t('fields.stage') + stg.stage }}</span>
-            <el-button v-permission="['sys:game-steps:update']" icon="el-icon-edit" size="mini" type="success" style="margin-left: 10px" @click="showEdit(stg)" />
-            <el-button v-permission="['sys:game-steps:del']" icon="el-icon-delete" size="mini" type="danger" style="margin-left: 10px" @click="removeSetting(stg.id)" />
+            <el-button v-permission="['sys:privi:game-steps:update']" icon="el-icon-edit" size="mini" type="success" style="margin-left: 10px" @click="showEdit(stg)" />
+            <el-button v-permission="['sys:privi:game-steps:del']" icon="el-icon-delete" size="mini" type="danger" style="margin-left: 10px" @click="removeSetting(stg.id)" />
           </template>
           <el-space style="align-items: stretch;">
             <el-card>

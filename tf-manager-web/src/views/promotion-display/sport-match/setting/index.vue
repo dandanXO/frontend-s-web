@@ -63,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:sport-match:add']"
+          v-permission="['sys:privi:sport-match:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -71,7 +71,7 @@
         <el-button
           size="small"
           type="success"
-          v-permission="['sys:sport-match:settle']"
+          v-permission="['sys:privi:sport-match:settle']"
           @click="settleMatch"
           style="cursor: pointer"
         >
@@ -80,7 +80,7 @@
         <el-button
           size="small"
           type="success"
-          v-permission="['sys:sport-match:settle']"
+          v-permission="['sys:privi:sport-match:settle']"
           @click="showDialog('SETTLE')"
           style="cursor: pointer"
         >
@@ -306,13 +306,13 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:sport-match:update']) || hasPermission(['sys:sport-match:del']))" fixed="right" width="280">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:sport-match:update']) || hasPermission(['sys:privi:sport-match:del']))" fixed="right" width="280">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'ACTIVE'"
             size="small"
             type="success"
-            v-permission="['sys:sport-match:update']"
+            v-permission="['sys:privi:sport-match:update']"
             @click="showEnd(scope.row)"
             style="cursor: pointer"
           >
@@ -323,7 +323,7 @@
             icon="el-icon-edit"
             size="small"
             type="warning"
-            v-permission="['sys:sport-match:update']"
+            v-permission="['sys:privi:sport-match:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
@@ -331,7 +331,7 @@
             icon="el-icon-remove"
             size="small"
             type="danger"
-            v-permission="['sys:sport-match:del']"
+            v-permission="['sys:privi:sport-match:del']"
             @click="removeMatch(scope.row.id)"
           />
         </template>
