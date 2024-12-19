@@ -2203,6 +2203,11 @@ export default {
     toGameCode: 'To Game Code',
   },
   message: {
+    adsStatusOpen: 'Open',
+    adsStatusClose: 'Close',
+    frequencyEveryTime: 'Every Time',
+    frequencyEveryDay: 'Every Day',
+    frequencyEverySession: 'Every Session',
     startenddatemore3months: 'Start and End date cannot more than 3 months',
     addRemarkSuccess: 'Add Remark Success',
     addSuccess: 'Add Success',
