@@ -151,6 +151,7 @@ import { useRouter } from 'vue-router';
 import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/index/promo";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import i18n from "src/i18n/index";
 import moment from "moment";
 const props = defineProps(["promoCode", "promoRules"]);
 const promoCode = ref(props.promoCode);
@@ -258,6 +259,10 @@ const getGachapon = (t) => {
           viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
         } else if (res.code === 58102) {
           viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 35013) {
+          viMessage = 'Bạn không đủ điều kiện để nhận thưởng'
+        } else {
+          viMessage = i18n.global.t('response.' + res.code) || res.message
         }
         const obj = {
           type: viMessage
