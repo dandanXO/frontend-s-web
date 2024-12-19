@@ -39,7 +39,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:redirect-notification:add']"
+          v-permission="['sys:site:redirect-notification:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -48,7 +48,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:redirect-notification:del']"
+          v-permission="['sys:site:redirect-notification:del']"
           @click="removeSetting()"
           :disabled="uiControl.removeBtn"
         >
@@ -300,7 +300,7 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:redirect-notification:update']) || hasPermission(['sys:redirect-notification:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:redirect-notification:update']) || hasPermission(['sys:site:redirect-notification:del']) )"
       >
         <template #default="scope">
           <div>
@@ -315,14 +315,14 @@
               icon="el-icon-edit"
               size="mini"
               type="success"
-              v-permission="['sys:redirect-notification:update']"
+              v-permission="['sys:site:redirect-notification:update']"
               @click="showEdit(scope.row)"
             />
             <el-button
               icon="el-icon-remove"
               size="mini"
               type="danger"
-              v-permission="['sys:redirect-notification:del']"
+              v-permission="['sys:site:redirect-notification:del']"
               @click="removeSetting(scope.row)"
             />
           </div>

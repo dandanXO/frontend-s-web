@@ -566,7 +566,7 @@
           icon="el-icon-edit"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-deposit-display:update']"
+          v-permission="['sys:payment:affiliate-deposit-display:update']"
           @click="showSettingEdit('ALL')"
         >
           {{ t('fields.update') }}
@@ -576,7 +576,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-deposit-display:update']"
+          v-permission="['sys:payment:affiliate-deposit-display:update']"
           @click="showSettingDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -610,7 +610,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-deposit-display:add']"
+          v-permission="['sys:payment:affiliate-deposit-display:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -648,7 +648,7 @@
         <el-table-column prop="paymentName3" :label="uiControl.payment3Title" />
         <el-table-column prop="paymentName4" :label="t('fields.riskPaymentChannel')" />
         <el-table-column prop="withdrawPlatformName" :label="uiControl.withdraw1Title" />
-        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
           <template #default="scope">
             <el-button
               icon="el-icon-edit"
@@ -695,7 +695,7 @@
                     <el-table-column :label="t('fields.eta')" prop="eta" />
                     <el-table-column :label="t('fields.minDeposit')" prop="min" />
                     <el-table-column :label="t('fields.maxDeposit')" prop="max" />
-                    <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+                    <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch
                           v-model="scope.row.paymentShow"
@@ -705,7 +705,7 @@
                         />
                       </template>
                     </el-table-column>
-                    <el-table-column prop="recommended" :label="t('fields.recommend')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+                    <el-table-column prop="recommended" :label="t('fields.recommend')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch
                           v-model="scope.row.recommended"
@@ -715,7 +715,7 @@
                         />
                       </template>
                     </el-table-column>
-                    <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+                    <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-button
                           icon="el-icon-edit"
@@ -727,7 +727,7 @@
                           icon="el-icon-delete"
                           size="mini"
                           type="danger"
-                          v-permission="['sys:affiliate-deposit-display:delete']"
+                          v-permission="['sys:payment:affiliate-deposit-display:delete']"
                           @click="deleteItem(scope.row)"
                         />
                       </template>
@@ -739,7 +739,7 @@
                 <div class="clearfix">
                   <el-table :data="props.row.affiliateWithdrawSettingVO" ref="table" size="small" style="width: 90%;">
                     <el-table-column :label="t('fields.channelName')" prop="channelName" />
-                    <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+                    <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch
                           v-model="scope.row.paymentShow"
@@ -749,7 +749,7 @@
                         />
                       </template>
                     </el-table-column>
-                    <el-table-column prop="recommend" :label="t('fields.recommend')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+                    <el-table-column prop="recommend" :label="t('fields.recommend')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch
                           v-model="scope.row.recommend"
@@ -759,7 +759,7 @@
                         />
                       </template>
                     </el-table-column>
-                    <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+                    <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-button
                           icon="el-icon-edit"
@@ -771,7 +771,7 @@
                           icon="el-icon-delete"
                           size="mini"
                           type="danger"
-                          v-permission="['sys:affiliate-deposit-display:delete']"
+                          v-permission="['sys:payment:affiliate-deposit-display:delete']"
                           @click="deleteItem(scope.row)"
                         />
                       </template>
@@ -798,7 +798,7 @@
             <span v-if="scope.row.affiliateCode !== null">{{ scope.row.affiliateCode }}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:payment:affiliate-deposit-display:update'])">
           <template #default="scope">
             <el-button
               icon="el-icon-plus"
@@ -810,7 +810,7 @@
               v-if="setting === null"
               size="mini"
               type="primary"
-              v-permission="['sys:affiliate-deposit-display:update']"
+              v-permission="['sys:payment:affiliate-deposit-display:update']"
               @click="batchSubmit(scope.row)"
             >
               {{ t('fields.update') }}

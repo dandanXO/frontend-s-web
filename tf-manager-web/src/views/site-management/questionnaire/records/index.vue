@@ -45,7 +45,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:member-questionnaire:export']"
+          v-permission="['sys:site:member-questionnaire:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}

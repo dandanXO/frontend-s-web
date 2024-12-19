@@ -49,7 +49,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:outbox:del']"
+          v-permission="['sys:site:outbox:del']"
           @click="removeSystemMessage()"
           :disabled="uiControl.removeBtn"
         >{{ t('fields.delete') }}</el-button>
@@ -67,7 +67,7 @@
           </el-col>
         </el-row>
         <div class="dialog-footer">
-          <el-button v-permission="['sys:outbox:reply']" v-if="form.memberName" @click="showDialog(form, 'REPLY')">{{ t('fields.reply') }}</el-button>
+          <el-button v-permission="['sys:site:outbox:reply']" v-if="form.memberName" @click="showDialog(form, 'REPLY')">{{ t('fields.reply') }}</el-button>
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
         </div>
       </el-form>

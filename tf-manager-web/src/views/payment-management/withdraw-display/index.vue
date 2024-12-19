@@ -128,7 +128,7 @@
             size="mini"
             type="primary"
             @click="showDialog('CREATE')"
-            v-permission="['sys:withdraw:show:add']"
+            v-permission="['sys:payment:withdraw-show:add']"
           />
           <div
             class="node"
@@ -170,14 +170,14 @@
                       size="mini"
                       type="success"
                       @click.stop="editHandle(item)"
-                      v-permission="['sys:withdraw:show:update']"
+                      v-permission="['sys:payment:withdraw-show:update']"
                     />
                     <i
                       class="el-icon-remove"
                       size="mini"
                       type="danger"
                       @click.stop="deleteItem(item, i, idx)"
-                      v-permission="['sys:withdraw:show:del']"
+                      v-permission="['sys:payment:withdraw-show:del']"
                     />
                   </el-col>
                 </el-row>
