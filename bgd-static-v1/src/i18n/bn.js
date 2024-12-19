@@ -200,7 +200,9 @@ export default {
     receive: "গ্রহণ করুন",
     startNow: "এখন শুরু করুন",
     continue: "চালিয়ে যান",
-    uploadAgain: "পুনরায় আপলোড করুন"
+    uploadAgain: "পুনরায় আপলোড করুন",
+    deposit: "জমা",
+    learnMore: "আরো জানুন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",

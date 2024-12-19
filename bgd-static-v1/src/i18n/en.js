@@ -201,7 +201,9 @@ export default {
     receive: "Receive",
     startNow: "Start Now",
     continue: "Continue",
-    uploadAgain: "Upload Again"
+    uploadAgain: "Upload Again",
+    deposit: "Deposit",
+    learnMore: "Learn More"
   },
   notify: {
     noRecord: "No Record",
