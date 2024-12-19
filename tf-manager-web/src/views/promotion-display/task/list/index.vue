@@ -152,6 +152,17 @@
             show-word-limit
           />
         </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input
+            type="textarea"
+            :rows="5"
+            v-model="form.remark"
+            style="width: 350px"
+            :placeholder="t('fields.remark')"
+            maxlength="500"
+            show-word-limit
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -170,15 +181,15 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="sequence" :label="t('fields.sequence')" width="80" />
-      <el-table-column prop="privilegeName" :label="t('fields.privilegeName')" width="150">
+      <el-table-column prop="privilegeName" :label="t('fields.privilegeName')" width="200">
         <template #default="scope">
           <span v-if="scope.row.privilegeName">{{ scope.row.privilegeName }}</span>
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column prop="name" :label="t('fields.taskName')" width="150" />
-      <el-table-column prop="code" :label="t('fields.taskCode')" width="150" />
-      <el-table-column prop="status" :label="t('fields.state')" width="180">
+      <el-table-column prop="name" :label="t('fields.taskName')" width="200" />
+      <el-table-column prop="code" :label="t('fields.taskCode')" width="200" />
+      <el-table-column prop="status" :label="t('fields.state')" width="200">
         <template #default="scope">
           <el-radio-group
             v-if="hasPermission(['sys:task:update:state'])"
@@ -202,6 +213,17 @@
           <div v-else-if="scope.row.rules">
             <span style="cursor: pointer; color: dark;" @click="openModal(t('fields.taskRules'), scope.row.rules)">{{ scope.row.rules.substr(0,50) + "..." }}</span>
           </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="remark" :label="t('fields.remark')" width="300">
+        <template #default="scope">
+          <div v-if="scope.row.remark && scope.row.remark.length < 50">
+            {{ scope.row.remark }}
+          </div>
+          <div v-else-if="scope.row.remark">
+            <span style="cursor: pointer; color: dark;" @click="openModal(t('fields.remark'), scope.row.remark)">{{ scope.row.remark.substr(0,50) + "..." }}</span>
+          </div>
+          <span v-else>-</span>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="200">
@@ -229,7 +251,7 @@
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:task:update'])|| hasPermission(['sys:task:del']))" min-width="150">
+      <el-table-column :label="t('fields.operate')" align="right" fixed="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:task:update'])|| hasPermission(['sys:task:del']))" min-width="150">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:task:update']" @click="showEdit(scope.row)" />
           <el-button
@@ -324,7 +346,8 @@ const form = reactive({
   name: null,
   code: null,
   sequence: 1,
-  rules: null
+  rules: null,
+  remark: null
 });
 
 const formRules = reactive({
