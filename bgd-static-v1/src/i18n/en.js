@@ -65,6 +65,7 @@ export default {
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must be 10 - 11 digits",
     phone_rules_03: "The phone number must start with '01'",
+    bindPhoneNumber: "Bind Phone Number",
     password: "Password",
     password_placeholder: "Please enter password",
     password_rules_01: "Please insert password",
@@ -201,7 +202,9 @@ export default {
     receive: "Receive",
     startNow: "Start Now",
     continue: "Continue",
-    uploadAgain: "Upload Again"
+    uploadAgain: "Upload Again",
+    deposit: "Deposit",
+    learnMore: "Learn More"
   },
   notify: {
     noRecord: "No Record",

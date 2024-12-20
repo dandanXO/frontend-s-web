@@ -849,10 +849,10 @@ const goToBank = () => {
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialPic = () => {
-  const code = selectedWithdrawalMethod.value.code;
   if (isUSDT.value) {
     window.open("https://drive.google.com/file/d/1R0gDPR7lFqZs1yS_Sp5DH5X086foh2i6/view?usp=drive_link", "_blank");
   } else {
+    const code = selectedWithdrawalMethod.value.code;
     switch (code) {
       case "BKASH":
         window.open("https://drive.google.com/file/d/1xgo20eOiIlgaRpOto3BiXQBarhJxz6-C/view?usp=drive_link", "_blank");
@@ -871,10 +871,10 @@ const openWithdrawTutorialPic = () => {
 };
 
 const openWithdrawTutorialVideo = () => {
-  const code = selectedWithdrawalMethod.value.code;
   if (isUSDT.value) {
     window.open("https://drive.google.com/file/d/1gYLoTmX9wfj_AdwJR2_BHxOBjPhOc7c6/view?usp=sharing", "_blank");
   } else {
+    const code = selectedWithdrawalMethod.value.code;
     switch (code) {
       case "BKASH":
         window.open("https://drive.google.com/file/d/15_EjJx3XPnsDFWUt-rmrjT_MC94HTAtR/view?usp=sharing", "_blank");

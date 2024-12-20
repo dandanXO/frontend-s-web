@@ -65,6 +65,7 @@ export default {
     phone_rules_01: "অনুগ্রহ করে ফোন নম্বর লিখুন",
     phone_rules_02: "ফোন নম্বরটি অবশ্যই 10 - 11 সংখ্যার হতে হবে",
     phone_rules_03: "ফোন নম্বর অবশ্যই '01' দিয়ে শুরু করতে হবে",
+    bindPhoneNumber: "ফোন নম্বর যুক্ত করুন",
     password: "পাসওয়ার্ড",
     password_placeholder: "অনুগ্রহ করে পাসওয়ার্ড লিখুন",
     password_rules_01: "অনুগ্রহ করে পাসওয়ার্ড লিখুন",
@@ -200,7 +201,9 @@ export default {
     receive: "গ্রহণ করুন",
     startNow: "এখন শুরু করুন",
     continue: "চালিয়ে যান",
-    uploadAgain: "পুনরায় আপলোড করুন"
+    uploadAgain: "পুনরায় আপলোড করুন",
+    deposit: "জমা",
+    learnMore: "আরো জানুন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
