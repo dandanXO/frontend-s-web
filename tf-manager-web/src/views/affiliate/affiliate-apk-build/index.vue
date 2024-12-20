@@ -150,12 +150,12 @@
               size="mini"
               type="success"
               v-if="
-                hasPermission(['sys:affapk:build']) &&
+                hasPermission(['sys:affiliate:affapk:build']) &&
                   scope.row.buildStatus !== 'IN_QUEUE' &&
                   scope.row.buildStatus !== 'IN_PROGRESS' &&
                   latestVersion !== null && latestVersion !== undefined
               "
-              v-permission="['sys:affapk:build']"
+              v-permission="['sys:affiliate:affapk:build']"
               @click="build(scope.row.id)"
             >
               {{ t('affiliateApk.buildApk') }}
@@ -164,10 +164,10 @@
               size="mini"
               type="danger"
               v-if="
-                hasPermission(['sys:affapk:build']) &&
+                hasPermission(['sys:affiliate:affapk:build']) &&
                   scope.row.buildStatus === 'IN_QUEUE'
               "
-              v-permission="['sys:affapk:build']"
+              v-permission="['sys:affiliate:affapk:build']"
               @click="cancel(scope.row.id)"
             >
               {{ t('fields.cancel') }}
@@ -175,8 +175,8 @@
             <el-button
               size="mini"
               type="success"
-              v-if="hasPermission(['sys:affapk:update'])"
-              v-permission="['sys:affapk:update']"
+              v-if="hasPermission(['sys:affiliate:affapk:update'])"
+              v-permission="['sys:affiliate:affapk:update']"
               @click="showDialog(scope.row)"
             >
               {{ t('fields.edit') }}

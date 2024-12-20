@@ -107,7 +107,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:amount:adjust:add']"
+          v-permission="['sys:member:amount-adjust:add']"
           @click="showDialog('CREATE_ADD')"
         >
           {{ t('fields.add') }}
@@ -116,7 +116,7 @@
           icon="el-icon-minus"
           size="mini"
           type="danger"
-          v-permission="['sys:amount:adjust:deduct']"
+          v-permission="['sys:member:amount-adjust:deduct']"
           @click="showDialog('CREATE_DEDUCT')"
         >
           {{ t('fields.deduct') }}
@@ -125,7 +125,7 @@
           icon="el-icon-upload"
           size="mini"
           type="success"
-          v-permission="['sys:amount:adjust:import']"
+          v-permission="['sys:member:amount-adjust:import']"
           @click="showImportDialog()"
         >
           {{ t('fields.massImport') }}
@@ -133,7 +133,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:amount:adjust:export']"
+          v-permission="['sys:member:amount-adjust:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
@@ -153,7 +153,7 @@
         icon="el-icon-download"
         size="mini"
         type="primary"
-        v-permission="['sys:amount:adjust:export']"
+        v-permission="['sys:member:amount-adjust:export']"
         @click="downloadTemplate"
       >
         {{ t('fields.downloadTemplate') }}

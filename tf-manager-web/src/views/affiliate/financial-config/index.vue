@@ -80,7 +80,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-financial-config:add']"
+          v-permission="['sys:affiliate:financial-config:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -202,7 +202,7 @@
           </template>
         </el-table-column>
         <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
-        <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
+        <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:affiliate:financial-config:update'])">
           <template #default="scope">
             <el-switch
               v-model="scope.row.status"
@@ -212,7 +212,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-financial-config:update'])">
+        <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate:financial-config:update'])">
           <template #default="scope">
             <el-button
               icon="el-icon-edit"

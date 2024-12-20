@@ -315,7 +315,7 @@
         <template #default="scope1">
           <el-button
             v-if="
-              scope1.row.status === 1 && hasPermission(['sys:feedback:update'])
+              scope1.row.status === 1 && hasPermission(['sys:deposit:feedback:update'])
             "
             size="mini"
             type="primary"

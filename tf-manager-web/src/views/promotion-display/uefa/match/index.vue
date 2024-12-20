@@ -1,12 +1,12 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.uefaMatchSetting')" name="uefa-match-setting" v-if="hasPermission(['sys:uefa-match:list'])">
+    <el-tab-pane :label="t('fields.uefaMatchSetting')" name="uefa-match-setting" v-if="hasPermission(['sys:privi:uefa-match:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.uefaMatchRecord')" name="uefa-match-record" v-if="hasPermission(['sys:uefa-match-record:list'])">
+    <el-tab-pane :label="t('fields.uefaMatchRecord')" name="uefa-match-record" v-if="hasPermission(['sys:privi:uefa-match-record:list'])">
       <RecordTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.uefaSettlement')" name="uefa-settlement" v-if="hasPermission(['sys:uefa-settlement:list'])">
+    <el-tab-pane :label="t('fields.uefaSettlement')" name="uefa-settlement" v-if="hasPermission(['sys:privi:uefa-settlement:list'])">
       <SettlementTab />
     </el-tab-pane>
   </el-tabs>

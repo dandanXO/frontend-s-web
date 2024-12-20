@@ -57,12 +57,12 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
       <div class="btn-group" v-if="!hasRole(['SUB_TENANT'])">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:promo-type:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:promo:promo-type:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
         <el-button
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:promo-type:update']"
+          v-permission="['sys:promo:promo-type:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >{{ t('fields.edit') }}</el-button>
@@ -70,7 +70,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:promo-type:del']"
+          v-permission="['sys:promo:promo-type:del']"
           @click="removePromoType()"
           :disabled="uiControl.removeBtn"
         >{{ t('fields.delete') }}</el-button>
@@ -274,7 +274,7 @@
       <el-table-column prop="status" :label="t('fields.state')" width="200">
         <template #default="scope">
           <el-switch
-            v-if="hasPermission(['sys:promo-type:update:state'])"
+            v-if="hasPermission(['sys:promo:promo-type:update:state'])"
             v-model="scope.row.status"
             active-color="#409EFF"
             inactive-color="#F56C6C"
@@ -299,14 +299,14 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column :label="t('fields.operate')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:promo-type:update'])|| hasPermission(['sys:promo-type:del']))">
+      <el-table-column :label="t('fields.operate')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:promo:promo-type:update'])|| hasPermission(['sys:promo:promo-type:del']))">
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:promo-type:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:promo:promo-type:update']" @click="showEdit(scope.row)" />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:promo-type:del']"
+            v-permission="['sys:promo:promo-type:del']"
             @click="removePromoType(scope.row)"
           />
         </template>

@@ -278,7 +278,7 @@ export default defineComponent({
       if (hasPermission(['sys:withdraw:pay'])) {
         await checkOutstandingPayment()
       }
-      if (hasPermission(['sys:feedback:list'])) {
+      if (hasPermission(['sys:deposit:feedback:list'])) {
         await checkOutstandingFinancialFeedback()
       }
       if (hasPermission(['sys:member:list'])) {
@@ -293,7 +293,7 @@ export default defineComponent({
           await checkDeposit()
         }, 180000)
       }
-      if (hasPermission(['sys:feedback:read'])) {
+      if (hasPermission(['sys:member:feedback:read'])) {
         await checkFeedback()
         setInterval(async () => {
           await checkFeedback()

@@ -31,7 +31,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:team-votes:create']"
+          v-permission="['sys:privi:team-votes:create']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -40,7 +40,7 @@
           icon="el-icon-edit"
           size="mini"
           type="warning"
-          v-permission="['sys:team-votes:update']"
+          v-permission="['sys:privi:team-votes:update']"
           :disabled="uiControl.awardBtn"
           @click="showDialog('UPDATE_AWARD')"
         >
@@ -176,18 +176,18 @@
           <el-input v-model="scope.row.totalVotesVirtual" />
         </template>
       </el-table-column>
-      <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:team-votes:update'])">
+      <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:privi:team-votes:update'])">
         <template #default="scope">
           <el-button
             size="mini"
             type="primary"
-            v-permission="['sys:team-votes:update']"
+            v-permission="['sys:privi:team-votes:update']"
             @click="editVoteRecord(scope.row)"
           >{{ t('fields.update') }}</el-button>
           <el-button
             size="mini"
             type="danger"
-            v-permission="['sys:team-votes:del']"
+            v-permission="['sys:privi:team-votes:del']"
             @click="deleteVoteRecord(scope.row)"
           >{{ t('fields.delete') }}</el-button>
         </template>

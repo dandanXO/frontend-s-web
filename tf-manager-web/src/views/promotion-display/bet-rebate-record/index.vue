@@ -77,14 +77,14 @@
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:bet-rebate-record:rebate']" @click="distributeRebate()">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:promo:bet-rebate-record:rebate']" @click="distributeRebate()">
             {{ t('fields.distributeRebate') }}
           </el-button>
           <el-button
             icon="el-icon-download"
             size="mini"
             type="warning"
-            v-permission="['sys:bet-rebate-record:export']"
+            v-permission="['sys:promo:bet-rebate-record:export']"
             @click="exportExcel"
           >{{ t('fields.exportToExcel') }}
           </el-button>
@@ -183,13 +183,13 @@
           align="center"
           fixed="right"
           width="220"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:bet-rebate-record:update']) || hasPermission(['sys:bet-rebate-record:detail']))"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:promo:bet-rebate-record:update']) || hasPermission(['sys:promo:bet-rebate-record:detail']))"
         >
           <template #default="scope">
             <el-button
               size="mini"
               type="warning"
-              v-permission="['sys:bet-rebate-record:detail']"
+              v-permission="['sys:promo:bet-rebate-record:detail']"
               @click="showDetails(scope.row)"
             >
               {{ t('fields.view') }}
@@ -198,7 +198,7 @@
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:bet-rebate-record:update']"
+              v-permission="['sys:promo:bet-rebate-record:update']"
               @click="showEdit(scope.row)"
             >
               {{ t('fields.adjustAmount') }}

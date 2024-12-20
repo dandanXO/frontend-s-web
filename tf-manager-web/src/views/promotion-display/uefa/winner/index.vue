@@ -35,7 +35,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:uefa-winner:add']"
+          v-permission="['sys:privi:uefa-winner:add']"
           @click="showDialog('CREATE')"
           v-if="!hasRole(['SUB_TENANT'])"
         >
@@ -46,7 +46,7 @@
           size="mini"
           type="success"
           @click="showEdit()"
-          v-permission="['sys:uefa-winner:update']"
+          v-permission="['sys:privi:uefa-winner:update']"
           :disabled="uiControl.editBtn"
           v-if="!hasRole(['SUB_TENANT'])"
         >
@@ -56,7 +56,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:uefa-winner:del']"
+          v-permission="['sys:privi:uefa-winner:del']"
           @click="removeWinner()"
           :disabled="uiControl.removeBtn"
           v-if="!hasRole(['SUB_TENANT'])"
@@ -132,21 +132,21 @@
         :label="t('fields.operate')"
         align="center"
         width="250"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:uefa-winner:update']) || hasPermission(['sys:uefa-winner:del']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:uefa-winner:update']) || hasPermission(['sys:privi:uefa-winner:del']))"
       >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:uefa-winner:update']"
+            v-permission="['sys:privi:uefa-winner:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:uefa-winner:del']"
+            v-permission="['sys:privi:uefa-winner:del']"
             @click="removeWinner(scope.row)"
           />
         </template>

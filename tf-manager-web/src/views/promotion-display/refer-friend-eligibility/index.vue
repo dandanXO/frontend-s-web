@@ -53,7 +53,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:refer-friend-eligibility:export']"
+          v-permission="['sys:privi:refer-friend-eligibility:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}

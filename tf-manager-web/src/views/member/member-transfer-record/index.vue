@@ -244,7 +244,7 @@
       <el-table-column
         :label="t('fields.operate')"
         v-if="
-          !hasRole(['SUB_TENANT']) && hasPermission(['sys:transfer:update'])
+          !hasRole(['SUB_TENANT']) && hasPermission(['sys:member:transfer:update'])
         "
       >
         <template #default="scope">
