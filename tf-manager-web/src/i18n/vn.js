@@ -1407,6 +1407,7 @@ export default {
     settleEdit: 'Chỉnh Sửa',
     show: 'Hiển Thị',
     showAll: 'Hiển Thị Tất Cả',
+    showFastAccess: 'Hiển thị truy cập nhanh',
     sid: 'SID',
     site: 'Trang Web',
     siteDetail: 'Chi tiết trang web',
