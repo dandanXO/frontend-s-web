@@ -259,6 +259,8 @@ const getGachapon = (t) => {
           viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
         } else if (res.code === 58102) {
           viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 58103) {
+          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
         } else if (res.code === 35013) {
           viMessage = 'Bạn không đủ điều kiện để nhận thưởng'
         } else if (res.code === 604) {
