@@ -1440,10 +1440,6 @@
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
 
-  <q-dialog v-model="isNameAuthModal">
-    <NameAuthModal @closeDialog="isNameAuthModal = false" />
-  </q-dialog>
-
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
@@ -1497,7 +1493,6 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swipe
 // import {Grid} from 'swiper/modules'
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
-import NameAuthModal from "src/components/modal/NameAuthModal.vue";
 import chroma from "chroma-js";
 import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 
@@ -1548,7 +1543,6 @@ const isCongratsModal = ref(false);
 const isCongratsModalV2 = ref(false);
 const isShowPrizeModal = ref(false);
 const isMoneyRainModal = ref(false);
-const isNameAuthModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const h5Url = store.h5Url;
 
