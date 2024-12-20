@@ -60,7 +60,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:red-packet-rain:add']"
+          v-permission="['sys:privi:red-packet-rain:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -791,14 +791,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:red-packet-rain:update']"
+            v-permission="['sys:privi:red-packet-rain:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-view"
             size="mini"
             type="success"
-            v-permission="['sys:red:packet:rain:list']"
+            v-permission="['sys:privi:red:packet:rain:list']"
             @click="goToList(scope.row)"
           />
         </template>

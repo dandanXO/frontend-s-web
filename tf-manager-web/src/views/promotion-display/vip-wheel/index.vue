@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.vipWheelSettings')" name="vip-wheel-setting" v-if="hasPermission(['sys:vip-wheel:list'])">
+    <el-tab-pane :label="t('fields.vipWheelSettings')" name="vip-wheel-setting" v-if="hasPermission(['sys:privi:vip-wheel:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.vipWheelRecords')" name="vip-wheel-records" v-if="hasPermission(['sys:vip-wheel-records:list'])">
+    <el-tab-pane :label="t('fields.vipWheelRecords')" name="vip-wheel-records" v-if="hasPermission(['sys:privi:vip-wheel-records:list'])">
       <RecordsTab />
     </el-tab-pane>
   </el-tabs>

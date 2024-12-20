@@ -43,7 +43,7 @@
           icon="el-icon-upload"
           size="mini"
           type="success"
-          v-permission="['sys:bet-record-import:import']"
+          v-permission="['sys:member:bet-record-import:import']"
           @click="uiControl.importDialogVisible = true"
         >
           {{ t('fields.massImport') }}

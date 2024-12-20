@@ -205,7 +205,7 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        v-if="hasPermission(['sys:member-refer-friend-reward:reject'])"
+        v-if="hasPermission(['sys:privi:member-refer-friend-reward:reject'])"
       >
         <template #default="scope">
           <el-button
@@ -213,7 +213,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:member-refer-friend-reward:reject']"
+            v-permission="['sys:privi:member-refer-friend-reward:reject']"
             @click="reject(scope.row)"
           />
         </template>

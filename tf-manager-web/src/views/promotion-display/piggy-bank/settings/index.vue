@@ -19,7 +19,7 @@
   <el-form ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="200px" style="margin-top: 10px;">
     <el-row>
       <el-form-item :label="t('fields.minWithdrawAmount')" prop="minWithdrawAmount">
-        <el-input v-if="hasPermission(['sys:piggy-bank:update'])" v-model="form.minWithdrawAmount" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:piggy-bank:update'])" v-model="form.minWithdrawAmount" style="width: 350px;" />
         <span v-else>{{ form.minWithdrawAmount }}</span>
       </el-form-item>
     </el-row>
@@ -27,18 +27,18 @@
       <el-form-item :label="t('fields.rules')" prop="rules">
         <div v-for="(item, index) in rulesParam" :key="index">
           <span class="param-label">{{ t('fields.minDeposit') }}:</span>
-          <el-input v-if="hasPermission(['sys:piggy-bank:update'])" class="param-input" v-model="item.minDeposit" />
+          <el-input v-if="hasPermission(['sys:privi:piggy-bank:update'])" class="param-input" v-model="item.minDeposit" />
           <span v-else class="param-label">{{ item.minDeposit }}</span>
 
           <span class="param-label">{{ t('fields.bonus') }}:</span>
-          <el-input v-if="hasPermission(['sys:piggy-bank:update'])" class="param-input" v-model="item.bonus" />
+          <el-input v-if="hasPermission(['sys:privi:piggy-bank:update'])" class="param-input" v-model="item.bonus" />
           <span v-else class="param-label">{{ item.bonus }}</span>
 
-          <el-button v-if="index === rulesParam.length - 1 && hasPermission(['sys:piggy-bank:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+          <el-button v-if="index === rulesParam.length - 1 && hasPermission(['sys:privi:piggy-bank:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                      @click="addParam('BONUS')" plain
           >{{ t('fields.add') }}
           </el-button>
-          <el-button v-if="rulesParam.length > 1 && hasPermission(['sys:piggy-bank:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+          <el-button v-if="rulesParam.length > 1 && hasPermission(['sys:privi:piggy-bank:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                      @click="delParam(index, 'BONUS')" plain
           >{{ t('fields.delete') }}
           </el-button>
@@ -46,7 +46,7 @@
       </el-form-item>
     </el-row>
     <div class="dialog-footer">
-      <el-button v-permission="['sys:piggy-bank:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
+      <el-button v-permission="['sys:privi:piggy-bank:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
     </div>
   </el-form>
 </template>

@@ -60,7 +60,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:site-interest-plan:add']"
+          v-permission="['sys:privi:site-interest-plan:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -69,7 +69,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:site-interest-plan:update']"
+          v-permission="['sys:privi:site-interest-plan:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -79,7 +79,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:site-interest-plan:del']"
+          v-permission="['sys:privi:site-interest-plan:del']"
           @click="removeLimit()"
           :disabled="uiControl.removeBtn"
         >
@@ -197,7 +197,7 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site-interest-plan:update']) || hasPermission(['sys:site-interest-plan:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:site-interest-plan:update']) || hasPermission(['sys:privi:site-interest-plan:del']) )"
       >
         <template #default="scope">
 
@@ -205,14 +205,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:site-interest-plan:update']"
+            v-permission="['sys:privi:site-interest-plan:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:site-interest-plan:del']"
+            v-permission="['sys:privi:site-interest-plan:del']"
             @click="removeLimit(scope.row)"
           />
         </template>

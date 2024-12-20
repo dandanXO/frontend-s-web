@@ -75,7 +75,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:member:multi:wheel:add']"
+          v-permission="['sys:privi:multi-wheel:add']"
           @click="showDialog()"
         >
           {{ t('fields.add') }}
@@ -85,7 +85,7 @@
           icon="el-icon-refresh"
           size="mini"
           type="primary"
-          v-permission="['sys:member:multi:wheel:additional:random']"
+          v-permission="['sys:privi:multi-wheel-additional:random']"
           @click="random"
         >
           {{ t('fields.randomMember') }}
@@ -109,7 +109,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:member:multi:wheel:delete']"
+            v-permission="['sys:privi:multi-wheel:delete']"
             v-if="scope.row.memberId === 0"
             @click="removeMemberMultiWheel(scope.row)"
           />

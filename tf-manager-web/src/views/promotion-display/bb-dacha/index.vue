@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.bbdachaSetting')" name="bb-dacha-setting" v-if="hasPermission(['sys:bb-dacha:list'])">
+    <el-tab-pane :label="t('fields.bbdachaSetting')" name="bb-dacha-setting" v-if="hasPermission(['sys:privi:bb-dacha:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.bbdachaAnswers')" name="bb-dacha-answers" v-if="hasPermission(['sys:bb-dacha-answer:list'])">
+    <el-tab-pane :label="t('fields.bbdachaAnswers')" name="bb-dacha-answers" v-if="hasPermission(['sys:privi:bb-dacha-answer:list'])">
       <AnswersTab />
     </el-tab-pane>
   </el-tabs>

@@ -46,7 +46,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:game-steps:export']"
+          v-permission="['sys:privi:game-steps:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}

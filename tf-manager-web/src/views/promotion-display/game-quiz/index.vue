@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.gameQuiz')" name="quiz-question" v-if="hasPermission(['sys:game-quiz:list'])">
+    <el-tab-pane :label="t('fields.gameQuiz')" name="quiz-question" v-if="hasPermission(['sys:privi:game-quiz:list'])">
       <QuestionTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.gameQuizAnswer')" name="quiz-answer" v-if="hasPermission(['sys:game-quiz-answer:list'])">
+    <el-tab-pane :label="t('fields.gameQuizAnswer')" name="quiz-answer" v-if="hasPermission(['sys:privi:game-quiz-answer:list'])">
       <AnswerTab />
     </el-tab-pane>
   </el-tabs>

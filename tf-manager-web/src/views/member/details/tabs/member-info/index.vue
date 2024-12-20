@@ -470,7 +470,7 @@
             type="info"
             size="mini"
             style="float: right;"
-            v-permission="['sys:member:update:memberType']"
+            v-permission="['sys:member:update:member-type']"
             @click="showDialog('UPDATE_USERTYPE')"
           >
             {{ t('fields.update') }}
@@ -533,7 +533,7 @@
             type="info"
             size="mini"
             style="float: right;"
-            v-permission="['sys:member:update:withdrawType']"
+            v-permission="['sys:member:update:withdraw-type']"
             @click="showDialog('UPDATE_WITHDRAWTYPE')"
           >
             {{ t('fields.update') }}

@@ -64,7 +64,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:game-quiz:add']"
+          v-permission="['sys:privi:game-quiz:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -608,13 +608,13 @@
         :label="t('fields.operate')"
         align="center"
         width="400"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-quiz:update']) || hasPermission(['sys:game-quiz:list']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:game-quiz:update']) || hasPermission(['sys:privi:game-quiz:list']))"
       >
         <template #default="scope">
           <el-button
             size="small"
             type="primary"
-            v-permission="['sys:game-quiz:update']"
+            v-permission="['sys:privi:game-quiz:update']"
             @click="showEdit(scope.row)"
             style="cursor: pointer"
           >
@@ -623,7 +623,7 @@
           <el-button
             size="small"
             type="warning"
-            v-permission="['sys:game-quiz:list']"
+            v-permission="['sys:privi:game-quiz:list']"
             @click="showDetails(scope.row)"
             style="cursor: pointer"
           >
@@ -633,7 +633,7 @@
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="success"
-            v-permission="['sys:game-quiz:update']"
+            v-permission="['sys:privi:game-quiz:update']"
             @click="showEnd(scope.row)"
             style="cursor: pointer; margin-left: 5px;"
           >
@@ -643,7 +643,7 @@
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="danger"
-            v-permission="['sys:game-quiz:update']"
+            v-permission="['sys:privi:game-quiz:update']"
             @click="cancelQuiz(scope.row.id)"
             style="cursor: pointer; margin-left: 5px"
           >
@@ -653,7 +653,7 @@
             v-if="scope.row.status === 'CANCEL' || scope.row.status === 'ENDED'"
             size="small"
             type="success"
-            v-permission="['sys:game-quiz:update']"
+            v-permission="['sys:privi:game-quiz:update']"
             @click="showEnd(scope.row)"
             style="cursor: pointer; margin-left: 5px;"
           >

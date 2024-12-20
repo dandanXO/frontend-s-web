@@ -3,14 +3,14 @@
     <el-tab-pane
       :label="t('fields.referFriendAnalysis')"
       name="stats-analysis"
-      v-if="hasPermission(['sys:member-refer-friend-stats:list'])"
+      v-if="hasPermission(['sys:privi:member-refer-friend-stats:list'])"
     >
       <StatsAnalysisTab @switch-to-relation-tab="switchPane" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.referRelationQuery')"
       name="refer-relation"
-      v-if="hasPermission(['sys:member-refer-friend-stats:list'])"
+      v-if="hasPermission(['sys:privi:member-refer-friend-stats:list'])"
     >
       <ReferRelationTab :referrer-name="referName" />
     </el-tab-pane>
