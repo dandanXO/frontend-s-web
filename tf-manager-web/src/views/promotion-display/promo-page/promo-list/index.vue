@@ -139,6 +139,23 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="showFastAccess" :label="t('fields.showFastAccess')" min-width="200">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.showFastAccess"
+            size="mini"
+            v-if="hasPermission(['sys:promp:page:update:state'])"
+            @change="changeFastAccessState(scope.row.id, scope.row.showFastAccess)"
+          >
+            <el-radio-button label="1">OPEN</el-radio-button>
+            <el-radio-button label="0">CLOSE</el-radio-button>
+          </el-radio-group>
+          <div v-else>
+            <div v-if="scope.row.showFastAccess === 1" style="color: green;">OPEN</div>
+            <div v-if="scope.row.showFastAccess === 0" style="color:red">CLOSED</div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="180">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
@@ -193,7 +210,8 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import {
   getPromoPagesList,
   deletePromoPages,
-  updatePromoPagesState
+  updatePromoPagesState,
+  updateFastAccessState
 } from '../../../../api/promoPages'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteListSimple } from '../../../../api/site'
@@ -319,6 +337,12 @@ async function removePromo(promoPages) {
 
 async function changePromoPagesState(id, status) {
   await updatePromoPagesState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadPromoPages()
+}
+
+async function changeFastAccessState(id, status) {
+  await updateFastAccessState(id, status)
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
   await loadPromoPages()
 }
