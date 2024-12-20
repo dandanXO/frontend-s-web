@@ -49,7 +49,9 @@
           </div>
         </div>
 
-        <div class="bonus-claim-button" @click="claimBonus">Claim now</div>
+        <div class="bonus-claim-button" :class="{ disable: promoData.claimableBonus <= 0 }" @click="claimBonus">
+          Claim now
+        </div>
       </div>
     </div>
     <div class="task-container" v-for="(task, index) in promoData.tasks" :key="task.code">
@@ -86,7 +88,7 @@
     <NameAuthModal @closeDialog="isNameAuthModal = false" />
   </q-dialog>
 
-  <q-dialog v-model="isCongratsModalV2">
+  <q-dialog v-model="isCongratsModalV2" @hide="handleReceiveBonus">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header-v2.png" /></div>
@@ -247,6 +249,14 @@ onMounted(() => {
       margin: 12px;
       border-radius: 28px;
       padding: 12px 0;
+      &.disable {
+        background: #d3d3d3;
+        box-shadow: none;
+        color: #a0a0a0;
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.6;
+      }
     }
   }
 }
