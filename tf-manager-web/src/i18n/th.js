@@ -1007,6 +1007,7 @@ export default {
     settleEdit: 'แก้ไข',
     show: 'แสดง',
     showAll: 'แสดงทั้งหมด',
+    showFastAccess: 'แสดงการเข้าถึงอย่างรวดเร็ว',
     sid: 'SID',
     site: 'เว็บไซต์',
     siteDetail: 'รายละเอียดเว็บไซต์',

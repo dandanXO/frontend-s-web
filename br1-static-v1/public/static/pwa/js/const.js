@@ -1,6 +1,6 @@
 export const PWA_DATA_KEY = "BRA_PWA_DATA";
 export const INSTALLATION_STATUS_KEY = "BRA_INSTALLATION_STATUS";
-
+export const FBQ_INITIALIZED = 'BRA_FBQ_INITIALIZED';
 
 export const domainLists = {
   "6sx65.cc": {
@@ -62,9 +62,8 @@ export const domainLists = {
   },
   "1mw9q.cc": {
     affiliateCode: "5DE816"
-  },
-}
-
+  }
+};
 
 export const affiliateLists = {
   "6805B0": {
@@ -129,5 +128,14 @@ export const affiliateLists = {
   },
   "5DE816": {
     adCode: "1jm2f4nf"
+  }
+};
+
+export const fbqLists = {
+  "6sx65.cc": {
+    id: "1506607026696966"
   },
+  "dtaw7.cc": {
+    id: "1077661224141152"
+  }
 };

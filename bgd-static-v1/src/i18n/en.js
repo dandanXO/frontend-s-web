@@ -65,6 +65,7 @@ export default {
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must be 10 - 11 digits",
     phone_rules_03: "The phone number must start with '01'",
+    bindPhoneNumber: "Bind Phone Number",
     password: "Password",
     password_placeholder: "Please enter password",
     password_rules_01: "Please insert password",
@@ -89,6 +90,8 @@ export default {
     newPassword_placeholder: "Please enter new password",
     newPassword_rules_01: "Please insert new password",
     newPassword_rules_02: "The characters of new password must be above 6",
+    confirmPassword: "Confirm Password",
+    confirmPassword_placeholder: "Please enter confirm password",
     confirmNewPassword: "Confirm New Password",
     confirmNewPassword_placeholder: "Please enter new confirm password",
     confirmNewPassword_rules_01: "Please insert new confirm password",
@@ -113,6 +116,7 @@ export default {
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
     fullName_rules_02: "Please enter a Valid full name",
+    setPassword: "Set Password",
     changePassword: "Change Password",
     currentPassword: "Current Password",
     currentPassword_placeholder: "Enter Current Password",
@@ -198,7 +202,9 @@ export default {
     receive: "Receive",
     startNow: "Start Now",
     continue: "Continue",
-    uploadAgain: "Upload Again"
+    uploadAgain: "Upload Again",
+    deposit: "Deposit",
+    learnMore: "Learn More"
   },
   notify: {
     noRecord: "No Record",

@@ -25,10 +25,15 @@
         v-for="(banner, i) in banners"
         :key="i"
         :name="i"
-        class="column no-wrap flex-center"
+        class="promo-carousel-slide column no-wrap flex-center"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
-      ></q-carousel-slide>
+      >
+        <!-- <div class="promo-banner-btn-grp">
+          <q-btn no-caps unelevated class="green-btn" @click.stop="() => {}">{{ $t("btn.deposit") }}</q-btn>
+          <a onclick="event.stopPropagation()">Learn More</a>
+        </div> -->
+      </q-carousel-slide>
 
       <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
 
@@ -1443,11 +1448,15 @@
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
+
+  <q-dialog v-model="isShowSetFirstPw">
+    <SetFirstPasswordModal @closeDialog="isShowSetFirstPw = false" />
+  </q-dialog>
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1490,6 +1499,7 @@ import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import NameAuthModal from "src/components/modal/NameAuthModal.vue";
 import chroma from "chroma-js";
+import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -1500,6 +1510,8 @@ const onSwiper = (category, swiper) => {
   swiperRef.value[category] = swiper;
   console.log("here", swiper);
 };
+
+const isShowSetFirstPw = ref(false);
 
 const prevSlide = (category) => {
   if (category === "live") {
@@ -3779,6 +3791,7 @@ onActivated(() => {
   checkHash();
 
   checkSpinWheel();
+  checkGoogleLoginSetPwd();
 
   // if (store.hasToken()) {
   // }
@@ -3815,6 +3828,10 @@ onMounted(() => {
   }
 });
 
+onUnmounted(() => {
+  store.isFirstLandOnHomePage = false;
+});
+
 watch(
   () => route.hash,
   (newHash) => {
@@ -3834,6 +3851,15 @@ watch(
 //     }
 //   }
 // );
+const checkGoogleLoginSetPwd = () => {
+  if (store.isGoogleLogin && store.isFirstLandOnHomePage) {
+    api.get("/session/first-password").then((res) => {
+      if (res.code === 0 && !res.data) {
+        isShowSetFirstPw.value = true;
+      }
+    });
+  }
+};
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
@@ -5605,5 +5631,34 @@ const showCongratsModal = () => {
 
 .dynamic-bg {
   background-size: cover;
+}
+
+.promo-carousel-slide {
+  position: relative;
+}
+
+.promo-banner-btn-grp {
+  display: flex;
+  position: absolute;
+  left: 20px;
+  bottom: 14px;
+  align-items: center;
+
+  .green-btn {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    color: #131313;
+    font-size: 10px;
+    font-weight: 700;
+    height: fit-content;
+    width: 70px;
+    padding: 0 4px;
+    margin-right: 10px;
+  }
+  a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 10px;
+    font-weight: 700;
+  }
 }
 </style>
