@@ -121,9 +121,11 @@ export default boot(({ app, router }) => {
     if (typeof response.data === "string") {
       res = JSON.parse(response.data);
     }
-
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
+      if ([58100, 58101, 58102, 58103, 35013, 604].includes(res.code)) {
+        return res;
+      }
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
