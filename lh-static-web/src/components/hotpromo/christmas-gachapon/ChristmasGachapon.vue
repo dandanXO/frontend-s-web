@@ -100,7 +100,7 @@
         <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
           <div class="left">优惠详情</div>
           <div class="right" style="max-width: 73%">
-            在2024.12.24-2025.1.1活动期间，每日投注额≥1000元及以上次日即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
+            在2024.12.24-2025.1.1活动期间，每日投注额≥1000元及以上即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
           </div>
         </div>
         <table class="detailed-info-table">
@@ -164,7 +164,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
               <span>示例</span>
             </div>
-            会员A在2024年12月25日累计有效投注为20000元, 2024年12月26日即可在优惠页面点击【立即抽奖】获得财富金,
+            会员A在2024年12月25日累计有效投注为20000元, 即可在优惠页面点击【立即抽奖】获得财富金,
             根据规则会员可获得5次抽奖机会, 奖金仅需5倍水即可出款
           </div>
         </div>
