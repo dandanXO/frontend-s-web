@@ -273,12 +273,18 @@ const getGachapon = (t) => {
       } else {
         prizes.value = [];
         var viMessage = '';
-        if (res.code === 58100) { // 抽奖次数不足
+        if (res.code === 58100) {
           viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
-        } else if (res.code === 58101) { // 今日可抽奖次已达上限
+        } else if (res.code === 58101) {
           viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
         } else if (res.code === 58102) {
           viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 58103) {
+          viMessage = 'Bạn không đủ điều kiện để nhận thưởng'
+        }  else if (res.code === 35013) {
+          viMessage = 'Bạn không đủ điều kiện để nhận thưởng'
+        } else if (res.code === 604) {
+          viMessage = 'Vui lòng đăng nhập tài khoản để mở quà'
         } else {
           viMessage = i18n.global.t('response.' + res.code) || res.message
         }
@@ -492,7 +498,7 @@ body .el-dialog.prize-modal.once {
   box-shadow: none;
 }
 body .el-dialog.prize-modal.once .el-dialog__body {
-  transform: scale(1.10);
+  transform: scale(1.25);
   background: url(img/modalbg.png) no-repeat center center;
   background-size: contain;
     min-height: 350px;

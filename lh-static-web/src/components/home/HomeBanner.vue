@@ -183,6 +183,7 @@ const checkShowImgTop = () => {
         // }
         const { code, data } = res;
         popupList.value = data;
+        store.frequency = data[0]["frequency"]
         if (code === 0) {
           if (isImpt === null) {
             switch (data[0]["frequency"]) {
