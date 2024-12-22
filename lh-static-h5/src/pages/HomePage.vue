@@ -681,12 +681,24 @@
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div>
-        <div class="promo-banner-container">
-          <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
-          <div class="promo-banner-img" @click="clickHomePopupImg(homePopupPath)" v-else>
-            <img loading="lazy" :src="homePopupImg" class="alert-img" />
-          </div>
-        </div>
+        <q-carousel
+          animated
+          v-model="popupSlide"
+          navigation
+          infinite
+          swipeable
+          height="100%"
+          style="background: transparent"
+        >
+          <q-carousel-slide v-for="(item, index) in popupList" :key="index" :name="index" class="carousel-slide" style="padding: 0">
+            <div class="promo-banner-container">
+              <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
+              <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
+                <img :src="formatHomePopupImg(item.mobileImgUrl)" class="alert-img" draggable="false" />
+              </div>
+            </div>
+          </q-carousel-slide>
+        </q-carousel>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -1044,12 +1056,8 @@ export default defineComponent({
     const imgURLFloat = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
-    const homePopupImg = ref("");
-    const homePopupContent = ref("");
-    const homePopupType = ref("");
-    const homePopupPath = ref("");
-    const homePopupId = ref(0);
-    const homePopupFrequency = ref(0);
+    const popupList = ref([]);
+    const popupSlide = ref(0)
     const homePopupFrequencyNum = ref(0);
 
     const setExpiryBanner = () => {
@@ -1068,8 +1076,8 @@ export default defineComponent({
       const item = {
         value: value,
         expiry: now.getTime() + interval,
-        id: homePopupId.value,
-        frequency: homePopupFrequency.value
+        id: popupList.value[0]?.id,
+        frequency: popupList.value[0]?.frequency,
       };
       localStorage.setItem(key, JSON.stringify(item));
     };
@@ -1124,15 +1132,16 @@ export default defineComponent({
         }
       } else {
         api
-          .get("/member/ads-popout")
+          .get("/member/site-popout-list")
           .then((res) => {
             // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
             //   res = apiMockData
             // }
             if (res.code === 0) {
+              popupList.value = res.data;
               // if (res.data[id] !== null) {
               if (isImpt === null) {
-                switch (res.data["frequency"]) {
+                switch (res.data[0]["frequency"]) {
                   case "EVERYTIME":
                     homePopupFrequencyNum.value = 0;
                     break;
@@ -1147,14 +1156,6 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value =
-                  useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
-                homePopupContent.value = res.data["content"];
-                homePopupType.value = res.data["type"];
-                homePopupPath.value = res.data["path"];
-                homePopupId.value = res.data["id"];
-                homePopupFrequency.value = res.data["frequency"];
-                // if (homePopupImg.value) {
                 isFirstView.value = true;
                 // }
               }
@@ -1166,6 +1167,9 @@ export default defineComponent({
           .catch(() => {});
       }
     };
+    const formatHomePopupImg = (path) => {
+      return useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + path;
+    }
 
     function loadData() {
       api
@@ -1783,7 +1787,6 @@ export default defineComponent({
       isAppUpdateModal,
       cancelUpdate,
       openDownloadPage,
-      homePopupImg,
       refreshBalance,
       isLoadingBalance,
       closeTopBox,
@@ -1793,14 +1796,11 @@ export default defineComponent({
       getWithExpiry,
       setWithExpiry,
       setExpiryBanner,
-      homePopupContent,
-      homePopupType,
-      homePopupPath,
-      homePopupId,
-      homePopupFrequency,
       homePopupFrequencyNum,
       isImpt,
       isImportantAnnoucementModal,
+      popupList,
+      popupSlide,
       offPopupModal,
       getImgPlatformLogo,
       getImgPlatformBg,
@@ -1841,7 +1841,8 @@ export default defineComponent({
       domainSlide: ref(0),
       rocketSlide: ref(0),
       promoSlide: ref(0),
-      convertToCommaAmount
+      convertToCommaAmount,
+      formatHomePopupImg
     };
   }
 });

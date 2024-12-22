@@ -1,8 +1,8 @@
-import { getAdjustUrl } from "./adjust.js";
-import { INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
+// import { getAdjustUrl } from "./adjust.js";
+import { FBQ_INITIALIZED, fbqLists, INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
-const INSTALL_COUNTDOWN = 10;
+const INSTALL_COUNTDOWN = 3;
 let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
 let deferredPrompt;
@@ -30,6 +30,9 @@ installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
+      const isFbqInitialized = sessionStorage.getItem(FBQ_INITIALIZED);
+      if(isFbqInitialized) fbq('track', 'SubmitApplication');
+
       if (!deferredPrompt) {
         const userAgent = navigator.userAgent.toLowerCase();
         const isIos = /iphone|ipad|ipod/.test(userAgent);
@@ -41,18 +44,18 @@ installBtn.addEventListener("click", async () => {
       } else {
         const { outcome } = await deferredPrompt.prompt();
         if (outcome === "accepted") {
-          const redirectUrl = getAdjustUrl();
+          // const redirectUrl = getAdjustUrl();
 
-          console.log("REd Url");
-          console.log(redirectUrl)
+          // console.log("REd Url");
+          // console.log(redirectUrl)
 
-          // alert(redirectUrl);
-          const iframeTag = document.createElement("iframe");
-          iframeTag.classList.add("blank-iframe");
-          iframeTag.src = redirectUrl;
-          iframeTag.addEventListener(
-            "load",
-            () => {
+          // // alert(redirectUrl);
+          // const iframeTag = document.createElement("iframe");
+          // iframeTag.classList.add("blank-iframe");
+          // iframeTag.src = redirectUrl;
+          // iframeTag.addEventListener(
+          //   "load",
+          //   () => {
               const redirectInfo = getRedirectInfo();
               localStorage.setItem(PWA_DATA_KEY, JSON.stringify(redirectInfo));
               localStorage.setItem(INSTALLATION_STATUS_KEY, "INSTALLING");
@@ -61,10 +64,10 @@ installBtn.addEventListener("click", async () => {
               installationCountdown();
               handleInstallationProgress();
               console.log("user accepted");
-            },
-            { once: true }
-          );
-          iframeContainer.appendChild(iframeTag);
+          //   },
+          //   { once: true }
+          // );
+          // iframeContainer.appendChild(iframeTag);
         }
       }
       break;
@@ -81,7 +84,7 @@ function handleInstallationProgress() {
     installationProgress.innerText = `${installationProgressNumber}%`;
     setTimeout(() => {
       requestAnimationFrame(handleInstallationProgress);
-    }, 100);
+    }, 1000 * INSTALL_COUNTDOWN / 100);
   }
   installationProgress;
 }
@@ -115,6 +118,14 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 window.addEventListener("load", () => {
+  const hostname = window.location.hostname.replace("www.", "");
+  const fbqId = fbqLists[hostname]?.id;
+  if(fbqId) {
+    fbq('init', fbqId);
+    fbq('track', 'PageView');
+    sessionStorage.setItem(FBQ_INITIALIZED, '1');
+  }
+
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
     redirectToGame();
   }
@@ -134,6 +145,7 @@ window.addEventListener("load", () => {
   }, 3000);
 
   detectDeviceAndBrowser();
+  countdown.innerHTML = `${INSTALL_COUNTDOWN}`;
 });
 
 /** browser detect **/
@@ -294,12 +306,13 @@ function insertRandomImages() {
   var imageUrls = [];
   var extraStyle = "";
 
-  var fileCountLists = [12, 13, 16, 16, 6];
-  var fileNum = Math.floor(Math.random() * 5) + 1;
-  // var fileNum= 1;
+  var fileCountLists = [6];
+  // var fileNum = Math.floor(Math.random() * 5) + 1;
+  var fileNum = 0;
   var fileDirec = "img" + fileNum;
 
-  var fileLength = fileCountLists[fileNum - 1];
+  // var fileLength = fileCountLists[fileNum - 1];
+  var fileLength = fileCountLists[fileNum];
   console.log(fileDirec);
   var fileArray = [];
   for (var i = 0; i < fileLength; i++) {
@@ -312,7 +325,7 @@ function insertRandomImages() {
   console.log(fileLists);
 
   fileLists.forEach((file) => {
-    var fileName = `images/${fileDirec}/${file}.jpg`;
+    var fileName = `images/${fileDirec}/${file}.png`;
     imageUrls.push(fileName);
   });
 
@@ -320,7 +333,7 @@ function insertRandomImages() {
     extraStyle = `style="height:300px;"`;
     defaultScrollList.style.height= "300px"
   } else {
-    extraStyle = `style="width:65vw;max-width: 300px;"`;
+    extraStyle = `style="width:65vw;max-width: 180px;"`;
     defaultScrollList.style.height= "auto"
   }
 

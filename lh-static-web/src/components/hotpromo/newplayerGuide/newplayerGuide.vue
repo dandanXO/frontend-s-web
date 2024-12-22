@@ -229,18 +229,22 @@
             </li>
             <li>
               <span class="step-number">4</span>
+              <div class="content">USDT存款方式不支持参与首存活动。</div>
+            </li>
+            <li>
+              <span class="step-number">5</span>
               <div class="content">
                 此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
               </div>
             </li>
             <li>
-              <span class="step-number">5</span>
+              <span class="step-number">6</span>
               <div class="content">
                 每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
               </div>
             </li>
             <li>
-              <span class="step-number">6</span>
+              <span class="step-number">7</span>
               <div class="content">此活动最终解释权归雷火所有；</div>
             </li>
           </ol>

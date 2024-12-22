@@ -56,7 +56,9 @@ export const userStore = defineStore("userStore", {
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
       ftd: "CLOSE",
-      isTkPixel: false
+      isTkPixel: false,
+      isGoogleLogin: false,
+      isFirstLandOnHomePage: true
     };
   },
   actions: {
@@ -115,7 +117,7 @@ export const userStore = defineStore("userStore", {
       }
       loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
-      return api.post("/member/pakLogin", string).then((ret) => {
+      return api.post("/member/bgdLogin", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);

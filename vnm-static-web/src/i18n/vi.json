@@ -272,7 +272,10 @@
     "bonus": "Phần thưởng",
     "congrats": "Chúc mừng",
     "claim": "Nhận",
-    "new_player_success": "Đã nhận thành công"
+    "new_player_success": "Đã nhận thành công",
+    "available_draw": "Tổng số lần rút thăm",
+    "tnc": "Điều khoản và điều kiện",
+    "view_records": "Xem hồ sơ"
   },
   "mail": {
     "inbox": "Hộp thư đến",
@@ -875,6 +878,10 @@
     "35011": "Thành viên 35011 không thể nhận đặc quyền này.",
     "37001": "Đã hết thời gian nhận Lì Xì",
     "45000": "Chưa đạt đến số tiền tối thiểu để rút",
-    "45001": "Hôm nay đã nhận được tiền thưởng ngẫu nhiên."
+    "45001": "Hôm nay đã nhận được tiền thưởng ngẫu nhiên.",
+    "58100": "Số lần quay thưởng không đủ",
+    "58101": "Số lần quay thưởng hôm nay đã đạt giới hạn",
+    "58102": "Tiền thưởng hàng ngày đã được đổi hết, vui lòng thử lại vào ngày mai.",
+    "58103": "Bạn không đủ điều kiện để nhận thưởng"
   }
 }

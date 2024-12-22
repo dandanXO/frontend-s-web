@@ -65,6 +65,7 @@ export default {
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must be 10 - 11 digits",
     phone_rules_03: "The phone number must start with '01'",
+    bindPhoneNumber: "Bind Phone Number",
     password: "Password",
     password_placeholder: "Please enter password",
     password_rules_01: "Please insert password",
@@ -89,6 +90,8 @@ export default {
     newPassword_placeholder: "Please enter new password",
     newPassword_rules_01: "Please insert new password",
     newPassword_rules_02: "The characters of new password must be above 6",
+    confirmPassword: "Confirm Password",
+    confirmPassword_placeholder: "Please enter confirm password",
     confirmNewPassword: "Confirm New Password",
     confirmNewPassword_placeholder: "Please enter new confirm password",
     confirmNewPassword_rules_01: "Please insert new confirm password",
@@ -113,6 +116,7 @@ export default {
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
     fullName_rules_02: "Please enter a Valid full name",
+    setPassword: "Set Password",
     changePassword: "Change Password",
     currentPassword: "Current Password",
     currentPassword_placeholder: "Enter Current Password",
@@ -191,7 +195,16 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    signinWithGoogle: "Google",
+    noRewardYet: "No Reward Yet",
+    received: "Received",
+    receive: "Receive",
+    startNow: "Start Now",
+    continue: "Continue",
+    uploadAgain: "Upload Again",
+    deposit: "Deposit",
+    learnMore: "Learn More"
   },
   notify: {
     noRecord: "No Record",
@@ -202,7 +215,10 @@ export default {
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
-    plsLoginToContinue: "Please login to continue"
+    plsLoginToContinue: "Please login to continue",
+    uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
+    imageFormatError: "Image format error",
+    uploadFailedPleaseTryAgain: "upload failed. Please try again"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -235,7 +251,23 @@ export default {
     cat_sport: "Sport",
     popup: {
       getFreeLuckyDraw: "Get a free lucky draw ticket",
-      downloadAppLoginAcc: "Download the app and log in to your account to get it"
+      downloadAppLoginAcc: "Download the app and log in to your account to get it",
+      free100Bonus: "Congratulations! You have completed Stage 1 and unlocked 100 bonuses.",
+      free100BonusAmount: "100BDT",
+      bonus: {
+        wheelOfFortuneTitle: "Wheel Of Fortune",
+        wheelOfFortuneDescription: "Wheel Of Fortune",
+        cashBackTitle: "Cash Back",
+        cashBackDescription: "Cash Back",
+        activityBonusTitle: "Activity Bonus",
+        activityBonusDescription: "Activity Bonus",
+        giveBackTitle: "Give Back",
+        giveBackDescription: "Give Back",
+        hierarchyTitle: "Hierarchy",
+        hierarchyDescription: "Hierarchy",
+        wheelRewardTitle: "Wheel Rewards",
+        wheelRewardDescription: "Wheel Rewards"
+      }
     },
     viewAll: "View All"
   },
@@ -330,6 +362,33 @@ export default {
     rewards: "Rewards",
     vipTable_txt:
       "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
+  },
+  nameAuth: {
+    title: "Real Name Authentication",
+    basicExperience: "Basic Experience",
+    humanResources: "Human Resources",
+    faceVerification: "Face Verification",
+    identityId: "Identity Id",
+    browsingTime: "Browsing time: 2 minutes",
+    additionalInfo:
+      "In order to better serve you, we require you to provide original copies of your identification documents. this will Gifts will be sent to the correct location.",
+    beReadyUploadIdCard: "Be ready to upload your ID card",
+    issuingCountryRegion: "Issuing country/region",
+    documentType: "Document Type",
+    getReadyUploadIdCard: "Get ready to upload your ID card",
+    ic: "IC",
+    hint_txt_1: "Upload color photos or documents",
+    hint_txt_2: "Take photos in a well-lit room",
+    hint_txt_3: "Do not edit images of files",
+    checkGuide: "Check out our guide",
+    passport: "Passport",
+    drivingLicense: "Driving License",
+    hint: "Hint",
+    uploadDoc: "Upload Documents",
+    uploadFailed: "Upload Failed",
+    uploadSuccessful: "Upload Successful",
+    uploaded: "Uploaded",
+    pendingAuth: "Pending Authentication"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -676,6 +735,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    14016: "Google login verification failed",
     15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",

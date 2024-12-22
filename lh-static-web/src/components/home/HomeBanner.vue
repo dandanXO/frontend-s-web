@@ -5,9 +5,13 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-    <a @click="clickHomePopupImg(homePopupPath)">
-      <img :src="homePopupImg" class="alert-img" />
-    </a>
+    <el-carousel autoplay height="auto" :autoplay="false" style="padding: 0;">
+      <el-carousel-item style="height: 500px" v-for="(item, index) in popupList" :key="index">
+        <a @click="clickHomePopupImg(item.path)" style="display: flex; justify-content: center;">
+          <img :src="imgURL + item.desktopImgUrl" class="" draggable="false"/>
+        </a>
+      </el-carousel-item>
+    </el-carousel>
   </el-dialog>
   <el-carousel
     v-if="banners?.length > 0"
@@ -40,7 +44,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
+import { loadPromoBanner, loadHomePopups } from "@/api/index/promo";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
@@ -119,15 +123,10 @@ const getWithExpiry = (key) => {
 
 const isImpt = getWithExpiry("isImpt");
 
+const popupList = ref([]);
 const isFirstView = ref(false);
-const homePopupImg = ref("");
-const homePopupPath = ref("");
 const isImportantAnnoucementModal = ref(false);
-const homePopupFrequency = ref(0);
 const homePopupFrequencyNum = ref(0);
-const homePopupContent = ref("");
-const homePopupType = ref("");
-const homePopupId = ref(0);
 
 const clickHomePopupImg = (urlString) => {
   isImportantAnnoucementModal.value = false;
@@ -164,15 +163,17 @@ const checkShowImgTop = () => {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
   } else {
-    loadHomePopup("")
+    loadHomePopups("")
       .then((res) => {
         // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
         //   res = apiMockData;
         // }
         const { code, data } = res;
+        popupList.value = data;
+        store.frequency = data[0]["frequency"]
         if (code === 0) {
           if (isImpt === null) {
-            switch (data["frequency"]) {
+            switch (data[0]["frequency"]) {
               case "EVERYTIME":
                 homePopupFrequencyNum.value = 0;
                 break;
@@ -187,12 +188,6 @@ const checkShowImgTop = () => {
                 break;
             }
             isImportantAnnoucementModal.value = true;
-            homePopupPath.value = data["path"];
-            homePopupImg.value = imgURL + data["desktopImgUrl"];
-            homePopupContent.value = data["content"];
-            homePopupType.value = data["type"];
-            homePopupId.value = data["id"];
-            homePopupFrequency.value = data["frequency"];
             isFirstView.value = true;
           } else {
             isImportantAnnoucementModal.value = false;
