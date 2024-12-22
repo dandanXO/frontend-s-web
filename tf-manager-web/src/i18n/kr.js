@@ -1432,6 +1432,7 @@ export default {
     settleEdit: '편집',
     show: '표시',
     showAll: '모두 표시',
+    showFastAccess: '빠른 액세스 표시',
     sid: 'SID',
     site: '사이트',
     siteDetail: '사이트 세부 정보',

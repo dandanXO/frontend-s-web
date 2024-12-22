@@ -1613,6 +1613,7 @@ export default {
     shareRatio: 'Share Ratio',
     show: 'Show',
     showAll: 'Show All',
+    showFastAccess: 'Show Fast Access',
     sid: 'SID',
     site: 'Site',
     siteDetail: 'Site Detail',
