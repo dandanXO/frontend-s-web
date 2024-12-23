@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>55ACE</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="js/oneSignal.js" type="text/javascript"></script>
+  </head>
+
+  <body id="bra-download-pwa">
+    <div class="container" data-type="INSTALL" id="container">
+      <header id="header">
+        <img src="images/header.png" />
+      </header>
+      <main>
+        <div class="header-wrapper">
+          <div class="header__icon">
+            <img alt="55ACE" loading="lazy" src="./images/logo.png" class="header__icon--img" />
+            <div class="header__icon--loading" id="iconLoading">
+              <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" fill="none" r="20"></circle>
+              </svg>
+            </div>
+          </div>
+          <div class="header__info">
+            <div class="header__info-title">
+              <span>55ACE</span>
+              <img alt="terverifikasi" class="header__info-title-tag" loading="lazy" src="./images/verified.png" />
+            </div>
+            <p class="header__info-description">55ACE</p>
+            <p class="header__info-progress" id="installProgress">0%</p>
+            <p class="header__info-play">
+              <img class="ic_dun" alt="terverifikasi" loading="lazy" src="./images/ic-dun.png" />
+              Terverifikasi oleh Play Protect
+            </p>
+          </div>
+        </div>
+        <div class="info">
+          <div class="info__view__wrap">
+            <div class="info__view">
+              <div class="info__view-value">
+                <span>4.8</span>
+                <img alt="bintang" class="ic_x" loading="lazy" src="./images/star.png" />
+              </div>
+              <div class="info__view-label">15 ribu ulasan</div>
+            </div>
+            <div class="info__view">
+              <div class="info__view-value">100 ribu +</div>
+              <div class="info__view-label">Unduhan</div>
+            </div>
+            <div class="info__view">
+              <img alt="pilihan editor" class="info__view-choice" loading="lazy" src="./images/check.png" />
+              <div class="info__view-label">Pilihan Editor</div>
+            </div>
+          </div>
+        </div>
+        <div class="qrcode-wrapper">
+          <div class="qrcode">
+            <div class="qrcode__hand">
+              <img alt="contoh QR code" class="qrcode__hand-bg" loading="lazy" src="./images/qrcode-in-phone.png" />
+              <img
+                alt="garis pemindaian QR code"
+                class="qrcode__hand-light"
+                loading="lazy"
+                src="./images/scan-line.png"
+              />
+            </div>
+            <div class="qrcode__prop">
+              <div class="qrcode__prop-code">
+                <div class="qrcode__code" id="qrcode"></div>
+                <img alt="bidik QR code" class="qrcode__prop-bg" loading="lazy" src="./images/qrcode-aim.png" />
+              </div>
+              <div class="qrcode__prop-title">Pindai QR code untuk menginstal</div>
+            </div>
+
+            <img alt="panah ke langkah berikutnya" class="qrcode__arrowhead" loading="lazy" src="./images/arrow.png" />
+
+            <div class="qrcode__phone">
+              <img alt="55ACE" class="qrcode__phone-icon" loading="lazy" src="./images/logo.png" />
+              <div class="qrcode__phone-name">55ACE</div>
+              <div class="qrcode__phone-btn">Instalasi Cepat</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="install-btn shiny-btn" id="install-btn">
+          <div class="install-btn__ing">
+            <div class="install-btn__ing__rapid">
+              <img alt="petir" class="ic_x" loading="lazy" src="./images/thunder.png" />
+              <span>Instalasi Cepat</span>
+            </div>
+            <div class="install-btn__ing__countdown">
+              <span>Unduh dalam</span>
+              <span class="countdown-num" id="countdown">3</span>
+              d
+            </div>
+          </div>
+          <div class="install-btn__play install-btn__view">Mainkan</div>
+          <div class="install-btn__install install-btn__view">Instal</div>
+        </div>
+        <div class="share-row">
+          <div class="share-row__item">
+            <img alt="bagikan" loading="lazy" src="./images/share.png" />
+            <div>Bagikan</div>
+          </div>
+          <div class="share-row__item">
+            <img alt="tambahkan ke favorit" loading="lazy" src="./images/bookmark.png" />
+            <div>Tambahkan ke daftar keinginan</div>
+          </div>
+        </div>
+
+        <div class="img-scroll">
+          <div class="img-scroll__list" id="scroll-lists">
+            <!--            <div class="img-scroll__view">-->
+            <!--              <img loading="lazy" src="./images/screenshot1.png" />-->
+            <!--            </div>-->
+            <!--            <div class="img-scroll__view">-->
+            <!--              <img loading="lazy" src="./images/screenshot2.png" />-->
+            <!--            </div>-->
+          </div>
+        </div>
+
+        <div class="description">
+          <div class="description__title">Tentang aplikasi ini</div>
+          <img class="description__right-arrow" loading="lazy" src="./images/description-arrow.png" />
+          <pre class="description__content">
+            55ACE - Platform Permainan Online yang Menawarkan Pengalaman Kaya dan Hadiah Berlimpah
+            55ACE adalah platform permainan online yang didedikasikan untuk memberikan pengguna berbagai pengalaman permainan dan hadiah yang menguntungkan. Selain hiburan, ini menawarkan kesempatan unik untuk menghasilkan uang dengan bermain, memungkinkan pengguna bersenang-senang sambil mendapatkan keuntungan.
+
+            Fitur Utama:
+            Konten Permainan yang Beragam:
+            55ACE menawarkan berbagai permainan, termasuk taruhan olahraga, e-sports, permainan memancing, permainan kartu, dan permainan kasino untuk memenuhi berbagai preferensi hiburan. Apakah Anda suka permainan strategi yang menantang atau lebih suka aksi cepat dari e-sports, 55ACE memiliki permainan yang sempurna untuk Anda.
+
+            Sistem Hadiah Inovatif: Platform ini menekankan konsep "semakin banyak Anda bermain, semakin banyak Anda menang". Pengguna dapat memenangkan hadiah dalam permainan dan mengubahnya menjadi keuntungan nyata. Setiap taruhan dan kompetisi bisa menjadi kesempatan Anda untuk menghasilkan uang, menjadikan permainan lebih dari sekadar hiburan.
+
+            Dapatkan Komisi dengan Mengundang Teman: 55ACE menawarkan sistem hadiah khusus untuk referensi, di mana pengguna dapat mendapatkan komisi dan bonus yang berlimpah dengan mengundang teman untuk bergabung dengan platform. Semakin banyak Anda mengundang, semakin banyak Anda mendapatkan, memudahkan Anda membangun tim permainan dan sumber penghasilan Anda.
+
+            Layanan Aman dan Terpercaya: Platform ini menggunakan teknologi keamanan canggih untuk memastikan keamanan akun dan data pengguna, serta menawarkan berbagai metode pembayaran untuk transaksi yang nyaman dan aman. Pengguna dapat bermain dengan tenang dan menarik keuntungan mereka dengan mudah melalui sistem pembayaran yang andal.
+
+            Bergabunglah dengan 55ACE dan Mulailah Menghasilkan dengan Bermain! Di 55ACE, Anda bukan hanya seorang pemain, tetapi seorang gamer terampil yang dapat menghasilkan uang dengan bermain. Daftar sekarang untuk merasakan sensasi permainan dan kepuasan mendapatkan keuntungan. Jadikan waktu hiburan Anda lebih berharga!
+          </pre>
+        </div>
+
+        <div class="description">
+          <div class="description__title" style="margin-bottom: 5px; font-size: 14px">Diperbarui pada</div>
+          <div class="description__content"></div>
+          <div class="description__label">
+            <div class="description__label-item">Permainan</div>
+            <div class="description__label-item">Bonus</div>
+            <div class="description__label-item">Kasino</div>
+          </div>
+        </div>
+
+        <div class="description">
+          <div class="description__title">Keamanan Data</div>
+          <img class="description__right-arrow" loading="lazy" src="./images/description-arrow.png" />
+          <pre class="description__content">
+            Keamanan dimulai dengan memahami bagaimana pengembang mengumpulkan dan membagikan data Anda. Praktik privasi dan keamanan data dapat bervariasi berdasarkan penggunaan, wilayah, dan usia Anda. Pengembang menyediakan informasi ini dan dapat memperbaruinya dari waktu ke waktu.
+          </pre>
+          <div class="description__data-safety">
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="keamanan data" loading="lazy" src="./images/data-safety-icon-1.png" />
+              </div>
+              <div class="item-content">
+                <p>Tidak ada data yang dibagikan dengan pihak ketiga</p>
+                <p>
+                  <ins>Pelajari lebih lanjut</ins>
+                  <span>tentang bagaimana pengembang menyatakan pembagian data</span>
+                </p>
+              </div>
+            </div>
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="keamanan data" loading="lazy" src="./images/data-safety-icon-2.png" />
+              </div>
+              <div class="item-content">
+                <p>Aplikasi ini dapat mengumpulkan jenis data berikut: Lokasi, Aktivitas aplikasi, dan 2 lainnya</p>
+              </div>
+            </div>
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="keamanan data" loading="lazy" src="./images/data-safety-icon-3.png" />
+              </div>
+              <div class="item-content">
+                <p>Data dienkripsi selama transmisi</p>
+              </div>
+            </div>
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="keamanan data" loading="lazy" src="./images/data-safety-icon-4.png" />
+              </div>
+              <div class="item-content">
+                <p>Anda dapat meminta agar data dihapus</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comments">
+          <div class="comments__title">Ulasan dan komentar</div>
+          <div class="comments__tips">
+            Ulasan dan komentar diverifikasi dan dibuat oleh orang-orang yang menggunakan jenis perangkat yang sama
+            dengan yang Anda gunakan
+          </div>
+
+          <div class="comments__scoring">
+            <div class="comments__scoring-num">
+              <div class="comments__scoring-points">4.8</div>
+              <div class="comments__scoring-star">
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-half.png" />
+              </div>
+              <div class="comments__scoring-people">15463</div>
+            </div>
+            <div class="comments__scoring-content">
+              <div class="comments__scoring-item">
+                5
+                <div class="progress">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                4
+                <div class="progress">
+                  <div class="progress-bar" style="width: 30%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                3
+                <div class="progress">
+                  <div class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                2
+                <div class="progress">
+                  <div class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                1
+                <div class="progress">
+                  <div class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-list">
+            <div class="comments__list-item">
+              <div class="comments__list-header">
+                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-1.png" />
+                <div class="comments__list-name">Ali</div>
+                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+              </div>
+              <div class="comments__list-stars">
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <span>24 Oktober 2024</span>
+              </div>
+              <div class="comments__list-detail">panas</div>
+            </div>
+            <div class="comments__list-item">
+              <div class="comments__list-header">
+                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-2.png" />
+                <div class="comments__list-name">Sophia</div>
+                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+              </div>
+              <div class="comments__list-stars">
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <span>25 Oktober 2024</span>
+              </div>
+              <div class="comments__list-detail">
+                Hadiah referensi luar biasa! Mengundang teman memberi Anda cashback nyata, dan ada juga acara bonus
+                seperti hujan paket merah!
+              </div>
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-3.png" />
+              <div class="comments__list-name">Jason</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-half.png" />
+              <span>23 Oktober 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Permainan sempurna untuk pecinta slot! Mudah digunakan untuk pemula dan penuh kesenangan untuk pemain
+              berpengalaman juga.
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-4.png" />
+              <div class="comments__list-name">Emma</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <span>20 Oktober 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Saya suka acara hujan paket merah! Semakin banyak teman yang saya undang, semakin banyak hadiah yang bisa
+              saya dapatkan. Sangat direkomendasikan!
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-5.png" />
+              <div class="comments__list-name">Lucas</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-half.png" />
+              <span>18 Oktober 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Fiquei realmente impressionado com as parcerias que eles têm! Colaborações exclusivas tornam ainda lebih
+              recompensador diariamente.
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-1.png" />
+              <div class="comments__list-name">Mia</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-half.png" />
+              <span>15 Oktober 2024</span>
+            </div>
+            <div class="comments__list-detail">
+              Sangat mudah digunakan dan pilihan yang bagus untuk para penggemar mesin slot! Sangat cocok untuk pemula
+              maupun pemain berpengalaman.
+            </div>
+          </div>
+        </div>
+
+        <div class="comments__br"></div>
+      </main>
+      <footer class="footer">
+        <div class="footer__section">
+          <div class="footer__section-item">Paspor Permainan</div>
+          <div class="footer__section-item">Poin Permainan</div>
+          <div class="footer__section-item">Kartu Hadiah</div>
+          <div class="footer__section-item">Tukarkan</div>
+          <div class="footer__section-item">Kebijakan Pengembalian Dana</div>
+        </div>
+        <div class="footer__section">
+          <div class="footer__section-title">Anak-anak & Keluarga</div>
+          <div class="footer__section-item">Panduan untuk Orang Tua</div>
+          <div class="footer__section-item">Berbagi Keluarga</div>
+        </div>
+        <div class="footer__bottom flex items-center">
+          <div class="mr-22">Ketentuan Layanan</div>
+          <div class="mr-22">Privasi</div>
+        </div>
+        <div class="footer__bottom flex items-center">
+          <div class="mr-22">Pengembang</div>
+          <div class="mr-22">Bahasa Inggris</div>
+        </div>
+        <div class="footer__tips">
+          <p class="contact_each_other">Hubungi pengembang</p>
+        </div>
+      </footer>
+
+      <div class="menus">
+        <div class="menus__placeholder"></div>
+        <div class="menus__body">
+          <div class="menus__item active">
+            <img alt="permainan" loading="lazy" src="./images/game.png" />
+            <div class="title">Permainan</div>
+          </div>
+          <div class="menus__item">
+            <img alt="aplikasi" loading="lazy" src="./images/app.png" />
+            <div class="title">Aplikasi</div>
+          </div>
+          <div class="menus__item">
+            <img alt="media" loading="lazy" src="./images/media.png" />
+            <div class="title">Film & TV</div>
+          </div>
+          <div class="menus__item">
+            <img alt="buku" loading="lazy" src="./images/book.png" />
+            <div class="title">Buku</div>
+          </div>
+          <div class="menus__item">
+            <img alt="anak-anak" loading="lazy" src="./images/kid.png" />
+            <div class="title">Anak-anak</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading loading--show" id="loading">
+        <div class="loading__icon">
+          <svg viewBox="25 25 50 50">
+            <circle cx="50" cy="50" fill="none" r="20"></circle>
+          </svg>
+        </div>
+        <div class="loading__text">Memuat</div>
+      </div>
+      <!-- <div class="blank-iframe" id="iframe-container"></div> -->
+    </div>
+
+    <div class="modal-open" style="display: none">
+      <div class="modal-div">
+        <div class="modal-inner">
+          <div class="modal-header">Perhatian!</div>
+
+          <div class="modal-content">
+            <div class="content-text">Silakan salin URL berikut dan tempelkan di Chrome/Firefox</div>
+            <div class="content-logo">
+              <img src="images/browser-chrome.png" alt="" class="logo-android" />
+              <img src="images/browser-firefox.png" alt="" class="logo-android" />
+              <img src="images/browser-safari.png" alt="" class="logo-ios" />
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-input">
+              <div id="id-url-input" class="url-input"></div>
+              <div class="copy-btn-input" id="id-copy-btn">Salin</div>
+            </div>
+            <div class="open-btn" id="id-open-btn">Buka di browser yang kompatibel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ios-modal" style="display: none">
+      <div class="ios-modal-content">
+        <button class="ios-close-btn" id="id-ios-close">✕</button>
+        <div class="ios-modal-title">Instal aplikasi</div>
+        <div class="app-info">
+          <!-- <img src="https://via.placeholder.com/50" alt="App Logo" class="app-logo" /> -->
+          <img alt="55ACE" loading="lazy" src="./images/logo.png" class="app-logo" />
+          <div>
+            <p class="app-title">55ACE</p>
+            <p class="app-url" id="id-url-install">55ACE.com</p>
+          </div>
+        </div>
+        <ol class="instruction-list">
+          <li>
+            Ketuk
+            <span class="ios-share-icon"><img alt="bagikan" src="./images/ios-share.svg" /></span>
+            di menu browser
+          </li>
+          <li>
+            Gulir ke bawah dan pilih
+            <b>Tambahkan ke layar utama</b>
+          </li>
+          <li>
+            Gulir ke bawah dan pilih
+            <span class="ios-share-icon"><img alt="bagikan" src="./images/logo.png" /></span>
+            ikon di layar utama Anda
+          </li>
+        </ol>
+      </div>
+    </div>
+  </body>
+  <!-- Facebook Pixel Code -->
+  <script>
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = "2.0";
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  </script>
+  <!-- <noscript>
+    <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id={your-pixel-id-goes-here}&ev=PageView&noscript=1"/>
+  </noscript> -->
+  <!-- End Facebook Pixel Code -->
+  <script src="js/qrcode.min.js" type="text/javascript" defer></script>
+  <script src="js/index.js" type="module" defer></script>
+</html>
