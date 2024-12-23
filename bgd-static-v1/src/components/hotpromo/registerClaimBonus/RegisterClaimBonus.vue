@@ -120,7 +120,7 @@ import moment from "moment";
 
 const store = userStore();
 
-const props = defineProps(["params"]);
+const props = defineProps(["params", "promocode"]);
 const params = JSON.parse(props.params || "{}");
 const promoData = ref([]);
 const isNameAuthModal = ref(false);
@@ -128,12 +128,6 @@ const isCongratsModalV2 = ref(false);
 const bonusAmount = ref(0);
 const promoDaysLeft = ref(0);
 
-const isFtdPromoEnded = computed(() => {
-  if (store.ftd !== "OPEN") {
-    return true;
-  }
-  return false;
-});
 
 const noOfTasksCompleted = computed(() => {
   return promoData.value?.tasks?.filter((item , index) => index <= 2 && (item.memberTaskStatus === "COMPLETED" || item.memberTaskStatus === "CLAIMED")).length || 0;
@@ -158,8 +152,8 @@ const claimBonus = () => {
   if (!promoData.value.idVerificationStatus) {
     isNameAuthModal.value = true;
   } else {
-    eventapi.post("/session/register-trial-fund/claimTask?promoCode=bgd-register-trial-fund").then((res) => {
-      if (res.code === 0) {
+    eventapi.post(`/session/register-trial-fund/claimTask?promoCode=${props.promocode}`).then((res) => {
+      if (res.code === 0 && res.data !== 0) {
         isCongratsModalV2.value = true;
         bonusAmount.value = res.data;
       }
@@ -172,23 +166,16 @@ const handleReceiveBonus = async () => {
   isCongratsModalV2.value = false;
 };
 
-// const loadAppTabs = () => {
-//   api.get("/opt-session/getPakAppTabs").then((res) => {
-//     if (res.code === 0) {
-//       const { data } = res;
-//       if (data && data.hasOwnProperty("ftd")) {
-//         store.ftd = data.ftd;
-//       }
-//     }
-//   });
-// };
 
 const getTasks = async () => {
-  eventapi.get("/session/register-trial-fund/init?promoCode=bgd-register-trial-fund").then((res) => {
+  eventapi.get(`/session/register-trial-fund/init?promoCode=${props.promocode}`).then((res) => {
     promoData.value = res.data;
 
     const expiryDate = moment.utc(promoData.value.expiryDate, "YYYY-MM-DD HH:mm:ss");
     promoDaysLeft.value = expiryDate.diff(moment.utc(), "days");
+    if(promoDaysLeft.value < 0){
+      promoDaysLeft.value = 0;
+    }
   });
 };
 onMounted(() => {
