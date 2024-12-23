@@ -61,7 +61,7 @@
             icon="el-icon-download"
             size="mini"
             type="success"
-            v-permission="['sys:promo-application:export']"
+            v-permission="['sys:promo:application:export']"
             @click="exportExcel"
           >{{ t('fields.exportToExcel') }}
           </el-button>

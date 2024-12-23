@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.piggyBankSettings')" name="piggy-bank-setting" v-if="hasPermission(['sys:piggy-bank:list'])">
+    <el-tab-pane :label="t('fields.piggyBankSettings')" name="piggy-bank-setting" v-if="hasPermission(['sys:privi:piggy-bank:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.piggyBankRecords')" name="piggy-bank-records" v-if="hasPermission(['sys:piggy-bank-records:list'])">
+    <el-tab-pane :label="t('fields.piggyBankRecords')" name="piggy-bank-records" v-if="hasPermission(['sys:privi:piggy-bank-records:list'])">
       <RecordsTab />
     </el-tab-pane>
   </el-tabs>

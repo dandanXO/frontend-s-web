@@ -77,7 +77,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:promp:page:add']"
+          v-permission="['sys:promo:page:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -86,7 +86,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:promp:page:del']"
+          v-permission="['sys:promo:page:del']"
           @click="removePromo()"
           :disabled="uiControl.removeBtn"
         >
@@ -125,7 +125,7 @@
           <el-radio-group
             v-model="scope.row.status"
             size="mini"
-            v-if="hasPermission(['sys:promp:page:update:state'])"
+            v-if="hasPermission(['sys:promo:page:update:state'])"
             @change="changePromoPagesState(scope.row.id, scope.row.status)"
           >
             <el-radio-button label="0">OPEN</el-radio-button>
@@ -171,7 +171,7 @@
         :label="t('fields.action')"
         v-if="
           hasPermission(['sys:promp:page:update']) ||
-            hasPermission(['sys:promp:page:del'])
+            hasPermission(['sys:promo:page:del'])
         "
         min-width="200"
       >
@@ -187,7 +187,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:promp:page:del']"
+            v-permission="['sys:promo:page:del']"
             @click="removePromo(scope.row)"
           />
         </template>

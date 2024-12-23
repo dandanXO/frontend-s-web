@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.uefaTeamSetting')" name="uefa-team-setting" v-if="hasPermission(['sys:uefa-team:list'])">
+    <el-tab-pane :label="t('fields.uefaTeamSetting')" name="uefa-team-setting" v-if="hasPermission(['sys:privi:uefa-team:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.uefaTeamRecord')" name="uefa-team-record" v-if="hasPermission(['sys:uefa-team-record:list'])">
+    <el-tab-pane :label="t('fields.uefaTeamRecord')" name="uefa-team-record" v-if="hasPermission(['sys:privi:uefa-team-record:list'])">
       <RecordTab />
     </el-tab-pane>
   </el-tabs>

@@ -53,7 +53,7 @@
           />
         </el-select>
         <el-select
-          v-permission="['sys:team-votes:list']"
+          v-permission="['sys:privi:team-votes:list']"
           v-model="request.teamVotesId"
           size="small"
           :placeholder="t('fields.teamName')"
@@ -103,7 +103,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:team-votes:export']"
+          v-permission="['sys:privi:team-votes:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
@@ -140,7 +140,7 @@
       <el-table-column
         type="title"
         :label="t('fields.action')"
-        v-if="hasPermission(['sys:team-votes-records:cancel'])"
+        v-if="hasPermission(['sys:privi:team-votes-records:cancel'])"
       >
         <template #default="scope">
           <!-- <el-button
@@ -155,7 +155,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:team-votes-records:cancel']"
+            v-permission="['sys:privi:team-votes-records:cancel']"
             @click="removeVoteRecord(scope.row)"
           />
         </template>

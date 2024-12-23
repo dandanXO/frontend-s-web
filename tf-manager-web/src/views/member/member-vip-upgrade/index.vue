@@ -55,7 +55,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:vip-upgrade:export']"
+          v-permission="['sys:member:vip-upgrade:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}

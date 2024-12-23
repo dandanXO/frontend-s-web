@@ -3,18 +3,18 @@
     <div class="header-container" v-if="hasRole(['TENANT','ADMIN'])">
       <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:ip:create']"
+                   v-permission="['sys:site:ip:create']"
         >
           {{ t('fields.add') }}
         </el-button>
         <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit()" :disabled="uiControl.editBtn"
-                   v-permission="['sys:ip:update']"
+                   v-permission="['sys:site:ip:update']"
         >
           {{ t('fields.edit') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeIpLabel()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:ip:del']"
+                   v-permission="['sys:site:ip:del']"
         >
           {{ t('fields.delete') }}
         </el-button></div>
@@ -59,11 +59,11 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:ip:update'])|| hasPermission(['sys:ip:del']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:ip:update'])|| hasPermission(['sys:site:ip:del']))"
       >
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:ip:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:ip:del']" @click="removeIpLabel(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:ip:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:ip:del']" @click="removeIpLabel(scope.row)" />
         </template>
       </el-table-column>
     </el-table>

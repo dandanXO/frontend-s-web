@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.gameStepsSettings')" name="game-steps-setting" v-if="hasPermission(['sys:game-steps:list'])">
+    <el-tab-pane :label="t('fields.gameStepsSettings')" name="game-steps-setting" v-if="hasPermission(['sys:privi:game-steps:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.gameStepsRecords')" name="game-steps-records" v-if="hasPermission(['sys:game-steps-records:list'])">
+    <el-tab-pane :label="t('fields.gameStepsRecords')" name="game-steps-records" v-if="hasPermission(['sys:privi:game-steps-records:list'])">
       <RecordsTab />
     </el-tab-pane>
   </el-tabs>

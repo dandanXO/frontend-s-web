@@ -52,21 +52,21 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:privilege-blacklist:add']"
+          v-permission="['sys:member:privilege-blacklist:add']"
           @click="showDialog('CREATE')"
         >{{ t('fields.add') }}</el-button>
         <el-button
           icon="el-icon-upload"
           size="mini"
           type="success"
-          v-permission="['sys:privilege-blacklist:import']"
+          v-permission="['sys:member:privilege-blacklist:import']"
           @click="showDialog('IMPORT')"
         >
           {{ t('fields.massImport') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeBlacklist()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:privilege-blacklist:del']"
+                   v-permission="['sys:member:privilege-blacklist:del']"
         >
           {{ t('fields.delete') }}
         </el-button>
@@ -116,10 +116,10 @@
           :label="t('fields.operate')"
           align="right"
           fixed="right"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privilege-blacklist:del']))"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:member:privilege-blacklist:del']))"
         >
           <template #default="scope">
-            <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:privilege-blacklist:del']" @click="removeBlacklist(scope.row)" />
+            <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:member:privilege-blacklist:del']" @click="removeBlacklist(scope.row)" />
           </template>
         </el-table-column>
       </el-table>

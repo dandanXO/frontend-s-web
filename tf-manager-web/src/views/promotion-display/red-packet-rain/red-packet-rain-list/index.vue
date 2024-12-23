@@ -61,7 +61,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:red:packet:rain:add']"
+          v-permission="['sys:privi:red:packet:rain:add']"
           @click="showDialog()"
         >
           {{ t('fields.add') }}
@@ -71,7 +71,7 @@
           icon="el-icon-refresh"
           size="mini"
           type="primary"
-          v-permission="['sys:red:packet:rain:random']"
+          v-permission="['sys:privi:red:packet:rain:random']"
           @click="random"
         >
           {{ t('fields.randomMember') }}
@@ -95,7 +95,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:red:packet:rain:delete']"
+            v-permission="['sys:privi:red:packet:rain:delete']"
             v-if="scope.row.memberId === '0'"
             @click="removeRedPacketRain(scope.row)"
           />

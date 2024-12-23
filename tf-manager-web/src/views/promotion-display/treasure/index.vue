@@ -1,12 +1,12 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.keyRecord')" name="key-record" v-if="hasPermission(['sys:treasure:key:list'])">
+    <el-tab-pane :label="t('fields.keyRecord')" name="key-record" v-if="hasPermission(['sys:privi:treasure:key:list'])">
       <KeyTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.claimRecord')" name="claim-record" v-if="hasPermission(['sys:treasure:list'])">
+    <el-tab-pane :label="t('fields.claimRecord')" name="claim-record" v-if="hasPermission(['sys:privi:treasure:list'])">
       <ClaimTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.checkInRecord')" name="check-in-record" v-if="hasPermission(['sys:treasure:check-in:list'])">
+    <el-tab-pane :label="t('fields.checkInRecord')" name="check-in-record" v-if="hasPermission(['sys:privi:treasure:check-in:list'])">
       <CheckInTab />
     </el-tab-pane>
   </el-tabs>

@@ -30,18 +30,18 @@
       </div>
       <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:member-rebate-rule:create']"
+                   v-permission="['sys:site:member-rebate-rule:create']"
         >
           {{ t('fields.add') }}
         </el-button>
         <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit()" :disabled="uiControl.editBtn"
-                   v-permission="['sys:member-rebate-rule:update']"
+                   v-permission="['sys:site:member-rebate-rule:update']"
         >
           {{ t('fields.edit') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeMemberRebateRule()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:member-rebate-rule:del']"
+                   v-permission="['sys:site:member-rebate-rule:del']"
         >
           {{ t('fields.delete') }}
         </el-button>
@@ -166,11 +166,11 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:member-rebate-rule:update'])|| hasPermission(['sys:member-rebate-rule:del']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:member-rebate-rule:update'])|| hasPermission(['sys:site:member-rebate-rule:del']))"
       >
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:member-rebate-rule:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:member-rebate-rule:del']" @click="removeMemberRebateRule(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:member-rebate-rule:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:member-rebate-rule:del']" @click="removeMemberRebateRule(scope.row)" />
         </template>
       </el-table-column>
     </el-table>

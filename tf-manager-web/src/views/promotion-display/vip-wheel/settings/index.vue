@@ -19,31 +19,31 @@
   <el-form ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="200px" style="margin-top: 10px;">
     <el-row>
       <el-form-item :label="t('fields.dailyMax')" prop="dailyMax">
-        <el-input v-if="hasPermission(['sys:vip-wheel:update'])" v-model="form.dailyMax" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:vip-wheel:update'])" v-model="form.dailyMax" style="width: 350px;" />
         <span v-else>{{ form.dailyMax }}</span>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.depositPerSpin')" prop="depositPerSpin">
-        <el-input v-if="hasPermission(['sys:vip-wheel:update'])" v-model="form.depositPerSpin" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:vip-wheel:update'])" v-model="form.depositPerSpin" style="width: 350px;" />
         <span v-else>{{ form.depositPerSpin }}</span>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.defaultBonus')" prop="defaultBonus">
-        <el-input v-if="hasPermission(['sys:vip-wheel:update'])" v-model="form.defaultBonus" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:vip-wheel:update'])" v-model="form.defaultBonus" style="width: 350px;" />
         <span v-else>{{ form.defaultBonus }}</span>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.sureWinBonus')" prop="sureWinBonus">
-        <el-input v-if="hasPermission(['sys:vip-wheel:update'])" v-model="form.sureWinBonus" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:vip-wheel:update'])" v-model="form.sureWinBonus" style="width: 350px;" />
         <span v-else>{{ form.sureWinBonus }}</span>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.sureWinMinSpin')" prop="sureWinMinSpin">
-        <el-input v-if="hasPermission(['sys:vip-wheel:update'])" v-model="form.sureWinMinSpin" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:vip-wheel:update'])" v-model="form.sureWinMinSpin" style="width: 350px;" />
         <span v-else>{{ form.sureWinMinSpin }}</span>
       </el-form-item>
     </el-row>
@@ -52,12 +52,12 @@
         <!-- <el-input v-model="form.params" style="width: 350px;" /> -->
         <div v-for="(item, index) in param" :key="index">
           <span class="param-label">{{ t('fields.bonus') }}:</span>
-          <el-input v-if="hasPermission(['sys:vip-wheel:update'])" class="param-input" v-model="item.bonus" />
+          <el-input v-if="hasPermission(['sys:privi:vip-wheel:update'])" class="param-input" v-model="item.bonus" />
           <span v-else class="param-label">{{ item.bonus }}</span>
 
           <span class="param-label">{{ t('fields.vipLevel') }}:</span>
           <el-select
-            v-if="hasPermission(['sys:vip-wheel:update'])"
+            v-if="hasPermission(['sys:privi:vip-wheel:update'])"
             v-model="item.vipLevel"
             multiple
             collapse-tags
@@ -77,13 +77,13 @@
           <span v-else class="param-label">{{ item.vipLevel }}</span>
 
           <span class="param-label">{{ t('fields.probability') }}:</span>
-          <el-input v-if="hasPermission(['sys:vip-wheel:update'])" class="param-input" v-model="item.probability" />
+          <el-input v-if="hasPermission(['sys:privi:vip-wheel:update'])" class="param-input" v-model="item.probability" />
           <span v-else class="param-label">{{ item.probability }}</span>
-          <el-button v-if="index === param.length - 1 && hasPermission(['sys:vip-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+          <el-button v-if="index === param.length - 1 && hasPermission(['sys:privi:vip-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                      @click="addParam()" plain
           >{{ t('fields.add') }}
           </el-button>
-          <el-button v-if="param.length > 1 && hasPermission(['sys:vip-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+          <el-button v-if="param.length > 1 && hasPermission(['sys:privi:vip-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                      @click="delParam(index)" plain
           >{{ t('fields.delete') }}
           </el-button>
@@ -91,7 +91,7 @@
       </el-form-item>
     </el-row>
     <div class="dialog-footer">
-      <el-button v-permission="['sys:vip-wheel:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
+      <el-button v-permission="['sys:privi:vip-wheel:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
     </div>
   </el-form>
 </template>
