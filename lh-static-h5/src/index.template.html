@@ -38,9 +38,6 @@
     </script>
 
     <script type="text/javascript">
-      if(localStorage.getItem('DARK_MODE') === 'true') {
-        document.body.style.background = 'black';
-      }
       //Call a Message to Parent (If App.)
       console.log("0411-11");
 
@@ -83,8 +80,11 @@
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
 
-            const updateUrlEvent = new CustomEvent("updateUrlEvent");
-            document.dispatchEvent(updateUrlEvent);
+            setTimeout(() => {
+              const updateUrlEvent = new CustomEvent("updateUrlEvent");
+              document.dispatchEvent(updateUrlEvent);
+            },250)
+
           } catch (error) {
             console.error("Error parsing message from Flutter:", error);
           }
@@ -155,8 +155,10 @@
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
 
-            const updateUrlEvent = new CustomEvent("updateUrlEvent");
-            document.dispatchEvent(updateUrlEvent);
+            setTimeout(() => {
+              const updateUrlEvent = new CustomEvent("updateUrlEvent");
+              document.dispatchEvent(updateUrlEvent);
+            },250)
           } catch (error) {
             alert("HAHAH ERROR HERRE.");
             console.error("Error parsing message from Flutter:", error);
