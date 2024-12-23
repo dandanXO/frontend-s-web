@@ -188,6 +188,7 @@ export default {
     loading_plsWait: "Loading... Please wait...",
     cancel: "Cancel",
     signOut: "Sign Out",
+    joinnow: "Join Now",
     back: "Back",
     moreGames: "More Games",
     addCash: "Add Cash",

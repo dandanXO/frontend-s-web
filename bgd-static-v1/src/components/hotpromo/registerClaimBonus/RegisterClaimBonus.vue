@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <div class="bonus-claim-button" :class="{ disable: promoData.claimableBonus <= 0 }" @click="claimBonus">
+        <div class="bonus-claim-button" :class="{ disable: promoData.idVerificationStatus===true && promoData.claimableBonus <= 0 }" @click="claimBonus">
           Claim now
         </div>
       </div>
@@ -155,16 +155,16 @@ const handleReceiveBonus = async () => {
   isCongratsModalV2.value = false;
 };
 
-const loadAppTabs = () => {
-  api.get("/opt-session/getPakAppTabs").then((res) => {
-    if (res.code === 0) {
-      const { data } = res;
-      if (data && data.hasOwnProperty("ftd")) {
-        store.ftd = data.ftd;
-      }
-    }
-  });
-};
+// const loadAppTabs = () => {
+//   api.get("/opt-session/getPakAppTabs").then((res) => {
+//     if (res.code === 0) {
+//       const { data } = res;
+//       if (data && data.hasOwnProperty("ftd")) {
+//         store.ftd = data.ftd;
+//       }
+//     }
+//   });
+// };
 
 const getTasks = async () => {
   eventapi.get("/session/register-trial-fund/init?promoCode=bgd-register-trial-fund").then((res) => {
@@ -175,7 +175,7 @@ const getTasks = async () => {
   });
 };
 onMounted(() => {
-  loadAppTabs();
+  // loadAppTabs();
   getTasks();
 });
 </script>
