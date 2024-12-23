@@ -10,15 +10,21 @@
         <div class="bonus-info">
           <div class="bonus-info-item">
             <div class="label">Trial bonus balance:</div>
-            <div class="value">0.00</div>
+            <div class="value">
+              {{ promoData.trialBalance ? convertToCommaAmount(promoData.trialBalance) : "0.00" }}
+            </div>
           </div>
           <div class="bonus-info-item">
             <div class="label">Amount available:</div>
-            <div class="value">0.00</div>
+            <div class="value">
+              {{ promoData.claimableBonus ? convertToCommaAmount(promoData.claimableBonus) : "0.00" }}
+            </div>
           </div>
           <div class="bonus-info-item">
             <div class="label">Amount to be unlocked:</div>
-            <div class="value">0.00</div>
+            <div class="value">
+              {{ promoData.pendingBonus ? convertToCommaAmount(promoData.pendingBonus) : "0.00" }}
+            </div>
           </div>
         </div>
 
@@ -30,160 +36,91 @@
               tasks to receive it
             </div>
             <div class="bonus-progress-title-right">
-              <img src="./img/clock.png" alt="">
-              Thirty Days</div>
+              <img src="./img/clock.png" alt="" />
+              {{ promoDaysLeft }} Days
+            </div>
           </div>
           <div class="bonus-progress-bar">
-            <div class="bonus-progress-bar-fill"></div>
+            <div class="bonus-progress-bar-fill" :style="{ width: totalProgressBarWidth + '%' }"></div>
           </div>
           <div class="bonus-progress-text">
-            <div class="bonus-progress-text-left">Completed： 1</div>
-            <div class="bonus-progress-text-right">Target: 5</div>
+            <div class="bonus-progress-text-left">Completed： {{ noOfTasksCompleted }}</div>
+            <div class="bonus-progress-text-right">Target: {{ promoData.tasks?.length }}</div>
           </div>
         </div>
 
-        <div class="bonus-claim-button">Claim now</div>
+        <div class="bonus-claim-button" :class="{ disable: promoData.claimableBonus <= 0 }" @click="claimBonus">
+          Claim now
+        </div>
       </div>
     </div>
-    <div class="task-container">
+    <div class="task-container" v-for="(task, index) in promoData.tasks" :key="task.code">
       <div class="task-container-header">
-        Task 1: Recharge to unlock
-        <div class="status-button progress">in progress</div>
+        Task {{ index + 1 }}: {{ task.name }}
+        <div class="status-button progress">
+          {{ task.memberTaskStatus.charAt(0) + task.memberTaskStatus.slice(1).toLowerCase() }}
+        </div>
       </div>
       <div class="task-container-content">
-        Users need to complete the minimum recharge before they can unlock the withdrawal rights for trial funds and
-        earnings.
+        {{ task.rules }}
       </div>
 
       <div class="bonus-progress">
         <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill"></div>
+          <div
+            class="bonus-progress-bar-fill"
+            :style="{ width: task.memberDepositStatus / task.depositRequired + '%' }"
+          ></div>
         </div>
         <div class="bonus-progress-text">
-          <div class="bonus-progress-text-left">Already recharged: 40</div>
-          <div class="bonus-progress-text-right">Amount: 200</div>
+          <div class="bonus-progress-text-left">Already recharged: {{ task.memberDepositStatus }}</div>
+          <div class="bonus-progress-text-right">Amount: {{ task.depositRequired }}</div>
         </div>
       </div>
       <div class="task-container-footer">
-        Minimum recharge amount: 200, which can unlock all trial funds and income withdrawal rights.
-        <br />
-        <span class="highlight">30% (recharge + bonus requires double turnover)</span>
-      </div>
-    </div>
-
-    <div class="task-container">
-      <div class="task-container-header">
-        Task 2: Invitation Unlocked
-        <div class="status-button completed">Completed</div>
-      </div>
-      <div class="task-container-content">
-        Invite 1 friend, and the friend's recharge is ≥200
-      </div>
-
-      <div class="bonus-progress">
-        <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill"></div>
-        </div>
-        <div class="bonus-progress-text">
-          <div class="bonus-progress-text-left">Already recharged: 40</div>
-          <div class="bonus-progress-text-right">Amount: 200</div>
-        </div>
-      </div>
-      <div class="task-container-footer">
-        Invite 1 friend, and the friend's recharge is ≥200, you can unlock all trial funds and income withdrawal rights.
-        <br />
-        <span class="highlight">30% (bonus needs to be rolled over twice)</span>
-      </div>
-    </div>
-
-    <div class="task-container">
-      <div class="task-container-header">
-        Task 3: Invitation Unlocked
-        <div class="status-button progress">in progress</div>
-      </div>
-      <div class="task-container-content">
-        Invite 1 friend again, and the friend's recharge is ≥200
-      </div>
-
-      <div class="bonus-progress">
-        <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill"></div>
-        </div>
-        <div class="bonus-progress-text">
-          <div class="bonus-progress-text-left">Already recharged: 40</div>
-          <div class="bonus-progress-text-right">Amount: 200</div>
-        </div>
-      </div>
-      <div class="task-container-footer">
-        Invite a friend again, and the friend's recharge is ≥200, you can unlock all trial funds and income withdrawal rights.
-        <br />
-        <span class="highlight">40% (bonus needs to be rolled over twice)</span>
-      </div>
-    </div>
-
-    <div class="task-container">
-      <div class="task-container-header">
-        Task 4: Additional rewards
-        <div class="status-button not-completed">Not completed</div>
-      </div>
-      <div class="task-container-content">
-        Invite 1 friend again, and the friend's recharge is ≥200
-      </div>
-
-      <div class="bonus-progress">
-        <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill"></div>
-        </div>
-        <div class="bonus-progress-text">
-          <div class="bonus-progress-text-left">Already recharged: 40</div>
-          <div class="bonus-progress-text-right">Amount: 200</div>
-        </div>
-      </div>
-      <div class="task-container-footer">
-        Invite a friend again, and the friend's recharge is ≥200, you can unlock all trial funds and income withdrawal rights.
-        <br />
-        <span class="highlight">40% (bonus needs to be rolled over twice)</span>
-      </div>
-    </div>
-
-    <div class="task-container">
-      <div class="task-container-header">
-        Task 5: Additional rewards
-        <div class="status-button completed">Completed</div>
-      </div>
-      <div class="task-container-content">
-        Invite a friend again, and the friend recharges ≥200, and you will get an additional 150 cashback.
-      </div>
-
-      <div class="bonus-progress">
-        <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill"></div>
-        </div>
-        <div class="bonus-progress-text">
-          <div class="bonus-progress-text-left">Already recharged: 40</div>
-          <div class="bonus-progress-text-right">Amount: 200</div>
-        </div>
-      </div>
-      <div class="task-container-footer">
-        Invite a friend again, and the friend recharges ≥200, and you will get an additional 150 cashback.
-        <br />
-        <span class="highlight">(The bonus needs to be doubled)</span>
+        {{ task.remark }}
+        <!-- <br />
+        <span class="highlight">30% (recharge + bonus requires double turnover)</span> -->
       </div>
     </div>
   </div>
+  <q-dialog v-model="isNameAuthModal">
+    <NameAuthModal @closeDialog="isNameAuthModal = false" />
+  </q-dialog>
+
+  <q-dialog v-model="isCongratsModalV2" @hide="handleReceiveBonus">
+    <div class="congrats-container">
+      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
+      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header-v2.png" /></div>
+      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupon.png" /></div>
+      <div class="congrats-title">Congratulations! You have unlocked bonuses</div>
+      <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
+
+      <div class="congrats-button">
+        <q-btn no-caps unelevated class="recharge-btn" @click="handleReceiveBonus">
+          {{ $t("btn.receive") }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
-import { computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { computed, onMounted, ref } from "vue";
 import { userStore } from "src/stores";
-import { api } from "boot/axios";
-
-const router = useRouter();
+import { api, eventapi } from "boot/axios";
+import NameAuthModal from "src/components/modal/NameAuthModal.vue";
+import { convertToCommaAmount } from "src/boot/utils";
+import moment from "moment";
 
 const store = userStore();
 
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
+const promoData = ref([]);
+const isNameAuthModal = ref(false);
+const isCongratsModalV2 = ref(false);
+const bonusAmount = ref(0);
+const promoDaysLeft = ref(0);
 
 const isFtdPromoEnded = computed(() => {
   if (store.ftd !== "OPEN") {
@@ -192,9 +129,30 @@ const isFtdPromoEnded = computed(() => {
   return false;
 });
 
-const gotoDepositPage = () => {
-  const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
-  router.push(redirectPage);
+const noOfTasksCompleted = computed(() => {
+  return promoData.value?.tasks?.filter((item) => item.status === "COMPLETED" || item.status === "CLAIMED").length || 0;
+});
+
+const totalProgressBarWidth = computed(() => {
+  return noOfTasksCompleted.value / promoData.value.tasks?.length ?? 0;
+});
+
+const claimBonus = () => {
+  if (!promoData.value.idVerificationStatus) {
+    isNameAuthModal.value = true;
+  } else {
+    eventapi.post("/session/register-trial-fund/claimTask?promoCode=bgd-register-trial-fund").then((res) => {
+      if (res.code === 0) {
+        isCongratsModalV2.value = true;
+        bonusAmount.value = res.data;
+      }
+    });
+  }
+};
+
+const handleReceiveBonus = async () => {
+  await getTasks();
+  isCongratsModalV2.value = false;
 };
 
 const loadAppTabs = () => {
@@ -208,8 +166,17 @@ const loadAppTabs = () => {
   });
 };
 
+const getTasks = async () => {
+  eventapi.get("/session/register-trial-fund/init?promoCode=bgd-register-trial-fund").then((res) => {
+    promoData.value = res.data;
+
+    const expiryDate = moment.utc(promoData.value.expiryDate, "YYYY-MM-DD HH:mm:ss");
+    promoDaysLeft.value = expiryDate.diff(moment.utc(), "days");
+  });
+};
 onMounted(() => {
   loadAppTabs();
+  getTasks();
 });
 </script>
 <style lang="scss" scoped>
@@ -282,6 +249,14 @@ onMounted(() => {
       margin: 12px;
       border-radius: 28px;
       padding: 12px 0;
+      &.disable {
+        background: #d3d3d3;
+        box-shadow: none;
+        color: #a0a0a0;
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.6;
+      }
     }
   }
 }
@@ -315,8 +290,8 @@ onMounted(() => {
 
       &.not-completed {
         color: #3b3b3b;
-      background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
-        linear-gradient(90deg, #888888 0%, #a0a0a0 100%);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
+          linear-gradient(90deg, #888888 0%, #a0a0a0 100%);
       }
 
       &.completed {
@@ -408,5 +383,102 @@ onMounted(() => {
 
 .highlight {
   color: #fff96f;
+}
+
+.congrats-button {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.congrats-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.congrats-container {
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+
+  &:before {
+    content: "";
+    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -150px;
+  }
+
+  .congrats-header {
+    display: flex;
+    justify-content: center;
+    margin-top: -18px;
+    z-index: 2;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-coupons {
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      max-width: 240px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 45px;
+    text-align: center;
+    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 0 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    margin-top: 16px;
+  }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.recharge-btn {
+  background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000a01;
 }
 </style>
