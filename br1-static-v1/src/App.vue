@@ -309,31 +309,28 @@ export default defineComponent({
         alert("RECEIVE MSG");
         console.log("Get push Messages:", msgData);
       });
+
       //  Push initialization
       window.MTpushInterface.init({
         appkey: "87702ef148c8418859cc7793", // Required. See above for application information
-        user_str: "adminDemo", // Required. User identifier, which identifies the user
+        user_str: randomUid(), // Required. User identifier, which identifies the user
         fail(err) {
           console.log("Failed to create an online push", err);
         },
         success(data) {
-          console.log("Success Init Engage Lab.");
+          alert("Success Init Engage Lab.");
           console.log("The online push is created successfully. Procedure", data);
-        },
-        webPushcallback(code, tip) {
-          console.log("The status code and prompt obtained by the user", code, tip);
-        },
-        swUrl: "", //The default **like this:**"/sw.min." + sdkEnv.version + ".js" ,This configuration item is the serverworker file address, the domain name must be the current domain name, and the path determines the serverworker scope.
-        canGetInfo(data) {
-          //Some configuration data that can be notified at this point is available to RegId after this callback function
-          console.log(data); //Related Configuration Information
-          console.log("get the RegId", window.MTpushInterface.getRegistrationID());
-        },
-        custom: (fuc) => {
-          //When using a custom prompt configuration, you need to manually call fuc() to request notification rights/**permission**. The request notification permission function can only be obtained through custom.
-          //fuc() Notification rights are requested when invoked/**it will get notification permission when invoked**
         }
       });
+
+      setTimeout(() => {
+        const thestatus = window.MTpushInterface.getPushAuthority();
+        console.log(thestatus);
+
+        const perm = window.MTpushInterface.getWebPermission();
+        console.log(perm);
+        alert(MTpushInterface.getRegistrationID());
+      }, 2000);
     };
 
     onMounted(async () => {
