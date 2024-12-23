@@ -113,6 +113,7 @@
       v-if="list.redirectUrl === 'lh1-christmas-gashapon'"
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
+      :promo-dates="list.param.date"
     />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">

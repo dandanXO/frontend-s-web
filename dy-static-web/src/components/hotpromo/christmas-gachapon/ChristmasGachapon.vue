@@ -19,14 +19,14 @@
         </div>
       </div>
     </div> -->
-    <div class="marquee-container">
+    <div v-if="shouldShowMarquee" class="marquee-container">
       <!-- Top Row -->
       <div class="marquee-row top-row" :style="{ animationDuration: topAnimationDuration + 's' }" ref="topRow">
         <div class="marquee-item" v-for="(item, index) in topRecords.slice(0, 20)" :key="'top-' + index">
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
           <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
         </div>
-        <div class="marquee-item" v-for="(item, index) in topRecords.slice(20, topRecords.length)" :key="'top-' + index">
+        <div v-if="topRecords.length > 20" class="marquee-item" v-for="(item, index) in topRecords.slice(20, topRecords.length)" :key="'top-' + index">
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
           <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
         </div>
@@ -201,7 +201,7 @@ import { getDrawPrizes, initDrawEvent, getLatestClaimedBonusList, getDrawRecord 
 import { ResponseCode } from "@/api/response";
 const store = userStore();
 const isLoading = ref(false);
-const props = defineProps(["promoCode", "promoRules"]);
+const props = defineProps(["promoCode", "promoRules", "promoDate"]);
 const promoCode = ref(props.promoCode);
 const rules = ref(props.promoRules);
 const notify = useNotify();
@@ -421,7 +421,7 @@ const init = () => {
     }
   })
 };
-const topRecords = computed(() => allRecords.value.slice(0, middleIndex.value));
+const topRecords = computed(() => allRecords.value);
 const bottomRecords = computed(() => allRecords.value.slice(middleIndex.value));
 const topRow = ref(null);
 const bottomRow = ref(null);
@@ -455,7 +455,14 @@ const adjustMarqueeSpeed = () => {
 onUpdated(() => {
   nextTick(adjustMarqueeSpeed);  // Recalculate speed if content or layout changes
 });
-
+const targetDate = computed(() => {
+  const validDate = moment(props.promoDate, 'YYYY-MM-DD', true); // Strict parsing
+  return validDate.isValid() ? validDate.toDate() : null; // Return JS Date or null if invalid
+});
+const shouldShowMarquee = computed(() => {
+  const currentDate = new Date();
+  return targetDate.value && currentDate >= targetDate.value && topRecords.value.length > 20;
+});
 onMounted(() => {
   if (!store.token) {
     return;

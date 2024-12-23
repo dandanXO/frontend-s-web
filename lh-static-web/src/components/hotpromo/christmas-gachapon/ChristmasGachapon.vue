@@ -19,7 +19,7 @@
         </div>
       </div>
     </div> -->
-    <div class="marquee-container">
+    <div v-if="shouldShowMarquee" class="marquee-container">
       <!-- Top Row -->
       <div class="marquee-row top-row" :style="{ animationDuration: topAnimationDuration + 's' }" ref="topRow">
         <div class="marquee-item" v-for="(item, index) in topRecords.slice(0, 20)" :key="'top-' + index">
@@ -454,6 +454,15 @@ const adjustMarqueeSpeed = () => {
 
 onUpdated(() => {
   nextTick(adjustMarqueeSpeed);  // Recalculate speed if content or layout changes
+});
+
+const targetDate = computed(() => {
+  const validDate = moment(props.promoDate, 'YYYY-MM-DD', true); // Strict parsing
+  return validDate.isValid() ? validDate.toDate() : null; // Return JS Date or null if invalid
+});
+const shouldShowMarquee = computed(() => {
+  const currentDate = new Date();
+  return targetDate.value && currentDate >= targetDate.value && topRecords.value.length > 20;
 });
 
 onMounted(() => {
