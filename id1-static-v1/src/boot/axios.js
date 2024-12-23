@@ -1,6 +1,6 @@
 import axios from "axios";
 import LocalStorage from "@/boot/local-storage";
-import { getRndInteger, isAndroid } from "@/boot/utils";
+import { getRndInteger, isAndroid, isInPwa } from "@/boot/utils";
 import { createPinia } from "pinia";
 import { Dialog, Loading, Notify, SessionStorage } from "quasar";
 import { userStore } from "src/stores";
@@ -76,7 +76,7 @@ export default boot(({ app, router }) => {
     }
 
     let token;
-    if (isAndroid()) {
+    if (isAndroid() || isInPwa()) {
       token = LocalStorage.getItem("TOKEN");
     } else {
       token = SessionStorage.getItem("TOKEN");
