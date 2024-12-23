@@ -318,7 +318,7 @@ export default defineComponent({
           console.log("Failed to create an online push", err);
         },
         success(data) {
-          console.log("Success Init Engage Lab.");
+          alert("Success Init Engage Lab.");
           console.log("The online push is created successfully. Procedure", data);
         },
         webPushcallback(code, tip) {
@@ -328,7 +328,7 @@ export default defineComponent({
         canGetInfo(data) {
           //Some configuration data that can be notified at this point is available to RegId after this callback function
           console.log(data); //Related Configuration Information
-          console.log("get the RegId", window.MTpushInterface.getRegistrationID());
+          alert("get the RegId", window.MTpushInterface.getRegistrationID());
         },
         custom: (fuc) => {
           //When using a custom prompt configuration, you need to manually call fuc() to request notification rights/**permission**. The request notification permission function can only be obtained through custom.
@@ -364,7 +364,9 @@ export default defineComponent({
         trackH5Affiliate();
       }
 
-      if (isInPwa()) {
+      const hostname= window.location.hostname;
+      if (isInPwa() || hostname.includes("7ffoz.cc")) {
+        console.log("Engagel labe here")
         initEngageLabPush();
       }
 
