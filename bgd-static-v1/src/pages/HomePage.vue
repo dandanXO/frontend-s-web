@@ -474,8 +474,12 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
-                  <div>
-                    <img class="img-maintenance" src="../assets/images/index/live/item-game-maintenance.jpg" />
+                  <div style="min-height: 200px">
+                    <img
+                      v-if="item.underMaintenance"
+                      class="img-maintenance"
+                      src="../assets/images/index/live/item-game-maintenance.jpg"
+                    />
                     <div
                       class="platform-live-item--img"
                       :style="{
@@ -1070,10 +1074,11 @@
           <div class="platform-game-container sport-platform">
             <template v-for="(item, index) in sport" :key="index">
               <div
+                style="min-height: 120px"
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/sport/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div
                   class="platform-game-item--img"
                   :style="{
