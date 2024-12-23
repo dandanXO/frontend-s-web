@@ -8,7 +8,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
-import { isAndroid } from "@/boot/utils";
+import { isAndroid, isInPwa } from "@/boot/utils";
 import { userStore } from "@/stores";
 import { useUI } from "@/stores/ui";
 import { Device } from "@capacitor/device";
@@ -17,6 +17,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import { domainLists } from "./constant";
 
 export default defineComponent({
   name: "App",
@@ -126,22 +127,39 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      var affiliateCode = "77A4DF";
+      const hostname = window.location.hostname.replace("www.", "");
+      const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "77A4DF";
 
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-        if (res.code === 0) {
-          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-          if (res.data.adjust_register_event) {
-            ui.adjust_register_event = res.data.adjust_register_event;
+      const track = () => {
+        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+            // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
           }
-          affAppToken.value = res.data.adjust_app_token;
-          initAdjustEventTrack();
-          // alert(affAppToken.value);
-        }
-      });
+        });
+      };
+
+      const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
+      if(isInPwa() && !isRefreshed) {
+        document.addEventListener(
+          "pwaEvent",
+          () => {
+            // affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+            // track();
+          },
+          { once: true }
+        );
+      } else {
+        track();
+      }
     };
 
     const onDeviceReady = () => {

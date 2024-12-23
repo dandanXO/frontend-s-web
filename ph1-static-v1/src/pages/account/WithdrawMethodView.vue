@@ -918,7 +918,7 @@ const filterBank = (val, update) => {
 
 const selectBankType = () => {
   currBankList.value = [];
-  bankCardField.bankId = undefined;
+  //bankCardField.bankId = undefined;
 
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;

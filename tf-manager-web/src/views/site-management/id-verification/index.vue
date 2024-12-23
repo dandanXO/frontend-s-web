@@ -1,6 +1,6 @@
 <template>
   <div class="roles-main">
-    <div class="header-container" v-if="hasRole(['TENANT','ADMIN'])">
+    <div class="header-container">
       <div class="search">
         <el-select
           v-model="request.siteId"
@@ -154,17 +154,13 @@ import { computed, nextTick, reactive, ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import { getSiteListSimple } from "../../../api/site";
 import { getIDVerificationList, updateVerificationStatus } from "../../../api/id-verification";
-import { hasRole } from "../../../utils/util";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const LOGIN_USER_NAME = computed(() => store.state.user.name);
-const site = ref(null);
 const idPhotoPath = process.env.VUE_APP_IMAGE + '/ID/';
 const request = reactive({
   siteId: null,
@@ -198,15 +194,11 @@ const page = reactive({
 });
 
 function resetQuery() {
-  request.siteId = sites.list[0].id;
+  request.siteId = store.state.user.siteId
   request.status = null;
   request.loginName = null;
   request.size = 30;
   request.current = 0;
-  page.pages = 0;
-  page.records = [];
-  page.pagingState = '';
-  page.loading = false;
 }
 
 const form = reactive({
@@ -319,14 +311,8 @@ watch(() => request.siteId, () => {
   form.siteId = request.siteId
 })
 onMounted(async () => {
-  if (hasRole(['TENANT', 'ADMIN'])) {
-    await loadSites();
-    await loadVerificationList(true);
-    if (LOGIN_USER_TYPE.value === TENANT.value) {
-      site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
-      request.siteId = site.value.id;
-    }
-  }
+  await loadSites();
+  request.siteId = store.state.user.siteId
 });
 
 </script>

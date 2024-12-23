@@ -126,7 +126,7 @@
 
 <script setup>
 import { api } from "@/boot/axios";
-import { convertToCommaAmount, isAndroid } from "@/boot/utils";
+import { convertToCommaAmount, isAndroid, isInPwa } from "@/boot/utils";
 import { userStore } from "@/stores/index";
 import { Platform } from "quasar";
 import { computed, onMounted, ref } from "vue";
@@ -197,7 +197,8 @@ const checkTopDownloadAppear = () => {
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
-      omitSites.includes(location.host)
+      omitSites.includes(location.host) ||
+      isInPwa()
     ) {
       topDownload.value = false;
     } else {
