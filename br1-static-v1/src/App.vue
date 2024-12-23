@@ -306,7 +306,7 @@ export default defineComponent({
       //Get push messages (web push, browser vendor channel)/"Callback function when receive the message from web push, browser channel"
       window.MTpushInterface.onMsgReceive((msgData) => {
         //msgData Data structure{data:{xxx},type:0} type:0 is the engagelab channel and 1 is the system channel
-        alert("RECEIVE MSG");
+        // alert("RECEIVE MSG");
         console.log("Get push Messages:", msgData);
       });
 
@@ -318,7 +318,7 @@ export default defineComponent({
           console.log("Failed to create an online push", err);
         },
         success(data) {
-          alert("Success Init Engage Lab.");
+          // alert("Success Init Engage Lab.");
           console.log("The online push is created successfully. Procedure", data);
         }
       });
@@ -329,7 +329,7 @@ export default defineComponent({
 
         const perm = window.MTpushInterface.getWebPermission();
         console.log(perm);
-        alert(MTpushInterface.getRegistrationID());
+        // alert(MTpushInterface.getRegistrationID());
       }, 2000);
     };
 
