@@ -95,6 +95,7 @@
       v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
+      :promo-date="listParam.date"
     />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
