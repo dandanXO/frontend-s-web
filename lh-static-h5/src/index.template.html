@@ -108,6 +108,9 @@
             if (returnJson && returnJson.upImg) {
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
+
+            const updateUrlEvent = new CustomEvent("updateUrlEvent");
+            document.dispatchEvent(updateUrlEvent);
           }
         });
       } else if (

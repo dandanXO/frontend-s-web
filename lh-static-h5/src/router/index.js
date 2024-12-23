@@ -3,6 +3,7 @@ import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
+import { useQuasar } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 
@@ -87,12 +88,19 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/viptest" ||
-      to.path === "/privilege/invite"
+      to.path === "/privilege/invite" ||
+      to.path === "/affiliatepage"
     ) {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
         SessionStorage.set("TOKEN", to.query.token);
+      }
+
+      if (to.query.dark) {
+        localStorage.setItem("DARK_MODE", true);
+        const $q = useQuasar();
+        $q.dark.set(true);
       }
 
       user.token = to.query.token;
