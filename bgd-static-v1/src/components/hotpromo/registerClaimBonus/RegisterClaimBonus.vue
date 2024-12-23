@@ -32,7 +32,7 @@
           <div class="bonus-progress-title">
             <div class="bonus-progress-title-left">
               Complete
-              <span class="highlight">1/5</span>
+              <span class="highlight">3</span>
               tasks to receive it
             </div>
             <div class="bonus-progress-title-right">
@@ -45,7 +45,7 @@
           </div>
           <div class="bonus-progress-text">
             <div class="bonus-progress-text-left">Completed： {{ noOfTasksCompleted }}</div>
-            <div class="bonus-progress-text-right">Target: {{ promoData.tasks?.length }}</div>
+            <div class="bonus-progress-text-right">Target: 3</div>
           </div>
         </div>
 
@@ -61,7 +61,9 @@
     <div class="task-container" v-for="(task, index) in promoData.tasks" :key="task.code">
       <div class="task-container-header">
         Task {{ index + 1 }}: {{ task.name }}
-        <div class="status-button progress">
+        <div class="status-button"
+          :class="(task.memberTaskStatus==='COMPLETED' || task.memberTaskStatus==='CLAIMED') ? 'completed' : 'progress'"
+        >
           {{ task.memberTaskStatus.charAt(0) + task.memberTaskStatus.slice(1).toLowerCase() }}
         </div>
       </div>
@@ -134,13 +136,21 @@ const isFtdPromoEnded = computed(() => {
 });
 
 const noOfTasksCompleted = computed(() => {
-  return promoData.value?.tasks?.filter((item) => item.status === "COMPLETED" || item.status === "CLAIMED").length || 0;
+  return promoData.value?.tasks?.filter((item , index) => index <= 2 && (item.memberTaskStatus === "COMPLETED" || item.memberTaskStatus === "CLAIMED")).length || 0;
 });
 
 const totalProgressBarWidth = computed(() => {
   const tasksLength = promoData.value.tasks?.length || 0;
-  const calculatedVal = tasksLength ? noOfTasksCompleted.value / tasksLength : 0;
+  var taskSize = 0;
+  if(noOfTasksCompleted.value === 1){
+    taskSize = 0.3;
+  }else if(noOfTasksCompleted.value === 2){
+    taskSize = 0.6;
+  }else  if(noOfTasksCompleted.value === 3){
+    taskSize = 1;
+  }
 
+  const calculatedVal = tasksLength ? taskSize : 0;
   return !isNaN(calculatedVal) ? calculatedVal * 100 : 0;
 });
 
