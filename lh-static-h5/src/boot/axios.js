@@ -482,8 +482,7 @@ function isInApp() {
 document.addEventListener(
   "updateUrlEvent",
   () => {
-    console.log("Okkk");
-    alert("updateUrlEvent!");
+    alert("updateUrlEvent 22");
 
     const RstUrl = localStorage.getItem(LH_H5_RST_URL);
     const EvtUrl = localStorage.getItem(LH_H5_EVT_URL);
