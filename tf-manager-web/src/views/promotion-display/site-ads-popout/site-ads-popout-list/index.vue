@@ -76,7 +76,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:ads-popout:add']"
+          v-permission="['sys:promo:ads-popout:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -85,7 +85,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:ads-popout:del']"
+          v-permission="['sys:promo:ads-popout:del']"
           @click="removeAdsPopout()"
           :disabled="uiControl.removeBtn"
         >
@@ -253,7 +253,7 @@
       <el-table-column prop="title" :label="t('fields.title')" />
       <el-table-column prop="frequency" :label="t('fields.frequency')" />
       <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:ads-popout:update:state'])">
+      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:promo:ads-popout:update:state'])">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
@@ -273,20 +273,20 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:ads-popout:update'])|| hasPermission(['sys:ads-popout:del'])">
+      <el-table-column type="title" :label="t('fields.action')" v-if="hasPermission(['sys:promo:ads-popout:update'])|| hasPermission(['sys:promo:ads-popout:del'])">
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:ads-popout:update']"
+            v-permission="['sys:promo:ads-popout:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:ads-popout:del']"
+            v-permission="['sys:promo:ads-popout:del']"
             @click="removeAdsPopout(scope.row)"
           />
         </template>

@@ -64,7 +64,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:bb-dacha:add']"
+          v-permission="['sys:privi:bb-dacha:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -383,7 +383,7 @@
         prop="toShow"
         :label="t('fields.show')"
         width="150"
-        v-if="hasPermission(['sys:bb-dacha:update'])"
+        v-if="hasPermission(['sys:privi:bb-dacha:update'])"
       >
         <template #default="scope">
           <el-switch
@@ -441,13 +441,13 @@
         :label="t('fields.operate')"
         align="center"
         width="450"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:bb-dacha:update']) || hasPermission(['sys:bb-dacha:list']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:bb-dacha:update']) || hasPermission(['sys:privi:bb-dacha:list']))"
       >
         <template #default="scope">
           <el-button
             size="small"
             type="primary"
-            v-permission="['sys:bb-dacha:update']"
+            v-permission="['sys:privi:bb-dacha:update']"
             @click="showEdit(scope.row)"
             style="cursor: pointer"
           >
@@ -456,7 +456,7 @@
           <el-button
             size="small"
             type="warning"
-            v-permission="['sys:bb-dacha:list']"
+            v-permission="['sys:privi:bb-dacha:list']"
             @click="showDetails(scope.row)"
             style="cursor: pointer"
           >
@@ -466,7 +466,7 @@
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="success"
-            v-permission="['sys:bb-dacha:update']"
+            v-permission="['sys:privi:bb-dacha:update']"
             @click="showEnd(scope.row)"
             style="cursor: pointer; margin-left: 5px;"
           >
@@ -476,7 +476,7 @@
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="danger"
-            v-permission="['sys:bb-dacha:update']"
+            v-permission="['sys:privi:bb-dacha:update']"
             @click="cancel(scope.row.id)"
             style="cursor: pointer; margin-left: 5px"
           >
@@ -486,7 +486,7 @@
             v-if="scope.row.status === 'CANCEL' || scope.row.status === 'ENDED'"
             size="small"
             type="success"
-            v-permission="['sys:bb-dacha:update']"
+            v-permission="['sys:privi:bb-dacha:update']"
             @click="showEnd(scope.row)"
             style="cursor: pointer; margin-left: 5px;"
           >

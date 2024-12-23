@@ -77,7 +77,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:pm:add']"
+          v-permission="['sys:site:pm:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -86,7 +86,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:pm:del']"
+          v-permission="['sys:site:pm:del']"
           @click="removeSystemMessage()"
           :disabled="uiControl.removeBtn"
         >
@@ -482,7 +482,7 @@
               icon="el-icon-remove"
               size="mini"
               type="danger"
-              v-permission="['sys:pm:del']"
+              v-permission="['sys:site:pm:del']"
               @click="removeSystemMessage(scope.row)"
             />
           </div>

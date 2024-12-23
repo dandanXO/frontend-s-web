@@ -60,7 +60,7 @@
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:loss-rebate-record:rebate']" @click="distributeRebate()">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:promo:loss-rebate-record:rebate']" @click="distributeRebate()">
             {{ t('fields.distributeRebate') }}
           </el-button>
           <el-button
@@ -156,14 +156,14 @@
           align="center"
           fixed="right"
           width="220"
-          v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:loss-rebate-record:update'])"
+          v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:promo:loss-rebate-record:update'])"
         >
           <template #default="scope">
             <el-button
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:loss-rebate-record:update']"
+              v-permission="['sys:promo:loss-rebate-record:update']"
               @click="showEdit(scope.row)"
             >
               {{ t('fields.adjustAmount') }}

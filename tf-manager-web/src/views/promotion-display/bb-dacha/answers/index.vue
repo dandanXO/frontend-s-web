@@ -67,7 +67,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:bb-dacha-answer:export']"
+          v-permission="['sys:privi:bb-dacha-answer:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
@@ -153,12 +153,12 @@
           <span v-else>{{ scope.row.answerOne }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:bb-dacha-answer:update'])">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:privi:bb-dacha-answer:update'])">
         <template #default="scope">
           <el-button
             type="primary"
             size="small"
-            v-permission="['sys:bb-dacha-answer:update']"
+            v-permission="['sys:privi:bb-dacha-answer:update']"
             @click="showUpdate(scope.row)"
             style="cursor: pointer"
           >

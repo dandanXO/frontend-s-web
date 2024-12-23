@@ -479,6 +479,22 @@ function isInApp() {
   return false;
 }
 
+document.addEventListener(
+  "updateUrlEvent",
+  () => {
+    alert("updateUrlEvent 22");
+
+    const RstUrl = localStorage.getItem(LH_H5_RST_URL);
+    const EvtUrl = localStorage.getItem(LH_H5_EVT_URL);
+    const CrtUrl = localStorage.getItem(LH_H5_CRT_URL);
+
+    api.defaults.baseURL = RstUrl;
+    eventapi.defaults.baseURL = EvtUrl;
+    cashier.defaults.baseURL = CrtUrl;
+  },
+  { once: true }
+);
+
 export default boot(({ app, router }) => {
   const onRequest = (config) => {
     if (store.token) {

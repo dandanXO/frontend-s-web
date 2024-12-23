@@ -66,7 +66,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:telegram-user:add']"
+          v-permission="['sys:site:telegram-user:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -75,7 +75,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:telegram-user:del']"
+          v-permission="['sys:site:telegram-user:del']"
           @click="removeLimit()"
           :disabled="uiControl.removeBtn"
         >
@@ -184,7 +184,7 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:telegram-user:approve']) || hasPermission(['sys:telegram-user:edit']) || hasPermission(['sys:telegram-user:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:telegram-user:approve']) || hasPermission(['sys:telegram-user:edit']) || hasPermission(['sys:site:telegram-user:del']) )"
       >
         <template #default="scope">
           <el-button
@@ -200,14 +200,14 @@
             icon="el-icon-circle-check"
             size="mini"
             type="success"
-            v-permission="['sys:telegram-user:approve']"
+            v-permission="['sys:site:telegram-user:approve']"
             @click="showApprove(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:telegram-user:del']"
+            v-permission="['sys:site:telegram-user:del']"
             @click="removeLimit(scope.row)"
           />
         </template>

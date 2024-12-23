@@ -1203,6 +1203,7 @@ export default {
     latestFetchBetRecordTime: 'Latest Fetch Bet Record Time',
     level: 'Level',
     levelUpCredit: 'Level Up Credit',
+    levelUpReferFriendCount: 'Level Up Refer Friend Count',
     limitNumber: 'Limit Number',
     localCurrencyAmount: 'Local Currency Amount',
     lockStatus: 'Lock Status',

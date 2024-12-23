@@ -158,7 +158,7 @@
       </el-table-column>
       <el-table-column
         :label="t('fields.operate')"
-        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:transfer:update'])"
+        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:member:transfer:update'])"
       >
         <template #default="scope">
           <el-button v-if="scope.row.status === 'SENDING'" icon="el-icon-edit" size="mini" type="success" @click="showValidate(scope.row)" />

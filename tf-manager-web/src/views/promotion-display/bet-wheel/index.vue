@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.betWheelSettings')" name="bet-wheel-setting" v-if="hasPermission(['sys:bet-wheel:list'])">
+    <el-tab-pane :label="t('fields.betWheelSettings')" name="bet-wheel-setting" v-if="hasPermission(['sys:privi:bet-wheel:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.betWheelRecords')" name="bet-wheel-records" v-if="hasPermission(['sys:bet-wheel-records:list'])">
+    <el-tab-pane :label="t('fields.betWheelRecords')" name="bet-wheel-records" v-if="hasPermission(['sys:privi:bet-wheel-records:list'])">
       <RecordsTab />
     </el-tab-pane>
   </el-tabs>

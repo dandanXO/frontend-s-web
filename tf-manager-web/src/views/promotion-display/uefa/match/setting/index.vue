@@ -63,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:uefa-match:add']"
+          v-permission="['sys:privi:uefa-match:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -364,14 +364,14 @@
         :label="t('fields.operate')"
         align="center"
         width="300"
-        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:uefa-match:update'])"
+        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:privi:uefa-match:update'])"
       >
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'PENDING' || scope.row.status === 'ONGOING'"
             size="small"
             type="primary"
-            v-permission="['sys:uefa-match:update']"
+            v-permission="['sys:privi:uefa-match:update']"
             @click="showEdit(scope.row)"
             style="cursor: pointer"
           >
@@ -381,7 +381,7 @@
             v-if="scope.row.status === 'PENDING'"
             size="small"
             type="success"
-            v-permission="['sys:uefa-match:update']"
+            v-permission="['sys:privi:uefa-match:update']"
             @click="setOngoing(scope.row.id)"
             style="cursor: pointer"
           >
@@ -391,7 +391,7 @@
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="success"
-            v-permission="['sys:uefa-match:update']"
+            v-permission="['sys:privi:uefa-match:update']"
             @click="showEnd(scope.row, false)"
             style="cursor: pointer; margin-left: 5px;"
           >
@@ -401,7 +401,7 @@
             v-if="scope.row.status === 'ONGOING'"
             size="small"
             type="danger"
-            v-permission="['sys:uefa-match:update']"
+            v-permission="['sys:privi:uefa-match:update']"
             @click="cancelMatch(scope.row.id)"
             style="cursor: pointer; margin-left: 5px"
           >
@@ -411,7 +411,7 @@
             v-if="scope.row.status === 'ENDED'"
             size="small"
             type="success"
-            v-permission="['sys:uefa-match:update']"
+            v-permission="['sys:privi:uefa-match:update']"
             @click="showEnd(scope.row, true)"
             style="cursor: pointer; margin-left: 5px;"
           >

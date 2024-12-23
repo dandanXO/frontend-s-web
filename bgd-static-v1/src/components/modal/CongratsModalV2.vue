@@ -7,9 +7,9 @@
     <div class="congrats-highlight">{{ $t("home.popup.free100BonusAmount") }}</div>
 
     <div class="congrats-button">
-      <router-link to="/deposit">
+      <router-link to="/promo?name=bgd-register-claim-bonus">
         <q-btn no-caps unelevated class="recharge-btn" :loading="false">
-          {{ $t("btn.recharge") }}
+          {{ $t("btn.joinnow") }}
         </q-btn>
       </router-link>
     </div>

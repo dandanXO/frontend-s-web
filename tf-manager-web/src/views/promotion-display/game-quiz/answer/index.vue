@@ -68,7 +68,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:game-quiz-answer:export']"
+          v-permission="['sys:privi:game-quiz-answer:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
@@ -174,12 +174,12 @@
           <span v-else>{{ scope.row.answerThree }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-quiz-answer:update'])">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:privi:game-quiz-answer:update'])">
         <template #default="scope">
           <el-button
             type="primary"
             size="small"
-            v-permission="['sys:game-quiz-answer:update']"
+            v-permission="['sys:privi:game-quiz-answer:update']"
             @click="showUpdate(scope.row)"
             style="cursor: pointer"
           >

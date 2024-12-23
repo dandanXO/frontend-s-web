@@ -721,6 +721,7 @@ export default {
     lastWeek: 'อาทิตย์ที่แล้ว',
     level: 'ระดับ',
     levelUpCredit: 'เพิ่มระดับเครดิต',
+    levelUpReferFriendCount: 'จำนวนคนที่เชิญสะสม',
     localCurrencyAmount: 'จำนวนสกุลเงินท้องถิ่น',
     lockStatus: 'สถานะล็อค',
     login: 'เข้าสู่ระบบ',

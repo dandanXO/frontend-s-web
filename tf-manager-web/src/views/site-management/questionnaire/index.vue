@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.question')" name="questionnaire-questions" v-if="hasPermission(['sys:questionnaire:list'])">
+    <el-tab-pane :label="t('fields.question')" name="questionnaire-questions" v-if="hasPermission(['sys:site:questionnaire:list'])">
       <QuestionsTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.records')" name="questionnaire-records" v-if="hasPermission(['sys:questionnaire-records:list'])">
+    <el-tab-pane :label="t('fields.records')" name="questionnaire-records" v-if="hasPermission(['sys:site:questionnaire-records:list'])">
       <RecordsTab />
     </el-tab-pane>
   </el-tabs>

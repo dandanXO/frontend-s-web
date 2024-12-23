@@ -337,7 +337,9 @@ const getIdVerifyStatus = () => {
         countryRegion.value = res.data.countryList.map((country) => ({
           label: country,
           value: country
-        }));
+        }))
+
+        selectedCountryRegion.value= countryRegion.value[0].value;
       }
     })
     .catch(() => {});

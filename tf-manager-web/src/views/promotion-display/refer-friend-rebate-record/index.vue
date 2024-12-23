@@ -60,7 +60,7 @@ x<template>
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:refer-rebate-record:rebate']" @click="distributeRebate()">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:promo:refer-rebate-record:rebate']" @click="distributeRebate()">
             {{ t('fields.distributeRebate') }}
           </el-button>
           <el-button
@@ -156,13 +156,13 @@ x<template>
           align="center"
           fixed="right"
           width="180"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:refer-rebate-record:update']) || hasPermission(['sys:refer-rebate-record:detail']))"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:promo:refer-rebate-record:update']) || hasPermission(['sys:promo:refer-rebate-record:detail']))"
         >
           <template #default="scope">
             <el-button
               size="mini"
               type="warning"
-              v-permission="['sys:refer-rebate-record:detail']"
+              v-permission="['sys:promo:refer-rebate-record:detail']"
               @click="showDetails(scope.row)"
             >
               {{ t('fields.view') }}
@@ -171,7 +171,7 @@ x<template>
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:refer-rebate-record:update']"
+              v-permission="['sys:promo:refer-rebate-record:update']"
               @click="showEdit(scope.row)"
             >
               {{ t('fields.adjustAmount') }}

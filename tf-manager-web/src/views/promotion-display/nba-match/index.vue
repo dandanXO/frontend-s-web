@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.nbaMatchSetting')" name="nba-match-setting" v-if="hasPermission(['sys:nba-match:list'])">
+    <el-tab-pane :label="t('fields.nbaMatchSetting')" name="nba-match-setting" v-if="hasPermission(['sys:privi:nba-match:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.nbaMatchRecord')" name="nba-match-record" v-if="hasPermission(['sys:nba-match-record:list'])">
+    <el-tab-pane :label="t('fields.nbaMatchRecord')" name="nba-match-record" v-if="hasPermission(['sys:privi:nba-match-record:list'])">
       <RecordTab />
     </el-tab-pane>
   </el-tabs>

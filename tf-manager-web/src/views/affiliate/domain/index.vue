@@ -48,7 +48,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-domain:add']"
+          v-permission="['sys:affiliate:domain:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -266,8 +266,8 @@
           fixed="right"
           v-if="
             !hasRole(['SUB_TENANT']) &&
-              (hasPermission(['sys:affiliate-domain:update']) ||
-                hasPermission(['sys:affiliate-domain:del']))
+              (hasPermission(['sys:affiliate:domain:update']) ||
+                hasPermission(['sys:affiliate:domain:del']))
           "
         >
           <template #default="scope">
@@ -275,14 +275,14 @@
               icon="el-icon-edit"
               size="mini"
               type="success"
-              v-permission="['sys:affiliate-domain:update']"
+              v-permission="['sys:affiliate:domain:update']"
               @click="showEdit(scope.row)"
             />
             <el-button
               icon="el-icon-remove"
               size="mini"
               type="danger"
-              v-permission="['sys:affiliate-domain:del']"
+              v-permission="['sys:affiliate:domain:del']"
               @click="removeAffiliateDomain(scope.row.id)"
             />
           </template>

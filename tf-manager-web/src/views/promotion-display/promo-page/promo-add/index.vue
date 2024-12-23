@@ -318,7 +318,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('DESKTOP_IMAGE')"
                 >
                   {{ t('fields.upload') }}
@@ -369,7 +369,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('DESKTOP_BACKGROUND_IMAGE')"
                 >
                   {{ t('fields.upload') }}
@@ -412,7 +412,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('MOBILE_IMAGE', false)"
                 >
                   {{ t('fields.upload') }}
@@ -458,7 +458,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('MOBILE_BACKGROUND_IMAGE')"
                 >
                   {{ t('fields.upload') }}
@@ -508,7 +508,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('DESKTOP_BANNER', false)"
                 >
                   {{ t('fields.upload') }}
@@ -558,7 +558,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('MOBILE_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -701,7 +701,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('DESKTOP_IMAGE')"
                 >
                   {{ t('fields.upload') }}
@@ -754,7 +754,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('DESKTOP_BACKGROUND_IMAGE')"
                 >
                   {{ t('fields.upload') }}
@@ -802,7 +802,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('MOBILE_IMAGE')"
                 >
                   {{ t('fields.upload') }}
@@ -855,7 +855,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('MOBILE_BACKGROUND_IMAGE')"
                 >
                   {{ t('fields.upload') }}
@@ -907,7 +907,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('DESKTOP_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -959,7 +959,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showDialog('MOBILE_BANNER')"
                 >
                   {{ t('fields.upload') }}

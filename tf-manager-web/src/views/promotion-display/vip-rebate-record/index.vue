@@ -90,14 +90,14 @@
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip-rebate-record:rebate']" @click="distributeRebate()">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:promo:vip-rebate-record:rebate']" @click="distributeRebate()">
             {{ t('fields.distributeRebate') }}
           </el-button>
           <el-button
             icon="el-icon-download"
             size="mini"
             type="warning"
-            v-permission="['sys:vip-rebate-record:export']"
+            v-permission="['sys:promo:vip-rebate-record:export']"
             @click="requestExportExcel"
           >{{ t('fields.exportToExcel') }}
           </el-button>
@@ -105,7 +105,7 @@
             icon="el-icon-upload"
             size="mini"
             type="danger"
-            v-permission="['sys:vip-rebate-record:cancel']"
+            v-permission="['sys:promo:vip-rebate-record:cancel']"
             @click="uiControl.importDialogVisible = true"
           >
             {{ t('fields.batchCancel') }}
@@ -114,7 +114,7 @@
             icon="el-icon-close"
             size="mini"
             type="danger"
-            v-permission="['sys:vip-rebate-record:cancel']"
+            v-permission="['sys:promo:vip-rebate-record:cancel']"
             @click="cancelBySearch"
           >
             {{ t('fields.cancelBySearch') }}
@@ -228,13 +228,13 @@
           align="center"
           fixed="right"
           width="280"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip-rebate-record:update']) || hasPermission(['sys:vip-rebate-record:update-bet']) || hasPermission(['sys:vip-rebate-record:detail']))"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:promo:vip-rebate-record:update']) || hasPermission(['sys:promo:vip-rebate-record:update-bet']) || hasPermission(['sys:promo:vip-rebate-record:detail']))"
         >
           <template #default="scope">
             <el-button
               size="mini"
               type="warning"
-              v-permission="['sys:vip-rebate-record:detail']"
+              v-permission="['sys:promo:vip-rebate-record:detail']"
               @click="showDetails(scope.row)"
             >
               {{ t('fields.view') }}
@@ -243,7 +243,7 @@
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:vip-rebate-record:update']"
+              v-permission="['sys:promo:vip-rebate-record:update']"
               @click="showEdit('AMOUNT', scope.row)"
             >
               {{ t('fields.adjustAmount') }}
@@ -252,7 +252,7 @@
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:vip-rebate-record:update-bet']"
+              v-permission="['sys:promo:vip-rebate-record:update-bet']"
               @click="showEdit('BET_AMOUNT', scope.row)"
             >
               {{ t('fields.adjustBetAmount') }}

@@ -23,13 +23,13 @@
       </div>
       <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:questionnaire:create']"
+                   v-permission="['sys:site:questionnaire:create']"
         >
           {{ t('fields.add') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeQuestionnaire()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:questionnaire:del']"
+                   v-permission="['sys:site:questionnaire:del']"
         >
           {{ t('fields.delete') }}
         </el-button>
@@ -59,7 +59,7 @@
         prop="status"
         :label="t('fields.status')"
         width="150"
-        v-if="hasPermission(['sys:questionnaire:update'])"
+        v-if="hasPermission(['sys:site:questionnaire:update'])"
       >
         <template #default="scope">
           <el-switch
@@ -78,8 +78,8 @@
       >
         <template #default="scope">
           <el-button size="mini" type="primary" @click="viewChoices(scope.row.id)">{{ t('fields.viewChoice') }}</el-button>
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:questionnaire:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:questionnaire:del']" @click="removeQuestionnaire(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:questionnaire:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:questionnaire:del']" @click="removeQuestionnaire(scope.row)" />
         </template>
       </el-table-column>
     </el-table>
@@ -152,11 +152,11 @@
           <span class="param-label">{{ t('fields.needSpecify') }}:</span>
           <el-checkbox style="margin-left: 5px; margin-right: 15px;" v-model="item.needSpecify" :true-label="true" :false-label="false" />
 
-          <el-button v-if="hasPermission(['sys:questionnaire:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+          <el-button v-if="hasPermission(['sys:site:questionnaire:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                      @click="addParam(index)" plain
           >{{ t('fields.add') }}
           </el-button>
-          <el-button v-if="choiceParam.length > 1 && hasPermission(['sys:questionnaire:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+          <el-button v-if="choiceParam.length > 1 && hasPermission(['sys:site:questionnaire:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                      @click="delParam(index)" plain
           >{{ t('fields.delete') }}
           </el-button>
