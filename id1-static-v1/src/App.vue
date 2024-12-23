@@ -289,6 +289,55 @@ export default defineComponent({
       }
     };
 
+    const initEngageLabPush = () => {
+      // Supported versions: 2.1.9+
+      console.log("initEngageLabPush");
+
+      // Get the unique identifier of user_str.
+      function randomUid() {
+        const keyStr = "mtWebPushRandomUid";
+        let uid = window.localStorage.getItem(keyStr);
+        if (!uid) {
+          uid = new Date().getTime().toString(36) + Math.floor(Math.random() * 10000000).toString(36);
+          window.localStorage.setItem(keyStr, uid);
+        }
+        return uid;
+      }
+
+      //Get push messages (web push, browser vendor channel)/"Callback function when receive the message from web push, browser channel"
+      window.MTpushInterface.onMsgReceive((msgData) => {
+        //msgData Data structure{data:{xxx},type:0} type:0 is the engagelab channel and 1 is the system channel
+        alert("RECEIVE MSG");
+        console.log("Get push Messages:", msgData);
+      });
+      //  Push initialization
+      window.MTpushInterface.init({
+        appkey: "87702ef148c8418859cc7793", // Required. See above for application information
+        user_str: "adminDemo", // Required. User identifier, which identifies the user
+        fail(err) {
+          console.log("Failed to create an online push", err);
+        },
+        success(data) {
+          console.log("Success Init Engage Lab.");
+          console.log("The online push is created successfully. Procedure", data);
+        },
+        webPushcallback(code, tip) {
+          console.log("The status code and prompt obtained by the user", code, tip);
+        },
+        swUrl: "", //The default **like this:**"/sw.min." + sdkEnv.version + ".js" ,This configuration item is the serverworker file address, the domain name must be the current domain name, and the path determines the serverworker scope.
+        canGetInfo(data) {
+          //Some configuration data that can be notified at this point is available to RegId after this callback function
+          console.log(data); //Related Configuration Information
+          console.log("get the RegId", window.MTpushInterface.getRegistrationID());
+        },
+        custom: (fuc) => {
+          //When using a custom prompt configuration, you need to manually call fuc() to request notification rights/**permission**. The request notification permission function can only be obtained through custom.
+          //fuc() Notification rights are requested when invoked/**it will get notification permission when invoked**
+        }
+      });
+    };
+
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -313,6 +362,10 @@ export default defineComponent({
         );
       } else {
         trackH5Affiliate();
+      }
+
+      if (isInPwa()) {
+        initEngageLabPush();
       }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
