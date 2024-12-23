@@ -167,6 +167,9 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
+              <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
@@ -202,11 +205,13 @@ import { useDark } from "@vueuse/core";
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
+    NBAWaterBattle,
     BlastPremierMarquee
   },
   setup() {

@@ -287,4 +287,10 @@ onMounted(() => {
     }
   }
 }
+
+.body--dark {
+  .nba-water-battle-bg {
+    background-image: url("../../../assets/images/promo/hotpromo/nba-water-battle/nba-water-battle-widget-bg-dark.png");
+  }
+}
 </style>
