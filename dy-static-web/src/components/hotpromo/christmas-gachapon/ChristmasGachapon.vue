@@ -1143,14 +1143,13 @@ body .el-dialog.christmas-modal .el-dialog__body {
 body .el-dialog.prize-modal.once .el-dialog__body {
   background: url(img/modal-one.png) no-repeat center center;
   background-size: contain;
-  min-height: 703px;
-  /* padding: 200px 80px 0;
-    margin-top: -120px; */
-  padding: 200px 80px 0;
+  min-height: 50vh;
+  padding: 15vh 0vh 5vh;
   .prizes {
     .prize {
       .imgball {
-        width: 300px;
+        max-width: 300px;
+        width: 40vh;
       }
     }
   }
