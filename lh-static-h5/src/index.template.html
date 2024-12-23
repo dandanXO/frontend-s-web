@@ -82,6 +82,9 @@
             if (returnJson && returnJson.upImg) {
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
+
+            const updateUrlEvent = new CustomEvent("updateUrlEvent");
+            document.dispatchEvent(updateUrlEvent);
           } catch (error) {
             console.error("Error parsing message from Flutter:", error);
           }
@@ -109,8 +112,6 @@
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
 
-            const updateUrlEvent = new CustomEvent("updateUrlEvent");
-            document.dispatchEvent(updateUrlEvent);
           }
         });
       } else if (
@@ -153,6 +154,9 @@
             if (returnJson && returnJson.upImg) {
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
+
+            const updateUrlEvent = new CustomEvent("updateUrlEvent");
+            document.dispatchEvent(updateUrlEvent);
           } catch (error) {
             alert("HAHAH ERROR HERRE.");
             console.error("Error parsing message from Flutter:", error);
