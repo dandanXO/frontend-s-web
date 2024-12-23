@@ -339,17 +339,17 @@ const uiControl = reactive({
   editBtn: true,
   removeBtn: true,
   adsStatus: [
-    { key: 1, displayName: '开', value: true },
-    { key: 2, displayName: '关', value: false },
+    { key: 1, displayName: t('message.adsStatusOpen'), value: true },
+    { key: 2, displayName: t('message.adsStatusClose'), value: false },
   ],
-  type: [
-    { key: 1, displayName: '文字', value: 'TEXT' },
-    { key: 2, displayName: '图片', value: 'IMG' },
-  ],
+  // type: [
+  //   { key: 1, displayName: '文字', value: 'TEXT' },
+  //   { key: 2, displayName: '图片', value: 'IMG' },
+  // ],
   frequency: [
-    { key: 1, displayName: '每次', value: 'EVERYTIME' },
-    { key: 2, displayName: '每天', value: 'EVERYDAY' },
-    { key: 3, displayName: '每时域', value: 'SESSION' },
+    { key: 1, displayName: t('message.frequencyEveryTime'), value: 'EVERYTIME' },
+    { key: 2, displayName: t('message.frequencyEveryDay'), value: 'EVERYDAY' },
+    { key: 3, displayName: t('message.frequencyEverySession'), value: 'SESSION' },
   ],
   showSiteType: false,
 })

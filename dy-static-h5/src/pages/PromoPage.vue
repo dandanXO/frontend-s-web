@@ -87,7 +87,8 @@
                   !isSpecialPromo &&
                   selectedPromo.promoCode !== 'lh1-ftd-promo' &&
                   selectedPromo.promoCode !== 'lh1-aijiasu' &&
-                  selectedPromo.promoCode !== 'lh1-eurocup-regen'
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen' && 
+                  selectedPromo.redirectUrl !== 'dy2-christmas-gashapon'
                 "
               >
                 <img
@@ -111,7 +112,7 @@
                     selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
                     selectedPromo.promoCode === 'dy2-blast-premier-treasure',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
-                  dyftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'dy2-intel-esl',
+                  dyftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'dy2-intel-esl' || selectedPromo.redirectUrl === 'dy2-christmas-gashapon',
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
@@ -162,7 +163,7 @@
                     <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
                   </div>
                   <div
-                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
+                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241 && selectedPromo.redirectUrl !== 'dy2-christmas-gashapon'"
                     v-html="selectedPromo.pageContent"
                   ></div>
                 </div>
@@ -424,7 +425,7 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "dy2-cny-step-game" || promo.promoCode === "dy2-game-steps") {
+      if (promo.promoCode === "dy2-cny-step-game" || promo.promoCode === "dy2-game-steps" || promo.redirectUrl === 'dy2-christmas-gachapon') {
         isSpecialPromo.value = true;
       } else {
         isSpecialPromo.value = false;

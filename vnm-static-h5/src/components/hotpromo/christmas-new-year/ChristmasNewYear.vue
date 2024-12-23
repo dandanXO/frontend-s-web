@@ -128,11 +128,9 @@
     </div> -->
   </q-dialog>
   <q-dialog
-    persistent
     class="prize-modal"
     :class="{ five: prizes.length > 1, once: prizes.length <= 1 }"
     v-model="isPrizeModal"
-    align-center
   >
     <div class="items">
       <div class="item" v-for="item in prizes" :key="item">
@@ -153,6 +151,7 @@ import { useRouter } from 'vue-router';
 import { initDrawEvent, getDrawPrizes, getDrawRecord } from "../../../api/index/promo";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import i18n from "src/i18n/index";
 import moment from "moment";
 const props = defineProps(["promoCode", "promoRules"]);
 const promoCode = ref(props.promoCode);
@@ -255,11 +254,19 @@ const getGachapon = (t) => {
         prizes.value = [];
         var viMessage = '';
         if (res.code === 58100) { // 抽奖次数不足
-          viMessage = 'Vui lòng đăng nhập tài khoản để mở quà'
-        } else if (res.code === 58101) { // 今日可抽奖次已达上限
-          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
-        } else if (res.code === 58102) {
           viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
+        } else if (res.code === 58101) { // 今日可抽奖次已达上限
+          viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
+        } else if (res.code === 58102) {
+          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 58103) {
+          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 35013) {
+          viMessage = 'Bạn không đủ điều kiện để nhận thưởng'
+        } else if (res.code === 604) {
+          viMessage = 'Vui lòng đăng nhập tài khoản để mở quà'
+        } else {
+          viMessage = i18n.global.t('response.' + res.code) || res.message
         }
         const obj = {
           type: viMessage
@@ -600,17 +607,28 @@ onMounted(() => {
     height: 30vh;
   }
 }
+.prize-modal.once {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 .prize-modal.once .q-dialog__inner {
   background: url(../christmas-new-year/img/modalbg.png) no-repeat center center;
   background-size: contain;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 190px;
   
-  height: 380px;
+  // height: 380px;
+  height: 530px;
     width: 95%;
-    max-width: 200px;
+    max-width: 220px;
+    transform: scale(1.1);
 
-  
+  .items {
+    height: 210px;
+  }
   .claimbtn {
     text-align: center;
     display: flex;
@@ -618,9 +636,9 @@ onMounted(() => {
     align-items: center;
     margin: 10px auto 0;
     cursor: pointer;
-    width: 120px;
+    width: 140px;
     position: absolute;
-    bottom: 60px;
+    bottom: 120px;
     img {
       width: 100%;
     }
@@ -636,31 +654,10 @@ onMounted(() => {
   .redbar {
     font-size: 15px;
     width: 90%;
-    max-width: 140px;
+    max-width: 160px;
     color: #FBE696;
     text-align: center;
     margin: 0 auto;
-  }
-  > div {
-    overflow: unset;
-  }
-}
-.prize-modal.five .q-dialog__inner {
-  padding: 140px 0 40px;
-  background: url(../christmas-new-year/img/modalbg.png) no-repeat center center;
-  background-size: contain;
-  justify-content: center;
-  align-items: center;
-  height: 540px;
-  .prizes {
-    align-items: flex-start;
-    .prize {
-      width: 30%;
-      align-items: center;
-      .imgball {
-        width: 100%;
-      }
-    }
   }
   > div {
     overflow: unset;

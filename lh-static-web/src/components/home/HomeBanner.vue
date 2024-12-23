@@ -5,10 +5,10 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-    <el-carousel height="500px" :autoplay="false" style="padding: 0;">
+    <el-carousel autoplay height="auto" :autoplay="false" style="padding: 0;">
       <el-carousel-item style="height: 500px" v-for="(item, index) in popupList" :key="index">
         <a @click="clickHomePopupImg(item.path)" style="display: flex; justify-content: center;">
-          <img :src="imgURL + item.desktopImgUrl" class="alert-img" draggable="false"/>
+          <img :src="imgURL + item.desktopImgUrl" class="" draggable="false"/>
         </a>
       </el-carousel-item>
     </el-carousel>
@@ -170,6 +170,7 @@ const checkShowImgTop = () => {
         // }
         const { code, data } = res;
         popupList.value = data;
+        store.frequency = data[0]["frequency"]
         if (code === 0) {
           if (isImpt === null) {
             switch (data[0]["frequency"]) {

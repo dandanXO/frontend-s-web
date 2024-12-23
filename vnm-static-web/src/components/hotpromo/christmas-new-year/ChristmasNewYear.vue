@@ -135,8 +135,8 @@
   </el-dialog>
   <el-dialog
     :show-close="false"
-    :close-on-click-modal="false"
-    :close-on-press-escape="false"
+    :close-on-click-modal="true"
+    :close-on-press-escape="true"
     class="prize-modal"
     :class="{ five: prizes.length > 1, once: prizes.length <= 1 }"
     v-model="isPrizeModal"
@@ -163,6 +163,8 @@ import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+
+import i18n from "@/i18n/index";
 const { t } = useI18n();
 const props = defineProps(["promoCode", "promoRules"]);
 const promoCode = ref(props.promoCode);
@@ -271,18 +273,28 @@ const getGachapon = (t) => {
       } else {
         prizes.value = [];
         var viMessage = '';
-        if (res.code === 58100) { // 抽奖次数不足
-          viMessage = 'Vui lòng đăng nhập tài khoản để mở quà'
-        } else if (res.code === 58101) { // 今日可抽奖次已达上限
-          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
-        } else if (res.code === 58102) {
+        if (res.code === 58100) {
           viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
+        } else if (res.code === 58101) {
+          viMessage = 'Bạn chưa có hoặc đã sử dụng hết số lần mở quà'
+        } else if (res.code === 58102) {
+          viMessage = 'Phần thưởng hôm nay đã phát hết rồi, ngày mai quay lại nhé'
+        } else if (res.code === 58103) {
+          viMessage = 'Bạn không đủ điều kiện để nhận thưởng'
+        }  else if (res.code === 35013) {
+          viMessage = 'Bạn không đủ điều kiện để nhận thưởng'
+        } else if (res.code === 604) {
+          viMessage = 'Vui lòng đăng nhập tài khoản để mở quà'
+        } else {
+          viMessage = i18n.global.t('response.' + res.code) || res.message
         }
         const obj = {
           type: viMessage
         }
         prizes.value.push(obj)
-        isPrizeModal.value = true;
+        if (viMessage) {
+          isPrizeModal.value = true;
+        }
       }
     })
     .catch((error) => {
@@ -486,6 +498,7 @@ body .el-dialog.prize-modal.once {
   box-shadow: none;
 }
 body .el-dialog.prize-modal.once .el-dialog__body {
+  transform: scale(1.25);
   background: url(img/modalbg.png) no-repeat center center;
   background-size: contain;
     min-height: 350px;

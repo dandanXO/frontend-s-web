@@ -65,6 +65,7 @@ export default {
     phone_rules_01: "অনুগ্রহ করে ফোন নম্বর লিখুন",
     phone_rules_02: "ফোন নম্বরটি অবশ্যই 10 - 11 সংখ্যার হতে হবে",
     phone_rules_03: "ফোন নম্বর অবশ্যই '01' দিয়ে শুরু করতে হবে",
+    bindPhoneNumber: "ফোন নম্বর যুক্ত করুন",
     password: "পাসওয়ার্ড",
     password_placeholder: "অনুগ্রহ করে পাসওয়ার্ড লিখুন",
     password_rules_01: "অনুগ্রহ করে পাসওয়ার্ড লিখুন",
@@ -89,6 +90,8 @@ export default {
     newPassword_placeholder: "অনুগ্রহ করে নতুন পাসওয়ার্ড লিখুন",
     newPassword_rules_01: "অনুগ্রহ করে নতুন পাসওয়ার্ড লিখুন",
     newPassword_rules_02: "নতুন পাসওয়ার্ডের অক্ষর অবশ্যই 6 এর উপরে হতে হবে",
+    confirmPassword: "পাসওয়ার্ড নিশ্চিত করুন",
+    confirmPassword_placeholder: "অনুগ্রহ করে পাসওয়ার্ড নিশ্চিত করুন",
     confirmNewPassword: "নতুন পাসওয়ার্ড নিশ্চিত করুন",
     confirmNewPassword_placeholder: "অনুগ্রহ করে নিশ্চিত করা নতুন পাসওয়ার্ড লিখুন",
     confirmNewPassword_rules_01: "অনুগ্রহ করে নিশ্চিত করা নতুন পাসওয়ার্ড লিখুন",
@@ -113,6 +116,7 @@ export default {
     fullName_placeholder: "আপনার পুরো নাম লিখুন",
     fullName_rules_01: "অনুগ্রহ করে আপনার পুরো নাম লিখুন",
     fullName_rules_02: "অনুগ্রহ করে একটি সঠিক পুরো নাম লিখুন",
+    setPassword: "পাসওয়ার্ড সেট করুন",
     changePassword: "পাসওয়ার্ড পরিবর্তন করুন",
     currentPassword: "বর্তমান পাসওয়ার্ড",
     currentPassword_placeholder: "বর্তমান পাসওয়ার্ড লিখুন",
@@ -197,7 +201,9 @@ export default {
     receive: "গ্রহণ করুন",
     startNow: "এখন শুরু করুন",
     continue: "চালিয়ে যান",
-    uploadAgain: "পুনরায় আপলোড করুন"
+    uploadAgain: "পুনরায় আপলোড করুন",
+    deposit: "জমা",
+    learnMore: "আরো জানুন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",

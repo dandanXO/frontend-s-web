@@ -27,7 +27,7 @@
     <div class="amtleft">
       抽奖次数剩余:
       <span>{{ availableDraw }}次</span>
-    </div>
+    </div><div class="tips">温馨提示：由于场馆人数火爆，投注记录会在10-20分钟内全部更新，请稍等片刻</div>
   </div>
   <q-dialog class="christmas-modal" v-model="isModal" align-center>
     <div class="title">
@@ -71,7 +71,7 @@
           <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
             <div class="left">优惠详情</div>
             <div class="right" style="max-width: 73%">
-              在2024.12.24-2025.1.1活动期间，每日投注额≥1000元及以上次日即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
+              在2024.12.24-2025.1.1活动期间，每日投注额≥1000元及以上即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
             </div>
           </div>
           <table class="detailed-info-table">
@@ -139,7 +139,7 @@
                 />
                 <span>示例</span>
               </div>
-              会员A在2024年12月25日累计有效投注为20000元, 2024年12月26日即可在优惠页面点击【立即抽奖】获得财富金,
+              会员A在2024年12月25日累计有效投注为20000元, 即可在优惠页面点击【立即抽奖】获得财富金,
               根据规则会员可获得5次抽奖机会, 奖金仅需5倍水即可出款
             </div>
           </div>
@@ -562,6 +562,22 @@ onMounted(() => {
       rgba(255, 217, 0, 0) 93.5%
     );
 
+    span {
+      color: #ffd900;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+  }
+  .tips {
+    // bottom: 227px;
+    top: 120vw;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    text-shadow: 1px 1px 3px #000000b3;
+    width: 100%;
     span {
       color: #ffd900;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
