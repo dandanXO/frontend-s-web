@@ -49,7 +49,11 @@
           </div>
         </div>
 
-        <div class="bonus-claim-button" :class="{ disable: promoData.idVerificationStatus===true && promoData.claimableBonus <= 0 }" @click="claimBonus">
+        <div
+          class="bonus-claim-button"
+          :class="{ disable: promoData.idVerificationStatus === true && promoData.claimableBonus <= 0 }"
+          @click="claimBonus"
+        >
           Claim now
         </div>
       </div>
@@ -69,7 +73,7 @@
         <div class="bonus-progress-bar">
           <div
             class="bonus-progress-bar-fill"
-            :style="{ width: task.memberDepositStatus / task.depositRequired + '%' }"
+            :style="{ width: (task.memberDepositStatus / task.depositRequired) * 100 + '%' }"
           ></div>
         </div>
         <div class="bonus-progress-text">
@@ -134,7 +138,10 @@ const noOfTasksCompleted = computed(() => {
 });
 
 const totalProgressBarWidth = computed(() => {
-  return noOfTasksCompleted.value / promoData.value.tasks?.length ?? 0;
+  const tasksLength = promoData.value.tasks?.length || 0;
+  const calculatedVal = tasksLength ? noOfTasksCompleted.value / tasksLength : 0;
+
+  return !isNaN(calculatedVal) ? calculatedVal * 100 : 0;
 });
 
 const claimBonus = () => {
