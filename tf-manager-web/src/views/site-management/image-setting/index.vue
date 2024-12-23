@@ -438,6 +438,8 @@ const uiControl = reactive({
     { name: 'MOBILE_BANNER', display: t('fields.mobileBanner') },
     { name: 'TEAM_ICON', display: t('fields.teamIcon') },
     { name: 'TEAM_BACKGROUND_IMAGE', display: t('fields.teamBackgroundImage') },
+    { name: 'DESKTOP_FAST_ACCESS_IMAGE', display: t('fields.desktopFastAccessIconImage') },
+    { name: 'MOBILE_FAST_ACCESS_IMAGE', display: t('fields.mobileFastAccessIconImage') },
     { name: 'OTHER', display: t('fields.other') },
   ],
 })
