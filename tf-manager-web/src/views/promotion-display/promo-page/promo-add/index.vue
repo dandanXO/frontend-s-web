@@ -583,6 +583,99 @@
               </el-row>
             </el-form-item>
           </el-row>
+          <hr>
+          <el-row>
+            <el-form-item
+              :label="t('fields.desktopFastAccessIconImage')"
+              prop="desktopFastAccessIconImgUrl"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopFastAccessIconImgUrl" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopFastAccessIconImgUrl"
+                    :src="promoDir + form.desktopFastAccessIconImgUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopFastAccessIconImgUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_FAST_ACCESS_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_FAST_ACCESS_IMAGE', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopFastAccessIconImgUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopFastAccessIconImgUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              :label="t('fields.mobileFastAccessIconImage')"
+              prop="mobileFastAccessIconImgUrl"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileFastAccessIconImgUrl" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileFastAccessIconImgUrl"
+                    :src="promoDir + form.mobileFastAccessIconImgUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileFastAccessIconImgUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_FAST_ACCESS_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_FAST_ACCESS_IMAGE', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileFastAccessIconImgUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileFastAccessIconImgUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
         </el-col>
         <el-col :span="20" :offset="50">
           <el-row>
@@ -891,6 +984,103 @@
               </el-row>
             </el-form-item>
           </el-row>
+          <hr>
+          <el-row>
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.desktopFastAccessIconImageDark')"
+              prop="desktopFastAccessIconImgUrlDark"
+              label-width="200px"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopFastAccessIconImgUrlDark" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopFastAccessIconImgUrlDark"
+                    :src="promoDir + form.desktopFastAccessIconImgUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopFastAccessIconImgUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_FAST_ACCESS_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_FAST_ACCESS_IMAGE', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopFastAccessIconImgUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopFastAccessIconImgUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.mobileFastAccessIconImageDark')"
+              prop="mobileFastAccessIconImgUrlDark"
+              label-width="200px"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileFastAccessIconImgUrlDark" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileFastAccessIconImgUrlDark"
+                    :src="promoDir + form.mobileFastAccessIconImgUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileFastAccessIconImgUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_FAST_ACCESS_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_FAST_ACCESS_IMAGE', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileFastAccessIconImgUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileFastAccessIconImgUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
         </el-col>
       </el-form>
     </el-tab-pane>
@@ -1164,6 +1354,20 @@
             {{ t('fields.imageSize') }}: 1000*400
           </span>
         </div>
+        <div v-if="imageForm.promoType === 'DESKTOP_FAST_ACCESS_IMAGE'">
+          <el-row>
+            <span style="width: 350px" disabled>
+              {{ t('fields.desktopFastAccessIconImage') }}
+            </span>
+          </el-row>
+        </div>
+        <div v-if="imageForm.promoType === 'MOBILE_FAST_ACCESS_IMAGE'">
+          <el-row>
+            <span style="width: 350px" disabled>
+              {{ t('fields.mobileFastAccessIconImage') }}
+            </span>
+          </el-row>
+        </div>
       </el-form-item>
       <el-form-item :label="t('fields.remark')" prop="remark">
         <el-input
@@ -1276,6 +1480,10 @@ const form = reactive({
   endTime: null,
   displayStartTime: "2020-01-01 00:00:00",
   displayEndTime: "2030-01-01 23:59:59",
+  desktopFastAccessIconImgUrl: null,
+  desktopFastAccessIconImgUrlDark: null,
+  mobileFastAccessIconImgUrl: null,
+  mobileFastAccessIconImgUrlDark: null,
 })
 
 const imageForm = reactive({
@@ -1563,6 +1771,12 @@ function browseImage(type, isDark) {
     case 'MOBILE_BANNER':
       uiControl.imageSelectionTitle = t('fields.mobileBanner')
       break
+    case 'DESKTOP_FAST_ACCESS_IMAGE':
+      uiControl.imageSelectionTitle = t('fields.desktopFastAccessIconImage')
+      break
+    case 'MOBILE_FAST_ACCESS_IMAGE':
+      uiControl.imageSelectionTitle = t('fields.mobileFastAccessIconImage')
+      break
   }
   if (uiControl.supportDarkMode && isDark) {
     uiControl.selectDarkImage = true
@@ -1827,6 +2041,20 @@ function submitImage() {
         form.mobileBannerUrl = selectedImage.path
       }
       break
+    case 'DESKTOP_FAST_ACCESS_IMAGE':
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.desktopFastAccessIconImgUrlDark = selectedImage.path
+      } else {
+        form.desktopFastAccessIconImgUrl = selectedImage.path
+      }
+      break
+    case 'MOBILE_FAST_ACCESS_IMAGE':
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.mobileFastAccessIconImgUrlDark = selectedImage.path
+      } else {
+        form.mobileFastAccessIconImgUrl = selectedImage.path
+      }
+      break
   }
   uiControl.imageSelectionVisible = false
 }
@@ -1864,6 +2092,12 @@ function showDialog(type) {
       break
     case 'MOBILE_BANNER':
       imageForm.promoType = 'MOBILE_BANNER'
+      break
+    case 'DESKTOP_FAST_ACCESS_IMAGE':
+      imageForm.promoType = 'DESKTOP_FAST_ACCESS_IMAGE'
+      break
+    case 'MOBILE_FAST_ACCESS_IMAGE':
+      imageForm.promoType = 'MOBILE_FAST_ACCESS_IMAGE'
       break
   }
   uiControl.dialogTitle = t('fields.addImage')
