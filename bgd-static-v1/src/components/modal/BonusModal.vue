@@ -3,7 +3,7 @@
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
-        <img class="mission-icon" :src="mission.icon" />
+        <img class="mission-icon" :src="imgURL + mission.mobileFastAccessIconImgUrl" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
             <span>{{ mission.title }}</span>
@@ -31,6 +31,8 @@ const props = defineProps({
   hasTopDownload: Boolean,
   promoList: Array
 });
+
+const imgURL = process.env.IMAGE_CDN + "/promo/";
 </script>
 
 <style lang="scss" scoped>
