@@ -305,21 +305,21 @@ export default defineComponent({
       }
 
       //Get push messages (web push, browser vendor channel)/"Callback function when receive the message from web push, browser channel"
-      window.MTpushInterface.onMsgReceive((msgData) => {
+      MTpushInterface.onMsgReceive((msgData) => {
         //msgData Data structure{data:{xxx},type:0} type:0 is the engagelab channel and 1 is the system channel
         alert("RECEIVE MSG");
         console.log("Get push Messages:", msgData);
       });
       //  Push initialization
-      window.MTpushInterface.init({
+      MTpushInterface.init({
         appkey: "87702ef148c8418859cc7793", // Required. See above for application information
-        user_str: "adminDemo", // Required. User identifier, which identifies the user
+        user_str: randomUid(), // Required. User identifier, which identifies the user
         fail(err) {
           console.log("Failed to create an online push", err);
         },
         success(data) {
-          alert("Success Init Engage Lab.");
           console.log("The online push is created successfully. Procedure", data);
+          alert("Success Init Engage Lab. DATA" + data.regid);
         },
         webPushcallback(code, tip) {
           console.log("The status code and prompt obtained by the user", code, tip);
@@ -328,7 +328,7 @@ export default defineComponent({
         canGetInfo(data) {
           //Some configuration data that can be notified at this point is available to RegId after this callback function
           console.log(data); //Related Configuration Information
-          alert("get the RegId", window.MTpushInterface.getRegistrationID());
+          alert("get the RegId", MTpushInterface.getRegistrationID());
         },
         custom: (fuc) => {
           //When using a custom prompt configuration, you need to manually call fuc() to request notification rights/**permission**. The request notification permission function can only be obtained through custom.
@@ -365,7 +365,7 @@ export default defineComponent({
       }
 
       const hostname= window.location.hostname;
-      if (isInPwa() || hostname.includes("7ffoz.cc")) {
+      if ( isInPwa() || hostname.includes("7ffoz.cc")) {
         console.log("Engagel labe here")
         initEngageLabPush();
       }
