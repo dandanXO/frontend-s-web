@@ -1048,6 +1048,7 @@ export default {
     latestFetchBetRecordTime: 'Thời gian lấy lịch sử cược mới nhất',
     level: 'Cấp độ',
     levelUpCredit: 'Tín dụng tăng cấp',
+    levelUpReferFriendCount: 'Tổng số người được mời',
     limitNumber: 'Giới hạn số lượng',
     localCurrencyAmount: 'Số tiền địa phương',
     lockStatus: 'Trạng thái khóa',

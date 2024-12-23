@@ -1203,6 +1203,7 @@ export default {
     latestFetchBetRecordTime: '最近抓取投注记录时间',
     level: '级别',
     levelUpCredit: '升级金额',
+    levelUpReferFriendCount: '累计邀请人数',
     limitNumber: '限量',
     localCurrencyAmount: '当地货币金额',
     lockStatus: '锁定状态',
