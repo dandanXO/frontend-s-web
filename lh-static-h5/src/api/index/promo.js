@@ -521,3 +521,13 @@ export function getWeeklySlotLossBonusInit() {
 export function claimWeeklySlotLossBonusInit() {
   return eventapi.put("/bonus/claim/lh1-weekly-slot-loss-bonus");
 }
+
+export function getBountyInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/event-check-in/can-claim?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimBountyBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/event-check-in/claim?promoCode=${promoCode}&v=${randNum}`);
+}
