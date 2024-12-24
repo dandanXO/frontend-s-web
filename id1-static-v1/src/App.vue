@@ -341,46 +341,78 @@ export default defineComponent({
       // Supported versions: 2.1.9+
       console.log("initEngageLabPush");
 
-      // Get the unique identifier of user_str.
-      function randomUid() {
-        const keyStr = "mtWebPushRandomUid";
-        let uid = window.localStorage.getItem(keyStr);
-        if (!uid) {
-          uid = new Date().getTime().toString(36) + Math.floor(Math.random() * 10000000).toString(36);
-          window.localStorage.setItem(keyStr, uid);
+      const requestNotificationPermission = async () => {
+        if (Notification.permission === "default") {
+          // Prompt user to allow notifications
+          try {
+            const permission = await Notification.requestPermission();
+            if (permission === "granted") {
+              console.log("Notification permission granted.");
+              initializePush();
+            } else {
+              console.log("Notification permission denied.");
+              // alert("Please enable notifications to receive updates.");
+            }
+          } catch (error) {
+            console.error("Failed to request notification permission:", error);
+          }
+        } else if (Notification.permission === "granted") {
+          console.log("Notification permission already granted.");
+          initializePush();
+        } else {
+          console.log("Notification permission denied.");
+          // alert("Please enable notifications in your browser settings.");
         }
-        return uid;
-      }
+      };
 
-      //Get push messages (web push, browser vendor channel)/"Callback function when receive the message from web push, browser channel"
-      window.MTpushInterface.onMsgReceive((msgData) => {
-        //msgData Data structure{data:{xxx},type:0} type:0 is the engagelab channel and 1 is the system channel
-        // alert("RECEIVE MSG");
-        console.log("Get push Messages:", msgData);
-      });
-
-      //  Push initialization
-      window.MTpushInterface.init({
-        appkey: "b654a90b71ff849be7a40cf3", // Required. See above for application information
-        user_str: randomUid(), // Required. User identifier, which identifies the user
-        fail(err) {
-          console.log("Failed to create an online push", err);
-        },
-        success(data) {
-          // alert("Success Init Engage Lab.");
-          console.log("The online push is created successfully. Procedure", data);
+      // Push initialization logic
+      const initializePush = () => {
+        function randomUid() {
+          const keyStr = "mtWebPushRandomUid";
+          let uid = window.localStorage.getItem(keyStr);
+          if (!uid) {
+            uid = new Date().getTime().toString(36) + Math.floor(Math.random() * 10000000).toString(36);
+            window.localStorage.setItem(keyStr, uid);
+          }
+          return uid;
         }
-      });
 
-      setTimeout(() => {
-        const thestatus = window.MTpushInterface.getPushAuthority();
-        console.log(thestatus);
+        // Get push messages
+        MTpushInterface.onMsgReceive((msgData) => {
+          // alert("RECEIVE MSG");
+          console.log("Get push Messages:", msgData);
+        });
 
-        const perm = window.MTpushInterface.getWebPermission();
-        console.log(perm);
-        // alert(MTpushInterface.getRegistrationID());
-      }, 2000);
+        console.log("TSET This 2");
+        // Push initialization
+        MTpushInterface.init({
+          appkey: "b654a90b71ff849be7a40cf3",
+          user_str: randomUid(),
+          fail(err) {
+            console.log("Failed to create an online push", err);
+          },
+          success(data) {
+            console.log("The online push is created successfully.", data);
+            // alert("Success Init Engage Lab. DATA: " + data.regid);
+          },
+          webPushcallback(code, tip) {
+            console.log("The status code and prompt obtained by the user", code, tip);
+          },
+          swUrl: "static/pwa/js/webpush/sw.produce.min.2.2.1.js",
+          canGetInfo(data) {
+            console.log(data);
+            // alert("Get the RegId: " + MTpushInterface.getRegistrationID());
+          },
+          custom: (fuc) => {
+            // Custom permission prompt logic
+          }
+        });
+      };
+
+      // Start the notification permission check
+      requestNotificationPermission();
     };
+
 
     onMounted(async () => {
       // const info = await App.getInfo();
