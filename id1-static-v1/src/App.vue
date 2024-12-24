@@ -148,7 +148,7 @@ export default defineComponent({
       };
 
       const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
-      if(isInPwa() && !isRefreshed) {
+      if (isInPwa() && !isRefreshed) {
         document.addEventListener(
           "pwaEvent",
           () => {
@@ -365,6 +365,16 @@ export default defineComponent({
         }
       };
 
+      // Handle notification click
+      MTpushInterface.onNotificationClick((msgData) => {
+        console.log("Notification clicked:", msgData);
+        alert(msgData);
+        if (msgData.customData) {
+          // Use the customData parameter to determine navigation or actions
+          console.log("User navigated via notification with data:", msgData.customData);
+        }
+      });
+
       // Push initialization logic
       const initializePush = () => {
         function randomUid() {
@@ -379,7 +389,7 @@ export default defineComponent({
 
         // Get push messages
         MTpushInterface.onMsgReceive((msgData) => {
-          alert("RECEIVE MSG");
+          alert(msgData);
           console.log("Get push Messages:", msgData);
         });
 
@@ -392,7 +402,7 @@ export default defineComponent({
           },
           success(data) {
             console.log("The online push is created successfully.", data);
-            alert("Success Init Engage Lab. DATA: " + data.regid);
+            alert("Success Init Engage Lab. DATA: " + data);
           },
           webPushcallback(code, tip) {
             console.log("The status code and prompt obtained by the user", code, tip);
@@ -412,7 +422,6 @@ export default defineComponent({
       // Start the notification permission check
       requestNotificationPermission();
     };
-
 
     onMounted(async () => {
       // const info = await App.getInfo();
@@ -440,9 +449,15 @@ export default defineComponent({
         trackH5Affiliate();
       }
 
-      const hostname= window.location.hostname;
-      if ( isInPwa() || hostname.includes("7ffoz.cc") || hostname.includes("hvfq2.cc") || hostname.includes("nwntx.cc") || hostname.includes("a8amb.cc") ) {
-        console.log("Engagel labe here")
+      const hostname = window.location.hostname;
+      if (
+        isInPwa() ||
+        hostname.includes("7ffoz.cc") ||
+        hostname.includes("hvfq2.cc") ||
+        hostname.includes("nwntx.cc") ||
+        hostname.includes("a8amb.cc")
+      ) {
+        console.log("Engagel labe here");
         initEngageLabPush();
       }
 
