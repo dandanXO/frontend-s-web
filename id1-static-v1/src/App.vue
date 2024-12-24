@@ -365,16 +365,6 @@ export default defineComponent({
         }
       };
 
-      // Handle notification click
-      MTpushInterface.onNotificationClick((msgData) => {
-        console.log("Notification clicked:", msgData);
-        alert(msgData);
-        if (msgData.customData) {
-          // Use the customData parameter to determine navigation or actions
-          console.log("User navigated via notification with data:", msgData.customData);
-        }
-      });
-
       // Push initialization logic
       const initializePush = () => {
         function randomUid() {
@@ -386,6 +376,23 @@ export default defineComponent({
           }
           return uid;
         }
+
+        // Handle notification click
+        // MTpushInterface.onNotificationClick((msgData) => {
+        //   console.log("Notification clicked:", msgData);
+        //   alert(msgData);
+        //   if (msgData.customData) {
+        //     // Use the customData parameter to determine navigation or actions
+        //     console.log("User navigated via notification with data:", msgData.customData);
+        //   }
+
+        //   console.log("Notification clicked. Domain:", self.origin);
+        //   alert(self.origin);
+        //   event.notification.close();
+
+        //   // Handle click event with domain data
+        //   event.waitUntil(clients.openWindow(self.origin));
+        // });
 
         // Get push messages
         MTpushInterface.onMsgReceive((msgData) => {
@@ -411,6 +418,13 @@ export default defineComponent({
           canGetInfo(data) {
             console.log(data);
             alert("Get the RegId: " + MTpushInterface.getRegistrationID());
+          },
+          onNotificationClick(data) {
+            alert(data);
+            console.log("Notification clicked with data:", data);
+            if (data.url) {
+              window.location.href = data.url; // Navigate to the specified URL
+            }
           },
           custom: (fuc) => {
             // Custom permission prompt logic
