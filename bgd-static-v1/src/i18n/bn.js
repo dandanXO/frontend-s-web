@@ -218,7 +218,8 @@ export default {
     plsLoginToContinue: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন",
     uploadImageLargerThan1MbError: "আপলোড করা ছবি 1MB এর বেশি হতে পারে না",
     imageFormatError: "ছবি ফরম্যাট ত্রুটি",
-    uploadFailedPleaseTryAgain: "আপলোড ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন"
+    uploadFailedPleaseTryAgain: "আপলোড ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন",
+    copiedSuccessfully: "সফলভাবে কপি করা হয়েছে"
   },
   sideNav: {
     inviteToEarn: "আয় করার জন্য আমন্ত্রণ জানান",

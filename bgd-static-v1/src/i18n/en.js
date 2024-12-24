@@ -219,7 +219,8 @@ export default {
     plsLoginToContinue: "Please login to continue",
     uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
     imageFormatError: "Image format error",
-    uploadFailedPleaseTryAgain: "upload failed. Please try again"
+    uploadFailedPleaseTryAgain: "upload failed. Please try again",
+    copiedSuccessfully: "Copied Successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
