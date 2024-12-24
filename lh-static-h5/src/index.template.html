@@ -58,6 +58,13 @@
           window["WebScript"].notifyApp("LH_ANDROID");
         }
 
+        //Send Start Message to Flutter.
+        if (window.FlutterChannel) {
+          window.FlutterChannel.postMessage('LH_FLUTTER');
+        } else {
+          console.error('FlutterChannel is not available');
+        }
+
         //NEw Event Listener for Flutter APp.
         window.notifyApp = function (message) {
           try {
