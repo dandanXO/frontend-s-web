@@ -334,7 +334,7 @@ export default defineComponent({
           console.log("Get push Messages:", msgData);
         });
 
-        console.log(window.location.host + "/static/sw.produce.min.2.2.1.js");
+        console.log("TSET This 2");
         // Push initialization
         MTpushInterface.init({
           appkey: "87702ef148c8418859cc7793",
@@ -349,7 +349,7 @@ export default defineComponent({
           webPushcallback(code, tip) {
             console.log("The status code and prompt obtained by the user", code, tip);
           },
-          swUrl: window.location.host + "/static/sw.produce.min.2.2.1.js",
+          swUrl: "static/pwa/js/webpush/sw.produce.min.2.2.1.js",
           canGetInfo(data) {
             console.log(data);
             // alert("Get the RegId: " + MTpushInterface.getRegistrationID());
