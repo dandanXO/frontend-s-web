@@ -290,11 +290,8 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      // const info = await App.getInfo();
-      // console.log("APP Info");
-      // console.log(info);
-      // checkSID();
-      // getCSA();
+      console.log("THA App.Vue OnMOunted")
+
       checkServerStatus();
       getAppInfo();
       initOrientation();
