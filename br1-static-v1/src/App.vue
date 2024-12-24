@@ -330,7 +330,7 @@ export default defineComponent({
 
         // Get push messages
         MTpushInterface.onMsgReceive((msgData) => {
-          alert("RECEIVE MSG");
+          // alert("RECEIVE MSG");
           console.log("Get push Messages:", msgData);
         });
 
