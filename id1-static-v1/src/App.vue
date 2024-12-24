@@ -385,7 +385,7 @@ export default defineComponent({
 
         // Push initialization
         MTpushInterface.init({
-          appkey: "87702ef148c8418859cc7793",
+          appkey: "b654a90b71ff849be7a40cf3",
           user_str: randomUid(),
           fail(err) {
             console.log("Failed to create an online push", err);
@@ -441,7 +441,7 @@ export default defineComponent({
       }
 
       const hostname= window.location.hostname;
-      if ( isInPwa() || hostname.includes("7ffoz.cc")) {
+      if ( isInPwa() || hostname.includes("7ffoz.cc") || hostname.includes("hvfq2.cc") || hostname.includes("nwntx.cc") ) {
         console.log("Engagel labe here")
         initEngageLabPush();
       }
