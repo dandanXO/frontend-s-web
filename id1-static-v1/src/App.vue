@@ -441,7 +441,7 @@ export default defineComponent({
       }
 
       const hostname= window.location.hostname;
-      if ( isInPwa() || hostname.includes("7ffoz.cc") || hostname.includes("hvfq2.cc") || hostname.includes("nwntx.cc") ) {
+      if ( isInPwa() || hostname.includes("7ffoz.cc") || hostname.includes("hvfq2.cc") || hostname.includes("nwntx.cc") || hostname.includes("a8amb.cc") ) {
         console.log("Engagel labe here")
         initEngageLabPush();
       }
