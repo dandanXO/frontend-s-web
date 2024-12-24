@@ -361,7 +361,7 @@ export default defineComponent({
 
       //  Push initialization
       window.MTpushInterface.init({
-        appkey: "87702ef148c8418859cc7793", // Required. See above for application information
+        appkey: "b654a90b71ff849be7a40cf3", // Required. See above for application information
         user_str: randomUid(), // Required. User identifier, which identifies the user
         fail(err) {
           console.log("Failed to create an online push", err);
