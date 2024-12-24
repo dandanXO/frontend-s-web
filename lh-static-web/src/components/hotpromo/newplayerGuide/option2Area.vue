@@ -79,7 +79,7 @@
           ></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起30天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
 
@@ -135,7 +135,7 @@
           ></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起30天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
 
@@ -159,7 +159,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>15倍</td>
+            <td>15 倍</td>
           </tr>
         </tbody>
       </table>
@@ -183,7 +183,7 @@
           ></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起30天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
 
@@ -207,7 +207,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>15倍</td>
+            <td>15 倍</td>
           </tr>
         </tbody>
       </table>
@@ -230,7 +230,7 @@
           ></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起30天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
 
@@ -254,7 +254,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>15倍</td>
+            <td>15 倍</td>
           </tr>
         </tbody>
       </table>
@@ -278,7 +278,7 @@
           ></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起30天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
 
@@ -302,7 +302,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>15倍</td>
+            <td>15 倍</td>
           </tr>
         </tbody>
       </table>
@@ -326,7 +326,7 @@
           ></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起30天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
   </div>
@@ -564,6 +564,312 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+.dark {
+  .promotion-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border: 1px solid #e3e8f0;
+    border-radius: 10px;
+    margin-top: 20px;
+    border: 1px solid rgba(172, 212, 246, 1);
+  }
+
+  .switch-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .switch-option {
+    width: 144px;
+    height: 44px;
+    text-align: center;
+    cursor: pointer;
+
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: #7a80a1;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 20px;
+    border: none;
+  }
+
+  .switch-option.active {
+    background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+    border: 0px;
+    color: white;
+  }
+
+  .promotion-block,
+  .growth-strategy {
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+
+    .first-title {
+      display: flex;
+      font-size: 24px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .big-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+    .title {
+      margin-top: 4px;
+      color: white;
+      font-weight: 600;
+      font-size: 24px;
+    }
+  }
+  .title-area {
+    display: flex;
+    justify-content: space-between;
+    .big-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+    .title {
+      margin-top: 4px;
+      color: #000;
+      font-weight: 600;
+      font-size: 24px;
+    }
+  }
+  .reward-description {
+    h3 {
+      color: rgba(65, 185, 255, 1);
+      font-family: PingFang TC;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 22.4px;
+      letter-spacing: -0.02em;
+      text-align: left;
+      align-items: center;
+      display: flex;
+      margin: 0;
+    }
+  }
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    border: 1px solid rgba(172, 212, 246, 1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    border: 1px solid rgba(172, 212, 246, 1);
+    padding: 10px;
+    text-align: center;
+  }
+
+  thead {
+    background: linear-gradient(180deg, #41B9FF -21.81%, #0085E8 95.54%);
+    color: white;
+  }
+  thead th {
+    border: none;
+  }
+  thead th:first-child {
+    border-top-left-radius: 10px;
+  }
+
+  thead th:last-child {
+    border-top-right-radius: 10px;
+  }
+
+  tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+  }
+
+  tbody tr:last-child {
+    border-bottom-right-radius: 10px;
+  }
+
+  .progress-bar {
+    width: 100%;
+    background-color: #e3e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 10px;
+    margin: 10px 0;
+  }
+
+  .progress {
+    height: 100%;
+    background-color: #3498db;
+  }
+
+  .rewards {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .reward {
+    background-color: #f1f1f1;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 130px;
+    }
+
+    button {
+      &:hover {
+        opacity: 0.9;
+      }
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
+    }
+
+    .CLAIMED {
+      width: 120px;
+      background: rgba(217, 217, 217, 1);
+      color: #000;
+    }
+    .YES {
+      width: 120px;
+      background: linear-gradient(90deg, #f4d24c 0%, #f2a03a 100%);
+      color: #fff;
+    }
+    .NO {
+      width: 120px;
+      background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+      color: #fff;
+    }
+  }
+
+  button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* Icon styles */
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sports-icon {
+    background: url("@/assets/images/promotion/hotpromo/newplayerguide/sport.png") no-repeat center center;
+    background-size: cover;
+    &-active {
+      background: url("@/assets/images/promotion/hotpromo/newplayerguide/sport-active.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
+
+  .esports-icon {
+    background: url("@/assets/images/promotion/hotpromo/newplayerguide/esport.png") no-repeat center center;
+    background-size: cover;
+    &-active {
+      background: url("@/assets/images/promotion/hotpromo/newplayerguide/esport-active.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
+
+  .live-icon {
+    background: url("@/assets/images/promotion/hotpromo/newplayerguide/real.png") no-repeat center center;
+    background-size: cover;
+    &-active {
+      background: url("@/assets/images/promotion/hotpromo/newplayerguide/real-active.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
+
+  .cards-icon {
+    background: url("@/assets/images/promotion/hotpromo/newplayerguide/card.png") no-repeat center center;
+    background-size: cover;
+    &-active {
+      background: url("@/assets/images/promotion/hotpromo/newplayerguide/card-active.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
+
+  .slots-icon {
+    background: url("@/assets/images/promotion/hotpromo/newplayerguide/slot.png") no-repeat center center;
+    background-size: cover;
+    &-active {
+      background: url("@/assets/images/promotion/hotpromo/newplayerguide/slot-active.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
+
+  .fishing-icon {
+    background: url("@/assets/images/promotion/hotpromo/newplayerguide/fish.png") no-repeat center center;
+    background-size: cover;
+    &-active {
+      background: url("@/assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
+
+  .go-btn-div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .go-btn {
+    width: 150px;
+    background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+    color: #fff;
+    padding: 5px 28px;
+    font-size: 16px;
+    border-radius: 8px;
+    text-align: center;
+
+    &.status {
+      color: #fff;
+    }
+
+    &.complete {
+      border: 1px solid rgba(0, 133, 232, 1);
+      background: white;
+      color: rgba(0, 133, 232, 1);
+    }
+  }
+}
 .promotion-container {
   display: flex;
   flex-direction: column;

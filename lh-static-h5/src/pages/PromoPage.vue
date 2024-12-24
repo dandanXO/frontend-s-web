@@ -316,7 +316,8 @@ export default defineComponent({
     const isDisplayLogin = ref(false);
 
     const selectedPromoWrapperClass = computed(() => ({
-      "challenge-comeback": ['lh1-cycle-loss-refund', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
+      "challenge-comeback": ['lh1-cycle-loss-refund', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
+      "challenge-comeback1": ['lh-official-gift'],
       "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin',
       'livepoker-rebate': selectedPromo.value.promoCode === 'lh1-livepoker-rebate',
       'lh1-football': selectedPromo.value.promoCode === 'lh1-football',
@@ -1107,6 +1108,10 @@ export default defineComponent({
         background: #e7f1fd;
       }
 
+      &.challenge-comeback1 {
+        background: #e7f1fd;
+      }
+
       &.livepoker-rebate {
         background: #e7f1fd;
       }
@@ -1326,6 +1331,10 @@ export default defineComponent({
               font-style: normal;
             }
           }
+        }
+
+        &.challenge-comeback1 {
+          background: transparent;
         }
       }
     }

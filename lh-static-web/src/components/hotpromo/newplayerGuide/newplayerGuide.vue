@@ -37,7 +37,7 @@
               <div class="subtitle">奖励说明</div>
             </div>
             <p>
-              注册后，绑定手机号码、银行账户或USDT地址，并完成任意一笔存款即可立即领取新手礼包。
+              注册后，绑定手机号码、银行账户或 USDT 地址，并完成任意一笔存款即可立即领取新手礼包。
               每绑定一项新的信息，均可获得额外奖励！
             </p>
           </div>
@@ -170,7 +170,7 @@
             <li>
               <span class="step-number">1</span>
               <div class="content">
-                自注册日起算7天内任意存款一次的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+                自注册日起算 7 天内任意存款一次的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
               </div>
             </li>
             <li>
@@ -182,7 +182,7 @@
             <li>
               <span class="step-number">3</span>
               <div class="content">
-                每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金5倍水即可提款，首次提款彩金为2倍流水；
+                每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2 倍流水；
               </div>
             </li>
             <li>
@@ -198,7 +198,7 @@
             <li>
               <span class="step-number">6</span>
               <div class="content">
-                每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+                每位有效玩家、每个手机号码、电子邮箱、银行卡、IP 地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
               </div>
             </li>
             <li>
@@ -212,24 +212,24 @@
             <li>
               <span class="step-number">1</span>
               <div class="content">
-                自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+                自注册日起算 30 天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺 3 个优惠，让新手会员进行游戏体验。
               </div>
             </li>
             <li>
               <span class="step-number">2</span>
               <div class="content">
-                每位新用户会员可选择各场馆参与1次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
+                每位新用户会员可选择各场馆参与 1 次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
               </div>
             </li>
             <li>
               <span class="step-number">3</span>
               <div class="content">
-                新人指路任务完成后点击领取即可获得，首存活动（本+彩）15倍流水，成长攻略以及钱包冲刺彩金均为5倍流水。
+                新人指路任务完成后点击领取即可获得，首存活动（本 + 彩）15 倍流水，成长攻略以及钱包冲刺彩金均为 5 倍流水。
               </div>
             </li>
             <li>
               <span class="step-number">4</span>
-              <div class="content">USDT存款方式不支持参与首存活动。</div>
+              <div class="content">USDT 存款方式不支持参与首存活动。</div>
             </li>
             <li>
               <span class="step-number">5</span>
@@ -240,7 +240,7 @@
             <li>
               <span class="step-number">6</span>
               <div class="content">
-                每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+                每位有效玩家、每个手机号码、电子邮箱、银行卡、IP 地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
               </div>
             </li>
             <li>
@@ -434,6 +434,279 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+.dark {
+  .switch-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .switch-container {
+    box-shadow: 0px 2px 4.58px 0px rgba(154, 206, 255, 1) inset;
+
+    box-shadow: 0px -1px 3.66px 0px rgba(106, 184, 255, 1) inset;
+
+    display: flex;
+    border: 1px solid rgba(154, 206, 255, 1);
+    border-radius: 30px;
+    overflow: hidden;
+    width: 400px;
+    background: transparent;
+  }
+
+  .switch-option {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    white-space: nowrap;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #7a80a1;
+  }
+
+  .switch-option.active {
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+    color: white;
+    box-shadow: 0px 8px 9px 0px #FFFFFF40 inset, 0px 4px 4px 0px #FFFFFF40 inset, 0px -4px 4px 0px #FFFFFF40 inset;
+  }
+  .go-btn {
+    background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+    color: #fff;
+    padding: 5px 28px;
+    font-size: 16px;
+    border-radius: 8px;
+
+    &.status {
+      color: #fff;
+    }
+
+    &.complete {
+      border: 1px solid rgba(0, 133, 232, 1);
+      background: white;
+      color: rgba(0, 133, 232, 1);
+    }
+  }
+  .container {
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    display: flex;
+    border: 1px solid rgba(172, 212, 246, 1);
+    border-radius: 10px;
+    padding: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+    .left-panel {
+      flex: 4;
+      .big-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+      }
+
+      .title {
+        margin-top: 4px;
+        color: white;
+        font-weight: 600;
+        font-size: 24px;
+      }
+    }
+
+    .right-panel {
+      flex: 3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .container2 {
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    display: flex;
+    border: 1px solid rgba(172, 212, 246, 1);
+    border-radius: 10px;
+    padding: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+    .left-panel {
+      flex: 2;
+
+      .big-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+
+      .title {
+        margin-top: 4px;
+        color: white;
+        font-weight: 600;
+        font-size: 24px;
+      }
+    }
+
+    .right-panel {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .container3 {
+    background-color: #f9fbfe;
+    display: flex;
+    border: 1px solid rgba(172, 212, 246, 1);
+    border-radius: 10px;
+    padding: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .section {
+    margin-top: 18px;
+    .subtitle {
+      color: rgba(65, 185, 255, 1);
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+  .section2 {
+    margin-top: 12px;
+    .subtitle {
+      color: rgba(65, 185, 255, 1);
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .steps {
+    margin-top: 20px;
+  }
+
+  .step {
+    border: 1px solid rgba(215, 235, 255, 1);
+    padding: 8px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    &.incomplete {
+      background: #d7ebff;
+    }
+  }
+
+  .step-number {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .step-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: white;
+  }
+
+  .status {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+    width: 100px;
+    border: 1px solid rgba(0, 133, 232, 1);
+
+    cursor: pointer;
+    color: rgba(0, 133, 232, 1);
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+
+  .complete {
+    background-color: transparent;
+  }
+
+  .incomplete {
+    background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+    border: unset;
+    color: #fff;
+  }
+
+  .not-eligible {
+    background: #d9d9d9;
+    border: none;
+    color: #000;
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .progress-bar {
+    width: 100%;
+    background: rgba(215, 235, 255, 1);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 10px;
+    margin: 10px 0;
+  }
+
+  .progress {
+    height: 100%;
+    background-color: #3498db;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .progress-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: white;
+  }
+  .rules-content {
+    color: white;
+    padding: 0;
+
+    .step-number {
+      width: 100%;
+      max-width: 20px;
+      height: 20px;
+      font-size: 14px;
+    }
+
+    li {
+      font-family: PingFang TC;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 28.8px;
+      text-align: left;
+      list-style-type: none;
+      display: flex;
+      margin-bottom: 4px;
+    }
+  }
+}
 .switch-wrapper {
   display: flex;
   justify-content: center;
