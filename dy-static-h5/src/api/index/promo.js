@@ -216,7 +216,13 @@ export function claimLivePokerBonus(item) {
 }
 
 export function footballHistroy() {
-  return eventapi.get("/lh1-football/history");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/lh1-football/history?v=${randNum}`);
+}
+
+export function footballEligibility() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/lh1-football/eligibility?v=${randNum}`);
 }
 
 export function getCompetitionBetToday(promoCode) {

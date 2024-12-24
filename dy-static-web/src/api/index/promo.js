@@ -314,6 +314,10 @@ export function footballHistroy() {
   return server.EVENT.get("/lh1-football/history");
 }
 
+export function footballEligibility() {
+  return server.EVENT.get("/session/lh1-football/eligibility");
+}
+
 export function getCompetitionBetToday(promoCode) {
   return server.EVENT.get(`/competition-bet/yesterday`, {
     params: {
