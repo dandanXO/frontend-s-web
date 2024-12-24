@@ -334,6 +334,7 @@ export default defineComponent({
           console.log("Get push Messages:", msgData);
         });
 
+        console.log(window.location.host + "/sw.produce.min.2.2.1.js");
         // Push initialization
         MTpushInterface.init({
           appkey: "87702ef148c8418859cc7793",
@@ -343,19 +344,18 @@ export default defineComponent({
           },
           success(data) {
             console.log("The online push is created successfully.", data);
-            alert("Success Init Engage Lab. DATA: " + data.regid);
+            // alert("Success Init Engage Lab. DATA: " + data.regid);
           },
           webPushcallback(code, tip) {
             console.log("The status code and prompt obtained by the user", code, tip);
           },
-          swUrl: "static/pwa/js/webpush/sw.produce.min.2.2.1.js",
+          swUrl: window.location.host + "/sw.produce.min.2.2.1.js",
           canGetInfo(data) {
             console.log(data);
-            alert("Get the RegId: " + MTpushInterface.getRegistrationID());
+            // alert("Get the RegId: " + MTpushInterface.getRegistrationID());
           },
           custom: (fuc) => {
             // Custom permission prompt logic
-            fuc();
           }
         });
       };
