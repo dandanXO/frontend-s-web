@@ -91,9 +91,9 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/affiliatepage"
     ) {
       if (isAndroid()) {
-        localStorage.setItem("TOKEN", to.query.token);
+        to.query.token && localStorage.setItem("TOKEN", to.query.token);
       } else {
-        SessionStorage.set("TOKEN", to.query.token);
+        to.query.token && SessionStorage.set("TOKEN", to.query.token);
       }
 
       if (to.query.dark) {
