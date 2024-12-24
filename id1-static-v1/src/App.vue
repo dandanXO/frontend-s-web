@@ -397,7 +397,7 @@ export default defineComponent({
           webPushcallback(code, tip) {
             console.log("The status code and prompt obtained by the user", code, tip);
           },
-          swUrl: "",
+          swUrl: "static/pwa/js/webpush/sw.produce.min.2.2.1.js",
           canGetInfo(data) {
             console.log(data);
             alert("Get the RegId: " + MTpushInterface.getRegistrationID());
