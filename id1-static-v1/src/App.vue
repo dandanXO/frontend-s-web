@@ -408,7 +408,7 @@ export default defineComponent({
             console.log("Failed to create an online push", err);
           },
           success(data) {
-            console.log("The online push is created successfully.", data);
+            console.log("The online push is created successfully.", JSON.stringify(data));
             alert("Success Init Engage Lab. DATA: " + data);
           },
           webPushcallback(code, tip) {
@@ -418,13 +418,6 @@ export default defineComponent({
           canGetInfo(data) {
             console.log(data);
             alert("Get the RegId: " + MTpushInterface.getRegistrationID());
-          },
-          onNotificationClick(data) {
-            alert(data);
-            console.log("Notification clicked with data:", data);
-            if (data.url) {
-              window.location.href = data.url; // Navigate to the specified URL
-            }
           },
           custom: (fuc) => {
             // Custom permission prompt logic
@@ -469,7 +462,8 @@ export default defineComponent({
         hostname.includes("7ffoz.cc") ||
         hostname.includes("hvfq2.cc") ||
         hostname.includes("nwntx.cc") ||
-        hostname.includes("a8amb.cc")
+        hostname.includes("a8amb.cc") ||
+        hostname.includes("6r6yy.cc")
       ) {
         console.log("Engagel labe here");
         initEngageLabPush();
