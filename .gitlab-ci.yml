@@ -26,7 +26,7 @@ default:
 #    - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
 
 .sonarqube-check:
-  stage: code-check
+  stage: code-check-and-build
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
     GIT_DEPTH: "0"
@@ -46,7 +46,7 @@ default:
     - production
 
 .build-projects:
-  stage: build
+  stage: code-check-and-build
   variables:
     NODE_OPTIONS: "--max-old-space-size=2048"
     NODE_VERSION: "16.17.0"
@@ -59,7 +59,7 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
-    - export NODE_OPTIONS="$NODE_OPTIONS"
+    - export NODE_OPTIONS="$NODE_OPTIONS" 
     - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
   artifacts:
    untracked: true
@@ -99,8 +99,7 @@ default:
         - $PROJECT/**/*
 
 stages:
-  - code-check
-  - build
+  - code-check-and-build
   - build-image
   - deploy
 
@@ -411,6 +410,19 @@ build-image-tha-static-h5:
 
 #===============================================================================================
 
+build-th2-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: th2-static-v1
+
+build-image-th2-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: th2-static-v1
+  needs:
+    - build-th2-static-v1
+
+#===============================================================================================
 build-ind-static-h5:
   extends: .build-projects
   variables:
@@ -684,6 +696,13 @@ deploy-lh-landing-v9:
 
 #===============================================================================================
 
+deploy-lh-landing-v10:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v10
+
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
@@ -877,7 +896,6 @@ build-image-pak-landing-v4:
     - build-pak-landing-v4
 
 #===============================================================================================
-
 
 deploy-pak-download-pwa:
   extends: .s3-deploy
@@ -1127,6 +1145,16 @@ deploy-bz1-download:
   extends: .s3-deploy
   variables:
     PROJECT: bz1-download
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
+
+#===============================================================================================
+
+deploy-br1-download-pwa:
+  extends: .s3-deploy
+  variables:
+    PROJECT: br1-download-pwa
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners
