@@ -1,15 +1,15 @@
 <template>
   <div class="marquee-wrapper">
-    <Vue3Marquee :clone="true">
+    <MarqueeText :repeat="10">
       <div v-for="index in 2" :key="index" :class="index % 2 ? 'odd' : 'even'" class="marquee-content">
-        <img v-if="type === 'bounty'" src="@/assets/images/promotion/hotpromo/blastpremier/marquee-bounty.png" />
-        <img v-else src="@/assets/images/promotion/hotpromo/blastpremier/marquee-odd.png" />
+        <img v-if="type === 'bounty'" src="../../../assets/images/promo/hotpromo/blastbounty/marquee-bounty.png" />
+        <img v-else  src="../../../assets/images/promo/hotpromo/blastbounty/marquee-odd.png" />
       </div>
-    </Vue3Marquee>
+    </MarqueeText>
   </div>
 </template>
 <script setup>
-import { Vue3Marquee } from "vue3-marquee";
+import MarqueeText from "vue-marquee-text-component";
 import { defineProps } from 'vue';
 
 // Define the `type` prop
@@ -24,21 +24,26 @@ defineProps({
 .marquee-wrapper {
   background-color: #000;
 
+  .marquee-text-wrap {
+    height: 16px;
+  }
+
   .marquee-content {
-    display: flex;
+    display: inline-block;
     justify-content: center;
-    padding: 7px 15px 4px;
-    width: 280px;
-    height: 40px;
+    padding: 1.4px 15px 2.8px;
+    width: 112px;
+    height: 16px;
 
     img {
+      display: block;
       max-width: 100%;
     }
 
     &.odd {
       $bg-color: #fffd66;
       background-color: $bg-color;
-      clip-path: polygon(20px 0, 260px 0, 100% 100%, 0 100%);
+      clip-path: polygon(8px 0, 104px 0, 100% 100%, 0 100%);
     }
 
     &.even {
