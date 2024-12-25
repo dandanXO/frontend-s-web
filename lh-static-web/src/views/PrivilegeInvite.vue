@@ -1,58 +1,112 @@
 <template>
   <div class="privilege-invite-container">
     <div>
-      <img class="banner" src="../assets/images/privilege-invite/web1.jpg" />
+      <img class="banner" src="../assets/images/privilege-invite/web2.jpg" />
     </div>
-    <div style="filter: hue-rotate(530deg)">
+    <div >
       <!-- tabs -->
       <div class="tabs">
         <div :class="{ tab: 'tab', active: activeKey === 1 }" @click="changeTab(1)">
-          <h3>邀请首存奖金</h3>
+          <h5>邀请首存奖金</h5>
         </div>
         <div :class="{ tab: 'tab', active: activeKey === 2 }" @click="changeTab(2)">
-          <h3>邀请周存送</h3>
+          <h5>邀请周存送</h5>
         </div>
         <div :class="{ tab: 'tab', active: activeKey === 3 }" @click="changeTab(3)">
-          <h3>好友流水返利</h3>
+          <h5>好友流水返利</h5>
         </div>
       </div>
+      <div class="new-section" v-if="activeKey === 1 || activeKey === 2">
+        <div class="new-rebate-section">
+          <div class="new-rebate-section-left">
+            <div class="new-rebate-section-title">
+              <div class="new-rebate-section-title-inner">
+                <div><img style="vertical-align: sub;" src="../assets/promo/lh1-blast-premier/section-title-img.png" />邀请首存奖金</div>
+                <div @click="toggleCheckRecordModal" class="tab active" >
+                  <h5>查看我的推廣紀錄</h5>
+                </div>
+              </div>
+            </div>
+            <div class="copy-section">
+              <div class="copy-first">分享链接 <img style="height: 24px;width: 24px;" src="../assets/images/privilege-invite/copy.png" /></div>
+              <div class="copy-sec">
+                <div class="copy-sec-inner"><div>{{referralLink}}</div> <div @click="copyText">复制</div> </div>
+                <div @click="shareInvite" class="tab active" >
+                  <h5>立即分享</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="new-section" v-if="activeKey === 3">
+        <div class="new-rebate-section">
+          <div class="new-rebate-section-left">
+            <div class="new-rebate-section-title">
+              <div class="new-rebate-section-title-inner">
+                <div><img style="vertical-align: sub;" src="../assets/promo/lh1-blast-premier/section-title-img.png" />邀请首存奖金</div>
+                <div @click="toggleCheckRecordModal" class="tab active" >
+                  <h5>查看我的推廣紀錄</h5>
+                </div>
+              </div>
+            </div>
+            <div class="info-box">
+              <div class="info-item">
+                <div class="info-top">昨日好友投注总额</div>
+                <div class="info-content yesterday-bet">{{ `${rebateInfo?.yesterdayFriendBet || '0.00'} 元` }}</div>
+              </div>
 
+              <div class="info-item">
+                <div class="info-top">累计待派返利</div>
+                <div class="info-content today-bonus">{{ `${rebateInfo?.pendingRebate || '0.00'} 元` }}</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-top">近 15 天累计返利</div>
+                <div class="info-content total-bouns">{{ `${rebateInfo?.fifteenDaysRebate || '0.00'} 元` }}</div>
+              </div>
+            </div>
+            <div class="copy-section">
+              <div class="copy-first">分享链接 <img style="height: 24px;width: 24px;" src="../assets/images/privilege-invite/copy.png" /></div>
+              <div class="copy-sec">
+                <div class="copy-sec-inner"><div>{{referralLink}}</div> <div @click="copyText">复制</div> </div>
+                <div @click="shareInvite" class="tab active" >
+                  <h5>立即分享</h5>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 20px; text-align: left;">活动期间，邀请人可获得每个好友从其注册时间开始计算 15 天的有效投注额 0.4% 的返利，无上限。</div>
+          </div>
+        </div>
+      </div>
       <!-- tab content -->
-      <div v-if="activeKey === 1" class="tab-content">
-        <div class="tab-section">
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-time.png"
-            width="560"
-            height="28"
-          />
-          <p>2022年11月17日00:00起</p>
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-content.png"
-            width="560"
-            height="28"
-          />
-          <p>
-            雷火用户打开：个人中心--点击“呼朋唤友”复制推广链接，通过QQ、微信、论坛、贴吧、微博等方式分享，成功邀请好友即
-            可获得现金奖励！
-          </p>
-          <p class="check-record-btn" @click="toggleCheckRecordModal(true)">查看我的推广记录</p>
-          <button class="share-btn" @click="shareInvite">立刻分享</button>
-          <div class="rebate-table-wrapper">
-            <table border="0">
+      <div v-if="activeKey === 1" class="new-section">
+          <div class="new-rebate-game-info">
+            <div class="title"></div>
+            <div class="little-title">
+              <div class="left">活动时间</div>
+              <div class="right">2022 年 11 月 17 日 00:00 起</div>
+            </div>
+            <div class="little-title">
+              <div class="left">活动内容</div>
+              <div class="right"></div>
+            </div>
+            <div  style="text-align: left;font-size: 18px;">
+              雷火用户打开：个人中心--点击“呼朋唤友”复制推广链接，通过 QQ、微信、论坛、贴吧、微博等方式分享，成功邀请好友即 可获得现金奖励！
+            </div>
+            <table class="new-rebate-game-info-table">
               <tbody>
                 <tr>
-                  <td>推荐新用户首存金额</td>
-                  <td>邀请人彩金</td>
-                  <td>被邀请人彩金</td>
-                  <td>流水要求</td>
+                  <th>推荐新用户首存金额</th>
+                  <th>邀请人彩金</th>
+                  <th>被邀请人彩金</th>
+                  <th>流水要求</th>
                 </tr>
                 <tr>
                   <td>≥100</td>
-                  <td>18元</td>
-                  <td>18元</td>
-                  <td rowspan="6">
+                  <td>18 元</td>
+                  <td>18 元</td>
+                  <td rowspan="7">
                     3倍/
                     <br />
                     不限制场馆
@@ -60,282 +114,232 @@
                 </tr>
                 <tr>
                   <td>≥1,000</td>
-                  <td>58元</td>
-                  <td>58元</td>
+                  <td>58 元</td>
+                  <td>58 元</td>
                 </tr>
                 <tr>
                   <td>≥5,000</td>
-                  <td>108元</td>
-                  <td>108元</td>
+                  <td>108 元</td>
+                  <td>108 元</td>
                 </tr>
                 <tr>
                   <td>≥10,000</td>
-                  <td>288元</td>
-                  <td>288元</td>
+                  <td>288 元</td>
+                  <td>288 元</td>
                 </tr>
                 <tr>
                   <td>≥30,000</td>
-                  <td>888元</td>
-                  <td>888元</td>
+                  <td>888 元</td>
+                  <td>888 元</td>
                 </tr>
                 <tr>
                   <td>≥50,000</td>
-                  <td>1,088元</td>
-                  <td>1,088元</td>
+                  <td>1,088 元</td>
+                  <td>1,088 元</td>
                 </tr>
                 <tr>
                   <td>≥100,000</td>
-                  <td>1,888元</td>
-                  <td>1,888元</td>
-                  <td></td>
+                  <td>1,888 元</td>
+                  <td>1,888 元</td>
                 </tr>
               </tbody>
             </table>
+            <div class="new-rebate-game-bottom">
+              <div class="new-rebate-game-bottom-inner">
+                <div style="font-weight: 600;"> <img style="height: 14px;width: 14px;" class="banner" src="../assets/images/privilege-invite/trangle.png" />示例：</div>
+                会员 A 邀请一位好友首存 1,000 元，会员 A 可获得 58 元，被邀请人可获得 58 元；
+              </div>
+            </div>
           </div>
-          <!-- <div class="rebate-table">
-            <div class="rebate-header">推荐新用户首存金额</div>
-            <div class="rebate-header">可获得推荐奖金</div>
-            <div class="rebate-header">流水要求</div>
 
-            <div class="rebate-list bg-dark">≥100</div>
-            <div class="rebate-list bg-dark">28元</div>
-            <div class="rebate-list bg-dark"></div>
-
-            <div class="rebate-list">≥1,000</div>
-            <div class="rebate-list">108元</div>
-            <div class="rebate-list"></div>
-
-            <div class="rebate-list bg-dark">≥5,000</div>
-            <div class="rebate-list bg-dark">158元</div>
-            <div class="rebate-list bg-dark">3倍/不限场馆</div>
-
-            <div class="rebate-list">≥10,000</div>
-            <div class="rebate-list">388元</div>
-            <div class="rebate-list"></div>
-
-            <div class="rebate-list bg-dark">≥30,000</div>
-            <div class="rebate-list bg-dark">1588元</div>
-            <div class="rebate-list bg-dark"></div>
-
-            <div class="rebate-list">≥50,000</div>
-            <div class="rebate-list">1888元</div>
-            <div class="rebate-list"></div>
-          </div> -->
-
-          <p class="example-text">例：会员A邀请一位好友首存1,000元，会员A可获得58元，被邀请人可获得58元；</p>
-        </div>
-        <div class="tab-section">
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-rules.png"
-            width="560"
-            height="28"
-          />
-
-          <div class="rules">
-            <ol>
-              <li>
+          <div class="new-rebate-game-bottom-rule">
+            <div class="title"></div>
+            <div class="content">
+              <div class="item">
+                <div class="item-num">1</div>
                 每个通过您推广链接进行注册，并完成相应首存的用户，您将获得对应的邀请奖金；每个受邀请人完成对应存款金额，双方都可获得彩金，
-                邀请人能最高可获得1,888元；
-              </li>
-              <li>本活动仅计算被推荐人首次单笔充值金额,非累计及第二笔以上充值金额计算；</li>
-              <li>
-                您每邀请一位新会员，被邀请人的第一笔首存金额达到对应档位即可在次日24小时内活动对应档位彩金，彩金3倍流水即可提款；
-              </li>
-              <li>邀请人等级不得低于vip1。</li>
-              <li>被推荐人注册后,无限制首次充值时间,完成首笔充值达到门槛,即可参与</li>
-              <li>
-                普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金
-              </li>
-              <li>
-                任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
-                注额内。
-              </li>
-              <li>
-                邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
-                个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
-              </li>
-              <li>为避免文字理解差异，雷火电竞保留此活动最终解释权。</li>
-            </ol>
-          </div>
-        </div>
+                邀请人能最高可获得 1,888 元；
+              </div>
+              <div class="item">
+                <div class="item-num">2</div>
+                本活动仅计算被推荐人首次单笔充值金额，非累计及第二笔以上充值金额计算；
+              </div>
+              <div class="item">
+                <div class="item-num">3</div>
+                您每邀请一位新会员，被邀请人的第一笔首存金额达到对应档位即可在次日 24 小时内活动对应档位彩金，彩金 3 倍流水即可提款；
+              </div>
+              <div class="item">
+                <div class="item-num">4</div>
+                邀请人等级不得低于 vip1。
+              </div>
+              <div class="item">
+                <div class="item-num">5</div>
+                被推荐人注册后，无限制首次充值时间，完成首笔充值达到门槛，即可参与
+              </div>
+              <div class="item">
+                <div class="item-num">6</div>
+                普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金             
+            </div>
+            <div class="item">
+                <div class="item-num">7</div>
+                任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投 注额内。
+            </div>
+            <div class="item">
+                <div class="item-num">8</div>
+                邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP 地址、每台设备只能使用一 个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+            </div>
+            <div class="item">
+                <div class="item-num">9</div>
+                为避免文字理解差异，雷火电竞保留此活动最终解释权。
+            </div>
+            </div>
+          </div>  
       </div>
-      <div v-if="activeKey === 2" class="tab-content">
-        <div class="tab-section">
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-time.png"
-            width="560"
-            height="28"
-          />
-          <p>2022年11月17日00:00起</p>
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-content.png"
-            width="560"
-            height="28"
-          />
-          <p>
-            活动期间，通过您的推广链接进行注册，并达到周累计存款要求，您和受邀请人均可获得该累计存款金额 1%
-            的新人奖励，最高单周可获得 88888 元哦！
-          </p>
-          <p class="check-record-btn" @click="toggleCheckRecordModal(true)">查看我的推广记录</p>
-          <button class="share-btn" @click="shareInvite">立刻分享</button>
-
-          <div class="rebate-table rebate-table-tab2">
-            <div class="rebate-header">邀请人等级要求</div>
-            <div class="rebate-header">好友周累计存款</div>
-            <div class="rebate-header">邀请人比例</div>
-            <div class="rebate-header">受邀请人比例</div>
-            <div class="rebate-header">总奖金上限</div>
-            <div class="rebate-header">流水要求</div>
-
-            <div class="rebate-list bg-dark">VIP2</div>
-            <div class="rebate-list bg-dark">≥5,000元</div>
-            <div class="rebate-list bg-dark">1%</div>
-            <div class="rebate-list bg-dark">1%</div>
-            <div class="rebate-list bg-dark">88元</div>
-            <div class="rebate-list bg-dark"></div>
-
-            <div class="rebate-list">VIP3-VIP4</div>
-            <div class="rebate-list">≥10,000元</div>
-            <div class="rebate-list">1%</div>
-            <div class="rebate-list">1%</div>
-            <div class="rebate-list">188元</div>
-            <div class="rebate-list"></div>
-
-            <div class="rebate-list bg-dark">VIP5-VIP6</div>
-            <div class="rebate-list bg-dark">≥50,000元</div>
-            <div class="rebate-list bg-dark">1%</div>
-            <div class="rebate-list bg-dark">1%</div>
-            <div class="rebate-list bg-dark">388元</div>
-            <div class="rebate-list bg-dark">1倍/不限场馆</div>
-
-            <div class="rebate-list">VIP7-VIP8</div>
-            <div class="rebate-list">≥100,000元</div>
-            <div class="rebate-list">1%</div>
-            <div class="rebate-list">1%</div>
-            <div class="rebate-list">888元</div>
-            <div class="rebate-list"></div>
-
-            <div class="rebate-list bg-dark">VIP9</div>
-            <div class="rebate-list bg-dark">≥500,000元</div>
-            <div class="rebate-list bg-dark">1%</div>
-            <div class="rebate-list bg-dark">1%</div>
-            <div class="rebate-list bg-dark">8,888元</div>
-            <div class="rebate-list bg-dark"></div>
-
-            <div class="rebate-list">VIP10-VIP12</div>
-            <div class="rebate-list">≥1,000,000元</div>
-            <div class="rebate-list">1%</div>
-            <div class="rebate-list">1%</div>
-            <div class="rebate-list">88,888元</div>
-            <div class="rebate-list"></div>
+      <div v-if="activeKey === 2" class="new-section" >
+        <div class="new-rebate-game-info">
+            <div class="title"></div>
+            <div class="little-title">
+              <div class="left">活动时间</div>
+              <div class="right">2022 年 11 月 17 日 00:00 起</div>
+            </div>
+            <div class="little-title">
+              <div class="left">活动内容</div>
+            </div>
+            <div style="text-align: left;font-size: 18px;">活动期间，通过您的推广链接进行注册，并达到周累计存款要求，您和受邀请人均可获得该累计存款金额 1% 的新人奖励，最高单周可获得 88888 元哦！</div>
+            <table class="new-rebate-game-info-table">
+              <tbody>
+                <tr>
+                  <th>邀请人等级要求</th>
+                  <th>好友周累计存款</th>
+                  <th>邀请人比例</th>
+                  <th>受邀请人比例</th>
+                  <th>总奖金上限</th>
+                  <th>流水要求</th>
+                </tr>
+                <tr>
+                  <td>VIP2</td>
+                  <td>≥5,000 元</td>
+                  <td>1%</td>
+                  <td>1%</td>
+                  <td>88 元</td>
+                  <td rowspan="6">
+                    3倍/
+                    <br />
+                    不限制场馆
+                  </td>
+                </tr>
+                <tr>
+                  <td>VIP3-VIP4</td>
+                  <td>≥10,000 元</td>
+                  <td>1%</td>
+                  <td>1%</td>
+                  <td>188 元</td>
+                </tr>
+                <tr>
+                  <td>VIP5-VIP6</td>
+                  <td>≥50,000 元</td>
+                  <td>1%</td>
+                  <td>1%</td>
+                  <td>388 元</td>
+                </tr>
+                <tr>
+                  <td>VIP7-VIP8</td>
+                  <td>≥100,000 元</td>
+                  <td>1%</td>
+                  <td>1%</td>
+                  <td>888 元</td>
+                </tr>
+                <tr>
+                  <td>VIP9</td>
+                  <td>≥500,000 元</td>
+                  <td>1%</td>
+                  <td>1%</td>
+                  <td>8,888 元</td>
+                </tr>
+                <tr>
+                  <td>VIP10-VIP12</td>
+                  <td>≥1,000,000 元</td>
+                  <td>1%</td>
+                  <td>1%</td>
+                  <td>8,888 元</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="new-rebate-game-bottom">
+              <div class="new-rebate-game-bottom-inner">
+                <div style="font-weight: 600;"> <img style="height: 14px;width: 14px;" class="banner" src="../assets/images/privilege-invite/trangle.png" />示例：</div>
+                邀请人等级为 VIP2，被邀请人周累计存款达到 10000 元，x1%=100 元，按照等级对应奖金上限，则各派发 88 元，奖金将会在次日凌晨 00:00 至下午 16:00 之间自动派发至您的主账户
+              </div>
+            </div>
           </div>
-
-          <p class="example-text">
-            例如：邀请人等级为VIP2，被邀请人周累计存款达到10000元，x1%=100元，
-            按照等级对应奖金上限，则各派发88元，奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户
-          </p>
-        </div>
-
-        <div class="tab-section">
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-rules.png"
-            width="560"
-            height="28"
-          />
-
-          <div class="rules">
-            <p>
-              1.每个通过您的推广链接进行注册，并达到周累计存款≥5000元的用户，您和受邀请人均可获得该累计存款金额 1%
-              的新人奖励。 周累计存款统计时间为自然周（每周一00:00至周日23:59）。
-            </p>
-            <p>
-              2.您每邀请一位新会员，从注册的日期开始算起，可享4次邀请周累存送，符合获取条件奖金的会员，将会在每个自然周一00:00:00
-              - 23:59:59内系统自动派发奖金至主钱包，并更新剩余获取奖金次数；逾期将会视为自动放弃。
-            </p>
-            <p>
-              3.任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
-              注额内。
-            </p>
-            <p>
-              4.邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
-              个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
-            </p>
-            <p>
-              5.普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金。
-            </p>
-            <p>6.为避免文字理解差异，雷火电竞保留此活动最终解释权。</p>
-          </div>
-        </div>
+          <div class="new-rebate-game-bottom-rule">
+            <div class="title"></div>
+              <div class="content">
+                <div class="item">
+                  <div class="item-num">1</div>
+                  每个通过您的推广链接进行注册，并达到周累计存款≥5000 元的用户，您和受邀请人均可获得该累计存款金额 1% 的新人奖励。周累计存款统计时间为自然周（每周一 00:00 至周日 23:59）。
+                </div>
+                <div class="item">
+                  <div class="item-num">2</div>
+                  您每邀请一位新会员，从注册的日期开始算起，可享 4 次邀请周累存送，符合获取条件奖金的会员，将会在每个自然周一 00:00:00 - 23:59:59 内系统自动派发奖金至主钱包，并更新剩余获取奖金次数；逾期将会视为自动放弃。
+                </div>
+                <div class="item">
+                  <div class="item-num">3</div>
+                  任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投 注额内。
+                </div>
+                <div class="item">
+                  <div class="item-num">4</div>
+                  邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP 地址、每台设备只能使用一 个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+                </div>
+                <div class="item">
+                  <div class="item-num">5</div>
+                  普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金。
+                </div>
+                <div class="item">
+                  <div class="item-num">6</div>
+                  为避免文字理解差异，雷火电竞保留此活动最终解释权。
+              </div>
+            </div>
+          </div>  
       </div>
-      <div v-if="activeKey === 3" class="tab-content">
-        <div class="tab-section">
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-time.png"
-            width="560"
-            height="28"
-          />
-          <p>2022年11月17日00:00起</p>
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-content.png"
-            width="560"
-            height="28"
-          />
-          <p>活动期间，邀请人可获得每个好友从其注册时间开始计算15天的有效投注额0.4%的返利，无上限。</p>
-          <p class="check-record-btn" @click="toggleCheckRecordModal(true)">查看我的推广记录</p>
+      <div v-if="activeKey === 3" class="new-section">
+        <div class="new-rebate-game-bottom-rule">
+            <div class="title"></div>
+              <div class="content">
+                <div class="item">
+                  <div class="item-num">1</div>
+                  活动有效投注额返利期限为 15 天，即：从您好友注册时间开始算起。
+                </div>
+                <div class="item">
+                  <div class="item-num">2</div>
+                  有效投注仅计算：体育场馆和电竞场馆的有效投注额。（IM 体育以美东时间计算为准）
+                </div>
+                <div class="item">
+                  <div class="item-num">3</div>
+                  每日有效投注返利结算发放时间为：奖金将会在次日凌晨 00:00 至下午 16:00 之间自动派发至您的主账户（发放前一日的有效投注返利）; 奖金最低派发为 1 元，等于 1 元不 派发，奖金只需 1 倍有效流水提款。
 
-          <div class="info-box">
-            <div class="info-item">
-              <div class="info-top">昨日好友投注总额</div>
-              <div class="info-content yesterday-bet">{{ `${rebateInfo?.yesterdayFriendBet || 0.0} 元` }}</div>
+                </div>
+                <div class="item">
+                  <div class="item-num">4</div>
+                  普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金
+
+                </div>
+                <div class="item">
+                  <div class="item-num">5</div>
+                  任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投 注额内。
+
+                </div>
+                <div class="item">
+                  <div class="item-num">6</div>
+                  邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP 地址、每台设备只能使用一 个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+
+              </div>
+              <div class="item">
+                  <div class="item-num">7</div>
+                  为避免文字理解差异，雷火电竞保留此活动最终解释权。
+              </div>
             </div>
-
-            <div class="info-item">
-              <div class="info-top">累计待派返利</div>
-              <div class="info-content today-bonus">{{ `${rebateInfo?.pendingRebate || 0.0} 元` }}</div>
-            </div>
-
-            <div class="info-item">
-              <div class="info-top">近15天累计返利</div>
-              <div class="info-content total-bouns">{{ `${rebateInfo?.fifteenDaysRebate || 0.0} 元` }}</div>
-            </div>
-          </div>
-
-          <button class="share-btn" @click="shareInvite">立刻分享</button>
-        </div>
-
-        <div class="tab-section">
-          <img
-            class="title-banner-image"
-            src="../assets/images/privilege-invite/act-rules.png"
-            width="560"
-            height="28"
-          />
-
-          <div class="rules">
-            <p>1.活动有效投注额返利期限为15天，即：从您好友注册时间开始算起。</p>
-            <p>2.有效投注仅计算：体育场馆和电竞场馆的有效投注额。（IM体育以美东时间计算为准）</p>
-            <p>
-              3.每日有效投注返利结算发放时间为：奖金将会在次日凌晨00:00至下午16:00之间自动派发至您的主账户（发放前一日的有效投注返利）;
-              奖金最低派发为1元，等于1元不 派发，奖金只需1倍有效流水提款。
-            </p>
-            <p>4.普通会员账号变更成代理账号时，该活动将无法参加；已经参加活动的账号变成代理账号，会即刻终止发放奖金</p>
-            <p>
-              5.任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投
-              注额内。
-            </p>
-            <p>
-              6.邀请人与受邀请人必须为不同身份的真实玩家，每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一
-              个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
-            </p>
-            <p>7.为避免文字理解差异，雷火电竞保留此活动最终解释权。</p>
-          </div>
-        </div>
+          </div>  
       </div>
     </div>
 
@@ -420,7 +424,7 @@ import { defineComponent, ref, reactive, onMounted } from "vue";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
-
+import { getReferralLink } from "@/api/personal/share"
 import { getRecommendPrivilegeRecord, getRebateInfo } from "@/api/privilegeInvite/privilegeInvite";
 import { userStore } from "@/store/index";
 import { useNotify } from "@/hooks/notify";
@@ -432,7 +436,9 @@ export default defineComponent({
     const route = useRoute();
     const store = userStore();
     const activeKey = ref(1);
-
+    const referralLink = ref('');
+    const summonerLink = ref('');
+    
     const isCheckRecordModalVisible = ref(false);
     const rebateInfo = ref({
       fifteenDaysRebate: 0,
@@ -487,7 +493,27 @@ export default defineComponent({
     const shareInvite = () => {
       router.push("/center/share");
     };
-
+    const getReferral = () => {
+      getReferralLink().then((res) => {
+        if (res.code === 0) {
+          referralLink.value = 'https://' + location.hostname + `/refer/${res.data}`;
+          console.log('dan',referralLink.value)
+          summonerLink.value = 'https://' + location.hostname + `/summon/${res.data}`;
+        } else {
+          notify.error(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    };
+    const copyText = async()=> {
+      try {
+        await navigator.clipboard.writeText(referralLink.value);
+        alert("已复制");
+      } catch (err) {
+        console.error(err);
+      }
+    }
     onMounted(() => {
       if (!store.token) {
         // notify({
@@ -496,6 +522,7 @@ export default defineComponent({
         // });
         return;
       }
+      getReferral()
       getRebateInfo().then(({ data }) => (rebateInfo.value = data));
 
       const type = route.query.type ?? "";
@@ -513,7 +540,10 @@ export default defineComponent({
       checkRecordFormData,
       shareInvite,
       rebateInfo,
-      tableRecords
+      tableRecords,
+      referralLink,
+      summonerLink,
+      copyText
     };
   }
 });
@@ -533,59 +563,46 @@ $gold: #efcf68;
 
   .tabs {
     display: flex;
-    justify-content: center;
-    gap: 25px;
     align-items: center;
-    margin: 24px auto;
+    justify-content: center;
+    gap: 20px;
 
-    .tab {
-      background: url(../assets/images/privilege-invite/tab-bg.png);
-      width: 328px;
-      height: 118px;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: contain;
+      .tab {
+      width: 300px;
+      height: 64px;
       display: flex;
-      text-align: center;
       align-items: center;
       justify-content: center;
+      border-radius: 60px;
+      background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+      color: #818181;
+      font-size: 36px;
+      font-weight: bold;
       cursor: pointer;
 
       &.active {
-        background: url(../assets/images/privilege-invite/tab-bg-active.png);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-      }
-
-      h3 {
-        font-size: 32px;
-        color: #11131f;
-        font-family: "Microsoft YaHei";
-        font-weight: 800;
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+        color: white;
       }
     }
   }
-
-  .tab-section {
-    height: fit-content;
-    width: 1000px;
-    background-image: url(../assets/images/privilege-invite/tab-content.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    margin: 0 auto 20px;
-    padding: 30px 25px 40px;
+  .tab {
+    width: 200px;
+    height: 40px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    text-align: center;
-  }
+    justify-content: center;
+    border-radius: 60px;
+    background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+    color: #818181;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
 
-  .title-banner-image {
-    margin-top: 10px;
-    text-align: center;
-    margin-bottom: 30px;
+    &.active {
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+      color: white;
+    }
   }
 
   p {
@@ -595,12 +612,7 @@ $gold: #efcf68;
     line-height: 32px;
   }
 
-  .check-record-btn {
-    color: #b89523;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
+
 
   .info-box {
     width: 100%;
@@ -614,15 +626,19 @@ $gold: #efcf68;
   .info-item {
     width: 280px;
     height: 140px;
-    border: solid 1px $gold;
+    border: 1px solid rgba(172, 212, 246, 1);
+    box-sizing: content-box;
+    border-radius: 10px;
   }
 
   .info-top {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     width: 280px;
     height: 50px;
-    background-color: $gold;
+    background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+    color: #fff;
     text-align: center;
-    color: #11131f;
 
     display: flex;
     justify-content: center;
@@ -633,11 +649,13 @@ $gold: #efcf68;
   }
 
   .info-content {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     width: 280px;
     height: 90px;
-
+    background: linear-gradient(0deg, #DCEEFF, #DCEEFF);
     text-align: center;
-    color: #b89523;
+    color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -646,63 +664,8 @@ $gold: #efcf68;
     font-weight: 700;
   }
 
-  .share-btn {
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 36px;
-    letter-spacing: 1px;
-    color: #11131f;
-    width: 220px;
-    height: 50px;
-    background-color: $gold;
-    border-radius: 25px;
-    border: 0px;
-    margin: 20px auto 15px;
-  }
 
-  .rebate-table-wrapper {
-    width: 100%;
-    margin-top: 20px;
-    margin: 35px 6px 35px;
 
-    table {
-      width: 100%;
-      text-align: center;
-
-      tr:first-child td {
-        height: 50px;
-        background-color: $gold;
-        color: #11131f;
-      }
-
-      tr td {
-        border: 1px solid #b3b3b3 !important;
-        font-size: 18px;
-        font-weight: 600;
-        height: 50px;
-      }
-
-      tr:nth-child(even) {
-        background-color: #ebe2b5;
-      }
-    }
-  }
-
-  .rebate-table {
-    display: grid;
-    align-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 35px 6px 35px;
-    width: 100%;
-    font-size: 18px;
-  }
-
-  .rebate-table-tab2 {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 3fr 3fr 2fr 2fr 3fr 2fr;
-    margin: 35px 0px 35px;
-  }
 
   .rebate-header,
   .rebate-list {
@@ -729,26 +692,6 @@ $gold: #efcf68;
     }
   }
 
-  .example-text {
-    color: #ac6d00;
-    line-height: 32px;
-    width: 90%;
-    margin: 0 auto;
-    text-align: left;
-    margin-bottom: 30px;
-  }
-
-  .rules {
-    margin-bottom: 30px;
-    text-align: left;
-
-    li {
-      font-size: 16px;
-      color: #000;
-      margin-bottom: 16px;
-      line-height: 32px;
-    }
-  }
 
   .record-modal-container {
     display: flex;
@@ -903,4 +846,304 @@ $gold: #efcf68;
     }
   }
 }
+
+.new-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.new-rebate-section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  border: 1px solid #acd4f6;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(242, 248, 254, 1);
+  background-size: 100% 100%;
+  width: 1000px;
+
+  .new-rebate-section-left {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .new-rebate-section-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 254px;
+
+    .bonus-image {
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        transform: translate(0px, 1px);
+        opacity: 0.9;
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .new-rebate-section-title {
+    color: #000000;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .new-rebate-section-title-inner{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+  }
+}
+
+.reward-info {
+  border: 1px solid rgba(215, 235, 255, 1);
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.reward-info-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.reward-info-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  color: black;
+  gap: 24px;
+
+  .amount {
+    color: #00a1ff;
+    font-weight: 600;
+  }
+}
+
+.copy-section{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgb(194, 221, 245);
+  padding: 20px;
+  border: 1px solid rgba(172, 212, 246, 1);
+  border-radius: 8px;
+  .copy-first{
+    font-weight: 600;
+    font-size: 18px;
+    color:rgba(0, 161, 255, 1);
+    display: flex;
+    justify-content: flex-start;
+  }
+  .copy-sec{
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 18px;
+    color:rgba(0, 161, 255, 1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .copy-sec-inner{
+      background-color: rgba(242, 248, 254, 1);
+      border: 1px solid rgba(172, 212, 246, 1);
+      line-height: 39px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      width: 65%;
+    }
+  }
+}
+.new-rebate-game-info {
+  width: 1000px;
+  height: 100%;
+  margin-top: 40px;
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 40px;
+  border: 1px solid #acd4f6;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  gap: 20px;
+
+  .title {
+    background-image: url("../assets/promo/lh1-blast-premier/info-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin: 0 auto 40px;
+  }
+  .little-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .left {
+      background-image: url("../assets/promo/lh1-blast-premier/info-little-title-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 120px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 600;
+      min-width: 120px;
+      line-height: 23.33px;
+      color: #ffffff;
+      margin-right: 16px;
+    }
+    .right {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      color: #000000;
+      text-align: left;
+    }
+  }
+}
+
+.new-rebate-game-info-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  text-align: center;
+  vertical-align: middle;
+  th {
+    height: 56px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #fff;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    &:first-child {
+      border-top-left-radius: 12px;
+    }
+    &:last-child {
+      border-top-right-radius: 12px;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        &:first-child {
+          // border-bottom-left-radius: 12px;
+        }
+      }
+    }
+    &:nth-child(2) {
+      td {
+        &:last-child {
+          // border-bottom-right-radius: 12px;
+        }
+      }
+    }
+  }
+  td {
+    border: 1px solid #acd4f6;
+    height: 56px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #000000;
+  }
+}
+.new-rebate-game-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: self-start;
+  .new-rebate-game-bottom-inner{
+    color: red;
+    text-align: left;
+  }
+}
+
+.new-rebate-game-bottom-rule {
+  width: 1000px;
+  height: 100%;
+  margin-top: 40px;
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 40px;
+  border: 1px solid #acd4f6;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title {
+    background-image: url("../assets/promo/lh1-blast-premier/rule-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin-bottom: 20px;
+  }
+  .content {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    color: #000000;
+    .item {
+      padding-left: 24px;
+      display: flex;
+      gap: 10px;
+      font-size: 16px;
+      text-align: left;
+
+      .item-num {
+        color: #ffffff;
+        font-size: 20px;
+        line-height: 1;
+        border-radius: 50%;
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      }
+    }
+  }
+}
+
+
 </style>
