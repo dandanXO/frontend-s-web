@@ -25,7 +25,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/reward-icon1-gold.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日累计存款：
+              昨日累计存款：
               <span class="amount">{{ yesterdayDeposit }}元</span>
             </div>
           </div>
@@ -34,7 +34,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/reward-icon3-gold.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日累计有效投注:
+              昨日累计有效投注:
               <span class="amount">{{ yesterdayBet }}元</span>
             </div>
           </div>
@@ -68,7 +68,7 @@
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">参与BLAST Premier 赏金赛当日投注金额500元且注单结算后，次日可获得一个开箱钥匙，每投注500元即可获得一个钥匙。</div>
+          <div class="right">活动期间，当日存款≥200元且当天投注BLAST Premier 赏金赛≥1,000元则视为签到成功，次日即可领取签到奖金。</div>
         </div>
         <table class="bounty-sign-game-info-table">
           <tbody>
@@ -240,7 +240,7 @@ onMounted(() => {
 .bounty-sign-container {
   width: 1200px;
   height: 100%;
-  
+
   .section {
     margin-bottom: 30px;
 
@@ -252,7 +252,7 @@ onMounted(() => {
           width: 100%;
         }
       }
-      
+
   .title {
     margin: 0 auto 20px;
     display: flex;
@@ -381,7 +381,7 @@ onMounted(() => {
     align-items: center;
     margin: 10px auto;
     img {
-    
+
     height: 70px;}
   }
   .little-title {
@@ -424,7 +424,7 @@ onMounted(() => {
   text-align: center;
   vertical-align: middle;
   tr:first-child {
-    
+
     background: linear-gradient(90deg, #FFFD66 0%, #FF9400 100%);
   }
   th {
@@ -462,7 +462,7 @@ onMounted(() => {
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
-    color: #B5A73B; 
+    color: #B5A73B;
   }
 }
 
