@@ -36,7 +36,7 @@
               />
             </div>
             <div class="reward-info-content">
-              当日累计存款：
+              昨日累计存款：
               <span class="amount">{{ yesterdayDeposit }}元</span>
             </div>
           </div>
@@ -49,7 +49,7 @@
               />
             </div>
             <div class="reward-info-content">
-              当日累计有效投注：
+              昨日累计有效投注：
               <span class="amount">{{ yesterdayBet }}元</span>
             </div>
           </div>
@@ -81,7 +81,7 @@
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">参与BLAST Premier 赏金赛当日投注金额500元且注单结算后，次日可获得一个开箱钥匙，每投注500元即可获得一个钥匙。</div>
+          <div class="right">活动期间，当日存款≥200元且当天投注BLAST Premier 赏金赛≥1,000元则视为签到成功，次日即可领取签到奖金。</div>
         </div>
         <table class="bounty-sign-game-info-table">
           <tbody>
@@ -274,7 +274,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   .section {
     margin-bottom: 30px;
     &.first {
@@ -499,7 +499,7 @@ onMounted(() => {
   background-color: unset;
 }
 .promo-container .selected-promo .selected-promo-wrapper .inner table.bounty-sign-game-info-table td {
-  
+
   border: 1px solid #FF9F0B66;
     height: 36px;
     font-size: 12px;
