@@ -15,7 +15,7 @@ import { useUI } from "stores/ui";
 import { useLocalStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
-import { useH5Only } from 'src/hooks/h5Only.js'
+import { useH5Only } from "src/hooks/h5Only.js";
 let CsClient;
 
 export default defineComponent({
@@ -93,7 +93,7 @@ export default defineComponent({
     };
 
     const initCsWeb = async () => {
-      if(!CsClient) {
+      if (!CsClient) {
         CsClient = (await import("csweb-client")).default;
       }
       var regDevice = store.getDeviceType();
@@ -190,10 +190,17 @@ export default defineComponent({
       }
     };
 
+    const checkDarkMode = () => {
+      if (localStorage.getItem("DARK_MODE") === "true") {
+        document.body.style.background = "black";
+      }
+    };
+
     onMounted(() => {
       // initCsWeb();
 
       checkSessStorageItem();
+      checkDarkMode();
 
       h5Only(() => {
         checkServerStatus();
@@ -202,7 +209,7 @@ export default defineComponent({
         getAffiliateByDomain();
         onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
         onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
-      })
+      });
     });
 
     onUnmounted(() => {

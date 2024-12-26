@@ -55,7 +55,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:platform-competition-code:add']"
+          v-permission="['sys:site:platform-competition-code:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -64,7 +64,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:platform-competition-code:update']"
+          v-permission="['sys:site:platform-competition-code:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -74,7 +74,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:platform-competition-code:del']"
+          v-permission="['sys:site:platform-competition-code:del']"
           @click="removeCompetitionCode()"
           :disabled="uiControl.removeBtn"
         >
@@ -157,8 +157,8 @@
         :label="t('fields.operate')"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-            (hasPermission(['sys:platform-competition-code:update']) ||
-              hasPermission(['sys:platform-competition-code:del']))
+            (hasPermission(['sys:site:platform-competition-code:update']) ||
+              hasPermission(['sys:site:platform-competition-code:del']))
         "
       >
         <template #default="scope">
@@ -166,14 +166,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:platform-competition-code:update']"
+            v-permission="['sys:site:platform-competition-code:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:platform-competition-code:del']"
+            v-permission="['sys:site:platform-competition-code:del']"
             @click="removeCompetitionCode(scope.row)"
           />
         </template>

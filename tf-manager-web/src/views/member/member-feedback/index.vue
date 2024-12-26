@@ -156,7 +156,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermission(['sys:feedback:read'])"
+        v-if="hasPermission(['sys:member:feedback:read'])"
         :label="t('fields.operate')"
         align="center"
         min-width="100"

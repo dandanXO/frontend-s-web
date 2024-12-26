@@ -113,7 +113,9 @@
       v-if="list.redirectUrl === 'lh1-christmas-gashapon'"
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
+      :promo-dates="list.param.date"
     />
+    <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -230,6 +232,7 @@ import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBo
 import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue";
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
+import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -328,7 +331,8 @@ export default defineComponent({
     PokerWinningPromo,
     SlotLossBonusPromo,
     ValorantChampionTour2024,
-    ChristmasGachapon
+    ChristmasGachapon,
+    BountyBlastPremier
   },
   props: {
     list: {

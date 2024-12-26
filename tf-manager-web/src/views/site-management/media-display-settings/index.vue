@@ -60,7 +60,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:media-display-settings:add']"
+          v-permission="['sys:site:media-display-settings:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -69,7 +69,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:media-display-settings:update']"
+          v-permission="['sys:site:media-display-settings:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -79,7 +79,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:media-display-settings:del']"
+          v-permission="['sys:site:media-display-settings:del']"
           @click="removeLimit()"
           :disabled="uiControl.removeBtn"
         >
@@ -278,21 +278,21 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:media-display-settings:update']) || hasPermission(['sys:media-display-settings:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:media-display-settings:update']) || hasPermission(['sys:site:media-display-settings:del']) )"
       >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:media-display-settings:update']"
+            v-permission="['sys:site:media-display-settings:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:media-display-settings:del']"
+            v-permission="['sys:site:media-display-settings:del']"
             @click="removeLimit(scope.row)"
           />
         </template>

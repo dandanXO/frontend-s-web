@@ -487,7 +487,7 @@
               {{ t('fields.viewLog') }}
             </el-button>
             <el-button
-              v-if="scope.row.status === 'SUCCESS' && hasPermission(['sys:withdraw:affiliateFail'])"
+              v-if="scope.row.status === 'SUCCESS' && hasPermission(['sys:withdraw:affiliate-fail'])"
               size="mini"
               type="danger"
               @click="toFail(scope.row)"

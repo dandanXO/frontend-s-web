@@ -212,7 +212,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:game-match-record:update'])"
+        v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:privi:game-match-record:update'])"
         :label="t('fields.operate')"
         align="center"
         fixed="right"
@@ -223,7 +223,7 @@
             v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA' && scope.row.gameType !== 'UEFA' && scope.row.gameType !== 'UCL'"
             size="small"
             type="success"
-            v-permission="['sys:game-match-record:update']"
+            v-permission="['sys:privi:game-match-record:update']"
             @click="showDialog('SETTLE', scope.row.id)"
             style="cursor: pointer"
           >
@@ -233,7 +233,7 @@
             v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA' && scope.row.gameType !== 'UEFA' && scope.row.gameType !== 'UCL'"
             size="small"
             type="danger"
-            v-permission="['sys:game-match-record:update']"
+            v-permission="['sys:privi:game-match-record:update']"
             @click="showDialog('CANCEL', scope.row.id)"
             style="cursor: pointer"
           >

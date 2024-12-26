@@ -160,13 +160,13 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" fixed="right" width="100" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:site-platform:update:alias'])">
+      <el-table-column :label="t('fields.operate')" align="center" fixed="right" width="100" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:site:site-platform:update:alias'])">
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:site-platform:update:alias']"
+            v-permission="['sys:site:site-platform:update:alias']"
             @click="showEdit(scope.row)"
           />
         </template>

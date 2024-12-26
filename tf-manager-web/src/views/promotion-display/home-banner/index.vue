@@ -78,7 +78,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:banner:add']"
+          v-permission="['sys:promo:banner:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -87,7 +87,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:banner:del']"
+          v-permission="['sys:promo:banner:del']"
           @click="removeBanner()"
           :disabled="uiControl.removeBtn"
         >
@@ -155,7 +155,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('DESKTOP_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -187,7 +187,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('DESKTOP_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -221,7 +221,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('MOBILE_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -253,7 +253,7 @@
                   icon="el-icon-plus"
                   size="mini"
                   type="primary"
-                  v-permission="['sys:siteimage:add']"
+                  v-permission="['sys:site:image:add']"
                   @click="showImageDialog('MOBILE_BANNER')"
                 >
                   {{ t('fields.upload') }}
@@ -527,8 +527,8 @@
         type="title"
         :label="t('fields.action')"
         v-if="
-          hasPermission(['sys:banner:update']) ||
-            hasPermission(['sys:banner:del'])
+          hasPermission(['sys:promo:banner:update']) ||
+            hasPermission(['sys:promo:banner:del'])
         "
       >
         <template #default="scope">
@@ -536,14 +536,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:banner:update']"
+            v-permission="['sys:promo:banner:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:banner:del']"
+            v-permission="['sys:promo:banner:del']"
             @click="removeBanner(scope.row)"
           />
         </template>

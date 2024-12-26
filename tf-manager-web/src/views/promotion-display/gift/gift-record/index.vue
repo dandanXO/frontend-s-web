@@ -164,7 +164,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:gift-record:cancel']) || hasPermission(['sys:gift-record:redeem-cash']) || hasPermission(['sys:gift-record:deliver']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:gift-record:cancel']) || hasPermission(['sys:privi:gift-record:redeem-cash']) || hasPermission(['sys:gift-record:deliver']))"
         :label="t('fields.operate')"
         align="center"
         fixed="right"
@@ -175,7 +175,7 @@
             v-if="scope.row.status === 'PROCESSING'"
             size="small"
             type="success"
-            v-permission="['sys:gift-record:redeem-cash']"
+            v-permission="['sys:privi:gift-record:redeem-cash']"
             @click="showMessageBox('REDEEM', scope.row.id)"
             style="cursor: pointer"
           >
@@ -195,7 +195,7 @@
             v-if="scope.row.status === 'PROCESSING'"
             size="small"
             type="danger"
-            v-permission="['sys:gift-record:cancel']"
+            v-permission="['sys:privi:gift-record:cancel']"
             @click="showDialog('CANCEL', scope.row)"
             style="cursor: pointer"
           >

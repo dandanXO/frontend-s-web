@@ -75,10 +75,10 @@
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate-bet-rebate-record:rebate']" @click="distributeRebate()">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate:bet-rebate-record:rebate']" @click="distributeRebate()">
             {{ t('fields.distributeRebate') }}
           </el-button>
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate-bet-rebate-record:rebate']" @click="batchDistributeRebate()" :disabled="uiControl.batchDistributeBtn">
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate:bet-rebate-record:rebate']" @click="batchDistributeRebate()" :disabled="uiControl.batchDistributeBtn">
             {{ t('fields.batchDistributeRebate') }}
           </el-button>
         </div>
@@ -175,13 +175,13 @@
           align="center"
           fixed="right"
           width="200"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate-bet-rebate-record:update']) || hasPermission(['sys:affiliate-bet-rebate-record:update-bet']) || hasPermission(['sys:affiliate-bet-rebate-record:detail']))"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate:bet-rebate-record:update']) || hasPermission(['sys:affiliate:bet-rebate-record:update-bet']) || hasPermission(['sys:affiliate:bet-rebate-record:detail']))"
         >
           <template #default="scope">
             <el-button
               size="mini"
               type="warning"
-              v-permission="['sys:affiliate-bet-rebate-record:detail']"
+              v-permission="['sys:affiliate:bet-rebate-record:detail']"
               @click="showDetails(scope.row)"
             >
               {{ t('fields.view') }}
@@ -190,7 +190,7 @@
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:affiliate-bet-rebate-record:update']"
+              v-permission="['sys:affiliate:bet-rebate-record:update']"
               @click="showEdit('AMOUNT', scope.row)"
             >
               {{ t('fields.adjustAmount') }}
@@ -199,7 +199,7 @@
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:affiliate-bet-rebate-record:update-bet']"
+              v-permission="['sys:affiliate:bet-rebate-record:update-bet']"
               @click="showEdit('BET_AMOUNT', scope.row)"
             >
               {{ t('fields.adjustBetAmount') }}
@@ -208,7 +208,7 @@
               v-if="scope.row.status === 'PENDING'"
               size="mini"
               type="success"
-              v-permission="['sys:affiliate-bet-rebate-record:rebate']"
+              v-permission="['sys:affiliate:bet-rebate-record:rebate']"
               @click="batchDistributeRebate(scope.row.id)"
             >
               {{ t('fields.distribute') }}

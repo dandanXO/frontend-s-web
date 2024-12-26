@@ -2,30 +2,24 @@
   <div class="bonus-container" :class="{ 'has-top-download': hasTopDownload }">
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
-      <div v-for="(mission, index) in missions" :key="index" class="mission-item">
-        <img class="mission-icon" :src="mission.icon" />
+      <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
+        <img class="mission-icon" :src="imgURL + mission.mobileFastAccessIconImgUrl" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
             <span>{{ mission.title }}</span>
-            <div v-if="mission.name === 'wheel-reward'" class="mission-title-extra">$15 12d 14:42:44</div>
+            <!-- <div v-if="mission.name === 'wheel-reward'" class="mission-title-extra">$15 12d 14:42:44</div> -->
           </div>
-          <q-icon name="help_outline">
+          <!-- <q-icon name="help_outline">
             <q-tooltip>
               {{ mission.description }}
             </q-tooltip>
-          </q-icon>
+          </q-icon> -->
         </div>
-        <q-btn flat :class="mission.status" :disabled="mission.status !== 'receive'">
-          <template v-if="mission.status === 'receive'">
+        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
+          <q-btn flat class="receive">
             {{ $t("btn.receive") }}
-          </template>
-          <template v-else-if="mission.status === 'received'">
-            {{ $t("btn.received") }}
-          </template>
-          <template v-else>
-            {{ $t("btn.noRewardYet") }}
-          </template>
-        </q-btn>
+          </q-btn>
+        </RouterLink>
       </div>
     </div>
     <div class="bonus-header"><img src="../../assets/images/index/modal/bonus-header.png" /></div>
@@ -33,59 +27,12 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
-
 const props = defineProps({
-  hasTopDownload: Boolean
+  hasTopDownload: Boolean,
+  promoList: Array
 });
 
-const { t } = useI18n();
-
-const missions = computed(() => [
-  {
-    name: "wheel-of-fortune",
-    title: t("home.popup.bonus.wheelOfFortuneTitle"),
-    description: t("home.popup.bonus.wheelOfFortuneDescription"),
-    status: "no-reward",
-    icon: require("../../assets/images/index/modal/bonus-wheel.png")
-  },
-  {
-    name: "cash-back",
-    title: t("home.popup.bonus.cashBackTitle"),
-    description: t("home.popup.bonus.cashBackTitle"),
-    status: "received",
-    icon: require("../../assets/images/index/modal/bonus-cash.png")
-  },
-  {
-    name: "activity-bonus",
-    title: t("home.popup.bonus.activityBonusTitle"),
-    description: t("home.popup.bonus.activityBonusTitle"),
-    status: "receive",
-    icon: require("../../assets/images/index/modal/bonus-coupon.png")
-  },
-  {
-    name: "give-back",
-    title: t("home.popup.bonus.giveBackTitle"),
-    description: t("home.popup.bonus.giveBackTitle"),
-    status: "receive",
-    icon: require("../../assets/images/index/modal/bonus-clock.png")
-  },
-  {
-    name: "hierarchy",
-    title: t("home.popup.bonus.hierarchyTitle"),
-    description: t("home.popup.bonus.hierarchyTitle"),
-    status: "receive",
-    icon: require("../../assets/images/index/modal/bonus-vip.png")
-  },
-  {
-    name: "wheel-reward",
-    title: t("home.popup.bonus.wheelRewardTitle"),
-    description: t("home.popup.bonus.wheelRewardTitle"),
-    status: "receive",
-    icon: require("../../assets/images/index/modal/bonus-wheel.png")
-  }
-]);
+const imgURL = process.env.IMAGE_CDN + "/promo/";
 </script>
 
 <style lang="scss" scoped>
@@ -140,6 +87,8 @@ const missions = computed(() => [
     display: flex;
     flex-direction: column;
     gap: 10px;
+    max-height: 60vh;
+    overflow-y: auto;
     .mission-item {
       display: flex;
       align-items: center;

@@ -20,29 +20,29 @@
     <el-form-item :label="t('fields.rules')" prop="rules">
       <div v-for="(item, index) in rulesParam" :key="index">
         <span class="param-label">{{ t('fields.validBet') }}:</span>
-        <el-input v-if="hasPermission(['sys:fish-red-packet:update'])" class="param-input" v-model="item.validBet" />
+        <el-input v-if="hasPermission(['sys:privi:fish-red-packet:update'])" class="param-input" v-model="item.validBet" />
         <span v-else class="param-label">{{ item.validBet }}</span>
 
         <span class="param-label">{{ t('fields.minBonus') }}:</span>
-        <el-input v-if="hasPermission(['sys:fish-red-packet:update'])" class="param-input" v-model="item.minBonus" />
+        <el-input v-if="hasPermission(['sys:privi:fish-red-packet:update'])" class="param-input" v-model="item.minBonus" />
         <span v-else class="param-label">{{ item.minBonus }}</span>
 
         <span class="param-label">{{ t('fields.maxBonus') }}:</span>
-        <el-input v-if="hasPermission(['sys:fish-red-packet:update'])" class="param-input" v-model="item.maxBonus" />
+        <el-input v-if="hasPermission(['sys:privi:fish-red-packet:update'])" class="param-input" v-model="item.maxBonus" />
         <span v-else class="param-label">{{ item.maxBonus }}</span>
 
-        <el-button v-if="index === rulesParam.length - 1 && hasPermission(['sys:fish-red-packet:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+        <el-button v-if="index === rulesParam.length - 1 && hasPermission(['sys:privi:fish-red-packet:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                    @click="addParam()" plain
         >{{ t('fields.add') }}
         </el-button>
-        <el-button v-if="rulesParam.length > 1 && hasPermission(['sys:fish-red-packet:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+        <el-button v-if="rulesParam.length > 1 && hasPermission(['sys:privi:fish-red-packet:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                    @click="delParam(index)" plain
         >{{ t('fields.delete') }}
         </el-button>
       </div>
     </el-form-item>
     <div class="dialog-footer">
-      <el-button v-permission="['sys:fish-red-packet:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
+      <el-button v-permission="['sys:privi:fish-red-packet:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
     </div>
   </el-form>
 </template>

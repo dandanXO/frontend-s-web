@@ -25,7 +25,7 @@
         </el-button> -->
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:vip:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:site:vip:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
       </div>
     </div>
     <el-dialog
@@ -168,6 +168,16 @@
         <el-form-item :label="t('fields.exclusiveUrlCashier')" prop="cashier" style="display:none">
           <el-input v-model="form.cashier" style="width: 350px" maxlength="100" />
         </el-form-item>
+        <el-form-item :label="t('fields.levelUpReferFriendCount')" prop="retainLevelDays">
+          <el-input-number
+            type="number"
+            v-model.number="form.levelUpReferFriendCount"
+            :min="0"
+            :max="99999999999"
+            :controls="false"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -191,6 +201,7 @@
       <el-table-column prop="levelUpBet" :label="t('fields.levelUpBet')" width="160" />
       <el-table-column prop="retainLevelBet" :label="t('fields.retainLevelBet')" width="160" />
       <el-table-column prop="retainLevelDays" :label="t('fields.retainLevelDays')" width="100" />
+      <el-table-column prop="levelUpReferFriendCount" :label="t('fields.levelUpReferFriendCount')" width="100" />
       <el-table-column prop="previousLevelName" :label="t('fields.previousLevelName')" width="100" />
       <el-table-column :label="t('fields.checkExclusiveUrl')" width="150">
         <template #default="scope">
@@ -213,9 +224,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip:update']) || hasPermission(['sys:vip:del']))">
+      <el-table-column :label="t('fields.action')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:vip:update']) || hasPermission(['sys:vip:del']))">
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:vip:update']" @click="showEdit(scope.row)" />
           <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:vip:del']" @click="removeVip(scope.row)" />
         </template>
       </el-table-column>
@@ -315,6 +326,7 @@ const form = reactive({
   retainLevelBet: null,
   retainLevelDays: null,
   category: null,
+  levelUpReferFriendCount: null,
 });
 
 const list = reactive({

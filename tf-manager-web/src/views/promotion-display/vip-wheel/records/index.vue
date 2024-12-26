@@ -59,7 +59,7 @@
           icon="el-icon-download"
           size="mini"
           type="primary"
-          v-permission="['sys:vip-wheel-records:export']"
+          v-permission="['sys:privi:vip-wheel-records:export']"
           @click="exportExcel"
         >{{ t('fields.exportToExcel') }}
         </el-button>

@@ -96,9 +96,11 @@
           ></div>
         </div>
         <BlastPremierMarquee
+          :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty': null"
           v-if="
             selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
-            selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure'
+            selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure' ||
+            selectedPromo?.redirectUrl === 'bounty-blast-premier'
           "
         />
         <div

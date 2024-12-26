@@ -314,6 +314,10 @@ export function footballHistroy() {
   return server.EVENT.get("/lh1-football/history");
 }
 
+export function footballEligibility() {
+  return server.EVENT.get("/session/lh1-football/eligibility");
+}
+
 export function getCompetitionBetToday(promoCode) {
   return server.EVENT.get(`/competition-bet/yesterday`, {
     params: {
@@ -500,4 +504,22 @@ export function getCompetitionLossInit(promoCode) {
 
 export function claimCompetitionLoss(promoCode) {
   return server.EVENT.post("/session/competition-loss/claim", { promoCode });
+}
+
+export function initDrawEvent(promoCode) {
+  return server.EVENT.get(`/session/draw-event/init?promoCode=${promoCode}`);
+}
+
+export function getDrawPrizes(promoCode, drawTimes) {
+  return server.EVENT.post(`/session/draw-event/draw?promoCode=${promoCode}&drawTimes=${drawTimes}`);
+}
+
+export function getDrawRecord(promoCode, params) {
+  return server.EVENT.get(
+    `/session/draw-event/record?promoCode=${promoCode}&size=${params.size}&current=${params.current}`
+  );
+}
+
+export function getLatestClaimedBonusList(promoCode) {
+  return server.EVENT.get(`/session/draw-event/getLatestClaimedBonusList?promoCode=${promoCode}`)
 }

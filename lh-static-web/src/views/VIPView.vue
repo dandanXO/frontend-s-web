@@ -355,7 +355,9 @@
           <el-carousel height="440px">
             <el-carousel-item v-for="item in banners" :key="item">
               <h3 class="small justify-center" text="2xl">
-                <a target="_blank" @click="handleBannerClick(item.redirectUrl)"><img :src="imgURL + item.desktopImageUrl" /></a>
+                <a target="_blank" @click="handleBannerClick(item.redirectUrl)">
+                  <img :src="imgURL + item.desktopImageUrl" />
+                </a>
               </h3>
             </el-carousel-item>
           </el-carousel>
@@ -844,7 +846,7 @@
         </ol>
       </div>
     </div>
-    <GameModal ref="gameModalRef"/>
+    <GameModal ref="gameModalRef" />
   </div>
 </template>
 
@@ -946,12 +948,14 @@ const handleBannerClick = (url) => {
     const extractedUrl = url.match(openPattern)[1];
     const [gameName, platformCode, gameCode] = extractedUrl.split("/");
     openGame(gameName, platformCode, gameCode);
+  } else if (url === "0") {
+    return;
   } else if (url.startsWith("/")) {
     router.push(url);
   } else {
     router.push({ path: "/promotion", query: { name: url } });
   }
-}
+};
 // const storeToken = computed(() => {
 //   return store.token;
 // });
