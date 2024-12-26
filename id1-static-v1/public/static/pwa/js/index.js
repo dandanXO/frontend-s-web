@@ -31,7 +31,7 @@ installBtn.addEventListener("click", async () => {
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       const isFbqInitialized = sessionStorage.getItem(FBQ_INITIALIZED);
-      if(isFbqInitialized) fbq('track', 'SubmitApplication');
+      if (isFbqInitialized) fbq("track", "SubmitApplication");
 
       if (!deferredPrompt) {
         const userAgent = navigator.userAgent.toLowerCase();
@@ -56,14 +56,14 @@ installBtn.addEventListener("click", async () => {
           // iframeTag.addEventListener(
           //   "load",
           //   () => {
-              const redirectInfo = getRedirectInfo();
-              localStorage.setItem(PWA_DATA_KEY, JSON.stringify(redirectInfo));
-              localStorage.setItem(INSTALLATION_STATUS_KEY, "INSTALLING");
-              container.setAttribute("data-type", "INSTALLING");
-              iconLoading.classList.add("active");
-              installationCountdown();
-              handleInstallationProgress();
-              console.log("user accepted");
+          const redirectInfo = getRedirectInfo();
+          localStorage.setItem(PWA_DATA_KEY, JSON.stringify(redirectInfo));
+          localStorage.setItem(INSTALLATION_STATUS_KEY, "INSTALLING");
+          container.setAttribute("data-type", "INSTALLING");
+          iconLoading.classList.add("active");
+          installationCountdown();
+          handleInstallationProgress();
+          console.log("user accepted");
           //   },
           //   { once: true }
           // );
@@ -84,7 +84,7 @@ function handleInstallationProgress() {
     installationProgress.innerText = `${installationProgressNumber}%`;
     setTimeout(() => {
       requestAnimationFrame(handleInstallationProgress);
-    }, 1000 * INSTALL_COUNTDOWN / 100);
+    }, (1000 * INSTALL_COUNTDOWN) / 100);
   }
   installationProgress;
 }
@@ -120,10 +120,10 @@ window.addEventListener("beforeinstallprompt", (e) => {
 window.addEventListener("load", () => {
   const hostname = window.location.hostname.replace("www.", "");
   const fbqId = fbqLists[hostname]?.id;
-  if(fbqId) {
-    fbq('init', fbqId);
-    fbq('track', 'PageView');
-    sessionStorage.setItem(FBQ_INITIALIZED, '1');
+  if (fbqId) {
+    fbq("init", fbqId);
+    fbq("track", "PageView");
+    sessionStorage.setItem(FBQ_INITIALIZED, "1");
   }
 
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
@@ -306,7 +306,7 @@ function insertRandomImages() {
   var imageUrls = [];
   var extraStyle = "";
 
-  var fileCountLists = [6];
+  var fileCountLists = [17];
   // var fileNum = Math.floor(Math.random() * 5) + 1;
   var fileNum = 0;
   var fileDirec = "img" + fileNum;
@@ -319,22 +319,30 @@ function insertRandomImages() {
     fileArray.push(i + 1);
   }
   shuffleArray(fileArray);
-// console.log(fileArray);
+  // console.log(fileArray);
 
-  var fileLists = fileArray.slice(0, 5);
+  var fileLists = [];
+  const numbers = new Set();
+  while (fileLists.length < 5) {
+    const random = Math.floor(Math.random() * fileLength) + 1;
+    if (!numbers.has(random)) {
+      numbers.add(random);
+      fileLists.push(random);
+    }
+  }
   console.log(fileLists);
 
   fileLists.forEach((file) => {
-    var fileName = `images/${fileDirec}/${file}.png`;
+    var fileName = `images/${fileDirec}/${file}.jpg`;
     imageUrls.push(fileName);
   });
 
   if (fileNum === 2 || fileNum === 4) {
     extraStyle = `style="height:300px;"`;
-    defaultScrollList.style.height= "300px"
+    defaultScrollList.style.height = "300px";
   } else {
     extraStyle = `style="width:65vw;max-width: 180px;"`;
-    defaultScrollList.style.height= "auto"
+    defaultScrollList.style.height = "auto";
   }
 
   imageUrls.forEach((imageUrl) => {
