@@ -41,6 +41,11 @@
       //Call a Message to Parent (If App.)
       console.log("0411-11");
 
+      const showAppRemark = () => {
+        const bodyElement = document.body;
+        bodyElement.classList.add("body-applinks");
+      }
+
       if (
         window.location.pathname === "/vip" ||
         window.location.pathname === "/promotion" ||
@@ -82,10 +87,11 @@
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
-              document.addEventListener("DOMContentLoaded", function () {
-                var bodyElement = document.body;
-                bodyElement.classList.add("body-applinks");
-              });
+              if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", showAppRemark);
+              } else {
+                showAppRemark();
+              }
             }
             if (returnJson && returnJson.actDomain) {
               window.localStorage.setItem("LH_H5_EVT_URL", returnJson.actDomain);
@@ -97,10 +103,11 @@
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
 
-            setTimeout(() => {
-              const updateUrlEvent = new CustomEvent("updateUrlEvent");
-              document.dispatchEvent(updateUrlEvent);
-            },350)
+            sessionStorage.setItem("LH_APP_DOMAIN_INITIALIZED", "1");
+            // setTimeout(() => {
+            //   const updateUrlEvent = new CustomEvent("updateUrlEvent");
+            //   document.dispatchEvent(updateUrlEvent);
+            // },350)
 
           } catch (error) {
             console.error("Error parsing message from Flutter:", error);
@@ -114,10 +121,11 @@
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
-              document.addEventListener("DOMContentLoaded", function () {
-                var bodyElement = document.body;
-                bodyElement.classList.add("body-applinks");
-              });
+              if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", showAppRemark);
+              } else {
+                showAppRemark();
+              }
             }
             if (returnJson && returnJson.actDomain) {
               window.localStorage.setItem("LH_H5_EVT_URL", returnJson.actDomain);
@@ -172,10 +180,11 @@
               window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
             }
 
-            setTimeout(() => {
-              const updateUrlEvent = new CustomEvent("updateUrlEvent");
-              document.dispatchEvent(updateUrlEvent);
-            },250)
+            sessionStorage.setItem("LH_APP_DOMAIN_INITIALIZED", "1");
+            // setTimeout(() => {
+            //   const updateUrlEvent = new CustomEvent("updateUrlEvent");
+            //   document.dispatchEvent(updateUrlEvent);
+            // },250)
           } catch (error) {
             alert("HAHAH ERROR HERRE.");
             console.error("Error parsing message from Flutter:", error);
