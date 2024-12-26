@@ -149,13 +149,19 @@
   </div>
   <q-dialog class="camera-dialog" v-model="takePicDialogVisible" persistent>
     <div class="camera-container-header">
-      <img src="../../assets/images/index/name-auth/step-back-icon.png" />
+      <img src="../../assets/images/index/name-auth/step-back-icon.png" @click="takePicDialogVisible = false" />
       <div class="camera-header-txt">Personal Verification</div>
     </div>
     <div class="camera-container">
       <div class="camera-inner-container">
         <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
-        <WebCam ref="webcam" class="webcam" style="height: calc(100% - 150px)" @photoTaken="photoTakenEvent" />
+        <WebCam
+          ref="webcam"
+          class="webcam"
+          style="height: calc(100% - 150px)"
+          @photoTaken="photoTakenEvent"
+          @init="webcamInit"
+        />
 
         <div class="camera-content">
           <div class="camera-content-txt">Document should be in the frame and clearly visible</div>
@@ -167,7 +173,35 @@
               src="../../assets/images/index/name-auth/camera-shutter.svg"
               @click="takePhoto"
             />
-            <img src="../../assets/images/index/name-auth/camera-options.svg" />
+            <!-- <img src="../../assets/images/index/name-auth/camera-options.svg" /> -->
+            <q-select
+              v-model="selectedCamera"
+              :options="cameras"
+              option-label="label"
+              option-value="deviceId"
+              option-slot
+              emit-value
+              outlined
+              label="Choose an option"
+              dense
+              hide-selected
+              @update:model-value="setCamera"
+            >
+              <template v-slot:prepend>
+                <q-icon name="photo_camera" />
+              </template>
+
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar>
+                    <q-icon :name="scope.opt.icon" />
+                  </q-item-section>
+                  <q-item-section>
+                    {{ scope.opt.label }}
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
           </div>
         </div>
       </div>
@@ -175,7 +209,7 @@
   </q-dialog>
 </template>
 <script setup>
-import { ref, defineEmits, onMounted } from "vue";
+import { ref, defineEmits, onMounted, onBeforeUnmount } from "vue";
 import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
 import { api } from "boot/axios";
@@ -197,6 +231,9 @@ const fileInput = ref(null);
 const webcam = ref(null);
 const photoPreview = ref(null);
 const fileSelected = ref(null);
+const cameras = ref([]);
+const selectedCamera = ref(null);
+const reloadCamInterval = ref(null);
 
 const docType = [
   { label: t("nameAuth.passport"), value: "PASSPORT" },
@@ -206,6 +243,21 @@ const docType = [
 
 const closeDialog = () => {
   emit("closeDialog");
+};
+
+const webcamInit = (id) => {
+  selectedCamera.value = id;
+};
+
+const loadCameras = () => {
+  if (webcam.value) {
+    webcam.value.loadCameras();
+    cameras.value = webcam.value.cameras;
+  }
+};
+
+const setCamera = () => {
+  webcam.value.changeCamera(selectedCamera.value === "" ? null : selectedCamera.value);
 };
 
 const getIdVerifyStatus = () => {
@@ -326,6 +378,21 @@ const submit = async () => {
 
 onMounted(() => {
   getIdVerifyStatus();
+  loadCameras();
+  if (cameras.value.length === 0) {
+    reloadCamInterval.value = setInterval(() => {
+      loadCameras();
+      if (cameras.value.length > 0) {
+        clearInterval(reloadCamInterval.value);
+        reloadCamInterval.value = null;
+      }
+    }, 1000);
+  }
+});
+
+onBeforeUnmount(() => {
+  clearInterval(reloadCamInterval.value);
+  reloadCamInterval.value = null;
 });
 </script>
 <style scoped lang="scss">
