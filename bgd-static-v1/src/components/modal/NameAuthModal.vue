@@ -95,7 +95,7 @@
           <div class="preview-txt">Make sure that all the information on the photo is visible and easy to read</div>
           <img :src="photoPreview" />
 
-          <q-btn no-caps unelevated class="green-btn">Submit</q-btn>
+          <q-btn no-caps unelevated class="green-btn" @click="submit">Submit</q-btn>
           <q-btn no-caps unelevated class="grey-btn" @click="takePicDialogVisible = true">Replace Image</q-btn>
         </div>
         <div
@@ -171,6 +171,7 @@ import { t } from "src/boot/lang";
 import { api } from "boot/axios";
 import { WebCam } from "vue-camera-lib";
 import { useQuasar } from "quasar";
+import { getRndInteger } from "boot/utils";
 
 const store = userStore();
 const $q = useQuasar();
@@ -183,6 +184,9 @@ const uploadStatus = ref("NOT_EXIST");
 const takePicDialogVisible = ref(false);
 const countryRegion = ref([]);
 const fileInput = ref(null);
+const webcam = ref(null);
+const photoPreview = ref(null);
+const fileSelected = ref(null);
 
 const docType = [
   { label: t("nameAuth.passport"), value: "PASSPORT" },
@@ -217,25 +221,19 @@ const getIdVerifyStatus = () => {
     .catch(() => {});
 };
 
-const webcam = ref(null);
-const photoPreview = ref(null);
-
 const takePhoto = async () => {
   if (webcam.value) {
     try {
       await webcam.value.takePhoto();
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (e) {}
   }
 };
 
 const photoTakenEvent = async ({ blob, image_data_url }) => {
-  const file = new File([blob], "photo.jpg", { type: blob.type });
-  photoPreview.value = URL.createObjectURL(file);
+  fileSelected.value = new File([blob], "photo.jpg", { type: blob.type });
+  photoPreview.value = URL.createObjectURL(fileSelected.value);
 
   takePicDialogVisible.value = false;
-  console.log("photoPreview", photoPreview.value);
 };
 
 const handleUploadDoc = () => {
@@ -246,10 +244,73 @@ const handleUploadDoc = () => {
 };
 
 const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    photoPreview.value = URL.createObjectURL(file);
+  fileSelected.value = event.target.files[0];
+  if (fileSelected.value) {
+    photoPreview.value = URL.createObjectURL(fileSelected.value);
     takePicDialogVisible.value = false;
+  }
+};
+
+const submit = async () => {
+  // isLoadingUpload.value = true;
+  const file = fileSelected.value;
+  if (file) {
+    const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
+
+    if (!file || !allowFileTypes.includes(file.type)) {
+      $q.notify({
+        type: "negative",
+        position: "top",
+        message: `${t("notify.imageFormatError")} ${file.type}`,
+        icon: "report_problem"
+      });
+
+      // isLoadingUpload.value = false;
+      return;
+    }
+    if (file && file.size > 1000000) {
+      $q.notify({
+        type: "negative",
+        position: "top",
+        message: `${t("notify.uploadImageLargerThan1MbError")}`,
+        icon: "report_problem"
+      });
+      // isLoadingUpload.value = false;
+      return;
+    }
+
+    if (file) {
+      var formData = new FormData();
+      formData.append("country", selectedCountryRegion.value);
+      formData.append("idType", selectedDocType.value);
+      formData.append("idPhoto", file);
+
+      const rstArray = Object.values(process.env.RST_API);
+      const rstApi = rstArray[getRndInteger(0, rstArray.length)];
+
+      try {
+        const response = await fetch(`${rstApi}/session/idVerify`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            authorization: "BGD",
+            token: `${store.token}`
+          }
+        });
+        const data = await response.json();
+        if (data.code === 0) {
+          photoPreview.value = null;
+          getIdVerifyStatus();
+        } else {
+          $q.notify({
+            type: "negative",
+            position: "top",
+            message: `${selectedDocType.value} ${t("notify.uploadFailedPleaseTryAgain")}`,
+            icon: "report_problem"
+          });
+        }
+      } catch (e) {}
+    }
   }
 };
 
