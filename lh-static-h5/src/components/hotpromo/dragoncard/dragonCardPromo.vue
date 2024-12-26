@@ -21,9 +21,9 @@
       </div>
 
       <div class="content">
-        <div class="longka-wrap">
-          <div class="longka-title">
-            <img src="../../../assets/images/promo/hotpromo/dragoncard/mycard-dragon.png" alt="" />
+        <div class="longka-wrap section-bg">
+          <div class="longka-title title-img">
+            我的龙卡
           </div>
           <div class="longka-container">
             <div class="longka-list">
@@ -54,9 +54,9 @@
             <div class="longka-btn waves-effect combo-btn" @click="compoundCard">合成龙卡</div>
           </div>
         </div>
-        <div class="longka-ranking-wrap">
-          <div class="longka-ranking-title">
-            <img src="../../../assets/images/promo/hotpromo/dragoncard/dragon-rank.png" alt="" />
+        <div class="longka-ranking-wrap section-bg">
+          <div class="longka-ranking-title title-img">
+            龙卡排行榜
           </div>
 
           <q-table :loading="rankingPage.loading" :columns="columns" :rows="rankingRecord()" square></q-table>
@@ -84,16 +84,16 @@
       </div>
     </div>
 
-    <div class="bottom-content">
-      <p>
-        <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/dragon-time.png`)" />
-      </p>
-      <table class="longka-ranking-table" v-if="cardInfo.cardDetail.setting">
+    <div class="bottom-content section-bg">
+      <div class="longka-ranking-title title-img">
+        活动时间
+      </div>
+      <table class="longka-ranking-table section-table" v-if="cardInfo.cardDetail.setting">
         <thead>
           <tr>
-            <td>期数</td>
-            <td>集卡时间</td>
-            <td>开奖时间</td>
+            <th>期数</th>
+            <th>集卡时间</th>
+            <th>开奖时间</th>
           </tr>
         </thead>
         <tbody>
@@ -576,6 +576,100 @@ const columns = [
     }
   }
 }
+
+.body--dark {
+  .tigercard-container {
+    .q-table {
+      max-width: 650px;
+      margin: 0 auto;
+
+      background: transparent;
+      border-radius: 10px;
+      border: 0;
+      color: #7a8eb9;
+
+      &__empty-text p {
+        color: #7a8eb9;
+      }
+
+      th {
+        text-align: center;
+        line-height: 32px;
+        color: #424f72;
+        font-weight: bold;
+        background: linear-gradient(180deg,#597adf,#3c5ec3)!important;
+        border: 1px solid #ecedf0;
+        box-shadow: inset 0 8px 9px 0 #ffffff40,inset 0 4px 4px 0 #ffffff40,inset 0 -4px 4px 0 #ffffff40 !important;
+
+        &.q-table__cell {
+          color: #7a8eb9;
+          border-bottom: 1px solid #ecedf0;
+          background-color: white;
+
+          &.is-leaf {
+            border-bottom: 1px solid #ecedf0;
+          }
+        }
+      }
+
+      td {
+        border: 1px solid #ecedf0 !important;
+
+        &.q-table__cell {
+          color: #7a8eb9;
+          text-align: center;
+          border: 0;
+        }
+      }
+    }
+
+    .q-table__bottom {
+      color: #7a8eb9;
+
+      .q-field__native {
+        color: #7a8eb9;
+      }
+
+      .q-field__append {
+        color: #7a8eb9;
+      }
+    }
+
+    .q-pagination {
+      margin: 10px auto;
+      justify-content: center;
+
+      .q-pager {
+        pointer-events: none;
+      }
+
+      .q-pager li {
+        color: #7a8eb9;
+        min-width: unset;
+
+        &.btn-quicknext {
+          svg {
+            display: none;
+          }
+        }
+
+        &.is-active,
+        &:hover {
+          color: #7a8eb9;
+          &:after {
+            content: "/";
+            display: inline-block;
+            margin-left: 8px;
+          }
+        }
+      }
+
+      button:hover {
+        color: #7a8eb9;
+      }
+    }
+  }
+}
 </style>
 <style lang="scss">
 body {
@@ -875,5 +969,38 @@ body {
   background: white;
   padding: 1.5rem;
   border-radius: 16px;
+}
+
+.section-bg {
+  .title-img {
+    aspect-ratio: 822 / 39;
+    background: url("../../../assets/images/promo/hotpromo/dragoncard/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 650px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+}
+.body--dark {
+  .section-bg {
+    .title-img {
+      aspect-ratio: 822 / 39;
+      background: url("../../../assets/images/promo/hotpromo/dragoncard/promo-details-title-bg.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 650px 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
 }
 </style>
