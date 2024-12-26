@@ -486,6 +486,39 @@ const columns = [
 ];
 </script>
 <style lang="scss">
+.section-bg {
+  .title-img {
+    aspect-ratio: 822 / 39;
+    background: url("../../../assets/images/promo/hotpromo/dragoncard/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 650px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+}
+.body--dark {
+  .section-bg {
+    .title-img {
+      aspect-ratio: 822 / 39;
+      background: url("../../../assets/images/promo/hotpromo/dragoncard/promo-details-title-bg.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 650px 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+}
+
 .tigercard-container {
   .q-table {
     max-width: 650px;
@@ -978,38 +1011,5 @@ body {
   background: white;
   padding: 1.5rem;
   border-radius: 16px;
-}
-
-.section-bg {
-  .title-img {
-    aspect-ratio: 822 / 39;
-    background: url("../../../assets/images/promo/hotpromo/dragoncard/promo-details-title-bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 650px 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-  }
-}
-.body--dark {
-  .section-bg {
-    .title-img {
-      aspect-ratio: 822 / 39;
-      background: url("../../../assets/images/promo/hotpromo/dragoncard/promo-details-title-bg.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 650px 25px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-    }
-  }
 }
 </style>
