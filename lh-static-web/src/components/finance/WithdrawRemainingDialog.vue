@@ -55,10 +55,11 @@
   </el-dialog>
 </template>
 <script setup>
-import { withdrawRemainingRollover } from "@/api/personal/personal";
+import { withdrawRemainingRollover, fetchWithdrawableBalance } from "@/api/personal/personal";
 import { convertToCommaAmount } from "@/utils/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { ElMessageBox } from "element-plus";
 
 const props = defineProps({
   modelValue: Boolean
@@ -131,7 +132,7 @@ const refreshTurnOverAmt = () => {
   }
   isRefreshing.value = true;
   tableData.value = [];
-  getRemainingRolloverData();
+  refreshWithdrawableBalance();
 };
 
 const getRemainingRolloverData = () => {
@@ -139,6 +140,31 @@ const getRemainingRolloverData = () => {
     .then((res) => {
       if (res.code === 0) {
         tableData.value = res.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      isRefreshing.value = false;
+    })
+    .finally((e) => {
+      isRefreshing.value = false;
+    });
+};
+
+const refreshWithdrawableBalance = () => {
+  fetchWithdrawableBalance()
+    .then((res) => {
+      if (res.code === 0) {
+        if (res.data.remainWagers === 0) {
+          ElMessageBox.alert('恭喜您完成流水，可以提款了!', {
+            confirmButtonText: '确认',
+            callback: () => {
+              emit("update:modelValue", false);
+            },
+          })
+        } if (res.data.remainWagers !== 0) {
+          getRemainingRolloverData();
+        }
       }
     })
     .catch((e) => {
