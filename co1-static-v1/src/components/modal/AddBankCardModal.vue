@@ -212,7 +212,8 @@ const dialogDisplays = reactive({
   selectionPlaceholder: t("form.bank_select"),
   selectionError: t("form.bank_selectError"),
   accountTypeTitle: t("form.accountType_selectionTitle"),
-  accountTypePlaceholder: t("form.accountType_select")
+  accountTypePlaceholder: t("form.accountType_select"),
+  accountTypeError: t("form.accountType_rules_01")
 });
 const selectBankType = () => {
   currBankList.value = [];
@@ -267,7 +268,7 @@ const isValidBank = () => {
 const isValidAccType = () => {
   const { cardAddress } = bankCardField;
 
-  const result = !cardAddress ? dialogDisplays.selectionError : true;
+  const result = !cardAddress ? dialogDisplays.accountTypeError : true;
   return result;
 };
 
