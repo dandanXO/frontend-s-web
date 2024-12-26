@@ -266,6 +266,10 @@ a {
   width: 24px;
   flex-shrink: 0;
 }
+.contact-item .we-icon {
+  width: 40px;
+}
+
 
 .contact-item .service-icon {
   width: 60px;
