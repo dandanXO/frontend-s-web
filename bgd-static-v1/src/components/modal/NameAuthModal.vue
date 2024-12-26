@@ -96,12 +96,12 @@
           <img :src="photoPreview" />
 
           <q-btn no-caps unelevated class="green-btn" @click="submit">Submit</q-btn>
-          <q-btn no-caps unelevated class="grey-btn" @click="takePicDialogVisible = true">Replace Image</q-btn>
+          <q-btn no-caps unelevated class="grey-btn" @click="cameraDialogVisible = true">Replace Image</q-btn>
         </div>
         <div
           v-else-if="uploadStatus === 'NOT_EXIST'"
           class="name-auth-upload-container upload"
-          @click="takePicDialogVisible = true"
+          @click="cameraDialogVisible = true"
         >
           <img src="../../assets/images/index/name-auth/upload-doc.png" />
           <span>{{ $t("nameAuth.uploadDoc") }}</span>
@@ -109,7 +109,7 @@
         <div v-else-if="uploadStatus === 'FAILED'" class="name-auth-upload-container upload-fail">
           <img src="../../assets/images/index/name-auth/upload-fail.png" />
           <span>{{ $t("nameAuth.uploadFailed") }}</span>
-          <q-btn no-caps unelevated class="green-btn" @click="takePicDialogVisible = true">
+          <q-btn no-caps unelevated class="green-btn" @click="cameraDialogVisible = true">
             {{ $t("btn.uploadAgain") }}
           </q-btn>
         </div>
@@ -147,9 +147,9 @@
       <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>
     </div>
   </div>
-  <q-dialog class="camera-dialog" v-model="takePicDialogVisible" persistent>
+  <q-dialog class="camera-dialog" v-model="cameraDialogVisible" persistent>
     <div class="camera-container-header">
-      <img src="../../assets/images/index/name-auth/step-back-icon.png" @click="takePicDialogVisible = false" />
+      <img src="../../assets/images/index/name-auth/step-back-icon.png" @click="cameraDialogVisible = false" />
       <div class="camera-header-txt">Personal Verification</div>
     </div>
     <div class="camera-container">
@@ -173,7 +173,6 @@
               src="../../assets/images/index/name-auth/camera-shutter.svg"
               @click="takePhoto"
             />
-            <!-- <img src="../../assets/images/index/name-auth/camera-options.svg" /> -->
             <q-select
               v-model="selectedCamera"
               :options="cameras"
@@ -225,7 +224,7 @@ const step = ref(0);
 const selectedCountryRegion = ref("");
 const selectedDocType = ref("PASSPORT");
 const uploadStatus = ref("NOT_EXIST");
-const takePicDialogVisible = ref(false);
+const cameraDialogVisible = ref(false);
 const countryRegion = ref([]);
 const fileInput = ref(null);
 const webcam = ref(null);
@@ -295,7 +294,7 @@ const photoTakenEvent = async ({ blob, image_data_url }) => {
   fileSelected.value = new File([blob], "photo.jpg", { type: blob.type });
   photoPreview.value = URL.createObjectURL(fileSelected.value);
 
-  takePicDialogVisible.value = false;
+  cameraDialogVisible.value = false;
 };
 
 const handleUploadDoc = () => {
@@ -309,7 +308,7 @@ const handleFileChange = (event) => {
   fileSelected.value = event.target.files[0];
   if (fileSelected.value) {
     photoPreview.value = URL.createObjectURL(fileSelected.value);
-    takePicDialogVisible.value = false;
+    cameraDialogVisible.value = false;
   }
 };
 
