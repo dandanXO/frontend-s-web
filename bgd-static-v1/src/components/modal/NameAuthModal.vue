@@ -90,16 +90,28 @@
           </div>
         </div>
 
-        <div class="name-auth-subtitle">{{ $t("nameAuth.getReadyUploadIdCard") }}</div>
-        <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
-        <div v-if="uploadStatus === 'NOT_EXIST'" class="name-auth-upload-container upload" @click="handleUploadDoc">
+        <div v-if="!photoPreview" class="name-auth-subtitle">{{ $t("nameAuth.getReadyUploadIdCard") }}</div>
+        <div v-if="photoPreview" class="name-auth-upload-container preview-photo">
+          <div class="preview-txt">Make sure that all the information on the photo is visible and easy to read</div>
+          <img :src="photoPreview" />
+
+          <q-btn no-caps unelevated class="green-btn" @click="submit">Submit</q-btn>
+          <q-btn no-caps unelevated class="grey-btn" @click="cameraDialogVisible = true">Replace Image</q-btn>
+        </div>
+        <div
+          v-else-if="uploadStatus === 'NOT_EXIST'"
+          class="name-auth-upload-container upload"
+          @click="cameraDialogVisible = true"
+        >
           <img src="../../assets/images/index/name-auth/upload-doc.png" />
           <span>{{ $t("nameAuth.uploadDoc") }}</span>
         </div>
         <div v-else-if="uploadStatus === 'FAILED'" class="name-auth-upload-container upload-fail">
           <img src="../../assets/images/index/name-auth/upload-fail.png" />
           <span>{{ $t("nameAuth.uploadFailed") }}</span>
-          <q-btn no-caps unelevated class="green-btn" @click="handleUploadDoc">{{ $t("btn.uploadAgain") }}</q-btn>
+          <q-btn no-caps unelevated class="green-btn" @click="cameraDialogVisible = true">
+            {{ $t("btn.uploadAgain") }}
+          </q-btn>
         </div>
         <div v-else-if="uploadStatus === 'SUCCESS'" class="name-auth-upload-container upload">
           <img src="../../assets/images/index/name-auth/upload-success.png" />
@@ -135,58 +147,155 @@
       <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>
     </div>
   </div>
-  <q-dialog v-model="cropDialogVisible" persistent class="crop-id-dialog">
-    <q-card class="crop-id-dialog-card">
-      <q-btn class="close-btn" dense flat icon="close" v-close-popup />
+  <q-dialog class="camera-dialog" v-model="cameraDialogVisible" persistent>
+    <div class="camera-container-header">
+      <img src="../../assets/images/index/name-auth/step-back-icon.png" @click="cameraDialogVisible = false" />
+      <div class="camera-header-txt">Personal Verification</div>
+    </div>
+    <div class="camera-container">
+      <div class="camera-inner-container">
+        <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
+        <WebCam
+          ref="webcam"
+          class="webcam"
+          style="height: calc(100% - 150px)"
+          @photoTaken="photoTakenEvent"
+          @init="webcamInit"
+        />
 
-      <cropper
-        v-if="imageSrc"
-        background-class="cropper-background"
-        ref="cropperRef"
-        class="cropper"
-        :src="
-          imageSrc
-            ? imageSrc
-            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'
-        "
-        @change="cropperChange"
-      />
+        <div class="camera-content">
+          <div class="camera-content-txt">Document should be in the frame and clearly visible</div>
 
-      <q-btn :loading="isLoadingUpload" no-caps unelevated class="green-btn crop-btn" @click="submit">
-        {{ $t("btn.submit") }}
-      </q-btn>
-    </q-card>
+          <div class="camera-btn-container">
+            <img src="../../assets/images/index/name-auth/gallery.svg" @click="handleUploadDoc" />
+            <img
+              class="camera-shutter-img"
+              src="../../assets/images/index/name-auth/camera-shutter.svg"
+              @click="takePhoto"
+            />
+            <q-select
+              v-model="selectedCamera"
+              :options="cameras"
+              option-label="label"
+              option-value="deviceId"
+              option-slot
+              emit-value
+              outlined
+              label="Choose an option"
+              dense
+              hide-selected
+              @update:model-value="setCamera"
+            >
+              <template v-slot:prepend>
+                <q-icon name="photo_camera" />
+              </template>
+
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar>
+                    <q-icon :name="scope.opt.icon" />
+                  </q-item-section>
+                  <q-item-section>
+                    {{ scope.opt.label }}
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
+        </div>
+      </div>
+    </div>
   </q-dialog>
 </template>
 <script setup>
-import { ref, defineEmits, onMounted } from "vue";
+import { ref, defineEmits, onMounted, onBeforeUnmount } from "vue";
 import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
-import { Cropper } from "vue-advanced-cropper";
-import "vue-advanced-cropper/dist/style.css";
-import "vue-advanced-cropper/dist/theme.compact.css";
 import { api } from "boot/axios";
+import { WebCam } from "vue-camera-lib";
+import { useQuasar } from "quasar";
 import { getRndInteger } from "boot/utils";
 
 const store = userStore();
+const $q = useQuasar();
 const emit = defineEmits(["closeDialog"]);
 
 const step = ref(0);
 const selectedCountryRegion = ref("");
 const selectedDocType = ref("PASSPORT");
 const uploadStatus = ref("NOT_EXIST");
-const cropDialogVisible = ref(false);
-
-const fileInput = ref(null);
-const imageSrc = ref("");
-
+const cameraDialogVisible = ref(false);
 const countryRegion = ref([]);
+const fileInput = ref(null);
+const webcam = ref(null);
+const photoPreview = ref(null);
+const fileSelected = ref(null);
+const cameras = ref([]);
+const selectedCamera = ref(null);
+const reloadCamInterval = ref(null);
 
 const docType = [
   { label: t("nameAuth.passport"), value: "PASSPORT" },
   { label: t("nameAuth.ic"), value: "IC" },
   { label: t("nameAuth.drivingLicense"), value: "DRIVING_LICENSE" }
 ];
+
+const closeDialog = () => {
+  emit("closeDialog");
+};
+
+const webcamInit = (id) => {
+  selectedCamera.value = id;
+};
+
+const loadCameras = () => {
+  if (webcam.value) {
+    webcam.value.loadCameras();
+    cameras.value = webcam.value.cameras;
+  }
+};
+
+const setCamera = () => {
+  webcam.value.changeCamera(selectedCamera.value === "" ? null : selectedCamera.value);
+};
+
+const getIdVerifyStatus = () => {
+  step.value = 0;
+  api
+    .get("/session/idVerifyStatus")
+    .then((res) => {
+      if (res.code === 0) {
+        uploadStatus.value = res.data.status;
+        if (uploadStatus.value !== "NOT_EXIST") {
+          step.value = 3;
+        } else {
+          step.value = 1;
+        }
+        countryRegion.value = res.data.countryList.map((country) => ({
+          label: country,
+          value: country
+        }));
+
+        selectedCountryRegion.value = countryRegion.value[0].value;
+      }
+    })
+    .catch(() => {});
+};
+
+const takePhoto = async () => {
+  if (webcam.value) {
+    try {
+      await webcam.value.takePhoto();
+    } catch (e) {}
+  }
+};
+
+const photoTakenEvent = async ({ blob, image_data_url }) => {
+  fileSelected.value = new File([blob], "photo.jpg", { type: blob.type });
+  photoPreview.value = URL.createObjectURL(fileSelected.value);
+
+  cameraDialogVisible.value = false;
+};
 
 const handleUploadDoc = () => {
   if (fileInput.value) {
@@ -196,32 +305,40 @@ const handleUploadDoc = () => {
 };
 
 const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    imageSrc.value = URL.createObjectURL(file);
-    cropDialogVisible.value = true;
+  fileSelected.value = event.target.files[0];
+  if (fileSelected.value) {
+    photoPreview.value = URL.createObjectURL(fileSelected.value);
+    cameraDialogVisible.value = false;
   }
-};
-
-const cropperRef = ref(null);
-const croppedImg = ref(null);
-const isLoadingUpload = ref(false);
-
-const getImageFromCropper = () => {
-  if (cropperRef.value) {
-    const { coordinates, canvas } = cropperRef.value.getResult();
-    croppedImg.value = canvas.toDataURL("image/jpeg", 0.6);
-  }
-};
-
-const cropperChange = () => {
-  getImageFromCropper();
 };
 
 const submit = async () => {
-  isLoadingUpload.value = true;
-  if (croppedImg.value) {
-    const file = await attachPhoto(croppedImg.value);
+  // isLoadingUpload.value = true;
+  const file = fileSelected.value;
+  if (file) {
+    const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
+
+    if (!file || !allowFileTypes.includes(file.type)) {
+      $q.notify({
+        type: "negative",
+        position: "top",
+        message: `${t("notify.imageFormatError")} ${file.type}`,
+        icon: "report_problem"
+      });
+
+      // isLoadingUpload.value = false;
+      return;
+    }
+    if (file && file.size > 1000000) {
+      $q.notify({
+        type: "negative",
+        position: "top",
+        message: `${t("notify.uploadImageLargerThan1MbError")}`,
+        icon: "report_problem"
+      });
+      // isLoadingUpload.value = false;
+      return;
+    }
 
     if (file) {
       var formData = new FormData();
@@ -243,6 +360,7 @@ const submit = async () => {
         });
         const data = await response.json();
         if (data.code === 0) {
+          photoPreview.value = null;
           getIdVerifyStatus();
         } else {
           $q.notify({
@@ -252,100 +370,28 @@ const submit = async () => {
             icon: "report_problem"
           });
         }
-      } catch (e) {
-      } finally {
-        isLoadingUpload.value = false;
-        cropDialogVisible.value = false;
-      }
+      } catch (e) {}
     }
   }
 };
 
-function isBase64(str) {
-  const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
-  return base64Regex.test(str);
-}
-
-async function attachPhoto(fileImg) {
-  var file = null;
-  if (typeof fileImg === "string" && isBase64(fileImg)) {
-    // Extract the MIME type from the base64 string
-    const mimeType = fileImg.split(";")[0].split(":")[1];
-    var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
-    // Decode the Base64 string
-    const byteCharacters = atob(data);
-    const byteNumbers = new Array(byteCharacters.length);
-
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    // Convert to an ArrayBuffer
-    const byteArray = new Uint8Array(byteNumbers);
-
-    // Create a Blob from the ArrayBuffer
-    const blob = new Blob([byteArray], { type: mimeType });
-
-    // Create a File object from the Blob
-    file = new File([blob], "image." + mimeType.split("/")[1], { type: mimeType });
-  } else {
-    file = fileImg;
-  }
-  // Use the File object for further processing
-  const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
-
-  if (!file || !allowFileTypes.includes(file.type)) {
-    $q.notify({
-      type: "negative",
-      position: "top",
-      message: `${t("notify.imageFormatError")}`,
-      icon: "report_problem"
-    });
-
-    isLoadingUpload.value = false;
-    return null;
-  }
-  if (file && file.size > 1000000) {
-    $q.notify({
-      type: "negative",
-      position: "top",
-      message: `${t("notify.uploadImageLargerThan1MbError")}`,
-      icon: "report_problem"
-    });
-    isLoadingUpload.value = false;
-    return null;
-  }
-
-  return file;
-}
-
-const closeDialog = () => {
-  emit("closeDialog");
-};
-
-const getIdVerifyStatus = () => {
-  step.value = 0;
-  api
-    .get("/session/idVerifyStatus")
-    .then((res) => {
-      if (res.code === 0) {
-        uploadStatus.value = res.data.status;
-        if (uploadStatus.value !== "NOT_EXIST") {
-          step.value = 3;
-        } else {
-          step.value = 1;
-        }
-        countryRegion.value = res.data.countryList.map((country) => ({
-          label: country,
-          value: country
-        }))
-
-        selectedCountryRegion.value= countryRegion.value[0].value;
-      }
-    })
-    .catch(() => {});
-};
 onMounted(() => {
   getIdVerifyStatus();
+  loadCameras();
+  if (cameras.value.length === 0) {
+    reloadCamInterval.value = setInterval(() => {
+      loadCameras();
+      if (cameras.value.length > 0) {
+        clearInterval(reloadCamInterval.value);
+        reloadCamInterval.value = null;
+      }
+    }, 1000);
+  }
+});
+
+onBeforeUnmount(() => {
+  clearInterval(reloadCamInterval.value);
+  reloadCamInterval.value = null;
 });
 </script>
 <style scoped lang="scss">
@@ -591,10 +637,33 @@ onMounted(() => {
     .upload {
       cursor: pointer;
     }
+
+    .name-auth-upload-container.preview-photo {
+      padding: 20px 36px;
+    }
+    .preview-photo {
+      .preview-txt {
+        font-size: 12px;
+        color: white;
+        margin-bottom: 10px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 10px;
+      }
+      .q-btn {
+        height: 24px;
+        width: 100%;
+        font-size: 10px;
+        margin-top: 8px;
+        border-radius: 4px;
+      }
+    }
     .upload-fail {
       color: #ff0000;
       .q-btn {
-        height: 20px;
+        height: 24px;
         width: auto;
         font-size: 10px;
         margin-top: 8px;
@@ -618,34 +687,6 @@ onMounted(() => {
   }
 }
 
-.crop-id-dialog-card {
-  padding: 40px 20px;
-  padding-top: 60px;
-  position: relative;
-  text-align: center;
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  .crop-btn {
-    width: auto;
-    height: 20px;
-    margin-top: 20px;
-  }
-}
-.cropper {
-  height: 360px;
-  width: 360px;
-  border-radius: 10px;
-}
-.vue-preview__wrapper {
-  border-radius: 20px;
-}
-.vue-bounding-box {
-  border-radius: 50%;
-}
-
 .green-btn {
   background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
   color: #131313;
@@ -661,6 +702,77 @@ onMounted(() => {
     height: 48px;
     margin-top: 16px;
     pointer-events: none;
+  }
+}
+
+.grey-btn {
+  background: #343434;
+  color: #fff;
+  font-weight: 700;
+  width: 100%;
+  height: 48px;
+  margin-top: 30px;
+}
+
+.camera-dialog {
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  .camera-container-header {
+    height: 50px;
+    width: 100%;
+    background-color: #1d1d1d;
+    display: flex;
+    align-items: center;
+    .camera-header-txt {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    img {
+      height: 24px;
+      padding-left: 10px;
+    }
+  }
+  .camera-container {
+    background-color: #111111;
+    height: 100%;
+    max-height: 100% !important;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 20px 20px;
+
+    .camera-inner-container {
+      background-color: #000;
+      height: calc(100% - 50px);
+
+      .camera-content {
+        justify-self: center;
+        padding: 10px 20px;
+        .camera-content-txt {
+          color: #fff;
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+      .camera-btn-container {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        img {
+          width: 30px;
+          height: 30px;
+        }
+        .camera-shutter-img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
   }
 }
 </style>
