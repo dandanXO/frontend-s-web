@@ -147,18 +147,28 @@
       <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>
     </div>
   </div>
-  <q-dialog v-model="takePicDialogVisible" persistent style="background-color: black">
+  <q-dialog class="camera-dialog" v-model="takePicDialogVisible" persistent>
+    <div class="camera-container-header">
+      <img src="../../assets/images/index/name-auth/step-back-icon.png" />
+      <div class="camera-header-txt">Personal Verification</div>
+    </div>
     <div class="camera-container">
-      <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
-      <WebCam ref="webcam" style="height: calc(100% - 100px)" @photoTaken="photoTakenEvent" />
+      <div class="camera-inner-container">
+        <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
+        <WebCam ref="webcam" class="webcam" style="height: calc(100% - 150px)" @photoTaken="photoTakenEvent" />
 
-      <div style="align-self: center; padding: 8px">
-        <div style="color: black; text-align: center">Document should be in the frame and clearly visible</div>
+        <div class="camera-content">
+          <div class="camera-content-txt">Document should be in the frame and clearly visible</div>
 
-        <div class="camera-btn-container">
-          <img src="../../assets/images/index/name-auth/gallery.png" @click="handleUploadDoc" />
-          <img src="../../assets/images/index/name-auth/camera-shutter.png" @click="takePhoto" />
-          <img src="../../assets/images/index/name-auth/camera-options.png" />
+          <div class="camera-btn-container">
+            <img src="../../assets/images/index/name-auth/gallery.svg" @click="handleUploadDoc" />
+            <img
+              class="camera-shutter-img"
+              src="../../assets/images/index/name-auth/camera-shutter.svg"
+              @click="takePhoto"
+            />
+            <img src="../../assets/images/index/name-auth/camera-options.svg" />
+          </div>
         </div>
       </div>
     </div>
@@ -638,21 +648,64 @@ onMounted(() => {
   margin-top: 30px;
 }
 
-.camera-container {
-  padding: 20px 0;
-  background-color: white;
-  height: 100%;
-  width: calc(100% - 100px);
-  display: flex;
-  flex-direction: column;
-  .camera-btn-container {
-    margin-top: 8px;
+.camera-dialog {
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  .camera-container-header {
+    height: 50px;
+    width: 100%;
+    background-color: #1d1d1d;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    .camera-header-txt {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
     img {
-      width: 30px;
-      height: 30px;
+      height: 24px;
+      padding-left: 10px;
+    }
+  }
+  .camera-container {
+    background-color: #111111;
+    height: 100%;
+    max-height: 100% !important;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 20px 20px;
+
+    .camera-inner-container {
+      background-color: #000;
+      height: calc(100% - 50px);
+
+      .camera-content {
+        justify-self: center;
+        padding: 10px 20px;
+        .camera-content-txt {
+          color: #fff;
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+      .camera-btn-container {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        img {
+          width: 30px;
+          height: 30px;
+        }
+        .camera-shutter-img {
+          width: 50px;
+          height: 50px;
+        }
+      }
     }
   }
 }
