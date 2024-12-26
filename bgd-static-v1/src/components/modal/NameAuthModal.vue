@@ -92,11 +92,13 @@
 
         <div v-if="!photoPreview" class="name-auth-subtitle">{{ $t("nameAuth.getReadyUploadIdCard") }}</div>
         <div v-if="photoPreview" class="name-auth-upload-container preview-photo">
-          <div class="preview-txt">Make sure that all the information on the photo is visible and easy to read</div>
+          <div class="preview-txt">{{ $t("nameAuth.photoPreview_txt") }}</div>
           <img :src="photoPreview" />
 
-          <q-btn no-caps unelevated class="green-btn" @click="submit">Submit</q-btn>
-          <q-btn no-caps unelevated class="grey-btn" @click="cameraDialogVisible = true">Replace Image</q-btn>
+          <q-btn no-caps unelevated class="green-btn" @click="submit">{{ $t("btn.submit") }}</q-btn>
+          <q-btn no-caps unelevated class="grey-btn" @click="cameraDialogVisible = true">
+            {{ $t("btn.replaceImage") }}
+          </q-btn>
         </div>
         <div
           v-else-if="uploadStatus === 'NOT_EXIST'"
@@ -150,7 +152,7 @@
   <q-dialog class="camera-dialog" v-model="cameraDialogVisible" persistent>
     <div class="camera-container-header">
       <img src="../../assets/images/index/name-auth/step-back-icon.png" @click="cameraDialogVisible = false" />
-      <div class="camera-header-txt">Personal Verification</div>
+      <div class="camera-header-txt">{{ $t("nameAuth.personalVerification") }}</div>
     </div>
     <div class="camera-container">
       <div class="camera-inner-container">
@@ -164,7 +166,7 @@
         />
 
         <div class="camera-content">
-          <div class="camera-content-txt">Document should be in the frame and clearly visible</div>
+          <div class="camera-content-txt">{{ $t("nameAuth.photoTaking_txt") }}</div>
 
           <div class="camera-btn-container">
             <img src="../../assets/images/index/name-auth/gallery.svg" @click="handleUploadDoc" />
