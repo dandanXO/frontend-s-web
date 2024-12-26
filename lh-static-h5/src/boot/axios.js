@@ -395,8 +395,11 @@ async function getInitApi(apiLinks, urlLsName, errorPrefix) {
       let APP_INITIAL_TIME_OUT = 5000;
       const checkAppInitialStatus = () => {
         const isAppInitialized = !!sessionStorage.getItem("LH_APP_DOMAIN_INITIALIZED");
-        if(isAppInitialized) {
+        if (isAppInitialized) {
           successRstUrl = localStorage.getItem(urlLsName);
+          return true;
+        } else {
+          return false;
         }
       }
       const interval = setInterval(()=>{
