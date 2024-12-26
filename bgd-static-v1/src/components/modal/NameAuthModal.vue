@@ -90,16 +90,30 @@
           </div>
         </div>
 
-        <div class="name-auth-subtitle">{{ $t("nameAuth.getReadyUploadIdCard") }}</div>
-        <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
-        <div v-if="uploadStatus === 'NOT_EXIST'" class="name-auth-upload-container upload" @click="handleUploadDoc">
+        <div v-if="!photoPreview" class="name-auth-subtitle">{{ $t("nameAuth.getReadyUploadIdCard") }}</div>
+        <!-- <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" /> -->
+        <div v-if="photoPreview" class="name-auth-upload-container preview-photo">
+          <div class="preview-txt">Make sure that all the information on the photo is visible and easy to read</div>
+          <img :src="photoPreview" />
+
+          <q-btn no-caps unelevated class="green-btn">Submit</q-btn>
+          <q-btn no-caps unelevated class="grey-btn" @click="takePicDialogVisible = true">Replace Image</q-btn>
+        </div>
+        <!-- <div v-if="uploadStatus === 'NOT_EXIST'" class="name-auth-upload-container upload" @click="handleUploadDoc"> -->
+        <div
+          v-else-if="uploadStatus === 'NOT_EXIST'"
+          class="name-auth-upload-container upload"
+          @click="takePicDialogVisible = true"
+        >
           <img src="../../assets/images/index/name-auth/upload-doc.png" />
           <span>{{ $t("nameAuth.uploadDoc") }}</span>
         </div>
         <div v-else-if="uploadStatus === 'FAILED'" class="name-auth-upload-container upload-fail">
           <img src="../../assets/images/index/name-auth/upload-fail.png" />
           <span>{{ $t("nameAuth.uploadFailed") }}</span>
-          <q-btn no-caps unelevated class="green-btn" @click="handleUploadDoc">{{ $t("btn.uploadAgain") }}</q-btn>
+          <q-btn no-caps unelevated class="green-btn" @click="takePicDialogVisible = true">
+            {{ $t("btn.uploadAgain") }}
+          </q-btn>
         </div>
         <div v-else-if="uploadStatus === 'SUCCESS'" class="name-auth-upload-container upload">
           <img src="../../assets/images/index/name-auth/upload-success.png" />
@@ -135,7 +149,23 @@
       <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>
     </div>
   </div>
-  <q-dialog v-model="cropDialogVisible" persistent class="crop-id-dialog">
+  <q-dialog v-model="takePicDialogVisible" persistent style="background-color: black">
+    <div class="camera-container">
+      <WebCam ref="webcam" style="height: calc(100% - 100px)" @photoTaken="photoTakenEvent" />
+
+      <div style="align-self: center; padding: 8px">
+        <div style="color: black; text-align: center">Document should be in the frame and clearly visible</div>
+
+        <div class="camera-btn-container">
+          <img src="../../assets/images/index/name-auth/gallery.png" />
+          <img src="../../assets/images/index/name-auth/camera-shutter.png" @click="takePhoto" />
+          <img src="../../assets/images/index/name-auth/camera-options.png" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <!-- <q-dialog v-model="cropDialogVisible" persistent class="crop-id-dialog">
     <q-card class="crop-id-dialog-card">
       <q-btn class="close-btn" dense flat icon="close" v-close-popup />
 
@@ -156,167 +186,40 @@
         {{ $t("btn.submit") }}
       </q-btn>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 <script setup>
 import { ref, defineEmits, onMounted } from "vue";
 import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
-import { Cropper } from "vue-advanced-cropper";
-import "vue-advanced-cropper/dist/style.css";
-import "vue-advanced-cropper/dist/theme.compact.css";
 import { api } from "boot/axios";
-import { getRndInteger } from "boot/utils";
+import { WebCam } from "vue-camera-lib";
+import { useQuasar } from "quasar";
+// import { Cropper } from "vue-advanced-cropper";
+// import "vue-advanced-cropper/dist/style.css";
+// import "vue-advanced-cropper/dist/theme.compact.css";
+// import { getRndInteger } from "boot/utils";
 
 const store = userStore();
+const $q = useQuasar();
 const emit = defineEmits(["closeDialog"]);
 
 const step = ref(0);
 const selectedCountryRegion = ref("");
 const selectedDocType = ref("PASSPORT");
 const uploadStatus = ref("NOT_EXIST");
-const cropDialogVisible = ref(false);
-
-const fileInput = ref(null);
-const imageSrc = ref("");
-
+const takePicDialogVisible = ref(false);
 const countryRegion = ref([]);
+
+// const cropDialogVisible = ref(false);
+// const fileInput = ref(null);
+// const imageSrc = ref("");
 
 const docType = [
   { label: t("nameAuth.passport"), value: "PASSPORT" },
   { label: t("nameAuth.ic"), value: "IC" },
   { label: t("nameAuth.drivingLicense"), value: "DRIVING_LICENSE" }
 ];
-
-const handleUploadDoc = () => {
-  if (fileInput.value) {
-    fileInput.value.value = null;
-    fileInput.value.click();
-  }
-};
-
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    imageSrc.value = URL.createObjectURL(file);
-    cropDialogVisible.value = true;
-  }
-};
-
-const cropperRef = ref(null);
-const croppedImg = ref(null);
-const isLoadingUpload = ref(false);
-
-const getImageFromCropper = () => {
-  if (cropperRef.value) {
-    const { coordinates, canvas } = cropperRef.value.getResult();
-    croppedImg.value = canvas.toDataURL("image/jpeg", 0.6);
-  }
-};
-
-const cropperChange = () => {
-  getImageFromCropper();
-};
-
-const submit = async () => {
-  isLoadingUpload.value = true;
-  if (croppedImg.value) {
-    const file = await attachPhoto(croppedImg.value);
-
-    if (file) {
-      var formData = new FormData();
-      formData.append("country", selectedCountryRegion.value);
-      formData.append("idType", selectedDocType.value);
-      formData.append("idPhoto", file);
-
-      const rstArray = Object.values(process.env.RST_API);
-      const rstApi = rstArray[getRndInteger(0, rstArray.length)];
-
-      try {
-        const response = await fetch(`${rstApi}/session/idVerify`, {
-          method: "POST",
-          body: formData,
-          headers: {
-            authorization: "BGD",
-            token: `${store.token}`
-          }
-        });
-        const data = await response.json();
-        if (data.code === 0) {
-          getIdVerifyStatus();
-        } else {
-          $q.notify({
-            type: "negative",
-            position: "top",
-            message: `${selectedDocType.value} ${t("notify.uploadFailedPleaseTryAgain")}`,
-            icon: "report_problem"
-          });
-        }
-      } catch (e) {
-      } finally {
-        isLoadingUpload.value = false;
-        cropDialogVisible.value = false;
-      }
-    }
-  }
-};
-
-function isBase64(str) {
-  const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
-  return base64Regex.test(str);
-}
-
-async function attachPhoto(fileImg) {
-  var file = null;
-  if (typeof fileImg === "string" && isBase64(fileImg)) {
-    // Extract the MIME type from the base64 string
-    const mimeType = fileImg.split(";")[0].split(":")[1];
-    var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
-    // Decode the Base64 string
-    const byteCharacters = atob(data);
-    const byteNumbers = new Array(byteCharacters.length);
-
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    // Convert to an ArrayBuffer
-    const byteArray = new Uint8Array(byteNumbers);
-
-    // Create a Blob from the ArrayBuffer
-    const blob = new Blob([byteArray], { type: mimeType });
-
-    // Create a File object from the Blob
-    file = new File([blob], "image." + mimeType.split("/")[1], { type: mimeType });
-  } else {
-    file = fileImg;
-  }
-  // Use the File object for further processing
-  const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
-
-  if (!file || !allowFileTypes.includes(file.type)) {
-    $q.notify({
-      type: "negative",
-      position: "top",
-      message: `${t("notify.imageFormatError")}`,
-      icon: "report_problem"
-    });
-
-    isLoadingUpload.value = false;
-    return null;
-  }
-  if (file && file.size > 1000000) {
-    $q.notify({
-      type: "negative",
-      position: "top",
-      message: `${t("notify.uploadImageLargerThan1MbError")}`,
-      icon: "report_problem"
-    });
-    isLoadingUpload.value = false;
-    return null;
-  }
-
-  return file;
-}
 
 const closeDialog = () => {
   emit("closeDialog");
@@ -337,13 +240,169 @@ const getIdVerifyStatus = () => {
         countryRegion.value = res.data.countryList.map((country) => ({
           label: country,
           value: country
-        }))
+        }));
 
-        selectedCountryRegion.value= countryRegion.value[0].value;
+        selectedCountryRegion.value = countryRegion.value[0].value;
       }
     })
     .catch(() => {});
 };
+
+const webcam = ref(null);
+const photoPreview = ref(null);
+
+const takePhoto = async () => {
+  if (webcam.value) {
+    try {
+      await webcam.value.takePhoto();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
+
+const photoTakenEvent = async ({ blob, image_data_url }) => {
+  const file = new File([blob], "photo.jpg", { type: blob.type });
+  photoPreview.value = URL.createObjectURL(file);
+
+  takePicDialogVisible.value = false;
+  console.log("photoPreview", photoPreview.value);
+};
+
+/** START CROPPER METHODS */
+
+// const handleUploadDoc = () => {
+//   if (fileInput.value) {
+//     fileInput.value.value = null;
+//     fileInput.value.click();
+//   }
+// };
+
+// const handleFileChange = (event) => {
+//   const file = event.target.files[0];
+//   if (file) {
+//     imageSrc.value = URL.createObjectURL(file);
+//     cropDialogVisible.value = true;
+//   }
+// };
+
+// const cropperRef = ref(null);
+// const croppedImg = ref(null);
+// const isLoadingUpload = ref(false);
+
+// const getImageFromCropper = () => {
+//   if (cropperRef.value) {
+//     const { coordinates, canvas } = cropperRef.value.getResult();
+//     croppedImg.value = canvas.toDataURL("image/jpeg", 0.6);
+//   }
+// };
+
+// const cropperChange = () => {
+//   getImageFromCropper();
+// };
+
+// const submit = async () => {
+//   isLoadingUpload.value = true;
+//   if (croppedImg.value) {
+//     const file = await attachPhoto(croppedImg.value);
+
+//     if (file) {
+//       var formData = new FormData();
+//       formData.append("country", selectedCountryRegion.value);
+//       formData.append("idType", selectedDocType.value);
+//       formData.append("idPhoto", file);
+
+//       const rstArray = Object.values(process.env.RST_API);
+//       const rstApi = rstArray[getRndInteger(0, rstArray.length)];
+
+//       try {
+//         const response = await fetch(`${rstApi}/session/idVerify`, {
+//           method: "POST",
+//           body: formData,
+//           headers: {
+//             authorization: "BGD",
+//             token: `${store.token}`
+//           }
+//         });
+//         const data = await response.json();
+//         if (data.code === 0) {
+//           getIdVerifyStatus();
+//         } else {
+//           $q.notify({
+//             type: "negative",
+//             position: "top",
+//             message: `${selectedDocType.value} ${t("notify.uploadFailedPleaseTryAgain")}`,
+//             icon: "report_problem"
+//           });
+//         }
+//       } catch (e) {
+//       } finally {
+//         isLoadingUpload.value = false;
+//         cropDialogVisible.value = false;
+//       }
+//     }
+//   }
+// };
+
+// function isBase64(str) {
+//   const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
+//   return base64Regex.test(str);
+// }
+
+// async function attachPhoto(fileImg) {
+//   var file = null;
+//   if (typeof fileImg === "string" && isBase64(fileImg)) {
+//     // Extract the MIME type from the base64 string
+//     const mimeType = fileImg.split(";")[0].split(":")[1];
+//     var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
+//     // Decode the Base64 string
+//     const byteCharacters = atob(data);
+//     const byteNumbers = new Array(byteCharacters.length);
+
+//     for (let i = 0; i < byteCharacters.length; i++) {
+//       byteNumbers[i] = byteCharacters.charCodeAt(i);
+//     }
+//     // Convert to an ArrayBuffer
+//     const byteArray = new Uint8Array(byteNumbers);
+
+//     // Create a Blob from the ArrayBuffer
+//     const blob = new Blob([byteArray], { type: mimeType });
+
+//     // Create a File object from the Blob
+//     file = new File([blob], "image." + mimeType.split("/")[1], { type: mimeType });
+//   } else {
+//     file = fileImg;
+//   }
+//   // Use the File object for further processing
+//   const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
+
+//   if (!file || !allowFileTypes.includes(file.type)) {
+//     $q.notify({
+//       type: "negative",
+//       position: "top",
+//       message: `${t("notify.imageFormatError")}`,
+//       icon: "report_problem"
+//     });
+
+//     isLoadingUpload.value = false;
+//     return null;
+//   }
+//   if (file && file.size > 1000000) {
+//     $q.notify({
+//       type: "negative",
+//       position: "top",
+//       message: `${t("notify.uploadImageLargerThan1MbError")}`,
+//       icon: "report_problem"
+//     });
+//     isLoadingUpload.value = false;
+//     return null;
+//   }
+
+//   return file;
+// }
+
+/** END CROPPER METHODS */
+
 onMounted(() => {
   getIdVerifyStatus();
 });
@@ -591,10 +650,33 @@ onMounted(() => {
     .upload {
       cursor: pointer;
     }
+
+    .name-auth-upload-container.preview-photo {
+      padding: 20px 36px;
+    }
+    .preview-photo {
+      .preview-txt {
+        font-size: 12px;
+        color: white;
+        margin-bottom: 10px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 10px;
+      }
+      .q-btn {
+        height: 24px;
+        width: 100%;
+        font-size: 10px;
+        margin-top: 8px;
+        border-radius: 4px;
+      }
+    }
     .upload-fail {
       color: #ff0000;
       .q-btn {
-        height: 20px;
+        height: 24px;
         width: auto;
         font-size: 10px;
         margin-top: 8px;
@@ -618,34 +700,6 @@ onMounted(() => {
   }
 }
 
-.crop-id-dialog-card {
-  padding: 40px 20px;
-  padding-top: 60px;
-  position: relative;
-  text-align: center;
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  .crop-btn {
-    width: auto;
-    height: 20px;
-    margin-top: 20px;
-  }
-}
-.cropper {
-  height: 360px;
-  width: 360px;
-  border-radius: 10px;
-}
-.vue-preview__wrapper {
-  border-radius: 20px;
-}
-.vue-bounding-box {
-  border-radius: 50%;
-}
-
 .green-btn {
   background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
   color: #131313;
@@ -663,4 +717,61 @@ onMounted(() => {
     pointer-events: none;
   }
 }
+
+.grey-btn {
+  background: #343434;
+  color: #fff;
+  font-weight: 700;
+  width: 100%;
+  height: 48px;
+  margin-top: 30px;
+}
+
+.camera-container {
+  padding: 20px 0;
+  background-color: white;
+  height: 100%;
+  width: calc(100% - 100px);
+  display: flex;
+  flex-direction: column;
+  .camera-btn-container {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+// Cropper styles
+// .crop-id-dialog-card {
+//   padding: 40px 20px;
+//   padding-top: 60px;
+//   position: relative;
+//   text-align: center;
+//   .close-btn {
+//     position: absolute;
+//     top: 10px;
+//     right: 10px;
+//   }
+//   .crop-btn {
+//     width: auto;
+//     height: 20px;
+//     margin-top: 20px;
+//   }
+// }
+// .cropper {
+//   height: 360px;
+//   width: 360px;
+//   border-radius: 10px;
+// }
+// .vue-preview__wrapper {
+//   border-radius: 20px;
+// }
+// .vue-bounding-box {
+//   border-radius: 50%;
+// }
 </style>
