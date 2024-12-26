@@ -578,8 +578,18 @@ const columns = [
 }
 
 .body--dark {
+  .longka-ranking-table {
+    border-collapse: unset !important;
+
+    &.section-table th {
+      border: none;
+      box-shadow: none !important;
+    }
+  }
+
   .tigercard-container {
     .q-table {
+      border-collapse: unset !important;
       max-width: 650px;
       margin: 0 auto;
 
@@ -598,22 +608,21 @@ const columns = [
         color: #424f72;
         font-weight: bold;
         background: linear-gradient(180deg,#597adf,#3c5ec3)!important;
-        border: 1px solid #ecedf0;
-        box-shadow: inset 0 8px 9px 0 #ffffff40,inset 0 4px 4px 0 #ffffff40,inset 0 -4px 4px 0 #ffffff40 !important;
+        border: 0px solid transparent;
 
         &.q-table__cell {
           color: #7a8eb9;
-          border-bottom: 1px solid #ecedf0;
+          border-bottom: 0px solid #505050;
           background-color: white;
 
           &.is-leaf {
-            border-bottom: 1px solid #ecedf0;
+            border-bottom: 1px solid #505050;
           }
         }
       }
 
       td {
-        border: 1px solid #ecedf0 !important;
+        border: 1px solid #505050 !important;
 
         &.q-table__cell {
           color: #7a8eb9;
@@ -624,14 +633,14 @@ const columns = [
     }
 
     .q-table__bottom {
-      color: #7a8eb9;
+      color: #fff;
 
       .q-field__native {
-        color: #7a8eb9;
+        color: #fff;
       }
 
       .q-field__append {
-        color: #7a8eb9;
+        color: #fff;
       }
     }
 
@@ -644,7 +653,7 @@ const columns = [
       }
 
       .q-pager li {
-        color: #7a8eb9;
+        color: #fff;
         min-width: unset;
 
         &.btn-quicknext {
@@ -655,7 +664,7 @@ const columns = [
 
         &.is-active,
         &:hover {
-          color: #7a8eb9;
+          color: #fff;
           &:after {
             content: "/";
             display: inline-block;
@@ -665,7 +674,7 @@ const columns = [
       }
 
       button:hover {
-        color: #7a8eb9;
+        color: #fff;
       }
     }
   }
