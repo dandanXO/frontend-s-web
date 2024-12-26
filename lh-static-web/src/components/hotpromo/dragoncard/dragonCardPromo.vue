@@ -405,39 +405,6 @@ const submitRegisterForm = async (elForm) => {
 };
 </script>
 <style lang="scss">
-
-.section-bg {
-  .title-img {
-    aspect-ratio: 2952 / 91;
-    background: url("../../../assets/images/promotion/hotpromo/dragoncard/promo-details-title-bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 1250px 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
-    font-weight: bold;
-    color: #333;
-  }
-}
-.dark {
-  .section-bg {
-    .title-img {
-      aspect-ratio: 2952 / 91;
-      background: url("../../../assets/images/promotion/hotpromo/dragoncard/promo-details-title-bg.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 1250px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 40px;
-      font-weight: bold;
-    }
-  }
-}
-
 .el-loading-spinner .path {
   stroke: #b46e00;
 }
@@ -892,5 +859,37 @@ body {
 .longka-ranking-pagination .next-page,
 .longka-ranking-pagination .prev-page {
   cursor: pointer;
+}
+
+.section-bg {
+  .title-img {
+    aspect-ratio: 2952 / 91;
+    background: url("../../../assets/images/promotion/hotpromo/dragoncard/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1250px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+  }
+}
+.dark {
+  .section-bg {
+    .title-img {
+      aspect-ratio: 2952 / 91;
+      background: url("../../../assets/images/promotion/hotpromo/dragoncard/promo-details-title-bg.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 1250px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      font-weight: bold;
+    }
+  }
 }
 </style>
