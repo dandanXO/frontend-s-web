@@ -2555,10 +2555,11 @@ export default defineComponent({
     }
     .game-right-platform {
       .platform-block {
+        min-height: 100px;
         .platform-img-frame {
           border-radius: unset;
           background-color: transparent;
-          aspect-ratio: 684/244;
+          aspect-ratio: 819/295;
           background-size: 100% 100%;
           max-height: 122px;
           .platform-label {
