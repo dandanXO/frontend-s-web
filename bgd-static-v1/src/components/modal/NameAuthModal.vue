@@ -71,7 +71,7 @@
         unelevated
         class="green-btn"
         :class="{ disabled: !selectedCountryRegion || !selectedDocType }"
-        @click="step = 3"
+        @click="continueStep3()"
       >
         {{ $t("btn.continue") }}
       </q-btn>
@@ -245,6 +245,20 @@ const docType = [
 const closeDialog = () => {
   emit("closeDialog");
 };
+
+const continueStep3 = () => {
+  step.value = 3;
+  // alert("3")
+  // Request access to the user's camera
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then((stream) => {
+      // Set the video element's source to the camera stream
+    })
+    .catch((error) => {
+      console.error("Error accessing the camera: ", error);
+    });
+
+}
 
 const webcamInit = (id) => {
   selectedCamera.value = id;
