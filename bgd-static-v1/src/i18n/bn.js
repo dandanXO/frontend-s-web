@@ -204,7 +204,8 @@ export default {
     continue: "চালিয়ে যান",
     uploadAgain: "পুনরায় আপলোড করুন",
     deposit: "জমা",
-    learnMore: "আরো জানুন"
+    learnMore: "আরো জানুন",
+    replaceImage: "চিত্র প্রতিস্থাপন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
@@ -389,7 +390,10 @@ export default {
     uploadFailed: "আপলোড ব্যর্থ",
     uploadSuccessful: "আপলোড সফল",
     uploaded: "আপলোড হয়েছে",
-    pendingAuth: "প্রমাণীকরণ অপেক্ষমাণ"
+    pendingAuth: "প্রমাণীকরণ অপেক্ষমাণ",
+    photoPreview_txt: "ফটোটির সমস্ত তথ্য স্পষ্টভাবে দেখা যাচ্ছে এবং পড়া সহজ তা নিশ্চিত করুন",
+    personalVerification: "ব্যক্তিগত যাচাইকরণ",
+    photoTaking_txt: "ডকুমেন্টটি ফ্রেমের মধ্যে এবং স্পষ্টভাবে দৃশ্যমান হওয়া উচিত"
   },
   earnMoney: {
     title: "বোনাস পট এসেছে",

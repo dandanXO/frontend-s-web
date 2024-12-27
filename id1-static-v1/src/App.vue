@@ -127,11 +127,46 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      const hostname = window.location.hostname.replace("www.", "");
-      const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
-      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "77A4DF";
+      // const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
+      if (isInPwa()) {
+        const hostname = window.location.hostname.replace("www.", "");
+        // const hostname= "7ffoz.cc"
 
-      const track = () => {
+        //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
+        api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}`).then((res) => {
+          console.log(res);
+
+          const {affiliateCode , facebookId , pushId} = res.data;
+          sessionStorage.setItem("AFFILIATE_CODE", affiliateCode)
+
+          console.log("Init FB");
+
+          fbq("init", facebookId);
+          fbq("track", "PageView");
+          store.isFbPixel = true;
+          // affiliateCode
+          //   :
+          //   "7A4D12"
+          // facebookId
+          //   :
+          //   "app_id"
+          // pushId
+          //   :
+          //   "push_id"
+
+        });
+        // document.addEventListener(
+        //   "pwaEvent",
+        //   () => {
+        //     // affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+        //     // track();
+        //   },
+        //   { once: true }
+        // );
+      } else {
+        //Normal H5.
+        var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "77A4DF";
+
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
         api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
           if (res.code === 0) {
@@ -145,20 +180,6 @@ export default defineComponent({
             initAdjustEventTrack();
           }
         });
-      };
-
-      const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
-      if (isInPwa() && !isRefreshed) {
-        document.addEventListener(
-          "pwaEvent",
-          () => {
-            // affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
-            // track();
-          },
-          { once: true }
-        );
-      } else {
-        track();
       }
     };
 
@@ -442,13 +463,14 @@ export default defineComponent({
 
       const hostname = window.location.hostname;
       if (
-        isInPwa() ||
-        hostname.includes("7ffoz.cc") ||
-        hostname.includes("hvfq2.cc") ||
-        hostname.includes("nwntx.cc") ||
-        hostname.includes("a8amb.cc") ||
-        hostname.includes("6r6yy.cc") ||
-        hostname.includes("0bmf0.cc")
+        isInPwa()
+        // ||
+        // hostname.includes("7ffoz.cc") ||
+        // hostname.includes("hvfq2.cc") ||
+        // hostname.includes("nwntx.cc") ||
+        // hostname.includes("a8amb.cc") ||
+        // hostname.includes("6r6yy.cc") ||
+        // hostname.includes("0bmf0.cc")
       ) {
         console.log("Engagel labe here");
         initEngageLabPush();
