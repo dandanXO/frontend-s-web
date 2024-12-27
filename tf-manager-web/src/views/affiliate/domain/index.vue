@@ -410,8 +410,6 @@ const querySearch = async (queryString, callback) => {
   }
 
   try {
-    console.log("queryString ::: ", queryString)
-    console.log("form ::: ", form)
     const { data: ret } = await getAffiliateLoginNameList(form.siteId, queryString);
 
     const results = ret.map(item => ({
@@ -422,7 +420,6 @@ const querySearch = async (queryString, callback) => {
     callback(results);
   } catch (error) {
     suggestions.value = []; // Clear suggestions on error
-    console.error('Error fetching suggestions:', error);
     callback();
   }
 };
