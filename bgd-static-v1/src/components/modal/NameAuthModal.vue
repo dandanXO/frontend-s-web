@@ -146,7 +146,7 @@
           </div>
         </div>
       </div>
-      <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>
+<!--      <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>-->
     </div>
   </div>
   <q-dialog class="camera-dialog" v-model="cameraDialogVisible" persistent>
@@ -319,7 +319,7 @@ const takePhoto = async () => {
 const photoTakenEvent = async ({ blob, image_data_url} ) => {
   console.log("Blob");
   console.log(blob);
-  fileSelected.value = createFileFromBlob(blob, "photo.jpg");
+  fileSelected.value = createFileFromBlob(blob,image_data_url, "photo.jpg");
   console.log(fileSelected.value);
 
   try {
@@ -333,23 +333,39 @@ const photoTakenEvent = async ({ blob, image_data_url} ) => {
   }
 };
 
-function createFileFromBlob(blob, fileName) {
+function convert2File(imgUrl) {
+  let bytes = atob(imgUrl.split(",")[1]);
+  let arrayBuffer = new ArrayBuffer(bytes.length);
+  let intArray = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < bytes.length; i++) {
+    intArray[i] = bytes.charCodeAt(i);
+  }
+  let blob = new Blob([intArray], { type: "image/png" });
+  console.log("b2: ", blob);
+  let fileName = "1.png";
+  let files = new File([blob], fileName, { type: "image/png" });
+  console.log("files ", files);
+  return files;
+}
+
+function convert2Blob(imgUrl) {
+  let bytes = atob(imgUrl.split(",")[1]);
+  let arrayBuffer = new ArrayBuffer(bytes.length);
+  let intArray = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < bytes.length; i++) {
+    intArray[i] = bytes.charCodeAt(i);
+  }
+  let blob = new Blob([intArray], { type: "image/png" });
+  console.log("blob: ", blob);
+  return blob;
+}
+
+function createFileFromBlob(blob, image_url, fileName) {
   if(isAndroid()){
-    console.log("android")
-    const file = blob;
-    file.name = fileName;
-    file.lastModified = new Date().getTime();
-    return file;
+    return convert2File(image_url);
   }else{
     return new File([blob], fileName, { type: blob.type });
   }
-  // try {
-  //
-  // } catch (error) {
-  //   console.warn("File constructor not supported, falling back to Blob workaround.");
-  //
-  //
-  // }
 }
 
 const handleUploadDoc = () => {
@@ -370,9 +386,12 @@ const handleFileChange = (event) => {
 const submit = async () => {
   // isLoadingUpload.value = true;
   const file = fileSelected.value;
+  console.log("File ")
+  console.log(file);
+
   if (file) {
     const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
-    if (!file || !allowFileTypes.includes(file.type)) {
+    if (!file || (!isAndroid() && !allowFileTypes.includes(file.type))) {
       $q.notify({
         type: "negative",
         position: "top",
@@ -398,7 +417,12 @@ const submit = async () => {
       var formData = new FormData();
       formData.append("country", selectedCountryRegion.value);
       formData.append("idType", selectedDocType.value);
-      formData.append("idPhoto", file);
+      if(isAndroid()) {
+        formData.append("idPhoto", convert2Blob(photoPreview.value));
+      }else{
+        formData.append("idPhoto", file);
+      }
+
 
       const rstArray = Object.values(process.env.RST_API);
       const rstApi = rstArray[getRndInteger(0, rstArray.length)];
