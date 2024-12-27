@@ -1128,8 +1128,9 @@ if (affidValue === "09F5B4") {
     ];
     extraStyle = `style="height:400px;"`;
 } else {
-    var fileCountLists = [12, 13, 16, 16, 6];
-    var fileNum = Math.floor(Math.random() * 5) + 1;
+    var fileCountLists = [12, 13, 16, 16, 6, 17];
+    // var fileNum = Math.floor(Math.random() * 5) + 1;
+    var fileNum = 6;
     var fileDirec = "img" + fileNum;
 
     var fileLength = fileCountLists[fileNum - 1];
@@ -1141,7 +1142,16 @@ if (affidValue === "09F5B4") {
     shuffleArray(fileArray);
     // console.log(fileArray);
 
-    var fileLists = fileArray.slice(0, 5);
+    // var fileLists = fileArray.slice(0, 5);
+    var fileLists = [];
+    const numbers = new Set();
+    while (fileLists.length < 5) {
+        const random = Math.floor(Math.random() * fileLength) + 1;
+        if (!numbers.has(random)) {
+            numbers.add(random);
+            fileLists.push(random);
+        }
+    }
     console.log(fileLists);
 
     fileLists.forEach((file) => {

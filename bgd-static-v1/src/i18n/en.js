@@ -205,7 +205,8 @@ export default {
     continue: "Continue",
     uploadAgain: "Upload Again",
     deposit: "Deposit",
-    learnMore: "Learn More"
+    learnMore: "Learn More",
+    replaceImage: "Replace Image"
   },
   notify: {
     noRecord: "No Record",
@@ -390,7 +391,10 @@ export default {
     uploadFailed: "Upload Failed",
     uploadSuccessful: "Upload Successful",
     uploaded: "Uploaded",
-    pendingAuth: "Pending Authentication"
+    pendingAuth: "Pending Authentication",
+    photoPreview_txt: "Make sure that all the information on the photo is visible and easy to read",
+    personalVerification: "Personal Verification",
+    photoTaking_txt: "Document should be in the frame and clearly visible"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
