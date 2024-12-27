@@ -2561,7 +2561,7 @@ export default defineComponent({
           background-color: transparent;
           aspect-ratio: 819/295;
           background-size: 100% 100%;
-          max-height: 122px;
+          max-height: 150px;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
             top: 1px;
