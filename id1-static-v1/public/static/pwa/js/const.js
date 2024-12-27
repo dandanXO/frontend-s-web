@@ -11,5 +11,13 @@ export const affiliateLists = {
 };
 
 export const fbqLists = {
-
+  "u8tcw.cc": {
+    id: "1017565260413606"
+  },
+  "7b9cc.cc": {
+    id: "494274190442103"
+  },
+  "guigo.cc": {
+    id: "980193670524558"
+  }
 };
