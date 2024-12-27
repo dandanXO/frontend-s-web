@@ -419,11 +419,12 @@ export default defineComponent({
                 SessionStorage.set("TOKEN", extensionToken.value);
               }
               store.token = extensionToken.value;
-            } else if (isAndroid()) {
+            } else if (isAndroid() && !promo.redirectUrl.includes("bgd-register-claim-bonus")) {
               // store.h5Url = "http://192.168.68.95:9090";
-              // const tgDomain = "https://" + store.evip;
-              //TODO: CHange after
-              const tgDomain = "https://win7.game";
+              const tgDomain = "https://" + store.evip;
+
+              //For Testing.
+              // const tgDomain = "https://win7.game";
 
               var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
@@ -463,10 +464,9 @@ export default defineComponent({
               } else {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl } });
               }
-              if (!isAndroid()) {
-                isPromoDetail.value = true;
-                selectedPromo.value = promo;
-              }
+
+              isPromoDetail.value = true;
+              selectedPromo.value = promo;
             }
           }
         }

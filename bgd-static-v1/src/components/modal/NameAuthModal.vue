@@ -257,7 +257,6 @@ const continueStep3 = () => {
     .catch((error) => {
       console.error("Error accessing the camera: ", error);
     });
-
 }
 
 const webcamInit = (id) => {
@@ -266,6 +265,17 @@ const webcamInit = (id) => {
 
 const loadCameras = () => {
   if (webcam.value) {
+
+    // Request access to the user's camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        // Set the video element's source to the camera stream
+      })
+      .catch((error) => {
+        console.error("Error accessing the camera: ", error);
+      });
+
+
     webcam.value.loadCameras();
     cameras.value = webcam.value.cameras;
   }
@@ -308,10 +318,18 @@ const takePhoto = async () => {
 
 const photoTakenEvent = async ({ blob, image_data_url }) => {
   fileSelected.value = new File([blob], "photo.jpg", { type: blob.type });
-  photoPreview.value = URL.createObjectURL(fileSelected.value);
-
-  cameraDialogVisible.value = false;
+  console.log(fileSelected.value);
+  try {
+    photoPreview.value = URL.createObjectURL(fileSelected.value);
+    cameraDialogVisible.value = false;
+  } catch (error) {
+    photoPreview.value = image_data_url;
+    cameraDialogVisible.value = false;
+    // alert("Error creating object URL:", error)
+    // console.error("Error creating object URL:", error);
+  }
 };
+
 
 const handleUploadDoc = () => {
   if (fileInput.value) {
@@ -333,7 +351,6 @@ const submit = async () => {
   const file = fileSelected.value;
   if (file) {
     const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
-
     if (!file || !allowFileTypes.includes(file.type)) {
       $q.notify({
         type: "negative",
