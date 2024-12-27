@@ -317,11 +317,10 @@ const takePhoto = async () => {
 };
 
 const photoTakenEvent = async ({ blob, image_data_url} ) => {
-  console.log("Blob");
-  console.log(blob);
+  // console.log("Blob");
+  // console.log(blob);
   fileSelected.value = createFileFromBlob(blob,image_data_url, "photo.jpg");
-  console.log(fileSelected.value);
-
+  // console.log(fileSelected.value);
   try {
     photoPreview.value = URL.createObjectURL(fileSelected.value);
     cameraDialogVisible.value = false;
@@ -386,9 +385,6 @@ const handleFileChange = (event) => {
 const submit = async () => {
   // isLoadingUpload.value = true;
   const file = fileSelected.value;
-  console.log("File ")
-  console.log(file);
-
   if (file) {
     const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
     if (!file || (!isAndroid() && !allowFileTypes.includes(file.type))) {
@@ -418,7 +414,8 @@ const submit = async () => {
       formData.append("country", selectedCountryRegion.value);
       formData.append("idType", selectedDocType.value);
       if(isAndroid()) {
-        formData.append("idPhoto", convert2Blob(photoPreview.value));
+        console.log(convert2Blob(photoPreview.value));
+        formData.append("idPhoto", convert2Blob(photoPreview.value), "1.jpg");;
       }else{
         formData.append("idPhoto", file);
       }
