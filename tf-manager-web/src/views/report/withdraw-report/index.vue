@@ -426,8 +426,8 @@ async function loadWithdrawReport(first) {
       item.totalTransaction = parseInt(item.totalWithdraw) + parseInt(item.totalSuccessWithdraw)
       item.totalAmount = parseFloat(item.totalWithdrawAmount) + parseFloat(item.totalSuccessWithdrawAmount)
     } else {
-      item.totalTransaction = item.totalWithdraw
-      item.totalAmount = item.totalWithdrawAmount
+      item.totalTransaction = parseInt(item.totalWithdraw) >= parseInt(item.totalSuccessWithdraw) ? item.totalWithdraw : item.totalSuccessWithdraw
+      item.totalAmount = parseFloat(item.totalWithdrawAmount) >= parseFloat(item.totalSuccessWithdrawAmount) ? item.totalWithdrawAmount : item.totalSuccessWithdrawAmount
     }
   });
   page.records = ret.records
