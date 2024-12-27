@@ -434,8 +434,9 @@ const debouncedFetchSuggestions = debounce((queryString, callback) => {
 
 const handleSelect = item => {
   if (item) {
+    inputValue.value = item.value
     form.affiliateName = item.value
-    memberForm.value.validateField('affiliateName'); // Validate the field after setting it
+    memberForm.value.validateField('affiliateName')
   }
 }
 
@@ -444,9 +445,10 @@ const handleBlur = () => {
     (suggestion) => suggestion.value === inputValue.value
   );
   if (!exists) {
-    inputValue.value = ''; // Clear input if no match
-    form.affiliateName = null; // Clear affiliate name in form
+    inputValue.value = ''
+    form.affiliateName = null
   }
+  memberForm.value.validateField('affiliateName')
 };
 
 function changePage(page) {
