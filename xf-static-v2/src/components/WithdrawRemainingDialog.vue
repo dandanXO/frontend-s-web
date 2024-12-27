@@ -52,6 +52,9 @@ import { api } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
 import { computed, onMounted, ref, defineModel } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 const isShow = defineModel();
 
@@ -110,7 +113,7 @@ const refreshTurnOverAmt = () => {
   }
   isRefreshing.value = true;
   tableData.value = [];
-  getRemainingRolloverData();
+  refreshWithdrawableBalance();
 };
 
 const getRemainingRolloverData = () => {
@@ -129,6 +132,39 @@ const getRemainingRolloverData = () => {
       isRefreshing.value = false;
     });
 };
+
+const refreshWithdrawableBalance = () => {
+  api
+    .get("/session/withdraw/withdrawableBalance/refresh")
+    .then((res) => {
+      if (res.code === 0) {
+        if (res.data.remainWagers === 0) {
+          $q.notify({
+            type: 'success',
+            message: '恭喜您完成流水，可以提款了!',
+            multiLine: true,
+            position: 'center',
+            actions: [
+              { label: '确认', handler: () => {
+                isShow.value = false;
+              } }
+            ],
+            timeout: 100000,
+          });
+        } if (res.data.remainWagers !== 0) {
+          getRemainingRolloverData();
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      isRefreshing.value = false;
+    })
+    .finally((e) => {
+      isRefreshing.value = false;
+    });
+};
+
 
 onMounted(() => {
   getRemainingRolloverData();
