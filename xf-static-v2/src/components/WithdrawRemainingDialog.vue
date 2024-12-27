@@ -42,7 +42,10 @@
             </tr>
           </tbody>
         </table>
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+        <div class="withdraw-remaining-dialog__buttons">
+          <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
+          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -305,6 +308,14 @@ onMounted(() => {
       }
     }
 
+    .withdraw-remaining-dialog__buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
     .withdraw-remaining-dialog__action {
       width: 100%;
       border: none;
@@ -316,6 +327,11 @@ onMounted(() => {
       line-height: var(--line-height);
       text-align: center;
       color: inherit;
+      &:first-of-type {
+        background: linear-gradient(180deg, #ff9d34 0%, #c76700 100%);
+        background-size: 100% 100%;
+        color: #fff;
+      }
 
       &:hover {
         filter: brightness(1.2);
