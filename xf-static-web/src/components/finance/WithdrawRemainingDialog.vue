@@ -135,7 +135,7 @@ const refreshTurnOverAmt = () => {
   }
   isRefreshing.value = true;
   tableData.value = [];
-  getRemainingRolloverData();
+  refreshWithdrawableBalance();
 };
 
 const getRemainingRolloverData = () => {
