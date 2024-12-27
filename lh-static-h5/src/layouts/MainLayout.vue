@@ -548,6 +548,14 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+:deep(body.desktop .q-hoverable:hover>.q-focus-helper) {
+  opacity: 0;
+}
+
+:deep(.q-ripple) {
+  display: none;
+}
+
 .q-drawer .platform-list {
   display: flex;
   flex-wrap: wrap;
