@@ -54,6 +54,9 @@
         window.location.pathname === "/privilege/invite" ||
         window.location.pathname === "/affiliatepage"
       ) {
+        //TODO:: Temp Add 1st.
+        sessionStorage.setItem("LH_APP_DOMAIN_INITIALIZED", "1");
+
         //IOS
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {
           window.webkit.messageHandlers.notifyApp.postMessage("LH_IOS");
