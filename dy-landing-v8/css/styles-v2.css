@@ -252,14 +252,14 @@ a {
 
 .contact-item {
   background: linear-gradient(180deg, #675E8C 0%, #353454 100%);
-  padding: 4px 10px;
   border-radius: 8px;
   display: flex;
   font-size: 0.9em;
   color: white;
-  gap: 8px;
+  gap: 2px;
   justify-content: space-between;
   align-items: center;
+    word-break: break-all;
 }
 
 .contact-item .icon {
@@ -267,7 +267,7 @@ a {
   flex-shrink: 0;
 }
 .contact-item .we-icon {
-  width: 40px;
+  width: 28px;
 }
 
 
@@ -280,11 +280,13 @@ a {
 }
 
 .contact-item.w-50 {
-  width: calc(50% - 4px);
+  width: calc(33% - 4px);
+  padding: 3px;
 }
 
 .contact-item.w-100 {
   width: 100%;
+  padding: 4px 8px;
 }
 
 .contact-btns-wrapper {
@@ -426,6 +428,10 @@ a {
   .qq-bg{
     padding-left: 13vw;
   }
+
+}
+.contact-item .content {
+  font-size: 12px;
 
 }
 
