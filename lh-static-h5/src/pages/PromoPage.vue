@@ -121,7 +121,10 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty': null" v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
+              <BlastPremierMarquee
+                :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty' : null"
+                v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'"
+              />
               <div
                 class="inner"
                 :class="{
@@ -136,6 +139,7 @@
                     selectedPromo.promoCode === 'lh1worldcupdota2' ||
                     selectedPromo.promoCode === 'lh1-football-fight',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
+                  lhinvite: selectedPromo.promoCode === 'lh1-invite',
                   lheuromanual:
                     selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-daily-checkin',
                   meizhoubei:
@@ -180,7 +184,10 @@
                   <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
-                  <div v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'" v-html="selectedPromo.pageContent"></div>
+                  <div
+                    v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
+                    v-html="selectedPromo.pageContent"
+                  ></div>
                 </div>
                 <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
                   <img
@@ -989,6 +996,9 @@ export default defineComponent({
         }
         &.meizhoubei {
           margin: 5px auto;
+        }
+        &.lhinvite {
+          width: 100%;
         }
 
         &.lheuromanual {
