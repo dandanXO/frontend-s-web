@@ -147,8 +147,8 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="todayRegCount" :label="t('fields.todayRegCount')" width="100" />
-        <el-table-column prop="yesterdayRegCount" :label="t('fields.yesterdayRegCount')" width="100" />
+        <!-- <el-table-column prop="todayRegCount" :label="t('fields.todayRegCount')" width="100" />
+        <el-table-column prop="yesterdayRegCount" :label="t('fields.yesterdayRegCount')" width="100" /> -->
         <el-table-column :label="t('fields.operate')" align="center" fixed="right" min-width="120">
           <template #default="scope" v-if="hasPermission(['sys:member-refer-pak:change-referrer'])">
             <el-button icon="el-icon-edit" size="mini" type="success" @click="showEditDialog(scope.row)">{{ t('fields.changeReferrer') }}</el-button>
@@ -300,7 +300,7 @@ function changePage(page) {
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
-  siteList.list = site.filter(e => e.id === 11 || e.id === 19)
+  siteList.list = site.filter(e => e.id === 11 || e.id === 12 || e.id === 19)
 }
 
 async function showEditDialog(row) {
