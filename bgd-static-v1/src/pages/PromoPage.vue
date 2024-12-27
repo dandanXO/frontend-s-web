@@ -421,7 +421,10 @@ export default defineComponent({
               store.token = extensionToken.value;
             } else if (isAndroid()) {
               // store.h5Url = "http://192.168.68.95:9090";
-              const tgDomain = "https://" + store.evip;
+              // const tgDomain = "https://" + store.evip;
+              //TODO: CHange after
+              const tgDomain = "https://win7.game";
+
               var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
               console.log(preUrl);
