@@ -216,7 +216,7 @@ import { t } from "src/boot/lang";
 import { api } from "boot/axios";
 import { WebCam } from "vue-camera-lib";
 import { useQuasar } from "quasar";
-import { getRndInteger } from "boot/utils";
+import { getRndInteger, isAndroid } from "boot/utils";
 
 const store = userStore();
 const $q = useQuasar();
@@ -250,14 +250,15 @@ const continueStep3 = () => {
   step.value = 3;
   // alert("3")
   // Request access to the user's camera
-  navigator.mediaDevices.getUserMedia({ video: true })
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
     .then((stream) => {
       // Set the video element's source to the camera stream
     })
     .catch((error) => {
       console.error("Error accessing the camera: ", error);
     });
-}
+};
 
 const webcamInit = (id) => {
   selectedCamera.value = id;
@@ -265,16 +266,15 @@ const webcamInit = (id) => {
 
 const loadCameras = () => {
   if (webcam.value) {
-
     // Request access to the user's camera
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then((stream) => {
         // Set the video element's source to the camera stream
       })
       .catch((error) => {
         console.error("Error accessing the camera: ", error);
       });
-
 
     webcam.value.loadCameras();
     cameras.value = webcam.value.cameras;
@@ -316,9 +316,12 @@ const takePhoto = async () => {
   }
 };
 
-const photoTakenEvent = async ({ blob, image_data_url }) => {
-  fileSelected.value = new File([blob], "photo.jpg", { type: blob.type });
+const photoTakenEvent = async ({ blob, image_data_url} ) => {
+  console.log("Blob");
+  console.log(blob);
+  fileSelected.value = createFileFromBlob(blob, "photo.jpg");
   console.log(fileSelected.value);
+
   try {
     photoPreview.value = URL.createObjectURL(fileSelected.value);
     cameraDialogVisible.value = false;
@@ -330,6 +333,24 @@ const photoTakenEvent = async ({ blob, image_data_url }) => {
   }
 };
 
+function createFileFromBlob(blob, fileName) {
+  if(isAndroid()){
+    console.log("android")
+    const file = blob;
+    file.name = fileName;
+    file.lastModified = new Date().getTime();
+    return file;
+  }else{
+    return new File([blob], fileName, { type: blob.type });
+  }
+  // try {
+  //
+  // } catch (error) {
+  //   console.warn("File constructor not supported, falling back to Blob workaround.");
+  //
+  //
+  // }
+}
 
 const handleUploadDoc = () => {
   if (fileInput.value) {
