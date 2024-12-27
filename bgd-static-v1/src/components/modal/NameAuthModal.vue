@@ -157,13 +157,17 @@
     <div class="camera-container">
       <div class="camera-inner-container">
         <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
+        
         <WebCam
           ref="webcam"
           class="webcam"
           style="height: calc(100% - 150px)"
           @photoTaken="photoTakenEvent"
           @init="webcamInit"
+          @start="isWebcamFrameVisible = true"
         />
+
+        <div v-if="isWebcamFrameVisible" class="frame" />
 
         <div class="camera-content">
           <div class="camera-content-txt">{{ $t("nameAuth.photoTaking_txt") }}</div>
@@ -230,6 +234,7 @@ const cameraDialogVisible = ref(false);
 const countryRegion = ref([]);
 const fileInput = ref(null);
 const webcam = ref(null);
+const isWebcamFrameVisible = ref(false);
 const photoPreview = ref(null);
 const fileSelected = ref(null);
 const cameras = ref([]);
@@ -470,6 +475,10 @@ onBeforeUnmount(() => {
 });
 </script>
 <style scoped lang="scss">
+.webcam {
+  position: relative;
+}
+
 .name-auth-modal {
   width: 100%;
   max-width: 400px;
@@ -823,6 +832,17 @@ onBeforeUnmount(() => {
     .camera-inner-container {
       background-color: #000;
       height: calc(100% - 50px);
+
+      .frame {
+        border: 1px solid white;
+        height: 30%;
+        width: calc(70% - 41px);
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 40%;
+        left: 50%;
+        border-radius: 10px;
+      }
 
       .camera-content {
         justify-self: center;
