@@ -146,7 +146,7 @@
           </div>
         </div>
       </div>
-      <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>
+<!--      <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>-->
     </div>
   </div>
   <q-dialog class="camera-dialog" v-model="cameraDialogVisible" persistent>
@@ -216,7 +216,7 @@ import { t } from "src/boot/lang";
 import { api } from "boot/axios";
 import { WebCam } from "vue-camera-lib";
 import { useQuasar } from "quasar";
-import { getRndInteger } from "boot/utils";
+import { getRndInteger, isAndroid } from "boot/utils";
 
 const store = userStore();
 const $q = useQuasar();
@@ -250,15 +250,15 @@ const continueStep3 = () => {
   step.value = 3;
   // alert("3")
   // Request access to the user's camera
-  navigator.mediaDevices.getUserMedia({ video: true })
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
     .then((stream) => {
       // Set the video element's source to the camera stream
     })
     .catch((error) => {
       console.error("Error accessing the camera: ", error);
     });
-
-}
+};
 
 const webcamInit = (id) => {
   selectedCamera.value = id;
@@ -266,6 +266,16 @@ const webcamInit = (id) => {
 
 const loadCameras = () => {
   if (webcam.value) {
+    // Request access to the user's camera
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        // Set the video element's source to the camera stream
+      })
+      .catch((error) => {
+        console.error("Error accessing the camera: ", error);
+      });
+
     webcam.value.loadCameras();
     cameras.value = webcam.value.cameras;
   }
@@ -306,12 +316,56 @@ const takePhoto = async () => {
   }
 };
 
-const photoTakenEvent = async ({ blob, image_data_url }) => {
-  fileSelected.value = new File([blob], "photo.jpg", { type: blob.type });
-  photoPreview.value = URL.createObjectURL(fileSelected.value);
-
-  cameraDialogVisible.value = false;
+const photoTakenEvent = async ({ blob, image_data_url} ) => {
+  // console.log("Blob");
+  // console.log(blob);
+  fileSelected.value = createFileFromBlob(blob,image_data_url, "photo.jpg");
+  // console.log(fileSelected.value);
+  try {
+    photoPreview.value = URL.createObjectURL(fileSelected.value);
+    cameraDialogVisible.value = false;
+  } catch (error) {
+    photoPreview.value = image_data_url;
+    cameraDialogVisible.value = false;
+    // alert("Error creating object URL:", error)
+    // console.error("Error creating object URL:", error);
+  }
 };
+
+function convert2File(imgUrl) {
+  let bytes = atob(imgUrl.split(",")[1]);
+  let arrayBuffer = new ArrayBuffer(bytes.length);
+  let intArray = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < bytes.length; i++) {
+    intArray[i] = bytes.charCodeAt(i);
+  }
+  let blob = new Blob([intArray], { type: "image/png" });
+  console.log("b2: ", blob);
+  let fileName = "1.png";
+  let files = new File([blob], fileName, { type: "image/png" });
+  console.log("files ", files);
+  return files;
+}
+
+function convert2Blob(imgUrl) {
+  let bytes = atob(imgUrl.split(",")[1]);
+  let arrayBuffer = new ArrayBuffer(bytes.length);
+  let intArray = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < bytes.length; i++) {
+    intArray[i] = bytes.charCodeAt(i);
+  }
+  let blob = new Blob([intArray], { type: "image/png" });
+  console.log("blob: ", blob);
+  return blob;
+}
+
+function createFileFromBlob(blob, image_url, fileName) {
+  if(isAndroid()){
+    return convert2File(image_url);
+  }else{
+    return new File([blob], fileName, { type: blob.type });
+  }
+}
 
 const handleUploadDoc = () => {
   if (fileInput.value) {
@@ -333,8 +387,7 @@ const submit = async () => {
   const file = fileSelected.value;
   if (file) {
     const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
-
-    if (!file || !allowFileTypes.includes(file.type)) {
+    if (!file || (!isAndroid() && !allowFileTypes.includes(file.type))) {
       $q.notify({
         type: "negative",
         position: "top",
@@ -360,7 +413,13 @@ const submit = async () => {
       var formData = new FormData();
       formData.append("country", selectedCountryRegion.value);
       formData.append("idType", selectedDocType.value);
-      formData.append("idPhoto", file);
+      if(isAndroid()) {
+        console.log(convert2Blob(photoPreview.value));
+        formData.append("idPhoto", convert2Blob(photoPreview.value), "1.jpg");;
+      }else{
+        formData.append("idPhoto", file);
+      }
+
 
       const rstArray = Object.values(process.env.RST_API);
       const rstApi = rstArray[getRndInteger(0, rstArray.length)];
