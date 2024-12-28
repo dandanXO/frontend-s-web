@@ -322,7 +322,9 @@ export default defineComponent({
                 //FB Tracking.
                 if (isInPwa()) {
                   if (store.isFbPixel) {
-                    fbq("track", "CompleteRegistration");
+                    fbq("track", "CompleteRegistration", {
+                      event_id: regForm.sid
+                    });
                   }
                 }
 
