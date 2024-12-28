@@ -141,9 +141,9 @@ export default defineComponent({
 
           console.log("Init FB");
 
-          // fbq("init", facebookId);
-          // fbq("track", "PageView");
-          // store.isFbPixel = true;
+          fbq("init", facebookId);
+          fbq("track", "PageView");
+          store.isFbPixel = true;
           // affiliateCode
           //   :
           //   "7A4D12"
