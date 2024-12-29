@@ -137,8 +137,5 @@ export const fbqLists = {
   },
   "dtaw7.cc": {
     id: "1129685552192624"
-  },
-  'localhost': {
-    id: '906416248141520'
   }
 };
