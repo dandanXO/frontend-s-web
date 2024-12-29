@@ -133,9 +133,12 @@ export const affiliateLists = {
 
 export const fbqLists = {
   "6sx65.cc": {
-    id: "1506607026696966"
+    id: "906416248141520"
   },
   "dtaw7.cc": {
     id: "1129685552192624"
+  },
+  'localhost': {
+    id: '906416248141520'
   }
 };
