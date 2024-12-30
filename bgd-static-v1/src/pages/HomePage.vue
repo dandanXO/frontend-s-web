@@ -3892,7 +3892,7 @@ const showCongratsModal = () => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         isCongratsModal.value = true;
-        isCongratsModalV2.value = true;
+        // isCongratsModalV2.value = true;
       }
     }
   });
