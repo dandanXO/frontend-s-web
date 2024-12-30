@@ -78,7 +78,8 @@
           </div>
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promo/hotpromo/summoner/rules-title.png">
+              <img v-if="$q.dark.isActive" src="../../../assets/images/promo/hotpromo/summoner/rules-title-black.png">
+              <img v-else src="../../../assets/images/promo/hotpromo/summoner/rules-title.png">
             </p>
             <div>
               <p>1. 活动期间，获得唤醒人与被唤醒人身份即可参与此活动；</p>
@@ -147,7 +148,8 @@
           </div>
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promo/hotpromo/summoner/rules-title.png">
+              <img v-if="$q.dark.isActive" src="../../../assets/images/promo/hotpromo/summoner/rules-title-black.png">
+              <img v-else src="../../../assets/images/promo/hotpromo/summoner/rules-title.png">
             </p>
             <p>
               1. 活动期间，会员历史存款≥500且会员超过15天未投注与存款的会员即可符合被唤醒人条件，申请当天被唤醒人当日存款与投注≥100元即可符合领取彩金条件。<br><br>
@@ -317,7 +319,61 @@ onMounted(() => {
 })
 </script>
 <style lang="scss">
+.body--dark {
+  .summoner {
+    .q-tabs{
+      margin-bottom: 16px;
+      height: auto !important;
+    }
+    .q-tabs .q-tab {
+      background: url(../../../assets/images/promo/hotpromo/summoner/tabbg.png) no-repeat center center;
+      width: 180px;
+      height: 69px;
+      background-size: contain;
+      color: #ffffff !important;
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 42px;
+      text-align: center;
+      padding: 0;
+      opacity: .6;
 
+      &--active {
+        opacity: 1;
+        .q-tab__label {
+          color: #ffffff !important;
+        }
+        .q-tab__indicator {
+          display: none !important;
+        }
+      }
+      .q-ripple {
+        display: none;
+      }
+    }
+  }
+  .summoner-modal {
+    .q-table {
+      th {
+
+        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        color: #fff;
+        &:first-child {
+          border-radius: 10px 0 0 0;
+        }
+
+        &:last-child {
+          border-radius: 0 10px 0 0;
+        }
+      }
+      td {
+        color: #7A8EB9;
+        background: #ffffff;
+        border: 1px solid #ECEDF0;
+      }
+    }
+  }
+}
 .summoner {
   .q-tabs{
     margin-bottom: 16px;
@@ -373,6 +429,129 @@ onMounted(() => {
 }
 </style>
 <style scoped lang="scss">
+.body--dark {
+  .summoner {
+    margin: 0 auto;
+    max-width: 1380px;
+  }
+
+  .summoner-tabs {
+    :deep(.el-tabs__nav) {
+      float: none;
+      justify-content: space-between;
+    }
+
+    :deep(.el-tabs__nav-wrap:after) {
+      display: none;
+    }
+
+    :deep(.el-tabs__active-bar) {
+      display: none;
+    }
+
+    table {
+      width: 100%;
+
+      tr {
+        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+      }
+
+      td,
+      th {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 28px;
+        text-align: center;
+        padding: 20px;
+      }
+
+      th {
+        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+        color: white !important;
+
+        &:first-child {
+          border-radius: 10px 0 0 0;
+        }
+
+        &:last-child {
+          border-radius: 0 10px 0 0;
+        }
+      }
+
+      td {
+        color: #7A8EB9;
+        background: #2D4065 !important;
+        border: 1px solid #ECEDF0;
+      }
+    }
+
+    .summon-btn {
+      margin: 10px auto;
+      width: 200px;
+      display: block;
+      cursor: pointer;
+
+      &:hover{
+        opacity: 0.9;
+      }
+      &:active{
+        filter:brightness(0.85);
+      }
+
+      img {
+        width: 100%;
+        max-width: 200px;
+        display: block;
+      }
+    }
+
+    .findfriend {
+      margin: 0 auto;
+      width: 200px;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .rules {
+      width: 100%;
+
+      p {
+        text-align: left;
+        padding: 0px 4px;
+        margin-bottom: 10px;
+        color: white;
+        font-size: 16px;
+
+        img {
+          margin: 20px auto;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .main-desc {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 15px auto;
+    text-align: center;
+  }
+
+  .sub-desc {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 15px auto;
+    text-align: center;
+
+  }
+}
 .summoner {
   margin: 0 auto;
   max-width: 1380px;
