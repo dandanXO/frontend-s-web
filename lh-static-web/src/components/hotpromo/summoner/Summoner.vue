@@ -55,7 +55,8 @@
           </div>
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
+              <img v-if="isDark" src="../../../assets/images/promotion/hotpromo/summoner/rules-title-black.png" />
+              <img v-else src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
             </p>
             <p>
               1. 活动期间，获得唤醒人与被唤醒人身份即可参与此活动；
@@ -141,7 +142,8 @@
           </div>
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
+              <img v-if="isDark" src="../../../assets/images/promotion/hotpromo/summoner/rules-title-black.png" />
+              <img v-else src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
             </p>
             <p>
               1.
@@ -207,7 +209,8 @@
 
           <div class="rules">
             <p>
-              <img src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
+              <img v-if="isDark" src="../../../assets/images/promotion/hotpromo/summoner/rules-title-black.png" />
+              <img v-else src="../../../assets/images/promotion/hotpromo/summoner/rules-title.png" />
             </p>
             <p>
               1. 活动期间，唤醒人完成被唤醒人数≥5人且被唤醒人完成五日存款，唤醒人则符合额外加赠彩金；
@@ -247,6 +250,8 @@
 import { ref, reactive, onMounted } from "vue";
 import { claimSummon, getSummonRewardRecord } from "@/api/index/promo.js";
 import { useNotify } from "@/hooks/notify";
+import { useDark } from "@vueuse/core";
+const isDark = useDark();
 const notify = useNotify();
 const tabPosition = ref("first");
 const isShowFriendDialog = ref(false);
@@ -279,6 +284,194 @@ const claimReward = () => {
 onMounted(() => {});
 </script>
 <style scoped lang="scss">
+.dark {
+  .summoner {
+  margin: 0 auto;
+  max-width: 1380px;
+}
+
+.summoner-tabs {
+  :deep(.el-tabs__nav) {
+    float: none;
+    justify-content: center;
+    gap: 100px;
+  }
+
+  :deep(.el-tabs__nav-wrap:after) {
+    display: none;
+  }
+
+  :deep(.el-tabs__item) {
+    background: url(../../../assets/images/promotion/hotpromo/summoner/tabbg.png) no-repeat center center;
+    width: 250px;
+    height: 95px;
+    background-size: contain;
+    color: #ffffff;
+    font-family: PingFang SC;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 42px;
+    text-align: center;
+    padding: 0;
+    opacity: 0.6;
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+
+  :deep(.el-tabs__active-bar) {
+    display: none;
+  }
+
+  table {
+    width: 100%;
+
+    tr {
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    }
+
+    td,
+    th {
+      font-family: PingFang SC;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 28px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    th {
+      background: unset;
+      color: white;
+
+      &:first-child {
+        border-radius: 10px 0 0 0;
+      }
+
+      &:last-child {
+        border-radius: 0 10px 0 0;
+      }
+    }
+
+    td {
+      color: white;
+      background: #2D4065;
+      border: 1px solid #ecedf0;
+    }
+  }
+
+  .summon-btn {
+    margin: 30px auto;
+    width: 320px;
+    display: block;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.85);
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  .findfriend {
+    margin: 0 auto;
+    width: 300px;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .rules {
+    width: 100%;
+
+    p {
+      text-align: left;
+      padding: 20px;
+      color: white;
+      font-size: 20px;
+
+      img {
+        margin: 20px auto;
+        display: block;
+      }
+    }
+  }
+}
+
+.main-desc {
+  color: white;
+  font-family: PingFang SC;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 34.45px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.sub-desc {
+  color: white;
+  font-family: PingFang SC;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 34.45px;
+  margin: 30px auto;
+  text-align: center;
+}
+:deep(.summoner-modal .el-dialog__body) {
+  padding: 0;
+  border-radius: 10px;
+}
+:deep(.summoner-modal .el-dialog__header .el-dialog__headerbtn .el-dialog__close) {
+  z-index: 99;
+}
+:deep(.el-dialog) {
+  table {
+    background: transparent;
+    tr {
+      th,
+      td {
+        text-align: center;
+      }
+      th {
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        color: #fff;
+        &:first-child {
+          border-radius: 10px 0 0 0;
+        }
+
+        &:last-child {
+          border-radius: 0 10px 0 0;
+        }
+      }
+      td {
+        color: #7a8eb9;
+        background: #ffffff;
+        border: 1px solid #ecedf0;
+      }
+      &:last-child {
+        td {
+          &:first-child {
+            border-radius: 0 0 0 10px;
+          }
+
+          &:last-child {
+            border-radius: 0 0 10px 0;
+          }
+        }
+      }
+    }
+  }
+}
+}
 .summoner {
   margin: 0 auto;
   max-width: 1380px;
