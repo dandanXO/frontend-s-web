@@ -2932,6 +2932,7 @@ export default {
     'Member Affiliate Change Log': 'Member Affiliate Change Log',
     'Member Group Send SMS': 'Member Group Send SMS',
     'Member Vip Upgrade': 'Member VIP Upgrade',
+    Sport: 'Sport',
     Affiliate: 'Affiliate',
     'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',
@@ -3187,6 +3188,9 @@ export default {
     'Telegram User': 'Telegram User',
     'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
     'Site Domain': 'Site Domain',
+    Competition: 'competition',
+    Event: 'event',
+    Team: 'team'
   },
   google: {
     google_auth_menu: 'Google Authenticator',

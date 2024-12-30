@@ -2882,6 +2882,7 @@ export default {
     'Member Affiliate Change Log': '会员代理更换记录',
     'Member Group Send SMS': '会员群发消息',
     'Member Vip Upgrade': '会员 VIP 升级记录',
+    Sport: '体育',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',
@@ -3137,6 +3138,9 @@ export default {
     'Affiliate Deposit Withdraw Summary': '代理存提汇总',
     'Site Domain': '站点域名管理',
     'Privi Spin Event Record': '优惠抽奖/轮盘记录',
+    Competition: '联赛',
+    Event: '赛事',
+    Team: '队伍'
   },
   google: {
     google_auth_menu: '谷歌验证',
