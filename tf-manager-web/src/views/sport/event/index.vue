@@ -104,27 +104,43 @@
       <template #title>
         {{ tfHomeTeamName }} vs {{ tfAwayTeamName }}
       </template>
-      <div v-for="marketLine in tfMarketLines" :key="marketLine.BetTypeId" class="market-section">
-        <span class="bet-type">{{ translateBetType(marketLine.BetTypeId, marketLine.WagerSelections || '') }}</span>
-        <span class="period-name">{{ marketLine.PeriodName }}</span>
-        <table class="market-table">
-          <thead>
-            <tr>
-              <th>{{ t('fields.selection') }}</th>
-              <th>{{ t('fields.odds') }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="selection in marketLine.WagerSelections" :key="selection.SelectionId">
-              <td class="selection-name">
-                {{ translateSelectionName(selection.SelectionName, selection.Specifiers) }}
-                {{ selection.Handicap || '' }}
-              </td>
-              <td class="selection-odds">{{ selection.OddsList[0]?.OddsValues.A }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
+      <el-tabs v-model="activeTab">
+        <el-tab-pane
+          v-for="(marketLines, betType) in groupedMarketLines"
+          :key="betType"
+          :label="betType"
+        >
+          <div
+            v-for="marketLine in marketLines"
+            :key="marketLine.PeriodName"
+            class="market-section"
+          >
+            <span class="period-name">{{ marketLine.PeriodName }}</span>
+            <table class="market-table">
+              <thead>
+                <tr>
+                  <th style="width: 60%">{{ t('fields.selection') }}</th>
+                  <th style="width: 40%">{{ t('fields.odds') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="selection in marketLine.WagerSelections"
+                  :key="selection.SelectionId"
+                >
+                  <td class="selection-name">
+                    {{ translateSelectionName(selection.SelectionName, selection.Specifiers) }}
+                    {{ selection.Handicap || '' }}
+                  </td>
+                  <td class="selection-odds">{{ selection.OddsList[0]?.OddsValues.A }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">关闭</el-button>
       </div>
@@ -205,6 +221,8 @@ const gameTypes = reactive({
 })
 
 const timezone = ref(null);
+const activeTab = ref(null);
+const groupedMarketLines = ref({});
 
 const tfHomeTeamName = ref('');
 const tfAwayTeamName = ref('');
@@ -248,6 +266,7 @@ function showDialog(id) {
   tfHomeTeamName.value = record.tfHomeTeamName;
   tfAwayTeamName.value = record.tfAwayTeamName;
   tfMarketLines.value = record.tfMarketLines;
+  groupedMarketLines.value = groupMarketLinesByBetType(record.tfMarketLines || []);
   uiControl.dialogVisible = true;
 }
 
@@ -285,6 +304,20 @@ function parseSpecifiers(specifiers) {
   });
 
   return result;
+}
+
+function groupMarketLinesByBetType(marketLines) {
+  const grouped = {};
+
+  marketLines.forEach((line) => {
+    const betType = translateBetType(line.BetTypeId, line.WagerSelections || '');
+    if (!grouped[betType]) {
+      grouped[betType] = [];
+    }
+    grouped[betType].push(line);
+  });
+
+  return grouped;
 }
 
 async function loadGameTypes() {
@@ -379,7 +412,7 @@ onMounted(() => {
 
 .period-name {
   font-weight: normal;
-  color: #FF8C00;
+  color: #ff0015;
   margin-left: 8px;
 }
 </style>
