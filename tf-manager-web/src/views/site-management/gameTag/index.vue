@@ -47,6 +47,12 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.gameName"
+          size="small"
+          style="width: 200px; margin-left: 5px"
+          :placeholder="t('fields.gameName')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -363,6 +369,7 @@ const request = reactive({
   siteId: null,
   platform: null,
   type: null,
+  gameName: null,
 })
 
 const requestGame = reactive({
@@ -431,6 +438,7 @@ function resetQuery() {
   request.siteId = sites.list[0].id;
   request.platform = null
   request.type = null
+  request.gameName = null
 }
 
 function handleSelectionChange(val) {

@@ -495,7 +495,13 @@ const showBonusModal = () => {
 const getFastAccessPromo = () => {
   api.get("/opt-session/promo/page?showFastAccess=1").then((res) => {
     if (res.code === 0) {
-      fastAccessPromo.value = res.data;
+      if(store.memberType==='TEST' || store.memberType==='PROMO_TEST'){
+        fastAccessPromo.value = res.data;
+      }else{
+        fastAccessPromo.value = res.data.filter(item => item.privilegeStatus !== 'TEST');
+
+      }
+
     }
   });
 };
