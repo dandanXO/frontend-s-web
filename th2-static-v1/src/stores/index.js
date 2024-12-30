@@ -32,7 +32,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: { value: "Rp", label: "IDR" },
+      currency: { value: "THB", label: "THB" },
       personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,
