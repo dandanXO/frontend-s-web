@@ -63,7 +63,7 @@ export default {
     phone: "Phone",
     phone_placeholder: "Please enter your mobile number",
     phone_rules_01: "Please insert Phone number",
-    phone_rules_02: "The phone number must have 11 digits",
+    phone_rules_02: "The phone number must have 10 digits",
     phone_rules_03: "The phone number must start with '03'",
     phone_rules_04: "Please enter a valid phone number",
     password: "Password",

@@ -17,6 +17,7 @@ const PAK2_SITE_ID = 19;
 const PK3_SITE_ID = 20;
 const MX1_SITE_ID = 21;
 const CO1_SITE_ID = 22;
+const TH2_SITE_ID = 23;
 
 export const isIndiaSite = (siteId) => {
   return parseInt(siteId) === IND_SITE_ID || parseInt(siteId) === IND2_SITE_ID;
@@ -153,6 +154,9 @@ export const getSiteTitle = (siteId) => {
       break;
     case CO1_SITE_ID :
       siteTitle = "Columbia "
+      break;
+    case TH2_SITE_ID :
+      siteTitle = "Thailand "
       break;
     default:
       siteTitle = "后台 "
