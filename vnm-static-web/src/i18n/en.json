@@ -287,6 +287,13 @@
     "isRead": "Read",
     "unread": "Unread"
   },
+  "inbox": {
+    "contactCS": "Contact Customer Support",
+    "viewDetails": "View Details",
+    "imptAnnouncement": "Important Announcement",
+    "mailBox": "Inbox Message",
+    "noMoreToday": "Do not remind me again today"
+  },
   "withdraw": {
     "withdraw": "Withdraw",
     "upgradeWithdraw": "Upgrade quick withdrawal",

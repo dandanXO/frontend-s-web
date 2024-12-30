@@ -18,14 +18,14 @@
           >
             <img
               v-if="currentTab === 'announcement'"
-              src="../../assets/home/announcement/tab-announcement-active.png"
+              :src="require(`../../assets/home/announcement/tab-announcement-active-${languageVal}.png`)"
               alt=""
             />
-            <p v-else>重要公告</p>
+            <p v-else>{{ $t('inbox.imptAnnouncement') }}</p>
           </div>
           <div class="dialog-tab-item" :class="currentTab === 'inbox' ? 'active' : ''" @click="currentTab = 'inbox'">
-            <img v-if="currentTab === 'inbox'" src="../../assets/home/announcement/tab-inbox-active.png" alt="" />
-            <p v-else>站內信</p>
+            <img v-if="currentTab === 'inbox'" :src="require(`../../assets/home/announcement/tab-inbox-active-${languageVal}.png`)" alt="" />
+            <p v-else>{{ $t('inbox.mailBox') }}</p>
           </div>
         </div>
         <div class="dialog-content">
@@ -39,7 +39,7 @@
       <div class="dialog-action">
         <div class="dialog-action-row today-not-remind">
           <div class="dialog-action-item">
-            <el-checkbox v-model="checked" style="color: white" text-color="white">今天不再提醒</el-checkbox>
+            <el-checkbox v-model="checked" style="color: white" text-color="white">{{ $t('inbox.noMoreToday') }}</el-checkbox>
           </div>
         </div>
 
@@ -63,6 +63,11 @@ import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
+
+import { i18nStore } from "@/store/language";
+import { storeToRefs } from "pinia";
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
 
 const store = userStore();
 const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);

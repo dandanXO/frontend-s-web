@@ -12,9 +12,9 @@
             >
               <div v-if="currentTab === 'announcement'">
                 <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background-2.png" alt="" />
-                <p class="text">重要公告</p>
+                <p class="text">{{ $t('lang.inbox_imptAnnouncement') }}</p>
               </div>
-              <p v-else>重要公告</p>
+              <p v-else>{{ $t('lang.inbox_imptAnnouncement') }}</p>
             </div>
             <div
               class="dialog-tab-item inbox"
@@ -29,10 +29,10 @@
                     alt=""
                     style="width: 24px; height: 24px"
                   />
-                  站内消息
+                  {{ $t('lang.inbox_mailBox') }}
                 </p>
               </div>
-              <p v-else>站內信</p>
+              <p v-else>{{ $t('lang.inbox_mailBox') }}</p>
             </div>
           </div>
           <div class="dialog-content">
@@ -61,7 +61,7 @@
                 @click="handleDotClick(index)"
               ></div>
             </div>
-            <q-checkbox v-model="checked" label="今天不再提醒" />
+            <q-checkbox v-model="checked" :label="$t('lang.inbox_noMoreToday')" />
           </div>
         </div>
         <div class="dialog-action">

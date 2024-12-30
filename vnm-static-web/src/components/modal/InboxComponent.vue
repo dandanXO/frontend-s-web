@@ -9,12 +9,12 @@
 
         <div class="announcement-footer">
           <div class="footer-button" @click="store.openLiveChat()">
-            联系客服
+            {{ $t('inbox.contactCS') }}
             <img src="@/assets/images/home/sticky-sidebar/cs-icon.svg" />
           </div>
           <!--          v-show="item.redirectType !== 'NONE'"-->
           <div class="footer-button detail" @click="goToMailDetail(item)">
-            查看详情
+            {{ $t('inbox.viewDetails') }}
             <el-icon :size="20">
               <img src="../../assets/home/arrow-drop-right-line.svg" />
             </el-icon>

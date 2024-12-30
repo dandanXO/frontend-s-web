@@ -286,6 +286,13 @@
     "isRead": "Đã đọc",
     "unread": "Chưa đọc"
   },
+  "inbox": {
+    "contactCS": "Liên hệ bộ phận hỗ trợ khách hàng",
+    "viewDetails": "Xem chi tiết",
+    "imptAnnouncement": "Thông báo quan trọng",
+    "mailBox": "Tin nhắn nội bộ",
+    "noMoreToday": "Không nhắc lại hôm nay"
+  },
   "withdraw": {
     "withdraw": "Rút tiền",
     "upgradeWithdraw": "Nâng cấp tốc độ xử lý",
