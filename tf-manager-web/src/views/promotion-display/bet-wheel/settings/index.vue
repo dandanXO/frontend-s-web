@@ -19,33 +19,33 @@
   <el-form ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="200px" style="margin-top: 10px;">
     <el-row>
       <el-form-item :label="t('fields.dailyMax')" prop="dailyMax">
-        <el-input v-if="hasPermission(['sys:bet-wheel:update'])" v-model="form.dailyMax" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" v-model="form.dailyMax" style="width: 350px;" />
         <span v-else>{{ form.dailyMax }}</span>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.sureWinBonus')" prop="sureWinBonus">
-        <el-input v-if="hasPermission(['sys:bet-wheel:update'])" v-model="form.sureWinBonus" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" v-model="form.sureWinBonus" style="width: 350px;" />
         <span v-else>{{ form.sureWinBonus }}</span>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.sureWinMinSpin')" prop="sureWinMinSpin">
-        <el-input v-if="hasPermission(['sys:bet-wheel:update'])" v-model="form.sureWinMinSpin" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" v-model="form.sureWinMinSpin" style="width: 350px;" />
         <span v-else>{{ form.sureWinMinSpin }}</span>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.allBonus')" prop="allBonus">
         <div v-for="(value, index) in allBonusParam" :key="index">
-          <el-input v-if="hasPermission(['sys:bet-wheel:update'])" class="param-input" v-model="allBonusParam[index]" />
+          <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" class="param-input" v-model="allBonusParam[index]" />
           <span v-else class="param-label">{{ value }}</span>
 
-          <el-button v-if="index === allBonusParam.length - 1 && hasPermission(['sys:bet-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+          <el-button v-if="index === allBonusParam.length - 1 && hasPermission(['sys:privi:bet-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                      @click="addParam('ALL_BONUS')" plain
           >{{ t('fields.add') }}
           </el-button>
-          <el-button v-if="allBonusParam.length > 1 && hasPermission(['sys:bet-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+          <el-button v-if="allBonusParam.length > 1 && hasPermission(['sys:privi:bet-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                      @click="delParam(index, 'ALL_BONUS')" plain
           >{{ t('fields.delete') }}
           </el-button>
@@ -56,18 +56,18 @@
       <el-form-item :label="t('fields.oneTimeSpin')" prop="oneTimeSpin">
         <div v-for="(item, index) in oneTimeSpinParam" :key="index">
           <span class="param-label">{{ t('fields.validBet') }}:</span>
-          <el-input v-if="hasPermission(['sys:bet-wheel:update'])" class="param-input" v-model="item.validBet" />
+          <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" class="param-input" v-model="item.validBet" />
           <span v-else class="param-label">{{ item.validBet }}</span>
 
           <span class="param-label">{{ t('fields.bonus') }}:</span>
-          <el-input v-if="hasPermission(['sys:bet-wheel:update'])" class="param-input" v-model="item.bonus" />
+          <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" class="param-input" v-model="item.bonus" />
           <span v-else class="param-label">{{ item.bonus }}</span>
 
-          <el-button v-if="index === oneTimeSpinParam.length - 1 && hasPermission(['sys:bet-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+          <el-button v-if="index === oneTimeSpinParam.length - 1 && hasPermission(['sys:privi:bet-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                      @click="addParam('ONE_TIME_SPIN')" plain
           >{{ t('fields.add') }}
           </el-button>
-          <el-button v-if="oneTimeSpinParam.length > 1 && hasPermission(['sys:bet-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+          <el-button v-if="oneTimeSpinParam.length > 1 && hasPermission(['sys:privi:bet-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                      @click="delParam(index, 'ONE_TIME_SPIN')" plain
           >{{ t('fields.delete') }}
           </el-button>
@@ -76,7 +76,7 @@
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.validBetPerSpin')" prop="validBetPerSpin">
-        <el-input v-if="hasPermission(['sys:bet-wheel:update'])" v-model="form.validBetPerSpin" style="width: 350px;" />
+        <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" v-model="form.validBetPerSpin" style="width: 350px;" />
         <span v-else>{{ form.validBetPerSpin }}</span>
       </el-form-item>
     </el-row>
@@ -84,18 +84,18 @@
       <el-form-item :label="t('fields.bonus')" prop="bonus">
         <div v-for="(item, index) in bonusParam" :key="index">
           <span class="param-label">{{ t('fields.amount') }}:</span>
-          <el-input v-if="hasPermission(['sys:bet-wheel:update'])" class="param-input" v-model="item.amount" />
+          <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" class="param-input" v-model="item.amount" />
           <span v-else class="param-label">{{ item.amount }}</span>
 
           <span class="param-label">{{ t('fields.probability') }}:</span>
-          <el-input v-if="hasPermission(['sys:bet-wheel:update'])" class="param-input" v-model="item.probability" />
+          <el-input v-if="hasPermission(['sys:privi:bet-wheel:update'])" class="param-input" v-model="item.probability" />
           <span v-else class="param-label">{{ item.probability }}</span>
 
-          <el-button v-if="index === bonusParam.length - 1 && hasPermission(['sys:bet-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+          <el-button v-if="index === bonusParam.length - 1 && hasPermission(['sys:privi:bet-wheel:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                      @click="addParam('BONUS')" plain
           >{{ t('fields.add') }}
           </el-button>
-          <el-button v-if="bonusParam.length > 1 && hasPermission(['sys:bet-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+          <el-button v-if="bonusParam.length > 1 && hasPermission(['sys:privi:bet-wheel:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                      @click="delParam(index, 'BONUS')" plain
           >{{ t('fields.delete') }}
           </el-button>
@@ -103,7 +103,7 @@
       </el-form-item>
     </el-row>
     <div class="dialog-footer">
-      <el-button v-permission="['sys:bet-wheel:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
+      <el-button v-permission="['sys:privi:bet-wheel:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
     </div>
   </el-form>
 </template>

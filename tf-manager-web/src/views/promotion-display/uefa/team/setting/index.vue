@@ -43,7 +43,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:uefa-team:add']"
+          v-permission="['sys:privi:uefa-team:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -253,13 +253,13 @@
         :label="t('fields.operate')"
         align="center"
         width="250"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:uefa-team:update']) || hasPermission(['sys:uefa-team:list']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:uefa-team:update']) || hasPermission(['sys:privi:uefa-team:list']))"
       >
         <template #default="scope">
           <el-button
             size="small"
             type="primary"
-            v-permission="['sys:uefa-team:update']"
+            v-permission="['sys:privi:uefa-team:update']"
             @click="showEdit(scope.row)"
             style="cursor: pointer"
           >
@@ -268,7 +268,7 @@
           <el-button
             size="small"
             type="success"
-            v-permission="['sys:uefa-team:update']"
+            v-permission="['sys:privi:uefa-team:update']"
             @click="showEditScore(scope.row)"
             style="cursor: pointer"
           >

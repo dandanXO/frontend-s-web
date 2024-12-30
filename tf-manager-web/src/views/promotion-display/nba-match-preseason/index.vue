@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.nbaMatchPreseasonSetting')" name="nba-match-preseason-setting" v-if="hasPermission(['sys:nba-match-preseason:list'])">
+    <el-tab-pane :label="t('fields.nbaMatchPreseasonSetting')" name="nba-match-preseason-setting" v-if="hasPermission(['sys:privi:nba-match-preseason:list'])">
       <SettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.nbaMatchPreseasonRecord')" name="nba-match-preseason-record" v-if="hasPermission(['sys:nba-match-preseason-record:list'])">
+    <el-tab-pane :label="t('fields.nbaMatchPreseasonRecord')" name="nba-match-preseason-record" v-if="hasPermission(['sys:privi:nba-match-preseason-record:list'])">
       <RecordTab />
     </el-tab-pane>
   </el-tabs>

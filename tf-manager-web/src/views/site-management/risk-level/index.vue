@@ -24,18 +24,18 @@
       </div>
       <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:risk:create']"
+                   v-permission="['sys:site:risk:create']"
         >
           {{ t('fields.add') }}
         </el-button>
         <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit()" :disabled="uiControl.editBtn"
-                   v-permission="['sys:risk:update']"
+                   v-permission="['sys:site:risk:update']"
         >
           {{ t('fields.edit') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeRiskLevel()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:risk:del']"
+                   v-permission="['sys:site:risk:del']"
         >
           {{ t('fields.delete') }}
         </el-button></div>
@@ -114,11 +114,11 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:risk:update'])|| hasPermission(['sys:risk:del']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:risk:update'])|| hasPermission(['sys:site:risk:del']))"
       >
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:risk:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:risk:del']" @click="removeRiskLevel(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:risk:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:risk:del']" @click="removeRiskLevel(scope.row)" />
         </template>
       </el-table-column>
     </el-table>

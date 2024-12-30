@@ -65,7 +65,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:message:add']"
+          v-permission="['sys:site:message:add']"
           @click="showDialog()"
         >
           {{ t('fields.add') }}
@@ -74,7 +74,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:message:del']"
+          v-permission="['sys:site:message:del']"
           @click="removeSystemMessage()"
           :disabled="uiControl.removeBtn"
         >
@@ -84,7 +84,7 @@
           icon="el-icon-upload"
           size="mini"
           type="success"
-          v-permission="['sys:message:import']"
+          v-permission="['sys:site:message:import']"
           @click="uiControl.importDialogVisible = true"
         >
           {{ t('fields.massImport') }}

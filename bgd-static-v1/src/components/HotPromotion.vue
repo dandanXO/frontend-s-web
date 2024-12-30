@@ -17,7 +17,7 @@
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'bgd-new-players' && !isCommonPromo && store.token" :list="list" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'bgd-slot-ftd' && store.token" :params="list.param" />
-    <RegisterClaimBonus v-if="!isCommonPromo && list.redirectUrl === 'bgd-register-claim-bonus' && store.token" :params="list.param" />
+    <RegisterClaimBonus v-if="!isCommonPromo && list.redirectUrl === 'bgd-register-claim-bonus' && store.token" :promocode="list.promoCode" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>

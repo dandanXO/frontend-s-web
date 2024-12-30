@@ -70,7 +70,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:gift:add']"
+          v-permission="['sys:privi:gift:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -241,10 +241,10 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:gift:update'])" fixed="right">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:privi:gift:update'])" fixed="right">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)"
-                     v-permission="['sys:gift:update']"
+                     v-permission="['sys:privi:gift:update']"
           >
             {{ t('fields.edit') }}
           </el-button>

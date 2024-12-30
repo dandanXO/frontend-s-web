@@ -107,7 +107,7 @@
         <el-table-column
           :label="t('fields.operate')"
           align="right"
-          v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:refer-friend-promo:distribute'])"
+          v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:promo:refer-friend-promo:distribute'])"
         >
           <template #default="scope">
             <el-tag v-if="scope.row.hasClaimed" type="success" size="mini">{{ t('fields.distributed') }}</el-tag>
@@ -116,7 +116,7 @@
               v-else-if="scope.row.eligibility"
               size="mini"
               type="success"
-              v-permission="['sys:refer-friend-promo:distribute']"
+              v-permission="['sys:promo:refer-friend-promo:distribute']"
               @click="distributeRefer(scope.row)"
             >{{ t('fields.distributePrivilege') }}</el-button>
             <el-tag v-else-if="!scope.row.eligibility" type="warning" size="mini">{{ t('fields.ineligible') }}</el-tag>

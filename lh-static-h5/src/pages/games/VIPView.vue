@@ -715,7 +715,7 @@
         </ol>
       </div>
     </div>
-    <GameModal ref="gameModalRef"/>
+    <GameModal ref="gameModalRef" />
   </div>
   <q-dialog class="newTable" v-model="isShowTable">
     <!-- <table border="0" cellspacing="0" cellpadding="0">
@@ -1412,12 +1412,14 @@ const handleBannerClick = (url) => {
     const extractedUrl = url.match(openPattern)[1];
     const [gameName, platformCode, gameCode] = extractedUrl.split("/");
     openGame(gameName, platformCode, gameCode);
+  } else if (url === "0") {
+    return;
   } else if (url.startsWith("/")) {
     router.push(url);
   } else {
     router.push({ path: "/promo", query: { name: url } });
   }
-}
+};
 
 onActivated(() => {
   initVIPTable();

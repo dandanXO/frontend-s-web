@@ -47,7 +47,7 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:payment-withdraw:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:payment:withdraw:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
       </div>
     </div>
     <el-dialog
@@ -214,7 +214,7 @@
       <el-table-column prop="type" :label="t('fields.paymentType')" width="170" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="180" />
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="180" />
-      <el-table-column prop="status" :label="t('fields.status')" width="100" v-if="hasPermission(['sys:payment-withdraw:update:state'])">
+      <el-table-column prop="status" :label="t('fields.status')" width="100" v-if="hasPermission(['sys:payment:withdraw:update:state'])">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
@@ -224,7 +224,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment-withdraw:update'])">
+      <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment:withdraw:update'])">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
           <el-button

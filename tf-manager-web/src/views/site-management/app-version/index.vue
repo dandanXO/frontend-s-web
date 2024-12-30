@@ -87,7 +87,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:appversion:add']"
+          v-permission="['sys:site:appversion:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -96,7 +96,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:appversion:del']"
+          v-permission="['sys:site:appversion:del']"
           @click="removeApp()"
           :disabled="uiControl.removeBtn"
         >
@@ -270,14 +270,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:appversion:edit']"
+            v-permission="['sys:site:appversion:edit']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:appversion:del']"
+            v-permission="['sys:site:appversion:del']"
             @click="removeApp(scope.row)"
           />
         </template>

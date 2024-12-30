@@ -45,7 +45,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:member-invite-limit:add']"
+          v-permission="['sys:site:member-invite-limit:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -54,7 +54,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:member-invite-limit:update']"
+          v-permission="['sys:site:member-invite-limit:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -64,7 +64,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:member-invite-limit:del']"
+          v-permission="['sys:site:member-invite-limit:del']"
           @click="removeLimit()"
           :disabled="uiControl.removeBtn"
         >
@@ -74,7 +74,7 @@
           icon="el-icon-upload"
           size="mini"
           type="primary"
-          v-permission="['sys:member-invite-limit:add']"
+          v-permission="['sys:site:member-invite-limit:add']"
           @click="uiControl.importDialogVisible = true"
         >
           {{ t('fields.massImport') }}
@@ -318,27 +318,27 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:member-invite-limit:update']) || hasPermission(['sys:member-invite-limit:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:member-invite-limit:update']) || hasPermission(['sys:site:member-invite-limit:del']) )"
       >
         <template #default="scope">
           <el-button size="mini" icon="el-icon-search"
                      type="primary"
                      @click="checkInviteLimit(scope.row)"
-                     v-permission="['sys:member-invite-limit:update']"
+                     v-permission="['sys:site:member-invite-limit:update']"
           />
 
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:member-invite-limit:update']"
+            v-permission="['sys:site:member-invite-limit:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:member-invite-limit:del']"
+            v-permission="['sys:site:member-invite-limit:del']"
             @click="removeLimit(scope.row)"
           />
         </template>

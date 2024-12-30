@@ -192,7 +192,9 @@
 
         <q-btn class="gift-wrapper" flat @click="showBonusModal">
           <img src="../assets/images/auth/gift.png" />
-          <q-badge class="gift-badge" floating rounded>1</q-badge>
+          <q-badge v-if="!!fastAccessPromoLength" class="gift-badge" floating rounded>
+            {{ fastAccessPromoLength }}
+          </q-badge>
         </q-btn>
 
         <!-- <div>
@@ -283,7 +285,7 @@
     </div>
 
     <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
-      <BonusModal :has-top-download="topDownload && !ui.hideDownload" />
+      <BonusModal :has-top-download="topDownload && !ui.hideDownload" :promo-list="fastAccessPromo" />
     </q-dialog>
   </div>
 </template>
@@ -312,6 +314,9 @@ const ui = useUI();
 
 const isScrolled = ref(false);
 const isBonusModal = ref(false);
+const fastAccessPromo = ref([]);
+
+const fastAccessPromoLength = computed(() => fastAccessPromo.value.length);
 
 const loadCustomerAddress = () => {
   cached
@@ -377,7 +382,7 @@ const randomProfileImg = computed(() => {
 
 const profileImagePath = computed(() => {
   if (store.profilePicture) {
-    return store.profilePicture
+    return store.profilePicture;
   }
 
   return require(`../assets/images/account/${randomProfileImg.value}.png`);
@@ -487,6 +492,20 @@ const showBonusModal = () => {
   isBonusModal.value = true;
 };
 
+const getFastAccessPromo = () => {
+  api.get("/opt-session/promo/page?showFastAccess=1").then((res) => {
+    if (res.code === 0) {
+      if(store.memberType==='TEST' || store.memberType==='PROMO_TEST'){
+        fastAccessPromo.value = res.data;
+      }else{
+        fastAccessPromo.value = res.data.filter(item => item.privilegeStatus !== 'TEST');
+
+      }
+
+    }
+  });
+};
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -506,6 +525,7 @@ onMounted(() => {
   }
   afterMounted();
   window.addEventListener("scroll", handleScroll);
+  getFastAccessPromo();
 });
 
 onUnmounted(() => {

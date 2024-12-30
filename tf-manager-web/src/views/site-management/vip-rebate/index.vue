@@ -24,18 +24,18 @@
       </div>
       <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:vip-rebate-rule:create']"
+                   v-permission="['sys:site:vip-rebate-rule:create']"
         >
           {{ t('fields.add') }}
         </el-button>
         <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit()" :disabled="uiControl.editBtn"
-                   v-permission="['sys:vip-rebate-rule:update']"
+                   v-permission="['sys:site:vip-rebate-rule:update']"
         >
           {{ t('fields.edit') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeVipRebateRule()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:vip-rebate-rule:del']"
+                   v-permission="['sys:site:vip-rebate-rule:del']"
         >
           {{ t('fields.delete') }}
         </el-button>
@@ -144,11 +144,11 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip-rebate-rule:update'])|| hasPermission(['sys:vip-rebate-rule:del']))"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:vip-rebate-rule:update'])|| hasPermission(['sys:site:vip-rebate-rule:del']))"
       >
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:vip-rebate-rule:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:vip-rebate-rule:del']" @click="removeVipRebateRule(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:vip-rebate-rule:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:vip-rebate-rule:del']" @click="removeVipRebateRule(scope.row)" />
         </template>
       </el-table-column>
     </el-table>

@@ -111,6 +111,11 @@
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
     <DemaciaCup1 v-if="list.redirectUrl === 'dy2-demacia-cup-2024'" :promo-param="listParam" />
     <Dota2BlastSlam2024 v-if="list.redirectUrl === 'dy2-dota2-blast-slam-2024'" :promo-code="list.promoCode" />
+    <ChristmasGachapon
+      v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
+      :promo-code="list.promoCode"
+      :promo-rules="list.pageContent"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -234,6 +239,7 @@ const ElisaGift = defineAsyncComponent(()=>import("./hotpromo/elisa-gift/ElisaGi
 const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
 const DemaciaCup1 = defineAsyncComponent(() => import("./hotpromo/demacia-cup-1/DemaciaCup1.vue"));
 const Dota2BlastSlam2024 = defineAsyncComponent(() => import("./hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"));
+const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -304,7 +310,8 @@ export default defineComponent({
     ChallengeComebackPromo,
     PerfectWorldMajor2024,
     DemaciaCup1,
-    Dota2BlastSlam2024
+    Dota2BlastSlam2024,
+    ChristmasGachapon
   },
   props: {
     list: {

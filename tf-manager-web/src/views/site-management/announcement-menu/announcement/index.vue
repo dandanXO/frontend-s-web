@@ -76,7 +76,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:annou:add']"
+          v-permission="['sys:site:annou:add']"
           @click="showDialog('CREATE')"
           v-if="!hasRole(['SUB_TENANT'])"
         >
@@ -87,7 +87,7 @@
           size="mini"
           type="success"
           @click="showEdit()"
-          v-permission="['sys:annou:update']"
+          v-permission="['sys:site:annou:update']"
           :disabled="uiControl.editBtn"
           v-if="!hasRole(['SUB_TENANT'])"
         >
@@ -97,7 +97,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:annou:del']"
+          v-permission="['sys:site:annou:del']"
           @click="removeAnnouncement()"
           :disabled="uiControl.removeBtn"
           v-if="!hasRole(['SUB_TENANT'])"
@@ -230,7 +230,7 @@
               icon="el-icon-plus"
               size="mini"
               type="primary"
-              v-permission="['sys:siteimage:add']"
+              v-permission="['sys:site:image:add']"
               @click="showImageDialog()"
             >
               {{ t('fields.upload') }}
@@ -285,7 +285,7 @@
         prop="status"
         :label="t('fields.state')"
         width="150"
-        v-if="hasPermission(['sys:annou:update:state'])"
+        v-if="hasPermission(['sys:site:annou:update:state'])"
       >
         <template #default="scope">
           <el-switch
@@ -304,8 +304,8 @@
         align="right"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-            (hasPermission(['sys:annou:update']) ||
-              hasPermission(['sys:annou:del']))
+            (hasPermission(['sys:site:annou:update']) ||
+              hasPermission(['sys:site:annou:del']))
         "
       >
         <template #default="scope">
@@ -313,14 +313,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:annou:update']"
+            v-permission="['sys:site:annou:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:annou:del']"
+            v-permission="['sys:site:annou:del']"
             @click="removeAnnouncement(scope.row)"
           />
         </template>

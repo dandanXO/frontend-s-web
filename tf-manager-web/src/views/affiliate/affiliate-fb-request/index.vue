@@ -54,7 +54,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-fb-request:add']"
+          v-permission="['sys:affiliate:fb-request:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -247,8 +247,8 @@
           fixed="right"
           v-if="
             !hasRole(['SUB_TENANT']) &&
-              (hasPermission(['sys:affiliate-fb-request:update']) ||
-                hasPermission(['sys:affiliate-fb-request:del']))
+              (hasPermission(['sys:affiliate:fb-request:update']) ||
+                hasPermission(['sys:affiliate:fb-request:del']))
           "
         >
           <template #default="scope">
@@ -256,14 +256,14 @@
               icon="el-icon-edit"
               size="mini"
               type="success"
-              v-permission="['sys:affiliate-fb-request:update']"
+              v-permission="['sys:affiliate:fb-request:update']"
               @click="showEdit(scope.row)"
             />
             <el-button
               icon="el-icon-remove"
               size="mini"
               type="danger"
-              v-permission="['sys:affiliate-fb-request:del']"
+              v-permission="['sys:affiliate:fb-request:del']"
               @click="removeAffiliateFBRequest(scope.row.id)"
             />
           </template>

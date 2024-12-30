@@ -10,7 +10,7 @@
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+        <q-skeleton v-if="isLoadingWithdrawalMethod || isRefreshRemainWager" style="height: 20px" />
         <span v-else class="amount">
           {{
             selectedWithdrawalMethod.withdrawableBalance >= 0
@@ -234,8 +234,14 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
-              <div class="desc">
-                {{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}
+              <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
+                <q-spinner v-if="isRefreshRemainWager" />
+                <span v-else>{{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
+                <img
+                  class="refresh-btn-img"
+                  :class="{ rotate: isRefreshRemainWager }"
+                  src="../../assets/images/account/refresh-icon.svg"
+                />
               </div>
             </div>
           </div>
@@ -516,6 +522,26 @@ const hasWithdrawCard = computed(() => {
 });
 const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
+const isRefreshRemainWager = ref(false);
+
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  api
+    .get("/session/withdraw/withdrawableBalance/refresh")
+    .then((res) => {
+      if (res.code === 0) {
+        selectedWithdrawalMethod.value = {
+          ...selectedWithdrawalMethod.value,
+          ...res.data
+        };
+      }
+    })
+    .finally(() => {
+      isRefreshRemainWager.value = false;
+    });
+};
+
 
 // const checkNewUser = () => {
 //   if (store.phone == "") {
@@ -1179,6 +1205,21 @@ const openWithdrawTutorialVideo = () => {
     .desc {
       font-size: 0.825rem;
       font-weight: 400;
+      .refresh-btn-img {
+        width: 20px;
+        height: 20px;
+
+        &.rotate {
+          animation: rotateTwice 1s infinite linear;
+        }
+      }
+    }
+
+    .remain-wager-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
     }
   }
 }

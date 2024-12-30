@@ -93,6 +93,10 @@ export function withdrawRemainingRollover() {
   return server.REST.get("/session/member/remainingRolloverByType");
 }
 
+export function fetchWithdrawableBalance() {
+  return server.REST.get("/session/withdraw/withdrawableBalance/refresh")
+}
+
 export function deleteBankCard(cardId) {
   return server.REST.post(`/session/bankCard/${cardId}?_method=delete`);
 }

@@ -53,7 +53,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:adjustment-reason:add']"
+          v-permission="['sys:site:adjustment-reason:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -62,7 +62,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:adjustment-reason:delete']"
+          v-permission="['sys:site:adjustment-reason:delete']"
           @click="removeCard()"
           :disabled="uiControl.removeBtn"
         >
@@ -173,7 +173,7 @@
       <el-table-column prop="reason" :label="t('fields.reason')" />
       <el-table-column
         :label="t('fields.action')"
-        v-if="hasPermission(['sys:adjustment-reason:update'])"
+        v-if="hasPermission(['sys:site:adjustment-reason:update'])"
       >
         <template #default="scope">
           <el-button

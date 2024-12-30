@@ -277,7 +277,8 @@ export default {
     failed: "Fallido",
     updateSucceed: "Actualizar con éxito",
     unbindSucceed: "Desvinculado con Éxito",
-    withdrawalSubmitSucceed: "Retiro Enviado con Éxito"
+    withdrawalSubmitSucceed: "Retiro Enviado con Éxito",
+    newPasswordUpdated: "Nueva contraseña actualizada exitosamente"
   },
   sideNav: {
     inviteToEarn: "Invitar para obtener beneficios",

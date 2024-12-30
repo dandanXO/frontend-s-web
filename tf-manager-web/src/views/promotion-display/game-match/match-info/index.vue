@@ -77,7 +77,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:game-match:add']"
+          v-permission="['sys:privi:game-match:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -271,13 +271,13 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game-match:update-status']) || hasPermission(['sys:game-match:update']) || hasPermission(['sys:game-match:del']))" fixed="right" width="280">
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:privi:game-match:update-status']) || hasPermission(['sys:privi:game-match:update']) || hasPermission(['sys:privi:game-match:del']))" fixed="right" width="280">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 'ACTIVE'"
             size="small"
             type="success"
-            v-permission="['sys:game-match:update-status']"
+            v-permission="['sys:privi:game-match:update-status']"
             @click="updateStatus(scope.row.id)"
             style="cursor: pointer"
           >
@@ -287,14 +287,14 @@
             icon="el-icon-edit"
             size="small"
             type="warning"
-            v-permission="['sys:game-match:update']"
+            v-permission="['sys:privi:game-match:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="small"
             type="danger"
-            v-permission="['sys:game-match:del']"
+            v-permission="['sys:privi:game-match:del']"
             @click="removeMatch(scope.row.id)"
           />
         </template>

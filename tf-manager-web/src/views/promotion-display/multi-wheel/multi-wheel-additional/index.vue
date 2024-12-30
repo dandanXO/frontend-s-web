@@ -63,7 +63,7 @@
         icon="el-icon-plus"
         size="mini"
         type="primary"
-        v-permission="['sys:member:multi:wheel:additional:add']"
+        v-permission="['sys:privi:multi-wheel-additional:add']"
         @click="showDialog()"
       >
         {{ t('fields.addTicket') }}
@@ -87,7 +87,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:member:multi:wheel:additional:delete']"
+            v-permission="['sys:privi:multi-wheel-additional:delete']"
             @click="removeMemberMultiWheelAdd(scope.row)"
           />
         </template>

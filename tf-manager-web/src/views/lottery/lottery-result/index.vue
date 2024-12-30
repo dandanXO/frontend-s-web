@@ -18,7 +18,7 @@
         <el-button size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:lottery:result:add']" @click="showDialog()">
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:privi:lottery:result:add']" @click="showDialog()">
           {{ t('fields.add') }}
         </el-button>
       </div>

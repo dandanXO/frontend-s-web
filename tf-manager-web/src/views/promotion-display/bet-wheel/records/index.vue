@@ -44,7 +44,7 @@
           icon="el-icon-download"
           size="mini"
           type="primary"
-          v-permission="['sys:bet-wheel-records:export']"
+          v-permission="['sys:privi:bet-wheel-records:export']"
           @click="exportExcel"
         >{{ t('fields.exportToExcel') }}
         </el-button>

@@ -189,6 +189,7 @@ export default {
     cancel: "বাতিল করুন",
     signOut: "সাইন আউট করুন",
     back: "পিছনে",
+    joinnow: "ابھی شامل ہوں",
     moreGames: "আরো গেম",
     addCash: "ক্যাশ যোগ করুন",
     search: "অনুসন্ধান করুন",
@@ -203,7 +204,8 @@ export default {
     continue: "চালিয়ে যান",
     uploadAgain: "পুনরায় আপলোড করুন",
     deposit: "জমা",
-    learnMore: "আরো জানুন"
+    learnMore: "আরো জানুন",
+    replaceImage: "চিত্র প্রতিস্থাপন"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
@@ -217,7 +219,8 @@ export default {
     plsLoginToContinue: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন",
     uploadImageLargerThan1MbError: "আপলোড করা ছবি 1MB এর বেশি হতে পারে না",
     imageFormatError: "ছবি ফরম্যাট ত্রুটি",
-    uploadFailedPleaseTryAgain: "আপলোড ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন"
+    uploadFailedPleaseTryAgain: "আপলোড ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন",
+    copiedSuccessfully: "সফলভাবে কপি করা হয়েছে"
   },
   sideNav: {
     inviteToEarn: "আয় করার জন্য আমন্ত্রণ জানান",
@@ -387,7 +390,10 @@ export default {
     uploadFailed: "আপলোড ব্যর্থ",
     uploadSuccessful: "আপলোড সফল",
     uploaded: "আপলোড হয়েছে",
-    pendingAuth: "প্রমাণীকরণ অপেক্ষমাণ"
+    pendingAuth: "প্রমাণীকরণ অপেক্ষমাণ",
+    photoPreview_txt: "ফটোটির সমস্ত তথ্য স্পষ্টভাবে দেখা যাচ্ছে এবং পড়া সহজ তা নিশ্চিত করুন",
+    personalVerification: "ব্যক্তিগত যাচাইকরণ",
+    photoTaking_txt: "ডকুমেন্টটি ফ্রেমের মধ্যে এবং স্পষ্টভাবে দৃশ্যমান হওয়া উচিত"
   },
   earnMoney: {
     title: "বোনাস পট এসেছে",
@@ -741,7 +747,6 @@ export default {
     24001: "অবস্থানের রেকর্ড ইতোমধ্যে বিদ্যমান।",
     24002: "একই আইপি শনাক্ত সহয়েছে",
     24005: "ন্যূনতম জমার পরিমাণ পূরণ করে না",
-    30000: "Member data not found",
     30000: "সদস্যের ডেটা পাওয়া যায়নি",
     30001: "সদস্য ইতোমধ্যে পদোন্নতি পেয়েছেন",
     30002: "সদস্য আজ নম্বরটি পাঠিয়েছেন",

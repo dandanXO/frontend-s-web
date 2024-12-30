@@ -48,7 +48,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affiliate-domain:add']"
+          v-permission="['sys:affiliate:domain:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -95,10 +95,14 @@
             </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.affiliateName')" prop="affiliateName">
-            <el-input
-              v-model="form.affiliateName"
+            <el-autocomplete
+              v-model="inputValue"
               style="width: 350px;"
               maxlength="13"
+              :fetch-suggestions="debouncedFetchSuggestions"
+              :trigger-on-focus="false"
+              @select="handleSelect"
+              @blur="handleBlur"
             />
           </el-form-item>
           <el-form-item :label="t('fields.way')" prop="way">
@@ -266,8 +270,8 @@
           fixed="right"
           v-if="
             !hasRole(['SUB_TENANT']) &&
-              (hasPermission(['sys:affiliate-domain:update']) ||
-                hasPermission(['sys:affiliate-domain:del']))
+              (hasPermission(['sys:affiliate:domain:update']) ||
+                hasPermission(['sys:affiliate:domain:del']))
           "
         >
           <template #default="scope">
@@ -275,14 +279,14 @@
               icon="el-icon-edit"
               size="mini"
               type="success"
-              v-permission="['sys:affiliate-domain:update']"
+              v-permission="['sys:affiliate:domain:update']"
               @click="showEdit(scope.row)"
             />
             <el-button
               icon="el-icon-remove"
               size="mini"
               type="danger"
-              v-permission="['sys:affiliate-domain:del']"
+              v-permission="['sys:affiliate:domain:del']"
               @click="removeAffiliateDomain(scope.row.id)"
             />
           </template>
@@ -314,6 +318,8 @@ import { useStore } from '../../../store';
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission, hasRole } from '../../../utils/util'
 import { useI18n } from 'vue-i18n'
+import { debounce } from 'lodash';
+import { getAffiliateLoginNameList } from '../../../api/affiliate';
 
 const { t } = useI18n()
 const store = useStore();
@@ -323,6 +329,8 @@ const siteList = reactive({
   list: [],
 })
 let timeZone = null
+const inputValue = ref('')
+const suggestions = ref([]); // Store suggestions
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -392,6 +400,57 @@ async function loadAffiliateDomains() {
   page.loading = false
 }
 
+const querySearch = async (queryString, callback) => {
+  if (!queryString) {
+    callback();
+    return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
+  }
+
+  try {
+    const { data: ret } = await getAffiliateLoginNameList(form.siteId, queryString);
+
+    const results = ret.map(item => ({
+      value: item.value,
+      id: item.id
+    }));
+    suggestions.value = results; // Update suggestions list
+    callback(results);
+  } catch (error) {
+    suggestions.value = []; // Clear suggestions on error
+    callback();
+  }
+};
+
+const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  if (!form.siteId) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
+  querySearch(queryString, callback);
+}, 1500);
+
+const handleSelect = item => {
+  if (item) {
+    inputValue.value = item.value
+    form.affiliateName = item.value
+    memberForm.value.validateField('affiliateName')
+  }
+}
+
+const handleBlur = () => {
+  const exists = suggestions.value.some(
+    (suggestion) => suggestion.value === inputValue.value
+  );
+  if (!exists) {
+    inputValue.value = ''
+    form.affiliateName = null
+  }
+  memberForm.value.validateField('affiliateName')
+};
+
 function changePage(page) {
   if (request.current >= 1) {
     request.current = page
@@ -417,6 +476,7 @@ function showDialog(type) {
     form.affiliateName = null
     form.way = null
     form.domain = null
+    inputValue.value = ''
     uiControl.dialogTitle = t('fields.addAffiliateDomain')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editAffiliateDomain')

@@ -155,7 +155,7 @@
       </el-form-item>
     </el-row>
     <div class="dialog-footer">
-      <el-button v-permission="['sys:refer-rebate:setting:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
+      <el-button v-permission="['sys:privi:refer-rebate:setting:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
     </div>
   </el-form>
 </template>

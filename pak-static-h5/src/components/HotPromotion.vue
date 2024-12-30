@@ -16,6 +16,7 @@
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
+    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-aviator-golden-egg' && store.token" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-slot-ftd' && store.token" :params="list.param" />
   </div>
 
@@ -51,6 +52,7 @@ import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRa
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
+import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -65,7 +67,8 @@ export default defineComponent({
     RedPacketRainPromo,
     InterestProfitPromo,
     NewPlayersPromo,
-    SlotFtdPromo
+    SlotFtdPromo,
+    GoldenEggPromo
   },
   props: {
     list: {
@@ -124,6 +127,7 @@ export default defineComponent({
       this.list.redirectUrl === "interest-profit" ||
       this.list.redirectUrl === "pak-new-players" ||
       this.list.redirectUrl === "pak-slot-ftd" ||
+      this.list.redirectUrl === "pak-aviator-golden-egg" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

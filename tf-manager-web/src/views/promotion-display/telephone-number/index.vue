@@ -46,7 +46,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:telephone:add']"
+          v-permission="['sys:privi:telephone:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -55,7 +55,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:telephone:update']"
+          v-permission="['sys:privi:telephone:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -65,7 +65,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:telephone:del']"
+          v-permission="['sys:privi:telephone:del']"
           @click="removeTelephone()"
           :disabled="uiControl.removeBtn"
         >
@@ -75,7 +75,7 @@
           icon="el-icon-upload"
           size="mini"
           type="primary"
-          v-permission="['sys:telephone:add']"
+          v-permission="['sys:privi:telephone:add']"
           @click="uiControl.importDialogVisible = true"
         >
           {{ t('fields.massImport') }}
@@ -288,8 +288,8 @@
         align="right"
         v-if="
           !hasRole(['SUB_TENANT']) &&
-          (hasPermission(['sys:telephone:update']) ||
-            hasPermission(['sys:telephone:del']))
+          (hasPermission(['sys:privi:telephone:update']) ||
+            hasPermission(['sys:privi:telephone:del']))
         "
       >
         <template #default="scope">
@@ -297,14 +297,14 @@
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:telephone:update']"
+            v-permission="['sys:privi:telephone:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:telephone:del']"
+            v-permission="['sys:privi:telephone:del']"
             @click="removeTelephone(scope.row)"
           />
         </template>

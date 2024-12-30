@@ -47,6 +47,12 @@
             :value="item.value"
           />
         </el-select>
+        <el-input
+          v-model="request.gameName"
+          size="small"
+          style="width: 200px; margin-left: 5px"
+          :placeholder="t('fields.gameName')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -70,7 +76,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:game:add']"
+          v-permission="['sys:site:game:add']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -79,7 +85,7 @@
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:game:update']"
+          v-permission="['sys:site:game:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >
@@ -89,7 +95,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:game:del']"
+          v-permission="['sys:site:game:del']"
           @click="removeGame()"
           :disabled="uiControl.removeBtn"
         >
@@ -98,7 +104,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:game:export']"
+          v-permission="['sys:site:game:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
@@ -265,21 +271,21 @@
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:game:update']) || hasPermission(['sys:game:del']) )"
+        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:game:update']) || hasPermission(['sys:site:game:del']) )"
       >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="success"
-            v-permission="['sys:game:update']"
+            v-permission="['sys:site:game:update']"
             @click="showEdit(scope.row)"
           />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:game:del']"
+            v-permission="['sys:site:game:del']"
             @click="removeGame(scope.row)"
           />
         </template>
@@ -363,6 +369,7 @@ const request = reactive({
   siteId: null,
   platform: null,
   type: null,
+  gameName: null,
 })
 
 const requestGame = reactive({
@@ -431,6 +438,7 @@ function resetQuery() {
   request.siteId = sites.list[0].id;
   request.platform = null
   request.type = null
+  request.gameName = null
 }
 
 function handleSelectionChange(val) {

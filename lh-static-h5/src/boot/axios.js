@@ -334,50 +334,88 @@ const LH_H5_CRT_URL = "LH_H5_CRT_URL";
 //   localStorage.setItem("IMAGE_CDN", cdnApi);
 //
 // }
-if (isGlobalLH) {
-  console.log("Is Global");
 
-  var rstApi = "https://aptvpnubglgl.conoibue6er.com";
-  var evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";
-  var crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
+let rstApi;
+let evtApi;
+let crtApi;
+let api;
+let cashier;
+let eventapi;
 
-  localStorage.setItem(LH_H5_RST_URL, rstApi);
-  localStorage.setItem(LH_H5_EVT_URL, evtApi);
-  localStorage.setItem(LH_H5_CRT_URL, crtApi);
-} else if (isGlobalAndCN) {
-  console.log("IS Global + CN");
-  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
-  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
-  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+async function init() {
+  if (isGlobalLH) {
+    console.log("Is Global");
 
-  var rstApi = getInitApi(rstGlobalArray, LH_H5_RST_URL, "1");
-  var evtApi = getInitApi(evtGlobalArray, LH_H5_EVT_URL, "2");
-  var crtApi = getInitApi(crGlobalArray, LH_H5_CRT_URL, "3");
-} else {
-  var rstApi = getInitApi(rstArray, LH_H5_RST_URL, "1");
-  var evtApi = getInitApi(evtArray, LH_H5_EVT_URL, "2");
-  var crtApi = getInitApi(crtArray, LH_H5_CRT_URL, "3");
-}
+    rstApi = "https://aptvpnubglgl.conoibue6er.com";
+    evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";
+    crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
 
-const api = axios.create({ baseURL: rstApi });
-const cashier = axios.create({ baseURL: crtApi });
-const eventapi = axios.create({ baseURL: evtApi });
+    localStorage.setItem(LH_H5_RST_URL, rstApi);
+    localStorage.setItem(LH_H5_EVT_URL, evtApi);
+    localStorage.setItem(LH_H5_CRT_URL, crtApi);
+  } else if (isGlobalAndCN) {
+    console.log("IS Global + CN");
+    const rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+    const evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+    const crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
 
-if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
-  const successImgCdn = localStorage.getItem("IMAGE_CDN");
-  if (!successImgCdn) {
-    const newDomain = replaceRndDomain("IMAGE_CDN");
-    const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
-    localStorage.setItem("IMAGE_CDN", newImgCDN);
+    rstApi = await getInitApi(rstGlobalArray, LH_H5_RST_URL, "1");
+    evtApi = await getInitApi(evtGlobalArray, LH_H5_EVT_URL, "2");
+    crtApi = await getInitApi(crGlobalArray, LH_H5_CRT_URL, "3");
+  } else {
+    rstApi = await getInitApi(rstArray, LH_H5_RST_URL, "1");
+    evtApi = await getInitApi(evtArray, LH_H5_EVT_URL, "2");
+    crtApi = await getInitApi(crtArray, LH_H5_CRT_URL, "3");
+  }
+
+  api = axios.create({ baseURL: rstApi });
+  cashier = axios.create({ baseURL: crtApi });
+  eventapi = axios.create({ baseURL: evtApi });
+
+  if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
+    const successImgCdn = localStorage.getItem("IMAGE_CDN");
+    if (!successImgCdn) {
+      const newDomain = replaceRndDomain("IMAGE_CDN");
+      const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
+      localStorage.setItem("IMAGE_CDN", newImgCDN);
+    }
   }
 }
 
-function getInitApi(apiLinks, urlLsName, errorPrefix) {
+// const api = axios.create({ baseURL: rstApi });
+// const cashier = axios.create({ baseURL: crtApi });
+// const eventapi = axios.create({ baseURL: evtApi });
+
+
+
+async function getInitApi(apiLinks, urlLsName, errorPrefix) {
   var successRstUrl = localStorage.getItem(urlLsName);
-  if (successRstUrl) {
-    if (isInApp()) {
-      return successRstUrl;
-    }
+  if (isInApp()) {
+    return await new Promise(resolve => {
+      let APP_INITIAL_TIME_OUT = 5000;
+      const checkAppInitialStatus = () => {
+        const isAppInitialized = !!sessionStorage.getItem("LH_APP_DOMAIN_INITIALIZED");
+        if (isAppInitialized) {
+          successRstUrl = localStorage.getItem(urlLsName);
+          return true;
+        } else {
+          return false;
+        }
+      }
+      const interval = setInterval(()=>{
+        if(checkAppInitialStatus()) {
+          resolve(successRstUrl);
+          clearInterval(interval);
+        } else {
+          APP_INITIAL_TIME_OUT -= 100;
+          if(APP_INITIAL_TIME_OUT <= 0) {
+            clearInterval(interval);
+            resolve(successRstUrl);
+          }
+        }
+      }, 100);
+    });
+  } else if (successRstUrl) {
     if (!Object.values(apiLinks).includes(successRstUrl)) {
       apiReplacementRecords.push({ errorPrefix, url: successRstUrl });
     }
@@ -469,17 +507,34 @@ function isInApp() {
     window.location.pathname === "/vip" ||
     window.location.pathname === "/viptest" ||
     window.location.pathname === "/promotion" ||
+    window.location.pathname === "/promotiontest" ||
     window.location.pathname === "/deposit" ||
     window.location.pathname === "/deposittest" ||
     window.location.pathname === "/invitefriend" ||
-    window.location.pathname === "/privilege/invite"
+    window.location.pathname === "/privilege/invite" ||
+    window.location.pathname === "/affiliatepage"
   ) {
     return true;
   }
   return false;
 }
 
-export default boot(({ app, router }) => {
+// document.addEventListener(
+//   "updateUrlEvent",
+//   () => {
+//     const RstUrl = localStorage.getItem(LH_H5_RST_URL);
+//     const EvtUrl = localStorage.getItem(LH_H5_EVT_URL);
+//     const CrtUrl = localStorage.getItem(LH_H5_CRT_URL);
+
+//     api.defaults.baseURL = RstUrl;
+//     eventapi.defaults.baseURL = EvtUrl;
+//     cashier.defaults.baseURL = CrtUrl;
+//   },
+//   { once: true }
+// );
+
+export default boot(async ({ app, router }) => {
+  await init();
   const onRequest = (config) => {
     if (store.token) {
       api.defaults.headers["token"] = store.token;

@@ -63,12 +63,12 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
       <div class="btn-group" v-if="!hasRole(['SUB_TENANT'])">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:annou:type:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:site:annou:type:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
         <el-button
           icon="el-icon-edit"
           size="mini"
           type="success"
-          v-permission="['sys:annou:type:update']"
+          v-permission="['sys:site:annou:type:update']"
           @click="showEdit()"
           :disabled="uiControl.editBtn"
         >{{ t('fields.edit') }}</el-button>
@@ -76,7 +76,7 @@
           icon="el-icon-remove"
           size="mini"
           type="danger"
-          v-permission="['sys:annou:type:del']"
+          v-permission="['sys:site:annou:type:del']"
           @click="removeAnnouncementType()"
           :disabled="uiControl.removeBtn"
         >{{ t('fields.delete') }}</el-button>
@@ -202,14 +202,14 @@
         </template>
       </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column :label="t('fields.operate')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:annou:type:update'])|| hasPermission(['sys:annou:type:del']))">
+      <el-table-column :label="t('fields.operate')" align="right" v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:site:annou:type:update'])|| hasPermission(['sys:site:annou:type:del']))">
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:annou:type:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:annou:type:update']" @click="showEdit(scope.row)" />
           <el-button
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:annou:type:del']"
+            v-permission="['sys:site:annou:type:del']"
             @click="removeAnnouncementType(scope.row)"
           />
         </template>
