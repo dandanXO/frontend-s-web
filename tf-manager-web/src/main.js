@@ -194,7 +194,7 @@ if (siteId === 'dy') {
 } else if (siteId === 'th') {
   link.href = '/th-favicon.ico';
   title.innerText = 'Jolly88';
-} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1' || siteId === 'br1' || siteId === 'mx1' || siteId === 'co1' || siteId === 'pk3' || siteId === 'id1') {
+} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1' || siteId === 'br1' || siteId === 'mx1' || siteId === 'co1' || siteId === 'pk3' || siteId === 'id1' || siteId === 'th2') {
   link.href = '/ind-favicon.ico';
   title.innerText = '55Ace';
 } else if (siteId === 'pak' || siteId === 'pk2' || siteId === 'bgd') {
