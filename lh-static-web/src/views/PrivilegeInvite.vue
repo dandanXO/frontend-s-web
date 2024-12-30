@@ -604,6 +604,599 @@ export default defineComponent({
 <style scoped lang="scss">
 $gold: #efcf68;
 
+.dark{
+  .privilege-invite-container {
+  display: flex;
+  flex-direction: column;
+
+  .banner {
+    width: 100%;
+    height: auto;
+  }
+
+  .tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    .tab {
+      width: 300px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+      color: #818181;
+      font-size: 36px;
+      font-weight: bold;
+      cursor: pointer;
+
+      &.active {
+        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+        color: white;
+      }
+    }
+  }
+  .tab {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60px;
+    background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+    color: #818181;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.active {
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      color: white;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 16px;
+    line-height: 32px;
+  }
+
+  .info-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 30px auto 20px;
+  }
+
+  .info-item {
+    width: 280px;
+    height: 140px;
+    border: 1px solid rgba(172, 212, 246, 1);
+    box-sizing: content-box;
+    border-radius: 10px;
+  }
+
+  .info-top {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 280px;
+    height: 50px;
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    color: #fff;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .info-content {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 280px;
+    height: 90px;
+    background: rgba(33, 43, 74, 1);
+    text-align: center;
+    color:rgba(255, 255, 255, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .rebate-header,
+  .rebate-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .rebate-header {
+    height: 50px;
+    background-color: $gold;
+    color: #11131f;
+  }
+
+  .rebate-list {
+    height: 40px;
+    color: #000;
+
+    &.bg-dark {
+      background-color: #ebe2b5;
+    }
+  }
+
+  .record-modal-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 20px 25px 50px;
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 35px;
+    }
+
+    .record-title {
+      margin-top: 10px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .record-selection {
+      display: grid;
+      grid-template-columns: auto auto auto;
+
+      label {
+        display: inline-block;
+        width: 82px;
+        text-align: right;
+        color: #000000;
+        font-size: 18px;
+        padding-right: 5px;
+        font-weight: 400;
+      }
+
+      .record-select-input {
+        width: 160px;
+        height: 40px;
+        background-color: #f5f5f5;
+        border: solid 1px #b89523;
+        color: #000000;
+        font-size: 16px;
+        border-radius: 4px;
+      }
+
+      .input-row {
+        margin-bottom: 16px;
+      }
+
+      .input-user {
+        width: 160px;
+        height: 40px;
+        background-color: #f5f5f5;
+        border: solid 1px #b89523;
+        color: #000000;
+        font-size: 16px;
+        border-radius: 4px;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+
+      .input-datetime {
+        width: 160px;
+        height: 40px;
+        background-color: #f5f5f5;
+        border: solid 1px #b89523;
+        color: #000000;
+        font-size: 16px;
+        border-radius: 4px;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+
+      .search-btn {
+        width: 150px;
+        height: 40px;
+        background-color: #fcec97;
+        border-radius: 30px;
+        display: flex;
+        border: 0px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+
+    .record-table {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin: 16px auto 0px;
+      width: 100%;
+      text-align: center;
+    }
+    .record-contents {
+      background: #ebe2b5;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: 100%;
+      text-align: center;
+      div {
+        padding: 10px;
+      }
+    }
+
+    .no-item-table {
+      width: 100%;
+      background-color: #ebe2b5;
+      height: 40px;
+
+      > p {
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0px;
+        height: 100%;
+      }
+    }
+
+    .listing-footer {
+      font-size: 16px;
+      margin: 0px auto;
+      padding: 14px 20px;
+      border-top: 1px solid #fddfaa;
+    }
+
+    .footer-div {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pointer-s {
+      cursor: pointer;
+      background-color: #fcec97;
+      color: #0a0b13;
+      border-radius: 50%;
+      font-size: 12px;
+      height: 25px;
+      width: 25px;
+      line-height: 25px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .footer-page {
+      margin: 0px 5px;
+      color: #efcf68;
+    }
+  }
+}
+
+.new-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.new-rebate-section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  border: 1px solid #BE9457;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+  background-size: 100% 100%;
+  width: 1000px;
+
+  .new-rebate-section-left {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .new-rebate-section-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 254px;
+
+    .bonus-image {
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        transform: translate(0px, 1px);
+        opacity: 0.9;
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .new-rebate-section-title {
+    color: rgba(255, 255, 255, 1);
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .new-rebate-section-title-inner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.reward-info {
+  border: 1px solid rgba(215, 235, 255, 1);
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.reward-info-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.reward-info-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  color: black;
+  gap: 24px;
+
+  .amount {
+    color: #00a1ff;
+    font-weight: 600;
+  }
+}
+
+.copy-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: rgba(33, 43, 74, 0.88);
+  padding: 20px;
+  border: 1px solid #BE9457;
+  border-radius: 8px;
+  .copy-first {
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(0, 161, 255, 1);
+    display: flex;
+    justify-content: flex-start;
+  }
+  .copy-sec {
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(0, 161, 255, 1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .copy-sec-inner {
+      background: rgba(44, 62, 99, 1);
+      border: 1px solid rgba(172, 212, 246, 1);
+      line-height: 39px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      width: 65%;
+
+      > div {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.new-rebate-game-info {
+  width: 1000px;
+  height: 100%;
+  margin-top: 40px;
+  background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+  border-radius: 12px;
+  padding: 40px;
+  border: 1px solid #BE9457;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  gap: 20px;
+
+  .title {
+    background-image: url("../assets/promo/lh1-blast-premier/info-title-dark.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin: 0 auto 40px;
+  }
+  .little-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .left {
+      background-image: url("../assets/promo/lh1-blast-premier/info-little-title-bg-dark.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 120px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 600;
+      min-width: 120px;
+      line-height: 23.33px;
+      color: #ffffff;
+      margin-right: 16px;
+    }
+    .right {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      color:rgba(255, 255, 255, 1);
+      text-align: left;
+    }
+  }
+}
+
+.new-rebate-game-info-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  text-align: center;
+  vertical-align: middle;
+  th {
+    height: 56px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #fff;
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    &:first-child {
+      border-top-left-radius: 12px;
+    }
+    &:last-child {
+      border-top-right-radius: 12px;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        &:first-child {
+          // border-bottom-left-radius: 12px;
+        }
+      }
+    }
+    &:nth-child(2) {
+      td {
+        &:last-child {
+          // border-bottom-right-radius: 12px;
+        }
+      }
+    }
+  }
+  td {
+    border: 1px solid #acd4f6;
+    height: 56px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color:rgba(255, 255, 255, 1);
+  }
+}
+.new-rebate-game-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: self-start;
+  .new-rebate-game-bottom-inner {
+    color: red;
+    text-align: left;
+  }
+}
+
+.new-rebate-game-bottom-rule {
+  width: 1000px;
+  height: 100%;
+  margin-top: 40px;
+  background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+  border-radius: 12px;
+  padding: 40px;
+  border: 1px solid #BE9457;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title {
+    background-image: url("../assets/promo/lh1-blast-premier/rule-title-dark.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin-bottom: 20px;
+  }
+  .content {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    color: rgba(217, 217, 217, 1);
+    .item {
+      padding-left: 24px;
+      display: flex;
+      gap: 10px;
+      font-size: 16px;
+      text-align: left;
+
+      .item-num {
+        color: #ffffff;
+        font-size: 20px;
+        line-height: 1;
+        border-radius: 50%;
+        height: 28px ;
+        width: 28px ;
+        min-width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        background: linear-gradient(90deg, #41B9FF 8.15%, #0085E8 92.42%);
+
+      }
+    }
+  }
+}
+}
+
 .privilege-invite-container {
   display: flex;
   flex-direction: column;
@@ -633,7 +1226,7 @@ $gold: #efcf68;
       cursor: pointer;
 
       &.active {
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) ;
         color: white;
       }
     }
@@ -652,7 +1245,7 @@ $gold: #efcf68;
     cursor: pointer;
 
     &.active {
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) ;
       color: white;
     }
   }
@@ -845,7 +1438,7 @@ $gold: #efcf68;
 
     .no-item-table {
       width: 100%;
-      background-color: #ebe2b5 !important;
+      background-color: #ebe2b5 ;
       height: 40px;
 
       > p {
@@ -1181,8 +1774,8 @@ $gold: #efcf68;
         font-size: 20px;
         line-height: 1;
         border-radius: 50%;
-        height: 28px !important;
-        width: 28px !important;
+        height: 28px ;
+        width: 28px ;
         min-width: 28px;
         display: flex;
         justify-content: center;
