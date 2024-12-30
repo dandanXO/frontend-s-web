@@ -1,6 +1,6 @@
 # ID1 App (ID1-h5-project)
 
-Indonesia H5 APP
+Thailand H5 APP
 - Node Version >= 16.17.0
 - H5 + Android APP
 
