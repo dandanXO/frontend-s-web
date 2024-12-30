@@ -97,6 +97,11 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'ph1';
     break;
+  case process.env.VUE_APP_TH2_HOST:
+    baseApi = process.env.VUE_APP_BASE_API;
+    baseWss = process.env.VUE_APP_SOCKET;
+    siteId = 'th2';
+    break;
   case process.env.VUE_APP_PK3_HOST:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
