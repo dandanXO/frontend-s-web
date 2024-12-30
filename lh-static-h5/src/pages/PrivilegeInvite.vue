@@ -1,6 +1,7 @@
 <template>
   <div class="privilege-invite-container">
-    <img class="title-img" src="../assets/images/privilege/title-img.jpg" />
+    <img v-if="$q.dark.isActive" class="title-img" src="../assets/images/privilege/title-img-dark.jpg" />
+    <img v-else class="title-img" src="../assets/images/privilege/title-img.jpg" />
     <div>
       <!-- tabs -->
       <div class="tab-wrapper">
@@ -494,6 +495,7 @@ import { userStore } from "stores/index";
 import { api, eventapi } from "boot/axios";
 import { isAndroid } from "boot/utils";
 import { useNotify } from "src/hooks/notify";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   setup() {
@@ -507,6 +509,7 @@ export default defineComponent({
       pendingRebate: 0,
       yesterdayFriendBet: 0
     });
+    const isDarkMode = useLocalStorage("DARK_MODE");
     const checkRecordFormData = reactive({
       recordType: "REFERRER",
       privilegeType: "FIRST_DEPOSIT",
@@ -724,13 +727,716 @@ export default defineComponent({
       bonusAmount,
       goToInvitePageOld,
       tableRecords,
-      copyText
+      copyText,
+      isDarkMode
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
+$gold: #efcf68;
+.body--dark{
+  .tab-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: calc(100% - 20px);
+  margin: 0px auto 20px;
+
+  .tab {
+    width: 160px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60px;
+    background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+    color: #818181;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.active {
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset;
+      box-shadow: 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+      box-shadow: 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+
+      color: white;
+    }
+  }
+}
+.new-section {
+  padding: 0px 12px;
+}
+.new-rebate-section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #BE9457;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: url("../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background-size: 100% 100%;
+  align-items: center;
+  width: 100%;
+  background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+
+
+  .new-rebate-section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .new-rebate-section-right {
+    width: 180px;
+    margin-top: 20px;
+
+    .bonus-image {
+      width: 100%;
+      cursor: pointer;
+
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .new-rebate-section-title {
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .new-rebate-section-title-inner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+}
+.tab {
+  width: 160px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 60px;
+  background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+  color: #818181;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  &.active {
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset;
+    color: white;
+  }
+}
+.copy-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgba(33, 43, 74, 0.88);
+  padding: 12px;
+  border: 1px solid #BE9457;
+  border-radius: 8px;
+  .copy-first {
+    font-weight: 600;
+    font-size: 1rem;
+    color: rgba(0, 161, 255, 1);
+    display: flex;
+    justify-content: flex-start;
+  }
+  .copy-sec {
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: rgba(0, 161, 255, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    .copy-sec-inner {
+      background-color:rgba(44, 62, 99, 1);
+      border: 1px solid rgba(172, 212, 246, 1);
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      line-height: 2.5rem;
+      height: 40px;
+      width: 100%;
+
+      > div {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.new-rebate-game-info {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+  border-radius: 12px;
+  padding: 20px 12px 12px;
+  border: 1px solid #BE9457;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .title {
+    background-image: url("../assets/images/promotion/hotpromo/lh1-blast-premier/info-title-dark.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 240px;
+    height: 26px;
+    margin: 0 auto;
+  }
+  .little-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .left {
+      background-image: url("../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg-dark.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 64px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 23.33px;
+      color: #ffffff;
+      margin-right: 16px;
+    }
+    .right {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 28px;
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.new-rebate-game-info-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+  vertical-align: middle;
+  th {
+    height: 36px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #fff;
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset;
+
+    &:first-child {
+      border-top-left-radius: 12px;
+    }
+    &:last-child {
+      border-top-right-radius: 12px;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        &:first-child {
+          // border-bottom-left-radius: 12px;
+        }
+      }
+    }
+    &:nth-child(2) {
+      td {
+        &:last-child {
+          // border-bottom-right-radius: 12px;
+        }
+      }
+    }
+  }
+  td {
+    background: transparent;
+    border: 1px solid #acd4f6;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 28px;
+    color:rgba(255, 255, 255, 1);
+  }
+}
+.new-rebate-game-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .new-rebate-game-bottom-left-title {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff0000;
+  }
+  .new-rebate-game-bottom-left-btn {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff0000;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+  }
+}
+.new-rebate-game-bottom-rule {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+  border-radius: 12px;
+  padding: 20px 12px 12px;
+  border: 1px solid #BE9457;
+
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+  .title {
+    background-image: url("../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title-dark.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 240px;
+    height: 20px;
+    margin-bottom: 20px;
+  }
+  .content {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 1);
+    padding: 8px;
+    .item {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+
+      .item-num {
+        color: #ffffff;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 50%;
+        height: 16px !important;
+        width: 16px !important;
+        min-width: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      }
+
+      .hint {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 22.4px;
+        color: #ff0000;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+}
+
+
+
+.title-img {
+  img {
+    width: 100%;
+  }
+}
+
+.privilege-invite-container {
+  display: flex;
+  flex-direction: column;
+
+  .banner {
+    width: 100%;
+    height: auto;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    margin: 0 auto;
+
+    .tab {
+      background: url(../assets/images/promo/hotpromo/privilegeinvite/btn-blue.png);
+      width: 100%;
+
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.5;
+      &.active {
+        background: url(../assets/images/promo/hotpromo/privilegeinvite/btn-blue.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        opacity: 1;
+      }
+
+      h3 {
+        font-size: 13px;
+        color: #ffffff;
+        font-family: "Microsoft YaHei";
+        font-weight: 800;
+      }
+    }
+  }
+
+  .tab-section {
+    width: calc(100% - 20px);
+    margin: 0 auto;
+    // height: fit-content;
+    // width: 100%;
+    // background-image: url(../assets/images/promo/hotpromo/privilegeinvite/tab-content.png);
+    // background-repeat: no-repeat;
+    // background-size: 100% 100%;
+    // margin: 0 auto 20px;
+    // padding: 30px 25px 40px;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: space-around;
+    // text-align: center;
+  }
+
+  .title-banner-image {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 16px;
+    line-height: 32px;
+  }
+
+  .check-record-btn {
+    color: #b89523;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .info-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: content-box;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .info-item {
+    min-width: 101px;
+    height: 100px;
+    border: 1px solid rgba(172, 212, 246, 1);
+    box-sizing: content-box;
+    border-radius: 10px;
+    background: rgba(33, 43, 74, 0.88);
+  }
+
+  .info-top {
+    padding: 4px;
+    height: 30px;
+    background-color: $gold;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .info-content {
+    height: 70px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .share-btn {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 1px;
+    color: #ffffff;
+    width: 160px;
+    height: 40px;
+    background-color: #0079fb;
+    border-radius: 25px;
+    border: 0px;
+    margin: 20px auto 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .rebate-table {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 35px 6px 35px;
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .rebate-table-tab2 {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 3fr 3fr 2fr 2fr 3fr 2fr;
+    margin: 35px 0px 35px;
+  }
+
+  .rebate-header,
+  .rebate-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .rebate-header {
+    height: 50px;
+    background-color: $gold;
+    color: #11131f;
+  }
+
+  .rebate-list {
+    height: 40px;
+    color: #000;
+
+    &.bg-dark {
+      background-color: #ebe2b5;
+    }
+  }
+
+  .example-text {
+    color: #0bb013;
+    line-height: 32px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  .rules {
+    margin-bottom: 30px;
+    text-align: left;
+    padding-left: 20px;
+    text-indent: -15px;
+  }
+}
+
+.record-modal-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 20px 25px 50px;
+
+  .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 35px;
+  }
+
+  .record-title img {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    height: auto;
+  }
+
+  .record-selection {
+    display: flex;
+    flex-wrap: wrap;
+    // display: grid;
+    // grid-template-columns: auto auto auto;
+
+    label {
+      display: inline-block;
+      width: 82px;
+      text-align: right;
+      color: #000000;
+      font-size: 18px;
+      padding-right: 5px;
+      font-weight: 400;
+    }
+
+    .record-select-input {
+      width: 160px;
+      height: 40px;
+      background-color: #f5f5f5;
+      border: solid 1px #b89523;
+      color: #000000;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    .input-row {
+      margin-bottom: 16px;
+      width: 50%;
+    }
+
+    .input-user {
+      width: 150px;
+      height: 40px;
+      background-color: #f5f5f5;
+      border: solid 1px #b89523;
+      color: #000000;
+      font-size: 16px;
+      border-radius: 4px;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+
+    .input-datetime {
+      width: 150px;
+      height: 40px;
+      background-color: #f5f5f5;
+      border: solid 1px #b89523;
+      color: #000000;
+      font-size: 16px;
+      border-radius: 4px;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+
+    .search-btn {
+      width: 150px;
+      height: 40px;
+      background-color: #fcec97;
+      border-radius: 30px;
+      display: flex;
+      border: 0px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+
+  .record-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 16px auto 0px;
+    width: 100%;
+  }
+
+  .no-item-table {
+    width: 100%;
+    background-color: #ebe2b5 !important;
+    height: 40px;
+
+    > p {
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 0px;
+      height: 100%;
+    }
+  }
+
+  .listing-footer {
+    font-size: 16px;
+    margin: 0px auto;
+    padding: 14px 20px;
+    border-top: 1px solid #fddfaa;
+  }
+
+  .footer-div {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pointer-s {
+    cursor: pointer;
+    background-color: #fcec97;
+    color: #0a0b13;
+    border-radius: 50%;
+    font-size: 12px;
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    text-align: center;
+    font-weight: 800;
+  }
+
+  .footer-page {
+    margin: 0px 5px;
+    color: #efcf68;
+  }
+}
+
+}
 .tab-wrapper {
   display: flex;
   align-items: center;
@@ -1059,7 +1765,7 @@ export default defineComponent({
   }
 }
 
-$gold: #efcf68;
+
 
 .title-img {
   img {

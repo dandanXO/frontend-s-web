@@ -1,7 +1,8 @@
 <template>
   <div class="privilege-invite-container">
     <div>
-      <img class="banner" src="../assets/images/privilege-invite/web2.jpg" />
+      <img v-if="isDark" class="banner" src="../assets/images/privilege-invite/web2-dark.jpg" />
+      <img v-else class="banner" src="../assets/images/privilege-invite/web2.jpg" />
     </div>
     <div>
       <!-- tabs -->
@@ -478,10 +479,12 @@ import { getReferralLink } from "@/api/personal/share";
 import { getRecommendPrivilegeRecord, getRebateInfo } from "@/api/privilegeInvite/privilegeInvite";
 import { userStore } from "@/store/index";
 import { useNotify } from "@/hooks/notify";
+import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   components: {},
   setup() {
+    const isDark = useDark();
     const notify = useNotify();
     const route = useRoute();
     const store = userStore();
@@ -595,7 +598,8 @@ export default defineComponent({
       tableRecords,
       referralLink,
       summonerLink,
-      copyText
+      copyText,
+      isDark
     };
   }
 });

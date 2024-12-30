@@ -90,11 +90,11 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/privilege/invite" ||
       to.path === "/affiliatepage"
     ) {
-      if (isAndroid()) {
-        localStorage.setItem("TOKEN", to.query.token);
-      } else {
-        SessionStorage.set("TOKEN", to.query.token);
-      }
+      // if (isAndroid()) {
+      //   localStorage.setItem("TOKEN", to.query.token);
+      // } else {
+      //   SessionStorage.set("TOKEN", to.query.token);
+      // }
 
       if (to.query.dark) {
         localStorage.setItem("DARK_MODE", true);
