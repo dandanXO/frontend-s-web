@@ -51,8 +51,8 @@
         <div class="little-title">
           <div class="left">申请方式</div>
           <div class="right" style="margin-top: 4px">
-            会员获得符合活动金额注单号，注单产生当日
-            23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+            会员获得符合活动金额注单号，注单产生当日 23:59:59
+            内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
           </div>
         </div>
         <div class="little-title">
@@ -133,7 +133,8 @@
             (路径：电子幸运注单活动页->领取彩金)，逾期申请则视为自动放弃，彩金八倍流水即可提款；
           </div>
           <div class="item">
-            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于 5 元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
+            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于 5
+            元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
           </div>
           <div class="item">3.彩金不可购买免费旋转机会，不可投注捕鱼游戏；</div>
           <div class="item">
@@ -497,7 +498,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     margin-top: 20px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border-radius: 12px;
     padding: 16px 8px;
     // border: 1px solid #acd4f6;
@@ -507,11 +508,12 @@ onMounted(() => {
     align-items: center;
 
     .title {
-      background-image: url("../../../assets/promo/lh-slot-lacky8/info-title2.png");
+      background-image: url("../../../assets/promo/lh-slot-lacky8/info-title-dark2.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 240px;
-      height: 20px;
+      width: 100%;
+      aspect-ratio: 720/44;
+      height: auto;
       margin-bottom: 16px;
     }
     .little-title {
@@ -550,7 +552,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     margin-top: 20px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     padding: 16px 8px;
@@ -618,7 +620,7 @@ onMounted(() => {
       font-weight: 400;
       line-height: 18px;
       color: #fff !important;
-      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
       &:first-child {
         border-top-left-radius: 12px;
       }
@@ -674,7 +676,7 @@ onMounted(() => {
       font-weight: 400;
       line-height: 18px;
       color: #fff !important;
-      background: linear-gradient(180deg,#597adf,#3c5ec3);
+      background: linear-gradient(180deg, #597adf, #3c5ec3);
       &:first-child {
         border-top-left-radius: 12px;
       }
@@ -746,7 +748,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     margin-top: 20px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border-radius: 12px;
     padding: 16px 0px;
     box-shadow: 0px 0px 4px 0px #01497b0f;
@@ -909,7 +911,7 @@ onMounted(() => {
       line-height: 30px;
       font-size: 16px;
     }
-  }  
+  }
 }
 
 .slot-lacky8-box {

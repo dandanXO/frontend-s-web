@@ -42,8 +42,8 @@
         <div class="little-title" style="margin-top: 20px">
           <div class="left">申请方式</div>
           <div class="right">
-            会员获得符合活动金额注单号，注单产生当日
-            23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+            会员获得符合活动金额注单号，注单产生当日 23:59:59
+            内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
           </div>
         </div>
         <div class="little-title" style="margin-bottom: 0px">
@@ -114,7 +114,8 @@
             (路径：电子幸运注单活动页->领取彩金)，逾期申请则视为自动放弃，彩金八倍流水即可提款；
           </div>
           <div class="item">
-            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于 5 元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
+            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于 5
+            元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
           </div>
           <div class="item">3.彩金不可购买免费旋转机会，不可投注捕鱼游戏；</div>
           <div class="item">
@@ -409,7 +410,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     margin-top: 40px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border-radius: 12px;
     padding: 40px;
     border: 1px solid #acd4f6;
@@ -419,7 +420,7 @@ onMounted(() => {
     align-items: center;
 
     .title {
-      background-image: url("../../../assets/promo/lh-luck8/money-title.png");
+      background-image: url("../../../assets/promo/lh-luck8/title-caijin-dark.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 738px;
@@ -464,7 +465,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     margin-top: 40px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border-radius: 12px;
     padding: 40px;
     border: 1px solid #acd4f6;
@@ -593,7 +594,7 @@ onMounted(() => {
       font-weight: 400;
       line-height: 28px;
       color: #fff;
-      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
       &:first-child {
         border-top-left-radius: 12px;
       }
@@ -654,7 +655,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     margin-top: 40px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border-radius: 12px;
     padding: 40px;
     border: 1px solid #acd4f6;
@@ -798,7 +799,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     margin-top: 8px;
-  }  
+  }
 }
 .luck8-box {
   font-family: PingFang TC;
