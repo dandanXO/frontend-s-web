@@ -529,5 +529,5 @@ export function getBountyInit(promoCode) {
 
 export function claimBountyBonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/event-check-in/claim?promoCode=${promoCode}&v=${randNum}`);
+  return eventapi.post(`/session/event-check-in/claim?promoCode=${promoCode}&v=${randNum}`);
 }
