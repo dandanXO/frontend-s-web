@@ -1496,8 +1496,8 @@ body {
 
     .unread-count {
       position: absolute;
-      bottom: 2px;
-      right: 5px;
+      bottom: 9px;
+      right: 12px;
       width: 12px;
       height: 12px;
       opacity: 1;
@@ -2423,20 +2423,20 @@ body {
     }
   }
 
-    .header-container {
-      .top-nav-wrapper {
-        background: rgba(21, 33, 62, 0.8);
-        box-shadow: none;
-        border-bottom: 1px solid #BE9457;
-        .top-nav-inner {
-          padding: 0px;
-          max-width: 1400px;
-          .navigations {
-            .header-menu-item {
-              color: $font-4-dark;
-              font-family: PingFang SC;
-                font-weight: 600;
-                font-size: 12px;
+  .header-container {
+    .top-nav-wrapper {
+      background: rgba(21, 33, 62, 0.8);
+      box-shadow: none;
+      border-bottom: 1px solid #be9457;
+      .top-nav-inner {
+        padding: 0px;
+        max-width: 1400px;
+        .navigations {
+          .header-menu-item {
+            color: $font-4-dark;
+            font-family: PingFang SC;
+            font-weight: 600;
+            font-size: 12px;
 
             &.active,
             &:hover {
