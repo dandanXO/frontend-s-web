@@ -52,7 +52,7 @@
           <div class="left">申请方式</div>
           <div class="right" style="margin-top: 4px">
             会员获得符合活动金额注单号，注单产生当日
-            23:59:59内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+            23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
           </div>
         </div>
         <div class="little-title">
@@ -133,7 +133,7 @@
             (路径：电子幸运注单活动页->领取彩金)，逾期申请则视为自动放弃，彩金八倍流水即可提款；
           </div>
           <div class="item">
-            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于5元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
+            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于 5 元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
           </div>
           <div class="item">3.彩金不可购买免费旋转机会，不可投注捕鱼游戏；</div>
           <div class="item">
@@ -337,6 +337,581 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.body--dark {
+  .slot-lacky8-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .slot-lacky8-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .slot-lacky8-game {
+    width: 100%;
+    height: 144px;
+    border-radius: 12px;
+    border: 1px solid #51acff;
+    background-color: #fff;
+    position: relative;
+    margin-bottom: 12px;
+    .slot-lacky8-game-status {
+      width: 120px;
+      height: 24px;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .slot-lacky8-game-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 16px;
+
+    .slot-lacky8-game-content-left,
+    .slot-lacky8-game-content-right {
+      flex: 1;
+      .slot-lacky8-game-content-team-img {
+        width: 44px !important;
+        height: 44px;
+      }
+      .slot-lacky8-game-content-team {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .slot-lacky8-game-content-team-name {
+          font-size: 0.875rem;
+          font-weight: 600;
+          line-height: 1rem;
+          margin-top: 4px;
+          margin-bottom: 12px;
+        }
+      }
+    }
+    .slot-lacky8-game-content-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+
+      .slot-lacky8-game-content-center-time {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.1rem;
+        color: #479af7;
+        border-radius: 30px;
+        padding: 4px 10px;
+        background: #edf4ff;
+        margin-bottom: 15px;
+      }
+      .slot-lacky8-game-content-center-schedule {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1rem;
+        color: #1b1b1b99;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .slot-lacky8-game-content-btn {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 16.8px;
+    color: #00000066;
+    background-image: url("../../../assets/promo/lh-slot-lacky8/btn.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 72px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .nba2-match-game-content-btn__pseudo {
+    height: 24px;
+  }
+
+  .slot-lacky8-game-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .slot-lacky8-game-bottom-left-title {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 16.8px;
+      color: #000000;
+      width: calc(100% - 61px);
+    }
+    .slot-lacky8-game-bottom-left-btn {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 18px;
+      color: #479af7;
+      cursor: pointer;
+      width: 61px;
+      margin-left: 24px;
+    }
+  }
+  .little2-title {
+    width: 100%;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+    color: #4ba5ff;
+    margin-top: 12px;
+  }
+  .little2-content {
+    width: 100%;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+  }
+  .slot-lacky8-game-money-info {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border-radius: 12px;
+    padding: 16px 8px;
+    // border: 1px solid #acd4f6;
+    box-shadow: 0px 0px 4px 0px #01497b0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      background-image: url("../../../assets/promo/lh-slot-lacky8/info-title2.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 240px;
+      height: 20px;
+      margin-bottom: 16px;
+    }
+    .little-title {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      margin: 12px 0 6px;
+      gap: 16px;
+      .left {
+        background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 350px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 23.33px;
+        color: #ffffff;
+      }
+      .right {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 18px;
+        color: white;
+
+        &.red-font {
+          color: #f53434;
+        }
+      }
+    }
+  }
+  .slot-lacky8-game-info {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 16px 8px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 4px 0px #01497b0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      background-image: url("../../../assets/promo/lh-slot-lacky8/info-title-black.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 240px;
+      height: 20px;
+      margin-bottom: 16px;
+    }
+    .little-title {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      margin-bottom: 12px;
+      .left {
+        background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 90px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 23.33px;
+        color: #ffffff;
+        margin-right: 16px;
+      }
+      .right {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 18px;
+        color: white;
+      }
+    }
+  }
+
+  .slot-lacky8-game-info-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: separate !important;
+    border-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 12px;
+    .inner-time {
+      font-size: 8px;
+      line-height: 10px;
+      width: 69px;
+      display: block;
+      margin: auto;
+    }
+    th {
+      height: 32px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      color: #fff !important;
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      &:first-child {
+        border-top-left-radius: 12px;
+      }
+      &:last-child {
+        border-top-right-radius: 12px;
+      }
+    }
+    tr {
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 12px;
+          }
+        }
+      }
+      &:last-child {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 12px;
+          }
+        }
+      }
+    }
+    td {
+      border: 1px solid #acd4f6;
+      height: 32px;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 18px;
+      color: white !important;
+      white-space: pre-wrap;
+      max-width: 70px;
+      word-wrap: break-word;
+    }
+  }
+
+  .slot-lack8-game-info-table-2 {
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+    border-collapse: separate !important;
+    border-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 12px;
+    .inner-time {
+      font-size: 8px;
+      width: 69px;
+    }
+    th {
+      height: 32px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      color: #fff !important;
+      background: linear-gradient(180deg,#597adf,#3c5ec3);
+      &:first-child {
+        border-top-left-radius: 12px;
+      }
+      &:last-child {
+        border-top-right-radius: 12px;
+      }
+    }
+    tr {
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 12px;
+          }
+        }
+      }
+      &:nth-child(2) {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 12px;
+          }
+        }
+      }
+    }
+    td {
+      border: 1px solid #acd4f6;
+      height: 32px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      color: white;
+    }
+  }
+
+  .option-btn-active {
+    font-size: 12px;
+    width: 60px;
+    height: 24px;
+    border-radius: 100px;
+    border: none;
+    color: rgba(255, 255, 255, 1);
+    white-space: nowrap;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+  }
+
+  .option-btn-redeemed {
+    font-size: 12px;
+    width: 56px;
+    height: 24px;
+    border-radius: 100px;
+    border: none;
+    color: rgba(255, 255, 255, 1);
+    white-space: nowrap;
+    background: linear-gradient(180deg, #48d179 0%, #00a63a 100%);
+    pointer-events: none;
+  }
+  .option-btn-disable {
+    font-size: 12px;
+    width: 56px;
+    height: 24px;
+    border-radius: 100px;
+    border: none;
+    white-space: nowrap;
+    background: rgba(217, 217, 217, 1);
+    color: rgba(255, 255, 255, 1);
+    pointer-events: none;
+  }
+
+  .slot-lacky8-game-bottom-rule {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border-radius: 12px;
+    padding: 16px 0px;
+    box-shadow: 0px 0px 4px 0px #01497b0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .title {
+      background-image: url("../../../assets/promo/lh-slot-lacky8/rule-title-black.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 240px;
+      height: 20px;
+      margin-bottom: 16px;
+    }
+    .content {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 18px;
+      color: white;
+      .item {
+        text-indent: -11px;
+        padding-left: 24px;
+        padding-right: 8px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .slot-lacky8-table-record-dialog {
+    width: 1000px;
+    height: 652px;
+
+    .record-dialog-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff;
+
+      width: 100%;
+      height: 100%;
+    }
+
+    .title {
+      background-image: url("../../../assets/promo/lh-slot-lacky8/record-title.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 265px;
+      height: 20px;
+      margin-top: 20px;
+    }
+
+    .record-table {
+      width: 96%;
+      height: 100%;
+      margin-top: 12px;
+      margin-bottom: 20px;
+      border-collapse: collapse !important;
+      th {
+        height: 32px;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 18px;
+        color: #fff;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+        vertical-align: middle;
+        text-align: left;
+
+        &:first-child {
+          border-top-left-radius: 6px;
+        }
+        &:last-child {
+          border-top-right-radius: 6px;
+        }
+      }
+      tr {
+        height: 32px;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 18px;
+        color: #7a8eb9;
+        vertical-align: middle;
+        text-align: left;
+        &:nth-child(odd) {
+          background: #f2f8fe;
+        }
+        &:nth-child(even) {
+          background: #fff;
+        }
+        th {
+          &:first-child {
+            padding-left: 20px;
+          }
+          &:last-child {
+            text-align: right;
+            padding-right: 14px;
+          }
+        }
+
+        td {
+          &:first-child {
+            padding-left: 20px;
+          }
+          &:last-child {
+            text-align: right;
+            padding-right: 14px;
+          }
+        }
+
+        &:last-child {
+          td {
+            &:first-child {
+              border-bottom-left-radius: 6px;
+            }
+          }
+        }
+        &:last-child {
+          td {
+            &:last-child {
+              border-bottom-right-radius: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .record-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .record-close-btn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 12px;
+  }
+
+  // confirm vote dialog
+  .confirm-vote-card {
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+
+    :deep(.q-form) {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .h6-div {
+      background: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
+      width: calc(100%);
+      text-align: center;
+      line-height: 30px;
+      font-size: 16px;
+    }
+  }  
+}
+
 .slot-lacky8-box {
   width: 100%;
   height: 100%;
