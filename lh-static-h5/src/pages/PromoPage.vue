@@ -11,7 +11,11 @@
         isPromoDetail
           ? 'background-image: url(' +
             imgURL +
-            ($q.dark.isActive && selectedPromo.mobileImgBackgroundUrlDark ? selectedPromo.mobileImgBackgroundUrlDark : selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+            ($q.dark.isActive && selectedPromo.mobileImgBackgroundUrlDark
+              ? selectedPromo.mobileImgBackgroundUrlDark
+              : selectedPromo.mobileImgBackgroundUrl
+              ? selectedPromo.mobileImgBackgroundUrl
+              : '') +
             ')'
           : ''
       "
@@ -73,7 +77,11 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img v-if="$q.dark.isActive && promo.mobileImgUrlDark" loading="lazy" :src="imgURL + promo.mobileImgUrlDark" />
+                          <img
+                            v-if="$q.dark.isActive && promo.mobileImgUrlDark"
+                            loading="lazy"
+                            :src="imgURL + promo.mobileImgUrlDark"
+                          />
                           <img v-else loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
@@ -187,6 +195,7 @@
                   </div>
                   <div
                     v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
+                    :class="`content-` + selectedPromo.redirectUrl"
                     v-html="selectedPromo.pageContent"
                   ></div>
                 </div>

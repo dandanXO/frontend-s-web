@@ -172,7 +172,11 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
-            <div v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'" v-html="selectedPromo.pageContent"></div>
+            <div
+              v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
+              :class="`content-` + selectedPromo.redirectUrl"
+              v-html="selectedPromo.pageContent"
+            ></div>
           </div>
           <div
             v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
@@ -516,8 +520,18 @@ export default defineComponent({
         }
       }
     }
-  }
-  a {
+
+    .content-lh1-poker-refund {
+      //color: #fff;
+      background: #fff;
+      border-radius: 12px;
+      padding: 0px 24px 30px;
+    }
+    .content-LH-baccarat-win {
+      background: #fff;
+      border-radius: 12px;
+      padding: 0px 24px 30px;
+    }
   }
 }
 </style>
