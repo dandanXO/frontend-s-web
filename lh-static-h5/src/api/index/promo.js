@@ -531,3 +531,12 @@ export function claimBountyBonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/event-check-in/claim?promoCode=${promoCode}&v=${randNum}`);
 }
+export function getVctcnInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/event-check-in/can-claim?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimVctcnBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/event-check-in/claim?promoCode=${promoCode}&v=${randNum}`);
+}

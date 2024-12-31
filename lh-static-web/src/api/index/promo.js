@@ -699,3 +699,9 @@ export function getBountyInit(promoCode) {
 export function claimBountyBonus(promoCode) {
   return server.EVENT.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
 }
+export function getVctcnInit(promoCode) {
+  return server.EVENT.get(`/session/event-check-in/can-claim?promoCode=${promoCode}`);
+}
+export function claimVctcnBonus(promoCode) {
+  return server.EVENT.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
+}

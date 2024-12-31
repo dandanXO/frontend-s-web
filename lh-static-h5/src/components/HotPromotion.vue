@@ -45,6 +45,7 @@
       :promo-rules="list.pageContent"
     />
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
+    <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -111,6 +112,7 @@ const lh1Vip = defineAsyncComponent(() => import("./hotpromo/lh1-vip/lh1Vip.vue"
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
 const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
 const BountyBlastPremier = defineAsyncComponent(() => import("../components/hotpromo/bounty-blast/BountyBlastPremier.vue"));
+const VctcnMatchPromo = defineAsyncComponent(() => import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue"))
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -145,7 +147,8 @@ export default defineComponent({
     lh1Vip,
     SlotLossBonusPromo,
     ChristmasGachapon,
-    BountyBlastPremier
+    BountyBlastPremier,
+    VctcnMatchPromo
   },
   props: {
     list: {
