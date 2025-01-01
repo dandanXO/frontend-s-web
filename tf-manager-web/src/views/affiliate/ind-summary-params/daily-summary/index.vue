@@ -282,7 +282,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
+            <span v-formatter="{ data: scope.row.netProfit, type: 'money' }" />
           </template>
         </el-table-column>
       </el-table>
