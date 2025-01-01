@@ -275,7 +275,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="profit"
+          prop="netProfit"
           :label="t('fields.netProfit')"
           align="center"
           width="120"
