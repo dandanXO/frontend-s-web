@@ -90,7 +90,8 @@
     <ElisaGift v-if="list.redirectUrl === 'dy2-elisa-gift'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
     <DemaciaCup1 v-if="list.redirectUrl === 'dy2-demacia-cup-2024'" :promo-param="listParam" />
-
+    <VctcnMatchPromo v-if="list.redirectUrl === 'dy2-vctcn'" :promo-code="list.promoCode" />
+    
     <ChristmasGachapon
       v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
       :promo-code="list.promoCode"
@@ -182,6 +183,7 @@ import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/Cha
 import PerfectWorldMajor2024 from "@/components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 import DemaciaCup1 from "@/components/hotpromo//demacia-cup-1/DemaciaCup1.vue";
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
+import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -267,7 +269,8 @@ export default defineComponent({
     ChallengeComebackPromo,
     PerfectWorldMajor2024,
     DemaciaCup1,
-    ChristmasGachapon
+    ChristmasGachapon,
+    VctcnMatchPromo
   },
   props: {
     list: {

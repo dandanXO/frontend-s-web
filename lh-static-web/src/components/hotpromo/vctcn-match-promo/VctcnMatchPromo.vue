@@ -13,7 +13,7 @@
             </div>
             <div class="reward-info-content">
               昨日累计有效投注:
-              <span class="amount">{{ yesterdayDeposit }}元</span>
+              <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               昨日LH有效投注:
-              <span class="amount">{{ singleHighestPayout }}元</span>
+              <span class="amount">{{ platformValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -175,8 +175,8 @@ const { promoCode } = toRefs(props);
 const notify = useNotify();
 
 const store = userStore();
-const yesterdayDeposit = ref(0);
-const singleHighestPayout = ref(0);
+const totalValidBet = ref(0);
+const platformValidBet = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
 
@@ -228,8 +228,8 @@ const handleClaimBonus = () => {
 const fetchData = async () => {
   try {
     const res = await getVctcnInit(promoCode.value);
-    yesterdayDeposit.value = res.data.yesterdayDeposit;
-    singleHighestPayout.value = res.data.singleHighestPayout;
+    totalValidBet.value = res.data.totalValidBet;
+    platformValidBet.value = res.data.platformValidBet;
     bonus.value = res.data.bonus;
   } catch (error) {
     console.log(error);

@@ -4,21 +4,12 @@
       <div class="livepoker-rebate-section">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div>
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
-                style="width: 20px; height: 20px; margin-bottom: 0px"
-              />
-            </div>
+            <div><img src="@/assets/promo/lh-livepoker-rebate/section-title-img.png" /></div>
             投注礼金
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
-                alt=""
-                width="100%"
-              />
+              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
               昨日累计有效投注:
@@ -27,24 +18,16 @@
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon3.png"
-                alt=""
-                width="100%"
-              />
+              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon3.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              昨日LH有效投注:
+              昨日DY有效投注:
               <span class="amount">{{ platformValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
-                alt=""
-                width="100%"
-              />
+              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
               可领取彩金：
@@ -54,7 +37,13 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
+            <img
+              v-if="bonus <= 0"
+              src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
+              alt=""
+              width="100%"
+            />
+            <img v-else src="@/assets/promo/lh-livepoker-rebate/reward-btn-3.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -73,7 +62,7 @@
             <tr>
               <th>累计有效投注</th>
               <th>累计投注嘉奖</th>
-              <th>雷火助力金</th>
+              <th>东赢助力金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
@@ -126,18 +115,13 @@
             </tr>
           </tbody>
         </table>
-
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
-                alt=""
-                style="width: 10px"
-              />
+              <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员A：在小艾电竞场馆投注VCTCN联赛5,000元后又在雷火电竞投注VCTCN联赛投注5,000元，会员A在次日可获投注奖励38元和雷火助力金38元，共76元彩金。
+            会员A：在小艾电竞场馆投注VCTCN联赛5,000元后又在东赢电竞投注VCTCN联赛投注5,000元，会员A在次日可获投注奖励38元和东赢助力金38元，共76元彩金。
           </div>
         </div>
       </div>
@@ -148,7 +132,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-            活动期间，在电竞场馆投注 VCTCN 联赛累计有效投注≥3,000 元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注 VCTCN 联赛可获更高奖励金额。
+            活动期间，在电竞场馆投注 VCTCN 联赛累计有效投注≥3,000 元或以上可获的对应投注嘉奖，若在东赢电竞场馆进行投注 VCTCN 联赛可获更高奖励金额。
             <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
           </div>
           </div>
@@ -170,7 +154,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -179,66 +163,54 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRefs } from "vue";
-import { getVctcnInit, claimVctcnBonus } from "../../../api/index/promo";
-import { useNotify } from "src/hooks/notify";
-import { userStore } from "src/stores";
-import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
-
+import { getVctcnInit, claimVctcnBonus } from "@/api/index/promo";
+import { onMounted, ref, defineProps, toRefs } from "vue";
+import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
+import { ResponseCode } from "@/api/response";
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
 
 const notify = useNotify();
-const store = userStore();
-const $q = useQuasar();
-const router = useRouter();
 
+const store = userStore();
 const totalValidBet = ref(0);
 const platformValidBet = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
 
 const handleClaimBonus = () => {
-  if (isClaiming.value === true) {
-    return;
-  }
+  if (isClaiming.value) return;
   isClaiming.value = true;
-  if (!store.token) {
-    $q.dialog({
-      class: "q-px-md q-pt-md",
-      title: "系统提示",
-      message: "请登录后再操作",
-      ok: {
-        push: true,
-        color: "primary",
-        label: "去登录",
-        tabindex: 1
-      },
-      cancel: {
-        push: true,
-        color: "warning",
-        label: "取消",
-        tabindex: 0
-      },
-      persistent: true
-    }).onOk(() => {
-      router.push("/login");
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
     });
     return;
   }
+
   claimVctcnBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
-        });
+        notify.redPacket("成功领取", res.data);
         fetchData();
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         notify({
           type: "error",
           message: res.message
@@ -277,51 +249,46 @@ onMounted(() => {
   display: flex;
   justify-content: center;
 }
-
 .livepoker-rebate-container {
-  width: 100%;
+  width: 1200px;
   height: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .livepoker-rebate-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  padding: 20px 12px 40px;
+  padding: 30px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
+  margin-top: 40px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
   background-size: 100% 100%;
-  align-items: center;
-  width: 100%;
 
   .livepoker-rebate-section-left {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
   }
 
   .livepoker-rebate-section-right {
-    width: 180px;
-    margin-top: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 254px;
 
     .bonus-image {
-      width: 100%;
       cursor: pointer;
+      width: 100%;
 
+      &:hover {
+        filter: brightness(0.9);
+      }
       &:active {
-        filter: brightness(0.85);
         transform: translate(0px, 1px);
+        opacity: 0.9;
       }
 
       &.disabled {
-        filter: grayscale(100%);
         cursor: not-allowed;
         pointer-events: none;
       }
@@ -330,7 +297,7 @@ onMounted(() => {
 
   .livepoker-rebate-section-title {
     color: #000000;
-    font-size: 16px;
+    font-size: 24px;
     line-height: 1;
     font-weight: 600;
     display: flex;
@@ -355,13 +322,13 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   .livepoker-rebate-game-bottom-left-title {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 22.4px;
     color: #ff0000;
   }
   .livepoker-rebate-game-bottom-left-btn {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 22.4px;
     color: #ff0000;
@@ -379,20 +346,21 @@ onMounted(() => {
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 20px 12px 12px;
+  padding: 40px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  // align-items: center;
+  gap: 20px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("@/assets/promo/lh-livepoker-rebate/info-title.png");
     background-repeat: no-repeat;
-    background-size: 100%;
-    width: 240px;
-    height: 26px;
-    margin: 0 auto;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin: 0 auto 8px;
   }
   .little-title {
     display: flex;
@@ -401,22 +369,22 @@ onMounted(() => {
     align-items: flex-start;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-image: url("@/assets/promo/lh-livepoker-rebate/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 64px;
-      height: 20px;
+      width: 120px;
+      height: 36px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 600;
       line-height: 23.33px;
       color: #ffffff;
       margin-right: 16px;
     }
     .right {
-      font-size: 12px;
+      font-size: 20px;
       font-weight: 400;
       line-height: 28px;
       color: #000000;
@@ -429,11 +397,12 @@ onMounted(() => {
   height: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  table-layout: fixed;
   text-align: center;
   vertical-align: middle;
   th {
-    height: 36px;
-    font-size: 12px;
+    height: 56px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 28px;
     color: #fff;
@@ -462,10 +431,9 @@ onMounted(() => {
     }
   }
   td {
-    background: transparent;
     border: 1px solid #acd4f6;
-    height: 36px;
-    font-size: 12px;
+    height: 56px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 28px;
     color: #000000;
@@ -478,39 +446,38 @@ onMounted(() => {
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 20px 12px 12px;
+  padding: 40px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-image: url("@/assets/promo/lh-livepoker-rebate/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 240px;
-    height: 20px;
+    width: 738px;
+    height: 44px;
     margin-bottom: 20px;
   }
   .content {
-    font-size: 12px;
+    font-size: 20px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 36px;
     color: #000000;
-    padding: 8px;
     .item {
+      padding-left: 24px;
       display: flex;
       gap: 10px;
-      align-items: baseline;
 
       .item-num {
         color: #ffffff;
-        font-size: 12px;
+        font-size: 20px;
         line-height: 1;
         border-radius: 50%;
-        height: 16px !important;
-        width: 16px !important;
-        min-width: 16px;
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -519,7 +486,7 @@ onMounted(() => {
       }
 
       .hint {
-        font-size: 12px;
+        font-size: 18px;
         font-weight: 400;
         line-height: 22.4px;
         color: #ff0000;
@@ -542,8 +509,8 @@ onMounted(() => {
 }
 
 .reward-info-icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   margin-right: 10px;
 }
 
@@ -552,8 +519,9 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 20px;
   color: black;
+  gap: 24px;
 
   .amount {
     color: #00a1ff;

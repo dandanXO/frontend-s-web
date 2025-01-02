@@ -6,7 +6,7 @@
           <div class="livepoker-rebate-section-title">
             <div>
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-title-img.png"
                 style="width: 20px; height: 20px; margin-bottom: 0px"
               />
             </div>
@@ -15,7 +15,7 @@
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon1.png"
                 alt=""
                 width="100%"
               />
@@ -28,20 +28,20 @@
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon3.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon3.png"
                 alt=""
                 width="100%"
               />
             </div>
             <div class="reward-info-content">
-              昨日LH有效投注:
+              昨日DY有效投注:
               <span class="amount">{{ platformValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/reward-icon2.png"
                 alt=""
                 width="100%"
               />
@@ -54,7 +54,7 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
+            <img src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
             <tr>
               <th>累计有效投注</th>
               <th>累计投注嘉奖</th>
-              <th>雷火助力金</th>
+              <th>东赢助力金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
@@ -131,13 +131,13 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/game-bottom-left-btn.png"
                 alt=""
                 style="width: 10px"
               />
               <span>示例</span>
             </div>
-            会员A：在小艾电竞场馆投注VCTCN联赛5,000元后又在雷火电竞投注VCTCN联赛投注5,000元，会员A在次日可获投注奖励38元和雷火助力金38元，共76元彩金。
+            会员A：在小艾电竞场馆投注VCTCN联赛5,000元后又在东赢电竞投注VCTCN联赛投注5,000元，会员A在次日可获投注奖励38元和东赢助力金38元，共76元彩金。
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-            活动期间，在电竞场馆投注 VCTCN 联赛累计有效投注≥3,000 元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注 VCTCN 联赛可获更高奖励金额。
+            活动期间，在电竞场馆投注 VCTCN 联赛累计有效投注≥3,000 元或以上可获的对应投注嘉奖，若在东赢电竞场馆进行投注 VCTCN 联赛可获更高奖励金额。
             <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
           </div>
           </div>
@@ -170,7 +170,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -295,7 +295,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-bg.png");
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
@@ -387,7 +387,7 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-title.png");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 240px;
@@ -401,7 +401,7 @@ onMounted(() => {
     align-items: flex-start;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 64px;
@@ -485,7 +485,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;
