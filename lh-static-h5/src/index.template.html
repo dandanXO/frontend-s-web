@@ -20,7 +20,6 @@
 
     <!-- PolyFill Script To Support Lower Version of Browser/Device -->
     <script type="text/javascript">
-      // Polyfill for globalThis
       if (typeof globalThis === "undefined") {
         if (typeof window !== "undefined") {
           // Browser environment
@@ -54,9 +53,8 @@
         window.location.pathname === "/privilege/invite" ||
         window.location.pathname === "/affiliatepage"
       ) {
-        //TODO:: Always add 1st.
+        //Always add 1st now.
         sessionStorage.setItem("LH_APP_DOMAIN_INITIALIZED", "1");
-
 
         //IOS
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {
