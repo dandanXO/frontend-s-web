@@ -506,6 +506,7 @@ export default {
     ERROR_BET_AMT_MIN_NOT_MEET: 'Minimum Bet Amount not reach',
     ERROR_SIMILAR_IP_DETECTED: 'Similar IP Detected',
     ERROR_SIMILAR_SID_DETECTED: 'Similar Device Detected',
+    HAS_REGISTER_TRIAL_PROMO: 'Particiapted in register trial promo'
   },
   rewardType: {
     BET: 'BET',
