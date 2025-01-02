@@ -646,6 +646,21 @@ async function pDepo(deposit) {
     privilegeId: deposit.privilegeId
   };
 
+  // Extract `fbp` from cookies
+  const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+    const [key, value] = cookie.split("=");
+    acc[key] = value;
+    return acc;
+  }, {});
+
+  const fbp = cookies["_fbp"] || null;
+
+  if (fbp) {
+    obj.fbp = fbp;
+  } else {
+    obj.fbp = 'no fbp';
+  }
+
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId;
   }
