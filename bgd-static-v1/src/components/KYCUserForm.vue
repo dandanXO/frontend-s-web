@@ -36,7 +36,7 @@
       flat
       no-caps
       class="btn-primary btn-primary__full"
-      :disable="!(isValidName() === true)"
+      :disabled="isValidName() !== true || (!store.phone && isValidPhone() !== true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -101,7 +101,7 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
-  updateInfo.phone && (updateInfo.phone = formDetail.phone);
+  formDetail.phone && (updateInfo.phone = formDetail.phone);
 
   api
     .post("/session/account", qs.stringify(updateInfo))
