@@ -15,6 +15,19 @@
           />
         </div>
       </div>
+      <div v-if="!store.phone" class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.phone") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.phone_placeholder')"
+            v-model="formDetail.phone"
+            :rules="[(_) => isValidPhone()]"
+          />
+        </div>
+      </div>
     </div>
 
     <q-btn
@@ -23,7 +36,7 @@
       flat
       no-caps
       class="btn-primary btn-primary__full"
-      :disable="!(isValidName() === true)"
+      :disabled="isValidName() !== true || (!store.phone && isValidPhone() !== true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -88,6 +101,7 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
+  formDetail.phone && (updateInfo.phone = formDetail.phone);
 
   api
     .post("/session/account", qs.stringify(updateInfo))
