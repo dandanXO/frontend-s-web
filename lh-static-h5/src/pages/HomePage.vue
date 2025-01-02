@@ -73,11 +73,11 @@
     </template>
 
     <q-carousel-slide
-      v-for="(banner, i) in banners"
+      v-for="(banner, i) in bannersWithImage"
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="imgURL + banner.mobileImageUrl"
+      :img-src="imgURL + banner.imgSrc"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
   </q-carousel>
@@ -629,7 +629,7 @@
 
   <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
     <q-card
-      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px;"
+      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px"
       class="bg-[#0000001A] text-black station-notice-content-wrapper"
     >
       <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
@@ -646,7 +646,7 @@
 
         <q-separator />
 
-        <q-tab-panels v-model="activeKey" animated style="background: transparent;">
+        <q-tab-panels v-model="activeKey" animated style="background: transparent">
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
             <q-list style="min-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
@@ -658,8 +658,8 @@
                     icon="notifications_none"
                     :label="ann.title"
                   >
-                    <q-card style="background: transparent;">
-                      <q-card-section style="color: #9f9f9f;">
+                    <q-card style="background: transparent">
+                      <q-card-section style="color: #9f9f9f">
                         {{ ann.content }}
                       </q-card-section>
                     </q-card>
@@ -690,7 +690,13 @@
           height="100%"
           style="background: transparent"
         >
-          <q-carousel-slide v-for="(item, index) in popupList" :key="index" :name="index" class="carousel-slide" style="padding: 0">
+          <q-carousel-slide
+            v-for="(item, index) in popupList"
+            :key="index"
+            :name="index"
+            class="carousel-slide"
+            style="padding: 0"
+          >
             <div class="promo-banner-container">
               <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
               <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
@@ -1057,7 +1063,7 @@ export default defineComponent({
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const popupList = ref([]);
-    const popupSlide = ref(0)
+    const popupSlide = ref(0);
     const homePopupFrequencyNum = ref(0);
 
     const setExpiryBanner = () => {
@@ -1077,7 +1083,7 @@ export default defineComponent({
         value: value,
         expiry: now.getTime() + interval,
         id: popupList.value[0]?.id,
-        frequency: popupList.value[0]?.frequency,
+        frequency: popupList.value[0]?.frequency
       };
       localStorage.setItem(key, JSON.stringify(item));
     };
@@ -1169,7 +1175,7 @@ export default defineComponent({
     };
     const formatHomePopupImg = (path) => {
       return useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + path;
-    }
+    };
 
     function loadData() {
       api
@@ -1182,6 +1188,13 @@ export default defineComponent({
         })
         .catch(() => {});
     }
+
+    const bannersWithImage = computed(() =>
+      banners.value.map((banner) => ({
+        ...banner,
+        imgSrc: $q.dark.isActive && banner.mobileImageUrlDark ? banner.mobileImageUrlDark : banner.mobileImageUrl
+      }))
+    );
 
     const platforms = ref([]);
     const selectedPlatId = ref();
@@ -1839,7 +1852,8 @@ export default defineComponent({
       rocketSlide: ref(0),
       promoSlide: ref(0),
       convertToCommaAmount,
-      formatHomePopupImg
+      formatHomePopupImg,
+      bannersWithImage
     };
   }
 });
@@ -2493,7 +2507,7 @@ export default defineComponent({
     height: 30px;
     margin: 2px auto;
   }
-  
+
   .home-header {
     background: #212b43;
     background-color: #212b43;
@@ -2524,7 +2538,7 @@ export default defineComponent({
 
   .details-bar {
     padding: 0;
-    
+
     .main-balance {
       color: $font-3-dark;
     }
@@ -2576,7 +2590,7 @@ export default defineComponent({
           }
           .platform-subtitle {
             color: #a98f7c;
-            font-size: .975rem;
+            font-size: 0.975rem;
           }
           .platform-logo {
             display: none;
