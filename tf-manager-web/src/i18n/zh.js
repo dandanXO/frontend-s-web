@@ -1087,6 +1087,7 @@ export default {
     extraParam: '扩展信息',
     fail: '失败',
     failReason: '失败原因',
+    fastAccessSeq: '快速浏览排序',
     fbid: 'Facebook 像素 ID',
     fbToken: 'Facebook 像素令牌',
     fdConvertRate: '存款转化率',

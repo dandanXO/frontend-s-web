@@ -968,6 +968,7 @@ export default {
     extraParam: '추가 매개변수',
     fail: '실패',
     failReason: '실패 사유',
+    fastAccessSeq: '빠른 액세스 순서',
     fbid: 'Facebook Pixel ID',
     fbToken: 'Facebook Pixel Token',
     fdConvertRate: 'FTD 환율',

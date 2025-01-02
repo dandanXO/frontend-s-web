@@ -156,6 +156,7 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="fastAccessSeq" :label="t('fields.fastAccessSeq')" width="60" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="180">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
