@@ -658,7 +658,7 @@ async function pDepo(deposit) {
   if (fbp) {
     obj.fbp = fbp;
   } else {
-    obj.fbp = 'no fbp';
+    obj.fbp = '';
   }
 
   if (deposit.privilegeId) {
