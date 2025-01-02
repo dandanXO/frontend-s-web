@@ -29,10 +29,9 @@ qrcode.makeCode(window.location.href);
 installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
 
-  // push fbc
   const getFclidFromUrl = () => {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('fclid') || null;
+    return urlParams.get("fclid") || null;
   };
 
   switch (container.getAttribute("data-type")) {
@@ -40,9 +39,40 @@ installBtn.addEventListener("click", async () => {
       const isFbqInitialized = sessionStorage.getItem(FBQ_INITIALIZED);
       if (isFbqInitialized) fbq("track", "SubmitApplication");
 
-      const fclid = getFclidFromUrl();
-      if (fclid) {
-        localStorage.setItem("FBCLID", fclid);
+      // Get the current URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const fbclid = urlParams.get("fbclid");
+      if (fbclid) {
+        const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+          const [key, value] = cookie.split("=");
+          acc[key] = value;
+          return acc;
+        }, {});
+
+        const fbp = cookies["_fbp"] || null;
+        const fbclidData = fbclid;
+        const timestamp = new Date().toISOString();
+        const fbc = fbclidData ? `fb.1.${timestamp}.${fbclid}` : null;
+
+        const siteCode = "ID1";
+
+        const payload = { fbp, fbc, siteCode };
+
+        // Make the POST fbc fbp
+        fetch("https://apz8rz8.q690cx97zgb.com/app/facebookInfo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
 
       if (!deferredPrompt) {
@@ -131,13 +161,6 @@ window.addEventListener("beforeinstallprompt", (e) => {
 
 window.addEventListener("load", () => {
   const hostname = window.location.hostname.replace("www.", "");
-
-  // Get the current URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const fbclid = urlParams.get('fbclid');
-  if (fbclid) {
-    sessionStorage.setItem(FBC, fbclid);
-  }
 
   const fbqId = fbqLists[hostname]?.id;
   if (fbqId) {
