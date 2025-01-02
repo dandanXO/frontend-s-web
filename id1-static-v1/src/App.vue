@@ -130,7 +130,7 @@ export default defineComponent({
       // const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
       if (isInPwa()) {
         const hostname = window.location.hostname.replace("www.", "");
-        const fbclid = localStorage.getItem("FBCLID");
+        // const fbclid = localStorage.getItem("FBCLID");
         // const hostname= "7ffoz.cc"
 
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
@@ -145,7 +145,7 @@ export default defineComponent({
           fbq("init", facebookId);
           fbq("track", "PageView");
           store.isFbPixel = true;
-          store.fbclid = fbclid;
+          // store.fbclid = fbclid;
 
           // affiliateCode
           //   :
