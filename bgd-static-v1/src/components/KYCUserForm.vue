@@ -25,7 +25,12 @@
             :placeholder="$t('form.phone_placeholder')"
             v-model="formDetail.phone"
             :rules="[(_) => isValidPhone()]"
-          />
+          >
+            <template v-slot:prepend>
+              <FancyIcon name="smartphone" />
+              <div class="prepend-number">+880</div>
+            </template>
+          </q-input>
         </div>
       </div>
     </div>
@@ -51,6 +56,7 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { t } from "src/boot/lang";
+import FancyIcon from "src/components/auth/FancyIcon.vue";
 
 const emits = defineEmits(["test"]);
 
@@ -75,15 +81,16 @@ const isValidName = () => {
 
 const isValidPhone = () => {
   const { phone } = formDetail;
-
-  if (!phone) {
-    return "Please Enter Phone Number";
+  if (!phone || phone.length === 0) {
+    return t("form.phone_rules_01");
   }
-
-  const phoneRegex = /^\d{10}$/;
-  const isValid = phoneRegex.test(phone);
-
-  return isValid ? true : "Phone Number must be 10 digits";
+  if (phone.length < 10 || phone.length > 11) {
+    return t("form.phone_rules_02");
+  }
+  if (!phone.startsWith("01")) {
+    return t("form.phone_rules_03");
+  }
+  return true;
 };
 
 const isAlphanumeric = (value, translation) => {
