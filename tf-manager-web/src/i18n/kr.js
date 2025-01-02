@@ -844,6 +844,7 @@ export default {
     delete: '삭제',
     runAtOnce: '즉시 실행',
     deleteRole: '역할 삭제',
+    deleteRanking: '순위 삭제',
     deliver: '전달',
     delivered: '전달됨',
     deliverGift: '선물 전달',
@@ -2648,6 +2649,8 @@ export default {
     'Site Platform Blacklist': '사이트 플랫폼 블랙리스트',
     'Affiliate Deposit Withdraw Summary': '에이전트 입출금 요약',
     'ID Verification': 'ID Verification',
+    'Privi Spin Event Record': '프리비 스핀 이벤트 기록',
+    'Top Ranking': '최고 순위 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',

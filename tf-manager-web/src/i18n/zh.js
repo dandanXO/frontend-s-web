@@ -953,6 +953,7 @@ export default {
     delete: '删除',
     runAtOnce: '立即执行',
     deleteRole: '删除角色',
+    deleteRanking: '刪除排行记录',
     deliver: '发送礼品',
     delivered: '已送达',
     deliverGift: '运送礼品',
@@ -2971,6 +2972,7 @@ export default {
     'Site Domain': '站点域名管理',
     'Privi Spin Event Record': '优惠抽奖/轮盘记录',
     'ID Verification': '身份认证',
+    'Top Ranking': '优惠排行榜记录',
   },
   google: {
     google_auth_menu: '谷歌验证',

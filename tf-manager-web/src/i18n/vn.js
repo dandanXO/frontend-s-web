@@ -824,6 +824,7 @@ export default {
     delete: 'Xóa',
     runAtOnce: 'Chạy ngay lập tức',
     deleteRole: 'Xóa vai trò',
+    deleteRanking: 'Xóa xếp hạng',
     deliver: 'Giao hàng',
     delivered: 'Đã giao hàng',
     deliverGift: 'Giao quà',
@@ -2616,6 +2617,8 @@ export default {
     'Mooncake Fest Spin Record': '中秋节转盘 2024',
     'Site Platform Blacklist': 'Danh sách đen nền tảng trang web',
     'ID Verification': 'ID Verification',
+    'Privi Spin Event Record': 'Ghi chép sự kiện quay thưởng Privi',
+    'Top Ranking': 'Ghi chép xếp hạng cao nhất',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
