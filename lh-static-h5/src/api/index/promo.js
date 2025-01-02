@@ -531,3 +531,11 @@ export function claimBountyBonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/event-check-in/claim?promoCode=${promoCode}&v=${randNum}`);
 }
+
+export function getCompetitionBetPlatformInit(promoCode) {
+  return eventapi.get(`/session/competition-bet-platform/init`, qs.stringify({ promoCode }));
+}
+
+export function getCompetitionBetPlatformClaimBonus(promoCode) {
+  return eventapi.post(`/session/competition-bet-platform/claimBonus`, qs.stringify({ promoCode }));
+}
