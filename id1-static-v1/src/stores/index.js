@@ -49,7 +49,8 @@ export const userStore = defineStore("userStore", {
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
       ftd: true,
-      isFbPixel: false
+      isFbPixel: false,
+      fbclid: "",
     };
   },
   actions: {

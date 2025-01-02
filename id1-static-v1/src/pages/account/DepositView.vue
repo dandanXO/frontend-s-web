@@ -657,8 +657,14 @@ async function pDepo(deposit) {
 
   if (fbp) {
     obj.fbp = fbp;
-  } else {
-    obj.fbp = '';
+  }
+
+  if (store.fbclid) {
+    const fbclidData = store.fbclid;
+    const timestamp = new Date().toISOString();
+    const fbc = fbclidData ? `fb.1.${timestamp}.${fbclid}` : null;
+
+    obj.fbc = fbc;
   }
 
   if (deposit.privilegeId) {
