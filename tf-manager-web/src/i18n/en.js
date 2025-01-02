@@ -950,6 +950,7 @@ export default {
     delete: 'Delete',
     runAtOnce: 'runAtOnce',
     deleteRole: 'Delete Role',
+    deleteRanking: 'Delete Ranking',
     deliver: 'Deliver',
     delivered: 'Delivered',
     deliverGift: 'Deliver Gift',
@@ -3022,6 +3023,8 @@ export default {
     'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
     'Site Domain': 'Site Domain',
     'ID Verification': 'ID Verification',
+    'Privi Spin Event Record': 'Privi Spin Event Record',
+    'Top Ranking': 'Top Ranking',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
