@@ -28,10 +28,22 @@ qrcode.makeCode(window.location.href);
 
 installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
+
+  // push fbc
+  const getFclidFromUrl = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('fclid') || null;
+  };
+
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       const isFbqInitialized = sessionStorage.getItem(FBQ_INITIALIZED);
       if (isFbqInitialized) fbq("track", "SubmitApplication");
+
+      const fclid = getFclidFromUrl();
+      if (fclid) {
+        localStorage.setItem("FBCLID", fclid);
+      }
 
       if (!deferredPrompt) {
         const userAgent = navigator.userAgent.toLowerCase();
@@ -119,6 +131,14 @@ window.addEventListener("beforeinstallprompt", (e) => {
 
 window.addEventListener("load", () => {
   const hostname = window.location.hostname.replace("www.", "");
+
+  // Get the current URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const fbclid = urlParams.get('fbclid');
+  if (fbclid) {
+    sessionStorage.setItem(FBC, fbclid);
+  }
+
   const fbqId = fbqLists[hostname]?.id;
   if (fbqId) {
     fbq("init", fbqId);
