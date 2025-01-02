@@ -51,8 +51,9 @@ installBtn.addEventListener("click", async () => {
 
         const fbp = cookies["_fbp"] || null;
         const fbclidData = fbclid;
-        const timestamp = new Date().toISOString();
-        const fbc = fbclidData ? `fb.1.${timestamp}.${fbclid}` : null;
+        // const timestamp = new Date().toISOString();
+        // const fbc = fbclidData ? `fb.1.${timestamp}.${fbclid}` : null;
+        const fbc = fbclidData;
 
         const siteCode = "ID1";
 
