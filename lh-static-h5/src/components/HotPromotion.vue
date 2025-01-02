@@ -44,6 +44,8 @@
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
     />
+    <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
+    <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -71,7 +73,6 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
-
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -110,7 +111,8 @@ const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/dai
 const lh1Vip = defineAsyncComponent(() => import("./hotpromo/lh1-vip/lh1Vip.vue"));
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
 const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
-
+const BountyBlastPremier = defineAsyncComponent(() => import("../components/hotpromo/bounty-blast/BountyBlastPremier.vue"));
+const VctcnMatchPromo = defineAsyncComponent(() => import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue"))
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -144,7 +146,9 @@ export default defineComponent({
     DailiPromo,
     lh1Vip,
     SlotLossBonusPromo,
-    ChristmasGachapon
+    ChristmasGachapon,
+    BountyBlastPremier,
+    VctcnMatchPromo
   },
   props: {
     list: {

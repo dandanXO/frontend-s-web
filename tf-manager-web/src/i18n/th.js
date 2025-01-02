@@ -547,6 +547,7 @@ export default {
     defaultAgentVip: 'VIP พันธมิตรเริ่มต้น',
     delete: 'ลบ',
     deleteRole: 'ลบกฎ',
+    deleteRanking: 'ลบการจัดอันดับ',
     deposit: 'เงินฝาก',
     depositAmount: 'จำนวนเงินฝาก',
     depositAverage: 'เงินฝากเฉลี่ย',

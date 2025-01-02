@@ -216,7 +216,13 @@ export function claimLivePokerBonus(item) {
 }
 
 export function footballHistroy() {
-  return eventapi.get("/lh1-football/history");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/lh1-football/history?v=${randNum}`);
+}
+
+export function footballEligibility() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/lh1-football/eligibility?v=${randNum}`);
 }
 
 export function getCompetitionBetToday(promoCode) {
@@ -417,4 +423,13 @@ export function getCompetitionLossInit(promoCode) {
 
 export function claimCompetitionLoss(promoCode) {
   return eventapi.post(`/session/competition-loss/claim`, qs.stringify({ promoCode }));
+}
+export function getVctcnInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-platform/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimVctcnBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }

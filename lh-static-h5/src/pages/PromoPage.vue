@@ -121,6 +121,7 @@
                   style="display: block; width: 100%"
                 />
               </div>
+              <BlastPremierMarquee :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty': null" v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
               <div
                 class="inner"
                 :class="{
@@ -282,6 +283,7 @@ import LocalStorage from "boot/local-storage";
 import { useLocalStorage } from "@vueuse/core";
 
 import HotPromotion from "components/HotPromotion";
+import BlastPremierMarquee from "src/components/hotpromo/bounty-blast/BlastPremierMarquee.vue";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import { cached } from "src/boot/cache";
@@ -293,6 +295,7 @@ export default defineComponent({
   components: {
     HotPromotion,
     NBAWaterBattle,
+    BlastPremierMarquee
   },
   setup() {
     const notify = useNotify();
@@ -533,7 +536,7 @@ export default defineComponent({
       isFetchingPromo,
       isSpecialPromo,
       selectedPromoWrapperClass,
-      showRuleDialog
+      showRuleDialog,
       // routeQuery
     };
   }

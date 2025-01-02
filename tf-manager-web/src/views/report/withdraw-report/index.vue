@@ -80,7 +80,7 @@
             <template #label>
               <div> {{ t('dashboard.totalTransaction') }} </div>
             </template>
-            <span>{{ item.totalSuccessWithdraw }} / {{ (parseInt(item.totalWithdraw) + parseInt(item.totalSuccessWithdraw)) }} </span>
+            <span>{{ item.totalSuccessWithdraw }} / {{ item.totalTransaction }} </span>
           </el-descriptions-item>
           <el-descriptions-item
             label-align="left"
@@ -91,7 +91,7 @@
               <div> {{ t('fields.amount') }} </div>
             </template>
             <span v-formatter="{data: item.totalSuccessWithdrawAmount, type: 'money'}" /> /
-            <span v-formatter="{data: parseFloat(item.totalWithdrawAmount) + parseFloat(item.totalSuccessWithdrawAmount), type: 'money'}" />
+            <span v-formatter="{data: item.totalAmount, type: 'money'}" />
           </el-descriptions-item>
           <el-descriptions-item
             label-align="left"
@@ -101,7 +101,7 @@
             <template #label>
               <div> {{ t('fields.successRate') }} </div>
             </template>
-            <span v-formatter="{data: item.totalSuccessWithdraw / (parseInt(item.totalWithdraw) + parseInt(item.totalSuccessWithdraw)) * 100, type: 'money'}" /> %
+            <span v-formatter="{data: item.totalSuccessWithdraw / item.totalTransaction * 100, type: 'money'}" /> %
           </el-descriptions-item>
           <el-descriptions-item
             label-align="left"
@@ -111,7 +111,7 @@
             <template #label>
               <div>{{ t('fields.successAmounntRate') }} </div>
             </template>
-            <span v-formatter="{data: item.totalSuccessWithdrawAmount / (parseFloat(item.totalWithdrawAmount) + parseFloat(item.totalSuccessWithdrawAmount)) * 100, type: 'money'}" /> %
+            <span v-formatter="{data: item.totalSuccessWithdrawAmount / item.totalAmount * 100, type: 'money'}" /> %
           </el-descriptions-item>
         </el-descriptions>
       </el-card>
@@ -304,6 +304,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
+import { isCnySite, isKorea, isVnmSite } from '../../../utils/site'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -420,6 +421,15 @@ async function loadWithdrawReport(first) {
   const { data: ret1 } = await getTotalWithdrawReport(query)
   totalPage.records = ret1.records
   page.pages = ret.pages
+  ret.records.forEach((item, index) => {
+    if (isCnySite(request.siteId) || isVnmSite(request.siteId) || isKorea(request.siteId)) {
+      item.totalTransaction = parseInt(item.totalWithdraw) + parseInt(item.totalSuccessWithdraw)
+      item.totalAmount = parseFloat(item.totalWithdrawAmount) + parseFloat(item.totalSuccessWithdrawAmount)
+    } else {
+      item.totalTransaction = parseInt(item.totalWithdraw) >= parseInt(item.totalSuccessWithdraw) ? item.totalWithdraw : item.totalSuccessWithdraw
+      item.totalAmount = parseFloat(item.totalWithdrawAmount) >= parseFloat(item.totalSuccessWithdrawAmount) ? item.totalWithdrawAmount : item.totalSuccessWithdrawAmount
+    }
+  });
   page.records = ret.records
   page.loading = false
 }

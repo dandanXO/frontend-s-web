@@ -702,7 +702,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showDialog('DESKTOP_IMAGE')"
+                  @click="showDialog('DESKTOP_IMAGE', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -755,7 +755,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showDialog('DESKTOP_BACKGROUND_IMAGE')"
+                  @click="showDialog('DESKTOP_BACKGROUND_IMAGE', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -803,7 +803,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showDialog('MOBILE_IMAGE')"
+                  @click="showDialog('MOBILE_IMAGE', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -856,7 +856,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showDialog('MOBILE_BACKGROUND_IMAGE')"
+                  @click="showDialog('MOBILE_BACKGROUND_IMAGE', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -908,7 +908,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showDialog('DESKTOP_BANNER')"
+                  @click="showDialog('DESKTOP_BANNER', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -960,7 +960,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showDialog('MOBILE_BANNER')"
+                  @click="showDialog('MOBILE_BANNER', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -1009,7 +1009,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:siteimage:add']"
-                  @click="showDialog('DESKTOP_FAST_ACCESS_IMAGE')"
+                  @click="showDialog('DESKTOP_FAST_ACCESS_IMAGE', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -1057,7 +1057,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:siteimage:add']"
-                  @click="showDialog('MOBILE_FAST_ACCESS_IMAGE')"
+                  @click="showDialog('MOBILE_FAST_ACCESS_IMAGE', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -1945,58 +1945,6 @@ async function loadSites() {
   siteList.list = site
 }
 
-// async function attachPhoto(event) {
-//   const files = event.target.files[0]
-//   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-//   const dir = 'promo'
-
-//   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-//     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
-//   } else {
-//     var formData = new FormData()
-//     formData.append('files', files)
-//     formData.append('dir', dir)
-//     formData.append('overwrite', false)
-//     return await uploadImage(formData)
-//   }
-// }
-
-// async function attachDesktopImg(event) {
-//   const data = await attachPhoto(event)
-//   if (data.code === 0) {
-//     form.desktopImgUrl = data.data
-//   } else {
-//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-//   }
-// }
-
-// async function attachMobileImg(event) {
-//   const data = await attachPhoto(event)
-//   if (data.code === 0) {
-//     form.mobileImgUrl = data.data
-//   } else {
-//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-//   }
-// }
-
-// async function attachDesktopBanner(event) {
-//   const data = await attachPhoto(event)
-//   if (data.code === 0) {
-//     form.desktopBannerUrl = data.data
-//   } else {
-//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-//   }
-// }
-
-// async function attachMobileBanner(event) {
-//   const data = await attachPhoto(event)
-//   if (data.code === 0) {
-//     form.mobileBannerUrl = data.data
-//   } else {
-//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-//   }
-// }
-
 function submitImage() {
   switch (uiControl.imageSelectionType) {
     case 'DESKTOP_IMAGE':
@@ -2067,7 +2015,7 @@ const handleCancelTypeClick = () => {
   form.promoType = null
 }
 
-function showDialog(type) {
+function showDialog(type, isDark = false) {
   if (imageFormRef.value) {
     imageFormRef.value.resetFields()
     uploadedImage.url = null
@@ -2102,9 +2050,11 @@ function showDialog(type) {
   }
   uiControl.dialogTitle = t('fields.addImage')
   uiControl.dialogVisible = true
+  uiControl.selectDarkImage = isDark;
 }
 
 async function attachImage(event) {
+  imageForm.name = generateRandomString(8);
   const data = await attachPhoto(event)
   if (data.code === 0) {
     imageForm.path = data.data
@@ -2112,6 +2062,16 @@ async function attachImage(event) {
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
   }
+}
+
+function generateRandomString(charSize) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < charSize; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
 }
 
 async function attachPhoto(event) {

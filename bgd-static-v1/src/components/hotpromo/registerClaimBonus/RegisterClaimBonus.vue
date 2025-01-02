@@ -32,7 +32,7 @@
           <div class="bonus-progress-title">
             <div class="bonus-progress-title-left">
               Complete
-              <span class="highlight">1/5</span>
+              <span class="highlight">3</span>
               tasks to receive it
             </div>
             <div class="bonus-progress-title-right">
@@ -45,11 +45,15 @@
           </div>
           <div class="bonus-progress-text">
             <div class="bonus-progress-text-left">Completed： {{ noOfTasksCompleted }}</div>
-            <div class="bonus-progress-text-right">Target: {{ promoData.tasks?.length }}</div>
+            <div class="bonus-progress-text-right">Target: 3</div>
           </div>
         </div>
 
-        <div class="bonus-claim-button" :class="{ disable: promoData.idVerificationStatus===true && promoData.claimableBonus <= 0 }" @click="claimBonus">
+        <div
+          class="bonus-claim-button"
+          :class="{ disable: promoData.idVerificationStatus === true && promoData.claimableBonus <= 0 }"
+          @click="claimBonus"
+        >
           Claim now
         </div>
       </div>
@@ -57,7 +61,9 @@
     <div class="task-container" v-for="(task, index) in promoData.tasks" :key="task.code">
       <div class="task-container-header">
         Task {{ index + 1 }}: {{ task.name }}
-        <div class="status-button progress">
+        <div class="status-button"
+          :class="(task.memberTaskStatus==='COMPLETED' || task.memberTaskStatus==='CLAIMED') ? 'completed' : 'progress'"
+        >
           {{ task.memberTaskStatus.charAt(0) + task.memberTaskStatus.slice(1).toLowerCase() }}
         </div>
       </div>
@@ -69,7 +75,7 @@
         <div class="bonus-progress-bar">
           <div
             class="bonus-progress-bar-fill"
-            :style="{ width: task.memberDepositStatus / task.depositRequired + '%' }"
+            :style="{ width: (task.memberDepositStatus / task.depositRequired) * 100 + '%' }"
           ></div>
         </div>
         <div class="bonus-progress-text">
@@ -114,7 +120,7 @@ import moment from "moment";
 
 const store = userStore();
 
-const props = defineProps(["params"]);
+const props = defineProps(["params", "promocode"]);
 const params = JSON.parse(props.params || "{}");
 const promoData = ref([]);
 const isNameAuthModal = ref(false);
@@ -122,27 +128,32 @@ const isCongratsModalV2 = ref(false);
 const bonusAmount = ref(0);
 const promoDaysLeft = ref(0);
 
-const isFtdPromoEnded = computed(() => {
-  if (store.ftd !== "OPEN") {
-    return true;
-  }
-  return false;
-});
 
 const noOfTasksCompleted = computed(() => {
-  return promoData.value?.tasks?.filter((item) => item.status === "COMPLETED" || item.status === "CLAIMED").length || 0;
+  return promoData.value?.tasks?.filter((item , index) => index <= 2 && (item.memberTaskStatus === "COMPLETED" || item.memberTaskStatus === "CLAIMED")).length || 0;
 });
 
 const totalProgressBarWidth = computed(() => {
-  return noOfTasksCompleted.value / promoData.value.tasks?.length ?? 0;
+  const tasksLength = promoData.value.tasks?.length || 0;
+  var taskSize = 0;
+  if(noOfTasksCompleted.value === 1){
+    taskSize = 0.3;
+  }else if(noOfTasksCompleted.value === 2){
+    taskSize = 0.6;
+  }else  if(noOfTasksCompleted.value === 3){
+    taskSize = 1;
+  }
+
+  const calculatedVal = tasksLength ? taskSize : 0;
+  return !isNaN(calculatedVal) ? calculatedVal * 100 : 0;
 });
 
 const claimBonus = () => {
   if (!promoData.value.idVerificationStatus) {
     isNameAuthModal.value = true;
   } else {
-    eventapi.post("/session/register-trial-fund/claimTask?promoCode=bgd-register-trial-fund").then((res) => {
-      if (res.code === 0) {
+    eventapi.post(`/session/register-trial-fund/claimTask?promoCode=${props.promocode}`).then((res) => {
+      if (res.code === 0 && res.data !== 0) {
         isCongratsModalV2.value = true;
         bonusAmount.value = res.data;
       }
@@ -155,23 +166,16 @@ const handleReceiveBonus = async () => {
   isCongratsModalV2.value = false;
 };
 
-// const loadAppTabs = () => {
-//   api.get("/opt-session/getPakAppTabs").then((res) => {
-//     if (res.code === 0) {
-//       const { data } = res;
-//       if (data && data.hasOwnProperty("ftd")) {
-//         store.ftd = data.ftd;
-//       }
-//     }
-//   });
-// };
 
 const getTasks = async () => {
-  eventapi.get("/session/register-trial-fund/init?promoCode=bgd-register-trial-fund").then((res) => {
+  eventapi.get(`/session/register-trial-fund/init?promoCode=${props.promocode}`).then((res) => {
     promoData.value = res.data;
 
     const expiryDate = moment.utc(promoData.value.expiryDate, "YYYY-MM-DD HH:mm:ss");
     promoDaysLeft.value = expiryDate.diff(moment.utc(), "days");
+    if(promoDaysLeft.value < 0){
+      promoDaysLeft.value = 0;
+    }
   });
 };
 onMounted(() => {
