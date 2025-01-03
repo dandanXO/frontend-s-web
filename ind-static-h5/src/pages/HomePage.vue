@@ -1165,14 +1165,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoriesList = ref([
-  { title: "Lobby", icon: "lobby", active: true },
-  { title: "Hot", icon: "hot", active: false },
-  { title: "Casino", icon: "casino", active: false },
-  { title: "Slot", icon: "slot", active: false },
-  { title: "Fishing", icon: "fishing", active: false },
-  { title: "Sport", icon: "sport", active: false }
-]);
+const categoriesList = ref([]);
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -2764,12 +2757,54 @@ const loadCustomerAddress = () => {
 
 let intervalId;
 
+const loadAppTabs = () => {
+  // Key to store tabs data in localStorage
+  const localStorageKey = "appTabs";
+
+  // Load tabs from localStorage if available
+  const savedTabs = JSON.parse(localStorage.getItem(localStorageKey));
+  if (savedTabs && savedTabs.length > 0) {
+    categoriesList.value = savedTabs;
+    console.log("got localstorage");
+    categoriesList.value.forEach((tab, index) => {
+      tab.active = index === 0;
+    });
+  } else {
+    categoriesList.value = [
+      { title: "Lobby", icon: "lobby", active: true },
+      { title: "Hot", icon: "hot", active: false },
+      { title: "Casino", icon: "casino", active: false },
+      { title: "Slot", icon: "slot", active: false },
+      { title: "Fishing", icon: "fishing", active: false },
+      { title: "Sport", icon: "sport", active: false }
+    ];
+  }
+
+  // Fetch latest tabs from the API
+  api
+    .get("/opt-session/getAppTabs")
+    .then((res) => {
+      if (res.code === 0 && res.data && res.data.tabs) {
+        const { tabs } = res.data;
+
+        if (tabs.length > 0) {
+          // Save updated tabs to localStorage
+          localStorage.setItem(localStorageKey, JSON.stringify(res.data.tabs));
+        }
+      }
+    })
+    .catch((e) => {
+      console.error("Failed to fetch tabs:", e);
+    });
+};
+
 onActivated(() => {
   store.getUnreadTotal();
 });
 
 onMounted(() => {
   isPlatLoading.value = true;
+  loadAppTabs();
   getPlatList();
   loadData();
   loadAnnouncement();
