@@ -136,8 +136,9 @@ const props = defineProps({
 
 const getPromotion = () => {
   loadingClaim.value = true;
+  const randNum = Math.floor(Math.random() * 1000) + 1;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=${props.promoCode}`)
+    .get(`/redPacketVip/claim?promoCode=${props.promoCode}&v=${randNum}`)
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
