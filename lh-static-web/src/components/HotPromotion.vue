@@ -117,6 +117,7 @@
     />
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
+    <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -235,7 +236,7 @@ import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/Christma
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
-
+import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -335,7 +336,8 @@ export default defineComponent({
     ValorantChampionTour2024,
     ChristmasGachapon,
     BountyBlastPremier,
-    VctcnMatchPromo
+    VctcnMatchPromo,
+    Belgrade2025Promo
   },
   props: {
     list: {

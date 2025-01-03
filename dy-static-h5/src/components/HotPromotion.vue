@@ -117,6 +117,7 @@
       :promo-rules="list.pageContent"
     />
     <VctcnMatchPromo v-if="list.redirectUrl === 'dy2-vctcn'" :promo-code="list.promoCode" />
+    <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -242,6 +243,7 @@ const DemaciaCup1 = defineAsyncComponent(() => import("./hotpromo/demacia-cup-1/
 const Dota2BlastSlam2024 = defineAsyncComponent(() => import("./hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"));
 const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
 const VctcnMatchPromo = defineAsyncComponent(() => import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue"))
+const Belgrade2025Promo = defineAsyncComponent(() => import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -314,7 +316,8 @@ export default defineComponent({
     DemaciaCup1,
     Dota2BlastSlam2024,
     ChristmasGachapon,
-    VctcnMatchPromo
+    VctcnMatchPromo,
+    Belgrade2025Promo
   },
   props: {
     list: {
