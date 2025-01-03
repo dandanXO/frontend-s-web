@@ -353,50 +353,6 @@
   
   const tabValue = ref(1);
   
-  const handleClaimBonus1 = () => {
-    if (!store.token) {
-      $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: "primary",
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: "warning",
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true
-      }).onOk(() => {
-        router.push("/login");
-      });
-      return;
-    }
-    claimCompetitionBonus(promoParam.value.betPromoCode)
-      .then((res) => {
-        if (res.code === 0) {
-          notify({
-            type: "success",
-            message: `成功领取${res.data}元`
-          });
-          fetchData();
-        } else {
-          notify({
-            type: "error",
-            message: res.message
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  
   const handleClaimBonus2 = () => {
     if (!store.token) {
       $q.dialog({
@@ -421,7 +377,51 @@
       });
       return;
     }
-    claimCompetitionLoss(promoParam.value.lossPromoCode)
+    claimCompetitionBonus(promoParam.value.promoCode2)
+      .then((res) => {
+        if (res.code === 0) {
+          notify({
+            type: "success",
+            message: `成功领取${res.data}元`
+          });
+          fetchData();
+        } else {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
+  const handleClaimBonus1 = () => {
+    if (!store.token) {
+      $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: "primary",
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: "warning",
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true
+      }).onOk(() => {
+        router.push("/login");
+      });
+      return;
+    }
+    claimCompetitionLoss(promoParam.value.promoCode1)
       .then((res) => {
         if (res.code === 0) {
           notify({
@@ -443,9 +443,8 @@
   
   const fetchData = async () => {
     try {
-      console.log('dan', promoParam.value)
-      const res1 = await getCompetitionYesterday(promoParam.value.promoCode);
-      const res2 = await getCompetitionLossInit(promoParam.value.promoCode);
+      const res2 = await getCompetitionYesterday(promoParam.value.promoCode2);
+      const res1 = await getCompetitionLossInit(promoParam.value.promoCode1);
   
       totalValidBet.value = res1.data?.totalValidBet || 0;
       bonus1.value = res1.data?.bonus || 0;
