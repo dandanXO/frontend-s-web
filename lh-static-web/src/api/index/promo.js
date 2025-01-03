@@ -713,3 +713,9 @@ export function getVctcnInit(promoCode) {
 export function claimVctcnBonus(promoCode) {
   return server.EVENT.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}`);
 }
+export function getBelgrade2025Init(promoCode) {
+  return server.EVENT.get(`/session/competition-single-bet/init?promoCode=${promoCode}`);
+}
+export function claimBelgrade2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}`);
+}
