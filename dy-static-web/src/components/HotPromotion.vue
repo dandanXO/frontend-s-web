@@ -92,13 +92,14 @@
     <DemaciaCup1 v-if="list.redirectUrl === 'dy2-demacia-cup-2024'" :promo-param="listParam" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'dy2-vctcn'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
-    
+
     <ChristmasGachapon
       v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
       :promo-date="listParam.date"
     />
+    <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -185,6 +186,7 @@ import PerfectWorldMajor2024 from "@/components/hotpromo/perfect-world-major-202
 import DemaciaCup1 from "@/components/hotpromo//demacia-cup-1/DemaciaCup1.vue";
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
+import DreamLeagueS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -273,7 +275,8 @@ export default defineComponent({
     DemaciaCup1,
     ChristmasGachapon,
     VctcnMatchPromo,
-    Belgrade2025Promo
+    Belgrade2025Promo,
+    DreamLeagueS25
   },
   props: {
     list: {
@@ -579,5 +582,36 @@ export default defineComponent({
       }
     }
   }
+}
+
+.ribbon {
+  clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+  background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+  padding-right: 10px;
+  font-family: 'PingFang SC';
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  width:fit-content;
+  padding: 0px 20px 0px 10px;
+  aspect-ratio: 94/30;
+  white-space: nowrap;
+}
+
+.title-img {
+  aspect-ratio: 2952 / 176;
+  background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 905px 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  color: #4c4c6c;
+  font-weight: bold;
+  letter-spacing: 3px;
 }
 </style>

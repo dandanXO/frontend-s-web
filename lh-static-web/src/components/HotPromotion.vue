@@ -55,6 +55,7 @@
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
     <DemaciaCup1 v-if="list.redirectUrl === 'lh-demacia-cup-1'" :promo-param="listParam" />
+    <LplPKlck2025loss v-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'" :promo-param="listParam" :promo-code="list.promoCode"/>
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
@@ -118,6 +119,7 @@
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
+    <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -169,6 +171,7 @@ import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS
 import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
 import PerfectWorldMajor2024 from "../components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 import DemaciaCup1 from "../components/hotpromo/demacia-cup-1/DemaciaCup1.vue";
+import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2025-loss.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
@@ -237,6 +240,9 @@ import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
+import Dota2BlastSlamS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
+import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
+
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -318,6 +324,7 @@ export default defineComponent({
     Cba30Dream,
     PerfectWorldMajor2024,
     DemaciaCup1,
+    LplPKlck2025loss,
     LiveDailyRebates,
     Dota2Pgl,
     NewVipRebate,
@@ -337,7 +344,9 @@ export default defineComponent({
     ChristmasGachapon,
     BountyBlastPremier,
     VctcnMatchPromo,
-    Belgrade2025Promo
+    Belgrade2025Promo,
+    Lh1Vctcn,
+    Dota2BlastSlamS25
   },
   props: {
     list: {
@@ -999,7 +1008,7 @@ export default defineComponent({
       color: #fff !important;
       background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
       white-space: pre-wrap;
-      
+
       &:not(:last-child) {
         border-right: 1px solid #dcdce8;
       }
