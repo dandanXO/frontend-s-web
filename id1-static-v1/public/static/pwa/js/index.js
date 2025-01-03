@@ -49,13 +49,13 @@ installBtn.addEventListener("click", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
       if (fbclid) {
-        const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
-          const [key, value] = cookie.split("=");
-          acc[key] = value;
-          return acc;
-        }, {});
+        // Retrieve _fbp directly
+        const getCookie = (name) => {
+          const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+          return match ? decodeURIComponent(match[1]) : null;
+        };
 
-        const fbp = cookies["_fbp"] || null;
+        const fbp = getCookie("_fbp");
         const fbc = fbclid;
         const siteCode = "ID1";
 
