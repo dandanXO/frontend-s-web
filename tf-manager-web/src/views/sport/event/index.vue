@@ -62,7 +62,6 @@
           />
         </el-select>
 
-        <!-- 创建时间选择 -->
         <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY HH:mm:ss"
@@ -75,7 +74,7 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
+          :disabled-date="false"
           :editable="false"
         />
 
@@ -155,7 +154,7 @@
       <el-table-column prop="tfEventStatusName" :label="t('fields.tfEventStatusName')" width="200" />
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
         <template #default="scope" :hidden="true">
-          <el-button icon="el-icon-plus" size="mini" @click="showDialog(scope.row._id)" />
+          <el-button icon="el-icon-view" size="mini" @click="showDialog(scope.row._id)" />
         </template>
       </el-table-column>
     </el-table>
@@ -171,12 +170,12 @@
 
 <script setup>
 
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { getSportTypes } from "../../../api/sport";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
-import { getShortcuts, convertDateToStart, convertDateToEnd, disabledDate } from '@/utils/datetime';
+import { getShortcuts, convertDateToStart, convertDateToEnd } from '@/utils/datetime';
 import { getEvents } from "../../../api/sport-event";
 
 const { t } = useI18n();
@@ -191,12 +190,12 @@ const uiControl = reactive({
   dialogLoading: false,
   supplier: [
     { name: 'IM', display: 'IM' },
-    { name: 'IM', display: 'FB' },
+    { name: 'FB', display: 'FB' },
   ],
-  eventStatus: [
+  eventStatus: computed(() => [
     { name: '1', display: t('fields.active') },
     { name: '2', display: t('fields.inactive') },
-  ],
+  ]),
 });
 const page = reactive({
   pages: 0,
@@ -322,7 +321,9 @@ function groupMarketLinesByBetType(marketLines) {
 
 async function loadGameTypes() {
   const { data: ret } = await getSportTypes()
-  gameTypes.list = ret
+  gameTypes.list = ret.sort((a, b) => {
+    return a.localeCompare(b);
+  });
 }
 
 function formatTimestamp(timestamp) {
