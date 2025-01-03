@@ -26,6 +26,12 @@ const qrcode = new QRCode(qrcodeCanvas, {
 });
 qrcode.makeCode(window.location.href);
 
+function objectToQueryString(obj) {
+  return Object.keys(obj)
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]))
+    .join("&");
+}
+
 installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
 
@@ -50,21 +56,23 @@ installBtn.addEventListener("click", async () => {
         }, {});
 
         const fbp = cookies["_fbp"] || null;
-        const fbclidData = fbclid;
-        const timestamp = new Date().toISOString();
-        const fbc = fbclidData ? `fb.1.${timestamp}.${fbclid}` : null;
-
+        const fbc = fbclid;
         const siteCode = "ID1";
 
-        const payload = { fbp, fbc, siteCode };
+        // Create payload in form format
+        const payload = new URLSearchParams({
+          fbp: fbp || "",
+          fbc: fbc || "",
+          siteCode: siteCode
+        });
 
-        // Make the POST fbc fbp
+        // Make the POST request
         fetch("https://apz8rz8.q690cx97zgb.com/app/facebookInfo", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
           },
-          body: JSON.stringify(payload)
+          body: payload.toString()
         })
           .then((response) => response.json())
           .then((data) => {

@@ -205,7 +205,8 @@ export default {
     uploadAgain: "পুনরায় আপলোড করুন",
     deposit: "জমা",
     learnMore: "আরো জানুন",
-    replaceImage: "চিত্র প্রতিস্থাপন"
+    replaceImage: "চিত্র প্রতিস্থাপন",
+    details: "বিস্তারিত"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
