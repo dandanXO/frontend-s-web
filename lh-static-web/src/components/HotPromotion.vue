@@ -55,6 +55,7 @@
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
     <DemaciaCup1 v-if="list.redirectUrl === 'lh-demacia-cup-1'" :promo-param="listParam" />
+    <LplPKlck2025loss v-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'" :promo-param="listParam" :promo-code="list.promoCode"/>
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
@@ -169,6 +170,7 @@ import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS
 import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
 import PerfectWorldMajor2024 from "../components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 import DemaciaCup1 from "../components/hotpromo/demacia-cup-1/DemaciaCup1.vue";
+import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2025-loss.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
@@ -237,6 +239,7 @@ import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
 import Dota2BlastSlamS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
+import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -319,6 +322,7 @@ export default defineComponent({
     Cba30Dream,
     PerfectWorldMajor2024,
     DemaciaCup1,
+    LplPKlck2025loss,
     LiveDailyRebates,
     Dota2Pgl,
     NewVipRebate,
@@ -337,6 +341,7 @@ export default defineComponent({
     ValorantChampionTour2024,
     ChristmasGachapon,
     BountyBlastPremier,
+    Lh1Vctcn,
     VctcnMatchPromo,
     Dota2BlastSlamS25
   },

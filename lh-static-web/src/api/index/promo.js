@@ -699,6 +699,14 @@ export function getBountyInit(promoCode) {
 export function claimBountyBonus(promoCode) {
   return server.EVENT.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
 }
+
+export function getCompetitionBetPlatformInit(promoCode){
+  return server.EVENT.get(`/session/competition-bet-platform/init?promoCode=${promoCode}`);
+}
+
+export function getCompetitionBetPlatformClaimBonus(promoCode){
+  return server.EVENT.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}`);
+}
 export function getVctcnInit(promoCode) {
   return server.EVENT.get(`/session/competition-bet-platform/init?promoCode=${promoCode}`);
 }
