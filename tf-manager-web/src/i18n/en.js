@@ -2381,7 +2381,10 @@ export default {
     tfCompetitionName: "competition name",
     sportType: "sport type",
     eventName: "event name",
-    tfEventStatusName: "event status"
+    tfEventStatusName: "event status",
+    betTypeName: 'bet type name',
+    betTypeId: 'bet type ID',
+    'Bet type setting': 'bet type setting'
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

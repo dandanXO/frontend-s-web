@@ -2382,7 +2382,9 @@ export default {
     tfCompetitionName: "联赛名称",
     sportType: "体育项目",
     eventName: "赛事名称",
-    tfEventStatusName: "赛事状态"
+    tfEventStatusName: "赛事状态",
+    betTypeName: '投注项名称',
+    betTypeId: '投注项 ID',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于 3 个月',
@@ -3140,7 +3142,8 @@ export default {
     'Privi Spin Event Record': '优惠抽奖/轮盘记录',
     Competition: '联赛',
     Event: '赛事',
-    Team: '队伍'
+    Team: '队伍',
+    'Bet type setting': '投注项设定'
   },
   google: {
     google_auth_menu: '谷歌验证',

@@ -9,3 +9,25 @@ export const getEvents = (events) => {
     ContentType.form
   )
 }
+
+export const getBetTypeSettings = (query) => {
+  return https().request(
+    '/sport/bet/setting',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export function updateBetTypeStatus(query) {
+  return https().request(
+    '/sport/bet/setting',
+    Method.POST,
+    query,
+    ContentType.form
+  )
+}
+
+export const getSportTypes = () => {
+  return https().request("/sport/sport-types", Method.GET, ContentType.form);
+};
