@@ -55,7 +55,13 @@ installBtn.addEventListener("click", async () => {
           return match ? decodeURIComponent(match[1]) : null;
         };
 
-        const fbp = getCookie("_fbp");
+        // const fbp = getCookie("_fbp");
+        // Extract the last portion of _fbp
+        const fbp = (() => {
+          const rawFbp = getCookie("_fbp");
+          return rawFbp ? rawFbp.split(".").pop() : null;
+        })();
+
         const fbc = fbclid;
         const siteCode = "ID1";
 
