@@ -38,12 +38,17 @@
     <div class="progressbar-wrapper">
       <div
         class="progressbar-progress"
-        :style="{ left: `clamp(10px, calc(${drawProgress}% + 2px), calc(100% - 10px))` }"
+        :style="{ left: `clamp(10px, calc(${betProgress}% + 2px), calc(100% - 10px))` }"
       >
-        {{ drawProgress }}%
+        {{ betProgress }}%
       </div>
       <div class="progressbar-border" />
-      <div class="progressbar-inner" :style="{ width: `${drawProgress}%` }" />
+      <div class="progressbar-inner" :style="{ width: `${betProgress}%` }" />
+    </div>
+
+    <div class="bets-wrapper">
+      Current Valid Bets: {{ convertToCommaAmount(validBet) }}/{{ convertToCommaAmount(minValidBet) }}
+      PKR
     </div>
 
     <div class="activities-wrapper">
@@ -93,7 +98,7 @@
                       </div>
                     </td>
                     <td align="center">{{ item.loginName }}</td>
-                    <td align="center">{{ convertToCommaAmount(item.amount) }}PKR</td>
+                    <td align="center">{{ convertToCommaAmount(item.amount) }} PKR</td>
                   </tr>
                 </template>
                 <div v-else class="no-record">No Record</div>
@@ -123,9 +128,9 @@ import { computed, onMounted, ref } from "vue";
 const store = userStore();
 const $q = useQuasar();
 
-const usedDraw = ref(0);
-const totalDraw = ref(0);
 const availableDraw = ref(0);
+const validBet = ref(0);
+const minValidBet = ref(0);
 const isClaiming = ref(false);
 const rankingLists = ref([]);
 const showPrizeDetail = ref(false);
@@ -139,10 +144,10 @@ const prizeList = ref([
   { status: "claim", prize: null }
 ]);
 
-const drawProgress = computed(() => {
-  const progress = Math.floor((usedDraw.value / totalDraw.value) * 100);
+const betProgress = computed(() => {
+  const progress = Math.floor((validBet.value / minValidBet.value) * 100);
   if (isNaN(progress)) return 0;
-  return progress;
+  return progress > 100 ? 100 : progress;
 });
 
 const rankingListHeight = computed(() => {
@@ -205,9 +210,9 @@ const resetClaimStatus = () => {
 const initGoldenEggPromo = () => {
   eventapi.get("/session/aviator-golden-egg/init?promoCode=pak-aviator-golden-egg").then((res) => {
     if (res.code === 0) {
-      usedDraw.value = res.data.usedDraw;
-      totalDraw.value = res.data.totalDraw;
       availableDraw.value = res.data.availableDraw;
+      validBet.value = res.data.validBet;
+      minValidBet.value = res.data.minValidBet;
     }
   });
 };
@@ -359,6 +364,12 @@ onMounted(() => {
       font-weight: 900;
       color: #fff;
     }
+  }
+
+  .bets-wrapper {
+    margin-top: -4px;
+    text-align: center;
+    color: #9f9f9f;
   }
 
   .activities-wrapper {

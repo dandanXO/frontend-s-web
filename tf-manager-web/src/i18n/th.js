@@ -647,6 +647,7 @@ export default {
     extraParam: 'พารามิเตอร์พิเศษ',
     fail: 'ล้มเหลว',
     failReason: 'เหตุผลที่ล้มเหลว',
+    fastAccessSeq: 'การเรียงลำดับการเข้าถึงอย่างรวดเร็ว',
     fbid: 'Facebook Pixel ID',
     fbToken: 'Facebook Pixel Token',
     fdConvertRate: 'อัตราการแปลง FTD',

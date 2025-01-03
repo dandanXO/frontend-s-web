@@ -1055,7 +1055,8 @@ function showDialog(type) {
     if (configForm.value) {
       form.id = null
       form.rulesId = null
-      configForm.value.resetFields()
+      form.code = null
+      form.value = null
     }
     uiControl.dialogTitle = t('fields.createConfig')
   } else if (type === 'EDIT') {
