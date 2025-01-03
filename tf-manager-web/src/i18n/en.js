@@ -506,6 +506,7 @@ export default {
     ERROR_BET_AMT_MIN_NOT_MEET: 'Minimum Bet Amount not reach',
     ERROR_SIMILAR_IP_DETECTED: 'Similar IP Detected',
     ERROR_SIMILAR_SID_DETECTED: 'Similar Device Detected',
+    HAS_REGISTER_TRIAL_PROMO: 'Particiapted in register trial promo'
   },
   rewardType: {
     BET: 'BET',
@@ -950,6 +951,7 @@ export default {
     delete: 'Delete',
     runAtOnce: 'runAtOnce',
     deleteRole: 'Delete Role',
+    deleteRanking: 'Delete Ranking',
     deliver: 'Deliver',
     delivered: 'Delivered',
     deliverGift: 'Deliver Gift',
@@ -3022,6 +3024,8 @@ export default {
     'Affiliate Deposit Withdraw Summary': 'Affiliate Deposit Withdraw Summary',
     'Site Domain': 'Site Domain',
     'ID Verification': 'ID Verification',
+    'Privi Spin Event Record': 'Privi Spin Event Record',
+    'Top Ranking': 'Top Ranking',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3435,6 +3439,7 @@ export default {
     45300: 'Member already has dummy record on the selected date',
     45301: 'Member dummy record on the selected date does not exists',
     45302: 'Member does not belong to any affiliate',
-    50002: 'The maximum amount for adjustment has been exceeded'
+    50002: 'The maximum amount for adjustment has been exceeded',
+    53000: 'Login name cannot be empty',
   },
 }

@@ -50,6 +50,7 @@ export const userStore = defineStore("userStore", {
       extraPrivilegeId: "",
       ftd: true,
       isFbPixel: false
+      // fbclid: "",
     };
   },
   actions: {

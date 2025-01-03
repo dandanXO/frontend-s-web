@@ -26,7 +26,11 @@
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
           <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
         </div>
-        <div class="marquee-item" v-for="(item, index) in topRecords.slice(20, topRecords.length)" :key="'top-' + index">
+        <div
+          class="marquee-item"
+          v-for="(item, index) in topRecords.slice(20, topRecords.length)"
+          :key="'top-' + index"
+        >
           <img class="icon" :src="require(`../christmas-gachapon/img/${item.img}.png`)" />
           <span>会员{{ item.loginName }}抽中 {{ item.type }}</span>
         </div>
@@ -91,7 +95,7 @@
       <div class="detailed-info">
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024.12.24-2025.1.1</div>
+          <div class="right">2024.12.24-2025.1.7</div>
         </div>
         <div class="little-title">
           <div class="left">活动对象</div>
@@ -100,7 +104,7 @@
         <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
           <div class="left">优惠详情</div>
           <div class="right" style="max-width: 73%">
-            在2024.12.24-2025.1.1活动期间，每日投注额≥1000元及以上即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
+            在2024.12.24-2025.1.7活动期间，每日投注额≥1000元及以上即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
           </div>
         </div>
         <table class="detailed-info-table">
@@ -207,7 +211,7 @@ const rules = ref(props.promoRules);
 const notify = useNotify();
 const isModal = ref(false);
 const isRules = ref(false);
-const allRecords = ref([])
+const allRecords = ref([]);
 const isPrizeModal = ref(false);
 const modalContent = {
   title: "",
@@ -227,10 +231,10 @@ const onPageSizeChange = async () => {
       totalItems.value = res.data.total;
       tableData.value = res.data.records;
     } else {
-        notify({
-            type: "error",
-            message: `${res.message}`
-        });
+      notify({
+        type: "error",
+        message: `${res.message}`
+      });
     }
   });
 };
@@ -402,9 +406,9 @@ const init = () => {
 
         // Define bonus types for other bonuses
         const bonusMapping = {
-          '大红包': "big",
-          '中红包': "med",
-          '小红包': "small"
+          大红包: "big",
+          中红包: "med",
+          小红包: "small"
         };
 
         // If the bonusName exists in the bonusMapping, update the img and type accordingly
@@ -419,7 +423,7 @@ const init = () => {
       allRecords.value = response;
       middleIndex.value = Math.floor(allRecords.value.length / 2);
     }
-  })
+  });
 };
 const topRecords = computed(() => allRecords.value.slice(0, middleIndex.value));
 const bottomRecords = computed(() => allRecords.value.slice(middleIndex.value));
@@ -439,7 +443,7 @@ const adjustMarqueeSpeed = () => {
   // You can experiment with the factor value (e.g., 1000) to fine-tune the speed
   const speedFactor = 1500; // Base speed factor
   const speedAdjustment = numberOfTopRecords < 5 ? 5 : numberOfTopRecords; // Slower for fewer items, faster for more
-  const topSpeed = (topRowWidth / containerWidth) * speedFactor / speedAdjustment;
+  const topSpeed = ((topRowWidth / containerWidth) * speedFactor) / speedAdjustment;
 
   // Set the animation duration dynamically
   // topAnimationDuration.value = topSpeed;
@@ -453,11 +457,11 @@ const adjustMarqueeSpeed = () => {
 };
 
 onUpdated(() => {
-  nextTick(adjustMarqueeSpeed);  // Recalculate speed if content or layout changes
+  nextTick(adjustMarqueeSpeed); // Recalculate speed if content or layout changes
 });
 
 const targetDate = computed(() => {
-  const validDate = moment(props.promoDate, 'YYYY-MM-DD', true); // Strict parsing
+  const validDate = moment(props.promoDate, "YYYY-MM-DD", true); // Strict parsing
   return validDate.isValid() ? validDate.toDate() : null; // Return JS Date or null if invalid
 });
 const shouldShowMarquee = computed(() => {
@@ -492,7 +496,7 @@ onMounted(() => {
 
 .bottom-row {
   margin-top: 10px;
-  animation-duration: 120s; 
+  animation-duration: 120s;
 }
 
 .top-row {
@@ -509,20 +513,20 @@ onMounted(() => {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 /* Duplicate the content for seamless scrolling */
-.top-row, .bottom-row {
+.top-row,
+.bottom-row {
   transform: translateX(0%);
 }
 .top-row {
   .marquee-item {
-    
     &:nth-child(even) {
-      background: url(img/even.png)no-repeat center center;
+      background: url(img/even.png) no-repeat center center;
       background-size: cover;
       color: #ffffff;
       font-weight: 600;
     }
     &:nth-child(odd) {
-      background: url(img/odd.png)no-repeat center center;
+      background: url(img/odd.png) no-repeat center center;
       background-size: cover;
       color: #ff0000;
       font-weight: 600;
@@ -531,19 +535,18 @@ onMounted(() => {
 }
 .bottom-row {
   .marquee-item {
-    
-  &:nth-child(even) {
-    background: url(img/odd.png)no-repeat center center;
-    background-size: cover;
-    color: #ff0000;
-    font-weight: 600;
-  }
-  &:nth-child(odd) {
-    background: url(img/even.png)no-repeat center center;
-    background-size: cover;
-    color: #ffffff;
-    font-weight: 600;
-  }
+    &:nth-child(even) {
+      background: url(img/odd.png) no-repeat center center;
+      background-size: cover;
+      color: #ff0000;
+      font-weight: 600;
+    }
+    &:nth-child(odd) {
+      background: url(img/even.png) no-repeat center center;
+      background-size: cover;
+      color: #ffffff;
+      font-weight: 600;
+    }
   }
 }
 .icon {
@@ -694,7 +697,7 @@ onMounted(() => {
     }
     @media screen and (max-width: 1500px) {
       top: 61%;
-        left: 25%;
+      left: 25%;
     }
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -708,14 +711,14 @@ onMounted(() => {
   .promorule {
     position: absolute;
     top: 69.7%;
-    left: 30.5%;    
+    left: 30.5%;
     @media screen and (max-width: 1700px) {
       top: 68%;
       left: 29%;
     }
     @media screen and (max-width: 1500px) {
       top: 68%;
-        left: 25%;
+      left: 25%;
     }
     transform: translate(-50%, -50%); /* Center the element */
     cursor: pointer;
@@ -736,7 +739,7 @@ onMounted(() => {
     }
     @media screen and (max-width: 1500px) {
       top: 75%;
-        left: 25%;
+      left: 25%;
     }
     transform: translate(-50%, -50%);
     cursor: pointer;

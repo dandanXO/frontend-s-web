@@ -646,6 +646,27 @@ async function pDepo(deposit) {
     privilegeId: deposit.privilegeId
   };
 
+  // Extract `fbp` from cookies
+  // const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+  //   const [key, value] = cookie.split("=");
+  //   acc[key] = value;
+  //   return acc;
+  // }, {});
+
+  // const fbp = cookies["_fbp"] || null;
+
+  // if (fbp) {
+  //   obj.fbp = fbp;
+  // }
+
+  // if (store.fbclid) {
+  //   const fbclidData = store.fbclid;
+  //   const timestamp = new Date().toISOString();
+  //   const fbc = fbclidData ? `fb.1.${timestamp}.${fbclid}` : null;
+
+  //   obj.fbc = fbc;
+  // }
+
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId;
   }

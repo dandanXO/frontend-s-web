@@ -509,6 +509,7 @@ export default {
     ERROR_BET_AMT_MIN_NOT_MEET: '最低下注要求未达成',
     ERROR_SIMILAR_IP_DETECTED: '侦测到相同 IP',
     ERROR_SIMILAR_SID_DETECTED: '侦测到相同设备',
+    HAS_REGISTER_TRIAL_PROMO: '参与体验金优惠'
   },
   rewardType: {
     BET: '投注',
@@ -953,6 +954,7 @@ export default {
     delete: '删除',
     runAtOnce: '立即执行',
     deleteRole: '删除角色',
+    deleteRanking: '刪除排行记录',
     deliver: '发送礼品',
     delivered: '已送达',
     deliverGift: '运送礼品',
@@ -1085,6 +1087,7 @@ export default {
     extraParam: '扩展信息',
     fail: '失败',
     failReason: '失败原因',
+    fastAccessSeq: '快速浏览排序',
     fbid: 'Facebook 像素 ID',
     fbToken: 'Facebook 像素令牌',
     fdConvertRate: '存款转化率',
@@ -2971,6 +2974,7 @@ export default {
     'Site Domain': '站点域名管理',
     'Privi Spin Event Record': '优惠抽奖/轮盘记录',
     'ID Verification': '身份认证',
+    'Top Ranking': '优惠排行榜记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3384,6 +3388,7 @@ export default {
     45300: '玩家于此记录时间的虚拟数据已存在',
     45301: '玩家于此记录时间的虚拟数据不存在',
     45302: '玩家不属于任何代理',
-    50002: '已超过平账最大金额'
+    50002: '已超过平账最大金额',
+    53000: '用户名不能为空',
   },
 }
