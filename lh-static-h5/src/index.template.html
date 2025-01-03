@@ -53,8 +53,6 @@
         window.location.pathname === "/privilege/invite" ||
         window.location.pathname === "/affiliatepage"
       ) {
-        //Always add 1st now.
-        sessionStorage.setItem("LH_APP_DOMAIN_INITIALIZED", "1");
 
         //IOS
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {

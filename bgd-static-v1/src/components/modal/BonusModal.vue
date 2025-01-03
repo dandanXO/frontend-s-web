@@ -16,8 +16,8 @@
           </q-icon> -->
         </div>
         <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn flat class="receive">
-            {{ $t("btn.receive") }}
+          <q-btn flat class="details">
+            {{ $t("btn.details") }}
           </q-btn>
         </RouterLink>
       </div>
@@ -126,12 +126,11 @@ const imgURL = process.env.IMAGE_CDN + "/promo/";
         font-weight: 700;
         text-transform: none;
 
-        &.receive {
+        &.details {
           background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
           color: #000a01;
         }
 
-        &.received,
         &.no-reward {
           background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
           box-shadow: 0px 0px 5px 0px #ffffff4a inset;

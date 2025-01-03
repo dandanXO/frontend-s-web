@@ -201,6 +201,16 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.fastAccessSeq')" prop="fastAccessSeq">
+            <el-col :span="7">
+              <el-input-number
+                v-model="form.fastAccessSeq"
+                controls-position="right"
+              />
+            </el-col>
+          </el-form-item>
+        </el-row>
         <el-form-item :label="t('fields.param')" prop="param">
           <div v-for="(item, index) in param" :key="index">
             <el-input
@@ -1484,6 +1494,7 @@ const form = reactive({
   desktopFastAccessIconImgUrlDark: null,
   mobileFastAccessIconImgUrl: null,
   mobileFastAccessIconImgUrlDark: null,
+  fastAccessSeq: 99
 })
 
 const imageForm = reactive({

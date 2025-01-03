@@ -948,6 +948,7 @@ export default {
     extraParam: 'Tham số bổ sung',
     fail: 'Thất bại',
     failReason: 'Lý do thất bại',
+    fastAccessSeq: 'Truy cập nhanh theo thứ tự',
     fbid: 'Facebook Pixel ID',
     fbToken: 'Facebook Pixel Token',
     fdConvertRate: 'Tỷ giá chuyển đổi FTD',

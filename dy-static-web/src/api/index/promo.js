@@ -523,3 +523,10 @@ export function getDrawRecord(promoCode, params) {
 export function getLatestClaimedBonusList(promoCode) {
   return server.EVENT.get(`/session/draw-event/getLatestClaimedBonusList?promoCode=${promoCode}`)
 }
+
+export function getVctcnInit(promoCode) {
+  return server.EVENT.get(`/session/competition-bet-platform/init?promoCode=${promoCode}`);
+}
+export function claimVctcnBonus(promoCode) {
+  return server.EVENT.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}`);
+}

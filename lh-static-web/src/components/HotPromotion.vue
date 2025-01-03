@@ -117,7 +117,8 @@
       :promo-dates="list.param.date"
     />
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
-    <Lh1Vctcn v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode"></Lh1Vctcn>
+    <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
+    <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -236,6 +237,8 @@ import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-to
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
+import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
+import Dota2BlastSlamS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
 import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 
 export default defineComponent({
@@ -338,7 +341,9 @@ export default defineComponent({
     ValorantChampionTour2024,
     ChristmasGachapon,
     BountyBlastPremier,
-    Lh1Vctcn
+    Lh1Vctcn,
+    VctcnMatchPromo,
+    Dota2BlastSlamS25
   },
   props: {
     list: {
@@ -1000,7 +1005,7 @@ export default defineComponent({
       color: #fff !important;
       background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
       white-space: pre-wrap;
-      
+
       &:not(:last-child) {
         border-right: 1px solid #dcdce8;
       }
