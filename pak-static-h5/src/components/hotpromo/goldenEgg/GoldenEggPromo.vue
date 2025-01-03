@@ -147,7 +147,7 @@ const prizeList = ref([
 const betProgress = computed(() => {
   const progress = Math.floor((validBet.value / minValidBet.value) * 100);
   if (isNaN(progress)) return 0;
-  return progress;
+  return progress > 100 ? 100 : progress;
 });
 
 const rankingListHeight = computed(() => {
