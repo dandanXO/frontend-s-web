@@ -7,6 +7,7 @@
           src="../../../assets/images/promotion/hotpromo/hongbaoyu2025/red-packet.png"
           @click="getPromotion"
           width="350"
+          :class="{ loading: loadingClaim }"
         />
       </div>
       <div class="livepoker-rebate-game-info">
@@ -118,8 +119,10 @@ const store = userStore();
 
 const privilegeClaimedModalVisible = ref(false);
 const winAmount = ref(0);
+const loadingClaim = ref(false);
 
 const getPromotion = () => {
+  loadingClaim.value = true;
   claimDailyRainItem(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
@@ -129,7 +132,10 @@ const getPromotion = () => {
         store.getBalance();
       }
     })
-    .catch(() => {});
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
 };
 
 const getPromotionPrize = () => {
@@ -174,6 +180,11 @@ const getPromotionPrize = () => {
       filter: grayscale(100%);
       cursor: not-allowed;
       pointer-events: none;
+    }
+    &.loading {
+      filter: grayscale(100%);
+      cursor: not-allowed;
+      opacity: 0.6;
     }
   }
 }
