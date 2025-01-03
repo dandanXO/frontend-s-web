@@ -302,7 +302,7 @@
   
   const tabValue = ref(1);
   
-  const handleClaimBonus1 = () => {
+  const handleClaimBonus2 = () => {
     if (!store.hasToken()) {
       ElMessageBox.alert("请登录后再操作", "系统提示", {
         autofocus: false,
@@ -317,7 +317,7 @@
       return;
     }
   
-    claimCompetitionBonus(promoCode.value)
+    claimCompetitionBonus(promoParam.value.promoCode2)
       .then((res) => {
         if (res.code === 0) {
           notify({
@@ -341,7 +341,7 @@
       });
   };
   
-  const handleClaimBonus2 = () => {
+  const handleClaimBonus1 = () => {
     if (!store.hasToken()) {
       ElMessageBox.alert("请登录后再操作", "系统提示", {
         autofocus: false,
@@ -356,7 +356,7 @@
       return;
     }
   
-    claimCompetitionLoss(promoCode.value)
+    claimCompetitionLoss(promoParam.value.promoCode1)
       .then((res) => {
         if (res.code === 0) {
           notify({
@@ -382,8 +382,8 @@
   
   const fetchData = async () => {
     try {
-      const res1 = await getCompetitionYesterday(promoCode.value);
-      const res2 = await getCompetitionLossInit(promoCode.value);
+      const res2 = await getCompetitionYesterday(promoParam.value.promoCode2);
+      const res1 = await getCompetitionLossInit(promoParam.value.promoCode1);
       totalLoss.value = res2.data?.totalLoss || 0;
       bonus2.value = res2.data?.bonus || 0;
   
