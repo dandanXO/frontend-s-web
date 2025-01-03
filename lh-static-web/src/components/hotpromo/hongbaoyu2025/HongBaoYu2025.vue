@@ -107,21 +107,14 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onMounted } from "vue";
-import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
+import { ref, defineProps } from "vue";
+import { claimDailyRainItem } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 
-// const startTime = reactive({
-//   time1: "17:00 ~ 18:00",
-//   time2: "19:00 ~ 20:00"
-// });
-
 const store = userStore();
-const notify = useNotify();
 
 const privilegeClaimedModalVisible = ref(false);
 const winAmount = ref(0);
@@ -131,14 +124,9 @@ const getPromotion = () => {
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
-
         privilegeClaimedModalVisible.value = true;
-        // lastDigitAmount:0
-        // redPacketSequence:1
-        // vipAmount:0.6
+
         store.getBalance();
-      } else {
-        notify.error(res.message);
       }
     })
     .catch(() => {});
@@ -148,52 +136,6 @@ const getPromotionPrize = () => {
   store.getBalance();
   privilegeClaimedModalVisible.value = false;
 };
-
-const promotionListing = ref();
-// const visibleItems = ref([]);
-// const maxVisibleItems = ref(5);
-// const intervalId = ref(null);
-
-const getPromotionListing = () => {
-  getDailyRainListing(promoCode.value)
-    .then((res) => {
-      if (res.code === 0) {
-        promotionListing.value = res.data;
-        // visibleItems.value = promotionListing.value.slice(0, maxVisibleItems.value);
-        // setTimeout(() => {
-        //   const addItem = () => {
-        //     if (visibleItems.value.length < promotionListing.value.length) {
-        //       const nextItemIndex = promotionListing.value.length - visibleItems.value.length - 1;
-        //       visibleItems.value.unshift(promotionListing.value[nextItemIndex]);
-
-        //       setTimeout(addItem, 1500);
-        //     } else {
-        //       clearInterval(intervalId.value);
-        //     }
-        //   };
-        //   addItem();
-        // }, 4000);
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
-
-onMounted(() => {
-  if (!store.token) {
-    return;
-  }
-  getPromotionListing();
-
-  // const params = props.params ? JSON.parse(props.params) : "";
-  // if (params?.time1) {
-  //   startTime.time1 = params.time1;
-  // }
-  // if (params?.time2) {
-  //   startTime.time2 = params.time2;
-  // }
-});
 </script>
 
 <style scoped lang="scss">
