@@ -129,7 +129,7 @@ export default defineComponent({
     const trackH5Affiliate = () => {
       const hostname = window.location.hostname.replace("www.", "");
       const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
-      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "77A4DF";
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "5E2D65";
 
       const track = () => {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);

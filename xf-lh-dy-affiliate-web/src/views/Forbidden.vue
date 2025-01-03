@@ -8,7 +8,7 @@
           <span class="title2">访问受到限制</span>
         </div>
         <br>
-        <div>
+        <div v-if="ipAddress">
           <span class="ip">
             您的IP地址为:
             <span id="data">{{ ipAddress }}</span>
@@ -19,6 +19,19 @@
             </span>
           </span>
         </div>
+
+        <div v-if="loginName">
+          <span class="ip">
+            您的账号为:
+            <span id="data">{{ loginName }}</span>
+            <span class="ipLock">
+              <img
+                src="../assets/403-images/lock_icon.png"
+              >
+            </span>
+          </span>
+        </div>
+
         <br>
         <div>
           <span class="ip">
@@ -105,7 +118,9 @@
 <script setup>
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const ipAddress = sessionStorage.getItem('myIPAddress');
+const ipAddress = sessionStorage.getItem('myIPAddress') || "";
+const loginName = sessionStorage.getItem('myloginName') || "";
+
 const backtoMain = () => {
   router.push('/')
 }

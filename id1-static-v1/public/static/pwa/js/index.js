@@ -2,7 +2,7 @@
 import { FBQ_INITIALIZED, fbqLists, INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
-const INSTALL_COUNTDOWN = 3;
+const INSTALL_COUNTDOWN = 2;
 let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
 let deferredPrompt;
@@ -26,12 +26,68 @@ const qrcode = new QRCode(qrcodeCanvas, {
 });
 qrcode.makeCode(window.location.href);
 
+function objectToQueryString(obj) {
+  return Object.keys(obj)
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]))
+    .join("&");
+}
+
 installBtn.addEventListener("click", async () => {
   if (loading.classList.contains("loading--show")) return;
+
+  const getFclidFromUrl = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("fclid") || null;
+  };
+
   switch (container.getAttribute("data-type")) {
     case "INSTALL":
       const isFbqInitialized = sessionStorage.getItem(FBQ_INITIALIZED);
       if (isFbqInitialized) fbq("track", "SubmitApplication");
+
+      // Get the current URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const fbclid = urlParams.get("fbclid");
+      if (fbclid) {
+        // Retrieve _fbp directly
+        const getCookie = (name) => {
+          const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+          return match ? decodeURIComponent(match[1]) : null;
+        };
+
+        // const fbp = getCookie("_fbp");
+        // Extract the last portion of _fbp
+        const fbp = (() => {
+          const rawFbp = getCookie("_fbp");
+          return rawFbp ? rawFbp.split(".").pop() : null;
+        })();
+
+        const fbc = fbclid;
+        const siteCode = "ID1";
+
+        // Create payload in form format
+        const payload = new URLSearchParams({
+          fbp: fbp || "",
+          fbc: fbc || "",
+          siteCode: siteCode
+        });
+
+        // Make the POST request
+        fetch("https://apz8rz8.q690cx97zgb.com/app/facebookInfo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: payload.toString()
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
 
       if (!deferredPrompt) {
         const userAgent = navigator.userAgent.toLowerCase();
@@ -119,6 +175,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
 
 window.addEventListener("load", () => {
   const hostname = window.location.hostname.replace("www.", "");
+
   const fbqId = fbqLists[hostname]?.id;
   if (fbqId) {
     fbq("init", fbqId);
@@ -142,7 +199,7 @@ window.addEventListener("load", () => {
       container.setAttribute("data-type", "INSTALL");
     }
     loading.classList.remove("loading--show");
-  }, 3000);
+  }, 2500);
 
   detectDeviceAndBrowser();
   countdown.innerHTML = `${INSTALL_COUNTDOWN}`;
