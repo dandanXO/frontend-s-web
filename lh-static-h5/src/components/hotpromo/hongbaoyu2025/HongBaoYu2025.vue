@@ -2,7 +2,12 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="livepoker-rebate-section">
-        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-2025.png" alt="" />
+        <img
+          src="../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-2025.png"
+          alt=""
+          @click="getPromotion"
+          :class="{ loading: loadingClaim }"
+        />
       </div>
       <div class="livepoker-rebate-game-info">
         <div class="title"></div>
@@ -112,24 +117,45 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useNotify } from "src/hooks/notify";
+import { defineProps } from "vue";
+import { eventapi } from "src/boot/axios";
+import { ref } from "vue";
 import { userStore } from "src/stores";
-import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
 
-const props = defineProps(["promoParam"]);
-
-const notify = useNotify();
 const store = userStore();
-const $q = useQuasar();
-const router = useRouter();
-
 const winAmount = ref(0);
 const isClaimModal = ref(false);
+const loadingClaim = ref(false);
 
-const getPromotionPrize = () => {};
-onMounted(() => {});
+const props = defineProps({
+  promoCode: {
+    type: String,
+    required: true
+  }
+});
+
+const getPromotion = () => {
+  loadingClaim.value = true;
+  eventapi
+    .get(`/redPacketVip/claim?promoCode=${props.promoCode}`)
+    .then((res) => {
+      if (res.code === 0) {
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
+        isClaimModal.value = true;
+
+        store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const getPromotionPrize = () => {
+  store.getBalance();
+  isClaimModal.value = false;
+};
 </script>
 
 <style scoped lang="scss">
@@ -162,6 +188,11 @@ onMounted(() => {});
 
   img {
     width: 200px !important;
+    &.loading {
+      filter: grayscale(100%);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
   }
 }
 
