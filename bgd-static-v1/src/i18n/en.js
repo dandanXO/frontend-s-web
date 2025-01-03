@@ -65,6 +65,7 @@ export default {
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must be 10 - 11 digits",
     phone_rules_03: "The phone number must start with '01'",
+    bindPhoneNumber: "Bind Phone Number",
     password: "Password",
     password_placeholder: "Please enter password",
     password_rules_01: "Please insert password",
@@ -89,6 +90,8 @@ export default {
     newPassword_placeholder: "Please enter new password",
     newPassword_rules_01: "Please insert new password",
     newPassword_rules_02: "The characters of new password must be above 6",
+    confirmPassword: "Confirm Password",
+    confirmPassword_placeholder: "Please enter confirm password",
     confirmNewPassword: "Confirm New Password",
     confirmNewPassword_placeholder: "Please enter new confirm password",
     confirmNewPassword_rules_01: "Please insert new confirm password",
@@ -113,6 +116,7 @@ export default {
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
     fullName_rules_02: "Please enter a Valid full name",
+    setPassword: "Set Password",
     changePassword: "Change Password",
     currentPassword: "Current Password",
     currentPassword_placeholder: "Enter Current Password",
@@ -184,6 +188,7 @@ export default {
     loading_plsWait: "Loading... Please wait...",
     cancel: "Cancel",
     signOut: "Sign Out",
+    joinnow: "Join Now",
     back: "Back",
     moreGames: "More Games",
     addCash: "Add Cash",
@@ -192,7 +197,17 @@ export default {
     downloadNow: "Download Now",
     recharge: "Recharge",
     getInterestProfit: "Get Interest Profit",
-    signinWithGoogle: "Sign-in with Google"
+    signinWithGoogle: "Google",
+    noRewardYet: "No Reward Yet",
+    received: "Received",
+    receive: "Receive",
+    startNow: "Start Now",
+    continue: "Continue",
+    uploadAgain: "Upload Again",
+    deposit: "Deposit",
+    learnMore: "Learn More",
+    replaceImage: "Replace Image",
+    details: "Details"
   },
   notify: {
     noRecord: "No Record",
@@ -203,7 +218,11 @@ export default {
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
-    plsLoginToContinue: "Please login to continue"
+    plsLoginToContinue: "Please login to continue",
+    uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
+    imageFormatError: "Image format error",
+    uploadFailedPleaseTryAgain: "upload failed. Please try again",
+    copiedSuccessfully: "Copied Successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -236,7 +255,23 @@ export default {
     cat_sport: "Sport",
     popup: {
       getFreeLuckyDraw: "Get a free lucky draw ticket",
-      downloadAppLoginAcc: "Download the app and log in to your account to get it"
+      downloadAppLoginAcc: "Download the app and log in to your account to get it",
+      free100Bonus: "Congratulations! You have completed Stage 1 and unlocked 100 bonuses.",
+      free100BonusAmount: "100BDT",
+      bonus: {
+        wheelOfFortuneTitle: "Wheel Of Fortune",
+        wheelOfFortuneDescription: "Wheel Of Fortune",
+        cashBackTitle: "Cash Back",
+        cashBackDescription: "Cash Back",
+        activityBonusTitle: "Activity Bonus",
+        activityBonusDescription: "Activity Bonus",
+        giveBackTitle: "Give Back",
+        giveBackDescription: "Give Back",
+        hierarchyTitle: "Hierarchy",
+        hierarchyDescription: "Hierarchy",
+        wheelRewardTitle: "Wheel Rewards",
+        wheelRewardDescription: "Wheel Rewards"
+      }
     },
     viewAll: "View All"
   },
@@ -332,6 +367,36 @@ export default {
     vipTable_txt:
       "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
   },
+  nameAuth: {
+    title: "Real Name Authentication",
+    basicExperience: "Basic Experience",
+    humanResources: "Human Resources",
+    faceVerification: "Face Verification",
+    identityId: "Identity Id",
+    browsingTime: "Browsing time: 2 minutes",
+    additionalInfo:
+      "In order to better serve you, we require you to provide original copies of your identification documents. this will Gifts will be sent to the correct location.",
+    beReadyUploadIdCard: "Be ready to upload your ID card",
+    issuingCountryRegion: "Issuing country/region",
+    documentType: "Document Type",
+    getReadyUploadIdCard: "Get ready to upload your ID card",
+    ic: "IC",
+    hint_txt_1: "Upload color photos or documents",
+    hint_txt_2: "Take photos in a well-lit room",
+    hint_txt_3: "Do not edit images of files",
+    checkGuide: "Check out our guide",
+    passport: "Passport",
+    drivingLicense: "Driving License",
+    hint: "Hint",
+    uploadDoc: "Upload Documents",
+    uploadFailed: "Upload Failed",
+    uploadSuccessful: "Upload Successful",
+    uploaded: "Uploaded",
+    pendingAuth: "Pending Authentication",
+    photoPreview_txt: "Make sure that all the information on the photo is visible and easy to read",
+    personalVerification: "Personal Verification",
+    photoTaking_txt: "Document should be in the frame and clearly visible"
+  },
   earnMoney: {
     title: "Bonus Pot Arrived",
     tabs: {
@@ -353,22 +418,53 @@ export default {
       inviteList_02: "Register via link",
       inviteList_03: "Complete deposit after registration",
       copyLink: "Copy Link",
-      friendCount: "Friend Count",
-      inviteBonus: "Invite Bonus",
+      grade: "Grade",
+      totalNoOfValidPlayersInvited: "Total number of valid players invited",
+      invitationRewards: "Invitation rewards",
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
-      betting_tips:
-        "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
-      deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
+      note: "Note:",
+      eligibility_tips: "Invitee's deposit must be ≥ 200.",
       multiple_acc_hint: `Notice:
     It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Bangladesh time on the next day. The rewards will be credited to the account during this time frame.
     `,
       shareTitle: "WIN7.GAME Share and Earn",
       shareText:
-        "WIN7.GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "WIN7.GAME Share and Earn:\n\tEarn up to 500 ৳ per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+      betting_table: {
+        header: {
+          description: "Description",
+          commission: "Three-Level Commission"
+        },
+        row1: {
+          description: "Invite players to place bets (win or lose) to earn rewards",
+          commission: "0.6%"
+        },
+        row2: {
+          description: "First-Level Commission",
+          commission: "0.3%"
+        },
+        row3: {
+          description: "Second-Level Commission",
+          commission: "0.2%"
+        },
+        row4: {
+          description: "Third-Level Commission",
+          commission: "0.1%"
+        }
+      },
+      deposit_table: {
+        header: {
+          description: "Description",
+          commission: "Deposit Commission"
+        },
+        row1: {
+          description: "Invite players to make their first deposit and receive a reward.",
+          commission: "5%"
+        }
+      }
     },
     teamManagement: {
       searchField: {

@@ -302,7 +302,7 @@ const openGame = (gameName, code, gameCode) => {
   // padding: 0px 16px;
   gap: 8px;
   text-align: center;
-  padding: 0px 10px;
+  padding: 0px 5px;
   font-family: "Be Vietnam Pro";
 
   &.second-nav {

@@ -17,6 +17,7 @@
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'bgd-new-players' && !isCommonPromo && store.token" :list="list" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'bgd-slot-ftd' && store.token" :params="list.param" />
+    <RegisterClaimBonus v-if="!isCommonPromo && list.redirectUrl === 'bgd-register-claim-bonus' && store.token" :promocode="list.promoCode" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -51,6 +52,7 @@ import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRa
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
+import RegisterClaimBonus from "../components/hotpromo/registerClaimBonus/RegisterClaimBonus.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -65,7 +67,8 @@ export default defineComponent({
     RedPacketRainPromo,
     InterestProfitPromo,
     NewPlayersPromo,
-    SlotFtdPromo
+    SlotFtdPromo,
+    RegisterClaimBonus
   },
   props: {
     list: {
@@ -124,6 +127,7 @@ export default defineComponent({
       this.list.redirectUrl === "interest-profit" ||
       this.list.redirectUrl === "bgd-new-players" ||
       this.list.redirectUrl === "bgd-slot-ftd" ||
+      this.list.redirectUrl === "bgd-register-claim-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

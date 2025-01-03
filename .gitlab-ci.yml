@@ -206,6 +206,13 @@ deploy-dy-landing-v6:
 
 #===============================================================================================
 
+deploy-dy-landing-v8:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-landing-v8
+
+#===============================================================================================
+
 deploy-lh-download:
   extends: .s3-deploy
   variables:

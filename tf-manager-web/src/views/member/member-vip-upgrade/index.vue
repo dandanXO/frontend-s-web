@@ -51,6 +51,16 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div class="btn-group">
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:member:vip-upgrade:export']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
+      </div>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
       <template #header>

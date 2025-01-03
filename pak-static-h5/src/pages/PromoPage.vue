@@ -18,7 +18,12 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="$t(tab.label)" />
+        <q-tab
+          v-for="(tab, i) in tabItems"
+          :key="i"
+          :name="tab.name"
+          :label="langVal === 'ur' ? tab.label_ur : tab.label"
+        />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -31,7 +36,10 @@
                   <!-- data-aos="zoom-in"
                   data-aos-easing="ease-out"
                   data-aos-duration="1000" -->
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                  >
                     <a @click="showPromoDetails(promo)">
                       <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
@@ -52,21 +60,21 @@
                     </a>
                   </div>
 
-                  <div class="promo-item" v-if="tab.name === 'all'">
-                    <a @click="showPromoDetails(promo)">
-                      <!-- <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div> -->
-                      <div class="promo-img-wrapper">
-                        <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
-                    </a>
-                  </div>
+                  <!--                  <div class="promo-item" v-if="tab.name === 'all'">-->
+                  <!--                    <a @click="showPromoDetails(promo)">-->
+                  <!--                      &lt;!&ndash; <div class="promo-info">-->
+                  <!--                        <span class="viewdetail">{{ promo.title }}</span>-->
+                  <!--                      </div> &ndash;&gt;-->
+                  <!--                      <div class="promo-img-wrapper">-->
+                  <!--                        <div class="promo-bg">-->
+                  <!--                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />-->
+                  <!--                        </div>-->
+                  <!--                      </div>-->
+                  <!--                      <div class="promo-info">-->
+                  <!--                        <span class="viewdetail">{{ promo.title }}</span>-->
+                  <!--                      </div>-->
+                  <!--                    </a>-->
+                  <!--                  </div>-->
                 </div>
               </div>
               <MediaSettingsComponent />
@@ -210,9 +218,11 @@
 import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
+import { cached } from "src/boot/cache";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
+import { i18nStore } from "src/router/language";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
@@ -238,6 +248,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
+    const i18nStoreLanguage = i18nStore();
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
@@ -489,6 +500,24 @@ export default defineComponent({
     };
 
     const loadAll = () => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
+          tabItems.value = [];
+          res.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).en,
+              label_ur: JSON.parse(element.name).H5_ur
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
+
       const platformApiUrl = "/opt-session/promo/page";
 
       // isFetchingPromo.value = window.location.pathname === "/promotion";
@@ -650,16 +679,9 @@ export default defineComponent({
     };
 
     const tab = ref("all");
-    const tabItems = [
-      { name: "all", label: "promo.all" },
-      { name: "earn", label: "promo.earn" },
-      { name: "hot", label: "promo.hot" },
-      { name: "new user", label: "promo.new_user" },
-      { name: "sports", label: "promo.sports" },
-      { name: "live", label: "promo.live" },
-      { name: "slot", label: "promo.slot" },
-      { name: "vip", label: "promo.vip" }
-    ];
+    const tabItems = ref([]);
+
+    const langVal = computed(() => i18nStoreLanguage.languageVal);
 
     // promo param split.
     const parsedParam = computed(() => {
@@ -685,6 +707,7 @@ export default defineComponent({
     });
 
     return {
+      langVal,
       promoState,
       promoTypes,
       promoTabActive,

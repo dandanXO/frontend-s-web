@@ -36,3 +36,7 @@ export const getAffiliateBalanceByWalletOrCommission = (loginName, siteId, mainW
 export const deleteBankCard = (card) => {
   return https().request(`/affiliate/${card.memberId}/memberBankCard?_method=delete`, Method.POST, { cardId: card.id }, ContentType.form);
 };
+
+export const getAffiliateLoginNameList = (siteId, value) => {
+  return https().request(`/affiliate/loginName-list/${siteId}`, Method.GET, { loginName: value }, ContentType.form);
+};

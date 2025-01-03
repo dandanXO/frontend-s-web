@@ -368,6 +368,17 @@
         :name="groupConfig.group"
         :key="groupConfig.group"
       >
+        <template #title>
+          <span>{{ groupConfig.group }}</span>
+          <span
+            style="margin-left: 10px"
+            @click="addGroupConfig(groupConfig.group)"
+          >
+            <el-icon color="#409efc">
+              <Plus />
+            </el-icon>
+          </span>
+        </template>
         <el-form-item
           v-for="item in groupConfig.items"
           border-color="#dcdcdc"
@@ -565,6 +576,7 @@ import { useI18n } from 'vue-i18n'
 import { required } from '../../../../utils/validate'
 import JsonEditor from 'json-editor-vue3'
 import { getValueRulesList } from '../../../../api/value-rules'
+import { Plus } from "@element-plus/icons-vue";
 
 const { t } = useI18n()
 const siteId = ref()
@@ -819,6 +831,11 @@ async function delConfig(id) {
   }
 }
 
+async function addGroupConfig(group) {
+  form.configGroup = group
+  showDialog('CREATE')
+}
+
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   sites.list = ret
@@ -1038,7 +1055,8 @@ function showDialog(type) {
     if (configForm.value) {
       form.id = null
       form.rulesId = null
-      configForm.value.resetFields()
+      form.code = null
+      form.value = null
     }
     uiControl.dialogTitle = t('fields.createConfig')
   } else if (type === 'EDIT') {

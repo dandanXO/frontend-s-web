@@ -10,7 +10,7 @@
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
+        <q-skeleton v-if="isLoadingWithdrawalMethod || isRefreshRemainWager" style="height: 20px" />
         <span v-else class="amount">
           {{
             selectedWithdrawalMethod.withdrawableBalance >= 0
@@ -234,8 +234,14 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
               </div>
-              <div class="desc">
-                {{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}
+              <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
+                <q-spinner v-if="isRefreshRemainWager" />
+                <span v-else>{{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
+                <img
+                  class="refresh-btn-img"
+                  :class="{ rotate: isRefreshRemainWager }"
+                  src="../../assets/images/account/refresh-icon.svg"
+                />
               </div>
             </div>
           </div>
@@ -348,7 +354,7 @@
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
-          <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
+          <span class="tutorial-link" @click="openWithdrawTutorialPic">Picture</span>
           /
           <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
         </p>
@@ -398,7 +404,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isWithdrawTutorial">
+  <!-- <q-dialog width="100%" v-model="isWithdrawTutorial">
     <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
         <div class="close-alert" v-close-popup>
@@ -407,7 +413,7 @@
         <img src="../../assets/images/account/tutorial-withdraw.jpg" class="tutorial-img" width="100%" />
       </q-card-section>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
@@ -516,17 +522,38 @@ const hasWithdrawCard = computed(() => {
 });
 const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
+const isRefreshRemainWager = ref(false);
 
-const checkNewUser = () => {
-  if (store.phone == "") {
-    isNewUser.value = true;
-  } else {
-    getWithdrawalMethods();
-  }
+const refreshRemainWager = () => {
+  isRefreshRemainWager.value = true;
+
+  api
+    .get("/session/withdraw/withdrawableBalance/refresh")
+    .then((res) => {
+      if (res.code === 0) {
+        selectedWithdrawalMethod.value = {
+          ...selectedWithdrawalMethod.value,
+          ...res.data
+        };
+      }
+    })
+    .finally(() => {
+      isRefreshRemainWager.value = false;
+    });
 };
 
+
+// const checkNewUser = () => {
+//   if (store.phone == "") {
+//     isNewUser.value = true;
+//   } else {
+//     getWithdrawalMethods();
+//   }
+// };
+
 onMounted(() => {
-  checkNewUser();
+  // checkNewUser();
+  getWithdrawalMethods();
   store.getBalance();
   // loadPlatform()
 });
@@ -584,7 +611,6 @@ const submitWithdraw = async () => {
   if (cardRef.value.hasError || amountRef.value.hasError) {
     $q.loading.hide();
   } else {
-    console.log("");
     api
       .post("/session/withdraw/", qs.stringify(withdrawInfo))
       .then((response) => {
@@ -845,11 +871,53 @@ const goToBank = () => {
   router.push("/account/bank?from=" + route.path);
 };
 
-const isWithdrawTutorial = ref(false);
+// const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
+const openWithdrawTutorialPic = () => {
+  if (isUSDT.value) {
+    window.open("https://drive.google.com/file/d/1R0gDPR7lFqZs1yS_Sp5DH5X086foh2i6/view?usp=drive_link", "_blank");
+  } else {
+    const code = selectedWithdrawalMethod.value.code;
+    switch (code) {
+      case "BKASH":
+        window.open("https://drive.google.com/file/d/1xgo20eOiIlgaRpOto3BiXQBarhJxz6-C/view?usp=drive_link", "_blank");
+        break;
+      case "NAGAD":
+        window.open("https://drive.google.com/file/d/1SPhry7cgQ3VDh5bThQq2RFeNcY-C3Nn5/view?usp=drive_link", "_blank");
+        break;
+      case "ROCKET":
+        window.open("https://drive.google.com/file/d/1XBv0mWwcPvFr7nepqon2jJaAFspUpMhg/view?usp=drive_link", "_blank");
+        break;
+      case "UPAY":
+        window.open("https://drive.google.com/file/d/1A1t8Y43IwUYeJeUcfjUz-0ccH9N0LIMf/view?usp=drive_link", "_blank");
+        break;
+    }
+  }
+};
+
 const openWithdrawTutorialVideo = () => {
-  window.open("https://drive.google.com/file/d/1yOJgpa4C9y7XFDacL52f4MoQ1lLw3Pm-/view?usp=drivesdk", "_blank");
+  if (isUSDT.value) {
+    window.open("https://drive.google.com/file/d/1gYLoTmX9wfj_AdwJR2_BHxOBjPhOc7c6/view?usp=sharing", "_blank");
+  } else {
+    const code = selectedWithdrawalMethod.value.code;
+    switch (code) {
+      case "BKASH":
+        window.open("https://drive.google.com/file/d/15_EjJx3XPnsDFWUt-rmrjT_MC94HTAtR/view?usp=sharing", "_blank");
+        break;
+      case "NAGAD":
+        window.open("https://drive.google.com/file/d/1Z79_CU37KKp7kR5Avn0W_Kj7HkeeivLC/view?usp=sharing", "_blank");
+        break;
+      case "ROCKET":
+        window.open("https://drive.google.com/file/d/1sTgWY79nWT3prENPF7ZI4OWwT1rlpK1I/view?usp=sharing", "_blank");
+        break;
+      case "UPAY":
+        window.open("https://drive.google.com/file/d/1DWvpqXFmPFOoxlu1BsHYlvp2mPbqeCkl/view?usp=sharing", "_blank");
+        break;
+    }
+  }
+
+  // window.open("https://drive.google.com/file/d/1yOJgpa4C9y7XFDacL52f4MoQ1lLw3Pm-/view?usp=drivesdk", "_blank");
   // if (langSelect === "ur") {
   //   window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
   // } else {
@@ -1137,6 +1205,21 @@ const openWithdrawTutorialVideo = () => {
     .desc {
       font-size: 0.825rem;
       font-weight: 400;
+      .refresh-btn-img {
+        width: 20px;
+        height: 20px;
+
+        &.rotate {
+          animation: rotateTwice 1s infinite linear;
+        }
+      }
+    }
+
+    .remain-wager-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
     }
   }
 }

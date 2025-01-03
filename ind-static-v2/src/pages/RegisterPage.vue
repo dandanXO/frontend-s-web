@@ -335,8 +335,14 @@ export default defineComponent({
       if (ui.adjust_register_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         Adjust.trackEvent(adjustEvent);
+      } else if (ui.adjust_register_event) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
       }
-    }
+    };
 
     const trackRegisterFailedEvent = () => {
       if(ui.adjust_register_fail_event && isAndroid()) {
@@ -406,7 +412,7 @@ export default defineComponent({
             }
           }
 
-          if (regForm.regDevice !== "ANDROID" || !affCode.value) {
+          if (!regForm.sid && (regForm.regDevice !== "ANDROID" || !affCode.value)) {
             regForm.sid = sidParam;
           }
 
@@ -423,14 +429,14 @@ export default defineComponent({
               if (res.code === 0) {
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();
-                
+
                 $q.notify({
                   color: "positive",
                   position: "top",
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-                
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {

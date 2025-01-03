@@ -313,13 +313,13 @@
       </el-table-column>
       <el-table-column prop="balance" :label="t('fields.balance')" min-width="180">
         <template #default="scope">
-            $
-            <span
-              v-formatter="{
+          $
+          <span
+            v-formatter="{
                 data: scope.row.balance,
                 type: 'money',
               }"
-            />
+          />
         </template>
       </el-table-column>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">

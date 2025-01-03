@@ -555,7 +555,13 @@ const getWithdrawalMethods = () => {
       if (isAutoWithdrawal.value) {
         isShowRemainingDialog.value = !response.data.withdrawStatus;
       }
-      withdrawalMethods.value = response.data.withdrawShowList;
+      const withdrawShowList = []
+      response.data.withdrawShowList.forEach(element => {
+        if (element.status) {
+          withdrawShowList.push(element)
+        }
+      });
+      withdrawalMethods.value = withdrawShowList;
       //Remove this for real data
       // withdrawalMethods.value = [
       //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
@@ -581,6 +587,8 @@ const chooseLabel = () => {
     // return '虚拟币'
   } else if (isEWALLET.value) {
     return "电子钱包";
+  } else if (isALIPAY.value) {
+    return '支付宝'
   } else {
     return "银行卡";
   }
@@ -599,6 +607,8 @@ const chooseCard = () => {
     return "虚拟钱包";
   } else if (isEWALLET.value) {
     return "电子钱包";
+  } else if (isALIPAY.value) {
+    return '支付宝卡'
   } else {
     return "银行卡片";
   }

@@ -1,15 +1,21 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <template v-if="ui.edition === EDITION.SLOT">
-      <img class="header-decoration left" src="@/assets/images/home/header-decoration-slot-left.png"
-        alt="TF88 slot left ribbon" />
-      <img class="header-decoration right" src="@/assets/images/home/header-decoration-slot-right.png"
-        alt="TF88 slot right ribbon" />
+      <img
+        class="header-decoration left"
+        src="@/assets/images/home/header-decoration-slot-left.png"
+        alt="TF88 slot left ribbon"
+      />
+      <img
+        class="header-decoration right"
+        src="@/assets/images/home/header-decoration-slot-right.png"
+        alt="TF88 slot right ribbon"
+      />
     </template>
     <div class="top-nav-wrapper">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo-bebest.svg" alt="TF88 logo" />
+          <img class="logo" src="../../assets/logo.svg" alt="TF88 logo" />
         </router-link>
         <Navigation />
 
@@ -55,8 +61,10 @@
               </div>
             </span>
             <template #dropdown>
-              <el-dropdown-menu style="min-width: 180px; display: flex; flex-direction: column; align-items: flex-start"
-                class="profile-info-dropdown-content">
+              <el-dropdown-menu
+                style="min-width: 180px; display: flex; flex-direction: column; align-items: flex-start"
+                class="profile-info-dropdown-content"
+              >
                 <el-dropdown-item command="personal">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
@@ -76,8 +84,10 @@
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="mailbox">
-                  <div class="mailbox-dropdown"
-                    style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div
+                    class="mailbox-dropdown"
+                    style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%"
+                  >
                     <img src="../../assets/images/home/header-dropdown-inbox-icon.png" />
                     <span>{{ $t("menu.mailbox") }}</span>
                     <div v-if="store.unreadTotal > 0" class="unread-total">
@@ -119,49 +129,85 @@
       </div>
     </div>
 
-    <el-dialog class="acc-dialog" v-model="loginDialogVisible" width="980px" align-center style="max-width: 1080px"
-      @close="store.loginPageVisible = false">
-      <div class="acc-dialog-container login-container"
-        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''">
+    <el-dialog
+      class="acc-dialog"
+      v-model="loginDialogVisible"
+      width="980px"
+      align-center
+      style="max-width: 1080px"
+      @close="store.loginPageVisible = false"
+    >
+      <div
+        class="acc-dialog-container login-container"
+        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''"
+      >
         <div class="acc-dialog-left">
           <img class="paris" v-if="isLandingClub !== 'tf88club'" :src="getLoginBg()" />
           <img v-else src="../../assets/home/tf88club-img.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
-            <LoginDialog @close-dialog="loginDialogVisible = false" @open-reg-dialog="openRegDialog"
-              @open-forgotpwd-dialog="openForgotpwdDialog" />
+            <LoginDialog
+              @close-dialog="loginDialogVisible = false"
+              @open-reg-dialog="openRegDialog"
+              @open-forgotpwd-dialog="openForgotpwdDialog"
+            />
           </div>
         </div>
       </div>
     </el-dialog>
 
-    <el-dialog class="acc-dialog" v-model="registerDialogVisible" width="1300px" align-center
-      @close="store.regPageVisible = false" style="transform: scale(.9);">
+    <el-dialog
+      class="acc-dialog"
+      v-model="registerDialogVisible"
+      width="1300px"
+      align-center
+      @close="store.regPageVisible = false"
+      style="transform: scale(0.9)"
+    >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
           <img class="paris" :src="getSignUpBg()" />
         </div>
         <div class="acc-dialog-right">
-          <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog"
-            @open-welcome-dialog="welcomeDialogVisible = true" />
+          <RegisterAccount
+            @close-dialog="registerDialogVisible = false"
+            @open-login-dialog="openLoginDialog"
+            @open-welcome-dialog="welcomeDialogVisible = true"
+          />
         </div>
       </div>
     </el-dialog>
 
-    <el-dialog v-model="welcomeDialogVisible" width="100%" align-center style="max-width: 1280px"
-      @close="store.welcomeDialogVisible = false">
+    <el-dialog
+      v-model="welcomeDialogVisible"
+      width="100%"
+      align-center
+      style="max-width: 1280px"
+      @close="store.welcomeDialogVisible = false"
+    >
       <HomeWelcome @close-dialog="welcomeDialogVisible = false" />
     </el-dialog>
 
-    <el-dialog v-model="captchaDialogVisible" :title="$t('personal.captcha')" width="50%" align-center
-      style="max-width: 500px" :close-on-click-modal="false" @keydown.enter.prevent>
+    <el-dialog
+      v-model="captchaDialogVisible"
+      :title="$t('personal.captcha')"
+      width="50%"
+      align-center
+      style="max-width: 500px"
+      :close-on-click-modal="false"
+      @keydown.enter.prevent
+    >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="100" label-suffix=":">
         <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode">
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input v-model="captchaForm.captchaCode" :label="$t('personal.captcha')"
-                :placeholder="$t('personal.captcha')" @keyup.enter="sendOtp" />
+              <el-input
+                v-model="captchaForm.captchaCode"
+                :label="$t('personal.captcha')"
+                :placeholder="$t('personal.captcha')"
+                @keyup.enter="sendOtp"
+              />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -174,8 +220,14 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog class="acc-dialog" v-model="forgetPassDialogVisible" width="1280px" align-center
-      style="max-width: 1080px" @close="store.forgetPassDialogVisible = false">
+    <el-dialog
+      class="acc-dialog"
+      v-model="forgetPassDialogVisible"
+      width="1280px"
+      align-center
+      style="max-width: 1080px"
+      @close="store.forgetPassDialogVisible = false"
+    >
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
@@ -192,8 +244,7 @@
     <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
       <div class="noticedialog">
         <div class="title">{{ $t("common.systemError") }}</div>
-        <div class="contents">
-        </div>
+        <div class="contents"></div>
         <el-button class="common-btn" @click="noticeDialogVisible = false">{{ $t("common.confirm") }}</el-button>
       </div>
     </el-dialog>
@@ -814,7 +865,6 @@ export default defineComponent({
 </script>
 <style lang="scss">
 body {
-
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
     background-color: #a8b5c3;
@@ -832,7 +882,6 @@ body {
     width: 100%;
     justify-content: center;
   }
-
 }
 </style>
 <style scoped lang="scss">
@@ -1060,13 +1109,17 @@ body {
 }
 
 .header-container {
-  &.on-scrolled {}
-
   width: 100%;
   position: sticky;
   top: 0;
   z-index: 99;
   transition: all 0.3s ease;
+
+  padding: 10px;
+  background: $color-white;
+
+  position: relative;
+  box-shadow: $shadow-header;
 
   .top-nav-wrapper {
     .side {
@@ -1083,20 +1136,14 @@ body {
       }
     }
 
-    padding: 10px;
-    background: $color-white;
-
-    position: relative;
-    box-shadow: $shadow-header;
-
     .top-nav-inner {
-      max-width: 1350px;
+      max-width: 1400px;
       margin: 0 auto;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      gap: 8px;
 
       &.logged-in-nav {
         max-width: 1530px;
@@ -1116,13 +1163,17 @@ body {
       }
 
       .logo {
-        height: 64px;
+        height: 60px;
         //width: 102px;
 
         img {
           width: 100%;
           display: block;
         }
+      }
+
+      @media (max-width: 1380px) {
+        margin: 0;
       }
     }
   }
@@ -1261,7 +1312,7 @@ body {
 }
 
 .mailbox-dropdown {
-  >span {
+  > span {
     flex-grow: 1;
   }
 
@@ -1751,7 +1802,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 
 .mailbox-notify {
   position: relative;

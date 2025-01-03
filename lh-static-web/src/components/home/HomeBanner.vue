@@ -4,10 +4,12 @@
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
+    width="820px"
   >
-    <a @click="clickHomePopupImg(homePopupPath)">
-      <img :src="homePopupImg" class="alert-img" />
-    </a>
+    <div style="position: relative;">
+      <SitePopout />
+      <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose">
+    </div>
   </el-dialog>
   <el-carousel
     v-if="banners?.length > 0"
@@ -40,12 +42,13 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
+import { loadPromoBanner, loadHomePopups } from "@/api/index/promo";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
+import SitePopout from "@/components/modal/SitePopout.vue";
 
 const notify = useNotify();
 
@@ -71,6 +74,10 @@ const goBannerPage = (redirectUrl) => {
     router.push(`/promotion?name=${redirectUrl}`);
   }
 };
+
+const handleClose = () => {
+  isImportantAnnoucementModal.value = false
+}
 
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
@@ -119,15 +126,10 @@ const getWithExpiry = (key) => {
 
 const isImpt = getWithExpiry("isImpt");
 
+const popupList = ref([]);
 const isFirstView = ref(false);
-const homePopupImg = ref("");
-const homePopupPath = ref("");
 const isImportantAnnoucementModal = ref(false);
-const homePopupFrequency = ref(0);
 const homePopupFrequencyNum = ref(0);
-const homePopupContent = ref("");
-const homePopupType = ref("");
-const homePopupId = ref(0);
 
 const clickHomePopupImg = (urlString) => {
   isImportantAnnoucementModal.value = false;
@@ -164,15 +166,17 @@ const checkShowImgTop = () => {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
   } else {
-    loadHomePopup("")
+    loadHomePopups("")
       .then((res) => {
         // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
         //   res = apiMockData;
         // }
         const { code, data } = res;
+        popupList.value = data;
+        store.frequency = data[0]["frequency"]
         if (code === 0) {
           if (isImpt === null) {
-            switch (data["frequency"]) {
+            switch (data[0]["frequency"]) {
               case "EVERYTIME":
                 homePopupFrequencyNum.value = 0;
                 break;
@@ -187,12 +191,6 @@ const checkShowImgTop = () => {
                 break;
             }
             isImportantAnnoucementModal.value = true;
-            homePopupPath.value = data["path"];
-            homePopupImg.value = imgURL + data["desktopImgUrl"];
-            homePopupContent.value = data["content"];
-            homePopupType.value = data["type"];
-            homePopupId.value = data["id"];
-            homePopupFrequency.value = data["frequency"];
             isFirstView.value = true;
           } else {
             isImportantAnnoucementModal.value = false;
@@ -270,5 +268,12 @@ watch(
       }
     }
   }
+}
+
+.close-btn {
+  position: absolute;
+  right: -60px;
+  top: 45px;
+  cursor: pointer;
 }
 </style>

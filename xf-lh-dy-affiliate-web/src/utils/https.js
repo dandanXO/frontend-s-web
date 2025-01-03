@@ -52,7 +52,15 @@ const onResponse = (response) => {
     const store = useStore()
     const siteId = store.state.user.siteId
     if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
-      sessionStorage.setItem('myIPAddress', res.data)
+      if(res.data){
+        sessionStorage.setItem('myIPAddress', res.data)
+      }
+      if(res.ip){
+        sessionStorage.setItem('myIPAddress', res.ip)
+      }
+      if(res.loginName){
+        sessionStorage.setItem('myloginName', res.loginName)
+      }
       router.push('/403');
       return;
     }

@@ -256,6 +256,9 @@ export default defineComponent({
       isShowBtt.value = false
     }
 
+    var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+    var platformGamesApiKey = store.hasToken() ? "LOGGEDPLATFORMGAMES" : "PLATFORMGAMES";
+
     const loadGameList = () => {
       isLoading.value = true;
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB"
@@ -267,9 +270,9 @@ export default defineComponent({
       }
       const code = selectedPlatId.value;
       const gameType = "FISH";
-      const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+      const key = `${platformGamesApiKey}_GAMES_${code}_${gameType}_${regDevice}`;
 
-      cached.get(key, () => api.get("/platformGames", {
+      cached.get(key, () => api.get(platformGamesApiUrl, {
         params: {platformId: code, gameType: gameType, device: regDevice, way: way},
       }).then((res) => {
         isLoading.value = false;

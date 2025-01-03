@@ -2639,6 +2639,7 @@ export default defineComponent({
       Object.keys({ ...aff }).forEach(detailField => {
         affiliateDetail[detailField] = aff[detailField]
       })
+      loading.affiliateInfo = false
 
       loadMemberRemark()
       await loadVips()
@@ -2646,7 +2647,6 @@ export default defineComponent({
       await loadRiskLevels()
       await populateIpColor()
       loading.accountInfo = false
-      loading.affiliateInfo = false
       loading.loginInfo = false
 
       await loadBalance()

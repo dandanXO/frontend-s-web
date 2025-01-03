@@ -128,8 +128,26 @@
       <el-table-column prop="siteName" :label="t('fields.siteName')" />
       <el-table-column prop="actionType" :label="t('fields.actionType')" />
       <el-table-column prop="field" :label="t('fields.field')" />
-      <el-table-column prop="dataBefore" :label="t('fields.dataBefore')" />
-      <el-table-column prop="dataAfter" :label="t('fields.dataAfter')" />
+      <el-table-column prop="dataBefore" :label="t('fields.dataBefore')">
+        <template #default="scope">
+          <div v-if="scope.row.dataBefore && scope.row.dataBefore.length < 50">
+            {{ scope.row.dataBefore }}
+          </div>
+          <div v-else-if="scope.row.dataBefore">
+            <span style="cursor: pointer; color: dark;" @click="openModal(t('fields.dataBefore'), scope.row.dataBefore)">{{ scope.row.dataBefore.substr(0,50) + "..." }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="dataAfter" :label="t('fields.dataAfter')">
+        <template #default="scope">
+          <div v-if="scope.row.dataAfter && scope.row.dataAfter.length < 50">
+            {{ scope.row.dataAfter }}
+          </div>
+          <div v-else-if="scope.row.dataAfter">
+            <span style="cursor: pointer; color: dark;" @click="openModal(t('fields.dataAfter'), scope.row.dataAfter)">{{ scope.row.dataAfter.substr(0,50) + "..." }}</span>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="loginName" :label="t('fields.doneBy')" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" />
     </el-table>
@@ -150,6 +168,13 @@
   >
     <p>{{ t('fields.responseBody') }} : {{ uiControl.responseBody }}</p>
     <p>{{ t('fields.requestParam') }} : {{ uiControl.requestParam }}</p>
+  </el-dialog>
+  <el-dialog
+    v-model="uiControl.loadLongContentDialog"
+    :title="uiControl.loadLongContentTitle"
+    width="580px"
+  >
+    {{ uiControl.loadLongContentDialog }}
   </el-dialog>
 </template>
 
@@ -230,6 +255,9 @@ const uiControl = reactive({
       value: 'DELETE',
     },
   ],
+  loadLongContentDialog: false,
+  loadLongContentTitle: null,
+  loadLongContent: null
 })
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -302,6 +330,12 @@ async function loadUserActionLog() {
 function changePage(page) {
   request.current = page
   loadUserActionLog()
+}
+
+function openModal(title, content) {
+  uiControl.loadLongContentDialog = true
+  uiControl.loadLongContentTitle = title
+  uiControl.loadLongContentDialog = content
 }
 
 onMounted(async () => {

@@ -249,6 +249,7 @@ export function getVIPDetails() {
 }
 
 export function getVIPDetailsNotLoggedIn() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/get-vip-bonus-detail?siteId=7&v=${randNum}`);
 }
 
@@ -261,7 +262,13 @@ export function claimLivePokerBonus() {
 }
 
 export function footballHistroy() {
-  return eventapi.get("/lh1-football/history");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/lh1-football/history?v=${randNum}`);
+}
+
+export function footballEligibility() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/lh1-football/eligibility?v=${randNum}`);
 }
 
 export function getCompetitionBetToday(promoCode) {
@@ -296,7 +303,8 @@ export function getCompetitionToday() {
 }
 
 export function getCompetitionYesterday(promoCode) {
-  return eventapi.get("/session/competition/yesterday", {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition/yesterday?v=${randNum}`, {
     params: {
       promoCode
     }
@@ -304,7 +312,8 @@ export function getCompetitionYesterday(promoCode) {
 }
 
 export function claimCompetitionBonus(promoCode) {
-  return eventapi.post("/session/competition/claimBonus", qs.stringify({ promoCode }));
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition/claimBonus?v=${randNum}`, qs.stringify({ promoCode }));
 }
 
 export function claimCompetitionBetBonus(promoCode) {
@@ -503,13 +512,51 @@ export function getCompetitionLossInit(promoCode) {
 }
 
 export function claimCompetitionLoss(promoCode) {
-  return eventapi.post(`/session/competition-loss/claim`, qs.stringify({ promoCode }));
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-loss/claim?v=${randNum}`, qs.stringify({ promoCode }));
 }
 export function getWeeklySlotLossBonusInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/weeklySlotLossBonus/init?v=${randNum}`)
+  return eventapi.get(`/session/weeklySlotLossBonus/init?v=${randNum}`);
 }
 
 export function claimWeeklySlotLossBonusInit() {
-  return eventapi.put("/bonus/claim/lh1-weekly-slot-loss-bonus")
+  return eventapi.put("/bonus/claim/lh1-weekly-slot-loss-bonus");
+}
+
+export function getBountyInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/event-check-in/can-claim?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimBountyBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/event-check-in/claim?promoCode=${promoCode}&v=${randNum}`);
+}
+export function getVctcnInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-platform/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimVctcnBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getCompetitionBetPlatformInit(promoCode) {
+  return eventapi.get(`/session/competition-bet-platform/init`, qs.stringify({ promoCode }));
+}
+
+export function getCompetitionBetPlatformClaimBonus(promoCode) {
+  return eventapi.post(`/session/competition-bet-platform/claimBonus`, qs.stringify({ promoCode }));
+}
+
+export function getBelgrade2025Init(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-single-bet/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimBelgrade2025Bonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }

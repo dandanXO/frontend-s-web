@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <title><%= productName %></title>
 
@@ -39,8 +39,18 @@
       // Now you can use globalThis safely
       // console.log(globalThis);
     </script>
+
+    <script>
+      (function () {
+        var s = document.createElement('script');
+        s.src = 'static/pwa/js/webpush/webPushSdk.produce.min.2.2.1.js';
+        s.async = true;
+        var s0 = document.getElementsByTagName('script')[0];
+        s0.parentNode.insertBefore(s, s0);
+      })();
+    </script>
   </head>
-  <body>
+  <body id="br1-static-v1">
     <!-- DO NOT touch the following DIV -->
     <div id="q-app"></div>
   </body>

@@ -32,7 +32,7 @@
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <div class="congrats-container">
       <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-money.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge {{ store.currency.label }}300 Get</div>
       <div class="congrats-highlight">{{ store.currency.label }}28</div>
 

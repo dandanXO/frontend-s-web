@@ -29,13 +29,15 @@ const handleReceivedWsEvent = (event) => {
     case 'MARK_NOTIFICATION_READ_RES':
       if (event.code === "0") {
         const notificationRecordIdToRemove = Number(event.notificationRecordId)
-        const updatedNotificationRecords = storeNotifications.value.filter(notification => notification.id !== notificationRecordIdToRemove);
-        store.dispatch(UserActionTypes.ACTION_REFRESH_NOTIFICATIONS, updatedNotificationRecords);
-        store.dispatch(WebSocketActionTypes.REMOVE_SOCKET_EVENTS, event);
-        ElMessage({
-          message: 'success',
-          type: 'success',
-        })
+        if (storeNotifications.value.find(notification => notification.id === notificationRecordIdToRemove)) {
+          const updatedNotificationRecords = storeNotifications.value.filter(notification => notification.id !== notificationRecordIdToRemove);
+          store.dispatch(UserActionTypes.ACTION_REFRESH_NOTIFICATIONS, updatedNotificationRecords);
+          store.dispatch(WebSocketActionTypes.REMOVE_SOCKET_EVENTS, event);
+          ElMessage({
+            message: t('transfer.status.success'),
+            type: 'success',
+          })
+        }
       }
       break;
     default:

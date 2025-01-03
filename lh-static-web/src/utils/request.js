@@ -97,6 +97,20 @@ const globalLinks = [
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
 const globalAndCNLinks = [
+  "823223.com",
+  "968276.com",
+  "385683.com",
+  "531950.com",
+  "lh684.cc",
+  "lh761.cc",
+  "lh184.cc",
+  "lh434.cc",
+  "lh126.cc",
+  "lh933.cc",
+  "lh920.cc",
+  "lh576.cc",
+  "lh252.cc",
+  "lh800.cc",
   "055267.com",
   "355277.com",
   "858862.com",
@@ -291,8 +305,14 @@ const globalAndCNLinks = [
   "lh942.cc",
   "lh943.cc",
   "lh953.cc",
-  "lh04157.com"
+  "lh04157.com",
+  "lh309.cc",
+  "lh279.cc",
+  "lh719.cc",
+  "lh589.cc",
+  "lh969.cc"
 ];
+
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 const REPLACEMENT_DOMAIN = "random";

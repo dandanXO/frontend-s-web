@@ -91,7 +91,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
 import { t } from "@/boot/lang";
-import { isAndroid } from "@/boot/utils";
+import { isAndroid, isInPwa } from "@/boot/utils";
 import { userStore } from "@/stores/index";
 import { useUI } from "@/stores/ui";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -230,6 +230,12 @@ export default defineComponent({
       if (ui.adjust_register_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         Adjust.trackEvent(adjustEvent);
+      } else if (ui.adjust_register_event) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
       }
     };
 
@@ -291,7 +297,7 @@ export default defineComponent({
             }
           }
 
-          if (regForm.regDevice !== "ANDROID" || !affCode.value) {
+          if (!regForm.sid && (regForm.regDevice !== "ANDROID" || !affCode.value)) {
             regForm.sid = sidParam;
           }
 
@@ -312,6 +318,15 @@ export default defineComponent({
                   message: t("notify.registeredSuccessfully"),
                   icon: "check_circle_outline"
                 });
+
+                //FB Tracking.
+                if (isInPwa()) {
+                  if (store.isFbPixel) {
+                    fbq("track", "CompleteRegistration", {
+                      event_id: regForm.sid
+                    });
+                  }
+                }
 
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();

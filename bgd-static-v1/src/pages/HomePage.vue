@@ -1,63 +1,83 @@
 <template>
-  <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
-
-  <q-carousel
-    v-model="slide"
-    id="home"
-    class="home"
-    data-aos-duration="1200"
-    data-aos-once="true"
-    data-aos="fade-in"
-    transition-next="slide-left"
-    transition-prev="slide-right"
-    animated
-    autoplay
-    infinite
-    navigation
-    swipeable
+  <div
+    :style="`background:linear-gradient(to bottom, ${bannerColors[slide]}, rgba(35,39,38,1)`"
+    style="transition: background 0.5s ease-in-out"
+    class="dynamic-bg"
   >
-    <q-carousel-slide
-      v-for="(banner, i) in banners"
-      :key="i"
-      :name="i"
-      class="column no-wrap flex-center"
-      :img-src="returnBannerUrl(banner)"
-      @click="gotoPromo(banner)"
-    ></q-carousel-slide>
+    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
 
-    <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
+    <q-carousel
+      v-model="slide"
+      id="home"
+      class="home"
+      data-aos-duration="1200"
+      data-aos-once="true"
+      data-aos="fade-in"
+      transition-next="slide-left"
+      transition-prev="slide-right"
+      animated
+      autoplay
+      infinite
+      navigation
+      swipeable
+    >
+      <q-carousel-slide
+        v-for="(banner, i) in banners"
+        :key="i"
+        :name="i"
+        class="promo-carousel-slide column no-wrap flex-center"
+        :img-src="returnBannerUrl(banner)"
+        @click="gotoPromo(banner)"
+      >
+        <!-- <div class="promo-banner-btn-grp">
+          <q-btn no-caps unelevated class="green-btn" @click.stop="() => {}">{{ $t("btn.deposit") }}</q-btn>
+          <a onclick="event.stopPropagation()">Learn More</a>
+        </div> -->
+      </q-carousel-slide>
 
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        v-if="active"
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: #7edb5c;
-        "
-      />
-      <q-btn
-        v-else
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.2);
-        "
-      />
-    </template>
-  </q-carousel>
+      <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
+
+      <template v-slot:navigation-icon="{ active, onClick }">
+        <q-btn
+          v-if="active"
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: #7edb5c;
+          "
+        />
+        <q-btn
+          v-else
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+          "
+        />
+      </template>
+    </q-carousel>
+
+    <!-- <pre> -->
+    <!-- banners--{{ banners }} -->
+    <!-- banners--{{ bannerColors }} -->
+
+    <!-- gradientStyle--{{ gradientStyle }} -->
+
+    <!-- slide--{{ bannerColors[slide] }} -->
+    <!-- </pre> -->
+  </div>
 
   <div>
     <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
@@ -102,6 +122,7 @@
         <!--        </div>-->
         <div>
           <q-carousel
+            v-if="hbPromo.length > 0"
             class="hb-float"
             :navigation="hbPromo.length > 1 ? true : false"
             v-model="hbSlide"
@@ -176,6 +197,7 @@
       <template v-for="(item, index) in translatedCategoriesList" :key="index">
         <swiper-slide>
           <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+            <div :class="`cat-icon ${item.icon}`" />
             <div class="cat-title">{{ item.label }}</div>
           </div>
         </swiper-slide>
@@ -197,22 +219,32 @@
               <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Hot">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Hot">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('hot')" title="hot prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('hot')" title="hot next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+          <div class="platform-game-wrapper lobby-platform-game" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
+              :grid="{ rows: 2, fill: 'row' }"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('hot', swiper)"
             >
-              <template v-for="(item, index) in hotGameList" :key="index">
+              <template v-for="(item, index) in lobbyHotGameLists" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
                     class="platform-game-item btn-effect"
@@ -225,12 +257,12 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg`)})`;
                               } catch (e) {
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg)`;
                                 }
                               }
                             })()
@@ -268,12 +300,12 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                               } catch (e) {
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.jpg)`;
                                 }
                               }
                             })()
@@ -309,12 +341,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -351,12 +383,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/hot/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -386,15 +418,23 @@
               <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Live">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Live">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('live')" title="live prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('live')" title="live next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <div class="platform-game-container live-casino">
               <div
-                v-for="(item, index) in livecasino.slice(0, 3)"
+                v-for="(item, index) in livecasino"
                 :key="index"
                 data-aos="zoom-in"
                 :data-aos-delay="100 * index"
@@ -403,15 +443,15 @@
                 data-aos-anchor="#hotgames"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/live/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/live/item-game-maintenance.jpg" />
                 <div
                   class="platform-live-item--img"
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                        return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.jpg`)})`;
                       } catch (e) {
-                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                       }
                     })()
                   }"
@@ -425,59 +465,6 @@
                 </div>
               </div>
             </div>
-            <!-- <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="15"
-              :scrollbar="{
-                hide: true
-              }"
-              :grid="{
-                rows: 2,
-                fill: 'row'
-              }"
-              :modules="[...gameModules, Grid]"
-              class="platform-game-container live-casino"
-              :style="{ height: '295px' }"
-            >
-              <template v-for="(item, index) in livecasino" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  :style="{ height: '140px' }"
-                >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#hotgames"
-                  >
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </swiper-slide>
-              </template>
-            </swiper> -->
           </div>
 
           <div class="platform-game-wrapper" v-else>
@@ -487,8 +474,12 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
-                  <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                  <div style="min-height: 200px">
+                    <img
+                      v-if="item.underMaintenance"
+                      class="img-maintenance"
+                      src="../assets/images/index/live/item-game-maintenance.jpg"
+                    />
                     <div
                       class="platform-live-item--img"
                       :style="{
@@ -496,9 +487,9 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${
                               item.name.toLowerCase() === 'evo' ? 'wc' : ''
-                            }${item.name.toLowerCase()}.png`)})`;
+                            }${item.name.toLowerCase()}.jpg`)})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.jpg)`;
                           }
                         })()
                       }"
@@ -529,20 +520,29 @@
               <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Slot">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Slot">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('slot')" title="slot prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('slot')" title="slot next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('slot', swiper)"
             >
               <template v-for="(item, index) in slot" :key="index">
                 <swiper-slide
@@ -571,9 +571,9 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
-                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.jpg)`;
                             }
                           })()
                         }"
@@ -593,7 +593,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -621,9 +621,9 @@
                       :style="{
                         backgroundImage: (() => {
                           try {
-                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.jpg`)})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         })()
                       }"
@@ -651,20 +651,29 @@
               <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_poker") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Poker">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Poker">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('poker')" title="poker prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('poker')" title="poker next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('poker', swiper)"
             >
               <template v-for="(item, index) in pokerGameJILIList" :key="index">
                 <!-- <template v-if="item.code === 'JILI'"> -->
@@ -712,7 +721,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -767,20 +776,29 @@
               <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Fish">
-              {{ $t("home.viewAll") }}
-            </RouterLink>
+            <div class="swiper-nav-btns">
+              <RouterLink class="title-game-action" to="#Fish">
+                {{ $t("home.viewAll") }}
+              </RouterLink>
+              <div class="swiper-nav-btn" @click="prevSlide('fish')" title="fish prev slide">
+                <div class="left-btn" />
+              </div>
+              <div class="swiper-nav-btn" @click="nextSlide('fish')" title="fish next slide">
+                <div class="right-btn" />
+              </div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
               }"
               :modules="gameModules"
               class="platform-game-container"
+              @swiper="(swiper) => onSwiper('fish', swiper)"
             >
               <template v-for="(item, index) in fishGameJILIList" :key="index">
                 <swiper-slide
@@ -800,12 +818,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -839,12 +857,12 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                             } catch (e) {
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                               }
                             }
                           })()
@@ -973,7 +991,7 @@
               <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Fish">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Fish">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
@@ -990,12 +1008,12 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         }
                       })()
@@ -1021,12 +1039,12 @@
                     :style="{
                       backgroundImage: (() => {
                         try {
-                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.jpg`)})`;
                         } catch (e) {
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${h5Url}static/images/index/fish/item-game-${item.code.toLowerCase()}.jpg)`;
                           }
                         }
                       })()
@@ -1049,25 +1067,26 @@
               <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_sport") }}</div>
             </div>
-            <RouterLink class="title-game-action" to="#Sport">
+            <RouterLink v-if="category.title === 'Lobby' && category.active" class="title-game-action" to="#Sport">
               {{ $t("home.viewAll") }}
             </RouterLink>
           </div>
           <div class="platform-game-container sport-platform">
             <template v-for="(item, index) in sport" :key="index">
               <div
+                style="min-height: 120px"
                 class="platform-game-item btn-effect"
                 @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
               >
-                <img src="../assets/images/index/sport/item-game-maintenance.png" />
+                <img v-if="item.underMaintenance" src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div
                   class="platform-game-item--img"
                   :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
+                        return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.jpg`)})`;
                       } catch (e) {
-                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(${h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.jpg)`;
                       }
                     })()
                   }"
@@ -1401,11 +1420,15 @@
     <CongratsModal />
   </q-dialog>
 
+  <q-dialog v-model="isCongratsModalV2">
+    <CongratsModalV2 />
+  </q-dialog>
+
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-money.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
       <div class="congrats-highlight">{{ store.currency.label }}28</div>
 
@@ -1426,11 +1449,15 @@
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
+
+  <q-dialog v-model="isShowSetFirstPw">
+    <SetFirstPasswordModal @closeDialog="isShowSetFirstPw = false" />
+  </q-dialog>
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1448,6 +1475,7 @@ import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
+import CongratsModalV2 from "../components/modal/CongratsModalV2.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
@@ -1470,11 +1498,45 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swipe
 // import {Grid} from 'swiper/modules'
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import chroma from "chroma-js";
+import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
-const gameModules = ref([Scrollbar, Navigation, Pagination]);
+const gameModules = ref([Grid, Scrollbar, Navigation, Pagination]);
+const swiperRef = ref({});
+const onSwiper = (category, swiper) => {
+  swiperRef.value[category] = swiper;
+  console.log("here", swiper);
+};
+
+const isShowSetFirstPw = ref(false);
+
+const prevSlide = (category) => {
+  if (category === "live") {
+    const target = document.querySelector(".live-casino");
+
+    target.scrollTo({
+      left: document.querySelector(".live-casino").getBoundingClientRect().left - 400,
+      behavior: "smooth"
+    });
+  } else {
+    swiperRef.value[category].slidePrev();
+  }
+};
+const nextSlide = (category) => {
+  if (category === "live") {
+    const target = document.querySelector(".live-casino");
+
+    target.scrollTo({
+      left: document.querySelector(".live-casino").getBoundingClientRect().left + 400,
+      behavior: "smooth"
+    });
+  } else {
+    swiperRef.value[category].slideNext();
+  }
+};
 
 const { t } = useI18n();
 const route = useRoute();
@@ -1483,6 +1545,7 @@ const store = userStore();
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
+const isCongratsModalV2 = ref(false);
 const isShowPrizeModal = ref(false);
 const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
@@ -1528,6 +1591,10 @@ const activeCategoryLabel = computed(() => {
 // };
 
 const activateSlide = (item) => {
+  if (item.title === "Lobby") {
+    router.push("/home");
+    window.history.replaceState({}, document.title, "/home");
+  }
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
   if (category) {
@@ -2046,6 +2113,52 @@ const banners = ref([
     mobileImageUrl: "empty-banner.png"
   }
 ]);
+const bannerColors = ref([]);
+
+// Extract dominant color from an image
+const getImageDominantColor = (imgUrl) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = imgUrl;
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+
+      // Calculate average color
+      const rgba = [0, 0, 0];
+      for (let i = 0; i < data.length; i += 4) {
+        rgba[0] += data[i]; // Red
+        rgba[1] += data[i + 1]; // Green
+        rgba[2] += data[i + 2]; // Blue
+      }
+
+      const pixelCount = data.length / 4;
+      rgba[0] = Math.floor(rgba[0] / pixelCount);
+      rgba[1] = Math.floor(rgba[1] / pixelCount);
+      rgba[2] = Math.floor(rgba[2] / pixelCount);
+
+      const dominantColor = chroma(rgba).hex(); // Convert to HEX
+      resolve(dominantColor);
+    };
+  });
+};
+
+const extractColors = async () => {
+  bannerColors.value = [];
+  for (const banner of banners.value) {
+    const imgUrl = returnBannerUrl(banner);
+    const color = await getImageDominantColor(imgUrl);
+    bannerColors.value.push(color);
+  }
+};
 
 const returnBannerUrl = (banner) => {
   try {
@@ -2062,6 +2175,16 @@ const returnBannerUrl = (banner) => {
     return imgURLPromo + banner.mobileImageUrl;
   }
 };
+
+const gradientStyle = ref("");
+
+const updateGradient = () => {
+  const colors = bannerColors.value.join(", ");
+  gradientStyle.value = `linear-gradient(to bottom, ${colors}, black)`;
+};
+
+// Watch for changes in bannerColors and update gradient
+watch(bannerColors, updateGradient);
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
@@ -2109,6 +2232,8 @@ const openHotGame = (hotGameList) => {
   fullGameDialog.value = true;
   hotGameOn.value = true;
 };
+
+const lobbyHotGameLists = ref([]);
 
 const hotGameList = ref([
   {
@@ -2530,6 +2655,7 @@ const loadHotGameList = () => {
     )
     .then((res) => {
       hotGameList.value = [];
+      lobbyHotGameLists.value = [];
       hotlists = res;
 
       // cached
@@ -2581,12 +2707,53 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
+          // lobbyHotGameLists rearrange such that
+          // 1  2  3
+          // 4  5  6
+          // becomes
+          // 1  3  5
+          // 2  4  6
+          const row = 2;
+          const cols = Math.ceil(hotGameList.value.length / row);
+          const temp = [...hotGameList.value];
+          lobbyHotGameLists.value = [...temp];
+
+          let index = 0;
+          for (let r = 0; r < row; r++) {
+            for (let c = 0; c < cols; c++) {
+              const originalIndex = c * row + r;
+              if (originalIndex < temp.length) {
+                lobbyHotGameLists.value[index] = temp[originalIndex];
+                index++;
+              }
+            }
+          }
+
+          // console.log("End");
           // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
     });
 };
+
+// const alignedHotGameLists= (hotgame) => {
+//   const alignLists= hotgame;
+//   const row = 2;
+//   const cols = Math.ceil(alignLists.length / row);
+//   const temp = [...alignLists];
+//
+//   let index = 0;
+//   for (let r = 0; r < row; r++) {
+//     for (let c = 0; c < cols; c++) {
+//       const originalIndex = c * row + r;
+//       if (originalIndex < temp.length) {
+//         alignLists[index] = temp[originalIndex];
+//         index++;
+//       }
+//     }
+//   }
+//   return alignLists;
+// }
 
 const fishGameJILIList = ref([
   {
@@ -2867,12 +3034,12 @@ const pokerGameJILIList = ref([
 
 const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JILI_FISH_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JILI_FISH_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 8,
             gameType: "FISH",
@@ -2895,12 +3062,12 @@ const loadJILIFishGameList = () => {
 
 const loadJILIPokerhGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JILI_POKER_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JILI_POKER_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 8,
             gameType: "POKER",
@@ -2994,12 +3161,12 @@ const fishGameJDBList = ref([
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
-  const key = `PLATFORM_JDB_FISH_GAMES_${regDevice}`;
+  const key = `${platformGamesApiKey}_JDB_FISH_GAMES_${regDevice}`;
 
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: 31,
             gameType: "FISH",
@@ -3042,13 +3209,13 @@ const loadGameList = (type, id) => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const code = id;
   const gameType = type;
-  const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+  const key = `${platformGamesApiKey}_GAMES_${code}_${gameType}_${regDevice}`;
 
   // cached
   cached
     .get(key, () =>
       api
-        .get("/platformGames", {
+        .get(platformGamesApiUrl, {
           params: {
             platformId: code,
             gameType: gameType,
@@ -3110,6 +3277,8 @@ function loadData() {
       if (res.code === 0) {
         banners.value = [];
         banners.value = res.data;
+
+        extractColors();
         // banners.value = [
         //   {
         //     promoPageId: null,
@@ -3126,6 +3295,9 @@ function loadData() {
 
 var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
 var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+var platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+var platformGamesApiKey = store.hasToken() ? "LOGGEDPLATFORMGAMES" : "PLATFORMGAMES";
 
 const getPlatList = () => {
   cached
@@ -3618,6 +3790,7 @@ onActivated(() => {
   checkHash();
 
   checkSpinWheel();
+  checkGoogleLoginSetPwd();
 
   // if (store.hasToken()) {
   // }
@@ -3654,6 +3827,10 @@ onMounted(() => {
   }
 });
 
+onUnmounted(() => {
+  store.isFirstLandOnHomePage = false;
+});
+
 watch(
   () => route.hash,
   (newHash) => {
@@ -3673,6 +3850,15 @@ watch(
 //     }
 //   }
 // );
+const checkGoogleLoginSetPwd = () => {
+  if (store.isGoogleLogin && store.isFirstLandOnHomePage) {
+    api.get("/session/first-password").then((res) => {
+      if (res.code === 0 && !res.data) {
+        isShowSetFirstPw.value = true;
+      }
+    });
+  }
+};
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
@@ -3706,6 +3892,7 @@ const showCongratsModal = () => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         isCongratsModal.value = true;
+        // isCongratsModalV2.value = true;
       }
     }
   });
@@ -4632,7 +4819,7 @@ const showCongratsModal = () => {
       align-items: center;
 
       .label-img {
-        display: block;
+        display: none;
         width: auto;
         height: 20px;
       }
@@ -4652,12 +4839,45 @@ const showCongratsModal = () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: url(../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
-      background-size: cover;
-      aspect-ratio: 140 / 44;
+      background: #394144;
       min-width: 90px;
       color: #fff;
       text-decoration: none;
+      border-radius: 4px;
+      padding: 5px 15px;
+    }
+
+    .swiper-nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .swiper-nav-btn {
+        background: #394144;
+        border-radius: 4px;
+        padding: 5px;
+        width: 31px;
+        height: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .left-btn {
+          background: url("../assets/images/index/swiper-nav-btns.svg") no-repeat center center;
+          background-size: auto 100%;
+          background-position: 1px 0px;
+          width: 10px;
+          height: 10px;
+        }
+
+        .right-btn {
+          background: url("../assets/images/index/swiper-nav-btns.svg") no-repeat center center;
+          background-size: auto 100%;
+          background-position: -6px 0px;
+          width: 10px;
+          height: 10px;
+        }
+      }
     }
   }
 }
@@ -4747,22 +4967,27 @@ const showCongratsModal = () => {
     padding-top: 8px;
     margin-bottom: 0px;
     display: grid;
-    grid-template-columns: 51fr 54fr;
+    grid-template-columns: 51fr repeat(1, 54fr);
     grid-template-rows: 1fr 1fr;
     grid-auto-flow: column;
-    width: 100%;
+    //width: 100%;
     box-sizing: border-box;
-    max-width: 100%;
     min-height: 100px;
     column-gap: 6px;
     row-gap: 8px;
+    overflow-x: scroll;
+
+    > div {
+      min-width: min(250px, calc(50vw - 16px));
+    }
 
     .platform-live-item--img {
       background-size: 100% 100%;
+      border-radius: 10px;
     }
 
     img {
-      max-width: 140px;
+      //max-width: 140px;
       border-radius: 8px;
     }
     .burning-hot {
@@ -4782,6 +5007,10 @@ const showCongratsModal = () => {
         background-size: 100% 100%;
       }
     }
+  }
+
+  .img-maintenance {
+    border-radius: 12px;
   }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
@@ -4809,6 +5038,10 @@ const showCongratsModal = () => {
     .platform-game-item--img {
       border-radius: 8px;
     }
+
+    .burning-hot {
+      right: 8px;
+    }
   }
 
   .platform-live-item {
@@ -4822,6 +5055,7 @@ const showCongratsModal = () => {
       position: absolute;
       top: 0;
       left: 0;
+      border-radius: 10px;
 
       .platform-live-title {
         position: absolute;
@@ -4933,13 +5167,11 @@ const showCongratsModal = () => {
 
 .cat-selection-wrapper {
   margin-bottom: 10px;
-  border-radius: 8px;
   padding: 2px;
-  background: url(../assets/images/index/category/cat-bg.png) no-repeat center center;
-  background-size: 100% 100%;
+  background: transparent;
   margin-bottom: 15px;
   aspect-ratio: 343 / 32;
-  padding: 0 36px;
+  padding: 0;
 
   .swiper-wrapper {
     // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
@@ -5032,32 +5264,32 @@ const showCongratsModal = () => {
   // padding-top: 4px;
   // padding-bottom: 8px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   transition: 0.3s all;
   width: 100%;
   height: 100%;
   position: relative;
 
   &.active {
-    background: linear-gradient(
-      180deg,
-      rgba(36, 238, 137, 0) 0%,
-      rgba(36, 238, 137, 0.525) 73.85%,
-      rgba(36, 238, 137, 0.7) 95.05%
-    );
+    background: #394144;
+    border-radius: 4px;
 
-    &:before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 2px;
-      width: 100%;
-      background: #24ee89;
-      border-radius: 4px;
+    .cat-icon {
+      filter: none;
     }
+
+    // &:before {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   height: 2px;
+    //   width: 100%;
+    //   background: #24ee89;
+    //   border-radius: 4px;
+    // }
 
     .cat-title {
       color: #ffffff;
@@ -5069,14 +5301,58 @@ const showCongratsModal = () => {
   }
 
   .cat-icon {
-    height: 28px;
+    height: 17px;
+    width: 17px;
     display: flex;
     align-items: center;
+    filter: grayscale(1) contrast(0.5) brightness(0.5);
 
     img {
       display: block;
       width: 100%;
       max-width: 28px;
+    }
+
+    &.lobby {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: 0px 0px;
+    }
+
+    &.hot {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -20px 0px;
+    }
+
+    &.slot {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -81px 0px;
+    }
+
+    &.live {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -41px 0px;
+    }
+
+    &.sport {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -122px 0px;
+    }
+
+    &.fish {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -61 0px;
+    }
+
+    &.poker {
+      background: url("../assets/images/index/menu/cat-selection-icons.svg") no-repeat center center;
+      background-size: auto 100%;
+      background-position: -102px 0px;
     }
   }
 
@@ -5086,7 +5362,6 @@ const showCongratsModal = () => {
     color: #ffffff80;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
   }
 }
 
@@ -5110,6 +5385,7 @@ const showCongratsModal = () => {
     border-radius: 8px;
     background-repeat: no-repeat;
     // background-image: url("../assets/images/index/mini-game-bg.png");
+    background-image: url("../assets/images/index/mini-game-bg.png");
   }
 }
 
@@ -5216,7 +5492,9 @@ const showCongratsModal = () => {
 }
 
 .congrats-container {
-  background-color: #113413;
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -5344,5 +5622,42 @@ const showCongratsModal = () => {
   top: 10px;
   right: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+.lobby-platform-game .swiper-wrapper {
+  height: fit-content;
+}
+
+.dynamic-bg {
+  background-size: cover;
+}
+
+.promo-carousel-slide {
+  position: relative;
+}
+
+.promo-banner-btn-grp {
+  display: flex;
+  position: absolute;
+  left: 20px;
+  bottom: 14px;
+  align-items: center;
+
+  .green-btn {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    color: #131313;
+    font-size: 10px;
+    font-weight: 700;
+    height: fit-content;
+    width: 70px;
+    padding: 0 4px;
+    margin-right: 10px;
+  }
+  a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 10px;
+    font-weight: 700;
+  }
 }
 </style>

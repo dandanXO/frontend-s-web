@@ -1,0 +1,873 @@
+<template>
+  <div class="name-auth-modal">
+    <img class="close-icon" src="../../assets/images/index/name-auth/dialog-close-icon.png" @click="closeDialog" />
+    <div class="name-auth-title">{{ $t("nameAuth.title") }}</div>
+    <div v-if="step === 0" class="name-auth-step step-loading">
+      <div class="name-auth-step-content"></div>
+      <div class="additional-info-loading"></div>
+    </div>
+    <div v-if="step === 1" class="name-auth-step step-1">
+      <div class="name-auth-step-content">
+        <div class="name-auth-subtitle">{{ $t("nameAuth.basicExperience") }}</div>
+        <div class="step-1-content">
+          <div>
+            <div class="basic-exp-item">
+              <img src="../../assets/images/index/name-auth/edit-icon.png" />
+              <span>{{ $t("nameAuth.humanResources") }}</span>
+            </div>
+            <div class="basic-exp-item">
+              <img src="../../assets/images/index/name-auth/face-verification-icon.png" />
+              <span>{{ $t("nameAuth.faceVerification") }}</span>
+            </div>
+            <div class="basic-exp-item">
+              <img src="../../assets/images/index/name-auth/identity-id-icon.png" />
+              <span>{{ $t("nameAuth.identityId") }}</span>
+            </div>
+          </div>
+          <q-btn no-caps unelevated class="green-btn" @click="step = 2">{{ $t("btn.startNow") }}</q-btn>
+          <div class="browsing-time-txt">{{ $t("nameAuth.browsingTime") }}</div>
+        </div>
+      </div>
+      <div class="additional-info">
+        {{ $t("nameAuth.additionalInfo") }}
+      </div>
+    </div>
+    <div v-if="step === 2" class="name-auth-step step-2">
+      <div class="name-auth-step-content">
+        <div class="stepper">
+          <div class="stepper-item active"></div>
+          <div class="stepper-item"></div>
+        </div>
+        <div class="name-auth-subtitle">{{ $t("nameAuth.beReadyUploadIdCard") }}</div>
+
+        <div class="country-region-selection">
+          <div class="form-label">{{ $t("nameAuth.issuingCountryRegion") }}</div>
+        </div>
+        <q-select
+          class="country-region-select"
+          standout
+          v-model="selectedCountryRegion"
+          :options="countryRegion"
+          option-label="label"
+          option-value="value"
+          emit-value
+          map-options
+        ></q-select>
+
+        <div class="doc-type-selection">
+          <div class="form-label">{{ $t("nameAuth.documentType") }}</div>
+          <q-radio
+            v-for="(option, index) in docType"
+            class="doc-type-radio"
+            v-model="selectedDocType"
+            :key="index"
+            :val="option.value"
+            :label="option.label"
+          />
+        </div>
+      </div>
+      <q-btn
+        no-caps
+        unelevated
+        class="green-btn"
+        :class="{ disabled: !selectedCountryRegion || !selectedDocType }"
+        @click="continueStep3()"
+      >
+        {{ $t("btn.continue") }}
+      </q-btn>
+    </div>
+    <div v-if="step === 3" class="name-auth-step step-3">
+      <div class="name-auth-step-content">
+        <div class="stepper-container">
+          <img
+            v-if="uploadStatus === 'NOT_EXIST' || uploadStatus === 'FAILED'"
+            src="../../assets/images/index/name-auth/step-back-icon.png"
+            @click="step = 2"
+          />
+          <div class="stepper">
+            <div class="stepper-item"></div>
+            <div class="stepper-item active"></div>
+          </div>
+        </div>
+
+        <div v-if="!photoPreview" class="name-auth-subtitle">{{ $t("nameAuth.getReadyUploadIdCard") }}</div>
+        <div v-if="photoPreview" class="name-auth-upload-container preview-photo">
+          <div class="preview-txt">{{ $t("nameAuth.photoPreview_txt") }}</div>
+          <img :src="photoPreview" />
+
+          <q-btn no-caps unelevated class="green-btn" @click="submit">{{ $t("btn.submit") }}</q-btn>
+          <q-btn no-caps unelevated class="grey-btn" @click="cameraDialogVisible = true">
+            {{ $t("btn.replaceImage") }}
+          </q-btn>
+        </div>
+        <div
+          v-else-if="uploadStatus === 'NOT_EXIST'"
+          class="name-auth-upload-container upload"
+          @click="cameraDialogVisible = true"
+        >
+          <img src="../../assets/images/index/name-auth/upload-doc.png" />
+          <span>{{ $t("nameAuth.uploadDoc") }}</span>
+        </div>
+        <div v-else-if="uploadStatus === 'FAILED'" class="name-auth-upload-container upload-fail">
+          <img src="../../assets/images/index/name-auth/upload-fail.png" />
+          <span>{{ $t("nameAuth.uploadFailed") }}</span>
+          <q-btn no-caps unelevated class="green-btn" @click="cameraDialogVisible = true">
+            {{ $t("btn.uploadAgain") }}
+          </q-btn>
+        </div>
+        <div v-else-if="uploadStatus === 'SUCCESS'" class="name-auth-upload-container upload">
+          <img src="../../assets/images/index/name-auth/upload-success.png" />
+          <span>{{ $t("nameAuth.uploadSuccessful") }}</span>
+        </div>
+        <div v-else class="name-auth-upload-container upload-pending-auth">
+          <img src="../../assets/images/index/name-auth/upload-pending-auth.png" />
+          <span>{{ $t("nameAuth.uploaded") }}</span>
+          <span>{{ $t("nameAuth.pendingAuth") }}</span>
+        </div>
+        <div class="edit-id-container">
+          <div>{{ docType.find((doc) => doc.value === selectedDocType)?.label ?? "" }}</div>
+          <!-- <img src="../../assets/images/index/name-auth/edit-icon.png" /> -->
+        </div>
+      </div>
+      <div>
+        <div class="hint-txt">{{ $t("nameAuth.hint") }}</div>
+        <div class="hint-content">
+          <div class="hint-content-item">
+            <img src="../../assets/images/index/name-auth/tick-icon.png" />
+            <span>{{ $t("nameAuth.hint_txt_1") }}</span>
+          </div>
+          <div class="hint-content-item">
+            <img src="../../assets/images/index/name-auth/tick-icon.png" />
+            <span>{{ $t("nameAuth.hint_txt_2") }}</span>
+          </div>
+          <div class="hint-content-item">
+            <img src="../../assets/images/index/name-auth/cross-icon.png" />
+            <span>{{ $t("nameAuth.hint_txt_3") }}</span>
+          </div>
+        </div>
+      </div>
+<!--      <div class="check-guide-txt">{{ $t("nameAuth.checkGuide") }}</div>-->
+    </div>
+  </div>
+  <q-dialog class="camera-dialog" v-model="cameraDialogVisible" persistent>
+    <div class="camera-container-header">
+      <img src="../../assets/images/index/name-auth/step-back-icon.png" @click="cameraDialogVisible = false" />
+      <div class="camera-header-txt">{{ $t("nameAuth.personalVerification") }}</div>
+    </div>
+    <div class="camera-container">
+      <div class="camera-inner-container">
+        <input type="file" ref="fileInput" accept="image/*" style="display: none" @change="handleFileChange" />
+        
+        <WebCam
+          ref="webcam"
+          class="webcam"
+          style="height: calc(100% - 150px)"
+          @photoTaken="photoTakenEvent"
+          @init="webcamInit"
+          @start="isWebcamFrameVisible = true"
+        />
+
+        <div v-if="isWebcamFrameVisible" class="frame" />
+
+        <div class="camera-content">
+          <div class="camera-content-txt">{{ $t("nameAuth.photoTaking_txt") }}</div>
+
+          <div class="camera-btn-container">
+            <img src="../../assets/images/index/name-auth/gallery.svg" @click="handleUploadDoc" />
+            <img
+              class="camera-shutter-img"
+              src="../../assets/images/index/name-auth/camera-shutter.svg"
+              @click="takePhoto"
+            />
+            <q-select
+              v-model="selectedCamera"
+              :options="cameras"
+              option-label="label"
+              option-value="deviceId"
+              option-slot
+              emit-value
+              outlined
+              label="Choose an option"
+              dense
+              hide-selected
+              @update:model-value="setCamera"
+            >
+              <template v-slot:prepend>
+                <q-icon name="photo_camera" />
+              </template>
+
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar>
+                    <q-icon :name="scope.opt.icon" />
+                  </q-item-section>
+                  <q-item-section>
+                    {{ scope.opt.label }}
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+</template>
+<script setup>
+import { ref, defineEmits, onMounted, onBeforeUnmount } from "vue";
+import { userStore } from "src/stores";
+import { t } from "src/boot/lang";
+import { api } from "boot/axios";
+import { WebCam } from "vue-camera-lib";
+import { useQuasar } from "quasar";
+import { getRndInteger, isAndroid } from "boot/utils";
+
+const store = userStore();
+const $q = useQuasar();
+const emit = defineEmits(["closeDialog"]);
+
+const step = ref(0);
+const selectedCountryRegion = ref("");
+const selectedDocType = ref("PASSPORT");
+const uploadStatus = ref("NOT_EXIST");
+const cameraDialogVisible = ref(false);
+const countryRegion = ref([]);
+const fileInput = ref(null);
+const webcam = ref(null);
+const isWebcamFrameVisible = ref(false);
+const photoPreview = ref(null);
+const fileSelected = ref(null);
+const cameras = ref([]);
+const selectedCamera = ref(null);
+const reloadCamInterval = ref(null);
+
+const docType = [
+  { label: t("nameAuth.passport"), value: "PASSPORT" },
+  { label: t("nameAuth.ic"), value: "IC" },
+  { label: t("nameAuth.drivingLicense"), value: "DRIVING_LICENSE" }
+];
+
+const closeDialog = () => {
+  emit("closeDialog");
+};
+
+const continueStep3 = () => {
+  step.value = 3;
+  // alert("3")
+  // Request access to the user's camera
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then((stream) => {
+      // Set the video element's source to the camera stream
+    })
+    .catch((error) => {
+      console.error("Error accessing the camera: ", error);
+    });
+};
+
+const webcamInit = (id) => {
+  selectedCamera.value = id;
+};
+
+const loadCameras = () => {
+  if (webcam.value) {
+    // Request access to the user's camera
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        // Set the video element's source to the camera stream
+      })
+      .catch((error) => {
+        console.error("Error accessing the camera: ", error);
+      });
+
+    webcam.value.loadCameras();
+    cameras.value = webcam.value.cameras;
+  }
+};
+
+const setCamera = () => {
+  webcam.value.changeCamera(selectedCamera.value === "" ? null : selectedCamera.value);
+};
+
+const getIdVerifyStatus = () => {
+  step.value = 0;
+  api
+    .get("/session/idVerifyStatus")
+    .then((res) => {
+      if (res.code === 0) {
+        uploadStatus.value = res.data.status;
+        if (uploadStatus.value !== "NOT_EXIST") {
+          step.value = 3;
+        } else {
+          step.value = 1;
+        }
+        countryRegion.value = res.data.countryList.map((country) => ({
+          label: country,
+          value: country
+        }));
+
+        selectedCountryRegion.value = countryRegion.value[0].value;
+      }
+    })
+    .catch(() => {});
+};
+
+const takePhoto = async () => {
+  if (webcam.value) {
+    try {
+      await webcam.value.takePhoto();
+    } catch (e) {}
+  }
+};
+
+const photoTakenEvent = async ({ blob, image_data_url} ) => {
+  // console.log("Blob");
+  // console.log(blob);
+  fileSelected.value = createFileFromBlob(blob,image_data_url, "photo.jpg");
+  // console.log(fileSelected.value);
+  try {
+    photoPreview.value = URL.createObjectURL(fileSelected.value);
+    cameraDialogVisible.value = false;
+  } catch (error) {
+    photoPreview.value = image_data_url;
+    cameraDialogVisible.value = false;
+    // alert("Error creating object URL:", error)
+    // console.error("Error creating object URL:", error);
+  }
+};
+
+function convert2File(imgUrl) {
+  let bytes = atob(imgUrl.split(",")[1]);
+  let arrayBuffer = new ArrayBuffer(bytes.length);
+  let intArray = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < bytes.length; i++) {
+    intArray[i] = bytes.charCodeAt(i);
+  }
+  let blob = new Blob([intArray], { type: "image/png" });
+  console.log("b2: ", blob);
+  let fileName = "1.png";
+  let files = new File([blob], fileName, { type: "image/png" });
+  console.log("files ", files);
+  return files;
+}
+
+function convert2Blob(imgUrl) {
+  let bytes = atob(imgUrl.split(",")[1]);
+  let arrayBuffer = new ArrayBuffer(bytes.length);
+  let intArray = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < bytes.length; i++) {
+    intArray[i] = bytes.charCodeAt(i);
+  }
+  let blob = new Blob([intArray], { type: "image/png" });
+  console.log("blob: ", blob);
+  return blob;
+}
+
+function createFileFromBlob(blob, image_url, fileName) {
+  if(isAndroid()){
+    return convert2File(image_url);
+  }else{
+    return new File([blob], fileName, { type: blob.type });
+  }
+}
+
+const handleUploadDoc = () => {
+  if (fileInput.value) {
+    fileInput.value.value = null;
+    fileInput.value.click();
+  }
+};
+
+const handleFileChange = (event) => {
+  fileSelected.value = event.target.files[0];
+  if (fileSelected.value) {
+    photoPreview.value = URL.createObjectURL(fileSelected.value);
+    cameraDialogVisible.value = false;
+  }
+};
+
+const submit = async () => {
+  // isLoadingUpload.value = true;
+  const file = fileSelected.value;
+  if (file) {
+    const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
+    if (!file || (!isAndroid() && !allowFileTypes.includes(file.type))) {
+      $q.notify({
+        type: "negative",
+        position: "top",
+        message: `${t("notify.imageFormatError")} ${file.type}`,
+        icon: "report_problem"
+      });
+
+      // isLoadingUpload.value = false;
+      return;
+    }
+    if (file && file.size > 1000000) {
+      $q.notify({
+        type: "negative",
+        position: "top",
+        message: `${t("notify.uploadImageLargerThan1MbError")}`,
+        icon: "report_problem"
+      });
+      // isLoadingUpload.value = false;
+      return;
+    }
+
+    if (file) {
+      var formData = new FormData();
+      formData.append("country", selectedCountryRegion.value);
+      formData.append("idType", selectedDocType.value);
+      if(isAndroid()) {
+        console.log(convert2Blob(photoPreview.value));
+        formData.append("idPhoto", convert2Blob(photoPreview.value), "1.jpg");;
+      }else{
+        formData.append("idPhoto", file);
+      }
+
+
+      const rstArray = Object.values(process.env.RST_API);
+      const rstApi = rstArray[getRndInteger(0, rstArray.length)];
+
+      try {
+        const response = await fetch(`${rstApi}/session/idVerify`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            authorization: "BGD",
+            token: `${store.token}`
+          }
+        });
+        const data = await response.json();
+        if (data.code === 0) {
+          photoPreview.value = null;
+          getIdVerifyStatus();
+        } else {
+          $q.notify({
+            type: "negative",
+            position: "top",
+            message: `${selectedDocType.value} ${t("notify.uploadFailedPleaseTryAgain")}`,
+            icon: "report_problem"
+          });
+        }
+      } catch (e) {}
+    }
+  }
+};
+
+onMounted(() => {
+  getIdVerifyStatus();
+  loadCameras();
+  if (cameras.value.length === 0) {
+    reloadCamInterval.value = setInterval(() => {
+      loadCameras();
+      if (cameras.value.length > 0) {
+        clearInterval(reloadCamInterval.value);
+        reloadCamInterval.value = null;
+      }
+    }, 1000);
+  }
+});
+
+onBeforeUnmount(() => {
+  clearInterval(reloadCamInterval.value);
+  reloadCamInterval.value = null;
+});
+</script>
+<style scoped lang="scss">
+.webcam {
+  position: relative;
+}
+
+.name-auth-modal {
+  width: 100%;
+  max-width: 400px;
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px;
+  padding: 30px 20px;
+  font-family: Inter;
+  text-align: center;
+  margin: 14px;
+  position: relative;
+
+  .close-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 14px;
+    right: 14px;
+  }
+  .name-auth-title {
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    padding-bottom: 24px;
+    font-family: Poppins;
+  }
+  .name-auth-subtitle {
+    font-size: 14px;
+    text-align: center;
+  }
+  .form-label {
+    font-size: 14px;
+    opacity: 60%;
+    text-align: start;
+    margin-bottom: 8px;
+  }
+
+  .name-auth-step-content {
+    background-color: #81ff9e1a;
+    border-radius: 4px;
+    padding: 14px;
+  }
+
+  .stepper-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    img {
+      height: 10px;
+      width: 6px;
+      cursor: pointer;
+    }
+    .stepper {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .stepper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    padding: 0 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    .stepper-item {
+      height: 4px;
+      background-color: #bfffb3;
+      opacity: 0.2;
+      border-radius: 4px;
+      &.active {
+        opacity: 1;
+        background-color: #00d24d;
+      }
+    }
+  }
+
+  .step-loading {
+    .name-auth-step-content,
+    .additional-info-loading {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .name-auth-step-content {
+      background-color: #81ff9e1a;
+      height: 200px;
+      border-radius: 4px;
+    }
+
+    .additional-info-loading {
+      background-color: #81ff9e1a;
+      height: 64px;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-top: 10px;
+    }
+
+    /* Add shimmer effect */
+    .name-auth-step-content::before,
+    .additional-info-loading::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(74, 145, 90, 0.05) 0%,
+        rgba(74, 145, 90, 0.25) 50%,
+        rgba(74, 145, 90, 0.05) 100%
+      );
+
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -150%;
+      }
+      100% {
+        left: 150%;
+      }
+    }
+  }
+
+  .step-1 {
+    .step-1-content {
+      padding-top: 14px;
+      .basic-exp-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+        opacity: 0.8;
+        img {
+          margin-right: 4px;
+          width: 20px;
+          height: 20px;
+        }
+        span {
+          font-size: 12px;
+        }
+      }
+      .browsing-time-txt {
+        margin-top: 14px;
+        font-size: 12px;
+        opacity: 0.8;
+      }
+    }
+    .additional-info {
+      background-color: #ff990047;
+      color: #ffae00;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-top: 10px;
+    }
+  }
+
+  .step-2 {
+    .country-region-selection {
+      margin-top: 16px;
+      .country-region-select .q-field__control {
+        height: 20px;
+      }
+
+      .q-field--standout.q-field--highlighted .q-field__native {
+        color: #fff !important;
+      }
+      .q-field--standout.q-field--dark .q-field__control,
+      .q-field--standout.q-field--dark .q-field__control:before,
+      .q-field--standout.q-field--dark.q-field--highlighted .q-field__control {
+        background: #94ffad1a !important;
+      }
+    }
+    .doc-type-selection {
+      margin-top: 16px;
+      .doc-type-radio {
+        flex-direction: row-reverse;
+        width: 100%;
+        justify-content: space-between;
+        background-color: #94ffad1a;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        padding: 4px 2px 4px 14px;
+      }
+    }
+  }
+
+  .step-3 {
+    .hint-txt {
+      text-align: start;
+      font-weight: 700;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    .hint-content {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      .hint-content-item {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 8px;
+        img {
+          width: 16px;
+          height: 16px;
+          margin-right: 6px;
+        }
+        span {
+          font-size: 12px;
+          opacity: 0.8;
+        }
+      }
+    }
+    .check-guide-txt {
+      margin-top: 20px;
+      opacity: 0.8;
+    }
+    .name-auth-upload-container {
+      width: 100%;
+      padding: 36px;
+      background-color: #0000004c;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: #00ff37;
+      display: grid;
+      justify-items: center;
+      img {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 8px;
+      }
+    }
+    .upload {
+      cursor: pointer;
+    }
+
+    .name-auth-upload-container.preview-photo {
+      padding: 20px 36px;
+    }
+    .preview-photo {
+      .preview-txt {
+        font-size: 12px;
+        color: white;
+        margin-bottom: 10px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 10px;
+      }
+      .q-btn {
+        height: 24px;
+        width: 100%;
+        font-size: 10px;
+        margin-top: 8px;
+        border-radius: 4px;
+      }
+    }
+    .upload-fail {
+      color: #ff0000;
+      .q-btn {
+        height: 24px;
+        width: auto;
+        font-size: 10px;
+        margin-top: 8px;
+        border-radius: 4px;
+      }
+    }
+    .upload-pending-auth {
+      color: #ffbb00;
+    }
+    .edit-id-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+      img {
+        width: 20px;
+        height: 20px;
+        margin-left: 8px;
+      }
+    }
+  }
+}
+
+.green-btn {
+  background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+  color: #131313;
+  font-weight: 700;
+  width: 100%;
+  height: 48px;
+  margin-top: 30px;
+  &.disabled {
+    background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
+    color: #fff;
+    font-weight: 700;
+    width: 100%;
+    height: 48px;
+    margin-top: 16px;
+    pointer-events: none;
+  }
+}
+
+.grey-btn {
+  background: #343434;
+  color: #fff;
+  font-weight: 700;
+  width: 100%;
+  height: 48px;
+  margin-top: 30px;
+}
+
+.camera-dialog {
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  .camera-container-header {
+    height: 50px;
+    width: 100%;
+    background-color: #1d1d1d;
+    display: flex;
+    align-items: center;
+    .camera-header-txt {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    img {
+      height: 24px;
+      padding-left: 10px;
+    }
+  }
+  .camera-container {
+    background-color: #111111;
+    height: 100%;
+    max-height: 100% !important;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 20px 20px;
+
+    .camera-inner-container {
+      background-color: #000;
+      height: calc(100% - 50px);
+
+      .frame {
+        border: 1px solid white;
+        height: 30%;
+        width: calc(70% - 41px);
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 40%;
+        left: 50%;
+        border-radius: 10px;
+      }
+
+      .camera-content {
+        justify-self: center;
+        padding: 10px 20px;
+        .camera-content-txt {
+          color: #fff;
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+      .camera-btn-container {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        img {
+          width: 30px;
+          height: 30px;
+        }
+        .camera-shutter-img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+  }
+}
+</style>

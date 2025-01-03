@@ -3,11 +3,8 @@
     <span v-for="n in 190" :key="n"></span>
   </div>
 
-  <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
-    <img src="../../assets/images/index/money-rain/money-content-events.png" />
-  </div>
-  <div class="rain-money-bg" v-if="moneyRainTab === 'records'">
-    <img src="../../assets/images/index/money-rain/money-content-records.png" />
+  <div class="rain-money-bg">
+    <img src="../../assets/images/index/money-rain/money-content.png" />
   </div>
   <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
 
@@ -15,9 +12,9 @@
     <div class="rain-money-tabs-container">
       <div class="logo-img"><img src="../../assets/images/auth/win-7-logo.png" /></div>
       <div class="rain-money-header">
-        <span class="orange">666,666BDT&nbsp;</span>
+        <span class="orange">700,000BDT&nbsp;</span>
         <span class="green">every time maximum surplus</span>
-        <span class="orange">&nbsp;66,666BDT</span>
+        <span class="orange">&nbsp;70,000BDT</span>
       </div>
 
       <div class="rain-money-tabs">
@@ -80,13 +77,13 @@
           </div> -->
           <div class="footer-title q-mt-sm">Terms and Conditions:</div>
           <div class="footer-content">
-            Each round of cash rain freely distributes 666,666 BDT.
+            Each round of cash rain freely distributes 700,000 BDT.
             <br />
-            Maximum cashback amount per round: 66,666 BDT.
+            Maximum cashback amount per round: 70,000 BDT.
             <br />
             Each round freely distributes cashback.
             <br />
-            Maintain a historical deposit of ≥300 BDT and complete daily bets of ≥100+ BDT to claim your reward for
+            Maintain a historical deposit of ≥200 BDT and complete daily bets of ≥100+ BDT to claim your reward for
             free.
             <br />
             The received money can be directly used for playing games or withdrawing.
@@ -438,14 +435,19 @@ onMounted(() => {
   }
 }
 
+.rain-money-tab-content::-webkit-scrollbar {
+  display: none;
+}
+
 .rain-money-tab-content {
-  background: #00d461;
+  background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
   min-height: 30dvh;
   height: calc(100dvh - 450px);
   overflow-y: auto;
   padding: 16px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  scrollbar-width: none;
 
   .content-footer {
     margin-top: 12px;

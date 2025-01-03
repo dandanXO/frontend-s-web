@@ -48,10 +48,14 @@
               </InputField>
             </div>
 
-            <div class="pc-form-item" @click="openPersonalCenterDialog">
+            <div class="pc-form-item" :class="{ 'item-click': !formDetail.phone }" @click="openPersonalCenterDialog">
               <InputField :label="$t('form.phone')">
                 <template #input>
-                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly></q-input>
+                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly>
+                    <template v-if="!formDetail.phone" v-slot:append>
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
             </div>
@@ -463,6 +467,61 @@
     </div>
   </q-dialog>
 
+  <q-dialog width="100%" v-model="changePhoneDialog">
+    <div class="popout-dialog">
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="text-white popout-close"
+        @click="changePhoneDialog = false"
+        v-close-popup
+      />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.bindPhoneNumber") }}</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.phone')">
+                <template #input>
+                  <q-input
+                    type="tel"
+                    pattern="\d*"
+                    maxlength="11"
+                    hide-bottom-space
+                    ref="phoneRef"
+                    v-model="updatePhoneInfo.phone"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                      (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('01') || $t('form.phone_rules_03')
+                    ]"
+                    label-color="brand"
+                    autocomplete="username"
+                    outlined
+                    color="green"
+                    :placeholder="$t('form.phone')"
+                  >
+                    <template v-slot:prepend>
+                      <FancyIcon name="smartphone" />
+                      <div class="prepend-number">+880</div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePhone">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
   <q-dialog width="100%" v-model="changeNewPasswordDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
@@ -647,6 +706,7 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import { t } from "src/boot/lang";
+import FancyIcon from "src/components/auth/FancyIcon.vue";
 // import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
@@ -696,14 +756,16 @@ const startRefresh = async () => {
 };
 
 const personalCenterDialog = ref(false);
+const changePhoneDialog = ref(false);
+
 const openPersonalCenterDialog = () => {
   if (store.guest && !personalState.memberInfo.realName) {
     // openNewChangePasswordDialog();
     openGuestKYCDialog();
   } else if (!store.guest && !personalState.memberInfo.realName) {
     openUserKYCDialog();
-  } else {
-    return false;
+  } else if (!formDetail.phone) {
+    changePhoneDialog.value = true;
   }
   // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
   //   personalCenterDialog.value = true;
@@ -1258,6 +1320,7 @@ const onCaptchaSubmit = () => {
 };
 
 const isPwd = ref(true);
+const phoneRef = ref();
 const oldPasswordRef = ref();
 const passwordRef = ref();
 const confirmPasswordRef = ref();
@@ -1274,12 +1337,60 @@ const updateEmailInfo = reactive({
   codeId: ""
 });
 
+const updatePhoneInfo = reactive({
+  phone: ""
+  // code: "",
+  // codeId: ""
+});
+
 const updateEmailRef = ref();
 const updateEmailCodeRef = ref();
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
   return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+};
+
+const submitUpdatePhone = () => {
+  phoneRef.value.validate();
+
+  if (!phoneRef.value.hasError) {
+    api
+      .post(
+        "/session/account",
+        qs.stringify({
+          phone: updatePhoneInfo.phone
+        })
+      )
+      .then((res) => {
+        if (res.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Phone number updated successfully",
+            icon: "check_circle_outline"
+          });
+
+          store
+            .getMemberInfo()
+            .then(() => {
+              loadInfo();
+            })
+            .finally(() => {
+              changePhoneDialog.value = false;
+              updatePhoneInfo.phone = "";
+            });
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {});
+  }
 };
 
 const submitUpdatePwd = () => {

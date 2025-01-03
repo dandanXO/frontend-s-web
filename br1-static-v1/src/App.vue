@@ -9,7 +9,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { useUI } from "src/stores/ui";
@@ -17,6 +17,7 @@ import axios from "axios";
 import AOS from "aos";
 import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
+import { domainLists } from "./constant";
 
 export default defineComponent({
   name: "App",
@@ -106,6 +107,7 @@ export default defineComponent({
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
+          logLevel: "verbose",
           attributionCallback: function (e, attribution) {
             // e: internal event name, can be ignored
             // attribution: details about the changed attribution
@@ -115,31 +117,49 @@ export default defineComponent({
           }
         });
         setTimeout(() => {
-          const attribution = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          console.log(attribution);
-          store.aaid = attribution ? attribution.adid : "";
-        }, 500);
+          AdjustWeb.waitForWebUUID().then((webUuid) => {
+            console.log("Web UUid");
+            console.log(webUuid);
+            store.aaid = webUuid ? webUuid : "";
+          });
+        }, 100);
       }
     };
 
     const trackH5Affiliate = () => {
-      var affiliateCode = "C402D4";
+      const hostname = window.location.hostname.replace("www.", "");
+      const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "C402D4";
 
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-        if (res.code === 0) {
-          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-          if (res.data.adjust_register_event) {
-            ui.adjust_register_event = res.data.adjust_register_event;
+      const track = () => {
+        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+            // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
           }
-          affAppToken.value = res.data.adjust_app_token;
-          initAdjustEventTrack();
-          // alert(affAppToken.value);
-        }
-      });
+        });
+      };
+
+      const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
+      if (isInPwa() && !isRefreshed) {
+        document.addEventListener(
+          "pwaEvent",
+          () => {
+            // affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+            // track();
+          },
+          { once: true }
+        );
+      } else {
+        track();
+      }
     };
 
     const onDeviceReady = () => {
@@ -170,7 +190,6 @@ export default defineComponent({
                         }
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
-                        // alert(affAppToken.value);
                       }
                     });
                   }
@@ -269,6 +288,82 @@ export default defineComponent({
       }
     };
 
+    const initEngageLabPush = () => {
+      // Supported versions: 2.1.9+
+      console.log("initEngageLabPush");
+
+      const requestNotificationPermission = async () => {
+        if (Notification.permission === "default") {
+          // Prompt user to allow notifications
+          try {
+            const permission = await Notification.requestPermission();
+            if (permission === "granted") {
+              console.log("Notification permission granted.");
+              initializePush();
+            } else {
+              console.log("Notification permission denied.");
+              alert("Please enable notifications to receive updates.");
+            }
+          } catch (error) {
+            console.error("Failed to request notification permission:", error);
+          }
+        } else if (Notification.permission === "granted") {
+          console.log("Notification permission already granted.");
+          initializePush();
+        } else {
+          console.log("Notification permission denied.");
+          alert("Please enable notifications in your browser settings.");
+        }
+      };
+
+      // Push initialization logic
+      const initializePush = () => {
+        function randomUid() {
+          const keyStr = "mtWebPushRandomUid";
+          let uid = window.localStorage.getItem(keyStr);
+          if (!uid) {
+            uid = new Date().getTime().toString(36) + Math.floor(Math.random() * 10000000).toString(36);
+            window.localStorage.setItem(keyStr, uid);
+          }
+          return uid;
+        }
+
+        // Get push messages
+        MTpushInterface.onMsgReceive((msgData) => {
+          // alert("RECEIVE MSG");
+          console.log("Get push Messages:", msgData);
+        });
+
+        console.log("TSET This 2");
+        // Push initialization
+        MTpushInterface.init({
+          appkey: "87702ef148c8418859cc7793",
+          user_str: randomUid(),
+          fail(err) {
+            console.log("Failed to create an online push", err);
+          },
+          success(data) {
+            console.log("The online push is created successfully.", data);
+            // alert("Success Init Engage Lab. DATA: " + data.regid);
+          },
+          webPushcallback(code, tip) {
+            console.log("The status code and prompt obtained by the user", code, tip);
+          },
+          swUrl: "static/pwa/js/webpush/sw.produce.min.2.2.1.js",
+          canGetInfo(data) {
+            console.log(data);
+            // alert("Get the RegId: " + MTpushInterface.getRegistrationID());
+          },
+          custom: (fuc) => {
+            // Custom permission prompt logic
+          }
+        });
+      };
+
+      // Start the notification permission check
+      requestNotificationPermission();
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -293,6 +388,12 @@ export default defineComponent({
         );
       } else {
         trackH5Affiliate();
+      }
+
+      const hostname = window.location.hostname;
+      if (isInPwa() || hostname.includes("cakup.cc")) {
+        console.log("Engagel labe here");
+        initEngageLabPush();
       }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);

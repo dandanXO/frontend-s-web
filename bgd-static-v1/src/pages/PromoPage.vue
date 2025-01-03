@@ -18,7 +18,12 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="$t(tab.label)" />
+        <q-tab
+          v-for="(tab, i) in tabItems"
+          :key="i"
+          :name="tab.name"
+          :label="langVal === 'bn' ? tab.label_bn : tab.label"
+        />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -205,9 +210,11 @@
 import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
+import { cached } from "src/boot/cache";
 import { useQuasar } from "quasar";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
+import { i18nStore } from "src/router/language";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
@@ -231,6 +238,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
+    const i18nStoreLanguage = i18nStore();
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
@@ -411,9 +419,13 @@ export default defineComponent({
                 SessionStorage.set("TOKEN", extensionToken.value);
               }
               store.token = extensionToken.value;
-            } else if (isAndroid()) {
+            } else if (isAndroid() && !promo.redirectUrl.includes("bgd-register-claim-bonus")) {
               // store.h5Url = "http://192.168.68.95:9090";
               const tgDomain = "https://" + store.evip;
+
+              //For Testing.
+              // const tgDomain = "https://win7.game";
+
               var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
               console.log(preUrl);
@@ -452,10 +464,9 @@ export default defineComponent({
               } else {
                 router.push({ path: "/promo", query: { name: promo.redirectUrl } });
               }
-              if (!isAndroid()) {
-                isPromoDetail.value = true;
-                selectedPromo.value = promo;
-              }
+
+              isPromoDetail.value = true;
+              selectedPromo.value = promo;
             }
           }
         }
@@ -476,6 +487,25 @@ export default defineComponent({
     };
 
     const loadAll = () => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
+          tabItems.value = [];
+          res.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).en,
+              label_bn: JSON.parse(element.name).H5_ur
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
+
+
       const platformApiUrl = "/opt-session/promo/page";
 
       // isFetchingPromo.value = window.location.pathname === "/promotion";
@@ -637,16 +667,9 @@ export default defineComponent({
     };
 
     const tab = ref("all");
-    const tabItems = [
-      { name: "all", label: "promo.all" },
-      { name: "earn", label: "promo.earn" },
-      { name: "hot", label: "promo.hot" },
-      { name: "new user", label: "promo.new_user" },
-      { name: "sports", label: "promo.sports" },
-      { name: "live", label: "promo.live" },
-      { name: "slot", label: "promo.slot" },
-      { name: "vip", label: "promo.vip" }
-    ];
+    const tabItems = ref([]);
+
+    const langVal = computed(() => i18nStoreLanguage.languageVal);
 
     // promo param split.
     const parsedParam = computed(() => {
@@ -672,6 +695,7 @@ export default defineComponent({
     });
 
     return {
+      langVal,
       promoState,
       promoTypes,
       promoTabActive,

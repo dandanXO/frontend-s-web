@@ -77,8 +77,10 @@
       </div>
     </div>
     <div class="button-group">
-        <a :href="affiliateUrl + 'login'"><button class="login-button">登陆</button></a>
-        <a :href="affiliateUrl + 'register?agent=' + (affCode ? affCode : '')"><button class="join-us-button">加入我们</button></a>
+      <a :href="affiliateUrl + 'login'"><button class="login-button">登陆</button></a>
+      <a :href="affiliateUrl + 'register?agent=' + (affCode ? affCode : '')">
+        <button class="join-us-button">加入我们</button>
+      </a>
     </div>
     <div class="affiliate-subgroup agent-content-item">
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
@@ -138,12 +140,8 @@
           <div class="affiliate-inner">
             <table>
               <tr>
-                <td style="background:#339ebc; color: white">
-                  平台输赢
-                </td>
-                <td style="background:#339ebc; color: white">
-                  10,000
-                </td>
+                <td style="background: #339ebc; color: white">平台输赢</td>
+                <td style="background: #339ebc; color: white">10,000</td>
               </tr>
               <tr>
                 <td class="highlight">平台费</td>
@@ -186,7 +184,9 @@
             <ul>
               <li>1.佣金派发时间：每月5号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
               <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥200为一个活跃玩家。</li>
-              <li>3.代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。</li>
+              <li>
+                3.代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
+              </li>
             </ul>
           </div>
         </div>
@@ -485,6 +485,7 @@ const copyText = (text, msgTitle) => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
+  margin: 0auto;
 }
 
 .contact-item {

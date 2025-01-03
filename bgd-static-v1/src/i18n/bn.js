@@ -65,6 +65,7 @@ export default {
     phone_rules_01: "অনুগ্রহ করে ফোন নম্বর লিখুন",
     phone_rules_02: "ফোন নম্বরটি অবশ্যই 10 - 11 সংখ্যার হতে হবে",
     phone_rules_03: "ফোন নম্বর অবশ্যই '01' দিয়ে শুরু করতে হবে",
+    bindPhoneNumber: "ফোন নম্বর যুক্ত করুন",
     password: "পাসওয়ার্ড",
     password_placeholder: "অনুগ্রহ করে পাসওয়ার্ড লিখুন",
     password_rules_01: "অনুগ্রহ করে পাসওয়ার্ড লিখুন",
@@ -89,6 +90,8 @@ export default {
     newPassword_placeholder: "অনুগ্রহ করে নতুন পাসওয়ার্ড লিখুন",
     newPassword_rules_01: "অনুগ্রহ করে নতুন পাসওয়ার্ড লিখুন",
     newPassword_rules_02: "নতুন পাসওয়ার্ডের অক্ষর অবশ্যই 6 এর উপরে হতে হবে",
+    confirmPassword: "পাসওয়ার্ড নিশ্চিত করুন",
+    confirmPassword_placeholder: "অনুগ্রহ করে পাসওয়ার্ড নিশ্চিত করুন",
     confirmNewPassword: "নতুন পাসওয়ার্ড নিশ্চিত করুন",
     confirmNewPassword_placeholder: "অনুগ্রহ করে নিশ্চিত করা নতুন পাসওয়ার্ড লিখুন",
     confirmNewPassword_rules_01: "অনুগ্রহ করে নিশ্চিত করা নতুন পাসওয়ার্ড লিখুন",
@@ -113,6 +116,7 @@ export default {
     fullName_placeholder: "আপনার পুরো নাম লিখুন",
     fullName_rules_01: "অনুগ্রহ করে আপনার পুরো নাম লিখুন",
     fullName_rules_02: "অনুগ্রহ করে একটি সঠিক পুরো নাম লিখুন",
+    setPassword: "পাসওয়ার্ড সেট করুন",
     changePassword: "পাসওয়ার্ড পরিবর্তন করুন",
     currentPassword: "বর্তমান পাসওয়ার্ড",
     currentPassword_placeholder: "বর্তমান পাসওয়ার্ড লিখুন",
@@ -185,13 +189,24 @@ export default {
     cancel: "বাতিল করুন",
     signOut: "সাইন আউট করুন",
     back: "পিছনে",
+    joinnow: "ابھی شامل ہوں",
     moreGames: "আরো গেম",
     addCash: "ক্যাশ যোগ করুন",
     search: "অনুসন্ধান করুন",
     downloadApp: "অ্যাপ ডাউনলোড করুন",
     downloadNow: "এখনই ডাউনলোড করুন",
     recharge: "রিচার্জ করুন",
-    getInterestProfit: "সুদের মুনাফা পান"
+    getInterestProfit: "সুদের মুনাফা পান",
+    noRewardYet: "এখনও কোনো পুরস্কার নেই",
+    received: "গৃহীত হয়েছে",
+    receive: "গ্রহণ করুন",
+    startNow: "এখন শুরু করুন",
+    continue: "চালিয়ে যান",
+    uploadAgain: "পুনরায় আপলোড করুন",
+    deposit: "জমা",
+    learnMore: "আরো জানুন",
+    replaceImage: "চিত্র প্রতিস্থাপন",
+    details: "বিস্তারিত"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",
@@ -202,7 +217,11 @@ export default {
     feedbackSentSuccess: "আপনার প্রতিক্রিয়া সফলভাবে পাঠানো হয়েছে!",
     quitGameMessage: "আপনি কি নিশ্চিতভাবে প্রস্থান করতে চান? গেমটি ছেড়ে দিতে নিশ্চিত করুন-এ ক্লিক করুন।",
     signOutMessage: "আপনি কি নিশ্চিত আপনি সাইন আউট করতে চান?",
-    plsLoginToContinue: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন"
+    plsLoginToContinue: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন",
+    uploadImageLargerThan1MbError: "আপলোড করা ছবি 1MB এর বেশি হতে পারে না",
+    imageFormatError: "ছবি ফরম্যাট ত্রুটি",
+    uploadFailedPleaseTryAgain: "আপলোড ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন",
+    copiedSuccessfully: "সফলভাবে কপি করা হয়েছে"
   },
   sideNav: {
     inviteToEarn: "আয় করার জন্য আমন্ত্রণ জানান",
@@ -235,7 +254,23 @@ export default {
     cat_sport: "স্পোর্ট",
     popup: {
       getFreeLuckyDraw: "একটি বিনামূল্যের লাকি ড্র টিকিট পান",
-      downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন"
+      downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন",
+      free100Bonus: "অভিনন্দন! আপনি স্টেজ ১ সম্পন্ন করেছেন এবং ১০০ বোনাস আনলক করেছেন।",
+      free100BonusAmount: "100BDT",
+      bonus: {
+        wheelOfFortuneTitle: "উইল অফ ফর্চুন",
+        wheelOfFortuneDescription: "উইল অফ ফর্চুন",
+        cashBackTitle: "ক্যাশ ব্যাক",
+        cashBackDescription: "ক্যাশ ব্যাক",
+        activityBonusTitle: "অ্যাক্টিভিটি বোনাস",
+        activityBonusDescription: "অ্যাক্টিভিটি বোনাস",
+        giveBackTitle: "গিভ ব্যাক",
+        giveBackDescription: "গিভ ব্যাক",
+        hierarchyTitle: "হায়ারার্কি",
+        hierarchyDescription: "হায়ারার্কি",
+        wheelRewardTitle: "উইল রিওয়ার্ডস",
+        wheelRewardDescription: "উইল রিওয়ার্ডস"
+      }
     },
     viewAll: "সব দেখুন"
   },
@@ -331,6 +366,36 @@ export default {
     vipTable_txt:
       "একবার আপনার জমা আপগ্রেডের শর্ত পূরণ করলে, আপনার ভিআইপি লেভেল অবিলম্বে আপগ্রেড করা হবে, আপনার উত্তোলনের সংখ্যা বৃদ্ধি পাবে।"
   },
+  nameAuth: {
+    title: "আসল নাম যাচাই",
+    basicExperience: "মৌলিক অভিজ্ঞতা",
+    humanResources: "মানব সম্পদ",
+    faceVerification: "মুখ শনাক্তকরণ",
+    identityId: "পরিচয় আইডি",
+    browsingTime: "ব্রাউজিং সময়: ২ মিনিট",
+    additionalInfo:
+      "আপনাকে ভালভাবে সেবা দেওয়ার জন্য, আমরা আপনার পরিচয়পত্রের আসল কপির প্রয়োজন। এর মাধ্যমে উপহারগুলি সঠিক স্থানে পাঠানো হবে।",
+    beReadyUploadIdCard: "আপনার আইডি কার্ড আপলোড করার জন্য প্রস্তুত থাকুন",
+    issuingCountryRegion: "জারি করা দেশ/অঞ্চল",
+    documentType: "দলিলের প্রকার",
+    getReadyUploadIdCard: "আপনার আইডি কার্ড আপলোড করার জন্য প্রস্তুত হোন",
+    ic: "পরিচয় পত্র",
+    hint_txt_1: "রঙিন ছবি বা দলিল আপলোড করুন",
+    hint_txt_2: "ভাল আলোতে ছবি তোলুন",
+    hint_txt_3: "ফাইলের ছবি সম্পাদনা করবেন না",
+    checkGuide: "আমাদের গাইড দেখুন",
+    passport: "পাসপোর্ট",
+    drivingLicense: "ড্রাইভিং লাইসেন্স",
+    hint: "সাহায্য",
+    uploadDoc: "ডকুমেন্ট আপলোড করুন",
+    uploadFailed: "আপলোড ব্যর্থ",
+    uploadSuccessful: "আপলোড সফল",
+    uploaded: "আপলোড হয়েছে",
+    pendingAuth: "প্রমাণীকরণ অপেক্ষমাণ",
+    photoPreview_txt: "ফটোটির সমস্ত তথ্য স্পষ্টভাবে দেখা যাচ্ছে এবং পড়া সহজ তা নিশ্চিত করুন",
+    personalVerification: "ব্যক্তিগত যাচাইকরণ",
+    photoTaking_txt: "ডকুমেন্টটি ফ্রেমের মধ্যে এবং স্পষ্টভাবে দৃশ্যমান হওয়া উচিত"
+  },
   earnMoney: {
     title: "বোনাস পট এসেছে",
     tabs: {
@@ -352,22 +417,53 @@ export default {
       inviteList_02: "লিঙ্কের মাধ্যমে নিবন্ধন করুন",
       inviteList_03: "নিবন্ধনের পরে সম্পূর্ণ জমা",
       copyLink: "লিঙ্ক কপি করুন",
-      friendCount: "বন্ধুর সংখ্যা",
-      inviteBonus: "আমন্ত্রণের বোনাস",
+      grade: "গ্রেড",
+      totalNoOfValidPlayersInvited: "মোট বৈধ প্লেয়ার আমন্ত্রিত",
+      invitationRewards: "আমন্ত্রণ পুরস্কার",
       totalAmountSentAsOfYesterday: "গতকাল পর্যন্ত পাঠানো মোট পরিমাণ",
       player: "প্লেয়ার",
       money: "টাকা",
-      eligibility_tips: "যোগ্যতা: <br />আমন্ত্রিত ব্যক্তির জমা হতে হবে ≥ 300।",
-      betting_tips:
-        " বেটিং কমিশন: <br />রেফার করুন এবং নতুন ব্যবহারকারীদের বাজি ধরতে আমন্ত্রণ জানান এবং দীর্ঘমেয়াদী 0.6% বেটিং রিবেট কমিশন অর্জন করুন।",
-      deposit_tips: "জমার কমিশন: <br />আপনার উল্লেখ করা প্রতিটি নতুন সদস্যের প্রথম উপর উপর 5% ছাড় পান।",
+      note: "যোগ্যতা:",
+      eligibility_tips: "আমন্ত্রিত ব্যক্তির জমা হতে হবে ≥ 200।",
       multiple_acc_hint: `বিজ্ঞপ্তি:
     অসাধু উপায়ে কমিশন শোষণ করতে একই ব্যক্তির জন্য একাধিক অ্যাকাউন্ট ব্যবহার করা নিষিদ্ধ। লঙ্ঘনকারীদের অ্যাকাউন্ট ফ্রিজ করা হবে।
     পুরস্কার বিতরণের সময়: পরের দিন বাংলাদেশ সময় বিকেল ৩টা থেকে সন্ধ্যা ৬টার মধ্যে। এই সময়ের মধ্যে পুরস্কারগুলি অ্যাকাউন্টে জমা হবে,
     `,
       shareTitle: "WIN7.GAME শেয়ার করুন এবং উপার্জন করুন",
       shareText:
-        "WIN7.GAME শেয়ার করুন এবং উপার্জন করুন: \n\tপ্রতি বন্ধু 500 ৳ পর্যন্ত উপার্জন করুন।\n\tআপনার প্রথম জমার উপর 5% ছাড় পান।\n\tসকল বাজিতে দীর্ঘমেয়াদী 0.6% ছাড় উপভোগ করুন।\nএখনই অ্যাপটি ডাউনলোড করুন এবং একটি রহস্য নগদ পুরস্কার পান!\n{url}"
+        "WIN7.GAME শেয়ার করুন এবং উপার্জন করুন: \n\tপ্রতি বন্ধু 500 ৳ পর্যন্ত উপার্জন করুন।\n\tআপনার প্রথম জমার উপর 5% ছাড় পান।\n\tসকল বাজিতে দীর্ঘমেয়াদী 0.6% ছাড় উপভোগ করুন।\nএখনই অ্যাপটি ডাউনলোড করুন এবং একটি রহস্য নগদ পুরস্কার পান!\n{url}",
+      betting_table: {
+        header: {
+          description: "বর্ণনা",
+          commission: "তিন-স্তরের কমিশন"
+        },
+        row1: {
+          description: "খেলোয়াড়দের বাজি ধরতে আমন্ত্রণ জানান (জয় বা পরাজয়) এবং পুরস্কার অর্জন করুন",
+          commission: "0.6%"
+        },
+        row2: {
+          description: "প্রথম-স্তরের কমিশন",
+          commission: "0.3%"
+        },
+        row3: {
+          description: "দ্বিতীয়-স্তরের কমিশন",
+          commission: "0.2%"
+        },
+        row4: {
+          description: "তৃতীয়-স্তরের কমিশন",
+          commission: "0.1%"
+        }
+      },
+      deposit_table: {
+        header: {
+          description: "বর্ণনা",
+          commission: "ডিপোজিট কমিশন"
+        },
+        row1: {
+          description: "খেলোয়াড়দের প্রথম ডিপোজিট করতে আমন্ত্রণ জানান এবং পুরস্কার পান।",
+          commission: "5%"
+        }
+      }
     },
     teamManagement: {
       searchField: {
@@ -652,7 +748,6 @@ export default {
     24001: "অবস্থানের রেকর্ড ইতোমধ্যে বিদ্যমান।",
     24002: "একই আইপি শনাক্ত সহয়েছে",
     24005: "ন্যূনতম জমার পরিমাণ পূরণ করে না",
-    30000: "Member data not found",
     30000: "সদস্যের ডেটা পাওয়া যায়নি",
     30001: "সদস্য ইতোমধ্যে পদোন্নতি পেয়েছেন",
     30002: "সদস্য আজ নম্বরটি পাঠিয়েছেন",

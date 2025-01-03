@@ -54,6 +54,8 @@
     <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
+    <DemaciaCup1 v-if="list.redirectUrl === 'lh-demacia-cup-1'" :promo-param="listParam" />
+    <LplPKlck2025loss v-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'" :promo-param="listParam" :promo-code="list.promoCode"/>
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
@@ -112,7 +114,13 @@
       v-if="list.redirectUrl === 'lh1-christmas-gashapon'"
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
+      :promo-dates="list.param.date"
     />
+    <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
+    <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
+    <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
+    <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
+    <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -163,6 +171,8 @@ import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS24.vue";
 import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
 import PerfectWorldMajor2024 from "../components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
+import DemaciaCup1 from "../components/hotpromo/demacia-cup-1/DemaciaCup1.vue";
+import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2025-loss.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
@@ -228,6 +238,12 @@ import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBo
 import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue";
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
+import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
+import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
+import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
+import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
+import Dota2BlastSlamS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
+import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -309,6 +325,8 @@ export default defineComponent({
     DreamLeagueS24,
     Cba30Dream,
     PerfectWorldMajor2024,
+    DemaciaCup1,
+    LplPKlck2025loss,
     LiveDailyRebates,
     Dota2Pgl,
     NewVipRebate,
@@ -325,7 +343,13 @@ export default defineComponent({
     PokerWinningPromo,
     SlotLossBonusPromo,
     ValorantChampionTour2024,
-    ChristmasGachapon
+    ChristmasGachapon,
+    BountyBlastPremier,
+    VctcnMatchPromo,
+    HongBaoYu2025,
+    Belgrade2025Promo,
+    Lh1Vctcn,
+    Dota2BlastSlamS25
   },
   props: {
     list: {
@@ -935,6 +959,208 @@ export default defineComponent({
             }
           }
         }
+      }
+    }
+  }
+}
+
+.section-bg {
+  border: 1px solid rgba(172, 212, 246, 1);
+  background: #F2F8FE;
+  border-radius: 12px;
+  padding: 30px;
+  font-family: 'PingFang SC';
+
+  .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .claim-title-icon {
+      background: url("../assets/promo/lh-livepoker-rebate/section-title-img.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-coin-icon {
+      background: url("../assets/promo/lh-livepoker-rebate/reward-icon1.png")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-gift-icon {
+      background: url("../assets/promo/lh-livepoker-rebate/reward-icon2.png")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-btn-img {
+      aspect-ratio: 762/630;
+      width: auto;
+      height: 100%;
+      background: url("../assets/promo/lh-livepoker-rebate/reward-btn.png")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+  .section-table {
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+      white-space: pre-wrap;
+
+      &:not(:last-child) {
+        border-right: 1px solid #dcdce8;
+      }
+    }
+
+    td {
+      border: 1px solid #dcdce8;
+      color: #333;
+    }
+  }
+
+  .element-bg {
+    color: #fff !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+  }
+
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    padding-right: 10px;
+    font-family: 'PingFang SC';
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width:fit-content;
+    padding: 0px 20px 0px 10px;
+    aspect-ratio: 94/30;
+    white-space: nowrap;
+  }
+
+  .title-img {
+    aspect-ratio: 2952 / 176;
+    background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 905px 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: #4c4c6c;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+
+  .item {
+    color: #333;
+    padding-left: 24px;
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+    padding: 3px 0;
+
+    .item-num {
+      color: #ffffff;
+      font-size: 1rem;
+      line-height: 1;
+      border-radius: 50%;
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2px;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    }
+  }
+}
+
+.dark {
+  .section-bg {
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+    border: 1px solid #be9457 !important;
+    color: #fff;
+
+    .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .claim-title-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-title-icon.svg") no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-coin-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-gift-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-btn-img {
+      aspect-ratio: 199/262;
+      width: auto;
+      height: 100%;
+      max-height: 250px;
+      background: url("../assets/images/promotion/hotpromo/common/claim-btn.png")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .title-img {
+      color: #fff;
+    }
+
+    .section-table {
+      th {
+        color: #fff !important;
+        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+        border-radius: 0px !important;
+
+        &:not(:last-child) {
+          border-right: 1px solid #484c5770;
+        }
+      }
+
+      td {
+        border: 1px solid #484c5770;
+        color: #fff;
+      }
+    }
+
+    .element-bg {
+      color: #fff !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+    }
+
+    .ribbon {
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    }
+
+    .item {
+      color: #fff;
+
+      .item-num {
+        color: #fff !important;
+        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
       }
     }
   }

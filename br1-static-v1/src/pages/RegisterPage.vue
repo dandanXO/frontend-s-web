@@ -12,7 +12,7 @@
           :rules="[
             (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
             (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02'),
-            (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04'),
+            (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
           ]"
           color="white"
           class="landing-input"
@@ -91,7 +91,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 // import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
@@ -217,6 +217,12 @@ export default defineComponent({
       if (ui.adjust_register_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         Adjust.trackEvent(adjustEvent);
+      } else if (ui.adjust_register_event) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
       }
     };
 
@@ -278,7 +284,7 @@ export default defineComponent({
             }
           }
 
-          if (regForm.regDevice !== "ANDROID" || !affCode.value) {
+          if (!regForm.sid && (regForm.regDevice !== "ANDROID" || !affCode.value)) {
             regForm.sid = sidParam;
           }
 

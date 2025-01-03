@@ -1229,7 +1229,7 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notify.newPasswordUpdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1268,7 +1268,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notify.newPasswordUpdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");

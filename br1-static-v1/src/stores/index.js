@@ -3,7 +3,7 @@ import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
 import OneSignal from "onesignal-cordova-plugin";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -11,7 +11,7 @@ const TOKEN_KEY = "TOKEN";
 export const userStore = defineStore("userStore", {
   state: () => {
     const getStoreToken = () => {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         return LocalStorage.getItem("TOKEN", "");
       } else {
         return SessionStorage.getItem("TOKEN") || "";
@@ -54,7 +54,7 @@ export const userStore = defineStore("userStore", {
   },
   actions: {
     hasToken() {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
         } else {
@@ -109,7 +109,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -138,7 +138,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 31536000);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -196,6 +196,7 @@ export const userStore = defineStore("userStore", {
       //   req.headers.token = token;
       //   return req;
       // });
+      this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -281,7 +282,7 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       this.token = token;
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         LocalStorage.set("TOKEN", token, 31536000);
       } else {
         SessionStorage.set("TOKEN", token);

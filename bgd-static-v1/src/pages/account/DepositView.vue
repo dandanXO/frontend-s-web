@@ -83,7 +83,7 @@
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
             <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
-            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
+            <div class="tutorial-link" @click="openDepositVideo" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
@@ -224,7 +224,7 @@
       <template v-else-if="isUSDT">
         <p>
           1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          <span class="tutorial-link" @click="openDepositPic">Picture</span>
           /
           <span class="tutorial-link" @click="openDepositVideo">Video</span>
         </p>
@@ -241,15 +241,19 @@
       <template v-else>
         <p>
           1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          <span class="tutorial-link" @click="openDepositPic">Picture</span>
           /
           <span class="tutorial-link" @click="openDepositVideo">Video</span>
         </p>
-        <p>2. Fill in the correct wallet account number</p>
-        <p>3. Fill in the correct CNIC number</p>
+        <p>2. Fill in the correct payment wallet account number.</p>
         <p>
-          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-          credited.
+          3. The submitted amount must match the payment amount; otherwise, it will not be automatically credited.
+          <br />
+          After completing the payment, please fill in the TrxID to avoid automatic credit failures.
+        </p>
+        <p>
+          4. Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not
+          allowed.
         </p>
 
         <!--        <p>-->
@@ -293,7 +297,6 @@
       >
         {{ $t("btn.submit") }}
       </q-btn>
-      <!--      <div class="tutorial-link q-mt-sm" @click="openDepositPage">{{ $t("deposit.depositTutorial") }}</div>-->
     </div>
   </div>
 
@@ -917,31 +920,48 @@ const isDepositTutorial = ref(false);
 
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
-const openDepositPage = () => {
-  // alert(selectedPayType.value);
-  if (selectedPayType.value === "EASYPAISA") {
-    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank");
-  } else if (selectedPayType.value === "JAZZCASH") {
-    // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
+const openDepositPic = () => {
+  if (isUSDT.value) {
+    window.open("https://drive.google.com/file/d/153LUTLzQIyk8edLu16V95g7MZi_UmjU6/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
+    const code = selectedPayType.value;
+    switch (code) {
+      case "BKASH":
+        window.open("https://drive.google.com/file/d/18Wnq4uUhejxc0XUswpAX4UOb2JVBBoIO/view?usp=sharing", "_blank");
+        break;
+      case "NAGAD":
+        window.open("https://drive.google.com/file/d/1iwmKbA72n_1XkJU5TGujiZZ2GLTI5D1e/view?usp=sharing", "_blank");
+        break;
+      case "ROCKET":
+        window.open("https://drive.google.com/file/d/12uSx9qcdrFoUOkE8bgA1-A5VaSNyGIry/view?usp=sharing", "_blank");
+        break;
+      case "UPAY":
+        window.open("https://drive.google.com/file/d/1hHeHxBYW-8GawWabvCd91aGRyG5rT2vL/view?usp=sharing", "_blank");
+        break;
+    }
   }
 };
 
 const openDepositVideo = () => {
-  if (langSelect === "ur") {
-    window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  if (isUSDT.value) {
+    window.open("https://drive.google.com/file/d/1Lt9K7e30o4G2AulN0n0OWnjZ881AbrFk/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+    const code = selectedPayType.value;
+    switch (code) {
+      case "BKASH":
+        window.open("https://drive.google.com/file/d/1haAPLN5eEiHYJ8XtxsuNjF1vTkQOw_VJ/view?usp=sharing", "_blank");
+        break;
+      case "NAGAD":
+        window.open("https://drive.google.com/file/d/1vOP9wv26V1Lizy8YfHFGwJ4nDYSkBxsW/view?usp=sharing", "_blank");
+        break;
+      case "ROCKET":
+        window.open("https://drive.google.com/file/d/1fatbGp3rvXLPb69NwNzrt0pwEI3FhOn_/view?usp=sharing", "_blank");
+        break;
+      case "UPAY":
+        window.open("https://drive.google.com/file/d/1Be1HauoKBExbjwxEf1ysrDFwmf93_vIu/view?usp=sharing", "_blank");
+        break;
+    }
   }
-  // if (selectedPayType.value === "EASYPAISA") {
-  //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
-  // } else if (selectedPayType.value === "JAZZCASH") {
-  //   window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank");
-  // } else {
-  //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
-  // }
 };
 
 const loadAppTabs = () => {

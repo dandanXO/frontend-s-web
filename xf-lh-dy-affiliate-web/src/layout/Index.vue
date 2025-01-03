@@ -171,7 +171,6 @@ export default defineComponent({
     // left: 10px;
     // height: 90vh;
     top: 50px;
-    bottom: 0;
     left: 0;
     height: calc(100vh - 43px);
     padding: 10px 0;
@@ -210,6 +209,12 @@ export default defineComponent({
   .main-container,
   .sidebar-container {
     transition: none;
+  }
+}
+
+@supports (height: 100dvh) {
+  .sidebar-container {
+    height: calc(100dvh - 43px);
   }
 }
 </style>
