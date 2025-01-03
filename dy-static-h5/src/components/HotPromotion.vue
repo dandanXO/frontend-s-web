@@ -117,6 +117,8 @@
       :promo-rules="list.pageContent"
     />
     <VctcnMatchPromo v-if="list.redirectUrl === 'dy2-vctcn'" :promo-code="list.promoCode" />
+    <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
+    <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -242,6 +244,8 @@ const DemaciaCup1 = defineAsyncComponent(() => import("./hotpromo/demacia-cup-1/
 const Dota2BlastSlam2024 = defineAsyncComponent(() => import("./hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"));
 const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
 const VctcnMatchPromo = defineAsyncComponent(() => import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue"))
+const Belgrade2025Promo = defineAsyncComponent(() => import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue"));
+const DreamLeagueS25 = defineAsyncComponent(() => import("./hotpromo/dream-league-s25/DreamLeagueS25.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -314,7 +318,9 @@ export default defineComponent({
     DemaciaCup1,
     Dota2BlastSlam2024,
     ChristmasGachapon,
-    VctcnMatchPromo
+    VctcnMatchPromo,
+    Belgrade2025Promo,
+    DreamLeagueS25
   },
   props: {
     list: {
@@ -723,5 +729,34 @@ export default defineComponent({
       }
     }
   }
+}
+
+.ribbon {
+  clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+  background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+  padding-right: 10px;
+  font-family: 'PingFang';
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  width:fit-content;
+  padding: 0px 20px 0px 10px;
+}
+
+.title-img {
+  aspect-ratio: 960 / 80;
+  background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 290px 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #4c4c6c;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 </style>
