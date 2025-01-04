@@ -959,6 +959,7 @@ function showDialog(type, affiliateId) {
     memberPage.affiliateId = affiliateId
     memberRequest.current = 1
     popUpRequest.regTime = request.recordTime;
+    popUpRequest.recordTime = request.recordTime;
     loadNewMember(affiliateId)
   } else if (type === 'ALLMEMBER') {
     currentPageType.value = 'allMembers'
