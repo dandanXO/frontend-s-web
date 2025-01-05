@@ -959,6 +959,7 @@ function showDialog(type, affiliateId) {
     memberPage.affiliateId = affiliateId
     memberRequest.current = 1
     popUpRequest.regTime = request.recordTime;
+    popUpRequest.recordTime = request.recordTime;
     loadNewMember(affiliateId)
   } else if (type === 'ALLMEMBER') {
     currentPageType.value = 'allMembers'
@@ -966,8 +967,8 @@ function showDialog(type, affiliateId) {
     allMemberPage.affiliateId = affiliateId
     allMemberRequest.current = 1
     popUpRequest.regTime = null
+    popUpRequest.recordTime = request.recordTime
     loadAllMember(affiliateId)
-    // popUpRequest.recordTime = request.recordTime
   }
   currentAffiliateId.value = affiliateId
   uiControl.dialogType = type
