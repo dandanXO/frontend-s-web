@@ -15,7 +15,7 @@
     <div class="top-nav-wrapper">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo-xmas.png" alt="TF88 logo" />
+          <img class="logo" src="../../assets/logo.svg" alt="TF88 logo" />
         </router-link>
         <Navigation />
 

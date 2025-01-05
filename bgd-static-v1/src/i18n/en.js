@@ -206,7 +206,8 @@ export default {
     uploadAgain: "Upload Again",
     deposit: "Deposit",
     learnMore: "Learn More",
-    replaceImage: "Replace Image"
+    replaceImage: "Replace Image",
+    details: "Details"
   },
   notify: {
     noRecord: "No Record",

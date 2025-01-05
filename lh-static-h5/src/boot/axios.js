@@ -306,7 +306,12 @@ const globalAndCNLinks = [
   "lh942.cc",
   "lh943.cc",
   "lh953.cc",
-  "lh04157.com"
+  "lh04157.com",
+  "lh309.cc",
+  "lh279.cc",
+  "lh719.cc",
+  "lh589.cc",
+  "lh969.cc"
 ];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
@@ -386,32 +391,61 @@ async function init() {
 // const cashier = axios.create({ baseURL: crtApi });
 // const eventapi = axios.create({ baseURL: evtApi });
 
-
-
 async function getInitApi(apiLinks, urlLsName, errorPrefix) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (isInApp()) {
-    return await new Promise(resolve => {
+    return await new Promise((resolve) => {
       let APP_INITIAL_TIME_OUT = 5000;
       const checkAppInitialStatus = () => {
         const isAppInitialized = !!sessionStorage.getItem("LH_APP_DOMAIN_INITIALIZED");
         if (isAppInitialized) {
           successRstUrl = localStorage.getItem(urlLsName);
-          return true;
-        } else {
-          return false;
-        }
-      }
-      const interval = setInterval(()=>{
-        if(checkAppInitialStatus()) {
-          resolve(successRstUrl);
-          clearInterval(interval);
-        } else {
-          APP_INITIAL_TIME_OUT -= 100;
-          if(APP_INITIAL_TIME_OUT <= 0) {
-            clearInterval(interval);
-            resolve(successRstUrl);
+          if (successRstUrl) {
+            return "SUCCESS";
+          } else {
+            return "DOMAIN_NOT_FOUND";
           }
+        } else {
+          return "FAIL";
+        }
+      };
+      const interval = setInterval(() => {
+        const appInitialStatus = checkAppInitialStatus();
+        switch (appInitialStatus) {
+          case "SUCCESS":
+            resolve(successRstUrl);
+            clearInterval(interval);
+            break;
+          case "DOMAIN_NOT_FOUND":
+            if (typeof apiLinks === "string" || apiLinks instanceof String) {
+              var initApi = apiLinks;
+            } else {
+              var apiLists = Object.values(apiLinks);
+              var initApi = apiLists[getRndInteger(0, apiLists.length)];
+              if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+                const newDomain = replaceRndDomain(urlLsName);
+                initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+                apiReplacementRecords.push({ errorPrefix, url: initApi });
+              }
+            }
+
+            axios.get(initApi + "/ping").then((res) => {
+              console.log(res);
+              if (res.status === 200) {
+                localStorage.setItem(urlLsName, initApi);
+              } else {
+                localStorage.removeItem(urlLsName);
+              }
+            });
+            resolve(initApi);
+            clearInterval(interval);
+            break;
+          case "FAIL":
+            APP_INITIAL_TIME_OUT -= 100;
+            if (APP_INITIAL_TIME_OUT <= 0) {
+              clearInterval(interval);
+              resolve(successRstUrl);
+            }
         }
       }, 100);
     });
@@ -503,16 +537,21 @@ function getErrorType(errorUrl) {
 }
 
 function isInApp() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isAndroidWebView = /wv/.test(userAgent);
+  const isiOSWebView = /WebView/.test(userAgent) && !/Safari/.test(userAgent);
+  const isWebView = isAndroidWebView || isiOSWebView;
   if (
-    window.location.pathname === "/vip" ||
-    window.location.pathname === "/viptest" ||
-    window.location.pathname === "/promotion" ||
-    window.location.pathname === "/promotiontest" ||
-    window.location.pathname === "/deposit" ||
-    window.location.pathname === "/deposittest" ||
-    window.location.pathname === "/invitefriend" ||
-    window.location.pathname === "/privilege/invite" ||
-    window.location.pathname === "/affiliatepage"
+    (window.location.pathname === "/vip" ||
+      window.location.pathname === "/viptest" ||
+      window.location.pathname === "/promotion" ||
+      window.location.pathname === "/promotiontest" ||
+      window.location.pathname === "/deposit" ||
+      window.location.pathname === "/deposittest" ||
+      window.location.pathname === "/invitefriend" ||
+      window.location.pathname === "/privilege/invite" ||
+      window.location.pathname === "/affiliatepage") &&
+    isWebView
   ) {
     return true;
   }

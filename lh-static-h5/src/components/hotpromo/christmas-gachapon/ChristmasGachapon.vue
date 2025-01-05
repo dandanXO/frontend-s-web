@@ -27,7 +27,8 @@
     <div class="amtleft">
       抽奖次数剩余:
       <span>{{ availableDraw }}次</span>
-    </div><div class="tips">温馨提示：由于场馆人数火爆，投注记录会在10-20分钟内全部更新，请稍等片刻</div>
+    </div>
+    <div class="tips">温馨提示：由于场馆人数火爆，投注记录会在10-20分钟内全部更新，请稍等片刻</div>
   </div>
   <q-dialog class="christmas-modal" v-model="isModal" align-center>
     <div class="title">
@@ -62,7 +63,7 @@
         <div class="detailed-info">
           <div class="little-title">
             <div class="left">活动时间</div>
-            <div class="right">2024.12.24-2025.1.1</div>
+            <div class="right">2024.12.24-2025.1.7</div>
           </div>
           <div class="little-title">
             <div class="left">活动对象</div>
@@ -71,7 +72,7 @@
           <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
             <div class="left">优惠详情</div>
             <div class="right" style="max-width: 73%">
-              在2024.12.24-2025.1.1活动期间，每日投注额≥1000元及以上即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
+              在2024.12.24-2025.1.7活动期间，每日投注额≥1000元及以上即可获得一次抽奖机会，每日可抽50次，活动周期内抽奖次数可累计。
             </div>
           </div>
           <table class="detailed-info-table">

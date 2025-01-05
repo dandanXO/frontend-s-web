@@ -3,7 +3,7 @@
     <div class="center">
       <router-link to="/">
         <div class="logo">
-          <img src="@/assets/logo-xmas.png" />
+          <img src="@/assets/logo.svg" />
         </div>
       </router-link>
 
