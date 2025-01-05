@@ -424,3 +424,22 @@ export function getCompetitionLossInit(promoCode) {
 export function claimCompetitionLoss(promoCode) {
   return eventapi.post(`/session/competition-loss/claim`, qs.stringify({ promoCode }));
 }
+export function getVctcnInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-bet-platform/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimVctcnBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getBelgrade2025Init(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-single-bet/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimBelgrade2025Bonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}

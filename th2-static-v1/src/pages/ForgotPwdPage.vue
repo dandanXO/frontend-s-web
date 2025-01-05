@@ -15,7 +15,8 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02')
+            (val) => (val && val.length == 10) || $t('form.phone_rules_02'),
+            (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
           ]"
           outlined
           label-color="brand"

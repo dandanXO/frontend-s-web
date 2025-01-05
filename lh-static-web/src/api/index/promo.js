@@ -699,3 +699,23 @@ export function getBountyInit(promoCode) {
 export function claimBountyBonus(promoCode) {
   return server.EVENT.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
 }
+
+export function getCompetitionBetPlatformInit(promoCode){
+  return server.EVENT.get(`/session/competition-bet-platform/init?promoCode=${promoCode}`);
+}
+
+export function getCompetitionBetPlatformClaimBonus(promoCode){
+  return server.EVENT.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}`);
+}
+export function getVctcnInit(promoCode) {
+  return server.EVENT.get(`/session/competition-bet-platform/init?promoCode=${promoCode}`);
+}
+export function claimVctcnBonus(promoCode) {
+  return server.EVENT.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}`);
+}
+export function getBelgrade2025Init(promoCode) {
+  return server.EVENT.get(`/session/competition-single-bet/init?promoCode=${promoCode}`);
+}
+export function claimBelgrade2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}`);
+}
