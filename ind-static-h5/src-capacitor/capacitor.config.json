@@ -4,7 +4,7 @@
   "webDir": "www",
   "server": {
     "androidScheme": "https",
-    "hostname": "www.indwin7.com"
+    "hostname": "ind.55ace.com"
   },
   "plugins": {
     "SplashScreen": {

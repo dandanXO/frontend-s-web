@@ -2,43 +2,98 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="livepoker-rebate-section">
-        <img
-          src="../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-2025.png"
-          alt=""
-          @click="getPromotion"
-          :class="{ loading: loadingClaim }"
-        />
-      </div>
-      <div class="livepoker-rebate-game-info section-bg">
-        <div class="title-img">活动详情</div>
-        <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
-          <div class="ribbon">活动时间</div>
-          <div class="right">2025年1月29日至2025年2月4日</div>
+        <div class="livepoker-rebate-section-left">
+          <div class="livepoker-rebate-section-title">
+            <div>
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                style="width: 20px; height: 20px; margin-bottom: 0px"
+              />
+            </div>
+            投注礼金
+          </div>
+          <div class="reward-info">
+            <div class="reward-info-icon">
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
+                alt=""
+                width="100%"
+              />
+            </div>
+            <div class="reward-info-content">
+              上月累计存款：
+              <span class="amount">{{ highestSingleValidBet }}元</span>
+            </div>
+          </div>
+          <div class="reward-info">
+            <div class="reward-info-icon">
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
+                alt=""
+                width="100%"
+              />
+            </div>
+            <div class="reward-info-content">
+              可领取红包礼金：
+              <span class="amount">{{ bonus }}元</span>
+            </div>
+          </div>
         </div>
-        <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
-          <div class="ribbon">活动内容</div>
+        <div class="livepoker-rebate-section-right">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+            <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/claim-btn-1.png" alt="" width="100%" />
+          </div>
+        </div>
+      </div>
+      <div class="livepoker-rebate-game-info">
+        <div class="title"></div>
+        <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">自2025年1月1日起</div>
+        </div>
+        <div class="little-title">
+          <div class="left">活动内容</div>
           <div class="right">
-            VIP1及以上会员当天累计存款达到200元，即可在当天活动时间内领新年红包，单个红包最高888元。
+            会员在每月最后一天前累计存款达到5000元，即可在次月20日晚6点-晚10点拆红包，单个红包最高888元。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
-          <tbody>
+          <thead>
             <tr>
-              <th>当天累计存款</th>
-              <th>红包雨时间</th>
+              <th>上月累计存款</th>
+              <th>获取红包数量</th>
               <th>流水倍数</th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
-              <td>200元</td>
-              <td style="padding: 24px 0">
-                下午 16:00-18:00
-                <br />
-                晚上 20:00-22:00
-              </td>
-              <td>5倍流水</td>
+              <td>15000</td>
+              <td>1</td>
+              <td rowspan="6">8倍流水</td>
+            </tr>
+            <tr>
+              <td>50000</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>100000</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>300000</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>500000</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>1000000</td>
+              <td>20</td>
             </tr>
           </tbody>
         </table>
+
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
@@ -49,25 +104,24 @@
               />
               <span>示例</span>
             </div>
-            会员A在1月29日累计存款200元，在1月29日下午16点-18点和晚上20点-22点登录账号进入活动页面领取新年红包，每轮红包雨可参与一次。
+            会员A在1月累计存款60000元，在2月20日晚上6点-10点即可登录账号进入活动页面拆红包，共计红包数量为5个。
           </div>
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule section-bg">
-        <div class="title-img">活动规则</div>
-        <br/>
+      <div class="livepoker-rebate-game-bottom-rule">
+        <div class="title"></div>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              <div>活动期间内VIP1及以上会员当日累计存款达到指定金额（当天累计存款≥200元）即可参与红包雨。</div>
-              <div class="hint">注：单次红包雨数量为5000个，每人每轮红包雨可参与一次</div>
+              活动期间内累计存款达到指定金额（月累计存款≥5000元）即可参与红包雨。存款金额越高，获得的红包奖励越丰厚。
+              <div class="hint">注：红包数量不叠加，红包按最高档位每月派发</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            红包发放时间为每日下午16点-18点和晚上20点-22点之间，符合要求的会员可登入优惠界面点击【新年红包】按钮获得，红包实时到账，红包彩金5倍流水即可提款；
+            红包发放时间为每月20日晚上6点至晚上10点之间，符合要求的会员可登入优惠界面点击【拆红包】按钮获得，红包实时到账，红包彩金8倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -90,74 +144,37 @@
       </div>
     </div>
   </div>
-  <q-dialog v-model="isClaimModal" persistent>
-    <q-card class="win-rebate-model">
-      <div class="close-btn">
-        <q-btn
-          @click="isClaimModal = false"
-          v-close-popup
-          rounded
-          icon="close"
-          color="white"
-          height="40"
-          width="40"
-        ></q-btn>
-      </div>
-
-      <q-card-section class="row items-center">
-        <div class="red-packet-opened">
-          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />
-
-          <span class="grats">恭喜获得奖金</span>
-          <span class="amount">{{ winAmount }}</span>
-          <div class="get-btn" @click="getPromotionPrize">点击领取</div>
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
-import { eventapi } from "src/boot/axios";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { userStore } from "src/stores";
+// import { useNotify } from "src/hooks/notify";
+// import { useQuasar } from "quasar";
+// import { useRouter } from "vue-router";
+
+const props = defineProps(["promoCode"]);
+// const { promoCode } = toRefs(props);
 
 const store = userStore();
-const winAmount = ref(0);
-const isClaimModal = ref(false);
-const loadingClaim = ref(false);
+// const notify = useNotify();
+// const $q = useQuasar();
+// const router = useRouter();
+// const isClaiming = ref(false);
 
-const props = defineProps({
-  promoCode: {
-    type: String,
-    required: true
+const bonus = ref(0);
+const highestSingleValidBet = ref(0);
+
+const handleClaimBonus = () => {};
+
+const fetchData = async () => {};
+
+onMounted(() => {
+  if (!store.token) {
+    return;
   }
+  fetchData();
 });
-
-const getPromotion = () => {
-  loadingClaim.value = true;
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  eventapi
-    .get(`/redPacketVip/claim?promoCode=${props.promoCode}&v=${randNum}`)
-    .then((res) => {
-      if (res.code === 0) {
-        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
-        isClaimModal.value = true;
-
-        store.getBalance();
-      }
-    })
-    .catch(() => {})
-    .finally(() => {
-      loadingClaim.value = false;
-    });
-};
-
-const getPromotionPrize = () => {
-  store.getBalance();
-  isClaimModal.value = false;
-};
 </script>
 
 <style scoped lang="scss">
@@ -177,7 +194,7 @@ const getPromotionPrize = () => {
 
 .livepoker-rebate-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  // padding: 20px 12px 40px;
+  padding: 20px 12px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
   display: flex;
@@ -188,13 +205,43 @@ const getPromotionPrize = () => {
   align-items: center;
   width: 100%;
 
-  img {
-    width: 200px !important;
-    &.loading {
-      filter: grayscale(100%);
-      cursor: not-allowed;
-      opacity: 0.6;
+  .livepoker-rebate-section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .livepoker-rebate-section-right {
+    width: 180px;
+    margin-top: 20px;
+
+    .bonus-image {
+      width: 100%;
+      cursor: pointer;
+
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     }
+  }
+
+  .livepoker-rebate-section-title {
+    color: #000000;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
   }
 }
 
@@ -216,13 +263,13 @@ const getPromotionPrize = () => {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff6b6b !important;
+    color: #ff0000;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff6b6b !important;
+    color: #ff0000;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -254,8 +301,9 @@ const getPromotionPrize = () => {
   }
   .little-title {
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     .left {
       background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
@@ -342,12 +390,12 @@ const getPromotionPrize = () => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     width: 240px;
-    height: 26px;
-    margin: 0 auto;
+    height: 20px;
+    margin-bottom: 20px;
   }
   .content {
     font-size: 12px;
@@ -389,91 +437,32 @@ const getPromotionPrize = () => {
   }
 }
 
-.tab-wrapper {
+.reward-info {
+  border: 1px solid rgba(215, 235, 255, 1);
+  padding: 8px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-
-  .tab {
-    width: 160px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 60px;
-    background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
-    color: #818181;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-
-    &.active {
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-      color: white;
-    }
-  }
+  margin-bottom: 16px;
 }
 
-.red-packet-opened {
-  position: relative;
-  img {
-    display: block;
-    width: 100%;
-  }
+.reward-info-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
 
-  .grats {
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    top: 0;
-    margin-top: 20%;
-    color: #fffbfb;
-    text-align: center;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    padding-right: 10px;
-  }
+.reward-info-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: black;
 
   .amount {
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    top: 0;
-    margin-top: 45%;
-    // left: -15px;
-    color: #f23b1d;
-    font-size: 36px;
-    font-weight: bold;
-    padding-right: 15px;
-  }
-
-  .get-btn {
-    color: #f23b1d;
-    border-radius: 30px;
-    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
-    position: absolute;
-
-    font-size: 16px;
-    padding: 4px 16px;
-    bottom: 17%;
-    display: flex;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    width: 100px;
-    left: 0;
-    right: 10px;
-
-    &:hover {
-      filter: brightness(0.9);
-    }
+    color: #00a1ff;
+    font-weight: 600;
   }
 }
 
@@ -498,6 +487,15 @@ const getPromotionPrize = () => {
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask-composite: exclude;
     pointer-events: none;
+  }
+
+  .livepoker-rebate-section {
+    .livepoker-rebate-section-title {
+      color: #fff;
+    }
+    .reward-info-content {
+      color: #fff;
+    }
   }
 
   .livepoker-rebate-game-info {
