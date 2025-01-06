@@ -23,7 +23,7 @@ export function loadHomePopup() {
 }
 
 export function loadHomePopups() {
-  return server.REST.get('/member/site-popout-list');
+  return server.REST.get("/member/site-popout-list");
 }
 
 export function claimBonusItem(item) {
@@ -690,7 +690,7 @@ export function getDrawRecord(promoCode, params) {
 }
 
 export function getLatestClaimedBonusList(promoCode) {
-  return server.EVENT.get(`/session/draw-event/getLatestClaimedBonusList?promoCode=${promoCode}`)
+  return server.EVENT.get(`/session/draw-event/getLatestClaimedBonusList?promoCode=${promoCode}`);
 }
 
 export function getBountyInit(promoCode) {
@@ -700,11 +700,11 @@ export function claimBountyBonus(promoCode) {
   return server.EVENT.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
 }
 
-export function getCompetitionBetPlatformInit(promoCode){
+export function getCompetitionBetPlatformInit(promoCode) {
   return server.EVENT.get(`/session/competition-bet-platform/init?promoCode=${promoCode}`);
 }
 
-export function getCompetitionBetPlatformClaimBonus(promoCode){
+export function getCompetitionBetPlatformClaimBonus(promoCode) {
   return server.EVENT.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}`);
 }
 export function getVctcnInit(promoCode) {
@@ -716,6 +716,12 @@ export function claimVctcnBonus(promoCode) {
 export function getBelgrade2025Init(promoCode) {
   return server.EVENT.get(`/session/competition-single-bet/init?promoCode=${promoCode}`);
 }
+export function getVctBangkokInit(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
 export function claimBelgrade2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}`);
+}
+export function claimVctBangkokBonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }

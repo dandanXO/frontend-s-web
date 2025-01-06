@@ -560,3 +560,12 @@ export function claimBelgrade2025Bonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }
+
+export function getVctBangkokInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}&v=${randNum}`);
+}
+export function claimVctBangkokBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
