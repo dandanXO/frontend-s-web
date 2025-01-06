@@ -86,6 +86,20 @@
           />
         </template>
       </el-table-column>
+      <el-table-column prop="startTime" :label="t('fields.startTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.startTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.startTime !== null"
+            v-formatter="{
+              data: scope.row.startTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="endTime" :label="t('fields.endTime')" width="180">
         <template #default="scope">
           <span v-if="scope.row.endTime === null">-</span>
@@ -242,6 +256,15 @@
             </el-button>
           </el-col>
         </el-row>
+      </el-form-item>
+      <el-form-item :label="t('fields.startTime')" prop="startTime">
+        <el-date-picker
+          type="datetime"
+          format="YYYY-MM-DD HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="form.startTime"
+          style="width: 350px;"
+        />
       </el-form-item>
       <el-form-item :label="t('fields.endTime')" prop="endTime">
         <el-date-picker
@@ -474,15 +497,34 @@ const form = reactive({
   code: null,
   platform: null,
   icon: null,
+  startTime: null,
   endTime: null
 });
+
+const validateStartTime = (rule, value, callback) => {
+  if (form.endTime && form.endTime < form.startTime) {
+    callback(new Error(t('message.startMustBeforeEnd')));
+  } else {
+    callback();
+  }
+};
+
+const validateEndTime = (rule, value, callback) => {
+  if (form.startTime && form.startTime > form.endTime) {
+    callback(new Error(t('message.endMustAfterStart')));
+  } else {
+    callback();
+  }
+};
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   type: [required(t('message.validateTypeRequired'))],
   code: [required(t('message.validateCodeRequired'))],
   platform: [required(t('message.validatePlatformRequired'))],
-  icon: [required(t('message.validateIconRequired'))]
+  icon: [required(t('message.validateIconRequired'))],
+  startTime: [{ validator: validateStartTime, trigger: "blur" }],
+  endTime: [{ validator: validateEndTime, trigger: "blur" }]
 });
 
 async function loadRedirect() {
@@ -520,6 +562,8 @@ function showDialog(type) {
     formRef.value.resetFields();
     form.platform = null;
     form.icon = null;
+    form.startTime = null;
+    form.endTime = null;
   }
   if (type === "CREATE") {
     form.siteId = request.siteId;
