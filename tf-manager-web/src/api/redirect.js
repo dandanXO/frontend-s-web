@@ -17,6 +17,10 @@ export const updateRedirectStatus = (id, status) => {
   return https().request(`/redirect/${id}/status?_method=PUT`, Method.POST, { status: status }, ContentType.form);
 };
 
+export const updateRedirectToShow = (id, toShow) => {
+  return https().request(`/redirect/${id}/show?_method=PUT`, Method.POST, { toShow: toShow }, ContentType.form);
+};
+
 export const deleteRedirect = (id) => {
   return https().request(`/redirect/${id}?_method=DELETE`, Method.POST);
 };

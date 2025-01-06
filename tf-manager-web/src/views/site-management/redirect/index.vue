@@ -72,6 +72,49 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="toShow"
+        :label="t('fields.show')"
+        width="150"
+        v-if="hasPermission(['sys:site:redirect:update'])"
+      >
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.toShow"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            @change="changeRedirectToShow(scope.row.id, scope.row.toShow)"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="startTime" :label="t('fields.startTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.startTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.startTime !== null"
+            v-formatter="{
+              data: scope.row.startTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="endTime" :label="t('fields.endTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.endTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.endTime !== null"
+            v-formatter="{
+              data: scope.row.endTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
         :label="t('fields.operate')"
         align="right"
         fixed="right"
@@ -214,6 +257,24 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <el-form-item :label="t('fields.startTime')" prop="startTime">
+        <el-date-picker
+          type="datetime"
+          format="YYYY-MM-DD HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="form.startTime"
+          style="width: 350px;"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.endTime')" prop="endTime">
+        <el-date-picker
+          type="datetime"
+          format="YYYY-MM-DD HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="form.endTime"
+          style="width: 350px;"
+        />
+      </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
         <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -354,7 +415,7 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getRedirect, createRedirect, updateRedirect, updateRedirectStatus, deleteRedirect } from "@/api/redirect";
+import { getRedirect, createRedirect, updateRedirect, updateRedirectStatus, updateRedirectToShow, deleteRedirect } from "@/api/redirect";
 import { getPlatformsBySite } from "@/api/platform";
 import { getActivePromoPageList } from "@/api/promoPages"
 import { required } from "@/utils/validate";
@@ -435,15 +496,35 @@ const form = reactive({
   type: null,
   code: null,
   platform: null,
-  icon: null
+  icon: null,
+  startTime: null,
+  endTime: null
 });
+
+const validateStartTime = (rule, value, callback) => {
+  if (form.endTime && form.endTime < form.startTime) {
+    callback(new Error(t('message.startMustBeforeEnd')));
+  } else {
+    callback();
+  }
+};
+
+const validateEndTime = (rule, value, callback) => {
+  if (form.startTime && form.startTime > form.endTime) {
+    callback(new Error(t('message.endMustAfterStart')));
+  } else {
+    callback();
+  }
+};
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   type: [required(t('message.validateTypeRequired'))],
   code: [required(t('message.validateCodeRequired'))],
   platform: [required(t('message.validatePlatformRequired'))],
-  icon: [required(t('message.validateIconRequired'))]
+  icon: [required(t('message.validateIconRequired'))],
+  startTime: [{ validator: validateStartTime, trigger: "blur" }],
+  endTime: [{ validator: validateEndTime, trigger: "blur" }]
 });
 
 async function loadRedirect() {
@@ -481,6 +562,8 @@ function showDialog(type) {
     formRef.value.resetFields();
     form.platform = null;
     form.icon = null;
+    form.startTime = null;
+    form.endTime = null;
   }
   if (type === "CREATE") {
     form.siteId = request.siteId;
@@ -596,6 +679,10 @@ async function removeRedirect(id) {
 
 async function changeRedirectStatus(id, status) {
   await updateRedirectStatus(id, status)
+}
+
+async function changeRedirectToShow(id, toShow) {
+  await updateRedirectToShow(id, toShow)
 }
 
 onMounted(async () => {
