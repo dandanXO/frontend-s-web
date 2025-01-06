@@ -27,9 +27,9 @@
           </q-btn>
 
           <div class="acc-btns-container row q-gutter-x-sm q-ml-auto">
-            <q-btn color="brightbtn" size="sm" @click="openDeposit" rounded>存款</q-btn>
-            <q-btn color="brightbtn" size="sm" to="finance/withdraw" rounded>提款</q-btn>
-            <q-btn color="brightbtn" size="sm" to="account/transfer" rounded>转账</q-btn>
+            <q-btn color="brightbtn" @click="openDeposit" rounded>存款</q-btn>
+            <q-btn color="brightbtn" to="finance/withdraw" rounded>提款</q-btn>
+            <q-btn color="brightbtn" to="account/transfer" rounded>转账</q-btn>
           </div>
         </div>
 
@@ -548,6 +548,13 @@ onBeforeUnmount(() => {
         padding: 0;
       }
     }
+  }
+}
+
+.acc-btns-container {
+  .q-btn {
+    font-size: 12px;
+    min-width: 60px;
   }
 }
 
