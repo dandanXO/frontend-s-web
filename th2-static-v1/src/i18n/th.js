@@ -258,7 +258,8 @@ export default {
     failed: "ล้มเหลว",
     updateSucceed: "อัปเดตสำเร็จแล้ว",
     unbindSucceed: "ยกเลิกการผูกสำเร็จแล้ว",
-    withdrawalSubmitSucceed: "ส่งการถอนสำเร็จแล้ว"
+    withdrawalSubmitSucceed: "ส่งการถอนสำเร็จแล้ว",
+    newPasswordUpdatedSuccess: "อัปเดตรหัสผ่านใหม่สำเร็จแล้ว"
   },
   sideNav: {
     inviteToEarn: "เชิญชวนเพื่อรับเงินรายได้",
