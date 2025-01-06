@@ -55,7 +55,11 @@
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
     <DemaciaCup1 v-if="list.redirectUrl === 'lh-demacia-cup-1'" :promo-param="listParam" />
-    <LplPKlck2025loss v-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'" :promo-param="listParam" :promo-code="list.promoCode"/>
+    <LplPKlck2025loss
+      v-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'"
+      :promo-param="listParam"
+      :promo-code="list.promoCode"
+    />
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
@@ -121,7 +125,9 @@
     <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
-    <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode"/>
+    <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
+    <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
+    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -243,9 +249,11 @@ import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
+import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
 import Dota2BlastSlamS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
 import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
+import Dota2BlastSlam2025 from "../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -352,7 +360,9 @@ export default defineComponent({
     Monthly20HongBaoYu,
     Belgrade2025Promo,
     Lh1Vctcn,
-    Dota2BlastSlamS25
+    Dota2BlastSlamS25,
+    VctBangkok,
+    Dota2BlastSlam2025
   },
   props: {
     list: {
@@ -969,41 +979,43 @@ export default defineComponent({
 
 .section-bg {
   border: 1px solid rgba(172, 212, 246, 1);
-  background: #F2F8FE;
+  background: #f2f8fe;
   border-radius: 12px;
   padding: 30px;
-  font-family: 'PingFang SC';
+  font-family: "PingFang SC";
 
-  .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .claim-title-icon,
+  .claim-coin-icon,
+  .claim-gift-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .claim-title-icon {
-      background: url("../assets/promo/lh-livepoker-rebate/section-title-img.png") no-repeat center center;
-      background-size: 100% 100%;
-    }
+  .claim-title-icon {
+    background: url("../assets/promo/lh-livepoker-rebate/section-title-img.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
 
-    .claim-coin-icon {
-      background: url("../assets/promo/lh-livepoker-rebate/reward-icon1.png")  no-repeat center center;
-      background-size: 100% 100%;
-    }
+  .claim-coin-icon {
+    background: url("../assets/promo/lh-livepoker-rebate/reward-icon1.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
 
-    .claim-gift-icon {
-      background: url("../assets/promo/lh-livepoker-rebate/reward-icon2.png")  no-repeat center center;
-      background-size: 100% 100%;
-    }
+  .claim-gift-icon {
+    background: url("../assets/promo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
 
-    .claim-btn-img {
-      aspect-ratio: 762/630;
-      width: auto;
-      height: 100%;
-      background: url("../assets/promo/lh-livepoker-rebate/reward-btn.png")  no-repeat center center;
-      background-size: 100% 100%;
-    }
+  .claim-btn-img {
+    aspect-ratio: 762/630;
+    width: auto;
+    height: 100%;
+    background: url("../assets/promo/lh-livepoker-rebate/reward-btn.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
 
   .section-table {
     th {
@@ -1028,7 +1040,8 @@ export default defineComponent({
 
   .element-bg {
     color: #fff !important;
-    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
   }
 
@@ -1036,13 +1049,13 @@ export default defineComponent({
     clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     padding-right: 10px;
-    font-family: 'PingFang SC';
+    font-family: "PingFang SC";
     color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    width:fit-content;
+    width: fit-content;
     padding: 0px 20px 0px 10px;
     aspect-ratio: 94/30;
     white-space: nowrap;
@@ -1090,11 +1103,13 @@ export default defineComponent({
 
 .dark {
   .section-bg {
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
     border: 1px solid #be9457 !important;
     color: #fff;
 
-    .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+    .claim-title-icon,
+    .claim-coin-icon,
+    .claim-gift-icon {
       width: 32px;
       height: 32px;
       display: flex;
@@ -1108,12 +1123,12 @@ export default defineComponent({
     }
 
     .claim-coin-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg")  no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg") no-repeat center center;
       background-size: 100% 100%;
     }
 
     .claim-gift-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg")  no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg") no-repeat center center;
       background-size: 100% 100%;
     }
 
@@ -1122,7 +1137,7 @@ export default defineComponent({
       width: auto;
       height: 100%;
       max-height: 250px;
-      background: url("../assets/images/promotion/hotpromo/common/claim-btn.png")  no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-btn.png") no-repeat center center;
       background-size: 100% 100%;
     }
 
@@ -1133,7 +1148,7 @@ export default defineComponent({
     .section-table {
       th {
         color: #fff !important;
-        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
         border-radius: 0px !important;
 
         &:not(:last-child) {
@@ -1149,12 +1164,13 @@ export default defineComponent({
 
     .element-bg {
       color: #fff !important;
-      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
     }
 
     .ribbon {
-      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
     }
 
     .item {
@@ -1162,8 +1178,9 @@ export default defineComponent({
 
       .item-num {
         color: #fff !important;
-        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+          0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
       }
     }
   }

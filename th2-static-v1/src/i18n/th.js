@@ -59,7 +59,8 @@ export default {
     financeFeedback: "ข้อเสนอแนะด้านการเงิน",
     helpRecord: "บันทึกการช่วยเหลือเงินทุน",
     reminderRecords: "บันทึกเตือนความจำ",
-    forgotPassword: "ลืมรหัสผ่าน"
+    forgotPassword: "ลืมรหัสผ่าน",
+    promo: "โปรโม"
   },
   bottomNav: {
     home: "บ้าน",
