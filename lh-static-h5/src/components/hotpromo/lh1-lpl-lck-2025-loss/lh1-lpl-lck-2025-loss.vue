@@ -241,7 +241,7 @@
             <table class="livepoker-rebate-game-info-table">
               <tbody>
                 <tr>
-                  <th>德玛西亚杯 负盈利</th>
+                  <th>LPL&LCK 2025 第一赛段 负盈利</th>
                   <th>救援金</th>
                   <th>流水倍数</th>
                 </tr>
