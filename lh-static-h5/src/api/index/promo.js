@@ -569,3 +569,17 @@ export function claimVctBangkokBonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }
+
+export function getCompetitionLossWeeklyInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-loss/init?v=${randNum}`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimCompetitionLossWeekly(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-loss/claim?v=${randNum}`, qs.stringify({ promoCode }));
+}

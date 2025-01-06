@@ -52,6 +52,7 @@
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-else-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
+    <Dota2BlastSlam2025 v-else-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -134,6 +135,7 @@ const Belgrade2025Promo = defineAsyncComponent(() =>
 );
 const lh1Vctcn = defineAsyncComponent(() => import("./hotpromo/lh1-vctcn/lh1Vctcn.vue"));
 const DreamLeagueS25 = defineAsyncComponent(() => import("../components/hotpromo/dream-league-s25/DreamLeagueS25.vue"));
+const Dota2BlastSlam2025 = defineAsyncComponent(() => import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue"));
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -176,7 +178,8 @@ export default defineComponent({
     Monthly20HongBaoYu,
     Belgrade2025Promo,
     lh1Vctcn,
-    DreamLeagueS25
+    DreamLeagueS25,
+    Dota2BlastSlam2025
   },
   props: {
     list: {
