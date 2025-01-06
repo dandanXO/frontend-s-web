@@ -46,10 +46,7 @@
               v-model="loginForm.password"
               label="用户密码"
               :type="isPwd ? 'password' : 'text'"
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入用户密码',
-                (val) => (val && val.length >= 6 && val.length <= 50) || '密码长度必须在6到50个字符之间'
-              ]"
+              :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
               label-color="brand"
               autocomplete="current-password"
               rounded
