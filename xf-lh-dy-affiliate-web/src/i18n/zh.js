@@ -153,6 +153,7 @@ export default {
     commissionRateInfo: '佣金比例说明',
     commissionRateDescription: '代理的佣金比例由本月总输赢和活跃人数两项条件决定，同时满足时获取对应等级的佣金比例',
     activeMemberRequirement: '活跃人数：当月存款>=100 或有效投注>=500；',
+    activeMemberRequirementDescription: '（需：新增活跃 同时满足条件，方可按比例派发佣金）',
     level: '级别',
     companyMonthlyProfit: '公司本月总输赢',
     activeNumberRequirement: '新增/ 活跃数量最低要求',
