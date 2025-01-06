@@ -9,7 +9,7 @@
       </div>
       <div class="buttons">
         <div class="buttons">
-          <q-btn @click="openDownloadAppLink" label="立即下载" color="brightbtn" class="top-btn" />
+          <q-btn @click="openDownloadAppLink" label="立即下载" class="top-btn common-md-btn" />
         </div>
       </div>
     </div>
@@ -2530,7 +2530,7 @@ export default defineComponent({
       .download-txt-container {
         color: $font-1-dark;
         .download-title {
-          color: $font-3-dark;
+          color: #fddf99;
         }
       }
     }
