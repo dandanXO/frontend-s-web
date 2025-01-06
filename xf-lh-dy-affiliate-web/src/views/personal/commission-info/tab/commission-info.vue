@@ -8,6 +8,9 @@
       <p>
         {{ t('commissionInfo.activeMemberRequirement') }}
       </p>
+      <p>
+        {{ t('commissionInfo.activeMemberRequirementDescription') }}
+      </p>
       <table class="custom-table">
         <thead>
           <tr>
