@@ -613,6 +613,7 @@ export default defineComponent({
     td {
       border: 1px solid #dcdce8;
       color: #333;
+      background: transparent !important;
     }
   }
 
