@@ -2239,7 +2239,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 0px;
+    gap: 5px;
 
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -2283,7 +2283,6 @@ export default defineComponent({
     img {
       display: block;
       width: 100%;
-      aspect-ratio: 45 / 53;
       max-width: 100%;
     }
   }
@@ -2566,6 +2565,10 @@ export default defineComponent({
     .game-left-list {
       gap: 10px;
       flex: 1.5;
+
+      img {
+        aspect-ratio: 45 / 53;
+      }
     }
     .game-right-platform {
       .platform-block {
