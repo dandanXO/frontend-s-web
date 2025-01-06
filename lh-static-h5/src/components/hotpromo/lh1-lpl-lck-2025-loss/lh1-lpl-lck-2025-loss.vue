@@ -228,12 +228,15 @@
               <div class="left">活动时间</div>
               <div class="right">2025 年 1 月 12 日起</div>
             </div>
-            <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
+            <div
+              class="little-title"
+              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
+            >
               <div class="left">活动内容</div>
-            </div>
-            <div class="right">
-              会员在电竞场馆中投注LPL&LCK2025第一赛段，北京时间当日负盈利达到 1500
-              元及以上，次日即可领取救援金，最高可达 1,188 元！
+              <div class="right">
+                会员在电竞场馆中投注LPL&LCK2025第一赛段，北京时间当日负盈利达到 1500
+                元及以上，次日即可领取救援金，最高可达 1,188 元！
+              </div>
             </div>
             <table class="livepoker-rebate-game-info-table">
               <tbody>
