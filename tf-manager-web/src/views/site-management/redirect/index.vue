@@ -71,21 +71,6 @@
           />
         </template>
       </el-table-column>
-      <el-table-column
-        prop="toShow"
-        :label="t('fields.show')"
-        width="150"
-        v-if="hasPermission(['sys:site:redirect:update'])"
-      >
-        <template #default="scope">
-          <el-switch
-            v-model="scope.row.toShow"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
-            @change="changeRedirectToShow(scope.row.id, scope.row.toShow)"
-          />
-        </template>
-      </el-table-column>
       <el-table-column prop="startTime" :label="t('fields.startTime')" width="180">
         <template #default="scope">
           <span v-if="scope.row.startTime === null">-</span>
@@ -415,7 +400,7 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getRedirect, createRedirect, updateRedirect, updateRedirectStatus, updateRedirectToShow, deleteRedirect } from "@/api/redirect";
+import { getRedirect, createRedirect, updateRedirect, updateRedirectStatus, deleteRedirect } from "@/api/redirect";
 import { getPlatformsBySite } from "@/api/platform";
 import { getActivePromoPageList } from "@/api/promoPages"
 import { required } from "@/utils/validate";
@@ -679,10 +664,6 @@ async function removeRedirect(id) {
 
 async function changeRedirectStatus(id, status) {
   await updateRedirectStatus(id, status)
-}
-
-async function changeRedirectToShow(id, toShow) {
-  await updateRedirectToShow(id, toShow)
 }
 
 onMounted(async () => {
