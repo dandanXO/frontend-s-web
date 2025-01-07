@@ -2211,6 +2211,13 @@ export default {
     fromPlatform: 'From Platform',
     fromGameCode: 'From Game Code',
     toGameCode: 'To Game Code',
+    priviClickNextStep: 'Next',
+    priviClickPreviousStep: 'Previous',
+    priviBasicInfo: 'Basic Info',
+    priviRewardSetup: 'Reward Setup',
+    priviVipSetup: 'Vip Setup',
+    priviPaymentSetup: 'Payment Setup',
+    priviOther: 'Other'
   },
   message: {
     adsStatusOpen: 'Open',

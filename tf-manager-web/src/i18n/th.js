@@ -1288,6 +1288,13 @@ export default {
     fromPlatform: 'จากแพลตฟอร์ม',
     fromGameCode: 'จากโค้ดเกม',
     toGameCode: 'สู่รหัสเกม',
+    priviClickNextStep: 'ขั้นตอนต่อไป',
+    priviClickPreviousStep: 'ขั้นตอนก่อนหน้า',
+    priviBasicInfo: 'ข้อมูลพื้นฐาน',
+    priviRewardSetup: 'การตั้งค่าโบนัส',
+    priviVipSetup: 'การตั้งค่าวีไอพี',
+    priviPaymentSetup: 'จ่าย',
+    priviOther: 'อื่น'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

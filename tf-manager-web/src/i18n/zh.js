@@ -2212,6 +2212,13 @@ export default {
     fromPlatform: '从平台',
     fromGameCode: '从游戏码',
     toGameCode: '至游戏码',
+    priviClickNextStep: '下一步',
+    priviClickPreviousStep: '上一步',
+    priviBasicInfo: '基本信息',
+    priviRewardSetup: '奖金设置',
+    priviVipSetup: 'vip设置',
+    priviPaymentSetup: '支付',
+    priviOther: '其他'
   },
   message: {
     adsStatusOpen: '开',

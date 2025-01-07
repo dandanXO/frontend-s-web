@@ -460,7 +460,7 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item
+        <!-- <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
           class-name="member-context"
@@ -473,7 +473,7 @@
           </template>
           <span v-if="memberDetail.sid !== null">{{ memberDetail.sid }}</span>
           <span v-if="memberDetail.sid === null">-</span>
-        </el-descriptions-item>
+        </el-descriptions-item> -->
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
@@ -2177,6 +2177,9 @@ export default defineComponent({
           updateUserTypeForm.value.resetFields()
         }
         userTypeForm.memberType = userType.list[0].value
+        if (memberDetail.memberType !== null) {
+          userTypeForm.memberType = memberDetail.memberType
+        }
         uiControl.dialogTitle = t('fields.userType')
       } else if (type === 'CHANGE_AFF') {
         if (changeAffForm.value) {
@@ -2194,6 +2197,9 @@ export default defineComponent({
           updateWithdrawTypeForm.value.resetFields()
         }
         withdrawTypeForm.withdrawType = withdrawType.list[0].value
+        if (memberDetail.withdrawType !== null) {
+          withdrawTypeForm.withdrawType = memberDetail.withdrawType
+        }
         uiControl.dialogTitle = t('fields.withdrawType')
       }
       uiControl.dialogVisible = true
