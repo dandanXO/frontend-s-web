@@ -514,11 +514,11 @@ const displayCardType = computed(() => {
 
 const validateBankCardError = () => {
   if (selectedMethodItem.value.payType === "EWALLET") {
-    return "Please Select eWallet Card";
+    return `${t("withdraw.choose")} ${displayCardType.value} ${t("withdraw.account")}`;
   } else if (selectedMethodItem.value.payType === "CRYPTO") {
-    return "Please Select Crypto Card";
+    return `${t("withdraw.choose")} ${displayCardType.value} ${t("withdraw.account")}`;
   }
-  return "Please Select Bank Card";
+  return `${t("withdraw.choose")} ${displayCardType.value} ${t("withdraw.account")}`;
 };
 
 const isNoBankCard = ref(false);
