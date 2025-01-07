@@ -328,7 +328,7 @@ export default {
     bankCardNumber: "หมายเลขบัตรธนาคาร",
     depositAmount: "จำนวนเงินฝาก",
     amount: "จำนวนเงิน",
-    depositAmountMustInBetween: "จำนวนเงินฝากจะต้องอยู่ระหว่าง",
+    depositAmountMustInBetween: "เงินฝากควรอยู่ระหว่าง",
     extra: "พิเศษ",
     understood: "เข้าใจแล้ว",
     noMatchingFound: "ไม่พบช่องทางการชำระเงินที่ตรงกับจำนวนเงิน"
