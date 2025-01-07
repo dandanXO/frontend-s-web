@@ -49,7 +49,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2025年02月03日至2025年02月09 日</div>
+          <div class="right">2025年02月03日至2025年02月09日</div>
         </div>
         <div class="little-title">
           <div class="left">活动对象</div>
@@ -59,11 +59,12 @@
           <div class="left">活动平台</div>
           <div class="right">电竞</div>
         </div>
-        <div class="little-title"
-          style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
-        >
+        <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">优惠详情</div>
-          <div class="right">会员在本站电竞场馆中，投注BLAST Slam II赛事在2月3日-2月9日的周总负盈利达到1000元及以上，2月10日即可领取救援金，最高可达1,288元！</div>
+          <div class="right">
+            会员在本站电竞场馆中，投注BLAST Slam
+            II赛事在2月3日-2月9日的周总负盈利达到1,000元及以上，2月10日即可领取救援金，最高可达1,288元！
+          </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <thead>
@@ -124,7 +125,7 @@
               />
               <span>示例</span>
             </div>
-            会员A在电竞场馆投注BLAST Slam II赛事,比赛期间产生总负盈利为6000元,2月10日即可获得救援金38元。
+            会员A在电竞场馆投注BLAST Slam II赛事,比赛期间产生总负盈利为6,000元,2月10日即可获得救援金38元。
           </div>
         </div>
       </div>
@@ -135,17 +136,20 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中梦幻联赛S25赛事，会员在当日梦幻联赛S25中累计有效投注金额≥1,500 元即可获得对应彩金，有效投注次日清零；
-            <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
-          </div>
+              活动期间，活动仅计算电竞场馆中梦幻联赛S25赛事，会员在当日梦幻联赛S25中累计有效投注金额≥1,500
+              元即可获得对应彩金，有效投注次日清零；
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+            </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 梦幻联赛S25已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
+            活动期间，活动仅计算当日 梦幻联赛S25已结算的赛事总有效投注，次日
+            24小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -153,7 +157,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
