@@ -10,21 +10,20 @@
 
       <!-- tab content -->
       <div v-if="activeKey === 1" class="new-section">
-        <div class="new-rebate-section">
+        <div class="new-rebate-section section-bg">
           <div class="new-rebate-section-left">
             <div class="new-rebate-section-title">
               <div class="new-rebate-section-title-inner">
                 <div>
-                  <img
-                    style="vertical-align: sub; height: 20px; width: 20px"
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                  <div
+                    class="claim-title-icon"
                   />
                   邀请首存奖金
                 </div>
                 <div @click="toggleCheckRecordModal(true)" class="tab active">查看我的推广记录</div>
               </div>
             </div>
-            <div class="copy-section">
+            <div class="copy-section section-bg">
               <div class="copy-first">
                 分享链接
                 <!-- <img style="height: 24px;width: 24px;" src="../../../assets/images/privilege-invite/copy.png" /> -->
@@ -39,23 +38,23 @@
             </div>
           </div>
         </div>
-        <div class="new-rebate-game-info">
-          <div class="title"></div>
+        <div class="new-rebate-game-info section-bg">
+          <div class="title-img">活动详情</div>
           <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
-            <div class="left">活动时间</div>
+            <div class="ribbon">活动时间</div>
             <div class="right">2022 年 11 月 17 日 00:00 起</div>
           </div>
           <div
             class="little-title"
             style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
           >
-            <div class="left">活动内容</div>
+            <div class="ribbon">活动内容</div>
             <div class="right">
               雷火用户打开：个人中心--点击“呼朋唤友”复制推广链接，通过
               QQ、微信、论坛、贴吧、微博等方式分享，成功邀请好友即 可获得现金奖励！
             </div>
           </div>
-          <table class="new-rebate-game-info-table">
+          <table class="new-rebate-game-info-table section-table">
             <tbody>
               <tr>
                 <th>推荐新用户 首存金额</th>
@@ -115,8 +114,8 @@
             </div>
           </div>
         </div>
-        <div class="new-rebate-game-bottom-rule">
-          <div class="title"></div>
+        <div class="new-rebate-game-bottom-rule section-bg">
+          <div class="title-img">活动规则</div><br/>
           <div class="content">
             <div class="item">
               <div class="item-num">1</div>
@@ -165,21 +164,20 @@
         </div>
       </div>
       <div v-if="activeKey === 2" class="new-section">
-        <div class="new-rebate-section">
+        <div class="new-rebate-section section-bg">
           <div class="new-rebate-section-left">
             <div class="new-rebate-section-title">
               <div class="new-rebate-section-title-inner">
                 <div>
-                  <img
-                    style="vertical-align: sub; height: 20px; width: 20px"
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                  <div
+                    class="claim-title-icon"
                   />
                   邀请周存送
                 </div>
                 <div @click="toggleCheckRecordModal(true)" class="tab active">查看我的推广记录</div>
               </div>
             </div>
-            <div class="copy-section">
+            <div class="copy-section section-bg">
               <div class="copy-first">
                 分享链接
                 <!-- <img style="height: 24px;width: 24px;" src="../../../assets/images/privilege-invite/copy.png" /> -->
@@ -194,23 +192,23 @@
             </div>
           </div>
         </div>
-        <div class="new-rebate-game-info">
-          <div class="title"></div>
+        <div class="new-rebate-game-info section-bg">
+          <div class="title-img">活动详情</div>
           <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
-            <div class="left">活动时间</div>
+            <div class="ribbon">活动时间</div>
             <div class="right">2022 年 11 月 17 日 00:00 起</div>
           </div>
           <div
             class="little-title"
             style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
           >
-            <div class="left">活动内容</div>
+            <div class="ribbon">活动内容</div>
             <div class="right">
               活动期间，通过您的推广链接进行注册，并达到周累计存款要求，您和受邀请人均可获得该累计存款金额 1%
               的新人奖励，最高单周可获得 88888 元哦！
             </div>
           </div>
-          <table class="new-rebate-game-info-table">
+          <table class="new-rebate-game-info-table section-table">
             <tr>
               <th>邀请人等级要求</th>
               <th>好友周累计存款</th>
@@ -278,8 +276,8 @@
             </div>
           </div>
         </div>
-        <div class="new-rebate-game-bottom-rule">
-          <div class="title"></div>
+        <div class="new-rebate-game-bottom-rule section-bg">
+          <div class="title-img">活动规则</div><br/>
           <div class="content">
             <div class="item">
               <div class="item-num">1</div>
@@ -316,14 +314,12 @@
       </div>
 
       <div v-if="activeKey === 3" class="new-section">
-        <div class="new-rebate-section">
+        <div class="new-rebate-section section-bg">
           <div class="new-rebate-section-left">
             <div class="new-rebate-section-title">
               <div class="new-rebate-section-title-inner">
                 <div>
-                  <img
-                    style="vertical-align: sub; height: 20px; width: 20px"
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
+                  <div class="claim-title-icon"
                   />
                   邀请首存奖金
                 </div>
@@ -347,7 +343,7 @@
               </div>
             </div>
 
-            <div class="copy-section">
+            <div class="copy-section section-bg">
               <div class="copy-first">
                 分享链接
                 <!-- <img style="height: 24px;width: 24px;" src="../../../assets/images/privilege-invite/copy.png" /> -->
@@ -365,8 +361,8 @@
             </div>
           </div>
         </div>
-        <div class="new-rebate-game-bottom-rule">
-          <div class="title"></div>
+        <div class="new-rebate-game-bottom-rule section-bg">
+          <div class="title-img">活动规则</div><br/>
           <div class="content">
             <div class="item">
               <div class="item-num">1</div>
@@ -760,6 +756,32 @@ export default defineComponent({
     }
   }
 }
+
+.body--dark {
+  .tab {
+    &.active {
+      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+    }
+  }
+
+  .privilege-invite-container {
+    .info-item {
+      background: transparent;
+      border-color: #3c5ec3;
+    }
+    .info-top {
+      background: linear-gradient(180deg,#597adf,#3c5ec3);
+    }
+  }
+
+  .record-selection {
+    .input-row {
+      label {
+        color: white;
+      }
+    }
+  }
+}
 .new-section {
   padding: 0px 12px;
 }
@@ -805,7 +827,6 @@ export default defineComponent({
   }
 
   .new-rebate-section-title {
-    color: #000000;
     font-size: 16px;
     line-height: 1;
     font-weight: 600;
@@ -926,7 +947,6 @@ export default defineComponent({
       font-size: 12px;
       font-weight: 400;
       line-height: 28px;
-      color: #000000;
     }
   }
 }
@@ -986,13 +1006,13 @@ export default defineComponent({
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #f93a3a !important;
   }
   .new-rebate-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #f93a3a !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -1051,7 +1071,7 @@ export default defineComponent({
         font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #f93a3a !important;
         display: flex;
         justify-content: flex-start;
         align-items: center;
