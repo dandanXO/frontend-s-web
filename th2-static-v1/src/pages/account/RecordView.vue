@@ -49,10 +49,9 @@
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
           <div class="date">{{ e.betTime }}</div>
-          <q-btn
-            :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
-          ></q-btn>
+          <div :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`">
+            {{ `${e.payout > 0 ? $t("records.profit") : $t("records.loss")}` }}
+          </div>
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
@@ -334,7 +333,7 @@ onActivated(() => {
       text-transform: capitalize;
       border-radius: 12.5rem;
       background: rgba(250, 229, 118, 0.2);
-      padding: 0 1rem;
+      padding: 0.25rem 1rem;
       min-height: unset;
     }
 
@@ -345,7 +344,7 @@ onActivated(() => {
       text-transform: capitalize;
       border-radius: 12.5rem;
       background: rgba(188, 102, 255, 0.2);
-      padding: 0 1rem;
+      padding: 0.25rem 1rem;
       min-height: unset;
     }
   }

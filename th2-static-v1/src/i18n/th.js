@@ -667,7 +667,9 @@ export default {
     serialNumber: "หมายเลขซีเรียล",
     vipUpgradeBonus: "โบนัสอัปเกรด VIP",
     to: "ถึง",
-    sending: "การส่ง"
+    sending: "การส่ง",
+    profit: "กำไร",
+    loss: "การสูญเสีย"
   },
   appUpdate: {
     updateHeader: "ประกาศอัปเดต",
