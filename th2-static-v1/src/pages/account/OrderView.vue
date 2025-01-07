@@ -204,6 +204,8 @@ const getWithdrawStatus = (withdrawStatus) => {
     case "STEP_3":
     case "STEP_4":
       return t("records.pending");
+    case "SENDING":
+      return t("records.sending");
     case "FAIL":
     case "STEP_5":
       return t("records.failed");
