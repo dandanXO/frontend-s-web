@@ -214,70 +214,70 @@
         </template>
       </q-table>
 
-      <q-table
-        flat
-        :hide-pagination="true"
-        :columns="columnsinvite"
-        :rows="rows"
-        row-key="name"
-        :rows-per-page-options="[0]"
-        style="overflow-x: scroll"
-        class="monthly-deposit-table"
-      >
-        <template v-slot:header="props">
-          <q-tr :props="props" style="display: none">
-            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
-              <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
-              <!-- unable to adjust table width... -->
-              <template v-else>
-                <div style="white-space: normal; text-align: center">
-                  Monthly Cumulative Deposit An Upgrade Vip Level
-                </div>
-              </template>
-            </q-th>
-          </q-tr>
+      <!--      <q-table-->
+      <!--        flat-->
+      <!--        :hide-pagination="true"-->
+      <!--        :columns="columnsinvite"-->
+      <!--        :rows="rows"-->
+      <!--        row-key="name"-->
+      <!--        :rows-per-page-options="[0]"-->
+      <!--        style="overflow-x: scroll"-->
+      <!--        class="monthly-deposit-table"-->
+      <!--      >-->
+      <!--        <template v-slot:header="props">-->
+      <!--          <q-tr :props="props" style="display: none">-->
+      <!--            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">-->
+      <!--              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />-->
+      <!--              <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>-->
+      <!--              &lt;!&ndash; unable to adjust table width... &ndash;&gt;-->
+      <!--              <template v-else>-->
+      <!--                <div style="white-space: normal; text-align: center">-->
+      <!--                  Monthly Cumulative Deposit An Upgrade Vip Level-->
+      <!--                </div>-->
+      <!--              </template>-->
+      <!--            </q-th>-->
+      <!--          </q-tr>-->
 
-          <q-tr class="top-header">
-            <q-td>
-              <div><img src="../../assets/images/vip/vip-col-level.png" /></div>
-            </q-td>
-            <q-td>
-              {{ $t("vip.accumulate") }}
-              <br />
-              {{ $t("vip.invites") }}
-            </q-td>
-            <q-td style="">
-              {{ $t("vip.extra") }}
-              <br />
-              {{ $t("vip.rewardss") }}
-            </q-td>
-          </q-tr>
-        </template>
+      <!--          <q-tr class="top-header">-->
+      <!--            <q-td>-->
+      <!--              <div><img src="../../assets/images/vip/vip-col-level.png" /></div>-->
+      <!--            </q-td>-->
+      <!--            <q-td>-->
+      <!--              {{ $t("vip.accumulate") }}-->
+      <!--              <br />-->
+      <!--              {{ $t("vip.invites") }}-->
+      <!--            </q-td>-->
+      <!--            <q-td style="">-->
+      <!--              {{ $t("vip.extra") }}-->
+      <!--              <br />-->
+      <!--              {{ $t("vip.rewardss") }}-->
+      <!--            </q-td>-->
+      <!--          </q-tr>-->
+      <!--        </template>-->
 
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 2">
-                <div style="justify-content: center; display: flex; align-items: center; gap: 4px">
-                  <img src="../../assets/images/vip/vip-coins.png" />
-                  <span>{{ col.value }}</span>
-                </div>
-              </template>
+      <!--        <template v-slot:body="props">-->
+      <!--          <q-tr :props="props">-->
+      <!--            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">-->
+      <!--              <template v-if="colIndex === 2">-->
+      <!--                <div style="justify-content: center; display: flex; align-items: center; gap: 4px">-->
+      <!--                  <img src="../../assets/images/vip/vip-coins.png" />-->
+      <!--                  <span>{{ col.value }}</span>-->
+      <!--                </div>-->
+      <!--              </template>-->
 
-              <template v-else>{{ col.value }}</template>
-            </q-td>
-          </q-tr>
-        </template>
+      <!--              <template v-else>{{ col.value }}</template>-->
+      <!--            </q-td>-->
+      <!--          </q-tr>-->
+      <!--        </template>-->
 
-        <template v-slot:bottom-row>
-          <q-tr style="display: none">
-            <q-td colspan="100%" class="bottom-note text-left">
-              {{ $t("vip.vipTable_txt") }}
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
+      <!--        <template v-slot:bottom-row>-->
+      <!--          <q-tr style="display: none">-->
+      <!--            <q-td colspan="100%" class="bottom-note text-left">-->
+      <!--              {{ $t("vip.vipTable_txt") }}-->
+      <!--            </q-td>-->
+      <!--          </q-tr>-->
+      <!--        </template>-->
+      <!--      </q-table>-->
 
       <div class="hint-msg">
         {{ $t("vip.vipTable_txt") }}
