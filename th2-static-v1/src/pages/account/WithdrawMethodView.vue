@@ -505,11 +505,11 @@ const bankCardList = ref([]);
 
 const displayCardType = computed(() => {
   if (selectedMethodItem.value.payType === "EWALLET") {
-    return t("withdraw.bank");
-  } else if (selectedMethodItem.value.payType === "CRYPTO") {
     return t("withdraw.ewallet");
+  } else if (selectedMethodItem.value.payType === "CRYPTO") {
+    return t("withdraw.crypto");
   }
-  return t("withdraw.crypto");
+  return t("withdraw.bank");
 });
 
 const validateBankCardError = () => {
