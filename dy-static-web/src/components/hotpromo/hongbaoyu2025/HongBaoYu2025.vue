@@ -91,7 +91,7 @@
   </div>
   <el-dialog
     class="award-modal hongbaoyu-modal"
-    :close-on-click-modal="false"
+    :close-on-click-modal="getPromotionPrize"
     :modal="false"
     v-model="privilegeClaimedModalVisible"
     align-center
@@ -395,7 +395,7 @@ const getPromotionPrize = () => {
 
   img {
     width: 500px;
-    padding-right: 30px;
+    // padding-right: 30px;
   }
 
   .grats {
@@ -403,7 +403,9 @@ const getPromotionPrize = () => {
     width: 100%;
     display: flex;
     justify-content: center;
-    top: 330px;
+    top: 350px;
+    left: calc(50% + 12px);
+    transform: translateX(-50%);
     z-index: 22;
     text-align: center;
     color: #fffbfb;
@@ -411,7 +413,6 @@ const getPromotionPrize = () => {
     font-family: PingFang SC;
     font-size: 28px;
     font-style: normal;
-    padding-left: 10px;
     font-weight: 600;
     line-height: normal;
   }
@@ -421,8 +422,8 @@ const getPromotionPrize = () => {
     width: 100%;
     display: flex;
     justify-content: center;
-    top: 270px;
-    left: calc(50% - 10px);
+    top: 290px;
+    left: calc(50% + 2px);
     transform: translateX(-50%);
     color: #fff;
     font-size: 50px;
@@ -437,8 +438,8 @@ const getPromotionPrize = () => {
     border-radius: 30px;
     background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
     position: absolute;
-    top: 380px;
-    left: calc(50% - 10px);
+    top: 396px;
+    left: calc(50% + 2px);
     transform: translateX(-50%);
     font-size: 20px;
     padding: 12px 24px;
