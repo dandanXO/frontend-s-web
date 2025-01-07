@@ -171,7 +171,7 @@
           提交答案
         </div>
       </div>
-      <div v-else class="prize-quiz-main prize-quiz-record-container" style="margin-top: 80px">
+      <div v-else class="prize-quiz-main prize-quiz-record-container section-bg" style="margin-top: 80px">
         <!-- <div class="title" id="title">
           {{ matchInfo.quizTitle || "答题区" }}
         </div> -->
@@ -220,8 +220,8 @@
         </div>
       </div>
 
-      <div class="prize-quiz-record-container">
-        <div class="title-img title-record"></div>
+      <div class="prize-quiz-record-container section-bg">
+        <div class="title-img">答题记录</div>
         <div>
           <table v-if="isHasRecord" class="record-table" id="record-table">
             <tr>
@@ -1111,7 +1111,6 @@ const submittedFormStatus = ref(false);
 .prize-quiz-record-container {
   width: 100%;
   height: 100%;
-  background-color: white;
   border-radius: 20px;
   padding: 20px;
   margin-top: 60px;
@@ -1626,7 +1625,6 @@ const submittedFormStatus = ref(false);
 .prize-quiz-record-container {
   width: 100%;
   height: 100%;
-  background-color: #2D4065 !important;
   border-radius: 20px;
   padding: 20px;
   margin-top: 60px;

@@ -523,13 +523,9 @@ export default defineComponent({
 
     .content-lh1-poker-refund {
       //color: #fff;
-      background: #fff;
-      border-radius: 12px;
       padding: 0px 24px 30px;
     }
     .content-LH-baccarat-win {
-      background: #fff;
-      border-radius: 12px;
       padding: 0px 24px 30px;
     }
   }

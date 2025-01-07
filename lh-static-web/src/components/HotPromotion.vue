@@ -1074,6 +1074,7 @@ export default defineComponent({
     color: #4c4c6c;
     font-weight: bold;
     letter-spacing: 3px;
+    margin: 0 auto;
   }
 
   .item {

@@ -1180,7 +1180,7 @@ $transition_timer: 0.5s;
                 color: #fff;
                 text-align: center;
                 font-family: PingFang SC;
-                font-size: 0.73363rem;
+                font-size: 0.83363rem;
                 font-weight: 700;
                 line-height: 1.46719rem;
                 white-space: nowrap;
@@ -1307,6 +1307,11 @@ $transition_timer: 0.5s;
             &.character-board-leg {
               margin-bottom: 7%;
               width: 89%;
+            }
+
+            &.character-slots-pp {
+              margin-bottom: 7%;
+              width: 91%
             }
           }
         }
