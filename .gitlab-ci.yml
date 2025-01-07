@@ -1167,3 +1167,17 @@ deploy-br1-download-pwa:
     - p8s1-br1-runners
 
 #===============================================================================================
+
+build-minigame-website:
+  extends: .build-projects
+  variables:
+    PROJECT: minigame-website
+
+build-image-minigame-website:
+  extends: .docker-build
+  variables:
+    PROJECT: minigame-website
+  needs:
+    - build-minigame-website
+
+#===============================================================================================
