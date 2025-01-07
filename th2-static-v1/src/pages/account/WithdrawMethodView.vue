@@ -263,7 +263,7 @@
                     class="minmax-btn"
                     rounded
                     color="black"
-                    label="Max"
+                    label="max"
                     dense
                     no-caps
                     @click="toggleAmount('max')"
