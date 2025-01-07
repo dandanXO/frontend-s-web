@@ -203,6 +203,8 @@ const getWithdrawStatus = (withdrawStatus) => {
     case "STEP_2":
     case "STEP_3":
     case "STEP_4":
+    case "WAITING_AUTO_PAY":
+    case "WAITING_CALLBACK":
       return t("records.pending");
     case "SENDING":
       return t("records.sending");
