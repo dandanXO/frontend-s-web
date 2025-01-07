@@ -203,7 +203,7 @@ import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dot
 import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
-import HongBaoYu2025 from "./hotpromo/hongbaoyu/HongBaoYu2025.vue";
+import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
