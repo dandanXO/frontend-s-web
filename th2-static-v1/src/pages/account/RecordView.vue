@@ -16,7 +16,7 @@
               </q-icon>
             </template>
           </q-input>
-          <span>to</span>
+          <span>{{ $t("records.to") }}</span>
           <q-input filled v-model="searchForm.endDate" readonly>
             <template v-slot:prepend>
               <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
@@ -62,8 +62,8 @@
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">Bet</div>
-            <div class="game-platform">Game Platform</div>
+            <div class="bet">{{ $t("records.bet") }}</div>
+            <div class="game-platform">{{ $t("records.gamePlatform") }}</div>
           </div>
           <div class="origin-val">
             <div class="bet-val">{{ convertToCommaAmount(e.bet, false) }}</div>

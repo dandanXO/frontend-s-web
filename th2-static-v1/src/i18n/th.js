@@ -665,7 +665,9 @@ export default {
     level: "เลเวล",
     turnover: "อัตราการเทิร์นโอเวอร์",
     serialNumber: "หมายเลขซีเรียล",
-    vipUpgradeBonus: "โบนัสอัปเกรด VIP"
+    vipUpgradeBonus: "โบนัสอัปเกรด VIP",
+    to: "ถึง",
+    sending: "การส่ง"
   },
   appUpdate: {
     updateHeader: "ประกาศอัปเดต",
