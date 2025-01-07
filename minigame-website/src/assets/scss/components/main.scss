@@ -421,7 +421,7 @@ body.bg-pigeon {
     }
   }
 
-  &.carousel-voxis-item {
+  &.carousel-texas-item {
     background-image: url("../images/carousel-img-02.png");
 
     @include breakpoint-down(small) {
@@ -501,7 +501,7 @@ body.bg-pigeon {
     }
   }
 
-  &.carousel-voxis-content {
+  &.carousel-texas-content {
     h2 {
       color: #000000;
       font-size: 45px;
@@ -1218,8 +1218,8 @@ footer {
   }
 }
 
-//voxis download
-.sec-voxis-download {
+//texas download
+.sec-texas-download {
   background: linear-gradient(
     180deg,
     rgba(134, 194, 254, 0.8) 0%,
@@ -1237,7 +1237,7 @@ footer {
     );
   }
 
-  .voxis-download-container {
+  .texas-download-container {
     // display: flex;
     // align-items: center;
     height: 100%;
@@ -1392,8 +1392,8 @@ footer {
   }
 }
 
-// voxis cam
-.sec-voxis-cam {
+// texas cam
+.sec-texas-cam {
   background: #ffffff;
   color: #000000;
   padding: 70px 0;
@@ -1422,8 +1422,8 @@ footer {
   }
 }
 
-// voxis voice
-.sec-voxis-voice {
+// texas voice
+.sec-texas-voice {
   background: #3a3f76;
   color: #ffffff;
   padding: 70px 0;
@@ -1452,7 +1452,7 @@ footer {
       margin-top: 24px;
     }
 
-    .voxis-msg-img {
+    .texas-msg-img {
       position: absolute;
       top: 0;
       left: 0;
@@ -1467,8 +1467,8 @@ footer {
   }
 }
 
-// voxis device
-.sec-voxis-device {
+// texas device
+.sec-texas-device {
   background: #ffffff;
   padding: 70px 0;
 
@@ -1476,7 +1476,7 @@ footer {
     padding: 36px 0;
   }
 
-  .voxis-device-container {
+  .texas-device-container {
     // display: flex;
     // align-items: center;
     display: grid;

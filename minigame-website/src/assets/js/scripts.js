@@ -259,7 +259,7 @@ function submitPackageApplyForm(e) {
 const tabItemToggle = () => {
   // Set the default active tab
   // $(".tab-item:first").addClass("active");
-  $(".tab-item[tabtarget='#product_voxis']").addClass("active");
+  $(".tab-item[tabtarget='#product_texas']").addClass("active");
   $(".tab-item[tabtarget='#product_all']").addClass("mobile-active");
 
   // Show the corresponding product showcase for the active tab

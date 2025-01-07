@@ -48,7 +48,7 @@ const versionTask = () => {
   buildVer = newVersionNumber;
   return src("src/assets/version/version.js")
     .pipe(versionNumber({ version: newVersionNumber }))
-    .pipe(dest("dist/assets/version"));
+    .pipe(dest("build/assets/version"));
 };
 
 // Change version num in HTML
@@ -89,6 +89,14 @@ const jsBuild = () => {
     .pipe(rename({ suffix: "-ver.min" }))
     .pipe(dest("dist/assets/js/", { sourcemaps: "." }));
 };
+
+const cssBuild = () => {
+  return src("src/assets/js/*.js", { sourcemaps: true })
+      .pipe(babel({ presets: ["@babel/preset-env"] }))
+      .pipe(terser())
+      .pipe(rename({ suffix: "-ver.min" }))
+      .pipe(dest("dist/assets/js/", { sourcemaps: "." }));
+}
 
 // const jsBuildNewVer = () => {
 //   return src("src/assets/js/*.js", { sourcemaps: true })
