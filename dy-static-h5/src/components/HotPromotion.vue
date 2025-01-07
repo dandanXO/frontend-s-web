@@ -111,6 +111,7 @@
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'dy2-perfect-world-major-2024'" :promo-param="listParam" />
     <DemaciaCup1 v-if="list.redirectUrl === 'dy2-demacia-cup-2024'" :promo-param="listParam" />
     <Dota2BlastSlam2024 v-if="list.redirectUrl === 'dy2-dota2-blast-slam-2024'" :promo-code="list.promoCode" />
+    <Lh1LplLck2025loss v-else-if="list.redirectUrl === 'dy2-lpl-lck-2025'" :promo-param="listParam" />
     <ChristmasGachapon
       v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
       :promo-code="list.promoCode"
@@ -230,6 +231,9 @@ const Tpworld2024 = defineAsyncComponent(() => import("../components/hotpromo/tp
 const NationalDay2024 = defineAsyncComponent(() =>
   import("../components/hotpromo/national-day-2024/NationalDay2024.vue")
 );
+const Lh1LplLck2025loss = defineAsyncComponent(() =>
+  import("../components/hotpromo/lh1-lpl-lck-2025-loss/lh1-lpl-lck-2025-loss.vue")
+);
 const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
 const Dota2Ti13 = defineAsyncComponent(() => import("../components/hotpromo/dota2-ti13/Dota2Ti13.vue"));
 const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"));
@@ -238,13 +242,21 @@ const Dota2Pgl = defineAsyncComponent(() => import("../components/hotpromo/dota2
 const IemMasterPromo = defineAsyncComponent(() => import("./hotpromo/iem-master/IemMasterPromo.vue"));
 const PullbackTide = defineAsyncComponent(() => import("./hotpromo/pullback-tide/PullbackTide.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
-const ElisaGift = defineAsyncComponent(()=>import("./hotpromo/elisa-gift/ElisaGift.vue"));
-const PerfectWorldMajor2024 = defineAsyncComponent(() => import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue"));
+const ElisaGift = defineAsyncComponent(() => import("./hotpromo/elisa-gift/ElisaGift.vue"));
+const PerfectWorldMajor2024 = defineAsyncComponent(() =>
+  import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue")
+);
 const DemaciaCup1 = defineAsyncComponent(() => import("./hotpromo/demacia-cup-1/DemaciaCup1.vue"));
-const Dota2BlastSlam2024 = defineAsyncComponent(() => import("./hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"));
+const Dota2BlastSlam2024 = defineAsyncComponent(() =>
+  import("./hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue")
+);
 const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
-const VctcnMatchPromo = defineAsyncComponent(() => import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue"))
-const Belgrade2025Promo = defineAsyncComponent(() => import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue"));
+const VctcnMatchPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue")
+);
+const Belgrade2025Promo = defineAsyncComponent(() =>
+  import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue")
+);
 const DreamLeagueS25 = defineAsyncComponent(() => import("./hotpromo/dream-league-s25/DreamLeagueS25.vue"));
 
 export default defineComponent({
@@ -316,6 +328,7 @@ export default defineComponent({
     ChallengeComebackPromo,
     PerfectWorldMajor2024,
     DemaciaCup1,
+    Lh1LplLck2025loss,
     Dota2BlastSlam2024,
     ChristmasGachapon,
     VctcnMatchPromo,
@@ -735,13 +748,13 @@ export default defineComponent({
   clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
   background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
   padding-right: 10px;
-  font-family: 'PingFang';
+  font-family: "PingFang";
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  width:fit-content;
+  width: fit-content;
   padding: 0px 20px 0px 10px;
 }
 
