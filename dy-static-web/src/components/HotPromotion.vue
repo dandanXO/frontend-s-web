@@ -81,7 +81,11 @@
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
-
+    <LplPKlck2025loss
+      v-if="list.redirectUrl === 'dy2-lpl-lck-2025'"
+      :promo-param="listParam"
+      :promo-code="list.promoCode"
+    />
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode" />
     <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode" />
@@ -188,16 +192,16 @@ import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/Christma
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
 import DreamLeagueS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
-
+import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2025-loss.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 import EslProCsgo2 from "./hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
 import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
-import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
-import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
-import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue"
+import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue";
+import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue";
+import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue";
 import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
@@ -273,6 +277,7 @@ export default defineComponent({
     ChallengeComebackPromo,
     PerfectWorldMajor2024,
     DemaciaCup1,
+    LplPKlck2025loss,
     ChristmasGachapon,
     VctcnMatchPromo,
     Belgrade2025Promo,
@@ -588,13 +593,13 @@ export default defineComponent({
   clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
   background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
   padding-right: 10px;
-  font-family: 'PingFang SC';
+  font-family: "PingFang SC";
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  width:fit-content;
+  width: fit-content;
   padding: 0px 20px 0px 10px;
   aspect-ratio: 94/30;
   white-space: nowrap;
