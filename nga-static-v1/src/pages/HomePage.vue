@@ -1147,14 +1147,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoriesList = ref([
-  { title: "Lobby", icon: "lobby", active: true },
-  { title: "Hot", icon: "hot", active: false },
-  { title: "Casino", icon: "casino", active: false },
-  { title: "Slot", icon: "slot", active: false },
-  { title: "Fishing", icon: "fishing", active: false },
-  { title: "Sport", icon: "sport", active: false }
-]);
+const categoriesList = ref([]);
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -2738,12 +2731,58 @@ const gotoFloatPromo = (val) => {
   }
 };
 
+const loadAppTabs = () => {
+  const localStorageKey = "appTabs";
+  const savedTabs = JSON.parse(localStorage.getItem(localStorageKey));
+  if (savedTabs && savedTabs.length > 0) {
+    categoriesList.value = savedTabs;
+    categoriesList.value.forEach((tab, index) => {
+      tab.active = index === 0;
+    });
+  } else {
+    categoriesList.value = [
+      { title: "Lobby", icon: "lobby", active: true },
+      { title: "Hot", icon: "hot", active: false },
+      { title: "Casino", icon: "casino", active: false },
+      { title: "Slot", icon: "slot", active: false },
+      { title: "Fishing", icon: "fishing", active: false },
+      { title: "Sport", icon: "sport", active: false }
+    ];
+  }
+
+  api
+    .get("/opt-session/getAppTabs")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        const { data } = res;
+        if (data && data.tabs) {
+          const { tabs } = res.data;
+          if (tabs.length > 0) {
+            localStorage.setItem(localStorageKey, JSON.stringify(res.data.tabs));
+          }
+        }
+        if (data && data.deposit) {
+          store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+          store.extraPrivilegeId = data.deposit.privilegeId;
+        }
+        if (data && data.hasOwnProperty("ftd")) {
+          store.ftd = data.ftd;
+        }
+      }
+    })
+    .catch((e) => {
+      console.error("Failed to fetch tabs:", e);
+    });
+};
+
 onActivated(() => {
   store.getUnreadTotal();
 });
 
 onMounted(() => {
   isPlatLoading.value = true;
+  loadAppTabs();
   getPlatList();
   loadData();
   loadAnnouncement();
