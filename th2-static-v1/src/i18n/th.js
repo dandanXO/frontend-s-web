@@ -351,7 +351,10 @@ export default {
     account: "บัญชี",
     addNewAccount: "เพิ่มบัญชีใหม่",
     withdrawalAmount: "จำนวนเงินที่ถอน",
-    available: "มีอยู่"
+    available: "มีอยู่",
+    bank: "ธนาคาร",
+    ewallet: "eWallet",
+    crypto: "คริปโต"
   },
   bank: {
     virtualWallet: "eWallet",
