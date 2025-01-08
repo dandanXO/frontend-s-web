@@ -182,6 +182,7 @@ const store = userStore();
 const draw = ref(0);
 const highestSingleValidBet = ref(0);
 const isClaimModal = ref(false);
+const loadingClaim = ref(false);
 const winAmount = ref(0);
 
 const fetchData = async () => {
