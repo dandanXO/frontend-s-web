@@ -35,7 +35,7 @@
             </div>
             <div class="reward-info-content">
               可领取红包次数：
-              <span class="amount">{{ draw }}元</span>
+              <span class="amount">{{ draw }}次</span>
             </div>
           </div>
         </div>
@@ -180,7 +180,7 @@ import { eventapi } from "src/boot/axios";
 const props = defineProps(["promoCode"]);
 const store = userStore();
 const draw = ref(0);
-const highestSingleValidBet = ref(0);
+const depositAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
 const winAmount = ref(0);
@@ -212,8 +212,9 @@ const handleClaimBonus = () => {
     .then((res) => {
       if (res.code === 0) {
         isClaimModal.value = true;
-        winAmount.value = res.data;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
         store.getBalance();
+        fetchData();
       }
     })
     .catch(() => {})

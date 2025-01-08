@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               可领取红包次数：
-              <span class="amount">{{ draw }}元</span>
+              <span class="amount">{{ draw }}次</span>
             </div>
           </div>
         </div>
@@ -185,8 +185,9 @@ const handleClaimBonus = () => {
     .then((res) => {
       if (res.code === 0) {
         privilegeClaimedModalVisible.value = true;
-        winAmount.value = res.data;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
         store.getBalance();
+        fetchData();
       }
     })
     .catch(() => {})
