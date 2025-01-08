@@ -112,7 +112,7 @@
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
           <div class="method-title q-mb-sm">
-            {{ $t("withdraw.choose") }} {{ displayCardType }} {{ $t("withdraw.account") }}
+            {{ $t("form.accountNumber") }}
           </div>
           <div class="mid-wrapper">
             <div class="w-form-item w-form-item--bankcard">
