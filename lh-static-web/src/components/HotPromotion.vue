@@ -636,7 +636,7 @@ export default defineComponent({
   box-shadow: none;
 
   .el-dialog__header .el-dialog__headerbtn {
-    font-size: 40px;
+    font-size: 20px;
     background: #3d8183;
     border-radius: 50%;
     display: flex;
