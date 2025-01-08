@@ -4,41 +4,48 @@
       <div class="decs1">
         <div>
           <span class="title1">ACCESS RESTRICTED</span>
-          <br>
+          <br />
           <span class="title2">访问受到限制</span>
         </div>
-        <br>
-        <div>
+        <br />
+        <div v-if="ipAddress">
           <span class="ip">
             您的IP地址为:
             <span id="data">{{ ipAddress }}</span>
             <span class="ipLock">
-              <img
-                src="../assets/403-images/lock_icon.png"
-              >
+              <img src="../assets/403-images/lock_icon.png" />
             </span>
           </span>
         </div>
-        <br>
+        <br />
+        <div v-if="loginName">
+          <span class="ip">
+            您的账号为:
+            <span id="data">{{ loginName }}</span>
+            <span class="ipLock">
+              <img src="../assets/403-images/lock_icon.png" />
+            </span>
+          </span>
+        </div>
+
+        <br />
         <div>
           <span class="ip">
             您的URL域名为:
             <span id="data1">{{ hostName }}</span>
             <span class="ipLock">
-              <img
-                src="../assets/403-images/lock_icon.png"
-              >
+              <img src="../assets/403-images/lock_icon.png" />
             </span>
           </span>
         </div>
 
         <div>
-          <br>
+          <br />
           <span class="highlight">
             Date:
             <span id="date">{{ formattedDate }}</span>
           </span>
-          <br>
+          <br />
           <span class="highlight">
             Time:
             <span id="time">{{ formattedTime }}</span>
@@ -46,7 +53,8 @@
         </div>
 
         <div class="back-text" @click="backtoMain">
-          Back to Main Page.<br>
+          Back to Main Page.
+          <br />
           返回主页面。
         </div>
         <div class="decs cn">
@@ -57,7 +65,7 @@
           </p>
         </div>
         <b>
-          <hr>
+          <hr />
           <div class="decs en">
             <p>
               The location you are trying to access the website from is
@@ -65,7 +73,7 @@
               Customer Services.
             </p>
           </div>
-          <hr>
+          <hr />
           <div class="decs en">
             <p>
               Vị trí hiện tại của bạn đăng nhập vào trang web bị hạn chế. Nếu có
@@ -73,7 +81,7 @@
               Hàng của chúng tôi.
             </p>
           </div>
-          <hr>
+          <hr />
           <div class="decs en">
             <p>
               Pelanggan terhormat.Sesuai dengan peraturan perundangan, situs
@@ -81,14 +89,14 @@
               Silahkan hubungi layanan pelanggan kami.
             </p>
           </div>
-          <hr>
+          <hr />
           <div class="decs en">
             <p>
               สถานที่ที่คุณพยายามเข้าถึงไซต์ถูก จำกัด ไว้ในขณะนี้ ถ้าคุณมี
               หากคุณมีข้อสงสัยใดๆ กรุณาติดต่อฝ่ายบริการลูกค้าของเรา
             </p>
           </div>
-          <hr>
+          <hr />
           <div class="decs en">
             <p>
               La página que está intentando ver no está disponible en esta
@@ -105,25 +113,31 @@
 <script setup>
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const ipAddress = sessionStorage.getItem('myIPAddress');
+const ipAddress = sessionStorage.getItem('myIPAddress') || ''
+const loginName = sessionStorage.getItem('myloginName') || ''
 const backtoMain = () => {
   router.push('/')
 }
-const hostName = window.location.hostname;
+const hostName = window.location.hostname
 // Get the current date
-const currentDateTime = new Date();
+const currentDateTime = new Date()
 
-const month = currentDateTime.getMonth() + 1; // Months are zero-indexed
-const day = currentDateTime.getDate();
-const year = currentDateTime.getFullYear();
+const month = currentDateTime.getMonth() + 1 // Months are zero-indexed
+const day = currentDateTime.getDate()
+const year = currentDateTime.getFullYear()
 
-const hours = currentDateTime.getHours();
-const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
-const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
+const hours = currentDateTime.getHours()
+const minutes = currentDateTime
+  .getMinutes()
+  .toString()
+  .padStart(2, '0')
+const seconds = currentDateTime
+  .getSeconds()
+  .toString()
+  .padStart(2, '0')
 
-const formattedDate = `${month}/${day}/${year}`;
-const formattedTime = `${hours}:${minutes}:${seconds}`;
-
+const formattedDate = `${month}/${day}/${year}`
+const formattedTime = `${hours}:${minutes}:${seconds}`
 </script>
 
 <style scoped>
@@ -140,10 +154,10 @@ const formattedTime = `${hours}:${minutes}:${seconds}`;
 }
 .back-text {
   background: #ff0000;
-    display: inline-block;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 20px;
+  display: inline-block;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 20px;
 }
 
 p {
@@ -166,8 +180,8 @@ p {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-    width: 95%;
-    text-align: center;
+  width: 95%;
+  text-align: center;
 }
 
 .decs {
@@ -216,9 +230,9 @@ p {
   border-radius: 0 6px 6px 0;
   margin-right: -65px;
   margin-left: 20px;
-    img {
-       width: 14px;
-    }
+  img {
+    width: 14px;
+  }
 }
 
 .en {
