@@ -28,9 +28,9 @@
       <div class="deposit-methods-container">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
-<!--            <div class="item-img">-->
-<!--              <img :src="imgURL + '/payment/' + item.nodeIcon" />-->
-<!--            </div>-->
+            <!--            <div class="item-img">-->
+            <!--              <img :src="imgURL + '/payment/' + item.nodeIcon" />-->
+            <!--            </div>-->
             <div class="item-title">{{ item.nodeName }}</div>
           </div>
         </template>
@@ -1187,6 +1187,7 @@ onMounted(() => {
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
   gap: 12px;
+  margin-bottom: 16px;
 
   &.col-three {
     grid-template-columns: repeat(3, 1fr);
