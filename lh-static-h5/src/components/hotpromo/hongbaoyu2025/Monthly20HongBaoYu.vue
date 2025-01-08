@@ -34,13 +34,13 @@
               />
             </div>
             <div class="reward-info-content">
-              可领取红包礼金：
-              <span class="amount">{{ bonus }}元</span>
+              可领取红包次数：
+              <span class="amount">{{ draw }}元</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
             <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/claim-btn-1.png" alt="" width="100%" />
           </div>
         </div>
@@ -144,30 +144,88 @@
       </div>
     </div>
   </div>
+
+  <q-dialog v-model="isClaimModal" persistent>
+    <q-card class="win-rebate-model">
+      <div class="close-btn">
+        <q-btn
+          @click="isClaimModal = false"
+          v-close-popup
+          rounded
+          icon="close"
+          color="white"
+          height="40"
+          width="40"
+        ></q-btn>
+      </div>
+
+      <q-card-section class="row items-center">
+        <div class="red-packet-opened">
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />
+
+          <span class="grats">恭喜获得奖金</span>
+          <span class="amount">{{ winAmount }}</span>
+          <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import { userStore } from "src/stores";
-// import { useNotify } from "src/hooks/notify";
-// import { useQuasar } from "quasar";
-// import { useRouter } from "vue-router";
+import { eventapi } from "src/boot/axios";
 
 const props = defineProps(["promoCode"]);
-// const { promoCode } = toRefs(props);
-
 const store = userStore();
-// const notify = useNotify();
-// const $q = useQuasar();
-// const router = useRouter();
-// const isClaiming = ref(false);
-
-const bonus = ref(0);
+const draw = ref(0);
 const highestSingleValidBet = ref(0);
+const isClaimModal = ref(false);
+const loadingClaim = ref(false);
+const winAmount = ref(0);
 
-const handleClaimBonus = () => {};
+const fetchData = async () => {
+  loadingClaim.value = true;
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  eventapi
+    .get(`/session/redPacketVip/initDepositRedPacket?promoCode=${props.promoCode}&v=${randNum}`)
+    .then((res) => {
+      if (res.code === 0) {
+        depositAmount.value = res.data.depositAmount;
+        draw.value = res.data.draw;
 
-const fetchData = async () => {};
+        store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const handleClaimBonus = () => {
+  loadingClaim.value = true;
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  eventapi
+    .get(`/redPacketVip/claim?promoCode=${props.promoCode}&v=${randNum}`)
+    .then((res) => {
+      if (res.code === 0) {
+        isClaimModal.value = true;
+        winAmount.value = res.data;
+        store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const getPromotionPrize = () => {
+  store.getBalance();
+  isClaimModal.value = false;
+};
 
 onMounted(() => {
   if (!store.token) {
@@ -526,6 +584,67 @@ onMounted(() => {
     td {
       color: white;
       background: transparent !important;
+    }
+  }
+}
+
+.red-packet-opened {
+  position: relative;
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  .grats {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 20%;
+    color: #fffbfb;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-right: 10px;
+  }
+
+  .amount {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 45%;
+    // left: -15px;
+    color: #f23b1d;
+    font-size: 36px;
+    font-weight: bold;
+    padding-right: 15px;
+  }
+
+  .get-btn {
+    color: #f23b1d;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
+    position: absolute;
+
+    font-size: 16px;
+    padding: 4px 16px;
+    bottom: 17%;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    width: 100px;
+    left: 0;
+    right: 10px;
+
+    &:hover {
+      filter: brightness(0.9);
     }
   }
 }
