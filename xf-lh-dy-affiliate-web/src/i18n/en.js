@@ -157,6 +157,7 @@ export default {
     commissionRateInfo: 'Commission Rate Info',
     commissionRateDescription: 'Affiliate commission rate is determined by monthly win loss and number of active member, when both conditions are met, affiliate will get the corresponding commission rate.',
     activeMemberRequirement: 'Number of active members: Deposit for the month >= 100 or valid bet >= 500;',
+    activeMemberRequirementDescription: '(Requirement: Add active members and meet the conditions to distribute commissions proportionally.)',
     level: 'Level',
     companyMonthlyProfit: 'Company Monthly Profit',
     activeNumberRequirement: 'New/ Active Count Minimum Requirement',

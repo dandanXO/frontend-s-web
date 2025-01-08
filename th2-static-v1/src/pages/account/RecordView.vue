@@ -16,7 +16,7 @@
               </q-icon>
             </template>
           </q-input>
-          <span>to</span>
+          <span>{{ $t("records.to") }}</span>
           <q-input filled v-model="searchForm.endDate" readonly>
             <template v-slot:prepend>
               <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
@@ -49,10 +49,9 @@
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
           <div class="date">{{ e.betTime }}</div>
-          <q-btn
-            :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
-          ></q-btn>
+          <div :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`">
+            {{ `${e.payout > 0 ? $t("records.profit") : $t("records.loss")}` }}
+          </div>
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
@@ -62,8 +61,8 @@
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">Bet</div>
-            <div class="game-platform">Game Platform</div>
+            <div class="bet">{{ $t("records.bet") }}</div>
+            <div class="game-platform">{{ $t("records.gamePlatform") }}</div>
           </div>
           <div class="origin-val">
             <div class="bet-val">{{ convertToCommaAmount(e.bet, false) }}</div>
@@ -334,7 +333,7 @@ onActivated(() => {
       text-transform: capitalize;
       border-radius: 12.5rem;
       background: rgba(250, 229, 118, 0.2);
-      padding: 0 1rem;
+      padding: 0.25rem 1rem;
       min-height: unset;
     }
 
@@ -345,7 +344,7 @@ onActivated(() => {
       text-transform: capitalize;
       border-radius: 12.5rem;
       background: rgba(188, 102, 255, 0.2);
-      padding: 0 1rem;
+      padding: 0.25rem 1rem;
       min-height: unset;
     }
   }

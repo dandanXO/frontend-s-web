@@ -477,7 +477,7 @@ onMounted(() => {
     align-items: center;
     padding-top: 10px;
     margin-bottom: auto;
-    width: 100%;
+    // width: 100%;
   }
 
   .logo-img {

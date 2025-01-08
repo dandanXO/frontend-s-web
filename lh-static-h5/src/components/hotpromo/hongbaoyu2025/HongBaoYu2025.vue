@@ -492,7 +492,7 @@ const getPromotionPrize = () => {
     position: absolute;
     inset: 0;
     border-radius: 12px;
-    padding: 1px;
+    padding: 1.5px;
     background: linear-gradient(170deg, #be9457 1.91%, rgba(190, 148, 87, 0) 33.82%);
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask-composite: exclude;

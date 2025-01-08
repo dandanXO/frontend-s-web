@@ -21,7 +21,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/reward-icon3.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              昨日LH有效投注:
+              昨日雷火有效投注:
               <span class="amount">{{ platformValidBet }}元</span>
             </div>
           </div>

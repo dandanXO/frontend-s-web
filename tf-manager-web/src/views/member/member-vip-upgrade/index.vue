@@ -109,6 +109,16 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="createBy"
+          :label="t('fields.createBy')"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.createBy === null">-</span>
+            <span v-else-if="scope.row.createBy === scope.row.loginName">-</span>
+            <span v-else>{{ scope.row.createBy }}</span>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
