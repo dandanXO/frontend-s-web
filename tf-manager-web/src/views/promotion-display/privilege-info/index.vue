@@ -1508,17 +1508,6 @@ function goToStep(index) {
       active.value = index; // Navigate to the clicked step if valid
     }
   });
-  // if (index > active.value) {
-  //   // Validate the current step before moving forward
-  //   privilegeInfoForm.value.validate(async valid => {
-  //     if (valid) {
-  //       active.value = index; // Navigate to the clicked step if valid
-  //     }
-  //   });
-  // } else {
-  //   // Allow navigating back without validation
-  //   active.value = index;
-  // }
 }
 
 onMounted(async () => {
