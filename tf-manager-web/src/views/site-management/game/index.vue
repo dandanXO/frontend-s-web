@@ -506,7 +506,20 @@
       <el-table-column prop="platformName" :label="t('fields.platform')" width="150"/>
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="120"/>
       <el-table-column prop="siteName" :label="t('fields.site')" width="150"/>
-      <el-table-column prop="status" :label="t('fields.status')" width="150"/>
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="150"/> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="150">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeGameStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">OPEN</el-radio-button>
+            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
+            <el-radio-button label="TEST">TEST</el-radio-button>
+          </el-radio-group>
+        </template>
+      </el-table-column>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
@@ -686,6 +699,7 @@ import {
   getGameTypes,
   createBatchGame,
   getExport,
+  updateGameState,
 } from '../../../api/game'
 import {
   getPlatformExcelMapping, getPlatformsBySite,
@@ -1354,6 +1368,13 @@ async function checkGamePlatform() {
   const { data: ret } = await getPlatformsBySite(imageForm.siteId)
   platform.list = ret
   platform.display = true
+}
+
+async function changeGameStatus(id, status) {
+  console.log(`id : ${id}, status : ${status}`)
+  await updateGameState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadGame()
 }
 
 onMounted(async () => {

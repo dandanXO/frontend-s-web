@@ -86,11 +86,11 @@
         finish-status="success"
         align-center
       >
-        <el-step :title="t('fields.priviBasicInfo')" />
-        <el-step :title="t('fields.priviRewardSetup')" />
-        <el-step :title="t('fields.priviVipSetup')" />
-        <el-step :title="t('fields.priviPaymentSetup')" />
-        <el-step :title="t('fields.priviOther')" />
+        <el-step :title="t('fields.priviBasicInfo')" @click="goToStep(0)" />
+        <el-step :title="t('fields.priviRewardSetup')" @click="goToStep(1)" />
+        <el-step :title="t('fields.priviVipSetup')" @click="goToStep(2)" />
+        <el-step :title="t('fields.priviPaymentSetup')" @click="goToStep(3)" />
+        <el-step :title="t('fields.priviOther')" @click="goToStep(4)" />
       </el-steps>
       <el-form
         ref="privilegeInfoForm"
@@ -976,10 +976,14 @@ function changePage(page) {
 
 function showDialog(type) {
   clearCheckAll()
+  if (privilegeInfoForm.value) {
+    privilegeInfoForm.value.resetFields(); // Reset form fields
+  }
+
   if (type === 'CREATE') {
     active.value = 0
     if (privilegeInfoForm.value) {
-      privilegeInfoForm.value.resetFields()
+      // privilegeInfoForm.value.resetFields()
       selectedVIPs.vipChecked = []
       selectedPayTypes.payTypeChecked = []
       selectedBonusDays.bonusDaysChecked = []
@@ -997,8 +1001,29 @@ function showDialog(type) {
     uiControl.pgroup = false
     uiControl.dialogTitle = t('fields.addPrivilegeInfo')
     uiControl.isNewRollover = true;
+
+    form.alias = null
+    form.name = null
+    form.code = null
+    form.id = null
+    form.startTime = null
+    form.endTime = null
+    form.rollover = null
+    form.gameTypeRollover = null
+    form.minBalance = null
+    form.bonusAmount = null
+    form.bonusAmountRatio = null
+    form.vips = null
+    form.payTypes = null
+    form.depositMin = null
+    form.bonusMax = null
+    form.param = null
+    form.remark = null
+    form.pgroup = null
+    form.bonusDays = null
   } else if (type === 'EDIT') {
     active.value = 0
+    // privilegeInfoForm.value.resetFields();
     uiControl.dialogTitle = t('fields.editPrivilegeInfo')
   }
   uiControl.dialogType = type
@@ -1215,6 +1240,16 @@ function create() {
     return;
   }
 
+  if (form.vips === null) {
+    ElMessage({ message: t('message.validateVipSettingRequired'), type: 'error' })
+    return;
+  }
+
+  if (form.payTypes === null) {
+    ElMessage({ message: t('message.validatePayementTypesSettingRequired'), type: 'error' })
+    return;
+  }
+
   privilegeInfoForm.value.validate(async valid => {
     if (valid) {
       if (form.bonusType === 'RATIO') {
@@ -1262,6 +1297,16 @@ function edit() {
   }
   if (validateGameRollOverType()) {
     ElMessage({ message: t('message.validateGameRolloverSelectRequired'), type: 'error' })
+    return;
+  }
+
+  if (form.vips === null) {
+    ElMessage({ message: t('message.validateVipSettingRequired'), type: 'error' })
+    return;
+  }
+
+  if (form.payTypes === null) {
+    ElMessage({ message: t('message.validatePayementTypesSettingRequired'), type: 'error' })
     return;
   }
 
@@ -1453,6 +1498,14 @@ function validateAndNext() {
   privilegeInfoForm.value.validate(async valid => {
     if (valid) {
       active.value += 1;
+    }
+  });
+}
+
+function goToStep(index) {
+  privilegeInfoForm.value.validate(async valid => {
+    if (valid) {
+      active.value = index; // Navigate to the clicked step if valid
     }
   });
 }

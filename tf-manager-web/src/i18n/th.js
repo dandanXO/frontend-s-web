@@ -1631,6 +1631,8 @@ export default {
     requestExportToExcelDone2: 'เพื่อการตรวจสอบความคืบหน้าและดาวน์โหลด',
     roleMustOnlyOne: 'โปรดเลือกบทบาทที่ต้องได้รับอนุมัติ',
     validateIsSeamlessTransferRequired: 'จำเป็นสำหรับการไม่มีการโอน',
+    validateVipSettingRequired: 'จำเป็นต้องตั้งค่าวีไอพี',
+    validatePayementTypesSettingRequired: 'จำเป็นต้องตั้งค่าการชำระเงิน'
   },
   menu: {
     undefined: 'ไม่ได้กำหนด',

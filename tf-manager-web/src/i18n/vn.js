@@ -2378,6 +2378,8 @@ export default {
     validatePlanLimitMinRequired: 'Yêu cầu giới hạn đầu tư tối thiểu',
     validatePlanLimitMaxRequired: 'Yêu cầu giới hạn đầu tư tối đa',
     validateIsSeamlessTransferRequired: 'Nó là cần thiết để không chuyển nhượng',
+    validateVipSettingRequired: 'Yêu cầu cài đặt VIP',
+    validatePayementTypesSettingRequired: 'Yêu cầu cài đặt thanh toán'
   },
   menu: {
     undefined: '',
