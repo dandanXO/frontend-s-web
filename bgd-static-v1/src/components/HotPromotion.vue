@@ -10,6 +10,8 @@
 
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'bgd-spin-wheel' && !isCommonPromo && store.token" />
     <SignIn7DaysPromo v-if="list.redirectUrl === 'bgd-signin-bonus' && !isCommonPromo && store.token" />
+    <SignIn1MthPromo v-if="list.redirectUrl === 'bgd-daily-signin-bonus' && !isCommonPromo && store.token" />
+
     <NewPlayerSpinWheelPromo
       v-if="list.redirectUrl === 'bgd-newplayer-welcome-spin' && !isCommonPromo && store.token"
     />
@@ -17,7 +19,11 @@
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'bgd-new-players' && !isCommonPromo && store.token" :list="list" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'bgd-slot-ftd' && store.token" :params="list.param" />
-    <RegisterClaimBonus v-if="!isCommonPromo && list.redirectUrl === 'bgd-register-claim-bonus' && store.token" :promocode="list.promoCode" :params="list.param" />
+    <RegisterClaimBonus
+      v-if="!isCommonPromo && list.redirectUrl === 'bgd-register-claim-bonus' && store.token"
+      :promocode="list.promoCode"
+      :params="list.param"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -53,6 +59,7 @@ import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestP
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 import RegisterClaimBonus from "../components/hotpromo/registerClaimBonus/RegisterClaimBonus.vue";
+import SignIn1MthPromo from "./hotpromo/signIn1Mth/SignIn1MthPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -63,6 +70,7 @@ export default defineComponent({
     HongBaoYuPromo,
     BonusSpinWheelPromo,
     SignIn7DaysPromo,
+    SignIn1MthPromo,
     NewPlayerSpinWheelPromo,
     RedPacketRainPromo,
     InterestProfitPromo,
@@ -122,6 +130,7 @@ export default defineComponent({
       this.list.redirectUrl === "hongbaoyu" ||
       this.list.redirectUrl === "bgd-spin-wheel" ||
       this.list.redirectUrl === "bgd-signin-bonus" ||
+      this.list.redirectUrl === "bgd-daily-signin-bonus" ||
       this.list.redirectUrl === "bgd-newplayer-welcome-spin" ||
       this.list.redirectUrl === "bgd-redpacketrain" ||
       this.list.redirectUrl === "interest-profit" ||
