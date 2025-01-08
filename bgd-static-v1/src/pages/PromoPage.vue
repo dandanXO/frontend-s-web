@@ -33,35 +33,8 @@
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
                 <div v-for="(promo, i) in filteredArray" :key="i">
-                  <!-- data-aos="zoom-in"
-                  data-aos-easing="ease-out"
-                  data-aos-duration="1000" -->
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div class="promo-item" v-if="tab.name === 'all' ||  promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <!-- <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div> -->
-                      <!-- <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div> -->
-                      <div class="promo-img-wrapper">
-                        <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
-
-                      <!-- <div class="pad-label label-new">最新活动</div> -->
-                    </a>
-                  </div>
-
-                  <div class="promo-item" v-if="tab.name === 'all'">
-                    <a @click="showPromoDetails(promo)">
-                      <!-- <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
@@ -74,7 +47,7 @@
                   </div>
                 </div>
               </div>
-              <MediaSettingsComponent />
+<!--              <MediaSettingsComponent />-->
             </div>
           </div>
           <div v-else class="selected-promo">
