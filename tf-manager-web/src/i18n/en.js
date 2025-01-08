@@ -2747,6 +2747,8 @@ export default {
       'The login name can only contain underscores (_), numbers, and letters.',
     validateAdjustColumnRequired: 'Adjust Column is required',
     validateIsSeamlessTransferRequired: 'Is Seamless Transfer is required',
+    validateVipSettingRequired: 'VIP Setting is required',
+    validatePayementTypesSettingRequired: 'Payment Setting is required'
   },
   menu: {
     undefined: '',

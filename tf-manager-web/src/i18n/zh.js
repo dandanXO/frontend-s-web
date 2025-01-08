@@ -2697,6 +2697,8 @@ export default {
     validateLoginNameNoSpecialCharacter: '登录名只能包含下划线（_），数字和字母。',
     validateAdjustColumnRequired: '平账目标必填',
     validateIsSeamlessTransferRequired: '是免转必填',
+    validateVipSettingRequired: 'VIP设置必填',
+    validatePayementTypesSettingRequired: '支付设置必填'
   },
   menu: {
     undefined: '',

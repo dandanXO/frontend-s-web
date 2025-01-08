@@ -460,7 +460,7 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <!-- <el-descriptions-item
+        <el-descriptions-item
           label-align="left"
           label-class-name="member-label"
           class-name="member-context"
@@ -473,7 +473,7 @@
           </template>
           <span v-if="memberDetail.sid !== null">{{ memberDetail.sid }}</span>
           <span v-if="memberDetail.sid === null">-</span>
-        </el-descriptions-item> -->
+        </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
           label-class-name="member-label"

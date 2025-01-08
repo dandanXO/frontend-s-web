@@ -2411,6 +2411,8 @@ export default {
     required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
     validateAdjustColumnRequired: '전송하지 않으려면 필요합니다.',
     validateIsSeamlessTransferRequired: 'isSeamlessTransfer is required',
+    validateVipSettingRequired: 'VIP 설정 필요',
+    validatePayementTypesSettingRequired: '결제 설정이 필요합니다'
   },
   menu: {
     undefined: '',
